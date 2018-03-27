@@ -72,6 +72,7 @@ class Root extends PureComponent {
           <div className="widgets">
             {loading && <Loader className="widgets-loader large" />}
             {!loading &&
+              currentLocation &&
               widgets &&
               widgets.length > 0 &&
               widgets.map(widget => (
@@ -82,12 +83,16 @@ class Root extends PureComponent {
                 />
               ))}
             {!loading &&
-              (!widgets || widgets.length === 0) && (
+              (!currentLocation || (!widgets || widgets.length === 0)) && (
                 <NoContent
                   className="no-widgets-message large"
-                  message={`${upperFirst(
-                    category
-                  )} data for ${currentLocation} coming soon`}
+                  message={
+                    currentLocation
+                      ? `${upperFirst(category)} data for ${
+                        currentLocation
+                      } coming soon`
+                      : 'Please select a country'
+                  }
                   icon
                 />
               )}

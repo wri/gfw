@@ -11,6 +11,8 @@ const SQL_QUERIES = {
     "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = 0 AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   multiRegionExtent:
     "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
+  rankedExtent:
+    "SELECT polyname, SUM({extent_year}) as value, SUM(area_gadm28) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = 0",
   gainRanked:
@@ -23,6 +25,8 @@ const SQL_QUERIES = {
     "SELECT {location} as region, {extentYear} as extent, {extent} as total FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{indicator}' {grouping}",
   locationsLoss:
     "SELECT {select} AS region, year_data.year as year, SUM(year_data.area_loss) as area_loss, FROM data WHERE polyname = '{indicator}' AND iso = '{iso}' {region} AND thresh= {threshold} GROUP BY {group}, nested(year_data.year) ORDER BY {order}",
+  lossRanked:
+    "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as loss, SUM({extent_year}) as extent, FROM data WHERE polyname = '{polyname}' AND thresh={threshold} GROUP BY polyname, iso, nested(year_data.year)",
   fao:
     "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30",
   faoExtent:
@@ -75,6 +79,22 @@ export const getLocationsLoss = ({ country, region, indicator, threshold }) => {
     .replace('{region}', region ? `AND adm1 = ${region}` : '')
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator);
+  return axios.get(url);
+};
+
+export const fetchLossRanked = ({ extentYear, indicator, threshold }) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.lossRanked}`
+    .replace('{extent_year}', getExtentYear(extentYear))
+    .replace('{polyname}', indicator)
+    .replace('{threshold}', threshold);
+  return axios.get(url);
+};
+
+export const fetchExtentRanked = ({ extentYear, indicator, threshold }) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.rankedExtent}`
+    .replace('{extent_year}', getExtentYear(extentYear))
+    .replace('{polyname}', indicator)
+    .replace('{threshold}', threshold);
   return axios.get(url);
 };
 
