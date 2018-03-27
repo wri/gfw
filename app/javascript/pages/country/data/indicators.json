@@ -20,6 +20,18 @@
     "metaKey": "wdpa_protected_areas"
   },
   {
+    "label": "Key Biodiversity Areas",
+    "value": "kba"
+  },
+  {
+    "label": "Tiger Conservation Landscapes",
+    "value": "tcl"
+  },
+  {
+    "label": "Aliance for Zero Extinction",
+    "value": "aze"
+  },
+  {
     "label": "Primary Forests",
     "value": "primary_forest",
     "metaKey": "primary_forest"

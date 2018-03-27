@@ -26,18 +26,12 @@ export const fetchGladAlerts = ({ country, region, subRegion, period }) => {
   return axios.get(url);
 };
 
-export const fetchGladIntersectionAlerts = ({
-  country,
-  region,
-  indicator,
-  period
-}) => {
+export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
   const url = `${REQUEST_URL}/query/${DATASET}?sql=${
     QUERIES.gladIntersectionAlerts
   }`
     .replace('{location}', getLocation(country, region))
-    .replace('{polyname}', indicator)
-    .replace('{period}', 4 || 'week');
+    .replace('{polyname}', indicator);
   return axios.get(url);
 };
 

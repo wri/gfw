@@ -132,7 +132,7 @@
                      "ifl_2013__wdpa", "ifl_2013__mining",
                      "primary_forests","primary_forest__landmark",
                       "plantations", "plantations__mining",
-                      "plantations__wdpa", "plantations__landmark"],
+                      "plantations__wdpa", "plantations__landmark", "kba", "aze"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
       "selectors": ["indicators", "startYears", "endYears", "thresholds", "extentYears"],
@@ -187,7 +187,7 @@
                       "ifl_2013__wdpa", "ifl_2013__mining",
                       "primary_forest", "primary_forest__landmark",
                       "plantations", "plantations__mining",
-                      "plantations__wdpa", "plantations__landmark"],
+                      "plantations__wdpa", "plantations__landmark", "kba", "aze"],
       "units": ["ha", "%"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region"],
@@ -246,7 +246,7 @@
       "size": "small",
       "indicators": ["gadm28", "primary_forest", "ifl_2013", "wdpa", "primary_forest__wdpa",
         "mining", "ifl_2013__wdpa", "primary_forest__mining", "ifl_2013__mining",
-        "plantations", "plantations__mining"],
+        "plantations", "plantations__mining", "kba", "aze"],
       "units": ["ha", "%"],
       "categories": ["summary", "forest-change"],
       "admins": ["country"],
@@ -411,7 +411,7 @@
     "enabled": true
   },
   "gladBiodiversity": {
-    "title": "GLAD biodiversity",
+    "title": "Deforestation Alerts Biodiversity",
     "config": {
       "size": "small",
       "indicators": ["gadm28", "ifl_2013", "wdpa",
@@ -420,7 +420,7 @@
       "units": ["ha", "%"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region"],
-      "selectors": ["indicators", "thresholds", "units", "extentYears"],
+      "selectors": ["indicators", "thresholds", "units", "extentYears", "weeks"],
       "locationCheck": true,
       "type": "loss",
       "layers": ["umd_as_it_happens"],
@@ -435,6 +435,7 @@
       "threshold": 30,
       "extentYear": 2000,
       "unit": "ha",
+      "weeks": 4,
       "pageSize": 5,
       "page": 0,
       "layers": ["umd_as_it_happens"]

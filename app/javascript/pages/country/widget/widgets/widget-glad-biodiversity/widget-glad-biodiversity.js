@@ -20,8 +20,8 @@ const mapStateToProps = (
   const { colors, locationNames, settingsConfig, activeIndicator } = ownProps;
   const { payload } = location;
   const selectorData = {
-    loss: data.loss.regions,
-    extent: data.extent.regions,
+    data: data.data,
+    extent: data.extent,
     settings,
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],

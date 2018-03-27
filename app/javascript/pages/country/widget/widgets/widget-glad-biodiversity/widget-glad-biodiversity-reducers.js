@@ -3,10 +3,7 @@ import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
 export const initialState = {
   loading: false,
   error: false,
-  data: {
-    loss: [],
-    extent: []
-  },
+  data: {},
   ...WIDGETS_CONFIG.gladBiodiversity
 };
 

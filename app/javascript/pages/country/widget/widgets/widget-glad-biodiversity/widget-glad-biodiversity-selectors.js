@@ -1,12 +1,13 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import uniqBy from 'lodash/uniqBy';
-import sumBy from 'lodash/sumBy';
-import { sortByKey } from 'utils/data';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
+import groupBy from 'lodash/groupBy';
+import sumBy from 'lodash/sumBy';
+import moment from 'moment';
 
 // get list data
-const getLoss = state => state.loss || null;
+const getData = state => state.data || null;
 const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
@@ -17,35 +18,35 @@ const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector(
-  [getLoss, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
+  [getData, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
   (data, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
-    const { startYear, endYear } = settings;
-    const mappedData = data.map(d => {
-      const region = meta.find(l => d.id === l.value);
-      const loss =
-        sumBy(
-          d.loss.filter(l => l.year >= startYear && l.year <= endYear),
-          'area_loss'
-        ) || 0;
-      const locationExtent = extent.filter(l => l.id === d.id);
-      const percentage = loss / locationExtent[0].extent * 100;
+    const alertsByDate = data.filter(d =>
+      moment(d.date).isAfter(moment.utc().subtract(settings.weeks, 'weeks'))
+    );
+    const groupedAlerts = groupBy(
+      alertsByDate,
+      location.region ? 'adm2' : 'adm1'
+    );
+    const mappedData = Object.keys(groupedAlerts).map(k => {
+      const region = meta.find(l => parseInt(k, 10) === l.value);
+      const regionExtent = extent.find(a => a.region === parseInt(k, 10));
+      const regionData = groupedAlerts[k];
+      const countsArea = sumBy(regionData, 'area_ha');
+      const countsAreaPerc =
+        countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
       return {
+        id: k,
+        color: colors.main,
+        percentage: countsAreaPerc,
+        value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
         label: (region && region.label) || '',
-        loss,
-        percentage,
-        value: settings.unit === 'ha' ? loss : percentage,
         path: `/country/${location.country}/${
           location.region ? `${location.region}/` : ''
-        }${d.id}`
+        }${k}`
       };
     });
-    const sortedData = sortByKey(uniqBy(mappedData, 'label'), 'value', true);
-
-    return sortedData.map(o => ({
-      ...o,
-      color: colors.main
-    }));
+    return sortBy(mappedData, 'value').reverse();
   }
 );
 
@@ -60,65 +61,18 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    const { startYear, endYear } = settings;
-    const totalLoss = sumBy(data, 'loss');
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
-    const topRegion = data.length && data[0];
-    const avgLossPercentage = sumBy(data, 'percentage') / data.length;
-    const avgLoss = sumBy(data, 'loss') / data.length;
-    let percentileLoss = 0;
-    let percentileLength = 0;
-    let sentence = '';
-
-    if (indicator.value !== 'gadm28') {
-      sentence += `For <b>${indicator.label}</b> in <b>${
-        currentLocation
-      }</b>, `;
-    } else {
-      sentence += `In <b>${currentLocation}</b>, `;
-    }
-    while (
-      (percentileLength < data.length && percentileLoss / totalLoss < 0.5) ||
-      (percentileLength < 10 && data.length > 10)
-    ) {
-      percentileLoss += data[percentileLength].loss;
-      percentileLength += 1;
-    }
-    const topLoss = percentileLoss / totalLoss * 100;
-
-    if (percentileLength > 1) {
-      sentence += `the top <b>${
-        percentileLength
-      }</b> regions were responsible for <b>`;
-    } else {
-      sentence += `<b>${topRegion.label}</b> was responsible for <b>`;
-    }
-    if (!location.region) {
-      sentence += `more than half (${format('.0f')(topLoss)}%)`;
-    } else {
-      sentence += `${format('.0f')(topLoss)}%`;
-    }
-    sentence += `</b> of all tree cover loss between <b>${
-      startYear
-    }</b> and <b>${endYear}</b>. `;
-    sentence += `${
-      percentileLength > 1 ? `<b>${topRegion.label}</b>` : 'This region'
-    } had the largest${
-      settings.unit === '%' ? ' relative' : ''
-    } tree cover loss at `;
-    if (topRegion.percentage > 1 && settings.unit === '%') {
-      sentence += `<b>${format('.0f')(
-        topRegion.percentage
-      )}%</b> compared to an average of <b>${format('.0f')(
-        avgLossPercentage
-      )}%</b>.`;
-    } else {
-      sentence += `<b>${format('.3s')(
-        topRegion.loss
-      )}ha</b> compared to an average of <b>${format('.3s')(avgLoss)}ha</b>.`;
-    }
-
+    let sentence =
+      'In the last <b>{timeframe}</b>, <b>{value}ha</b> of GLAD alerts were detected in <b>{location}</b>, equivalent to a <b>{percentage}%</b> loss relative to <b>{extentYear}</b> tree cover extent.';
+    const params = {
+      timeframe: options.weeks.find(w => w.value === settings.weeks).label,
+      value: format('.2s')(data[0].value),
+      location: locationNames.current.label,
+      percentage: format('.2f')(data[0].percentage),
+      extentYear: settings.extentYear
+    };
+    Object.keys(params).forEach(p => {
+      sentence = sentence.replace(`{${p}}`, params[p]);
+    });
     return sentence;
   }
 );
