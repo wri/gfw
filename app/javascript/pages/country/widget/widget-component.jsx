@@ -26,6 +26,7 @@ import WidgetFaoCover from 'pages/country/widget/widgets/widget-fao-cover';
 import WidgetFaoReforestation from 'pages/country/widget/widgets/widget-fao-reforestation';
 import WidgetFaoDeforestation from 'pages/country/widget/widgets/widget-fao-deforestation';
 import WidgetGladAlerts from 'pages/country/widget/widgets/widget-glad-alerts';
+import WidgetGladBiodiversity from 'pages/country/widget/widgets/widget-glad-biodiversity';
 import WidgetRankedPlantations from 'pages/country/widget/widgets/widget-ranked-plantations';
 import WidgetEmissions from 'pages/country/widget/widgets/widget-emissions';
 import WidgetEmissionsDeforestation from 'pages/country/widget/widgets/widget-emissions-deforestation';
@@ -53,6 +54,7 @@ const widgets = {
   WidgetFaoReforestation,
   WidgetFaoDeforestation,
   WidgetGladAlerts,
+  WidgetGladBiodiversity,
   WidgetRankedPlantations,
   WidgetEmissions,
   WidgetEmissionsDeforestation,

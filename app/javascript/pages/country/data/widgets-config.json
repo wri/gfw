@@ -410,6 +410,37 @@
     },
     "enabled": true
   },
+  "gladBiodiversity": {
+    "title": "GLAD biodiversity",
+    "config": {
+      "size": "small",
+      "indicators": ["gadm28", "ifl_2013", "wdpa",
+                      "kba", "aze",
+                      "tcl"],
+      "units": ["ha", "%"],
+      "categories": ["summary", "forest-change"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "units", "extentYears"],
+      "locationCheck": true,
+      "type": "loss",
+      "layers": ["umd_as_it_happens"],
+      "metaKey": "widget_glad_biodiversity",
+      "sortOrder": {
+        "summary": 6,
+        "forest-change": 4
+      }
+    },
+    "settings": {
+      "indicator": "gadm28",
+      "threshold": 30,
+      "extentYear": 2000,
+      "unit": "ha",
+      "pageSize": 5,
+      "page": 0,
+      "layers": ["umd_as_it_happens"]
+    },
+    "enabled": true
+  },
   "rankedPlantations": {
     "title": "Ranked plantation breakdown",
     "config": {

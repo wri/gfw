@@ -7,10 +7,10 @@ export const initialState = {
     loss: [],
     extent: []
   },
-  ...WIDGETS_CONFIG.lossLocated
+  ...WIDGETS_CONFIG.gladBiodiversity
 };
 
-const setLossLocatedData = (state, { payload }) => ({
+const setGladBiodiversityData = (state, { payload }) => ({
   ...state,
   loading: false,
   data: payload,
@@ -20,7 +20,7 @@ const setLossLocatedData = (state, { payload }) => ({
   }
 });
 
-const setLossLocatedPage = (state, { payload }) => ({
+const setGladBiodiversityPage = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
@@ -28,7 +28,7 @@ const setLossLocatedPage = (state, { payload }) => ({
   }
 });
 
-const setLossLocatedSettings = (state, { payload }) => ({
+const setGladBiodiversitySettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
@@ -36,14 +36,14 @@ const setLossLocatedSettings = (state, { payload }) => ({
   }
 });
 
-const setLossLocatedLoading = (state, { payload }) => ({
+const setGladBiodiversityLoading = (state, { payload }) => ({
   ...state,
   ...payload
 });
 
 export default {
-  setLossLocatedData,
-  setLossLocatedPage,
-  setLossLocatedSettings,
-  setLossLocatedLoading
+  setGladBiodiversityData,
+  setGladBiodiversityPage,
+  setGladBiodiversitySettings,
+  setGladBiodiversityLoading
 };

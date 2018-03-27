@@ -34,6 +34,7 @@ import * as widgetFAOCoverComponent from 'pages/country/widget/widgets/widget-fa
 import * as widgetFAOReforestationComponent from 'pages/country/widget/widgets/widget-fao-reforestation';
 import * as widgetFAODeforestationComponent from 'pages/country/widget/widgets/widget-fao-deforestation';
 import * as widgetGladAlertsComponent from 'pages/country/widget/widgets/widget-glad-alerts';
+import * as widgetGladBiodiversityComponent from 'pages/country/widget/widgets/widget-glad-biodiversity';
 import * as widgetRankedPlantationsComponent from 'pages/country/widget/widgets/widget-ranked-plantations';
 import * as widgetEmissionsComponent from 'pages/country/widget/widgets/widget-emissions';
 import * as widgetEmissionsDeforestationComponent from 'pages/country/widget/widgets/widget-emissions-deforestation';
@@ -70,6 +71,7 @@ const componentsReducers = {
   widgetFAOReforestation: handleActions(widgetFAOReforestationComponent),
   widgetFAODeforestation: handleActions(widgetFAODeforestationComponent),
   widgetGladAlerts: handleActions(widgetGladAlertsComponent),
+  widgetGladBiodiversity: handleActions(widgetGladBiodiversityComponent),
   widgetRankedPlantations: handleActions(widgetRankedPlantationsComponent),
   widgetEmissions: handleActions(widgetEmissionsComponent),
   widgetEmissionsDeforestation: handleActions(

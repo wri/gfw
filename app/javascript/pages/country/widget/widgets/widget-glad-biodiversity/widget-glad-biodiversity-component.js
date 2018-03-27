@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import WidgetNumberedList from 'pages/country/widget/components/widget-numbered-list';
 import WidgetDynamicSentence from 'pages/country/widget/components/widget-dynamic-sentence';
 
-import './widget-loss-located-styles.scss';
+import './widget-glad-biodiversity-styles.scss';
 
-class WidgetLossLocated extends PureComponent {
+class WidgetGladBiodiversity extends PureComponent {
   render() {
     const { data, settings, handlePageChange, embed, sentence } = this.props;
 
@@ -28,7 +28,7 @@ class WidgetLossLocated extends PureComponent {
   }
 }
 
-WidgetLossLocated.propTypes = {
+WidgetGladBiodiversity.propTypes = {
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
   handlePageChange: PropTypes.func.isRequired,
@@ -36,4 +36,4 @@ WidgetLossLocated.propTypes = {
   sentence: PropTypes.string
 };
 
-export default WidgetLossLocated;
+export default WidgetGladBiodiversity;

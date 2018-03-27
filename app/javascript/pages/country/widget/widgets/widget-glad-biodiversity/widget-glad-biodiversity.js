@@ -3,17 +3,20 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
-import actions from './widget-loss-located-actions';
-import reducers, { initialState } from './widget-loss-located-reducers';
-import { getSortedData, getSentence } from './widget-loss-located-selectors';
-import WidgetLossLocatedComponent from './widget-loss-located-component';
+import actions from './widget-glad-biodiversity-actions';
+import reducers, { initialState } from './widget-glad-biodiversity-reducers';
+import {
+  getSortedData,
+  getSentence
+} from './widget-glad-biodiversity-selectors';
+import WidgetGladBiodiversityComponent from './widget-glad-biodiversity-component';
 
 const mapStateToProps = (
-  { location, widgetLossLocated, countryData },
+  { location, widgetGladBiodiversity, countryData },
   ownProps
 ) => {
   const { isCountriesLoading, isRegionsLoading } = countryData;
-  const { settings, data, loading } = widgetLossLocated;
+  const { settings, data, loading } = widgetGladBiodiversity;
   const { colors, locationNames, settingsConfig, activeIndicator } = ownProps;
   const { payload } = location;
   const selectorData = {
@@ -35,17 +38,17 @@ const mapStateToProps = (
   };
 };
 
-class WidgetLossLocatedContainer extends PureComponent {
+class WidgetGladBiodiversityContainer extends PureComponent {
   componentWillMount() {
-    const { location, settings, getLossLocated } = this.props;
-    getLossLocated({
+    const { location, settings, getGladBiodiversity } = this.props;
+    getGladBiodiversity({
       ...location,
       ...settings
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { settings, location, getLossLocated } = nextProps;
+    const { settings, location, getGladBiodiversity } = nextProps;
 
     if (
       !isEqual(location.country, this.props.location.country) ||
@@ -54,7 +57,7 @@ class WidgetLossLocatedContainer extends PureComponent {
       !isEqual(settings.threshold, this.props.settings.threshold) ||
       !isEqual(settings.extentYear, this.props.settings.extentYear)
     ) {
-      getLossLocated({
+      getGladBiodiversity({
         ...location,
         ...settings
       });
@@ -62,25 +65,27 @@ class WidgetLossLocatedContainer extends PureComponent {
   }
 
   handlePageChange = change => {
-    const { setLossLocatedPage, settings } = this.props;
-    setLossLocatedPage(settings.page + change);
+    const { setGladBiodiversityPage, settings } = this.props;
+    setGladBiodiversityPage(settings.page + change);
   };
 
   render() {
-    return createElement(WidgetLossLocatedComponent, {
+    return createElement(WidgetGladBiodiversityComponent, {
       ...this.props,
       handlePageChange: this.handlePageChange
     });
   }
 }
 
-WidgetLossLocatedContainer.propTypes = {
-  setLossLocatedPage: PropTypes.func.isRequired,
+WidgetGladBiodiversityContainer.propTypes = {
+  setGladBiodiversityPage: PropTypes.func.isRequired,
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  getLossLocated: PropTypes.func.isRequired
+  getGladBiodiversity: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(WidgetLossLocatedContainer);
+export default connect(mapStateToProps, actions)(
+  WidgetGladBiodiversityContainer
+);
