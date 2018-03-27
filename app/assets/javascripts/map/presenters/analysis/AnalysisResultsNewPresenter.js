@@ -168,12 +168,17 @@ define(
          * Exceptions
          */
         if (p.slug === 'umd-loss-gain') {
-          var results = type == 'country' ? results.totals : results;
+          var results =
+            type == 'country' ? results.totals || results.total : results;
           p.areaHa = this.roundNumber(results.areaHa || 0);
           p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
           p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
-          p.alerts.treeExtent = this.roundNumber(results.extent2000 || 0);
-          p.alerts.treeExtent2010 = this.roundNumber(results.extent2010 || 0);
+          p.alerts.treeExtent = this.roundNumber(
+            results.extent2000 || results.treeExtent || 0
+          );
+          p.alerts.treeExtent2010 = this.roundNumber(
+            results.extent2010 || results.treeExtent2010 || 0
+          );
 
           // Dates
           p.dates.lossDateRange = '{0}-{1}'.format(
