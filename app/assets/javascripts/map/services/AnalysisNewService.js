@@ -126,7 +126,9 @@ define(
       },
 
       getApiHost: function(dataset) {
-        return dataset === 'umd-loss-gain' ? APIURLV2 : APIURL;
+        return dataset === 'umd-loss-gain' && this.analysis.type === 'country'
+          ? APIURLV2
+          : APIURL;
       },
 
       /**
