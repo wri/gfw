@@ -390,6 +390,7 @@
     "config": {
       "size": "large",
       "categories": ["summary", "forest-change"],
+      "weeks": [13, 26, 52],
       "admins": ["country", "region", "subRegion"],
       "type": "loss",
       "selectors": ["weeks"],

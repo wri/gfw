@@ -57,7 +57,7 @@ const mapStateToProps = (state, ownProps) => {
           });
           break;
         default:
-          options[selector] = selectorFunc();
+          options[selector] = selectorFunc({ config });
       }
     });
   }
