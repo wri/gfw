@@ -95,7 +95,7 @@ export const fetchProjectsImages = createThunkAction(
           );
         }
       },
-      'SGF page compressed/'
+      'SGF page/'
     );
   }
 );

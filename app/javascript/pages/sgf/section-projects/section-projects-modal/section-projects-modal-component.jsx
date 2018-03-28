@@ -82,7 +82,9 @@ class SectionProjectsModal extends PureComponent {
               </a>
             )}
           {data.categories && (
-            <p className="links">{data.categories.filter(i => i).join(', ')}</p>
+            <p className="categories">
+              {data.categories.filter(i => i).join(', ')}
+            </p>
           )}
         </div>
       </div>

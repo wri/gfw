@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-projects-modal {
-  max-width: calc(#{$max-width} - 2 * #{$desktop-gutter});
+  max-width: calc((#{$max-width} - 2 * #{$desktop-gutter}) / 12 * 10);
   width: 100%;
   color: $slate;
   font-weight: 300;
@@ -45,6 +45,10 @@
 
   .modal-image-slider {
     margin-top: rem(40px);
+
+    .slick-dots {
+      margin-bottom: 0;
+    }
   }
 
   .image-background {
@@ -74,6 +78,13 @@
       font-size: rem(14px);
       margin-bottom: rem(15px);
       display: block;
+    }
+
+    .categories {
+      font-size: rem(14px);
+      text-transform: uppercase;
+      font-weight: 400;
+      opacity: 0.5;
     }
   }
 }

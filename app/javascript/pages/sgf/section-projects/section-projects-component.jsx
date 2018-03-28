@@ -31,11 +31,6 @@ class SectionProjects extends PureComponent {
     return (
       <div>
         <div className="l-section-projects">
-          <div className="row project-header">
-            <div className="column small-12">
-              <h2>SMALL GRANTS FUND RECIPIENTS</h2>
-            </div>
-          </div>
           <div className="row">
             <div className="column small-12 large-7 project-globe">
               <Globe
@@ -44,13 +39,14 @@ class SectionProjects extends PureComponent {
                 onClick={handleGlobeClick}
               />
             </div>
-            <div className="column small-12 large-5">
-              <Search
-                className="project-search"
-                placeholder="Search"
-                input={search}
-                onChange={setSearch}
-              />
+            <div className="column small-12 large-5 side">
+              <h3>MEET THE GRANTEES</h3>
+              <p>
+                With financial and technical support from GFW, organizations
+                around the world are using Global Forest Watch to monitor
+                large-scale land use projects, enforce community land rights,
+                defend critical habitat, and influence forest policy.
+              </p>
               {hasCategories && (
                 <ItemsList
                   className="project-list"
@@ -62,12 +58,20 @@ class SectionProjects extends PureComponent {
             </div>
           </div>
           <ScrollEl name="project-cards" className="row project-cards">
+            <div className="column small-12 medium-6 large-4 medium-offset-6 large-offset-8">
+              <Search
+                className="project-search"
+                placeholder="Search"
+                input={search}
+                onChange={setSearch}
+              />
+            </div>
             {hasData &&
               !loading &&
               data.map(d => (
                 <div
                   key={d.id}
-                  className="column small-12 medium-4 card-container"
+                  className="column small-12 medium-6 large-4 card-container"
                 >
                   <Card
                     className="project-card"
