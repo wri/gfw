@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * The AnalysisResultsPresenter class for the AnalysisResultsView.
  *
@@ -31,7 +32,7 @@ define(
        */
       _subscriptions: [
         {
-          'Place/go': function (place) {
+          'Place/go': function(place) {
             const params = place.params;
             this.status.set(
               'baselayers_full',
@@ -41,30 +42,35 @@ define(
           }
         },
         {
-          'LayerNav/change': function (layerSpec) {
+          'LayerNav/change': function(layerSpec) {
             this.status.set('baselayers_full', layerSpec.getBaselayers(), {
               silent: true
             });
           }
         },
         {
-          'Analysis/results': function (status) {
+          'Analysis/results': function(status) {
             this.status.set(status, { silent: true });
-            this.status.set(
-              {
-                resource: _.clone(this.setAnalysisResource())
-              },
-              {
-                silent: true
-              }
-            );
+            if (!status.results) {
+              this.publishNotification('notification-empty-analysis');
+              this.view.renderError();
+            } else {
+              this.status.set(
+                {
+                  resource: _.clone(this.setAnalysisResource())
+                },
+                {
+                  silent: true
+                }
+              );
 
-            // Trigger change always
-            this.changeResource();
+              // Trigger change always
+              this.changeResource();
+            }
           }
         },
         {
-          'Analysis/results-error': function (status) {
+          'Analysis/results-error': function(status) {
             this.status.set(status, { silent: true });
             this.view.renderError();
           }
@@ -75,9 +81,14 @@ define(
         const iso = this.status.get('iso');
 
         // Get regions if analysis has country
-        !!iso.country && iso.country != 'ALL'
-          ? this.getRegions()
-          : this.view.render();
+        if (!!iso.country && iso.country != 'ALL') {
+          this.getRegions();
+          if (!!iso.region) {
+            this.getSubRegions();
+          }
+        } else {
+          this.view.render();
+        }
       },
 
       getRegions() {
@@ -86,6 +97,20 @@ define(
         CountryService.getRegionsList({ iso: iso.country }).then(results => {
           this.status.set({
             regions: results
+          });
+          this.view.render();
+        });
+      },
+
+      getSubRegions() {
+        const iso = this.status.get('iso');
+
+        CountryService.getSubRegionsList({
+          iso: iso.country,
+          region: iso.region
+        }).then(results => {
+          this.status.set({
+            subRegions: results
           });
           this.view.render();
         });
@@ -143,13 +168,16 @@ define(
          * Exceptions
          */
         if (p.slug === 'umd-loss-gain') {
-          var results = type == 'country' ? results.total : results;
+          var results =
+            type == 'country' ? results.totals || results.total : results;
           p.areaHa = this.roundNumber(results.areaHa || 0);
           p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
           p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
-          p.alerts.treeExtent = this.roundNumber(results.treeExtent || 0);
+          p.alerts.treeExtent = this.roundNumber(
+            results.extent2000 || results.treeExtent || 0
+          );
           p.alerts.treeExtent2010 = this.roundNumber(
-            results.treeExtent2010 || 0
+            results.extent2010 || results.treeExtent2010 || 0
           );
 
           // Dates

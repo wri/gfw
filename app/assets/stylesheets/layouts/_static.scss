@@ -1,7 +1,5 @@
-// LAYOUT
-.layout-content {
- // padding: 0 15px;
-}
+
+/* eslint-disable */
 
 .loader-mobile{
   display: block;
@@ -107,6 +105,9 @@
   }
   .inner {
     padding: 0 15px;
+    &.-redirect {
+      text-align: center;
+    }
   }
   .row {
     display: flex;

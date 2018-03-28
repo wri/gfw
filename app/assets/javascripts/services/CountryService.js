@@ -1,10 +1,10 @@
-define([
-  'Class',
-  'uri',
-  'bluebird',
-  'map/services/DataService'
-], function(Class, UriTemplate, Promise, ds) {
-
+/* eslint-disable */
+define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
+  Class,
+  UriTemplate,
+  Promise,
+  ds
+) {
   'use strict';
 
   var CONFIG = {
@@ -19,20 +19,28 @@ define([
   };
 
   var GET_REQUEST_COUNTRY_CONFIG_ID = 'CountryService:getCountries',
-      GET_REQUEST_COUNTRIES_LIST_ID = 'CountryService:getCountries',
-      SHOW_REQUEST_COUNTRY_ID = 'CountryService:showCountry',
-      GET_REQUEST_REGIONS_LIST_ID = 'CountryService:getRegionsList',
-      SHOW_REQUEST_REGION_ID = 'CountryService:showRegion';
+    GET_REQUEST_COUNTRIES_LIST_ID = 'CountryService:getCountries',
+    SHOW_REQUEST_COUNTRY_ID = 'CountryService:showCountry',
+    GET_REQUEST_REGIONS_LIST_ID = 'CountryService:getRegionsList',
+    SHOW_REQUEST_REGION_ID = 'CountryService:showRegion',
+    GET_REQUEST_SUBREGIONS_LIST_ID = 'CountryService:getRegionsList';
 
   var APIURL = window.gfw.config.GFW_API_HOST_PROD;
+  var CARTO_API_URL = window.gfw.config.CARTO_API_URL;
 
   var APIURLS = {
-    'getCountryConfig'   : '/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso=\'{iso}\'',
-    'getCountriesList'   : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable}',
-    'showCountry'        : '/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson FROM {countriesTable} WHERE iso=\'{iso}\'',
-    'getRegionsList'     : '/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsTable} WHERE iso=\'{iso}\' ORDER BY name_1',
-    'showRegion'         : '/query/{regionsDataset}?sql=SELECT id_1, name_1, geojson FROM {regionsTable} WHERE iso=\'{iso}\' AND id_1={region} ORDER BY name_1',
-    'getSubRegionsList'  : '/query/{subRegionsDataset}?sql=SELECT id_1, name_1 FROM {subRegionsTable} WHERE iso=\'{iso}\' ORDER BY name_1'
+    getCountryConfig:
+      "/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso='{iso}'",
+    getCountriesList:
+      '/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable} ORDER BY name',
+    showCountry:
+      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson FROM {countriesTable} WHERE iso='{iso}'",
+    getRegionsList:
+      "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' ORDER BY name_1",
+    showRegion:
+      "/query/{regionsDataset}?sql=SELECT id_1, name_1, geojson FROM {regionsTable} WHERE iso='{iso}' AND id_1={region} ORDER BY name_1",
+    getSubRegionsList:
+      "/sql?q=SELECT id_2 as id, name_2 as name FROM gadm28_adm2 WHERE iso = '{iso}' AND id_1 = '{region}' ORDER BY name"
   };
 
   var CountriesService = Class.extend({
@@ -42,142 +50,217 @@ define([
 
     getCountryConfig: function(params) {
       var datasetId = GET_REQUEST_COUNTRY_CONFIG_ID + '_' + params.iso;
-      return new Promise(function(resolve, reject) {
-        var status = _.extend({}, CONFIG, params);
-        var url = new UriTemplate(APIURLS.getCountryConfig).fillFromObject(status);
+      return new Promise(
+        function(resolve, reject) {
+          var status = _.extend({}, CONFIG, params);
+          var url = new UriTemplate(
+            APIURL + APIURLS.getCountryConfig
+          ).fillFromObject(status);
 
-        this.defineRequest(datasetId,
-          url, { type: 'persist', duration: 1, unit: 'days' });
+          this.defineRequest(datasetId, url, {
+            type: 'persist',
+            duration: 1,
+            unit: 'days'
+          });
 
-        var requestConfig = {
-          resourceId: datasetId,
-          success: function(res, status) {
-            resolve(res.data, status);
-          },
-          error: function(errors) {
-            reject(errors);
-          }
-        };
+          var requestConfig = {
+            resourceId: datasetId,
+            success: function(res, status) {
+              resolve(res.data, status);
+            },
+            error: function(errors) {
+              reject(errors);
+            }
+          };
 
-        ds.request(requestConfig);
-      }.bind(this));
+          ds.request(requestConfig);
+        }.bind(this)
+      );
     },
 
     getCountries: function() {
-      return new Promise(function(resolve, reject) {
-        var url = new UriTemplate(APIURLS.getCountriesList).fillFromObject(CONFIG);
+      return new Promise(
+        function(resolve, reject) {
+          var url = new UriTemplate(
+            APIURL + APIURLS.getCountriesList
+          ).fillFromObject(CONFIG);
 
-        this.defineRequest(GET_REQUEST_COUNTRIES_LIST_ID,
-          url, { type: 'persist', duration: 1, unit: 'days' });
+          this.defineRequest(GET_REQUEST_COUNTRIES_LIST_ID, url, {
+            type: 'persist',
+            duration: 1,
+            unit: 'days'
+          });
 
-        var requestConfig = {
-          resourceId: GET_REQUEST_COUNTRIES_LIST_ID,
-          success: function(res, status) {
-            resolve(res.data, status);
-          },
-          error: function(errors) {
-            reject(errors);
-          }
-        };
+          var requestConfig = {
+            resourceId: GET_REQUEST_COUNTRIES_LIST_ID,
+            success: function(res, status) {
+              resolve(res.data, status);
+            },
+            error: function(errors) {
+              reject(errors);
+            }
+          };
 
-        this.abortRequest(GET_REQUEST_COUNTRIES_LIST_ID);
-        this.currentRequest[GET_REQUEST_COUNTRIES_LIST_ID] = ds.request(requestConfig);
-      }.bind(this));
+          this.abortRequest(GET_REQUEST_COUNTRIES_LIST_ID);
+          this.currentRequest[GET_REQUEST_COUNTRIES_LIST_ID] = ds.request(
+            requestConfig
+          );
+        }.bind(this)
+      );
     },
 
     showCountry: function(params) {
       var datasetId = SHOW_REQUEST_COUNTRY_ID + '_' + params.iso;
-      return new Promise(function(resolve, reject) {
-        this.getCountryConfig(params)
-          .then(function(countryConfig) {
-            var status = _.extend({}, CONFIG, params);
-            var url = new UriTemplate(APIURLS.showCountry).fillFromObject(status);
+      return new Promise(
+        function(resolve, reject) {
+          this.getCountryConfig(params)
+            .then(
+              function(countryConfig) {
+                var status = _.extend({}, CONFIG, params);
+                var url = new UriTemplate(
+                  APIURL + APIURLS.showCountry
+                ).fillFromObject(status);
 
-            this.defineRequest(datasetId,
-              url, { type: 'persist', duration: 1, unit: 'days' });
+                this.defineRequest(datasetId, url, {
+                  type: 'persist',
+                  duration: 1,
+                  unit: 'days'
+                });
 
-            var requestConfig = {
-              resourceId: datasetId,
-              success: function(res, status) {
-                var dataCountryConfig = countryConfig.length >= 0 ? countryConfig[0] : [];
-                var dataCountry = res.data.length >= 0 ? res.data[0] : [];
-                var data = _.extend({}, dataCountry, dataCountryConfig);
-                resolve(data, status);
-              },
-              error: function(errors) {
-                reject(errors);
-              }
-            };
+                var requestConfig = {
+                  resourceId: datasetId,
+                  success: function(res, status) {
+                    var dataCountryConfig =
+                      countryConfig.length >= 0 ? countryConfig[0] : [];
+                    var dataCountry = res.data.length >= 0 ? res.data[0] : [];
+                    var data = _.extend({}, dataCountry, dataCountryConfig);
+                    resolve(data, status);
+                  },
+                  error: function(errors) {
+                    reject(errors);
+                  }
+                };
 
-            ds.request(requestConfig);
-          }.bind(this))
-          .error(function(error) {
-            console.warn(error);
-          }.bind(this))
-      }.bind(this));
+                ds.request(requestConfig);
+              }.bind(this)
+            )
+            .error(
+              function(error) {
+                console.warn(error);
+              }.bind(this)
+            );
+        }.bind(this)
+      );
     },
 
     getRegionsList: function(params) {
-      return new Promise(function(resolve, reject) {
-        var status = _.extend({}, CONFIG, params);
-        var url = new UriTemplate(APIURLS.getRegionsList).fillFromObject(status);
+      return new Promise(
+        function(resolve, reject) {
+          var status = _.extend({}, CONFIG, params);
+          var url = new UriTemplate(
+            APIURL + APIURLS.getRegionsList
+          ).fillFromObject(status);
 
-        this.defineRequest(GET_REQUEST_REGIONS_LIST_ID,
-          url, { type: 'persist', duration: 1, unit: 'days' });
+          this.defineRequest(GET_REQUEST_REGIONS_LIST_ID, url, {
+            type: 'persist',
+            duration: 1,
+            unit: 'days'
+          });
 
-        var requestConfig = {
-          resourceId: GET_REQUEST_REGIONS_LIST_ID,
-          success: function(res, status) {
-            resolve(res.data, status);
-          },
-          error: function(errors) {
-            reject(errors);
-          }
-        };
+          var requestConfig = {
+            resourceId: GET_REQUEST_REGIONS_LIST_ID,
+            success: function(res, status) {
+              resolve(res.data, status);
+            },
+            error: function(errors) {
+              reject(errors);
+            }
+          };
 
-        this.abortRequest(GET_REQUEST_REGIONS_LIST_ID);
-        this.currentRequest[GET_REQUEST_REGIONS_LIST_ID] = ds.request(requestConfig);
-      }.bind(this));
+          this.abortRequest(GET_REQUEST_REGIONS_LIST_ID);
+          this.currentRequest[GET_REQUEST_REGIONS_LIST_ID] = ds.request(
+            requestConfig
+          );
+        }.bind(this)
+      );
     },
 
     showRegion: function(params) {
-      var datasetId = SHOW_REQUEST_REGION_ID + '_' + params.iso + '_' + params.region;
-      return new Promise(function(resolve, reject) {
-        var status = _.extend({}, CONFIG, params);
-        var url = new UriTemplate(APIURLS.showRegion).fillFromObject(status);
+      var datasetId =
+        SHOW_REQUEST_REGION_ID + '_' + params.iso + '_' + params.region;
+      return new Promise(
+        function(resolve, reject) {
+          var status = _.extend({}, CONFIG, params);
+          var url = new UriTemplate(APIURL + APIURLS.showRegion).fillFromObject(
+            status
+          );
 
-        this.defineRequest(datasetId,
-          url, { type: 'persist', duration: 1, unit: 'days' });
+          this.defineRequest(datasetId, url, {
+            type: 'persist',
+            duration: 1,
+            unit: 'days'
+          });
 
-        var requestConfig = {
-          resourceId: datasetId,
-          success: function(res, status) {
-            var data = res.data.length >= 0 ? res.data[0] : [];
-            resolve(data, status);
-          },
-          error: function(errors) {
-            reject(errors);
-          }
-        };
+          var requestConfig = {
+            resourceId: datasetId,
+            success: function(res, status) {
+              var data = res.data.length >= 0 ? res.data[0] : [];
+              resolve(data, status);
+            },
+            error: function(errors) {
+              reject(errors);
+            }
+          };
 
-        ds.request(requestConfig);
-      }.bind(this));
+          ds.request(requestConfig);
+        }.bind(this)
+      );
     },
 
-    defineRequest: function (id, url, cache) {
+    getSubRegionsList: function(params) {
+      return new Promise(
+        function(resolve, reject) {
+          var status = _.extend({}, CONFIG, params);
+          var url = new UriTemplate(
+            CARTO_API_URL + APIURLS.getSubRegionsList
+          ).fillFromObject(status);
+
+          this.defineRequest(GET_REQUEST_SUBREGIONS_LIST_ID, url, {
+            type: 'persist',
+            duration: 1,
+            unit: 'days'
+          });
+
+          var requestConfig = {
+            resourceId: GET_REQUEST_SUBREGIONS_LIST_ID,
+            success: function(res, status) {
+              resolve(res.rows, status);
+            },
+            error: function(errors) {
+              reject(errors);
+            }
+          };
+
+          this.abortRequest(GET_REQUEST_SUBREGIONS_LIST_ID);
+          this.currentRequest[GET_REQUEST_SUBREGIONS_LIST_ID] = ds.request(
+            requestConfig
+          );
+        }.bind(this)
+      );
+    },
+
+    defineRequest: function(id, url, cache) {
       ds.define(id, {
         cache: cache,
-        url: APIURL + url,
+        url: url,
         type: 'GET',
         dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        decoder: function ( data, status, xhr, success, error ) {
-          if ( status === "success" ) {
-            success( data, xhr );
-          } else if ( status === "fail" || status === "error" ) {
+        decoder: function(data, status, xhr, success, error) {
+          if (status === 'success') {
+            success(data, xhr);
+          } else if (status === 'fail' || status === 'error') {
             error(xhr.statusText);
-          } else if ( status === "abort") {
-
+          } else if (status === 'abort') {
           } else {
             error(xhr.statusText);
           }
@@ -194,9 +277,7 @@ define([
         this.currentRequest[request] = null;
       }
     }
-
   });
 
   return new CountriesService();
-
 });
