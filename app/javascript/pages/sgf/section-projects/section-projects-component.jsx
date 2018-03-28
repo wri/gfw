@@ -25,9 +25,8 @@ class SectionProjects extends PureComponent {
       setSectionProjectsModal,
       loading
     } = this.props;
-    const hasData = data && !!data.length;
+    const hasData = data && data.length > 0;
     const hasCategories = categories && !!categories.length;
-
     return (
       <div>
         <div className="l-section-projects">
@@ -57,7 +56,7 @@ class SectionProjects extends PureComponent {
               )}
             </div>
           </div>
-          <ScrollEl name="project-cards" className="row project-cards">
+          <div className="row">
             <div className="column small-12 medium-6 large-4 medium-offset-6 large-offset-8">
               <Search
                 className="project-search"
@@ -66,6 +65,8 @@ class SectionProjects extends PureComponent {
                 onChange={setSearch}
               />
             </div>
+          </div>
+          <ScrollEl name="project-cards" className="row project-cards">
             {hasData &&
               !loading &&
               data.map(d => (
@@ -86,7 +87,12 @@ class SectionProjects extends PureComponent {
                 </div>
               ))}
             {!loading &&
-              !hasData && <NoContent message="No projects for that search" />}
+              !hasData && (
+                <NoContent
+                  className="no-projects"
+                  message="No projects for that search"
+                />
+              )}
             {loading && <Loader loading={loading} />}
           </ScrollEl>
         </div>

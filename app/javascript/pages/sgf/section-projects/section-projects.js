@@ -34,7 +34,10 @@ const mapStateToProps = ({ projects }) => {
     categorySelected:
       filters && filters.length ? '' : projects.categorySelected,
     search: projects.search,
-    loading: projects.loading,
+    loading:
+      projects.loading ||
+      !projects.data.projects.length ||
+      !projects.data.images,
     customFilter: projects.customFilter
   };
 };

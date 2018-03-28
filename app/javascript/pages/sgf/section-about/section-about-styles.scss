@@ -19,8 +19,16 @@
     line-height: 1.67;
     margin-bottom: rem(40px);
 
+    &.results {
+      margin-bottom: rem(20px);
+    }
+
     @media screen and (min-width: $screen-m) {
       margin-bottom: rem(60px);
+
+      &.results {
+        margin-bottom: rem(60px);
+      }
     }
   }
 
@@ -35,7 +43,11 @@
 
   .icon-list {
     text-align: center;
-    margin-bottom: rem(40px);
+    margin-bottom: 0;
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(40px);
+    }
 
     svg {
       width: 40%;
