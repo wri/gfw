@@ -419,7 +419,7 @@
                       "kba", "aze",
                       "tcl"],
       "units": ["ha", "%"],
-      "categories": ["summary", "forest-change"],
+      "categories": ["summary", "forest-change", "conservation"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears", "weeks"],
       "locationCheck": true,
