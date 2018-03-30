@@ -247,7 +247,7 @@
                         "primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark",
                         "plantations__mining", "plantations__wdpa", "plantations__landmark"],
       "units": ["ha", "%"],
-      "categories": ["summary", "forest-change"],
+      "categories": ["forest-change"],
       "admins": ["country"],
       "selectors": ["indicators", "thresholds", "extentYears", "units", "startYears", "endYears"],
       "type": "loss",
@@ -264,7 +264,7 @@
       "startYear": 2001,
       "endYear": 2016,
       "unit": "ha",
-      "extentYear": 2010,
+      "extentYear": 2000,
       "layers": ["loss"]
     },
     "enabled": true
@@ -278,7 +278,7 @@
                       "primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark",
                       "plantations__mining", "plantations__wdpa", "plantations__landmark"],
       "units": ["ha", "%"],
-      "categories": ["summary", "land-cover"],
+      "categories": ["land-cover"],
       "admins": ["country"],
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "extent",
