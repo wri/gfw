@@ -28,11 +28,11 @@ export const getSummedByYearsData = createSelector(
     const isos = Object.keys(groupedByIso);
     const mappedData = isos.map(i => {
       const isoLoss = sumBy(groupedByIso[i], 'loss') || 0;
-      const isoExtent = extent.find(e => e.iso === i).total_area;
+      const isoExtent = extent.find(e => e.iso === i).value;
       return {
         id: i,
         loss: isoLoss,
-        extent,
+        extent: isoExtent,
         percentage: isoExtent ? 100 * isoLoss / isoExtent : 0
       };
     });
