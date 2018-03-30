@@ -7,7 +7,7 @@ const DATASET = process.env.GLAD_PRECALC_DATASET;
 const QUERIES = {
   gladAlerts: '{location}?aggregate_values=true&aggregate_by={period}',
   gladIntersectionAlerts:
-    "SELECT iso, adm1, adm2, alert_count as count, alert_date as date, area_ha, polyname FROM data WHERE {location} AND alert_date > '{dateBound}' AND polyname = '{polyname}'",
+    "SELECT iso, adm1, adm2, alerts as count, alert_date as date, area_ha, polyname FROM data WHERE {location} AND alert_date > '{dateBound}' AND polyname = '{polyname}'",
   viirsAlerts:
     '{location}?group=true&period={period}&thresh=0&geostore={geostore}'
 };
