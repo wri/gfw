@@ -33,12 +33,15 @@ export const getSortedData = createSelector(
       const regionExtent = extent.find(a => a.region === parseInt(k, 10));
       const regionData = groupedAlerts[k];
       const countsArea = sumBy(regionData, 'area_ha');
+      const counts = sumBy(regionData, 'count');
       const countsAreaPerc =
         countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
       return {
         id: k,
         color: colors.main,
         percentage: countsAreaPerc,
+        count: counts,
+        area: countsArea,
         value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
         label: (region && region.label) || '',
         path: `/country/${location.country}/${
@@ -62,13 +65,12 @@ export const getSentence = createSelector(
   (data, settings, options, location, indicator, locationNames) => {
     if (!data || !options || !indicator || !locationNames) return '';
     let sentence =
-      'In the last <b>{timeframe}</b>, <b>{value}ha</b> of GLAD alerts were detected in <b>{location}</b>, equivalent to a <b>{percentage}%</b> loss relative to <b>{extentYear}</b> tree cover extent.';
+      'In the last <b>{timeframe}</b>, <b>{count}</b> GLAD alerts were detected in <b>{location}</b>, which affected an area of approximately <b>{area}ha</b>.';
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
-      value: format('.2s')(data[0].value),
-      location: locationNames.current.label,
-      percentage: format('.2f')(data[0].percentage),
-      extentYear: settings.extentYear
+      count: sumBy(data, 'count'),
+      area: format('.2s')(sumBy(data, 'area')),
+      location: locationNames.current.label
     };
     Object.keys(params).forEach(p => {
       sentence = sentence.replace(`{${p}}`, params[p]);
