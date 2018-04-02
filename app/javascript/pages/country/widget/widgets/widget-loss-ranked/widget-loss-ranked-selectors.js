@@ -28,11 +28,11 @@ export const getSummedByYearsData = createSelector(
     const isos = Object.keys(groupedByIso);
     const mappedData = isos.map(i => {
       const isoLoss = sumBy(groupedByIso[i], 'loss') || 0;
-      const isoExtent = extent.find(e => e.iso === i).total_area;
+      const isoExtent = extent.find(e => e.iso === i).value;
       return {
         id: i,
         loss: isoLoss,
-        extent,
+        extent: isoExtent,
         percentage: isoExtent ? 100 * isoLoss / isoExtent : 0
       };
     });
@@ -133,7 +133,9 @@ export const getSentence = createSelector(
       loss ? format('.3s')(loss) : '0'
     }ha</strong> of tree cover ${regionPhrase}`;
     const secondSentence = loss
-      ? `, equivalent to a <strong>${areaPercent}%</strong> loss relative to <b>${
+      ? `, equivalent to a <strong>${
+        areaPercent
+      }%</strong> loss relative to <b>${
         settings.extentYear
       }</b> tree cover extent.`
       : '.';

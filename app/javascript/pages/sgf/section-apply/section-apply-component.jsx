@@ -3,6 +3,8 @@ import React, { PureComponent } from 'react';
 
 import './section-apply-styles.scss';
 
+import sgfLogo from './img/GFW_SGF_logo.png';
+
 class SectionAbout extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -83,6 +85,12 @@ class SectionAbout extends PureComponent {
                   gfwfund@wri.org
                 </a>.
               </p>
+            </div>
+            <div className="column small-12 medium-3 logo">
+              <img
+                src={sgfLogo}
+                alt="Logo Global Forest Watch Small Grant Funds"
+              />
             </div>
           </div>
         </section>

@@ -4,7 +4,10 @@ import Projects from 'pages/sgf/section-projects';
 import About from 'pages/sgf/section-about';
 import Apply from 'pages/sgf/section-apply';
 
-import { fetchProjects } from 'pages/sgf/section-projects/section-projects-actions';
+import {
+  fetchProjects,
+  fetchProjectsImages
+} from 'pages/sgf/section-projects/section-projects-actions';
 
 const history = createHistory();
 
@@ -15,7 +18,10 @@ export const APPLY = 'location/APPLY';
 export const routes = {
   [PROJECTS]: {
     path: '/small-grants-fund',
-    thunk: fetchProjects(),
+    thunk: dispatch => {
+      dispatch(fetchProjects());
+      dispatch(fetchProjectsImages());
+    },
     component: Projects,
     label: 'Projects',
     submenu: true
