@@ -216,7 +216,7 @@
     "title": "Tree cover gain",
     "config": {
       "size": "small",
-      "indicators": ["gadm28", "wdpa", "primary_forest", "plantations", "ifl_2013"],
+      "indicators": ["gadm28", "wdpa", "primary_forest", "plantations", "ifl_2013", "landmark", "mining"],
       "units": ["ha", "%"],
       "categories": ["summary", "forest-change"],
       "admins": ["country", "region", "subRegion"],
@@ -418,7 +418,7 @@
                       "kba", "aze",
                       "tcl"],
       "units": ["ha", "%"],
-      "categories": ["summary", "forest-change", "conservation"],
+      "categories": ["forest-change", "conservation"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears", "weeks"],
       "locationCheck": true,
