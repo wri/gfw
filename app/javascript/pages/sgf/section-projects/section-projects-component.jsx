@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ProjectsGLobe from 'components/globe-projects';
+import Globe from 'components/globe';
 import ProjectsModal from 'pages/sgf/section-projects/section-projects-modal';
 import Card from 'components/card';
 import ItemsList from 'components/items-list';
 import Search from 'components/search';
 import NoContent from 'components/no-content';
+import Loader from 'components/loader';
+import { Element as ScrollEl } from 'react-scroll';
 
 import './section-projects-styles.scss';
 
@@ -13,35 +15,37 @@ class SectionProjects extends PureComponent {
   render() {
     const {
       data,
+      globeData,
       categories,
       setCategorySelected,
       categorySelected,
       search,
       setSearch,
-      setSectionProjectsModal
+      handleGlobeClick,
+      setSectionProjectsModal,
+      loading
     } = this.props;
-    const hasData = data && !!data.length;
+    const hasData = data && data.length > 0;
     const hasCategories = categories && !!categories.length;
-
     return (
       <div>
         <div className="l-section-projects">
-          <div className="row project-header">
-            <div className="column small-12">
-              <h2>SMALL GRANTS FUND RECIPIENTS</h2>
-            </div>
-          </div>
           <div className="row">
             <div className="column small-12 large-7 project-globe">
-              <ProjectsGLobe data={data} setModal={setSectionProjectsModal} />
-            </div>
-            <div className="column small-12 large-5">
-              <Search
-                className="project-search"
-                placeholder="Search"
-                input={search}
-                onChange={setSearch}
+              <Globe
+                autorotate={false}
+                data={globeData}
+                onClick={handleGlobeClick}
               />
+            </div>
+            <div className="column small-12 large-5 side">
+              <h3>MEET THE GRANTEES</h3>
+              <p>
+                With financial and technical support from GFW, organizations
+                around the world are using Global Forest Watch to monitor
+                large-scale land use projects, enforce community land rights,
+                defend critical habitat, and influence forest policy.
+              </p>
               {hasCategories && (
                 <ItemsList
                   className="project-list"
@@ -52,12 +56,23 @@ class SectionProjects extends PureComponent {
               )}
             </div>
           </div>
-          <div className="row project-cards">
-            {hasData ? (
+          <div className="row">
+            <div className="column small-12 medium-6 large-4 medium-offset-6 large-offset-8">
+              <Search
+                className="project-search"
+                placeholder="Search"
+                input={search}
+                onChange={setSearch}
+              />
+            </div>
+          </div>
+          <ScrollEl name="project-cards" className="row project-cards">
+            {hasData &&
+              !loading &&
               data.map(d => (
                 <div
                   key={d.id}
-                  className="column small-12 medium-4 card-container"
+                  className="column small-12 medium-6 large-4 card-container"
                 >
                   <Card
                     className="project-card"
@@ -70,11 +85,16 @@ class SectionProjects extends PureComponent {
                     }
                   />
                 </div>
-              ))
-            ) : (
-              <NoContent message="No projects for that search" />
-            )}
-          </div>
+              ))}
+            {!loading &&
+              !hasData && (
+                <NoContent
+                  className="no-projects"
+                  message="No projects for that search"
+                />
+              )}
+            {loading && <Loader loading={loading} />}
+          </ScrollEl>
         </div>
         <ProjectsModal />
       </div>
@@ -84,12 +104,15 @@ class SectionProjects extends PureComponent {
 
 SectionProjects.propTypes = {
   data: PropTypes.array,
+  globeData: PropTypes.array,
   categories: PropTypes.array,
   categorySelected: PropTypes.string.isRequired,
   setCategorySelected: PropTypes.func.isRequired,
   search: PropTypes.string,
   setSearch: PropTypes.func.isRequired,
-  setSectionProjectsModal: PropTypes.func
+  handleGlobeClick: PropTypes.func,
+  setSectionProjectsModal: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default SectionProjects;

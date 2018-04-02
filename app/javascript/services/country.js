@@ -14,7 +14,9 @@ const SQL_QUERIES = {
   getCountryLinks:
     'SELECT iso, external_links FROM external_links_gfw WHERE forest_atlas is true',
   getRanking:
-    "WITH mytable AS (SELECT fao.iso, fao.name, fao.forest_primary, fao.extent forest_extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary > 0 AND a.year = 2001 AND a.thresh = 30), rank AS ( SELECT forest_extent * (forest_primary/100)/area_ha * 100 as percent_primary ,iso from mytable ORDER BY percent_primary DESC), item as (select percent_primary from rank where iso = '{country}') select count(*) as rank from rank WHERE percent_primary > (select percent_primary from item )"
+    "WITH mytable AS (SELECT fao.iso, fao.name, fao.forest_primary, fao.extent forest_extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.forest_primary > 0 AND a.year = 2001 AND a.thresh = 30), rank AS ( SELECT forest_extent * (forest_primary/100)/area_ha * 100 as percent_primary ,iso from mytable ORDER BY percent_primary DESC), item as (select percent_primary from rank where iso = '{country}') select count(*) as rank from rank WHERE percent_primary > (select percent_primary from item )",
+  getCountriesLatLng:
+    'SELECT latitude_average, longitude_average, alpha_3_code as iso FROM country_list_iso_3166_codes_latitude_longitude'
 };
 
 export const getCountriesProvider = () => {
@@ -44,6 +46,11 @@ export const getSubRegionsProvider = (admin0, admin1) => {
 
 export const getCountryLinksProvider = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getCountryLinks}`;
+  return axios.get(url);
+};
+
+export const getCountriesLatLng = () => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.getCountriesLatLng}`;
   return axios.get(url);
 };
 

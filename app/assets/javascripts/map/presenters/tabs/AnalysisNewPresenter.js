@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * The AnalysisNewPresenter class for the AnalysisToolView.
  *
@@ -59,7 +60,8 @@ define(
           // Country
           iso: {
             country: null,
-            region: null
+            region: null,
+            subRegion: null
           },
           isoDisabled: false,
 
@@ -304,7 +306,7 @@ define(
       _subscriptions: [
         // GLOBAL EVENTS
         {
-          'Place/go': function (place) {
+          'Place/go': function(place) {
             const params = place.params;
             const layerSpec = place.layerSpec;
 
@@ -312,7 +314,8 @@ define(
               // Countries
               iso: {
                 country: params.iso.country,
-                region: params.iso.region
+                region: params.iso.region,
+                subRegion: params.iso.subRegion
               },
               // Check if param exists, if it doesn't check if country exists and it isn't equal to 'ALL'
               isoDisabled:
@@ -351,7 +354,7 @@ define(
           }
         },
         {
-          'LayerNav/change': function (layerSpec) {
+          'LayerNav/change': function(layerSpec) {
             const currentBaselayers = this.status.get('baselayers');
             const newBaselayers = _.keys(layerSpec.getBaselayers());
 
@@ -365,29 +368,29 @@ define(
           }
         },
         {
-          'LayerNav/changeLayerOptions': function (layerOptions) {
+          'LayerNav/changeLayerOptions': function(layerOptions) {
             this.status.set('layerOptions', _.clone(layerOptions));
           }
         },
         {
-          'Threshold/update': function (threshold) {
+          'Threshold/update': function(threshold) {
             this.status.set('threshold', threshold);
           }
         },
 
         // DRAWING EVENTS
         {
-          'Analysis/start-drawing': function () {
+          'Analysis/start-drawing': function() {
             this.status.set('isDrawing', true);
           }
         },
         {
-          'Analysis/stop-drawing': function () {
+          'Analysis/stop-drawing': function() {
             this.status.set('isDrawing', false);
           }
         },
         {
-          'Analysis/geojson': function (geojson) {
+          'Analysis/geojson': function(geojson) {
             if (geojson) {
               this.status.set('spinner', true);
               GeostoreService.save(geojson).then(geostoreId => {
@@ -404,7 +407,7 @@ define(
 
         // COUNTRY EVENTS
         {
-          'Analysis/iso': function (iso, isoDisabled) {
+          'Analysis/iso': function(iso, isoDisabled) {
             this.status.set({
               iso,
               isoDisabled
@@ -412,7 +415,7 @@ define(
           }
         },
         {
-          'Subscribe/iso': function (iso) {
+          'Subscribe/iso': function(iso) {
             let subscritionObj = {};
             subscritionObj = {
               iso,
@@ -429,7 +432,7 @@ define(
 
         // SHAPE
         {
-          'Analysis/shape': function (data) {
+          'Analysis/shape': function(data) {
             this.status.set({
               useid: data.useid,
               use: data.use,
@@ -438,7 +441,7 @@ define(
           }
         },
         {
-          'Subscribe/shape': function (data) {
+          'Subscribe/shape': function(data) {
             let subscritionObj = {};
 
             if (!!data.use && this.usenames.indexOf(data.use) === -1) {
@@ -453,7 +456,8 @@ define(
                 subscritionObj = {
                   iso: {
                     country: null,
-                    region: null
+                    region: null,
+                    subRegion: null
                   },
                   geostore: useGeostoreId,
                   useid: null,
@@ -469,7 +473,8 @@ define(
               subscritionObj = {
                 iso: {
                   country: null,
-                  region: null
+                  region: null,
+                  subRegion: null
                 },
                 geostore: null,
                 useid: data.useid,
@@ -484,14 +489,14 @@ define(
           }
         },
         {
-          'Analysis/shape-enableds': function () {
+          'Analysis/shape-enableds': function() {
             this.publishEnableds();
           }
         },
 
         // TIMELINE
         {
-          'Timeline/date-change': function (layerSlug, date) {
+          'Timeline/date-change': function(layerSlug, date) {
             const dateFormat = 'YYYY-MM-DD';
             var date = date.map(date => moment(date).format(dateFormat));
 
@@ -502,7 +507,7 @@ define(
           }
         },
         {
-          'Torque/date-range-change': function (date) {
+          'Torque/date-range-change': function(date) {
             const dateFormat = 'YYYY-MM-DD';
             var date = date.map(date => moment(date).format(dateFormat));
 
@@ -513,61 +518,61 @@ define(
           }
         },
         {
-          'Timeline/start-playing': function () {
+          'Timeline/start-playing': function() {
             this.status.set('enabledUpdating', false);
           }
         },
         {
-          'Timeline/stop-playing': function () {
+          'Timeline/stop-playing': function() {
             this.status.set('enabledUpdating', true);
           }
         },
 
         // GLOBAL ANALYSIS EVENTS
         {
-          'Analysis/toggle': function (toggle) {
+          'Analysis/toggle': function(toggle) {
             this.status.set('mobileEnabled', toggle);
           }
         },
         {
-          'Subscribe/toggle': function (toggle) {
+          'Subscribe/toggle': function(toggle) {
             this.status.set('subscribe', !!toggle);
           }
         },
         {
-          'Analysis/subtab': function (subtab) {
+          'Analysis/subtab': function(subtab) {
             this.status.set('subtab', subtab);
           }
         },
         {
-          'Analysis/active': function (active) {
+          'Analysis/active': function(active) {
             this.status.set('active', active);
           }
         },
         {
-          'Analysis/type': function (type) {
+          'Analysis/type': function(type) {
             this.status.set('type', type);
           }
         },
         {
-          'Analysis/refresh': function () {
+          'Analysis/refresh': function() {
             this.publishAnalysis();
           }
         },
         {
-          'Analysis/delete': function (options) {
+          'Analysis/delete': function(options) {
             this.deleteAnalysis(options);
           }
         },
 
         // DIALOGS
         {
-          'Dialogs/close': function () {
+          'Dialogs/close': function() {
             this.status.set('mobileEnabled', false);
           }
         },
         {
-          'Layers/toggle': function () {
+          'Layers/toggle': function() {
             this.status.set('mobileEnabled', false);
           }
         }
@@ -879,7 +884,8 @@ define(
                 'iso',
                 {
                   country: null,
-                  region: null
+                  region: null,
+                  subRegion: null
                 },
                 options
               );
