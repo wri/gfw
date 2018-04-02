@@ -21,7 +21,8 @@
   },
   {
     "label": "Key Biodiversity Areas",
-    "value": "kba"
+    "value": "kba",
+    "metaKey": "key_biodiversity_areas"
   },
   {
     "label": "Tiger Conservation Landscapes",
