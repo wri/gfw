@@ -133,7 +133,9 @@ export const getSentence = createSelector(
       loss ? format('.3s')(loss) : '0'
     }ha</strong> of tree cover ${regionPhrase}`;
     const secondSentence = loss
-      ? `, equivalent to a <strong>${areaPercent}%</strong> loss relative to <b>${
+      ? `, equivalent to a <strong>${
+        areaPercent
+      }%</strong> loss relative to <b>${
         settings.extentYear
       }</b> tree cover extent.`
       : '.';
