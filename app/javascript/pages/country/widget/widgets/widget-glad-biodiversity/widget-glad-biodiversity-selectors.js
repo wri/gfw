@@ -68,9 +68,13 @@ export const getSentence = createSelector(
       'In the last <b>{timeframe}</b>, <b>{count}</b> GLAD alerts were detected in <b>{location}</b>, which affected an area of approximately <b>{area}ha</b>.';
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
-      count: sumBy(data, 'count'),
+      count: format(',')(sumBy(data, 'count')),
       area: format('.2s')(sumBy(data, 'area')),
-      location: locationNames.current.label
+      location: `${
+        indicator && indicator.value !== 'gadm28'
+          ? `${indicator.label} in `
+          : ''
+      } ${locationNames.current.label}`
     };
     Object.keys(params).forEach(p => {
       sentence = sentence.replace(`{${p}}`, params[p]);
