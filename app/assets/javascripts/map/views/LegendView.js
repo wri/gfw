@@ -3,6 +3,9 @@
  *
  * @return singleton instance of the legend class (extends Widget).
  */
+
+/* eslint-disable */
+
 define(
   [
     'mps',
@@ -73,7 +76,9 @@ define(
     'text!map/templates/legend/lbr_community.handlebars',
     'text!map/templates/legend/mangrove_2.handlebars',
     'text!map/templates/legend/bol_user_fire_frequency.handlebars',
-    'text!map/templates/legend/sentinel_tiles.handlebars'
+    'text!map/templates/legend/sentinel_tiles.handlebars',
+    'text!map/templates/legend/biodiversity_intactness.handlebars',
+    'text!map/templates/legend/biodiversity_completeness.handlebars'
   ],
   (
     mps,
@@ -144,7 +149,9 @@ define(
     lbr_communityTpl,
     mangrove2Tpl,
     bol_user_fire_frequencyTpl,
-    sentinel_tilesTpl
+    sentinel_tilesTpl,
+    biodiversity_intactnessTpl,
+    biodiversity_completenessTpl
   ) => {
     const LegendView = Backbone.View.extend({
       el: '#module-legend',
@@ -244,7 +251,11 @@ define(
         lbr_resource_rights: Handlebars.compile(lbr_communityTpl),
         mangrove_2: Handlebars.compile(mangrove2Tpl),
         bol_user_fire_frequency: Handlebars.compile(bol_user_fire_frequencyTpl),
-        sentinel_tiles: Handlebars.compile(sentinel_tilesTpl)
+        sentinel_tiles: Handlebars.compile(sentinel_tilesTpl),
+        biodiversity_intactness: Handlebars.compile(biodiversity_intactnessTpl),
+        biodiversity_completeness: Handlebars.compile(
+          biodiversity_completenessTpl
+        )
       },
 
       events: {
@@ -260,6 +271,7 @@ define(
         'click .-js-show-layer': 'showLayer',
         'click .-js-hidden-layer': 'hiddenLayer',
         'click .js-toggle-threshold': 'toggleThreshold',
+        'change .js-biodiversity-layer': 'toggleBiodiversityLayer',
         'change .js-tree-cover-year': 'toggleTreeCoverYear',
         'change .js-tree-plantation': 'togglePlantation',
         'change .js-tree-plantation-country': 'togglePlantationCountry',
@@ -283,7 +295,7 @@ define(
         enquire.register(
           `screen and (min-width:${window.gfw.config.GFW_MOBILE}px)`,
           {
-            match: function () {
+            match: function() {
               this.mobile = false;
             }.bind(this)
           }
@@ -291,7 +303,7 @@ define(
         enquire.register(
           `screen and (max-width:${window.gfw.config.GFW_MOBILE}px)`,
           {
-            match: function () {
+            match: function() {
               this.mobile = true;
             }.bind(this)
           }
@@ -336,7 +348,7 @@ define(
         // Append details template to layer.
         _.each(
           layers,
-          function (layer) {
+          function(layer) {
             layer.source =
               layer.slug === 'nothing' ? null : layer.source || layer.slug;
             if (this.detailsTemplates[layer.slug]) {
@@ -629,7 +641,11 @@ define(
         const dataSource = $(e.target).attr('data-source');
         if (text != '') {
           $('body').append(
-            `<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:${top}px; left:${left}px;"><div class="triangle"><span>${text}</span><p>Click to see more</p></div></div>`
+            `<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:${
+              top
+            }px; left:${left}px;"><div class="triangle"><span>${
+              text
+            }</span><p>Click to see more</p></div></div>`
           );
         }
         $('.tooltip-info-legend').css(
@@ -649,7 +665,7 @@ define(
 
         if ($subLayers.length > 0) {
           const _this = this;
-          $subLayers.each(function () {
+          $subLayers.each(function() {
             const $item = $(this);
             const isChecked = $item.find('.checked').length > 0;
 
@@ -666,7 +682,7 @@ define(
 
         if ($subLayers.length > 0) {
           const _this = this;
-          $subLayers.each(function () {
+          $subLayers.each(function() {
             const $item = $(this);
             const isChecked = $item.find('.checked').length > 0;
 
@@ -690,6 +706,13 @@ define(
         const layerSlugRemove = '';
         this.presenter.toggleLayer('forest2000');
         this.presenter.toggleLayer('forest2010');
+      },
+
+      toggleBiodiversityLayer(e) {
+        const layerSlug = $(e.currentTarget).val();
+        const layerSlugRemove = '';
+        this.presenter.toggleLayer('biodiversity_intactness');
+        this.presenter.toggleLayer('biodiversity_completeness');
       },
 
       // map biomas year
