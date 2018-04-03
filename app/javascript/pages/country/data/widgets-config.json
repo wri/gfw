@@ -251,7 +251,7 @@
       "admins": ["country"],
       "selectors": ["indicators", "thresholds", "extentYears", "units", "startYears", "endYears"],
       "type": "loss",
-      "metaKey": "widget_tree_cover_loss",
+      "metaKey": "widget_tree_cover_loss_ranking",
       "layers": ["loss"],
       "sortOrder": {
         "summary": 5,
@@ -282,7 +282,7 @@
       "admins": ["country"],
       "selectors": ["indicators", "thresholds", "extentYears", "units"],
       "type": "extent",
-      "metaKey": "widget_tree_cover",
+      "metaKey": "widget_forest_cover_ranking",
       "layers": ["forest2000", "forest2010"],
       "sortOrder": {
         "summary": 1,
