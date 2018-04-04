@@ -62,8 +62,7 @@ define(
             imgdata[pixelPos + 1] = tmp_rgb[1];
             imgdata[pixelPos + 2] = tmp_rgb[2];
 
-            imgdata[pixelPos + 3] =
-              zoom < 13 ? myscale(intensity) * 256 : intensity * 256;
+            imgdata[pixelPos + 3] = myscale(intensity) * 256;
           }
         }
       },

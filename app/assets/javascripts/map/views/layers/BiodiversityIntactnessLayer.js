@@ -59,13 +59,10 @@ define(
             var intensity = imgdata[pixelPos + 1];
 
             var tmp_rgb = scale(intensity).rgb();
-            //console.log('rgb values: ',tmp_rgb);
             imgdata[pixelPos] = tmp_rgb[0];
             imgdata[pixelPos + 1] = tmp_rgb[1];
             imgdata[pixelPos + 2] = tmp_rgb[2];
-
-            imgdata[pixelPos + 3] =
-              zoom < 13 ? myscale(intensity) * 256 : intensity * 256;
+            imgdata[pixelPos + 3] = myscale(intensity) * 256;
           }
         }
       },
