@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
-import { sortByKey, getColorPalette } from 'utils/data';
+import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -33,19 +33,12 @@ export const getSortedData = createSelector(
           value: settings.unit === 'ha' ? d.gain : percentage,
           path: `/country/${location.country}/${
             location.region ? `${location.region}/` : ''
-          }${d.id}`
+          }${d.id}`,
+          color: colors.main
         });
       }
     });
-    const sortedData = sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
-    const colorRange = getColorPalette(
-      colors.ramp,
-      sortedData.length < 10 ? sortedData.length : 10
-    );
-    return sortedData.map((o, i) => ({
-      ...o,
-      color: o.gain ? colorRange[i] || colorRange[9] : colors.noGain
-    }));
+    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
   }
 );
 
@@ -88,9 +81,9 @@ export const getSentence = createSelector(
     let sentence = '';
 
     if (indicator.value !== 'gadm28') {
-      sentence += `For <b>${
-        indicator.label
-      }</b> in <b>${currentLocation}</b>, `;
+      sentence += `For <b>${indicator.label}</b> in <b>${
+        currentLocation
+      }</b>, `;
     } else {
       sentence += `In <b>${currentLocation}</b>, `;
     }
@@ -104,7 +97,9 @@ export const getSentence = createSelector(
     const topGain = percentileGain / totalGain * 100;
 
     if (percentileLength > 1) {
-      sentence += `the top <b>${percentileLength}</b> regions were responsible <b>`;
+      sentence += `the top <b>${
+        percentileLength
+      }</b> regions were responsible <b>`;
     } else {
       sentence += `<b>${topRegion.label}</b> was responsible <b>`;
     }

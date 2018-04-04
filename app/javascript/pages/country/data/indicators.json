@@ -1,13 +1,11 @@
 [
   {
     "label": "All of {location}",
-    "value": "gadm28",
-    "metaKey": ""
+    "value": "gadm28"
   },
   {
     "label": "Biomes",
-    "value": "bra_biomes",
-    "metaKey": ""
+    "value": "bra_biomes"
   },
   {
     "label": "Mining concessions",
@@ -20,6 +18,21 @@
     "metaKey": "wdpa_protected_areas"
   },
   {
+    "label": "Key Biodiversity Areas",
+    "value": "kba",
+    "metaKey": "key_biodiversity_areas"
+  },
+  {
+    "label": "Tiger Conservation Landscapes",
+    "value": "tcl",
+    "metaKey": "tiger_conservation_landscapes"
+  },
+  {
+    "label": "Aliance for Zero Extinction",
+    "value": "aze",
+    "metaKey": "alliance_for_zero_extinction_sites"
+  },
+  {
     "label": "Primary Forests",
     "value": "primary_forest",
     "metaKey": "primary_forest"
@@ -27,13 +40,11 @@
   {
     "label": "Mining concessions in Primary Forests",
     "value": "primary_forest__mining",
-    "metaKey": "",
     "group": "Intersections"
   },
   {
     "label": "Protected Areas in Primary Forests",
     "value": "primary_forest__wdpa",
-    "metaKey": "",
     "group": "Intersections"
   },
   {
@@ -44,13 +55,11 @@
   {
     "label": "Protected Areas in Intact Forest Landscapes",
     "value": "ifl_2013__wdpa",
-    "metaKey": "",
     "group": "Intersections"
   },
   {
     "label": "Mining concessions in Intact Forest Landscapes",
     "value": "ifl_2013__mining",
-    "metaKey": "",
     "group": "Intersections"
   },
   {
@@ -61,7 +70,6 @@
   {
     "label": "Indigenous Lands in Primary Forests",
     "value": "primary_forest__landmark",
-    "metaKey": "",
     "group": "Intersections"
   },
   {
@@ -72,19 +80,16 @@
   {
     "label": "Mining concessions in Plantation Areas",
     "value": "plantations__mining",
-    "metaKey": "",
     "group": "Intersections"
   },
   {
     "label": "Protected areas in Plantations",
     "value": "plantations__wdpa",
-    "metaKey": "",
     "group": "Intersections"
   },
   {
     "label": "Indigenous Lands in Plantations",
     "value": "plantations__landmark",
-    "metaKey": "",
     "group": "Intersections"
   }
 ]

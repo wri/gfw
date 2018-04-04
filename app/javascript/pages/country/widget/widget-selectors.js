@@ -162,7 +162,10 @@ export const getTypes = createSelector([], () => sortByKey(TYPES, 'label'));
 
 export const getExtentYears = createSelector([], () => EXTENT_YEARS);
 
-export const getWeeks = createSelector([], () => WEEKS);
+export const getWeeks = createSelector([getConfig], config => {
+  if (!config || !config.weeks) return WEEKS;
+  return WEEKS.filter(w => config.weeks.indexOf(w.value) > -1);
+});
 
 export const getRangeYears = createSelector(
   [getData, getConfig],

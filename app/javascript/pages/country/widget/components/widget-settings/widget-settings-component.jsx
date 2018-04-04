@@ -9,6 +9,7 @@ class WidgetSettings extends PureComponent {
   render() {
     const {
       settings,
+      config,
       loading,
       locationNames,
       onSettingsChange,
@@ -46,7 +47,7 @@ class WidgetSettings extends PureComponent {
             disabled={loading}
             optionsAction={setModalMeta}
             optionsActionKey="metaKey"
-            clearable
+            clearable={config.indicators[0] === 'gadm28'}
             noSelectedValue={`All of ${locationNames &&
               locationNames.current.label}`}
           />
@@ -208,6 +209,7 @@ WidgetSettings.propTypes = {
   periods: PropTypes.array,
   years: PropTypes.array,
   settings: PropTypes.object,
+  config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,
