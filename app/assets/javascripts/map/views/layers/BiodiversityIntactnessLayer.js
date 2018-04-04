@@ -18,6 +18,7 @@ define(
 
     var BiodiversityIntactness = CanvasLayerClass.extend({
       options: {
+        dataMaxZoom: 12,
         urlTemplate:
           'https://storage.googleapis.com/wri-public/biodiversity/intactness/v1{/z}{/x}{/y}.png'
       },

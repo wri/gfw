@@ -18,6 +18,7 @@ define(
 
     var BiodiversityCompleteness = CanvasLayerClass.extend({
       options: {
+        dataMaxZoom: 12,
         urlTemplate:
           'https://storage.googleapis.com/wri-public/biodiversity/significance/all/loss/v1{/z}{/x}{/y}.png'
       },
@@ -43,12 +44,12 @@ define(
           .range([0, 256]);
         var scale = chroma
           .scale([
-            '#6D00E1',
-            '#9D36F7',
-            '#C26DFE',
-            '#DFA4FF',
+            '#F8EBFF',
             '#ECCAFC',
-            '#F8EBFF'
+            '#DFA4FF',
+            '#C26DFE',
+            '#9D36F7',
+            '#6D00E1'
           ])
           .domain([0, 255]);
         for (var i = 0; i < w; ++i) {
