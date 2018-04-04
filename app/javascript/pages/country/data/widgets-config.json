@@ -393,7 +393,7 @@
       "admins": ["country", "region", "subRegion"],
       "type": "loss",
       "selectors": ["weeks"],
-      "metaKey": "widget_deforestation_alert_location",
+      "metaKey": "widget_deforestation_graph",
       "customLocationWhitelist": ["BRA", "COL", "ECU", "GUF", "GUY", "PER", "SUR", "BDI",
         "CMR", "CAF", "GNQ", "GAB", "RWA", "UGA", "IDN", "MYS",
         "PNG", "VEN", "TLS", "COD","COG"],
@@ -411,16 +411,49 @@
     "enabled": true
   },
   "gladBiodiversity": {
+    "title": "Deforestation Alerts in Biodiversity Areas",
+    "config": {
+      "size": "small",
+      "indicators": [
+        "kba", "aze", "wdpa"
+      ],
+      "units": ["ha", "%"],
+      "categories": ["conservation"],
+      "admins": ["country", "region"],
+      "selectors": ["indicators", "thresholds", "units", "extentYears", "weeks"],
+      "metaKey": "widget_deforestation_alert_location_biodiversity",
+      "locationCheck": true,
+      "type": "loss",
+      "layers": ["umd_as_it_happens"],
+      "sortOrder": {
+        "summary": 6,
+        "forest-change": 4
+      }
+    },
+    "settings": {
+      "indicator": "kba",
+      "threshold": 30,
+      "extentYear": 2000,
+      "unit": "ha",
+      "weeks": 4,
+      "pageSize": 5,
+      "page": 0,
+      "layers": ["umd_as_it_happens"]
+    },
+    "enabled": true
+  },
+  "gladRanked": {
     "title": "Deforestation Alerts",
     "config": {
       "size": "small",
       "indicators": ["gadm28", "ifl_2013", "wdpa",
-                      "kba", "aze",
-                      "tcl"],
+        "kba", "aze",
+        "tcl"],
       "units": ["ha", "%"],
-      "categories": ["forest-change", "conservation"],
+      "categories": ["forest-change"],
       "admins": ["country", "region"],
       "selectors": ["indicators", "thresholds", "units", "extentYears", "weeks"],
+      "metaKey": "widget_deforestation_alert_location",
       "locationCheck": true,
       "type": "loss",
       "layers": ["umd_as_it_happens"],

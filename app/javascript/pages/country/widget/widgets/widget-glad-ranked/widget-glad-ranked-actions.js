@@ -6,16 +6,16 @@ import moment from 'moment';
 import { fetchGladIntersectionAlerts } from 'services/alerts';
 import { getMultiRegionExtent } from 'services/forest-data';
 
-const setGladBiodiversityData = createAction('setGladBiodiversityData');
-const setGladBiodiversityPage = createAction('setGladBiodiversityPage');
-const setGladBiodiversitySettings = createAction('setGladBiodiversitySettings');
-const setGladBiodiversityLoading = createAction('setGladBiodiversityLoading');
+const setGladRankedData = createAction('setGladRankedData');
+const setGladRankedPage = createAction('setGladRankedPage');
+const setGladRankedSettings = createAction('setGladRankedSettings');
+const setGladRankedLoading = createAction('setGladRankedLoading');
 
-const getGladBiodiversity = createThunkAction(
-  'getGladBiodiversity',
+const getGladRanked = createThunkAction(
+  'getGladRanked',
   params => (dispatch, state) => {
-    if (!state().widgetGladBiodiversity.loading) {
-      dispatch(setGladBiodiversityLoading({ loading: true, error: false }));
+    if (!state().widgetGladRanked.loading) {
+      dispatch(setGladRankedLoading({ loading: true, error: false }));
       axios
         .all([
           fetchGladIntersectionAlerts({ ...params }),
@@ -33,7 +33,7 @@ const getGladBiodiversity = createThunkAction(
                 )
               );
             dispatch(
-              setGladBiodiversityData(
+              setGladRankedData(
                 alertsByDate && extent
                   ? { data: alertsByDate, extent: areas }
                   : {}
@@ -43,16 +43,16 @@ const getGladBiodiversity = createThunkAction(
         )
         .catch(error => {
           console.info(error);
-          dispatch(setGladBiodiversityLoading({ loading: false, error: true }));
+          dispatch(setGladRankedLoading({ loading: false, error: true }));
         });
     }
   }
 );
 
 export default {
-  setGladBiodiversityData,
-  setGladBiodiversityPage,
-  setGladBiodiversitySettings,
-  setGladBiodiversityLoading,
-  getGladBiodiversity
+  setGladRankedData,
+  setGladRankedPage,
+  setGladRankedSettings,
+  setGladRankedLoading,
+  getGladRanked
 };
