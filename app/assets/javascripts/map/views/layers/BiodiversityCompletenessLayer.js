@@ -8,11 +8,12 @@ define(
   [
     'underscore',
     'd3',
+    'chroma-js',
     'uri',
     'abstract/layer/CanvasLayerClass',
     'map/presenters/layers/BiodiversityCompletenessLayerPresenter'
   ],
-  function(_, d3, UriTemplate, CanvasLayerClass, Presenter) {
+  function(_, d3, chroma, UriTemplate, CanvasLayerClass, Presenter) {
     'use strict';
 
     var BiodiversityCompleteness = CanvasLayerClass.extend({
@@ -40,12 +41,26 @@ define(
           .exponent(exp)
           .domain([0, 256])
           .range([0, 256]);
-
+        var scale = chroma
+          .scale([
+            '#6D00E1',
+            '#9D36F7',
+            '#C26DFE',
+            '#DFA4FF',
+            '#ECCAFC',
+            '#F8EBFF'
+          ])
+          .domain([0, 255]);
         for (var i = 0; i < w; ++i) {
           for (var j = 0; j < h; ++j) {
             //maps over square
             var pixelPos = (j * w + i) * components;
             var intensity = imgdata[pixelPos + 1];
+
+            var tmp_rgb = scale(intensity).rgb();
+            imgdata[pixelPos] = tmp_rgb[0];
+            imgdata[pixelPos + 1] = tmp_rgb[1];
+            imgdata[pixelPos + 2] = tmp_rgb[2];
 
             imgdata[pixelPos + 3] =
               zoom < 13 ? myscale(intensity) * 256 : intensity * 256;
