@@ -8,11 +8,11 @@ var AnalysisServiceResponse = {
       "world": "http://localhost/nasa-active-fires{?period,geojson,download,bust,dev}"
     },
     "download_urls": {
-      "csv": "http://wri-01.cartodb.com/api/v2/sql?q=TODO&format=csv",
-      "geojson": "http://wri-01.cartodb.com/api/v2/sql?q=TODO&format=geojson",
-      "kml": "http://wri-01.cartodb.com/api/v2/sql?q=TODO&format=kml",
-      "shp": "http://wri-01.cartodb.com/api/v2/sql?q=TODO&format=shp",
-      "svg": "http://wri-01.cartodb.com/api/v2/sql?q=TODO&format=svg"
+      "csv": "https://wri-01.carto.com/api/v2/sql?q=TODO&format=csv",
+      "geojson": "https://wri-01.carto.com/api/v2/sql?q=TODO&format=geojson",
+      "kml": "https://wri-01.carto.com/api/v2/sql?q=TODO&format=kml",
+      "shp": "https://wri-01.carto.com/api/v2/sql?q=TODO&format=shp",
+      "svg": "https://wri-01.carto.com/api/v2/sql?q=TODO&format=svg"
     },
     "meta": {
       "coverage": "Global",

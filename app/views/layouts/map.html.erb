@@ -19,12 +19,12 @@
 
     <link rel="canonical" href="<%= request.original_url %>" />
 
-    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,500,300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Fira+Sans:400,500,300' rel='stylesheet' type='text/css'>
 
     <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
     <%= render 'shared/icons' %>
-    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
+    <%= stylesheet_link_tag "https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css", :media => 'all' %>
     <%= stylesheet_link_tag "map", :media => "all" %>
     <%= csrf_meta_tags %>
 
@@ -48,7 +48,7 @@
     <%= render 'shared/notifications' %>
 
     <%= render 'shared/google_carto' %>
-    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.mod.torque.js" %>
+    <%= javascript_include_tag "https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.mod.torque.js" %>
     <script src="//www.google-analytics.com/cx/api.js"></script>
 
     <%= requirejs_include_tag "map" %>

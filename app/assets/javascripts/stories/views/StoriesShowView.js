@@ -87,7 +87,7 @@ define([
       var coords = this.story.get('lat') + ',' + this.story.get('lng'),
           marker = '&markers=icon:'+window.gfw.config.AWS_HOST+'/marker_exclamation.png%7C'+coords;
 
-      return 'http://maps.google.com/maps/api/staticmap?center='+coords+'&zoom=5&size=1600x500'+marker+'&maptype=terrain&sensor=false&scale=2';
+      return 'https://maps.google.com/maps/api/staticmap?center='+coords+'&zoom=5&size=1600x500'+marker+'&maptype=terrain&sensor=false&scale=2';
     },
 
     getMedia: function() {

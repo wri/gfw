@@ -14,7 +14,7 @@ define([
 
     requestId: 'MongabayStoryService',
 
-    url: 'https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabay &format=json',
+    url: 'https://wri-01.carto.com/api/v2/sql?q=SELECT * FROM mongabay &format=json',
 
     /**
      * Constructs a new instance of StoryService.

@@ -24,7 +24,7 @@ define([
       var threshold = (this.helper.config.canopy_choice) ? this.helper.config.canopy_choice : 30;
       var layers = {
         'forest2000': {
-          url: 'http://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_' + threshold + '_2014/%z/%x/%y.png',
+          url: 'https://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_' + threshold + '_2014/%z/%x/%y.png',
           dataMaxZoom: 12,
           tileSize: [256, 256],
           _filterCanvasImage: function(imageData, w, h) {

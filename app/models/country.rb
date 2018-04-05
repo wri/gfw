@@ -5,7 +5,7 @@ class Country
     end
 
     def find_all
-      url = "#{ENV['GFW_API_HOST']}/countries"
+      url = "#{ENV['GFW_API_HOST_HTTP']}/countries"
       response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
       if response.success?
         JSON.parse(response.body)['countries']

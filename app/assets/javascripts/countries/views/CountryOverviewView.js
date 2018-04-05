@@ -235,7 +235,7 @@ define([
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
         }
-        d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
 
@@ -324,7 +324,7 @@ define([
           sql += ' LIMIT 10 ';
         }
 
-        d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
           var self = that,
               markup_list = '';
 
@@ -400,7 +400,7 @@ define([
           sql += ' LIMIT 10 ';
         }
 
-        d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
           var self = that,
               markup_list = '';
 
@@ -469,7 +469,7 @@ define([
           sql += ' LIMIT 10 ';
         }
 
-        d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
 
@@ -509,7 +509,7 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
         var sql = "SELECT ecozone as name, sum(loss) as total_loss, SUM(gain)/COUNT(gain) as total_gain FROM umd_eco_2014 where thresh = "+ (this.helper.config.canopy_choice || 30) +" and ecozone !='Water' and ecozone != 'Polar' group by ecozone";
-        d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
           var data = json.rows;
@@ -566,7 +566,7 @@ define([
 
       if (this.model.get('graph') === ('total_loss')) {
         var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain)/COUNT(gain) gain FROM umd_nat_staging WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2017 GROUP BY iso, year ORDER BY year';
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, function(json) {
           var data = json.rows;
 
           var data_ = data,
@@ -595,7 +595,7 @@ define([
                   WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' \
                          AND iso = \''+ iso +'\'';
 
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
           var data = json.rows;
 
           var data_ = data;
@@ -627,7 +627,7 @@ define([
                          AND iso = \''+ iso +'\' \
                          AND year > 2000 AND year < 2015';
 
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, function(json) {
 
           var graph2 = d3.select('.countries_list__minioverview_'+iso)
             .append('div')
@@ -822,7 +822,7 @@ define([
         if (!!mode && mode.mode == 'percent') {
           sql = 'SELECT year, Sum(loss) / Sum(extent_2000) loss FROM umd_nat_staging WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 AND year < 2017 GROUP BY year ORDER BY year ';
         }
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), _.bind(function(error, json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql?q='+encodeURIComponent(sql), _.bind(function(error, json) {
           var data = json.rows;
 
           var data_ = data;
@@ -897,7 +897,7 @@ define([
           query = 'WITH g AS (SELECT gain, extent_2000, land, country, iso FROM umd_nat_staging WHERE year = 2001 AND thresh = ' + (this.helper.config.canopy_choice || 30) + ' AND gain IS NOT NULL) SELECT ROUND(sum(gain)/sum(extent_2000) * 100, 2) as sum FROM g WHERE NOT extent_2000 = 0 ';
         }
         $.ajax({
-              url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+              url: 'https://wri-01.carto.com/api/v2/sql?q=' + query,
               dataType: 'json',
               success: _.bind(function(data) {
                 var gain = data.rows[0].sum;
@@ -920,7 +920,7 @@ define([
             query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_staging WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +'';
           }
         $.ajax({
-              url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+              url: 'https://wri-01.carto.com/api/v2/sql?q=' + query,
               dataType: 'json',
               success: _.bind(function(data) {
                 var extent = data.rows[0].sum;
@@ -1016,7 +1016,7 @@ define([
                     AND      e.iso = u.iso  \
                     ORDER BY u.sum_loss DESC limit 50 ';
 
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
           var data = json.rows;
 
           var log_m = 50;
@@ -1181,7 +1181,7 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         this._showYears();
         var sql = "SELECT ecozone as name, sum(loss), year FROM umd_eco_2014 where thresh = " + (this.helper.config.canopy_choice || 30) + " and ecozone !='Water' and ecozone != 'Polar' group by name, year";
-        d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
+        d3.json('https://wri-01.carto.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var data = _.groupBy(_.sortBy(json.rows, function(row){ return row.year}), function(row){
             return row.name;
           });

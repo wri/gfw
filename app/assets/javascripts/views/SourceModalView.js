@@ -123,7 +123,7 @@ define([
 
       if (data.amazon_link) {
         // var file = encodeURIComponent(data.sql_api + '&format=geojson').replace(/%20/g, "%2520");
-        // data.open_in_carto = 'http://oneclick.cartodb.com?file='+encodeURIComponent(data.amazon_link);
+        // data.open_in_carto = 'http://oneclick.carto.com?file='+encodeURIComponent(data.amazon_link);
       }
 
       if (data.map_service) {

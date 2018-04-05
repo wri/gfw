@@ -12,7 +12,7 @@ define([
   var Terra_iLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: 'http://www.terra-i.org/latin-america/Z{z}/{y}/{x}.png',
+      urlTemplate: 'https://www.terra-i.org/latin-america/Z{z}/{y}/{x}.png',
       dataMaxZoom: 8
     }
 

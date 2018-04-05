@@ -45,7 +45,7 @@ var layers = {
     "xmin": null,
     "ymax": null,
     "ymin": null,
-    "tileurl": "http://earthengine.google.org/static/hansen_2013/gain_alpha/{Z}/{X}/{Y}.png",
+    "tileurl": "https://earthengine.google.org/static/hansen_2013/gain_alpha/{Z}/{X}/{Y}.png",
     "visible": true,
     "position": 0
   },
@@ -70,7 +70,7 @@ var layers = {
     "xmin": null,
     "ymax": null,
     "ymin": null,
-    "tileurl": "https://wri-01.cartodb.com/tiles/global_7d/{Z}/{X}/{Y}.png",
+    "tileurl": "https://wri-01.carto.com/tiles/global_7d/{Z}/{X}/{Y}.png",
     "visible": true,
     "position": 0,
     "detailsTpl": "<div class=\"layer-details layer-details-fires\">\n  <a href=\"http://fires.globalforestwatch.org/\" target=\"_blank\" class=\"gfw-fires-link\">Check out <span>GFW FIRES</span></a>\n</div>\n"
@@ -144,7 +144,7 @@ var layers = {
     "xmin": null,
     "ymax": null,
     "ymin": null,
-    "tileurl": "https://wri-01.cartodb.com/tiles/logging_gcs_wgs84/{Z}/{X}/{Y}.png",
+    "tileurl": "https://wri-01.carto.com/tiles/logging_gcs_wgs84/{Z}/{X}/{Y}.png",
     "visible": true
   },
   "mining": {
@@ -168,7 +168,7 @@ var layers = {
     "xmin": 12.275,
     "ymax": 5.166667,
     "ymin": -13.45,
-    "tileurl": "https://wri-01.cartodb.com/tiles/cod_mc_4/{Z}/{X}/{Y}.png",
+    "tileurl": "https://wri-01.carto.com/tiles/cod_mc_4/{Z}/{X}/{Y}.png",
     "visible": true
   }
 };
