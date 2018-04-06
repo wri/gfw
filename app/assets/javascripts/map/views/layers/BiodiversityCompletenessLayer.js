@@ -20,7 +20,7 @@ define(
       options: {
         dataMaxZoom: 12,
         urlTemplate:
-          'https://storage.googleapis.com/wri-public/biodiversity/significance/all/loss/v1{/z}{/x}{/y}.png'
+          'https://storage.googleapis.com/wri-public/biodiversity/significance/all/remaining/v1{/z}{/x}{/y}.png'
       },
 
       init: function(layer, options, map) {
