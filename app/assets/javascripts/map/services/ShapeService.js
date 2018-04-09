@@ -10,12 +10,12 @@ define([
   var GET_REQUEST_ID = 'ShapeService:get';
 
   var SQL = {
-    'protected_areas' : 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_protected_areas where wdpaid ={id}',
-    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_logging where cartodb_id ={id}',
-    'mining':'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_mining where cartodb_id ={id}',
-    'oilpalm': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_oil_palm where cartodb_id ={id}',
-    'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_wood_fiber where cartodb_id ={id}',
-    'default': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from {slug} where cartodb_id ={id}'
+    'protected_areas' : 'https://wri-01.carto.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_protected_areas where wdpaid ={id}',
+    'logging': 'https://wri-01.carto.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_logging where cartodb_id ={id}',
+    'mining':'https://wri-01.carto.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_mining where cartodb_id ={id}',
+    'oilpalm': 'https://wri-01.carto.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_oil_palm where cartodb_id ={id}',
+    'fiber': 'https://wri-01.carto.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_wood_fiber where cartodb_id ={id}',
+    'default': 'https://wri-01.carto.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from {slug} where cartodb_id ={id}'
   };
 
 

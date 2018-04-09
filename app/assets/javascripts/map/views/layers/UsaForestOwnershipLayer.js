@@ -12,7 +12,7 @@ define([
   var UsaForestOwnershipLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: 'http://s3.amazonaws.com/wri-tiles/usa_forest_ownership{/z}{/x}{/y}.png',
+      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/usa_forest_ownership{/z}{/x}{/y}.png',
       dataMaxZoom: 12
     }
 

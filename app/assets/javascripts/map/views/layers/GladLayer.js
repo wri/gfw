@@ -12,7 +12,7 @@ define([
 
   'use strict';
   var env = window.gfw.config.FEATURE_ENV === 'staging' ? 'staging' : 'prod';
-  var TILE_URL = `http://wri-tiles.s3.amazonaws.com/glad_${env}/tiles{/z}{/x}{/y}.png`;
+  var TILE_URL = `https://wri-tiles.s3.amazonaws.com/glad_${env}/tiles{/z}{/x}{/y}.png`;
   var START_DATE = '2015-01-01';
 
   var padNumber = function(number) {

@@ -46,7 +46,7 @@ var baselayers = {
     "xmin": null,
     "ymax": null,
     "ymin": null,
-    "tileurl": "http://earthengine.google.org/static/hansen_2013/gain_alpha/{Z}/{X}/{Y}.png",
+    "tileurl": "https://earthengine.google.org/static/hansen_2013/gain_alpha/{Z}/{X}/{Y}.png",
     "visible": true,
     "position": 0,
     "detailsTpl": "\n  <div class=\"layer-details\">\n    \n  </div>\n\n"

@@ -6,7 +6,7 @@ define([
   'use strict';
 
   var REQUEST_ID = 'CartoDbNamedMapService:fetchLayerMap';
-  var URL = 'https://wri-01.cartodb.com/api/v1/map/named/';
+  var URL = 'https://wri-01.carto.com/api/v1/map/named/';
 
   var CartoDbNamedMapService = Class.extend({
 

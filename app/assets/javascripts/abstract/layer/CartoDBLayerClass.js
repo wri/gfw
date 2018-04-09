@@ -49,7 +49,7 @@ define([
         }]
       };
 
-      cartodb.createLayer(this.map, cartodbOptions)
+      cartodb.createLayer(this.map, cartodbOptions, { https: true })
         .on('done',
           _.bind(function(layer) {
             this.cdbLayer = layer;

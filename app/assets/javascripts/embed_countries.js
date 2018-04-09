@@ -216,7 +216,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
                                     FROM countries_gain) as gain\
               FROM loss_gt_0';
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, function(error, json) {
         var data = json.rows[0];
 
         var data_ = [],
@@ -396,7 +396,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
               FROM countries_gain) as gain\
               FROM loss, extent';
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows[0];
 
         var data_ = [],
@@ -579,7 +579,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
               FROM loss_gt_25 loss, extent_gt_25 extent\
               WHERE loss.iso = extent.iso';
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows[0];
 
         var data_ = [],
@@ -789,7 +789,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
                 WHERE ratio IS NOT null\
                 ORDER BY ratio DESC';
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
 
         var log_m = 50;
@@ -964,7 +964,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
       sql += 'y2012) as max\
               FROM countries_domains';
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, function(error, json) {
         var data = json.rows;
 
         var r_scale = d3.scale.linear()
@@ -1267,7 +1267,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
                "ORDER BY date_trunc('month', date) ASC"].join(' ');
 
     if (type === 'lines') {
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, function(json) {
         if(json && json.rows.length > 0) {
           $graph.removeClass('ghost');
           $action.removeClass('disabled');
@@ -1347,7 +1347,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
         sql += "year, extent_gt_25 extent FROM umd WHERE iso='"+options.iso+"'";
       }
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, function(json) {
         if(json) {
           $graph.removeClass('ghost');
 
@@ -1409,7 +1409,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
     } else if (type === 'comp') {
       var sql = "SELECT iso, sum(umd.loss_gt_0) loss, max(umd.gain) gain FROM umd WHERE iso='"+options.iso+"' GROUP BY iso";
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         if(json) {
           $graph.removeClass('ghost');
 

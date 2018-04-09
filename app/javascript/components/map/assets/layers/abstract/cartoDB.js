@@ -40,7 +40,7 @@ class CartoDB extends Overlay {
 
     return new Promise(resolve => {
       cartodb // eslint-disable-line
-        .createLayer(this.map, cartodbOptions)
+        .createLayer(this.map, cartodbOptions, { https: true })
         .on('done', layer => {
           resolve(layer);
         });

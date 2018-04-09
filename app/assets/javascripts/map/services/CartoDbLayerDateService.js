@@ -6,7 +6,7 @@ define([
   'use strict';
 
   var REQUEST_ID = 'CartoDbLayerDateService:fetchLayerDates';
-  var URL = 'https://wri-01.cartodb.com/api/v2/sql{?q}';
+  var URL = 'https://wri-01.carto.com/api/v2/sql{?q}';
 
   var CartoDbLayerDateService = Class.extend({
 
