@@ -41,7 +41,7 @@ class EmbedController < ApplicationController
     def find_by_name(country_name)
       country_name, *rest = country_name.split(/_/)
       country_name = country_name.capitalize!
-      response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'",
+      response = Typhoeus.get("https://wri-01.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'",
         headers: {"Accept" => "application/json"}
         )
       if response.success?

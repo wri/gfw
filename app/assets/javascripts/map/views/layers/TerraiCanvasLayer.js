@@ -12,7 +12,7 @@ define([
 
   'use strict';
 
-  var TILE_URL = 'http://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png';
+  var TILE_URL = 'https://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png';
   var START_DATE = '2004-01-01';
   var START_YEAR = 2004;
 

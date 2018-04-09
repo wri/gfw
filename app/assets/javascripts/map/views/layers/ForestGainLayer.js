@@ -13,7 +13,7 @@ define([
 
     options: {
       dataMaxZoom: 12,
-      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gain_alpha{/z}{/x}{/y}.png'
+      urlTemplate: 'https://earthengine.google.org/static/hansen_2013/gain_alpha{/z}{/x}{/y}.png'
     }
 
   });

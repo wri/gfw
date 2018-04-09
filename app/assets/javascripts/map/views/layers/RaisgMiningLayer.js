@@ -22,7 +22,7 @@ define([
     wmsUrl += '&TRANSPARENT=true';
     wmsUrl += '&HEIGHT=256';
     wmsUrl += '&WIDTH=256';
-    wmsUrl += '&SLD=http://gfw-nav.herokuapp.com/assets/map/cartocss/raisg_mining.xml';
+    wmsUrl += '&SLD=https://gfw-nav.herokuapp.com/assets/map/cartocss/raisg_mining.xml';
     wmsUrl += '&CRS=EPSG%3A3857';
 
 

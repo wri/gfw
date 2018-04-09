@@ -13,8 +13,8 @@ define([
 
   'use strict';
 
-  var SENTINEL_URL = 'http://services.sentinel-hub.com/v1/{provider}/9f85dfae-bf90-4638-81d3-dc9925dd5b26/';
-  var LANDSAT_URL = 'http://services-uswest2.sentinel-hub.com/v1/{provider}/0e8c6cde-ff77-4e38-aba8-33b171896972/';
+  var SENTINEL_URL = 'https://services.sentinel-hub.com/v1/{provider}/9f85dfae-bf90-4638-81d3-dc9925dd5b26/';
+  var LANDSAT_URL = 'https://services-uswest2.sentinel-hub.com/v1/{provider}/0e8c6cde-ff77-4e38-aba8-33b171896972/';
   var TILE_SIZE = 256;
   var MAX_ZOOM = 9;
 

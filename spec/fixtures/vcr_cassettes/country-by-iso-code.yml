@@ -68,10 +68,10 @@ http_interactions:
         "value": 0}], "forests": [{"percent": 0, "type": "forest_regenerated"}, {"percent":
         100, "type": "forest_primary"}, {"percent": 0, "type": "forest_planted"}],
         "forma": [], "gva": 7069.9499999999998, "gva_percent": 1.5600000000000001,
-        "ifl": ["respond", {"download_urls": {"csv": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=csv",
-        "geojson": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=geojson",
-        "kml": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=kml", "shp": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=shp",
-        "svg": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=svg"}, "params":
+        "ifl": ["respond", {"download_urls": {"csv": "https://wri-01.carto.com/api/v2/sql?q=None&format=csv",
+        "geojson": "https://wri-01.carto.com/api/v2/sql?q=None&format=geojson",
+        "kml": "https://wri-01.carto.com/api/v2/sql?q=None&format=kml", "shp": "https://wri-01.carto.com/api/v2/sql?q=None&format=shp",
+        "svg": "https://wri-01.carto.com/api/v2/sql?q=None&format=svg"}, "params":
         {"ifl": false, "iso": "pol", "table": "stories_dev_copy", "thresh": "30"}}],
         "indepth": "", "iso": "POL", "lat": 52.127595700000001, "lng": 19.39012834,
         "loss_outside_plantations": [], "ministry_link": "http://www.mos.gov.pl/?j=en",

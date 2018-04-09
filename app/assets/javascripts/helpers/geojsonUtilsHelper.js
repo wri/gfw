@@ -93,7 +93,7 @@ define([
       // changed function to calculate areas in cartodb instead of using the google library
 
       // var area;
-      // var theurl="http://wri-01.cartodb.com/api/v2/sql";
+      // var theurl="https://wri-01.carto.com/api/v2/sql";
       // var thequery="select st_area(st_geomfromgeojson('"+JSON.stringify(geojson)+"')::geography)/10000 as area_ha";
       // $.ajax({
       //    url: theurl,

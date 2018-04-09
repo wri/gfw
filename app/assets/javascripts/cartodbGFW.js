@@ -20978,8 +20978,8 @@ if(!window.JSON) {
 
     cdb.config = new Config();
     cdb.config.set({
-      cartodb_attributions: "CartoDB <a href='http://cartodb.com/attributions' target='_blank'>attribution</a>",
-      cartodb_logo_link: "http://www.cartodb.com"
+      cartodb_attributions: "CartoDB <a href='http://carto.com/attributions' target='_blank'>attribution</a>",
+      cartodb_logo_link: "http://www.carto.com"
     });
 
 })();
@@ -21916,10 +21916,10 @@ cdb.geo.CartoDBLayer = cdb.geo.MapLayer.extend({
     interactivity: null,
     interaction: true,
     debug: false,
-    tiler_domain: "cartodb.com",
+    tiler_domain: "carto.com",
     tiler_port: "80",
     tiler_protocol: "http",
-    sql_api_domain: "cartodb.com",
+    sql_api_domain: "carto.com",
     sql_api_port: "80",
     sql_api_protocol: "http",
     extra_params: {},
@@ -28119,9 +28119,9 @@ LayerDefinition.prototype = _.extend({}, Map.prototype, {
     var domain = attrs.sql_api_domain + (port ? ':' + port: '')
     var protocol = attrs.sql_api_protocol;
     var version = 'v1';
-    if (domain.indexOf('cartodb.com') !== -1) {
+    if (domain.indexOf('carto.com') !== -1) {
       //protocol = 'http';
-      domain = "cartodb.com";
+      domain = "carto.com";
       version = 'v2';
     }
 
@@ -28820,10 +28820,10 @@ L.CartoDBGroupLayerBase = L.TileLayer.extend({
     debug:          false,
     visible:        true,
     added:          false,
-    tiler_domain:   "cartodb.com",
+    tiler_domain:   "carto.com",
     tiler_port:     "80",
     tiler_protocol: "http",
-    sql_api_domain:     "cartodb.com",
+    sql_api_domain:     "carto.com",
     sql_api_port:       "80",
     sql_api_protocol:   "http",
     maxZoom: 30, // default leaflet zoom level for a layers is 18, raise it
@@ -29998,10 +29998,10 @@ var default_options = {
   debug:          false,
   visible:        true,
   added:          false,
-  tiler_domain:   "cartodb.com",
+  tiler_domain:   "carto.com",
   tiler_port:     "80",
   tiler_protocol: "http",
-  sql_api_domain:     "cartodb.com",
+  sql_api_domain:     "carto.com",
   sql_api_port:       "80",
   sql_api_protocol:   "http",
   extra_params:   {
@@ -32776,9 +32776,9 @@ var Vis = cdb.core.View.extend({
     var domain = attrs.sql_api_domain + (port ? ':' + port: '')
     var protocol = attrs.sql_api_protocol;
     var version = 'v1';
-    if (domain.indexOf('cartodb.com') !== -1) {
+    if (domain.indexOf('carto.com') !== -1) {
       protocol = 'http';
-      domain = "cartodb.com";
+      domain = "carto.com";
       version = 'v2';
     }
 
@@ -33773,7 +33773,7 @@ Layers.register('namedmap', function(vis, data) {
 Layers.register('torque', function(vis, data) {
   // default is https
   if(vis.https) {
-    if(data.sql_api_domain && data.sql_api_domain.indexOf('cartodb.com') !== -1) {
+    if(data.sql_api_domain && data.sql_api_domain.indexOf('carto.com') !== -1) {
       data.sql_api_protocol = 'https';
       data.sql_api_port = 443;
       data.tiler_protocol = 'https';
@@ -33812,7 +33812,7 @@ Layers.register('torque', function(vis, data) {
    * compose cartodb url
    */
   function cartodbUrl(opts) {
-    var host = opts.host || 'cartodb.com';
+    var host = opts.host || 'carto.com';
     var protocol = opts.protocol || 'https';
     return protocol + '://' + opts.user + '.' + host + '/api/v1/viz/' + opts.table + '/viz.json';
   }
@@ -34045,7 +34045,7 @@ Layers.register('torque', function(vis, data) {
     if(opts && opts.completeDomain) {
       return opts.completeDomain + '/api/' +  opts.version + '/sql'
     } else {
-      var host = opts.host || 'cartodb.com';
+      var host = opts.host || 'carto.com';
       var protocol = opts.protocol || 'https';
 
       return protocol + '://' + opts.user + '.' + host + '/api/' +  opts.version + '/sql';
