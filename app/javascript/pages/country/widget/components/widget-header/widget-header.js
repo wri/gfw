@@ -20,9 +20,9 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
     location.payload.region ? `/${location.payload.region}` : ''
   }${location.payload.subRegion ? `/${location.payload.subRegion}` : ''}`;
 
-  const embedUrl = `${
-    window.location.origin
-  }/country/embed/${widget}/${locationUrl}${
+  const embedUrl = `${window.location.origin}/country/embed/${widget}/${
+    locationUrl
+  }${
     location.query && location.query[widget]
       ? `?${widget}=${location.query[widget]}`
       : ''
@@ -42,9 +42,11 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
       subtitle: `${title} in ${
         locationNames.current ? locationNames.current.label : ''
       }`,
-      shareUrl: `http://${
-        window.location.host
-      }/country/${locationUrl}?widget=${widget}${
+      shareUrl: `http://${window.location.host}/country/${locationUrl}?${
+        location.query && location.query.category
+          ? `category=${location.query.category}&`
+          : ''
+      }widget=${widget}${
         location.query && location.query[widget]
           ? `&${widget}=${location.query[widget]}`
           : ''
