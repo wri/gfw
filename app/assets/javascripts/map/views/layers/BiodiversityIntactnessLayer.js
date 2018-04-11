@@ -51,7 +51,7 @@ define(
             '#9D36F7',
             '#6D00E1'
           ])
-          .domain([0, 100]);
+          .domain([0, 36, 55, 75, 95, 100]);
 
         for (var i = 0; i < w; ++i) {
           for (var j = 0; j < h; ++j) {

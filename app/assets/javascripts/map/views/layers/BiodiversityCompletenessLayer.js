@@ -51,7 +51,7 @@ define(
             '#9D36F7',
             '#6D00E1'
           ])
-          .domain([0, 255]);
+          .domain([0, 22, 64, 119, 171, 255]);
         for (var i = 0; i < w; ++i) {
           for (var j = 0; j < h; ++j) {
             //maps over square
