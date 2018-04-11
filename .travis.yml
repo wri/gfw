@@ -1,4 +1,11 @@
-language: ruby
-rvm:
-- 2.4.0
-script: npm run cypress:open
+language: node_js
+node_js:
+  - 8.10.0
+cache:
+  directories:
+    - ~/.npm
+    - node_modules
+install:
+  - npm install
+script:
+  - $(npm bin)/cypress run --record
