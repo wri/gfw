@@ -11,13 +11,14 @@
     "webpack": "./bin/webpack",
     "foreman": "foreman start",
     "start": "./bin/server",
-    "test": "./bin/server cypress run",
+    "test": "cy:run",
     "server": "./bin/webpack-dev-server",
     "lint": "eslint --ext js --ext jsx .",
     "precommit": "lint-staged",
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
     "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
-    "cypress:open": "cypress open"
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "repository": {
     "type": "git",
