@@ -15,7 +15,8 @@
     "lint": "eslint --ext js --ext jsx .",
     "precommit": "lint-staged",
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
-    "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page"
+    "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "babel-preset-stage-3": "6.24.1",
     "compression-webpack-plugin": "1.0.0",
     "css-loader": "0.28.5",
+    "cypress": "^2.1.0",
     "eslint": "4.6.1",
     "eslint-config-prettier": "2.4.0",
     "eslint-config-vizzuality": "1.0.5",
