@@ -1,11 +1,10 @@
-language: node_js
+before_install:
+  - rvm use 2.4.0
+  - gem install bundler
+  - bundle install
 node_js:
   - 8.10.0
-cache:
-  directories:
-    - ~/.npm
-    - node_modules
 install:
   - npm install
 script:
-  - $(npm bin)/cypress run --record
+  - npm test
