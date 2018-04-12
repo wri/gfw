@@ -15,5 +15,8 @@ cache:
 install:
   - bundle install && npm install
 
+before_script:
+  - npm run prod-server -- --silent
+
 script:
   - npm run ci
