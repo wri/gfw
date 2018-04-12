@@ -15,8 +15,5 @@ cache:
 install:
   - bundle install && npm install
 
-before_script:
-  - npm run prod-server -- --silent &
-
 script:
-  - $(npm bin)/cypress run --record
+  - npm run ci
