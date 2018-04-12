@@ -9,17 +9,15 @@
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",
     "webpack": "./bin/webpack",
-    "foreman": "foreman start",
     "start": "./bin/server",
-    "test": "npx cypress run",
     "prod-server": "bundle exec foreman start -f Procfile",
     "server": "./bin/webpack-dev-server",
     "lint": "eslint --ext js --ext jsx .",
     "precommit": "lint-staged",
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
     "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open"
+    "test": "$(npm bin)/cypress run",
+    "test:open": "$(npm bin)/cypress open"
   },
   "repository": {
     "type": "git",
