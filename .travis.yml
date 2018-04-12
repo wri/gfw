@@ -32,7 +32,7 @@ before_script:
   ## travis to run this process in the background
   ## else it would block execution and hang travis
 
-  - npm start -- --silent &
+  - npm run prod-server -- --silent &
 
 script:
   ## now run cypress headlessly
@@ -41,7 +41,7 @@ script:
   ## CYPRESS_RECORD_KEY environment
   ## variable by default and apply
   ## this to the run.
-  - $(npm bin)/cypress run --record
+  - $(npm bin)/cypress run
 
   ## alternatively we could specify
   ## a specific record key to use
