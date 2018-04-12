@@ -11,15 +11,14 @@
     "webpack": "./bin/webpack",
     "start": "./bin/server",
     "prod-server": "bundle exec foreman start -f Procfile",
-    "start-prod-server": "npm run prod-server -- --silent &",
-    "ci": "npm run test:record",
+    "ci": "start-server-and-test prod-server http://localhost:5000 test-record",
     "server": "./bin/webpack-dev-server",
     "lint": "eslint --ext js --ext jsx .",
     "precommit": "lint-staged",
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
     "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
     "test": "$(npm bin)/cypress run",
-    "test:record": "$(npm bin)/cypress run --record",
+    "test-record": "$(npm bin)/cypress run --record",
     "test:open": "$(npm bin)/cypress open"
   },
   "repository": {
