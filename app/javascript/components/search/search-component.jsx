@@ -7,7 +7,7 @@ import debounce from 'lodash/debounce';
 import searchIcon from 'assets/icons/search.svg';
 import closeIcon from 'assets/icons/close.svg';
 import './search-styles.scss';
-import 'styles/themes/search/search-light.scss'; // eslint-disable-line
+import './themes/search-light.scss'; // eslint-disable-line
 
 class Search extends Component {
   constructor(props) {

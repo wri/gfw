@@ -4,7 +4,7 @@ import { Link as AnchorLink } from 'react-scroll';
 import { NavLink } from 'redux-first-router-link';
 
 import './subnav-menu-styles.scss';
-import 'styles/themes/subnav/subnav-dark.scss'; // eslint-disable-line
+import './themes/subnav-dark.scss'; // eslint-disable-line
 
 class SubNavMenu extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
