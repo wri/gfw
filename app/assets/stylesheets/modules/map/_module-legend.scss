@@ -734,16 +734,16 @@
       border: 1px solid #ccc;
       border-radius: 10px;
       background: #FFFFD4;
-      background: -moz-linear-gradient(left, #F8EBFF 0%, #ECCAFC 25%, #DFA4FF 50%, #C26DFE 75%, #6D00E1 100%);
-      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#F8EBFF),color-stop(25%,#ECCAFC),color-stop(50%,#DFA4FF), color-stop(75%,#C26DFE), color-stop(100%,#6D00E1));
-      background: -webkit-linear-gradient(left, #F8EBFF 0%, #ECCAFC 35%, #DFA4FF 75%, #C26DFE 100%);
-      background: -o-linear-gradient(left, #F8EBFF 0%, #ECCAFC 25%, #DFA4FF 50%, #C26DFE 75%, #6D00E1 100%);
-      background: -ms-linear-gradient(left, #F8EBFF 0%, #ECCAFC 25%, #DFA4FF 50%, #C26DFE 75%, #6D00E1 100%);
-      background: linear-gradient(to right, #F8EBFF 0%, #ECCAFC 25%, #DFA4FF 50%, #C26DFE 75%, #6D00E1 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F8EBFF', endColorstr='#6D00E1', GradientType=1);
-      background-image: -ms-linear-gradient(lleft, #F8EBFF 0%, #ECCAFC 25%, #DFA4FF 50%, #C26DFE 75%, #6D00E1 100%);
+      background: -moz-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#F8EBFF),color-stop(20%,#ECCAFC),color-stop(40%,#DFA4FF), color-stop(60%,#C26DFE), color-stop(80%,#6D00E1) color-stop(100%,#3C00AB));
+      background: -webkit-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: -o-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: -ms-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: linear-gradient(to right, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F8EBFF', endColorstr='#3C00AB', GradientType=1);
+      background-image: -ms-linear-gradient(lleft, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
     }
-  }
+  }//3C00AB
 
   /***************************/
   /* Forest2000Layer details */

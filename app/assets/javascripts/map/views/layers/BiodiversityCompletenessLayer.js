@@ -49,9 +49,11 @@ define(
             '#DFA4FF',
             '#C26DFE',
             '#9D36F7',
-            '#6D00E1'
+            '#6D00E1',
+            '#3C00AB'
           ])
-          .domain([0, 22, 64, 119, 171, 255]);
+          .domain([0, 40, 84, 119, 140, 175, 255]);
+
         for (var i = 0; i < w; ++i) {
           for (var j = 0; j < h; ++j) {
             //maps over square
