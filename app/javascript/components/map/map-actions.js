@@ -6,6 +6,7 @@ const setLayerSpecLoading = createAction('setLayerSpecLoading');
 const setLayerSpec = createAction('setLayerSpec');
 const setMapSettings = createAction('setMapSettings');
 const setMapZoom = createAction('setMapZoom');
+const setShowMapMobile = createAction('setShowMapMobile');
 
 const getLayerSpec = createThunkAction(
   'getLayerSpec',
@@ -33,5 +34,6 @@ export default {
   setLayerSpec,
   setMapSettings,
   setMapZoom,
-  getLayerSpec
+  getLayerSpec,
+  setShowMapMobile
 };

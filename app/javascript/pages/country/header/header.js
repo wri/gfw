@@ -6,7 +6,7 @@ import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
-import WIDGETS_CONFIG from 'pages/country/data/widgets-config.json';
+import WIDGETS_CONFIG from 'components/widget/widget-config.json';
 import { biomassToCO2 } from 'utils/calculations';
 import { deburrUpper } from 'utils/data';
 
