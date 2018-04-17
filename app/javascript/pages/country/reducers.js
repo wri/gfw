@@ -6,10 +6,10 @@ import { handleActions } from 'utils/redux';
 import router from './router';
 
 // Pages
-import * as country from 'pages/country/root';
+import * as country from 'pages/country/page';
 
 const countryReducers = {
-  root: handleActions(country)
+  page: handleActions(country)
 };
 
 // Components

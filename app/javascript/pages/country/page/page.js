@@ -78,7 +78,7 @@ const mapStateToProps = ({ page, countryData, whitelists, location }) => {
   };
 };
 
-class RootContainer extends PureComponent {
+class PageContainer extends PureComponent {
   handleShowMapMobile = () => {
     this.props.setShowMapMobile(!this.props.showMapMobile);
   };
@@ -92,11 +92,11 @@ class RootContainer extends PureComponent {
   }
 }
 
-RootContainer.propTypes = {
+PageContainer.propTypes = {
   setShowMapMobile: PropTypes.func,
   showMapMobile: PropTypes.bool
 };
 
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(RootContainer);
+export default connect(mapStateToProps, actions)(PageContainer);
