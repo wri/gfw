@@ -44,7 +44,7 @@ define([
     disableDefaultUI: true,
   };
 
-  var BASE_URL = 'http://gfw2stories.s3.amazonaws.com/uploads/';
+  var BASE_URL = 'https://gfw2stories.s3.amazonaws.com/uploads/';
 
   var constraints = {
     'title': {

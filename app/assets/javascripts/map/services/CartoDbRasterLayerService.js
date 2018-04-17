@@ -6,7 +6,7 @@ define([
   'use strict';
 
   var MAP_REQUEST_ID = 'CartoDbLayerService:fetchRasterLayerMap';
-  var MAP_URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
+  var MAP_URL = 'https://wri-01.carto.com/api/v1/map?stat_tag=API';
 
   var CartoDbRasterLayerService = Class.extend({
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/icon';
+import Button from 'components/button';
 import debounce from 'lodash/debounce';
 
 import searchIcon from 'assets/icons/search.svg';
+import closeIcon from 'assets/icons/close.svg';
 import './search-styles.scss';
-import 'styles/themes/search/search-light.scss'; // eslint-disable-line
+import './themes/search-light.scss'; // eslint-disable-line
 
 class Search extends Component {
   constructor(props) {
@@ -58,6 +60,15 @@ class Search extends Component {
           disabled={disabled}
         />
         <Icon icon={searchIcon} className="icon" />
+        {search && (
+          <Button
+            className="clear-btn"
+            theme="theme-button-clear theme-button-small square"
+            onClick={() => this.handleChange('')}
+          >
+            <Icon icon={closeIcon} className="icon" />
+          </Button>
+        )}
       </div>
     );
   }

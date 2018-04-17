@@ -1,0 +1,28 @@
+@import '~styles/settings';
+
+.theme-button-clear {
+  background-color: transparent;
+  color: $slate;
+  border: 0;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  &.disabled {
+    border-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    svg {
+      fill: $slate;
+    }
+  }
+
+  svg {
+    fill: $slate;
+  }
+}

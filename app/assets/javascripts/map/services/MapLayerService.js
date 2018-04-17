@@ -111,7 +111,7 @@ define([
       var sql = null;
 
       if (!this.url) {
-        template = 'http://wri-01.cartodb.com/api/v2/sql{?q}';
+        template = 'https://wri-01.carto.com/api/v2/sql{?q}';
         /*jshint multistr: true */
         sql = 'SELECT \
                 cartodb_id AS id, \
@@ -152,7 +152,7 @@ define([
                 title ASC';
         this.url = new UriTemplate(template).fillFromObject({q: sql});
       }
-      
+
       return this.url;
     },
 

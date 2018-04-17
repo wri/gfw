@@ -7,7 +7,7 @@ define([
 
   var REQUEST_ID = 'CartoDbLayerService:fetchLayerConfig';
 
-  var URL = 'http://wri-01.cartodb.com/api/v1/map?stat_tag=API';
+  var URL = 'https://wri-01.carto.com/api/v1/map?stat_tag=API';
 
   var CartoDbLayerService = Class.extend({
 

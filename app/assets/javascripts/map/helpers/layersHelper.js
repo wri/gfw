@@ -55,6 +55,8 @@ define(
     'map/views/layers/ProtectedAreasLayer',
     'map/views/layers/ProtectedAreasCDBLayer',
     'map/views/layers/BiodiversityHotspotsLayer',
+    'map/views/layers/BiodiversityIntactnessLayer',
+    'map/views/layers/BiodiversityCompletenessLayer',
     'map/views/layers/ResourceRightsLayer',
     'map/views/layers/CmrResourceRightsLayer',
     'map/views/layers/LbrResourceRightsLayer',
@@ -242,6 +244,8 @@ define(
     ProtectedAreasLayer,
     ProtectedAreasCDBLayer,
     BiodiversityHotspotsLayer,
+    BiodiversityIntactnessLayer,
+    BiodiversityCompletenessLayer,
     ResourceRightsLayer,
     CmrResourceRightsLayer,
     LbrResourceRightsLayer,
@@ -537,6 +541,12 @@ define(
       },
       biodiversity_hotspots: {
         view: BiodiversityHotspotsLayer
+      },
+      biodiversity_intactness: {
+        view: BiodiversityIntactnessLayer
+      },
+      biodiversity_completeness: {
+        view: BiodiversityCompletenessLayer
       },
       resource_rights: {
         view: ResourceRightsLayer

@@ -1,10 +1,5 @@
 class SmallGrantsFundController < ApplicationController
-
-  if ENV['FEATURE_ENV'] == 'staging'
-    layout 'application_react'
-  else
-    layout 'small_grants_fund'
-  end
+  layout 'application_react'
 
   def index
     @title = 'Small Grants Fund'

@@ -29,7 +29,7 @@ define([
     },
 
     _getUrl: function() {
-      var template = 'http://wri-01.cartodb.com/api/v2/sql{?q}',
+      var template = 'https://wri-01.carto.com/api/v2/sql{?q}',
           sql = ['SELECT DISTINCT date',
                  'FROM ' + this.options.table_name,
                  'ORDER BY date DESC'].join(" "),

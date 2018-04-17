@@ -82,7 +82,7 @@ define([
                   'WHERE c.iso = m.adm0_a3',
                   "AND c.iso = 'TWN'&format=topojson"].join(' ');
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
         for (var i = 0; i < Object.keys(topology.objects).length; i++) {
           var iso = topology.objects[i].properties.iso;
 
@@ -91,7 +91,7 @@ define([
           if (iso === 'CHN') {
             that.bounds = bounds;
 
-            d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql_, _.bind(function(error, topology) {
+            d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql_, _.bind(function(error, topology) {
               this.helper.draw(topology, 0, 'CHN', { alerts: false, bounds: that.bounds});
             }, this ));
           }

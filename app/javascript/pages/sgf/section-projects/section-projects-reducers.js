@@ -2,7 +2,9 @@ export const initialState = {
   loading: false,
   error: false,
   data: [],
-  categorySelected: 'All'
+  categorySelected: 'All',
+  customFilter: [],
+  countries: []
 };
 
 const setProjectsLoading = (state, { payload }) => ({
@@ -12,22 +14,34 @@ const setProjectsLoading = (state, { payload }) => ({
 
 const setProjectsData = (state, { payload }) => ({
   ...state,
-  data: payload
+  data: {
+    ...state.data,
+    ...payload
+  },
+  loading: false
 });
 
 const setCategorySelected = (state, { payload }) => ({
   ...state,
-  categorySelected: payload
+  categorySelected: payload,
+  customFilter: []
+});
+
+const setCustomFilter = (state, { payload }) => ({
+  ...state,
+  customFilter: payload
 });
 
 const setSearch = (state, { payload }) => ({
   ...state,
-  search: payload
+  search: payload,
+  customFilter: []
 });
 
 export default {
   setProjectsLoading,
   setProjectsData,
   setCategorySelected,
-  setSearch
+  setSearch,
+  setCustomFilter
 };

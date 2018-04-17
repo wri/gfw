@@ -1,0 +1,18 @@
+[
+  {
+    "label": "4 weeks",
+    "value": 4
+  },
+  {
+    "label": "3 months",
+    "value": 13
+  },
+  {
+    "label": "6 months",
+    "value": 26
+  },
+  {
+    "label": "12 months",
+    "value": 52
+  }
+]

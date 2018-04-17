@@ -155,7 +155,7 @@ define([
                  'WHERE iso = \'' + this.country.get('iso') + '\''
                 ].join(' ');
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+ sql, function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+ sql, function(json) {
         var data = json.rows[0];
         var tenures = [{
           name: 'Public lands administered by the government',
@@ -199,7 +199,7 @@ define([
                  'FROM gfw2_countries',
                  "WHERE iso = '" + this.country.get('iso') + "'"].join(' ');
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q=' + sql, function(json) {
         var data = _.pluck(json.rows, 'percent'),
             sumData = _.reduce(data, function(memo, num){ return memo + num; }, 0),
             $countryForestType = $('.country-forests-type');
@@ -363,7 +363,7 @@ define([
                  "GROUP BY date_trunc('month', date)",
                  "ORDER BY date_trunc('month', date) ASC"].join(' ');
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+      d3.json('https://wri-01.carto.com/api/v2/sql?q='+sql, function(json) {
         if (json && json.rows.length > 0) {
           var data = json.rows.slice(1, json.rows.length);
           if (data.length == 0) data = json.rows;

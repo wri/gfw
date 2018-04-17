@@ -39,7 +39,7 @@ $dd-button-height: rem(28px);
     }
 
     .menu {
-      top: calc(#{$dd-button-height} + 5);
+      top: calc(#{$dd-button-height} + 5px);
       border: 0;
       box-shadow: 1px 1px 10px 0 rgba(85, 85, 85, 0.25);
     }

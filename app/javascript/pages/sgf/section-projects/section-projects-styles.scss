@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .l-section-projects {
+  margin-top: rem(-30px);
+
   h2 {
     opacity: 0.5;
     font-size: rem(18px);
@@ -17,9 +19,19 @@
 
   .project-search {
     margin-bottom: rem(30px);
+  }
 
-    @media screen and (min-width: $screen-l) {
-      margin: rem(50px) 0 rem(40px) rem(20px);
+  .side {
+    padding-top: rem(40px);
+
+    h3 {
+      margin-bottom: rem(20px);
+      font-size: rem(18px);
+      opacity: 0.5;
+    }
+
+    p {
+      margin-bottom: rem(30px);
     }
   }
 
@@ -29,14 +41,10 @@
 
   .project-cards {
     position: relative;
-    min-height: rem(100px);
+    min-height: rem(200px);
 
     .card-container {
       margin-bottom: rem(30px);
     }
-  }
-
-  .project-card {
-    height: 100%;
   }
 }

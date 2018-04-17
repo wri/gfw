@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import { createElement, PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import { actions as modalActions } from 'pages/about/section-projects/section-projects-modal';
 import * as sectionActions from './section-projects-actions';
@@ -25,7 +27,27 @@ const mapStateToProps = ({ projects }) => {
     categorySelected: projects.categorySelected
   };
 };
+class SectionProjectsContainer extends PureComponent {
+  handleGlobeClick = d => {
+    const { setSectionProjectsModal } = this.props;
+    setSectionProjectsModal({
+      isOpen: true,
+      data: d
+    });
+  };
+
+  render() {
+    return createElement(SectionProjectsComponent, {
+      ...this.props,
+      handleGlobeClick: this.handleGlobeClick
+    });
+  }
+}
+
+SectionProjectsContainer.propTypes = {
+  setSectionProjectsModal: PropTypes.func
+};
 
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(SectionProjectsComponent);
+export default connect(mapStateToProps, actions)(SectionProjectsContainer);

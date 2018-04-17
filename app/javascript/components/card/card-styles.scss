@@ -3,11 +3,10 @@
 .c-card {
   position: relative;
   width: 100%;
-  background-color: $grey-light;
-  border: solid 1px $border;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  border: solid 1px $border;
 
   .image {
     width: 100%;
@@ -29,28 +28,36 @@
 
   .body {
     padding: rem(15px);
+    background-color: $grey-light;
 
     @media screen and (min-width: $screen-m) {
       padding: rem(25px);
     }
 
-    .header {
+    .title {
       margin-bottom: rem(15px);
+      font-size: rem(28px);
+      line-height: 1.25;
+      letter-spacing: -0.4px;
+      font-weight: 300;
     }
 
     .summary {
-      height: rem(120px);
       font-size: rem(16px);
-      margin-bottom: rem(15px);
+      margin-bottom: rem(20px);
+      line-height: 1.9;
     }
 
     .meta {
       margin-bottom: rem(10px);
+      font-size: rem(14px);
+      opacity: 0.5;
+      text-transform: uppercase;
     }
 
     .read-more {
       max-width: rem(150px);
-      margin-top: rem(20px);
+      margin-top: rem(30px);
     }
   }
 }

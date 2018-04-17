@@ -25,7 +25,7 @@ class CountriesController < ApplicationController
     blog_story = Api::Blog.find_by_country(@country)
     @blog_story = blog_story.present? ? blog_story : nil
 
-    response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=with%20r%20as%20((select%20the_geom_webmercator%20from%0Agadm2_countries%20where%20iso%3Dupper('#{@country['iso'].downcase}')))%20SELECT%20f.the_geom%2C%20author%2C%20date%2C%20image%2C%20lat%2Clon%2Ctitle%20FROM%20mongabay%20f%2C%20r%20WHERE%20st_intersects(f.the_geom_webmercator%2Cr.the_geom_webmercator)%20order%20by%20date%3A%3Adate%20desc", headers: { "Accept" => "application/json" })
+    response = Typhoeus.get("https://wri-01.carto.com/api/v2/sql?q=with%20r%20as%20((select%20the_geom_webmercator%20from%0Agadm2_countries%20where%20iso%3Dupper('#{@country['iso'].downcase}')))%20SELECT%20f.the_geom%2C%20author%2C%20date%2C%20image%2C%20lat%2Clon%2Ctitle%20FROM%20mongabay%20f%2C%20r%20WHERE%20st_intersects(f.the_geom_webmercator%2Cr.the_geom_webmercator)%20order%20by%20date%3A%3Adate%20desc", headers: { "Accept" => "application/json" })
     @mongabay_story = if response.success?
                         JSON.parse(response.body)['rows'][0]
                       else

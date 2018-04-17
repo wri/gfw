@@ -8,9 +8,9 @@ define([
   'use strict';
 
   var GET_TILE_URL_ID = 'FormaService:getTilesUrl';
-  var GET_TILE_URL = 'http://api-dot-forma-250.appspot.com/tiles/latest';
+  var GET_TILE_URL = 'https://api-dot-forma-250.appspot.com/tiles/latest';
   var GET_DATES_ID = 'FormaService:getDates';
-  var GET_DATES_URL = 'http://api.forma-250.appspot.com/dates';
+  var GET_DATES_URL = 'https://api.forma-250.appspot.com/dates';
 
   var FormaService = Class.extend({
     getTileUrl: function() {

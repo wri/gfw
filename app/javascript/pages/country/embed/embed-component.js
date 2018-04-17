@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Widget from 'pages/country/widget';
+import Widget from 'components/widget';
 import Share from 'components/share';
-import CountryDataProvider from 'pages/country/providers/country-data-provider';
-import WhitelistsProvider from 'pages/country/providers/whitelists-provider';
+import CountryDataProvider from 'providers/country-data-provider';
+import WhitelistsProvider from 'providers/whitelists-provider';
 import ModalMeta from 'components/modal-meta';
 
 import './embed-styles.scss';

@@ -7,10 +7,11 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/tip';
 
 import './button-styles.scss';
-import 'styles/themes/button/button-light.scss'; // eslint-disable-line
-import 'styles/themes/button/button-small.scss'; // eslint-disable-line
-import 'styles/themes/button/button-grey.scss'; // eslint-disable-line
-import 'styles/themes/button/button-map-control.scss'; // eslint-disable-line
+import './themes/button-light.scss'; // eslint-disable-line
+import './themes/button-small.scss'; // eslint-disable-line
+import './themes/button-grey.scss'; // eslint-disable-line
+import './themes/button-clear.scss'; // eslint-disable-line
+import './themes/button-map-control.scss'; // eslint-disable-line
 
 const Button = props => {
   const {

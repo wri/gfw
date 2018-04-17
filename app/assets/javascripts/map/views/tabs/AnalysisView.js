@@ -279,7 +279,7 @@ define([
       if (!amplify.store('countries')) {
         var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
         $.ajax({
-          url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
+          url: 'https://wri-01.carto.com/api/v2/sql?q='+sql,
           dataType: 'json',
           success: _.bind(function(data){
             amplify.store('countries', data.rows);
@@ -298,7 +298,7 @@ define([
       this.$regionSelect.attr('disabled', true).trigger("chosen:updated");
       var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
       $.ajax({
-        url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
+        url: 'https://wri-01.carto.com/api/v2/sql?q='+sql,
         dataType: 'json',
         success: _.bind(function(data){
           this.printSubareas(data.rows);
