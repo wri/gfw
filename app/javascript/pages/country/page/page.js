@@ -1,6 +1,4 @@
-import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import replace from 'lodash/replace';
 
 import {
@@ -11,14 +9,12 @@ import {
 import CATEGORIES from 'data/categories.json';
 
 import mapActions from 'components/map/map-actions';
-import ownActions from './page-actions';
-import reducers, { initialState } from './page-reducers';
 import { filterWidgets, getLinks, getActiveWidget } from './page-selectors';
-import PageComponent from './page-component';
+import Component from './page-component';
 
-const actions = { ...ownActions, ...mapActions };
+const actions = { ...mapActions };
 
-const mapStateToProps = ({ page, countryData, whitelists, location }) => {
+const mapStateToProps = ({ countryData, whitelists, location, map }) => {
   const category = (location.query && location.query.category) || 'summary';
   const {
     countryWhitelist,
@@ -56,9 +52,7 @@ const mapStateToProps = ({ page, countryData, whitelists, location }) => {
   };
 
   return {
-    gfwHeaderHeight: page.gfwHeaderHeight,
-    isMapFixed: page.isMapFixed,
-    showMapMobile: page.showMapMobile,
+    showMapMobile: map.showMapMobile,
     links: getLinks({ categories: CATEGORIES, location, category }),
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
@@ -78,25 +72,4 @@ const mapStateToProps = ({ page, countryData, whitelists, location }) => {
   };
 };
 
-class PageContainer extends PureComponent {
-  handleShowMapMobile = () => {
-    this.props.setShowMapMobile(!this.props.showMapMobile);
-  };
-
-  render() {
-    return createElement(PageComponent, {
-      ...this.props,
-      handleShowMapMobile: this.handleShowMapMobile,
-      handleScrollCallback: this.handleScrollCallback
-    });
-  }
-}
-
-PageContainer.propTypes = {
-  setShowMapMobile: PropTypes.func,
-  showMapMobile: PropTypes.bool
-};
-
-export { actions, reducers, initialState };
-
-export default connect(mapStateToProps, actions)(PageContainer);
+export default connect(mapStateToProps, actions)(Component);

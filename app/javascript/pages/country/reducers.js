@@ -5,13 +5,6 @@ import { handleActions } from 'utils/redux';
 // Routes
 import router from './router';
 
-// Pages
-import * as country from 'pages/country/page';
-
-const countryReducers = {
-  page: handleActions(country)
-};
-
 // Components
 import * as ShareComponent from 'components/share';
 import * as ModalMetaComponent from 'components/modal-meta';
@@ -92,7 +85,6 @@ const providersReducers = {
 
 export default combineReducers({
   ...providersReducers,
-  ...countryReducers,
   ...componentsReducers,
   location: router.reducer
 });

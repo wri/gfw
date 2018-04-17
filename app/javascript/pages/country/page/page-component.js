@@ -29,7 +29,7 @@ class Page extends PureComponent {
   render() {
     const {
       showMapMobile,
-      handleShowMapMobile,
+      setShowMapMobile,
       links,
       isGeostoreLoading,
       widgets,
@@ -51,7 +51,7 @@ class Page extends PureComponent {
           <Button
             theme="square theme-button-light"
             className="close-map-button"
-            onClick={handleShowMapMobile}
+            onClick={() => setShowMapMobile(!showMapMobile)}
           >
             <Icon icon={closeIcon} />
           </Button>
@@ -158,7 +158,7 @@ class Page extends PureComponent {
 
 Page.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
-  handleShowMapMobile: PropTypes.func.isRequired,
+  setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
   widgets: PropTypes.array,
