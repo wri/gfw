@@ -7,7 +7,7 @@ class CountryController < ApplicationController
     @title = @country && @country["name"]
     @desc = "Data about forest change, tenure, forest related employment and land use in #{@title}"
     if params[:widget]
-      widgets_config = JSON.parse(File.read(Rails.root.join('app', 'javascript', 'pages', 'country', 'data', 'widgets-config.json')))
+      widgets_config = JSON.parse(File.read(Rails.root.join('app', 'javascript', 'components', 'widget', 'widget-config.json')))
       widget_data = widgets_config[params[:widget]]
       @og_title = "#{widget_data["title"]} in #{@title}"
       # for dynamic widget image when the feature is ready
