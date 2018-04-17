@@ -17,7 +17,7 @@
     "precommit": "lint-staged",
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
     "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
-    "test": "$(npm bin)/cypress run",
+    "test": "bundle exec rspec && $(npm bin)/cypress run",
     "test:open": "$(npm bin)/cypress open",
     "test-ci": "bundle exec rake && $(npm bin)/cypress run --record"
   },
