@@ -3,21 +3,14 @@
  *
  * @return UsaLandCoverLayer class (extends ImageLayerClass)
  */
-define([
-  'abstract/layer/ImageLayerClass',
-], function(ImageLayerClass) {
-
-  'use strict';
-
-  var UsaForestOwnershipLayer = ImageLayerClass.extend({
-
+define(['abstract/layer/ImageLayerClass'], (ImageLayerClass) => {
+  const UsaForestOwnershipLayer = ImageLayerClass.extend({
     options: {
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/usa_forest_ownership{/z}{/x}{/y}.png',
+      urlTemplate:
+        'https://s3.amazonaws.com/wri-tiles/usa_forest_ownership{/z}{/x}{/y}.png',
       dataMaxZoom: 12
     }
-
   });
 
   return UsaForestOwnershipLayer;
-
 });

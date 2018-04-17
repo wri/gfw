@@ -3,21 +3,14 @@
  *
  * @return UsaLandCoverLayer class (extends ImageLayerClass)
  */
-define([
-  'abstract/layer/ImageLayerClass',
-], function(ImageLayerClass) {
-
-  'use strict';
-
-  var MexLandCoverLayer = ImageLayerClass.extend({
-
+define(['abstract/layer/ImageLayerClass'], (ImageLayerClass) => {
+  const MexLandCoverLayer = ImageLayerClass.extend({
     options: {
-      urlTemplate: 'https://gis-gfw.wri.org/arcgis/rest/services/cached/mex_land_cover/MapServer/tile/{z}/{y}/{x}',
+      urlTemplate:
+        'https://gis-gfw.wri.org/arcgis/rest/services/cached/mex_land_cover/MapServer/tile/{z}/{y}/{x}',
       dataMaxZoom: 9
     }
-
   });
 
   return MexLandCoverLayer;
-
 });
