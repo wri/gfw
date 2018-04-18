@@ -28,12 +28,14 @@ export const fetchGladAlerts = ({ country, region, subRegion, period }) => {
 };
 
 export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
-  const url = `${REQUEST_URL}/query/${region ? '428db321-5ebb-4e86-a3df-32c63b6d3c83' : 'dda5f07e-fd81-436d-abe3-f880d5e5c280'}?sql=${
-    QUERIES.gladIntersectionAlerts
-  }`
+  const url = `${REQUEST_URL}/query/${
+    region
+      ? '428db321-5ebb-4e86-a3df-32c63b6d3c83'
+      : 'dda5f07e-fd81-436d-abe3-f880d5e5c280'
+  }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
     .replace('{polyname}', indicator);
-  debugger;
+
   return axios.get(url);
 };
 
