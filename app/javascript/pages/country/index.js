@@ -11,7 +11,7 @@ import 'babel-polyfill';
 import reducers from './reducers';
 import router, { EMBED } from './router';
 
-import Root from './root';
+import Page from './page';
 import Embed from './embed';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -28,7 +28,7 @@ const state = store.getState();
 
 const Country = () => (
   <Provider store={store}>
-    {state.location.type === EMBED ? <Embed /> : <Root />}
+    {state.location.type === EMBED ? <Embed /> : <Page />}
   </Provider>
 );
 

@@ -1,0 +1,22 @@
+@import '~styles/settings.scss';
+
+.c-paginate {
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid rgba($border, 0.2);
+  width: calc(100% - #{rem(48px)});
+  margin: rem(15px) auto auto auto;
+  padding-top: rem(10px);
+
+  .button-up {
+    margin-right: rem(2px);
+
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .button-down {
+    margin-left: rem(2px);
+  }
+}

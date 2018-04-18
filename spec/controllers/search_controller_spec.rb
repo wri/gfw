@@ -17,7 +17,7 @@ describe SearchController, type: :controller do
     it_behaves_like 'assigns title', 'Search'
     it 'returns results' do
       subject
-      expect(assigns(:total)).to eq(10)
+      expect(assigns(:total)).to eq(5)
     end
   end
 end
