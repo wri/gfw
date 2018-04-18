@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api-proxy-staging.globalforestwatch.org//countries
+    uri: http://api.globalforestwatch.org/countries
     body:
       encoding: US-ASCII
       string: ''
@@ -18,33 +18,29 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Connection:
-      - keep-alive
-      Server:
-      - nginx
-      Date:
-      - Wed, 05 Jul 2017 11:52:37 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '871248'
       Cache-Control:
       - no-cache
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Headers:
       - Origin, X-Requested-With, Content-Type, Accept
-      Charset:
+      charset:
       - utf-8
+      Content-Type:
+      - application/json
       Set-Cookie:
-      - _eauth=eyJ1c2VyX2lkIjpudWxsLCJzZXNzaW9uX2lkIjoidVBhTGNMR0wycGtFRUJqMkliNFhPMCJ9|1499255557|0ded9a4c07b62392fc8756f390d84c443a1d9800;
-        Domain=.globalforestwatch.org; Path=/
+      - _eauth=eyJ1c2VyX2lkIjpudWxsLCJzZXNzaW9uX2lkIjoiZ0NQaE44dzdnVXZvZTJudzNXQ2hpVyJ9|1523538271|88a5d449056840809e9f95b2c422ef596dfc446e;
+        Path=/
       X-Cloud-Trace-Context:
-      - cd094539a34f9b2560d8285b5a9dee24;o=1
+      - f29bffc4f1666014537355546b2f2d47
+      Date:
+      - Thu, 12 Apr 2018 13:04:31 GMT
+      Server:
+      - Google Frontend
+      Content-Length:
+      - '871248'
       Expires:
-      - Wed, 05 Jul 2017 11:52:37 GMT
-      Via:
-      - 1.1 vegur
+      - Thu, 12 Apr 2018 13:04:31 GMT
     body:
       encoding: UTF-8
       string: '{"countries": [{"alerts_count": null, "carbon_stocks": 38, "convention_cbd":
@@ -10968,6 +10964,6 @@ http_interactions:
         null}], "params": {"index": true, "interval": "12 Months", "order": ""}}'
     http_version: '1.1'
     adapter_metadata:
-      effective_url: http://api-proxy-staging.globalforestwatch.org//countries
-  recorded_at: Wed, 05 Jul 2017 11:52:37 GMT
-recorded_with: VCR 3.0.3
+      effective_url: http://api.globalforestwatch.org/countries
+  recorded_at: Thu, 12 Apr 2018 13:04:31 GMT
+recorded_with: VCR 4.0.0

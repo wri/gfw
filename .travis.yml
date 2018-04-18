@@ -1,0 +1,19 @@
+language: ruby
+
+node_js:
+  - 8.10.0
+
+rvm:
+  - 2.4.0
+
+cache:
+  bundler: true
+  directories:
+    - ~/.npm
+    - node_modules
+
+install:
+  - bundle install && npm install
+
+script:
+  - npm run ci
