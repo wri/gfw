@@ -4,14 +4,28 @@ import Canvas from './abstract/canvas';
 
 const OPTIONS = {
   dataMaxZoom: 12,
-  urlTemplate:
-    `https://wri-tiles.s3.amazonaws.com/glad_${process.env.FEATURE_ENV === 'staging' ? 'staging' : 'prod'}/tiles/{z}/{x}/{y}.png`,
+  urlTemplate: `https://wri-tiles.s3.amazonaws.com/glad_${
+    process.env.FEATURE_ENV === 'staging' ? 'staging' : 'prod'
+  }/tiles/{z}/{x}/{y}.png`,
   startDate: '2015-01-01'
 };
 
-const padNumber = number => {
-  const s = `00${number}`;
-  return s.substr(s.length - 3);
+const getConfidence = number => {
+  let confidence = -1;
+  if (number >= 100 && number < 200) {
+    confidence = 0;
+  } else if (number >= 200) {
+    confidence = 1;
+  }
+  return confidence;
+};
+
+const getIntensity = number => {
+  let intensity = (number % 10) * 50;
+  if (intensity > 255) {
+    intensity = 255;
+  }
+  return intensity;
 };
 
 class Glad extends Canvas {
@@ -59,37 +73,26 @@ class Glad extends Canvas {
         pixelPos = (j * w + i) * pixelComponents;
         // day 0 is 2015-01-01 until current day
         const day = imageData[pixelPos] * 255 + imageData[pixelPos + 1];
+        const band3 = imgdata[pixelPos + 2];
+        const confidence = getConfidence(imgdata[band3]);
 
-        if (day >= customRangeStartDate || (0 && day <= numberOfDays)) {
-          const band3_str = padNumber(imageData[pixelPos + 2].toString());
-
-          // Grab confidence (the first value) from this string
-          // confidence is stored as 1/2, subtract one to make it 0/1
-          const confidence = parseInt(band3_str[0], 10) - 1;
-
-          if (confidence >= confidenceValue) {
-            // Grab the raw intensity value from the pixel; ranges from 1 - 255
-            const intensity_raw = parseInt(band3_str.slice(1, 3), 10);
-            // Scale the intensity to make it visible
-            let intensity = intensity_raw * 50;
-            // Set intensity to 255 if it's > than that value
-            if (intensity > 255) {
-              intensity = 255;
-            }
-
-            if (day >= numberOfDays - 7 && day <= numberOfDays) {
-              imageData[pixelPos] = 219;
-              imageData[pixelPos + 1] = 168;
-              imageData[pixelPos + 2] = 0;
-              imageData[pixelPos + 3] = intensity;
-            } else {
-              imageData[pixelPos] = 220;
-              imageData[pixelPos + 1] = 102;
-              imageData[pixelPos + 2] = 153;
-              imageData[pixelPos + 3] = intensity;
-            }
-            continue; // eslint-disable-line
+        if (
+          confidence >= confidenceValue &&
+          (day >= customRangeStartDate || (0 && day <= numberOfDays))
+        ) {
+          const intensity = getIntensity(band3);
+          if (day >= numberOfDays - 7 && day <= numberOfDays) {
+            imageData[pixelPos] = 219;
+            imageData[pixelPos + 1] = 168;
+            imageData[pixelPos + 2] = 0;
+            imageData[pixelPos + 3] = intensity;
+          } else {
+            imageData[pixelPos] = 220;
+            imageData[pixelPos + 1] = 102;
+            imageData[pixelPos + 2] = 153;
+            imageData[pixelPos + 3] = intensity;
           }
+          continue; // eslint-disable-line
         }
 
         imageData[pixelPos + 3] = 0;
