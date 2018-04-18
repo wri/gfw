@@ -57,17 +57,20 @@ class Glad extends Canvas {
   }
 
   filterCanvasImgdata(imgdata, w, h) {
+    const { startDate, layerStartDate, layerEndDate } = this.options;
     const imageData = imgdata;
-    const startDate = this.options.startDate;
     const endDate = moment(this.endDate);
-    const customRangeDays = this.options.weeks && this.options.weeks * 7;
     const numberOfDays = endDate.diff(startDate, 'days');
-    const customRangeStartDate = numberOfDays - customRangeDays;
-
+    const startDay = layerStartDate
+      ? moment(layerStartDate).diff(moment(startDate), 'days')
+      : moment(startDate);
+    const endDay = layerEndDate
+      ? numberOfDays - endDate.diff(moment(layerEndDate), 'days')
+      : endDate;
     const confidenceValue = -1;
     const pixelComponents = 4; // RGBA
-
     let pixelPos = 0;
+
     for (let i = 0; i < w; ++i) {
       for (let j = 0; j < h; ++j) {
         pixelPos = (j * w + i) * pixelComponents;
@@ -76,10 +79,7 @@ class Glad extends Canvas {
         const band3 = imgdata[pixelPos + 2];
         const confidence = getConfidence(imgdata[band3]);
 
-        if (
-          confidence >= confidenceValue &&
-          (day >= customRangeStartDate || (0 && day <= numberOfDays))
-        ) {
+        if (confidence >= confidenceValue && day >= startDay && day <= endDay) {
           const intensity = getIntensity(band3);
           if (day >= numberOfDays - 7 && day <= numberOfDays) {
             imageData[pixelPos] = 219;
