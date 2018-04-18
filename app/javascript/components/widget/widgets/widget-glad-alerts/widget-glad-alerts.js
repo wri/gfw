@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 
@@ -31,27 +32,75 @@ const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
 
 class WidgetGladAlertsContainer extends PureComponent {
   componentWillMount() {
-    const { getGladAlerts, location, settings } = this.props;
+    const {
+      getGladAlerts,
+      location,
+      settings,
+      setGladAlertsSettings
+    } = this.props;
     getGladAlerts({ ...location, ...settings });
+    setGladAlertsSettings({
+      layerStartDate: moment()
+        .subtract(settings.weeks, 'weeks')
+        .format('YYYY-MM-DD'),
+      layerEndDate: moment().format('YYYY-MM-DD')
+    });
   }
 
   componentWillUpdate(nextProps) {
-    const { getGladAlerts, location, settings } = nextProps;
+    const {
+      getGladAlerts,
+      location,
+      settings,
+      setGladAlertsSettings
+    } = nextProps;
 
     if (!isEqual(location, this.props.location)) {
       getGladAlerts({ ...location, ...settings });
     }
+    if (settings.weeks !== this.props.settings.weeks) {
+      setGladAlertsSettings({
+        layerStartDate: moment()
+          .subtract(settings.weeks, 'weeks')
+          .format('YYYY-MM-DD'),
+        layerEndDate: moment().format('YYYY-MM-DD')
+      });
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { settings } = nextProps;
+
+    if (settings.layerStartDate !== this.props.settings.layerStartDate) {
+      return false;
+    }
+    return true;
   }
 
   handleMouseMove = debounce(data => {
     let activeData = {};
-    const { setActiveAlert } = this.props;
+    const {
+      settings: { weeks },
+      setActiveAlert,
+      setGladAlertsSettings
+    } = this.props;
     if (data) {
       const { activePayload } = data && data;
       activeData =
         activePayload && activePayload.find(d => d.name === 'count').payload;
     }
     setActiveAlert(activeData);
+    setGladAlertsSettings({
+      layerStartDate: activeData
+        ? activeData.date
+        : moment()
+          .subtract(weeks, 'weeks')
+          .format('YYYY-MM-DD'),
+      layerEndDate: (activeData
+        ? moment(activeData.date).add(1, 'week')
+        : moment()
+      ).format('YYYY-MM-DD')
+    });
   }, 100);
 
   render() {
@@ -67,7 +116,8 @@ WidgetGladAlertsContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getGladAlerts: PropTypes.func.isRequired,
-  setActiveAlert: PropTypes.func.isRequired
+  setActiveAlert: PropTypes.func.isRequired,
+  setGladAlertsSettings: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
