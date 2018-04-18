@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import difference from 'lodash/difference';
+import findIndex from 'lodash/findIndex';
 
 import Layers from './assets/layers';
 import GFWdefault from './assets/maptypes/GFWdefault';
@@ -38,6 +39,12 @@ const mapStateToProps = (
 };
 
 class MapContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.runningLayers = [];
+  }
+
   componentDidMount() {
     const { mapOptions, getLayerSpec, setMapSettings } = this.props;
     this.buildMap();
@@ -122,9 +129,29 @@ class MapContainer extends PureComponent {
     if (layers && layers.length) {
       layers.forEach((slug, index) => {
         const layerSettings = { ...layerSpec[slug], ...settings };
-        const layer = new Layers[slug](this.map, layerSettings);
-        layer.getLayer().then(res => {
-          this.map.overlayMapTypes.setAt(index, res);
+        const newLayer = new Layers[slug](this.map, layerSettings);
+        newLayer.getLayer().then(res => {
+          const runningLayerIndex = findIndex(
+            this.runningLayers,
+            d => d.slug === slug
+          );
+          if (
+            runningLayerIndex !== -1 &&
+            this.runningLayers[runningLayerIndex].layer.updateTiles
+          ) {
+            const { layer } = this.runningLayers[runningLayerIndex];
+            layer.setOptions(res.options);
+            layer.updateTiles();
+          } else {
+            this.runningLayers[index] = {
+              slug,
+              layer: res
+            };
+            this.map.overlayMapTypes.setAt(
+              index,
+              this.runningLayers[index].layer
+            );
+          }
         });
       });
     }
