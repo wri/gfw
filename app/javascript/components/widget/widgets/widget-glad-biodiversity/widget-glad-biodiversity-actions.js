@@ -23,15 +23,16 @@ const getGladBiodiversity = createThunkAction(
         ])
         .then(
           axios.spread((alerts, extent) => {
+            debugger;
             const { data } = alerts.data;
             const areas = extent.data.data;
-            const alertsByDate =
-              data &&
-              data.filter(d =>
-                moment(new Date(d.date)).isAfter(
-                  moment.utc().subtract(53, 'weeks')
-                )
-              );
+            // const alertsByDate =
+            //   data &&
+            //   data.filter(d =>
+            //     moment(new Date(d.date)).isAfter(
+            //       moment.utc().subtract(53, 'weeks')
+            //     )
+            //   );
             dispatch(
               setGladBiodiversityData(
                 alertsByDate && extent
