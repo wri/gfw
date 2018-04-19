@@ -22,9 +22,10 @@ export const getSortedData = createSelector(
   (data, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const alertsByDate = data.filter(d =>
-      moment(new Date(d.date)).isAfter(
-        moment.utc().subtract(settings.weeks, 'weeks')
-      )
+      moment()
+        .week(d.week)
+        .year(d.year)
+        .isAfter(moment.utc().subtract(settings.weeks, 'weeks'))
     );
     const groupedAlerts = groupBy(
       alertsByDate,
