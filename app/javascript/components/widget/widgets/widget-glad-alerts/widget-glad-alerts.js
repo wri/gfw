@@ -15,13 +15,13 @@ import {
 import WidgetGladAlertsComponent from './widget-glad-alerts-component';
 
 const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
-  const { data, settings, activeAlert } = widgetGladAlerts;
+  const { data, settings } = widgetGladAlerts;
   const { colors } = ownProps;
   const selectorData = {
     ...data,
     settings,
     colors,
-    activeData: activeAlert
+    activeData: settings.activeData
   };
   return {
     data: chartData(selectorData),
@@ -32,82 +32,52 @@ const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
 
 class WidgetGladAlertsContainer extends PureComponent {
   componentWillMount() {
-    const {
-      getGladAlerts,
-      location,
-      settings,
-      setGladAlertsSettings
-    } = this.props;
+    const { getGladAlerts, location, settings } = this.props;
     getGladAlerts({ ...location, ...settings });
-    setGladAlertsSettings({
-      layerStartDate: moment()
-        .subtract(settings.weeks, 'weeks')
-        .format('YYYY-MM-DD'),
-      layerEndDate: moment().format('YYYY-MM-DD')
-    });
   }
 
-  componentWillUpdate(nextProps) {
-    const {
-      getGladAlerts,
-      location,
-      settings,
-      setGladAlertsSettings
-    } = nextProps;
+  componentWillReceiveProps(nextProps) {
+    const { getGladAlerts, location, settings } = nextProps;
 
     if (!isEqual(location, this.props.location)) {
       getGladAlerts({ ...location, ...settings });
     }
-    if (settings.weeks !== this.props.settings.weeks) {
-      setGladAlertsSettings({
-        layerStartDate: moment()
-          .subtract(settings.weeks, 'weeks')
-          .format('YYYY-MM-DD'),
-        layerEndDate: moment().format('YYYY-MM-DD')
-      });
-    }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { settings } = nextProps;
-
-    if (settings.layerStartDate !== this.props.settings.layerStartDate) {
-      return false;
-    }
-    return true;
   }
 
   handleMouseMove = debounce(data => {
+    const { setGladAlertsSettings } = this.props;
     let activeData = {};
-    const {
-      settings: { weeks },
-      setActiveAlert,
-      setGladAlertsSettings
-    } = this.props;
     if (data) {
       const { activePayload } = data && data;
-      activeData =
+      const payload =
         activePayload && activePayload.find(d => d.name === 'count').payload;
+      const startDate =
+        payload &&
+        moment()
+          .year(payload.year)
+          .week(payload.week);
+      if (payload) {
+        activeData = {
+          ...payload,
+          startDate,
+          endDate: startDate && startDate.add(7, 'days')
+        };
+      }
     }
-    setActiveAlert(activeData);
-    setGladAlertsSettings({
-      layerStartDate: activeData
-        ? activeData.date
-        : moment()
-          .subtract(weeks, 'weeks')
-          .format('YYYY-MM-DD'),
-      layerEndDate: (activeData
-        ? moment(activeData.date).add(1, 'week')
-        : moment()
-      ).format('YYYY-MM-DD')
-    });
+    setGladAlertsSettings({ activeData });
+  }, 100);
+
+  handleMouseLeave = debounce(() => {
+    const { setGladAlertsSettings } = this.props;
+    setGladAlertsSettings({ activeData: {} });
   }, 100);
 
   render() {
     return createElement(WidgetGladAlertsComponent, {
       ...this.props,
       getSentence: this.getSentence,
-      handleMouseMove: this.handleMouseMove
+      handleMouseMove: this.handleMouseMove,
+      handleMouseLeave: this.handleMouseLeave
     });
   }
 }
@@ -116,7 +86,6 @@ WidgetGladAlertsContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getGladAlerts: PropTypes.func.isRequired,
-  setActiveAlert: PropTypes.func.isRequired,
   setGladAlertsSettings: PropTypes.func.isRequired
 };
 
