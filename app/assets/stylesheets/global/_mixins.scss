@@ -88,10 +88,17 @@
     background-image: linear-gradient($origin, $start, $stop);
 }
 
-
 @mixin keyframes($name) {
-  @-o-keyframes $name { @content };
-  @-moz-keyframes $name { @content };
-  @-webkit-keyframes $name { @content };
-  @-keyframes $name { @content };
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
 }
