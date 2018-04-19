@@ -40,7 +40,7 @@ export const getFilteredData = createSelector(
       label: d.name,
       color: colors.main,
       path: `/country/${d.iso}`,
-      value: d.rate * 1000
+      value: d.rate
     }));
   }
 );
@@ -57,9 +57,7 @@ export const getSentence = createSelector(
       ? `From <b>${period &&
           period.label}</b>, the rate of reforestation in <b>${
         countryData.label
-      }</b> was <strong>${format('.3s')(
-        countryData.value * 1000
-      )}ha/year</strong>.`
+      }</b> was <strong>${format('.3s')(countryData.value)}ha/year</strong>.`
       : '';
   }
 );
