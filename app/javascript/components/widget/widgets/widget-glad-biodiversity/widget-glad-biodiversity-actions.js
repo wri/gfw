@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios from 'axios';
 
-import { fetchGladIntersectionAlerts } from 'services/alerts';
+import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
 import { getMultiRegionExtent } from 'services/forest-data';
 
 const setGladBiodiversityData = createAction('setGladBiodiversityData');
@@ -18,15 +18,23 @@ const getGladBiodiversity = createThunkAction(
       axios
         .all([
           fetchGladIntersectionAlerts({ ...params }),
+          fetchGLADLatest(),
           getMultiRegionExtent({ ...params })
         ])
         .then(
-          axios.spread((alerts, extent) => {
+          axios.spread((alerts, latest, extent) => {
             const { data } = alerts.data;
+            const latestData = latest.data.data;
             const areas = extent.data.data;
             dispatch(
               setGladBiodiversityData(
-                data && extent ? { data, extent: areas } : {}
+                data && extent && latest
+                  ? {
+                    data,
+                    extent: areas,
+                    latest: latestData[0].attributes.date
+                  }
+                  : {}
               )
             );
           })
