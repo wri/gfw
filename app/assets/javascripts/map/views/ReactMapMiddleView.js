@@ -52,6 +52,10 @@ define(
         this.presenter.updateLayer(slug);
       },
 
+      showAlertNotification: function(alert) {
+        this.presenter.notificate(alert);
+      },
+
       getParams: function(e) {
         return this.params;
       },

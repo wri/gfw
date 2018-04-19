@@ -96,6 +96,10 @@ define(
         return {
           recentImagery: this.status.get('recentImagery')
         };
+      },
+
+      notificate: function(id) {
+        mps.publish('Notification/open', [id]);
       }
     });
 

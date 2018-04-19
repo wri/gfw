@@ -14,7 +14,7 @@ export const initialState = {
       left: '50%'
     },
     layerSlug: 'sentinel_tiles',
-    minZoom: 8,
+    minZoom: 9,
     thumbsToShow: 5,
     selectedTileIndex: 0,
     date: null,
