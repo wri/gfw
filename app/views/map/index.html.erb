@@ -1,25 +1,22 @@
-<% content_for :header do %>
-  <h1><a href="/">Global Forest Watch</a></h1>
-
-  <nav id="layers-menu" class="layers-menu">
-
-  </nav>
-
-
+<% content_for :head do %>
+  <%= stylesheet_link_tag "https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css", :media => 'all' %>
+  <%= render 'shared/google_carto' %>
 <% end %>
 
-<%= render 'shared/icons/svg_icons' %>
+<% content_for :header do %>
+  <nav id="layers-menu" class="layers-menu"></nav>
+<% end %>
+
+<%= render 'shared/map' %>
+<%= render 'shared/modal' %>
+<%= render 'shared/notifications' %>
+
 <%= render 'shared/icons/svg_icons_map' %>
 <%= render 'shared/icons/svg_icons_applications' %>
 <%= render 'shared/icons/svg_icons_layers' %>
 <%= render 'shared/icons/svg_icons_country' %>
 
-<%#= render "shared/notice" %>
-<%= render "shared/header_landing" %>
-
-<div class="layout-content">
-  <%= render 'shared/map' %>
-</div>
+<div class="backdrop"></div>
 
 <div id="sources" class='sources notranslate is-hidden'>
   <%= render 'shared/sources_map' %>
@@ -31,3 +28,5 @@
   </div>
 </div>
 <div class="mini-modal download-modal"></div>
+
+<script src="//www.google-analytics.com/cx/api.js"></script>
