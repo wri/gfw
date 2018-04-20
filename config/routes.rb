@@ -39,6 +39,7 @@ Gfw::Application.routes.draw do
 
   # stories
   get '/stayinformed/crowdsourced-stories' => redirect('/stories')
+  get '/stories/crowdsourcedstories' => redirect('/stories')
 
   # stayinformed
   get '/stayinformed' => redirect("/")
