@@ -3,7 +3,6 @@ import WIDGETS_CONFIG from '../../widget-config.json';
 export const initialState = {
   loading: false,
   error: false,
-  activeAlert: {},
   data: {},
   ...WIDGETS_CONFIG.gladAlerts
 };
@@ -27,14 +26,8 @@ export const setGladAlertsLoading = (state, { payload }) => ({
   ...payload
 });
 
-export const setActiveAlert = (state, { payload }) => ({
-  ...state,
-  activeAlert: payload
-});
-
 export default {
   setGladAlertsData,
   setGladAlertsSettings,
-  setGladAlertsLoading,
-  setActiveAlert
+  setGladAlertsLoading
 };

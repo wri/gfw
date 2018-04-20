@@ -34,13 +34,5 @@ describe ApplicationController, type: :controller do
         is_expected.to_not redirect_to("/notsupportedbrowser")
       end
     end
-
-    context "with a unsupported browser" do
-      let(:user_agent) { "Mozilla/4.0 WebTV/2.6 (compatible; MSIE 4.0)" }
-
-      it "redirects to /notsupportedbrowser" do
-        is_expected.to redirect_to("/notsupportedbrowser")
-      end
-    end
   end
 end

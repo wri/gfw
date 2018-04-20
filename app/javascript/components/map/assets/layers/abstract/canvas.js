@@ -10,6 +10,7 @@ class Canvas extends Overlay {
     super(map, OPTIONS);
     this.options = { ...OPTIONS, ...options };
     this.tiles = {};
+    this.updateTilesEnable = true;
   }
 
   getTile(coord, zoom, ownerDocument) {
@@ -143,6 +144,17 @@ class Canvas extends Overlay {
 
   getZoomSteps(z) {
     return z - this.options.dataMaxZoom;
+  }
+
+  updateTiles() {
+    const tilesKeys = Object.keys(this.tiles);
+    for (let i = 0; i < tilesKeys.length; i++) {
+      this.drawCanvasImage(this.tiles[tilesKeys[i]]);
+    }
+  }
+
+  setOptions(options) {
+    this.options = { ...this.options, ...options };
   }
 
   filterCanvasImgdata() {}

@@ -51,14 +51,14 @@ export const getSentence = createSelector(
     const period = getActiveFilter(settings, periods, 'period');
 
     if (deforest) {
-      return `From <b>${period &&
+      return `In <b>${period &&
         period.label}</b>, the rate of deforestation in <b>${
         currentLocation
       }</b> was <b>${format('.3s')(deforest)}ha/yr</b>${
         humdef
           ? `, of which <b>${format('.3s')(
-              humdef
-            )}ha/yr</b> was due to human activity`
+            humdef
+          )}ha/yr</b> was due to human activity`
           : ''
       }.`;
     }

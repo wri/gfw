@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api-proxy-staging.globalforestwatch.org//countries/poland?thresh=30
+    uri: https://api.globalforestwatch.org/countries/poland?thresh=30
     body:
       encoding: US-ASCII
       string: ''
@@ -15,35 +15,16 @@ http_interactions:
       - ''
   response:
     status:
-      code: 404
-      message: Not Found
-    headers:
-      Connection:
-      - keep-alive
-      Server:
-      - nginx
-      Date:
-      - Wed, 05 Jul 2017 13:38:29 GMT
-      Content-Type:
-      - text/html; charset=utf-8
-      Content-Length:
-      - '0'
-      Cache-Control:
-      - no-cache
-      Set-Cookie:
-      - _eauth=eyJ1c2VyX2lkIjpudWxsLCJzZXNzaW9uX2lkIjoieGQ3MldsTkVickV4RjRwN0h2M0pjRyJ9|1499261909|762bebe6d6475215884f8f48fd5626f768741ca0;
-        Domain=.globalforestwatch.org; Path=/
-      X-Cloud-Trace-Context:
-      - 0a57bf1297260045152aac4cb3ad3bb9;o=1
-      Via:
-      - 1.1 vegur
+      code: 0
+      message: 
+    headers: {}
     body:
       encoding: UTF-8
       string: ''
-    http_version: '1.1'
+    http_version: 
     adapter_metadata:
-      effective_url: http://api-proxy-staging.globalforestwatch.org//countries/poland?thresh=30
-  recorded_at: Wed, 05 Jul 2017 13:38:30 GMT
+      effective_url: https://api.globalforestwatch.org/countries/poland?thresh=30
+  recorded_at: Tue, 17 Apr 2018 11:42:24 GMT
 - request:
     method: get
     uri: https://wri-01.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20%27Poland%25%27
@@ -65,7 +46,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Wed, 05 Jul 2017 13:38:30 GMT
+      - Tue, 17 Apr 2018 11:42:24 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -74,13 +55,15 @@ http_interactions:
       - keep-alive
       Vary:
       - Accept-Encoding
-      - Accept-Encoding
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
+      vary:
+      - Accept-Encoding
+      - Authorization
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Wed, 05 Jul 2017 13:38:30
+      - inline; filename=cartodb-query.json; modification-date="Tue, 17 Apr 2018 11:42:24
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -89,9 +72,9 @@ http_interactions:
       Last-Modified:
       - Wed, 07 Sep 2016 10:27:19 GMT
       X-SQLAPI-Profiler:
-      - '{"setDBAuth":1,"queryExplain":6,"beforeSink":2,"total":9}'
+      - '{"getConnectionParams":1,"getUserTimeoutLimits":1,"queryExplain":6,"eventedQuery":1,"beforeSink":1,"total":10}'
       X-Varnish:
-      - '269939935'
+      - '2054175295'
       Age:
       - '0'
       X-Cache:
@@ -103,5 +86,5 @@ http_interactions:
     http_version: '1.1'
     adapter_metadata:
       effective_url: https://wri-01.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'Poland%25'
-  recorded_at: Wed, 05 Jul 2017 13:38:30 GMT
-recorded_with: VCR 3.0.3
+  recorded_at: Tue, 17 Apr 2018 11:42:25 GMT
+recorded_with: VCR 4.0.0

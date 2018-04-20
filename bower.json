@@ -56,7 +56,7 @@
   },
   "resolutions": {
     "jquery": "1.11.1",
-    "underscore": "1.8.3"
+    "underscore": ">=1.8.3 <2.0"
   },
   "devDependencies": {}
 }
