@@ -1,6 +1,7 @@
 class Overlay {
-  constructor(map, options) {
+  constructor(map, index, options) {
     this.map = map;
+    this.index = index;
     this.tileSize = new google.maps.Size(256, 256); // eslint-disable-line
     this.options = { ...options };
   }

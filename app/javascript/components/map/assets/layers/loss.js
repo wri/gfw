@@ -11,8 +11,8 @@ const OPTIONS = {
 };
 
 class Loss extends Canvas {
-  constructor(map, options) {
-    super(map, options);
+  constructor(map, index, options) {
+    super(map, index, options);
     this.options = { ...OPTIONS, ...options };
   }
 
@@ -51,6 +51,24 @@ class Loss extends Canvas {
       .replace('{y}', y)
       .replace('{z}', z)
       .replace('{threshold}', this.options.threshold);
+  }
+
+  setOptions(options) {
+    if (this.options.threshold !== options.threshold) {
+      this.updateTilesEnable = false;
+    }
+    this.options = { ...this.options, ...options };
+  }
+
+  updateTiles(updatedLayer) {
+    if (this.updateTilesEnable) {
+      const tilesKeys = Object.keys(this.tiles);
+      for (let i = 0; i < tilesKeys.length; i++) {
+        this.drawCanvasImage(this.tiles[tilesKeys[i]]);
+      }
+    } else {
+      this.map.overlayMapTypes.setAt(this.index, updatedLayer);
+    }
   }
 }
 

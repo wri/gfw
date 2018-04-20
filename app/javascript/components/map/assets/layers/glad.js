@@ -29,8 +29,8 @@ const getIntensity = number => {
 };
 
 class Glad extends Canvas {
-  constructor(map, options) {
-    super(map, options);
+  constructor(map, index, options) {
+    super(map, index, options);
     this.options = { ...OPTIONS, ...options };
     this.tiles = {};
   }

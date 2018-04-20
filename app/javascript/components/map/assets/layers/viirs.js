@@ -21,8 +21,8 @@ const OPTIONS = {
 };
 
 class Viirs extends CartoDB {
-  constructor(map, options) {
-    super(map, options);
+  constructor(map, index, options) {
+    super(map, index, options);
     this.options = { ...OPTIONS, ...options };
     this.currentDate = getRangeForDates(
       options.currentDate || [moment().subtract(8, 'days'), moment()]

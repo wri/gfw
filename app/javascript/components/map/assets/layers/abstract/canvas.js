@@ -6,10 +6,11 @@ const OPTIONS = {
 };
 
 class Canvas extends Overlay {
-  constructor(map, options) {
-    super(map, OPTIONS);
+  constructor(map, index, options) {
+    super(map, index, OPTIONS);
     this.options = { ...OPTIONS, ...options };
     this.tiles = {};
+    this.updateTilesEnable = true;
   }
 
   getTile(coord, zoom, ownerDocument) {

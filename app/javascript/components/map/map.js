@@ -129,7 +129,7 @@ class MapContainer extends PureComponent {
     if (layers && layers.length) {
       layers.forEach((slug, index) => {
         const layerSettings = { ...layerSpec[slug], ...settings };
-        const newLayer = new Layers[slug](this.map, layerSettings);
+        const newLayer = new Layers[slug](this.map, index, layerSettings);
         newLayer.getLayer().then(res => {
           const runningLayerIndex = findIndex(
             this.runningLayers,
@@ -141,7 +141,7 @@ class MapContainer extends PureComponent {
           ) {
             const { layer } = this.runningLayers[runningLayerIndex];
             layer.setOptions(res.options);
-            layer.updateTiles();
+            layer.updateTiles(res);
           } else {
             this.runningLayers[index] = {
               slug,

@@ -9,8 +9,8 @@ const OPTIONS = {
 };
 
 class ForestCover extends Canvas {
-  constructor(map, options) {
-    super(map, options);
+  constructor(map, index, options) {
+    super(map, index, options);
     this.options = { ...OPTIONS, ...options };
   }
 
