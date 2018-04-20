@@ -7,7 +7,6 @@ import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
 const setGladAlertsLoading = createAction('setGladAlertsLoading');
 const setGladAlertsData = createAction('setGladAlertsData');
 const setGladAlertsSettings = createAction('setGladAlertsSettings');
-const setActiveAlert = createAction('setActiveAlert');
 
 const getGladAlerts = createThunkAction(
   'getGladAlerts',
@@ -42,6 +41,5 @@ export default {
   setGladAlertsData,
   setGladAlertsSettings,
   setGladAlertsLoading,
-  getGladAlerts,
-  setActiveAlert
+  getGladAlerts
 };

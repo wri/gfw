@@ -406,7 +406,9 @@
     "settings": {
       "period": "week",
       "weeks": 13,
-      "layers": ["umd_as_it_happens"]
+      "layers": ["umd_as_it_happens"],
+      "layerStartDate": null,
+      "layerEndDate": null
     },
     "enabled": true
   },

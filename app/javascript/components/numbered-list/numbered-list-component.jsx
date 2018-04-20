@@ -41,7 +41,7 @@ class NumberedList extends PureComponent {
                   <div className="item-value">
                     {unitFormat
                       ? unitFormat(item.value)
-                      : format(item.value < 1 ? '.2f' : '.3s')(item.value)}
+                      : format('.3s')(item.value)}
                     {unit}
                   </div>
                 </div>
