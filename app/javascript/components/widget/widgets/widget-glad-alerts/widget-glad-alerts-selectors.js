@@ -16,9 +16,9 @@ const MIN_YEAR = 2015;
 // get list data
 const getAlerts = state => state.alerts || null;
 const getLatestDates = state => state.latest || null;
-const getSettings = state => state.settings || null;
 const getColors = state => state.colors || null;
 const getActiveData = state => state.activeData || null;
+const getWeeks = state => (state.settings && state.settings.weeks) || null;
 
 const getYearsObj = (data, startSlice, endSlice) => {
   const grouped = groupBy(data, 'year');
@@ -159,13 +159,10 @@ export const getDates = createSelector([getStdDev], data => {
   }));
 });
 
-export const chartData = createSelector(
-  [getDates, getSettings],
-  (data, settings) => {
-    if (!data) return null;
-    return data.slice(-settings.weeks);
-  }
-);
+export const chartData = createSelector([getDates, getWeeks], (data, weeks) => {
+  if (!data) return null;
+  return data.slice(-weeks);
+});
 
 export const chartConfig = createSelector(
   [getColors, chartData],

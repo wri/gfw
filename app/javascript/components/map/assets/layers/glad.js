@@ -1,5 +1,6 @@
 import { fetchGLADLatest } from 'services/alerts';
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 import Canvas from './abstract/canvas';
 
 const OPTIONS = {
@@ -57,28 +58,43 @@ class Glad extends Canvas {
   }
 
   filterCanvasImgdata(imgdata, w, h) {
+    // fixed variables
     const imageData = imgdata;
-    const startDate = this.options.startDate;
-    const endDate = moment(this.endDate);
-    const customRangeDays = this.options.weeks && this.options.weeks * 7;
-    const numberOfDays = endDate.diff(startDate, 'days');
-    const customRangeStartDate = numberOfDays - customRangeDays;
+    const absStartDate = this.options.startDate;
+    const absEndDate = moment(this.endDate);
+    const numberOfDays = absEndDate.diff(absStartDate, 'days');
+
+    // timeline or hover effect active range
+    const { activeData } = this.options;
+    const activeStartDay =
+      !isEmpty(activeData) &&
+      numberOfDays - absEndDate.diff(activeData.startDate, 'days');
+    const activeEndDay =
+      !isEmpty(activeData) &&
+      numberOfDays - absEndDate.diff(activeData.endDate, 'days');
+
+    // show specified weeks from end date
+    const { weeks } = this.options;
+    const rangeStartDate = weeks && numberOfDays - 7 * weeks;
+
+    // get start and end day
+    const startDay = activeStartDay || rangeStartDate || 0;
+    const endDay = activeEndDay || numberOfDays;
 
     const confidenceValue = -1;
     const pixelComponents = 4; // RGBA
-
     let pixelPos = 0;
     for (let i = 0; i < w; ++i) {
       for (let j = 0; j < h; ++j) {
         pixelPos = (j * w + i) * pixelComponents;
-        // day 0 is 2015-01-01 until current day
+        // day 0 is 2015-01-01 until latest date from fetch
         const day = imageData[pixelPos] * 255 + imageData[pixelPos + 1];
         const band3 = imgdata[pixelPos + 2];
         const confidence = getConfidence(imgdata[band3]);
 
         if (
           confidence >= confidenceValue &&
-          (day >= customRangeStartDate || (0 && day <= numberOfDays))
+          (day >= startDay || (0 && day <= endDay))
         ) {
           const intensity = getIntensity(band3);
           if (day >= numberOfDays - 7 && day <= numberOfDays) {
