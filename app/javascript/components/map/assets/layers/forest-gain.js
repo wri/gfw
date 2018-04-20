@@ -7,8 +7,8 @@ const OPTIONS = {
 };
 
 class ForestGain extends ImageLayer {
-  constructor(map, index, options) {
-    super(map, index, options);
+  constructor(map, options) {
+    super(map, options);
     this.options = { ...OPTIONS, ...options };
   }
 }

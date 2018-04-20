@@ -6,8 +6,8 @@ const OPTIONS = {
 };
 
 class Canvas extends Overlay {
-  constructor(map, index, options) {
-    super(map, index, OPTIONS);
+  constructor(map, options) {
+    super(map, OPTIONS);
     this.options = { ...OPTIONS, ...options };
     this.tiles = {};
     this.updateTilesEnable = true;

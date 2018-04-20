@@ -18,8 +18,8 @@ const OPTIONS = {
 };
 
 class ProtectedAreas extends CartoDB {
-  constructor(map, index, options) {
-    super(map, index, options);
+  constructor(map, options) {
+    super(map, options);
     this.options = { ...OPTIONS, ...options };
   }
 }
