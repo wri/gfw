@@ -4,7 +4,17 @@
 <% end %>
 
 <% content_for :header do %>
-  <nav id="layers-menu" class="layers-menu"></nav>
+  <div class="layout-header-bottom" id="layers-options">
+  	<div class="inner">
+      <nav id="layers-menu" class="layers-menu"></nav>
+  	</div>
+  </div>
+  <div class="layout-share-mobile">
+    <a href="#" class="share-link" data-hideembed="1"><svg><use xlink:href="#shape-share"></use></svg></a>
+    <% if content_for?(:headerMobile) %>
+      <%= yield :headerMobile %>
+    <% end %>
+  </div>
 <% end %>
 
 <%= render 'shared/map' %>
