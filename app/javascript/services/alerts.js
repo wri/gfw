@@ -1,11 +1,12 @@
 import axios from 'axios';
-import moment from 'moment';
+// import moment from 'moment';
 
 const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}`;
-const DATASET = process.env.GLAD_PRECALC_DATASET;
+const ISO_DATASET = process.env.ISO_GLAD_SUMMARY;
+const ADM1_DATASET = process.env.ADM1_GLAD_SUMMARY;
+const ADM2_DATASET = process.env.ADM2_GLAD_SUMMARY;
 
 const QUERIES = {
-  gladAlerts: '{location}?aggregate_values=true&aggregate_by={period}',
   gladIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   viirsAlerts:
@@ -20,22 +21,27 @@ const getLocation = (country, region, subRegion) =>
     subRegion ? ` AND adm2 = ${subRegion}` : ''
   }`;
 
-export const fetchGladAlerts = ({ country, region, subRegion, period }) => {
-  const url = `${REQUEST_URL}/glad-alerts/admin/${QUERIES.gladAlerts}`
-    .replace('{location}', getLocationQuery(country, region, subRegion))
-    .replace('{period}', period || 'week');
+export const fetchGladAlerts = ({ country, region, subRegion }) => {
+  let glad_summary_table = ISO_DATASET;
+  if (subRegion) {
+    glad_summary_table = ADM2_DATASET;
+  } else if (region) {
+    glad_summary_table = ADM1_DATASET;
+  }
+  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
+    QUERIES.gladIntersectionAlerts
+  }`
+    .replace('{location}', getLocation(country, region, subRegion))
+    .replace('{polyname}', 'gadm28');
   return axios.get(url);
 };
 
 export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
   const url = `${REQUEST_URL}/query/${
-    region
-      ? '428db321-5ebb-4e86-a3df-32c63b6d3c83'
-      : 'dda5f07e-fd81-436d-abe3-f880d5e5c280'
+    region ? ADM2_DATASET : ISO_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
     .replace('{polyname}', indicator);
-
   return axios.get(url);
 };
 
