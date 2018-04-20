@@ -1,9 +1,5 @@
 class LandingController < ApplicationController
 
-  def is_number?(string)
-    true if Float(string) rescue false
-  end
-
   def index
     require 'open-uri'
     @title = 'Forest monitoring designed for action'
