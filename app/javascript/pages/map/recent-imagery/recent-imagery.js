@@ -165,7 +165,7 @@ class RecentImageryContainer extends PureComponent {
     });
     if (zoom < minZoom) {
       map.setZoom(minZoom);
-      this.middleView.showAlertNotification('notification-zoom-go-back');
+      this.middleView.showZoomAlert('notification-zoom-go-back', zoom);
     }
   }
 
