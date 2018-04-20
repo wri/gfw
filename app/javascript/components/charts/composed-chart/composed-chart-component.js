@@ -44,7 +44,13 @@ class CustomComposedChart extends PureComponent {
       unitFormat,
       height
     } = this.props.config;
-    const { className, data, config, handleMouseMove } = this.props;
+    const {
+      className,
+      data,
+      config,
+      handleMouseMove,
+      handleMouseLeave
+    } = this.props;
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
@@ -56,6 +62,7 @@ class CustomComposedChart extends PureComponent {
             margin={{ top: 15, right: 0, left: 42, bottom: 0 }}
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
             <defs>
               {gradients &&
@@ -137,6 +144,7 @@ CustomComposedChart.propTypes = {
   config: PropTypes.object,
   className: PropTypes.string,
   handleMouseMove: PropTypes.func,
+  handleMouseLeave: PropTypes.func,
   backgroundColor: PropTypes.string
 };
 

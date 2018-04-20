@@ -131,7 +131,7 @@ class WidgetSettings extends PureComponent {
         {periods && (
           <Dropdown
             theme="theme-select-light"
-            label="PERIOD"
+            label="YEAR"
             value={settings.period}
             options={periods}
             onChange={option =>
