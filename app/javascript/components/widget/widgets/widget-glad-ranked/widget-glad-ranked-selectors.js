@@ -8,6 +8,7 @@ import moment from 'moment';
 
 // get list data
 const getData = state => state.data || null;
+const getLatestDates = state => state.latest || null;
 const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
@@ -18,13 +19,33 @@ const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 
 export const getSortedData = createSelector(
-  [getData, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
-  (data, extent, settings, location, meta, colors) => {
+  [
+    getData,
+    getLatestDates,
+    getExtent,
+    getSettings,
+    getLocation,
+    getLocationsMeta,
+    getColors
+  ],
+  (data, latest, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
+    const latestWeek = moment(latest)
+      .subtract(1, 'weeks')
+      .week();
+    const latestYear = moment(latest)
+      .subtract(1, 'weeks')
+      .year();
     const alertsByDate = data.filter(d =>
-      moment(new Date(d.date)).isAfter(
-        moment.utc().subtract(settings.weeks, 'weeks')
-      )
+      moment()
+        .week(d.week)
+        .year(d.year)
+        .isAfter(
+          moment()
+            .week(latestWeek)
+            .year(latestYear)
+            .subtract(settings.weeks, 'weeks')
+        )
     );
     const groupedAlerts = groupBy(
       alertsByDate,
