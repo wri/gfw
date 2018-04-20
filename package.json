@@ -18,7 +18,7 @@
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
     "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
     "test": "bundle exec rspec && $(npm bin)/cypress run",
-    "test:open": "$(npm bin)/cypress open",
+    "test:open": "npx cypress open",
     "test-ci": "bundle exec rake && $(npm bin)/cypress run --record"
   },
   "repository": {

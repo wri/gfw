@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 
@@ -14,13 +15,13 @@ import {
 import WidgetGladAlertsComponent from './widget-glad-alerts-component';
 
 const mapStateToProps = ({ widgetGladAlerts }, ownProps) => {
-  const { data, settings, activeAlert } = widgetGladAlerts;
+  const { data, settings } = widgetGladAlerts;
   const { colors } = ownProps;
   const selectorData = {
     ...data,
     settings,
     colors,
-    activeData: activeAlert
+    activeData: settings.activeData
   };
   return {
     data: chartData(selectorData),
@@ -35,7 +36,7 @@ class WidgetGladAlertsContainer extends PureComponent {
     getGladAlerts({ ...location, ...settings });
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     const { getGladAlerts, location, settings } = nextProps;
 
     if (!isEqual(location, this.props.location)) {
@@ -44,21 +45,39 @@ class WidgetGladAlertsContainer extends PureComponent {
   }
 
   handleMouseMove = debounce(data => {
+    const { setGladAlertsSettings } = this.props;
     let activeData = {};
-    const { setActiveAlert } = this.props;
     if (data) {
       const { activePayload } = data && data;
-      activeData =
+      const payload =
         activePayload && activePayload.find(d => d.name === 'count').payload;
+      const startDate =
+        payload &&
+        moment()
+          .year(payload.year)
+          .week(payload.week);
+      if (payload) {
+        activeData = {
+          ...payload,
+          startDate,
+          endDate: startDate && startDate.add(7, 'days')
+        };
+      }
     }
-    setActiveAlert(activeData);
+    setGladAlertsSettings({ activeData });
+  }, 100);
+
+  handleMouseLeave = debounce(() => {
+    const { setGladAlertsSettings } = this.props;
+    setGladAlertsSettings({ activeData: {} });
   }, 100);
 
   render() {
     return createElement(WidgetGladAlertsComponent, {
       ...this.props,
       getSentence: this.getSentence,
-      handleMouseMove: this.handleMouseMove
+      handleMouseMove: this.handleMouseMove,
+      handleMouseLeave: this.handleMouseLeave
     });
   }
 }
@@ -67,7 +86,7 @@ WidgetGladAlertsContainer.propTypes = {
   settings: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   getGladAlerts: PropTypes.func.isRequired,
-  setActiveAlert: PropTypes.func.isRequired
+  setGladAlertsSettings: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
