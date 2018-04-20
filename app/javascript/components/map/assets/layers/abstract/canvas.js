@@ -10,6 +10,7 @@ class Canvas extends Overlay {
     super(map, OPTIONS);
     this.options = { ...OPTIONS, ...options };
     this.tiles = {};
+    this.updateTilesEnable = true;
   }
 
   getTile(coord, zoom, ownerDocument) {
