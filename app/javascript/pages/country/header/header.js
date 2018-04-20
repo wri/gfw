@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     {
       handleCountryChange: country => ({
         type: COUNTRY,
-        payload: { country: country.value },
+        payload: { country: country && country.value },
         query: newQuery
       }),
       handleRegionChange: (country, region) => ({

@@ -75,6 +75,11 @@ Gfw::Application.routes.draw do
   # country
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
 
+  # countries
+  get '/countries' => redirect('/country')
+  get '/countries/overview' => redirect('/country')
+  get '/embed/countries/overview' => redirect('/country')
+
   ########### /LEGACY #############
 
   ########### ACTIVE ROUTES #############
@@ -96,14 +101,9 @@ Gfw::Application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
-  # countries
-  get '/countries' => 'countries#index'
-  get '/countries/overview' => 'countries#overview'
-  get '/embed/countries/overview' => 'embed#countries_overview'
-
   # country dashboard
   get '/country/embed/:widget/:iso(/:region)(/:sub_region)' => 'country#embed'
-  get '/country/:iso(/:region)(/:sub_region)' => 'country#show', as: :country
+  get '/country(/:iso)(/:region)(/:sub_region)' => 'country#show', as: :country
   get '/embed/country/:id' => 'embed#countries_show'
   get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
   get '/embed/country/:id/:area_id' => 'embed#countries_show'

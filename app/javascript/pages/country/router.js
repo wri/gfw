@@ -1,4 +1,4 @@
-import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
+import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import queryString from 'query-string';
 import { setWidgetSettingsStore } from 'components/widget/widget-actions';
@@ -25,11 +25,7 @@ export const routes = {
     path: '/country/embed/:widget/:country/:region?/:subRegion?'
   },
   [COUNTRY]: {
-    path: '/country/:country/:region?/:subRegion?'
-  },
-  [NOT_FOUND]: {
-    path: '/404',
-    thunk: dispatch => dispatch(redirect({ type: COUNTRY }))
+    path: '/country/:country?/:region?/:subRegion?'
   }
 };
 

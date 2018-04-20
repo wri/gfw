@@ -70,7 +70,7 @@ class Header extends PureComponent {
                 theme="theme-dropdown-dark"
                 placeholder="Country"
                 noItemsFound="No country found"
-                noSelectedValue="Country"
+                noSelectedValue="Global"
                 value={locationNames.country}
                 options={locationOptions.countries}
                 onChange={handleCountryChange}
@@ -81,8 +81,10 @@ class Header extends PureComponent {
                   delay: 1000
                 }}
                 arrowPosition="left"
+                clearable
               />
-              {locationOptions.regions &&
+              {location.country &&
+                locationOptions.regions &&
                 locationOptions.regions.length > 1 && (
                   <Dropdown
                     theme="theme-dropdown-dark"
@@ -104,7 +106,8 @@ class Header extends PureComponent {
                     clearable
                   />
                 )}
-              {locationNames.region &&
+              {location.region &&
+                locationNames.region &&
                 locationNames.region.value &&
                 locationOptions.subRegions &&
                 locationOptions.subRegions.length > 1 && (
