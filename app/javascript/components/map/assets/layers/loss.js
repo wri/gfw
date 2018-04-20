@@ -59,17 +59,6 @@ class Loss extends Canvas {
     }
     this.options = { ...this.options, ...options };
   }
-
-  updateTiles(updatedLayer) {
-    if (this.updateTilesEnable) {
-      const tilesKeys = Object.keys(this.tiles);
-      for (let i = 0; i < tilesKeys.length; i++) {
-        this.drawCanvasImage(this.tiles[tilesKeys[i]]);
-      }
-    } else {
-      this.map.overlayMapTypes.setAt(this.index, updatedLayer);
-    }
-  }
 }
 
 export default Loss;

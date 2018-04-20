@@ -141,20 +141,25 @@ class MapContainer extends PureComponent {
           ) {
             const { layer } = this.runningLayers[runningLayerIndex];
             layer.setOptions(res.options);
-            layer.updateTiles(res);
+            if (layer.updateTilesEnable) {
+              layer.updateTiles();
+            } else {
+              this.setRunningLayer(index, slug, res);
+            }
           } else {
-            this.runningLayers[index] = {
-              slug,
-              layer: res
-            };
-            this.map.overlayMapTypes.setAt(
-              index,
-              this.runningLayers[index].layer
-            );
+            this.setRunningLayer(index, slug, res);
           }
         });
       });
     }
+  };
+
+  setRunningLayer = (index, slug, layer) => {
+    this.runningLayers[index] = {
+      slug,
+      layer
+    };
+    this.map.overlayMapTypes.setAt(index, this.runningLayers[index].layer);
   };
 
   updateZoom(zoom) {
