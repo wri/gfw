@@ -40,7 +40,7 @@ export const getFilteredData = createSelector(
       label: d.name,
       color: colors.main,
       path: `/country/${d.iso}`,
-      value: d.rate
+      value: d.rate * 1000
     }));
   }
 );
