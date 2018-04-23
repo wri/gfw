@@ -66,11 +66,12 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
+              {!location.country && <h3>Global</h3>}
               <Dropdown
                 theme="theme-dropdown-dark"
                 placeholder="Country"
                 noItemsFound="No country found"
-                noSelectedValue="Global"
+                noSelectedValue="Select a country"
                 value={locationNames.country}
                 options={locationOptions.countries}
                 onChange={handleCountryChange}
@@ -90,7 +91,7 @@ class Header extends PureComponent {
                     theme="theme-dropdown-dark"
                     placeholder="Region"
                     noItemsFound="No region found"
-                    noSelectedValue="All Regions"
+                    noSelectedValue="Select a region"
                     value={locationNames.region}
                     options={locationOptions.regions}
                     onChange={region =>
@@ -115,7 +116,7 @@ class Header extends PureComponent {
                     theme="theme-dropdown-dark"
                     placeholder="Region"
                     noItemsFound="No region found"
-                    noSelectedValue="All Regions"
+                    noSelectedValue="Select a region"
                     value={locationNames.subRegion}
                     options={locationOptions.subRegions}
                     onChange={subRegion =>
