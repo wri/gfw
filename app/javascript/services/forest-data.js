@@ -242,6 +242,5 @@ export const getGainRanked = ({
     .replace('{location}', location)
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{polyname}', indicator);
-  console.log(url)
   return axios.get(url);
 };
