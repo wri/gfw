@@ -43,7 +43,7 @@ const getExtentYear = year =>
   (year === 2000 ? 'area_extent_2000' : 'area_extent');
 
 const getLocationQuery = (country, region, subRegion) =>
-  `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
+  `${country ? ` iso = '${country}'` : ''}${region ? ` AND adm1 = ${region}` : ''}${
     subRegion ? ` AND adm2 = ${subRegion}` : ''
   }`;
 
@@ -111,6 +111,7 @@ export const getExtent = ({
     .replace('{threshold}', threshold)
     .replace('{indicator}', indicator)
     .replace('{extentYear}', getExtentYear(extentYear));
+  console.log(`HERE---------------->`, url)
   return axios.get(url);
 };
 
