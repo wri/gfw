@@ -24,7 +24,7 @@ http_interactions:
     http_version: 
     adapter_metadata:
       effective_url: https://api.globalforestwatch.org/countries/poland?thresh=30
-  recorded_at: Tue, 17 Apr 2018 11:42:24 GMT
+  recorded_at: Mon, 23 Apr 2018 16:17:58 GMT
 - request:
     method: get
     uri: https://wri-01.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20%27Poland%25%27
@@ -46,7 +46,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Tue, 17 Apr 2018 11:42:24 GMT
+      - Mon, 23 Apr 2018 16:17:58 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -63,7 +63,7 @@ http_interactions:
       - Accept-Encoding
       - Authorization
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Tue, 17 Apr 2018 11:42:24
+      - inline; filename=cartodb-query.json; modification-date="Mon, 23 Apr 2018 16:17:58
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -72,9 +72,9 @@ http_interactions:
       Last-Modified:
       - Wed, 07 Sep 2016 10:27:19 GMT
       X-SQLAPI-Profiler:
-      - '{"getConnectionParams":1,"getUserTimeoutLimits":1,"queryExplain":6,"eventedQuery":1,"beforeSink":1,"total":10}'
+      - '{"getUserTimeoutLimits":1,"queryExplain":5,"eventedQuery":1,"beforeSink":1,"total":8}'
       X-Varnish:
-      - '2054175295'
+      - '588299178'
       Age:
       - '0'
       X-Cache:
@@ -86,5 +86,5 @@ http_interactions:
     http_version: '1.1'
     adapter_metadata:
       effective_url: https://wri-01.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'Poland%25'
-  recorded_at: Tue, 17 Apr 2018 11:42:25 GMT
+  recorded_at: Mon, 23 Apr 2018 16:17:58 GMT
 recorded_with: VCR 4.0.0
