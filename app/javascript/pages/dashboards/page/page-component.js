@@ -72,7 +72,7 @@ class Page extends PureComponent {
           <div className="widgets">
             {loading && <Loader className="widgets-loader large" />}
             {!loading &&
-              currentLocation &&
+              // currentLocation &&
               widgets &&
               widgets.length > 0 &&
               widgets.map(widget => (
@@ -82,20 +82,16 @@ class Page extends PureComponent {
                   active={activeWidget && activeWidget.name === widget.name}
                 />
               ))}
-            {!loading &&
-              (!currentLocation || (!widgets || widgets.length === 0)) && (
+            {(!loading && !widgets) ||
+              (widgets.length === 0 && (
                 <NoContent
                   className="no-widgets-message large"
-                  message={
-                    currentLocation
-                      ? `${upperFirst(category)} data for ${
-                        currentLocation
-                      } coming soon`
-                      : 'Please select a country'
-                  }
+                  message={`${upperFirst(
+                    category
+                  )} data for ${currentLocation || 'global'} coming soon`}
                   icon
                 />
-              )}
+              ))}
           </div>
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
