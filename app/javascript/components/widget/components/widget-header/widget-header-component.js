@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
-import { COUNTRY } from 'pages/country/router';
+import { COUNTRY } from 'pages/dashboards/router';
 import { isTouch } from 'utils/browser';
 import { SCREEN_L } from 'utils/constants';
 

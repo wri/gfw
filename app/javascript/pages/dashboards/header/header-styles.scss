@@ -1,0 +1,80 @@
+@import '~styles/settings.scss';
+
+.c-header {
+  position: relative;
+  background-color: $slate-light;
+  min-height: rem(350px);
+  padding: rem(50px) 0 rem(30px);
+  width: 100%;
+
+  @media screen and(min-width: $screen-l) {
+    padding: rem(70px) rem(30px) rem(80px) 0;
+  }
+
+  .share-buttons {
+    position: absolute;
+    right: rem(20px);
+    top: rem(20px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    > * {
+      margin-left: rem(5px);
+    }
+  }
+
+  .loader {
+    z-index: 10;
+
+    @media screen and (min-width: $screen-xl) {
+      padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
+    }
+  }
+
+  .select-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-l) {
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-size: 42px;
+      margin-left: 30px;
+      font-weight: 300;
+      color: $white;
+    }
+
+    > div {
+      margin-bottom: rem(5px);
+    }
+  }
+
+  .description {
+    color: rgba($white, 0.9);
+    line-height: 1.6;
+    margin-top: rem(10px);
+
+    p {
+      margin-bottom: rem(15px);
+
+      @media screen and (min-width: $screen-l) {
+        margin-bottom: rem(30px);
+      }
+    }
+
+    b {
+      color: $green-gfw;
+    }
+  }
+
+  .forest-atlas-btn {
+    margin-bottom: rem(20px);
+    max-width: rem(200px);
+  }
+}
