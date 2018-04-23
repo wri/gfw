@@ -215,7 +215,12 @@ class RecentImageryContainer extends PureComponent {
       this.boundsPolygonInfowindow.close();
     }
     this.boundsPolygonInfowindow = new google.maps.InfoWindow({
-      content: `<div class="recent-imagery-infowindow">${description}</div>`,
+      content: `
+        <div class="recent-imagery-infowindow">
+          ${description}
+          <div class="recent-imagery-infowindow__arrow"></div>
+        </div>
+      `,
       position: polygonCenter.top
     });
   }
