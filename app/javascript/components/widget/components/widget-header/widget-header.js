@@ -40,7 +40,7 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
       subtitle: `${title} in ${
         locationNames.current ? locationNames.current.label : ''
       }`,
-      shareUrl: `http://${window.location.host}/country/${locationUrl}?${
+      shareUrl: `http://${window.location.host}/dashboards/${locationUrl}?${
         location.query && location.query.category
           ? `category=${location.query.category}&`
           : ''

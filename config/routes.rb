@@ -75,9 +75,9 @@ Gfw::Application.routes.draw do
   # country
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
   get '/country',to: redirect('/dashboards')
-  get '/country/:iso', to: redirect { |params, req| "/dashboards/#{params[:iso]}?#{req.params.to_query}" }
-  get '/country/:iso/:region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}?#{req.params.to_query}" }
-  get '/country/:iso/:region/:sub_region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?#{req.params.to_query}" }
+  get '/country/:iso', to: redirect { |params, req| "/dashboards/#{params[:iso]}?#{req.params.except!(:iso).to_query}" }
+  get '/country/:iso/:region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}?#{req.params.except!(:iso, :region).to_query}" }
+  get '/country/:iso/:region/:sub_region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?#{req.params.except!(:iso, :region, :sub_region).to_query}" }
 
   # countries
   get '/countries' => redirect('/dashboards')
