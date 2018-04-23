@@ -226,27 +226,18 @@ class RecentImageryContainer extends PureComponent {
     let clickTimeout = null;
 
     google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
-      const zoom = map.getZoom();
-      if (zoom < 10) {
-        this.boundsPolygon.setOptions({
-          fillColor: '#000000',
-          fillOpacity: 0.1,
-          strokeColor: '#000000',
-          strokeOpacity: 0.5,
-          strokeWeight: 1
-        });
-        this.boundsPolygonInfowindow.open(map);
-      }
+      this.boundsPolygon.setOptions({
+        strokeColor: '#000000',
+        strokeOpacity: 0.5,
+        strokeWeight: 1
+      });
+      this.boundsPolygonInfowindow.open(map);
     });
     google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
-      const zoom = map.getZoom();
-      if (zoom < 10) {
-        this.boundsPolygon.setOptions({
-          fillColor: 'transparent',
-          strokeWeight: 0
-        });
-        this.boundsPolygonInfowindow.close();
-      }
+      this.boundsPolygon.setOptions({
+        strokeWeight: 0
+      });
+      this.boundsPolygonInfowindow.close();
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
