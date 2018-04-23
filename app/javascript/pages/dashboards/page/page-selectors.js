@@ -119,7 +119,7 @@ export const getLinks = createSelector(
       };
       return {
         label: category.label,
-        path: `/country/${locationUrl}?${qs.stringify(newQuery)}`,
+        path: `/dashboards/${locationUrl}?${qs.stringify(newQuery)}`,
         active: activeCategory === category.value
       };
     })

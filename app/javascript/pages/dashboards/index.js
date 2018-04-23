@@ -26,10 +26,10 @@ const store = createStore(
 );
 const state = store.getState();
 
-const Country = () => (
+const Dashboards = () => (
   <Provider store={store}>
     {state.location.type === EMBED ? <Embed /> : <Page />}
   </Provider>
 );
 
-export default Country;
+export default Dashboards;

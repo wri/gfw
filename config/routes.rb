@@ -75,15 +75,14 @@ Gfw::Application.routes.draw do
   # country
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
   get '/country',to: redirect('/dashboards')
-  get '/country/:iso',to: redirect('/dashboards/%{iso}')
-  get '/country/:iso/:region',to: redirect('/dashboards/%{iso}/%{region}')
-  get '/country/:iso/:region/:sub_region',to: redirect('/dashboards/%{iso}/%{region}/%{sub_region}')
+  get '/country/:iso', to: redirect { |params, req| "/dashboards/#{params[:iso]}?#{req.params.to_query}" }
+  get '/country/:iso/:region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}?#{req.params.to_query}" }
+  get '/country/:iso/:region/:sub_region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?#{req.params.to_query}" }
 
   # countries
   get '/countries' => redirect('/dashboards')
-  get '/countries/overview' => redirect('/dashboards')
-  get '/embed/countries/overview' => redirect('/dashboards')
   get '/countries/*all' => redirect('/dashboards')
+  get '/embed/countries/overview' => redirect('/dashboards')
 
   ########### /LEGACY #############
 
