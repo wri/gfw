@@ -27,7 +27,7 @@
     height: calc(100vh - #{rem(36px)});
   }
 
-  @media screen and (min-width: 62.5rem) {
+  @media screen and (min-width: rem(1300px)) {
     display: block;
   }
 }
