@@ -1,17 +1,7 @@
-class Country
+class Dashboards
   class << self
     def base_path
       "#{ENV['CARTO_API_URL']}/sql?q="
-    end
-
-    def find_all
-      url = "#{ENV['GFW_API_HOST_HTTP']}/countries"
-      response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
-      if response.success?
-        JSON.parse(response.body)['countries']
-      else
-        nil
-      end
     end
 
     def find_by_iso_or_name(value)

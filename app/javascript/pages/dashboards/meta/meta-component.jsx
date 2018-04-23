@@ -12,13 +12,17 @@ class Meta extends PureComponent {
         <title>{`${page} | Global Forest Watch`}</title>
         <meta
           name="description"
-          content={`Data about forest change, tenure, forest related employment and land use in ${page}`}
+          content={`Data about forest change, tenure, forest related employment and land use in ${
+            page
+          }`}
         />
         <meta name="DC.title" content={`${page} | Global Forest Watch`} />
         <meta property="og:title" content={`${page} | Global Forest Watch`} />
         <meta
           property="og:description"
-          content={`Data about forest change, tenure, forest related employment and land use in ${page}`}
+          content={`Data about forest change, tenure, forest related employment and land use in ${
+            page
+          }`}
         />
         <meta property="og:url" content={window.location.href} />
       </Helmet>

@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { COUNTRY } from 'pages/country/router';
+import { COUNTRY } from 'pages/dashboards/router';
 import isEqual from 'lodash/isEqual';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';

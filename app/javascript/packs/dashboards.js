@@ -8,8 +8,8 @@
 // layout file, like app/views/layouts/application.html.erb
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Country from 'pages/country';
+import Dashboards from 'pages/dashboards';
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Country />, document.getElementById('country-page'));
+  ReactDOM.render(<Dashboards />, document.getElementById('dashboards-page'));
 });

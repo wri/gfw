@@ -25,7 +25,7 @@ export const routes = {
     path: '/country/embed/:widget/:country/:region?/:subRegion?'
   },
   [COUNTRY]: {
-    path: '/country/:country?/:region?/:subRegion?'
+    path: '/dashboards/:country?/:region?/:subRegion?'
   }
 };
 

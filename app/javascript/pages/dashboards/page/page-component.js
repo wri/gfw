@@ -7,8 +7,8 @@ import { SCREEN_M } from 'utils/constants';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 
-import Meta from 'pages/country/meta';
-import Header from 'pages/country/header';
+import Meta from 'pages/dashboards/meta';
+import Header from 'pages/dashboards/header';
 
 import Widget from 'components/widget';
 import Share from 'components/share';

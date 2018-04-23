@@ -74,11 +74,16 @@ Gfw::Application.routes.draw do
 
   # country
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
+  get '/country',to: redirect('/dashboards')
+  get '/country/:iso',to: redirect('/dashboards/%{iso}')
+  get '/country/:iso/:region',to: redirect('/dashboards/%{iso}/%{region}')
+  get '/country/:iso/:region/:sub_region',to: redirect('/dashboards/%{iso}/%{region}/%{sub_region}')
 
   # countries
-  get '/countries' => redirect('/country')
-  get '/countries/overview' => redirect('/country')
-  get '/embed/countries/overview' => redirect('/country')
+  get '/countries' => redirect('/dashboards')
+  get '/countries/overview' => redirect('/dashboards')
+  get '/embed/countries/overview' => redirect('/dashboards')
+  get '/countries/*all' => redirect('/dashboards')
 
   ########### /LEGACY #############
 
@@ -101,9 +106,11 @@ Gfw::Application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
-  # country dashboard
-  get '/country/embed/:widget/:iso(/:region)(/:sub_region)' => 'country#embed'
-  get '/country(/:iso)(/:region)(/:sub_region)' => 'country#show', as: :country
+  # dashboards
+  get '/dashboards/embed/:widget/:iso(/:region)(/:sub_region)' => 'dashboards#embed'
+  get '/dashboards(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
+
+  # old country embeds
   get '/embed/country/:id' => 'embed#countries_show'
   get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
   get '/embed/country/:id/:area_id' => 'embed#countries_show'

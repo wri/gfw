@@ -1,7 +1,7 @@
 import shareActions from 'components/share/share-actions';
 import modalActions from 'components/modal-meta/modal-meta-actions';
 import buttonActions from 'components/button/button-actions';
-import { COUNTRY } from 'pages/country/router';
+import { COUNTRY } from 'pages/dashboards/router';
 import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 
