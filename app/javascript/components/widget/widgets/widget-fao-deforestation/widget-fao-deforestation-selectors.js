@@ -33,7 +33,7 @@ export const getFilteredData = createSelector(
       label: d.name,
       color: colors.main,
       path: `/country/${d.iso}`,
-      value: d.deforest * 1000
+      value: d.deforest
     }));
   }
 );
@@ -54,7 +54,7 @@ export const getSentence = createSelector(
       return `In <b>${period &&
         period.label}</b>, the rate of deforestation in <b>${
         currentLocation
-      }</b> was <b>${format('.3s')(deforest * 1000)}ha/yr</b>${
+      }</b> was <b>${format('.3s')(deforest)}ha/yr</b>${
         humdef
           ? `, of which <b>${format('.3s')(
             humdef
