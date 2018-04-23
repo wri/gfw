@@ -17,7 +17,9 @@
   }
 
   &.--active {
-    background-color: $border;
+    background-color: $green-gfw;
+    color: $black;
+    fill: $black;
   }
 
   svg {
