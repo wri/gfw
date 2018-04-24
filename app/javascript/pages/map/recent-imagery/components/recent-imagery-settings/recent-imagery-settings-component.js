@@ -157,7 +157,7 @@ class RecentImagerySettings extends PureComponent {
           {tiles.length < 2 && (
             <NoContent
               className="c-recent-imagery-settings__empty-thumbnails"
-              message="We haven't found more images for this selection"
+              message="We can't find additional images for the selection"
             />
           )}
         </div>
