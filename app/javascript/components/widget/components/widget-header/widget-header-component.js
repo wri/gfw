@@ -110,6 +110,7 @@ class WidgetHeader extends PureComponent {
           {settingsConfig &&
             !isEmpty(settingsConfig.options) && (
               <Tooltip
+                className="widget-tooltip-theme"
                 theme="light"
                 position="bottom-right"
                 offset={-95}
