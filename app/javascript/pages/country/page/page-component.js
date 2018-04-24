@@ -11,7 +11,7 @@ import Meta from 'pages/country/meta';
 import Header from 'pages/country/header';
 
 import Widget from 'components/widget';
-import Share from 'components/share';
+import Share from 'components/modals/share';
 import Map from 'components/map';
 import MapControls from 'components/map/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';

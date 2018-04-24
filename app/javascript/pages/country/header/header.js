@@ -10,7 +10,7 @@ import WIDGETS_CONFIG from 'components/widget/widget-config.json';
 import { biomassToCO2 } from 'utils/calculations';
 import { deburrUpper } from 'utils/data';
 
-import shareActions from 'components/share/share-actions';
+import shareActions from 'components/modals/share/share-actions';
 import * as ownActions from './header-actions';
 import reducers, { initialState } from './header-reducers';
 import HeaderComponent from './header-component';

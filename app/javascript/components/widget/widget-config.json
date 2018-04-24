@@ -43,7 +43,7 @@
       "type": "bound2",
       "layers": ["plantations_by_species"]
     },
-    "enabled": true
+    "enabled": false
   },
   "intactTreeCover": {
     "title": "Intact forest extent",
@@ -66,7 +66,7 @@
       "extentYear": 2010,
       "layers": ["forest2010", "ifl_2013_deg"]
     },
-    "enabled": true
+    "enabled": false
   },
   "primaryTreeCover": {
     "title": "Primary forest extent",
@@ -90,7 +90,7 @@
       "extentYear": 2000,
       "layers": ["forest2000"]
     },
-    "enabled": true
+    "enabled": false
   },
   "treeLocated": {
     "title": "Where is tree cover located",
@@ -122,7 +122,7 @@
       "pageSize": 5,
       "page": 0
     },
-    "enabled": true
+    "enabled": false
   },
   "treeLoss": {
     "title": "Tree cover loss",
@@ -151,7 +151,7 @@
       "extentYear": 2000,
       "layers": ["loss"]
     },
-    "enabled": true
+    "enabled": false
   },
   "treeLossPlantations": {
     "title": "Tree cover loss for plantations",
@@ -176,7 +176,7 @@
       "endYear": 2016,
       "layers": ["loss", "plantations_by_type"]
     },
-    "enabled": true
+    "enabled": false
   },
   "lossLocated": {
     "title": "Where did tree cover loss occur",
@@ -210,7 +210,7 @@
       "endYear": 2016,
       "layers": ["loss"]
     },
-    "enabled": true
+    "enabled": false
   },
   "treeGain": {
     "title": "Tree cover gain",
@@ -236,7 +236,7 @@
       "extentYear": 2010,
       "layers": ["forestgain"]
     },
-    "enabled": true
+    "enabled": false
   },
   "lossRanked": {
     "title": "Tree cover loss",
@@ -267,7 +267,7 @@
       "extentYear": 2000,
       "layers": ["loss"]
     },
-    "enabled": true
+    "enabled": false
   },
   "treeCoverRanked": {
     "title": "Tree cover extent",
@@ -296,7 +296,7 @@
       "extentYear": 2010,
       "layers": ["forest2010"]
     },
-    "enabled": true
+    "enabled": false
   },
   "FAOReforestation": {
     "title": "FAO reforestation",
@@ -315,7 +315,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "enabled": true
+    "enabled": false
   },
   "FAODeforestation": {
     "title": "FAO deforestation",
@@ -334,7 +334,7 @@
       "period": 2010,
       "unit": "ha/year"
     },
-    "enabled": true
+    "enabled": false
   },
   "gainLocated": {
     "title": "Where did tree cover gain occur",
@@ -365,7 +365,7 @@
       "page": 0,
       "layers": ["forestgain"]
     },
-    "enabled": true
+    "enabled": false
   },
   "FAOCover": {
     "title": "Forest cover",
@@ -382,7 +382,7 @@
     "settings": {
       "unit": "ha"
     },
-    "enabled": true
+    "enabled": false
   },
   "gladAlerts": {
     "title": "Deforestation Alerts",
@@ -410,7 +410,7 @@
       "layerStartDate": null,
       "layerEndDate": null
     },
-    "enabled": true
+    "enabled": false
   },
   "gladBiodiversity": {
     "title": "Deforestation Alerts in Biodiversity Areas",
@@ -445,7 +445,7 @@
       "page": 0,
       "layers": ["umd_as_it_happens"]
     },
-    "enabled": true
+    "enabled": false
   },
   "gladRanked": {
     "title": "Deforestation Alerts",
@@ -478,7 +478,7 @@
       "page": 0,
       "layers": ["umd_as_it_happens"]
     },
-    "enabled": true
+    "enabled": false
   },
   "rankedPlantations": {
     "title": "Ranked plantation breakdown",
@@ -502,7 +502,7 @@
       "page": 0,
       "layers": ["plantations_by_species"]
     },
-    "enabled": true
+    "enabled": false
   },
   "emissions": {
     "title": "Historical emissions",
@@ -514,7 +514,7 @@
       "type": "loss",
       "colors": "emissions"
     },
-    "enabled": true
+    "enabled": false
   },
   "emissionsDeforestation": {
     "title": "Emissions from biomass loss",
@@ -537,7 +537,7 @@
       "startYear": 2001,
       "endYear": 2016
     },
-    "enabled": true
+    "enabled": false
   },
   "fires": {
     "title": "Fires",
@@ -554,7 +554,7 @@
       "periodValue": 1,
       "layers": ["viirs_fires_alerts"]
     },
-    "enabled": true
+    "enabled": false
   },
   "forestryEmployment": {
     "title": "Forestry Employment by Gender",
@@ -573,7 +573,7 @@
     "settings": {
       "year": 2000
     },
-    "enabled": true
+    "enabled": false
   },
   "economicImpact": {
     "title": "Economic Impact",
@@ -592,6 +592,6 @@
     "settings": {
       "unit": "net_usd"
     },
-    "enabled": true
+    "enabled": false
   }
 }

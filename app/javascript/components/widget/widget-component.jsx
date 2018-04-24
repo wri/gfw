@@ -10,8 +10,7 @@ import Button from 'components/ui/button';
 
 import WidgetHeader from './components/widget-header';
 import WidgetSettingsStatement from './components/widget-settings-statement';
-
-import * as Widgets from './widget-manifest';
+import WidgetDynamicSentence from './components/widget-dynamic-sentence';
 
 import './widget-styles.scss';
 
@@ -31,9 +30,11 @@ class Widget extends PureComponent {
       data,
       active,
       query,
-      colors
+      colors,
+      Component,
+      sentence,
+      parsedData
     } = this.props;
-    const WidgetComponent = Widgets[`Widget${upperFirst(camelCase(widget))}`];
     const highlightColor =
       colors.main || (colors.extent && colors.extent.main) || '#a0c746';
     const haveMapLayers =
@@ -41,6 +42,7 @@ class Widget extends PureComponent {
       settingsConfig.settings.layers &&
       settingsConfig.settings.layers.length;
     const onMap = active && haveMapLayers;
+    console.log(parsedData);
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
@@ -84,7 +86,12 @@ class Widget extends PureComponent {
             error && (
               <NoContent message="An error occured while fetching data. Please try again later." />
             )}
-          {!error && <WidgetComponent {...this.props} {...settingsConfig} />}
+          {!error &&
+            <div>
+              <WidgetDynamicSentence sentence={sentence} />
+              <Component {...this.props} {...settingsConfig} />
+            </div>
+          }
         </div>
         <WidgetSettingsStatement settings={settingsConfig.settings} />
         {embed &&

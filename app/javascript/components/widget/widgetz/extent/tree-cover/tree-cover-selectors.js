@@ -12,7 +12,7 @@ const getIndicatorWhitelist = state => state.whitelist;
 const getColors = state => state.colors;
 
 // get lists selected
-export const getTreeCoverData = createSelector(
+export const parseData = createSelector(
   [getData, getSettings, getIndicatorWhitelist, getColors],
   (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
@@ -52,9 +52,9 @@ export const getTreeCoverData = createSelector(
 export const getSentence = createSelector(
   [getData, getSettings, getLocationNames, getActiveIndicator],
   (data, settings, locationNames, indicator) => {
-    if (!data) return null;
+    if (!data || !indicator) return null;
     const { cover } = data;
-    const locationLabel = locationNames.current && locationNames.current.label;
+    const locationLabel = locationNames && locationNames.current && locationNames.current.label;
     const locationIntro = `${
       indicator.value !== 'gadm28'
         ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> `

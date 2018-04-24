@@ -18,7 +18,7 @@ class WidgetDynamicSentence extends PureComponent {
 
 WidgetDynamicSentence.propTypes = {
   className: PropTypes.string,
-  sentence: PropTypes.string.isRequired
+  sentence: PropTypes.string
 };
 
 export default WidgetDynamicSentence;
