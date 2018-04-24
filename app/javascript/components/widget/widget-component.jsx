@@ -18,11 +18,8 @@ class Widget extends PureComponent {
       widget,
       locationNames,
       location,
-      title,
       settingsConfig,
-      setWidgetSettingsUrl,
       embed,
-      whitelist,
       loading,
       error,
       data,
@@ -54,20 +51,7 @@ class Widget extends PureComponent {
         }}
         id={widget}
       >
-        <WidgetHeader
-          widget={widget}
-          title={title}
-          location={location}
-          query={query}
-          locationNames={locationNames}
-          whitelist={whitelist}
-          settingsConfig={{
-            ...settingsConfig,
-            onSettingsChange: setWidgetSettingsUrl
-          }}
-          embed={embed}
-          active={active}
-        />
+        <WidgetHeader {...this.props} />
         <div className="container">
           {!loading &&
             !error &&
@@ -87,7 +71,7 @@ class Widget extends PureComponent {
             !isEmpty(data) && (
               <WidgetDynamicSentence className="sentence" sentence={sentence} />
             )}
-          {!error && data && <Component {...this.props} {...settingsConfig} />}
+          {!error && data && <Component {...this.props} />}
         </div>
         <WidgetSettingsStatement settings={settingsConfig.settings} />
         {embed &&
