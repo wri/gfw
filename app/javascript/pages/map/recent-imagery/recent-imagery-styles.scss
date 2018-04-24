@@ -1,13 +1,11 @@
 @import '~styles/settings.scss';
 
 .c-recent-imagery {
-  display: none;
-
   &__button {
     position: absolute;
-    bottom: rem(50px);
-    right: rem(35px);
-    width: rem(76px);
+    right: rem(10px);
+    bottom: rem(238px);
+    width: rem(38px);
     z-index: 20;
 
     .satellite-icon {
@@ -17,6 +15,7 @@
     }
 
     span {
+      display: none;
       text-align: left;
     }
   }
@@ -27,8 +26,21 @@
     height: calc(100vh - #{rem(36px)});
   }
 
-  @media screen and (min-width: rem(1300px)) {
-    display: block;
+  @media screen and (min-width: rem(1000px)) {
+    &__button {
+      right: auto;
+      left: rem(35px);
+      bottom: rem(172px);
+      width: rem(76px);
+
+      .satellite-icon {
+        margin-right: rem(5px);
+      }
+
+      span {
+        display: inline-block;
+      }
+    }
   }
 }
 
