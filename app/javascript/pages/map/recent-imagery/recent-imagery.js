@@ -19,7 +19,14 @@ import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { active, showSettings, data, dataStatus, settings } = recentImagery;
+  const {
+    active,
+    showSettings,
+    isTimelineOpen,
+    data,
+    dataStatus,
+    settings
+  } = recentImagery;
   const selectorData = {
     data: data.tiles,
     bbox: data.bbox,
@@ -29,6 +36,7 @@ const mapStateToProps = ({ recentImagery }) => {
   return {
     active,
     showSettings,
+    isTimelineOpen,
     dataStatus,
     allTiles: getAllTiles(selectorData),
     tile: getTile(selectorData),
@@ -59,6 +67,10 @@ class RecentImageryContainer extends PureComponent {
         this.removedFromUrl = true;
         toogleRecentImagery();
       }
+    });
+    window.addEventListener('timelineToogle', e => {
+      const { setTimelineFlag } = this.props;
+      setTimelineFlag(e.detail);
     });
   }
 
@@ -275,6 +287,7 @@ RecentImageryContainer.propTypes = {
   dates: PropTypes.object,
   settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
+  setTimelineFlag: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
   getData: PropTypes.func,
   getMoreTiles: PropTypes.func,

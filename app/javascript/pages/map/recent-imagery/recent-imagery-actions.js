@@ -6,6 +6,7 @@ import findIndex from 'lodash/findIndex';
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
 
 const toogleRecentImagery = createAction('toogleRecentImagery');
+const setTimelineFlag = createAction('setTimelineFlag');
 const setRecentImageryData = createAction('setRecentImageryData');
 const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
 const setRecentImagerySettings = createAction('setRecentImagerySettings');
@@ -125,6 +126,7 @@ const resetData = createThunkAction('resetData', () => dispatch => {
 
 export default {
   toogleRecentImagery,
+  setTimelineFlag,
   setRecentImageryData,
   setRecentImageryDataStatus,
   setRecentImagerySettings,

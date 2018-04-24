@@ -6,6 +6,7 @@
     right: rem(10px);
     bottom: rem(238px);
     width: rem(38px);
+    transition: transform 0.25s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     z-index: 20;
 
     .satellite-icon {
@@ -17,6 +18,10 @@
     span {
       display: none;
       text-align: left;
+    }
+
+    &--timeline-open {
+      transform: translate(0, rem(-45px));
     }
   }
 
