@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'components/modal';
 
 import Button from 'components/button';
 import Icon from 'components/icon/icon';
 import Loader from 'components/loader';
+import Modal from '../modal';
 
 import googleplusIcon from 'assets/icons/googleplus.svg';
 import twitterIcon from 'assets/icons/twitter.svg';

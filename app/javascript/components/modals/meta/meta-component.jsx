@@ -4,11 +4,11 @@ import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import ReactHtmlParser from 'react-html-parser';
 
-import Modal from 'components/modal';
 import Loader from 'components/loader';
 import NoContent from 'components/no-content';
+import Modal from '../modal';
 
-import './modal-meta-styles.scss';
+import './meta-styles.scss';
 
 class ModalMeta extends PureComponent {
   getContent() {

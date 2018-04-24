@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Modal from 'components/modal';
+import Modal from '../modal';
 
-import './modal-video-styles.scss';
+import './video-styles.scss';
 
 class ModalVideo extends PureComponent {
   getContent() {

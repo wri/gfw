@@ -5,7 +5,7 @@ import Widget from 'components/widget';
 import Share from 'components/share';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
-import ModalMeta from 'components/modal-meta';
+import ModalMeta from 'components/modals/meta';
 
 import './embed-styles.scss';
 

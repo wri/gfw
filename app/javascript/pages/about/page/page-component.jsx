@@ -7,7 +7,7 @@ import Projects from 'pages/about/section-projects';
 import Join from 'pages/about/section-join';
 import Button from 'components/button';
 import Icon from 'components/icon';
-import ModalVideo from 'components/modal-video';
+import ModalVideo from 'components/modals/video';
 
 import playIcon from 'assets/icons/play.svg';
 import bgImage from './header-bg';

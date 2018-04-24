@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 
-import actions from './modal-video-actions';
-import reducers, { initialState } from './modal-video-reducers';
-import ModalVideoComponent from './modal-video-component';
+import actions from './video-actions';
+import reducers, { initialState } from './video-reducers';
+import ModalVideoComponent from './video-component';
 
 const mapStateToProps = ({ modalVideo }) => ({
   open: modalVideo.open,

@@ -1,5 +1,5 @@
 import shareActions from 'components/share/share-actions';
-import modalActions from 'components/modal-meta/modal-meta-actions';
+import modalActions from 'components/modals/meta/modal-meta-actions';
 import buttonActions from 'components/button/button-actions';
 import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';

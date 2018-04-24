@@ -7,7 +7,7 @@ import router from './router';
 
 // Components
 import * as ShareComponent from 'components/share';
-import * as ModalMetaComponent from 'components/modal-meta';
+import * as ModalMetaComponent from 'components/modals/meta';
 import * as mapComponent from 'components/map';
 import * as storiesComponent from 'pages/country/stories';
 import * as headerComponent from 'pages/country/header';

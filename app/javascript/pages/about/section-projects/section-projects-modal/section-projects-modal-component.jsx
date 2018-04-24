@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'components/modal';
+import Modal from 'components/modals/modal';
 import Button from 'components/button';
 import Tip from 'components/tip';
 

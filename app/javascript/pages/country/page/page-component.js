@@ -19,7 +19,7 @@ import NoContent from 'components/no-content';
 import Loader from 'components/loader';
 import Button from 'components/button';
 import Icon from 'components/icon';
-import ModalMeta from 'components/modal-meta';
+import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
 
 import closeIcon from 'assets/icons/close.svg';

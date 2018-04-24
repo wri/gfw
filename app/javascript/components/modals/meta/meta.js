@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import pick from 'lodash/pick';
 
-import actions from './modal-meta-actions';
-import reducers, { initialState } from './modal-meta-reducers';
-import ModalMetaComponent from './modal-meta-component';
+import actions from './meta-actions';
+import reducers, { initialState } from './meta-reducers';
+import ModalMetaComponent from './meta-component';
 
 const MASTER_META_FIELDS = ['title', 'subtitle', 'citation', 'overview'];
 const MASTER_TABLE_FIELDS = [
