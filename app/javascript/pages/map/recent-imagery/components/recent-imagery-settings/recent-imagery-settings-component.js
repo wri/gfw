@@ -125,10 +125,17 @@ class RecentImagerySettings extends PureComponent {
                   infinite: tiles.length > thumbsToShow,
                   centerMode: tiles.length > thumbsToShow,
                   centerPadding: '20px',
-                  responsive: null,
                   draggable: false,
                   dots: false,
-                  arrows: tiles.length > thumbsToShow
+                  arrows: tiles.length > thumbsToShow,
+                  responsive: [
+                    {
+                      breakpoint: 620,
+                      settings: {
+                        slidesToShow: thumbsToShow - 2
+                      }
+                    }
+                  ]
                 }}
               >
                 {tiles.map((tile, i) => (

@@ -2,7 +2,8 @@
 
 .c-recent-imagery-settings {
   position: absolute;
-  width: rem(600px);
+  width: calc(100% - #{rem(20px)});
+  max-width: rem(600px);
   padding: rem(25px) 0 rem(22px) 0;
   transform: translateX(-50%);
   background-color: $white;
@@ -10,6 +11,7 @@
   z-index: 102;
 
   .dragger-icon {
+    display: none;
     position: absolute;
     top: rem(9px);
     left: rem(10px);
@@ -48,7 +50,7 @@
   &__dates {
     position: relative;
     display: inline-block;
-    width: 50%;
+    width: 100%;
     padding: 0 rem(20px);
     vertical-align: top;
     z-index: 2;
@@ -78,8 +80,9 @@
   &__clouds {
     position: relative;
     display: inline-block;
-    width: 50%;
+    width: 100%;
     padding: 0 rem(20px);
+    margin-top: rem(11px);
     vertical-align: top;
 
     &__title {
@@ -139,5 +142,20 @@
 
   &__empty-thumbnails {
     padding-top: rem(11px);
+  }
+
+  @media screen and (min-width: rem(620px)) {
+    .dragger-icon {
+      display: block;
+    }
+
+    &__dates {
+      width: 50%;
+    }
+
+    &__clouds {
+      width: 50%;
+      margin-top: 0;
+    }
   }
 }
