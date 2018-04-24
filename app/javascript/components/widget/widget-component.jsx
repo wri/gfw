@@ -4,9 +4,9 @@ import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import isEmpty from 'lodash/isEmpty';
 
-import Loader from 'components/loader/loader';
-import NoContent from 'components/no-content';
-import Button from 'components/button';
+import Loader from 'components/ui/loader/loader';
+import NoContent from 'components/ui/no-content';
+import Button from 'components/ui/button';
 
 import WidgetHeader from './components/widget-header';
 import WidgetSettingsStatement from './components/widget-settings-statement';

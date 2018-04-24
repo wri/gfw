@@ -6,9 +6,9 @@ import { COUNTRY } from 'pages/country/router';
 import { isTouch } from 'utils/browser';
 import { SCREEN_L } from 'utils/constants';
 
-import Button from 'components/button';
-import Icon from 'components/icon';
-import Tip from 'components/tip';
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
+import Tip from 'components/ui/tip';
 import WidgetSettings from 'components/widget/components/widget-settings';
 
 import settingsIcon from 'assets/icons/settings.svg';

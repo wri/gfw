@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import shareActions from 'components/modals/share/share-actions';
-import modalMetaActions from 'component/modals/meta/modal-meta-actions';
+import modalMetaActions from 'components/modals/meta/meta-actions';
 import mapActions from 'components/map/map-actions';
 import WidgetHeaderComponent from './widget-header-component';
 

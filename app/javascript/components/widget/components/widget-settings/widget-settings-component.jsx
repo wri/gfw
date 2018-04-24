@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Dropdown from 'components/dropdown';
+import Dropdown from 'components/ui/dropdown';
 
 import './widget-settings-styles.scss';
 

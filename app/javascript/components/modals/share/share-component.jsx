@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Button from 'components/button';
-import Icon from 'components/icon/icon';
-import Loader from 'components/loader';
-import Modal from '../modal';
-
 import googleplusIcon from 'assets/icons/googleplus.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
 import facebookIcon from 'assets/icons/facebook.svg';
+
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon/icon';
+import Loader from 'components/ui/loader';
+import Modal from '../modal';
 
 import './share-styles.scss';
 
@@ -97,7 +97,9 @@ class Share extends PureComponent {
             <Icon icon={googleplusIcon} className="googleplus-icon" />
           </Button>
           <Button
-            extLink={`https://twitter.com/intent/tweet?text=${socialText}&via=globalforests&url=${shareUrl}`}
+            extLink={`https://twitter.com/intent/tweet?text=${
+              socialText
+            }&via=globalforests&url=${shareUrl}`}
             className="social-button -twitter"
             trackingData={{
               ...data,

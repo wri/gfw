@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import SlickSlider from 'react-slick';
-import Button from 'components/button';
-import Icon from 'components/icon';
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
 
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import { SCREEN_M, SCREEN_XL } from 'utils/constants';

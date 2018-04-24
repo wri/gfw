@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import closeIcon from 'assets/icons/close.svg';

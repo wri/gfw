@@ -4,8 +4,8 @@ import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import ReactHtmlParser from 'react-html-parser';
 
-import Loader from 'components/loader';
-import NoContent from 'components/no-content';
+import Loader from 'components/ui/loader';
+import NoContent from 'components/ui/no-content';
 import Modal from '../modal';
 
 import './meta-styles.scss';
@@ -78,7 +78,8 @@ class ModalMeta extends PureComponent {
     return (
       <div>
         {ReactHtmlParser(html, {
-          transform: node => { // eslint-disable-line
+          transform: node => {
+            // eslint-disable-line
             if (node.name === 'a') {
               return (
                 <a

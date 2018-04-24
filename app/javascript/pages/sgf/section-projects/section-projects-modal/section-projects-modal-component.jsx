@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modals/modal';
 import ReactHtmlParser from 'react-html-parser';
-import Carousel from 'components/carousel';
+import Carousel from 'components/ui/carousel';
 
 import './section-projects-modal-styles.scss';
 

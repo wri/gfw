@@ -15,10 +15,10 @@ import Share from 'components/share';
 import Map from 'components/map';
 import MapControls from 'components/map/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';
-import NoContent from 'components/no-content';
-import Loader from 'components/loader';
-import Button from 'components/button';
-import Icon from 'components/icon';
+import NoContent from 'components/ui/no-content';
+import Loader from 'components/ui/loader';
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
 

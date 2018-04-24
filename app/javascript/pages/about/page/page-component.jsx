@@ -5,8 +5,8 @@ import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 import Projects from 'pages/about/section-projects';
 import Join from 'pages/about/section-join';
-import Button from 'components/button';
-import Icon from 'components/icon';
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
 import ModalVideo from 'components/modals/video';
 
 import playIcon from 'assets/icons/play.svg';

@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Downshift from 'downshift';
-import Button from 'components/button';
-import Icon from 'components/icon';
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
 import { Tooltip } from 'react-tippy';
-import Tip from 'components/tip';
+import Tip from 'components/ui/tip';
 
 import infoIcon from 'assets/icons/info.svg';
 

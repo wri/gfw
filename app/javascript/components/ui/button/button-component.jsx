@@ -4,7 +4,7 @@ import Link from 'redux-first-router-link';
 import { isTouch } from 'utils/browser';
 
 import { Tooltip } from 'react-tippy';
-import Tip from 'components/tip';
+import Tip from 'components/ui/tip';
 
 import './button-styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line

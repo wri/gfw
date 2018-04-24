@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/button';
+import Button from 'components/ui/button';
 import Dotdotdot from 'react-dotdotdot';
 
 import './card-styles.scss';

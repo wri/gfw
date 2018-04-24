@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/button';
+import Button from 'components/ui/button';
 import { Field, reduxForm } from 'redux-form';
 
 import {

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import closeIcon from 'assets/icons/close.svg';
 

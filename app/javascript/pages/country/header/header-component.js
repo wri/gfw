@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Dropdown from 'components/dropdown';
-import Loader from 'components/loader';
-import Icon from 'components/icon';
-import Button from 'components/button';
+import Dropdown from 'components/ui/dropdown';
+import Loader from 'components/ui/loader';
+import Icon from 'components/ui/icon';
+import Button from 'components/ui/button';
 
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
