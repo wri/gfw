@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import isEmpty from 'lodash/isEmpty';
 
 import Loader from 'components/ui/loader/loader';
@@ -32,8 +30,7 @@ class Widget extends PureComponent {
       query,
       colors,
       Component,
-      sentence,
-      parsedData
+      sentence
     } = this.props;
     const highlightColor =
       colors.main || (colors.extent && colors.extent.main) || '#a0c746';
@@ -42,7 +39,6 @@ class Widget extends PureComponent {
       settingsConfig.settings.layers &&
       settingsConfig.settings.layers.length;
     const onMap = active && haveMapLayers;
-    console.log(parsedData);
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
@@ -87,11 +83,11 @@ class Widget extends PureComponent {
               <NoContent message="An error occured while fetching data. Please try again later." />
             )}
           {!error &&
-            <div>
-              <WidgetDynamicSentence sentence={sentence} />
-              <Component {...this.props} {...settingsConfig} />
-            </div>
-          }
+            sentence &&
+            !isEmpty(data) && (
+              <WidgetDynamicSentence className="sentence" sentence={sentence} />
+            )}
+          {!error && data && <Component {...this.props} {...settingsConfig} />}
         </div>
         <WidgetSettingsStatement settings={settingsConfig.settings} />
         {embed &&
@@ -131,7 +127,9 @@ Widget.propTypes = {
   data: PropTypes.object,
   active: PropTypes.bool,
   colors: PropTypes.object,
-  whitelist: PropTypes.object
+  whitelist: PropTypes.object,
+  Component: PropTypes.func,
+  sentence: PropTypes.string
 };
 
 export default Widget;

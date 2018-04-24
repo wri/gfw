@@ -3,6 +3,7 @@ import WIDGETS_CONFIG from './widget-config.json';
 const widgets = {};
 Object.keys(WIDGETS_CONFIG).forEach(key => {
   widgets[key] = {
+    name: key,
     loading: false,
     error: false,
     data: {},
@@ -40,7 +41,7 @@ const setWidgetData = (state, { payload }) => ({
     ...state[payload.widget],
     data: payload.data,
     loading: false,
-    error: !payload
+    error: payload.error
   }
 });
 

@@ -27,6 +27,10 @@
   .container {
     position: relative;
     height: 100%;
+
+    .sentence {
+      margin-bottom: rem(30px);
+    }
   }
 
   .embed-footer {

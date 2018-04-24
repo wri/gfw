@@ -124,9 +124,7 @@ class Page extends PureComponent {
                 }}
                 areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
-                parentLayersKey={
-                  activeWidget && `widget${upperFirst(activeWidget.name)}`
-                }
+                parentSettings={activeWidget && activeWidget.settings}
               />
             </div>
           </Sticky>

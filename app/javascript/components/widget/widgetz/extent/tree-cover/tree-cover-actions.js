@@ -24,9 +24,7 @@ export const getData = (params, dispatch, setData, widget) => {
           plantationsResponse => {
             const plantationsData =
               plantationsResponse.data && plantationsResponse.data.data;
-            plantations = plantationsData.length
-              ? plantationsData[0].value
-              : 0;
+            plantations = plantationsData.length ? plantationsData[0].value : 0;
             if (extent.length) {
               data = {
                 ...data,
@@ -39,7 +37,7 @@ export const getData = (params, dispatch, setData, widget) => {
       }
     })
     .catch(error => {
-      dispatch(setData({}));
+      dispatch(setData({ widget, error: true }));
       console.info(error);
     });
 };

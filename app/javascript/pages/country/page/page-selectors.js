@@ -16,7 +16,6 @@ const getLocation = state => state.location || null;
 const getLocationOptions = state => state.locationOptions || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 const getFAOCountries = state => state.faoCountries || null;
-const getWidgetQuery = state => state.activeWidget || null;
 
 // get lists selected
 export const getWidgets = createSelector([], () =>
@@ -93,15 +92,6 @@ export const filterWidgets = createSelector(
 
       return showByIndicators && hasData;
     });
-  }
-);
-
-export const getActiveWidget = createSelector(
-  [filterWidgets, getWidgetQuery],
-  (widgets, widgetQuery) => {
-    if (!widgets || !widgets.length || widgetQuery === 'none') return null;
-    if (!widgetQuery) return widgets[0];
-    return widgets.find(w => w.name === widgetQuery);
   }
 );
 

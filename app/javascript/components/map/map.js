@@ -19,11 +19,9 @@ export { default as actions } from './map-actions';
 
 const mapStateToProps = (
   state,
-  { isParentLoading, layers, parentLayersKey }
+  { isParentLoading, layers, parentSettings }
 ) => {
   const { map, countryData } = state;
-  const parentSettings =
-    state[parentLayersKey] && state[parentLayersKey].settings;
   const activeLayers =
     layers || (parentSettings && parentSettings.layers) || map.layers;
   return {
