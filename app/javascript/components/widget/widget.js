@@ -3,20 +3,51 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import isEqual from 'lodash/isEqual';
-import upperFirst from 'lodash/upperFirst';
 import COLORS from 'data/colors.json';
 
 import Component from './widget-component';
 import actions from './widget-actions';
 import reducers, { initialState } from './widget-reducers';
-import * as widgetSelectors from './widget-selectors';
+import {
+  getOptions,
+  getActiveIndicator,
+  getAdminsSelected,
+  getActiveAdmin
+} from './widget-selectors';
 import * as Widgets from './widget-manifest';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (
+  { location, countryData, whitelists, widgets },
+  ownProps
+) => {
+  // widget consts
   const widget = ownProps.widget;
   const widgetFuncs = Widgets[widget];
-  const { location, countryData, whitelists } = state;
-  const { title, config, settings, loading, data, error } = state.widgets[widget];
+  const { title, config, settings, loading, data, error } = widgets[widget];
+  const colors = COLORS[config.colors || config.type] || COLORS;
+
+  // selector data
+  const activeIndicator =
+    settings && settings.indicator && getActiveIndicator(settings.indicator);
+  const selectorData = {
+    data,
+    settings,
+    location: location.payload,
+    countryData,
+    whitelists,
+    locationNames,
+    activeIndicator,
+    config,
+    colors,
+    countries: countryData.countries,
+    regions: countryData.regions,
+    subRegions: countryData.subRegions
+  };
+  const locationNames = getAdminsSelected(selectorData);
+  const activeLocation = getActiveAdmin(selectorData);
+  const options = getOptions(selectorData);
+
+  // loaders
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -28,71 +59,19 @@ const mapStateToProps = (state, ownProps) => {
     regionWhitelistLoading,
     waterBodiesLoading
   } = whitelists;
-  const adminData = {
-    location: location.payload,
-    countries: countryData.countries,
-    regions: countryData.regions,
-    subRegions: countryData.subRegions
-  };
-  const activeIndicator =
-    settings &&
-    settings.indicator &&
-    widgetSelectors.getActiveIndicator(settings.indicator);
-  const locationNames = widgetSelectors.getAdminsSelected(adminData);
-  const selectorData = {
-    data,
-    settings,
-    whitelist: whitelists.countryWhitelist,
-    locationNames,
-    activeIndicator,
-    colors: COLORS[config.colors || config.type] || COLORS
-  };
-  const options = {};
-  if (config.selectors) {
-    config.selectors.forEach(selector => {
-      const selectorFunc = widgetSelectors[`get${upperFirst(selector)}`];
-      switch (selector) {
-        case 'indicators':
-          options[selector] = selectorFunc({
-            config,
-            location: location.payload,
-            ...countryData,
-            ...whitelists
-          });
-          break;
-        case 'years':
-        case 'units':
-          options[selector] = selectorFunc({
-            config,
-            ...settings
-          });
-          break;
-        case 'startYears':
-        case 'endYears':
-          options[selector] = selectorFunc({
-            config,
-            data: data.loss || (data.regions && data.regions[0].loss),
-            ...settings
-          });
-          break;
-        default:
-          options[selector] = selectorFunc({ config });
-      }
-    });
-  }
+  const isMetaLoading =
+    isCountriesLoading ||
+    isRegionsLoading ||
+    isSubRegionsLoading ||
+    countryWhitelistLoading ||
+    regionWhitelistLoading ||
+    waterBodiesLoading;
+
   return {
-    isMetaLoading:
-      isCountriesLoading ||
-      isRegionsLoading ||
-      isSubRegionsLoading ||
-      countryWhitelistLoading ||
-      regionWhitelistLoading ||
-      waterBodiesLoading,
+    isMetaLoading,
     isGeostoreLoading,
     locationNames,
-    activeLocation: widgetSelectors.getActiveAdmin({
-      location: location.payload
-    }),
+    activeLocation,
     activeIndicator,
     location: location.payload,
     query: location.query,

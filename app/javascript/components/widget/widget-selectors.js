@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
+
 import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
 import lowerCase from 'lodash/lowerCase';
+import upperFirst from 'lodash/upperFirst';
 import { sortByKey } from 'utils/data';
 
 import INDICATORS from 'data/indicators.json';
@@ -22,6 +24,9 @@ const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
 const getConfig = state => state.config || null;
 const getWaterBodies = state => state.waterBodies || null;
+const getCountryData = state => state.countryData || null;
+const getWhitelists = state => state.whitelists || null;
+const getSettings = state => state.settings || null;
 const getLocationWhitelist = state =>
   (state.location.region ? state.regionWhitelist : state.countryWhitelist);
 
@@ -78,7 +83,6 @@ export const getAdminsOptions = createSelector(
   }
 );
 
-// get lists selected
 export const getAdminsSelected = createSelector(
   [getAdminsOptions, getAdmins],
   (options, adminsSelected) => {
@@ -110,6 +114,7 @@ export const getAdminsSelected = createSelector(
   }
 );
 
+// get options
 export const getIndicators = createSelector(
   [getLocationWhitelist, getAdminsSelected, getConfig],
   (locationWhitelist, locationNames, config) => {
@@ -210,3 +215,56 @@ export const getYears = createSelector([getConfig], config => {
     value: d
   }));
 });
+
+const selectorFuncs = {
+  getIndicators,
+  getThresholds,
+  getUnits,
+  getTypes,
+  getExtentYears,
+  getWeeks,
+  getRangeYears,
+  getStartYears,
+  getEndYears,
+  getPeriods,
+  getYears
+};
+
+export const getOptions = createSelector(
+  [getConfig, getSettings, getAdmins, getCountryData, getWhitelists, getData],
+  (config, settings, location, countryData, whitelists, data) => {
+    if (!config || !config.selectors) return null;
+    const options = {};
+    config.selectors.forEach(selector => {
+      const selectorFunc = selectorFuncs[`get${upperFirst(selector)}`];
+      switch (selector) {
+        case 'indicators':
+          options[selector] = selectorFunc({
+            config,
+            location,
+            ...countryData,
+            ...whitelists
+          });
+          break;
+        case 'years':
+        case 'units':
+          options[selector] = selectorFunc({
+            config,
+            ...settings
+          });
+          break;
+        case 'startYears':
+        case 'endYears':
+          options[selector] = selectorFunc({
+            config,
+            data: data.loss || (data.regions && data.regions[0].loss),
+            ...settings
+          });
+          break;
+        default:
+          options[selector] = selectorFunc({ config });
+      }
+    });
+    return options;
+  }
+);

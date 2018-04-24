@@ -7,8 +7,8 @@ class WidgetTreeCover extends PureComponent {
   render() {
     const { parsedData, settings } = this.props;
 
-    return parsedData && (
-      <PieChartLegend data={parsedData} settings={settings} />
+    return (
+      parsedData && <PieChartLegend data={parsedData} settings={settings} />
     );
   }
 }

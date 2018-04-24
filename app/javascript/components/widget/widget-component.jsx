@@ -27,7 +27,8 @@ class Widget extends PureComponent {
       query,
       colors,
       Component,
-      sentence
+      sentence,
+      setWidgetSettingsUrl
     } = this.props;
     const highlightColor =
       colors.main || (colors.extent && colors.extent.main) || '#a0c746';
@@ -36,6 +37,7 @@ class Widget extends PureComponent {
       settingsConfig.settings.layers &&
       settingsConfig.settings.layers.length;
     const onMap = active && haveMapLayers;
+
     return (
       <div
         className={`c-widget ${settingsConfig.config.size || ''}`}
@@ -51,7 +53,13 @@ class Widget extends PureComponent {
         }}
         id={widget}
       >
-        <WidgetHeader {...this.props} />
+        <WidgetHeader
+          {...this.props}
+          settingsConfig={{
+            ...settingsConfig,
+            onSettingsChange: setWidgetSettingsUrl
+          }}
+        />
         <div className="container">
           {!loading &&
             !error &&

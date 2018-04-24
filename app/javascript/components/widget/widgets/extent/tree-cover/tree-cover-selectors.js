@@ -8,17 +8,18 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getLocationNames = state => state.locationNames;
 const getActiveIndicator = state => state.activeIndicator;
-const getIndicatorWhitelist = state => state.whitelist;
+const getWhitelists = state => state.whitelists;
 const getColors = state => state.colors;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist, getColors],
-  (data, settings, whitelist, colors) => {
-    if (isEmpty(data) || isEmpty(whitelist)) return null;
+  [getData, getSettings, getWhitelists, getColors],
+  (data, settings, whitelists, colors) => {
+    if (isEmpty(data) || isEmpty(whitelists)) return null;
     const { totalArea, cover, plantations } = data;
     const { indicator } = settings;
-    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
+    const hasPlantations =
+      Object.keys(whitelists.countryWhitelist).indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 2 : 1);
     const parsedData = [
       {
@@ -54,7 +55,8 @@ export const getSentence = createSelector(
   (data, settings, locationNames, indicator) => {
     if (!data || !indicator) return null;
     const { cover } = data;
-    const locationLabel = locationNames && locationNames.current && locationNames.current.label;
+    const locationLabel =
+      locationNames && locationNames.current && locationNames.current.label;
     const locationIntro = `${
       indicator.value !== 'gadm28'
         ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> `
