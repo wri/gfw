@@ -20,7 +20,7 @@ define(
       options: {
         dataMaxZoom: 12,
         urlTemplate:
-          'https://storage.googleapis.com/wri-public/biodiversity/significance/all/remaining/v1{/z}{/x}{/y}.png'
+          'https://api.resourcewatch.org/v1/layer/43a205fe-aad3-4db1-8807-c399a3264349/tile/gee/{z}/{x}/{y}'
       },
 
       init: function(layer, options, map) {
@@ -42,32 +42,6 @@ define(
           .exponent(exp)
           .domain([0, 256])
           .range([0, 256]);
-        var scale = chroma
-          .scale([
-            '#F8EBFF',
-            '#ECCAFC',
-            '#DFA4FF',
-            '#C26DFE',
-            '#9D36F7',
-            '#6D00E1',
-            '#3C00AB'
-          ])
-          .domain([0, 40, 84, 119, 140, 175, 255]);
-
-        for (var i = 0; i < w; ++i) {
-          for (var j = 0; j < h; ++j) {
-            //maps over square
-            var pixelPos = (j * w + i) * components;
-            var intensity = imgdata[pixelPos + 1];
-
-            var tmp_rgb = scale(intensity).rgb();
-            imgdata[pixelPos] = tmp_rgb[0];
-            imgdata[pixelPos + 1] = tmp_rgb[1];
-            imgdata[pixelPos + 2] = tmp_rgb[2];
-
-            imgdata[pixelPos + 3] = myscale(intensity) * 256;
-          }
-        }
       },
 
       _getUrl: function(x, y, z) {

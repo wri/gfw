@@ -4,21 +4,12 @@
 <!--[if IE 8]>         <html class='no-js lt-ie9'> <![endif]-->
 <!--[if gt IE 8]><!--> <html class='no-js'> <!--<![endif]-->
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <title>Global Forest Watch</title>
+  <%= render 'shared/meta' %>
+  <%= render 'shared/links' %>
 
-  <link href='//fonts.googleapis.com/css?family=Fira+Sans:400,500,300' rel='stylesheet' type='text/css' crossorigin="anonymous">
-
-
-  <meta name='description' content='Global Forest Watch (GFW) is a partnership that provides the most current, reliable, and actionable information about what is happening in forests worldwide.'>
-  <meta name="keywords" content="<%= @keywords %>">
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <meta name='robots' content='noindex'>
-  <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
   <%= favicon_link_tag 'favicon.ico' %>
 
-  <%= controller_stylesheet_link_tag %>
+  <%= stylesheet_link_tag controller_name, :media => 'all' %>
   <%= yield :css %>
   <style>
     body {
@@ -55,25 +46,7 @@
   </style>
 
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
-  <%= csrf_meta_tags %>
-  <script>
-    if (! !!window.gfw) {
-      var gfw = window.gfw = {
-        config: {
-          GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
-          GFW_API_HOST_NEW_API: "<%= ENV['GFW_API_HOST_NEW_API'] %>",
-          GFW_API_HOST_API_V2: "<%= ENV['GFW_API_HOST_API_V2'] %>",
-          CARTO_API_URL: "<%= ENV['CARTO_API_URL'] %>",
-          GFW_API_AUTH: "<%= ENV['GFW_API_AUTH'] %>",
-          GFW_API_HOST_PROD: "<%= ENV['GFW_API_HOST_PROD'] %>",
-          GFW_MOBILE: 1000,
-          AWS_HOST: "<%= ENV['AWS_HOST'] %>",
-        },
-        cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
-        layer_spec: "<%= ENV['LAYER_SPEC'] %>"
-      };
-    }
-  </script>
+  <%= render 'shared/js_config' %>
 </head>
 <body class='<%= "#{controller_name} #{action_name}" %>'>
   <%= yield :title %>
