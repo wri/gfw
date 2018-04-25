@@ -5,7 +5,7 @@ const dropTarget = {
     const { setRecentImagerySettings } = props;
     const item = monitor.getItem();
     const delta = monitor.getDifferenceFromInitialOffset();
-    const top = Math.round(item.top + delta.y);
+    const top = `calc(${item.top} + ${Math.round(delta.y)}px)`;
     const left = `calc(${item.left} + ${Math.round(delta.x)}px)`;
     setRecentImagerySettings({ styles: { top, left } });
   }
