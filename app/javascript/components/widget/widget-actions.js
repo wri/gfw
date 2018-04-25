@@ -3,7 +3,7 @@ import { createThunkAction } from 'utils/redux';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
-import WIDGETS_CONFIG from './widget-config.json';
+import * as WIDGETS from './widget-manifest';
 
 export const setWidgetSettings = createAction('setWidgetSettings');
 export const setWidgetLoading = createAction('setWidgetLoading');
@@ -49,13 +49,15 @@ export const setWidgetSettingsStore = createThunkAction(
   'setWidgetSettingsStore',
   query => (dispatch, getState) => {
     Object.keys(query).forEach(widgetKey => {
-      if (Object.keys(WIDGETS_CONFIG).indexOf(widgetKey) > -1) {
+      if (Object.keys(WIDGETS).indexOf(widgetKey) > -1) {
         const widgetConfig = decodeUrlForState(query[widgetKey]);
         const { settings } = getState().widgets[widgetKey];
         // Check if the state needs and update checking the values of the new config
         // with the existing in the url to avoid dispatch actions without changes
         if (!isObjectContained(widgetConfig, settings)) {
-          dispatch(setWidgetSettings({ widget: widgetKey, settings: widgetConfig }));
+          dispatch(
+            setWidgetSettings({ widget: widgetKey, settings: widgetConfig })
+          );
         }
       }
     });

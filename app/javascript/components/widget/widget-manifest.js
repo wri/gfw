@@ -1,5 +1,6 @@
 // Extent widgets
 import * as treeCover from './widgets/extent/tree-cover';
+import * as treeCoverPlantations from './widgets/extent/tree-cover-plantations';
 
 // import WidgetTreeCoverPlantations from './widgets/widget-tree-cover-plantations';
 // import WidgetIntactTreeCover from './widgets/widget-intact-tree-cover';
@@ -26,7 +27,8 @@ import * as treeCover from './widgets/extent/tree-cover';
 // import WidgetEconomicImpact from './widgets/widget-economic-impact';
 
 export {
-  treeCover
+  treeCover,
+  treeCoverPlantations
   // WidgetTreeCoverPlantations,
   // WidgetIntactTreeCover,
   // WidgetPrimaryTreeCover,
