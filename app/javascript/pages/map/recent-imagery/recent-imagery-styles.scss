@@ -1,23 +1,26 @@
 @import '~styles/settings.scss';
 
 .c-recent-imagery {
-  display: none;
-
   &__button {
     position: absolute;
-    bottom: rem(50px);
-    right: rem(35px);
-    width: rem(76px);
-    z-index: 20;
+    right: rem(10px);
+    bottom: rem(238px);
+    width: rem(38px);
+    transition: transform 0.25s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    z-index: 19;
 
     .satellite-icon {
       width: rem(20px);
       height: rem(20px);
-      margin-right: rem(5px);
     }
 
     span {
+      display: none;
       text-align: left;
+    }
+
+    &--timeline-open {
+      transform: translate(0, rem(-45px));
     }
   }
 
@@ -27,14 +30,47 @@
     height: calc(100vh - #{rem(36px)});
   }
 
-  @media screen and (min-width: 62.5rem) {
-    display: block;
+  @media screen and (min-width: rem(1000px)) {
+    &__button {
+      right: auto;
+      left: rem(35px);
+      bottom: rem(172px);
+      width: rem(76px);
+
+      .satellite-icon {
+        margin-right: rem(5px);
+      }
+
+      span {
+        display: inline-block;
+      }
+    }
   }
 }
 
 .recent-imagery-infowindow {
   font-family: $font-family-1;
-  color: $white;
-  font-size: 10px;
-  text-shadow: 0 0 3px $slate-light;
+  padding: rem(10px);
+  margin: rem(3px) rem(3px) rem(5px) rem(3px);
+  font-size: 12px;
+  color: $slate;
+  background-color: $tip;
+  box-shadow: 0 1px 3px 0 rgba($slate, 0.25);
+
+  &__arrow {
+    position: absolute;
+    left: rem(-18px);
+    right: 0;
+    top: rem(37px);
+    width: 0;
+    height: 0;
+    margin: auto;
+    border-left: 7px solid $tip;
+    border-right: none;
+    border-top: 7px solid $slate-light;
+    transform-origin: 0 0;
+    transform: rotate(-45deg);
+    border-top-color: $tip;
+    box-shadow: -2px 2px 2px 0 rgba($slate, 0.1);
+  }
 }

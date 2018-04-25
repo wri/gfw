@@ -60,6 +60,11 @@ define(
               window.dispatchEvent(new Event('isRecentImageryActivated'));
             }
           }
+        },
+        {
+          'ReactMap/zoom-go-back': function(slug) {
+            mps.publish('Map/set-zoom', [this.view.previousZoom]);
+          }
         }
       ],
 
@@ -96,6 +101,10 @@ define(
         return {
           recentImagery: this.status.get('recentImagery')
         };
+      },
+
+      notificate: function(id) {
+        mps.publish('Notification/open', [id]);
       }
     });
 

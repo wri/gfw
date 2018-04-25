@@ -13,6 +13,7 @@ class RecentImagery extends PureComponent {
     const {
       active,
       showSettings,
+      isTimelineOpen,
       tile,
       allTiles,
       settings,
@@ -30,7 +31,9 @@ class RecentImagery extends PureComponent {
         }`}
       >
         <Button
-          className="c-recent-imagery__button"
+          className={`c-recent-imagery__button ${
+            isTimelineOpen ? 'c-recent-imagery__button--timeline-open' : ''
+          }`}
           theme="theme-button-map-control"
           active={active}
           onClick={() => toogleRecentImagery()}
@@ -57,6 +60,7 @@ class RecentImagery extends PureComponent {
 RecentImagery.propTypes = {
   active: PropTypes.bool.isRequired,
   showSettings: PropTypes.bool.isRequired,
+  isTimelineOpen: PropTypes.bool.isRequired,
   tile: PropTypes.object,
   allTiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,

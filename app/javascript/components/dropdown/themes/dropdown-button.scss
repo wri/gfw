@@ -30,7 +30,7 @@ $dd-button-height: rem(28px);
         border-right: none;
         transform-origin: 0 0;
         transform: rotate(-45deg);
-        top: calc(#{$dd-button-height} + 6px);
+        top: calc(#{$dd-button-height} + #{rem(11px)});
         left: calc(50% - 14px);
         border-bottom-color: #fff;
         box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
@@ -39,9 +39,9 @@ $dd-button-height: rem(28px);
     }
 
     .menu {
-      top: calc(#{$dd-button-height} + 5px);
+      top: calc(#{$dd-button-height} + #{rem(12px)});
       border: 0;
-      box-shadow: 1px 1px 10px 0 rgba(85, 85, 85, 0.25);
+      box-shadow: $pop-box-shadow;
     }
   }
 

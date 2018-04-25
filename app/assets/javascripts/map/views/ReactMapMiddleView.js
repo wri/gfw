@@ -52,6 +52,15 @@ define(
         this.presenter.updateLayer(slug);
       },
 
+      showZoomAlert: function(alert, currentZoom) {
+        this.previousZoom = currentZoom;
+        this.showAlertNotification(alert);
+      },
+
+      showAlertNotification: function(alert) {
+        this.presenter.notificate(alert);
+      },
+
       getParams: function(e) {
         return this.params;
       },

@@ -1,6 +1,7 @@
 export const initialState = {
   active: false,
   showSettings: false,
+  isTimelineOpen: false,
   data: {},
   dataStatus: {
     tilesPerRequest: 6,
@@ -14,7 +15,7 @@ export const initialState = {
       left: '50%'
     },
     layerSlug: 'sentinel_tiles',
-    minZoom: 8,
+    minZoom: 9,
     thumbsToShow: 5,
     selectedTileIndex: 0,
     date: null,
@@ -26,6 +27,11 @@ export const initialState = {
 const toogleRecentImagery = state => ({
   ...state,
   active: !state.active
+});
+
+const setTimelineFlag = (state, { payload }) => ({
+  ...state,
+  isTimelineOpen: payload
 });
 
 const setRecentImageryData = (state, { payload }) => ({
@@ -60,6 +66,7 @@ const setRecentImageryShowSettings = (state, { payload }) => ({
 
 export default {
   toogleRecentImagery,
+  setTimelineFlag,
   setRecentImageryData,
   setRecentImageryDataStatus,
   setRecentImagerySettings,

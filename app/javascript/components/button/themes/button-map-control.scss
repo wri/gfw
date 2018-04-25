@@ -12,15 +12,17 @@
   line-height: 10px;
   color: $slate-light;
 
+  svg {
+    fill: $slate;
+  }
+
   &:hover {
     background-color: $grey-light;
   }
 
   &.--active {
-    background-color: $border;
-  }
-
-  svg {
-    fill: $slate;
+    svg {
+      fill: $green-gfw;
+    }
   }
 }
