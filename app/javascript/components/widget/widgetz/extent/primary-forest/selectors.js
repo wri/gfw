@@ -21,18 +21,22 @@ export const parseData = createSelector(
     const { totalArea, totalExtent, extent, plantations } = data;
     const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
+    const secondaryExtent =
+      totalExtent - extent - plantations < 0
+        ? 0
+        : totalExtent - extent - plantations;
     const parsedData = [
       {
-        label: 'Intact Forest',
+        label: 'Primary Forest',
         value: extent,
         color: colorRange[0],
         percentage: extent / totalArea * 100
       },
       {
-        label: hasPlantations ? 'Degraded Forest' : 'Other Tree Cover',
-        value: totalExtent - extent - plantations,
+        label: hasPlantations ? 'Secondary Forest' : 'Other Tree Cover',
+        value: secondaryExtent,
         color: colorRange[1],
-        percentage: (totalExtent - extent - plantations) / totalArea * 100
+        percentage: secondaryExtent / totalArea * 100
       },
       {
         label: 'Non-Forest',
@@ -69,34 +73,41 @@ export const getSentence = createSelector(
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
       .reduce((sum, d) => sum + d);
-    const intactPercentage =
-      parsedData.find(d => d.label === 'Intact Forest').value /
+    const primaryPercentage =
+      parsedData.find(d => d.label === 'Primary Forest').value /
       totalExtent *
       100;
+
     let indicatorLabel = indicator.label;
     switch (indicator.value) {
-      case 'ifl_2013__mining':
+      case 'primary_forest__mining':
         indicatorLabel = 'Mining concessions';
         break;
-      case 'ifl_2013__wdpa':
+      case 'primary_forest__landmark':
+        indicatorLabel = 'Indigenous lands';
+        break;
+      case 'primary_forest__wdpa':
         indicatorLabel = 'Protected areas';
         break;
       default:
-        indicatorLabel = 'Intact forest';
+        indicatorLabel = 'Primary forests';
     }
 
     const params = {
       location: locationLabel,
       indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1 ? '0.1%' : `${format('.1f')(intactPercentage)}%`,
-      intact: 'intact forest'
+        primaryPercentage < 0.1
+          ? '0.1%'
+          : `${format('.1f')(primaryPercentage)}%`,
+      primary: 'primary forest'
     };
 
-    let sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
-    if (intactPercentage < 0.01) {
+    let sentence =
+      indicator.value === 'primary_forest' ? initial : withIndicator;
+    if (primaryPercentage < 0.01) {
       sentence =
-        indicator.value === 'ifl_2013' ? lessThan : lessThanWithIndicator;
+        indicator.value === 'primary_forest' ? lessThan : lessThanWithIndicator;
     }
     return {
       sentence,
