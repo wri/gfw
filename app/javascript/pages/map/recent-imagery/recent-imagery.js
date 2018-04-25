@@ -21,6 +21,7 @@ import RecentImageryComponent from './recent-imagery-component';
 const mapStateToProps = ({ recentImagery }) => {
   const {
     active,
+    visible,
     showSettings,
     isTimelineOpen,
     data,
@@ -35,6 +36,7 @@ const mapStateToProps = ({ recentImagery }) => {
   };
   return {
     active,
+    visible,
     showSettings,
     isTimelineOpen,
     dataStatus,
@@ -71,6 +73,12 @@ class RecentImageryContainer extends PureComponent {
     window.addEventListener('timelineToogle', e => {
       const { setTimelineFlag } = this.props;
       setTimelineFlag(e.detail);
+    });
+    window.addEventListener('toogleLayerVisibility', e => {
+      const { settings: { layerSlug }, setVisible } = this.props;
+      if (e.detail.slug === layerSlug) {
+        setVisible(e.detail.visibility);
+      }
     });
   }
 
@@ -136,26 +144,28 @@ class RecentImageryContainer extends PureComponent {
     const { map } = this.middleView;
 
     const loadNewTile = () => {
-      const { dates, getData } = this.props;
-      const zoom = map.getZoom();
-      const needNewTile = !google.maps.geometry.poly.containsLocation(
-        map.getCenter(),
-        this.boundsPolygon
-      );
-      if (needNewTile) {
-        getData({
-          latitude: map.getCenter().lng(),
-          longitude: map.getCenter().lat(),
-          start: dates.start,
-          end: dates.end
-        });
-      }
-      if (zoom >= 10) {
-        this.boundsPolygon.setOptions({
-          fillColor: 'transparent',
-          strokeWeight: 0
-        });
-        this.boundsPolygonInfowindow.close();
+      const { visible, dates, getData } = this.props;
+      if (visible) {
+        const zoom = map.getZoom();
+        const needNewTile = !google.maps.geometry.poly.containsLocation(
+          map.getCenter(),
+          this.boundsPolygon
+        );
+        if (needNewTile) {
+          getData({
+            latitude: map.getCenter().lng(),
+            longitude: map.getCenter().lat(),
+            start: dates.start,
+            end: dates.end
+          });
+        }
+        if (zoom >= 10) {
+          this.boundsPolygon.setOptions({
+            fillColor: 'transparent',
+            strokeWeight: 0
+          });
+          this.boundsPolygonInfowindow.close();
+        }
       }
     };
     this.mapDragEvent = map.addListener('dragend', loadNewTile);
@@ -279,6 +289,7 @@ class RecentImageryContainer extends PureComponent {
 
 RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
+  visible: PropTypes.bool,
   showSettings: PropTypes.bool,
   dataStatus: PropTypes.object,
   tile: PropTypes.object,
@@ -287,6 +298,7 @@ RecentImageryContainer.propTypes = {
   dates: PropTypes.object,
   settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
+  setVisible: PropTypes.func,
   setTimelineFlag: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
   getData: PropTypes.func,

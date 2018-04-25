@@ -27,7 +27,7 @@
   &--dragging {
     position: relative;
     width: 100%;
-    height: calc(100vh - #{rem(36px)});
+    height: 100vh;
   }
 
   @media screen and (min-width: rem(1000px)) {

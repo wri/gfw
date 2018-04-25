@@ -1,5 +1,6 @@
 export const initialState = {
   active: false,
+  visible: false,
   showSettings: false,
   isTimelineOpen: false,
   data: {},
@@ -11,7 +12,7 @@ export const initialState = {
   },
   settings: {
     styles: {
-      top: 50,
+      top: 90,
       left: '50%'
     },
     layerSlug: 'sentinel_tiles',
@@ -26,7 +27,13 @@ export const initialState = {
 
 const toogleRecentImagery = state => ({
   ...state,
-  active: !state.active
+  active: !state.active,
+  visible: !state.active
+});
+
+const setVisible = (state, { payload }) => ({
+  ...state,
+  visible: payload
 });
 
 const setTimelineFlag = (state, { payload }) => ({
@@ -66,6 +73,7 @@ const setRecentImageryShowSettings = (state, { payload }) => ({
 
 export default {
   toogleRecentImagery,
+  setVisible,
   setTimelineFlag,
   setRecentImageryData,
   setRecentImageryDataStatus,
