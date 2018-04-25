@@ -1,0 +1,20 @@
+<%= render 'shared/js_footer' %>
+<%= render 'shared/google_carto' %>
+<%= render 'shared/icons/svg_icons_footer' %>
+<%= render 'shared/modal' %>
+<%= render 'shared/notifications' %>
+<% content_for :headerMobile do %>
+  <a href="#" class="menu-section-link" data-hideembed="1">Countries <svg><use xlink:href="#shape-country"></use></svg></a>
+  <ul id="menu-section-dropdown" class="menu-section-dropdown">
+    <li>
+      <a class="btn gray uppercase <% if (controller?("countries") && action?("index")) || (controller?("countries") && action?("show")) %> current<% end %>" href="/countries">Country Profiles</a>
+    </li>
+    <li>
+      <a class="btn gray uppercase <% if controller?("countries") && action?("overview") %>current<% end %>" href="/countries/overview">Country Rankings</a>
+    </li>
+  </ul>
+<% end %>
+<div id='sources' class='sources notranslate is-hidden'>
+  <%= render 'countries' %>
+  <%= render 'shared/sources' %>
+</div>

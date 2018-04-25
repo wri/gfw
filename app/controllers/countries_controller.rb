@@ -3,8 +3,6 @@ class CountriesController < ApplicationController
 
   include ActionView::Helpers::NumberHelper
 
-  layout 'countries'
-
   def index
     @countries = Country.find_all
     @title = 'Country Profiles'

@@ -1,8 +1,4 @@
 class LandingController < ApplicationController
-  layout 'landing'
-  def is_number?(string)
-    true if Float(string) rescue false
-  end
 
   def index
     require 'open-uri'
