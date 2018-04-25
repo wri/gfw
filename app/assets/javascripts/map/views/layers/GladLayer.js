@@ -100,7 +100,7 @@ define(
       filterCanvasImgdata: function(imgdata, w, h, z) {
         const imageData = imgdata;
         const startDate = moment(START_DATE);
-        const endDate = this.currentDate[1];
+        const endDate = this.maxDataDate;
         const numberOfDays = endDate.diff(startDate, 'days');
         const customRangeStartDate = numberOfDays - 7;
 
