@@ -12,7 +12,7 @@ export const initialState = {
   },
   settings: {
     styles: {
-      top: '25%',
+      top: 90,
       left: '50%'
     },
     layerSlug: 'sentinel_tiles',
