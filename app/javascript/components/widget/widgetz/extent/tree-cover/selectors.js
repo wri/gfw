@@ -62,7 +62,7 @@ export const getSentence = createSelector(
       year: settings.extentYear,
       location: locationLabel,
       indicator: indicator.label,
-      value: format('.3s')(data.cover)
+      value: `${format('.3s')(data.cover)}ha`
     };
 
     return {

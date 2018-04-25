@@ -14,7 +14,7 @@ export const getWidgetData = createThunkAction(
   ({ getData, widget, params }) => (dispatch, state) => {
     if (!state().widgets[widget].loading) {
       dispatch(setWidgetLoading(widget));
-      getData(params, dispatch, setWidgetData, widget);
+      getData({ params, dispatch, setWidgetData, widget, state });
     }
   }
 );

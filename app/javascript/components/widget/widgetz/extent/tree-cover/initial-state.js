@@ -22,9 +22,9 @@ export const initialState = {
       landCover: 1
     },
     sentences: {
-      initial: 'As of {year}, {location} had {value}ha of tree cover.',
+      initial: 'As of {year}, {location} had {value} of tree cover.',
       withIndicator:
-        'As of {year}, {indicator} in {location} had {value}ha of tree cover.'
+        'As of {year}, {indicator} in {location} had {value} of tree cover.'
     }
   },
   settings: {

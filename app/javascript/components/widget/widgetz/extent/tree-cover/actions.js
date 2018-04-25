@@ -1,6 +1,6 @@
 import { getExtent } from 'services/forest-data';
 
-export const getData = (params, dispatch, setData, widget) => {
+export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   getExtent(params)
     .then(response => {
       const extent = response.data && response.data.data;
@@ -18,7 +18,7 @@ export const getData = (params, dispatch, setData, widget) => {
         };
       }
       if (params.indicator !== 'gadm28') {
-        dispatch(setData({ data, widget }));
+        dispatch(setWidgetData({ data, widget }));
       } else {
         getExtent({ ...params, indicator: 'plantations' }).then(
           plantationsResponse => {
@@ -31,13 +31,13 @@ export const getData = (params, dispatch, setData, widget) => {
                 plantations
               };
             }
-            dispatch(setData({ data, widget }));
+            dispatch(setWidgetData({ data, widget }));
           }
         );
       }
     })
     .catch(error => {
-      dispatch(setData({ widget, error: true }));
+      dispatch(setWidgetData({ widget, error: true }));
       console.info(error);
     });
 };

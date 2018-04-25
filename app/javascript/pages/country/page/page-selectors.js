@@ -3,6 +3,7 @@ import compact from 'lodash/compact';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
 import isEmpty from 'lodash/isEmpty';
+import camelCase from 'lodash/camelCase';
 import qs from 'query-string';
 import sortBy from 'lodash/sortBy';
 
@@ -32,7 +33,7 @@ export const filterWidgetsByCategory = createSelector(
       widgets.filter(
         w => w.enabled && w.config.categories.indexOf(category) > -1
       ),
-      `config.sortOrder[${category}]`
+      `config.sortOrder[${camelCase(category)}]`
     )
 );
 

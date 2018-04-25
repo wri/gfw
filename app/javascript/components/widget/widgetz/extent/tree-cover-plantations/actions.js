@@ -1,7 +1,7 @@
 import { getExtent, getPlantationsExtent } from 'services/forest-data';
 import axios from 'axios';
 
-export const getData = (params, dispatch, setData, widget) => {
+export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   axios
     .all([
       getExtent({ ...params, indicator: 'gadm28' }),
@@ -22,11 +22,11 @@ export const getData = (params, dispatch, setData, widget) => {
             plantations: plantationsExtent
           };
         }
-        dispatch(setData({ data, widget }));
+        dispatch(setWidgetData({ data, widget }));
       })
     )
     .catch(error => {
-      dispatch(setData({ widget, error: true }));
+      dispatch(setWidgetData({ widget, error: true }));
       console.info(error);
     });
 };

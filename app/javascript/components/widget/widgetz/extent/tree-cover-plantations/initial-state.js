@@ -14,13 +14,13 @@ export const initialState = {
     },
     sentences: {
       initialSpecies:
-        'In {location}, {firstSpecies} and {secondSpecies} represent the largest plantation area by {type}, spanning {extent}ha.',
+        'In {location}, {firstSpecies} and {secondSpecies} represent the largest plantation area by {type}, spanning {extent}.',
       singleSpecies:
-        'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent}ha.',
+        'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent}.',
       remainingSpecies:
-        'The remaining {other}ha is distributed between {count} other plantation species.',
+        'The remaining {other} is distributed between {count} other plantation species.',
       initialTypes:
-        'In {location}, the largest plantation area by type are {topType}, spanning {extent}ha.'
+        'In {location}, the largest plantation area by type are {topType}, spanning {extent}.'
     }
   },
   settings: {

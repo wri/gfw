@@ -8,11 +8,13 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getLocationNames = state => state.locationNames;
 const getActiveIndicator = state => state.activeIndicator;
+const getIndicatorWhitelist = state =>
+  state.whitelists && state.whitelists.countryWhitelist;
 const getColors = state => state.colors;
-const getIndicatorWhitelist = state => state.whitelist;
+const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
-export const getIntactTreeCoverData = createSelector(
+export const parseData = createSelector(
   [getData, getSettings, getIndicatorWhitelist, getColors],
   (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
@@ -52,9 +54,17 @@ export const getIntactTreeCoverData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getIntactTreeCoverData, getSettings, getLocationNames, getActiveIndicator],
-  (parsedData, settings, locationNames, indicator) => {
+  [parseData, getSettings, getLocationNames, getActiveIndicator, getSentences],
+  (parsedData, settings, locationNames, indicator, sentences) => {
     if (!parsedData || !locationNames) return null;
+    const {
+      initial,
+      lessThan,
+      withIndicator,
+      lessThanWithIndicator
+    } = sentences;
+    const locationLabel =
+      locationNames && locationNames.current && locationNames.current.label;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
@@ -63,37 +73,33 @@ export const getSentence = createSelector(
       parsedData.find(d => d.label === 'Intact Forest').value /
       totalExtent *
       100;
-    const locationLabel = locationNames.current && locationNames.current.label;
-    let sentenceLocation;
-
+    let indicatorLabel = indicator.label;
     switch (indicator.value) {
       case 'ifl_2013__mining':
-        sentenceLocation = '<b>Mining concessions</b>';
+        indicatorLabel = 'Mining concessions';
         break;
-
       case 'ifl_2013__wdpa':
-        sentenceLocation = '<b>Protected areas</b>';
+        indicatorLabel = 'Protected areas';
         break;
-
       default:
-        sentenceLocation = '<b>Intact forest</b>';
+        indicatorLabel = 'Intact forest';
     }
 
-    const lessThanCheck =
-      intactPercentage < 0.01
-        ? 'less than <b>0.1%</b> '
-        : `<strong>${format('.1f')(intactPercentage)}%</strong> `;
+    const params = {
+      location: locationLabel,
+      indicator: indicatorLabel,
+      percentage: `${format('.1f')(intactPercentage)}%`,
+      intact: 'intact forest'
+    };
 
-    const sentence = `${
-      indicator.value === 'ifl_2013'
-        ? `In <b>${locationLabel}</b>, ${
-          lessThanCheck
-        } of tree cover is <b>intact forest</b>.`
-        : `Within <b>${sentenceLocation}</b> in <b>${locationLabel}</b>, ${
-          lessThanCheck
-        } of tree cover is <b>intact forest</b>.`
-    }`;
-
-    return sentence;
+    let sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
+    if (intactPercentage < 0.01) {
+      sentence =
+        indicator.value === 'ifl_2013' ? lessThan : lessThanWithIndicator;
+    }
+    return {
+      sentence,
+      params
+    };
   }
 );
