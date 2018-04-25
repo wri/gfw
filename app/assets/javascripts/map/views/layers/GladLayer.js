@@ -38,7 +38,7 @@ define(
     };
 
     var getIntensity = function(number) {
-      var intensity = (number % 10) * 50;
+      var intensity = (number % 100) * 50;
       if (intensity > 255) {
         intensity = 255;
       }
