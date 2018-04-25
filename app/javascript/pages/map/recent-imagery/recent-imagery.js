@@ -19,7 +19,14 @@ import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
 const mapStateToProps = ({ recentImagery }) => {
-  const { active, showSettings, data, dataStatus, settings } = recentImagery;
+  const {
+    active,
+    showSettings,
+    isTimelineOpen,
+    data,
+    dataStatus,
+    settings
+  } = recentImagery;
   const selectorData = {
     data: data.tiles,
     bbox: data.bbox,
@@ -29,6 +36,7 @@ const mapStateToProps = ({ recentImagery }) => {
   return {
     active,
     showSettings,
+    isTimelineOpen,
     dataStatus,
     allTiles: getAllTiles(selectorData),
     tile: getTile(selectorData),
@@ -59,6 +67,10 @@ class RecentImageryContainer extends PureComponent {
         this.removedFromUrl = true;
         toogleRecentImagery();
       }
+    });
+    window.addEventListener('timelineToogle', e => {
+      const { setTimelineFlag } = this.props;
+      setTimelineFlag(e.detail);
     });
   }
 
@@ -215,7 +227,12 @@ class RecentImageryContainer extends PureComponent {
       this.boundsPolygonInfowindow.close();
     }
     this.boundsPolygonInfowindow = new google.maps.InfoWindow({
-      content: `<div class="recent-imagery-infowindow">${description}</div>`,
+      content: `
+        <div class="recent-imagery-infowindow">
+          ${description}
+          <div class="recent-imagery-infowindow__arrow"></div>
+        </div>
+      `,
       position: polygonCenter.top
     });
   }
@@ -226,27 +243,18 @@ class RecentImageryContainer extends PureComponent {
     let clickTimeout = null;
 
     google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
-      const zoom = map.getZoom();
-      if (zoom < 10) {
-        this.boundsPolygon.setOptions({
-          fillColor: '#000000',
-          fillOpacity: 0.1,
-          strokeColor: '#000000',
-          strokeOpacity: 0.5,
-          strokeWeight: 1
-        });
-        this.boundsPolygonInfowindow.open(map);
-      }
+      this.boundsPolygon.setOptions({
+        strokeColor: '#000000',
+        strokeOpacity: 0.5,
+        strokeWeight: 1
+      });
+      this.boundsPolygonInfowindow.open(map);
     });
     google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
-      const zoom = map.getZoom();
-      if (zoom < 10) {
-        this.boundsPolygon.setOptions({
-          fillColor: 'transparent',
-          strokeWeight: 0
-        });
-        this.boundsPolygonInfowindow.close();
-      }
+      this.boundsPolygon.setOptions({
+        strokeWeight: 0
+      });
+      this.boundsPolygonInfowindow.close();
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
@@ -279,6 +287,7 @@ RecentImageryContainer.propTypes = {
   dates: PropTypes.object,
   settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
+  setTimelineFlag: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
   getData: PropTypes.func,
   getMoreTiles: PropTypes.func,
