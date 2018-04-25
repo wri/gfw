@@ -831,11 +831,20 @@ define(
             iCount += 1;
           });
         }
+
+        window.dispatchEvent(
+          new CustomEvent('toogleLayerVisibility', {
+            detail: {
+              slug: layer,
+              visibility: true
+            }
+          })
+        );
       },
 
       hiddenLayer(e) {
         const layer = $(e.target).attr('data-slug-hidden');
-
+        
         _.each(this.$el.find('.layer-info-container'), li => {
           if (layer === $(li).attr('data-slug')) {
             $(li).addClass('-desactivate');
@@ -879,6 +888,15 @@ define(
           this.model.set('layers_status', layerArray);
           this.map.overlayMapTypes.removeAt(index);
         }
+
+        window.dispatchEvent(
+          new CustomEvent('toogleLayerVisibility', {
+            detail: {
+              slug: layer,
+              visibility: false
+            }
+          })
+        );
       },
 
       _getOverlayIndex(name) {
