@@ -1,13 +1,14 @@
-import WIDGETS_CONFIG from './widget-config.json';
+// import WIDGETS_CONFIG from './widget-config.json';
+import * as Widgets from './widget-manifest';
 
 const widgets = {};
-Object.keys(WIDGETS_CONFIG).forEach(key => {
+Object.keys(Widgets).forEach(key => {
   widgets[key] = {
     name: key,
     loading: false,
     error: false,
     data: {},
-    ...WIDGETS_CONFIG[key]
+    ...Widgets[key].initialState
   };
 });
 

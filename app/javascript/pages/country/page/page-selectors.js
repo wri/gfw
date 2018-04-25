@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import qs from 'query-string';
 import sortBy from 'lodash/sortBy';
 
-import WIDGETS from 'components/widget/widget-config.json';
+import * as WIDGETS from 'components/widget/widget-manifest';
 
 // get list data
 const getCategories = state => state.categories || null;
@@ -21,7 +21,7 @@ const getFAOCountries = state => state.faoCountries || null;
 export const getWidgets = createSelector([], () =>
   Object.keys(WIDGETS).map(key => ({
     name: key,
-    ...WIDGETS[key]
+    ...WIDGETS[key].initialState
   }))
 );
 

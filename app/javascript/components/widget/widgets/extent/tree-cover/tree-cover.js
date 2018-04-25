@@ -1,5 +1,6 @@
-import { getData } from './tree-cover-actions';
-import { parseData, getSentence } from './tree-cover-selectors';
-import Component from './tree-cover-component';
+import { getData } from './actions';
+import { parseData, getSentence } from './selectors';
+import Component from './component';
+import { initialState } from './initial-state';
 
-export { getData, parseData, getSentence, Component };
+export { getData, parseData, getSentence, Component, initialState };
