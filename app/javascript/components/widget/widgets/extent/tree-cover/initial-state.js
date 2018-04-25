@@ -19,7 +19,12 @@ export const initialState = {
     layers: ['forest2000', 'forest2010'],
     sortOrder: {
       summary: 1,
-      land_cover: 1
+      landCover: 1
+    },
+    sentences: {
+      initial: 'As of {year}, {location} had {value}ha of tree cover.',
+      withIndicator:
+        'As of {year}, {indicator} in {location} had {value}ha of tree cover.'
     }
   },
   settings: {

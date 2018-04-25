@@ -10,6 +10,7 @@ const getLocationNames = state => state.locationNames;
 const getActiveIndicator = state => state.activeIndicator;
 const getWhitelists = state => state.whitelists;
 const getColors = state => state.colors;
+const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
@@ -51,21 +52,22 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getSettings, getLocationNames, getActiveIndicator],
-  (data, settings, locationNames, indicator) => {
-    if (!data || !indicator) return null;
-    const { cover } = data;
+  [getData, getSettings, getLocationNames, getActiveIndicator, getSentences],
+  (data, settings, locationNames, indicator, sentences) => {
+    if (!data || !indicator || !sentences) return null;
+    const { initial, withIndicator } = sentences;
     const locationLabel =
       locationNames && locationNames.current && locationNames.current.label;
-    const locationIntro = `${
-      indicator.value !== 'gadm28'
-        ? `<b>${indicator.label}</b> in <b>${locationLabel}</b> `
-        : `<b>${locationLabel}</b> `
-    }`;
-    const sentence = `As of <b>${settings.extentYear}</b>, ${
-      locationIntro
-    } had <b>${format('.3s')(cover)}Ha</b> of tree cover.`;
+    const params = {
+      year: settings.extentYear,
+      location: locationLabel,
+      indicator: indicator.label,
+      value: format('.3s')(data.cover)
+    };
 
-    return sentence;
+    return {
+      sentence: indicator.value !== 'gadm28' ? withIndicator : initial,
+      params
+    };
   }
 );

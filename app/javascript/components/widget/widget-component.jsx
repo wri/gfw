@@ -121,7 +121,7 @@ Widget.propTypes = {
   colors: PropTypes.object,
   whitelist: PropTypes.object,
   Component: PropTypes.func,
-  sentence: PropTypes.string
+  sentence: PropTypes.object
 };
 
 export default Widget;

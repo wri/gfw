@@ -35,7 +35,6 @@ const mapStateToProps = (
     location: location.payload,
     countryData,
     whitelists,
-    locationNames,
     activeIndicator,
     config,
     colors,
@@ -92,7 +91,7 @@ const mapStateToProps = (
     widget,
     data,
     parsedData: widgetFuncs.parseData(selectorData),
-    sentence: widgetFuncs.getSentence(selectorData),
+    sentence: widgetFuncs.getSentence({ ...selectorData, locationNames }),
     settings
   };
 };

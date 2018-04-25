@@ -5,12 +5,22 @@ import './widget-dynamic-sentence-styles.scss';
 
 class WidgetDynamicSentence extends PureComponent {
   render() {
-    const { sentence, className } = this.props;
+    const { className } = this.props;
+    const { sentence, params } = this.props.sentence;
+    let formattedSentence = sentence;
+    if (params) {
+      Object.keys(params).forEach(p => {
+        formattedSentence = formattedSentence.replace(
+          `{${p}}`,
+          `<b>${params[p]}</b>`
+        );
+      });
+    }
 
     return (
       <p
         className={`c-widget-dynamic-sentence ${className || ''}`}
-        dangerouslySetInnerHTML={{ __html: sentence }}
+        dangerouslySetInnerHTML={{ __html: formattedSentence }}
       />
     );
   }
@@ -18,7 +28,7 @@ class WidgetDynamicSentence extends PureComponent {
 
 WidgetDynamicSentence.propTypes = {
   className: PropTypes.string,
-  sentence: PropTypes.string
+  sentence: PropTypes.object
 };
 
 export default WidgetDynamicSentence;
