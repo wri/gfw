@@ -14,6 +14,7 @@ class Root extends PureComponent {
     if (loading) {
       return null;
     }
+
     return (
       <div className="l-map">
         <DragDropContextProvider backend={HTML5Backend}>
