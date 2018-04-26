@@ -232,9 +232,7 @@ export const getGainRanked = ({
   } else if (region) {
     regionValue = 'adm1';
   }
-  // if country, location = ''
-  // if region, location = country
-  // if subregion, location = adm1
+
   const location = region
     ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
     : '';
