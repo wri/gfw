@@ -8,14 +8,16 @@ import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 import endsWith from 'lodash/endsWith';
 
-const getPlantations = state => state.plantations || null;
-const getExtent = state => state.extent || null;
+const getPlantations = state => state.data && state.data.plantations || null;
+const getExtent = state => state.data && state.data.extent || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
-const getLocationsMeta = state => state.meta || null;
+const getQuery = state => state.query || null;
+const getLocationsMeta = state => state.countryData[!state.location.region ? 'regions' : 'subRegions'] || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 const getEmbed = state => state.embed || null;
+const getSentences = state => state.sentences || null;
 
 const getPlanationKeys = createSelector(
   [getPlantations],
@@ -23,16 +25,17 @@ const getPlanationKeys = createSelector(
     (plantations ? Object.keys(groupBy(plantations, 'label')) : null)
 );
 
-export const chartData = createSelector(
+export const parseData = createSelector(
   [
     getPlantations,
     getExtent,
     getPlanationKeys,
     getLocationsMeta,
     getLocation,
+    getQuery,
     getEmbed
   ],
-  (plantations, extent, plantationKeys, meta, location, embed) => {
+  (plantations, extent, plantationKeys, meta, location, query, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
     const groupedByRegion = groupBy(plantations, 'region');
     const regionData = Object.keys(groupedByRegion).map(r => {
@@ -60,10 +63,10 @@ export const chartData = createSelector(
         ...yKeys,
         total: totalRegionPlantations / totalArea * 100,
         path: `${embed ? `http://${window.location.host}` : ''}/country/${
-          location.payload.country
-        }/${location.payload.region ? `${location.payload.region}/` : ''}${
+          location.country
+        }/${location.region ? `${location.region}/` : ''}${
           regionId
-        }${location.search ? `?${location.search}` : ''}`,
+        }${query ? `?${query}` : ''}`,
         extLink: embed
       };
     });
@@ -73,7 +76,7 @@ export const chartData = createSelector(
   }
 );
 
-export const chartConfig = createSelector(
+export const parseConfig = createSelector(
   [getPlanationKeys, getColors, getSettings],
   (dataKeys, colors, settings) => {
     if (!dataKeys) return null;
@@ -97,8 +100,8 @@ export const chartConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [chartData, getSettings, getLocation, getLocationNames],
-  (data, settings, location, locationNames) => {
+  [parseData, getSettings, getLocation, getLocationNames, getSentences],
+  (data, settings, location, locationNames, sentences) => {
     if (!data || !data.length) return null;
 
     const { type } = settings;
@@ -123,7 +126,7 @@ export const getSentence = createSelector(
         topRegion.region
       }</b> has the largest relative plantation area in <b>${
         currentLocation
-      }</b>${location.payload.region ? ' ' : ''} at <b>${format('.1f')(
+      }</b>${location.region ? ' ' : ''} at <b>${format('.1f')(
         data[0].total
       )}%</b>, most of which is in <b>${plantationLabel}${
         isPlural ? '' : 's'
@@ -133,14 +136,14 @@ export const getSentence = createSelector(
         topRegion.region
       }</b> has the largest relative plantation area in <b>${
         currentLocation
-      }</b>${location.payload.region ? ' ' : ''} at <b>${format('.1f')(
+      }</b>${location.region ? ' ' : ''} at <b>${format('.1f')(
         data[0].total
       )}%</b>, most of which is in <b>${topPlantation.label} plantations</b>.`;
     } else {
       sentence = `Within <b>${currentLocation}</b>, <b>${(topRegion.region &&
         topRegion.region) ||
         ''}</b> has the largest relative area of plantations${
-        location.payload.region ? ' extent' : ''
+        location.region ? ' extent' : ''
       } at <b>${format('.1f')(topRegion.total)}%</b>.`;
     }
     return sentence;

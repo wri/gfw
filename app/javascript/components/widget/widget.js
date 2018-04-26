@@ -23,6 +23,7 @@ const mapStateToProps = (
   // widget consts
   const widget = ownProps.widget;
   const widgetFuncs = Widgets[widget];
+  const { parseData, parseConfig, getSentence } = Widgets[widget];
   const { title, config, settings, loading, data, error } = widgets[widget];
   const colors = COLORS[config.colors || config.type] || COLORS;
 
@@ -33,6 +34,7 @@ const mapStateToProps = (
     data,
     settings,
     location: location.payload,
+    query: location.search,
     countryData,
     whitelists,
     activeIndicator,
@@ -90,12 +92,17 @@ const mapStateToProps = (
     ...Widgets[widget],
     widget,
     data,
-    parsedData: widgetFuncs.parseData({
+    parsedData: parseData && parseData({
       ...selectorData,
       locationNames,
       options
     }),
-    sentence: widgetFuncs.getSentence({
+    parsedConfig: parseConfig && parseConfig({
+      ...selectorData,
+      locationNames,
+      options
+    }),
+    sentence: getSentence && getSentence({
       ...selectorData,
       locationNames,
       options
@@ -123,7 +130,8 @@ class WidgetContainer extends PureComponent {
       !isEqual(location, this.props.location) ||
       !isEqual(settings.threshold, this.props.settings.threshold) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
-      !isEqual(settings.extentYear, this.props.settings.extentYear)
+      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
+      !isEqual(settings.type, this.props.settings.type)
     ) {
       getWidgetData({
         widget,

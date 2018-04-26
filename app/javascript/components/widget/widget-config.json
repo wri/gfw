@@ -144,35 +144,6 @@
     },
     "enabled": false
   },
-  "treeCoverRanked": {
-    "title": "Tree cover extent",
-    "config": {
-      "size": "small",
-      "indicators": ["gadm28", "ifl_2013", "mining", "wdpa","plantations","landmark", "primary_forest",
-                      "ifl_2013", "ifl_2013__wdpa", "ifl_2013__mining", "ifl_2013__landmark",
-                      "primary_forest", "primary_forest__mining", "primary_forest__wdpa", "primary_forest__landmark",
-                      "plantations__mining", "plantations__wdpa", "plantations__landmark"],
-      "units": ["ha", "%"],
-      "categories": ["land-cover"],
-      "admins": ["country"],
-      "selectors": ["indicators", "thresholds", "extentYears", "units"],
-      "type": "extent",
-      "metaKey": "widget_forest_cover_ranking",
-      "layers": ["forest2000", "forest2010"],
-      "sortOrder": {
-        "summary": 1,
-        "land-cover": 1
-      }
-    },
-    "settings": {
-      "indicator": "gadm28",
-      "threshold": 30,
-      "unit": "ha",
-      "extentYear": 2010,
-      "layers": ["forest2010"]
-    },
-    "enabled": false
-  },
   "FAOReforestation": {
     "title": "FAO reforestation",
     "config": {
@@ -352,82 +323,6 @@
       "pageSize": 5,
       "page": 0,
       "layers": ["umd_as_it_happens"]
-    },
-    "enabled": false
-  },
-  "rankedPlantations": {
-    "title": "Ranked plantation breakdown",
-    "config": {
-      "size": "small",
-      "categories": ["land-use"],
-      "admins": ["country", "region"],
-      "selectors": ["types"],
-      "type": "plantations",
-      "metaKey": "widget_plantations_ranked",
-      "layers": ["plantations_by_type", "plantations_by_species"],
-      "sortOrder": {
-        "land-use": 2
-      }
-    },
-    "settings": {
-      "indicator": "gadm28",
-      "threshold": 0,
-      "type": "bound2",
-      "pageSize": 5,
-      "page": 0,
-      "layers": ["plantations_by_species"]
-    },
-    "enabled": false
-  },
-  "emissions": {
-    "title": "Historical emissions",
-    "config": {
-      "size": "small",
-      "categories": ["climate"],
-      "admins": ["country"],
-      "metaKey": "widget_historical_emissions",
-      "type": "loss",
-      "colors": "emissions"
-    },
-    "enabled": false
-  },
-  "emissionsDeforestation": {
-    "title": "Emissions from biomass loss",
-    "config": {
-      "size": "small",
-      "indicators": ["gadm28", "bra_biomes", "mining", "wdpa", "primary_forest", "ifl_2013", "landmark"],
-      "categories": ["climate"],
-      "admins": ["country", "region", "subRegion"],
-      "selectors": ["indicators", "startYears", "endYears", "units"],
-      "units": ["biomassCarbon", "co2Emissions"],
-      "yearRange": ["2001", "2016"],
-      "metaKey": "widget_carbon_emissions_tree_cover_loss",
-      "type": "loss",
-      "colors": "emissions"
-    },
-    "settings": {
-      "indicator": "gadm28",
-      "unit": "biomassCarbon",
-      "threshold": 30,
-      "startYear": 2001,
-      "endYear": 2016
-    },
-    "enabled": false
-  },
-  "fires": {
-    "title": "Fires",
-    "config": {
-      "size": "small",
-      "categories": ["forest-change", "summary"],
-      "admins": ["country", "region", "subRegion"],
-      "metaKey": "widget_fire_alert_location",
-      "layers": ["viirs_fires_alerts"],
-      "type": "fires"
-    },
-    "settings": {
-      "period": "week",
-      "periodValue": 1,
-      "layers": ["viirs_fires_alerts"]
     },
     "enabled": false
   },
