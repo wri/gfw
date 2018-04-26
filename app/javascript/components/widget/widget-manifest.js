@@ -5,11 +5,13 @@ import * as intactTreeCover from './widgetz/extent/intact-tree-cover';
 import * as primaryForest from './widgetz/extent/primary-forest';
 // Climate
 import * as emissions from './widgetz/climate/emissions';
+import * as emissionsDeforestation from './widgetz/climate/emissions-deforestation';
 
 export {
   treeCover,
   treeCoverPlantations,
   intactTreeCover,
   primaryForest,
-  emissions
+  emissions,
+  emissionsDeforestation
 };
