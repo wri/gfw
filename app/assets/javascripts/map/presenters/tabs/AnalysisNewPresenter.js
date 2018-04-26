@@ -753,7 +753,12 @@ define(
             ),
             'slug'
           )
-        );
+        ).sort(function(a, b) {
+          if (a === 'umd-loss-gain') {
+            return 1;
+          }
+          return 0;
+        });
         return dataset[0] || null;
       },
 
