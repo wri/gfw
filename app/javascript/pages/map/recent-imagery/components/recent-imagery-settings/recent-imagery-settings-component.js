@@ -123,10 +123,9 @@ class RecentImagerySettings extends PureComponent {
               <Carousel
                 settings={{
                   slidesToShow: thumbsToShow,
-                  infinite: tiles.length > thumbsToShow,
-                  centerMode: tiles.length > thumbsToShow,
+                  infinite: false,
+                  centerMode: false,
                   centerPadding: '20px',
-                  draggable: false,
                   dots: false,
                   arrows: tiles.length > thumbsToShow,
                   responsive: [
