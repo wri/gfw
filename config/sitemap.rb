@@ -21,5 +21,6 @@ SitemapGenerator::Sitemap.create do
   add '/howto', :changefreq => 'weekly', :priority => 0.4
   add 'https://developers.globalforestwatch.org', :changefreq => 'weekly', :priority => 0.4
   add 'http://data.globalforestwatch.org', :changefreq => 'weekly', :priority => 0.4
+  add 'http://blog.globalforestwatch.org', :changefreq => 'weekly', :priority => 0.4
 
 end
