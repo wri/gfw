@@ -115,7 +115,7 @@ class RecentImagerySettings extends PureComponent {
           />
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
-          {tiles.length >= 2 && (
+          {tiles.length >= 1 && (
             <div>
               <div className="c-recent-imagery-settings__thumbnails__description">
                 {this.state.thumbnailsDescription || selectedTile.description}
@@ -161,7 +161,7 @@ class RecentImagerySettings extends PureComponent {
               </Carousel>
             </div>
           )}
-          {tiles.length < 2 && (
+          {tiles.length < 1 && (
             <NoContent
               className="c-recent-imagery-settings__empty-thumbnails"
               message="We can't find additional images for the selection"
