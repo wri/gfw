@@ -185,7 +185,7 @@ $w-control: 44px;
         position: fixed;
         background: $white;
         z-index: 2001;
-        bottom: 50px;
+        bottom: 0;
         left: 0;
         width: 100%;
         padding: 10px;
@@ -422,4 +422,10 @@ $w-control: 44px;
       }
     }
   }
+}
+
+#cartodb-gmaps-attribution {
+  bottom: 50px !important;
+  background: transparent !important;
+  z-index: 15 !important;
 }

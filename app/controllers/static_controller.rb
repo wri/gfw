@@ -10,13 +10,6 @@ class StaticController < ApplicationController
     @title = 'Terms of Service'
   end
 
-  def about
-    @title = 'About'
-    @desc = 'Learn about the ideas and partnerships behind GFW and our outcomes, watch videos, read our data policy, and contact us.'
-    @keywords = 'GFW, about, global forest watch, about gfw, history, staff, world resources institute, wri, about gfw commodities, about gfw fires'
-    @currentNavigation = '.shape-about'
-  end
-
   # TODO: no route?
   def data
     section = params[:section]
@@ -64,56 +57,6 @@ class StaticController < ApplicationController
     respond_with @visible
   end
 
-  # TODO: no route?
-  def getinvolved
-    @title = 'Get Involved'
-    @desc = 'Contribute to the GFW community by providing data, helping improve GFW, developing your own project, or by joining the discussion about GFW.'
-    @keywords = 'GFW, help, join, upload, crowdsource, develop, submit, story, app, report, map, public, open, data, share, improve, apply, small grants, fund, feedback, translations, action'
-    @currentNavigation = '.shape-getinvolved'
-  end
-
-  # TODO: no route?
-  def explore
-    @title = 'Explore'
-    @desc = 'Browse maps and tools available through GFW, create custom visualizations and analyses, access interactive forest statistics, or download data.'
-    @keywords = 'GFW, forests, forest data, forest monitoring, forest landscapes, maps, apps, applications, fires, commodities, open landscape partnership, map, palm oil transparency toolkit, forest atlas, develop your own app, climate, biodiversity, deforestation, mobile, explore, browse, tools'
-    @currentNavigation = '.shape-all-apps'
-  end
-
-  # TODO: no route?
-  def feedback
-    @title = 'Feedback'
-
-    signup   = params["signup"]
-    email    = params["email"]
-    feedback = params["feedback"]
-
-    FeedbackMailer.feedback(feedback,signup,email).deliver_now
-
-    if signup == 'true' && email.present?
-      Api::Feedback.add_as_tester(email)
-    end
-  end
-
-  # TODO: is this used?
-  def feedback_jsonp
-    signup   = params["signup"]
-    email    = params["email"]
-    feedback = params["feedback"]
-    hostname = params["hostname"]
-
-    FeedbackMailer.feedback(feedback,signup,email,hostname).deliver_now
-    if signup == 'true' && email.present?
-      Api::Feedback.add_as_tester(email)
-    end
-
-    respond_to do |format|
-      format.js do
-        render :json => true, :callback => params[:callback]
-      end
-    end
-  end
-
   def contribute
     @title = 'Contribute data'
     @desc = 'Share your data with the GFW community by adding it to the GFW Interactive Map.'
@@ -121,8 +64,7 @@ class StaticController < ApplicationController
     @s3_direct_post = S3_DATA_BUCKET_NAME.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: '201', acl: 'public-read')
   end
 
-  def old
+  def browser_support
     @title = "Oops, your browser isn't supported."
-    render layout: 'old_browser'
   end
 end

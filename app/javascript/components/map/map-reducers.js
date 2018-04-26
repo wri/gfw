@@ -3,7 +3,8 @@ export const initialState = {
   error: false,
   options: {},
   layerSpec: {},
-  settings: {}
+  settings: {},
+  showMapMobile: false
 };
 
 const setLayerSpecLoading = (state, { payload }) => ({
@@ -20,6 +21,11 @@ const setLayerSpec = (state, { payload }) => ({
 const setMapSettings = (state, { payload }) => ({
   ...state,
   options: payload
+});
+
+const setShowMapMobile = (state, { payload }) => ({
+  ...state,
+  showMapMobile: payload
 });
 
 const setMapZoom = (state, { payload }) => {
@@ -43,5 +49,6 @@ export default {
   setLayerSpecLoading,
   setLayerSpec,
   setMapSettings,
-  setMapZoom
+  setMapZoom,
+  setShowMapMobile
 };

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import replace from 'lodash/replace';
-import WIDGETS from 'pages/country/data/widgets-config.json';
+import WIDGETS from 'components/widget/widget-config.json';
 
 import MetaComponent from './meta-component';
 

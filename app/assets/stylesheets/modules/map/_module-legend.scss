@@ -704,6 +704,46 @@
     }
   }
 
+    /****************************/
+  /* Biodiversity Intactness Details */
+  /****************************/
+  .layer-details-biodiversity-layers {
+    .details-title .units {
+      font-weight: normal;
+      text-transform: normal;
+    }
+
+    .total-carbon-bar {
+      margin-top: 4px;
+    }
+
+    .labels {
+      display: block;
+      width: 100%;
+      height: 12px;
+      font-size: 10px;
+      li {display: inline-block;}
+      li:first-child {float: left;}
+      li:last-child {float: right;}
+    }
+
+    .quartile-bar-biomass {
+      clear: both;
+      height: 12px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #FFFFD4;
+      background: -moz-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#F8EBFF),color-stop(20%,#ECCAFC),color-stop(40%,#DFA4FF), color-stop(60%,#C26DFE), color-stop(80%,#6D00E1) color-stop(100%,#3C00AB));
+      background: -webkit-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: -o-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: -ms-linear-gradient(left, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      background: linear-gradient(to right, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F8EBFF', endColorstr='#3C00AB', GradientType=1);
+      background-image: -ms-linear-gradient(lleft, #F8EBFF 0%, #ECCAFC 20%, #DFA4FF 40%, #C26DFE 60%, #6D00E1 80%, #3C00AB 100%);
+    }
+  }//3C00AB
 
   /***************************/
   /* Forest2000Layer details */

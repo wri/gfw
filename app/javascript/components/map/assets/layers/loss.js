@@ -52,6 +52,13 @@ class Loss extends Canvas {
       .replace('{z}', z)
       .replace('{threshold}', this.options.threshold);
   }
+
+  setOptions(options) {
+    if (this.options.threshold !== options.threshold) {
+      this.updateTilesEnable = false;
+    }
+    this.options = { ...this.options, ...options };
+  }
 }
 
 export default Loss;

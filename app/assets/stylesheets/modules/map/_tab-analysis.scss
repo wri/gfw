@@ -8,7 +8,6 @@
   max-height: 75%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0px 0 50px;
   z-index: 21;
   background: $white;
   transition: all 0.25s $easeInOutSine;
@@ -136,5 +135,14 @@
       }
     }
 
+    .select-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      select {
+        min-height: 30px;
+      }
+    }
   }
 }

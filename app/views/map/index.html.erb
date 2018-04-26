@@ -1,25 +1,31 @@
-<% content_for :header do %>
-  <h1><a href="/">Global Forest Watch</a></h1>
-
-  <nav id="layers-menu" class="layers-menu">
-
-  </nav>
-
-
+<% content_for :head do %>
+  <%= render 'shared/google_carto' %>
 <% end %>
 
-<%= render 'shared/icons/svg_icons' %>
+<% content_for :header do %>
+  <div class="layout-header-bottom" id="layers-options">
+  	<div class="inner">
+      <nav id="layers-menu" class="layers-menu"></nav>
+  	</div>
+  </div>
+  <div class="layout-share-mobile">
+    <a href="#" class="share-link" data-hideembed="1"><svg><use xlink:href="#shape-share"></use></svg></a>
+    <% if content_for?(:headerMobile) %>
+      <%= yield :headerMobile %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render 'shared/map' %>
+<%= render 'shared/modal' %>
+<%= render 'shared/notifications' %>
+
 <%= render 'shared/icons/svg_icons_map' %>
 <%= render 'shared/icons/svg_icons_applications' %>
 <%= render 'shared/icons/svg_icons_layers' %>
 <%= render 'shared/icons/svg_icons_country' %>
 
-<%#= render "shared/notice" %>
-<%= render "shared/header_landing" %>
-
-<div class="layout-content">
-  <%= render 'shared/map' %>
-</div>
+<div class="backdrop"></div>
 
 <div id="sources" class='sources notranslate is-hidden'>
   <%= render 'shared/sources_map' %>
@@ -31,3 +37,5 @@
   </div>
 </div>
 <div class="mini-modal download-modal"></div>
+
+<script src="//www.google-analytics.com/cx/api.js"></script>

@@ -37,6 +37,8 @@ vendor/assets/bower_components
 jstest/SpecRunner.html
 yarn.lock
 package-lock.json
+/cypress/videos
+/cypress/screenshots
 
 # Ignore Vagrant
 .vagrant
