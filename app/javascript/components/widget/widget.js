@@ -40,8 +40,7 @@ const mapStateToProps = (
     colors,
     countries: countryData.countries,
     regions: countryData.regions,
-    subRegions: countryData.subRegions,
-    meta: countryData[!location.payload.region ? 'regions' : 'subRegions']
+    subRegions: countryData.subRegions
   };
   const locationNames = getAdminsSelected(selectorData);
   const activeLocation = getActiveAdmin(selectorData);
@@ -91,7 +90,11 @@ const mapStateToProps = (
     ...Widgets[widget],
     widget,
     data,
-    parsedData: widgetFuncs.parseData(selectorData),
+    parsedData: widgetFuncs.parseData({
+      ...selectorData,
+      locationNames,
+      options
+    }),
     sentence: widgetFuncs.getSentence({
       ...selectorData,
       locationNames,
