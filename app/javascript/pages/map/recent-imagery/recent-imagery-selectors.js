@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import findIndex from 'lodash/findIndex';
 import moment from 'moment';
 import { format } from 'd3-format';
+import { sortByKey } from 'utils/data';
 
 const getData = state => state.data || null;
 const getBbox = state => state.bbox || null;
@@ -15,8 +16,13 @@ const getFilteredData = createSelector(
     if (!data || isEmpty(data)) return null;
 
     const { clouds } = settings;
-    return data.filter(
+    const dataFiltered = data.filter(
       item => Math.round(item.attributes.cloud_score) <= clouds
+    );
+    return sortByKey(
+      dataFiltered.map(item => item.attributes),
+      'date_time',
+      true
     );
   }
 );
@@ -25,17 +31,17 @@ export const getAllTiles = createSelector([getFilteredData], data => {
   if (!data || isEmpty(data)) return [];
 
   return data.map(item => ({
-    id: item.attributes.source,
-    url: item.attributes.tile_url,
-    thumbnail: item.attributes.thumbnail_url,
-    cloudScore: item.attributes.cloud_score,
-    dateTime: item.attributes.date_time,
-    instrument: item.attributes.instrument,
-    description: `${moment(item.attributes.date_time)
+    id: item.source,
+    url: item.tile_url,
+    thumbnail: item.thumbnail_url,
+    cloudScore: item.cloud_score,
+    dateTime: item.date_time,
+    instrument: item.instrument,
+    description: `${moment(item.date_time)
       .format('DD MMM YYYY')
-      .toUpperCase()} - ${format('.0f')(
-      item.attributes.cloud_score
-    )}% cloud coverage - ${item.attributes.instrument}`
+      .toUpperCase()} - ${format('.0f')(item.cloud_score)}% cloud coverage - ${
+      item.instrument
+    }`
   }));
 });
 
@@ -49,6 +55,10 @@ export const getTile = createSelector(
       data,
       d => d.attributes.source === selectedTileSource
     );
+    if (index === -1) {
+      return null;
+    }
+
     const selectedTile = data[index].attributes;
     return {
       url: selectedTile.tile_url,

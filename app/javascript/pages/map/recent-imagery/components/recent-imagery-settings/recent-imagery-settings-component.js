@@ -118,7 +118,8 @@ class RecentImagerySettings extends PureComponent {
           {tiles.length >= 1 && (
             <div>
               <div className="c-recent-imagery-settings__thumbnails__description">
-                {this.state.thumbnailsDescription || selectedTile.description}
+                {this.state.thumbnailsDescription ||
+                  (selectedTile && selectedTile.description)}
               </div>
               <Carousel
                 settings={{
@@ -176,7 +177,7 @@ class RecentImagerySettings extends PureComponent {
 }
 
 RecentImagerySettings.propTypes = {
-  selectedTile: PropTypes.object.isRequired,
+  selectedTile: PropTypes.object,
   tiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   isDragging: PropTypes.bool.isRequired,
