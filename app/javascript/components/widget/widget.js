@@ -90,8 +90,12 @@ const mapStateToProps = (
     ...Widgets[widget],
     widget,
     data,
-    parsedData: widgetFuncs.parseData(selectorData),
-    sentence: widgetFuncs.getSentence({ ...selectorData, locationNames }),
+    parsedData: widgetFuncs.parseData && widgetFuncs.parseData(selectorData),
+    parsedConfig:
+      widgetFuncs.parseConfig && widgetFuncs.parseConfig(selectorData),
+    sentence:
+      widgetFuncs.getSentence &&
+      widgetFuncs.getSentence({ ...selectorData, locationNames }),
     settings
   };
 };

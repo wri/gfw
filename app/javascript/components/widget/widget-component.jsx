@@ -29,7 +29,8 @@ class Widget extends PureComponent {
       Component,
       sentence,
       setWidgetSettingsUrl,
-      parsedData
+      parsedData,
+      parsedConfig
     } = this.props;
     const highlightColor =
       colors.main || (colors.extent && colors.extent.main) || '#a0c746';
@@ -80,7 +81,15 @@ class Widget extends PureComponent {
             !isEmpty(data) && (
               <WidgetDynamicSentence className="sentence" sentence={sentence} />
             )}
-          {!error && data && parsedData && <Component {...this.props} data={parsedData} />}
+          {!error &&
+            data &&
+            parsedData && (
+              <Component
+                {...this.props}
+                data={parsedData}
+                config={parsedConfig}
+              />
+            )}
         </div>
         <WidgetSettingsStatement settings={settingsConfig.settings} />
         {embed &&
@@ -122,7 +131,9 @@ Widget.propTypes = {
   colors: PropTypes.object,
   whitelist: PropTypes.object,
   Component: PropTypes.func,
-  sentence: PropTypes.object
+  sentence: PropTypes.object,
+  parsedData: PropTypes.object,
+  parsedConfig: PropTypes.object
 };
 
 export default Widget;
