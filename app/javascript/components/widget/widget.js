@@ -40,7 +40,8 @@ const mapStateToProps = (
     colors,
     countries: countryData.countries,
     regions: countryData.regions,
-    subRegions: countryData.subRegions
+    subRegions: countryData.subRegions,
+    meta: countryData[!location.payload.region ? 'regions' : 'subRegions']
   };
   const locationNames = getAdminsSelected(selectorData);
   const activeLocation = getActiveAdmin(selectorData);
@@ -91,7 +92,11 @@ const mapStateToProps = (
     widget,
     data,
     parsedData: widgetFuncs.parseData(selectorData),
-    sentence: widgetFuncs.getSentence({ ...selectorData, locationNames }),
+    sentence: widgetFuncs.getSentence({
+      ...selectorData,
+      locationNames,
+      options
+    }),
     settings
   };
 };
@@ -113,7 +118,9 @@ class WidgetContainer extends PureComponent {
     const { location, settings, getData, getWidgetData, widget } = nextProps;
     if (
       !isEqual(location, this.props.location) ||
-      !isEqual(settings, this.props.settings)
+      !isEqual(settings.threshold, this.props.settings.threshold) ||
+      !isEqual(settings.indicator, this.props.settings.indicator) ||
+      !isEqual(settings.extentYear, this.props.settings.extentYear)
     ) {
       getWidgetData({
         widget,

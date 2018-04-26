@@ -80,7 +80,9 @@ class Widget extends PureComponent {
             !isEmpty(data) && (
               <WidgetDynamicSentence className="sentence" sentence={sentence} />
             )}
-          {!error && data && parsedData && <Component {...this.props} data={parsedData} />}
+          {!error &&
+            data &&
+            parsedData && <Component {...this.props} data={parsedData} />}
         </div>
         <WidgetSettingsStatement settings={settingsConfig.settings} />
         {embed &&
@@ -121,8 +123,9 @@ Widget.propTypes = {
   active: PropTypes.bool,
   colors: PropTypes.object,
   whitelist: PropTypes.object,
-  Component: PropTypes.func,
-  sentence: PropTypes.object
+  Component: PropTypes.any,
+  sentence: PropTypes.object,
+  parsedData: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export default Widget;
