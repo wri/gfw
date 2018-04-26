@@ -6,21 +6,21 @@ const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
-    "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} thresh = {threshold} AND polyname = '{indicator}'",
   plantationsExtent:
-    "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = 0 AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
+    "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} thresh = 0 AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   multiRegionExtent:
-    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
+    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
   rankedExtent:
     "SELECT polyname, SUM({extent_year}) as value, SUM(area_gadm28) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
   gain:
-    "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = 0",
+    "SELECT {calc} as value FROM data WHERE {location} polyname = '{indicator}' AND thresh = 0",
   gainRanked:
-    "SELECT {region} as region, SUM(area_gain) AS gain, FROM data WHERE {location} AND polyname = '{polyname}' AND thresh = 0 GROUP BY region",
+    "SELECT {region} as region, SUM(area_gain) AS gain FROM data WHERE {location} polyname = '{polyname}' AND thresh = 0 GROUP BY region",
   gainLocations:
-    "SELECT {admin} as region, {calc} as gain, FROM data WHERE {location} AND thresh = 0 AND polyname = '{indicator}' {grouping} ",
+    "SELECT {admin} as region, {calc} as gain FROM data WHERE {location} thresh = 0 AND polyname = '{indicator}' {grouping} ",
   loss:
-    "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} AND thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
+    "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE polyname = '{indicator}' AND {location} thresh= {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   locations:
     "SELECT {location} as region, {extentYear} as extent, {extent} as total FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{indicator}' {grouping}",
   locationsLoss:
@@ -36,16 +36,16 @@ const SQL_QUERIES = {
   faoDeforestRank:
     'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest from rank',
   faoEcoLive:
-    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 1990 or fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999'
+    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999'
 };
 
 const getExtentYear = year =>
   (year === 2000 ? 'area_extent_2000' : 'area_extent');
 
 const getLocationQuery = (country, region, subRegion) =>
-  `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
-    subRegion ? ` AND adm2 = ${subRegion}` : ''
-  }`;
+  `${country ? `iso = '${country}'` : ''}${
+    region ? ` AND adm1 = ${region} AND` : ' AND'
+  }${subRegion ? ` adm2 = ${subRegion} AND` : ''}`;
 
 export const getLocations = ({
   country,
@@ -235,7 +235,7 @@ export const getGainRanked = ({
 
   const location = region
     ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
-    : '1 = 1';
+    : '';
 
   const url = `${REQUEST_URL}${SQL_QUERIES.gainRanked}`
     .replace('{region}', regionValue)
