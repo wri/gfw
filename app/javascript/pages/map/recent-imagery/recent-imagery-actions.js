@@ -80,7 +80,9 @@ const getMoreTiles = createThunkAction(
                   data.tiles,
                   d => d.attributes.source === item.source_id
                 );
-                data.tiles[index].attributes.tile_url = item.tile_url;
+                if (index !== -1) {
+                  data.tiles[index].attributes.tile_url = item.tile_url;
+                }
               }
             });
             thumbs.forEach(item => {
@@ -88,7 +90,9 @@ const getMoreTiles = createThunkAction(
                 data.tiles,
                 d => d.attributes.source === item.source
               );
-              data.tiles[index].attributes.thumbnail_url = item.thumbnail_url;
+              if (index !== -1) {
+                data.tiles[index].attributes.thumbnail_url = item.thumbnail_url;
+              }
             });
 
             dispatch(
