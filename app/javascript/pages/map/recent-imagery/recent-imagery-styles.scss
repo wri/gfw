@@ -49,28 +49,14 @@
 }
 
 .recent-imagery-infowindow {
+  padding: rem(15px);
   font-family: $font-family-1;
-  padding: rem(10px);
-  margin: rem(3px) rem(3px) rem(5px) rem(3px);
   font-size: 12px;
-  color: $slate;
-  background-color: $tip;
-  box-shadow: 0 1px 3px 0 rgba($slate, 0.25);
+  color: $white;
+  background: rgba($black, 0.6);
 
-  &__arrow {
-    position: absolute;
-    left: rem(-18px);
-    right: 0;
-    top: rem(37px);
-    width: 0;
-    height: 0;
-    margin: auto;
-    border-left: 7px solid $tip;
-    border-right: none;
-    border-top: 7px solid $slate-light;
-    transform-origin: 0 0;
-    transform: rotate(-45deg);
-    border-top-color: $tip;
-    box-shadow: -2px 2px 2px 0 rgba($slate, 0.1);
+  &__hook {
+    margin-top: rem(5px);
+    font-size: 11px;
   }
 }

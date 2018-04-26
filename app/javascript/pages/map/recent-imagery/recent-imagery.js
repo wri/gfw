@@ -4,7 +4,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
@@ -228,7 +227,6 @@ class RecentImageryContainer extends PureComponent {
       fillColor: 'transparent',
       strokeWeight: 0
     });
-    const polygonCenter = getPolygonCenter(this.boundsPolygon);
 
     this.addBoundsPolygonEvents();
     this.boundsPolygon.setMap(map);
@@ -240,10 +238,9 @@ class RecentImageryContainer extends PureComponent {
       content: `
         <div class="recent-imagery-infowindow">
           ${description}
-          <div class="recent-imagery-infowindow__arrow"></div>
+          <div class="recent-imagery-infowindow__hook">Click to refine image</div>
         </div>
-      `,
-      position: polygonCenter.top
+      `
     });
   }
 
@@ -265,6 +262,9 @@ class RecentImageryContainer extends PureComponent {
         strokeWeight: 0
       });
       this.boundsPolygonInfowindow.close();
+    });
+    google.maps.event.addListener(this.boundsPolygon, 'mousemove', e => {
+      this.boundsPolygonInfowindow.setPosition(e.latLng);
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
