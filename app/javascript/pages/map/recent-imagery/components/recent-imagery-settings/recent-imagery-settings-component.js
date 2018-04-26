@@ -31,7 +31,7 @@ class RecentImagerySettings extends PureComponent {
       settings: {
         styles,
         thumbsToShow,
-        selectedTileIndex,
+        selectedTileSource,
         date,
         weeks,
         clouds
@@ -143,9 +143,11 @@ class RecentImagerySettings extends PureComponent {
                     <RecentImageryThumbnail
                       id={i}
                       tile={tile}
-                      selected={selectedTileIndex === i}
+                      selected={selectedTileSource === tile.id}
                       handleClick={() => {
-                        setRecentImagerySettings({ selectedTileIndex: i });
+                        setRecentImagerySettings({
+                          selectedTileSource: tile.id
+                        });
                       }}
                       handleMouseEnter={() => {
                         this.setState({

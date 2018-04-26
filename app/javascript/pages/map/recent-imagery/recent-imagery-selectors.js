@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import findIndex from 'lodash/findIndex';
 import moment from 'moment';
 import { format } from 'd3-format';
 
@@ -43,8 +44,12 @@ export const getTile = createSelector(
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
-    const { selectedTileIndex } = settings;
-    const selectedTile = data[selectedTileIndex].attributes;
+    const { selectedTileSource } = settings;
+    const index = findIndex(
+      data,
+      d => d.attributes.source === selectedTileSource
+    );
+    const selectedTile = data[index].attributes;
     return {
       url: selectedTile.tile_url,
       cloudScore: selectedTile.cloud_score,

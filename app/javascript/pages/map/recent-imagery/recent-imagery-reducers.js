@@ -18,7 +18,7 @@ export const initialState = {
     layerSlug: 'sentinel_tiles',
     minZoom: 9,
     thumbsToShow: 5,
-    selectedTileIndex: 0,
+    selectedTileSource: null,
     date: null,
     weeks: 13,
     clouds: 25
