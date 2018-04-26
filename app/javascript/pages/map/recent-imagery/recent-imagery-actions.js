@@ -25,16 +25,14 @@ const getData = createThunkAction('getData', params => dispatch => {
     .then(response => {
       if (response.data.data.tiles) {
         dispatch(
-          setRecentImagerySettings({
-            selectedTileSource: response.data.data.tiles[0].attributes.source
-          })
-        );
-        dispatch(
           setRecentImageryData({
             data: response.data.data,
             dataStatus: {
               haveAllData: false,
               requestedTiles: 0
+            },
+            settings: {
+              selectedTileSource: response.data.data.tiles[0].attributes.source
             }
           })
         );

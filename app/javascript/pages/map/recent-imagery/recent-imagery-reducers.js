@@ -47,6 +47,10 @@ const setRecentImageryData = (state, { payload }) => ({
   dataStatus: {
     ...state.dataStatus,
     ...payload.dataStatus
+  },
+  settings: {
+    ...state.settings,
+    ...payload.settings
   }
 });
 

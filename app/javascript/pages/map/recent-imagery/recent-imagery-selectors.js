@@ -57,9 +57,6 @@ export const getTile = createSelector(
       data,
       d => d.attributes.source === selectedTileSource
     );
-    if (index === -1) {
-      return null;
-    }
 
     const selectedTile = data[index].attributes;
     return {
