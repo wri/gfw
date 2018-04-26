@@ -15,9 +15,11 @@ const getFilteredData = createSelector(
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
-    const { clouds } = settings;
+    const { clouds, selectedTileSource } = settings;
     const dataFiltered = data.filter(
-      item => Math.round(item.attributes.cloud_score) <= clouds
+      item =>
+        Math.round(item.attributes.cloud_score) <= clouds ||
+        item.attributes.source === selectedTileSource
     );
     return sortByKey(
       dataFiltered.map(item => item.attributes),
