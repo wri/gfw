@@ -2,15 +2,7 @@ export const initialState = {
   title: 'Tree cover extent',
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'mining',
-      'landmark',
-      'wdpa',
-      'plantations',
-      'primary_forest',
-      'ifl_2013'
-    ],
+    indicators: ['gadm28', 'mining', 'landmark', 'wdpa'],
     categories: ['summary', 'land-cover'],
     admins: ['country', 'region', 'subRegion'],
     selectors: ['indicators', 'thresholds', 'extentYears'],
