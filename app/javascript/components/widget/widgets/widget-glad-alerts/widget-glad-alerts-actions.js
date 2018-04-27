@@ -14,15 +14,15 @@ const getGladAlerts = createThunkAction(
     if (!state().widgetGladAlerts.loading) {
       dispatch(setGladAlertsLoading({ loading: true, error: false }));
       axios
-        .all([fetchGladAlerts(params), fetchGLADLatest()])
+        .all([fetchGladAlerts({ ...params }), fetchGLADLatest()])
         .then(
           axios.spread((alerts, latest) => {
             let data = {};
             if (alerts && alerts.data && latest && latest.data) {
-              const alertsData = alerts.data.data;
+              const alertsData = alerts.data;
               const latestData = latest.data.data;
               data = {
-                alerts: alertsData.attributes.value,
+                alerts: alertsData.data,
                 latest: latestData[0].attributes.date
               };
             }
