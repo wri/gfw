@@ -37,7 +37,7 @@ export const fetchGladAlerts = ({ country, region, subRegion }) => {
 
 export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
   const url = `${REQUEST_URL}/query/${
-    region ? GLAD_ADM2_DATASET : GLAD_ISO_DATASET
+    region ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
     .replace('{polyname}', indicator);

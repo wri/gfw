@@ -38,12 +38,12 @@ export const getSortedData = createSelector(
       .year();
     const alertsByDate = data.filter(d =>
       moment()
-        .week(d.week)
         .year(d.year)
+        .week(d.week)
         .isAfter(
           moment()
-            .week(latestWeek)
             .year(latestYear)
+            .week(latestWeek)
             .subtract(settings.weeks, 'weeks')
         )
     );

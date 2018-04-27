@@ -17,8 +17,7 @@ const mapStateToProps = (
   const { colors, locationNames, settingsConfig, activeIndicator } = ownProps;
   const { payload } = location;
   const selectorData = {
-    data: data.data,
-    extent: data.extent,
+    ...data,
     settings,
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],
