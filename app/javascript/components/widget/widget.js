@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 import COLORS from 'data/colors.json';
 
 import Component from './widget-component';
@@ -22,7 +23,6 @@ const mapStateToProps = (
 ) => {
   // widget consts
   const widget = ownProps.widget;
-  const widgetFuncs = Widgets[widget];
   const { parseData, parseConfig, getSentence } = Widgets[widget];
   const { title, config, settings, loading, data, error } = widgets[widget];
   const colors = COLORS[config.colors || config.type] || COLORS;
@@ -92,36 +92,51 @@ const mapStateToProps = (
     ...Widgets[widget],
     widget,
     data,
-    parsedData: parseData && parseData({
-      ...selectorData,
-      locationNames,
-      options
-    }),
-    parsedConfig: parseConfig && parseConfig({
-      ...selectorData,
-      locationNames,
-      options
-    }),
-    sentence: getSentence && getSentence({
-      ...selectorData,
-      locationNames,
-      options
-    }),
+    parsedData:
+      parseData &&
+      parseData({
+        ...selectorData,
+        locationNames,
+        options
+      }),
+    parsedConfig:
+      parseConfig &&
+      parseConfig({
+        ...selectorData,
+        locationNames,
+        options
+      }),
+    sentence:
+      getSentence &&
+      getSentence({
+        ...selectorData,
+        locationNames,
+        options
+      }),
     settings
   };
 };
 
 class WidgetContainer extends PureComponent {
   componentDidMount() {
-    const { location, settings, getData, getWidgetData, widget } = this.props;
-    getWidgetData({
-      widget,
+    const {
+      location,
+      settings,
       getData,
-      params: {
-        ...location,
-        ...settings
-      }
-    });
+      getWidgetData,
+      widget,
+      data
+    } = this.props;
+    if (isEmpty(data)) {
+      getWidgetData({
+        widget,
+        getData,
+        params: {
+          ...location,
+          ...settings
+        }
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -156,7 +171,8 @@ WidgetContainer.propTypes = {
   location: PropTypes.object,
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
-  widget: PropTypes.string
+  widget: PropTypes.string,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export { actions, reducers, initialState };
