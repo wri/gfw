@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import PieChart from 'components/charts/pie-chart';
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
 
-import './pie-chart-legend-styles';
+import './styles';
 
 class WidgetTreeCover extends PureComponent {
   render() {
@@ -22,11 +22,7 @@ class WidgetTreeCover extends PureComponent {
             key: 'value'
           }}
         />
-        <PieChart
-          className="cover-pie-chart"
-          data={data}
-          maxSize={140}
-        />
+        <PieChart className="cover-pie-chart" data={data} maxSize={140} />
       </div>
     );
   }

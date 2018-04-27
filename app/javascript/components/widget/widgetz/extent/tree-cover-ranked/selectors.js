@@ -5,13 +5,15 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getData = state => state.data || null;
+const getData = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
-const getLocationsMeta = state => state.meta || null;
+const getLocationsMeta = state =>
+  (state.countryData && state.countryData.countries) || null;
 const getColors = state => state.colors || null;
-const getIndicator = state => state.indicator || null;
+const getIndicator = state => state.activeIndicator || null;
 const getLocationNames = state => state.locationNames || null;
+const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -28,7 +30,7 @@ export const getSortedData = createSelector(
   }
 );
 
-export const getFilteredData = createSelector(
+export const parseData = createSelector(
   [
     getSortedData,
     getSettings,
@@ -38,10 +40,12 @@ export const getFilteredData = createSelector(
     getColors
   ],
   (data, settings, location, locationNames, meta, colors) => {
-    if (!data || !data.length) return null;
+    if (!data || !data.length || !locationNames || !meta) return null;
     const locationIndex = findIndex(
       data,
-      d => d.id === (locationNames.current && locationNames.current.value)
+      d =>
+        d.id ===
+        (locationNames && locationNames.current && locationNames.current.value)
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
@@ -77,28 +81,33 @@ export const getFilteredData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getSortedData, getSettings, getIndicator, getLocationNames],
-  (data, settings, indicator, locationNames) => {
-    if (!data || !data.length || !locationNames) return null;
+  [parseData, getSettings, getIndicator, getLocationNames, getSentences],
+  (data, settings, indicator, locationNames, sentences) => {
+    if (!data || !data.length || !locationNames || !indicator) return null;
+    const { initial, withInd, withPerc, withPercAndInd } = sentences;
     const locationData =
       locationNames.current &&
       data.find(l => l.id === locationNames.current.value);
-    const regionPhrase =
-      indicator && indicator.value === 'gadm28'
-        ? '<span>region-wide</span>'
-        : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const extent = locationData && locationData.extent;
-    return `As of <b>${
-      settings.extentYear
-    }</b>, <span>${locationNames.current &&
-      locationNames.current.label}</span> had <strong>${
-      extent ? format('.3s')(extent) : '0'
-    }ha</strong> of tree cover ${regionPhrase}${
-      areaPercent >= 0.1
-        ? `, equivalent to <strong>${areaPercent}%</strong> of the country.`
-        : '.'
-    }`;
+
+    const params = {
+      extentYear: settings.extentYear,
+      location: locationNames.current.label,
+      extent: `${extent ? format('.3s')(extent) : '0'}ha`,
+      region: indicator && indicator.value,
+      percentage: `${format('.3s')(areaPercent)}ha`
+    };
+
+    let sentence = areaPercent >= 0.1 ? withPerc : initial;
+    if (indicator.value !== 'gadm28') {
+      sentence = areaPercent >= 0.1 ? withPercAndInd : withInd;
+    }
+
+    return {
+      sentence,
+      params
+    };
   }
 );

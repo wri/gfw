@@ -12,7 +12,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
           percentage: d.extent ? d.extent / d.total * 100 : 0
         }));
       }
-      dispatch(setWidgetData({ data, widget }));
+      dispatch(setWidgetData({ data: mappedData, widget }));
     })
     .catch(error => {
       dispatch(setWidgetData({ widget, error: true }));

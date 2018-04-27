@@ -1,6 +1,8 @@
 // Extent widgets
 import * as treeCover from './widgetz/extent/tree-cover';
 import * as treeCoverPlantations from './widgetz/extent/tree-cover-plantations';
+import * as treeCoverRanked from './widgetz/extent/tree-cover-ranked';
+import * as treeCoverLocated from './widgetz/extent/tree-cover-located';
 import * as intactTreeCover from './widgetz/extent/intact-tree-cover';
 import * as primaryForest from './widgetz/extent/primary-forest';
 // Climate
@@ -10,6 +12,8 @@ import * as emissionsDeforestation from './widgetz/climate/emissions-deforestati
 import * as fires from './widgetz/alerts/fires';
 import * as gladAlerts from './widgetz/alerts/glad-alerts';
 
+import * as rankedPlantations from './widgetz/extent/ranked-plantations';
+
 export {
   treeCover,
   treeCoverPlantations,
@@ -18,5 +22,8 @@ export {
   emissions,
   emissionsDeforestation,
   fires,
-  gladAlerts
+  gladAlerts,
+  treeCoverLocated,
+  treeCoverRanked,
+  rankedPlantations
 };

@@ -130,10 +130,10 @@ Widget.propTypes = {
   active: PropTypes.bool,
   colors: PropTypes.object,
   whitelist: PropTypes.object,
-  Component: PropTypes.func,
+  Component: PropTypes.any,
   sentence: PropTypes.object,
-  parsedData: PropTypes.object,
-  parsedConfig: PropTypes.object
+  parsedData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  parsedConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export default Widget;

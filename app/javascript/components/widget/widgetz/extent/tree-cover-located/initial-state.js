@@ -36,11 +36,15 @@ export const initialState = {
     },
     sentences: {
       initial:
-        'In {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
+        'In {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {extent} compared to an average of {averageExtent}.',
       hasIndicator:
-        'For {indicator} in {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
+        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {extent} compared to an average of {averageExtent}.',
+      largePercentile:
+        'In {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
+      largePercentileWithIndicator:
+        'For {indicator} in {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
       hasPercentage:
-        '{region} had the largest relative tree cover of {percentage}, compared to a regional average of {average}.'
+        '{region} had the largest relative tree cover of {relPercentage}, compared to a regional average of {averagePerc}.'
     },
     data: [
       {
