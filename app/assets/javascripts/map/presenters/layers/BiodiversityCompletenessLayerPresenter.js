@@ -8,9 +8,9 @@
 
 define(
   ['underscore', 'mps', 'map/presenters/PresenterClass'],
-  (_, mps, PresenterClass) => {
-    const BiodiversityCompletenessLayerPresenter = PresenterClass.extend({
-      init(view) {
+  function(_, mps, PresenterClass) {
+    var BiodiversityCompletenessLayerPresenter = PresenterClass.extend({
+      init: function(view) {
         this.view = view;
         this._super();
       },
@@ -20,7 +20,7 @@ define(
        */
       _subscriptions: [],
 
-      updateLayer() {
+      updateLayer: function() {
         mps.publish('Layer/update', [this.view.getName()]);
       }
     });

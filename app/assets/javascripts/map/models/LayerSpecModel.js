@@ -6,8 +6,8 @@
 
 /* eslint-disable */
 
-define(['underscore', 'backbone'], (_, Backbone) => {
-  const LayerSpecModel = Backbone.Model.extend({
+define(['underscore', 'backbone'], function(_, Backbone) {
+  var LayerSpecModel = Backbone.Model.extend({
     // You should put more importants layers at the bottom of the layerOrder
     // As you see forestchange layers are the more importants so they will be added to top
     // the order will be Grump, forest cover,Conservation, Forest Use, and People layers and finally  Forest Change layers
@@ -206,8 +206,8 @@ define(['underscore', 'backbone'], (_, Backbone) => {
      * @param  {object} layers
      * @return {object} layers
      */
-    positionizer(layers) {
-      const layerOrder = _.intersection(
+    positionizer: function(layers) {
+      var layerOrder = _.intersection(
         this.layerOrder,
         _.pluck(layers, 'slug')
       );
@@ -221,11 +221,11 @@ define(['underscore', 'backbone'], (_, Backbone) => {
       return layers;
     },
 
-    getLayer(where) {
+    getLayer: function(where) {
       if (!where) {
         return;
       }
-      const layer = _.findWhere(this.getLayers(), where, this);
+      var layer = _.findWhere(this.getLayers(), where, this);
       return layer;
     },
 
@@ -235,10 +235,10 @@ define(['underscore', 'backbone'], (_, Backbone) => {
      *
      * @return {object} layers
      */
-    getLayers() {
-      const layers = {};
+    getLayers: function() {
+      var layers = {};
 
-      _.each(this.toJSON(), category => {
+      _.each(this.toJSON(), function(category) {
         _.extend(layers, category);
       });
 
@@ -250,12 +250,12 @@ define(['underscore', 'backbone'], (_, Backbone) => {
      *
      * @return {object} baselayers
      */
-    getBaselayers() {
+    getBaselayers: function() {
       return this.positionizer(this.get('forest_clearing') || {});
     },
 
-    getBaselayer() {
-      const baselayers = _.keys(
+    getBaselayer: function() {
+      var baselayers = _.keys(
         this.positionizer(this.get('forest_clearing') || {})
       );
       if (baselayers.length) {
@@ -269,10 +269,10 @@ define(['underscore', 'backbone'], (_, Backbone) => {
      *
      * @return {object} sublayers
      */
-    getSublayers() {
-      let layers = {};
+    getSublayers: function() {
+      var layers = {};
 
-      _.each(_.omit(this.toJSON(), 'forest_clearing'), results => {
+      _.each(_.omit(this.toJSON(), 'forest_clearing'), function(results) {
         layers = _.extend(layers, results);
       });
 
@@ -284,18 +284,18 @@ define(['underscore', 'backbone'], (_, Backbone) => {
      *
      * @return {array} categories
      */
-    getLayersByCategory() {
-      const categories = [];
+    getLayersByCategory: function() {
+      var categories = [];
 
       _.each(
         this.categoryOrder,
         _.bind(function(categoryName) {
-          const category = this.get(categoryName);
+          var category = this.get(categoryName);
           if (category) {
             categories.push(
               _.sortBy(
                 this.positionizer(category),
-                layer => layer.position
+                function(layer){ return layer.position; }
               ).reverse()
             );
           }
