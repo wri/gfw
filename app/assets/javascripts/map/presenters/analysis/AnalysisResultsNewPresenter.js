@@ -13,17 +13,17 @@ define(
     'mps',
     'services/CountryService'
   ],
-  (PresenterClass, _, Backbone, moment, mps, CountryService) => {
-    const AnalysisResultsPresenter = PresenterClass.extend({
+  function(PresenterClass, _, Backbone, moment, mps, CountryService) {
+    var AnalysisResultsPresenter = PresenterClass.extend({
       status: new (Backbone.Model.extend())(),
 
-      init(view) {
+      init: function(view) {
         this.view = view;
         this._super();
         this.listeners();
       },
 
-      listeners() {
+      listeners: function() {
         this.status.on('change:resource', this.changeResource.bind(this));
       },
 
@@ -33,7 +33,7 @@ define(
       _subscriptions: [
         {
           'Place/go': function(place) {
-            const params = place.params;
+            var params = place.params;
             this.status.set(
               'baselayers_full',
               place.layerSpec.getBaselayers(),
@@ -77,8 +77,8 @@ define(
         }
       ],
 
-      changeResource() {
-        const iso = this.status.get('iso');
+      changeResource: function() {
+        var iso = this.status.get('iso');
 
         // Get regions if analysis has country
         if (!!iso.country && iso.country != 'ALL') {
@@ -91,29 +91,30 @@ define(
         }
       },
 
-      getRegions() {
-        const iso = this.status.get('iso');
+      getRegions: function() {
+        var iso = this.status.get('iso');
 
-        CountryService.getRegionsList({ iso: iso.country }).then(results => {
-          this.status.set({
-            regions: results
-          });
-          this.view.render();
-        });
+        CountryService.getRegionsList({ iso: iso.country })
+          .then(function(results) {
+            this.status.set({
+              regions: results
+            });
+            this.view.render();
+          }.bind(this));
       },
 
-      getSubRegions() {
-        const iso = this.status.get('iso');
+      getSubRegions: function() {
+        var iso = this.status.get('iso');
 
         CountryService.getSubRegionsList({
           iso: iso.country,
           region: iso.region
-        }).then(results => {
+        }).then(function(results) {
           this.status.set({
             subRegions: results
           });
           this.view.render();
-        });
+        }.bind(this));
       },
 
       /**
@@ -124,8 +125,8 @@ define(
        * @return {Object}         Returns resource params
        */
 
-      setAnalysisResource(status) {
-        const p = {};
+      setAnalysisResource: function(status) {
+        var p = {};
         /**
          * Define variable that we are going to use later
          */
@@ -218,19 +219,19 @@ define(
        * - publishShowCanopy
        * - publishNotification
        */
-      publishDeleteAnalysis() {
+      publishDeleteAnalysis: function() {
         mps.publish('Analysis/delete');
       },
 
-      publishRefreshAnalysis() {
+      publishRefreshAnalysis: function() {
         mps.publish('Analysis/refresh');
       },
 
-      publishShowCanopy() {
+      publishShowCanopy: function() {
         mps.publish('ThresholdControls/show');
       },
 
-      publishNotification(id) {
+      publishNotification: function(id) {
         mps.publish('Notification/open', [id]);
       },
 
@@ -238,7 +239,7 @@ define(
        * HELPER
        * - roundNumber
        */
-      roundNumber(value) {
+      roundNumber: function(value) {
         if (_.isNumber(value)) {
           // Check if value has decimals
           return value < 10 && value % 1 != 0

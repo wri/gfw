@@ -11,8 +11,8 @@ define(
     'map/services/MapLayerService',
     'map/models/LayerSpecModel'
   ],
-  (Class, _, moment, mapLayerService, LayerSpecModel) => {
-    const LayerSpecService = Class.extend({
+  function(Class, _, moment, mapLayerService, LayerSpecModel) {
+    var LayerSpecService = Class.extend({
       options: {
         forbidCombined: {
           forest_clearing: {
@@ -67,7 +67,7 @@ define(
         }
       },
 
-      init() {
+      init: function() {
         _.bindAll(this, '_getLayers', '_removeLayer');
         this.model = new LayerSpecModel();
       },
@@ -80,22 +80,22 @@ define(
        * @param  {function} success callback
        * @param  {function} error   callback
        */
-      toggle(where, success, error) {
+      toggle: function(where, success, error) {
         mapLayerService.getLayers(
           where,
-          layers => {
+          function(layers) {
             _.each(layers, this._toggleLayer, this);
             success(this.model);
-          },
+          }.bind(this),
           error
         );
       },
 
-      _getLayers() {
+      _getLayers: function() {
         return this.model.getLayers();
       },
 
-      _getAllLayers(filterFn, successCb, errorCb) {
+      _getAllLayers: function(filterFn, successCb, errorCb) {
         mapLayerService.getAllLayers(filterFn, successCb, errorCb);
       },
 
@@ -105,9 +105,9 @@ define(
        * @param  {object} layer
        * @return {layer}  return layer or false.
        */
-      _toggleLayer(layer) {
-        const current = this.model.getLayer({ slug: layer.slug });
-        const baselayers = this.model.getBaselayers();
+      _toggleLayer: function(layer) {
+        var current = this.model.getLayer({ slug: layer.slug });
+        var baselayers = this.model.getBaselayers();
 
         // At least one baselayer active.
         // if (current && current.category_slug === 'forest_clearing' &&
@@ -120,11 +120,11 @@ define(
           return false;
         }
         if (!this._combinationIsValid(layer)) {
-          _.each(this.model.get(layer.category_slug), l => {
+          _.each(this.model.get(layer.category_slug), function(l) {
             if (l.category_name === 'Forest change') {
               this._removeLayer(l);
             }
-          });
+          }.bind(this));
         }
         this._addLayer(layer);
         return layer;
@@ -135,8 +135,8 @@ define(
        *
        * @param {object} layer
        */
-      _addLayer(layer) {
-        const category = this._getCategory(layer.category_slug);
+      _addLayer: function(layer) {
+        var category = this._getCategory(layer.category_slug);
         category[layer.slug] = this._standardizeAttrs(layer);
       },
 
@@ -146,13 +146,13 @@ define(
        *
        * @param  {object} layer The layer object
        */
-      _removeLayer(layer) {
+      _removeLayer: function(layer) {
         // delete layer
         delete this.model.get(layer.category_slug)[layer.slug];
 
         // delete its sublayers
         if (layer.sublayer) {
-          const sublayer = this.model.getLayer({ slug: layer.sublayer });
+          var sublayer = this.model.getLayer({ slug: layer.sublayer });
           sublayer && this._removeLayer(sublayer);
         }
 
@@ -166,7 +166,7 @@ define(
        * Remove all the active layers.
        * @param  {object} layer The layer object
        */
-      _removeAllLayers() {
+      _removeAllLayers: function() {
         this.model.clear();
       },
 
@@ -176,7 +176,7 @@ define(
        * @param  {string} slug category slug
        * @return {object}      category
        */
-      _getCategory(slug) {
+      _getCategory: function(slug) {
         !this.model.get(slug) && this.model.set(slug, {});
         return this.model.get(slug);
       },
@@ -186,7 +186,7 @@ define(
        *
        * @param  {string} slug category slug
        */
-      _removeCategory(slug) {
+      _removeCategory: function(slug) {
         this.model.unset(slug);
       },
 
@@ -196,22 +196,22 @@ define(
        * @param  {object}  layer layer object
        * @return {boolean}       combination is valid
        */
-      _combinationIsValid(layer) {
-        const currentLayers = this.model.get(layer.category_slug);
-        const forbidden = this.options.forbidCombined[layer.category_slug];
+      _combinationIsValid: function(layer) {
+        var currentLayers = this.model.get(layer.category_slug);
+        var forbidden = this.options.forbidCombined[layer.category_slug];
         if (!forbidden) {
           return true;
         }
-        let validCombination = false;
+        var validCombination = false;
 
         if (forbidden.except) {
-          const combination = _.union(_.pluck(currentLayers, 'slug'), [
+          var combination = _.union(_.pluck(currentLayers, 'slug'), [
             layer.slug
           ]);
           combination.push(layer.slug);
           _.each(
             forbidden.except,
-            exception => {
+            function(exception) {
               if (_.difference(combination, exception).length < 1) {
                 validCombination = true;
               }
@@ -229,7 +229,7 @@ define(
        * @param  {object} layer layer object
        * @return {object} layer
        */
-      _standardizeAttrs(layer) {
+      _standardizeAttrs: function(layer) {
         if (layer.mindate) {
           layer.mindate = layer.mindate;
         }
@@ -247,21 +247,24 @@ define(
        *
        * @return {object} params
        */
-      getPlaceParams() {
-        const p = {};
-        const sublayers = this.model.getSublayers();
+      getPlaceParams: function() {
+        var p = {};
+        var sublayers = this.model.getSublayers();
 
         p.name = 'map';
-        p.baselayers = _.map(_.keys(this.model.getBaselayers()), slug => ({
-          slug
-        }));
+        p.baselayers = _.map(
+          _.keys(this.model.getBaselayers()),
+          function(slug) {
+            return { slug: slug };
+          }
+        );
         p.sublayers = !_.isEmpty(sublayers) ? _.pluck(sublayers, 'id') : null;
 
         return p;
       }
     });
 
-    const service = new LayerSpecService();
+    var service = new LayerSpecService();
 
     return service;
   }
