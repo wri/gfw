@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}`;
-const GLAD_ISO_DATASET = process.env.ISO_GLAD_SUMMARY;
-const GLAD_ADM1_DATASET = process.env.ADM1_GLAD_SUMMARY;
-const GLAD_ADM2_DATASET = process.env.ADM2_GLAD_SUMMARY;
+const REQUEST_URL = process.env.GFW_API_HOST_PROD;
+const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
+const GLAD_ADM1_DATASET = process.env.GLAD_ISO_DATASET;
+const GLAD_ADM2_DATASET = process.env.GLAD_ISO_DATASET;
 
 const QUERIES = {
   gladIntersectionAlerts:
