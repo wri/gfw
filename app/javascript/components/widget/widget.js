@@ -24,11 +24,15 @@ const mapStateToProps = (
   const { config, settings } = widgets[widget];
   const { parseData, parseConfig, getSentence } = Widgets[widget];
   const colors = COLORS[config.colors || config.type] || COLORS;
+  const highlightColor =
+    colors.main || (colors.extent && colors.extent.main) || '#a0c746';
+  const haveMapLayers = settings && settings.layers && settings.layers.length;
+  const onMap = active && !!haveMapLayers;
 
   // selector data
   const activeIndicator =
     settings && settings.indicator && getActiveIndicator(settings.indicator);
-  const activeLocation = getActiveAdmin(selectorData);
+  const activeLocation = getActiveAdmin({ ...location });
   const selectorData = {
     ...widgets[widget],
     ...location,
@@ -40,6 +44,10 @@ const mapStateToProps = (
     colors
   };
   const options = getOptions(selectorData);
+  const parseSelectorData = {
+    ...selectorData,
+    options
+  };
 
   // loaders
   const {
@@ -66,35 +74,21 @@ const mapStateToProps = (
     ...Widgets[widget],
     isMetaLoading,
     isGeostoreLoading,
-    parsedData:
-      parseData &&
-      parseData({
-        ...selectorData,
-        locationNames,
-        options
-      }),
-    parsedConfig:
-      parseConfig &&
-      parseConfig({
-        ...selectorData,
-        locationNames,
-        options
-      }),
-    sentence:
-      getSentence &&
-      getSentence({
-        ...selectorData,
-        locationNames,
-        options
-      }),
-    settings
+    highlightColor,
+    onMap,
+    whitelist: location.payload.region
+      ? whitelists.regionWhitelist
+      : whitelists.countryWhitelist,
+    parsedData: parseData && parseData(parseSelectorData),
+    parsedConfig: parseConfig && parseConfig(parseSelectorData),
+    sentence: getSentence && getSentence(parseSelectorData)
   };
 };
 
 class WidgetContainer extends PureComponent {
   componentDidMount() {
     const {
-      location,
+      payload,
       settings,
       getData,
       getWidgetData,
@@ -106,7 +100,7 @@ class WidgetContainer extends PureComponent {
         widget,
         getData,
         params: {
-          ...location,
+          ...payload,
           ...settings
         }
       });
@@ -114,9 +108,9 @@ class WidgetContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location, settings, getData, getWidgetData, widget } = nextProps;
-    if (settings &&
-      !isEqual(location, this.props.location) ||
+    const { payload, settings, getData, getWidgetData, widget } = nextProps;
+    if (
+      (settings && !isEqual(payload, this.props.payload)) ||
       !isEqual(settings.threshold, this.props.settings.threshold) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||
       !isEqual(settings.extentYear, this.props.settings.extentYear) ||
@@ -126,7 +120,7 @@ class WidgetContainer extends PureComponent {
         widget,
         getData,
         params: {
-          ...location,
+          ...payload,
           ...settings
         }
       });
@@ -142,7 +136,7 @@ class WidgetContainer extends PureComponent {
 
 WidgetContainer.propTypes = {
   settings: PropTypes.object,
-  location: PropTypes.object,
+  payload: PropTypes.object,
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
   widget: PropTypes.string,

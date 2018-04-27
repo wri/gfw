@@ -20,31 +20,24 @@ class Widget extends PureComponent {
       location,
       settings,
       config,
-      options,
       embed,
       loading,
       error,
       data,
-      active,
       query,
-      colors,
+      onMap,
+      highlightColor,
       Component,
       sentence,
       setWidgetSettingsUrl,
       parsedData,
       parsedConfig
     } = this.props;
-    const highlightColor =
-      colors.main || (colors.extent && colors.extent.main) || '#a0c746';
-    const haveMapLayers =
-      settings &&
-      settings.layers &&
-      settings.layers.length;
-    const onMap = active && haveMapLayers;
 
     return (
       <div
         className={`c-widget ${config.size || ''}`}
+        id={widget}
         style={{
           ...(!!onMap && {
             borderColor: highlightColor,
@@ -55,7 +48,6 @@ class Widget extends PureComponent {
             borderRadius: 0
           })
         }}
-        id={widget}
       >
         <WidgetHeader
           {...this.props}
@@ -66,7 +58,8 @@ class Widget extends PureComponent {
             !error &&
             isEmpty(data) && (
               <NoContent
-                message={`No data in selection for ${locationNames.current &&
+                message={`No data in selection for ${locationNames &&
+                  locationNames.current &&
                   locationNames.current.label}`}
               />
             )}
@@ -82,7 +75,13 @@ class Widget extends PureComponent {
             )}
           {!error &&
             data &&
-            parsedData && <Component {...this.props} data={parsedData} config={parsedConfig} />}
+            parsedData && (
+              <Component
+                {...this.props}
+                data={parsedData}
+                config={parsedConfig}
+              />
+            )}
         </div>
         <WidgetSettingsStatement settings={settings} />
         {embed &&
@@ -112,19 +111,22 @@ Widget.propTypes = {
   widget: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   setWidgetSettingsUrl: PropTypes.func.isRequired,
-  settingsConfig: PropTypes.object,
+  settings: PropTypes.object,
+  config: PropTypes.object,
+  onMap: PropTypes.bool,
+  highlightColor: PropTypes.string,
   locationNames: PropTypes.object,
   location: PropTypes.object,
   query: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
   error: PropTypes.bool,
-  data: PropTypes.object,
   active: PropTypes.bool,
   colors: PropTypes.object,
   whitelist: PropTypes.object,
   Component: PropTypes.any,
   sentence: PropTypes.object,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   parsedData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   parsedConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };

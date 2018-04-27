@@ -9,12 +9,10 @@ export { initialState } from './stories-reducers';
 export { default as reducers } from './stories-reducers';
 export { default as actions } from './stories-actions';
 
-const mapStateToProps = state => {
+const mapStateToProps = ({ location, countryData }) => {
   const adminData = {
-    location: state.location.payload,
-    countries: state.countryData.countries,
-    regions: state.countryData.regions,
-    subRegions: state.countryData.subRegions
+    ...location,
+    ...countryData
   };
   return {
     totalAmount: 'Nan',

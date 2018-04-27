@@ -13,7 +13,8 @@ import * as WIDGETS from 'components/widget/widget-manifest';
 const getCategories = state => state.categories || null;
 const getCategory = state => state.category || null;
 const getAdminLevel = state => state.adminLevel || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationOptions = state => state.locationOptions || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 const getFAOCountries = state => state.faoCountries || null;
@@ -49,15 +50,14 @@ export const checkWidgetNeedsLocations = createSelector(
     if (isEmpty(locations)) return null;
     const adminCheck = adminLevel === 'country' ? 'regions' : 'subRegions';
     const isFaoCountry =
-      faoCountries.find(c => c.value === location.payload.country) || null;
+      faoCountries.find(c => c.value === location.country) || null;
     return widgets.filter(
       w =>
         w.config.admins.indexOf(adminLevel) > -1 &&
         (!w.config.locationCheck || locations[adminCheck].length > 1) &&
         (w.config.type !== 'fao' || isFaoCountry) &&
         (!w.config.customLocationWhitelist ||
-          w.config.customLocationWhitelist.indexOf(location.payload.country) >
-            -1)
+          w.config.customLocationWhitelist.indexOf(location.country) > -1)
     );
   }
 );
@@ -97,14 +97,14 @@ export const filterWidgets = createSelector(
 );
 
 export const getLinks = createSelector(
-  [getCategories, getCategory, getLocation],
-  (categories, activeCategory, location) =>
+  [getCategories, getCategory, getLocation, getQuery],
+  (categories, activeCategory, location, query) =>
     categories.map(category => {
       const locationUrl = compact(
-        Object.keys(location.payload).map(key => location.payload[key])
+        Object.keys(location).map(key => location[key])
       ).join('/');
       const newQuery = {
-        ...location.query,
+        ...query,
         category: category.value,
         widget: undefined
       };

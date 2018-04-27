@@ -10,11 +10,9 @@ const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.activeIndicator || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
-  (state.countryData &&
-    state.countryData[!location.region ? 'regions' : 'subRegions']) ||
-  null;
+  (state.payload.region ? state.regions : state.subRegions) || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
