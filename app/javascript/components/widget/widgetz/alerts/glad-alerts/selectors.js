@@ -288,10 +288,3 @@ export const getSentence = createSelector(
     return { sentence: initial, params };
   }
 );
-
-// return `There were <b style="color: ${colors.main}">${format(',')(
-//   lastDate.count
-// )}</b> GLAD alerts reported in the week of the <b>${date}</b>. This was
-// <b style="color: ${statusColor}">${
-// status
-// }</b> compared to the same week in previous years.`;

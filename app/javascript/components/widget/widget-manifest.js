@@ -11,7 +11,9 @@ import * as emissionsDeforestation from './widgetz/climate/emissions-deforestati
 // Alerts
 import * as fires from './widgetz/alerts/fires';
 import * as gladAlerts from './widgetz/alerts/glad-alerts';
-
+import * as gladBiodiversity from './widgetz/alerts/glad-biodiversity';
+import * as gladRanked from './widgetz/alerts/glad-ranked';
+// Other
 import * as rankedPlantations from './widgetz/extent/ranked-plantations';
 
 export {
@@ -25,5 +27,7 @@ export {
   gladAlerts,
   treeCoverLocated,
   treeCoverRanked,
+  gladBiodiversity,
+  gladRanked,
   rankedPlantations
 };

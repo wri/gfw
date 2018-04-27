@@ -7,17 +7,19 @@ import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 
 // get list data
-const getData = state => state.data || null;
-const getExtent = state => state.extent || null;
+const getData = state => state.data.alerts || null;
+const getExtent = state => state.data.extent || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
-const getIndicator = state => state.indicator || null;
+const getIndicator = state => state.activeIndicator || null;
 const getLocation = state => state.location || null;
-const getLocationsMeta = state => state.meta || null;
+const getLocationsMeta = state =>
+  (!state.region ? state.regions : state.subRegions) || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
+const getSentences = state => state.config.sentences || null;
 
-export const getSortedData = createSelector(
+export const parseData = createSelector(
   [getData, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
   (data, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
@@ -26,6 +28,7 @@ export const getSortedData = createSelector(
         moment.utc().subtract(settings.weeks, 'weeks')
       )
     );
+
     const groupedAlerts = groupBy(
       alertsByDate,
       location.region ? 'adm2' : 'adm1'
@@ -57,30 +60,28 @@ export const getSortedData = createSelector(
 
 export const getSentence = createSelector(
   [
-    getSortedData,
+    parseData,
     getSettings,
     getOptions,
     getLocation,
     getIndicator,
-    getLocationNames
+    getLocationNames,
+    getSentences
   ],
-  (data, settings, options, location, indicator, locationNames) => {
+  (data, settings, options, location, indicator, locationNames, sentences) => {
     if (!data || !options || !indicator || !locationNames) return '';
-    let sentence =
-      'In the last <b>{timeframe}</b>, <b>{count}</b> GLAD alerts were detected in <b>{location}</b>, which affected an area of approximately <b>{area}ha</b>.';
+    const { initial } = sentences;
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
-      area: format('.2s')(sumBy(data, 'area')),
-      location: `${
+      area: `${format('.2s')(sumBy(data, 'area'))}ha`,
+      location: `${locationNames.current.label}`,
+      indicator: `${
         indicator && indicator.value !== 'gadm28'
           ? `${indicator.label} in `
           : ''
-      } ${locationNames.current.label}`
+      }`
     };
-    Object.keys(params).forEach(p => {
-      sentence = sentence.replace(`{${p}}`, params[p]);
-    });
-    return sentence;
+    return { sentence: initial, params };
   }
 );

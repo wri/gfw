@@ -81,6 +81,7 @@ const mapStateToProps = (
     title,
     loading,
     error,
+    ...countryData, // /hack
     colors: COLORS[config.colors || config.type] || COLORS,
     settingsConfig: {
       config,
