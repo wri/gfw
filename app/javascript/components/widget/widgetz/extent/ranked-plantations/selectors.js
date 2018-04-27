@@ -8,16 +8,17 @@ import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 import endsWith from 'lodash/endsWith';
 
-const getPlantations = state => state.data && state.data.plantations || null;
-const getExtent = state => state.data && state.data.extent || null;
+const getPlantations = state => (state.data && state.data.plantations) || null;
+const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
-const getLocationsMeta = state => state.countryData[!state.location.region ? 'regions' : 'subRegions'] || null;
+const getLocationsMeta = state =>
+  state.countryData[!state.location.region ? 'regions' : 'subRegions'] || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 const getEmbed = state => state.embed || null;
-const getSentences = state => state.sentences || null;
+const getSentences = state => state.config.sentences || null;
 
 const getPlanationKeys = createSelector(
   [getPlantations],
@@ -64,9 +65,9 @@ export const parseData = createSelector(
         total: totalRegionPlantations / totalArea * 100,
         path: `${embed ? `http://${window.location.host}` : ''}/country/${
           location.country
-        }/${location.region ? `${location.region}/` : ''}${
-          regionId
-        }${query ? `?${query}` : ''}`,
+        }/${location.region ? `${location.region}/` : ''}${regionId}${
+          query ? `?${query}` : ''
+        }`,
         extLink: embed
       };
     });
@@ -103,8 +104,7 @@ export const getSentence = createSelector(
   [parseData, getSettings, getLocation, getLocationNames, getSentences],
   (data, settings, location, locationNames, sentences) => {
     if (!data || !data.length) return null;
-
-    const { type } = settings;
+    const { initial } = sentences;
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
     const topRegion = data[0];
@@ -120,32 +120,17 @@ export const getSentence = createSelector(
     );
     const plantationLabel = topPlantation.label;
     const isPlural = endsWith(plantationLabel, 's');
-    let sentence = '';
-    if (type === 'bound1') {
-      sentence = `<b>${
-        topRegion.region
-      }</b> has the largest relative plantation area in <b>${
-        currentLocation
-      }</b>${location.region ? ' ' : ''} at <b>${format('.1f')(
-        data[0].total
-      )}%</b>, most of which is in <b>${plantationLabel}${
-        isPlural ? '' : 's'
-      }</b>.`;
-    } else if (type === 'bound2') {
-      sentence = `<b>${
-        topRegion.region
-      }</b> has the largest relative plantation area in <b>${
-        currentLocation
-      }</b>${location.region ? ' ' : ''} at <b>${format('.1f')(
-        data[0].total
-      )}%</b>, most of which is in <b>${topPlantation.label} plantations</b>.`;
-    } else {
-      sentence = `Within <b>${currentLocation}</b>, <b>${(topRegion.region &&
-        topRegion.region) ||
-        ''}</b> has the largest relative area of plantations${
-        location.region ? ' extent' : ''
-      } at <b>${format('.1f')(topRegion.total)}%</b>.`;
-    }
-    return sentence;
+
+    const params = {
+      location: currentLocation,
+      region: topRegion.region,
+      topType: `${plantationLabel}${isPlural ? 's' : ''} plantations`,
+      percentage: `${format('.1f')(data[0].total)}%`
+    };
+
+    return {
+      sentence: initial,
+      params
+    };
   }
 );

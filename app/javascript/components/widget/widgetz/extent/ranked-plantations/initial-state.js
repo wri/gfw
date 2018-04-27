@@ -12,7 +12,8 @@ export const initialState = {
       'land-use': 2
     },
     sentences: {
-      initial: ''
+      initial:
+        '{region} has the largest relative plantation area in {location} at {percentage}, most of which is in {topType}.'
     }
   },
   settings: {
