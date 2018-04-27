@@ -22,6 +22,7 @@ const mapStateToProps = (
   const selectorData = {
     data: data.data,
     extent: data.extent,
+    latest: data.latest,
     settings,
     options: settingsConfig.options,
     meta: countryData[!payload.region ? 'regions' : 'subRegions'],

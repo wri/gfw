@@ -18,6 +18,7 @@ gem 'fog'
 gem 'rmagick', :require => false
 gem 'mini_magick'
 gem 'unf'
+gem 'sitemap_generator'
 
 # requirejs
 gem 'erubis'

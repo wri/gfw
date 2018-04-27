@@ -78,11 +78,7 @@ export const getData = createSelector(
     years.forEach(d => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {
-        zeroFilledData.push(
-          yearDataByWeek[i]
-            ? yearDataByWeek[i][0]
-            : { count: 0, week: i, year: parseInt(d, 10) }
-        );
+        zeroFilledData.push(yearDataByWeek[i][0]);
       }
     });
     return zeroFilledData;
