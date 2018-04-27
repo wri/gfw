@@ -12,40 +12,33 @@ import reducers, { initialState } from './widget-reducers';
 import {
   getOptions,
   getActiveIndicator,
-  getAdminsSelected,
   getActiveAdmin
 } from './widget-selectors';
 import * as Widgets from './widget-manifest';
 
 const mapStateToProps = (
   { location, countryData, whitelists, widgets },
-  ownProps
+  { widget, locationNames, active }
 ) => {
   // widget consts
-  const widget = ownProps.widget;
+  const { config, settings } = widgets[widget];
   const { parseData, parseConfig, getSentence } = Widgets[widget];
-  const { title, config, settings, loading, data, error } = widgets[widget];
   const colors = COLORS[config.colors || config.type] || COLORS;
 
   // selector data
   const activeIndicator =
     settings && settings.indicator && getActiveIndicator(settings.indicator);
-  const selectorData = {
-    data,
-    settings,
-    location: location.payload,
-    query: location.search,
-    countryData,
-    whitelists,
-    activeIndicator,
-    config,
-    colors,
-    countries: countryData.countries,
-    regions: countryData.regions,
-    subRegions: countryData.subRegions
-  };
-  const locationNames = getAdminsSelected(selectorData);
   const activeLocation = getActiveAdmin(selectorData);
+  const selectorData = {
+    ...widgets[widget],
+    ...location,
+    ...countryData,
+    ...whitelists,
+    activeIndicator,
+    activeLocation,
+    locationNames,
+    colors
+  };
   const options = getOptions(selectorData);
 
   // loaders
@@ -69,29 +62,10 @@ const mapStateToProps = (
     waterBodiesLoading;
 
   return {
+    ...selectorData,
+    ...Widgets[widget],
     isMetaLoading,
     isGeostoreLoading,
-    locationNames,
-    activeLocation,
-    activeIndicator,
-    location: location.payload,
-    query: location.query,
-    whitelist: location.payload.region
-      ? whitelists.regionWhitelist
-      : whitelists.countryWhitelist,
-    title,
-    loading,
-    error,
-    colors: COLORS[config.colors || config.type] || COLORS,
-    settingsConfig: {
-      config,
-      settings,
-      options,
-      loading
-    },
-    ...Widgets[widget],
-    widget,
-    data,
     parsedData:
       parseData &&
       parseData({
@@ -141,7 +115,7 @@ class WidgetContainer extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { location, settings, getData, getWidgetData, widget } = nextProps;
-    if (
+    if (settings &&
       !isEqual(location, this.props.location) ||
       !isEqual(settings.threshold, this.props.settings.threshold) ||
       !isEqual(settings.indicator, this.props.settings.indicator) ||

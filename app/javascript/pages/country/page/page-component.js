@@ -79,6 +79,7 @@ class Page extends PureComponent {
                 <Widget
                   key={widget.name}
                   widget={widget.name}
+                  locationNames={locationNames}
                   active={
                     (activeWidget && activeWidget.name === widget.name) ||
                     !index

@@ -18,7 +18,9 @@ class Widget extends PureComponent {
       widget,
       locationNames,
       location,
-      settingsConfig,
+      settings,
+      config,
+      options,
       embed,
       loading,
       error,
@@ -35,14 +37,14 @@ class Widget extends PureComponent {
     const highlightColor =
       colors.main || (colors.extent && colors.extent.main) || '#a0c746';
     const haveMapLayers =
-      settingsConfig.settings &&
-      settingsConfig.settings.layers &&
-      settingsConfig.settings.layers.length;
+      settings &&
+      settings.layers &&
+      settings.layers.length;
     const onMap = active && haveMapLayers;
 
     return (
       <div
-        className={`c-widget ${settingsConfig.config.size || ''}`}
+        className={`c-widget ${config.size || ''}`}
         style={{
           ...(!!onMap && {
             borderColor: highlightColor,
@@ -57,10 +59,7 @@ class Widget extends PureComponent {
       >
         <WidgetHeader
           {...this.props}
-          settingsConfig={{
-            ...settingsConfig,
-            onSettingsChange: setWidgetSettingsUrl
-          }}
+          onSettingsChange={change => setWidgetSettingsUrl({ widget, change })}
         />
         <div className="container">
           {!loading &&
@@ -85,7 +84,7 @@ class Widget extends PureComponent {
             data &&
             parsedData && <Component {...this.props} data={parsedData} config={parsedConfig} />}
         </div>
-        <WidgetSettingsStatement settings={settingsConfig.settings} />
+        <WidgetSettingsStatement settings={settings} />
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
