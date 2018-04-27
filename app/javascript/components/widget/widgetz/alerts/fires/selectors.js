@@ -5,32 +5,33 @@ import isEmpty from 'lodash/isEmpty';
 import { sortByKey } from 'utils/data';
 
 // get list data
-const getData = state => state.data || null;
+const getData = state => (state.data && state.data.fires) || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
+const getSentences = state => state.config && state.config.sentences;
 
-export const getSortedData = createSelector([getData], data => {
+export const parseData = createSelector([getData], data => {
   if (!data || isEmpty(data)) return null;
 
   let sortedData = [];
-  if (Array.isArray(data.fires)) {
-    sortedData = isEmpty(data.fires)
+  if (Array.isArray(data)) {
+    sortedData = isEmpty(data)
       ? [{ value: 0 }]
       : sortByKey(
-        data.fires
+        data
           .filter(item => item.attributes.day !== null)
           .map(item => item.attributes),
         'day',
         false
       );
   } else {
-    sortedData = [{ value: data.fires.attributes.value }];
+    sortedData = [{ value: data.attributes.value }];
   }
   return sortedData;
 });
 
-export const chartConfig = createSelector(
-  [getSortedData, getColors],
+export const parseConfig = createSelector(
+  [parseData, getColors],
   (data, colors) => {
     if (!data || !data.length) return null;
 
@@ -82,16 +83,19 @@ export const chartConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getSortedData, getLocationNames],
-  (data, locationNames) => {
-    if (!data || !data.length) return '';
-
+  [parseData, getLocationNames, getSentences],
+  (data, locationNames, sentences) => {
+    const { initial } = sentences;
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
     const firesCount =
-      data.map(item => item.value).reduce((sum, item) => sum + item) || 'no';
-    return `In <b>${currentLocation}</b> there were <b>${
-      Number.isInteger(firesCount) ? format(',')(firesCount) : firesCount
-    }</b> active fires detected in the last 7 days.`;
+      (data &&
+        data.map(item => item.value).reduce((sum, item) => sum + item)) ||
+      'no';
+    const params = {
+      location: currentLocation,
+      count: Number.isInteger(firesCount) ? format(',')(firesCount) : firesCount
+    };
+    return { sentence: initial, params };
   }
 );

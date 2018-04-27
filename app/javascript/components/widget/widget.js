@@ -22,7 +22,6 @@ const mapStateToProps = (
 ) => {
   // widget consts
   const widget = ownProps.widget;
-  const widgetFuncs = Widgets[widget];
   const { parseData, parseConfig, getSentence } = Widgets[widget];
   const { title, config, settings, loading, data, error } = widgets[widget];
   const colors = COLORS[config.colors || config.type] || COLORS;
@@ -92,21 +91,27 @@ const mapStateToProps = (
     ...Widgets[widget],
     widget,
     data,
-    parsedData: parseData && parseData({
-      ...selectorData,
-      locationNames,
-      options
-    }),
-    parsedConfig: parseConfig && parseConfig({
-      ...selectorData,
-      locationNames,
-      options
-    }),
-    sentence: getSentence && getSentence({
-      ...selectorData,
-      locationNames,
-      options
-    }),
+    parsedData:
+      parseData &&
+      parseData({
+        ...selectorData,
+        locationNames,
+        options
+      }),
+    parsedConfig:
+      parseConfig &&
+      parseConfig({
+        ...selectorData,
+        locationNames,
+        options
+      }),
+    sentence:
+      getSentence &&
+      getSentence({
+        ...selectorData,
+        locationNames,
+        options
+      }),
     settings
   };
 };
