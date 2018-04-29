@@ -5,12 +5,13 @@ import { biomassToCO2, biomassToC } from 'utils/calculations';
 import { getColorPalette } from 'utils/data';
 
 // get list data
-const getData = state => state.data || null;
+const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
-const getIndicator = state => state.indicator || null;
+const getIndicator = state => state.activeIndicator || null;
 const getColors = state => state.colors || null;
+const getSentences = state => state.config && state.config.sentences;
 
-export const chartData = createSelector(
+export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
@@ -26,7 +27,7 @@ export const chartData = createSelector(
   }
 );
 
-export const chartConfig = createSelector(
+export const parseConfig = createSelector(
   [getSettings, getColors],
   (settings, colors) => {
     const colorRange = getColorPalette(colors.ramp, 2);
@@ -59,10 +60,10 @@ export const chartConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [chartData, getSettings, getIndicator],
-  (data, settings, indicator) => {
+  [parseData, getSettings, getIndicator, getSentences],
+  (data, settings, indicator, sentences) => {
     if (!data || isEmpty(data) || !indicator) return null;
-
+    const { initial, containsIndicator } = sentences;
     const { startYear, endYear, unit } = settings;
     const totalEmissions = data
       .map(d => d[unit])
@@ -70,16 +71,19 @@ export const getSentence = createSelector(
     const emissionType = unit === 'biomassCarbon' ? 'carbon' : 'CO2';
     let indicatorText = '';
     if (indicator.value === 'mining') {
-      indicatorText = ` in ${indicator.label.toLowerCase()} regions`;
+      indicatorText = ` ${indicator.label.toLowerCase()} regions`;
     } else if (indicator.value !== 'gadm28') {
-      indicatorText = ` in ${indicator.label.toLowerCase()}`;
+      indicatorText = ` ${indicator.label.toLowerCase()}`;
     }
-    return `Between <b>${startYear}</b> and <b>${endYear}</b>, <b>${format(
-      '.3s'
-    )(totalEmissions)}t</b> of <b>${
-      emissionType
-    }</b> was released into the atmosphere as a result of forest loss${
+
+    const params = {
+      type: emissionType,
+      value: `${format('.3s')(totalEmissions)}t`,
+      startYear,
+      endYear,
       indicatorText
-    }</b>.`;
+    };
+    const sentence = indicatorText ? containsIndicator : initial;
+    return { sentence, params };
   }
 );

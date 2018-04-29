@@ -13,6 +13,7 @@ const EMISSIONS_KEYS = [
 const getData = state => state.data || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
+const getSentences = state => state.config && state.config.sentences;
 
 const getSortedData = createSelector([getData], data => {
   if (!data || isEmpty(data)) return null;
@@ -33,7 +34,7 @@ const getSortedData = createSelector([getData], data => {
   return sortedData;
 });
 
-export const getChartData = createSelector([getSortedData], sortedData => {
+export const parseData = createSelector([getSortedData], sortedData => {
   if (!sortedData || !sortedData.data.length) return null;
 
   const { data, total } = sortedData;
@@ -50,8 +51,8 @@ export const getChartData = createSelector([getSortedData], sortedData => {
   return chartData;
 });
 
-export const chartConfig = createSelector(
-  [getChartData, getColors],
+export const parseConfig = createSelector(
+  [parseData, getColors],
   (data, colors) => {
     if (!data) return null;
 
@@ -105,10 +106,10 @@ export const chartConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getSortedData, getLocationNames],
-  (sortedData, locationNames) => {
+  [getSortedData, getLocationNames, getSentences],
+  (sortedData, locationNames, sentences) => {
     if (!sortedData || !sortedData.data.length) return '';
-
+    const { initial } = sentences;
     const { data, total } = sortedData;
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
@@ -130,18 +131,15 @@ export const getSentence = createSelector(
         item.value
     );
     const emissionFraction = emissionsCount / totalEmissionsCount * 100;
-    const sentence = `In <b>${
-      currentLocation
-    }</b>, land-use change and forestry combined with agriculture contributed <b>${format(
-      '.3s'
-    )(emissionsCount)}tCO₂e</b> of emissions emissions from <b>${
-      data[0].emissions[0].year
-    }–${data[0].emissions[data[0].emissions.length - 1].year}</b>, <b>${format(
-      '.0f'
-    )(emissionFraction)}%</b> of <b>${
-      currentLocation
-    }'s</b> total over this period.`;
-
-    return sentence;
+    const params = {
+      location: currentLocation,
+      location_alt: `${currentLocation}'s`,
+      percentage:
+        emissionFraction < 0.1 ? '0.1%' : `${format('.1f')(emissionFraction)}%`,
+      value: `${format('.3s')(emissionsCount)}tCO₂e`,
+      startYear: data[0].emissions[0].year,
+      endYear: data[0].emissions[data[0].emissions.length - 1].year
+    };
+    return { sentence: initial, params };
   }
 );

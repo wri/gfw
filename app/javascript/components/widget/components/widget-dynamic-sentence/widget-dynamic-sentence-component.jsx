@@ -12,7 +12,9 @@ class WidgetDynamicSentence extends PureComponent {
       Object.keys(params).forEach(p => {
         formattedSentence = formattedSentence.replace(
           `{${p}}`,
-          `<b>${params[p]}</b>`
+          `<b ${
+            params[p].color ? `style="color: ${params[p].color};` : ''
+          }">${params[p].value || params[p]}</b>`
         );
       });
     }
