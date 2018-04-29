@@ -125,7 +125,7 @@ Widget.propTypes = {
   colors: PropTypes.object,
   whitelist: PropTypes.object,
   Component: PropTypes.any,
-  sentence: PropTypes.object,
+  sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   parsedData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   parsedConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.array])

@@ -7,7 +7,7 @@ import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 
 // get list data
-const getData = state => state.data || null;
+const getData = state => state.data.alerts || null;
 const getLatestDates = state => state.latest || null;
 const getExtent = state => state.extent || null;
 const getSettings = state => state.settings || null;
