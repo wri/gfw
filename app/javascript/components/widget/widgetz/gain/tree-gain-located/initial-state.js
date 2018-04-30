@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Where did tree cover gain occur',
   config: {
     size: 'small',

@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Where is tree cover located',
   config: {
     size: 'small',

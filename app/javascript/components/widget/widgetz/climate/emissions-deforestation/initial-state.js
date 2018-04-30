@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Emissions from biomass loss',
   config: {
     size: 'small',

@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Ranked plantation breakdown',
   config: {
     size: 'small',

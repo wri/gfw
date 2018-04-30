@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Primary forest extent',
   config: {
     size: 'small',

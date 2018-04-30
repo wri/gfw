@@ -113,6 +113,7 @@ class WidgetContainer extends PureComponent {
     const { payload, settings, getData, getWidgetData, widget } = nextProps;
     if (
       settings &&
+      this.props.settings &&
       (!isEqual(payload, this.props.payload) ||
         !isEqual(settings.threshold, this.props.settings.threshold) ||
         !isEqual(settings.indicator, this.props.settings.indicator) ||

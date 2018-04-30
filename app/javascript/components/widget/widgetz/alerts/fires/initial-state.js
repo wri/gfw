@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Fires',
   config: {
     size: 'small',

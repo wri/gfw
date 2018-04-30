@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Historical emissions',
   config: {
     size: 'small',

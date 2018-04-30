@@ -73,9 +73,8 @@ const mapStateToProps = ({
       countryWhitelistLoading ||
       regionWhitelistLoading ||
       waterBodiesWhitelistLoading,
-    activeWidget: activeWidget
-      ? widgets[activeWidget]
-      : !!filteredWidgets.length && filteredWidgets[0]
+    activeWidget:
+      widgets[activeWidget] || (filteredWidgets && filteredWidgets[0])
   };
 };
 

@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Deforestation Alerts',
   config: {
     size: 'large',

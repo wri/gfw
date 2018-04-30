@@ -1,4 +1,4 @@
-export const initialState = {
+export default {
   title: 'Forestry Employment by Gender',
   config: {
     size: 'small',
