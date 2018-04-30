@@ -10,11 +10,9 @@ const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.activeIndicator || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
-  (state.countryData &&
-    state.countryData[!location.region ? 'regions' : 'subRegions']) ||
-  null;
+  (state.payload.region ? state.subRegions : state.regions) || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -22,9 +20,9 @@ const getSentences = state => state.config && state.config.sentences;
 export const parseData = createSelector(
   [getData, getSettings, getLocation, getLocationsMeta, getColors],
   (data, settings, location, meta, colors) => {
-    if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
+    if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
-    data.regions.forEach(d => {
+    data.forEach(d => {
       const region = meta.find(l => d.id === l.value);
       if (region) {
         dataMapped.push({

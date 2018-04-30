@@ -15,7 +15,8 @@ import TYPES from 'data/types.json';
 import WEEKS from 'data/weeks.json';
 
 // get list data
-const getAdmins = state => state.location || null;
+const getState = state => state || null;
+const getAdmins = state => state.payload || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
@@ -24,11 +25,8 @@ const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
 const getConfig = state => state.config || null;
 const getWaterBodies = state => state.waterBodies || null;
-const getCountryData = state => state.countryData || null;
-const getWhitelists = state => state.whitelists || null;
-const getSettings = state => state.settings || null;
 const getLocationWhitelist = state =>
-  (state.location.region ? state.regionWhitelist : state.countryWhitelist);
+  (state.payload.region ? state.regionWhitelist : state.countryWhitelist);
 
 // helper to get active key for location
 export const getActiveAdmin = location => {
@@ -43,14 +41,6 @@ export const getActiveFilter = (settings, filters, key) =>
 
 export const getActiveIndicator = indicator =>
   INDICATORS.find(i => i.value === indicator);
-
-export const getLocationLabel = (location, indicator, indicators) => {
-  if (!location || !indicators || !indicators.length) return '';
-  const activeIndicator = indicators.find(i => i.value === indicator);
-  return activeIndicator.value === 'gadm28'
-    ? location
-    : `${activeIndicator.label} in ${location}`;
-};
 
 // get lists selected
 export const getAdminsOptions = createSelector(
@@ -174,9 +164,10 @@ export const getWeeks = createSelector([getConfig], config => {
 
 export const getRangeYears = createSelector(
   [getData, getConfig],
-  (data, config) => {
+  (rawData, config) => {
     if (isEmpty(data) || !data.length) return null;
-
+    const data =
+      rawData.loss || (rawData.regions && rawData.regions[0].loss) || rawData;
     return uniq(data.map(d => d.year))
       .filter(
         d =>
@@ -230,41 +221,13 @@ const selectorFuncs = {
   getYears
 };
 
-export const getOptions = createSelector(
-  [getConfig, getSettings, getAdmins, getCountryData, getWhitelists, getData],
-  (config, settings, location, countryData, whitelists, data) => {
-    if (!config || !config.selectors) return null;
-    const options = {};
-    config.selectors.forEach(selector => {
-      const selectorFunc = selectorFuncs[`get${upperFirst(selector)}`];
-      switch (selector) {
-        case 'indicators':
-          options[selector] = selectorFunc({
-            config,
-            location,
-            ...countryData,
-            ...whitelists
-          });
-          break;
-        case 'years':
-        case 'units':
-          options[selector] = selectorFunc({
-            config,
-            ...settings
-          });
-          break;
-        case 'startYears':
-        case 'endYears':
-          options[selector] = selectorFunc({
-            config,
-            data: data.loss || (data.regions && data.regions[0].loss),
-            ...settings
-          });
-          break;
-        default:
-          options[selector] = selectorFunc({ config });
-      }
-    });
-    return options;
-  }
-);
+export const getOptions = createSelector([getState], state => {
+  const { config } = state;
+  if (!config || !config.selectors) return null;
+  const options = {};
+  config.selectors.forEach(selector => {
+    const selectorFunc = selectorFuncs[`get${upperFirst(selector)}`];
+    options[selector] = selectorFunc({ ...state });
+  });
+  return options;
+});

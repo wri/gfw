@@ -17,7 +17,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
           };
         });
       }
-      dispatch(setWidgetData({ data: { extent: mappedData }, widget }));
+      dispatch(setWidgetData({ data: mappedData, widget }));
     })
     .catch(error => {
       dispatch(setWidgetData({ widget, error: true }));

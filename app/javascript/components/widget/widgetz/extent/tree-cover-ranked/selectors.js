@@ -5,11 +5,11 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getData = state => (state.data && state.data.extent) || null;
+const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
-  (state.countryData && state.countryData.countries) || null;
+  (state.payload.region ? state.region : state.countries) || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.activeIndicator || null;
 const getLocationNames = state => state.locationNames || null;

@@ -11,8 +11,8 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
           const alertsData = alerts.data.data;
           const latestData = latest.data.data;
           data = {
-            alerts: alertsData.attributes.value,
-            latest: latestData[0].attributes.date
+            alerts: alertsData,
+            latest: latestData.length && latestData[0].attributes.date
           };
         }
         dispatch(setWidgetData({ data, widget }));

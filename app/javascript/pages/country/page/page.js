@@ -31,15 +31,13 @@ const mapStateToProps = ({
     waterBodiesWhitelistLoading
   } = whitelists;
   const adminData = {
-    countries: countryData.countries,
-    regions: countryData.regions,
-    subRegions: countryData.subRegions,
-    waterBodies: waterBodiesWhitelist,
-    location: location.payload
+    ...countryData,
+    ...location,
+    waterBodies: waterBodiesWhitelist
   };
   const locationOptions = getAdminsOptions(adminData);
   const locationNames = getAdminsSelected(adminData);
-  const adminLevel = getActiveAdmin(location.payload);
+  const adminLevel = getActiveAdmin(adminData);
   const widgetHash =
     window.location.hash && replace(window.location.hash, '#', '');
   const widgetAnchor = document.getElementById(widgetHash);
@@ -50,31 +48,34 @@ const mapStateToProps = ({
     faoCountries: countryData.faoCountries,
     category,
     adminLevel,
-    location,
+    ...location,
     locationOptions,
     indicatorWhitelist: location.payload.region
       ? regionWhitelist
       : countryWhitelist
   };
+  const filteredWidgets = filterWidgets(widgetData);
 
   return {
     showMapMobile: map.showMapMobile,
-    links: getLinks({ categories: CATEGORIES, location, category }),
+    links: getLinks({ categories: CATEGORIES, ...location, category }),
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
-    location,
+    ...location,
     widgetAnchor,
     locationOptions,
     locationNames,
     currentLocation:
       locationNames[adminLevel] && locationNames[adminLevel].label,
-    widgets: filterWidgets(widgetData),
+    widgets: filteredWidgets,
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
     loading:
       countryWhitelistLoading ||
       regionWhitelistLoading ||
       waterBodiesWhitelistLoading,
-    activeWidget: widgets[activeWidget]
+    activeWidget:
+      widgets[activeWidget] ||
+      (filteredWidgets.length > 0 && filteredWidgets[0])
   };
 };
 

@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { isTouch } from 'utils/browser';
+import { SCREEN_L } from 'utils/constants';
 
 import shareActions from 'components/modals/share/share-actions';
 import modalMetaActions from 'components/modals/meta/meta-actions';
@@ -12,8 +14,10 @@ const actions = {
   ...mapActions
 };
 
-const mapStateToProps = ({ location, modalMeta }, ownProps) => {
-  const { locationNames, widget, title, settingsConfig } = ownProps;
+const mapStateToProps = (
+  { location, modalMeta },
+  { locationNames, widget, title, config, whitelist }
+) => {
   const locationUrl = `${location.payload.country}${
     location.payload.region ? `/${location.payload.region}` : ''
   }${location.payload.subRegion ? `/${location.payload.subRegion}` : ''}`;
@@ -25,9 +29,18 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
       ? `?${widget}=${location.query[widget]}`
       : ''
   }`;
+  const size = config.size;
+  const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
+  const widgetMetaKey =
+    widget === 'treeCover' && whitelist.plantations
+      ? 'widget_natural_vs_planted'
+      : config.metaKey;
 
   return {
     location,
+    size,
+    isDeviceTouch,
+    widgetMetaKey,
     modalOpen: modalMeta.open,
     modalClosing: modalMeta.closing,
     citation: `Global Forest Watch. “${title} in ${locationNames &&
@@ -51,7 +64,7 @@ const mapStateToProps = ({ location, modalMeta }, ownProps) => {
       }#${widget}`,
       embedUrl,
       embedSettings:
-        settingsConfig.config.size === 'small'
+        config.size === 'small'
           ? { width: 315, height: 460 }
           : { width: 670, height: 490 },
       socialText: `${title} in ${

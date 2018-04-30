@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 import COLORS from 'data/colors.json';
 
 import Component from './widget-component';
@@ -11,41 +12,42 @@ import reducers, { initialState } from './widget-reducers';
 import {
   getOptions,
   getActiveIndicator,
-  getAdminsSelected,
   getActiveAdmin
 } from './widget-selectors';
 import * as Widgets from './widget-manifest';
 
 const mapStateToProps = (
   { location, countryData, whitelists, widgets },
-  ownProps
+  { widget, locationNames, active }
 ) => {
   // widget consts
-  const widget = ownProps.widget;
+  const { config, settings } = widgets[widget];
   const { parseData, parseConfig, getSentence } = Widgets[widget];
-  const { title, config, settings, loading, data, error } = widgets[widget];
   const colors = COLORS[config.colors || config.type] || COLORS;
+  const highlightColor =
+    colors.main || (colors.extent && colors.extent.main) || '#a0c746';
+  const haveMapLayers = settings && settings.layers && !!settings.layers.length;
+  const onMap = active && haveMapLayers;
 
   // selector data
   const activeIndicator =
     settings && settings.indicator && getActiveIndicator(settings.indicator);
+  const activeLocation = getActiveAdmin({ ...location });
   const selectorData = {
-    data,
-    settings,
-    location: location.payload,
-    query: location.search,
-    countryData,
-    whitelists,
+    ...widgets[widget],
+    ...location,
+    ...countryData,
+    ...whitelists,
     activeIndicator,
-    config,
-    colors,
-    countries: countryData.countries,
-    regions: countryData.regions,
-    subRegions: countryData.subRegions
+    activeLocation,
+    locationNames,
+    colors
   };
-  const locationNames = getAdminsSelected(selectorData);
-  const activeLocation = getActiveAdmin(selectorData);
   const options = getOptions(selectorData);
+  const parseSelectorData = {
+    ...selectorData,
+    options
+  };
 
   // loaders
   const {
@@ -68,82 +70,60 @@ const mapStateToProps = (
     waterBodiesLoading;
 
   return {
+    ...selectorData,
+    ...Widgets[widget],
     isMetaLoading,
     isGeostoreLoading,
-    locationNames,
-    activeLocation,
-    activeIndicator,
-    location: location.payload,
-    query: location.query,
+    highlightColor,
+    options,
+    onMap,
+    haveMapLayers,
     whitelist: location.payload.region
       ? whitelists.regionWhitelist
       : whitelists.countryWhitelist,
-    title,
-    loading,
-    error,
-    ...countryData, // /hack
-    colors: COLORS[config.colors || config.type] || COLORS,
-    settingsConfig: {
-      config,
-      settings,
-      options,
-      loading
-    },
-    ...Widgets[widget],
-    widget,
-    data,
-    parsedData:
-      parseData &&
-      parseData({
-        ...selectorData,
-        locationNames,
-        options
-      }),
-    parsedConfig:
-      parseConfig &&
-      parseConfig({
-        ...selectorData,
-        locationNames,
-        options
-      }),
-    sentence:
-      getSentence &&
-      getSentence({
-        ...selectorData,
-        locationNames,
-        options
-      }),
-    settings
+    parsedData: parseData && parseData(parseSelectorData),
+    parsedConfig: parseConfig && parseConfig(parseSelectorData),
+    sentence: getSentence && getSentence(parseSelectorData)
   };
 };
 
 class WidgetContainer extends PureComponent {
   componentDidMount() {
-    const { location, settings, getData, getWidgetData, widget } = this.props;
-    getWidgetData({
-      widget,
+    const {
+      payload,
+      settings,
       getData,
-      params: {
-        ...location,
-        ...settings
-      }
-    });
+      getWidgetData,
+      widget,
+      data
+    } = this.props;
+    if (isEmpty(data)) {
+      getWidgetData({
+        widget,
+        getData,
+        params: {
+          ...payload,
+          ...settings
+        }
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location, settings, getData, getWidgetData, widget } = nextProps;
+    const { payload, settings, getData, getWidgetData, widget } = nextProps;
     if (
-      !isEqual(location, this.props.location) ||
-      !isEqual(settings.threshold, this.props.settings.threshold) ||
-      !isEqual(settings.indicator, this.props.settings.indicator) ||
-      !isEqual(settings.extentYear, this.props.settings.extentYear) ||
-      !isEqual(settings.type, this.props.settings.type)
+      settings &&
+      (!isEqual(payload, this.props.payload) ||
+        !isEqual(settings.threshold, this.props.settings.threshold) ||
+        !isEqual(settings.indicator, this.props.settings.indicator) ||
+        !isEqual(settings.extentYear, this.props.settings.extentYear) ||
+        !isEqual(settings.type, this.props.settings.type))
     ) {
       getWidgetData({
         widget,
         getData,
         params: {
-          ...location,
+          ...payload,
           ...settings
         }
       });
@@ -159,10 +139,11 @@ class WidgetContainer extends PureComponent {
 
 WidgetContainer.propTypes = {
   settings: PropTypes.object,
-  location: PropTypes.object,
+  payload: PropTypes.object,
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
-  widget: PropTypes.string
+  widget: PropTypes.string,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 export { actions, reducers, initialState };

@@ -51,7 +51,7 @@ const mapStateToProps = ({ countryData, location, header }) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { query } = ownProps.location;
+  const { query } = ownProps;
   const widgetQueries = {};
   if (query) {
     Object.keys(query).forEach(key => {

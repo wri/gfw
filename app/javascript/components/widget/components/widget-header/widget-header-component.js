@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
 import { COUNTRY } from 'pages/country/router';
-import { isTouch } from 'utils/browser';
-import { SCREEN_L } from 'utils/constants';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -28,7 +26,8 @@ class WidgetHeader extends PureComponent {
   render() {
     const {
       title,
-      settingsConfig,
+      settings,
+      options,
       locationNames,
       modalClosing,
       widget,
@@ -41,19 +40,12 @@ class WidgetHeader extends PureComponent {
       setShowMapMobile,
       citation,
       active,
-      whitelist
+      haveMapLayers,
+      isDeviceTouch,
+      size,
+      widgetMetaKey
     } = this.props;
     const { tooltipOpen } = this.state;
-    const widgetSize = settingsConfig.config.size;
-    const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
-    const haveMapLayers =
-      settingsConfig.settings &&
-      settingsConfig.settings.layers &&
-      settingsConfig.settings.layers.length;
-    const widgetMetaKey =
-      widget === 'treeCover' && whitelist.plantations
-        ? 'widget_natural_vs_planted'
-        : settingsConfig.config.metaKey;
 
     return (
       <div className="c-widget-header">
@@ -66,7 +58,7 @@ class WidgetHeader extends PureComponent {
               <Button
                 className={`map-button ${active ? '-active' : ''}`}
                 theme={`theme-button-small ${
-                  widgetSize === 'small' || isDeviceTouch ? 'square' : ''
+                  size === 'small' || isDeviceTouch ? 'square' : ''
                 }`}
                 link={{
                   type: COUNTRY,
@@ -84,7 +76,7 @@ class WidgetHeader extends PureComponent {
                 }}
                 onClick={() => setShowMapMobile(true)}
                 tooltip={
-                  widgetSize === 'small'
+                  size === 'small'
                     ? {
                       theme: 'tip',
                       position: 'top',
@@ -101,14 +93,14 @@ class WidgetHeader extends PureComponent {
                     : null
                 }
               >
-                {(widgetSize === 'small' || isDeviceTouch) && (
+                {(size === 'small' || isDeviceTouch) && (
                   <Icon icon={mapIcon} className="map-icon" />
                 )}
-                {widgetSize !== 'small' && !isDeviceTouch && 'SHOW ON MAP'}
+                {size !== 'small' && !isDeviceTouch && 'SHOW ON MAP'}
               </Button>
             )}
-          {settingsConfig &&
-            !isEmpty(settingsConfig.options) && (
+          {settings &&
+            !isEmpty(options) && (
               <Tooltip
                 theme="light"
                 position="bottom-right"
@@ -124,14 +116,7 @@ class WidgetHeader extends PureComponent {
                 arrow
                 useContext
                 open={tooltipOpen}
-                html={
-                  <WidgetSettings
-                    {...settingsConfig}
-                    widget={widget}
-                    locationNames={locationNames}
-                    setModalMeta={setModalMeta}
-                  />
-                }
+                html={<WidgetSettings {...this.props} />}
               >
                 <Button
                   className="theme-button-small square"
@@ -154,7 +139,7 @@ class WidgetHeader extends PureComponent {
               </Tooltip>
             )}
           {!embed &&
-            (!isEmpty(settingsConfig.options) || haveMapLayers) && (
+            (!isEmpty(options) || haveMapLayers) && (
               <div className="separator" />
             )}
           <div className="small-options">
@@ -201,11 +186,16 @@ class WidgetHeader extends PureComponent {
 WidgetHeader.propTypes = {
   widget: PropTypes.string,
   title: PropTypes.string.isRequired,
-  settingsConfig: PropTypes.object,
+  settings: PropTypes.object,
+  options: PropTypes.object,
   locationNames: PropTypes.object,
   location: PropTypes.object,
   query: PropTypes.object,
   embed: PropTypes.bool,
+  haveMapLayers: PropTypes.bool,
+  isDeviceTouch: PropTypes.bool,
+  size: PropTypes.string,
+  widgetMetaKey: PropTypes.string,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   setModalMeta: PropTypes.func.isRequired,
