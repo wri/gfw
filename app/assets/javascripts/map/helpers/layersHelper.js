@@ -1,7 +1,9 @@
-/* eslint-disable */
 /**
  * Map layers slug with layer files. (like views and dialog templates)
  */
+
+/* eslint-disable */
+
 define(
   [
     // Layer views
@@ -364,7 +366,7 @@ define(
     HaitiWatershedLayer,
     EcuUserProtectedAreasLayer,
     BolUserFireFrequencyLayer,
-    //highres layers
+    // highres layers
     SentinelLayer,
     RecentImageryLayer,
     // Layer dialog templates
@@ -381,8 +383,6 @@ define(
     GladTimeline,
     MangroveTimeline
   ) {
-    'use strict';
-
     var layersHelper = {
       loss: {
         view: LossLayer,

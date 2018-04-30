@@ -1,11 +1,11 @@
-define([], () => {
-  const fallbackDataHelper = {
+define([], function() {
+  var fallbackDataHelper = {
     /**
      * Returns country names and iso codes
      *
      * @return {object} Object
      */
-    getCountryNames() {
+    getCountryNames: function() {
       return {
         data: [
           { name: 'Norway', iso: 'NOR' },

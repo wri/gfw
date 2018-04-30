@@ -10,7 +10,7 @@ define(
     'stories/views/StoriesShowView',
     'connect/views/LoginView'
   ],
-  (
+  function(
     $,
     Backbone,
     NotificationsView,
@@ -20,8 +20,8 @@ define(
     StoriesNewView,
     StoriesShowView,
     LoginView
-  ) => {
-    const StoriesRouter = Backbone.Router.extend({
+  ) {
+    var StoriesRouter = Backbone.Router.extend({
       status: new (Backbone.Model.extend({
         params: null
       }))(),
@@ -37,11 +37,11 @@ define(
         '*path': 'show404'
       },
 
-      initialize() {
+      initialize: function() {
         new NotificationsView();
       },
 
-      navigateTo(route, params) {
+      navigateTo: function(route, params) {
         window.scrollTo(0, 0);
         this.setParams(params);
         this.navigate(route, {
@@ -49,53 +49,57 @@ define(
         });
       },
 
-      setParams(params) {
+      setParams: function(params) {
         this.status.set({
           params
         });
       },
 
-      clearParams() {
+      clearParams: function() {
         this.status.set({
           params: null
         });
       },
 
-      index() {
+      index: function() {
         new StoriesIndexView({
           el: '.layout-content'
         });
       },
 
-      listStories() {
-        const storiesList = new StoriesListView({
+      listStories: function() {
+        var storiesList = new StoriesListView({
           el: '.layout-content'
         });
       },
 
-      checkLoggedIn() {
+      checkLoggedIn: function() {
         this.user = new User();
         return this.user.fetch();
       },
 
-      newStory() {
+      newStory: function() {
         this.checkLoggedIn()
-          .then(() => {
-            new StoriesNewView({
-              router: this,
-              alreadyLoggedIn: true
-            });
-          })
+          .then(
+            function() {
+              new StoriesNewView({
+                router: this,
+                alreadyLoggedIn: true
+              });
+            }
+          )
 
-          .fail(() => {
-            new StoriesNewView({
-              router: this,
-              alreadyLoggedIn: false
-            });
-          });
+          .fail(
+            function() {
+              new StoriesNewView({
+                router: this,
+                alreadyLoggedIn: false
+              });
+            }
+          );
       },
 
-      showStory(storyId) {
+      showStory: function(storyId) {
         if (this.storyView) {
           this.storyView.remove();
         }
@@ -107,25 +111,29 @@ define(
         this.clearParams();
       },
 
-      editStory(storyId) {
+      editStory: function(storyId) {
         this.checkLoggedIn()
-          .then(() => {
-            const editStoryView = new StoriesNewView({
-              id: storyId,
-              alreadyLoggedIn: true,
-              router: this
-            });
-          })
+          .then(
+            function() {
+              var editStoryView = new StoriesNewView({
+                id: storyId,
+                alreadyLoggedIn: true,
+                router: this
+              });
+            }
+          )
 
-          .fail(() => {
-            const loginView = new LoginView({
-              message: 'Please log in to edit a story.'
-            });
-            this.el.html(loginView.render().el);
-          });
+          .fail(
+            function() {
+              var loginView = new LoginView({
+                message: 'Please log in to edit a story.'
+              });
+              this.el.html(loginView.render().el);
+            }
+          );
       },
 
-      show404() {
+      show404: function() {
         window.location = '/404';
       }
     });
