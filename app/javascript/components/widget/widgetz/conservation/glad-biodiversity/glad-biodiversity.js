@@ -1,4 +1,4 @@
-import * as Widget from '../glad-ranked';
+import * as Widget from '../../forest-change/glad-ranked';
 import childState from './initial-state';
 
 const Component = Widget.Component;
