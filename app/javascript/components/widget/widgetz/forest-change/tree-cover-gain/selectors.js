@@ -4,17 +4,13 @@ import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
+import { getActiveAdmins } from '../../../widget-selectors';
+
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state => {
-  let meta = state.countries;
-  if (state.payload.region) {
-    meta = state.payload.subRegion ? state.subRegions : state.regions;
-  }
-  return meta;
-};
+const getLocationsMeta = state => state[getActiveAdmins(state.payload)] || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.activeIndicator || null;
 const getLocationNames = state => state.locationNames || null;

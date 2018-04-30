@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import replace from 'lodash/replace';
-import WIDGETS from 'components/widget/widget-manifest';
+import * as WIDGETS from 'components/widget/widget-manifest';
 
 import MetaComponent from './meta-component';
 

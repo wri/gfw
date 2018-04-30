@@ -35,6 +35,12 @@ export const getActiveAdmin = location => {
   return 'country';
 };
 
+export const getActiveAdmins = ({ region, subRegion }) => {
+  if (subRegion) return 'subRegions';
+  if (region) return 'regions';
+  return 'countries';
+};
+
 // helper to get active filter from state based on key
 export const getActiveFilter = (settings, filters, key) =>
   (filters ? filters.find(i => i.value === settings[key]) : null);
@@ -165,7 +171,7 @@ export const getWeeks = createSelector([getConfig], config => {
 export const getRangeYears = createSelector(
   [getData, getConfig],
   (rawData, config) => {
-    if (isEmpty(data) || !data.length) return null;
+    if (isEmpty(rawData) || !rawData.length) return null;
     const data =
       rawData.loss || (rawData.regions && rawData.regions[0].loss) || rawData;
     return uniq(data.map(d => d.year))
