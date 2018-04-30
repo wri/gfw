@@ -3,13 +3,14 @@ import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-import { getActiveFilter } from '../../widget-selectors';
+import { getActiveFilter } from '../../../widget-selectors';
 
 const getData = state => state.data || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
+const getSentences = state => state.config && state.config.sentences;
 
 export const getSortedData = createSelector([getData], data => {
   if (!data || !data.length) return null;
@@ -19,7 +20,7 @@ export const getSortedData = createSelector([getData], data => {
   }));
 });
 
-export const getFilteredData = createSelector(
+export const parseData = createSelector(
   [getSortedData, getLocation, getColors],
   (data, location, colors) => {
     if (!data || !data.length) return null;
@@ -46,17 +47,25 @@ export const getFilteredData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getFilteredData, getLocation, getSettings, getOptions],
-  (data, location, settings, options) => {
+  [parseData, getLocation, getSettings, getOptions, getSentences],
+  (data, location, settings, options, sentences) => {
     if (!data || !data.length) return null;
+    const { initial, noReforest } = sentences;
     const countryData = data.find(d => location.country === d.iso) || null;
     const periods = options && options.periods;
     const period = getActiveFilter(settings, periods, 'period');
 
-    return countryData
-      ? `In <b>${period && period.label}</b>, the rate of reforestation in <b>${
-        countryData.label
-      }</b> was <strong>${format('.3s')(countryData.value)}ha/year</strong>.`
-      : '';
+    const sentence = countryData.value > 0 ? initial : noReforest;
+
+    const params = {
+      location: countryData.label,
+      year: period && period.label,
+      rate: `${format('.3s')(countryData.value)}ha/yr`
+    };
+
+    return {
+      sentence,
+      params
+    };
   }
 );

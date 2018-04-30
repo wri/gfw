@@ -23,6 +23,7 @@ import * as treeLoss from './widgetz/loss/tree-loss';
 // FAO
 import * as faoCover from './widgetz/fao/fao-cover';
 import * as faoDeforest from './widgetz/fao/fao-deforest';
+import * as faoReforest from './widgetz/fao/fao-reforest';
 
 export {
   treeCover,
@@ -43,5 +44,6 @@ export {
   treeLossPlantations,
   treeLoss,
   faoCover,
-  faoDeforest
+  faoDeforest,
+  faoReforest
 };
