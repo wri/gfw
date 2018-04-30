@@ -17,6 +17,7 @@ import * as gladRanked from './widgetz/alerts/glad-ranked';
 import * as rankedPlantations from './widgetz/extent/ranked-plantations';
 // Loss
 import * as treeLossLocated from './widgetz/loss/tree-loss-located';
+import * as treeLossRanked from './widgetz/loss/tree-loss-ranked';
 
 export {
   treeCover,
@@ -32,5 +33,6 @@ export {
   gladBiodiversity,
   gladRanked,
   rankedPlantations,
-  treeLossLocated
+  treeLossLocated,
+  treeLossRanked
 };
