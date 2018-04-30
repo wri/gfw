@@ -4,6 +4,7 @@ import * as treeCoverRanked from './widgetz/land-cover/tree-cover-ranked';
 import * as treeCoverLocated from './widgetz/land-cover/tree-cover-located';
 import * as intactTreeCover from './widgetz/land-cover/intact-tree-cover';
 import * as primaryForest from './widgetz/land-cover/primary-forest';
+import * as faoCover from './widgetz/land-cover/fao-cover';
 
 // Forest change
 import * as gladAlerts from './widgetz/forest-change/glad-alerts';
@@ -15,6 +16,8 @@ import * as treeGainLocated from './widgetz/forest-change/tree-gain-located';
 import * as treeLossRanked from './widgetz/forest-change/tree-loss-ranked';
 import * as treeLossPlantations from './widgetz/forest-change/tree-loss-plantations';
 import * as treeLoss from './widgetz/forest-change/tree-loss';
+import * as faoDeforest from './widgetz/forest-change/fao-deforest';
+import * as faoReforest from './widgetz/forest-change/fao-reforest';
 
 // Land use
 import * as treeCoverPlantations from './widgetz/land-use/tree-cover-plantations';
@@ -31,11 +34,6 @@ import * as forestryEmployment from './widgetz/people/forestry-employment';
 import * as emissions from './widgetz/climate/emissions';
 import * as emissionsDeforestation from './widgetz/climate/emissions-deforestation';
 
-// FAO
-import * as faoCover from './widgetz/fao/fao-cover';
-import * as faoDeforest from './widgetz/fao/fao-deforest';
-import * as faoReforest from './widgetz/fao/fao-reforest';
-
 export {
   // land cover
   treeCover,
@@ -43,6 +41,7 @@ export {
   intactTreeCover,
   primaryForest,
   treeCoverLocated,
+  faoCover,
   // forest change
   gladAlerts,
   gladRanked,
@@ -53,13 +52,11 @@ export {
   treeLossRanked,
   treeLossPlantations,
   treeLoss,
+  faoDeforest,
+  faoReforest,
   // land use
   treeCoverPlantations,
   rankedPlantations,
-  // fao
-  faoCover,
-  faoDeforest,
-  faoReforest,
   // conservation
   gladBiodiversity,
   // people
