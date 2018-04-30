@@ -7,7 +7,6 @@ export const initialState = {
       'ifl_2013',
       'mining',
       'wdpa',
-      'plantations',
       'landmark',
       'primary_forest',
       'ifl_2013',

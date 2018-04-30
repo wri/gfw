@@ -6,7 +6,7 @@ import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
-import WIDGETS_CONFIG from 'components/widget/widget-config.json';
+import WIDGETS from 'components/widget/widget-manifest';
 import { biomassToCO2 } from 'utils/calculations';
 import { deburrUpper } from 'utils/data';
 
@@ -55,10 +55,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const widgetQueries = {};
   if (query) {
     Object.keys(query).forEach(key => {
-      if (Object.keys(WIDGETS_CONFIG).indexOf(key) > -1) {
+      if (Object.keys(WIDGETS).indexOf(key) > -1) {
         widgetQueries[key] = encodeStateForUrl({
           ...decodeUrlForState(query[key]),
-          indicator: WIDGETS_CONFIG[key].settings.indicator
+          indicator: WIDGETS[key].initialState.settings.indicator
         });
       }
     });

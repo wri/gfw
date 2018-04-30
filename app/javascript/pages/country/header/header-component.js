@@ -134,7 +134,7 @@ class Header extends PureComponent {
                 )}
             </div>
           </div>
-          <div className="columns large-6 medium-12 small-12">
+          <div className="columns small-12 large-6">
             <div className="description text -title-xs">
               {!loading && (
                 <div>

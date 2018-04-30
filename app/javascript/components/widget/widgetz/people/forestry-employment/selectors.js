@@ -65,11 +65,15 @@ export const getSentence = createSelector(
     if (!data) return null;
     const { year } = settings;
     const { initial, withFemales } = sentences;
-    const selectedFAO = data.filter(item => item.year === year);
-    const employees = selectedFAO[0].female
-      ? selectedFAO[0].male + selectedFAO[0].female
-      : selectedFAO[0].male;
-    const females = parseInt(selectedFAO[0].female, 10);
+    const selectedFAO = data.find(item => item.year === year);
+    let employees = 0;
+    let females = 0;
+    if (selectedFAO) {
+      employees = selectedFAO.female
+        ? selectedFAO.male + selectedFAO.female
+        : selectedFAO.male;
+      females = parseInt(selectedFAO.female, 10);
+    }
 
     const params = {
       location: `${locationNames &&

@@ -1,4 +1,3 @@
-// import WIDGETS_CONFIG from './widget-config.json';
 import * as Widgets from './widget-manifest';
 
 const widgets = {};

@@ -8,7 +8,13 @@ import { format } from 'd3-format';
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state => state.countries || null;
+const getLocationsMeta = state => {
+  let meta = state.countries;
+  if (state.payload.region) {
+    meta = state.payload.subRegion ? state.subRegions : state.regions;
+  }
+  return meta;
+};
 const getColors = state => state.colors || null;
 const getIndicator = state => state.activeIndicator || null;
 const getLocationNames = state => state.locationNames || null;
