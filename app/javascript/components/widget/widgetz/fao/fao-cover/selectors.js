@@ -7,9 +7,10 @@ import { getColorPalette } from 'utils/data';
 const getData = state => state.data || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
+const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
-export const getFAOCoverData = createSelector(
+export const parseData = createSelector(
   [getData, getLocationNames, getColors],
   (data, locationNames, colors) => {
     if (isEmpty(data) || !locationNames) return null;
@@ -58,25 +59,24 @@ export const getFAOCoverData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getLocationNames],
-  (data, locationNames) => {
+  [getData, getLocationNames, getSentences],
+  (data, locationNames, sentences) => {
     if (isEmpty(data) || !locationNames) return null;
+    const { initial, noPrimary } = sentences;
     const { area_ha, extent, forest_primary } = data;
     const primaryForest = extent / 100 * forest_primary;
-    const sentence = `FAO data from 2015 shows that <strong>${locationNames.current &&
-      locationNames.current.label}</strong> contains <strong>${format('.3s')(
-      extent
-    )}Ha</strong> of forest, ${
-      primaryForest > 0
-        ? ` with Primary forest occupying 
-        <strong>${format('.1f')(
-    primaryForest / area_ha * 100
-  )}%</strong> of the country.`
-        : ` which occupies 
-        <strong>${format('.1f')(
-    extent / area_ha * 100
-  )}%</strong> of the country.`
-    }`;
-    return sentence;
+    const sentence = primaryForest > 0 ? initial : noPrimary;
+    const params = {
+      location: locationNames.current && locationNames.current.label,
+      extent: `${format('.3s')(extent)}ha`,
+      primaryPercent:
+        primaryForest > 0
+          ? `${format('.1f')(primaryForest / area_ha * 100)}%`
+          : `${format('.1f')(extent / area_ha * 100)}%`
+    };
+    return {
+      sentence,
+      params
+    };
   }
 );
