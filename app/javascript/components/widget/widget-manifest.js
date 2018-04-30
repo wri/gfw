@@ -24,6 +24,7 @@ import * as treeLossLocated from './widgetz/loss/tree-loss-located';
 
 // Gain
 import * as treeCoverGain from './widgetz/gain/tree-cover-gain';
+import * as treeGainLocated from './widgetz/gain/tree-gain-located';
 
 export {
   treeCover,
@@ -40,5 +41,6 @@ export {
   gladRanked,
   rankedPlantations,
   treeLossLocated,
-  treeCoverGain
+  treeCoverGain,
+  treeGainLocated
 };
