@@ -74,7 +74,7 @@ const mapStateToProps = ({
       regionWhitelistLoading ||
       waterBodiesWhitelistLoading,
     activeWidget:
-      widgets[activeWidget] || (!!filteredWidgets.length && filteredWidgets[0])
+      widgets[activeWidget] || (filteredWidgets && filteredWidgets[0])
   };
 };
 

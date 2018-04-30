@@ -48,21 +48,29 @@ class NumberedList extends PureComponent {
               );
               return (
                 <li key={`${item.label}-${item.id}`}>
-                  {linksExt ? (
-                    <a
-                      href={`http://${window.location.host}${item.path}`}
-                      target="_blank"
-                      rel="noopener nofollower"
-                    >
+                  {item.path &&
+                    linksExt && (
+                      <a
+                        href={`http://${window.location.host}${item.path}`}
+                        target="_blank"
+                        rel="noopener nofollower"
+                      >
+                        {linkContent}
+                      </a>
+                    )}
+                  {item.path &&
+                    !linksExt && (
+                      <Link
+                        className={`${linksDisabled ? 'disabled' : ''}`}
+                        to={item.path}
+                      >
+                        {linkContent}
+                      </Link>
+                    )}
+                  {!item.path && (
+                    <div className={`${linksDisabled ? 'disabled' : ''}`}>
                       {linkContent}
-                    </a>
-                  ) : (
-                    <Link
-                      className={`${linksDisabled ? 'disabled' : ''}`}
-                      to={item.path}
-                    >
-                      {linkContent}
-                    </Link>
+                    </div>
                   )}
                 </li>
               );

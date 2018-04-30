@@ -41,6 +41,14 @@ const setWidgetData = (state, { payload }) => ({
   [payload.widget]: {
     ...state[payload.widget],
     data: payload.data,
+    config: {
+      ...state[payload.widget].config,
+      ...payload.config
+    },
+    settings: {
+      ...state[payload.widget].settings,
+      ...payload.settings
+    },
     loading: false,
     error: payload.error
   }
