@@ -1,19 +1,20 @@
 import { createSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
-import { getActiveFilter } from '../../widget-selectors';
+import { getActiveFilter } from '../../../widget-selectors';
 
 const getData = state => state.data || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
+const getSentences = state => state.config && state.config.sentences;
 
-export const getFilteredData = createSelector(
+export const parseData = createSelector(
   [getData, getLocation, getColors],
   (data, location, colors) => {
-    if (!data || !data.rank.length) return null;
+    if (!data || !data.rank) return null;
 
     const { rank } = data;
     const locationIndex = findIndex(rank, d => d.iso === location.country);
@@ -39,10 +40,17 @@ export const getFilteredData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getLocation, getLocationNames, getSettings, getOptions],
-  (data, location, locationNames, settings, options) => {
-    if (!data || !data.fao.length) return '';
-
+  [
+    getData,
+    getLocation,
+    getLocationNames,
+    getSettings,
+    getOptions,
+    getSentences
+  ],
+  (data, location, locationNames, settings, options, sentences) => {
+    if (!data || !data.fao) return '';
+    const { initial, noDeforest, humanDeforest } = sentences;
     const topFao = data.fao.filter(d => d.year === settings.period);
     const { deforest, humdef } = topFao[0];
     const currentLocation =
@@ -50,18 +58,20 @@ export const getSentence = createSelector(
     const periods = options && options.periods;
     const period = getActiveFilter(settings, periods, 'period');
 
+    let sentence = noDeforest;
     if (deforest) {
-      return `In <b>${period &&
-        period.label}</b>, the rate of deforestation in <b>${
-        currentLocation
-      }</b> was <b>${format('.3s')(deforest)}ha/yr</b>${
-        humdef
-          ? `, of which <b>${format('.3s')(
-            humdef
-          )}ha/yr</b> was due to human activity`
-          : ''
-      }.`;
+      sentence = humdef ? humanDeforest : initial;
     }
-    return `No deforestation data in <b>${currentLocation}</b>.`;
+    const params = {
+      location: currentLocation,
+      year: period && period.label,
+      rate: `${format('.3s')(deforest)}ha/yr`,
+      human: `${format('.3s')(humdef)}ha/yr`
+    };
+
+    return {
+      sentence,
+      params
+    };
   }
 );
