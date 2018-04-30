@@ -7,14 +7,15 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getLocationNames = state => state.locationNames;
 const getColors = state => state.colors;
+const getSentences = state => state.config.sentences;
 
 // get lists selected
 export const getFilteredData = createSelector(
   [getData, getLocationNames],
   (data, locationNames) => {
-    if (!data || !data.fao) return null;
+    if (isEmpty(data)) return null;
 
-    return data.fao
+    return data
       .filter(
         item =>
           item.country === locationNames.current.value && item.year !== 9999
@@ -29,7 +30,7 @@ export const getFilteredData = createSelector(
   }
 );
 
-export const charData = createSelector(
+export const parseData = createSelector(
   [getFilteredData, getSettings, getColors],
   (data, settings, colors) => {
     if (isEmpty(data)) return null;
@@ -59,27 +60,29 @@ export const charData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getFilteredData, getSettings, getLocationNames],
-  (data, settings, locationNames) => {
-    if (!data) return '';
-
+  [getFilteredData, getSettings, getLocationNames, getSentences],
+  (data, settings, locationNames, sentences) => {
+    if (!data) return null;
     const { year } = settings;
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
+    const { initial, withFemales } = sentences;
     const selectedFAO = data.filter(item => item.year === year);
     const employees = selectedFAO[0].female
       ? selectedFAO[0].male + selectedFAO[0].female
       : selectedFAO[0].male;
-    return `According to the FAO there were <b>${
-      employees ? format('.3s')(employees) : 'no'
-    }</b> people employed in <b>${
-      currentLocation
-    }'s</b> Forestry sector in <b>${year}</b>${
-      parseInt(selectedFAO[0].female, 10)
-        ? `, of which <b>${format('.3s')(
-          selectedFAO[0].female
-        )}</b> were female`
-        : ''
-    }.`;
+    const females = parseInt(selectedFAO[0].female, 10);
+
+    const params = {
+      location: `${locationNames &&
+        locationNames.current &&
+        locationNames.current.label}'s`,
+      value: `${employees ? format('.3s')(employees) : 'no'}`,
+      count: `${format('.3s')(females)}`,
+      year
+    };
+
+    return {
+      sentence: females ? withFemales : initial,
+      params
+    };
   }
 );
