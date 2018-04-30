@@ -30,11 +30,10 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
         }
         dispatch(
           setWidgetData({
-            data:
-              {
-                loss: lossMappedData,
-                extent: extentMappedData
-              },
+            data: {
+              loss: lossMappedData.regions,
+              extent: extentMappedData.regions
+            },
             widget
           })
         );
