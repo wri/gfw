@@ -5,14 +5,15 @@ import { format } from 'd3-format';
 import { getColorPalette } from 'utils/data';
 
 // get list data
-const getLoss = state => state.loss || null;
-const getTotalLoss = state => state.totalLoss || null;
+const getLoss = state => (state.data && state.data.loss) || null;
+const getTotalLoss = state => (state.data && state.data.totalLoss) || null;
 const getSettings = state => state.settings || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
+const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
-export const chartData = createSelector(
+export const parseData = createSelector(
   [getLoss, getTotalLoss, getSettings],
   (loss, totalLoss, settings) => {
     if (!loss || !totalLoss) return null;
@@ -31,7 +32,7 @@ export const chartData = createSelector(
   }
 );
 
-export const chartConfig = createSelector([getColors], colors => {
+export const parseConfig = createSelector([getColors], colors => {
   const colorRange = getColorPalette(colors.ramp, 2);
   return {
     xKey: 'year',
@@ -68,9 +69,10 @@ export const chartConfig = createSelector([getColors], colors => {
 });
 
 export const getSentence = createSelector(
-  [chartData, getSettings, getLocationNames],
-  (data, settings, locationNames) => {
+  [parseData, getSettings, getLocationNames, getSentences],
+  (data, settings, locationNames, sentences) => {
     if (!data) return null;
+    const { initial } = sentences;
     const { startYear, endYear } = settings;
     const locationLabel = locationNames.current && locationNames.current.label;
     const totalLoss = sumBy(data, 'areaLoss') || 0;
@@ -78,12 +80,18 @@ export const getSentence = createSelector(
     const lossPhrase =
       totalLoss > totalOutsideLoss ? 'plantations' : 'natural forest';
 
-    return `The majority of tree cover loss in <b>${
-      locationLabel
-    }</b> from <span>${startYear}</span>
-    to <span>${endYear}</span> occured within <b>${lossPhrase}</b>.
-    The total loss within natural forest was equivalent to <b>${format('.2s')(
-    totalOutsideLoss
-  )}t of CO<sub>2</sub></b> emissions.`;
+    const sentence = initial;
+    const params = {
+      location: locationLabel,
+      startYear,
+      endYear,
+      lossPhrase,
+      value: `${format('.2s')(totalOutsideLoss)}t of CO<sub>2</sub> emissions`
+    };
+
+    return {
+      sentence,
+      params
+    };
   }
 );
