@@ -43,7 +43,7 @@ export const mapData = createSelector(
       };
     });
 
-    return mappedData;
+    return sortByKey(mappedData, 'loss');
   }
 );
 
@@ -63,6 +63,7 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [
     mapData,
+    parseData,
     getSettings,
     getOptions,
     getLocation,
@@ -71,7 +72,16 @@ export const getSentence = createSelector(
     getSentences
   ],
 
-  (data, settings, options, location, indicator, locationNames, sentences) => {
+  (
+    data,
+    sortedData,
+    settings,
+    options,
+    location,
+    indicator,
+    locationNames,
+    sentences
+  ) => {
     if (!data || !options || !indicator || !locationNames) return '';
     const {
       initial,
@@ -83,7 +93,7 @@ export const getSentence = createSelector(
     const totalLoss = sumBy(data, 'loss');
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
-    const topRegion = data.length && data[0];
+    const topRegion = sortedData.length && sortedData[0];
     const avgLossPercentage = sumBy(data, 'percentage') / data.length;
     const avgLoss = sumBy(data, 'loss') / data.length;
     let percentileLoss = 0;

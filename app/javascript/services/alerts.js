@@ -41,7 +41,6 @@ export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
     .replace('{polyname}', indicator);
-  console.log(url, GLAD_ISO_DATASET, GLAD_ADM1_DATASET,GLAD_ADM2_DATASET)
   return axios.get(url);
 };
 

@@ -40,18 +40,19 @@ export const getSortedData = createSelector(
         });
       }
     });
-    return sortByKey(uniqBy(dataMapped, 'label'), 'gain', true);
+    return sortByKey(dataMapped, 'gain');
   }
 );
 
 export const parseData = createSelector([getSortedData], data => {
   if (!data || !data.length) return null;
-  return sortByKey(data, 'value');
+  return sortByKey(uniqBy(data, 'label'), 'value', true);
 });
 
 export const getSentence = createSelector(
   [
     getSortedData,
+    parseData,
     getSettings,
     getOptions,
     getLocation,
@@ -59,7 +60,16 @@ export const getSentence = createSelector(
     getLocationNames,
     getSentences
   ],
-  (data, settings, options, location, indicator, locationNames, sentences) => {
+  (
+    data,
+    sortedData,
+    settings,
+    options,
+    location,
+    indicator,
+    locationNames,
+    sentences
+  ) => {
     if (!data || !options || !indicator || !locationNames) return null;
     const {
       initial,
@@ -70,7 +80,7 @@ export const getSentence = createSelector(
     const totalGain = sumBy(data, 'gain');
     const currentLocation =
       locationNames && locationNames.current && locationNames.current.label;
-    const topRegion = data.length && data[0];
+    const topRegion = sortedData.length && sortedData[0];
     const avgGainPercentage = sumBy(data, 'percentage') / data.length;
     const avgGain = sumBy(data, 'gain') / data.length;
     let percentileGain = 0;
