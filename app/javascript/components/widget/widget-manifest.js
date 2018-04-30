@@ -26,6 +26,9 @@ import * as treeLossLocated from './widgetz/loss/tree-loss-located';
 import * as treeCoverGain from './widgetz/gain/tree-cover-gain';
 import * as treeGainLocated from './widgetz/gain/tree-gain-located';
 
+// People
+import * as economicImpact from './widgetz/people/economic-impact';
+
 export {
   treeCover,
   treeCoverPlantations,
@@ -42,5 +45,6 @@ export {
   rankedPlantations,
   treeLossLocated,
   treeCoverGain,
-  treeGainLocated
+  treeGainLocated,
+  economicImpact
 };

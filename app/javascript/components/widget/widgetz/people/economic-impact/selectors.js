@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
+import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 import { formatUSD } from 'utils/format';
@@ -7,18 +8,19 @@ import { formatUSD } from 'utils/format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationsMeta = state => state.meta || null;
+const getLocationsMeta = state => state.countries || null;
 const getLocationNames = state => state.locationNames;
 const getColors = state => state.colors;
+const getSentences = state => state.config.sentence;
 
 // get lists selected
 export const getFilteredData = createSelector(
   [getData, getSettings],
   (data, settings) => {
-    if (!data || !data.fao) return null;
+    if (isEmpty(data)) return null;
 
     const { year } = settings;
-    const gdps = data.fao.filter(
+    const gdps = data.filter(
       item =>
         item.gdpusd2012 &&
         item.gdpusd2012 !== '' &&
@@ -26,7 +28,7 @@ export const getFilteredData = createSelector(
         item.year === 9999
     );
 
-    return data.fao
+    return data
       .filter(
         d =>
           d.country !== 'LBN' &&
@@ -128,7 +130,18 @@ export const rankData = createSelector(
   }
 );
 
-export const chartConfig = createSelector([], () => ({
+export const parseData = createSelector(
+  [chartData, rankData],
+  (data, rankedData) => {
+    if (!data || !rankedData) return null;
+    return {
+      chartData: data,
+      rankedData
+    };
+  }
+);
+
+export const parseConfig = () => ({
   yKeys: {
     bars: {
       value: {
@@ -146,28 +159,29 @@ export const chartConfig = createSelector([], () => ({
   ],
   unit: ' $',
   unitFormat: value => formatUSD(value)
-}));
+});
 
 export const getSentence = createSelector(
-  [getFilteredData, getSettings, getLocationNames],
-  (data, settings, locationNames) => {
-    if (!data) return '';
-
+  [getFilteredData, getSettings, getLocationNames, getSentences],
+  (data, settings, locationNames, sentence) => {
+    if (!data) return null;
     const selectedFAO = data.filter(
       item => item.iso === locationNames.current.value
     );
     if (!selectedFAO.length) return '';
 
-    const { year } = settings;
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
-    return `According to the FAO, the forestry sector contributed a net <b>${formatUSD(
-      selectedFAO[0].net_usd,
-      false
-    )} USD</b> to the economy in <b>${
-      year
-    }</b>, which is approximately <b>${format('.2f')(
-      selectedFAO[0].net_perc
-    )}%</b> of <b>${currentLocation}'s</b> GDP.`;
+    const params = {
+      location: `${locationNames &&
+        locationNames.current &&
+        locationNames.current.label}'s`,
+      value: `${formatUSD(selectedFAO[0].net_usd, false)} USD`,
+      percentage: `${format('.2f')(selectedFAO[0].net_perc)}%`,
+      year: settings.year
+    };
+
+    return {
+      sentence,
+      params
+    };
   }
 );
