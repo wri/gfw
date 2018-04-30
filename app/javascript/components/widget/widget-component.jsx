@@ -74,8 +74,7 @@ class Widget extends PureComponent {
               <WidgetDynamicSentence className="sentence" sentence={sentence} />
             )}
           {!error &&
-            data &&
-            parsedData && (
+            !isEmpty(parsedData) && (
               <Component
                 {...this.props}
                 data={parsedData}

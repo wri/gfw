@@ -9,7 +9,7 @@ const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
-  (state.payload.region ? state.regions : state.subRegions) || null;
+  (state.payload.region ? state.region : state.countries) || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.activeIndicator || null;
 const getLocationNames = state => state.locationNames || null;

@@ -8,19 +8,18 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getLocationNames = state => state.locationNames;
 const getActiveIndicator = state => state.activeIndicator;
-const getWhitelists = state => state.whitelists;
+const getWhitelists = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
   [getData, getSettings, getWhitelists, getColors],
-  (data, settings, whitelists, colors) => {
-    if (isEmpty(data) || isEmpty(whitelists)) return null;
+  (data, settings, whitelist, colors) => {
+    if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, cover, plantations } = data;
     const { indicator } = settings;
-    const hasPlantations =
-      Object.keys(whitelists.countryWhitelist).indexOf('plantations') > -1;
+    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 2 : 1);
     const parsedData = [
       {
