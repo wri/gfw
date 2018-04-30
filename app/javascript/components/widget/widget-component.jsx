@@ -49,10 +49,7 @@ class Widget extends PureComponent {
           })
         }}
       >
-        <WidgetHeader
-          {...this.props}
-          onSettingsChange={change => setWidgetSettingsUrl({ widget, change })}
-        />
+        <WidgetHeader {...this.props} onSettingsChange={setWidgetSettingsUrl} />
         <div className="container">
           {!loading &&
             !error &&

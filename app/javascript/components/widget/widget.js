@@ -26,8 +26,8 @@ const mapStateToProps = (
   const colors = COLORS[config.colors || config.type] || COLORS;
   const highlightColor =
     colors.main || (colors.extent && colors.extent.main) || '#a0c746';
-  const haveMapLayers = settings && settings.layers && settings.layers.length;
-  const onMap = active && !!haveMapLayers;
+  const haveMapLayers = settings && settings.layers && !!settings.layers.length;
+  const onMap = active && haveMapLayers;
 
   // selector data
   const activeIndicator =
@@ -75,7 +75,9 @@ const mapStateToProps = (
     isMetaLoading,
     isGeostoreLoading,
     highlightColor,
+    options,
     onMap,
+    haveMapLayers,
     whitelist: location.payload.region
       ? whitelists.regionWhitelist
       : whitelists.countryWhitelist,
