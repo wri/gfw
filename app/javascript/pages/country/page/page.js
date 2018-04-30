@@ -54,6 +54,7 @@ const mapStateToProps = ({
       ? regionWhitelist
       : countryWhitelist
   };
+  const filteredWidgets = filterWidgets(widgetData);
 
   return {
     showMapMobile: map.showMapMobile,
@@ -66,13 +67,15 @@ const mapStateToProps = ({
     locationNames,
     currentLocation:
       locationNames[adminLevel] && locationNames[adminLevel].label,
-    widgets: filterWidgets(widgetData),
+    widgets: filteredWidgets,
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
     loading:
       countryWhitelistLoading ||
       regionWhitelistLoading ||
       waterBodiesWhitelistLoading,
-    activeWidget: widgets[activeWidget]
+    activeWidget:
+      widgets[activeWidget] ||
+      (filteredWidgets.length > 0 && filteredWidgets[0])
   };
 };
 

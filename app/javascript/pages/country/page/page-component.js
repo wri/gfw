@@ -75,15 +75,12 @@ class Page extends PureComponent {
               currentLocation &&
               widgets &&
               widgets.length > 0 &&
-              widgets.map((widget, index) => (
+              widgets.map(widget => (
                 <Widget
                   key={widget.name}
                   widget={widget.name}
                   locationNames={locationNames}
-                  active={
-                    (activeWidget && activeWidget.name === widget.name) ||
-                    !index
-                  }
+                  active={activeWidget && activeWidget.name === widget.name}
                 />
               ))}
             {!loading &&
@@ -128,10 +125,7 @@ class Page extends PureComponent {
                 }}
                 areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
-                parentSettings={
-                  (activeWidget && activeWidget.settings) ||
-                  (widgets.length > 0 && widgets[0].settings)
-                }
+                parentSettings={activeWidget && activeWidget.settings}
               />
             </div>
           </Sticky>
