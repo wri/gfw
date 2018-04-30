@@ -17,7 +17,7 @@ const MIN_YEAR = 2015;
 const getAlerts = state => (state.data && state.data.alerts) || null;
 const getLatestDates = state => (state.data && state.data.latest) || null;
 const getColors = state => state.colors || null;
-const getActiveData = state => state.activeData || null;
+const getActiveData = state => state.settings.activeData || null;
 const getWeeks = state => (state.settings && state.settings.weeks) || null;
 const getSentences = state => state.config.sentences || null;
 
@@ -166,15 +166,14 @@ export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
 });
 
 export const parseConfig = createSelector(
-  [getColors, parseData],
-  (colors, data) => {
-    if (!data) return null;
-    const lastDate = data[data.length - 1].date;
+  [getColors, getLatestDates],
+  (colors, latest) => {
+    if (!latest) return null;
     const ticks = [];
     while (ticks.length < 12) {
       ticks.push(
         parseInt(
-          moment(lastDate)
+          moment(latest)
             .subtract(ticks.length, 'months')
             .format('Mo'),
           10

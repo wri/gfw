@@ -23,7 +23,3 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
       console.info(error);
     });
 };
-
-export default {
-  getData
-};
