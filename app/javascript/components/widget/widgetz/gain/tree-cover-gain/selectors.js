@@ -7,11 +7,12 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.location || null;
-const getLocationsMeta = state => state.meta || null;
+const getLocation = state => state.payload || null;
+const getLocationsMeta = state => state.countries || null;
 const getColors = state => state.colors || null;
-const getIndicator = state => state.indicator || null;
+const getIndicator = state => state.activeIndicator || null;
 const getLocationNames = state => state.locationNames || null;
+const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -28,7 +29,7 @@ export const getSortedData = createSelector(
   }
 );
 
-export const getFilteredData = createSelector(
+export const parseData = createSelector(
   [
     getSortedData,
     getSettings,
@@ -77,31 +78,37 @@ export const getFilteredData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getSortedData, getSettings, getIndicator, getLocationNames],
-  (data, settings, indicator, locationNames) => {
+  [getSortedData, getSettings, getIndicator, getLocationNames, getSentences],
+  (data, settings, indicator, locationNames, sentences) => {
     if (!data || !data.length || !locationNames) return null;
+    const {
+      initial,
+      withGain,
+      withIndicator,
+      withGainAndIndicator
+    } = sentences;
     const locationData =
       locationNames.current &&
       data.find(l => l.id === locationNames.current.value);
-    const regionPhrase =
-      indicator && indicator.value === 'gadm28'
-        ? '<span>region-wide</span>'
-        : `in <span>${indicator && indicator.label.toLowerCase()}</span>`;
-    const areaPercent =
-      (locationData && format('.1f')(locationData.percentage)) || 0;
     const gain = locationData && locationData.gain;
-    const firstSentence = `From 2001 to 2012, <span>${locationNames.current &&
-      locationNames.current.label}</span> gained <strong>${
-      gain ? format('.3s')(gain) : '0'
-    }ha</strong> of tree cover ${regionPhrase}`;
-    const secondSentence = gain
-      ? `, equivalent to a <strong>${
-        areaPercent
-      }%</strong> increase relative to <b>${
-        settings.extentYear
-      }</b> tree cover extent.`
-      : '.';
+    const areaPercent = (locationData && locationData.percentage) || 0;
 
-    return `${firstSentence}${secondSentence}`;
+    const params = {
+      location: locationNames.current && locationNames.current.label,
+      gain: `${format('.3s')(gain)}ha`,
+      region: indicator.value !== 'gadm28' ? indicator.label : 'region-wide',
+      percentage: `${format('.1f')(areaPercent)}%`,
+      extentYear: settings.extentYear
+    };
+
+    let sentence = gain ? withGain : initial;
+    if (indicator) {
+      sentence = gain ? withGainAndIndicator : withIndicator;
+    }
+
+    return {
+      sentence,
+      params
+    };
   }
 );
