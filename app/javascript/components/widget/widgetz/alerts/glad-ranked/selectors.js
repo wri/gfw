@@ -7,15 +7,15 @@ import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 
 // get list data
-const getData = state => state.data.alerts || null;
-const getLatestDates = state => state.latest || null;
-const getExtent = state => state.extent || null;
+const getData = state => (state.data && state.data.alerts) || null;
+const getLatestDates = state => (state.data && state.data.latest) || null;
+const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.activeIndicator || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
-  (!state.region ? state.regions : state.subRegions) || null;
+  (!state.payload.region ? state.regions : state.subRegions) || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
@@ -40,16 +40,15 @@ export const parseData = createSelector(
       .year();
     const alertsByDate = data.filter(d =>
       moment()
-        .year(d.year)
         .week(d.week)
+        .year(d.year)
         .isAfter(
           moment()
-            .year(latestYear)
             .week(latestWeek)
+            .year(latestYear)
             .subtract(settings.weeks, 'weeks')
         )
     );
-
     const groupedAlerts = groupBy(
       alertsByDate,
       location.region ? 'adm2' : 'adm1'

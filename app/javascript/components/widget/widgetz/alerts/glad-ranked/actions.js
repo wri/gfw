@@ -1,28 +1,28 @@
-import { fetchGladIntersectionAlerts } from 'services/alerts';
+import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
 import { getMultiRegionExtent } from 'services/forest-data';
-import moment from 'moment';
 import axios from 'axios';
 
 export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   axios
     .all([
       fetchGladIntersectionAlerts({ ...params }),
+      fetchGLADLatest(),
       getMultiRegionExtent({ ...params })
     ])
     .then(
-      axios.spread((alerts, extent) => {
+      axios.spread((alerts, latest, extent) => {
         const { data } = alerts.data;
+        const latestData = latest.data.data;
         const areas = extent.data.data;
-        const alertsByDate =
-          data &&
-          data.filter(d =>
-            moment(new Date(d.date)).isAfter(moment.utc().subtract(53, 'weeks'))
-          );
         dispatch(
           setWidgetData({
             data:
-              alertsByDate && extent
-                ? { alerts: alertsByDate, extent: areas }
+              data && extent && latest
+                ? {
+                  alerts: data,
+                  extent: areas,
+                  latest: latestData[0].attributes.date
+                }
                 : {},
             widget
           })

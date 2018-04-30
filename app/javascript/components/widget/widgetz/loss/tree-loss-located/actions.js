@@ -8,19 +8,19 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
     .then(
       axios.spread((getLocationsResponse, getLocationsLossResponse) => {
         const extentData = getLocationsResponse.data.data;
-        const extentMappedData = {};
+        let extentMappedData = {};
         if (extentData && extentData.length) {
-          extentMappedData.regions = extentData.map(d => ({
+          extentMappedData = extentData.map(d => ({
             id: d.region,
             extent: d.extent || 0,
             percentage: d.extent ? d.extent / d.total * 100 : 0
           }));
         }
         const lossData = getLocationsLossResponse.data.data;
-        const lossMappedData = {};
+        let lossMappedData = {};
         if (lossData && lossData.length) {
           const lossByRegion = groupBy(lossData, 'region');
-          lossMappedData.regions = Object.keys(lossByRegion).map(d => {
+          lossMappedData = Object.keys(lossByRegion).map(d => {
             const regionLoss = lossByRegion[d];
             return {
               id: parseInt(d, 10),
@@ -28,11 +28,12 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
             };
           });
         }
+
         dispatch(
           setWidgetData({
             data: {
-              loss: lossMappedData.regions,
-              extent: extentMappedData.regions
+              loss: lossMappedData,
+              extent: extentMappedData
             },
             widget
           })

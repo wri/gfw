@@ -1,13 +1,9 @@
-import Component from 'components/widget/components/widget-numbered-list';
-import { getData } from './actions';
-import { parseData, getSentence, parseConfig } from './selectors';
+import * as Widget from '../glad-ranked';
 import { initialState } from './initial-state';
 
-export {
-  getData,
-  parseData,
-  getSentence,
-  Component,
-  initialState,
-  parseConfig
-};
+const Component = Widget.Component;
+const parseData = Widget.parseData;
+const getData = Widget.getData;
+const getSentence = Widget.getSentence;
+
+export { Component, parseData, getData, getSentence, initialState };

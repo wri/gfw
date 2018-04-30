@@ -1,9 +1,13 @@
-import * as Widget from '../glad-biodiversity';
+import Component from 'components/widget/components/widget-numbered-list';
+import { getData } from './actions';
+import { parseData, getSentence, parseConfig } from './selectors';
 import { initialState } from './initial-state';
 
-const Component = Widget.Component;
-const parseData = Widget.parseData;
-const getData = Widget.getData;
-const getSentence = Widget.getSentence;
-
-export { Component, parseData, getData, getSentence, initialState };
+export {
+  getData,
+  parseData,
+  getSentence,
+  Component,
+  initialState,
+  parseConfig
+};

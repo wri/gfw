@@ -6,14 +6,14 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getLoss = state => state.data.loss || null;
-const getExtent = state => state.data.extent || null;
+const getLoss = state => (state.data && state.data.loss) || null;
+const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getActiveIndicator = state => state.activeIndicator;
-const getLocation = state => state.location || null;
+const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
-  (!state.region ? state.regions : state.subRegions) || null;
+  (state.payload.region ? state.subRegions : state.regions) || null;
 const getLocationNames = state => state.locationNames || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -21,7 +21,7 @@ const getSentences = state => state.config && state.config.sentences;
 export const mapData = createSelector(
   [getLoss, getExtent, getSettings, getLocation, getLocationsMeta],
   (data, extent, settings, location, meta) => {
-    if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
+    if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
     const mappedData = data.map(d => {
       const region = meta.find(l => d.id === l.value);
