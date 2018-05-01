@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import upperFirst from 'lodash/upperFirst';
 import Sticky from 'react-stickynode';
-import { SCREEN_M } from 'utils/constants';
+import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
@@ -133,7 +133,10 @@ class Page extends PureComponent {
         {!isGeostoreLoading && (
           <MapControls
             className="map-controls"
-            stickyOptions={{ enabled: true, top: 15 }}
+            stickyOptions={{
+              enabled: true,
+              top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
+            }}
             handleZoomIn={() => setMapZoom({ value: 1, sum: true })}
             handleZoomOut={() => setMapZoom({ value: -1, sum: true })}
           />
