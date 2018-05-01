@@ -1,10 +1,8 @@
 export const initialState = {
   countryWhitelistLoading: false,
   regionWhitelistLoading: false,
-  waterBodiesWhitelistLoading: true,
   countryWhitelist: {},
-  regionWhitelist: {},
-  waterBodiesWhitelist: {}
+  regionWhitelist: {}
 };
 
 const setCountryWhitelistLoading = (state, { payload }) => ({
@@ -15,11 +13,6 @@ const setCountryWhitelistLoading = (state, { payload }) => ({
 const setRegionWhitelistLoading = (state, { payload }) => ({
   ...state,
   regionWhitelistLoading: payload
-});
-
-const setWaterBodiesWhitelistLoading = (state, { payload }) => ({
-  ...state,
-  waterBodiesWhitelistLoading: payload
 });
 
 const setCountryWhitelist = (state, { payload }) => ({
@@ -34,17 +27,9 @@ const setRegionWhitelist = (state, { payload }) => ({
   regionWhitelist: payload
 });
 
-const setWaterBodiesWhitelist = (state, { payload }) => ({
-  ...state,
-  waterBodiesWhitelistLoading: false,
-  waterBodiesWhitelist: payload
-});
-
 export default {
   setCountryWhitelistLoading,
   setRegionWhitelistLoading,
-  setWaterBodiesWhitelistLoading,
   setCountryWhitelist,
-  setRegionWhitelist,
-  setWaterBodiesWhitelist
+  setRegionWhitelist
 };

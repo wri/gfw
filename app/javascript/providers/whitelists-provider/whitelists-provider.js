@@ -9,19 +9,13 @@ const mapStateToProps = state => ({
   location: state.location.payload
 });
 
-class CountryDataProvider extends PureComponent {
+class WhitelistProvider extends PureComponent {
   componentWillMount() {
-    const {
-      location,
-      getCountryWhitelist,
-      getRegionWhitelist,
-      getWaterBodiesWhitelist
-    } = this.props;
+    const { location, getCountryWhitelist, getRegionWhitelist } = this.props;
     getCountryWhitelist(location.country);
     if (location.region) {
       getRegionWhitelist(location.country, location.region, location.subRegion);
     }
-    getWaterBodiesWhitelist();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,12 +39,11 @@ class CountryDataProvider extends PureComponent {
   }
 }
 
-CountryDataProvider.propTypes = {
+WhitelistProvider.propTypes = {
   location: PropTypes.object.isRequired,
   getCountryWhitelist: PropTypes.func.isRequired,
-  getRegionWhitelist: PropTypes.func.isRequired,
-  getWaterBodiesWhitelist: PropTypes.func.isRequired
+  getRegionWhitelist: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
-export default connect(mapStateToProps, actions)(CountryDataProvider);
+export default connect(mapStateToProps, actions)(WhitelistProvider);

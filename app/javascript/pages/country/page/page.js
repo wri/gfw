@@ -3,7 +3,6 @@ import replace from 'lodash/replace';
 
 import {
   getActiveAdmin,
-  getAdminsOptions,
   getAdminsSelected
 } from 'components/widget/widget-selectors';
 import CATEGORIES from 'data/categories.json';
@@ -25,18 +24,15 @@ const mapStateToProps = ({
   const {
     countryWhitelist,
     regionWhitelist,
-    waterBodiesWhitelist,
     countryWhitelistLoading,
-    regionWhitelistLoading,
-    waterBodiesWhitelistLoading
+    regionWhitelistLoading
   } = whitelists;
   const adminData = {
     ...countryData,
-    ...location,
-    waterBodies: waterBodiesWhitelist
+    ...location
   };
-  const locationOptions = getAdminsOptions(adminData);
   const locationNames = getAdminsSelected(adminData);
+  const locationOptions = { ...countryData };
   const adminLevel = getActiveAdmin(adminData);
   const widgetHash =
     window.location.hash && replace(window.location.hash, '#', '');
@@ -45,7 +41,7 @@ const mapStateToProps = ({
     replace(window.location.hash, '#', '') ||
     (location.query && location.query.widget);
   const widgetData = {
-    faoCountries: countryData.faoCountries,
+    ...countryData,
     category,
     adminLevel,
     ...location,
@@ -63,16 +59,14 @@ const mapStateToProps = ({
     category,
     ...location,
     widgetAnchor,
-    locationOptions,
+    ...countryData,
     locationNames,
+    locationOptions,
     currentLocation:
       locationNames[adminLevel] && locationNames[adminLevel].label,
     widgets: filteredWidgets,
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
-    loading:
-      countryWhitelistLoading ||
-      regionWhitelistLoading ||
-      waterBodiesWhitelistLoading,
+    loading: countryWhitelistLoading || regionWhitelistLoading,
     activeWidget:
       widgets[activeWidget] || (filteredWidgets && filteredWidgets[0])
   };

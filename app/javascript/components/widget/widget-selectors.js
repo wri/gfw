@@ -24,7 +24,6 @@ const getData = state => state.data || null;
 const getStartYear = state => state.startYear || null;
 const getEndYear = state => state.endYear || null;
 const getConfig = state => state.config || null;
-const getWaterBodies = state => state.waterBodies || null;
 const getLocationWhitelist = state =>
   (state.payload.region ? state.regionWhitelist : state.countryWhitelist);
 
@@ -49,50 +48,17 @@ export const getActiveIndicator = indicator =>
   INDICATORS.find(i => i.value === indicator);
 
 // get lists selected
-export const getAdminsOptions = createSelector(
-  [getAdmins, getCountries, getRegions, getSubRegions, getWaterBodies],
-  (location, countries, regions, subRegions, waterBodies) => {
-    const activeWaterBodies =
-      waterBodies &&
-      waterBodies[location.country] &&
-      waterBodies[location.country].filter(
-        w => w.adm1 === parseInt(location.region, 10)
-      );
-    const waterBodiesIds =
-      activeWaterBodies && activeWaterBodies.map(w => w.adm2);
-
-    return {
-      countries:
-        (countries &&
-          sortByKey(countries.filter(c => c.value !== 'XCA'), 'label')) ||
-        null,
-      regions: regions && sortByKey(regions, 'label'),
-      subRegions:
-        subRegions &&
-        sortByKey(
-          waterBodiesIds
-            ? subRegions.filter(s => waterBodiesIds.indexOf(s.value) === -1)
-            : subRegions,
-          'label'
-        )
-    };
-  }
-);
-
 export const getAdminsSelected = createSelector(
-  [getAdminsOptions, getAdmins],
-  (options, adminsSelected) => {
+  [getCountries, getRegions, getSubRegions, getAdmins],
+  (countries, regions, subRegions, adminsSelected) => {
     const country =
-      (options.countries &&
-        options.countries.find(i => i.value === adminsSelected.country)) ||
+      (countries && countries.find(i => i.value === adminsSelected.country)) ||
       null;
     const region =
-      (options.regions &&
-        options.regions.find(i => i.value === adminsSelected.region)) ||
-      null;
+      (regions && regions.find(i => i.value === adminsSelected.region)) || null;
     const subRegion =
-      (options.subRegions &&
-        options.subRegions.find(i => i.value === adminsSelected.subRegion)) ||
+      (subRegions &&
+        subRegions.find(i => i.value === adminsSelected.subRegion)) ||
       null;
     let current = country;
     if (adminsSelected.subRegion) {
