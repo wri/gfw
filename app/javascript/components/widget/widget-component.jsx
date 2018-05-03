@@ -17,7 +17,7 @@ class Widget extends PureComponent {
     const {
       widget,
       locationNames,
-      location,
+      payload,
       settings,
       config,
       embed,
@@ -87,9 +87,9 @@ class Widget extends PureComponent {
               <Button
                 className="embed-btn"
                 extLink={`http://globalforestwatch.org/country/${
-                  location.country
-                }${location.region ? `/${location.region}` : ''}${
-                  location.subRegion ? `/${location.subRegion}` : ''
+                  payload.country
+                }${payload.region ? `/${payload.region}` : ''}${
+                  payload.subRegion ? `/${payload.subRegion}` : ''
                 }?widget=${widget}${
                   query && query[widget] ? `&${widget}=${query[widget]}` : ''
                 }#${widget}`}
@@ -112,7 +112,7 @@ Widget.propTypes = {
   onMap: PropTypes.bool,
   highlightColor: PropTypes.string,
   locationNames: PropTypes.object,
-  location: PropTypes.object,
+  payload: PropTypes.object,
   query: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,

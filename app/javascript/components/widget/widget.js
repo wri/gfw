@@ -12,13 +12,14 @@ import reducers, { initialState } from './widget-reducers';
 import {
   getOptions,
   getActiveIndicator,
-  getActiveAdmin
+  getActiveAdmin,
+  getAdminsSelected
 } from './widget-selectors';
 import * as Widgets from './widget-manifest';
 
 const mapStateToProps = (
   { location, countryData, whitelists, widgets },
-  { widget, locationNames, active }
+  { widget, active }
 ) => {
   // widget consts
   const { config, settings } = widgets[widget];
@@ -33,6 +34,7 @@ const mapStateToProps = (
   const activeIndicator =
     settings && settings.indicator && getActiveIndicator(settings.indicator);
   const activeLocation = getActiveAdmin({ ...location });
+  const locationNames = getAdminsSelected({ ...countryData, ...location });
   const selectorData = {
     ...widgets[widget],
     ...location,
