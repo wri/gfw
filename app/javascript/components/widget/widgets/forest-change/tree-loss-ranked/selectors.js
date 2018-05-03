@@ -120,9 +120,12 @@ export const getSentence = createSelector(
     const locationData =
       locationNames.current &&
       data.find(l => l.id === locationNames.current.value);
+    const loss = locationData && locationData.loss;
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
-    const loss = locationData && locationData.loss;
+    const globalPercent =
+      loss && locationData ? 100 * loss / sumBy(data, 'loss') : 0;
+    const locationName = locationNames.current && locationNames.current.label;
     const sentence =
       indicator && indicator.value === 'gadm28' ? initial : withIndicator;
     const params = {
@@ -130,11 +133,14 @@ export const getSentence = createSelector(
         indicator && indicator.value === 'gadm28'
           ? 'region-wide'
           : `${indicator && indicator.label.toLowerCase()}`,
-      location: locationNames.current && locationNames.current.label,
+      location: locationName,
+      location_alt: locationName,
       startYear,
       endYear,
       loss: loss ? `${format('.3s')(loss)}ha` : '0ha',
-      percent: `${areaPercent}%`,
+      percent: areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
+      globalPercent:
+        globalPercent >= 0.1 ? `${format('.1f')(globalPercent)}%` : '<0.1%',
       extentYear: settings.extentYear
     };
 

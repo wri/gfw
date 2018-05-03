@@ -42,9 +42,9 @@ export const initialState = {
     },
     sentences: {
       initial:
-        'Between {startYear} and {endYear}, {location} lost {loss} of tree cover {indicator}, equivalent to a {percent} loss relative to {extentYear} tree cover extent.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover {indicator}, equivalent to a {percent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
       withIndicator:
-        'Between {startYear} and {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} loss relative to {extentYear} tree cover extent.'
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {globalPercent} of global tree cover gain within {location_alt}.'
     }
   },
   settings: {

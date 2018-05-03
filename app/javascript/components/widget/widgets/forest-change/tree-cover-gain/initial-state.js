@@ -25,9 +25,9 @@ export default {
     },
     sentences: {
       initial:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} since {extentYear} and {percentage} of global tree cover gain.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain.',
       withIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} since {extentYear}. This represents {percentage} of global tree cover gain within {indicator_alt}.'
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercentage} of global tree cover gain within {indicator_alt}.'
     }
   },
   settings: {

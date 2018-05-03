@@ -89,7 +89,8 @@ export const getSentence = createSelector(
       locationNames.current &&
       data.find(l => l.id === locationNames.current.value);
     const gain = locationData && locationData.gain;
-    const areaPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
+    const globalPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
+    const areaPercent = (locationData && locationData.percentage) || 0;
     const indicatorName =
       indicator.value !== 'gadm28' ? indicator.label : 'region-wide';
 
@@ -98,8 +99,9 @@ export const getSentence = createSelector(
       gain: `${format('.3s')(gain)}ha`,
       indicator: indicatorName.toLowerCase(),
       indicator_alt: indicatorName.toLowerCase(),
-      percentage:
-        areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
+      percent: areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
+      globalPercent:
+        globalPercent >= 0.1 ? `${format('.1f')(globalPercent)}%` : '<0.1%',
       extentYear: settings.extentYear
     };
 
