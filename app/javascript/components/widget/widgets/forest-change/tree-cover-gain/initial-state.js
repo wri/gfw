@@ -5,11 +5,12 @@ export default {
     indicators: [
       'gadm28',
       'wdpa',
-      'primary_forest',
       'plantations',
-      'ifl_2013',
       'landmark',
-      'mining'
+      'mining',
+      'kba',
+      'aze',
+      'tcl'
     ],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
@@ -35,7 +36,7 @@ export default {
   },
   settings: {
     indicator: 'gadm28',
-    threshold: 30,
+    threshold: 50,
     unit: 'ha',
     extentYear: 2010,
     layers: ['forestgain']
