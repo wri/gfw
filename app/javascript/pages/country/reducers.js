@@ -37,6 +37,7 @@ import * as widgetForestryEmploymentComponent from 'components/widget/widgets/wi
 import * as widgetEconomicImpactComponent from 'components/widget/widgets/widget-economic-impact';
 
 // Providers
+import * as cacheProviderComponent from 'providers/cache-provider';
 import * as countryDataProviderComponent from 'providers/country-data-provider';
 import * as whitelistsProviderComponent from 'providers/whitelists-provider';
 
@@ -79,6 +80,7 @@ const componentsReducers = {
 
 // Provider Reducers
 const providersReducers = {
+  cache: handleActions(cacheProviderComponent),
   countryData: handleActions(countryDataProviderComponent),
   whitelists: handleActions(whitelistsProviderComponent)
 };
