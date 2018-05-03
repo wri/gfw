@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import upperFirst from 'lodash/upperFirst';
 import Sticky from 'react-stickynode';
 import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 
@@ -10,13 +9,11 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import Meta from 'pages/country/meta';
 import Header from 'pages/country/header';
 
-import Widget from 'components/widget';
+import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
 import Map from 'components/map';
 import MapControls from 'components/map/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';
-import NoContent from 'components/ui/no-content';
-import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
@@ -32,13 +29,9 @@ class Page extends PureComponent {
       setShowMapMobile,
       links,
       isGeostoreLoading,
-      widgets,
       location,
-      currentLocation,
       locationOptions,
       locationNames,
-      category,
-      loading,
       widgetAnchor,
       activeWidget,
       locationGeoJson,
@@ -69,34 +62,7 @@ class Page extends PureComponent {
             links={links}
             checkActive
           />
-          <div className="widgets">
-            {loading && <Loader className="widgets-loader large" />}
-            {!loading &&
-              currentLocation &&
-              widgets &&
-              widgets.length > 0 &&
-              widgets.map(widget => (
-                <Widget
-                  key={widget.name}
-                  widget={widget.name}
-                  active={activeWidget && activeWidget.name === widget.name}
-                />
-              ))}
-            {!loading &&
-              (!currentLocation || (!widgets || widgets.length === 0)) && (
-                <NoContent
-                  className="no-widgets-message large"
-                  message={
-                    currentLocation
-                      ? `${upperFirst(category)} data for ${
-                        currentLocation
-                      } coming soon`
-                      : 'Please select a country'
-                  }
-                  icon
-                />
-              )}
-          </div>
+          <Widgets />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Sticky
@@ -162,11 +128,7 @@ Page.propTypes = {
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
-  widgets: PropTypes.array,
   location: PropTypes.object,
-  loading: PropTypes.bool,
-  currentLocation: PropTypes.string,
-  category: PropTypes.string,
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

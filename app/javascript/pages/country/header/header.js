@@ -6,7 +6,6 @@ import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
-import * as WIDGETS from 'components/widget/widget-manifest';
 import { biomassToCO2 } from 'utils/calculations';
 import { deburrUpper } from 'utils/data';
 
@@ -17,7 +16,7 @@ import HeaderComponent from './header-component';
 
 const actions = { ...ownActions, ...shareActions };
 
-const mapStateToProps = ({ countryData, location, header }) => {
+const mapStateToProps = ({ countryData, location, header, widgets }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -46,19 +45,20 @@ const mapStateToProps = ({ countryData, location, header }) => {
     shareData: {
       title: 'Share this Dashboard',
       shareUrl: `${window.location.href}`
-    }
+    },
+    widgets
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { query } = ownProps;
+  const { query, widgets } = ownProps;
   const widgetQueries = {};
   if (query) {
     Object.keys(query).forEach(key => {
-      if (Object.keys(WIDGETS).indexOf(key) > -1) {
+      if (Object.keys(widgets).indexOf(key) > -1) {
         widgetQueries[key] = encodeStateForUrl({
           ...decodeUrlForState(query[key]),
-          indicator: WIDGETS[key].initialState.settings.indicator
+          indicator: widgets[key].settings.indicator
         });
       }
     });
