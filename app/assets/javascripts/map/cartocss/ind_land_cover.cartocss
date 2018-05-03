@@ -1,0 +1,95 @@
+/** simple visualization */
+
+#idn_land_cover{
+  polygon-opacity: 0.7;
+  polygon-fill:#FF0000;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 0.0;
+
+  // primary forest
+  [keterangan='Hutan Lahan Kering Primer']{
+  	polygon-fill:#82B17A;
+  }
+  // secondary forest
+  [keterangan='Hutan Lahan Kering Sekunder']{
+    polygon-fill:#DCFDC4;
+  }
+
+  // secondary swamp forest
+  [keterangan='Hutan Rawa Sekunder']{
+    polygon-fill:#DCFDC4;
+  }
+  //primary mangrove forest
+  [keterangan='Hutan Mangrove Primer']{
+  	polygon-fill:#829D04;
+  }
+  //secondary mangrove forest
+  [keterangan='Hutan Mangrove Sekunder']{
+  	polygon-fill:#B99D04;
+  }
+  //Industry
+  [keterangan='Hutan Tanaman Industri ( HTI )']{
+  	polygon-fill:#D9AA3B;
+  }
+  // Dryland farming - agriculture
+  [keterangan='Pertanian Lahan Kering']{
+  	polygon-fill:#D9AA3B;
+  }
+  // Dryland farm - mixed
+  [keterangan='Pertanian Lahan Kering Campur']{
+  	polygon-fill:#D9AA3B;
+  }
+  // Rice farming - mixed
+  [keterangan='Sawah']{
+  	polygon-fill:#D9AA3B;
+  }
+  //Plantation
+  [keterangan='Perkebunan']{
+  	polygon-fill:#9F6BC8;
+  }
+  //Forest Plantation
+  [keterangan='Hutan Tanaman']{
+  	polygon-fill:#84704B;
+  }
+  //Grassland
+  [keterangan='Savana']{
+  	polygon-fill:#FFFEC5;
+  }
+  //Shrub
+  [keterangan='Belukar']{
+   	polygon-fill:#FFFEC5;
+  }
+  //Swamps
+  [keterangan='Belukar Rawa']{
+  	polygon-fill:#7199A6;
+  }
+  //primary swamp forest
+  [keterangan='Hutan Rawa Primer']{
+  	polygon-fill:#7199A6;
+  }
+  //Swamp
+  [keterangan='Rawa']{
+  	polygon-fill:#7199A6;
+  }
+  //bare ground
+  [keterangan='Tanah Terbuka']{
+  	polygon-fill:#D3CE6D;
+  }
+  //Settlement
+  [keterangan='Pemukiman']{
+  	polygon-fill:#F3B9CB;
+  }
+  //mining
+  [keterangan='Pertambangan']{
+  	polygon-fill:#000000;
+  }
+  //Fish pond
+  [keterangan='Tambak']{
+  	polygon-fill:#C6E7FD;
+  }
+  //water-body
+  [keterangan='Badan Air']{
+  	polygon-fill:#80B2F9;
+  }
+}
