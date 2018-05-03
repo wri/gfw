@@ -16,7 +16,7 @@ const actions = {
 
 const mapStateToProps = (
   { location, modalMeta },
-  { locationNames, widget, title, config, whitelist }
+  { currentLocation, widget, title, config, whitelist }
 ) => {
   const locationUrl = `${location.payload.country}${
     location.payload.region ? `/${location.payload.region}` : ''
@@ -43,16 +43,13 @@ const mapStateToProps = (
     widgetMetaKey,
     modalOpen: modalMeta.open,
     modalClosing: modalMeta.closing,
-    citation: `Global Forest Watch. “${title} in ${locationNames &&
-      locationNames.current &&
-      locationNames.current.label}”. Accessed on ${moment().format(
+    citation: `Global Forest Watch. “${title} in ${currentLocation &&
+      currentLocation.label}”. Accessed on ${moment().format(
       'MMMM Do YYYY'
     )} from www.globalforestwatch.org.`,
     shareData: {
       title: 'Share this widget',
-      subtitle: `${title} in ${
-        locationNames.current ? locationNames.current.label : ''
-      }`,
+      subtitle: `${title} in ${currentLocation ? currentLocation.label : ''}`,
       shareUrl: `http://${window.location.host}/country/${locationUrl}?${
         location.query && location.query.category
           ? `category=${location.query.category}&`
@@ -67,9 +64,7 @@ const mapStateToProps = (
         config.size === 'small'
           ? { width: 315, height: 460 }
           : { width: 670, height: 490 },
-      socialText: `${title} in ${
-        locationNames.current ? locationNames.current.label : ''
-      }`
+      socialText: `${title} in ${currentLocation ? currentLocation.label : ''}`
     }
   };
 };

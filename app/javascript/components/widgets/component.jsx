@@ -16,14 +16,14 @@ class Widgets extends PureComponent {
       widgets,
       activeWidget,
       category,
-      WidgetsFuncs
+      WidgetsFuncs,
+      colors
     } = this.props;
 
     return (
       <div className="c-widgets">
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
-          currentLocation &&
           widgets &&
           widgets.length > 0 &&
           widgets.map(widget => (
@@ -31,8 +31,11 @@ class Widgets extends PureComponent {
               {...this.props}
               key={widget.name}
               widget={widget.name}
-              active={activeWidget && activeWidget.name === widget.name}
+              active={activeWidget && activeWidget === widget.name}
               {...WidgetsFuncs[widget.name]}
+              colors={
+                colors[widget.config.colors || widget.config.type] || colors
+              }
             />
           ))}
         {!loading &&
@@ -42,7 +45,7 @@ class Widgets extends PureComponent {
               message={
                 currentLocation
                   ? `${upperFirst(category)} data for ${
-                    currentLocation
+                    currentLocation.label
                   } coming soon`
                   : 'Please select a country'
               }
@@ -56,11 +59,12 @@ class Widgets extends PureComponent {
 
 Widgets.propTypes = {
   loading: PropTypes.bool,
-  currentLocation: PropTypes.string,
+  currentLocation: PropTypes.object,
   widgets: PropTypes.array,
   activeWidget: PropTypes.string,
   category: PropTypes.string,
-  WidgetsFuncs: PropTypes.object
+  WidgetsFuncs: PropTypes.object,
+  colors: PropTypes.object
 };
 
 export default Widgets;

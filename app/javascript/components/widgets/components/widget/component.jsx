@@ -16,7 +16,7 @@ class Widget extends PureComponent {
   render() {
     const {
       widget,
-      locationNames,
+      currentLocation,
       payload,
       settings,
       config,
@@ -55,9 +55,7 @@ class Widget extends PureComponent {
             !error &&
             isEmpty(data) && (
               <NoContent
-                message={`No data in selection for ${locationNames &&
-                  locationNames.current &&
-                  locationNames.current.label}`}
+                message={`No data in selection for ${currentLocation}`}
               />
             )}
           {loading && <Loader />}
@@ -111,7 +109,7 @@ Widget.propTypes = {
   config: PropTypes.object,
   onMap: PropTypes.bool,
   highlightColor: PropTypes.string,
-  locationNames: PropTypes.object,
+  currentLocation: PropTypes.object,
   payload: PropTypes.object,
   query: PropTypes.object,
   embed: PropTypes.bool,

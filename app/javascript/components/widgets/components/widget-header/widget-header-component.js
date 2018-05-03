@@ -28,7 +28,7 @@ class WidgetHeader extends PureComponent {
       title,
       settings,
       options,
-      locationNames,
+      currentLocation,
       modalClosing,
       widget,
       location,
@@ -50,7 +50,7 @@ class WidgetHeader extends PureComponent {
     return (
       <div className="c-widget-header">
         <div className="title">{`${title} in ${
-          locationNames.current ? locationNames.current.label : ''
+          currentLocation ? currentLocation.label : ''
         }`}</div>
         <div className="options">
           {!embed &&
@@ -71,7 +71,7 @@ class WidgetHeader extends PureComponent {
                 trackingData={{
                   title: 'map-button',
                   widget: `${title} in ${
-                    locationNames.current ? locationNames.current.label : ''
+                    currentLocation ? currentLocation.label : ''
                   }`
                 }}
                 onClick={() => setShowMapMobile(true)}
@@ -130,7 +130,7 @@ class WidgetHeader extends PureComponent {
                   trackingData={{
                     event: 'open-settings',
                     label: `${title} in ${
-                      locationNames.current ? locationNames.current.label : ''
+                      currentLocation ? currentLocation.label : ''
                     }`
                   }}
                 >
@@ -188,7 +188,7 @@ WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   settings: PropTypes.object,
   options: PropTypes.object,
-  locationNames: PropTypes.object,
+  currentLocation: PropTypes.object,
   location: PropTypes.object,
   query: PropTypes.object,
   embed: PropTypes.bool,

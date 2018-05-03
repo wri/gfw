@@ -1,31 +1,35 @@
 import { connect } from 'react-redux';
 import replace from 'lodash/replace';
 
-import {
-  getActiveAdmin,
-  getAdminsSelected
-} from 'components/widgets/selectors';
 import CATEGORIES from 'data/categories.json';
 
 import mapActions from 'components/map/map-actions';
-import { getLinks } from './page-selectors';
+
+import { getLinks, getAdminsSelected } from './page-selectors';
 import Component from './page-component';
 
 const actions = { ...mapActions };
 
-const mapStateToProps = ({ countryData, whitelists, location, map }) => {
+const mapStateToProps = ({
+  countryData,
+  whitelists,
+  location,
+  map,
+  widgets
+}) => {
   const category = (location.query && location.query.category) || 'summary';
   const { countryWhitelistLoading, regionWhitelistLoading } = whitelists;
   const adminData = {
     ...countryData,
     ...location
   };
+  const { query } = location;
   const locationNames = getAdminsSelected(adminData);
   const locationOptions = { ...countryData };
-  const adminLevel = getActiveAdmin(adminData);
   const widgetHash =
     window.location.hash && replace(window.location.hash, '#', '');
   const widgetAnchor = document.getElementById(widgetHash);
+  const activeWidget = query && query.widget;
 
   return {
     showMapMobile: map.showMapMobile,
@@ -37,8 +41,9 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     ...countryData,
     locationNames,
     locationOptions,
+    activeWidget: widgets[activeWidget],
     currentLocation:
-      locationNames[adminLevel] && locationNames[adminLevel].label,
+      locationNames && locationNames.current && locationNames.current.label,
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
     loading: countryWhitelistLoading || regionWhitelistLoading
   };

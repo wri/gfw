@@ -10,7 +10,7 @@ const getData = state => state.data || null;
 const getOptions = state => state.options || null;
 const getConfig = state => state.config || null;
 const getSettings = state => state.settings || null;
-const getLocationNames = state => state.locationNames || null;
+const getLocation = state => state.payload || null;
 const getLocationWhitelist = state =>
   (state.payload.region ? state.regionWhitelist : state.countryWhitelist);
 
@@ -24,7 +24,7 @@ export const getOptionsSelectedMeta = createSelector(
       if (options[optionsKey]) {
         optionsMeta[o] = options[optionsKey].find(
           opt => opt.value === settings[o]
-        );
+        ).label;
       }
     });
     return optionsMeta;
@@ -33,13 +33,9 @@ export const getOptionsSelectedMeta = createSelector(
 
 // get options
 export const getIndicators = createSelector(
-  [getLocationWhitelist, getLocationNames, getConfig, getOptions],
-  (locationWhitelist, locationNames, config, options) => {
-    if (
-      isEmpty(locationNames) ||
-      !locationNames.current ||
-      isEmpty(locationWhitelist)
-    ) {
+  [getLocationWhitelist, getLocation, getConfig, getOptions],
+  (locationWhitelist, location, config, options) => {
+    if (isEmpty(location) || isEmpty(locationWhitelist)) {
       return null;
     }
     const whitelist = Object.keys(locationWhitelist);
@@ -60,9 +56,9 @@ export const getIndicators = createSelector(
           .map(item => {
             const indicator = item;
             if (indicator.metaKey === 'primary_forest') {
-              indicator.metaKey = `${lowerCase(locationNames.country.value)}_${
+              indicator.metaKey = `${lowerCase(location.country)}_${
                 indicator.metaKey
-              }${locationNames.country.value === 'IDN' ? 's' : ''}`;
+              }${location.country === 'IDN' ? 's' : ''}`;
             }
             return indicator;
           }),

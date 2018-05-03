@@ -9,10 +9,7 @@ import upperFirst from 'lodash/upperFirst';
 import Component from './component';
 import * as Selectors from './selectors';
 
-const mapStateToProps = (
-  { location, whitelists, widgets, countryData },
-  ownProps
-) => {
+const mapStateToProps = ({ location, whitelists, widgets }, ownProps) => {
   const {
     widget,
     colors,
@@ -22,6 +19,7 @@ const mapStateToProps = (
     parseConfig,
     getSentence
   } = ownProps;
+
   // widget consts
   const { config, settings } = widgets[widget];
   const highlightColor =
@@ -30,57 +28,31 @@ const mapStateToProps = (
   const onMap = active && haveMapLayers;
 
   // selector data
-  const selectorData = {
-    ...ownProps,
-    ...widgets[widget],
-    optionsSelected,
-    colors: colors[config.colors || config.type] || colors
-  };
   const optionsSelected =
     settings &&
     Selectors.getOptionsSelectedMeta({
       options,
       settings
     });
-  const parseSelectorData = {
-    ...selectorData,
-    optionsSelected
+  const selectorData = {
+    optionsSelected,
+    options,
+    ...ownProps,
+    ...widgets[widget]
   };
   const filteredOptions = {};
   if (config.selectors) {
     config.selectors.forEach(selector => {
       const selectorFunc = Selectors[`get${upperFirst(selector)}`];
-      if (selectorFunc) {
-        filteredOptions[selector] = selectorFunc(selectorData);
-      }
+      filteredOptions[selector] = selectorFunc
+        ? selectorFunc(selectorData)
+        : options[selector];
     });
   }
-
-  // loaders
-  const {
-    isCountriesLoading,
-    isRegionsLoading,
-    isSubRegionsLoading,
-    isGeostoreLoading
-  } = countryData;
-  const {
-    countryWhitelistLoading,
-    regionWhitelistLoading,
-    waterBodiesLoading
-  } = whitelists;
-  const isMetaLoading =
-    isCountriesLoading ||
-    isRegionsLoading ||
-    isSubRegionsLoading ||
-    countryWhitelistLoading ||
-    regionWhitelistLoading ||
-    waterBodiesLoading;
 
   return {
     ...selectorData,
     optionsSelected,
-    isMetaLoading,
-    isGeostoreLoading,
     highlightColor,
     options: filteredOptions,
     onMap,
@@ -88,9 +60,9 @@ const mapStateToProps = (
     whitelist: location.payload.region
       ? whitelists.regionWhitelist
       : whitelists.countryWhitelist,
-    parsedData: parseData && parseData(parseSelectorData),
-    parsedConfig: parseConfig && parseConfig(parseSelectorData),
-    sentence: getSentence && getSentence(parseSelectorData)
+    parsedData: parseData && parseData(selectorData),
+    parsedConfig: parseConfig && parseConfig(selectorData),
+    sentence: getSentence && getSentence(selectorData)
   };
 };
 

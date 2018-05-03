@@ -17,30 +17,11 @@ import weeks from 'data/weeks.json';
 import * as WIDGETS from 'components/widgets/manifest';
 
 // get list data
-const getCountries = state => state.countries || null;
-const getRegions = state => state.regions || null;
-const getSubRegions = state => state.subRegions || null;
+const getState = state => state || null;
 const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
-const getLocationOptions = state => {
-  const admin = getActiveAdmin(state.payload);
-  return state[admin === 'country' ? 'regions' : 'subRegions'];
-};
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 const getFAOCountries = state => state.faoCountries || null;
-
-// helper to get active key for location
-export const getActiveAdmin = location => {
-  if (location.subRegion) return 'subRegion';
-  if (location.region) return 'region';
-  return 'country';
-};
-
-export const getActiveAdmins = ({ region, subRegion }) => {
-  if (subRegion) return 'subRegions';
-  if (region) return 'regions';
-  return 'countries';
-};
 
 const options = {
   indicators,
@@ -52,6 +33,17 @@ const options = {
   weeks
 };
 
+export const getAdminLevel = createSelector([getLocation], location => {
+  if (location.subRegion) return 'subRegion';
+  if (location.region) return 'region';
+  return 'country';
+});
+
+export const getLocationOptions = createSelector(
+  [getAdminLevel, getState],
+  (admin, state) => state[admin === 'country' ? 'regions' : 'subRegions']
+);
+
 export const getOptions = () => {
   const optionsMeta = {};
   Object.keys(options).forEach(oKey => {
@@ -61,28 +53,14 @@ export const getOptions = () => {
 };
 
 // get lists selected
-export const getAdminsSelected = createSelector(
-  [getCountries, getRegions, getSubRegions, getLocation],
-  (countries, regions, subRegions, location) => {
-    const country =
-      (countries && countries.find(i => i.value === location.country)) || null;
-    const region =
-      (regions && regions.find(i => i.value === location.region)) || null;
-    const subRegion =
-      (subRegions && subRegions.find(i => i.value === location.subRegion)) ||
-      null;
-    let current = country;
-    if (location.subRegion) {
-      current = subRegion;
-    } else if (location.region) {
-      current = region;
-    }
-
+export const getAdminSelected = createSelector(
+  [getAdminLevel, getState, getLocation],
+  (admin, state, location) => {
+    if (isEmpty(state[admin])) return null;
+    const current = state[admin].find(i => i.value === location[admin]);
     return {
-      country,
-      region,
-      subRegion,
-      current
+      ...current,
+      admin
     };
   }
 );
@@ -107,10 +85,15 @@ export const filterWidgetsByCategory = createSelector(
 );
 
 export const checkWidgetNeedsLocations = createSelector(
-  [filterWidgetsByCategory, getLocationOptions, getFAOCountries, getLocation],
-  (widgets, locations, faoCountries, location) => {
+  [
+    filterWidgetsByCategory,
+    getLocationOptions,
+    getFAOCountries,
+    getLocation,
+    getAdminLevel
+  ],
+  (widgets, locations, faoCountries, location, adminLevel) => {
     if (isEmpty(locations)) return null;
-    const adminLevel = getActiveAdmin(location);
     const isFaoCountry =
       !!faoCountries.find(c => c.value === location.country) || null;
     return widgets.filter(

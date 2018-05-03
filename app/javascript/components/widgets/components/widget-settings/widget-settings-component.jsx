@@ -11,7 +11,7 @@ class WidgetSettings extends PureComponent {
       settings,
       config,
       loading,
-      locationNames,
+      currentLocation,
       onSettingsChange,
       widget,
       setModalMeta
@@ -34,8 +34,8 @@ class WidgetSettings extends PureComponent {
         {indicators && (
           <Dropdown
             theme="theme-select-light"
-            label={`REFINE LOCATION WITHIN ${locationNames.current &&
-              locationNames.current.label.toUpperCase()}`}
+            label={`REFINE LOCATION WITHIN ${currentLocation &&
+              currentLocation.label.toUpperCase()}`}
             value={settings.indicator}
             options={indicators}
             onChange={option =>
@@ -48,8 +48,8 @@ class WidgetSettings extends PureComponent {
             optionsAction={setModalMeta}
             optionsActionKey="metaKey"
             clearable={config.indicators[0] === 'gadm28'}
-            noSelectedValue={`All of ${locationNames &&
-              locationNames.current.label}`}
+            noSelectedValue={`All of ${currentLocation &&
+              currentLocation.label}`}
           />
         )}
         {types && (
@@ -213,7 +213,7 @@ WidgetSettings.propTypes = {
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,
-  locationNames: PropTypes.object,
+  currentLocation: PropTypes.object,
   options: PropTypes.object,
   onSettingsChange: PropTypes.func,
   widget: PropTypes.string,

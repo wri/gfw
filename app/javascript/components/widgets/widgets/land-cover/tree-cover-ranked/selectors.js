@@ -11,7 +11,7 @@ const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.region : state.countries) || null;
 const getColors = state => state.colors || null;
-const getIndicator = state => state.activeIndicator || null;
+const getIndicator = state => state.optionsSelected.indicator || null;
 const getLocationNames = state => state.locationNames || null;
 const getSentences = state => state.config.sentences || null;
 
