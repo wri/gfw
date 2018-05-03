@@ -57,10 +57,13 @@ export const getSentence = createSelector(
     const { initial, withIndicator } = sentences;
     const locationLabel =
       locationNames && locationNames.current && locationNames.current.label;
+    const percentCover = 100 * data.cover / data.totalArea;
     const params = {
       year: settings.extentYear,
       location: locationLabel,
       indicator: indicator.label,
+      percentage:
+        percentCover >= 0.1 ? `${format('.1f')(percentCover)}%` : '<0.1%',
       value: `${format('.3s')(data.cover)}ha`
     };
 

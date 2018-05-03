@@ -14,9 +14,10 @@ export default {
       landCover: 1
     },
     sentences: {
-      initial: 'As of {year}, {location} had {value} of tree cover.',
+      initial:
+        'As of {year}, {location} had {value} of tree cover, representing {percentage} of the total land area.',
       withIndicator:
-        'As of {year}, {indicator} in {location} had {value} of tree cover.'
+        'As of {year}, {location} had {percentage} tree cover was in {indicator}.'
     }
   },
   settings: {
