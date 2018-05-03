@@ -6,7 +6,7 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getLoss = state => (state.data && state.data.loss) || null;
+const getLoss = state => (state.data && state.data.lossByRegion) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;

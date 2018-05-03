@@ -41,7 +41,8 @@ const mapStateToProps = (
     activeIndicator,
     activeLocation,
     locationNames,
-    colors
+    colors,
+    widget
   };
   const options = getOptions(selectorData);
   const parseSelectorData = {

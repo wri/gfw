@@ -21,9 +21,8 @@ const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
 const getData = state => state.data || null;
-const getStartYear = state => state.startYear || null;
-const getEndYear = state => state.endYear || null;
 const getConfig = state => state.config || null;
+const getSettings = state => state.settings || null;
 const getLocationWhitelist = state =>
   (state.payload.region ? state.regionWhitelist : state.countryWhitelist);
 
@@ -136,11 +135,10 @@ export const getWeeks = createSelector([getConfig], config => {
 
 export const getRangeYears = createSelector(
   [getData, getConfig],
-  (rawData, config) => {
-    if (isEmpty(rawData) || !rawData.length) return null;
-    const data =
-      rawData.loss || (rawData.regions && rawData.regions[0].loss) || rawData;
-    return uniq(data.map(d => d.year))
+  (data, config) => {
+    if (isEmpty(data)) return null;
+    const yearsData = data.loss || data.lossByRegion[0].loss || data;
+    return uniq(yearsData.map(d => d.year))
       .filter(
         d =>
           !config.yearRange ||
@@ -154,17 +152,19 @@ export const getRangeYears = createSelector(
 );
 
 export const getStartYears = createSelector(
-  [getRangeYears, getEndYear],
-  (years, endYear) => {
-    if (isEmpty(years) || !endYear) return null;
+  [getRangeYears, getSettings],
+  (years, settings) => {
+    if (isEmpty(years)) return null;
+    const { endYear } = settings;
     return years.filter(y => y.value <= endYear);
   }
 );
 
 export const getEndYears = createSelector(
-  [getRangeYears, getStartYear],
-  (years, startYear) => {
-    if (isEmpty(years) || !startYear) return null;
+  [getRangeYears, getSettings],
+  (years, settings) => {
+    if (isEmpty(years)) return null;
+    const { startYear } = settings;
     return years.filter(y => y.value >= startYear);
   }
 );
