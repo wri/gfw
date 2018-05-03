@@ -125,16 +125,16 @@ export const getSentence = createSelector(
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const globalPercent =
       loss && locationData ? 100 * loss / sumBy(data, 'loss') : 0;
-    const locationName = locationNames.current && locationNames.current.label;
+    const indicatorName =
+      indicator && indicator.value === 'gadm28'
+        ? 'region-wide'
+        : `${indicator && indicator.label.toLowerCase()}`;
     const sentence =
       indicator && indicator.value === 'gadm28' ? initial : withIndicator;
     const params = {
-      indicator:
-        indicator && indicator.value === 'gadm28'
-          ? 'region-wide'
-          : `${indicator && indicator.label.toLowerCase()}`,
-      location: locationName,
-      location_alt: locationName,
+      indicator: indicatorName,
+      location: locationNames.current && locationNames.current.label,
+      indicator_alt: indicatorName,
       startYear,
       endYear,
       loss: loss ? `${format('.3s')(loss)}ha` : '0ha',
