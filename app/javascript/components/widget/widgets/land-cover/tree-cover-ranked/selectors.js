@@ -96,8 +96,8 @@ export const getSentence = createSelector(
       extentYear: settings.extentYear,
       location: locationNames.current.label,
       extent: `${extent ? format('.3s')(extent) : '0'}ha`,
-      region: indicator && indicator.value,
-      percentage: `${format('.3s')(areaPercent)}ha`
+      indicator: indicator && indicator.value,
+      percentage: `${format('.3s')(areaPercent)}%`
     };
 
     let sentence = areaPercent >= 0.1 ? withPerc : initial;
