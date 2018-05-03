@@ -18,8 +18,7 @@ export const parseData = createSelector(
   (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
     const { totalArea, totalExtent, extent } = data;
-    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
-    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
+    const colorRange = getColorPalette(colors.ramp, 2);
     const parsedData = [
       {
         label: 'Intact Forest',
@@ -40,14 +39,6 @@ export const parseData = createSelector(
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
-    // if (hasPlantations) {
-    //   parsedData.splice(2, 0, {
-    //     label: 'Plantations',
-    //     value: plantations,
-    //     color: colorRange[2],
-    //     percentage: plantations / totalArea * 100
-    //   });
-    // }
     return parsedData;
   }
 );

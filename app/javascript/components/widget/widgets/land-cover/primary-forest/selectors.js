@@ -17,13 +17,9 @@ export const parseData = createSelector(
   [getData, getSettings, getIndicatorWhitelist, getColors],
   (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
-    const { totalArea, totalExtent, extent, plantations } = data;
-    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
-    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
-    const secondaryExtent =
-      totalExtent - extent - plantations < 0
-        ? 0
-        : totalExtent - extent - plantations;
+    const { totalArea, totalExtent, extent } = data;
+    const colorRange = getColorPalette(colors.ramp, 2);
+    const secondaryExtent = totalExtent - extent < 0 ? 0 : totalExtent - extent;
     const parsedData = [
       {
         label: 'Primary Forest',
@@ -32,7 +28,7 @@ export const parseData = createSelector(
         percentage: extent / totalArea * 100
       },
       {
-        label: hasPlantations ? 'Secondary Forest' : 'Other Tree Cover',
+        label: 'Other Tree Cover',
         value: secondaryExtent,
         color: colorRange[1],
         percentage: secondaryExtent / totalArea * 100
@@ -44,14 +40,6 @@ export const parseData = createSelector(
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
-    if (hasPlantations) {
-      parsedData.splice(2, 0, {
-        label: 'Plantations',
-        value: plantations,
-        color: colorRange[2],
-        percentage: plantations / totalArea * 100
-      });
-    }
     return parsedData;
   }
 );
@@ -69,7 +57,6 @@ export const getSentence = createSelector(
     const locationLabel =
       locationNames && locationNames.current && locationNames.current.label;
     const totalExtent = parsedData
-      .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
       .reduce((sum, d) => sum + d);
     const primaryPercentage =
