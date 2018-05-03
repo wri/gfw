@@ -35,13 +35,9 @@ export default {
     },
     sentences: {
       initial:
-        'As of {extentYear}, {location} had {extent} of tree cover region-wide.',
+        'As of {extentYear}, {location} represented {percentage} of global tree cover.',
       withInd:
-        'As of {extentYear}, {location} had {extent} of tree cover in {region}.',
-      withPerc:
-        'As of {extentYear}, {location} had {extent} of tree cover region-wide, equivalent to {percentage} of the country.',
-      withPercAndInd:
-        'As of {extentYear}, {location} had {extent} of tree cover in {region}, equivalent to {percentage} of the country.'
+        'As of {extentYear}, {location} represented {percentage} of global tree cover in {indicator}.'
     }
   },
   settings: {

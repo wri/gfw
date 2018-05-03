@@ -3,6 +3,7 @@ import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
+import sumBy from 'lodash/sumBy';
 
 // get list data
 const getData = state => state.data || null;
@@ -81,29 +82,33 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getIndicator, getLocationNames, getSentences],
-  (data, settings, indicator, locationNames, sentences) => {
+  [
+    getData,
+    parseData,
+    getSettings,
+    getIndicator,
+    getLocationNames,
+    getSentences
+  ],
+  (rawData, data, settings, indicator, locationNames, sentences) => {
     if (!data || !data.length || !locationNames || !indicator) return null;
-    const { initial, withInd, withPerc, withPercAndInd } = sentences;
+    const { initial, withInd } = sentences;
     const locationData =
       locationNames.current &&
       data.find(l => l.id === locationNames.current.value);
-    const areaPercent =
-      (locationData && format('.1f')(locationData.percentage)) || 0;
     const extent = locationData && locationData.extent;
+    const areaPercent = 100 * extent / sumBy(rawData, 'extent') || 0;
 
     const params = {
       extentYear: settings.extentYear,
       location: locationNames.current.label,
       extent: `${extent ? format('.3s')(extent) : '0'}ha`,
       indicator: indicator && indicator.value,
-      percentage: `${format('.3s')(areaPercent)}%`
+      percentage:
+        areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%'
     };
 
-    let sentence = areaPercent >= 0.1 ? withPerc : initial;
-    if (indicator.value !== 'gadm28') {
-      sentence = areaPercent >= 0.1 ? withPercAndInd : withInd;
-    }
+    const sentence = indicator.value !== 'gadm28' ? withInd : initial;
 
     return {
       sentence,
