@@ -12,5 +12,10 @@ class CacheController < ApplicationController
 
     render :json => { data: data }
   end
+
+  def keys
+    data = $redis.keys('*')
+    render :json => { data: data }
+  end
   
 end
