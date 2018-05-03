@@ -10,7 +10,7 @@ export default {
     ],
     categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds', 'extentYears'],
+    selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_ifl',
     layers: ['forest2000', 'forest2010', 'ifl_2013_deg'],
@@ -18,13 +18,13 @@ export default {
       landCover: 3
     },
     sentences: {
-      initial: 'In {location}, {percentage} of tree cover is {intact}.',
+      initial: 'In {location}, {intact} covers {percentage} of the land area.',
       lessThan:
-        'In {location}, less than {percentage} of tree cover is {intact}.',
+        'In {location}, {intact} covers less than {percentage} of the land area.',
       withIndicator:
-        'Within {indicator} in {location}, {percentage} of tree cover is {intact}.',
+        'Within {indicator} in {location}, {intact} covers {percentage} of the land area.',
       lessThanWithIndicator:
-        'Within {indicator} in {location}, less than {percentage} of tree cover is {intact}.'
+        'Within {indicator} in {location}, {intact} covers less than {percentage} of the land area.'
     }
   },
   settings: {
