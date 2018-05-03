@@ -28,29 +28,32 @@ const mapStateToProps = ({ location, countryData, whitelists }) => {
     countryWhitelistLoading ||
     regionWhitelistLoading;
 
-  const { query } = location;
-  const currentLocation = getAdminSelected({ ...countryData, ...location });
-  const category = query && query.category;
+  const { query, payload } = location;
+  const category = (query && query.category) || 'summary';
   const activeWidget = query && query.widget;
 
   const widgetData = {
     category,
     ...location,
-    ...countryData,
-    currentLocation,
-    locationOptions: countryData,
+    countryData,
     indicatorWhitelist: location.payload.region
       ? regionWhitelist
       : countryWhitelist
   };
+  const currentLocation = getAdminSelected({ countryData, payload });
 
   return {
     loading,
     WidgetsFuncs: Widgets,
     widgets: filterWidgets(widgetData),
     options: getOptions(),
+    currentLocation,
+    currentLabel: currentLocation && currentLocation.label,
     ...widgetData,
     ...whitelists,
+    whitelist: payload.region
+      ? whitelists.regionWhitelist
+      : whitelists.countryWhitelist,
     colors,
     activeWidget
   };

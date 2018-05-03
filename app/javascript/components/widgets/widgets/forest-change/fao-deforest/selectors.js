@@ -4,7 +4,7 @@ import { format } from 'd3-format';
 
 const getData = state => state.data || null;
 const getLocation = state => state.payload || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 const getOptionsSelected = state => state.options || null;
@@ -42,18 +42,16 @@ export const getSentence = createSelector(
   [
     getData,
     getLocation,
-    getLocationNames,
+    getCurrentLocation,
     getSettings,
     getOptionsSelected,
     getSentences
   ],
-  (data, location, locationNames, settings, options, sentences) => {
+  (data, location, currentLabel, settings, options, sentences) => {
     if (!data || !data.fao) return '';
     const { initial, noDeforest, humanDeforest } = sentences;
     const topFao = data.fao.filter(d => d.year === settings.period);
     const { deforest, humdef } = topFao[0];
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
     const period = options && options.periods;
 
     let sentence = noDeforest;
@@ -61,7 +59,7 @@ export const getSentence = createSelector(
       sentence = humdef ? humanDeforest : initial;
     }
     const params = {
-      location: currentLocation,
+      location: currentLabel,
       year: period && period.label,
       rate: `${format('.3s')(deforest)}ha/yr`,
       human: `${format('.3s')(humdef)}ha/yr`

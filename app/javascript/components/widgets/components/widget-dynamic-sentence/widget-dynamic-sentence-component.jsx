@@ -13,10 +13,12 @@ class WidgetDynamicSentence extends PureComponent {
         formattedSentence = formattedSentence.replace(
           `{${p}}`,
           `<b ${
-            typeof params[p] === 'object' && params[p].color
+            typeof params[p] === 'object' && params[p] && params[p].color
               ? `style="color: ${params[p].color};`
               : ''
-          }">${(typeof params[p] === 'object' && params[p].value) ||
+          }">${(typeof params[p] === 'object' &&
+            params[p] &&
+            params[p].value) ||
             params[p]}</b>`
         );
       });

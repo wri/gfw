@@ -6,7 +6,7 @@ import { sortByKey } from 'utils/data';
 
 // get list data
 const getData = state => (state.data && state.data.fires) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -83,17 +83,15 @@ export const parseConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getLocationNames, getSentences],
-  (data, locationNames, sentences) => {
+  [parseData, getCurrentLocation, getSentences],
+  (data, currentLabel, sentences) => {
     const { initial } = sentences;
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
     const firesCount =
       (data &&
         data.map(item => item.value).reduce((sum, item) => sum + item)) ||
       'no';
     const params = {
-      location: currentLocation,
+      location: currentLabel,
       count: Number.isInteger(firesCount) ? format(',')(firesCount) : firesCount
     };
     return { sentence: initial, params };

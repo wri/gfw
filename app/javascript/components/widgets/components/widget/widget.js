@@ -9,7 +9,7 @@ import upperFirst from 'lodash/upperFirst';
 import Component from './component';
 import * as Selectors from './selectors';
 
-const mapStateToProps = ({ location, whitelists, widgets }, ownProps) => {
+const mapStateToProps = ({ widgets }, ownProps) => {
   const {
     widget,
     colors,
@@ -57,9 +57,6 @@ const mapStateToProps = ({ location, whitelists, widgets }, ownProps) => {
     options: filteredOptions,
     onMap,
     haveMapLayers,
-    whitelist: location.payload.region
-      ? whitelists.regionWhitelist
-      : whitelists.countryWhitelist,
     parsedData: parseData && parseData(selectorData),
     parsedConfig: parseConfig && parseConfig(selectorData),
     sentence: getSentence && getSentence(selectorData)

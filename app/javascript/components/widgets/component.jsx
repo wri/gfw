@@ -12,7 +12,7 @@ class Widgets extends PureComponent {
   render() {
     const {
       loading,
-      currentLocation,
+      currentLabel,
       widgets,
       activeWidget,
       category,
@@ -39,13 +39,13 @@ class Widgets extends PureComponent {
             />
           ))}
         {!loading &&
-          (!currentLocation || (!widgets || widgets.length === 0)) && (
+          (!currentLabel || (!widgets || widgets.length === 0)) && (
             <NoContent
               className="no-widgets-message large"
               message={
-                currentLocation
+                currentLabel
                   ? `${upperFirst(category)} data for ${
-                    currentLocation.label
+                    currentLabel
                   } coming soon`
                   : 'Please select a country'
               }
@@ -59,7 +59,7 @@ class Widgets extends PureComponent {
 
 Widgets.propTypes = {
   loading: PropTypes.bool,
-  currentLocation: PropTypes.object,
+  currentLabel: PropTypes.string,
   widgets: PropTypes.array,
   activeWidget: PropTypes.string,
   category: PropTypes.string,

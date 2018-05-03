@@ -15,7 +15,7 @@ const getLocationsMeta = state => state.countries || null;
 const getColors = state => state.colors || null;
 const getIndicator = state =>
   (state.optionsSelected && state.optionsSelected.indicator) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const getSummedByYearsData = createSelector(
@@ -69,15 +69,15 @@ export const parseData = createSelector(
     sortData,
     getSettings,
     getLocation,
-    getLocationNames,
+    getCurrentLocation,
     getLocationsMeta,
     getColors
   ],
-  (data, settings, location, locationNames, meta, colors) => {
+  (data, settings, location, currentLocation, meta, colors) => {
     if (!data || !data.length) return null;
     const locationIndex = findIndex(
       data,
-      d => d.id === (locationNames.current && locationNames.current.value)
+      d => d.id === (currentLocation && currentLocation.value)
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
@@ -113,14 +113,13 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [sortData, getSettings, getIndicator, getLocationNames, getSentences],
-  (data, settings, indicator, locationNames, sentences) => {
-    if (!data || !data.length || !locationNames) return null;
+  [sortData, getSettings, getIndicator, getCurrentLocation, getSentences],
+  (data, settings, indicator, currentLocation, sentences) => {
+    if (!data || !data.length || !currentLocation) return null;
     const { startYear, endYear } = settings;
     const { initial, withIndicator } = sentences;
     const locationData =
-      locationNames.current &&
-      data.find(l => l.id === locationNames.current.value);
+      currentLocation && data.find(l => l.id === currentLocation.value);
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const loss = locationData && locationData.loss;
@@ -131,7 +130,7 @@ export const getSentence = createSelector(
         indicator && indicator.value === 'gadm28'
           ? 'region-wide'
           : `${indicator && indicator.label.toLowerCase()}`,
-      location: locationNames.current && locationNames.current.label,
+      location: currentLocation && currentLocation.label,
       startYear,
       endYear,
       loss: loss ? `${format('.3s')(loss)}ha` : '0ha',

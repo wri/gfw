@@ -13,7 +13,7 @@ const getLocationsMeta = state =>
 const getColors = state => state.colors || null;
 const getIndicator = state =>
   (state.optionsSelected && state.optionsSelected.indicator) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
@@ -36,15 +36,15 @@ export const parseData = createSelector(
     getSortedData,
     getSettings,
     getLocation,
-    getLocationNames,
+    getCurrentLocation,
     getLocationsMeta,
     getColors
   ],
-  (data, settings, location, locationNames, meta, colors) => {
+  (data, settings, location, currentLocation, meta, colors) => {
     if (!data || !data.length) return null;
     const locationIndex = findIndex(
       data,
-      d => d.id === (locationNames.current && locationNames.current.value)
+      d => d.id === (currentLocation && currentLocation.value)
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
@@ -80,9 +80,9 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getSortedData, getSettings, getIndicator, getLocationNames, getSentences],
-  (data, settings, indicator, locationNames, sentences) => {
-    if (!data || !data.length || !locationNames) return null;
+  [getSortedData, getSettings, getIndicator, getCurrentLocation, getSentences],
+  (data, settings, indicator, currentLocation, sentences) => {
+    if (!data || !data.length || !currentLocation) return null;
     const {
       initial,
       withGain,
@@ -90,13 +90,12 @@ export const getSentence = createSelector(
       withGainAndIndicator
     } = sentences;
     const locationData =
-      locationNames.current &&
-      data.find(l => l.id === locationNames.current.value);
+      currentLocation && data.find(l => l.id === currentLocation.value);
     const gain = locationData && locationData.gain;
     const areaPercent = (locationData && locationData.percentage) || 0;
 
     const params = {
-      location: locationNames.current && locationNames.current.label,
+      location: currentLocation && currentLocation.label,
       gain: `${format('.3s')(gain)}ha`,
       region: indicator.value !== 'gadm28' ? indicator.label : 'region-wide',
       percentage: `${format('.1f')(areaPercent)}%`,

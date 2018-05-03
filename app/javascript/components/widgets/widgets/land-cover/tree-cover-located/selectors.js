@@ -14,7 +14,7 @@ const getIndicator = state =>
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -49,14 +49,12 @@ export const getSentence = createSelector(
     getOptions,
     getLocation,
     getIndicator,
-    getLocationNames,
+    getCurrentLocation,
     getSentences
   ],
-  (data, settings, options, location, indicator, locationNames, sentences) => {
-    if (!data || !options || !indicator || !locationNames) return null;
+  (data, settings, options, location, indicator, currentLabel, sentences) => {
+    if (!data || !options || !indicator || !currentLabel) return null;
     const { initial, hasPercentage, hasIndicator } = sentences;
-    const locationLabel =
-      locationNames && locationNames.current && locationNames.current.label;
     const topRegion = data.length && data[0];
     const totalExtent = sumBy(data, 'extent');
     const avgExtent = sumBy(data, 'extent') / data.length;
@@ -74,7 +72,7 @@ export const getSentence = createSelector(
     const topExtent = percentileExtent / totalExtent * 100;
 
     const params = {
-      location: locationLabel,
+      location: currentLabel,
       region: topRegion.label,
       indicator: indicator.label,
       percentage: `${format('.0f')(topExtent)}%`,

@@ -15,7 +15,7 @@ const getIndicator = state =>
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
@@ -58,7 +58,7 @@ export const getSentence = createSelector(
     getOptions,
     getLocation,
     getIndicator,
-    getLocationNames,
+    getCurrentLocation,
     getSentences
   ],
   (
@@ -68,10 +68,10 @@ export const getSentence = createSelector(
     options,
     location,
     indicator,
-    locationNames,
+    currentLabel,
     sentences
   ) => {
-    if (!data || !options || !indicator || !locationNames) return null;
+    if (!data || !options || !indicator || !currentLabel) return null;
     const {
       initial,
       withIndicator,
@@ -79,8 +79,6 @@ export const getSentence = createSelector(
       withIndicatorPercent
     } = sentences;
     const totalGain = sumBy(data, 'gain');
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
     const topRegion = sortedData.length && sortedData[0];
     const avgGainPercentage = sumBy(data, 'percentage') / data.length;
     const avgGain = sumBy(data, 'gain') / data.length;
@@ -103,7 +101,7 @@ export const getSentence = createSelector(
 
     const params = {
       indicator: indicator.value,
-      location: currentLocation,
+      location: currentLabel,
       topGain: `${format('.0f')(topGain)}%`,
       percentileLength,
       region: percentileLength > 1 ? topRegion.label : 'This region',

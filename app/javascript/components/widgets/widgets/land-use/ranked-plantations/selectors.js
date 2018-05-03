@@ -15,7 +15,7 @@ const getLocation = state => state.payload || null;
 const getQuery = state => state.search || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getEmbed = state => state.embed || null;
 const getSentences = state => state.config.sentences || null;
@@ -101,12 +101,10 @@ export const parseConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getLocation, getLocationNames, getSentences],
-  (data, settings, location, locationNames, sentences) => {
+  [parseData, getSettings, getLocation, getCurrentLocation, getSentences],
+  (data, settings, location, currentLabel, sentences) => {
     if (!data || !data.length) return null;
     const { initial } = sentences;
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
     const topRegion = data[0];
     const topPlantation = maxBy(
       remove(
@@ -122,7 +120,7 @@ export const getSentence = createSelector(
     const isPlural = endsWith(plantationLabel, 's');
 
     const params = {
-      location: currentLocation,
+      location: currentLabel,
       region: topRegion.region,
       topType: `${plantationLabel}${isPlural ? 's' : ''} plantations`,
       percentage: `${format('.1f')(data[0].total)}%`

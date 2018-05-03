@@ -22,9 +22,10 @@ export const getOptionsSelectedMeta = createSelector(
     Object.keys(settings).forEach(o => {
       const optionsKey = `${o}s`;
       if (options[optionsKey]) {
-        optionsMeta[o] = options[optionsKey].find(
+        const option = options[optionsKey].find(
           opt => opt.value === settings[o]
-        ).label;
+        );
+        optionsMeta[o] = option && option.value !== 'gadm28' && option.label;
       }
     });
     return optionsMeta;

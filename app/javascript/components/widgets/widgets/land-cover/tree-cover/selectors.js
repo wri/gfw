@@ -6,7 +6,7 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationNames = state => state.locationNames;
+const getCurrentLocation = state => state.currentLabel;
 const getActiveIndicator = state =>
   (state.optionsSelected && state.optionsSelected.indicator) || null;
 const getWhitelists = state => state.countryWhitelist;
@@ -52,21 +52,19 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getSettings, getLocationNames, getActiveIndicator, getSentences],
-  (data, settings, locationNames, indicator, sentences) => {
-    if (!data || !indicator || !sentences) return null;
+  [getData, getSettings, getCurrentLocation, getActiveIndicator, getSentences],
+  (data, settings, currentLabel, indicator, sentences) => {
+    if (!data || !sentences) return null;
     const { initial, withIndicator } = sentences;
-    const locationLabel =
-      locationNames && locationNames.current && locationNames.current.label;
     const params = {
       year: settings.extentYear,
-      location: locationLabel,
-      indicator: indicator.label,
+      location: currentLabel,
+      indicator,
       value: `${format('.3s')(data.cover)}ha`
     };
 
     return {
-      sentence: indicator.value !== 'gadm28' ? withIndicator : initial,
+      sentence: indicator ? withIndicator : initial,
       params
     };
   }

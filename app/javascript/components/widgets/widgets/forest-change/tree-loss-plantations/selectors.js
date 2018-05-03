@@ -8,7 +8,7 @@ import { getColorPalette } from 'utils/data';
 const getLoss = state => (state.data && state.data.loss) || null;
 const getTotalLoss = state => (state.data && state.data.totalLoss) || null;
 const getSettings = state => state.settings || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -69,12 +69,11 @@ export const parseConfig = createSelector([getColors], colors => {
 });
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getLocationNames, getSentences],
-  (data, settings, locationNames, sentences) => {
+  [parseData, getSettings, getCurrentLocation, getSentences],
+  (data, settings, currentLabel, sentences) => {
     if (!data) return null;
     const { initial } = sentences;
     const { startYear, endYear } = settings;
-    const locationLabel = locationNames.current && locationNames.current.label;
     const totalLoss = sumBy(data, 'areaLoss') || 0;
     const totalOutsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
     const lossPhrase =
@@ -82,7 +81,7 @@ export const getSentence = createSelector(
 
     const sentence = initial;
     const params = {
-      location: locationLabel,
+      location: currentLabel,
       startYear,
       endYear,
       lossPhrase,

@@ -9,7 +9,7 @@ import { biomassToCO2 } from 'utils/calculations';
 const getLoss = state => (state.data && state.data.loss) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getActiveIndicator = state =>
   (state.optionsSelected && state.optionsSelected.indicator) || null;
 const getColors = state => state.colors || null;
@@ -75,15 +75,14 @@ export const getSentence = createSelector(
     parseData,
     getExtent,
     getSettings,
-    getLocationNames,
+    getCurrentLocation,
     getActiveIndicator,
     getSentences
   ],
-  (data, extent, settings, locationNames, indicator, sentences) => {
+  (data, extent, settings, currentLabel, indicator, sentences) => {
     if (!data) return null;
     const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
     const { startYear, endYear, extentYear } = settings;
-    const locationLabel = locationNames.current && locationNames.current.label;
 
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
@@ -98,7 +97,7 @@ export const getSentence = createSelector(
 
     const params = {
       indicator: indicator.label.toLowerCase(),
-      location: locationLabel,
+      location: currentLabel,
       startYear,
       endYear,
       loss: `${format('.3s')(totalLoss)}ha`,

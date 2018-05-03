@@ -17,7 +17,7 @@ const getIndicator = state =>
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (!state.payload.region ? state.regions : state.subRegions) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
@@ -86,17 +86,17 @@ export const getSentence = createSelector(
     getOptions,
     getLocation,
     getIndicator,
-    getLocationNames,
+    getCurrentLocation,
     getSentences
   ],
-  (data, settings, options, location, indicator, locationNames, sentences) => {
-    if (!data || !options || !indicator || !locationNames) return '';
+  (data, settings, options, location, indicator, currentLabel, sentences) => {
+    if (!data || !options || !indicator || !currentLabel) return '';
     const { initial } = sentences;
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
       area: `${format('.2s')(sumBy(data, 'area'))}ha`,
-      location: `${locationNames.current.label}`,
+      location: `${currentLabel}`,
       indicator: `${
         indicator && indicator.value !== 'gadm28'
           ? `${indicator.label} in `

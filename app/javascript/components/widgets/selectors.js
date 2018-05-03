@@ -17,11 +17,10 @@ import weeks from 'data/weeks.json';
 import * as WIDGETS from 'components/widgets/manifest';
 
 // get list data
-const getState = state => state || null;
+const getCountryData = state => state.countryData || null;
 const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
-const getFAOCountries = state => state.faoCountries || null;
 
 const options = {
   indicators,
@@ -39,9 +38,16 @@ export const getAdminLevel = createSelector([getLocation], location => {
   return 'country';
 });
 
+export const getAdminKey = createSelector([getLocation], location => {
+  if (location.subRegion) return 'subRegions';
+  if (location.region) return 'regions';
+  return 'countries';
+});
+
 export const getLocationOptions = createSelector(
-  [getAdminLevel, getState],
-  (admin, state) => state[admin === 'country' ? 'regions' : 'subRegions']
+  [getAdminLevel, getCountryData],
+  (admin, countryData) =>
+    countryData[admin === 'country' ? 'regions' : 'subRegions']
 );
 
 export const getOptions = () => {
@@ -54,13 +60,15 @@ export const getOptions = () => {
 
 // get lists selected
 export const getAdminSelected = createSelector(
-  [getAdminLevel, getState, getLocation],
-  (admin, state, location) => {
-    if (isEmpty(state[admin])) return null;
-    const current = state[admin].find(i => i.value === location[admin]);
+  [getAdminLevel, getAdminKey, getCountryData, getLocation],
+  (adminLevel, adminKey, locations, location) => {
+    const current = locations[adminKey].find(
+      i => i.value === location[adminLevel]
+    );
     return {
       ...current,
-      admin
+      adminKey,
+      adminLevel
     };
   }
 );
@@ -88,12 +96,13 @@ export const checkWidgetNeedsLocations = createSelector(
   [
     filterWidgetsByCategory,
     getLocationOptions,
-    getFAOCountries,
+    getCountryData,
     getLocation,
     getAdminLevel
   ],
-  (widgets, locations, faoCountries, location, adminLevel) => {
+  (widgets, locations, countryData, location, adminLevel) => {
     if (isEmpty(locations)) return null;
+    const { faoCountries } = countryData;
     const isFaoCountry =
       !!faoCountries.find(c => c.value === location.country) || null;
     return widgets.filter(

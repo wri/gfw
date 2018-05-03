@@ -12,7 +12,7 @@ const getLocationsMeta = state =>
   (state.payload.region ? state.region : state.countries) || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.optionsSelected.indicator || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
@@ -35,17 +35,16 @@ export const parseData = createSelector(
     getSortedData,
     getSettings,
     getLocation,
-    getLocationNames,
+    getCurrentLocation,
     getLocationsMeta,
     getColors
   ],
-  (data, settings, location, locationNames, meta, colors) => {
-    if (!data || !data.length || !locationNames || !meta) return null;
+  (data, settings, location, currentLocation, meta, colors) => {
+    if (!data || !data.length || !currentLocation || !meta) return null;
     const locationIndex = findIndex(
       data,
       d =>
-        d.id ===
-        (locationNames && locationNames.current && locationNames.current.value)
+        d.id === (currentLocation && currentLocation && currentLocation.value)
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
@@ -81,20 +80,19 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getIndicator, getLocationNames, getSentences],
-  (data, settings, indicator, locationNames, sentences) => {
-    if (!data || !data.length || !locationNames || !indicator) return null;
+  [parseData, getSettings, getIndicator, getCurrentLocation, getSentences],
+  (data, settings, indicator, currentLocation, sentences) => {
+    if (!data || !data.length || !currentLocation || !indicator) return null;
     const { initial, withInd, withPerc, withPercAndInd } = sentences;
     const locationData =
-      locationNames.current &&
-      data.find(l => l.id === locationNames.current.value);
+      currentLocation && data.find(l => l.id === currentLocation.value);
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const extent = locationData && locationData.extent;
 
     const params = {
       extentYear: settings.extentYear,
-      location: locationNames.current.label,
+      location: currentLocation.label,
       extent: `${extent ? format('.3s')(extent) : '0'}ha`,
       region: indicator && indicator.value,
       percentage: `${format('.3s')(areaPercent)}ha`

@@ -11,7 +11,7 @@ const EMISSIONS_KEYS = [
 
 // get list data
 const getData = state => state.data || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -106,13 +106,11 @@ export const parseConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getSortedData, getLocationNames, getSentences],
-  (sortedData, locationNames, sentences) => {
+  [getSortedData, getCurrentLocation, getSentences],
+  (sortedData, currentLabel, sentences) => {
     if (!sortedData || !sortedData.data.length) return '';
     const { initial } = sentences;
     const { data, total } = sortedData;
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
     const emissionsCount = data.reduce((accumulator, item) => {
       const accumulatorCount =
         typeof accumulator !== 'object'
@@ -132,8 +130,8 @@ export const getSentence = createSelector(
     );
     const emissionFraction = emissionsCount / totalEmissionsCount * 100;
     const params = {
-      location: currentLocation,
-      location_alt: `${currentLocation}'s`,
+      location: currentLabel,
+      location_alt: `${currentLabel}'s`,
       percentage:
         emissionFraction < 0.1 ? '0.1%' : `${format('.1f')(emissionFraction)}%`,
       value: `${format('.3s')(emissionsCount)}tCO₂e`,

@@ -15,7 +15,7 @@ const getActiveIndicator = state =>
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -69,7 +69,7 @@ export const getSentence = createSelector(
     getOptions,
     getLocation,
     getActiveIndicator,
-    getLocationNames,
+    getCurrentLocation,
     getSentences
   ],
 
@@ -80,10 +80,10 @@ export const getSentence = createSelector(
     options,
     location,
     indicator,
-    locationNames,
+    currentLabel,
     sentences
   ) => {
-    if (!data || !options || !indicator || !locationNames) return '';
+    if (!data || !options || !indicator || !currentLabel) return '';
     const {
       initial,
       withIndicator,
@@ -92,8 +92,6 @@ export const getSentence = createSelector(
     } = sentences;
     const { startYear, endYear } = settings;
     const totalLoss = sumBy(data, 'loss');
-    const currentLocation =
-      locationNames && locationNames.current && locationNames.current.label;
     const topRegion = sortedData.length && sortedData[0];
     const avgLossPercentage = sumBy(data, 'percentage') / data.length;
     const avgLoss = sumBy(data, 'loss') / data.length;
@@ -116,7 +114,7 @@ export const getSentence = createSelector(
 
     const params = {
       indicator: indicator.value,
-      location: currentLocation,
+      location: currentLabel,
       startYear,
       endYear,
       topLoss: `${format('.0f')(topLoss)}%`,

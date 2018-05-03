@@ -8,7 +8,7 @@ import endsWith from 'lodash/endsWith';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationNames = state => state.locationNames;
+const getCurrentLocation = state => state.currentLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -38,8 +38,8 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getLocationNames, getSentences],
-  (data, settings, locationNames, sentences) => {
+  [parseData, getSettings, getCurrentLocation, getSentences],
+  (data, settings, currentLabel, sentences) => {
     if (isEmpty(data) || !sentences) return null;
     const {
       initialSpecies,
@@ -47,13 +47,11 @@ export const getSentence = createSelector(
       remainingSpecies,
       initialTypes
     } = sentences;
-    const locationLabel =
-      locationNames && locationNames.current && locationNames.current.label;
     const top =
       settings.type === 'bound2' ? data.slice(0, 2) : data.slice(0, 1);
 
     const params = {
-      location: locationLabel,
+      location: currentLabel,
       firstSpecies: top[0].label,
       secondSpecies: top.length > 1 && top[1].label,
       type: settings.type === 'bound2' ? 'species' : 'type',

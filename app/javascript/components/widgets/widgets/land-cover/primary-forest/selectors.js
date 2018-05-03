@@ -6,7 +6,7 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationNames = state => state.locationNames;
+const getCurrentLocation = state => state.currentLabel;
 const getActiveIndicator = state =>
   (state.optionsSelected && state.optionsSelected.indicator) || null;
 const getIndicatorWhitelist = state => state.countryWhitelist;
@@ -58,17 +58,21 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getLocationNames, getActiveIndicator, getSentences],
-  (parsedData, settings, locationNames, indicator, sentences) => {
-    if (!parsedData || !locationNames) return null;
+  [
+    parseData,
+    getSettings,
+    getCurrentLocation,
+    getActiveIndicator,
+    getSentences
+  ],
+  (parsedData, settings, currentLabel, indicator, sentences) => {
+    if (!parsedData || !currentLabel) return null;
     const {
       initial,
       lessThan,
       withIndicator,
       lessThanWithIndicator
     } = sentences;
-    const locationLabel =
-      locationNames && locationNames.current && locationNames.current.label;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
@@ -94,7 +98,7 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      location: locationLabel,
+      location: currentLabel,
       indicator: indicatorLabel,
       percentage:
         primaryPercentage < 0.1

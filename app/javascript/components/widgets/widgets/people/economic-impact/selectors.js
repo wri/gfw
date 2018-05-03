@@ -9,7 +9,7 @@ import { formatUSD } from 'utils/format';
 const getData = state => state.data;
 const getSettings = state => state.settings;
 const getLocationsMeta = state => state.countries || null;
-const getLocationNames = state => state.locationNames;
+const getCurrentLocation = state => state.currentLocation;
 const getColors = state => state.colors;
 const getSentences = state => state.config.sentence;
 
@@ -71,12 +71,12 @@ export const getSortedData = createSelector(
 );
 
 export const chartData = createSelector(
-  [getFilteredData, getSettings, getLocationNames, getColors],
-  (filteredData, settings, locationNames, colors) => {
+  [getFilteredData, getSettings, getCurrentLocation, getColors],
+  (filteredData, settings, currentLocation, colors) => {
     if (!filteredData || !filteredData.length) return null;
 
     const data = filteredData.filter(
-      item => item.iso === locationNames.current.value
+      item => item.iso === currentLocation.value
     );
     if (!data.length) return null;
 
@@ -98,14 +98,11 @@ export const chartData = createSelector(
 );
 
 export const rankData = createSelector(
-  [getSortedData, getSettings, getLocationsMeta, getLocationNames, getColors],
-  (data, settings, meta, locationNames, colors) => {
+  [getSortedData, getSettings, getLocationsMeta, getCurrentLocation, getColors],
+  (data, settings, meta, currentLocation, colors) => {
     if (!data || !data.length) return null;
 
-    const locationIndex = findIndex(
-      data,
-      d => d.iso === locationNames.current.value
-    );
+    const locationIndex = findIndex(data, d => d.iso === currentLocation.value);
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
     if (locationIndex < 2) {
@@ -162,18 +159,16 @@ export const parseConfig = () => ({
 });
 
 export const getSentence = createSelector(
-  [getFilteredData, getSettings, getLocationNames, getSentences],
-  (data, settings, locationNames, sentence) => {
+  [getFilteredData, getSettings, getCurrentLocation, getSentences],
+  (data, settings, currentLocation, sentence) => {
     if (!data) return null;
-    const selectedFAO = data.filter(
-      item => item.iso === locationNames.current.value
-    );
+    const selectedFAO = data.filter(item => item.iso === currentLocation.value);
     if (!selectedFAO.length) return '';
 
     const params = {
-      location: `${locationNames &&
-        locationNames.current &&
-        locationNames.current.label}'s`,
+      location: `${currentLocation &&
+        currentLocation &&
+        currentLocation.label}'s`,
       value: `${formatUSD(selectedFAO[0].net_usd, false)} USD`,
       percentage: `${format('.2f')(selectedFAO[0].net_perc)}%`,
       year: settings.year

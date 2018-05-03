@@ -5,20 +5,19 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationNames = state => state.locationNames;
+const getCurrentLocation = state => state.currentLocation;
 const getColors = state => state.colors;
 const getSentences = state => state.config.sentences;
 
 // get lists selected
 export const getFilteredData = createSelector(
-  [getData, getLocationNames],
-  (data, locationNames) => {
+  [getData, getCurrentLocation],
+  (data, currentLocation) => {
     if (isEmpty(data)) return null;
 
     return data
       .filter(
-        item =>
-          item.country === locationNames.current.value && item.year !== 9999
+        item => item.country === currentLocation.value && item.year !== 9999
       )
       .map(item => ({
         male: item.femempl
@@ -60,8 +59,8 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getFilteredData, getSettings, getLocationNames, getSentences],
-  (data, settings, locationNames, sentences) => {
+  [getFilteredData, getSettings, getCurrentLocation, getSentences],
+  (data, settings, currentLocation, sentences) => {
     if (!data) return null;
     const { year } = settings;
     const { initial, withFemales } = sentences;
@@ -76,9 +75,9 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      location: `${locationNames &&
-        locationNames.current &&
-        locationNames.current.label}'s`,
+      location: `${currentLocation &&
+        currentLocation &&
+        currentLocation.label}'s`,
       value: `${employees ? format('.3s')(employees) : 'no'}`,
       count: `${format('.3s')(females)}`,
       year

@@ -5,15 +5,15 @@ import { getColorPalette } from 'utils/data';
 
 // get list data
 const getData = state => state.data || null;
-const getLocationNames = state => state.locationNames || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getLocationNames, getColors],
-  (data, locationNames, colors) => {
-    if (isEmpty(data) || !locationNames) return null;
+  [getData, getCurrentLocation, getColors],
+  (data, currentLabel, colors) => {
+    if (isEmpty(data) || !currentLabel) return null;
     const {
       area_ha,
       extent,
@@ -59,15 +59,15 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getLocationNames, getSentences],
-  (data, locationNames, sentences) => {
-    if (isEmpty(data) || !locationNames) return null;
+  [getData, getCurrentLocation, getSentences],
+  (data, currentLabel, sentences) => {
+    if (isEmpty(data) || !currentLabel) return null;
     const { initial, noPrimary } = sentences;
     const { area_ha, extent, forest_primary } = data;
     const primaryForest = extent / 100 * forest_primary;
     const sentence = primaryForest > 0 ? initial : noPrimary;
     const params = {
-      location: locationNames.current && locationNames.current.label,
+      location: currentLabel,
       extent: `${format('.3s')(extent)}ha`,
       primaryPercent:
         primaryForest > 0
