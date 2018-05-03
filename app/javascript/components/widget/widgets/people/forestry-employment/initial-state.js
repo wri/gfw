@@ -16,7 +16,7 @@ export default {
       initial:
         'According to the FAO there were {value} people employed in {location} Forestry sector in {year}.',
       withFemales:
-        'According to the FAO there were {value} people employed in {location} Forestry sector in {year}, of which {count} were female.'
+        'According to the FAO there were {value} people employed in {location} Forestry sector in {year}, of which {percent} were female.'
     }
   },
   settings: {

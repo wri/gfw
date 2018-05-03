@@ -80,7 +80,7 @@ export const getSentence = createSelector(
         locationNames.current &&
         locationNames.current.label}'s`,
       value: `${employees ? format('.3s')(employees) : 'no'}`,
-      count: `${format('.3s')(females)}`,
+      percent: `${format('.2s')(100 * females / employees)}%`,
       year
     };
 
