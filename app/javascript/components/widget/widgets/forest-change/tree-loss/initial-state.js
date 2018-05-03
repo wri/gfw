@@ -39,13 +39,13 @@ export const initialState = {
     },
     sentences: {
       initial:
-        "Between {startYear} and {endYear}, {location} lost {loss} of tree cover. This loss is equal to {percent} of the area's tree cover extent in {extentYear}, and equivalent to {emissions} of of CO\u2082 emissions.",
+        'From {startYear} and {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
       withIndicator:
-        "Between {startYear} and {endYear}, {indicator} in {location} lost {loss} of tree cover. This loss is equal to {percent} of the area's tree cover extent in {extentYear}, and equivalent to {emissions} of of CO\u2082 emissions.",
+        'From {startYear} and {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
       noLoss:
-        'Between {startYear} and {endYear}, {location} lost {loss} of tree cover.',
+        'From {startYear} and {endYear}, {location} lost {loss} of tree cover.',
       noLossWithIndicator:
-        'Between {startYear} and {endYear}, {indicator} in {location} lost {loss} of tree cover.'
+        'From {startYear} and {endYear}, {location} lost {loss} of tree cover in {indicator}.'
     }
   },
   settings: {
