@@ -8,6 +8,7 @@ import { getColorPalette } from 'utils/data';
 const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
 const getIndicator = state => state.activeIndicator || null;
+const getLocationNames = state => state.locationNames;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -60,8 +61,8 @@ export const parseConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getIndicator, getSentences],
-  (data, settings, indicator, sentences) => {
+  [parseData, getSettings, getIndicator, getSentences, getLocationNames],
+  (data, settings, indicator, sentences, location) => {
     if (!data || isEmpty(data) || !indicator) return null;
     const { initial, containsIndicator } = sentences;
     const { startYear, endYear, unit } = settings;
@@ -79,6 +80,7 @@ export const getSentence = createSelector(
     const params = {
       type: emissionType,
       value: `${format('.3s')(totalEmissions)}t`,
+      location: location.current.label,
       startYear,
       endYear,
       indicatorText
