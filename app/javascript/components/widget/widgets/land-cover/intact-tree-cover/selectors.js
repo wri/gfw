@@ -88,7 +88,7 @@ export const getSentence = createSelector(
       location: locationLabel,
       indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1 ? '0.1%' : `${format('.1f')(intactPercentage)}%`,
+        intactPercentage < 0.1 ? '0.1%' : `${format('.0f')(intactPercentage)}%`,
       intact: 'intact forest'
     };
 

@@ -71,8 +71,8 @@ export const getSentence = createSelector(
       extent: `${format('.3s')(extent)}ha`,
       primaryPercent:
         primaryForest > 0
-          ? `${format('.1f')(primaryForest / area_ha * 100)}%`
-          : `${format('.1f')(extent / area_ha * 100)}%`
+          ? `${format('.0f')(primaryForest / area_ha * 100)}%`
+          : `${format('.0f')(extent / area_ha * 100)}%`
     };
     return {
       sentence,

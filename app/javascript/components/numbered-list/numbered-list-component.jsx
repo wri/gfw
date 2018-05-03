@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Link from 'redux-first-router-link';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
+import { format as unitFormat } from 'd3-format';
 
 import Paginate from 'components/paginate';
 
@@ -17,7 +17,7 @@ class NumberedList extends PureComponent {
       linksDisabled,
       linksExt
     } = this.props;
-    const { page, pageSize, unit, unitFormat } = settings;
+    const { page, pageSize, unit, format } = settings;
     const pageData = pageSize
       ? data.slice(page * pageSize, (page + 1) * pageSize)
       : data;
@@ -39,9 +39,9 @@ class NumberedList extends PureComponent {
                     <div className="item-name">{item.label}</div>
                   </div>
                   <div className="item-value">
-                    {unitFormat
-                      ? unitFormat(item.value)
-                      : format('.3s')(item.value)}
+                    {format
+                      ? unitFormat(format)(item.value)
+                      : unitFormat('.3s')(item.value)}
                     {unit}
                   </div>
                 </div>

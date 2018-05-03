@@ -12,12 +12,14 @@ class WidgetTreeLocated extends PureComponent {
       embed,
       widget
     } = this.props;
-
     return (
       <NumberedList
         className="locations-list"
         data={parsedData}
-        settings={settings}
+        settings={{
+          ...settings,
+          format: settings.unit === '%' ? '.0f' : '.2s'
+        }}
         handlePageChange={change =>
           setWidgetSettingsUrl({
             value: { page: settings.page + change },
