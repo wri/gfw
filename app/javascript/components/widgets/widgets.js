@@ -4,7 +4,12 @@ import colors from 'data/colors.json';
 import Component from './component';
 import actions from './actions';
 import reducers, { initialState } from './reducers';
-import { getAdminSelected, getOptions, filterWidgets } from './selectors';
+import {
+  getAdminSelected,
+  getOptions,
+  filterWidgets,
+  getAdminKey
+} from './selectors';
 
 const mapStateToProps = (
   { location, countryData, whitelists },
@@ -45,6 +50,7 @@ const mapStateToProps = (
     loading,
     widgets: widgets || filterWidgets(widgetData),
     options: getOptions(),
+    adminKey: getAdminKey({ payload }),
     currentLocation,
     currentLabel: currentLocation && currentLocation.label,
     ...widgetData,

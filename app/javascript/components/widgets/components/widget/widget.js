@@ -60,7 +60,8 @@ class WidgetContainer extends PureComponent {
       getData,
       getWidgetData,
       widget,
-      data
+      data,
+      geostore
     } = this.props;
     if (isEmpty(data)) {
       getWidgetData({
@@ -68,14 +69,22 @@ class WidgetContainer extends PureComponent {
         getData,
         params: {
           ...payload,
-          ...settings
+          ...settings,
+          geostore
         }
       });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { payload, settings, getData, getWidgetData, widget } = nextProps;
+    const {
+      payload,
+      settings,
+      getData,
+      getWidgetData,
+      widget,
+      geostore
+    } = nextProps;
     if (
       settings &&
       this.props.settings &&
@@ -90,7 +99,8 @@ class WidgetContainer extends PureComponent {
         getData,
         params: {
           ...payload,
-          ...settings
+          ...settings,
+          geostore
         }
       });
     }
@@ -109,6 +119,7 @@ WidgetContainer.propTypes = {
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
   widget: PropTypes.string,
+  geostore: PropTypes.object,
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
