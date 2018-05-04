@@ -21,6 +21,7 @@ const getCountryData = state => state.countryData || null;
 const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
+const getWidgetQuery = state => state.activeWidget || null;
 
 const options = {
   indicators,
@@ -149,5 +150,14 @@ export const filterWidgets = createSelector(
 
       return showByIndicators && hasData;
     });
+  }
+);
+
+export const getActiveWidget = createSelector(
+  [filterWidgets, getWidgetQuery],
+  (widgets, widgetQuery) => {
+    if (!widgets || !widgets.length || widgetQuery === 'none') return null;
+    if (!widgetQuery) return widgets[0];
+    return widgets.find(w => w.name === widgetQuery);
   }
 );

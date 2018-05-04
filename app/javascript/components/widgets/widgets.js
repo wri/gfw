@@ -1,12 +1,21 @@
 import { connect } from 'react-redux';
 import colors from 'data/colors.json';
+import replace from 'lodash/replace';
 
 import Component from './component';
 import actions from './actions';
 import reducers, { initialState } from './reducers';
-import { getAdminSelected, getOptions, filterWidgets } from './selectors';
+import {
+  getAdminSelected,
+  getOptions,
+  filterWidgets,
+  getActiveWidget
+} from './selectors';
 
-const mapStateToProps = ({ location, countryData, whitelists }) => {
+const mapStateToProps = (
+  { location, countryData, whitelists },
+  { widgets, activeWidget }
+) => {
   // loaders
   const {
     isCountriesLoading,
@@ -28,12 +37,13 @@ const mapStateToProps = ({ location, countryData, whitelists }) => {
 
   const { query, payload } = location;
   const category = (query && query.category) || 'summary';
-  const activeWidget = query && query.widget;
-
   const widgetData = {
     category,
     ...location,
     countryData,
+    activeWidget:
+      replace(window.location.hash, '#', '') ||
+      (location.query && location.query.widget),
     indicatorWhitelist: location.payload.region
       ? regionWhitelist
       : countryWhitelist
@@ -42,7 +52,7 @@ const mapStateToProps = ({ location, countryData, whitelists }) => {
 
   return {
     loading,
-    widgets: filterWidgets(widgetData),
+    widgets: widgets || filterWidgets(widgetData),
     options: getOptions(),
     currentLocation,
     currentLabel: currentLocation && currentLocation.label,
@@ -50,7 +60,7 @@ const mapStateToProps = ({ location, countryData, whitelists }) => {
     ...whitelists,
     ...countryData,
     colors,
-    activeWidget
+    activeWidget: activeWidget || getActiveWidget(widgetData)
   };
 };
 

@@ -35,7 +35,8 @@ class Page extends PureComponent {
       widgetAnchor,
       activeWidget,
       locationGeoJson,
-      setMapZoom
+      setMapZoom,
+      widgets
     } = this.props;
 
     return (
@@ -62,7 +63,7 @@ class Page extends PureComponent {
             links={links}
             checkActive
           />
-          <Widgets />
+          <Widgets widgets={widgets} activeWidget={activeWidget} />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Sticky
@@ -131,6 +132,7 @@ Page.propTypes = {
   location: PropTypes.object,
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
+  widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   locationGeoJson: PropTypes.object,
   activeWidget: PropTypes.object,

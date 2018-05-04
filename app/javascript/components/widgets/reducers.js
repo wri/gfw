@@ -24,6 +24,11 @@ const setWidgetLoading = (state, { payload }) => ({
   }
 });
 
+const setWidgetActive = (state, { payload }) => ({
+  ...state,
+  active: payload
+});
+
 const setWidgetSettings = (state, { payload }) => ({
   ...state,
   [payload.widget]: {
@@ -56,5 +61,6 @@ const setWidgetData = (state, { payload }) => ({
 export default {
   setWidgetSettings,
   setWidgetLoading,
-  setWidgetData
+  setWidgetData,
+  setWidgetActive
 };
