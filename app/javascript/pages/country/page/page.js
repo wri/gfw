@@ -47,7 +47,7 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
     widgets,
-    activeWidget: activeWidget || (widgets && widgets[0]),
+    activeWidget: activeWidget || (widgets && widgets[0] && widgets[0].name),
     ...location,
     widgetAnchor,
     ...countryData,
