@@ -8,7 +8,7 @@ export const initialState = {
     type: 'fao',
     metaKey: 'widget_rate_of_restoration_fao',
     sortOrder: {
-      forestChange: 6
+      forestChange: 4
     },
     colors: 'gain',
     sentences: {

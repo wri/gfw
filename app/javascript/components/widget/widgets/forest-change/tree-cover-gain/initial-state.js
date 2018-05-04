@@ -21,7 +21,7 @@ export default {
     layers: ['forestgain'],
     sortOrder: {
       summary: 6,
-      'forest-change': 4
+      forestChange: 5
     },
     sentences: {
       initial:
