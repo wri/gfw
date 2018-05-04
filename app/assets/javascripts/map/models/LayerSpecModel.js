@@ -56,6 +56,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'col_plantations_by_species',
       'khm_plantations_by_type',
       'khm_plantations_by_species',
+      'idn_forest_cover',
       'idn_forest_area',
       'idn_plantations_by_type',
       'idn_plantations_by_species',
