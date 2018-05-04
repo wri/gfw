@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Widget from 'components/widget';
+import Widgets from 'components/widgets';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import Share from 'components/modals/share';
@@ -16,7 +16,7 @@ class Embed extends PureComponent {
     return (
       <div className="c-embed">
         <div className="widget-wrapper">
-          <Widget widget={widgetKey} embed />
+          <Widgets widget={widgetKey} embed />
         </div>
         <Share />
         <ModalMeta />

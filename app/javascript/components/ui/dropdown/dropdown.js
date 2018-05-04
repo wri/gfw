@@ -76,6 +76,9 @@ class DropdownContainer extends PureComponent {
     if (changes && changes.selectedItem) {
       this.setState({ isOpen: false, inputValue: '' });
     }
+    if (Object.keys(changes).indexOf('isOpen') > -1) {
+      this.setState({ inputValue: '' });
+    }
     if (
       (changes && changes.highlightedIndex) ||
       changes.highlightedIndex === 0
@@ -109,7 +112,7 @@ class DropdownContainer extends PureComponent {
   handleClearSelection = () => {
     const { onChange } = this.props;
     onChange();
-    this.setState({ isOpen: false, showGroup: '' });
+    this.setState({ isOpen: false, showGroup: '', inputValue: '' });
   };
 
   handleSelectGroup = item => {
