@@ -6,8 +6,6 @@ import actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getAdminSelected, getOptions, filterWidgets } from './selectors';
 
-import * as Widgets from './manifest';
-
 const mapStateToProps = ({ location, countryData, whitelists }) => {
   // loaders
   const {
@@ -44,16 +42,13 @@ const mapStateToProps = ({ location, countryData, whitelists }) => {
 
   return {
     loading,
-    WidgetsFuncs: Widgets,
     widgets: filterWidgets(widgetData),
     options: getOptions(),
     currentLocation,
     currentLabel: currentLocation && currentLocation.label,
     ...widgetData,
     ...whitelists,
-    whitelist: payload.region
-      ? whitelists.regionWhitelist
-      : whitelists.countryWhitelist,
+    ...countryData,
     colors,
     activeWidget
   };

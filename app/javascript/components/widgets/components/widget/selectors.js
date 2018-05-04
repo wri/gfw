@@ -11,21 +11,19 @@ const getOptions = state => state.options || null;
 const getConfig = state => state.config || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
-const getLocationWhitelist = state =>
-  (state.payload.region ? state.regionWhitelist : state.countryWhitelist);
+const getLocationWhitelist = state => state.indicatorWhitelist || null;
 
-export const getOptionsSelectedMeta = createSelector(
+export const getOptionsSelected = createSelector(
   [getOptions, getSettings],
   (options, settings) => {
-    if (!options) return null;
+    if (!options || !settings) return null;
     const optionsMeta = {};
     Object.keys(settings).forEach(o => {
       const optionsKey = `${o}s`;
       if (options[optionsKey]) {
-        const option = options[optionsKey].find(
-          opt => opt.value === settings[o]
+        optionsMeta[o] = options[optionsKey].find(
+          opt => opt.value === settings[o] && opt.value !== 'gadm28'
         );
-        optionsMeta[o] = option && option.value !== 'gadm28' && option.label;
       }
     });
     return optionsMeta;

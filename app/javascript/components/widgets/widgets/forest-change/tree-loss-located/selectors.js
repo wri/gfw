@@ -10,8 +10,7 @@ const getLoss = state => (state.data && state.data.lossByRegion) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
-const getActiveIndicator = state =>
-  (state.optionsSelected && state.optionsSelected.indicator) || null;
+const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
@@ -68,7 +67,7 @@ export const getSentence = createSelector(
     getSettings,
     getOptions,
     getLocation,
-    getActiveIndicator,
+    getIndicator,
     getCurrentLocation,
     getSentences
   ],
@@ -83,7 +82,7 @@ export const getSentence = createSelector(
     currentLabel,
     sentences
   ) => {
-    if (!data || !options || !indicator || !currentLabel) return '';
+    if (!data || !options || !currentLabel) return '';
     const {
       initial,
       withIndicator,
@@ -106,14 +105,13 @@ export const getSentence = createSelector(
       percentileLength += 1;
     }
     const topLoss = percentileLoss / totalLoss * 100;
-    let sentence =
-      indicator.value === 'gadm28' ? initialPercent : withIndicatorPercent;
+    let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
-      sentence = indicator.value === 'gadm28' ? initial : withIndicator;
+      sentence = !indicator ? initial : withIndicator;
     }
 
     const params = {
-      indicator: indicator.value,
+      indicator: indicator && indicator.value,
       location: currentLabel,
       startYear,
       endYear,

@@ -11,8 +11,7 @@ const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.region : state.countries) || null;
 const getColors = state => state.colors || null;
-const getIndicator = state =>
-  (state.optionsSelected && state.optionsSelected.indicator) || null;
+const getIndicator = state => state.indicator || null;
 const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config.sentences || null;
 
@@ -97,7 +96,7 @@ export const getSentence = createSelector(
     const params = {
       location: currentLocation && currentLocation.label,
       gain: `${format('.3s')(gain)}ha`,
-      region: indicator.value !== 'gadm28' ? indicator.label : 'region-wide',
+      region: indicator ? indicator.label : 'region-wide',
       percentage: `${format('.1f')(areaPercent)}%`,
       extentYear: settings.extentYear
     };

@@ -16,7 +16,6 @@ class Widgets extends PureComponent {
       widgets,
       activeWidget,
       category,
-      WidgetsFuncs,
       colors
     } = this.props;
 
@@ -32,7 +31,6 @@ class Widgets extends PureComponent {
               key={widget.name}
               widget={widget.name}
               active={activeWidget && activeWidget === widget.name}
-              {...WidgetsFuncs[widget.name]}
               colors={
                 colors[widget.config.colors || widget.config.type] || colors
               }

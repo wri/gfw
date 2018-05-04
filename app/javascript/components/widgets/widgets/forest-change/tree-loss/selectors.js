@@ -10,8 +10,7 @@ const getLoss = state => (state.data && state.data.loss) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getCurrentLocation = state => state.currentLabel || null;
-const getActiveIndicator = state =>
-  (state.optionsSelected && state.optionsSelected.indicator) || null;
+const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -76,7 +75,7 @@ export const getSentence = createSelector(
     getExtent,
     getSettings,
     getCurrentLocation,
-    getActiveIndicator,
+    getIndicator,
     getSentences
   ],
   (data, extent, settings, currentLabel, indicator, sentences) => {
@@ -90,13 +89,13 @@ export const getSentence = createSelector(
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
 
-    let sentence = indicator.value === 'gadm28' ? initial : withIndicator;
+    let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
-      sentence = indicator.value === 'gadm28' ? noLoss : noLossWithIndicator;
+      sentence = indicator ? noLossWithIndicator : noLoss;
     }
 
     const params = {
-      indicator: indicator.label.toLowerCase(),
+      indicator: indicator && indicator.label.toLowerCase(),
       location: currentLabel,
       startYear,
       endYear,

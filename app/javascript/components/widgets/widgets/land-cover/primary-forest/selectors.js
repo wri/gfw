@@ -7,8 +7,7 @@ import { format } from 'd3-format';
 const getData = state => state.data;
 const getSettings = state => state.settings;
 const getCurrentLocation = state => state.currentLabel;
-const getActiveIndicator = state =>
-  (state.optionsSelected && state.optionsSelected.indicator) || null;
+const getIndicator = state => state.indicator || null;
 const getIndicatorWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
@@ -58,15 +57,9 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [
-    parseData,
-    getSettings,
-    getCurrentLocation,
-    getActiveIndicator,
-    getSentences
-  ],
+  [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !currentLabel) return null;
+    if (!parsedData || !currentLabel || !indicator) return null;
     const {
       initial,
       lessThan,

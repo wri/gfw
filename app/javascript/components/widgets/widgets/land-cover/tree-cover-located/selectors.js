@@ -9,8 +9,7 @@ import { format } from 'd3-format';
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
-const getIndicator = state =>
-  (state.optionsSelected && state.optionsSelected.indicator) || null;
+const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
@@ -53,7 +52,7 @@ export const getSentence = createSelector(
     getSentences
   ],
   (data, settings, options, location, indicator, currentLabel, sentences) => {
-    if (!data || !options || !indicator || !currentLabel) return null;
+    if (!data || !options || !currentLabel) return null;
     const { initial, hasPercentage, hasIndicator } = sentences;
     const topRegion = data.length && data[0];
     const totalExtent = sumBy(data, 'extent');
@@ -74,7 +73,7 @@ export const getSentence = createSelector(
     const params = {
       location: currentLabel,
       region: topRegion.label,
-      indicator: indicator.label,
+      indicator: indicator && indicator.label,
       percentage: `${format('.0f')(topExtent)}%`,
       relPercentage: `${format('.0f')(topRegion.percentage)}%`,
       averagePerc: `${format('.0f')(avgExtentPercentage)}%`,
@@ -84,7 +83,7 @@ export const getSentence = createSelector(
     };
 
     let sentence = settings.unit === '%' ? hasPercentage : initial;
-    if (indicator.value !== 'gadm28') {
+    if (indicator) {
       sentence = hasIndicator;
     }
 

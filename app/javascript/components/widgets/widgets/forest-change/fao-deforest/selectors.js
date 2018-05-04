@@ -7,7 +7,7 @@ const getLocation = state => state.payload || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
-const getOptionsSelected = state => state.options || null;
+const getPeriod = state => state.period || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const parseData = createSelector(
@@ -44,15 +44,14 @@ export const getSentence = createSelector(
     getLocation,
     getCurrentLocation,
     getSettings,
-    getOptionsSelected,
+    getPeriod,
     getSentences
   ],
-  (data, location, currentLabel, settings, options, sentences) => {
+  (data, location, currentLabel, settings, period, sentences) => {
     if (!data || !data.fao) return '';
     const { initial, noDeforest, humanDeforest } = sentences;
     const topFao = data.fao.filter(d => d.year === settings.period);
     const { deforest, humdef } = topFao[0];
-    const period = options && options.periods;
 
     let sentence = noDeforest;
     if (deforest) {

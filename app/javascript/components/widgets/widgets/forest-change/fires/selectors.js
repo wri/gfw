@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import { sortByKey } from 'utils/data';
 
 // get list data
-const getData = state => (state.data && state.data.fires) || null;
+const getData = state => state.data || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;

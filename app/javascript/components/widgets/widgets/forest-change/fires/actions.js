@@ -12,9 +12,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
     .then(response => {
       dispatch(
         setWidgetData({
-          data: {
-            fires: response.data.data
-          },
+          data: response.data.data,
           widget
         })
       );

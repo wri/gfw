@@ -7,38 +7,27 @@ import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 
 import Component from './component';
+import * as Widgets from '../../manifest';
 import * as Selectors from './selectors';
 
 const mapStateToProps = ({ widgets }, ownProps) => {
-  const {
-    widget,
-    colors,
-    active,
-    options,
-    parseData,
-    parseConfig,
-    getSentence
-  } = ownProps;
+  const { widget, colors, active, options } = ownProps;
 
   // widget consts
   const { config, settings } = widgets[widget];
-  const highlightColor =
-    colors.main || (colors.extent && colors.extent.main) || '#a0c746';
-  const haveMapLayers = settings && settings.layers && !!settings.layers.length;
+  const { getOptionsSelected } = Selectors;
+  const highlightColor = colors.main || '#a0c746';
+  const haveMapLayers = settings && !isEmpty(settings.layers);
   const onMap = active && haveMapLayers;
+  const { parseData, parseConfig, getSentence } = Widgets[widget];
 
   // selector data
   const optionsSelected =
-    settings &&
-    Selectors.getOptionsSelectedMeta({
-      options,
-      settings
-    });
+    settings && getOptionsSelected({ ...ownProps, settings });
   const selectorData = {
-    optionsSelected,
-    options,
     ...ownProps,
-    ...widgets[widget]
+    ...widgets[widget],
+    ...optionsSelected
   };
   const filteredOptions = {};
   if (config.selectors) {
@@ -51,8 +40,8 @@ const mapStateToProps = ({ widgets }, ownProps) => {
   }
 
   return {
+    ...Widgets[widget],
     ...selectorData,
-    optionsSelected,
     highlightColor,
     options: filteredOptions,
     onMap,

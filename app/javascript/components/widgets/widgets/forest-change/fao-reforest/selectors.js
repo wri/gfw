@@ -8,7 +8,7 @@ const getData = state => state.data || null;
 const getLocation = state => state.payload || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
-const getOptionsSelected = state => state.options || null;
+const getPeriod = state => state.period || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const getSortedData = createSelector([getData], data => {
@@ -46,12 +46,11 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getLocation, getSettings, getOptionsSelected, getSentences],
-  (data, location, settings, options, sentences) => {
+  [parseData, getLocation, getSettings, getPeriod, getSentences],
+  (data, location, settings, period, sentences) => {
     if (!data || !data.length) return null;
     const { initial, noReforest } = sentences;
     const countryData = data.find(d => location.country === d.iso) || null;
-    const period = options && options.periods;
 
     const sentence = countryData.value > 0 ? initial : noReforest;
 

@@ -8,10 +8,9 @@ import { format } from 'd3-format';
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state =>
-  (state.payload.region ? state.region : state.countries) || null;
+const getLocationsMeta = state => state.countries || null;
 const getColors = state => state.colors || null;
-const getIndicator = state => state.optionsSelected.indicator || null;
+const getIndicator = state => state.indicator || null;
 const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config.sentences || null;
 
@@ -82,7 +81,7 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getIndicator, getCurrentLocation, getSentences],
   (data, settings, indicator, currentLocation, sentences) => {
-    if (!data || !data.length || !currentLocation || !indicator) return null;
+    if (!data || !data.length || !currentLocation) return null;
     const { initial, withInd, withPerc, withPercAndInd } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
@@ -94,12 +93,12 @@ export const getSentence = createSelector(
       extentYear: settings.extentYear,
       location: currentLocation.label,
       extent: `${extent ? format('.3s')(extent) : '0'}ha`,
-      region: indicator && indicator.value,
+      region: indicator && indicator.label,
       percentage: `${format('.3s')(areaPercent)}ha`
     };
 
     let sentence = areaPercent >= 0.1 ? withPerc : initial;
-    if (indicator.value !== 'gadm28') {
+    if (indicator) {
       sentence = areaPercent >= 0.1 ? withPercAndInd : withInd;
     }
 

@@ -12,8 +12,7 @@ const getLatestDates = state => (state.data && state.data.latest) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
-const getIndicator = state =>
-  (state.optionsSelected && state.optionsSelected.indicator) || null;
+const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state =>
   (!state.payload.region ? state.regions : state.subRegions) || null;
@@ -90,18 +89,14 @@ export const getSentence = createSelector(
     getSentences
   ],
   (data, settings, options, location, indicator, currentLabel, sentences) => {
-    if (!data || !options || !indicator || !currentLabel) return '';
+    if (!data || !options || !currentLabel) return '';
     const { initial } = sentences;
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
       area: `${format('.2s')(sumBy(data, 'area'))}ha`,
       location: `${currentLabel}`,
-      indicator: `${
-        indicator && indicator.value !== 'gadm28'
-          ? `${indicator.label} in `
-          : ''
-      }`
+      indicator: `${indicator ? `${indicator.label} in ` : ''}`
     };
     return { sentence: initial, params };
   }

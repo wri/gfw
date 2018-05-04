@@ -42,7 +42,7 @@ export {
   primaryForest,
   treeCoverLocated,
   faoCover,
-  // forest change
+  // // forest change
   gladAlerts,
   gladRanked,
   fires,
@@ -54,15 +54,15 @@ export {
   treeLoss,
   faoDeforest,
   faoReforest,
-  // land use
+  // // land use
   treeCoverPlantations,
   rankedPlantations,
-  // conservation
+  // // conservation
   gladBiodiversity,
-  // people
+  // // people
   economicImpact,
   forestryEmployment,
-  // climate
+  // // climate
   emissions,
   emissionsDeforestation
 };

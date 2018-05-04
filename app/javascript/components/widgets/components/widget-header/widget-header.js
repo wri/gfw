@@ -16,7 +16,7 @@ const actions = {
 
 const mapStateToProps = (
   { location, modalMeta },
-  { currentLocation, widget, title, config, whitelist }
+  { currentLocation, widget, title, config, indicatorWhitelist }
 ) => {
   const locationUrl = `${location.payload.country}${
     location.payload.region ? `/${location.payload.region}` : ''
@@ -32,7 +32,7 @@ const mapStateToProps = (
   const size = config.size;
   const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
   const widgetMetaKey =
-    widget === 'treeCover' && whitelist.plantations
+    widget === 'treeCover' && indicatorWhitelist.plantations
       ? 'widget_natural_vs_planted'
       : config.metaKey;
 

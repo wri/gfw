@@ -7,7 +7,7 @@ import { getColorPalette } from 'utils/data';
 // get list data
 const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
-const getOptionsSelected = state => state.optionsSelected || null;
+const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -60,10 +60,9 @@ export const parseConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getOptionsSelected, getSentences],
-  (data, settings, options, sentences) => {
-    if (!data || isEmpty(data) || !indicator) return null;
-    const { indicator } = options;
+  [parseData, getSettings, getIndicator, getSentences],
+  (data, settings, indicator, sentences) => {
+    if (!data || isEmpty(data)) return null;
     const { initial, containsIndicator } = sentences;
     const { startYear, endYear, unit } = settings;
     const totalEmissions = data
@@ -71,9 +70,9 @@ export const getSentence = createSelector(
       .reduce((sum, d) => (d ? sum + d : sum));
     const emissionType = unit === 'biomassCarbon' ? 'carbon' : 'CO2';
     let indicatorText = '';
-    if (indicator.value === 'mining') {
+    if (indicator && indicator.value === 'mining') {
       indicatorText = ` ${indicator.label.toLowerCase()} regions`;
-    } else if (indicator.value !== 'gadm28') {
+    } else if (indicator && indicator.value !== 'gadm28') {
       indicatorText = ` ${indicator.label.toLowerCase()}`;
     }
 

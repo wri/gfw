@@ -13,8 +13,7 @@ const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
 const getLocationsMeta = state => state.countries || null;
 const getColors = state => state.colors || null;
-const getIndicator = state =>
-  (state.optionsSelected && state.optionsSelected.indicator) || null;
+const getIndicator = state => state.indicator || null;
 const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -123,13 +122,11 @@ export const getSentence = createSelector(
     const areaPercent =
       (locationData && format('.1f')(locationData.percentage)) || 0;
     const loss = locationData && locationData.loss;
-    const sentence =
-      indicator && indicator.value === 'gadm28' ? initial : withIndicator;
+    const sentence = !indicator ? initial : withIndicator;
     const params = {
-      indicator:
-        indicator && indicator.value === 'gadm28'
-          ? 'region-wide'
-          : `${indicator && indicator.label.toLowerCase()}`,
+      indicator: !indicator
+        ? 'region-wide'
+        : `${indicator && indicator.label.toLowerCase()}`,
       location: currentLocation && currentLocation.label,
       startYear,
       endYear,
