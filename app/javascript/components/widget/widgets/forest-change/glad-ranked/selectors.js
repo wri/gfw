@@ -61,10 +61,13 @@ export const parseData = createSelector(
       const counts = sumBy(regionData, 'count');
       const countsAreaPerc =
         countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
+      const countsPerHa =
+        counts && regionExtent ? counts / regionExtent.extent : 0;
       return {
         id: k,
         color: colors.main,
         percentage: countsAreaPerc,
+        countsPerHa,
         count: counts,
         area: countsArea,
         value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
