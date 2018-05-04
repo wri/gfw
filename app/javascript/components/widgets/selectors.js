@@ -36,7 +36,8 @@ const options = {
 export const getAdminLevel = createSelector([getLocation], location => {
   if (location.subRegion) return 'subRegion';
   if (location.region) return 'region';
-  return 'country';
+  if (location.country) return 'country';
+  return 'global';
 });
 
 export const getAdminKey = createSelector([getLocation], location => {
@@ -103,14 +104,13 @@ export const checkWidgetNeedsLocations = createSelector(
     getAdminLevel
   ],
   (widgets, locations, countryData, location, adminLevel) => {
-    if (isEmpty(locations)) return null;
     const { faoCountries } = countryData;
     const isFaoCountry =
       !!faoCountries.find(c => c.value === location.country) || null;
     return widgets.filter(
       w =>
         w.config.admins.indexOf(adminLevel) > -1 &&
-        (!w.config.locationCheck || locations.length > 1) &&
+        (!w.config.locationCheck || (locations && locations.length > 1)) &&
         (w.config.type !== 'fao' || isFaoCountry) &&
         (!w.config.customLocationWhitelist ||
           w.config.customLocationWhitelist.indexOf(location.country) > -1)
@@ -119,9 +119,10 @@ export const checkWidgetNeedsLocations = createSelector(
 );
 
 export const filterWidgets = createSelector(
-  [checkWidgetNeedsLocations, getIndicatorWhitelist],
-  (widgets, whitelist) => {
+  [checkWidgetNeedsLocations, getIndicatorWhitelist, getAdminLevel],
+  (widgets, whitelist, admin) => {
     if (!widgets) return null;
+    if (admin === 'global') return widgets;
     const whitelistKeys = !isEmpty(whitelist) ? Object.keys(whitelist) : null;
 
     return widgets.filter(widget => {

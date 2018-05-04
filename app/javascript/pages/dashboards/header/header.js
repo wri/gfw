@@ -141,7 +141,7 @@ class HeaderContainer extends PureComponent {
     let secondSentence = '';
     if (data.extent > 0) {
       firstSentence = `
-        In 2010, <b>${location}</b> had <b>${
+        In 2010, <b>${location || 'the world'}</b> had <b>${
         extent
       }ha</b> of tree cover, extending over <b>${
         percentageCover
@@ -163,7 +163,7 @@ class HeaderContainer extends PureComponent {
       }t</b> of CO₂ of emissions.
       `;
     }
-    return `${location ? firstSentence : ''} ${secondSentence}`;
+    return `${firstSentence} ${secondSentence}`;
   };
 
   render() {

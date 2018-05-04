@@ -37,7 +37,7 @@ class Widgets extends PureComponent {
             />
           ))}
         {!loading &&
-          (!currentLabel || (!widgets || widgets.length === 0)) && (
+          (!widgets || widgets.length === 0) && (
             <NoContent
               className="no-widgets-message large"
               message={`${upperFirst(category)} data for ${currentLabel ||
