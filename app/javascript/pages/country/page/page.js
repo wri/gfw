@@ -5,7 +5,7 @@ import CATEGORIES from 'data/categories.json';
 
 import mapActions from 'components/map/map-actions';
 
-import { filterWidgets, getActiveWidget } from 'components/widgets/selectors';
+import { filterWidgets } from 'components/widgets/selectors';
 import { getLinks, getAdminsSelected } from './page-selectors';
 import Component from './page-component';
 
@@ -28,25 +28,26 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
   const widgetHash =
     window.location.hash && replace(window.location.hash, '#', '');
   const widgetAnchor = document.getElementById(widgetHash);
+  const activeWidget =
+    replace(window.location.hash, '#', '') ||
+    (location.query && location.query.widget);
   const widgetData = {
     category,
     ...location,
     countryData,
-    activeWidget:
-      replace(window.location.hash, '#', '') ||
-      (location.query && location.query.widget),
     indicatorWhitelist: location.payload.region
       ? regionWhitelist
       : countryWhitelist
   };
+  const widgets = filterWidgets(widgetData);
 
   return {
     showMapMobile: map.showMapMobile,
     links: getLinks({ categories: CATEGORIES, ...location, category }),
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
-    widgets: filterWidgets(widgetData),
-    activeWidget: getActiveWidget(widgetData),
+    widgets,
+    activeWidget: activeWidget || (widgets && widgets[0]),
     ...location,
     widgetAnchor,
     ...countryData,
