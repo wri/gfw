@@ -1,4 +1,5 @@
 import axios from 'axios';
+import request from 'utils/request';
 
 const REQUEST_URL = process.env.GFW_API_HOST_PROD;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -32,7 +33,7 @@ export const fetchGladAlerts = ({ country, region, subRegion }) => {
   }`
     .replace('{location}', getLocation(country, region, subRegion))
     .replace('{polyname}', 'gadm28');
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
