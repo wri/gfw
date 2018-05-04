@@ -94,10 +94,24 @@ export const getSentence = createSelector(
   (data, settings, options, location, indicator, locationNames, sentences) => {
     if (!data || !options || !indicator || !locationNames) return '';
     const { initial } = sentences;
+    const totalCount = sumBy(data, 'count');
+    let percentileCount = 0;
+    let percentileLength = 0;
+
+    while (
+      (percentileLength < data.length && percentileCount / totalCount < 0.5) ||
+      (percentileLength < 10 && data.length > 10)
+    ) {
+      percentileCount += data[percentileLength].count;
+      percentileLength += 1;
+    }
+    const topCount = percentileCount / totalCount * 100;
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
       area: `${format('.2s')(sumBy(data, 'area'))}ha`,
+      topPercent: `${format('.2s')(topCount)}%`,
+      topRegions: percentileLength,
       location: `${locationNames.current.label}`,
       indicator: `${
         indicator && indicator.value !== 'gadm28'
