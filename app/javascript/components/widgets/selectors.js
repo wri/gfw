@@ -53,7 +53,8 @@ export const getLocationOptions = createSelector(
 export const getOptions = () => {
   const optionsMeta = {};
   Object.keys(options).forEach(oKey => {
-    optionsMeta[oKey] = sortByKey(options[oKey], 'label');
+    optionsMeta[oKey] =
+      oKey !== 'weeks' ? sortByKey(options[oKey], 'label') : options[oKey];
   });
   return optionsMeta;
 };
