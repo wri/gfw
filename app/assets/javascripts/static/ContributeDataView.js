@@ -220,7 +220,7 @@ define([
 
     // TO-DO: validate checkbox
     validateInput: function(name, value) {
-      let errors = validate.single(value, constraints[name]);
+      var errors = validate.single(value, constraints[name]);
       if (!!errors) {
         this.errors[name] = errors[0];
       } else {

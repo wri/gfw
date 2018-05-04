@@ -214,23 +214,21 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Protected areas<a href='#' data-source='wdpa_protected_areas' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          {{#if staging}}
           <li class="wrapped-layer" data-color="#6D00E1">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Global Biodiversity<a href='#' data-source='biodiversity_intactness' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">Biodiversity Intactness and Significance</span>
+            <span class="layer-title">Global Forest Biodiversity<a href='#' data-source='biodiversity_intactness' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">Forest Biodiversity Significance and Intactness</span>
             <span class="layer-info -hidden">
-              <label data-layer="biodiversity_intactness" class="layer wrapped">
-                <span></span>
-                <input type="radio" />Intactness
-              </label>
               <label data-layer="biodiversity_completeness" class="layer wrapped">
                 <span></span>
                 <input type="radio" />Significance
               </label>
+              <label data-layer="biodiversity_intactness" class="layer wrapped">
+                <span></span>
+                <input type="radio" />Intactness
+              </label>
             </span>
           </li>
-          {{/if}}
           <li class="layer" data-layer="biodiversity_hotspots">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Biodiversity hotspots<a href='#' data-source='biodiversity_hotspots' class='source source-shape-info'><svg><use xlink:href="#shape-info"></use></svg></a></span>

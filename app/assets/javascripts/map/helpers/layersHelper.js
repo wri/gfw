@@ -194,7 +194,7 @@ define(
     'map/views/timeline/GladTimeline',
     'map/views/timeline/MangroveTimeline'
   ],
-  (
+  function(
     // Layer Views
     LossLayer,
     ForestGainLayer,
@@ -382,8 +382,8 @@ define(
     GuyraTimeline,
     GladTimeline,
     MangroveTimeline
-  ) => {
-    const layersHelper = {
+  ) {
+    var layersHelper = {
       loss: {
         view: LossLayer,
         timelineView: LossTimeline
