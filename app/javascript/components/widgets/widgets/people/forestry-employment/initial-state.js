@@ -1,5 +1,5 @@
 export default {
-  title: 'Forestry Employment by Gender',
+  title: 'Forestry Employment',
   config: {
     size: 'small',
     categories: ['people'],

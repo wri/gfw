@@ -1,5 +1,5 @@
 export default {
-  title: 'Economic Impact',
+  title: 'Economic Impact of forests',
   config: {
     size: 'large',
     categories: ['people'],

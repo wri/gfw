@@ -1,5 +1,5 @@
 export default {
-  title: 'Tree cover gain',
+  title: 'Location of tree cover gain',
   config: {
     size: 'small',
     indicators: [

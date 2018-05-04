@@ -1,5 +1,5 @@
 export default {
-  title: 'Where is tree cover located',
+  title: 'Location of tree cover',
   config: {
     size: 'small',
     indicators: [

@@ -12,9 +12,10 @@ export const initialState = {
     },
     colors: 'loss',
     sentences: {
-      initial: 'In {year}, the rate of deforestation in {location} was {rate}.',
+      initial:
+        'According to the FAO the rate of deforestation in {location} was {rate}, in {year}.',
       humanDeforest:
-        'In {year}, the rate of deforestation in {location} was {rate}, of which {human} was due to human activity.',
+        'According to the FAO the rate of deforestation in {location} was {rate} in {year}, of which {human} was due to human activity.',
       noDeforest: 'No deforestation data in {location}.'
     }
   },

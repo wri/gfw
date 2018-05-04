@@ -12,8 +12,7 @@ export default {
       forestChange: 9
     },
     sentences: {
-      initial:
-        'In {location} there were {count} active fires detected in the last 7 days.'
+      initial: '{count} active fires detected in {location} in the last 7 days.'
     }
   },
   settings: {

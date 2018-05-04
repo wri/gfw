@@ -1,5 +1,5 @@
 export default {
-  title: 'Primary forest extent',
+  title: 'Primary forest',
   config: {
     size: 'small',
     indicators: [

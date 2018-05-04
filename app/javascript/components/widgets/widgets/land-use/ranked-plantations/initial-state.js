@@ -1,5 +1,5 @@
 export default {
-  title: 'Ranked plantation breakdown',
+  title: 'Location of plantations',
   config: {
     size: 'small',
     categories: ['land-use'],

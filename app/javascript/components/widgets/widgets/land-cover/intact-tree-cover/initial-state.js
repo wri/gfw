@@ -1,5 +1,5 @@
 export default {
-  title: 'Intact forest extent',
+  title: 'Intact forest',
   config: {
     size: 'small',
     indicators: [
