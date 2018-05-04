@@ -1,3 +1,5 @@
+import { sortByKey } from 'utils/data';
+
 export const initialState = {
   isCountriesLoading: false,
   isRegionsLoading: false,
@@ -27,7 +29,7 @@ const mapLocations = locations => {
       });
     }
   });
-  return locationsMapped;
+  return sortByKey(locationsMapped, 'label');
 };
 
 const setCountriesLoading = (state, { payload }) => ({

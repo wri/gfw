@@ -71,7 +71,6 @@ export const getSentence = createSelector(
     getCurrentLocation,
     getSentences
   ],
-
   (
     data,
     sortedData,
@@ -111,7 +110,7 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      indicator: indicator && indicator.value,
+      indicator: indicator && indicator.label,
       location: currentLabel,
       startYear,
       endYear,

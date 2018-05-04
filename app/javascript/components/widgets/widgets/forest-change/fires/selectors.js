@@ -25,7 +25,9 @@ export const parseData = createSelector([getData], data => {
         false
       );
   } else {
-    sortedData = [{ value: data.attributes.value }];
+    sortedData = data.attributes.value
+      ? [{ value: data.attributes.value }]
+      : null;
   }
   return sortedData;
 });

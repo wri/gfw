@@ -2,7 +2,6 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios from 'axios';
 import uniqBy from 'lodash/uniqBy';
-import { sortByKey } from 'utils/data';
 
 import {
   getCountriesProvider,
@@ -43,10 +42,7 @@ export const getCountries = createThunkAction(
               [...gadm28Countries.data.rows, ...faoCountries.data.rows],
               'iso'
             );
-            const countries = sortByKey(
-              allCountries.filter(c => c.iso !== 'XCA'),
-              'label'
-            );
+            const countries = allCountries.filter(c => c.iso !== 'XCA');
             dispatch(setGadmCountries(gadm28Countries.data.rows));
             dispatch(setFAOCountries(faoCountries.data.rows));
             dispatch(setCountries(countries));
@@ -68,7 +64,7 @@ export const getRegions = createThunkAction(
       dispatch(setRegionsLoading(true));
       getRegionsProvider(country)
         .then(response => {
-          dispatch(setRegions(sortByKey(response.data.rows, 'label')));
+          dispatch(setRegions(response.data.rows));
           dispatch(setRegionsLoading(false));
         })
         .catch(error => {
