@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
-import Loader from 'components/loader';
-import NoContent from 'components/no-content';
+import Loader from 'components/ui/loader';
+import NoContent from 'components/ui/no-content';
 import MiniLegend from 'components/map/components/mini-legend';
 
 import './map-styles.scss';

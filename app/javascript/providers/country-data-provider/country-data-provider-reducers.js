@@ -3,6 +3,7 @@ export const initialState = {
   isRegionsLoading: false,
   isSubRegionsLoading: false,
   isGeostoreLoading: false,
+  isCountryLinksLoading: false,
   countries: [],
   gadmCountries: [],
   faoCountries: [],

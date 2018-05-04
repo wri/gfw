@@ -3,12 +3,12 @@
 .c-header {
   position: relative;
   background-color: $slate-light;
-  min-height: rem(350px);
   padding: rem(50px) 0 rem(30px);
   width: 100%;
 
   @media screen and(min-width: $screen-l) {
     padding: rem(70px) rem(30px) rem(80px) 0;
+    min-height: rem(350px);
   }
 
   .share-buttons {
@@ -37,7 +37,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-bottom: rem(30px);
+    margin-bottom: rem(20px);
 
     @media screen and (min-width: $screen-l) {
       margin-bottom: 0;

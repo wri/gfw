@@ -1,119 +1,25 @@
 import { createSelector } from 'reselect';
 import compact from 'lodash/compact';
-import uniq from 'lodash/uniq';
-import concat from 'lodash/concat';
-import isEmpty from 'lodash/isEmpty';
 import qs from 'query-string';
-import sortBy from 'lodash/sortBy';
-
-import WIDGETS from 'components/widget/widget-config.json';
 
 // get list data
 const getCategories = state => state.categories || null;
 const getCategory = state => state.category || null;
-const getAdminLevel = state => state.adminLevel || null;
-const getLocation = state => state.location || null;
-const getLocationOptions = state => state.locationOptions || null;
-const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
-const getFAOCountries = state => state.faoCountries || null;
-const getWidgetQuery = state => state.activeWidget || null;
-
-// get lists selected
-export const getWidgets = createSelector([], () =>
-  Object.keys(WIDGETS).map(key => ({
-    name: key,
-    ...WIDGETS[key]
-  }))
-);
-
-export const filterWidgetsByCategory = createSelector(
-  [getWidgets, getCategory],
-  (widgets, category) =>
-    sortBy(
-      widgets.filter(
-        w => w.enabled && w.config.categories.indexOf(category) > -1
-      ),
-      `config.sortOrder[${category}]`
-    )
-);
-
-export const checkWidgetNeedsLocations = createSelector(
-  [
-    filterWidgetsByCategory,
-    getLocationOptions,
-    getAdminLevel,
-    getFAOCountries,
-    getLocation
-  ],
-  (widgets, locations, adminLevel, faoCountries, location) => {
-    if (isEmpty(locations)) return null;
-    const adminCheck = adminLevel === 'country' ? 'regions' : 'subRegions';
-    const isFaoCountry =
-      faoCountries.find(c => c.value === location.payload.country) || null;
-    return widgets.filter(
-      w =>
-        w.config.admins.indexOf(adminLevel) > -1 &&
-        (!w.config.locationCheck || locations[adminCheck].length > 1) &&
-        (w.config.type !== 'fao' || isFaoCountry) &&
-        (!w.config.customLocationWhitelist ||
-          w.config.customLocationWhitelist.indexOf(location.payload.country) >
-            -1)
-    );
-  }
-);
-
-export const filterWidgets = createSelector(
-  [checkWidgetNeedsLocations, getIndicatorWhitelist],
-  (widgets, whitelist) => {
-    const whitelistKeys = !isEmpty(whitelist) ? Object.keys(whitelist) : null;
-
-    return widgets.filter(widget => {
-      // filter by showIndicators
-      let showByIndicators = true;
-      if (widget.config.showIndicators && whitelist) {
-        const totalIndicators = concat(
-          widget.config.showIndicators,
-          whitelistKeys
-        ).length;
-        const reducedIndicators = uniq(
-          concat(widget.config.showIndicators, whitelistKeys)
-        ).length;
-        showByIndicators = totalIndicators !== reducedIndicators;
-      }
-      // Then check if widget has data for gadm28 (loss or gain)
-      const type = widget.config.type;
-      const hasData =
-        !type ||
-        type === 'extent' ||
-        type === 'fao' ||
-        type === 'emissions' ||
-        type === 'plantations' ||
-        type === 'fires' ||
-        (whitelist && whitelist.gadm28 && whitelist.gadm28[type]);
-
-      return showByIndicators && hasData;
-    });
-  }
-);
-
-export const getActiveWidget = createSelector(
-  [filterWidgets, getWidgetQuery],
-  (widgets, widgetQuery) => {
-    if (!widgets || !widgets.length || widgetQuery === 'none') return null;
-    if (!widgetQuery) return widgets[0];
-    return widgets.find(w => w.name === widgetQuery);
-  }
-);
+const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
+const getCountries = state => state.countries || null;
+const getRegions = state => state.regions || null;
+const getSubRegions = state => state.subRegions || null;
 
 export const getLinks = createSelector(
-  [getCategories, getCategory, getLocation],
-  (categories, activeCategory, location) =>
+  [getCategories, getCategory, getLocation, getQuery],
+  (categories, activeCategory, location, query) =>
     categories.map(category => {
       const locationUrl = compact(
-        Object.keys(location.payload).map(key => location.payload[key])
+        Object.keys(location).map(key => location[key])
       ).join('/');
       const newQuery = {
-        ...location.query,
+        ...query,
         category: category.value,
         widget: undefined
       };
@@ -123,4 +29,31 @@ export const getLinks = createSelector(
         active: activeCategory === category.value
       };
     })
+);
+
+// get lists selected
+export const getAdminsSelected = createSelector(
+  [getCountries, getRegions, getSubRegions, getLocation],
+  (countries, regions, subRegions, location) => {
+    const country =
+      (countries && countries.find(i => i.value === location.country)) || null;
+    const region =
+      (regions && regions.find(i => i.value === location.region)) || null;
+    const subRegion =
+      (subRegions && subRegions.find(i => i.value === location.subRegion)) ||
+      null;
+    let current = country;
+    if (location.subRegion) {
+      current = subRegion;
+    } else if (location.region) {
+      current = region;
+    }
+
+    return {
+      ...current,
+      country,
+      region,
+      subRegion
+    };
+  }
 );

@@ -9,7 +9,8 @@ const SQL_QUERIES = {
     "SELECT polyname, SUM(area_extent_2000) as total_extent_2000, SUM(area_extent) as total_extent_2010, SUM(area_gain) as total_gain, SUM(year_data.area_loss) as total_loss FROM data WHERE thresh = 0 AND iso = '{iso}' GROUP BY polyname",
   getRegionWhitelist:
     'SELECT polyname, SUM(area_extent_2000) as total_extent_2000, SUM(area_extent) as total_extent_2010, SUM(area_gain) as total_gain, SUM(year_data.area_loss) as total_loss FROM data WHERE thresh = 0 AND {location} GROUP BY polyname',
-  getWaterBodiesWhitelist: 'SELECT iso, adm1, adm2 from water_bodies_gadm28'
+  getWaterBodiesWhitelist:
+    "SELECT iso, adm1, adm2 from water_bodies_gadm28 WHERE iso = '{country}' AND adm1 = {region}"
 };
 
 const getLocationQuery = (country, region, subRegion) =>
@@ -33,7 +34,9 @@ export const getRegionWhitelistProvider = (admin0, admin1, admin2) => {
   return axios.get(url);
 };
 
-export const getWaterBodiesBlacklistProvider = () => {
-  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getWaterBodiesWhitelist}`;
+export const getWaterBodiesBlacklistProvider = (admin0, admin1) => {
+  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getWaterBodiesWhitelist}`
+    .replace('{country}', admin0)
+    .replace('{region}', admin1);
   return axios.get(url);
 };

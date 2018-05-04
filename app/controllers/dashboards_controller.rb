@@ -6,13 +6,13 @@ class DashboardsController < ApplicationController
   def index
     @title = @location && @location["name"] || @location
     @desc = "Data about forest change, tenure, forest related employment and land use in #{@location}"
-    if params[:widget]
-      widgets_config = JSON.parse(File.read(Rails.root.join('app', 'javascript', 'components', 'widget', 'widget-config.json')))
-      widget_data = widgets_config[params[:widget]]
-      @og_title = "#{widget_data["title"]} in #{@location}"
-      # for dynamic widget image when the feature is ready
-      # @img = "widgets/#{@widget}.png"
-    end
+    # if params[:widget]
+    #   widgets_config = JSON.parse(File.read(Rails.root.join('app', 'javascript', 'components', 'widget', 'widget-config.json')))
+    #   widget_data = widgets_config[params[:widget]]
+    #   @og_title = "#{widget_data["title"]} in #{@location}"
+    #   # for dynamic widget image when the feature is ready
+    #   # @img = "widgets/#{@widget}.png"
+    # end
   end
 
   def embed

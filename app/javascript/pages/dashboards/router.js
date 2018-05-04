@@ -1,7 +1,7 @@
 import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import queryString from 'query-string';
-import { setWidgetSettingsStore } from 'components/widget/widget-actions';
+import { setWidgetSettingsStore } from 'components/widgets/actions';
 import { handlePageTrack } from 'utils/analytics';
 
 const history = createHistory();
@@ -22,7 +22,7 @@ const routeChangeThunk = (dispatch, getState) => {
 
 export const routes = {
   [EMBED]: {
-    path: '/country/embed/:widget/:country/:region?/:subRegion?'
+    path: '/dashboards/embed/:widget/:country/:region?/:subRegion?'
   },
   [COUNTRY]: {
     path: '/dashboards/:country?/:region?/:subRegion?'
