@@ -1,5 +1,5 @@
 export default {
-  title: 'Tree cover extent',
+  title: 'Tree cover',
   config: {
     size: 'small',
     indicators: ['gadm28', 'mining', 'landmark', 'wdpa'],
@@ -17,7 +17,7 @@ export default {
       initial:
         'As of {year}, {location} had {value} of tree cover, representing {percentage} of the total land area.',
       withIndicator:
-        'As of {year}, {location} had {percentage} tree cover was in {indicator}.'
+        'As of {year}, {location} had {percentage} tree cover within {indicator}.'
     }
   },
   settings: {

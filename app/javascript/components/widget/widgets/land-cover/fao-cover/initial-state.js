@@ -1,5 +1,5 @@
 export const initialState = {
-  title: 'Forest cover',
+  title: 'FAO forest cover',
   config: {
     size: 'small',
     categories: ['land-cover'],

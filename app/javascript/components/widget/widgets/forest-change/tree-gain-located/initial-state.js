@@ -1,5 +1,5 @@
 export default {
-  title: 'Where did tree cover gain occur',
+  title: 'Location of tree cover gain in',
   config: {
     size: 'small',
     indicators: [
@@ -35,13 +35,13 @@ export default {
     },
     sentences: {
       initial:
-        'In {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the largest tree cover gain at {value} compared to an average of {average}.',
+        'In {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the most tree cover gain at {value} compared to an average of {average}.',
       withIndicator:
-        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the largest tree cover gain at {value} compared to an average of {average}.',
+        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the most tree cover gain at {value} compared to an average of {average}.',
       initialPercent:
-        'In {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the largest relative tree cover gain at {value} compared to an average of {average}.',
+        'In {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the most relative tree cover gain at {value} compared to an average of {average}.',
       withIndicatorPercent:
-        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the largest relative tree cover gain at {value} compared to an average of {average}.'
+        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topGain} of all tree cover gain. {region} had the most relative tree cover gain at {value} compared to an average of {average}.'
     }
   },
   settings: {
