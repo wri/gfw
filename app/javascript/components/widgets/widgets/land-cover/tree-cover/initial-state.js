@@ -5,7 +5,7 @@ export default {
     indicators: ['gadm28', 'mining', 'landmark', 'wdpa'],
     categories: ['summary', 'land-cover'],
     admins: ['country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds', 'extentYears'],
+    selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_tree_cover',
     layers: ['forest2000', 'forest2010'],

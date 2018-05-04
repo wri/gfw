@@ -40,7 +40,7 @@ export const parseData = createSelector(
     ];
     if (indicator === 'gadm28' && hasPlantations) {
       parsedData.splice(1, 0, {
-        label: 'Tree plantations',
+        label: 'Plantations',
         value: plantations,
         color: colorRange[1],
         percentage: plantations / totalArea * 100
