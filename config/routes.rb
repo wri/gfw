@@ -147,7 +147,7 @@ Gfw::Application.routes.draw do
 
   #cache
   get '/cache/keys' => 'cache#keys'
-  get '/cache/add' => 'cache#add'
+  post '/cache/add' => 'cache#add'
   get '/cache/*id' => 'cache#index'
 
   # sitemap
