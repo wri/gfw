@@ -75,14 +75,14 @@ Gfw::Application.routes.draw do
   # country
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
   get '/country',to: redirect('/dashboards')
-  get '/country/:iso', to: redirect { |params, req| "/dashboards/#{params[:iso]}?#{req.params.except!(:iso).to_query}" }
-  get '/country/:iso/:region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}?#{req.params.except!(:iso, :region).to_query}" }
-  get '/country/:iso/:region/:sub_region', to: redirect { |params, req| "/dashboards/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?#{req.params.except!(:iso, :region, :sub_region).to_query}" }
+  get '/country/:iso', to: redirect { |params, req| "/dashboards/country/#{params[:iso]}?#{req.params.except!(:iso).to_query}" }
+  get '/country/:iso/:region', to: redirect { |params, req| "/dashboards/country/#{params[:iso]}/#{params[:region]}?#{req.params.except!(:iso, :region).to_query}" }
+  get '/country/:iso/:region/:sub_region', to: redirect { |params, req| "/dashboards/country/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?#{req.params.except!(:iso, :region, :sub_region).to_query}" }
 
   # countries
-  get '/countries' => redirect('/dashboards')
-  get '/countries/*all' => redirect('/dashboards')
-  get '/embed/countries/overview' => redirect('/dashboards')
+  get '/countries' => redirect('/dashboards/global')
+  get '/countries/*all' => redirect('/dashboards/global')
+  get '/embed/countries/overview' => redirect('/dashboards/global')
 
   ########### /LEGACY #############
 
@@ -107,7 +107,8 @@ Gfw::Application.routes.draw do
 
   # dashboards
   get '/dashboards/embed/:widget/:iso(/:region)(/:sub_region)' => 'dashboards#embed'
-  get '/dashboards(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
+  get '/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
+  get '/dashboards' => redirect('/dashboards/global')
 
   # old country embeds
   get '/embed/country/:id' => 'embed#countries_show'

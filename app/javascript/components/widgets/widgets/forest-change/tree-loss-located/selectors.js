@@ -37,7 +37,7 @@ export const mapData = createSelector(
         loss,
         percentage,
         value: settings.unit === 'ha' ? loss : percentage,
-        path: `/country/${location.country}/${
+        path: `/dashboards/country/${location.country}/${
           location.region ? `${location.region}/` : ''
         }${d.id}`
       };

@@ -120,7 +120,7 @@ export const rankData = createSelector(
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        path: `/country/${d.iso}`,
+        path: `/dashboards/country/${d.iso}`,
         value: settings.unit === 'net_usd' ? d.net_usd : d.net_perc
       };
     });

@@ -69,7 +69,7 @@ export const parseData = createSelector(
         area: countsArea,
         value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
         label: (region && region.label) || '',
-        path: `/country/${location.country}/${
+        path: `/dashboards/country/${location.country}/${
           location.region ? `${location.region}/` : ''
         }${k}`
       };

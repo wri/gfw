@@ -90,7 +90,13 @@ export const getRangeYears = createSelector(
   [getData, getConfig],
   (data, config) => {
     if (isEmpty(data)) return null;
-    const yearsData = data.loss || data.lossByRegion[0].loss || data;
+    const yearsData =
+      data.loss ||
+      (data.lossByRegion &&
+        data.lossByRegion.length &&
+        data.lossByRegion[0].loss) ||
+      data;
+    if (isEmpty(yearsData) || !Array.isArray(data)) return null;
     return uniq(yearsData.map(d => d.year))
       .filter(
         d =>

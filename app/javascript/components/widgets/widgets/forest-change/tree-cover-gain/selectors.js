@@ -58,7 +58,7 @@ export const parseData = createSelector(
     const dataTrimmed = data.slice(trimStart, trimEnd);
     return dataTrimmed.map(d => {
       const locationData = meta && meta.find(l => d.id === l.value);
-      let path = '/country/';
+      let path = '/dashboards/country/';
       if (location.subRegion) {
         path += `${location.country}/${location.region}/${d.id}`;
       } else if (location.region) {

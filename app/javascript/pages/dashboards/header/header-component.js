@@ -66,7 +66,7 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
-              {!location.country && <h3>Global</h3>}
+              {!location.country && <h3>{location.type}</h3>}
               <Dropdown
                 theme="theme-dropdown-dark"
                 placeholder="Country"

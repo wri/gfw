@@ -30,7 +30,7 @@ export const parseData = createSelector(
           extent: d.extent,
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
-          path: `/country/${location.country}/${
+          path: `/dashboards/country/${location.country}/${
             location.region ? `${location.region}/` : ''
           }${d.id}`,
           color: colors.main

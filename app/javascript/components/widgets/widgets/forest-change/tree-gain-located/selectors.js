@@ -33,7 +33,7 @@ export const getSortedData = createSelector(
           gain: d.gain,
           percentage,
           value: settings.unit === 'ha' ? d.gain : percentage,
-          path: `/country/${location.country}/${
+          path: `/dashboards/country/${location.country}/${
             location.region ? `${location.region}/` : ''
           }${d.id}`,
           color: colors.main

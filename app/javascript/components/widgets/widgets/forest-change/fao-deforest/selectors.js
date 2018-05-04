@@ -32,7 +32,7 @@ export const parseData = createSelector(
       ...d,
       label: d.name,
       color: colors.main,
-      path: `/country/${d.iso}`,
+      path: `/dashboards/country/${d.iso}`,
       value: d.deforest
     }));
   }

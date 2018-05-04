@@ -63,11 +63,11 @@ export const parseData = createSelector(
         region: regionLabel && regionLabel.label,
         ...yKeys,
         total: totalRegionPlantations / totalArea * 100,
-        path: `${embed ? `http://${window.location.host}` : ''}/country/${
-          location.country
-        }/${location.region ? `${location.region}/` : ''}${regionId}${
-          query ? `?${query}` : ''
-        }`,
+        path: `${
+          embed ? `http://${window.location.host}` : ''
+        }/dashboards/country/${location.country}/${
+          location.region ? `${location.region}/` : ''
+        }${regionId}${query ? `?${query}` : ''}`,
         extLink: embed
       };
     });

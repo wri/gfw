@@ -40,13 +40,8 @@ class Widgets extends PureComponent {
           (!currentLabel || (!widgets || widgets.length === 0)) && (
             <NoContent
               className="no-widgets-message large"
-              message={
-                currentLabel
-                  ? `${upperFirst(category)} data for ${
-                    currentLabel
-                  } coming soon`
-                  : 'Please select a country'
-              }
+              message={`${upperFirst(category)} data for ${currentLabel ||
+                'global'} coming soon`}
               icon
             />
           )}
