@@ -10,7 +10,7 @@ import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as MapComponent from 'components/map';
 import * as HeaderComponent from 'pages/country/header';
-import * as WidgetComponent from 'components/widget';
+import * as WidgetComponent from 'components/widgets';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
