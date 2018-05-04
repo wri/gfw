@@ -121,7 +121,7 @@ class HeaderContainer extends PureComponent {
 
   getHeaderDescription = () => {
     const { locationNames, data } = this.props;
-    const extent = format('.2s')(data.extent);
+    const extent = format('.3s')(data.extent);
     const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
     const lossWithOutPlantations = format('.2s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
