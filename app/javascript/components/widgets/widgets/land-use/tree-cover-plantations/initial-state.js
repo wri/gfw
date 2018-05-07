@@ -2,7 +2,7 @@ export default {
   title: 'Plantations extent',
   config: {
     size: 'small',
-    categories: ['land-use'],
+    categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
     selectors: ['types'],
     showIndicators: ['plantations'],
@@ -10,7 +10,7 @@ export default {
     layers: ['plantations_by_type', 'plantations_by_species'],
     metaKey: 'widget_plantation_extent',
     sortOrder: {
-      landUse: 1
+      landCover: 100
     },
     sentences: {
       initialSpecies:
