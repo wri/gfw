@@ -69,7 +69,7 @@ class Header extends PureComponent {
               {!location.country && <h3>{location.type}</h3>}
               <Dropdown
                 theme="theme-dropdown-dark"
-                placeholder="Country"
+                placeholder="Select a country"
                 noItemsFound="No country found"
                 noSelectedValue="Select a country"
                 value={locationNames.country}
@@ -89,7 +89,7 @@ class Header extends PureComponent {
                 locationOptions.regions.length > 1 && (
                   <Dropdown
                     theme="theme-dropdown-dark"
-                    placeholder="Region"
+                    placeholder="Select a region"
                     noItemsFound="No region found"
                     noSelectedValue="Select a region"
                     value={locationNames.region}
@@ -114,7 +114,7 @@ class Header extends PureComponent {
                 locationOptions.subRegions.length > 1 && (
                   <Dropdown
                     theme="theme-dropdown-dark"
-                    placeholder="Region"
+                    placeholder="Select a region"
                     noItemsFound="No region found"
                     noSelectedValue="Select a region"
                     value={locationNames.subRegion}

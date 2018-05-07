@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import replace from 'lodash/replace';
+import upperFirst from 'lodash/upperFirst';
 
 import CATEGORIES from 'data/categories.json';
 
@@ -56,7 +57,10 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     currentLocation:
       locationNames && locationNames.current && locationNames.current.label,
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
-    loading: countryWhitelistLoading || regionWhitelistLoading
+    loading: countryWhitelistLoading || regionWhitelistLoading,
+    pageName: !location.payload.country
+      ? `${upperFirst(location.payload.type)} dashboard`
+      : locationNames.current && locationNames.current.label
   };
 };
 

@@ -20,20 +20,27 @@ class CountryDataProvider extends PureComponent {
       getCountryLinks
     } = this.props;
     getCountries();
-    getRegions(location.country);
+    if (location.country) {
+      getRegions(location.country);
+      getGeostore(location.country, location.region, location.subRegion);
+    }
     if (location.region) {
       getSubRegions(location.country, location.region);
     }
-    getGeostore(location.country, location.region, location.subRegion);
     getCountryLinks();
   }
 
   componentWillReceiveProps(nextProps) {
     const { country, region, subRegion } = nextProps.location;
-    const { getRegions, getSubRegions, getGeostore } = this.props;
-    const hasCountryChanged = country !== this.props.location.country;
+    const { getRegions, getSubRegions, getGeostore, setGeostore } = this.props;
+    const hasCountryChanged =
+      country !== this.props.location.country && country;
     const hasRegionChanged = region !== this.props.location.region;
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
+
+    if (!country) {
+      setGeostore({});
+    }
 
     if (hasCountryChanged) {
       getRegions(country);
@@ -66,7 +73,8 @@ CountryDataProvider.propTypes = {
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,
   getGeostore: PropTypes.func.isRequired,
-  getCountryLinks: PropTypes.func.isRequired
+  getCountryLinks: PropTypes.func.isRequired,
+  setGeostore: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };

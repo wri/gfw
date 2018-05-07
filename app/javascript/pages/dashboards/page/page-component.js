@@ -73,7 +73,7 @@ class Page extends PureComponent {
             <div className="map-container">
               <Map
                 maxZoom={14}
-                minZoom={3}
+                minZoom={2}
                 mapOptions={{
                   mapTypeId: 'GFWdefault',
                   backgroundColor: '#99b3cc',
@@ -86,8 +86,8 @@ class Page extends PureComponent {
                   overviewMapControl: false,
                   tilt: 0,
                   scrollwheel: false,
-                  center: { lat: -34.397, lng: 150.644 },
-                  zoom: 8
+                  center: { lat: 15, lng: 27 },
+                  zoom: 2
                 }}
                 areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}

@@ -66,6 +66,14 @@ class MapContainer extends PureComponent {
       this.setEvents();
     }
 
+    if (!bounds && bounds !== this.props.bounds) {
+      this.map.setZoom(2);
+      this.map.setCenter({ lat: 15, lng: 27 });
+      this.map.data.forEach(feature => {
+        this.map.data.remove(feature);
+      });
+    }
+
     if (
       !isEqual(layersKeys, this.props.layersKeys) ||
       !isEqual(settings, this.props.settings)
@@ -192,7 +200,7 @@ class MapContainer extends PureComponent {
 MapContainer.propTypes = {
   isParentLoading: PropTypes.bool,
   layerSpec: PropTypes.object.isRequired,
-  bounds: PropTypes.array.isRequired,
+  bounds: PropTypes.array,
   layersKeys: PropTypes.array,
   settings: PropTypes.object,
   options: PropTypes.object,
