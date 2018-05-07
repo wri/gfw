@@ -45,13 +45,15 @@ define(
 
         // Load countries
         CountryService.getCountries()
-          .then(results => {
-            this.countries = _.sortBy(results, 'name');
-            this.renderCountries();
-            this.renderRegions();
-          })
+          .then(
+            (results) => {
+              this.countries = _.sortBy(results, 'name');
+              this.renderCountries();
+              this.renderRegions();
+            }
+          )
 
-          .error(error => {
+          .error((error) => {
             console.log(error);
           });
       },
@@ -117,10 +119,12 @@ define(
         mps.publish('Datasets/refresh', []);
 
         // Get the regions for this country
-        CountryService.getRegionsList({ iso: country }).then(results => {
-          this.regions = results;
-          this.renderRegions();
-        });
+        CountryService.getRegionsList({ iso: country }).then(
+          (results) => {
+            this.regions = results;
+            this.renderRegions();
+          }
+        );
       },
 
       changeRegion() {
@@ -172,7 +176,7 @@ define(
       },
 
       renderChosen() {
-        _.each(this.$el.find('select'), select => {
+        _.each(this.$el.find('select'), (select) => {
           const $select = $(select);
           if (!$select.data('chosen')) {
             $select.chosen({
@@ -189,7 +193,7 @@ define(
         const countriesData = [];
         const selectedCountry = this.model.attributes.country || null;
 
-        _.each(this.countries, country => {
+        _.each(this.countries, (country) => {
           const currentCountry = _.extend({}, country);
           if (selectedCountry && currentCountry.iso === selectedCountry) {
             currentCountry.selected = true;
@@ -202,10 +206,9 @@ define(
 
       _getParsedRegions() {
         const regionsData = [];
-        const selectedRegion =
-          parseInt(this.model.attributes.region, 10) || null;
+        const selectedRegion = parseInt(this.model.attributes.region, 10) || null;
 
-        _.each(this.regions, region => {
+        _.each(this.regions, (region) => {
           const currentRegion = _.extend({}, region);
           if (selectedRegion && currentRegion.id_1 === selectedRegion) {
             currentRegion.selected = true;

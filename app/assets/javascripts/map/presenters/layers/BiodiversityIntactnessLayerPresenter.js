@@ -6,25 +6,26 @@
 
 /* eslint-disable */
 
-define(
-  ['underscore', 'mps', 'map/presenters/PresenterClass'],
-  (_, mps, PresenterClass) => {
-    const BiodiversityIntactnessLayerPresenter = PresenterClass.extend({
-      init(view) {
-        this.view = view;
-        this._super();
-      },
+define(['underscore', 'mps', 'map/presenters/PresenterClass'], function(
+  _,
+  mps,
+  PresenterClass
+) {
+  var BiodiversityIntactnessLayerPresenter = PresenterClass.extend({
+    init: function(view) {
+      this.view = view;
+      this._super();
+    },
 
-      /**
-       * Application subscriptions.
-       */
-      _subscriptions: [],
+    /**
+     * Application subscriptions.
+     */
+    _subscriptions: [],
 
-      updateLayer() {
-        mps.publish('Layer/update', [this.view.getName()]);
-      }
-    });
+    updateLayer: function() {
+      mps.publish('Layer/update', [this.view.getName()]);
+    }
+  });
 
-    return BiodiversityIntactnessLayerPresenter;
-  }
-);
+  return BiodiversityIntactnessLayerPresenter;
+});

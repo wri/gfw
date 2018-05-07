@@ -22,7 +22,7 @@ const getConfidence = number => {
 };
 
 const getIntensity = number => {
-  let intensity = (number % 10) * 50;
+  let intensity = (number % 100) * 50;
   if (intensity > 255) {
     intensity = 255;
   }

@@ -75,7 +75,7 @@ define(
       ],
 
       /**
-       * Constructs a new MapView and its presenter.
+       * varructs a new MapView and its presenter.
        */
       initialize() {
         this.presenter = new Presenter(this);
@@ -183,7 +183,7 @@ define(
         google.maps.event.addListener(
           this.map,
           'click',
-          _.bind(wdpa => {
+          _.bind((wdpa) => {
             if (!!wdpa && !!wdpa.wdpaid) {
               // TODO => No mps here!
               mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
@@ -603,10 +603,7 @@ define(
        * Updates
        */
       updateLatlngAnalysis(lat, lng) {
-        const html = 'Lat/long: {0}, {1}'.format(
-          lat.toFixed(6),
-          lng.toFixed(6)
-        );
+        const html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
         this.$analysislatlng.html(html);
       },
 
@@ -621,10 +618,7 @@ define(
        * Updates
        */
       updateLatlngInfo(lat, lng) {
-        const html = 'Lat/long: {0}, {1}'.format(
-          lat.toFixed(6),
-          lng.toFixed(6)
-        );
+        const html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
         this.$maplngLng.html(html);
       },
 
@@ -632,7 +626,7 @@ define(
        * Display a dialog from the Landing Index First Steps options
        */
       _checkDialogs() {
-        $(document).ready(type => {
+        $(document).ready((type) => {
           if (!sessionStorage.getItem('DIALOG')) return;
           const dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
 
@@ -640,9 +634,9 @@ define(
 
           let $container = $('.map-container').find('.widget')[0],
             $trigger = $(
-              `<a data-source='${
+              `<a data-source="${
                 dialog.type
-              }' class='source hidden hide' style='display: none'></a>`
+              }" class="source hidden hide" style="display: none"></a>`
             );
           $trigger.appendTo($container).trigger('click');
           sessionStorage.removeItem('DIALOG');

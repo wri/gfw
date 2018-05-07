@@ -80,14 +80,14 @@ define(
 
       newStory() {
         this.checkLoggedIn()
-          .then(() => {
+          .then(function () {
             new StoriesNewView({
               router: this,
               alreadyLoggedIn: true
             });
           })
 
-          .fail(() => {
+          .fail(function () {
             new StoriesNewView({
               router: this,
               alreadyLoggedIn: false
@@ -109,7 +109,7 @@ define(
 
       editStory(storyId) {
         this.checkLoggedIn()
-          .then(() => {
+          .then(function () {
             const editStoryView = new StoriesNewView({
               id: storyId,
               alreadyLoggedIn: true,
@@ -117,7 +117,7 @@ define(
             });
           })
 
-          .fail(() => {
+          .fail(function () {
             const loginView = new LoginView({
               message: 'Please log in to edit a story.'
             });

@@ -16,7 +16,7 @@ define(
     'map/services/GeostoreService',
     'helpers/geojsonUtilsHelper'
   ],
-  (
+  function(
     PresenterClass,
     _,
     Backbone,
@@ -27,8 +27,8 @@ define(
     GeostoreService,
     ShapeService,
     geojsonUtilsHelper
-  ) => {
-    const AnalysisNewPresenter = PresenterClass.extend({
+  ) {
+    var AnalysisNewPresenter = PresenterClass.extend({
       status: new (Backbone.Model.extend({
         defaults: {
           // Analysis
@@ -200,16 +200,16 @@ define(
 
       usenames: ['mining', 'oilpalm', 'fiber', 'logging'],
 
-      init(view) {
+      init: function(view) {
         this.view = view;
         this._super();
         this.listeners();
         mps.publish('Place/register', [this]);
       },
 
-      listeners() {
+      listeners: function() {
         // dev
-        this.status.on('change', () => {
+        this.status.on('change', function() {
           mps.publish('Place/update', [{ go: false }]);
         });
 
@@ -269,8 +269,8 @@ define(
        *
        * @return {object} iso/geom params
        */
-      getPlaceParams() {
-        const p = {};
+      getPlaceParams: function() {
+        var p = {};
 
         // Countries
         p.dont_analyze = !!this.status.get('isoDisabled');
@@ -307,8 +307,8 @@ define(
         // GLOBAL EVENTS
         {
           'Place/go': function(place) {
-            const params = place.params;
-            const layerSpec = place.layerSpec;
+            var params = place.params;
+            var layerSpec = place.layerSpec;
 
             this.status.set({
               // Countries
@@ -355,10 +355,10 @@ define(
         },
         {
           'LayerNav/change': function(layerSpec) {
-            const currentBaselayers = this.status.get('baselayers');
-            const newBaselayers = _.keys(layerSpec.getBaselayers());
+            var currentBaselayers = this.status.get('baselayers');
+            var newBaselayers = _.keys(layerSpec.getBaselayers());
 
-            const baselayers_change =
+            var baselayers_change =
               !!_.difference(currentBaselayers, newBaselayers).length ||
               !!_.difference(newBaselayers, currentBaselayers).length;
             if (baselayers_change) {
@@ -393,12 +393,14 @@ define(
           'Analysis/geojson': function(geojson) {
             if (geojson) {
               this.status.set('spinner', true);
-              GeostoreService.save(geojson).then(geostoreId => {
-                if (geostoreId === this.status.get('geostore')) {
-                  this.status.set('spinner', false);
-                }
-                this.status.set('geostore', geostoreId);
-              });
+              GeostoreService.save(geojson).then(
+                function(geostoreId) {
+                  if (geostoreId === this.status.get('geostore')) {
+                    this.status.set('spinner', false);
+                  }
+                  this.status.set('geostore', geostoreId);
+                }.bind(this)
+              );
             } else {
               this.status.set('geostore', null);
             }
@@ -409,16 +411,16 @@ define(
         {
           'Analysis/iso': function(iso, isoDisabled) {
             this.status.set({
-              iso,
-              isoDisabled
+              iso: iso,
+              isoDisabled: isoDisabled
             });
           }
         },
         {
           'Subscribe/iso': function(iso) {
-            let subscritionObj = {};
+            var subscritionObj = {};
             subscritionObj = {
-              iso,
+              iso: iso,
               geostore: null,
               useid: null,
               use: null,
@@ -442,33 +444,35 @@ define(
         },
         {
           'Subscribe/shape': function(data) {
-            let subscritionObj = {};
+            var subscritionObj = {};
 
             if (!!data.use && this.usenames.indexOf(data.use) === -1) {
-              const provider = {
+              var provider = {
                 table: data.use,
-                filter: `cartodb_id = ${data.useid}`,
+                filter: 'cartodb_id = ' + data.useid,
                 user: 'wri-01',
                 type: 'carto'
               };
 
-              GeostoreService.use(provider).then(useGeostoreId => {
-                subscritionObj = {
-                  iso: {
-                    country: null,
-                    region: null,
-                    subRegion: null
-                  },
-                  geostore: useGeostoreId,
-                  useid: null,
-                  use: null,
-                  wdpaid: null
-                };
+              GeostoreService.use(provider).then(
+                function(useGeostoreId) {
+                  subscritionObj = {
+                    iso: {
+                      country: null,
+                      region: null,
+                      subRegion: null
+                    },
+                    geostore: useGeostoreId,
+                    useid: null,
+                    use: null,
+                    wdpaid: null
+                  };
 
-                this.publishSubscribtion(
-                  _.extend({}, this.status.toJSON(), subscritionObj)
-                );
-              });
+                  this.publishSubscribtion(
+                    _.extend({}, this.status.toJSON(), subscritionObj)
+                  );
+                }.bind(this)
+              );
             } else {
               subscritionObj = {
                 iso: {
@@ -497,8 +501,10 @@ define(
         // TIMELINE
         {
           'Timeline/date-change': function(layerSlug, date) {
-            const dateFormat = 'YYYY-MM-DD';
-            var date = date.map(date => moment(date).format(dateFormat));
+            var dateFormat = 'YYYY-MM-DD';
+            var date = date.map(function(date) {
+              return moment(date).format(dateFormat);
+            });
 
             this.status.set({
               begin: date[0],
@@ -508,8 +514,10 @@ define(
         },
         {
           'Torque/date-range-change': function(date) {
-            const dateFormat = 'YYYY-MM-DD';
-            var date = date.map(date => moment(date).format(dateFormat));
+            var dateFormat = 'YYYY-MM-DD';
+            var date = date.map(function(date) {
+              return moment(date).format(dateFormat);
+            });
 
             this.status.set({
               begin: date[0],
@@ -582,18 +590,18 @@ define(
        * LISTENERS
        *
        */
-      changeBaselayers() {
+      changeBaselayers: function() {
         // Set the baselayer to analyze
         this.status.set('dataset', this.setDataset());
 
         // Check which baselayers are analysis-allowed
-        const enabled = !!_.intersection(
+        var enabled = !!_.intersection(
           this.status.get('baselayers'),
           _.pluck(this.datasets, 'name')
         ).length;
 
         // Check which baselayers are subscription-allowed
-        const enabledSubscription = !!_.intersection(
+        var enabledSubscription = !!_.intersection(
           this.status.get('baselayers'),
           _.pluck(_.where(this.datasets, { subscription: true }), 'name')
         ).length;
@@ -612,26 +620,26 @@ define(
         }
       },
 
-      changeDataset() {
+      changeDataset: function() {
         if (this.status.get('dataset')) {
           this.publishAnalysis();
         }
       },
 
-      changeLayerOptions() {
+      changeLayerOptions: function() {
         this.publishAnalysis();
       },
 
-      changeActive() {
+      changeActive: function() {
         this.publishAnalysis();
       },
 
-      changeSpinner() {
+      changeSpinner: function() {
         this.view.toggleSpinner();
       },
 
-      changeEnabled() {
-        const enabled = this.status.get('enabled');
+      changeEnabled: function() {
+        var enabled = this.status.get('enabled');
         mps.publish('Analysis/enabled', [enabled]);
         this.view.toggleEnabledButtons();
 
@@ -642,34 +650,34 @@ define(
         }
       },
 
-      changeEnabledSubscription() {
+      changeEnabledSubscription: function() {
         mps.publish('Analysis/enabled-subscription', [
           this.status.get('enabledSubscription')
         ]);
       },
 
-      changeDate() {
+      changeDate: function() {
         this.publishAnalysis();
       },
 
-      changeThreshold() {
+      changeThreshold: function() {
         this.publishAnalysis();
       },
 
-      changeSubtab() {
+      changeSubtab: function() {
         this.view.toggleSubtab();
       },
 
-      changeMobileEnabled() {
+      changeMobileEnabled: function() {
         this.view.toggleMobile();
         mps.publish('Overlay/toggle', [this.status.get('mobileEnabled')]);
       },
 
-      changeIsDrawing() {
+      changeIsDrawing: function() {
         this.status.set('mobileEnabled', !this.status.get('isDrawing'));
       },
 
-      changeSubscribe() {
+      changeSubscribe: function() {
         // This function is used to show the subscription modal view whenever you find
         if (this.status.get('subscribe')) {
           this.publishSubscribtion();
@@ -686,20 +694,20 @@ define(
        * - changeWdpaid
        * - changeUse
        */
-      changeGeostore() {
+      changeGeostore: function() {
         if (this.status.get('geostore')) {
           this.setAnalysis('draw');
         }
       },
 
-      changeIso() {
+      changeIso: function() {
         if (
           !!this.status.get('iso').country &&
           this.status.get('iso').country != 'ALL'
         ) {
           if (!this.status.get('isoDisabled')) {
             this.setAnalysis('country');
-            const country = _.findWhere(this.view.countries, {
+            var country = _.findWhere(this.view.countries, {
               iso: this.status.get('iso').country
             });
             if (country) {
@@ -709,14 +717,14 @@ define(
         }
       },
 
-      changeWdpaid() {
+      changeWdpaid: function() {
         if (this.status.get('wdpaid')) {
           this.setAnalysis('wdpaid');
         }
       },
 
-      changeUse() {
-        let use = this.status.get('use'),
+      changeUse: function() {
+        var use = this.status.get('use'),
           useid = this.status.get('useid');
 
         if (!!use && !!useid) {
@@ -725,17 +733,19 @@ define(
           } else {
             this.status.set('spinner', true);
 
-            const provider = {
+            var provider = {
               table: use,
-              filter: `cartodb_id = ${useid}`,
+              filter: 'cartodb_id = ' + useid,
               user: 'wri-01',
               type: 'carto'
             };
 
-            GeostoreService.use(provider).then(useGeostoreId => {
-              this.status.set('useGeostore', useGeostoreId);
-              this.setAnalysis('use');
-            });
+            GeostoreService.use(provider).then(
+              function(useGeostoreId) {
+                this.status.set('useGeostore', useGeostoreId);
+                this.setAnalysis('use');
+              }.bind(this)
+            );
           }
         }
       },
@@ -745,23 +755,31 @@ define(
        * - setDataset
        * @return {void}
        */
-      setDataset() {
-        const dataset = _.uniq(
+      setDataset: function() {
+        var dataset = _.uniq(
           _.pluck(
-            _.filter(this.datasets, dataset =>
-              _.contains(this.status.get('baselayers'), dataset.name)
+            _.filter(
+              this.datasets,
+              function(dataset) {
+                return _.contains(this.status.get('baselayers'), dataset.name);
+              }.bind(this)
             ),
             'slug'
           )
-        );
+        ).sort(function(a, b) {
+          if (a === 'umd-loss-gain') {
+            return 1;
+          }
+          return 0;
+        });
         return dataset[0] || null;
       },
 
-      setAnalysis(type) {
+      setAnalysis: function(type) {
         this.status.set(
           {
             active: true,
-            type
+            type: type
           },
           {
             silent: true
@@ -770,7 +788,7 @@ define(
 
         this.deleteAnalysis({
           silent: true,
-          type
+          type: type
         });
         this.publishAnalysis();
       },
@@ -782,7 +800,7 @@ define(
        * - publishRefreshAnalysis
        * - publishNotification
        */
-      publishAnalysis() {
+      publishAnalysis: function() {
         // 1. Check if analysis is active
         if (
           this.status.get('active') &&
@@ -792,10 +810,10 @@ define(
           this.status.set('spinner', true);
 
           // Open the current subtab
-          const subtab = _.findWhere(this.types, {
+          var subtab = _.findWhere(this.types, {
             type: this.status.get('type')
           }).subtab;
-          mps.publish('Analysis/subtab', [`analysis-${subtab}-tab`]);
+          mps.publish('Analysis/subtab', ['analysis-' + subtab + '-tab']);
 
           // Open the analysis tab
           mps.publish('Tab/toggle', ['analysis-tab', true]);
@@ -803,64 +821,70 @@ define(
           // Send request to the Analysis Service
           AnalysisService.get(this.status.toJSON())
 
-            .then((response, xhr) => {
-              this.status.set('spinner', false);
+            .then(
+              function(response, xhr) {
+                this.status.set('spinner', false);
 
-              const statusWithResults = _.extend({}, this.status.toJSON(), {
-                results: response.data.attributes
-              });
-              mps.publish('Analysis/results', [statusWithResults]);
-            })
+                var statusWithResults = _.extend({}, this.status.toJSON(), {
+                  results: response.data.attributes
+                });
+                mps.publish('Analysis/results', [statusWithResults]);
+              }.bind(this)
+            )
 
-            .catch(errors => {
-              this.status.set('spinner', false);
+            .catch(
+              function(errors) {
+                this.status.set('spinner', false);
 
-              const statusWithErrors = _.extend(
-                {},
-                this.status.toJSON(),
-                errors
-              );
-              mps.publish('Analysis/results-error', [statusWithErrors]);
-            })
+                var statusWithErrors = _.extend(
+                  {},
+                  this.status.toJSON(),
+                  errors
+                );
+                mps.publish('Analysis/results-error', [statusWithErrors]);
+              }.bind(this)
+            )
 
-            .finally(() => {
-              this.status.set('spinner', false);
-            });
+            .finally(
+              function() {
+                this.status.set('spinner', false);
+              }.bind(this)
+            );
         }
       },
 
-      publishDeleteAnalysis() {
+      publishDeleteAnalysis: function() {
         mps.publish('Analysis/delete');
       },
 
-      publishRefreshAnalysis() {
+      publishRefreshAnalysis: function() {
         mps.publish('Analysis/refresh');
       },
 
-      publishSubscribtion(data) {
+      publishSubscribtion: function(data) {
         mps.publish('Subscribe/show', [data || this.status.toJSON()]);
       },
 
-      publishNotification(id) {
+      publishNotification: function(id) {
         mps.publish('Notification/open', [id]);
       },
 
-      publishCanopyAnalysis() {
+      publishCanopyAnalysis: function() {
         mps.publish('ThresholdControls/show');
       },
 
-      publishDownloadsAnalysis(active) {
+      publishDownloadsAnalysis: function(active) {
         mps.publish('Analysis/downloads-toggle', [active]);
       },
 
-      publishEnableds() {
+      publishEnableds: function() {
         mps.publish('Analysis/enabled', [this.status.get('enabled')]);
         mps.publish('Analysis/enabled-subscription', [
           this.status.get('enabledSubscription')
         ]);
       },
 
-      publishMobileActive() {
+      publishMobileActive: function() {
         mps.publish('Analysis/toggle', [!this.status.get('mobileEnabled')]);
       },
 
@@ -868,36 +892,41 @@ define(
        * HELPERS
        * - deleteAnalysis
        */
-      deleteAnalysis(options) {
-        const type = options ? options.type : null;
-        const statusFiltered = type
-          ? _.filter(this.types, v => v.type != type)
+      deleteAnalysis: function(options) {
+        var type = options ? options.type : null;
+        var statusFiltered = type
+          ? _.filter(this.types, function(v) {
+              return v.type != type;
+            })
           : this.types;
 
         // If type exists delete all stuff related
         // to other analysis
         // 'iso' and 'isoDisabled' need a different treatment
-        _.each(statusFiltered, v => {
-          switch (v.name) {
-            case 'iso':
-              this.status.set(
-                'iso',
-                {
-                  country: null,
-                  region: null,
-                  subRegion: null
-                },
-                options
-              );
-              break;
-            case 'isoDisabled':
-              this.status.set('isoDisabled', true);
-              break;
-            default:
-              this.status.set(v.name, null, options);
-              break;
-          }
-        });
+        _.each(
+          statusFiltered,
+          function(v) {
+            switch (v.name) {
+              case 'iso':
+                this.status.set(
+                  'iso',
+                  {
+                    country: null,
+                    region: null,
+                    subRegion: null
+                  },
+                  options
+                );
+                break;
+              case 'isoDisabled':
+                this.status.set('isoDisabled', true);
+                break;
+              default:
+                this.status.set(v.name, null, options);
+                break;
+            }
+          }.bind(this)
+        );
 
         // If type doesn't exist remove type, active and enabledUpdating
         if (!type) {

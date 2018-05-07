@@ -83,7 +83,7 @@ define(
       toggle(where, success, error) {
         mapLayerService.getLayers(
           where,
-          layers => {
+          (layers) => {
             _.each(layers, this._toggleLayer, this);
             success(this.model);
           },
@@ -120,11 +120,14 @@ define(
           return false;
         }
         if (!this._combinationIsValid(layer)) {
-          _.each(this.model.get(layer.category_slug), l => {
-            if (l.category_name === 'Forest change') {
-              this._removeLayer(l);
+          _.each(
+            this.model.get(layer.category_slug),
+            (l) => {
+              if (l.category_name === 'Forest change') {
+                this._removeLayer(l);
+              }
             }
-          });
+          );
         }
         this._addLayer(layer);
         return layer;
@@ -211,7 +214,7 @@ define(
           combination.push(layer.slug);
           _.each(
             forbidden.except,
-            exception => {
+            (exception) => {
               if (_.difference(combination, exception).length < 1) {
                 validCombination = true;
               }
@@ -252,9 +255,9 @@ define(
         const sublayers = this.model.getSublayers();
 
         p.name = 'map';
-        p.baselayers = _.map(_.keys(this.model.getBaselayers()), slug => ({
+        p.baselayers = _.map(_.keys(this.model.getBaselayers()), (
           slug
-        }));
+        ) => ({ slug }));
         p.sublayers = !_.isEmpty(sublayers) ? _.pluck(sublayers, 'id') : null;
 
         return p;

@@ -381,8 +381,6 @@ define(
     GladTimeline,
     MangroveTimeline
   ) {
-    'use strict';
-
     var layersHelper = {
       loss: {
         view: LossLayer,

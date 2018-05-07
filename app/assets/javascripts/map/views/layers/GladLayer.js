@@ -22,9 +22,10 @@ define(
   ) {
     'use strict';
     var env = window.gfw.config.FEATURE_ENV === 'staging' ? 'staging' : 'prod';
-    var TILE_URL = `https://wri-tiles.s3.amazonaws.com/glad_${
-      env
-    }/tiles{/z}{/x}{/y}.png`;
+    var TILE_URL =
+      'https://wri-tiles.s3.amazonaws.com/glad_' +
+      env +
+      '/tiles{/z}{/x}{/y}.png';
     var START_DATE = '2015-01-01';
 
     var getConfidence = function(number) {
@@ -38,7 +39,7 @@ define(
     };
 
     var getIntensity = function(number) {
-      var intensity = (number % 10) * 50;
+      var intensity = (number % 100) * 50;
       if (intensity > 255) {
         intensity = 255;
       }
@@ -98,11 +99,11 @@ define(
       },
 
       filterCanvasImgdata: function(imgdata, w, h, z) {
-        const imageData = imgdata;
-        const startDate = moment(START_DATE);
-        const endDate = this.currentDate[1];
-        const numberOfDays = endDate.diff(startDate, 'days');
-        const customRangeStartDate = numberOfDays - 7;
+        var imageData = imgdata;
+        var startDate = moment(START_DATE);
+        var endDate = this.maxDataDate;
+        var numberOfDays = endDate.diff(startDate, 'days');
+        var customRangeStartDate = numberOfDays - 7;
 
         if (this.timelineExtent === undefined) {
           this.timelineExtent = [
@@ -111,11 +112,8 @@ define(
           ];
         }
 
-        const timeLinesStartDay = this.timelineExtent[0].diff(
-          startDate,
-          'days'
-        );
-        const timeLinesEndDay =
+        var timeLinesStartDay = this.timelineExtent[0].diff(startDate, 'days');
+        var timeLinesEndDay =
           numberOfDays - endDate.diff(this.timelineExtent[1], 'days');
 
         var confidenceValue = -1;

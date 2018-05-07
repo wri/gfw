@@ -81,7 +81,7 @@ define(
     'text!map/templates/legend/biodiversity_intactness.handlebars',
     'text!map/templates/legend/biodiversity_completeness.handlebars'
   ],
-  (
+  function(
     mps,
     _,
     Handlebars,
@@ -153,8 +153,8 @@ define(
     sentinel_tilesTpl,
     biodiversity_intactnessTpl,
     biodiversity_completenessTpl
-  ) => {
-    const LegendView = Backbone.View.extend({
+  ) {
+    var LegendView = Backbone.View.extend({
       el: '#module-legend',
 
       template: Handlebars.compile(tpl),
@@ -284,7 +284,7 @@ define(
         'click .js-refresh-tiles': 'refreshTiles'
       },
 
-      initialize(map, countries) {
+      initialize: function(map, countries) {
         this.presenter = new Presenter(this);
 
         this.map = map;
@@ -294,7 +294,7 @@ define(
         this.listeners();
 
         enquire.register(
-          `screen and (min-width:${window.gfw.config.GFW_MOBILE}px)`,
+          'screen and (min-width:' + window.gfw.config.GFW_MOBILE + 'px)',
           {
             match: function() {
               this.mobile = false;
@@ -302,7 +302,7 @@ define(
           }
         );
         enquire.register(
-          `screen and (max-width:${window.gfw.config.GFW_MOBILE}px)`,
+          'screen and (max-width:' + window.gfw.config.GFW_MOBILE + 'px)',
           {
             match: function() {
               this.mobile = true;
@@ -311,16 +311,16 @@ define(
         );
       },
 
-      listeners() {
+      listeners: function() {
         this.listenTo(this.model, 'change:hidden', this.toogleModule, this);
       },
 
-      render(html) {
+      render: function(html) {
         this.$el.html(html);
         this.cache();
       },
 
-      cache() {
+      cache: function() {
         // elements
         this.$window = $(window);
         this.$titleDialog = $('#title-dialog-legend');
@@ -339,12 +339,12 @@ define(
        * @param  {array}  categories layers ordered by category
        * @param  {object} options    legend options
        */
-      updateLegend(categories, options, geographic, iso, more) {
-        const layersGlobal = [];
-        const layersIso = [];
-        let categoriesGlobal = [];
-        let categoriesIso = [];
-        const layers = _.flatten(categories);
+      updateLegend: function(categories, options, geographic, iso, more) {
+        var layersGlobal = [];
+        var layersIso = [];
+        var categoriesGlobal = [];
+        var categoriesIso = [];
+        var layers = _.flatten(categories);
 
         // Append details template to layer.
         _.each(
@@ -360,22 +360,20 @@ define(
                 layer.title = 'Tree plantations';
               }
 
-              layer.sublayers = layers.filter(
-                l => l.parent_layer === layer.slug
-              );
+              layer.sublayers = layers.filter(function(l) {
+                return l.parent_layer === layer.slug;
+              });
 
-              const subLayers =
+              var subLayers =
                 layer.sublayers.length &&
-                layer.sublayers.reduce(
-                  (state, l) =>
-                    Object.assign(state, {
-                      [l.slug]: {
-                        color: l.category_color,
-                        checked: 'checked'
-                      }
-                    }),
-                  {}
-                );
+                layer.sublayers.reduce(function(state, l) {
+                  var slugData = {};
+                  slugData[l.slug] = {
+                    color: l.category_color,
+                    checked: 'checked'
+                  };
+                  return Object.assign(state, slugData);
+                }, {});
 
               layer.detailsTpl = this.detailsTemplates[layer.slug](
                 Object.assign(
@@ -395,10 +393,10 @@ define(
             if (layer.iso) {
               this.iso = layer.iso;
               layersIso.push(layer);
-              layer.category_status = `${layer.category_slug}-iso`;
+              layer.category_status = layer.category_slug + '-iso';
             } else {
               layersGlobal.push(layer);
-              layer.category_status = `${layer.category_slug}-global`;
+              layer.category_status = layer.category_slug + '-global';
             }
 
             layer.geographic = geographic ? 'checked' : '';
@@ -424,18 +422,16 @@ define(
             country: iso
               ? _.findWhere(this.countries, { iso: iso.country })
               : null,
-            more,
+            more: more,
             countryVisibility: !!more || !_.isEmpty(categoriesIso)
           })
         );
 
         // Change selector countries action name.
         if ($('.categories').filter('.-country')) {
-          const accordionCountry = $('.categories').filter('.-country');
+          var accordionCountry = $('.categories').filter('.-country');
           if ($(accordionCountry).find('.js-tree-plantation')) {
-            const selectOption = $(accordionCountry).find(
-              '.js-tree-plantation'
-            );
+            var selectOption = $(accordionCountry).find('.js-tree-plantation');
             $(selectOption).removeClass('js-tree-plantation');
             $(selectOption).addClass('js-tree-plantation-country');
           }
@@ -445,10 +441,12 @@ define(
         this.presenter.toggleLayerOptions();
       },
 
-      getLayersByCategory(layers) {
-        const subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-        const filteredLayers = _.filter(layers, layer => !layer.parent_layer);
-        return _.groupBy(filteredLayers, layer => {
+      getLayersByCategory: function(layers) {
+        var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
+        var filteredLayers = _.filter(layers, function(layer) {
+          return !layer.parent_layer;
+        });
+        return _.groupBy(filteredLayers, function(layer) {
           layer.allowSubscription =
             layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
 
@@ -463,13 +461,13 @@ define(
         });
       },
 
-      statusCategories(array) {
+      statusCategories: function(array) {
         // Search for layer 'nothing'
-        const categories_status = this.model.get('categories_status');
+        var categories_status = this.model.get('categories_status');
         _.each(
           array,
-          category => {
-            for (let i = 0; i < category.length; i++) {
+          function(category) {
+            for (var i = 0; i < category.length; i++) {
               // Mantain categories closed in rendering
               category.closed =
                 categories_status.indexOf(category[i].category_status) != -1;
@@ -488,7 +486,7 @@ define(
        *
        * @param  {array} categories, options, geographic
        */
-      update(categories, options, geographic, iso, more) {
+      update: function(categories, options, geographic, iso, more) {
         if (categories.length === 0 && !more) {
           this.model.set({
             hidden: true
@@ -508,12 +506,12 @@ define(
        *
        */
       // category
-      toogleCategory(e) {
+      toogleCategory: function(e) {
         if (!this.mobile) {
           // Save category status in an array
-          const categories_status = this.model.get('categories_status');
-          const slug = $(e.currentTarget).data('category_slug');
-          const index = categories_status.indexOf(slug);
+          var categories_status = this.model.get('categories_status');
+          var slug = $(e.currentTarget).data('category_slug');
+          var index = categories_status.indexOf(slug);
 
           // Generate the status of the categories
           index != -1
@@ -531,12 +529,12 @@ define(
         }
       },
 
-      toogleCountryCategory(e) {
+      toogleCountryCategory: function(e) {
         if (!this.mobile) {
           // Save category status in an array
-          const categories_status = this.model.get('categories_status');
-          const slug = $(e.currentTarget).data('category_slug');
-          const index = categories_status.indexOf(slug);
+          var categories_status = this.model.get('categories_status');
+          var slug = $(e.currentTarget).data('category_slug');
+          var index = categories_status.indexOf(slug);
 
           // Generate the status of the categories
           index != -1
@@ -544,7 +542,7 @@ define(
             : categories_status.push(slug);
           this.model.set('categories_status', categories_status);
 
-          const parent = $(e.currentTarget).parent();
+          var parent = $(e.currentTarget).parent();
 
           if ($(parent).hasClass('-divided')) {
             $(parent)
@@ -557,27 +555,26 @@ define(
         }
       },
 
-      toggleLayerOption(e) {
+      toggleLayerOption: function(e) {
         if (
           !$(e.target).hasClass('source') &&
           !$(e.target)
             .parent()
             .hasClass('source')
         ) {
-          const option = $(e.currentTarget).data('option');
+          var option = $(e.currentTarget).data('option');
           this.presenter.toggleLayerOption(option);
         }
       },
 
-      toggleLayerOptions(layerOptions) {
+      toggleLayerOptions: function(layerOptions) {
         _.each(
           this.$el.find('.layer-option'),
-          div => {
-            const $div = $(div);
-            const $toggle = $div.find('.onoffswitch');
-            const optionSelected =
-              layerOptions.indexOf($div.data('option')) > -1;
-            const color = $toggle.data('color') || '#F69';
+          function(div) {
+            var $div = $(div);
+            var $toggle = $div.find('.onoffswitch');
+            var optionSelected = layerOptions.indexOf($div.data('option')) > -1;
+            var color = $toggle.data('color') || '#F69';
 
             if (optionSelected) {
               $toggle.addClass('checked').css('background', color);
@@ -591,43 +588,43 @@ define(
         );
       },
 
-      togglePlantation(e) {
-        const layerSlug = $(e.currentTarget).val();
-        const layerSlugRemove = '';
+      togglePlantation: function(e) {
+        var layerSlug = $(e.currentTarget).val();
+        var layerSlugRemove = '';
         this.presenter.toggleLayer('plantations_by_type');
         this.presenter.toggleLayer('plantations_by_species');
       },
 
-      togglePlantationCountry(e) {
-        const iso = this.iso.toLowerCase();
-        const types = `${iso}_plantations_type`;
-        const species = `${iso}_plantations_species`;
+      togglePlantationCountry: function(e) {
+        var iso = this.iso.toLowerCase();
+        var types = iso + '_plantations_type';
+        var species = iso + '_plantations_species';
         this.presenter.toggleLayer(types);
         this.presenter.toggleLayer(species);
       },
 
-      toggleConcessions(e) {
+      toggleConcessions: function(e) {
         this.presenter.toggleLayer('concesiones_forestales');
         this.presenter.toggleLayer('concesiones_forestalesNS');
       },
 
       // layers
-      toggleLayer(e) {
+      toggleLayer: function(e) {
         if (
           !$(e.target).hasClass('source') &&
           !$(e.target)
             .parent()
             .hasClass('source')
         ) {
-          const layerSlug = $(e.currentTarget).data('sublayer');
+          var layerSlug = $(e.currentTarget).data('sublayer');
           this.presenter.toggleLayer(layerSlug);
         }
       },
 
-      removeLayer(e) {
+      removeLayer: function(e) {
         e && e.preventDefault();
 
-        const layerSlug = $(e.currentTarget).data('slug');
+        var layerSlug = $(e.currentTarget).data('slug');
         this.presenter.toggleLayer(layerSlug);
         this.removeSublayers(layerSlug);
         window.dispatchEvent(
@@ -635,21 +632,23 @@ define(
         );
       },
 
-      showTooltip(e) {
-        const position = $(e.target).offset();
-        const top = position.top - 10;
-        const left = position.left - 92;
-        let text = $(e.target).attr('data-description');
+      showTooltip: function(e) {
+        var position = $(e.target).offset();
+        var top = position.top - 10;
+        var left = position.left - 92;
+        var text = $(e.target).attr('data-description');
         text = text.replace('(', '');
         text = text.replace(')', '');
-        const dataSource = $(e.target).attr('data-source');
+        var dataSource = $(e.target).attr('data-source');
         if (text != '') {
           $('body').append(
-            `<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:${
-              top
-            }px; left:${left}px;"><div class="triangle"><span>${
-              text
-            }</span><p>Click to see more</p></div></div>`
+            '<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:' +
+              top +
+              'px; left:' +
+              left +
+              'px;"><div class="triangle"><span>' +
+              text +
+              '</span><p>Click to see more</p></div></div>'
           );
         }
         $('.tooltip-info-legend').css(
@@ -658,40 +657,40 @@ define(
         );
       },
 
-      hiddenTooltip(e) {
+      hiddenTooltip: function(e) {
         if ($('#tooltip-info-legend').length) {
           document.getElementById('tooltip-info-legend').remove();
         }
       },
 
-      removeSublayers(layerSlug) {
-        const $subLayers = this.$el.find(`[data-parent='${layerSlug}']`);
+      removeSublayers: function(layerSlug) {
+        var $subLayers = this.$el.find("[data-parent='" + layerSlug + "']");
 
         if ($subLayers.length > 0) {
-          const _this = this;
+          var _this = this;
           $subLayers.each(function() {
-            const $item = $(this);
-            const isChecked = $item.find('.checked').length > 0;
+            var $item = $(this);
+            var isChecked = $item.find('.checked').length > 0;
 
             if (isChecked) {
-              const slug = $(this).data('sublayer');
+              var slug = $(this).data('sublayer');
               _this.presenter.toggleLayer(slug);
             }
           });
         }
       },
 
-      hiddenSublayers(layerSlug) {
-        const $subLayers = this.$el.find(`[data-parent='${layerSlug}']`);
+      hiddenSublayers: function(layerSlug) {
+        var $subLayers = this.$el.find("[data-parent='" + layerSlug + "']");
 
         if ($subLayers.length > 0) {
-          const _this = this;
+          var _this = this;
           $subLayers.each(function() {
-            const $item = $(this);
-            const isChecked = $item.find('.checked').length > 0;
+            var $item = $(this);
+            var isChecked = $item.find('.checked').length > 0;
 
             if (isChecked) {
-              const slug = $(this).data('sublayer');
+              var slug = $(this).data('sublayer');
               _this.presenter.toggleLayer(slug);
             }
           });
@@ -699,49 +698,49 @@ define(
       },
 
       // threshold
-      toggleThreshold(e) {
+      toggleThreshold: function(e) {
         e && e.preventDefault();
         this.presenter.toggleThreshold();
       },
 
       // tree cover year
-      toggleTreeCoverYear(e) {
-        const layerSlug = $(e.currentTarget).val();
-        const layerSlugRemove = '';
+      toggleTreeCoverYear: function(e) {
+        var layerSlug = $(e.currentTarget).val();
+        var layerSlugRemove = '';
         this.presenter.toggleLayer('forest2000');
         this.presenter.toggleLayer('forest2010');
       },
 
-      toggleBiodiversityLayer(e) {
-        const layerSlug = $(e.currentTarget).val();
-        const layerSlugRemove = '';
+      toggleBiodiversityLayer: function(e) {
+        var layerSlug = $(e.currentTarget).val();
+        var layerSlugRemove = '';
         this.presenter.toggleLayer('biodiversity_intactness');
         this.presenter.toggleLayer('biodiversity_completeness');
       },
 
       // map biomas year
-      toggleMapBiomasYear(e) {
-        const year = $(e.currentTarget).val();
+      toggleMapBiomasYear: function(e) {
+        var year = $(e.currentTarget).val();
         mps.publish('Year/update', [year]);
       },
 
       // legend
-      toogleLegend(bool) {
-        const to = bool && bool.currentTarget ? false : bool;
+      toogleLegend: function(bool) {
+        var to = bool && bool.currentTarget ? false : bool;
         this.$el.toggleClass('active', to);
         this.presenter.toggleOverlay(to);
       },
 
       // Toggle sublayers if they are selected
-      toggleSelected(layers) {
+      toggleSelected: function(layers) {
         _.each(
           this.$el.find('.layer-sublayer'),
-          div => {
-            const $div = $(div);
-            const $toggle = $div.find('.onoffswitch');
-            const layer = layers[$div.data('sublayer')];
+          function(div) {
+            var $div = $(div);
+            var $toggle = $div.find('.onoffswitch');
+            var layer = layers[$div.data('sublayer')];
             if (layer) {
-              const color = layer.parent_layer
+              var color = layer.parent_layer
                 ? layer.title_color
                 : layer.category_color;
               $toggle.addClass('checked');
@@ -757,74 +756,74 @@ define(
       },
 
       // Toggle visibility
-      toogleModule() {
+      toogleModule: function() {
         this.$el.toggleClass('hide', this.model.get('hidden'));
         this.$el.toggleClass('hide-no-layers', this.model.get('hidden'));
       },
 
       // Embed UI events
-      toogleEmbedLegend(e) {
+      toogleEmbedLegend: function(e) {
         e && e.preventDefault();
-        const active = this.$titleDialog.hasClass('active');
+        var active = this.$titleDialog.hasClass('active');
         this.$titleDialog.toggleClass('active', !active);
         this.$categories.toggleClass('active', !active);
         this.$buttonLegendBox.toggleClass('active', !active);
       },
 
-      updateLinkToGFW() {
+      updateLinkToGFW: function() {
         if (this.embed && !!this.$linkLegendBox) {
-          const href = window.location.href.replace('/embed', '');
+          var href = window.location.href.replace('/embed', '');
           this.$linkLegendBox.attr('href', href);
         }
       },
 
-      selectLayer(e) {
-        const target = $(e.currentTarget);
-        const radios = this.$el.find('.radioswitch');
+      selectLayer: function(e) {
+        var target = $(e.currentTarget);
+        var radios = this.$el.find('.radioswitch');
 
         if (!target.hasClass('selected')) {
-          const layerSlug = target.data('layer');
+          var layerSlug = target.data('layer');
           radios.removeClass('selected');
           target.addClass('selected');
           this.presenter.toggleLayer(layerSlug);
         }
       },
 
-      showLayer(e) {
-        const layer = $(e.target).attr('data-slug-show');
+      showLayer: function(e) {
+        var layer = $(e.target).attr('data-slug-show');
 
-        _.each(this.$el.find('.layer-info-container'), li => {
+        _.each(this.$el.find('.layer-info-container'), function(li) {
           if (layer === $(li).attr('data-slug')) {
             $(li).removeClass('-desactivate');
           }
         });
 
-        _.each(this.$el.find('.-js-hidden-layer'), li => {
+        _.each(this.$el.find('.-js-hidden-layer'), function(li) {
           if (layer === $(li).attr('data-slug-hidden')) {
             $(li).css('display', 'block');
           }
         });
 
-        _.each(this.$el.find('.-js-show-layer'), li => {
+        _.each(this.$el.find('.-js-show-layer'), function(li) {
           if (layer === $(li).attr('data-slug-show')) {
             $(li).css('display', 'none');
           }
         });
         e && e.preventDefault();
-        const index = this._getOverlayIndex(layer);
-        let iCount = 0;
-        const layerP = this.map.overlayMapTypes.getAt(index);
-        let hasOpacity = false;
+        var index = this._getOverlayIndex(layer);
+        var iCount = 0;
+        var layerP = this.map.overlayMapTypes.getAt(index);
+        var hasOpacity = false;
         if (typeof layerP !== 'undefined' || layerP != null) {
           hasOpacity = layerP.opacity >= 0;
         }
         if (hasOpacity) {
           layerP.setOpacity(1);
         } else {
-          const layerArray = this.model.get('layers_status');
-          const mapLayer = this.map.overlayMapTypes.getAt(index);
+          var layerArray = this.model.get('layers_status');
+          var mapLayer = this.map.overlayMapTypes.getAt(index);
 
-          _.map(layerArray, (l, i) => {
+          _.map(layerArray, function(l, i) {
             if (l.name === layer) {
               this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
             }
@@ -833,31 +832,31 @@ define(
         }
       },
 
-      hiddenLayer(e) {
-        const layer = $(e.target).attr('data-slug-hidden');
+      hiddenLayer: function(e) {
+        var layer = $(e.target).attr('data-slug-hidden');
 
-        _.each(this.$el.find('.layer-info-container'), li => {
+        _.each(this.$el.find('.layer-info-container'), function(li) {
           if (layer === $(li).attr('data-slug')) {
             $(li).addClass('-desactivate');
           }
         });
 
-        _.each(this.$el.find('.-js-hidden-layer'), li => {
+        _.each(this.$el.find('.-js-hidden-layer'), function(li) {
           if (layer === $(li).attr('data-slug-hidden')) {
             $(li).css('display', 'none');
           }
         });
 
-        _.each(this.$el.find('.-js-show-layer'), li => {
+        _.each(this.$el.find('.-js-show-layer'), function(li) {
           if (layer === $(li).attr('data-slug-show')) {
             $(li).css('display', 'block');
           }
         });
 
         e && e.preventDefault();
-        const index = this._getOverlayIndex(layer);
-        const layerP = this.map.overlayMapTypes.getAt(index);
-        let hasOpacity = false;
+        var index = this._getOverlayIndex(layer);
+        var layerP = this.map.overlayMapTypes.getAt(index);
+        var hasOpacity = false;
 
         if (typeof layerP !== 'undefined' || layerP != null) {
           hasOpacity = layerP.opacity >= 0;
@@ -869,10 +868,10 @@ define(
           typeof this.map.overlayMapTypes.getAt(index) !== 'undefined' ||
           this.map.overlayMapTypes.getAt(index) != null
         ) {
-          const layerArray = this.model.get('layers_status');
-          const mapLayer = this.map.overlayMapTypes.getAt(index);
+          var layerArray = this.model.get('layers_status');
+          var mapLayer = this.map.overlayMapTypes.getAt(index);
           layerArray.push({
-            index,
+            index: index,
             name: layer,
             layerInformation: this.map.overlayMapTypes.getAt(index)
           });
@@ -881,14 +880,14 @@ define(
         }
       },
 
-      _getOverlayIndex(name) {
-        let index = -1;
+      _getOverlayIndex: function(name) {
+        var index = -1;
         var name = name;
         _.each(
           this.map.overlayMapTypes.getArray(),
-          (layer, i) => {
+          function(layer, i) {
             if (layer) {
-              const layerName = layer.name || layer.options.name;
+              var layerName = layer.name || layer.options.name;
               if (layerName === name) {
                 index = i;
               }
@@ -899,8 +898,8 @@ define(
         return index;
       },
 
-      refreshTiles(e) {
-        const layerSlug = $(e.currentTarget).data('sublayer');
+      refreshTiles: function(e) {
+        var layerSlug = $(e.currentTarget).data('sublayer');
 
         mps.publish('Layer/update', [layerSlug]);
       }

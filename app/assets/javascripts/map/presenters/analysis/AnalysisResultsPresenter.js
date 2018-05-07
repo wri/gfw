@@ -358,7 +358,7 @@ define(
             p.gainAlerts = results.years[0].total_gain;
             p.extent = results.years[results.years.length - 1].extent;
             const years = _.range(dateRange[1].diff(dateRange[0], 'years'));
-            _.each(years, i => {
+            _.each((years, i) => {
               const year = _.findWhere(results.years, {
                 year: dateRange[0].year() + i
               });
