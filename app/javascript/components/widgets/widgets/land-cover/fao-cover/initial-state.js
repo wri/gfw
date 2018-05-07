@@ -3,7 +3,7 @@ export const initialState = {
   config: {
     size: 'small',
     categories: ['land-cover'],
-    admins: ['country'],
+    admins: ['global', 'country'],
     type: 'fao',
     metaKey: 'widget_forest_cover_fao',
     sortOrder: {

@@ -14,11 +14,12 @@ const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist, getColors],
-  (data, settings, whitelist, colors) => {
-    if (isEmpty(data) || isEmpty(whitelist)) return null;
+  [getData, getSettings, getIndicatorWhitelist, getColors, getCurrentLocation],
+  (data, settings, whitelist, colors, currentLabel) => {
+    if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent, plantations } = data;
-    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
+    const hasPlantations =
+      !currentLabel || Object.keys(whitelist).indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
     const parsedData = [
       {
@@ -40,7 +41,7 @@ export const parseData = createSelector(
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
-    if (hasPlantations) {
+    if (currentLabel && hasPlantations) {
       parsedData.splice(2, 0, {
         label: 'Plantations',
         value: plantations,
@@ -55,12 +56,12 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !currentLabel || !indicator) return null;
+    if (!parsedData || !indicator) return null;
     const {
       initial,
-      lessThan,
       withIndicator,
-      lessThanWithIndicator
+      globalInitial,
+      globalWithIndicator
     } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
@@ -83,17 +84,20 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      location: currentLabel,
+      location: currentLabel || 'global',
       indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1 ? '0.1%' : `${format('.0f')(intactPercentage)}%`,
+        intactPercentage < 0.1
+          ? '<0.1%'
+          : `${format('.0f')(intactPercentage)}%`,
       intact: 'intact forest'
     };
 
     let sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
-    if (intactPercentage < 0.01) {
+
+    if (!currentLabel) {
       sentence =
-        indicator.value === 'ifl_2013' ? lessThan : lessThanWithIndicator;
+        indicator.value === 'ifl_2013' ? globalInitial : globalWithIndicator;
     }
     return {
       sentence,

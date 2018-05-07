@@ -14,12 +14,13 @@ const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getWhitelists, getColors],
-  (data, settings, whitelist, colors) => {
-    if (isEmpty(data) || isEmpty(whitelist)) return null;
+  [getData, getSettings, getWhitelists, getColors, getCurrentLocation],
+  (data, settings, whitelist, colors, currentLabel) => {
+    if (isEmpty(data)) return null;
     const { totalArea, cover, plantations } = data;
     const { indicator } = settings;
-    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
+    const hasPlantations =
+      !currentLabel || Object.keys(whitelist).indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 2 : 1);
     const parsedData = [
       {
@@ -54,17 +55,22 @@ export const getSentence = createSelector(
   [getData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (data, settings, currentLabel, indicator, sentences) => {
     if (!data || !sentences) return null;
-    const { initial, withIndicator } = sentences;
+    const {
+      initial,
+      withIndicator,
+      globalInitial,
+      globalWithIndicator
+    } = sentences;
     const params = {
       year: settings.extentYear,
-      location: currentLabel,
+      location: currentLabel || 'global',
       indicator: indicator && indicator.label,
       value: `${format('.3s')(data.cover)}ha`
     };
-
-    return {
-      sentence: indicator ? withIndicator : initial,
-      params
-    };
+    let sentence = indicator ? withIndicator : initial;
+    if (!currentLabel) {
+      sentence = indicator ? globalWithIndicator : globalInitial;
+    }
+    return { sentence, params };
   }
 );

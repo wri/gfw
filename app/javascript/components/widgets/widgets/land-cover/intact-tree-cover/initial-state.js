@@ -9,7 +9,7 @@ export default {
       'ifl_2013__landmark'
     ],
     categories: ['land-cover'],
-    admins: ['country', 'region', 'subRegion'],
+    admins: ['global', 'country', 'region', 'subRegion'],
     selectors: ['indicators', 'thresholds', 'extentYears'],
     type: 'extent',
     metaKey: 'widget_ifl',
@@ -18,13 +18,13 @@ export default {
       landCover: 3
     },
     sentences: {
+      globalInitial:
+        'As of 2013, {percentage} of {location} tree cover is {intact}.',
+      globalWithIndicator:
+        'As of 2013, {percentage} of {location} tree cover within {indicator} is {intact}.',
       initial: 'In {location}, {percentage} of tree cover is {intact}.',
-      lessThan:
-        'In {location}, less than {percentage} of tree cover is {intact}.',
       withIndicator:
-        'Within {indicator} in {location}, {percentage} of tree cover is {intact}.',
-      lessThanWithIndicator:
-        'Within {indicator} in {location}, less than {percentage} of tree cover is {intact}.'
+        'Within {indicator} in {location}, {percentage} of tree cover is {intact}.'
     }
   },
   settings: {

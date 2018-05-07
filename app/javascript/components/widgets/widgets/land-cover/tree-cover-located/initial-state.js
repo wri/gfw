@@ -24,7 +24,7 @@ export default {
     ],
     units: ['ha', '%'],
     categories: ['summary', 'land-cover'],
-    admins: ['country', 'region'],
+    admins: ['global', 'country', 'region'],
     selectors: ['indicators', 'thresholds', 'units', 'extentYears'],
     locationCheck: true,
     type: 'extent',
@@ -35,6 +35,7 @@ export default {
       landCover: 2
     },
     sentences: {
+      global: '',
       initial:
         'In {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {extent} compared to an average of {averageExtent}.',
       hasIndicator:
