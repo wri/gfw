@@ -1,5 +1,5 @@
 export default {
-  title: 'Location of tree cover gain',
+  title: 'Tree cover gain',
   config: {
     size: 'small',
     indicators: [
@@ -20,8 +20,8 @@ export default {
     metaKey: 'widget_tree_cover_gain',
     layers: ['forestgain'],
     sortOrder: {
-      summary: 6,
-      forestChange: 5
+      summary: 3,
+      forestChange: 6
     },
     sentences: {
       initial:

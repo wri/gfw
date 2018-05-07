@@ -31,7 +31,7 @@ export default {
     metaKey: 'widget_forest_location',
     layers: ['forest2000', 'forest2010'],
     sortOrder: {
-      summary: 2,
+      summary: 5,
       landCover: 2
     },
     sentences: {

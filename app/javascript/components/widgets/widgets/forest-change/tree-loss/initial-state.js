@@ -34,7 +34,7 @@ export const initialState = {
     metaKey: 'widget_tree_cover_loss',
     layers: ['loss'],
     sortOrder: {
-      summary: 3,
+      summary: 1,
       forestChange: 1
     },
     sentences: {

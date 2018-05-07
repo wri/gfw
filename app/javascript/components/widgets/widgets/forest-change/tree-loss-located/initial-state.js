@@ -38,7 +38,7 @@ export default {
     layers: ['loss'],
     metaKey: 'widget_tree_cover_loss_location',
     sortOrder: {
-      summary: 4,
+      summary: 2,
       forestChange: 2
     },
     sentences: {

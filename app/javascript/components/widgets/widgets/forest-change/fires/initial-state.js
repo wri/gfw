@@ -8,7 +8,7 @@ export default {
     layers: ['viirs_fires_alerts'],
     type: 'fires',
     sortOrder: {
-      summary: 100,
+      summary: 7,
       forestChange: 9
     },
     sentences: {

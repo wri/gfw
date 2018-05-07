@@ -10,7 +10,7 @@ export default {
     metaKey: 'widget_tree_cover',
     layers: ['forest2000', 'forest2010'],
     sortOrder: {
-      summary: 1,
+      summary: 4,
       landCover: 1
     },
     sentences: {

@@ -31,7 +31,7 @@ export default {
     layers: ['forestgain'],
     metaKey: 'widget_tree_cover_gain_location',
     sortOrder: {
-      forestChange: 6
+      forestChange: 5
     },
     sentences: {
       initial:
