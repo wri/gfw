@@ -2,7 +2,32 @@
 http_interactions:
 - request:
     method: get
-    uri: http://api-proxy-staging.globalforestwatch.org/countries/pol?thresh=30
+    uri: https://api.globalforestwatch.org/countries/pol?thresh=30
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+      Accept:
+      - application/json
+      Expect:
+      - ''
+  response:
+    status:
+      code: 0
+      message: 
+    headers: {}
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+    adapter_metadata:
+      effective_url: https://api.globalforestwatch.org/countries/pol?thresh=30
+  recorded_at: Mon, 07 May 2018 15:10:44 GMT
+- request:
+    method: get
+    uri: https://wri-01.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20%27Pol%25%27
     body:
       encoding: US-ASCII
       string: ''
@@ -18,251 +43,48 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Server:
+      - openresty
+      Date:
+      - Mon, 07 May 2018 15:10:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '3092'
       Connection:
       - keep-alive
-      Server:
-      - nginx
-      Date:
-      - Mon, 07 May 2018 14:11:51 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '17015'
-      Cache-Control:
-      - no-cache
+      Vary:
+      - Accept-Encoding
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Allow-Headers:
-      - Origin, X-Requested-With, Content-Type, Accept
-      Charset:
-      - utf-8
-      Set-Cookie:
-      - _eauth=eyJ1c2VyX2lkIjpudWxsLCJzZXNzaW9uX2lkIjoibVZQcEVQN2JrOTRTYUUzbXNHU3N1VCJ9|1525702311|5e87bffaa88a35713fc2900e053773cda08d1136;
-        Path=/
-      X-Cloud-Trace-Context:
-      - 7caa1c5369535c07cf6430ff399c57ea;o=1
-      Expires:
-      - Mon, 07 May 2018 14:11:51 GMT
-      Via:
-      - 1.1 vegur
+      - X-Requested-With, X-Prototype-Version, X-CSRF-Token
+      vary:
+      - Accept-Encoding
+      - Authorization
+      Content-Disposition:
+      - inline; filename=cartodb-query.json; modification-date="Mon, 07 May 2018 15:10:45
+        GMT";
+      Cache-Control:
+      - no-cache,max-age=31536000,must-revalidate,public
+      Surrogate-Key:
+      - t:pSs8wB
+      Last-Modified:
+      - Wed, 07 Sep 2016 10:27:19 GMT
+      X-SQLAPI-Profiler:
+      - '{"authorization":1,"init":1,"queryExplain":5,"eventedQuery":1,"beforeSink":1,"total":9}'
+      X-Varnish:
+      - '1315740824'
+      Age:
+      - '0'
+      X-Cache:
+      - MISS
     body:
-      encoding: UTF-8
-      string: '{"bounds": {"coordinates": [[[14.123922973466399, 48.994013163876403],
-        [14.123922973466399, 54.838324286436702], [24.1431563718691, 54.838324286436702],
-        [24.1431563718691, 48.994013163876403], [14.123922973466399, 48.994013163876403]]],
-        "type": "Polygon"}, "burned_forests": [{"area_burned_forest": 21500, "year":
-        2003}, {"area_burned_forest": 3800, "year": 2004}, {"area_burned_forest":
-        5800, "year": 2005}, {"area_burned_forest": 5900, "year": 2006}, {"area_burned_forest":
-        3600, "year": 2007}, {"area_burned_forest": 3000, "year": 2008}, {"area_burned_forest":
-        4400, "year": 2009}, {"area_burned_forest": 2100, "year": 2010}, {"area_burned_forest":
-        2800, "year": 2011}, {"area_burned_forest": 7200, "year": 2012}], "carbon_stocks":
-        823, "convention_cbd": "Ratification", "convention_cites": "Ratification",
-        "convention_ilo": "Not Ratified", "convention_itta": "Consuming Member", "convention_kyoto":
-        "Ratification", "convention_nlbi": "Member State", "convention_ramsar": "Contracting
-        Party", "convention_unccd": "Accession", "convention_unfccc": "Annex I/II
-        Party", "convention_world_heritage": "Ratification", "country_alt": "", "dataset_link":
-        "", "emissions": null, "employment": 251, "enabled": true, "extent": 9621967.8680000007,
-        "external_links": "", "forest_certification": [{"type": "total_area_certified",
-        "value": 14223591}, {"type": "percent_fsc", "value": 0.48648692162197299},
-        {"type": "percent_pef", "value": 0.51351307837802695}, {"type": "percent_other",
-        "value": 0}], "forests": [{"percent": 0, "type": "forest_regenerated"}, {"percent":
-        100, "type": "forest_primary"}, {"percent": 0, "type": "forest_planted"}],
-        "forma": [], "gva": 7069.9499999999998, "gva_percent": 1.5600000000000001,
-        "ifl": ["respond", {"download_urls": {"csv": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=csv",
-        "geojson": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=geojson",
-        "kml": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=kml", "shp": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=shp",
-        "svg": "https://wri-01.cartodb.com/api/v2/sql?q=None&format=svg"}, "params":
-        {"ifl": false, "iso": "pol", "table": "stories_dev_copy", "thresh": "30"}}],
-        "indepth": "", "iso": "POL", "lat": 52.127595700000001, "lng": 19.39012834,
-        "loss_outside_plantations": [], "ministry_link": "http://www.mos.gov.pl/?j=en",
-        "name": "Poland", "national_policy_link": "http://www.fao.org/docrep/013/al601E/al601E.pdf",
-        "national_policy_title": "Ministerstwo \u00c5\u0161rodowiska, Zasob\u00c3\u00b3w
-        Naturalnych i Le\u00c5\u203anictwa. Polityka le\u00c5\u203ana Pa\u00c5\u201estwa.
-        Warszawa. 1997", "params": {"ifl": false, "iso": "pol", "table": "stories_dev_copy",
-        "thresh": "30"}, "policy_links": null, "reforestation": [{"reforestation_rate":
-        48.430999999999997}], "story": null, "subnat_bounds": [{"bounds": {"coordinates":
-        [[[18.054031372070401, 50.804325103759901], [18.054031372070401, 52.334228515625099],
-        [20.673692703247099, 52.334228515625099], [20.673692703247099, 50.804325103759901],
-        [18.054031372070401, 50.804325103759901]]], "type": "Polygon"}, "cartodb_id":
-        1512, "id_1": 1, "iso": "POL", "name_1": "L\u00f3dz"}, {"bounds": {"coordinates":
-        [[[19.741737365722599, 50.172901153564602], [19.741737365722599, 51.29154586792],
-        [21.909618377685799, 51.29154586792], [21.909618377685799, 50.172901153564602],
-        [19.741737365722599, 50.172901153564602]]], "type": "Polygon"}, "cartodb_id":
-        1572, "id_1": 2, "iso": "POL", "name_1": "Swietokrzyskie"}, {"bounds": {"coordinates":
-        [[[15.8241081237793, 51.0654945373537], [15.8241081237793, 53.596515655517599],
-        [19.081657409668001, 53.596515655517599], [19.081657409668001, 51.0654945373537],
-        [15.8241081237793, 51.0654945373537]]], "type": "Polygon"}, "cartodb_id":
-        1459, "id_1": 3, "iso": "POL", "name_1": "Greater Poland"}, {"bounds": {"coordinates":
-        [[[17.289487838745401, 52.278453826904403], [17.289487838745401, 53.696960449218999],
-        [19.752832412719702, 53.696960449218999], [19.752832412719702, 52.278453826904403],
-        [17.289487838745401, 52.278453826904403]]], "type": "Polygon"}, "cartodb_id":
-        1495, "id_1": 4, "iso": "POL", "name_1": "Kuyavian-Pomeranian"}, {"bounds":
-        {"coordinates": [[[19.112335205078299, 49.1797943115237], [19.112335205078299,
-        50.486759185791001], [21.513074874878001, 50.486759185791001], [21.513074874878001,
-        49.1797943115237], [19.112335205078299, 49.1797943115237]]], "type": "Polygon"},
-        "cartodb_id": 1545, "id_1": 5, "iso": "POL", "name_1": "Lesser Poland"}, {"bounds":
-        {"coordinates": [[[14.8200302124026, 50.095115661621101], [14.8200302124026,
-        51.772609710693501], [17.718473434448399, 51.772609710693501], [17.718473434448399,
-        50.095115661621101], [14.8200302124026, 50.095115661621101]]], "type": "Polygon"},
-        "cartodb_id": 1419, "id_1": 6, "iso": "POL", "name_1": "Lower Silesian"},
-        {"bounds": {"coordinates": [[[21.645198822021701, 50.313446044921903], [21.645198822021701,
-        52.303955078125], [24.153276443481399, 52.303955078125], [24.153276443481399,
-        50.313446044921903], [21.645198822021701, 50.313446044921903]]], "type": "Polygon"},
-        "cartodb_id": 1638, "id_1": 7, "iso": "POL", "name_1": "Lublin"}, {"bounds":
-        {"coordinates": [[[14.5289087295532, 51.403549194336001], [14.5289087295532,
-        53.107391357421903], [16.371171951293999, 53.107391357421903], [16.371171951293999,
-        51.403549194336001], [14.5289087295532, 51.403549194336001]]], "type": "Polygon"},
-        "cartodb_id": 1406, "id_1": 8, "iso": "POL", "name_1": "Lubusz"}, {"bounds":
-        {"coordinates": [[[19.295961380004801, 51.008758544922102], [19.295961380004801,
-        53.444816589355703], [23.091226577758999, 53.444816589355703], [23.091226577758999,
-        51.008758544922102], [19.295961380004801, 51.008758544922102]]], "type": "Polygon"},
-        "cartodb_id": 1552, "id_1": 9, "iso": "POL", "name_1": "Masovian"}, {"bounds":
-        {"coordinates": [[[16.9483051300051, 49.972427368163999], [16.9483051300051,
-        51.153156280517599], [18.6556301116943, 51.153156280517599], [18.6556301116943,
-        49.972427368163999], [16.9483051300051, 49.972427368163999]]], "type": "Polygon"},
-        "cartodb_id": 1486, "id_1": 10, "iso": "POL", "name_1": "Opole"}, {"bounds":
-        {"coordinates": [[[21.522520065307599, 52.297153472900298], [21.522520065307599,
-        54.424747467041101], [23.939750671386701, 54.424747467041101], [23.939750671386701,
-        52.297153472900298], [21.522520065307599, 52.297153472900298]]], "type": "Polygon"},
-        "cartodb_id": 1636, "id_1": 11, "iso": "POL", "name_1": "Podlachian"}, {"bounds":
-        {"coordinates": [[[16.787248611450401, 53.433864593505902], [16.787248611450401,
-        54.835693359375099], [19.653608322143601, 54.835693359375099], [19.653608322143601,
-        53.433864593505902], [16.787248611450401, 53.433864593505902]]], "type": "Polygon"},
-        "cartodb_id": 1481, "id_1": 12, "iso": "POL", "name_1": "Pomeranian"}, {"bounds":
-        {"coordinates": [[[18.0111904144288, 49.394058227539297], [18.0111904144288,
-        51.039352416992102], [19.968339920044102, 51.039352416992102], [19.968339920044102,
-        49.394058227539297], [18.0111904144288, 49.394058227539297]]], "type": "Polygon"},
-        "cartodb_id": 1510, "id_1": 13, "iso": "POL", "name_1": "Silesian"}, {"bounds":
-        {"coordinates": [[[21.207763671875, 49.006130218506101], [21.207763671875,
-        50.8077812194825], [23.6611938476563, 50.8077812194825], [23.6611938476563,
-        49.006130218506101], [21.207763671875, 49.006130218506101]]], "type": "Polygon"},
-        "cartodb_id": 1625, "id_1": 14, "iso": "POL", "name_1": "Subcarpathian"},
-        {"bounds": {"coordinates": [[[19.1283092498781, 53.093219757080099], [19.1283092498781,
-        54.4362983703613], [22.8196830749513, 54.4362983703613], [22.8196830749513,
-        53.093219757080099], [19.1283092498781, 53.093219757080099]]], "type": "Polygon"},
-        "cartodb_id": 1546, "id_1": 15, "iso": "POL", "name_1": "Warmian-Masurian"},
-        {"bounds": {"coordinates": [[[14.1212701797488, 52.595512390136797], [14.1212701797488,
-        54.574584960937599], [17.057754516601602, 54.574584960937599], [17.057754516601602,
-        52.595512390136797], [14.1212701797488, 52.595512390136797]]], "type": "Polygon"},
-        "cartodb_id": 1388, "id_1": 16, "iso": "POL", "name_1": "West Pomeranian"}],
-        "tenure": [{"max": null, "tenure_government": null, "tenure_owned": null,
-        "tenure_owned_individuals": null, "tenure_reserved": null}], "topojson": {"arcs":
-        [[[5487, 9347], [40, -21], [281, -22], [284, -23], [458, -24], [477, -26],
-        [495, -26], [535, -29], [565, -16], [34, 11], [58, 67], [70, -9], [83, -41],
-        [39, -31], [16, -36], [11, -40], [45, -8], [83, -31], [112, -71], [88, -69],
-        [84, -98], [28, -110], [1, -126], [-5, -81], [7, -33], [115, -585], [190,
-        -564], [70, -273], [28, -146], [23, -210], [7, -149], [-1, -83], [-14, -114],
-        [-57, -68], [-366, -194], [-69, -61], [-108, -150], [-99, -156], [-23, -53],
-        [-6, -35], [22, -51], [130, -83], [132, -67], [43, -50], [97, -65], [35, -57],
-        [19, -50], [-1, -116], [-44, -160], [18, -122], [-44, -80], [-37, -90], [-5,
-        -157], [66, -173], [54, -119], [20, -93], [-22, -73], [7, -73], [48, -77],
-        [152, -239], [74, -229], [48, -90], [111, -116], [10, -48], [-45, -44], [-35,
-        -6], [-29, -11], [-19, -41], [29, -44], [39, -64], [48, -182], [-4, -149],
-        [-38, -37], [-48, -89], [-32, -81], [-261, -56], [-63, -86], [-143, -167],
-        [-98, -96], [-145, -174], [-228, -299], [-85, -125], [-61, -103], [-185, -275],
-        [-57, -116], [11, -95], [60, -223], [12, -101], [-10, -93], [-20, -83], [3,
-        -37], [55, -60], [87, -95], [5, -31], [-12, -41], [-30, -31], [-109, 32],
-        [-122, 65], [-41, -8], [-66, 15], [-271, 123], [-183, 97], [-18, 63], [-34,
-        91], [-78, 76], [-178, 66], [-73, 52], [-290, 29], [-126, 1], [-89, -21],
-        [-56, 2], [-79, -135], [-54, -39], [-79, -4], [-69, 24], [-71, 71], [-113,
-        37], [-82, -18], [-60, 15], [-52, 4], [-18, -14], [-41, 2], [-61, -34], [-66,
-        -48], [-73, -36], [-56, -79], [-51, -154], [-141, 69], [-48, -30], [-66, -20],
-        [-46, 21], [11, 53], [20, 60], [-1, 83], [-13, 93], [-44, 29], [-66, 12],
-        [-34, 18], [-3, 30], [-34, 39], [-59, 99], [-55, 123], [-38, 37], [-55, -58],
-        [-84, -67], [-53, -23], [-101, -192], [-181, -6], [-11, 89], [-19, 86], [-107,
-        22], [-3, 50], [-22, 127], [-213, 247], [-26, 104], [9, 40], [-15, 65], [-46,
-        40], [-168, 47], [-44, -27], [-39, 28], [-61, 59], [-106, 48], [-12, 25],
-        [-38, 43], [-21, 5], [-14, -26], [-31, -36], [-109, -46], [-44, 19], [-39,
-        40], [-46, 86], [-65, 76], [-54, 27], [-31, 39], [-7, 31], [120, 62], [26,
-        64], [-15, 117], [-18, 15], [-48, -40], [-100, -34], [-93, -16], [-47, 0],
-        [-264, 212], [-171, 65], [-101, 19], [-11, -22], [46, -119], [79, -147], [-4,
-        -39], [-95, -60], [-53, -26], [-64, -51], [-53, -71], [-46, -32], [-40, 8],
-        [-43, 34], [-109, 218], [-138, 166], [-16, 37], [-43, 9], [-61, 38], [-20,
-        51], [30, 53], [42, 49], [74, 30], [23, 28], [13, 43], [28, 55], [-8, 19],
-        [-52, 63], [-78, 59], [-216, -45], [-60, -31], [-33, 41], [-26, 60], [-54,
-        11], [-75, 55], [-89, 53], [-87, 16], [-180, 77], [-70, 4], [-40, 27], [-42,
-        58], [-36, 64], [-18, 130], [-133, 59], [-132, 37], [-10, -19], [6, -131],
-        [-7, -70], [-88, -43], [-86, -4], [5, 22], [103, 235], [47, 149], [52, 271],
-        [-63, 214], [-18, 100], [-29, 48], [-182, 104], [-14, 36], [28, 141], [-14,
-        60], [-44, 62], [-57, 125], [-22, 106], [73, 125], [18, 91], [32, 125], [23,
-        69], [5, 19], [-48, 49], [-12, 68], [13, 99], [-26, 73], [-64, 47], [-42,
-        63], [-20, 78], [16, 123], [49, 168], [-105, 201], [-261, 235], [-125, 165],
-        [10, 94], [55, 85], [99, 76], [76, 135], [42, 161], [2, 31], [2, 114], [-116,
-        469], [-19, 118], [-14, 141], [-7, 39], [229, -99], [96, -56], [-12, 63],
-        [-19, 54], [13, 79], [-7, 120], [-208, 61], [-137, 21], [-16, 83], [13, 53],
-        [38, -31], [136, -13], [332, 161], [574, 209], [613, 196], [143, 22], [144,
-        41], [53, 73], [53, 49], [83, 130], [185, 201], [326, 73], [122, 95], [256,
-        134], [582, 150], [243, 32], [239, 5], [212, -119], [224, -146], [41, -88],
-        [-122, 55], [-177, 131], [-65, 6], [151, -399], [82, -141], [168, -105], [140,
-        -35], [432, 63], [153, 84], [44, 42]]], "objects": {"0": {"arcs": [[[0]]],
-        "type": "MultiPolygon"}}, "transform": {"scale": [0.00099781468146814675,
-        0.00058180138013801347], "translate": [14.128613, 49.020752000000002]}, "type":
-        "Topology"}, "umd": [{"area_ha": 31208527.7641, "country": "Poland", "extent":
-        10461916.810699999, "extent_perc": 33.522622053100001, "gain": 504136.84982200002,
-        "gain_perc": 4.8187809073999999, "iso": "POL", "loss": 19103.046120800002,
-        "loss_perc": 0.18259604302400001, "thresh": 30, "total_gain": 6049642.1978639998,
-        "year": 2001}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 31087.722104699998, "loss_perc":
-        0.29715130283699998, "thresh": 30, "total_gain": 6049642.1978639998, "year":
-        2002}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 33323.857879399999, "loss_perc":
-        0.31852535708700003, "thresh": 30, "total_gain": 6049642.1978639998, "year":
-        2003}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 41941.1616565, "loss_perc": 0.40089366428200002,
-        "thresh": 30, "total_gain": 6049642.1978639998, "year": 2004}, {"area_ha":
-        31208527.7641, "country": "Poland", "extent": 10461916.810699999, "extent_perc":
-        33.522622053100001, "gain": 504136.84982200002, "gain_perc": 4.8187809073999999,
-        "iso": "POL", "loss": 82451.052091599995, "loss_perc": 0.78810655430999998,
-        "thresh": 30, "total_gain": 6049642.1978639998, "year": 2005}, {"area_ha":
-        31208527.7641, "country": "Poland", "extent": 10461916.810699999, "extent_perc":
-        33.522622053100001, "gain": 504136.84982200002, "gain_perc": 4.8187809073999999,
-        "iso": "POL", "loss": 37706.163642, "loss_perc": 0.36041352960700002, "thresh":
-        30, "total_gain": 6049642.1978639998, "year": 2006}, {"area_ha": 31208527.7641,
-        "country": "Poland", "extent": 10461916.810699999, "extent_perc": 33.522622053100001,
-        "gain": 504136.84982200002, "gain_perc": 4.8187809073999999, "iso": "POL",
-        "loss": 57404.130430500001, "loss_perc": 0.54869610864999996, "thresh": 30,
-        "total_gain": 6049642.1978639998, "year": 2007}, {"area_ha": 31208527.7641,
-        "country": "Poland", "extent": 10461916.810699999, "extent_perc": 33.522622053100001,
-        "gain": 504136.84982200002, "gain_perc": 4.8187809073999999, "iso": "POL",
-        "loss": 47973.966605100002, "loss_perc": 0.45855809669600001, "thresh": 30,
-        "total_gain": 6049642.1978639998, "year": 2008}, {"area_ha": 31208527.7641,
-        "country": "Poland", "extent": 10461916.810699999, "extent_perc": 33.522622053100001,
-        "gain": 504136.84982200002, "gain_perc": 4.8187809073999999, "iso": "POL",
-        "loss": 46976.510646800001, "loss_perc": 0.44902393602200003, "thresh": 30,
-        "total_gain": 6049642.1978639998, "year": 2009}, {"area_ha": 31208527.7641,
-        "country": "Poland", "extent": 10461916.810699999, "extent_perc": 33.522622053100001,
-        "gain": 504136.84982200002, "gain_perc": 4.8187809073999999, "iso": "POL",
-        "loss": 71873.856776899993, "loss_perc": 0.687004667284, "thresh": 30, "total_gain":
-        6049642.1978639998, "year": 2010}, {"area_ha": 31208527.7641, "country": "Poland",
-        "extent": 10461916.810699999, "extent_perc": 33.522622053100001, "gain": 504136.84982200002,
-        "gain_perc": 4.8187809073999999, "iso": "POL", "loss": 56692.749433500001,
-        "loss_perc": 0.54189638915399996, "thresh": 30, "total_gain": 6049642.1978639998,
-        "year": 2011}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 54937.259363500001, "loss_perc":
-        0.52511657622200003, "thresh": 30, "total_gain": 6049642.1978639998, "year":
-        2012}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 35029.589190600003, "loss_perc":
-        0.33482955202600001, "thresh": 30, "total_gain": 6049642.1978639998, "year":
-        2013}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 56308.268234700001, "loss_perc":
-        0.53822133413600004, "thresh": 30, "total_gain": 6049642.1978639998, "year":
-        2014}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 42767.384146299999, "loss_perc":
-        0.40879109364100003, "thresh": 30, "total_gain": 6049642.1978639998, "year":
-        2015}, {"area_ha": 31208527.7641, "country": "Poland", "extent": 10461916.810699999,
-        "extent_perc": 33.522622053100001, "gain": 504136.84982200002, "gain_perc":
-        4.8187809073999999, "iso": "POL", "loss": 86595.131429800007, "loss_perc":
-        0.82771764483200005, "thresh": 30, "total_gain": 6049642.1978639998, "year":
-        2016}]}'
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyb3dzIjpbeyJlbXBsb3ltZW50IjoyNTEsImVuYWJsZWQiOnRydWUsImV4dGVudCI6OTYyMTk2Ny44NjgsImd2YSI6NzA2OS45NSwiZ3ZhX3BlcmNlbnQiOjEuNTYsImluZGVwdGgiOiIiLCJpc28iOiJQT0wiLCJsYXQiOjUyLjEyNzU5NTcsImxuZyI6MTkuMzkwMTI4MzQsIm5hbWUiOiJQb2xhbmQiLCJjb252ZW50aW9uX2NiZCI6IlJhdGlmaWNhdGlvbiIsImNvbnZlbnRpb25fY2l0ZXMiOiJSYXRpZmljYXRpb24iLCJjb252ZW50aW9uX2lsbyI6Ik5vdCBSYXRpZmllZCIsImNvbnZlbnRpb25faXR0YSI6IkNvbnN1bWluZyBNZW1iZXIiLCJjb252ZW50aW9uX2t5b3RvIjoiUmF0aWZpY2F0aW9uIiwiY29udmVudGlvbl9ubGJpIjoiTWVtYmVyIFN0YXRlIiwiY29udmVudGlvbl9yYW1zYXIiOiJDb250cmFjdGluZyBQYXJ0eSIsImNvbnZlbnRpb25fdW5jY2QiOiJBY2Nlc3Npb24iLCJjb252ZW50aW9uX3VuZmNjYyI6IkFubmV4IEkvSUkgUGFydHkiLCJjb252ZW50aW9uX3dvcmxkX2hlcml0YWdlIjoiUmF0aWZpY2F0aW9uIiwibmF0aW9uYWxfcG9saWN5X2xpbmsiOiJodHRwOi8vd3d3LmZhby5vcmcvZG9jcmVwLzAxMy9hbDYwMUUvYWw2MDFFLnBkZiIsIm5hdGlvbmFsX3BvbGljeV90aXRsZSI6Ik1pbmlzdGVyc3R3byDDhcWhcm9kb3dpc2thLCBaYXNvYsODwrN3IE5hdHVyYWxueWNoIGkgTGXDheKAum5pY3R3YS4gUG9saXR5a2EgbGXDheKAum5hIFBhw4XigJ5zdHdhLiBXYXJzemF3YS4gMTk5NyIsIl9jYXJ0b2RiX2lkMCI6Ijk5IiwiZXh0ZXJuYWxfbGlua3MiOiIiLCJtaW5pc3RyeV9saW5rIjoiaHR0cDovL3d3dy5tb3MuZ292LnBsLz9qPWVuIiwiZGF0YXNldF9saW5rIjoiIiwiZW1pc3Npb25zIjpudWxsLCJjYXJib25fc3RvY2tzIjo4MjMsImZvcmVzdF9wbGFudGVkIjpudWxsLCJmb3Jlc3RfcHJpbWFyeSI6MTAwLCJmb3Jlc3RfcmVnZW5lcmF0ZWQiOm51bGwsInRlbnVyZV9nb3Zlcm5tZW50IjpudWxsLCJ0ZW51cmVfcmVzZXJ2ZWQiOm51bGwsInRlbnVyZV9vd25lZCI6bnVsbCwidGVudXJlX293bmVkX2luZGl2aWR1YWxzIjpudWxsLCJjb3VudHJ5X2FsdCI6IiIsInRoZV9nZW9tIjoiMDEwMTAwMDAyMEU2MTAwMDAwREVFMjZCNzNERjYzMzM0MDAwN0M1MTBFNTUxMDRBNDAiLCJjYXJ0b2RiX2lkIjoxNTYsImNyZWF0ZWRfYXQiOiIyMDE0LTAxLTE4VDExOjM0OjA3WiIsInVwZGF0ZWRfYXQiOiIyMDE2LTAxLTEyVDE2OjMyOjUzWiIsInRoZV9nZW9tX3dlYm1lcmNhdG9yIjoiMDEwMTAwMDAyMDExMEYwMDAwRjU4QzQ5OUJEMTc3NDA0MTdFQzhDNjU2NEYwNzVBNDEiLCJwZXJjZW50X2ZzYyI6MC40ODY0ODY5MjE2MjE5NzMsInBlcmNlbnRfb3RoZXIiOjAsInBlcmNlbnRfcGVmIjowLjUxMzUxMzA3ODM3ODAyNywidG90YWxfYXJlYV9jZXJ0aWZpZWQiOjE0MjIzNTkxLCJyZWZvcmVzdGF0aW9uX3JhdGUiOjQ4LjQzMSwicG9saWN5X2xpbmtzIjpudWxsfV0sInRpbWUiOjAuMDAyLCJmaWVsZHMiOnsiZW1wbG95bWVudCI6eyJ0eXBlIjoibnVtYmVyIn0sImVuYWJsZWQiOnsidHlwZSI6ImJvb2xlYW4ifSwiZXh0ZW50Ijp7InR5cGUiOiJudW1iZXIifSwiZ3ZhIjp7InR5cGUiOiJudW1iZXIifSwiZ3ZhX3BlcmNlbnQiOnsidHlwZSI6Im51bWJlciJ9LCJpbmRlcHRoIjp7InR5cGUiOiJzdHJpbmcifSwiaXNvIjp7InR5cGUiOiJzdHJpbmcifSwibGF0Ijp7InR5cGUiOiJudW1iZXIifSwibG5nIjp7InR5cGUiOiJudW1iZXIifSwibmFtZSI6eyJ0eXBlIjoic3RyaW5nIn0sImNvbnZlbnRpb25fY2JkIjp7InR5cGUiOiJzdHJpbmcifSwiY29udmVudGlvbl9jaXRlcyI6eyJ0eXBlIjoic3RyaW5nIn0sImNvbnZlbnRpb25faWxvIjp7InR5cGUiOiJzdHJpbmcifSwiY29udmVudGlvbl9pdHRhIjp7InR5cGUiOiJzdHJpbmcifSwiY29udmVudGlvbl9reW90byI6eyJ0eXBlIjoic3RyaW5nIn0sImNvbnZlbnRpb25fbmxiaSI6eyJ0eXBlIjoic3RyaW5nIn0sImNvbnZlbnRpb25fcmFtc2FyIjp7InR5cGUiOiJzdHJpbmcifSwiY29udmVudGlvbl91bmNjZCI6eyJ0eXBlIjoic3RyaW5nIn0sImNvbnZlbnRpb25fdW5mY2NjIjp7InR5cGUiOiJzdHJpbmcifSwiY29udmVudGlvbl93b3JsZF9oZXJpdGFnZSI6eyJ0eXBlIjoic3RyaW5nIn0sIm5hdGlvbmFsX3BvbGljeV9saW5rIjp7InR5cGUiOiJzdHJpbmcifSwibmF0aW9uYWxfcG9saWN5X3RpdGxlIjp7InR5cGUiOiJzdHJpbmcifSwiX2NhcnRvZGJfaWQwIjp7InR5cGUiOiJzdHJpbmcifSwiZXh0ZXJuYWxfbGlua3MiOnsidHlwZSI6InN0cmluZyJ9LCJtaW5pc3RyeV9saW5rIjp7InR5cGUiOiJzdHJpbmcifSwiZGF0YXNldF9saW5rIjp7InR5cGUiOiJzdHJpbmcifSwiZW1pc3Npb25zIjp7InR5cGUiOiJudW1iZXIifSwiY2FyYm9uX3N0b2NrcyI6eyJ0eXBlIjoibnVtYmVyIn0sImZvcmVzdF9wbGFudGVkIjp7InR5cGUiOiJudW1iZXIifSwiZm9yZXN0X3ByaW1hcnkiOnsidHlwZSI6Im51bWJlciJ9LCJmb3Jlc3RfcmVnZW5lcmF0ZWQiOnsidHlwZSI6Im51bWJlciJ9LCJ0ZW51cmVfZ292ZXJubWVudCI6eyJ0eXBlIjoibnVtYmVyIn0sInRlbnVyZV9yZXNlcnZlZCI6eyJ0eXBlIjoibnVtYmVyIn0sInRlbnVyZV9vd25lZCI6eyJ0eXBlIjoibnVtYmVyIn0sInRlbnVyZV9vd25lZF9pbmRpdmlkdWFscyI6eyJ0eXBlIjoibnVtYmVyIn0sImNvdW50cnlfYWx0Ijp7InR5cGUiOiJzdHJpbmcifSwidGhlX2dlb20iOnsidHlwZSI6Imdlb21ldHJ5In0sImNhcnRvZGJfaWQiOnsidHlwZSI6Im51bWJlciJ9LCJjcmVhdGVkX2F0Ijp7InR5cGUiOiJkYXRlIn0sInVwZGF0ZWRfYXQiOnsidHlwZSI6ImRhdGUifSwidGhlX2dlb21fd2VibWVyY2F0b3IiOnsidHlwZSI6Imdlb21ldHJ5In0sInBlcmNlbnRfZnNjIjp7InR5cGUiOiJudW1iZXIifSwicGVyY2VudF9vdGhlciI6eyJ0eXBlIjoibnVtYmVyIn0sInBlcmNlbnRfcGVmIjp7InR5cGUiOiJudW1iZXIifSwidG90YWxfYXJlYV9jZXJ0aWZpZWQiOnsidHlwZSI6Im51bWJlciJ9LCJyZWZvcmVzdGF0aW9uX3JhdGUiOnsidHlwZSI6Im51bWJlciJ9LCJwb2xpY3lfbGlua3MiOnsidHlwZSI6InN0cmluZyJ9fSwidG90YWxfcm93cyI6MX0=
     http_version: '1.1'
     adapter_metadata:
-      effective_url: http://api-proxy-staging.globalforestwatch.org/countries/pol?thresh=30
-  recorded_at: Mon, 07 May 2018 14:11:52 GMT
+      effective_url: https://wri-01.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'Pol%25'
+  recorded_at: Mon, 07 May 2018 15:10:45 GMT
 recorded_with: VCR 4.0.0
