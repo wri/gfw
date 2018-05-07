@@ -8,6 +8,7 @@ export default {
     type: 'loss',
     selectors: ['weeks'],
     metaKey: 'widget_deforestation_graph',
+    interactive: true,
     customLocationWhitelist: [
       'BRA',
       'COL',
