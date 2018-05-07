@@ -144,7 +144,6 @@ class RecentImageryContainer extends PureComponent {
     this.mapIdleEvent = map.addListener('idle', () => {
       const { visible, dates, getData } = this.props;
       if (visible) {
-        const zoom = map.getZoom();
         const needNewTile = !google.maps.geometry.poly.containsLocation(
           map.getCenter(),
           this.boundsPolygon
@@ -156,13 +155,6 @@ class RecentImageryContainer extends PureComponent {
             start: dates.start,
             end: dates.end
           });
-        }
-        if (zoom >= 10) {
-          this.boundsPolygon.setOptions({
-            fillColor: 'transparent',
-            strokeWeight: 0
-          });
-          this.boundsPolygonInfowindow.close();
         }
       }
     });
