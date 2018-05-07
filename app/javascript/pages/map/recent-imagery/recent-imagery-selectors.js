@@ -6,7 +6,6 @@ import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 
 const getData = state => state.data || null;
-const getBbox = state => state.bbox || null;
 const getDataStatus = state => state.dataStatus || null;
 const getSettings = state => state.settings || null;
 
@@ -73,11 +72,20 @@ export const getTile = createSelector(
   }
 );
 
-export const getBounds = createSelector([getBbox], bbox => {
-  if (!bbox || isEmpty(bbox)) return null;
+export const getBounds = createSelector(
+  [getData, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
 
-  return bbox.geometry.coordinates;
-});
+    const { selectedTileSource } = settings;
+    const index = findIndex(
+      data,
+      d => d.attributes.source === selectedTileSource
+    );
+
+    return data[index].attributes.bbox.geometry.coordinates;
+  }
+);
 
 export const getSources = createSelector(
   [getData, getDataStatus],

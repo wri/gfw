@@ -29,7 +29,6 @@ const mapStateToProps = ({ recentImagery }) => {
   } = recentImagery;
   const selectorData = {
     data: data.tiles,
-    bbox: data.bbox,
     dataStatus,
     settings
   };
