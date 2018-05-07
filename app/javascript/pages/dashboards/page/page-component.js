@@ -6,9 +6,7 @@ import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 
-import Meta from 'pages/dashboards/meta';
-import Header from 'pages/dashboards/header';
-
+import Meta from 'components/meta';
 import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
 import Map from 'components/map';
@@ -18,6 +16,8 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
+
+import Header from 'pages/dashboards/header';
 
 import closeIcon from 'assets/icons/close.svg';
 import './page-styles.scss';
@@ -36,7 +36,8 @@ class Page extends PureComponent {
       activeWidget,
       locationGeoJson,
       setMapZoom,
-      widgets
+      widgets,
+      title
     } = this.props;
 
     return (
@@ -113,11 +114,8 @@ class Page extends PureComponent {
         <CountryDataProvider />
         <WhitelistsProvider />
         <Meta
-          page={
-            locationNames &&
-            locationNames.country &&
-            locationNames.country.label
-          }
+          title={title}
+          description="Data about forest change, tenure, forest related employment and land use in"
         />
       </div>
     );
@@ -136,7 +134,8 @@ Page.propTypes = {
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   locationGeoJson: PropTypes.object,
   activeWidget: PropTypes.string,
-  setMapZoom: PropTypes.func
+  setMapZoom: PropTypes.func,
+  title: PropTypes.string
 };
 
 export default Page;

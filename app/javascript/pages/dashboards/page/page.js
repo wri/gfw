@@ -54,13 +54,12 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     ...countryData,
     locationNames,
     locationOptions,
-    currentLocation:
-      locationNames && locationNames.current && locationNames.current.label,
+    currentLocation: locationNames && locationNames && locationNames.label,
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
     loading: countryWhitelistLoading || regionWhitelistLoading,
-    pageName: !location.payload.country
-      ? `${upperFirst(location.payload.type)} dashboard`
-      : locationNames.current && locationNames.current.label
+    title: !location.payload.country
+      ? `${upperFirst(location.payload.type)} Dashboard`
+      : locationNames && locationNames.label
   };
 };
 
