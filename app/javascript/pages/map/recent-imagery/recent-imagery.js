@@ -141,7 +141,7 @@ class RecentImageryContainer extends PureComponent {
   setEvents() {
     const { map } = this.middleView;
 
-    const loadNewTile = () => {
+    this.mapIdleEvent = map.addListener('idle', () => {
       const { visible, dates, getData } = this.props;
       if (visible) {
         const zoom = map.getZoom();
@@ -165,14 +165,11 @@ class RecentImageryContainer extends PureComponent {
           this.boundsPolygonInfowindow.close();
         }
       }
-    };
-    this.mapDragEvent = map.addListener('dragend', loadNewTile);
-    this.mapZoomEvent = map.addListener('zoom_changed', loadNewTile);
+    });
   }
 
   removeEvents() {
-    google.maps.event.removeListener(this.mapDragEvent);
-    google.maps.event.removeListener(this.mapZoomEvent);
+    google.maps.event.removeListener(this.mapIdleEvent);
   }
 
   showLayer(url) {
