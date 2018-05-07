@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Legend module.
  *
@@ -830,6 +829,15 @@ define(
             iCount += 1;
           });
         }
+
+        window.dispatchEvent(
+          new CustomEvent('toogleLayerVisibility', {
+            detail: {
+              slug: layer,
+              visibility: true
+            }
+          })
+        );
       },
 
       hiddenLayer: function(e) {
@@ -878,6 +886,15 @@ define(
           this.model.set('layers_status', layerArray);
           this.map.overlayMapTypes.removeAt(index);
         }
+
+        window.dispatchEvent(
+          new CustomEvent('toogleLayerVisibility', {
+            detail: {
+              slug: layer,
+              visibility: false
+            }
+          })
+        );
       },
 
       _getOverlayIndex: function(name) {

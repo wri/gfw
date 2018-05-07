@@ -31,7 +31,7 @@ class RecentImagerySettings extends PureComponent {
       settings: {
         styles,
         thumbsToShow,
-        selectedTileIndex,
+        selectedTileSource,
         date,
         weeks,
         clouds
@@ -115,18 +115,18 @@ class RecentImagerySettings extends PureComponent {
           />
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
-          {tiles.length >= 2 && (
+          {tiles.length >= 1 && (
             <div>
               <div className="c-recent-imagery-settings__thumbnails__description">
-                {this.state.thumbnailsDescription || selectedTile.description}
+                {this.state.thumbnailsDescription ||
+                  (selectedTile && selectedTile.description)}
               </div>
               <Carousel
                 settings={{
                   slidesToShow: thumbsToShow,
-                  infinite: tiles.length > thumbsToShow,
-                  centerMode: tiles.length > thumbsToShow,
+                  infinite: false,
+                  centerMode: false,
                   centerPadding: '20px',
-                  draggable: false,
                   dots: false,
                   arrows: tiles.length > thumbsToShow,
                   responsive: [
@@ -144,9 +144,11 @@ class RecentImagerySettings extends PureComponent {
                     <RecentImageryThumbnail
                       id={i}
                       tile={tile}
-                      selected={selectedTileIndex === i}
+                      selected={selectedTileSource === tile.id}
                       handleClick={() => {
-                        setRecentImagerySettings({ selectedTileIndex: i });
+                        setRecentImagerySettings({
+                          selectedTileSource: tile.id
+                        });
                       }}
                       handleMouseEnter={() => {
                         this.setState({
@@ -162,7 +164,7 @@ class RecentImagerySettings extends PureComponent {
               </Carousel>
             </div>
           )}
-          {tiles.length < 2 && (
+          {tiles.length < 1 && (
             <NoContent
               className="c-recent-imagery-settings__empty-thumbnails"
               message="We can't find additional images for the selection"
@@ -175,7 +177,7 @@ class RecentImagerySettings extends PureComponent {
 }
 
 RecentImagerySettings.propTypes = {
-  selectedTile: PropTypes.object.isRequired,
+  selectedTile: PropTypes.object,
   tiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   isDragging: PropTypes.bool.isRequired,

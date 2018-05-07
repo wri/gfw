@@ -4,8 +4,10 @@ import axios, { CancelToken } from 'axios';
 import findIndex from 'lodash/findIndex';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
+import { initialState } from './recent-imagery-reducers';
 
 const toogleRecentImagery = createAction('toogleRecentImagery');
+const setVisible = createAction('setVisible');
 const setTimelineFlag = createAction('setTimelineFlag');
 const setRecentImageryData = createAction('setRecentImageryData');
 const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
@@ -23,13 +25,22 @@ const getData = createThunkAction('getData', params => dispatch => {
   getRecentTiles({ ...params, token: this.getDataSource.token })
     .then(response => {
       if (response.data.data.tiles) {
-        dispatch(setRecentImagerySettings({ selectedTileIndex: 0 }));
+        const { clouds } = initialState.settings;
+        const { source } = response.data.data.tiles[0].attributes;
+        const cloud_score = Math.round(
+          response.data.data.tiles[0].attributes.cloud_score
+        );
+
         dispatch(
           setRecentImageryData({
             data: response.data.data,
             dataStatus: {
               haveAllData: false,
               requestedTiles: 0
+            },
+            settings: {
+              selectedTileSource: source,
+              clouds: cloud_score > clouds ? cloud_score : clouds
             }
           })
         );
@@ -75,7 +86,9 @@ const getMoreTiles = createThunkAction(
                   data.tiles,
                   d => d.attributes.source === item.source_id
                 );
-                data.tiles[index].attributes.tile_url = item.tile_url;
+                if (index !== -1) {
+                  data.tiles[index].attributes.tile_url = item.tile_url;
+                }
               }
             });
             thumbs.forEach(item => {
@@ -83,7 +96,9 @@ const getMoreTiles = createThunkAction(
                 data.tiles,
                 d => d.attributes.source === item.source
               );
-              data.tiles[index].attributes.thumbnail_url = item.thumbnail_url;
+              if (index !== -1) {
+                data.tiles[index].attributes.thumbnail_url = item.thumbnail_url;
+              }
             });
 
             dispatch(
@@ -126,6 +141,7 @@ const resetData = createThunkAction('resetData', () => dispatch => {
 
 export default {
   toogleRecentImagery,
+  setVisible,
   setTimelineFlag,
   setRecentImageryData,
   setRecentImageryDataStatus,

@@ -4,7 +4,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { getPolygonCenter } from 'utils/map';
 
 import actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
@@ -21,6 +20,7 @@ import RecentImageryComponent from './recent-imagery-component';
 const mapStateToProps = ({ recentImagery }) => {
   const {
     active,
+    visible,
     showSettings,
     isTimelineOpen,
     data,
@@ -29,12 +29,12 @@ const mapStateToProps = ({ recentImagery }) => {
   } = recentImagery;
   const selectorData = {
     data: data.tiles,
-    bbox: data.bbox,
     dataStatus,
     settings
   };
   return {
     active,
+    visible,
     showSettings,
     isTimelineOpen,
     dataStatus,
@@ -71,6 +71,12 @@ class RecentImageryContainer extends PureComponent {
     window.addEventListener('timelineToogle', e => {
       const { setTimelineFlag } = this.props;
       setTimelineFlag(e.detail);
+    });
+    window.addEventListener('toogleLayerVisibility', e => {
+      const { settings: { layerSlug }, setVisible } = this.props;
+      if (e.detail.slug === layerSlug) {
+        setVisible(e.detail.visibility);
+      }
     });
   }
 
@@ -135,36 +141,27 @@ class RecentImageryContainer extends PureComponent {
   setEvents() {
     const { map } = this.middleView;
 
-    const loadNewTile = () => {
-      const { dates, getData } = this.props;
-      const zoom = map.getZoom();
-      const needNewTile = !google.maps.geometry.poly.containsLocation(
-        map.getCenter(),
-        this.boundsPolygon
-      );
-      if (needNewTile) {
-        getData({
-          latitude: map.getCenter().lng(),
-          longitude: map.getCenter().lat(),
-          start: dates.start,
-          end: dates.end
-        });
+    this.mapIdleEvent = map.addListener('idle', () => {
+      const { visible, dates, getData } = this.props;
+      if (visible) {
+        const needNewTile = !google.maps.geometry.poly.containsLocation(
+          map.getCenter(),
+          this.boundsPolygon
+        );
+        if (needNewTile) {
+          getData({
+            latitude: map.getCenter().lng(),
+            longitude: map.getCenter().lat(),
+            start: dates.start,
+            end: dates.end
+          });
+        }
       }
-      if (zoom >= 10) {
-        this.boundsPolygon.setOptions({
-          fillColor: 'transparent',
-          strokeWeight: 0
-        });
-        this.boundsPolygonInfowindow.close();
-      }
-    };
-    this.mapDragEvent = map.addListener('dragend', loadNewTile);
-    this.mapZoomEvent = map.addListener('zoom_changed', loadNewTile);
+    });
   }
 
   removeEvents() {
-    google.maps.event.removeListener(this.mapDragEvent);
-    google.maps.event.removeListener(this.mapZoomEvent);
+    google.maps.event.removeListener(this.mapIdleEvent);
   }
 
   showLayer(url) {
@@ -218,7 +215,6 @@ class RecentImageryContainer extends PureComponent {
       fillColor: 'transparent',
       strokeWeight: 0
     });
-    const polygonCenter = getPolygonCenter(this.boundsPolygon);
 
     this.addBoundsPolygonEvents();
     this.boundsPolygon.setMap(map);
@@ -230,10 +226,9 @@ class RecentImageryContainer extends PureComponent {
       content: `
         <div class="recent-imagery-infowindow">
           ${description}
-          <div class="recent-imagery-infowindow__arrow"></div>
+          <div class="recent-imagery-infowindow__hook">Click to refine image</div>
         </div>
-      `,
-      position: polygonCenter.top
+      `
     });
   }
 
@@ -255,6 +250,9 @@ class RecentImageryContainer extends PureComponent {
         strokeWeight: 0
       });
       this.boundsPolygonInfowindow.close();
+    });
+    google.maps.event.addListener(this.boundsPolygon, 'mousemove', e => {
+      this.boundsPolygonInfowindow.setPosition(e.latLng);
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
@@ -279,6 +277,7 @@ class RecentImageryContainer extends PureComponent {
 
 RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
+  visible: PropTypes.bool,
   showSettings: PropTypes.bool,
   dataStatus: PropTypes.object,
   tile: PropTypes.object,
@@ -287,6 +286,7 @@ RecentImageryContainer.propTypes = {
   dates: PropTypes.object,
   settings: PropTypes.object,
   toogleRecentImagery: PropTypes.func,
+  setVisible: PropTypes.func,
   setTimelineFlag: PropTypes.func,
   setRecentImageryShowSettings: PropTypes.func,
   getData: PropTypes.func,

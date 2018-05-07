@@ -80,19 +80,23 @@ define(
 
       newStory() {
         this.checkLoggedIn()
-          .then(function () {
-            new StoriesNewView({
-              router: this,
-              alreadyLoggedIn: true
-            });
-          })
+          .then(
+            function() {
+              new StoriesNewView({
+                router: this,
+                alreadyLoggedIn: true
+              });
+            }
+          )
 
-          .fail(function () {
-            new StoriesNewView({
-              router: this,
-              alreadyLoggedIn: false
-            });
-          });
+          .fail(
+            function() {
+              new StoriesNewView({
+                router: this,
+                alreadyLoggedIn: false
+              });
+            }
+          );
       },
 
       showStory(storyId) {
@@ -109,20 +113,24 @@ define(
 
       editStory(storyId) {
         this.checkLoggedIn()
-          .then(function () {
-            const editStoryView = new StoriesNewView({
-              id: storyId,
-              alreadyLoggedIn: true,
-              router: this
-            });
-          })
+          .then(
+            function() {
+              var editStoryView = new StoriesNewView({
+                id: storyId,
+                alreadyLoggedIn: true,
+                router: this
+              });
+            }
+          )
 
-          .fail(function () {
-            const loginView = new LoginView({
-              message: 'Please log in to edit a story.'
-            });
-            this.el.html(loginView.render().el);
-          });
+          .fail(
+            function() {
+              var loginView = new LoginView({
+                message: 'Please log in to edit a story.'
+              });
+              this.el.html(loginView.render().el);
+            }
+          );
       },
 
       show404() {

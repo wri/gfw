@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import findIndex from 'lodash/findIndex';
 import moment from 'moment';
 import { format } from 'd3-format';
+import { sortByKey } from 'utils/data';
 
 const getData = state => state.data || null;
-const getBbox = state => state.bbox || null;
 const getDataStatus = state => state.dataStatus || null;
 const getSettings = state => state.settings || null;
 
@@ -14,8 +15,13 @@ const getFilteredData = createSelector(
     if (!data || isEmpty(data)) return null;
 
     const { clouds } = settings;
-    return data.filter(
+    const dataFiltered = data.filter(
       item => Math.round(item.attributes.cloud_score) <= clouds
+    );
+    return sortByKey(
+      dataFiltered.map(item => item.attributes),
+      'date_time',
+      true
     );
   }
 );
@@ -24,17 +30,17 @@ export const getAllTiles = createSelector([getFilteredData], data => {
   if (!data || isEmpty(data)) return [];
 
   return data.map(item => ({
-    id: item.attributes.source,
-    url: item.attributes.tile_url,
-    thumbnail: item.attributes.thumbnail_url,
-    cloudScore: item.attributes.cloud_score,
-    dateTime: item.attributes.date_time,
-    instrument: item.attributes.instrument,
-    description: `${moment(item.attributes.date_time)
+    id: item.source,
+    url: item.tile_url,
+    thumbnail: item.thumbnail_url,
+    cloudScore: item.cloud_score,
+    dateTime: item.date_time,
+    instrument: item.instrument,
+    description: `${moment(item.date_time)
       .format('DD MMM YYYY')
-      .toUpperCase()} - ${format('.0f')(
-      item.attributes.cloud_score
-    )}% cloud coverage - ${item.attributes.instrument}`
+      .toUpperCase()} - ${format('.0f')(item.cloud_score)}% cloud coverage - ${
+      item.instrument
+    }`
   }));
 });
 
@@ -43,8 +49,13 @@ export const getTile = createSelector(
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
-    const { selectedTileIndex } = settings;
-    const selectedTile = data[selectedTileIndex].attributes;
+    const { selectedTileSource } = settings;
+    const index = findIndex(
+      data,
+      d => d.attributes.source === selectedTileSource
+    );
+
+    const selectedTile = data[index].attributes;
     return {
       url: selectedTile.tile_url,
       cloudScore: selectedTile.cloud_score,
@@ -59,11 +70,20 @@ export const getTile = createSelector(
   }
 );
 
-export const getBounds = createSelector([getBbox], bbox => {
-  if (!bbox || isEmpty(bbox)) return null;
+export const getBounds = createSelector(
+  [getData, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
 
-  return bbox.geometry.coordinates;
-});
+    const { selectedTileSource } = settings;
+    const index = findIndex(
+      data,
+      d => d.attributes.source === selectedTileSource
+    );
+
+    return data[index].attributes.bbox.geometry.coordinates;
+  }
+);
 
 export const getSources = createSelector(
   [getData, getDataStatus],
