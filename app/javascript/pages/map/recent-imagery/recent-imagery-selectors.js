@@ -6,7 +6,6 @@ import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 
 const getData = state => state.data || null;
-const getBbox = state => state.bbox || null;
 const getDataStatus = state => state.dataStatus || null;
 const getSettings = state => state.settings || null;
 
@@ -15,11 +14,9 @@ const getFilteredData = createSelector(
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
-    const { clouds, selectedTileSource } = settings;
+    const { clouds } = settings;
     const dataFiltered = data.filter(
-      item =>
-        Math.round(item.attributes.cloud_score) <= clouds ||
-        item.attributes.source === selectedTileSource
+      item => Math.round(item.attributes.cloud_score) <= clouds
     );
     return sortByKey(
       dataFiltered.map(item => item.attributes),
@@ -73,11 +70,20 @@ export const getTile = createSelector(
   }
 );
 
-export const getBounds = createSelector([getBbox], bbox => {
-  if (!bbox || isEmpty(bbox)) return null;
+export const getBounds = createSelector(
+  [getData, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
 
-  return bbox.geometry.coordinates;
-});
+    const { selectedTileSource } = settings;
+    const index = findIndex(
+      data,
+      d => d.attributes.source === selectedTileSource
+    );
+
+    return data[index].attributes.bbox.geometry.coordinates;
+  }
+);
 
 export const getSources = createSelector(
   [getData, getDataStatus],

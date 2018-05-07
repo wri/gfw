@@ -4,6 +4,7 @@ import axios, { CancelToken } from 'axios';
 import findIndex from 'lodash/findIndex';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
+import { initialState } from './recent-imagery-reducers';
 
 const toogleRecentImagery = createAction('toogleRecentImagery');
 const setVisible = createAction('setVisible');
@@ -24,6 +25,12 @@ const getData = createThunkAction('getData', params => dispatch => {
   getRecentTiles({ ...params, token: this.getDataSource.token })
     .then(response => {
       if (response.data.data.tiles) {
+        const { clouds } = initialState.settings;
+        const { source } = response.data.data.tiles[0].attributes;
+        const cloud_score = Math.round(
+          response.data.data.tiles[0].attributes.cloud_score
+        );
+
         dispatch(
           setRecentImageryData({
             data: response.data.data,
@@ -32,7 +39,8 @@ const getData = createThunkAction('getData', params => dispatch => {
               requestedTiles: 0
             },
             settings: {
-              selectedTileSource: response.data.data.tiles[0].attributes.source
+              selectedTileSource: source,
+              clouds: cloud_score > clouds ? cloud_score : clouds
             }
           })
         );

@@ -29,7 +29,6 @@ const mapStateToProps = ({ recentImagery }) => {
   } = recentImagery;
   const selectorData = {
     data: data.tiles,
-    bbox: data.bbox,
     dataStatus,
     settings
   };
@@ -142,10 +141,9 @@ class RecentImageryContainer extends PureComponent {
   setEvents() {
     const { map } = this.middleView;
 
-    const loadNewTile = () => {
+    this.mapIdleEvent = map.addListener('idle', () => {
       const { visible, dates, getData } = this.props;
       if (visible) {
-        const zoom = map.getZoom();
         const needNewTile = !google.maps.geometry.poly.containsLocation(
           map.getCenter(),
           this.boundsPolygon
@@ -158,22 +156,12 @@ class RecentImageryContainer extends PureComponent {
             end: dates.end
           });
         }
-        if (zoom >= 10) {
-          this.boundsPolygon.setOptions({
-            fillColor: 'transparent',
-            strokeWeight: 0
-          });
-          this.boundsPolygonInfowindow.close();
-        }
       }
-    };
-    this.mapDragEvent = map.addListener('dragend', loadNewTile);
-    this.mapZoomEvent = map.addListener('zoom_changed', loadNewTile);
+    });
   }
 
   removeEvents() {
-    google.maps.event.removeListener(this.mapDragEvent);
-    google.maps.event.removeListener(this.mapZoomEvent);
+    google.maps.event.removeListener(this.mapIdleEvent);
   }
 
   showLayer(url) {
