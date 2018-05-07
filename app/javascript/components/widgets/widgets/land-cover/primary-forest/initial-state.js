@@ -19,13 +19,10 @@ export default {
       landCover: 4
     },
     sentences: {
-      initial: 'In {location}, {primary} covers {percentage} of the land area.',
-      lessThan:
-        'In {location}, {primary} covers less than {percentage} of the land area.',
+      initial:
+        'As of {extentYear}, {percentage} of {location} total tree cover was {primary}.',
       withIndicator:
-        'Within {indicator} in {location}, {primary} covers {percentage} of the land area.',
-      lessThanWithIndicator:
-        'Within {indicator} in {location}, {primary} covers less than {percentage} of the land area.'
+        'As of {extentYear}, {percentage} of {location} total tree cover was {primary} within {indicator}.'
     }
   },
   settings: {

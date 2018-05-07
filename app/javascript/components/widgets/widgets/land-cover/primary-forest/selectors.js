@@ -48,13 +48,9 @@ export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
     if (!parsedData || !currentLabel || !indicator) return null;
-    const {
-      initial,
-      lessThan,
-      withIndicator,
-      lessThanWithIndicator
-    } = sentences;
+    const { initial, withIndicator } = sentences;
     const totalExtent = parsedData
+      .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
       .reduce((sum, d) => sum + d);
     const primaryPercentage =
@@ -78,21 +74,19 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      location: currentLabel,
+      location: `${currentLabel}'s`,
       indicator: indicatorLabel,
       percentage:
         primaryPercentage < 0.1
-          ? '0.1%'
+          ? '<0.1%'
           : `${format('.0f')(primaryPercentage)}%`,
-      primary: 'primary forest'
+      primary: 'primary forest',
+      extentYear: settings.extentYear
     };
 
-    let sentence =
+    const sentence =
       indicator.value === 'primary_forest' ? initial : withIndicator;
-    if (primaryPercentage < 0.01) {
-      sentence =
-        indicator.value === 'primary_forest' ? lessThan : lessThanWithIndicator;
-    }
+
     return {
       sentence,
       params
