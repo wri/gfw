@@ -2,26 +2,7 @@ export default {
   title: 'Tree cover extent',
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'ifl_2013',
-      'mining',
-      'wdpa',
-      'plantations',
-      'landmark',
-      'primary_forest',
-      'ifl_2013',
-      'ifl_2013__wdpa',
-      'ifl_2013__mining',
-      'ifl_2013__landmark',
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark',
-      'plantations__mining',
-      'plantations__wdpa',
-      'plantations__landmark'
-    ],
+    indicators: ['gadm28', 'wdpa', 'kba', 'aze', 'tcl'],
     units: ['ha', '%'],
     categories: ['land-cover'],
     admins: ['country'],
@@ -35,20 +16,16 @@ export default {
     },
     sentences: {
       initial:
-        'As of {extentYear}, {location} had {extent} of tree cover region-wide.',
+        'As of {extentYear}, {location} represented {percentage} of global tree cover.',
       withInd:
-        'As of {extentYear}, {location} had {extent} of tree cover in {region}.',
-      withPerc:
-        'As of {extentYear}, {location} had {extent} of tree cover region-wide, equivalent to {percentage} of the country.',
-      withPercAndInd:
-        'As of {extentYear}, {location} had {extent} of tree cover in {region}, equivalent to {percentage} of the country.'
+        'As of {extentYear}, {location} represented {percentage} of global tree cover in {indicator}.'
     }
   },
   settings: {
     indicator: 'gadm28',
     threshold: 30,
     unit: 'ha',
-    extentYear: 2010,
+    extentYear: 2000,
     layers: ['forest2010']
   },
   enabled: true

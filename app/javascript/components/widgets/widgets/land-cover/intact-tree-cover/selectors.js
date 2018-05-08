@@ -17,9 +17,8 @@ export const parseData = createSelector(
   [getData, getSettings, getIndicatorWhitelist, getColors],
   (data, settings, whitelist, colors) => {
     if (isEmpty(data) || isEmpty(whitelist)) return null;
-    const { totalArea, totalExtent, extent, plantations } = data;
-    const hasPlantations = Object.keys(whitelist).indexOf('plantations') > -1;
-    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
+    const { totalArea, totalExtent, extent } = data;
+    const colorRange = getColorPalette(colors.ramp, 2);
     const parsedData = [
       {
         label: 'Intact Forest',
@@ -28,10 +27,10 @@ export const parseData = createSelector(
         percentage: extent / totalArea * 100
       },
       {
-        label: hasPlantations ? 'Degraded Forest' : 'Other Tree Cover',
-        value: totalExtent - extent - plantations,
+        label: 'Other Tree Cover',
+        value: totalExtent - extent,
         color: colorRange[1],
-        percentage: (totalExtent - extent - plantations) / totalArea * 100
+        percentage: (totalExtent - extent) / totalArea * 100
       },
       {
         label: 'Non-Forest',
@@ -40,14 +39,6 @@ export const parseData = createSelector(
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
-    if (hasPlantations) {
-      parsedData.splice(2, 0, {
-        label: 'Plantations',
-        value: plantations,
-        color: colorRange[2],
-        percentage: plantations / totalArea * 100
-      });
-    }
     return parsedData;
   }
 );
@@ -56,12 +47,7 @@ export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
     if (!parsedData || !currentLabel || !indicator) return null;
-    const {
-      initial,
-      lessThan,
-      withIndicator,
-      lessThanWithIndicator
-    } = sentences;
+    const { initial, withIndicator } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
@@ -83,18 +69,17 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      location: currentLabel,
+      location: `${currentLabel}'s`,
       indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1 ? '0.1%' : `${format('.0f')(intactPercentage)}%`,
+        intactPercentage < 0.1
+          ? '<0.1%'
+          : `${format('.0f')(intactPercentage)}%`,
       intact: 'intact forest'
     };
 
-    let sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
-    if (intactPercentage < 0.01) {
-      sentence =
-        indicator.value === 'ifl_2013' ? lessThan : lessThanWithIndicator;
-    }
+    const sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
+
     return {
       sentence,
       params

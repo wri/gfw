@@ -109,7 +109,7 @@ export const getSentence = createSelector(
   [getSortedData, getCurrentLocation, getSentences],
   (sortedData, currentLabel, sentences) => {
     if (!sortedData || !sortedData.data.length) return '';
-    const { initial } = sentences;
+    const { positive, negative } = sentences;
     const { data, total } = sortedData;
     const emissionsCount = data.reduce((accumulator, item) => {
       const accumulatorCount =
@@ -128,16 +128,26 @@ export const getSentence = createSelector(
         (typeof accumulator !== 'object' ? accumulator : accumulator.value) +
         item.value
     );
+    const startYear = data[0].emissions[0].year;
+    const endYear = data[0].emissions[data[0].emissions.length - 1].year;
     const emissionFraction = emissionsCount / totalEmissionsCount * 100;
     const params = {
       location: currentLabel,
       location_alt: `${currentLabel}'s`,
       percentage:
-        emissionFraction < 0.1 ? '0.1%' : `${format('.1f')(emissionFraction)}%`,
-      value: `${format('.3s')(emissionsCount)}tCO₂e`,
-      startYear: data[0].emissions[0].year,
-      endYear: data[0].emissions[data[0].emissions.length - 1].year
+        Math.abs(emissionFraction) < 0.1
+          ? '<0.1%'
+          : `${format('.1f')(Math.abs(emissionFraction))}%`,
+      value: `${format('.3s')(
+        Math.abs(emissionsCount / (endYear - startYear))
+      )}tCO₂e/yr`,
+      startYear,
+      endYear,
+      type: emissionsCount >= 0 ? 'net source' : 'net sink'
     };
-    return { sentence: initial, params };
+
+    const sentence = emissionsCount >= 0 ? positive : negative;
+
+    return { sentence, params };
   }
 );

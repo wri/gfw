@@ -1,15 +1,15 @@
 export default {
-  title: 'Ranked plantation breakdown',
+  title: 'Location of plantations',
   config: {
     size: 'small',
-    categories: ['land-use'],
+    categories: ['land-cover'],
     admins: ['country', 'region'],
     selectors: ['types'],
     type: 'plantations',
     metaKey: 'widget_plantations_ranked',
     layers: ['plantations_by_type', 'plantations_by_species'],
     sortOrder: {
-      'land-use': 2
+      landCover: 101
     },
     sentences: {
       initial:

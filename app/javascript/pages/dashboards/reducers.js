@@ -9,8 +9,8 @@ import router from './router';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as MapComponent from 'components/map';
-import * as HeaderComponent from 'pages/dashboards/header';
-import * as WidgetComponent from 'components/widgets';
+import * as HeaderComponent from 'pages/country/header';
+import * as WidgetsComponent from 'components/widgets';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
@@ -22,7 +22,7 @@ const componentsReducers = {
   modalMeta: handleActions(ModalMetaComponent),
   map: handleActions(MapComponent),
   header: handleActions(HeaderComponent),
-  widgets: handleActions(WidgetComponent)
+  widgets: handleActions(WidgetsComponent)
 };
 
 // Provider Reducers
