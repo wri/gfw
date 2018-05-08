@@ -1,4 +1,3 @@
-import axios from 'axios';
 import request from 'utils/request';
 
 const REQUEST_URL = process.env.GFW_API_HOST_PROD;
@@ -42,12 +41,12 @@ export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
     .replace('{polyname}', indicator);
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const fetchGLADLatest = () => {
   const url = `${REQUEST_URL}/glad-alerts/latest`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const fetchViirsAlerts = ({
@@ -66,5 +65,5 @@ export const fetchViirsAlerts = ({
     )
     .replace('{geostore}', subRegion && geostore ? geostore.hash : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
-  return axios.get(url);
+  return request.get(url);
 };

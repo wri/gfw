@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 
 const REQUEST_URL = `${process.env.CLIMATE_WATCH_API_URL}/emissions`;
 
@@ -9,7 +9,7 @@ const QUERIES = {
 
 export const getMeta = () => {
   const url = REQUEST_URL + QUERIES.meta;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getGas = ({ country, gas, source }) => {
@@ -19,5 +19,5 @@ export const getGas = ({ country, gas, source }) => {
       .replace('{adm0}', country)
       .replace('{gas}', gas)
       .replace('{source}', source);
-  return axios.get(url);
+  return request.get(url);
 };
