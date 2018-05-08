@@ -3,720 +3,619 @@
  *
  * @return AnalysisView instance (extends Backbone.View).
  */
-define(
-  [
-    'underscore',
-    'handlebars',
-    'amplify',
-    'chosen',
-    'turf',
-    'mps',
-    'enquire',
-    'map/presenters/tabs/AnalysisPresenter',
-    'map/services/ShapefileService',
-    'helpers/geojsonUtilsHelper',
-    'map/views/tabs/SpinnerView',
-    'text!map/templates/tabs/analysis.handlebars',
-    'text!map/templates/tabs/analysis-mobile.handlebars'
-  ],
-  (
-    _,
-    Handlebars,
-    amplify,
-    chosen,
-    turf,
-    mps,
-    enquire,
-    Presenter,
-    ShapefileService,
-    geojsonUtilsHelper,
-    SpinnerView,
-    tpl,
-    tplMobile
-  ) => {
-    const AnalysisModel = Backbone.Model.extend({
-      hidden: true
-    });
+define([
+  'underscore', 'handlebars', 'amplify', 'chosen', 'turf', 'mps',
+  'enquire',
+  'map/presenters/tabs/AnalysisPresenter',
+  'map/services/ShapefileService',
+  'helpers/geojsonUtilsHelper',
+  'map/views/tabs/SpinnerView',
+  'text!map/templates/tabs/analysis.handlebars',
+  'text!map/templates/tabs/analysis-mobile.handlebars'
+], function(_, Handlebars, amplify, chosen, turf, mps, enquire, Presenter, ShapefileService, geojsonUtilsHelper, SpinnerView, tpl, tplMobile) {
 
-    const AnalysisView = Backbone.View.extend({
-      el: '#analysis-tab',
+  'use strict';
 
-      template: Handlebars.compile(tpl),
-      templateMobile: Handlebars.compile(tplMobile),
+  var AnalysisModel = Backbone.Model.extend({
+    hidden: true
+  });
 
-      events: {
-        // tabs
-        'click #analysis-nav li': 'toggleTabs',
 
-        // draw
-        'click #start-analysis': '_onClickAnalysis',
+  var AnalysisView = Backbone.View.extend({
 
-        // countries
-        'change #analysis-country-select': 'changeIso',
-        'change #analysis-region-select': 'changeArea',
-        'click #analysis-country-button': 'analysisCountry',
-        'click #subscribe-country-button': 'subscribeCountry',
+    el: '#analysis-tab',
 
-        // other
-        'click #data-tab-play': 'onGifPlay',
-        'click .close': 'toggleAnalysis'
-      },
+    template: Handlebars.compile(tpl),
+    templateMobile: Handlebars.compile(tplMobile),
 
-      initialize(map) {
-        _.bindAll(this, '_onOverlayComplete', '_removeCartodblayer');
-        this.map = map;
-        this.presenter = new Presenter(this);
-        this.model = new AnalysisModel();
-        enquire.register(
-          `screen and (min-width:${window.gfw.config.GFW_MOBILE}px)`,
-          {
-            match: _.bind(function () {
-              this.mobile = false;
-              this.render();
-            }, this)
-          }
-        );
-        enquire.register(
-          `screen and (max-width:${window.gfw.config.GFW_MOBILE}px)`,
-          {
-            match: _.bind(function () {
-              this.mobile = true;
-              this.renderMobile();
-            }, this)
-          }
-        );
-        this.setDropable();
-      },
+    events: {
+      //tabs
+      'click #analysis-nav li' : 'toggleTabs',
 
-      cacheVars() {
-        this.$button = $(`#${this.$el.attr('id')}-button`);
-        // draw
-        this.$start = $('#start-analysis');
-        this.$done = $('#done-analysis');
-        this.$doneSubscribe = $('#done-subscribe');
+      //draw
+      'click #start-analysis' : '_onClickAnalysis',
 
-        // country
-        this.$selects = this.$el.find('.chosen-select');
-        this.$countrySelect = $('#analysis-country-select');
-        this.$regionSelect = $('#analysis-region-select');
-        this.$countryButtonContainer = $('#country-button-container');
-        this.$countryAnalysis = $('#analysis-country-button');
-        this.$countrySubscribe = $('#subscribe-country-button');
+      //countries
+      'change #analysis-country-select' : 'changeIso',
+      'change #analysis-region-select' : 'changeArea',
+      'click #analysis-country-button' : 'analysisCountry',
+      'click #subscribe-country-button' : 'subscribeCountry',
 
-        // other
-        this.$img = $('#data-tab-img');
-        this.$play = $('#data-tab-play');
+      //other
+      'click #data-tab-play' : 'onGifPlay',
+      'click .close' : 'toggleAnalysis'
+    },
 
-        // tabs
-        this.$tabs = $('#analysis-nav li');
-        this.$tabsContent = $('.analysis-tab-content');
+    initialize: function(map) {
+      _.bindAll(this, '_onOverlayComplete','_removeCartodblayer');
+      this.map = map;
+      this.presenter = new Presenter(this);
+      this.model = new AnalysisModel();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+          this.renderMobile();
+        },this)
+      });
+      this.setDropable();
+    },
 
-        // delete
-        this.timeout = null;
-      },
+    cacheVars: function(){
+      this.$button = $('#'+this.$el.attr('id')+'-button');
+      //draw
+      this.$start = $('#start-analysis');
+      this.$done = $('#done-analysis');
+      this.$doneSubscribe = $('#done-subscribe');
 
-      setDropable() {
-        let dropable = document.getElementById('drop-shape-analysis'),
+      //country
+      this.$selects = this.$el.find('.chosen-select');
+      this.$countrySelect = $('#analysis-country-select');
+      this.$regionSelect = $('#analysis-region-select');
+      this.$countryButtonContainer = $('#country-button-container');
+      this.$countryAnalysis = $('#analysis-country-button');
+      this.$countrySubscribe = $('#subscribe-country-button');
+
+      //other
+      this.$img = $('#data-tab-img');
+      this.$play = $('#data-tab-play');
+
+      //tabs
+      this.$tabs = $('#analysis-nav li');
+      this.$tabsContent = $('.analysis-tab-content');
+
+      //delete
+      this.timeout = null;
+
+    },
+
+    setDropable: function() {
+      var dropable = document.getElementById('drop-shape-analysis'),
           fileSelector = document.getElementById('analysis-file-upload');
-        if (!dropable) {
+      if (!dropable) { return; }
+
+      var handleUpload = function(file) {
+        var FILE_SIZE_LIMIT = 1000000,
+            sizeMessage = 'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?';
+        if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
+          $(dropable).removeClass('moving');
           return;
         }
 
-        const handleUpload = function (file) {
-          let FILE_SIZE_LIMIT = 1000000,
-            sizeMessage =
-              'The selected file is quite large and uploading it might result in browser instability. Do you want to continue?';
-          if (file.size > FILE_SIZE_LIMIT && !window.confirm(sizeMessage)) {
-            $(dropable).removeClass('moving');
-            return;
-          }
+        mps.publish('Spinner/start', []);
 
-          mps.publish('Spinner/start', []);
+        var shapeService = new ShapefileService({ shapefile: file });
+        shapeService.toGeoJSON().then(function(data) {
+          var combinedFeatures = data.features.reduce(turf.union);
 
-          const shapeService = new ShapefileService({ shapefile: file });
-          shapeService.toGeoJSON().then(
-            (data) => {
-              const combinedFeatures = data.features.reduce(turf.union);
+          mps.publish('Analysis/upload', [combinedFeatures.geometry]);
 
-              mps.publish('Analysis/upload', [combinedFeatures.geometry]);
+          this.drawMultipolygon(combinedFeatures);
+          var bounds = geojsonUtilsHelper.getBoundsFromGeojson(combinedFeatures);
+          this.map.fitBounds(bounds);
+        }.bind(this));
 
-              this.drawMultipolygon(combinedFeatures);
-              const bounds = geojsonUtilsHelper.getBoundsFromGeojson(
-                combinedFeatures
-              );
-              this.map.fitBounds(bounds);
-            }
-          );
+        $(dropable).removeClass('moving');
+      }.bind(this);
 
-          $(dropable).removeClass('moving');
-        }.bind(this);
+      fileSelector.addEventListener('change', function() {
+        var file = this.files[0];
+        if (file) { handleUpload(file); }
+      });
 
-        fileSelector.addEventListener('change', function () {
-          const file = this.files[0];
-          if (file) {
-            handleUpload(file);
-          }
-        });
+      dropable.addEventListener('click', function(event) {
+        var $el = $(event.target);
+        if ($el.hasClass('source')) { return true; }
 
-        dropable.addEventListener('click', (event) => {
-          const $el = $(event.target);
-          if ($el.hasClass('source')) {
-            return true;
-          }
+        $(fileSelector).trigger('click');
+      });
 
-          $(fileSelector).trigger('click');
-        });
+      dropable.ondragover = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondragend = function () { $(dropable).toggleClass('moving'); return false; };
+      dropable.ondrop = function (e) {
+        e.preventDefault();
+        var file = e.dataTransfer.files[0];
+        handleUpload(file);
+        return false;
+      };
 
-        dropable.ondragover = function () {
-          $(dropable).toggleClass('moving');
-          return false;
-        };
-        dropable.ondragend = function () {
-          $(dropable).toggleClass('moving');
-          return false;
-        };
-        dropable.ondrop = function (e) {
-          e.preventDefault();
-          const file = e.dataTransfer.files[0];
-          handleUpload(file);
-          return false;
-        };
-      },
+    },
 
-      render() {
-        this.$el.html(this.template());
-        this.cacheVars();
-        this.inits();
-      },
+    render: function(){
+      this.$el.html(this.template());
+      this.cacheVars();
+      this.inits();
+    },
 
-      renderMobile() {
-        this.$el.html(this.templateMobile());
-        this.cacheVars();
-        this.inits();
-      },
+    renderMobile: function(){
+      this.$el.html(this.templateMobile());
+      this.cacheVars();
+      this.inits();
+    },
 
-      toggleAnalysis(bool) {
-        const to = bool && bool.currentTarget ? true : bool;
-        this.$el.toggleClass('active', !to);
-        this.presenter.toggleOverlay(!to);
-      },
+    toggleAnalysis: function(bool){
+      var to = (bool && bool.currentTarget) ? true : bool;
+      this.$el.toggleClass('active', !to);
+      this.presenter.toggleOverlay(!to);
+    },
 
-      inits() {
-        this.spinner = new SpinnerView();
-        // countries
-        this.setStyle();
-        this.getCountries();
+    inits: function(){
+      this.spinner = new SpinnerView();
+      // countries
+      this.setStyle();
+      this.getCountries();
 
-        // other
-        this.png = '/assets/infowindow-example.png';
-        this.gif = this.loadImg('/assets/infowindow-example.gif');
-      },
+      //other
+      this.png = '/assets/infowindow-example.png';
+      this.gif = this.loadImg('/assets/infowindow-example.gif');
+    },
 
-      // navigate between tabs
-      toggleTabs(e) {
-        if (!$(e.currentTarget).hasClass('disabled')) {
-          const tab = $(e.currentTarget).data('analysis');
+    // navigate between tabs
+    toggleTabs: function(e){
 
-          // Current tab
-          this.$tabs.removeClass('active');
-          $(e.currentTarget).addClass('active');
+      if (!$(e.currentTarget).hasClass('disabled')) {
+        var tab = $(e.currentTarget).data('analysis');
 
-          // Current content tab
-          this.$tabsContent.removeClass('active');
-          $(`#${tab}`).addClass('active');
+        // Current tab
+        this.$tabs.removeClass('active');
+        $(e.currentTarget).addClass('active');
 
-          // prevent changes between tabs without reset drawing
-          if (this.model.get('is_drawing')) {
-            this._stopDrawing();
-            this.presenter.deleteAnalysis();
-          }
-        } else {
-          this.$deletebtn = $('#analysis-delete');
-          clearTimeout(this.timeout);
-          this.$deletebtn.addClass('pulse');
-          this.presenter.notificate('notification-delete-analysis');
-          this.timeout = setTimeout(
-            _.bind(function () {
-              this.$deletebtn.removeClass('pulse');
-            }, this),
-            3000
-          );
-        }
-      },
+        // Current content tab
+        this.$tabsContent.removeClass('active');
+        $('#'+tab).addClass('active');
 
-      openTab(type) {
-        let current;
-        switch (type) {
-          case 'geojson':
-            current = '#draw-tab-button';
-            $('#draw-tab-button')
-              .removeClass('disabled')
-              .trigger('click');
-            break;
-          case 'iso':
-            current = '#country-tab-button';
-            $('#country-tab-button')
-              .removeClass('disabled')
-              .trigger('click');
-            break;
-          case 'other':
-            current = '#data-tab-button';
-            $('#data-tab-button')
-              .removeClass('disabled')
-              .trigger('click');
-            break;
-        }
-        this.fixTab(current);
-      },
-
-      fixTab(current) {
-        // function to fix current tab and prevent user for changing tab with an analysis rendered
-        this.$tabs.addClass('disabled');
-        $(current).removeClass('disabled');
-      },
-
-      /**
-       * Set geojson style.
-       */
-      setStyle() {
-        this.style = {
-          strokeWeight: 2,
-          fillOpacity: 0,
-          fillColor: '#FFF',
-          strokeColor: '#A2BC28',
-          icon: new google.maps.MarkerImage(
-            '/assets/icons/marker_exclamation.png',
-            new google.maps.Size(36, 36), // size
-            new google.maps.Point(0, 0), // offset
-            new google.maps.Point(18, 18) // anchor
-          )
-        };
-
-        this.map.data.setStyle(
-          _.bind((feature) => {
-            const strokeColor = feature.getProperty('color')
-              ? feature.getProperty('color')
-              : '#A2BC28';
-            return {
-              strokeWeight: 2,
-              fillOpacity: 0,
-              fillColor: '#FFF',
-              strokeColor
-            };
-          }, this)
-        );
-      },
-
-      setGeojson(geojson, color) {
-        geojson.properties.color = color;
-        return geojson;
-      },
-
-      /**
-       * COUNTRY
-       */
-
-      /**
-       * Ajax for getting countries.
-       */
-      getCountries() {
-        if (!amplify.store('countries')) {
-          const sql = [
-            'SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'
-          ];
-          $.ajax({
-            url: `https://wri-01.carto.com/api/v2/sql?q=${sql}`,
-            dataType: 'json',
-            success: _.bind(function (data) {
-              amplify.store('countries', data.rows);
-              this.printCountries();
-            }, this),
-            error(error) {
-              console.log(error);
-            }
-          });
-        } else {
-          this.printCountries();
-        }
-      },
-
-      getSubCountries() {
-        this.$regionSelect.attr('disabled', true).trigger('chosen:updated');
-        const sql = [
-          `SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '${
-            this.iso
-          }' AND gadm2_provinces_simple.iso = '${
-            this.iso
-          }' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc`
-        ];
-        $.ajax({
-          url: `https://wri-01.carto.com/api/v2/sql?q=${sql}`,
-          dataType: 'json',
-          success: _.bind(function (data) {
-            this.printSubareas(data.rows);
-          }, this),
-          error(error) {
-            console.log(error);
-          }
-        });
-      },
-
-      /**
-       * Print countries.
-       */
-      printCountries() {
-        // Country select
-        this.countries = amplify.store('countries');
-
-        // Loop for print options
-        let options = this.mobile ? '' : '<option></option>';
-        _.each(
-          _.sortBy(this.countries, (country) => country.name),
-          _.bind((country, i) => {
-            options +=
-              `<option value="${
-                country.iso
-              }">${
-                country.name
-              }</option>`;
-          }, this)
-        );
-        this.$countrySelect.append(options);
-        if (!this.mobile) {
-          this.$selects.chosen({
-            width: '100%',
-            allow_single_deselect: true,
-            inherit_select_classes: true,
-            no_results_text: 'Oops, nothing found!'
-          });
-        }
-      },
-
-      printSubareas(subareas) {
-        var subareas = subareas;
-        let options = this.mobile
-          ? '<option value="" disabled selected>Select jurisdiction (optional)</option>'
-          : '<option></option>';
-        _.each(
-          _.sortBy(subareas, (area) => area.name_1),
-          _.bind((area, i) => {
-            options +=
-              `<option value="${area.id_1}">${area.name_1}</option>`;
-          }, this)
-        );
-        this.$regionSelect
-          .empty()
-          .append(options)
-          .removeAttr('disabled');
-        this.$regionSelect.val(this.area).trigger('chosen:updated');
-      },
-
-      // Select change iso
-      changeIso(e) {
-        this.iso = $(e.currentTarget).val();
-        this.$countryAnalysis.removeClass('disabled');
-        this.$countrySubscribe.removeClass('disabled');
-        this.area = null;
-
-        if (this.iso) {
-          this.getSubCountries();
-          this.$countryButtonContainer.show();
-        } else {
-          this.$countryButtonContainer.show();
-          this.presenter.deleteAnalysis();
-          this.presenter.setDontAnalyze(true);
-          this.$countryAnalysis.addClass('disabled');
-          this.$countrySubscribe.addClass('disabled');
-          this.$regionSelect
-            .val(null)
-            .attr('disabled', true)
-            .trigger('chosen:updated');
-        }
-
-        if (!this.presenter.layerAvailableForSubscription()) {
-          this.$countrySubscribe.addClass('disabled');
-        }
-      },
-
-      toggleCountrySubscribeBtn() {
-        if (!this.presenter.layerAvailableForSubscription()) {
-          this.$countrySubscribe.addClass('disabled');
-        } else if (!this.$countryAnalysis.hasClass('disabled')) {
-          this.$countrySubscribe.removeClass('disabled');
-        }
-      },
-
-      changeArea(e) {
-        this.area = $(e.currentTarget).val();
-        this.$countryButtonContainer.show();
-      },
-
-      // For autoselect country and region when youn reload page
-      setSelects(iso, dont_analyze) {
-        this.iso = iso.country;
-        this.area = iso.region;
-
-        this.$countrySelect.val(this.iso).trigger('chosen:updated');
-
-        if (this.iso) {
-          this.getSubCountries();
-          if (!dont_analyze) {
-            this.$countryButtonContainer.hide();
-          } else {
-            this.$countryAnalysis.removeClass('disabled');
-            this.$countrySubscribe.removeClass('disabled');
-          }
-        } else {
-          if (dont_analyze) {
-            this.$countryButtonContainer.show();
-          }
-          this.$countryAnalysis.addClass('disabled');
-          this.$countrySubscribe.addClass('disabled');
-          this.$regionSelect
-            .val(this.area)
-            .attr('disabled', true)
-            .trigger('chosen:updated');
-        }
-
-        if (!this.presenter.layerAvailableForSubscription()) {
-          this.$countrySubscribe.addClass('disabled');
-        }
-      },
-
-      analysisCountry() {
-        if (this.iso && !this.$countryAnalysis.hasClass('disabled')) {
-          const iso = {
-            country: this.iso,
-            region: this.area
-          };
-          this.$countryButtonContainer.hide();
-          this.$countryAnalysis.addClass('disabled');
-          this.presenter.setDontAnalyze(null);
-          this.presenter.setAnalyzeIso(iso);
-        }
-      },
-
-      subscribeCountry() {
-        if (this.iso && !this.$countrySubscribe.hasClass('disabled')) {
-          const iso = {
-            country: this.iso,
-            region: this.area
-          };
-          this.presenter._subscribeIso(iso);
-        }
-      },
-
-      /**
-       * DRAWING
-       */
-      /**
-       * Triggered when the user clicks on the analysis draw button.
-       */
-      _onClickAnalysis() {
-        if (!this.$start.hasClass('in_use')) {
-          ga('send', 'event', 'Map', 'Analysis', 'Click: start');
-          this.toggleUseBtn(true);
-          this._startDrawingManager();
-          this.presenter.startDrawing();
-        } else {
-          ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
+        // prevent changes between tabs without reset drawing
+        if (this.model.get('is_drawing')) {
           this._stopDrawing();
           this.presenter.deleteAnalysis();
         }
-      },
+      }else{
+        this.$deletebtn = $('#analysis-delete');
+        clearTimeout(this.timeout);
+        this.$deletebtn.addClass('pulse');
+        this.presenter.notificate('notification-delete-analysis');
+        this.timeout = setTimeout(_.bind(function(){
+          this.$deletebtn.removeClass('pulse');
+        }, this ),3000)
+      }
+    },
 
-      /**
-       * Triggered when the user complete a polygon
-       * or change it with the drawing manager.
-       */
-      _updateAnalysis() {
-        this._stopDrawing();
-        this.presenter.doneDrawing();
-        this.toggleAnalysis(true);
-      },
+    openTab: function(type){
+      var current;
+      switch(type){
+        case 'geojson':
+          current = '#draw-tab-button';
+          $('#draw-tab-button').removeClass('disabled').trigger('click');
+        break;
+        case 'iso':
+          current = '#country-tab-button';
+          $('#country-tab-button').removeClass('disabled').trigger('click');
+        break;
+        case 'other':
+          current = '#data-tab-button';
+          $('#data-tab-button').removeClass('disabled').trigger('click');
+        break;
+      }
+      this.fixTab(current);
+    },
 
-      /**
-       * Star drawing manager and add an overlaycomplete
-       * listener.
-       */
-      _startDrawingManager() {
-        this.presenter.deleteMultiPoligon();
-        this.model.set('is_drawing', true);
-        this.drawingManager = new google.maps.drawing.DrawingManager({
-          drawingControl: false,
-          drawingMode: google.maps.drawing.OverlayType.POLYGON,
-          polygonOptions: _.extend(
-            {
-              editable: true
-            },
-            this.style
-          ),
-          panControl: false,
-          map: this.map
+    fixTab: function(current){
+      // function to fix current tab and prevent user for changing tab with an analysis rendered
+      this.$tabs.addClass('disabled');
+      $(current).removeClass('disabled');
+    },
+
+
+    /**
+     * Set geojson style.
+     */
+    setStyle: function() {
+      this.style = {
+        strokeWeight: 2,
+        fillOpacity: 0,
+        fillColor: '#FFF',
+        strokeColor: '#A2BC28',
+        icon: new google.maps.MarkerImage(
+          '/assets/icons/marker_exclamation.png',
+          new google.maps.Size(36, 36), // size
+          new google.maps.Point(0, 0), // offset
+          new google.maps.Point(18, 18) // anchor
+        )
+      };
+
+      this.map.data.setStyle(_.bind(function(feature){
+        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+        return ({
+          strokeWeight: 2,
+          fillOpacity: 0,
+          fillColor: '#FFF',
+          strokeColor: strokeColor
         });
+      }, this ));
+    },
 
-        $(document).on(
-          'keyup.drawing',
-          (e) => {
-            if (e.keyCode == 27) {
-              this._stopDrawing();
-              this.presenter.deleteAnalysis();
-            }
+    setGeojson: function(geojson, color) {
+      geojson.properties.color = color;
+      return geojson;
+    },
+
+
+
+
+
+    /**
+     * COUNTRY
+     */
+
+    /**
+     * Ajax for getting countries.
+     */
+    getCountries: function(){
+      if (!amplify.store('countries')) {
+        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
+        $.ajax({
+          url: 'https://wri-01.carto.com/api/v2/sql?q='+sql,
+          dataType: 'json',
+          success: _.bind(function(data){
+            amplify.store('countries', data.rows);
+            this.printCountries();
+          }, this ),
+          error: function(error){
+            console.log(error);
           }
-        );
+        });
+      }else{
+        this.printCountries()
+      }
+    },
 
-        // cache cartodb infowindows
-        this.$infowindows = $('.cartodb-infowindow');
-        this.$infowindows.addClass('hidden');
+    getSubCountries: function(){
+      this.$regionSelect.attr('disabled', true).trigger("chosen:updated");
+      var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
+      $.ajax({
+        url: 'https://wri-01.carto.com/api/v2/sql?q='+sql,
+        dataType: 'json',
+        success: _.bind(function(data){
+          this.printSubareas(data.rows);
+        }, this ),
+        error: function(error){
+          console.log(error);
+        }
+      });
+    },
 
-        google.maps.event.addListener(
-          this.drawingManager,
-          'overlaycomplete',
-          this._onOverlayComplete
-        );
-      },
+    /**
+     * Print countries.
+     */
+    printCountries: function(){
+      //Country select
+      this.countries = amplify.store('countries');
 
-      /**
-       * Triggered when the user finished drawing a polygon.
-       *
-       * @param  {Object} e event
-       */
-      _onOverlayComplete(e) {
-        ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
-        this.presenter.onOverlayComplete(e);
-        this._resetDrawing();
-        this._updateAnalysis();
+      //Loop for print options
+      var options = (this.mobile) ? '' : '<option></option>';
+      _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+        options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
+      }, this ));
+      this.$countrySelect.append(options);
+      if (!this.mobile) {
+        this.$selects.chosen({
+          width: '100%',
+          allow_single_deselect: true,
+          inherit_select_classes: true,
+          no_results_text: "Oops, nothing found!"
+        });
+      }
+    },
 
+    printSubareas: function(subareas){
+      var subareas = subareas;
+      var options = (this.mobile) ? '<option value="" disabled selected>Select jurisdiction (optional)</option>' : '<option></option>';
+      _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
+        options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
+      }, this ));
+      this.$regionSelect.empty().append(options).removeAttr('disabled');
+      this.$regionSelect.val(this.area).trigger("chosen:updated");
+    },
+
+    // Select change iso
+    changeIso: function(e){
+      this.iso = $(e.currentTarget).val();
+      this.$countryAnalysis.removeClass('disabled');
+      this.$countrySubscribe.removeClass('disabled');
+      this.area = null;
+
+      if(this.iso) {
+        this.getSubCountries()
+        this.$countryButtonContainer.show();
+      } else {
+        this.$countryButtonContainer.show();
+        this.presenter.deleteAnalysis();
         this.presenter.setDontAnalyze(true);
-        this.setEditableEvents(e.overlay);
-      },
+        this.$countryAnalysis.addClass('disabled');
+        this.$countrySubscribe.addClass('disabled');
+        this.$regionSelect.val(null).attr('disabled', true).trigger("chosen:updated");
+      }
 
-      /**
-       * Stop drawing manager, set drawing box to hidden.
-       */
-      _stopDrawing() {
-        this.presenter.stopDrawing();
-        this._resetDrawing();
-        // buttons clases
-        this.toggleUseBtn(false);
-        // Remove binds
-        $(document).off('keyup.drawing');
-      },
+      if (!this.presenter.layerAvailableForSubscription()) {
+        this.$countrySubscribe.addClass('disabled');
+      }
+    },
 
-      _resetDrawing() {
-        this.model.set('is_drawing', false);
-        if (this.$infowindows) this.$infowindows.hide(0).removeClass('hidden');
-        if (this.drawingManager) {
-          this.drawingManager.setDrawingMode(null);
-          this.drawingManager.setMap(null);
+    toggleCountrySubscribeBtn: function() {
+      if (!this.presenter.layerAvailableForSubscription()) {
+        this.$countrySubscribe.addClass('disabled');
+      } else {
+        if (!this.$countryAnalysis.hasClass('disabled')) {
+          this.$countrySubscribe.removeClass('disabled');
         }
-      },
+      }
+    },
 
-      /**
-       * Deletes a overlay from the map.
-       *
-       * @param  {object} resource overlay/multipolygon
-       */
-      deleteGeom(resource) {
-        if (resource.overlay) {
-          resource.overlay.setMap(null);
-          resource.overlay = null;
+    changeArea: function(e){
+      this.area = $(e.currentTarget).val();
+      this.$countryButtonContainer.show();
+    },
+
+    // For autoselect country and region when youn reload page
+    setSelects: function(iso, dont_analyze){
+      this.iso = iso.country;
+      this.area = iso.region;
+
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
+
+      if (this.iso) {
+        this.getSubCountries();
+        if (!dont_analyze) {
+          this.$countryButtonContainer.hide();
+        } else {
+          this.$countryAnalysis.removeClass('disabled');
+          this.$countrySubscribe.removeClass('disabled');
         }
-
-        if (resource.multipolygon) {
-          this.map.data.remove(resource.multipolygon);
+      } else {
+        if (dont_analyze) {
+          this.$countryButtonContainer.show();
         }
+        this.$countryAnalysis.addClass('disabled');
+        this.$countrySubscribe.addClass('disabled');
+        this.$regionSelect.val(this.area).attr('disabled', true).trigger("chosen:updated")
+      }
 
-        this._removeCartodblayer();
-        this.$tabs.removeClass('disabled');
-      },
+      if (!this.presenter.layerAvailableForSubscription()) {
+        this.$countrySubscribe.addClass('disabled');
+      }
+    },
 
-      setEditable(overlay, to) {
-        overlay.setEditable(to);
-      },
+    analysisCountry: function(){
+      if (this.iso && !this.$countryAnalysis.hasClass('disabled')) {
+        var iso = {
+          country: this.iso,
+          region: this.area
+        };
+        this.$countryButtonContainer.hide();
+        this.$countryAnalysis.addClass('disabled');
+        this.presenter.setDontAnalyze(null);
+        this.presenter.setAnalyzeIso(iso);
+      }
+    },
 
-      setEditableEvents(overlay) {
-        google.maps.event.addListener(
-          overlay.getPath(),
-          'set_at',
-          () => {
-            this._updateAnalysis();
-          }
-        );
+    subscribeCountry: function(){
+      if (this.iso && !this.$countrySubscribe.hasClass('disabled')) {
+        var iso = {
+          country: this.iso,
+          region: this.area
+        };
+        this.presenter._subscribeIso(iso);
+      }
+    },
 
-        google.maps.event.addListener(
-          overlay.getPath(),
-          'insert_at',
-          () => {
-            this._updateAnalysis();
-          }
-        );
+    /**
+     * DRAWING
+     */
+    /**
+     * Triggered when the user clicks on the analysis draw button.
+     */
+    _onClickAnalysis: function() {
+      if (!this.$start.hasClass('in_use')) {
+        ga('send', 'event', 'Map', 'Analysis', 'Click: start');
+        this.toggleUseBtn(true);
+        this._startDrawingManager();
+        this.presenter.startDrawing();
+      }else{
+        ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
+        this._stopDrawing();
+        this.presenter.deleteAnalysis();
+      }
+    },
 
-        google.maps.event.addListener(
-          overlay.getPath(),
-          'remove_at',
-          () => {
-            this._updateAnalysis();
-          }
-        );
-      },
+    /**
+     * Triggered when the user complete a polygon
+     * or change it with the drawing manager.
+     */
+    _updateAnalysis: function() {
+      this._stopDrawing();
+      this.presenter.doneDrawing();
+      this.toggleAnalysis(true);
+    },
 
-      /**
-       * Draw Geojson polygon on the map.
-       *
-       * @param  {String} geojson Geojson polygon as a string
-       */
-      drawPaths(paths) {
-        const overlay = new google.maps.Polygon(
-          _.extend({}, { paths, editable: true }, this.style)
-        );
+    /**
+     * Star drawing manager and add an overlaycomplete
+     * listener.
+     */
+    _startDrawingManager: function() {
+      this.presenter.deleteMultiPoligon();
+      this.model.set('is_drawing', true);
+      this.drawingManager = new google.maps.drawing.DrawingManager({
+        drawingControl: false,
+        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+        polygonOptions: _.extend({
+          editable: true
+        }, this.style),
+        panControl: false,
+        map: this.map
+      });
 
-        overlay.setMap(this.map);
-        this.presenter.setOverlay(overlay);
-        this.setEditableEvents(overlay);
-      },
+      $(document).on('keyup.drawing', function(e){
+        if (e.keyCode == 27) {
+          this._stopDrawing();
+          this.presenter.deleteAnalysis();
+        }
+      }.bind(this));
 
-      /**
-       * Draw a multypoligon on the map.
-       *
-       * @param  {Object} topojson
-       */
-      drawMultipolygon(geojson) {
-        const multipolygon = this.map.data.addGeoJson(geojson)[0];
-        this.map.data.addListener(
-          'click',
-          (e) => {
-            google.maps.event.trigger(this.map, 'click', e);
-          }
-        );
-        this.setStyle();
-        this.presenter.setMultipolygon(multipolygon, geojson);
-      },
-      drawCountrypolygon(geojson, color) {
-        var geojson = this.setGeojson(geojson, color);
-        this.setStyle();
-        const multipolygon = this.map.data.addGeoJson(geojson)[0];
-        this.map.data.addListener(
-          'click',
-          (e) => {
-            google.maps.event.trigger(this.map, 'click', e);
-          }
-        );
-        this.presenter.setMultipolygon(multipolygon, geojson);
-      },
+      // cache cartodb infowindows
+      this.$infowindows = $('.cartodb-infowindow');
+      this.$infowindows.addClass('hidden');
 
-      // COUNTRY MASK
-      drawMaskCountry(geojson, iso) {
-        this.mask = cartodb.createLayer(this.map, {
-          user_name: 'wri-01',
-          type: 'cartodb',
-          cartodb_logo: false,
-          name: 'mask',
-          sublayers: [
-            {
-              sql: 'SELECT * FROM country_mask',
-              cartocss:
-                `\
+
+      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete);
+    },
+
+    /**
+     * Triggered when the user finished drawing a polygon.
+     *
+     * @param  {Object} e event
+     */
+    _onOverlayComplete: function(e) {
+      ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
+      this.presenter.onOverlayComplete(e);
+      this._resetDrawing();
+      this._updateAnalysis();
+
+      this.presenter.setDontAnalyze(true);
+      this.setEditableEvents(e.overlay);
+    },
+
+    /**
+     * Stop drawing manager, set drawing box to hidden.
+     */
+    _stopDrawing: function() {
+      this.presenter.stopDrawing();
+      this._resetDrawing();
+      // buttons clases
+      this.toggleUseBtn(false);
+      // Remove binds
+      $(document).off('keyup.drawing');
+
+    },
+
+    _resetDrawing: function(){
+      this.model.set('is_drawing', false);
+      if(this.$infowindows)
+        this.$infowindows.hide(0).removeClass('hidden');
+      if (this.drawingManager) {
+        this.drawingManager.setDrawingMode(null);
+        this.drawingManager.setMap(null);
+      }
+    },
+
+    /**
+     * Deletes a overlay from the map.
+     *
+     * @param  {object} resource overlay/multipolygon
+     */
+    deleteGeom: function(resource) {
+      if (resource.overlay) {
+        resource.overlay.setMap(null);
+        resource.overlay = null;
+      }
+
+      if (resource.multipolygon) {
+        this.map.data.remove(resource.multipolygon);
+      }
+
+      this._removeCartodblayer();
+      this.$tabs.removeClass('disabled');
+    },
+
+    setEditable: function(overlay, to) {
+      overlay.setEditable(to);
+    },
+
+    setEditableEvents: function(overlay) {
+      google.maps.event.addListener(overlay.getPath(), 'set_at', function () {
+        this._updateAnalysis();
+      }.bind(this));
+
+      google.maps.event.addListener(overlay.getPath(), 'insert_at', function () {
+        this._updateAnalysis();
+      }.bind(this));
+
+      google.maps.event.addListener(overlay.getPath(), 'remove_at', function () {
+        this._updateAnalysis();
+      }.bind(this));
+    },
+
+    /**
+     * Draw Geojson polygon on the map.
+     *
+     * @param  {String} geojson Geojson polygon as a string
+     */
+    drawPaths: function(paths) {
+      var overlay = new google.maps.Polygon(
+        _.extend({}, {paths: paths, editable: true}, this.style));
+
+      overlay.setMap(this.map);
+      this.presenter.setOverlay(overlay);
+      this.setEditableEvents(overlay);
+    },
+
+    /**
+     * Draw a multypoligon on the map.
+     *
+     * @param  {Object} topojson
+     */
+    drawMultipolygon: function(geojson) {
+      var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.map.data.addListener("click", function(e){
+          google.maps.event.trigger(this.map, 'click', e);
+      }.bind(this));
+      this.setStyle();
+      this.presenter.setMultipolygon(multipolygon, geojson);
+    },
+    drawCountrypolygon: function(geojson,color) {
+      var geojson = this.setGeojson(geojson,color);
+      this.setStyle();
+      var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.map.data.addListener("click", function(e){
+          google.maps.event.trigger(this.map, 'click', e);
+      }.bind(this));
+      this.presenter.setMultipolygon(multipolygon, geojson);
+    },
+
+    // COUNTRY MASK
+    drawMaskCountry: function(geojson, iso){
+      this.mask = cartodb.createLayer(this.map, {
+        user_name: 'wri-01',
+        type: 'cartodb',
+        cartodb_logo: false,
+        name: 'mask',
+        sublayers: [{
+          sql: "SELECT * FROM country_mask",
+          cartocss: "\
             #country_mask {\
               polygon-fill: #373737;\
               polygon-opacity: 0.15;\
@@ -724,37 +623,32 @@ define(
               line-width: 0;\
               line-opacity: 0;\
             }\
-            #country_mask[code='${
-  iso
-}'] {\
+            #country_mask[code='" + iso + "'] {\
               polygon-opacity: 0;\
               line-color: #97Bd3d;\
               line-width: 1;\
               line-opacity: 0;\
-            }`
-            }
-          ]
-        });
-        // this.mask.addTo(this.map, 1000)
-        this.mask.done(_.bind(this._cartodbLayerDone, this));
-      },
+            }"
+        }]
+      });
+      // this.mask.addTo(this.map, 1000)
+      this.mask.done(_.bind(this._cartodbLayerDone, this ));
+    },
 
-      // COUNTRY MASK
-      // If we want to be more accurate:
-      // - Change the query table -> gadm2_countries
-      // - Cartocss #country_mask -> #gadm2_countries; code = -> iso= ;
+    // COUNTRY MASK
+    // If we want to be more accurate:
+    // - Change the query table -> gadm2_countries
+    // - Cartocss #country_mask -> #gadm2_countries; code = -> iso= ;
 
-      drawMaskArea(geojson, iso, region) {
-        this.mask = cartodb.createLayer(this.map, {
-          user_name: 'wri-01',
-          type: 'cartodb',
-          cartodb_logo: false,
-          name: 'mask',
-          sublayers: [
-            {
-              sql: 'SELECT * FROM country_mask',
-              cartocss:
-                `\
+    drawMaskArea: function(geojson, iso, region){
+      this.mask = cartodb.createLayer(this.map, {
+        user_name: 'wri-01',
+        type: 'cartodb',
+        cartodb_logo: false,
+        name: 'mask',
+        sublayers: [{
+          sql: "SELECT * FROM country_mask",
+          cartocss: "\
             #country_mask {\
               polygon-fill: #373737;\
               polygon-opacity: 0.15;\
@@ -762,138 +656,118 @@ define(
               line-width: 0;\
               line-opacity: 0;\
             }\
-            #country_mask[code='${
-  iso
-}'] {\
+            #country_mask[code='" + iso + "'] {\
               polygon-opacity: 0;\
               line-color: #333;\
               line-width: 1;\
               line-opacity: 1;\
-            }`
-            },
-            {
-              sql: `SELECT * FROM gadm_1_all WHERE iso LIKE '${iso}' `,
-              cartocss:
-                `\
+            }"
+        }, {
+          sql: "SELECT * FROM gadm_1_all WHERE iso LIKE '" + iso +"' ",
+          cartocss: "\
             #gadm_1_all {\
               polygon-fill: #373737;\
               polygon-opacity: 0.15;\
               line-color: #333;\
               line-width: 0;\
               line-opacity: 0;\
-              [id_1=${
-  region
-}]{\
+              [id_1=" + region + "]{\
                 polygon-opacity: 0;\
               }\
-              ::active[id_1=${
-  region
-}] {\
+              ::active[id_1=" + region + "] {\
                 polygon-opacity: 0;\
                 line-color: #73707D;\
                 line-width: 1;\
                 line-opacity: 1;\
               }\
-            }`
-            }
-          ]
-        });
-        // this.mask.addTo(this.map, 1000)
-        this.mask.done(_.bind(this._cartodbLayerDone, this));
-      },
+            }"
+        }]
+      })
+      // this.mask.addTo(this.map, 1000)
+      this.mask.done(_.bind(this._cartodbLayerDone, this ));
+    },
 
-      _removeCartodblayer() {
-        this.removeLayer();
-      },
 
-      _cartodbLayerDone(layer) {
-        this._removeCartodblayer();
-        this.cartodbLayer = layer;
-        this.putMaskOnTop();
-      },
+    _removeCartodblayer: function() {
+      this.removeLayer();
+    },
 
-      putMaskOnTop() {
-        const overlaysLength = this.map.overlayMapTypes.getLength();
-        this.map.overlayMapTypes.insertAt(overlaysLength, this.cartodbLayer);
-      },
+    _cartodbLayerDone: function(layer) {
+      this._removeCartodblayer();
+      this.cartodbLayer = layer;
+      this.putMaskOnTop();
+    },
 
-      _getOverlayIndex(who) {
-        const overlaysLength = this.map.overlayMapTypes.getLength();
-        if (overlaysLength > 0) {
-          for (let i = 0; i < overlaysLength; i++) {
-            const layer = this.map.overlayMapTypes.getAt(i);
-            if (layer.name === who) {
-              return i;
-            }
+    putMaskOnTop: function(){
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      this.map.overlayMapTypes.insertAt(overlaysLength, this.cartodbLayer);
+    },
+
+    _getOverlayIndex: function(who) {
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      if (overlaysLength > 0) {
+        for (var i = 0; i< overlaysLength; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer.name === who) {
+            return i;
           }
         }
-        return -1;
-      },
+      }
+      return -1;
+    },
 
-      removeLayer() {
-        // var overlayIndex = this._getOverlayIndex('mask');
-        // if(overlayIndex > -1) {
-        //   this.map.overlayMapTypes.removeAt(overlayIndex);
-        // }
-      },
+    removeLayer: function() {
+      // var overlayIndex = this._getOverlayIndex('mask');
+      // if(overlayIndex > -1) {
+      //   this.map.overlayMapTypes.removeAt(overlayIndex);
+      // }
+    },
 
-      /**
-       * BUTTONS.
-       */
-      toggleBtn(to) {
-        if (this.mobile) {
-          this.presenter.toggleVisibilityAnalysis(to);
-        } else if (to) {
-          this.$button.hasClass('active')
-            ? this.$button.trigger('click')
-            : null;
+    /**
+     * BUTTONS.
+     */
+    toggleBtn: function(to) {
+      if (this.mobile) {
+        this.presenter.toggleVisibilityAnalysis(to);
+      }else{
+        if (to) {
+          (this.$button.hasClass('active')) ? this.$button.trigger('click') : null;
           this.$button.removeClass('in_use').addClass('disabled');
-        } else {
+        }else{
           this.$button.removeClass('disabled');
         }
-        $('.cartodb-popup').toggleClass('dont_analyze', to);
-      },
-
-      toggleUseBtn(to) {
-        this.$start.toggleClass('in_use', to);
-        to
-          ? this.$start
-            .removeClass('green')
-            .addClass('gray')
-            .text('Cancel')
-          : this.$start
-            .removeClass('gray')
-            .addClass('green')
-            .text('Start drawing');
-        $('.cartodb-popup').toggleClass('dont_analyze', to);
-      },
-
-      toggleDoneSubscribeBtn() {
-        this.$doneSubscribe.toggleClass(
-          'disabled',
-          !this.presenter.layerAvailableForSubscription()
-        );
-      },
-
-      // OTHER
-      onGifPlay() {
-        this.$play.addClass('hidden');
-        this.$img.attr('src', this.gif);
-        setTimeout(
-          _.bind(function () {
-            this.$play.removeClass('hidden');
-            this.$img.attr('src', this.png);
-          }, this),
-          7500
-        );
-      },
-
-      loadImg(url) {
-        const img = new Image();
-        img.src = url;
-        return url;
       }
-    });
-    return AnalysisView;
-  }
-);
+      $('.cartodb-popup').toggleClass('dont_analyze', to);
+    },
+
+    toggleUseBtn: function(to){
+      this.$start.toggleClass('in_use', to);
+      (to) ? this.$start.removeClass('green').addClass('gray').text('Cancel') : this.$start.removeClass('gray').addClass('green').text('Start drawing');
+      $('.cartodb-popup').toggleClass('dont_analyze', to);
+    },
+
+
+    toggleDoneSubscribeBtn: function() {
+      this.$doneSubscribe.toggleClass('disabled', !this.presenter.layerAvailableForSubscription());
+    },
+
+    // OTHER
+    onGifPlay: function(){
+      this.$play.addClass('hidden');
+      this.$img.attr('src',this.gif);
+      setTimeout(_.bind(function(){
+        this.$play.removeClass('hidden');
+        this.$img.attr('src',this.png);
+      }, this ), 7500 );
+    },
+
+    loadImg: function(url){
+      var img = new Image();
+      img.src = url;
+      return url;
+    }
+
+  });
+  return AnalysisView;
+
+});

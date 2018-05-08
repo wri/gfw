@@ -3,14 +3,21 @@
  *
  * @return UsaLandCoverLayer class (extends ImageLayerClass)
  */
-define(['abstract/layer/ImageLayerClass'], (ImageLayerClass) => {
-  const GlobalLandCoverLayer = ImageLayerClass.extend({
+define([
+  'abstract/layer/ImageLayerClass',
+], function(ImageLayerClass) {
+
+  'use strict';
+
+  var GlobalLandCoverLayer = ImageLayerClass.extend({
+
     options: {
-      urlTemplate:
-        'https://wri-tiles.s3.amazonaws.com/global-landcover-2015/{z}/{x}/{y}.png',
+      urlTemplate: 'https://wri-tiles.s3.amazonaws.com/global-landcover-2015/{z}/{x}/{y}.png',
       dataMaxZoom: 9
     }
+
   });
 
   return GlobalLandCoverLayer;
+
 });

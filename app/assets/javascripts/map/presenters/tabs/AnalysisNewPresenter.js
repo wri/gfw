@@ -393,14 +393,13 @@ define(
           'Analysis/geojson': function(geojson) {
             if (geojson) {
               this.status.set('spinner', true);
-              GeostoreService.save(geojson).then(
-                function(geostoreId) {
+              GeostoreService.save(geojson)
+                .then(function(geostoreId) {
                   if (geostoreId === this.status.get('geostore')) {
                     this.status.set('spinner', false);
                   }
                   this.status.set('geostore', geostoreId);
-                }.bind(this)
-              );
+                }.bind(this));
             } else {
               this.status.set('geostore', null);
             }
@@ -454,25 +453,24 @@ define(
                 type: 'carto'
               };
 
-              GeostoreService.use(provider).then(
-                function(useGeostoreId) {
-                  subscritionObj = {
-                    iso: {
-                      country: null,
-                      region: null,
-                      subRegion: null
-                    },
-                    geostore: useGeostoreId,
-                    useid: null,
-                    use: null,
-                    wdpaid: null
-                  };
+              GeostoreService.use(provider)
+              .then(function(useGeostoreId) {
+                subscritionObj = {
+                  iso: {
+                    country: null,
+                    region: null,
+                    subRegion: null
+                  },
+                  geostore: useGeostoreId,
+                  useid: null,
+                  use: null,
+                  wdpaid: null
+                };
 
-                  this.publishSubscribtion(
-                    _.extend({}, this.status.toJSON(), subscritionObj)
-                  );
-                }.bind(this)
-              );
+                this.publishSubscribtion(
+                  _.extend({}, this.status.toJSON(), subscritionObj)
+                );
+              }.bind(this));
             } else {
               subscritionObj = {
                 iso: {
@@ -502,9 +500,11 @@ define(
         {
           'Timeline/date-change': function(layerSlug, date) {
             var dateFormat = 'YYYY-MM-DD';
-            var date = date.map(function(date) {
-              return moment(date).format(dateFormat);
-            });
+            var date = date.map(
+              function(date) {
+                return moment(date).format(dateFormat);
+              }
+            );
 
             this.status.set({
               begin: date[0],
@@ -515,9 +515,11 @@ define(
         {
           'Torque/date-range-change': function(date) {
             var dateFormat = 'YYYY-MM-DD';
-            var date = date.map(function(date) {
-              return moment(date).format(dateFormat);
-            });
+            var date = date.map(
+              function(date) {
+                return moment(date).format(dateFormat);
+              }
+            );
 
             this.status.set({
               begin: date[0],
@@ -740,12 +742,11 @@ define(
               type: 'carto'
             };
 
-            GeostoreService.use(provider).then(
-              function(useGeostoreId) {
+            GeostoreService.use(provider)
+              .then(function(useGeostoreId) {
                 this.status.set('useGeostore', useGeostoreId);
                 this.setAnalysis('use');
-              }.bind(this)
-            );
+              }.bind(this));
           }
         }
       },
@@ -821,35 +822,29 @@ define(
           // Send request to the Analysis Service
           AnalysisService.get(this.status.toJSON())
 
-            .then(
-              function(response, xhr) {
-                this.status.set('spinner', false);
+            .then(function(response, xhr) {
+              this.status.set('spinner', false);
 
-                var statusWithResults = _.extend({}, this.status.toJSON(), {
-                  results: response.data.attributes
-                });
-                mps.publish('Analysis/results', [statusWithResults]);
-              }.bind(this)
-            )
+              var statusWithResults = _.extend({}, this.status.toJSON(), {
+                results: response.data.attributes
+              });
+              mps.publish('Analysis/results', [statusWithResults]);
+            }.bind(this))
 
-            .catch(
-              function(errors) {
-                this.status.set('spinner', false);
+            .catch(function(errors) {
+              this.status.set('spinner', false);
 
-                var statusWithErrors = _.extend(
-                  {},
-                  this.status.toJSON(),
-                  errors
-                );
-                mps.publish('Analysis/results-error', [statusWithErrors]);
-              }.bind(this)
-            )
+              var statusWithErrors = _.extend(
+                {},
+                this.status.toJSON(),
+                errors
+              );
+              mps.publish('Analysis/results-error', [statusWithErrors]);
+            }.bind(this))
 
-            .finally(
-              function() {
-                this.status.set('spinner', false);
-              }.bind(this)
-            );
+            .finally(function() {
+              this.status.set('spinner', false);
+            }.bind(this));
         }
       },
 
@@ -895,38 +890,33 @@ define(
       deleteAnalysis: function(options) {
         var type = options ? options.type : null;
         var statusFiltered = type
-          ? _.filter(this.types, function(v) {
-              return v.type != type;
-            })
+          ? _.filter(this.types, function(v) { return v.type != type; })
           : this.types;
 
         // If type exists delete all stuff related
         // to other analysis
         // 'iso' and 'isoDisabled' need a different treatment
-        _.each(
-          statusFiltered,
-          function(v) {
-            switch (v.name) {
-              case 'iso':
-                this.status.set(
-                  'iso',
-                  {
-                    country: null,
-                    region: null,
-                    subRegion: null
-                  },
-                  options
-                );
-                break;
-              case 'isoDisabled':
-                this.status.set('isoDisabled', true);
-                break;
-              default:
-                this.status.set(v.name, null, options);
-                break;
-            }
-          }.bind(this)
-        );
+        _.each(statusFiltered, function(v) {
+          switch (v.name) {
+            case 'iso':
+              this.status.set(
+                'iso',
+                {
+                  country: null,
+                  region: null,
+                  subRegion: null
+                },
+                options
+              );
+              break;
+            case 'isoDisabled':
+              this.status.set('isoDisabled', true);
+              break;
+            default:
+              this.status.set(v.name, null, options);
+              break;
+          }
+        }.bind(this));
 
         // If type doesn't exist remove type, active and enabledUpdating
         if (!type) {

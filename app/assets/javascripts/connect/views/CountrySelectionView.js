@@ -13,8 +13,8 @@ define(
     'text!connect/templates/countrySelection.handlebars',
     'text!connect/templates/regionSelection.handlebars'
   ],
-  (_, Handlebars, mps, View, CountryService, countryTpl, regionTpl) => {
-    const CountrySelectionView = View.extend({
+  function(_, Handlebars, mps, View, CountryService, countryTpl, regionTpl) {
+    var CountrySelectionView = View.extend({
       model: new (Backbone.Model.extend({
         country: null,
         region: null
@@ -30,7 +30,7 @@ define(
         'change .js-select-region': 'onChangeRegion'
       },
 
-      initialize(map, params) {
+      initialize: function(map, params) {
         if (!this.$el.length) {
           return;
         }
@@ -45,20 +45,18 @@ define(
 
         // Load countries
         CountryService.getCountries()
-          .then(
-            (results) => {
-              this.countries = _.sortBy(results, 'name');
-              this.renderCountries();
-              this.renderRegions();
-            }
-          )
+          .then(function(results) {
+            this.countries = _.sortBy(results, 'name');
+            this.renderCountries();
+            this.renderRegions();
+          }.bind(this))
 
-          .error((error) => {
+          .error(function(error) {
             console.log(error);
           });
       },
 
-      listeners() {
+      listeners: function() {
         // We should start using listenTo and handle the remove views
         this.listenTo(
           this.model,
@@ -72,7 +70,7 @@ define(
         );
       },
 
-      cache() {
+      cache: function() {
         this.$countryField = this.$el.find('#country-field');
         this.$regionField = this.$el.find('#region-field');
       },
@@ -80,7 +78,7 @@ define(
       /**
        * Sets params from the URL
        */
-      _setParams() {
+      _setParams: function() {
         if (this.params.params.iso.country) {
           this.model.set(
             {
@@ -105,8 +103,8 @@ define(
       /**
        * CHANGE EVENTS
        */
-      changeCountry() {
-        const country = this.model.get('country');
+      changeCountry: function() {
+        var country = this.model.get('country');
 
         // Publish the current country selection
         mps.publish('Country/update', [
@@ -120,16 +118,16 @@ define(
 
         // Get the regions for this country
         CountryService.getRegionsList({ iso: country }).then(
-          (results) => {
+            function(results) {
             this.regions = results;
             this.renderRegions();
-          }
+          }.bind(this)
         );
       },
 
-      changeRegion() {
-        const country = this.model.get('country');
-        const region = this.model.get('region');
+      changeRegion: function() {
+        var country = this.model.get('country');
+        var region = this.model.get('region');
 
         // Publish the current country-region selection
         mps.publish('Country/update', [
@@ -145,7 +143,7 @@ define(
       /**
        * RENDERS
        */
-      renderCountries() {
+      renderCountries: function() {
         this.$countryField.html(
           this.templateCountries({
             name: 'Select a country',
@@ -156,7 +154,7 @@ define(
         this.renderChosen();
       },
 
-      renderRegions() {
+      renderRegions: function() {
         this.$regionField.html(
           this.templateRegions({
             name: 'Select a jurisdiction',
@@ -166,8 +164,8 @@ define(
         );
 
         // Set the state of the region select
-        const disabled = !this.model.get('country');
-        const $regionSelect = this.$regionField.find('select');
+        var disabled = !this.model.get('country');
+        var $regionSelect = this.$regionField.find('select');
         $regionSelect
           .toggleClass('disabled', disabled)
           .prop('disabled', disabled);
@@ -175,9 +173,9 @@ define(
         this.renderChosen();
       },
 
-      renderChosen() {
-        _.each(this.$el.find('select'), (select) => {
-          const $select = $(select);
+      renderChosen: function() {
+        _.each(this.$el.find('select'), function(select) {
+          var $select = $(select);
           if (!$select.data('chosen')) {
             $select.chosen({
               width: '100%',
@@ -189,12 +187,12 @@ define(
         });
       },
 
-      _getParsedCountries() {
-        const countriesData = [];
-        const selectedCountry = this.model.attributes.country || null;
+      _getParsedCountries: function() {
+        var countriesData = [];
+        var selectedCountry = this.model.attributes.country || null;
 
-        _.each(this.countries, (country) => {
-          const currentCountry = _.extend({}, country);
+        _.each(this.countries, function(country) {
+          var currentCountry = _.extend({}, country);
           if (selectedCountry && currentCountry.iso === selectedCountry) {
             currentCountry.selected = true;
           }
@@ -204,12 +202,13 @@ define(
         return countriesData;
       },
 
-      _getParsedRegions() {
-        const regionsData = [];
-        const selectedRegion = parseInt(this.model.attributes.region, 10) || null;
+      _getParsedRegions: function() {
+        var regionsData = [];
+        var selectedRegion =
+          parseInt(this.model.attributes.region, 10) || null;
 
-        _.each(this.regions, (region) => {
-          const currentRegion = _.extend({}, region);
+        _.each(this.regions, function(region) {
+          var currentRegion = _.extend({}, region);
           if (selectedRegion && currentRegion.id_1 === selectedRegion) {
             currentRegion.selected = true;
           }
@@ -222,18 +221,18 @@ define(
       /**
        * UI EVENTS
        */
-      onChangeCountry(e) {
+      onChangeCountry: function(e) {
         e && e.preventDefault();
-        const country = $(e.currentTarget).val();
+        var country = $(e.currentTarget).val();
         this.model.set({
           country,
           region: null
         });
       },
 
-      onChangeRegion(e) {
+      onChangeRegion: function(e) {
         e && e.preventDefault();
-        const region = $(e.currentTarget).val();
+        var region = $(e.currentTarget).val();
         this.model.set('region', region);
       }
     });

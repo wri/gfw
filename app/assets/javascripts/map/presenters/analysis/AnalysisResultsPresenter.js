@@ -13,7 +13,7 @@ define(
     'helpers/datasetsHelper',
     'helpers/geojsonUtilsHelper'
   ],
-  (
+  function(
     PresenterClass,
     _,
     Backbone,
@@ -21,8 +21,8 @@ define(
     mps,
     datasetsHelper,
     geojsonUtilsHelper
-  ) => {
-    const StatusModel = Backbone.Model.extend({
+  ) {
+    var StatusModel = Backbone.Model.extend({
       defaults: {
         baselayer: null,
         both: false,
@@ -32,7 +32,7 @@ define(
       }
     });
 
-    const AnalysisResultsPresenter = PresenterClass.extend({
+    var AnalysisResultsPresenter = PresenterClass.extend({
       /**
        * Layers that support email subscriptions.
        */
@@ -56,7 +56,7 @@ define(
         viirs_fires_alerts: 'viirs-active-fires'
       },
 
-      init(view) {
+      init: function(view) {
         this.view = view;
         this.status = new StatusModel();
         this._super();
@@ -97,7 +97,7 @@ define(
         },
         {
           'AnalysisTool/iso-drawn': function (multipolygon) {
-            const isoTotalArea = geojsonUtilsHelper.getHectares(multipolygon);
+            var isoTotalArea = geojsonUtilsHelper.getHectares(multipolygon);
             this.status.set('isoTotalArea', isoTotalArea);
           }
         },
@@ -134,8 +134,8 @@ define(
        *
        * @param {Object} baselayers Current active baselayers
        */
-      _setBaselayer(baselayers) {
-        let baselayer;
+      _setBaselayer: function(baselayers) {
+        var baselayer;
 
         if (baselayers.loss) {
           this.loss = true;
@@ -161,7 +161,7 @@ define(
        * Set the subscribe button to disabled if alerts
        * are not supported for the current layers.
        */
-      _setSubscribeButton() {
+      _setSubscribeButton: function() {
         // var supported = false;
         // var baselayer = this.status.get('baselayer');
 
@@ -179,7 +179,7 @@ define(
        *
        * @param  {Object} results [description]
        */
-      _renderResults(results) {
+      _renderResults: function(results) {
         // Even if the result is a failure or unavailable message, we render
         // the widget results and keep the polygon.
         this.status.set('analysis', true);
@@ -208,8 +208,8 @@ define(
        *
        * @param  {Object} results Results object form the AnalysisService
        */
-      _renderAnalysis(results) {
-        const layer = this.status.get('baselayer');
+      _renderAnalysis: function(results) {
+        var layer = this.status.get('baselayer');
 
         // Unexpected results from successful request
         if (!layer) {
@@ -218,7 +218,7 @@ define(
         }
 
         if (_.values(this.datasets).indexOf(results.meta.id) > -1) {
-          const params = this._getAnalysisResource(results, layer);
+          var params = this._getAnalysisResource(results, layer);
           this.view.renderAnalysis(params);
           mps.publish('Place/update', [{ go: false }]);
         }
@@ -227,7 +227,7 @@ define(
       /**
        * Updates current analysis if it's permitted.
        */
-      _updateAnalysis() {
+      _updateAnalysis: function() {
         if (
           this.status.get('analysis') &&
           !this.status.get('disableUpdating')
@@ -240,8 +240,8 @@ define(
        * Render analysis subscribe dialog by publishing
        * to SubscribePresenter.
        */
-      subscribeAnalysis() {
-        const options = {
+      subscribeAnalysis: function() {
+        var options = {
           analysisResource: this.status.get('resource'),
           layer: this.status.get('baselayer')
         };
@@ -253,7 +253,7 @@ define(
        * Delete the current analysis and abort the current
        * AnalysisService request.
        */
-      deleteAnalysis() {
+      deleteAnalysis: function() {
         this.status.set('analysis', false);
         this.status.set('iso', null);
         this.status.set('resource', null);
@@ -263,18 +263,18 @@ define(
         mps.publish('Place/update', [{ go: false }]);
       },
 
-      refreshAnalysis() {
+      refreshAnalysis: function() {
         mps.publish('AnalysisService/refresh', []);
       },
 
       /**
        * Set total area for countries, protected areas or forest use layers
        */
-      _setTotalArea(area) {
+      _setTotalArea: function(area) {
         this.totalArea = area.hectares;
       },
 
-      _getTotalArea() {
+      _getTotalArea: function() {
         return this.totalArea;
       },
 
@@ -287,8 +287,8 @@ define(
        * @return {Object}         Returns resource params
        */
 
-      _getAnalysisResource(results, layer) {
-        const p = {};
+      _getAnalysisResource: function(results, layer) {
+        var p = {};
 
         p.slug = layer.slug;
         p.layer = layer;
@@ -296,7 +296,7 @@ define(
         if (p.download) {
           p.download.cdb = p.download.kml
             ? encodeURIComponent(
-              `${p.download.kml}&filename=GFW_Analysis_Results`
+              p.download.kml + '&filename=GFW_Analysis_Results'
             )
             : null;
         }
@@ -307,7 +307,7 @@ define(
           p.iso = results.params.iso;
         }
 
-        const dateRange = [
+        var dateRange = [
           moment(results.params.begin),
           moment(results.params.end)
         ];
@@ -357,9 +357,9 @@ define(
           if (results.years) {
             p.gainAlerts = results.years[0].total_gain;
             p.extent = results.years[results.years.length - 1].extent;
-            const years = _.range(dateRange[1].diff(dateRange[0], 'years'));
-            _.each((years, i) => {
-              const year = _.findWhere(results.years, {
+            var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
+            _.each(function(years, i) {
+              var year = _.findWhere(results.years, {
                 year: dateRange[0].year() + i
               });
               if (!year) {
@@ -412,19 +412,19 @@ define(
         return p;
       },
 
-      roundNumber(value) {
+      roundNumber: function(value) {
         return value < 10
           ? value.toFixed(2).toLocaleString()
           : Math.round(value).toLocaleString();
       },
 
-      showCanopy() {
+      showCanopy: function() {
         mps.publish('ThresholdControls/show');
       },
 
-      toggleSubscribeButton() {
-        const subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-        const baselayer = this.status.get('baselayer').slug;
+      toggleSubscribeButton: function() {
+        var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
+        var baselayer = this.status.get('baselayer').slug;
         if (subscriptionsAllowed.indexOf(baselayer) === -1) {
           this.view.$('#analysis-subscribe').addClass('disabled');
         } else {

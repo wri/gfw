@@ -1,162 +1,134 @@
-define(
-  [
-    'bluebird',
-    'uri',
-    'd3',
-    'mps',
-    'moment',
-    'abstract/layer/AnimatedCanvasLayerClass',
-    'map/services/TerraiDateService',
-    'map/presenters/TerraILayerPresenter'
-  ],
-  (
-    Promise,
-    UriTemplate,
-    d3,
-    mps,
-    moment,
-    AnimatedCanvasLayerClass,
-    TerraiDateService,
-    Presenter
-  ) => {
-    const TILE_URL =
-      'https://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png';
-    const START_DATE = '2004-01-01';
-    const START_YEAR = 2004;
+define([
+  'bluebird', 'uri', 'd3', 'mps', 'moment',
+  'abstract/layer/AnimatedCanvasLayerClass',
+  'map/services/TerraiDateService',
+  'map/presenters/TerraILayerPresenter'
+], function(
+  Promise, UriTemplate, d3, mps, moment,
+  AnimatedCanvasLayerClass,
+  TerraiDateService,
+  Presenter
+) {
 
-    const TerraiCanvasLayer = AnimatedCanvasLayerClass.extend({
-      init(layer, options, map) {
-        this.presenter = new Presenter(this);
-        this._super(layer, options, map);
-        this.presenter.setConfirmedStatus(options.layerOptions);
-        this.options.showLoadingSpinner = true;
-        this.options.dataMaxZoom = 10;
-        this._setupAnimation();
+  'use strict';
 
-        this.currentDate = [
-          !!options.currentDate && !!options.currentDate[0]
-            ? moment.utc(options.currentDate[0])
-            : moment.utc(START_DATE),
-          !!options.currentDate && !!options.currentDate[1]
-            ? moment.utc(options.currentDate[1])
-            : moment.utc()
-        ];
+  var TILE_URL = 'https://wri-tiles.s3.amazonaws.com/terrai_prod/tiles/{z}/{x}/{y}.png';
+  var START_DATE = '2004-01-01';
+  var START_YEAR = 2004;
 
-        this.maxDate = this.currentDate[1];
-      },
+  var TerraiCanvasLayer = AnimatedCanvasLayerClass.extend({
 
-      _getLayer() {
-        return new Promise(
-          ((resolve) => {
-            const dateService = new TerraiDateService();
+    init: function(layer, options, map) {
+      this.presenter = new Presenter(this);
+      this._super(layer, options, map);
+      this.presenter.setConfirmedStatus(options.layerOptions);
+      this.options.showLoadingSpinner = true;
+      this.options.dataMaxZoom = 10;
+      this._setupAnimation();
 
-            dateService.fetchDates().then(
-              (response) => {
-                // Check max date
-                this._checkMaxDate(response);
-                mps.publish('Torque/date-range-change', [this.currentDate]);
-                mps.publish('Place/update', [{ go: false }]);
+      this.currentDate = [
+        (!!options.currentDate && !!options.currentDate[0]) ?
+          moment.utc(options.currentDate[0]) : moment.utc(START_DATE),
+        (!!options.currentDate && !!options.currentDate[1]) ?
+          moment.utc(options.currentDate[1]) : moment.utc(),
+      ];
 
-                resolve(this);
-              }
-            );
-          })
-        );
-      },
+      this.maxDate = this.currentDate[1];
+    },
 
-      _getUrl(x, y, z) {
-        return new UriTemplate(TILE_URL).fillFromObject({ x, y, z });
-      },
+    _getLayer: function() {
+      return new Promise(function(resolve) {
 
-      _checkMaxDate(response) {
-        const maxDataDate = moment.utc(response.maxDate);
-        if (this.maxDate.isAfter(maxDataDate)) {
-          this.maxDate = maxDataDate;
-          this.currentDate[1] = this.maxDate;
-        }
-      },
+      var dateService = new TerraiDateService();
 
-      filterCanvasImgdata(imgdata, w, h, z) {
-        if (this.timelineExtent === undefined) {
-          this.timelineExtent = [
-            moment.utc(this.currentDate[0]),
-            moment.utc(this.currentDate[1])
-          ];
-        }
+      dateService.fetchDates().then(function(response) {
+        // Check max date
+        this._checkMaxDate(response);
+        mps.publish('Torque/date-range-change', [this.currentDate]);
+        mps.publish('Place/update', [{go: false}]);
 
-        const components = 4;
-        const numCompletedYears =
-          moment
-            .utc()
-            .subtract(1, 'year')
-            .year() - START_YEAR;
+        resolve(this);
+      }.bind(this));
 
-        let start =
-          (this.timelineExtent[0].year() - START_YEAR) * 23 +
-          Math.floor(this.timelineExtent[0].dayOfYear() / 16 + 1);
+      }.bind(this));
+    },
 
-        const end =
-          (this.timelineExtent[1].year() - START_YEAR) * 23 +
-          Math.floor(this.timelineExtent[1].dayOfYear() / 16 + 1);
+    _getUrl: function(x, y, z) {
+      return new UriTemplate(TILE_URL).fillFromObject({x: x, y: y, z: z});
+    },
 
-        const recentStartRange =
-          (this.maxDate.year() - START_YEAR) * 23 +
-          Math.floor(
-            this.maxDate
-              .clone()
-              .subtract(1, 'month')
-              .dayOfYear() /
-              16 +
-              1
-          );
-
-        const recentEndRange =
-          (this.maxDate.year() - START_YEAR) * 23 +
-          Math.floor(this.maxDate.dayOfYear() / 16 + 1);
-
-        if (start < 1) {
-          start = 1;
-        }
-
-        for (let i = 0; i < w; ++i) {
-          for (let j = 0; j < h; ++j) {
-            const pixelPos = (j * w + i) * components;
-
-            const r = imgdata[pixelPos];
-            const g = imgdata[pixelPos + 1];
-            const b = imgdata[pixelPos + 2];
-            const intensity = Math.min(b * 4, 255);
-
-            const timeLoss = r + g;
-
-            if (timeLoss >= start && timeLoss <= end) {
-              if (timeLoss >= recentStartRange && timeLoss <= recentEndRange) {
-                imgdata[pixelPos] = 219;
-                imgdata[pixelPos + 1] = 168;
-                imgdata[pixelPos + 2] = 0;
-                imgdata[pixelPos + 3] = intensity;
-              } else {
-                imgdata[pixelPos] = 220;
-                imgdata[pixelPos + 1] = 102;
-                imgdata[pixelPos + 2] = 153;
-                imgdata[pixelPos + 3] = intensity;
-
-                if (timeLoss > this.top_date) {
-                  imgdata[pixelPos] = 233;
-                  imgdata[pixelPos + 1] = 189;
-                  imgdata[pixelPos + 2] = 21;
-                  imgdata[pixelPos + 3] = intensity;
-                }
-              }
-              continue;
-            }
-
-            imgdata[pixelPos + 3] = 0;
-          }
-        } // end first for loop
+    _checkMaxDate: function(response) {
+      var maxDataDate = moment.utc(response.maxDate);
+      if (this.maxDate.isAfter(maxDataDate)) {
+        this.maxDate = maxDataDate;
+        this.currentDate[1] = this.maxDate;
       }
-    });
+    },
 
-    return TerraiCanvasLayer;
-  }
-);
+    filterCanvasImgdata: function(imgdata, w, h, z) {
+      if (this.timelineExtent === undefined) {
+        this.timelineExtent = [moment.utc(this.currentDate[0]),
+          moment.utc(this.currentDate[1])];
+      }
+
+      var components = 4;
+      var numCompletedYears = moment.utc().subtract(1, 'year').year() - START_YEAR;
+
+      var start = (this.timelineExtent[0].year() - START_YEAR) * 23 +
+        Math.floor((this.timelineExtent[0].dayOfYear() / 16) + 1);
+
+      var end = (this.timelineExtent[1].year() - START_YEAR) * 23 +
+        Math.floor((this.timelineExtent[1].dayOfYear() / 16) + 1);
+
+      var recentStartRange = (this.maxDate.year() - START_YEAR) * 23 +
+        Math.floor((this.maxDate.clone().subtract(1, 'month').dayOfYear()  / 16) + 1);
+
+      var recentEndRange = (this.maxDate.year() - START_YEAR) * 23 +
+        Math.floor((this.maxDate.dayOfYear() / 16) + 1);
+
+      if (start < 1) {
+        start = 1;
+      }
+
+      for(var i=0; i < w; ++i) {
+        for(var j=0; j < h; ++j) {
+          var pixelPos = (j*w + i) * components;
+
+          var r = imgdata[pixelPos];
+          var g = imgdata[pixelPos+1];
+          var b = imgdata[pixelPos+2];
+          var intensity = Math.min(b * 4, 255);
+
+          var timeLoss = r + g;
+
+          if (timeLoss >= start && timeLoss <= end) {
+            if (timeLoss >= recentStartRange && timeLoss <= recentEndRange) {
+              imgdata[pixelPos] = 219;
+              imgdata[pixelPos + 1] = 168;
+              imgdata[pixelPos + 2] = 0;
+              imgdata[pixelPos + 3] = intensity;
+            } else {
+              imgdata[pixelPos]     = 220;
+              imgdata[pixelPos + 1] = 102;
+              imgdata[pixelPos + 2] = 153;
+              imgdata[pixelPos + 3] = intensity;
+
+              if (timeLoss > this.top_date) {
+                imgdata[pixelPos]     = 233;
+                imgdata[pixelPos + 1] = 189;
+                imgdata[pixelPos + 2] = 21;
+                imgdata[pixelPos + 3] = intensity;
+              }
+            }
+            continue;
+          }
+
+          imgdata[pixelPos + 3] = 0;
+        }
+      } //end first for loop
+    }
+  });
+
+  return TerraiCanvasLayer;
+
+});

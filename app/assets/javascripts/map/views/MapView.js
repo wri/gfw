@@ -21,7 +21,7 @@ define(
     'map/helpers/layersHelper',
     'map/services/LandsatService'
   ],
-  (
+  function(
     Backbone,
     _,
     mps,
@@ -36,8 +36,8 @@ define(
     openStreetMaptype,
     layersHelper,
     landsatService
-  ) => {
-    const MapView = Backbone.View.extend({
+  ) {
+    var MapView = Backbone.View.extend({
       el: '#map',
 
       /**
@@ -77,7 +77,7 @@ define(
       /**
        * varructs a new MapView and its presenter.
        */
-      initialize() {
+      initialize: function() {
         this.presenter = new Presenter(this);
         this.layerInst = {};
         this.$maplngLng = $('.map-container .map-latlng');
@@ -90,7 +90,7 @@ define(
         this.allowedBounds = null;
 
         enquire.register(
-          `screen and (min-width:${window.gfw.config.GFW_MOBILE}px)`,
+          'screen and (min-width:' + window.gfw.config.GFW_MOBILE + 'px)',
           {
             match: _.bind(function () {
               this.mobile = false;
@@ -100,7 +100,7 @@ define(
           }
         );
         enquire.register(
-          `screen and (max-width:${window.gfw.config.GFW_MOBILE}px)`,
+          'screen and (max-width:' + window.gfw.config.GFW_MOBILE + 'px)',
           {
             match: _.bind(function () {
               this.mobile = true;
@@ -114,9 +114,9 @@ define(
       /**
        * Creates the Google Maps and attaches it to the DOM.
        */
-      render(zoom) {
-        const params = {
-          zoom,
+      render: function(zoom) {
+        var params = {
+          zoom: zoom,
           minZoom: zoom,
           mapTypeId: 'grayscale',
           center: new google.maps.LatLng(15, 27)
@@ -144,7 +144,7 @@ define(
        * Wires up Google Maps API listeners so that the view can respond to user
        * events fired by the UI.
        */
-      _addListeners() {
+      _addListeners: function() {
         google.maps.event.addListener(
           this.map,
           'zoom_changed',
@@ -183,7 +183,7 @@ define(
         google.maps.event.addListener(
           this.map,
           'click',
-          _.bind((wdpa) => {
+          _.bind(function(wdpa) {
             if (!!wdpa && !!wdpa.wdpaid) {
               // TODO => No mps here!
               mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
@@ -206,12 +206,12 @@ define(
           }, this)
         );
 
-        this.openDashaboard.click(() => {
+        this.openDashaboard.click(function() {
           $('.m-header-sub-menu-dashboard').css('max-height', 'none');
           if ($(window).height() < $('.m-header-sub-menu-dashboard').height()) {
             $('.m-header-sub-menu-dashboard').css(
               'max-height',
-              `${$(window).height() - 100}px`
+              ($(window).height() - 100) + 'px'
             );
           }
           if ($('.m-header-sub-menu-dashboard').hasClass('-active')) {
@@ -221,7 +221,7 @@ define(
           }
         });
 
-        this.backDashboard.click(() => {
+        this.backDashboard.click(function() {
           if ($('.m-header-sub-menu-dashboard').hasClass('-active')) {
             $('#layers-options').removeClass('-hidden');
           }
@@ -233,7 +233,7 @@ define(
        *
        * @param {Object} options
        */
-      setOptions(options) {
+      setOptions: function(options) {
         this.map.setOptions(options);
         this.onCenterChange();
         this.presenter.onMaptypeChange(options.mapTypeId);
@@ -245,7 +245,7 @@ define(
        * @param {object} layers  Layers object
        * @param {object} options Layers options from url
        */
-      setLayers(layers, options) {
+      setLayers: function(layers, options) {
         _.each(
           this.layerInst,
           function (inst, layerSlug) {
@@ -266,11 +266,11 @@ define(
        * @param {object}  options layers options eg: threshold, currentDate
        * @param {integer} i       current layer index
        */
-      _addLayers(layers, options, i) {
+      _addLayers: function(layers, options, i) {
         i = i || 0;
-        const layer = layers[i];
+        var layer = layers[i];
 
-        const _addNext = _.bind(function () {
+        var _addNext = _.bind(function () {
           i++;
           layers[i] && this._addLayers(layers, options, i);
         }, this);
@@ -280,7 +280,7 @@ define(
             _addNext();
             return;
           }
-          const layerView = (this.layerInst[layer.slug] = new layersHelper[
+          var layerView = (this.layerInst[layer.slug] = new layersHelper[
             layer.slug
           ].view(layer, options, this.map));
 
@@ -296,9 +296,9 @@ define(
        * @param  {object} layer
        * @return {integer} position
        */
-      _getOverlayPosition(layer) {
-        let position = 0;
-        const layersCount = this.map.overlayMapTypes.getLength();
+      _getOverlayPosition: function(layer) {
+        var position = 0;
+        var layersCount = this.map.overlayMapTypes.getLength();
         if (
           typeof layer.position !== 'undefined' &&
           layer.position <= layersCount
@@ -313,8 +313,8 @@ define(
        *
        * @param  {string} layerSlug The layerSlug of the layer to remove
        */
-      _removeLayer(layerSlug) {
-        const inst = this.layerInst[layerSlug];
+      _removeLayer: function(layerSlug) {
+        var inst = this.layerInst[layerSlug];
         if (!inst) {
           return;
         }
@@ -325,9 +325,9 @@ define(
         this.layerInst[layerSlug] = null;
       },
 
-      updateLayer(layerSlug) {
-        const options = {};
-        const layer = this.layerInst[layerSlug];
+      updateLayer: function(layerSlug) {
+        var options = {};
+        var layer = this.layerInst[layerSlug];
         options.currentDate = layer.currentDate ? layer.currentDate : null;
         options.threshold = layer.threshold ? layer.threshold : null;
         options.year = layer.year ? layer.year : null;
@@ -341,34 +341,34 @@ define(
        * @param {Number} lat The center latitude
        * @param {Number} lng The center longitude
        */
-      setCenter(lat, lng) {
+      setCenter: function(lat, lng) {
         this.map.setCenter(new google.maps.LatLng(lat, lng));
       },
 
-      getCenter() {
-        const center = this.map.getCenter();
+      getCenter: function() {
+        var center = this.map.getCenter();
 
         return { lat: center.lat(), lng: center.lng() };
       },
 
-      setZoom(zoom) {
+      setZoom: function(zoom) {
         this.map.setZoom(zoom);
       },
 
-      fitBounds(bounds) {
+      fitBounds: function(bounds) {
         this.center_moved = false;
         this.map.fitBounds(bounds);
       },
 
-      offsetCenter(latlng, offsetx, offsety) {
+      offsetCenter: function(latlng, offsetx, offsety) {
         // latlng is the apparent centre-point
         // offsetx is the distance you want that point to move to the right, in pixels
         // offsety is the distance you want that point to move upwards, in pixels
         // offset can be negative
         // offsetx and offsety are both optional
 
-        const scale = Math.pow(2, this.map.getZoom());
-        const nw = new google.maps.LatLng(
+        var scale = Math.pow(2, this.map.getZoom());
+        var nw = new google.maps.LatLng(
           this.map
             .getBounds()
             .getNorthEast()
@@ -379,20 +379,20 @@ define(
             .lng()
         );
 
-        const worldCoordinateCenter = this.map
+        var worldCoordinateCenter = this.map
           .getProjection()
           .fromLatLngToPoint(latlng);
-        const pixelOffset = new google.maps.Point(
+        var pixelOffset = new google.maps.Point(
           offsetx / scale || 0,
           offsety / scale || 0
         );
 
-        const worldCoordinateNewCenter = new google.maps.Point(
+        var worldCoordinateNewCenter = new google.maps.Point(
           worldCoordinateCenter.x - pixelOffset.x,
           worldCoordinateCenter.y + pixelOffset.y
         );
 
-        const newCenter = this.map
+        var newCenter = this.map
           .getProjection()
           .fromPointToLatLng(worldCoordinateNewCenter);
 
@@ -402,13 +402,13 @@ define(
       /**
        * Used by Embed to fit bounds.
        */
-      myFitBounds(myMap, bounds) {
+      myFitBounds: function(myMap, bounds) {
         myMap.fitBounds(bounds);
-        const self = this;
-        const overlayHelper = new google.maps.OverlayView();
+        var self = this;
+        var overlayHelper = new google.maps.OverlayView();
         overlayHelper.draw = function () {
           if (!this.ready) {
-            const zoom = self.getExtraZoom(
+            var zoom = self.getExtraZoom(
               this.getProjection(),
               bounds,
               myMap.getBounds(),
@@ -425,8 +425,8 @@ define(
       },
 
       // LatLngBounds b1, b2 -> zoom increment
-      getExtraZoom(projection, expectedBounds, actualBounds, self) {
-        let expectedSize = self.getSizeInPixels(projection, expectedBounds),
+      getExtraZoom: function(projection, expectedBounds, actualBounds, self) {
+        var expectedSize = self.getSizeInPixels(projection, expectedBounds),
           actualSize = self.getSizeInPixels(projection, actualBounds);
 
         if (
@@ -436,9 +436,9 @@ define(
           return 0;
         }
 
-        const qx = actualSize.x / expectedSize.x;
-        const qy = actualSize.y / expectedSize.y;
-        const min = Math.min(qx, qy);
+        var qx = actualSize.x / expectedSize.x;
+        var qy = actualSize.y / expectedSize.y;
+        var min = Math.min(qx, qy);
 
         if (min < 1) {
           return 0;
@@ -448,9 +448,9 @@ define(
       },
 
       // LatLngBounds bnds -> height and width as a Point
-      getSizeInPixels(projection, bounds) {
-        const sw = projection.fromLatLngToContainerPixel(bounds.getSouthWest());
-        const ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
+      getSizeInPixels: function(projection, bounds) {
+        var sw = projection.fromLatLngToContainerPixel(bounds.getSouthWest());
+        var ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
         return new google.maps.Point(
           Math.round(10000 * Math.abs(sw.y - ne.y)) / 10000,
           Math.round(10000 * Math.abs(sw.x - ne.x)) / 10000
@@ -462,10 +462,10 @@ define(
        *
        * @param {string} maptype The map type id.
        */
-      setMapTypeId(maptype) {
+      setMapTypeId: function(maptype) {
         this.map.setMapTypeId(maptype);
         if (maptype === 'terrain') {
-          const styles = [
+          var styles = [
             {
               featureType: 'water',
               stylers: [
@@ -475,16 +475,16 @@ define(
               ]
             }
           ];
-          this.map.setOptions({ styles });
+          this.map.setOptions({ styles: styles });
         }
         this.presenter.onMaptypeChange(maptype);
       },
 
-      getMapTypeId() {
+      getMapTypeId: function() {
         return this.map.getMapTypeId();
       },
 
-      createMaptypeNode() {
+      createMaptypeNode: function() {
         this.creditNode = document.createElement('div');
         this.creditNode.id = 'credit-control';
         this.creditNode.index = 0;
@@ -493,9 +493,9 @@ define(
         );
       },
 
-      setAttribution() {
-        const maptype = this.getMapTypeId();
-        const maptypeAttribution = _.findWhere(this.attributions, {
+      setAttribution: function() {
+        var maptype = this.getMapTypeId();
+        var maptypeAttribution = _.findWhere(this.attributions, {
           id: maptype
         });
 
@@ -511,16 +511,16 @@ define(
       /**
        * Handles a map center change UI event by dispatching to MapPresenter.
        */
-      onCenterChange() {
-        const center = this.map.getCenter();
-        const lat = center.lat();
-        const lng = center.lng();
+      onCenterChange: function() {
+        var center = this.map.getCenter();
+        var lat = center.lat();
+        var lng = center.lng();
         this.presenter.onCenterChange(lat, lng);
         this.updateLatlngInfo(lat, lng);
         this.checkBounds();
       },
 
-      checkBounds() {
+      checkBounds: function() {
         if (!this.map.getBounds()) return;
 
         if (this.allowedBounds.contains(this.map.getCenter())) {
@@ -536,7 +536,7 @@ define(
       /**
        * Resizes the map.
        */
-      resize() {
+      resize: function() {
         google.maps.event.trigger(this.map, 'resize');
         this.map.setZoom(this.map.getZoom());
         this.map.setCenter(this.map.getCenter());
@@ -545,7 +545,7 @@ define(
       /**
        * Set additional maptypes to this.map.
        */
-      _setMaptypes() {
+      _setMaptypes: function() {
         this.map.mapTypes.set('grayscale', grayscaleMaptype());
         this.map.mapTypes.set('treeheight', treeheightMaptype());
         this.map.mapTypes.set('dark', darkMaptype());
@@ -554,8 +554,8 @@ define(
         this._setLandsatTiles();
       },
 
-      _setLandsatTiles() {
-        for (let i = 1999; i <= 2016; i++) {
+      _setLandsatTiles: function() {
+        for (var i = 1999; i <= 2016; i++) {
           if (i >= 2013) {
             landsatService.getTiles(i).then(
               function (year, results) {
@@ -578,7 +578,7 @@ define(
       /**
        * Crosshairs when analysis is activated
        */
-      crosshairs() {
+      crosshairs: function() {
         this.$viewFinder.addClass('hidden');
         this.$maplngLng.removeClass('hidden');
         this.$analysislatlng = $('#analysisLatlng');
@@ -586,28 +586,31 @@ define(
         this.$el.on('mousemove', _.bind(this.updatePositionCrosshairs, this));
       },
 
-      updatePositionCrosshairs(event) {
-        const currentBounds = this.map.getBounds();
-        const topLeftLatLng = new google.maps.LatLng(
+      updatePositionCrosshairs: function(event) {
+        var currentBounds = this.map.getBounds();
+        var topLeftLatLng = new google.maps.LatLng(
           currentBounds.getNorthEast().lat(),
           currentBounds.getSouthWest().lng()
         );
-        const point = this.map.getProjection().fromLatLngToPoint(topLeftLatLng);
+        var point = this.map.getProjection().fromLatLngToPoint(topLeftLatLng);
         point.x += event.offsetX / (1 << this.map.getZoom());
         point.y += event.offsetY / (1 << this.map.getZoom());
 
-        const latlong = this.map.getProjection().fromPointToLatLng(point);
+        var latlong = this.map.getProjection().fromPointToLatLng(point);
         this.updateLatlngAnalysis(latlong.lat(), latlong.lng());
       },
       /**
        * Updates
        */
-      updateLatlngAnalysis(lat, lng) {
-        const html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
+      updateLatlngAnalysis: function(lat, lng) {
+        var html = 'Lat/long: {0}, {1}'.format(
+          lat.toFixed(6),
+          lng.toFixed(6)
+        );
         this.$analysislatlng.html(html);
       },
 
-      centerPositionCrosshairs() {
+      centerPositionCrosshairs: function() {
         this.$viewFinder.removeClass('hidden');
         this.$maplngLng.addClass('hidden');
         this.$el.off('mousemove');
@@ -617,61 +620,62 @@ define(
       /**
        * Updates
        */
-      updateLatlngInfo(lat, lng) {
-        const html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
+      updateLatlngInfo: function(lat, lng) {
+        var html = 'Lat/long: {0}, {1}'.format(
+          lat.toFixed(6),
+          lng.toFixed(6)
+        );
         this.$maplngLng.html(html);
       },
 
       /**
        * Display a dialog from the Landing Index First Steps options
        */
-      _checkDialogs() {
-        $(document).ready((type) => {
+      _checkDialogs: function() {
+        $(document).ready(function(type) {
           if (!sessionStorage.getItem('DIALOG')) return;
-          const dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
+          var dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
 
           if (!dialog.display) return;
 
-          let $container = $('.map-container').find('.widget')[0],
+          var $container = $('.map-container').find('.widget')[0],
             $trigger = $(
-              `<a data-source="${
-                dialog.type
-              }" class="source hidden hide" style="display: none"></a>`
+              '<a data-source="'+ dialog.type + '" class="source hidden hide" style="display: none"></a>'
             );
           $trigger.appendTo($container).trigger('click');
           sessionStorage.removeItem('DIALOG');
-          window.setTimeout(() => {
+          window.setTimeout(function() {
             $('.backdrop').css('opacity', '0.3');
           }, 500);
         });
       },
 
-      overlayToggle(bool) {
+      overlayToggle: function(bool) {
         this.$overlayMobile.toggleClass('active', bool);
       },
 
       // Autolocate
-      autolocateQuestion() {
+      autolocateQuestion: function() {
         if (isMobile.any && !this.embed && !Cookies.get('autolocate')) {
           Cookies.set('autolocate', true, { expires: 30 });
           mps.publish('Confirm/ask', ['default', 'autolocate']);
         }
       },
 
-      autolocateResponse(response) {
+      autolocateResponse: function(response) {
         if (response) {
           this.autolocate();
         }
       },
 
-      autolocate() {
+      autolocate: function() {
         // window.gfw.config.GFW_MOBILE
         if (navigator.geolocation) {
-          const $locate_handle = $('#map-control-locate').find('.handler');
+          var $locate_handle = $('#map-control-locate').find('.handler');
           $locate_handle.addClass('spinner start');
           navigator.geolocation.getCurrentPosition(
             _.bind(function (position) {
-              const pos = new google.maps.LatLng(
+              var pos = new google.maps.LatLng(
                 position.coords.latitude,
                 position.coords.longitude
               );
