@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 // import PropTypes from 'prop-types';
 
-import Carousel from 'components/carousel';
+import Carousel from 'components/ui/carousel';
 import img1997 from 'pages/about/section-history/images/1997.jpg';
 import img2002 from 'pages/about/section-history/images/2002.jpg';
 import img2004 from 'pages/about/section-history/images/2004.jpg';

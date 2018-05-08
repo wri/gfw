@@ -29,18 +29,18 @@ http_interactions:
       Content-Type:
       - application/json
       Set-Cookie:
-      - _eauth=eyJ1c2VyX2lkIjpudWxsLCJzZXNzaW9uX2lkIjoiZ0NQaE44dzdnVXZvZTJudzNXQ2hpVyJ9|1523538271|88a5d449056840809e9f95b2c422ef596dfc446e;
+      - _eauth=eyJ1c2VyX2lkIjpudWxsLCJzZXNzaW9uX2lkIjoidE5wZjQ2YWR6YW84NzNuQmczMjRQSCJ9|1525705843|195506fd8c7a7d2c305adce36c40d5ea8929e1f3;
         Path=/
       X-Cloud-Trace-Context:
-      - f29bffc4f1666014537355546b2f2d47
+      - c53b30d831a728707b2a76492e27739a
       Date:
-      - Thu, 12 Apr 2018 13:04:31 GMT
+      - Mon, 07 May 2018 15:10:43 GMT
       Server:
       - Google Frontend
       Content-Length:
       - '871248'
       Expires:
-      - Thu, 12 Apr 2018 13:04:31 GMT
+      - Mon, 07 May 2018 15:10:43 GMT
     body:
       encoding: UTF-8
       string: '{"countries": [{"alerts_count": null, "carbon_stocks": 38, "convention_cbd":
@@ -10965,5 +10965,5 @@ http_interactions:
     http_version: '1.1'
     adapter_metadata:
       effective_url: http://api.globalforestwatch.org/countries
-  recorded_at: Thu, 12 Apr 2018 13:04:31 GMT
+  recorded_at: Mon, 07 May 2018 15:10:43 GMT
 recorded_with: VCR 4.0.0
