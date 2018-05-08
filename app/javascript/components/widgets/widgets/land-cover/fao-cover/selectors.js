@@ -13,45 +13,39 @@ const getSentences = state => state.config && state.config.sentences;
 export const parseData = createSelector(
   [getData, getCurrentLocation, getColors],
   (data, currentLabel, colors) => {
-    if (isEmpty(data) || !currentLabel) return null;
+    if (isEmpty(data)) return null;
     const {
       area_ha,
-      extent,
-      forest_planted,
+      planted_forest,
       forest_primary,
       forest_regenerated
     } = data;
     const colorRange = getColorPalette(colors.ramp, 3);
-    const naturallyRegenerated = extent / 100 * forest_regenerated;
-    const primaryForest = forest_primary ? extent / 100 * forest_primary : 0;
-    const plantedForest = extent / 100 * forest_planted;
     const nonForest =
-      area_ha - (naturallyRegenerated + primaryForest + plantedForest);
-    const total =
-      naturallyRegenerated + primaryForest + plantedForest + area_ha;
+      area_ha - (forest_regenerated + forest_primary + planted_forest);
     return [
       {
         label: 'Naturally regenerated Forest',
-        value: naturallyRegenerated,
-        percentage: naturallyRegenerated / total * 100,
+        value: forest_regenerated,
+        percentage: forest_regenerated / area_ha * 100,
         color: colorRange[0]
       },
       {
         label: 'Primary Forest',
-        value: primaryForest,
-        percentage: primaryForest / total * 100,
+        value: forest_primary,
+        percentage: forest_primary / area_ha * 100,
         color: colorRange[1]
       },
       {
         label: 'Planted Forest',
-        value: plantedForest,
-        percentage: plantedForest / total * 100,
+        value: planted_forest,
+        percentage: planted_forest / area_ha * 100,
         color: colorRange[2]
       },
       {
         label: 'Non-Forest',
         value: nonForest,
-        percentage: nonForest / total * 100,
+        percentage: nonForest / area_ha * 100,
         color: colors.nonForest
       }
     ];
@@ -61,19 +55,20 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [getData, getCurrentLocation, getSentences],
   (data, currentLabel, sentences) => {
-    if (isEmpty(data) || !currentLabel) return null;
-    const { initial, noPrimary } = sentences;
+    if (isEmpty(data)) return null;
+    const { initial, noPrimary, globalInitial, globalNoPrimary } = sentences;
     const { area_ha, extent, forest_primary } = data;
-    const primaryForest = extent / 100 * forest_primary;
-    const sentence = primaryForest > 0 ? initial : noPrimary;
+
     const params = {
-      location: currentLabel,
+      location: currentLabel || 'globally',
       extent: `${format('.3s')(extent)}ha`,
       primaryPercent:
-        primaryForest > 0
-          ? `${format('.0f')(primaryForest / area_ha * 100)}%`
+        forest_primary > 0
+          ? `${format('.0f')(forest_primary / area_ha * 100)}%`
           : `${format('.0f')(extent / area_ha * 100)}%`
     };
+    let sentence = forest_primary > 0 ? initial : noPrimary;
+    if (!currentLabel) { sentence = forest_primary > 0 ? globalInitial : globalNoPrimary; }
     return {
       sentence,
       params
