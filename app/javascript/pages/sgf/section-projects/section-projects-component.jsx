@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Globe from 'components/globe';
 import ProjectsModal from 'pages/sgf/section-projects/section-projects-modal';
-import Card from 'components/card';
+import Card from 'components/ui/card';
 import ItemsList from 'components/items-list';
-import Search from 'components/search';
-import NoContent from 'components/no-content';
-import Loader from 'components/loader';
+import Search from 'components/ui/search';
+import NoContent from 'components/ui/no-content';
+import Loader from 'components/ui/loader';
 import { Element as ScrollEl } from 'react-scroll';
 
 import './section-projects-styles.scss';

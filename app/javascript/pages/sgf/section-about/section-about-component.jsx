@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import sgfLogo from './img/GFW_SGF_logo.png';
 
