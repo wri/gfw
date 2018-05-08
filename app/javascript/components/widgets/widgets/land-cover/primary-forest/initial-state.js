@@ -1,5 +1,5 @@
 export default {
-  title: 'Primary forest extent',
+  title: 'Primary forest',
   config: {
     size: 'small',
     indicators: [
@@ -19,13 +19,10 @@ export default {
       landCover: 4
     },
     sentences: {
-      initial: 'In {location}, {percentage} of tree cover is {primary}.',
-      lessThan:
-        'In {location}, less than {percentage} of tree cover is {primary}.',
+      initial:
+        'As of {extentYear}, {percentage} of {location} total tree cover was {primary}.',
       withIndicator:
-        'Within {indicator} in {location}, {percentage} of tree cover is {primary}.',
-      lessThanWithIndicator:
-        'Within {indicator} in {location}, less than {percentage} of tree cover is {primary}.'
+        'As of {extentYear}, {percentage} of {location} total tree cover was {primary} within {indicator}.'
     }
   },
   settings: {

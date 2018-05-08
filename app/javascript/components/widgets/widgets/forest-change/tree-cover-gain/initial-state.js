@@ -5,11 +5,12 @@ export default {
     indicators: [
       'gadm28',
       'wdpa',
-      'primary_forest',
       'plantations',
-      'ifl_2013',
       'landmark',
-      'mining'
+      'mining',
+      'kba',
+      'aze',
+      'tcl'
     ],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
@@ -19,23 +20,19 @@ export default {
     metaKey: 'widget_tree_cover_gain',
     layers: ['forestgain'],
     sortOrder: {
-      summary: 6,
-      'forest-change': 4
+      summary: 3,
+      forestChange: 6
     },
     sentences: {
       initial:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {region}.',
-      withGain:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {region}, equivalent to a {percentage} increase relative to {extentYear} tree cover extent.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain.',
       withIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {region}.',
-      withGainAndIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {region}, equivalent to a {percentage} increase relative to {extentYear} tree cover extent.'
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercentage} of global tree cover gain within {indicator_alt}.'
     }
   },
   settings: {
     indicator: 'gadm28',
-    threshold: 30,
+    threshold: 50,
     unit: 'ha',
     extentYear: 2010,
     layers: ['forestgain']

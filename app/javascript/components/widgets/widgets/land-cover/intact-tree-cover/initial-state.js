@@ -1,5 +1,5 @@
 export default {
-  title: 'Intact forest extent',
+  title: 'Intact forest',
   config: {
     size: 'small',
     indicators: [
@@ -10,7 +10,7 @@ export default {
     ],
     categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds', 'extentYears'],
+    selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_ifl',
     layers: ['forest2000', 'forest2010', 'ifl_2013_deg'],
@@ -18,13 +18,10 @@ export default {
       landCover: 3
     },
     sentences: {
-      initial: 'In {location}, {percentage} of tree cover is {intact}.',
-      lessThan:
-        'In {location}, less than {percentage} of tree cover is {intact}.',
+      initial:
+        'As of 2013, {percentage} of {location} total tree cover was {intact}.',
       withIndicator:
-        'Within {indicator} in {location}, {percentage} of tree cover is {intact}.',
-      lessThanWithIndicator:
-        'Within {indicator} in {location}, less than {percentage} of tree cover is {intact}.'
+        'As of 2013, {percentage} of {location} total tree cover was {intact} within {indicator}.'
     }
   },
   settings: {

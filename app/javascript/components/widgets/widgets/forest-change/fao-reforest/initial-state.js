@@ -8,11 +8,12 @@ export const initialState = {
     type: 'fao',
     metaKey: 'widget_rate_of_restoration_fao',
     sortOrder: {
-      forestChange: 6
+      forestChange: 4
     },
     colors: 'gain',
     sentences: {
-      initial: 'In {year}, the rate of deforestation in {location} was {rate}.',
+      initial:
+        'According to the FAO the rate of deforestation in {location} was {rate}, in {year}',
       noReforest: 'No deforestation data in {location}.'
     }
   },

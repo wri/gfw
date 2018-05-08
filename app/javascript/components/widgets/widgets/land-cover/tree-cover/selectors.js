@@ -40,7 +40,7 @@ export const parseData = createSelector(
     ];
     if (indicator === 'gadm28' && hasPlantations) {
       parsedData.splice(1, 0, {
-        label: 'Tree plantations',
+        label: 'Plantations',
         value: plantations,
         color: colorRange[1],
         percentage: plantations / totalArea * 100
@@ -55,10 +55,13 @@ export const getSentence = createSelector(
   (data, settings, currentLabel, indicator, sentences) => {
     if (!data || !sentences) return null;
     const { initial, withIndicator } = sentences;
+    const percentCover = 100 * data.cover / data.totalArea;
     const params = {
       year: settings.extentYear,
       location: currentLabel,
       indicator: indicator && indicator.label,
+      percentage:
+        percentCover >= 0.1 ? `${format('.1f')(percentCover)}%` : '<0.1%',
       value: `${format('.3s')(data.cover)}ha`
     };
 
