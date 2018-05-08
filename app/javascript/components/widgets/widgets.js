@@ -12,9 +12,10 @@ import {
 } from './selectors';
 
 const mapStateToProps = (
-  { location, countryData, whitelists },
-  { widgets, activeWidget }
+  { location, countryData, whitelists, widgets },
+  ownProps
 ) => {
+  const { widget, activeWidget } = ownProps;
   // loaders
   const {
     isCountriesLoading,
@@ -48,7 +49,7 @@ const mapStateToProps = (
 
   return {
     loading,
-    widgets: widgets || filterWidgets(widgetData),
+    widgets: (!widget && ownProps.widgets) || filterWidgets(widgetData),
     options: getOptions(),
     adminKey: getAdminKey({ payload }),
     currentLocation,
@@ -58,7 +59,8 @@ const mapStateToProps = (
     ...whitelists,
     ...countryData,
     colors,
-    activeWidget
+    activeWidget,
+    ...(!!widget && { widget: widgets[widget] })
   };
 };
 

@@ -10,9 +10,10 @@ import Component from './component';
 import * as Widgets from '../../manifest';
 import * as Selectors from './selectors';
 
-const mapStateToProps = ({ widgets }, ownProps) => {
+const mapStateToProps = ({ widgets, location }, ownProps) => {
   const { widget, colors, active, options } = ownProps;
-
+  const { query } = location;
+  const { country, region, subRegion, type } = location.payload;
   // widget consts
   const { config, settings } = widgets[widget];
   const { getOptionsSelected } = Selectors;
@@ -48,7 +49,13 @@ const mapStateToProps = ({ widgets }, ownProps) => {
     haveMapLayers,
     parsedData: parseData && parseData(selectorData),
     parsedConfig: parseConfig && parseConfig(selectorData),
-    sentence: getSentence && getSentence(selectorData)
+    sentence: getSentence && getSentence(selectorData),
+    extLink: `${window.location.host}/dashboards/${type ||
+      'global'}/${country || ''}${region ? `/${region}` : ''}${
+      subRegion ? `/${subRegion}` : ''
+    }?${query && query.category ? `category=${query.category}` : ''}&widget=${
+      widget
+    }${query && query[widget] ? `&${widget}=${query[widget]}` : ''}#${widget}`
   };
 };
 

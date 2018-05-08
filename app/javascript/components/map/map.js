@@ -25,6 +25,7 @@ const mapStateToProps = (
   const widgetSettings = widget && widget.settings;
   const activeLayers =
     layers || (widgetSettings && widgetSettings.layers) || map.layers;
+
   return {
     loading: map.loading || isParentLoading,
     error: map.error,
@@ -49,6 +50,7 @@ class MapContainer extends PureComponent {
     this.buildMap();
     getLayerSpec();
     setMapSettings(mapOptions);
+    this.setEvents();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,19 +61,18 @@ class MapContainer extends PureComponent {
       settings,
       options
     } = nextProps;
-    if (isParentLoading !== this.props.isParentLoading && bounds) {
-      this.boundMap(nextProps.bounds);
-      this.setAreaHighlight();
-      this.updateLayers(layersKeys, this.props.layersKeys, settings);
-      this.setEvents();
-    }
-
-    if (!bounds && bounds !== this.props.bounds) {
-      this.map.setZoom(2);
-      this.map.setCenter({ lat: 15, lng: 27 });
-      this.map.data.forEach(feature => {
-        this.map.data.remove(feature);
-      });
+    if (!isParentLoading) {
+      if (bounds && !isEqual(bounds, this.props.bounds)) {
+        this.boundMap(nextProps.bounds);
+        this.setAreaHighlight();
+      }
+      if (!bounds && this.props.bounds) {
+        this.map.setZoom(2);
+        this.map.setCenter({ lat: 15, lng: 27 });
+        this.map.data.forEach(feature => {
+          this.map.data.remove(feature);
+        });
+      }
     }
 
     if (

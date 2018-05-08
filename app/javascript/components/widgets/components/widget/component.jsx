@@ -17,7 +17,7 @@ class Widget extends PureComponent {
     const {
       widget,
       currentLabel,
-      payload,
+      extLink,
       settings,
       config,
       embed,
@@ -85,16 +85,7 @@ class Widget extends PureComponent {
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
               <p>For more info</p>
-              <Button
-                className="embed-btn"
-                extLink={`http://globalforestwatch.org/country/${
-                  payload.country
-                }${payload.region ? `/${payload.region}` : ''}${
-                  payload.subRegion ? `/${payload.subRegion}` : ''
-                }?widget=${widget}${
-                  query && query[widget] ? `&${widget}=${query[widget]}` : ''
-                }#${widget}`}
-              >
+              <Button className="embed-btn" extLink={extLink}>
                 EXPLORE ON GFW
               </Button>
             </div>
@@ -113,7 +104,7 @@ Widget.propTypes = {
   onMap: PropTypes.bool,
   highlightColor: PropTypes.string,
   currentLabel: PropTypes.string,
-  payload: PropTypes.object,
+  extLink: PropTypes.string,
   query: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,

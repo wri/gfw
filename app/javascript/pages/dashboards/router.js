@@ -22,7 +22,7 @@ const routeChangeThunk = (dispatch, getState) => {
 
 export const routes = {
   [EMBED]: {
-    path: '/dashboards/embed/:widget/:country/:region?/:subRegion?'
+    path: '/dashboards/embed/:type/:widget/:country?/:region?/:subRegion?'
   },
   [COUNTRY]: {
     path: '/dashboards/:type?/:country?/:region?/:subRegion?'

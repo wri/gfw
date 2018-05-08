@@ -18,15 +18,19 @@ const mapStateToProps = (
   { location, modalMeta },
   { currentLabel, widget, title, config, indicatorWhitelist }
 ) => {
-  const locationUrl = `${location.payload.country}${
-    location.payload.region ? `/${location.payload.region}` : ''
-  }${location.payload.subRegion ? `/${location.payload.subRegion}` : ''}`;
+  const { country, region, subRegion, type } = location.payload;
+  const locationUrl = `${country || ''}${region ? `/${region}` : ''}${
+    subRegion ? `/${subRegion}` : ''
+  }`;
 
-  const embedUrl = `${window.location.origin}/country/embed/${widget}/${
-    locationUrl
-  }${
+  const embedUrl = `${window.location.origin}/dashboards/embed/${type ||
+    'global'}/${widget}/${locationUrl}${
     location.query && location.query[widget]
       ? `?${widget}=${location.query[widget]}`
+      : ''
+  }${
+    location.query && location.query.category
+      ? `&category=${location.query.category}`
       : ''
   }`;
   const size = config.size;
@@ -51,7 +55,8 @@ const mapStateToProps = (
     shareData: {
       title: 'Share this widget',
       subtitle: `${title} in ${currentLabel || ''}`,
-      shareUrl: `http://${window.location.host}/country/${locationUrl}?${
+      shareUrl: `http://${window.location.host}/dashboards/${type ||
+        'global'}/${locationUrl}?${
         location.query && location.query.category
           ? `category=${location.query.category}&`
           : ''

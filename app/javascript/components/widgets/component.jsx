@@ -16,24 +16,30 @@ class Widgets extends PureComponent {
       widgets,
       activeWidget,
       category,
-      colors
+      colors,
+      widget,
+      embed
     } = this.props;
 
-    return (
-      <div className="c-widgets">
+    return widget ? (
+      <Widget
+        {...this.props}
+        widget={widget.name}
+        colors={colors[widget.config.colors || widget.config.type] || colors}
+      />
+    ) : (
+      <div className={`c-widgets ${embed ? 'embed' : ''}`}>
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
           widgets.length > 0 &&
-          widgets.map(widget => (
+          widgets.map(w => (
             <Widget
               {...this.props}
-              key={widget.name}
-              widget={widget.name}
-              active={activeWidget && activeWidget === widget.name}
-              colors={
-                colors[widget.config.colors || widget.config.type] || colors
-              }
+              key={w.name}
+              widget={w.name}
+              active={activeWidget && activeWidget === w.name}
+              colors={colors[w.config.colors || w.config.type] || colors}
             />
           ))}
         {!loading &&
@@ -54,6 +60,8 @@ Widgets.propTypes = {
   loading: PropTypes.bool,
   currentLabel: PropTypes.string,
   widgets: PropTypes.array,
+  widget: PropTypes.object,
+  embed: PropTypes.bool,
   activeWidget: PropTypes.string,
   category: PropTypes.string,
   WidgetsFuncs: PropTypes.object,
