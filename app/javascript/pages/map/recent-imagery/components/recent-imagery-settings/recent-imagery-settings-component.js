@@ -10,7 +10,7 @@ import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
 import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
 
-import WEEKS from 'pages/map/data/weeks.json';
+import WEEKS from 'data/weeks.json';
 import draggerIcon from 'assets/icons/dragger.svg';
 import closeIcon from 'assets/icons/close.svg';
 import RecentImageryDrag from './recent-imagery-settings-drag';
