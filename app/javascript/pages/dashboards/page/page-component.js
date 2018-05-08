@@ -29,7 +29,6 @@ class Page extends PureComponent {
       setShowMapMobile,
       links,
       isGeostoreLoading,
-      location,
       locationOptions,
       locationNames,
       widgetAnchor,
@@ -54,7 +53,6 @@ class Page extends PureComponent {
         <div className="content-panel">
           <Header
             className="header"
-            location={location}
             locationOptions={locationOptions}
             locationNames={locationNames}
           />
@@ -127,7 +125,6 @@ Page.propTypes = {
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
-  location: PropTypes.object,
   locationOptions: PropTypes.object,
   locationNames: PropTypes.object,
   widgets: PropTypes.array,
