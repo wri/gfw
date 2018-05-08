@@ -49,9 +49,7 @@ class WidgetHeader extends PureComponent {
 
     return (
       <div className="c-widget-header">
-        <div className="title">{`${title} in ${
-          currentLocation.label ? currentLocation.label : 'Global'
-        }`}</div>
+        <div className="title">{title}</div>
         <div className="options">
           {!embed &&
             haveMapLayers && (
