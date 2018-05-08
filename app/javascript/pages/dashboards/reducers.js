@@ -6,10 +6,10 @@ import { handleActions } from 'utils/redux';
 import router from './router';
 
 // Components
+import * as HeaderComponent from 'pages/dashboards/header';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as MapComponent from 'components/map';
-import * as HeaderComponent from 'pages/country/header';
 import * as WidgetsComponent from 'components/widgets';
 
 // Providers
