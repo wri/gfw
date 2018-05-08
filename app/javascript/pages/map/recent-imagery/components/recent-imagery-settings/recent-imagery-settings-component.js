@@ -2,12 +2,12 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import Icon from 'components/icon';
-import Slider from 'components/slider';
-import Carousel from 'components/carousel';
-import Dropdown from 'components/dropdown';
-import Datepicker from 'components/datepicker';
-import NoContent from 'components/no-content';
+import Icon from 'components/ui/icon';
+import Slider from 'components/ui/slider';
+import Carousel from 'components/ui/carousel';
+import Dropdown from 'components/ui/dropdown';
+import Datepicker from 'components/ui/datepicker';
+import NoContent from 'components/ui/no-content';
 import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
 
 import WEEKS from 'pages/map/data/weeks.json';

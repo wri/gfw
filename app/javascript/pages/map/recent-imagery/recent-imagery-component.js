@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 import satelliteIcon from 'assets/icons/satellite.svg';
-import Button from 'components/button';
+import Button from 'components/ui/button';
 import RecentImagerySettings from './components/recent-imagery-settings';
 
 import './recent-imagery-styles.scss';

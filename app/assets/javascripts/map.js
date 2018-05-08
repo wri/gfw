@@ -153,7 +153,7 @@ require([
         return text.charAt(0).toUpperCase();
       });
 
-      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+      Handlebars.registerHelper('ifCond', function(v1, operator, v2, options) {
         switch (operator) {
           case '==':
             return v1 == v2 ? options.fn(this) : options.inverse(this);
@@ -181,11 +181,7 @@ require([
 
     _googleMapsHelper: function() {
       if (!google.maps.Polygon.prototype.getBounds) {
-<<<<<<< HEAD
         google.maps.Polygon.prototype.getBounds = function() {
-=======
-        google.maps.Polygon.prototype.getBounds = function () {
->>>>>>> 5fccbd097fc5fcab031fd664e878c2d1194f3592
           var bounds = new google.maps.LatLngBounds();
           var paths = this.getPaths();
           var path;
