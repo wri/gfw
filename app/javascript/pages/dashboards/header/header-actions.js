@@ -2,6 +2,9 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import { getExtent, getLoss } from 'services/forest-data';
 import sortBy from 'lodash/sortBy';
+import groupBy from 'lodash/groupBy';
+import sumBy from 'lodash/sumBy';
+import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 import axios from 'axios';
 
@@ -24,11 +27,18 @@ export const getHeaderData = createThunkAction(
             const extent = totalExtent.data.data;
             const loss = totalLoss.data.data;
             const plantations = plantationsLoss.data.data;
+            const groupedLoss = loss && groupBy(loss, 'year');
+            const latestYear = max(Object.keys(groupedLoss));
+            const summedLoss = sumBy(groupedLoss[latestYear], 'area');
+            const summedEmissions = sumBy(groupedLoss[latestYear], 'emissions');
             const data = {
               totalArea: (extent[0] && extent[0].total_area) || 0,
               extent: (extent[0] && extent[0].value) || 0,
-              totalLoss:
-                loss && loss.length ? reverse(sortBy(loss, 'year'))[0] : {},
+              totalLoss: {
+                area: summedLoss,
+                year: latestYear,
+                emissions: summedEmissions
+              },
               plantationsLoss:
                 plantations && plantations.length
                   ? reverse(sortBy(plantations, 'year'))[0]

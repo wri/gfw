@@ -34,10 +34,10 @@ export const getOptionsSelected = createSelector(
 export const getIndicators = createSelector(
   [getLocationWhitelist, getLocation, getConfig, getOptions],
   (locationWhitelist, location, config, options) => {
-    if (isEmpty(location) || isEmpty(locationWhitelist)) {
+    if (isEmpty(location)) {
       return null;
     }
-    const whitelist = Object.keys(locationWhitelist);
+    const whitelist = locationWhitelist && Object.keys(locationWhitelist);
 
     return sortByKey(
       sortByKey(
@@ -45,9 +45,10 @@ export const getIndicators = createSelector(
           .filter(
             i =>
               config.indicators.indexOf(i.value) > -1 &&
-              whitelist.indexOf(i.value) > -1 &&
+              (isEmpty(whitelist) || whitelist.indexOf(i.value) > -1) &&
               i.value !== 'gadm28' &&
-              (!config.type ||
+              (isEmpty(locationWhitelist) ||
+                !config.type ||
                 config.type === 'extent' ||
                 (locationWhitelist[i.value] &&
                   locationWhitelist[i.value][config.type]))

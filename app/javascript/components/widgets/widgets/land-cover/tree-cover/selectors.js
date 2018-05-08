@@ -14,13 +14,13 @@ const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getWhitelists, getColors, getCurrentLocation],
-  (data, settings, whitelist, colors, currentLabel) => {
+  [getData, getSettings, getWhitelists, getColors],
+  (data, settings, whitelist, colors) => {
     if (isEmpty(data)) return null;
     const { totalArea, cover, plantations } = data;
     const { indicator } = settings;
     const hasPlantations =
-      !currentLabel || Object.keys(whitelist).indexOf('plantations') > -1;
+      isEmpty(whitelist) || Object.keys(whitelist).indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 2 : 1);
     const parsedData = [
       {

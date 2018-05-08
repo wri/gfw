@@ -28,7 +28,7 @@ class WidgetHeader extends PureComponent {
       title,
       settings,
       options,
-      currentLocation,
+      currentLabel,
       modalClosing,
       widget,
       location,
@@ -68,9 +68,7 @@ class WidgetHeader extends PureComponent {
                 }}
                 trackingData={{
                   title: 'map-button',
-                  widget: `${title} in ${
-                    currentLocation ? currentLocation.label : ''
-                  }`
+                  widget: `${title} in ${currentLabel || ''}`
                 }}
                 onClick={() => setShowMapMobile(true)}
                 tooltip={
@@ -127,9 +125,7 @@ class WidgetHeader extends PureComponent {
                   }}
                   trackingData={{
                     event: 'open-settings',
-                    label: `${title} in ${
-                      currentLocation ? currentLocation.label : ''
-                    }`
+                    label: `${title} in ${currentLabel || ''}`
                   }}
                 >
                   <Icon icon={settingsIcon} className="settings-icon" />
@@ -186,7 +182,7 @@ WidgetHeader.propTypes = {
   title: PropTypes.string.isRequired,
   settings: PropTypes.object,
   options: PropTypes.object,
-  currentLocation: PropTypes.object,
+  currentLabel: PropTypes.string,
   location: PropTypes.object,
   query: PropTypes.object,
   embed: PropTypes.bool,

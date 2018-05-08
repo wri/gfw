@@ -52,7 +52,8 @@ const mapStateToProps = (
     options: getOptions(),
     adminKey: getAdminKey({ payload }),
     currentLocation,
-    currentLabel: currentLocation && currentLocation.label,
+    currentLabel:
+      (currentLocation && currentLocation.label) || payload.type || 'global',
     ...widgetData,
     ...whitelists,
     ...countryData,
