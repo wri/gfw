@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { getKey, addKey } from 'services/cache';
 
-const cacheKeys = [];
+let cacheKeys = [];
+
+export const cacheMiddleware = () => nextDispatch => action => {
+  if (action.type === 'setCacheList') {
+    cacheKeys = action.payload;
+  }
+  nextDispatch(action);
+};
 
 const request = {
   get(url) {
