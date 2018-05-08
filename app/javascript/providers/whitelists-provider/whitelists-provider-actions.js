@@ -1,11 +1,9 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
-import groupBy from 'lodash/groupBy';
 
 import {
   getCountryWhitelistProvider,
-  getRegionWhitelistProvider,
-  getWaterBodiesBlacklistProvider
+  getRegionWhitelistProvider
 } from 'services/whitelists';
 
 export const setCountryWhitelistLoading = createAction(
@@ -14,13 +12,9 @@ export const setCountryWhitelistLoading = createAction(
 export const setRegionWhitelistLoading = createAction(
   'setRegionWhitelistLoading'
 );
-export const setWaterBodiesWhitelistLoading = createAction(
-  'setWaterBodiesWhitelistLoading'
-);
 
 export const setCountryWhitelist = createAction('setCountryWhitelist');
 export const setRegionWhitelist = createAction('setRegionWhitelist');
-export const setWaterBodiesWhitelist = createAction('setWaterBodiesWhitelist');
 
 export const getCountryWhitelist = createThunkAction(
   'getCountryWhitelist',
@@ -75,23 +69,5 @@ export const getRegionWhitelist = createThunkAction(
           console.info(error);
         });
     }
-  }
-);
-
-export const getWaterBodiesWhitelist = createThunkAction(
-  'getWaterBodiesWhitelist',
-  () => dispatch => {
-    getWaterBodiesBlacklistProvider()
-      .then(response => {
-        let data = [];
-        if (response.data && response.data.rows.length) {
-          data = groupBy(response.data.rows, 'iso');
-        }
-        dispatch(setWaterBodiesWhitelist(data));
-      })
-      .catch(error => {
-        dispatch(setWaterBodiesWhitelistLoading(false));
-        console.info(error);
-      });
   }
 );

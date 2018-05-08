@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/button';
+import Button from 'components/ui/button';
 import Contact from 'components/forms/contact';
-import Loader from 'components/loader';
+import Loader from 'components/ui/loader';
 
 import './section-contact-styles.scss';
 

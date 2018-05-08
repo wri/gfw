@@ -18,20 +18,19 @@ export { default as reducers } from './map-reducers';
 export { default as actions } from './map-actions';
 
 const mapStateToProps = (
-  state,
-  { isParentLoading, layers, parentLayersKey }
+  { map, countryData, widgets },
+  { isParentLoading, layers, widgetKey }
 ) => {
-  const { map, countryData } = state;
-  const parentSettings =
-    state[parentLayersKey] && state[parentLayersKey].settings;
+  const widget = widgets[widgetKey];
+  const widgetSettings = widget && widget.settings;
   const activeLayers =
-    layers || (parentSettings && parentSettings.layers) || map.layers;
+    layers || (widgetSettings && widgetSettings.layers) || map.layers;
   return {
     loading: map.loading || isParentLoading,
     error: map.error,
     bounds: countryData.geostore.bounds,
     layerSpec: map.layerSpec,
-    settings: { ...map.settings, ...parentSettings },
+    settings: { ...map.settings, ...widgetSettings },
     options: map.options,
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers

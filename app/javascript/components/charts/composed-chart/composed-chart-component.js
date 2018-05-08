@@ -51,6 +51,7 @@ class CustomComposedChart extends PureComponent {
       handleMouseMove,
       handleMouseLeave
     } = this.props;
+
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 

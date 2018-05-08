@@ -7,13 +7,9 @@
     "label": "Land cover",
     "value": "land-cover"
   },
-  { 
+  {
     "label": "Forest change",
     "value": "forest-change"
-  },
-  {
-    "label": "Land use",
-    "value": "land-use"
   },
   {
     "label": "Conservation",

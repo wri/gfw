@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 import Sticky from 'react-stickynode';
 
-import Button from 'components/button';
-import Icon from 'components/icon';
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
 
 import plusIcon from 'assets/icons/plus.svg';
 import minusIcon from 'assets/icons/minus.svg';
