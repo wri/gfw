@@ -58,7 +58,7 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     locationGeoJson: countryData.geostore && countryData.geostore.geojson,
     loading: countryWhitelistLoading || regionWhitelistLoading,
     title: !location.payload.country
-      ? `${upperFirst(location.payload.type)} Dashboard`
+      ? `${upperFirst(location.payload.type) || 'Global'} Dashboard`
       : locationNames && locationNames.label
   };
 };
