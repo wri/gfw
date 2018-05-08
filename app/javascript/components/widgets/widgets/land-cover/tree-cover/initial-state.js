@@ -4,7 +4,7 @@ export default {
     size: 'small',
     indicators: ['gadm28', 'mining', 'landmark', 'wdpa'],
     categories: ['summary', 'land-cover'],
-    admins: ['country', 'region', 'subRegion'],
+    admins: ['global', 'country', 'region', 'subRegion'],
     selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_tree_cover',
@@ -14,8 +14,11 @@ export default {
       landCover: 1
     },
     sentences: {
-      initial:
-        'As of {year}, {location} had {value} of tree cover, representing {percentage} of the total land area.',
+      globalInitial:
+        'As of {year}, there was {value} of {location} tree cover.',
+      globalWithIndicator:
+        'As of {year}, there was {value} of {location} tree cover within {indicator}.',
+      initial: 'As of {year}, {location} had {value} of tree cover.',
       withIndicator:
         'As of {year}, {location} had {percentage} tree cover within {indicator}.'
     }

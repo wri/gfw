@@ -14,11 +14,13 @@ const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist, getColors],
-  (data, settings, whitelist, colors) => {
-    if (isEmpty(data) || isEmpty(whitelist)) return null;
-    const { totalArea, totalExtent, extent } = data;
-    const colorRange = getColorPalette(colors.ramp, 2);
+  [getData, getSettings, getIndicatorWhitelist, getColors, getCurrentLocation],
+  (data, settings, whitelist, colors, currentLabel) => {
+    if (isEmpty(data)) return null;
+    const { totalArea, totalExtent, extent, plantations } = data;
+    const hasPlantations =
+      !currentLabel || Object.keys(whitelist).indexOf('plantations') > -1;
+    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
     const parsedData = [
       {
         label: 'Intact Forest',
@@ -39,6 +41,14 @@ export const parseData = createSelector(
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
+    if (currentLabel && hasPlantations) {
+      parsedData.splice(2, 0, {
+        label: 'Plantations',
+        value: plantations,
+        color: colorRange[2],
+        percentage: plantations / totalArea * 100
+      });
+    }
     return parsedData;
   }
 );
@@ -46,8 +56,13 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !currentLabel || !indicator) return null;
-    const { initial, withIndicator } = sentences;
+    if (!parsedData || !indicator) return null;
+    const {
+      initial,
+      withIndicator,
+      globalInitial,
+      globalWithIndicator
+    } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
@@ -69,7 +84,7 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      location: `${currentLabel}'s`,
+      location: currentLabel || 'global',
       indicator: indicatorLabel,
       percentage:
         intactPercentage < 0.1
@@ -78,8 +93,12 @@ export const getSentence = createSelector(
       intact: 'intact forest'
     };
 
-    const sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
+    let sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
 
+    if (!currentLabel) {
+      sentence =
+        indicator.value === 'ifl_2013' ? globalInitial : globalWithIndicator;
+    }
     return {
       sentence,
       params

@@ -50,7 +50,7 @@ class WidgetHeader extends PureComponent {
     return (
       <div className="c-widget-header">
         <div className="title">{`${title} in ${
-          currentLocation ? currentLocation.label : ''
+          currentLocation.label ? currentLocation.label : 'Global'
         }`}</div>
         <div className="options">
           {!embed &&
