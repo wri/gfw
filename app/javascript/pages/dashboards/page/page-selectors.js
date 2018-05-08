@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import compact from 'lodash/compact';
 import qs from 'query-string';
 
 // get list data
@@ -15,9 +14,6 @@ export const getLinks = createSelector(
   [getCategories, getCategory, getLocation, getQuery],
   (categories, activeCategory, location, query) =>
     categories.map(category => {
-      const locationUrl = compact(
-        Object.keys(location).map(key => location[key])
-      ).join('/');
       const newQuery = {
         ...query,
         category: category.value,
@@ -25,7 +21,9 @@ export const getLinks = createSelector(
       };
       return {
         label: category.label,
-        path: `/dashboards/${locationUrl}?${qs.stringify(newQuery)}`,
+        path: `${window.location.pathname}${newQuery ? '?' : ''}${qs.stringify(
+          newQuery
+        )}`,
         active: activeCategory === category.value
       };
     })

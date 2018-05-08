@@ -9,7 +9,7 @@ export default {
       'ifl_2013__landmark'
     ],
     categories: ['land-cover'],
-    admins: ['country', 'region', 'subRegion'],
+    admins: ['global', 'country', 'region', 'subRegion'],
     selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_ifl',
