@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'components/modal';
-import Button from 'components/button';
-import Tip from 'components/tip';
+import Modal from 'components/modals/modal';
+import Button from 'components/ui/button';
+import Tip from 'components/ui/tip';
 
 // import dollarIcon from 'assets/icons/info.svg';
 import './section-projects-modal-styles.scss';

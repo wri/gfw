@@ -6,18 +6,17 @@ import { COUNTRY } from 'pages/country/router';
 import isEqual from 'lodash/isEqual';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { format } from 'd3-format';
-import WIDGETS_CONFIG from 'components/widget/widget-config.json';
 import { biomassToCO2 } from 'utils/calculations';
 import { deburrUpper } from 'utils/data';
 
-import shareActions from 'components/share/share-actions';
+import shareActions from 'components/modals/share/share-actions';
 import * as ownActions from './header-actions';
 import reducers, { initialState } from './header-reducers';
 import HeaderComponent from './header-component';
 
 const actions = { ...ownActions, ...shareActions };
 
-const mapStateToProps = ({ countryData, location, header }) => {
+const mapStateToProps = ({ countryData, location, header, widgets }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -46,19 +45,20 @@ const mapStateToProps = ({ countryData, location, header }) => {
     shareData: {
       title: 'Share this Dashboard',
       shareUrl: `${window.location.href}`
-    }
+    },
+    widgets
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { query } = ownProps.location;
+  const { query, widgets } = ownProps;
   const widgetQueries = {};
   if (query) {
     Object.keys(query).forEach(key => {
-      if (Object.keys(WIDGETS_CONFIG).indexOf(key) > -1) {
+      if (Object.keys(widgets).indexOf(key) > -1) {
         widgetQueries[key] = encodeStateForUrl({
           ...decodeUrlForState(query[key]),
-          indicator: WIDGETS_CONFIG[key].settings.indicator
+          indicator: widgets[key].settings.indicator
         });
       }
     });
@@ -121,7 +121,7 @@ class HeaderContainer extends PureComponent {
 
   getHeaderDescription = () => {
     const { locationNames, data } = this.props;
-    const extent = format('.2s')(data.extent);
+    const extent = format('.3s')(data.extent);
     const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
     const lossWithOutPlantations = format('.2s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)

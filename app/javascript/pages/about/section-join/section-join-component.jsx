@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Button from 'components/button';
+import Button from 'components/ui/button';
 import { Link as AnchorLink } from 'react-scroll';
 
 import './section-join-styles.scss';

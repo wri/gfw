@@ -1,7 +1,7 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import queryString from 'query-string';
-import { setWidgetSettingsStore } from 'components/widget/widget-actions';
+import { setWidgetSettingsStore } from 'components/widgets/actions';
 import { handlePageTrack } from 'utils/analytics';
 
 const history = createHistory();

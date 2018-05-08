@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import actions from 'components/modal-video/modal-video-actions';
+import actions from 'components/modals/video/video-actions';
 import { routes } from 'pages/about/router';
 import PageComponent from './page-component';
 

@@ -63,7 +63,7 @@ export const fetchViirsAlerts = ({
       '{location}',
       !subRegion ? getLocationQuery(country, region, subRegion) : ''
     )
-    .replace('{geostore}', subRegion && geostore ? geostore : '')
+    .replace('{geostore}', subRegion && geostore ? geostore.hash : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return axios.get(url);
 };
