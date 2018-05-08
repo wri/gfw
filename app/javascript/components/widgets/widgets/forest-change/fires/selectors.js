@@ -10,7 +10,7 @@ const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
-export const parseData = createSelector([getData], data => {
+export const filterData = createSelector([getData], data => {
   if (!data || isEmpty(data)) return null;
 
   let sortedData = [];
@@ -28,6 +28,11 @@ export const parseData = createSelector([getData], data => {
     sortedData = [{ value: data.attributes.value }];
   }
   return sortedData;
+});
+
+export const parseData = createSelector([filterData], data => {
+  if (!data || data.length <= 1) return null;
+  return data;
 });
 
 export const parseConfig = createSelector(
@@ -83,7 +88,7 @@ export const parseConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getCurrentLocation, getSentences],
+  [filterData, getCurrentLocation, getSentences],
   (data, currentLabel, sentences) => {
     const { initial } = sentences;
     const firesCount =

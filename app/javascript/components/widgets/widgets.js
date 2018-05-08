@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import colors from 'data/colors.json';
-import replace from 'lodash/replace';
 
 import Component from './component';
 import actions from './actions';
@@ -9,7 +8,7 @@ import {
   getAdminSelected,
   getOptions,
   filterWidgets,
-  getActiveWidget
+  getAdminKey
 } from './selectors';
 
 const mapStateToProps = (
@@ -41,9 +40,6 @@ const mapStateToProps = (
     category,
     ...location,
     countryData,
-    activeWidget:
-      replace(window.location.hash, '#', '') ||
-      (location.query && location.query.widget),
     indicatorWhitelist: location.payload.region
       ? regionWhitelist
       : countryWhitelist
@@ -54,13 +50,14 @@ const mapStateToProps = (
     loading,
     widgets: widgets || filterWidgets(widgetData),
     options: getOptions(),
+    adminKey: getAdminKey({ payload }),
     currentLocation,
     currentLabel: currentLocation && currentLocation.label,
     ...widgetData,
     ...whitelists,
     ...countryData,
     colors,
-    activeWidget: activeWidget || getActiveWidget(widgetData)
+    activeWidget
   };
 };
 

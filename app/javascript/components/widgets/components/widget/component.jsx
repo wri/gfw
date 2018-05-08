@@ -64,7 +64,12 @@ class Widget extends PureComponent {
           {!error &&
             sentence &&
             !isEmpty(data) && (
-              <WidgetDynamicSentence className="sentence" sentence={sentence} />
+              <WidgetDynamicSentence
+                className={`sentence ${
+                  config.interactive ? 'interactive' : ''
+                }`}
+                sentence={sentence}
+              />
             )}
           {!error &&
             !isEmpty(parsedData) && (

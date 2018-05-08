@@ -30,6 +30,22 @@
 
     .sentence {
       margin-bottom: rem(30px);
+
+      &.interactive {
+        height: rem(160px);
+
+        @media screen and (min-width: 360px) {
+          height: rem(110px);
+        }
+
+        @media screen and (min-width: $screen-m) {
+          height: rem(90px);
+        }
+
+        @media screen and (min-width: $screen-l) {
+          height: rem(70px);
+        }
+      }
     }
   }
 

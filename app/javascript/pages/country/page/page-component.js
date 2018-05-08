@@ -91,7 +91,7 @@ class Page extends PureComponent {
                 }}
                 areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
-                parentSettings={activeWidget && activeWidget.settings}
+                widgetKey={activeWidget}
               />
             </div>
           </Sticky>
@@ -135,7 +135,7 @@ Page.propTypes = {
   widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   locationGeoJson: PropTypes.object,
-  activeWidget: PropTypes.object,
+  activeWidget: PropTypes.string,
   setMapZoom: PropTypes.func
 };
 

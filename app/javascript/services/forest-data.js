@@ -16,7 +16,7 @@ const SQL_QUERIES = {
   gain:
     "SELECT {calc} as value FROM data WHERE {location} polyname = '{indicator}' AND thresh = 0",
   gainRanked:
-    "SELECT {region} as region, SUM(area_gain) AS gain FROM data WHERE {location} polyname = '{polyname}' AND thresh = 0 GROUP BY region",
+    "SELECT {region} as region, SUM(area_gain) AS gain FROM data WHERE {location} AND polyname = '{polyname}' AND thresh = 0 GROUP BY region",
   gainLocations:
     "SELECT {admin} as region, {calc} as gain FROM data WHERE {location} thresh = 0 AND polyname = '{indicator}' {grouping} ",
   loss:
