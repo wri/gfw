@@ -21,9 +21,9 @@ export default {
     colors: 'emissions',
     sentences: {
       initial:
-        'Between {startYear} and {endYear}, {value} of {type} was released into the atmosphere as a result of forest loss.',
+        'Between {startYear} and {endYear}, {value} of {type} was released into the atmosphere as a result of tree cover loss in {location}.',
       containsIndicator:
-        'Between {startYear} and {endYear}, {value} of {type} was released into the atmosphere as a result of forest loss in {indicatorText}.'
+        'Between {startYear} and {endYear}, {value} of {type} was released into the atmosphere as a result of tree cover loss within {indicatorText} in {location}.'
     }
   },
   settings: {

@@ -106,9 +106,8 @@ Gfw::Application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # dashboards
+  get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
   get '/dashboards/embed/:widget/:iso(/:region)(/:sub_region)' => 'dashboards#embed'
-  get '/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
-  get '/dashboards' => redirect('/dashboards/global')
 
   # old country embeds
   get '/embed/country/:id' => 'embed#countries_show'

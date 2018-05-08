@@ -1,5 +1,5 @@
 export default {
-  title: 'Where did tree cover loss occur',
+  title: 'Location of tree cover loss',
   config: {
     size: 'small',
     indicators: [
@@ -38,18 +38,18 @@ export default {
     layers: ['loss'],
     metaKey: 'widget_tree_cover_loss_location',
     sortOrder: {
-      summary: 4,
+      summary: 2,
       forestChange: 2
     },
     sentences: {
       initial:
-        'In {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the largest tree cover loss at {value} compared to an average of {average}.',
+        'In {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most tree cover loss at {value} compared to an average of {average}.',
       withIndicator:
-        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the largest tree cover loss at {value} compared to an average of {average}.',
+        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most tree cover loss at {value} compared to an average of {average}.',
       initialPercent:
-        'In {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the largest relative tree cover loss at {value} compared to an average of {average}.',
+        'In {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most relative tree cover loss at {value} compared to an average of {average}.',
       withIndicatorPercent:
-        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the largest relative tree cover loss at {value} compared to an average of {average}.'
+        'For {indicator} in {location}, the top {percentileLength} regions were responsible for {topLoss} of all tree cover loss between {startYear} and {endYear}. {region} had the most relative tree cover loss at {value} compared to an average of {average}.'
     }
   },
   settings: {

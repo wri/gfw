@@ -1,5 +1,5 @@
 export default {
-  title: 'Deforestation Alerts',
+  title: 'Location of deforestation Alerts',
   config: {
     size: 'small',
     indicators: [
@@ -44,17 +44,17 @@ export default {
     layers: ['umd_as_it_happens'],
     sortOrder: {
       summary: 6,
-      forestChange: 4
+      forestChange: 8
     },
     sentences: {
       initial:
-        'In the last {timeframe}, {count} GLAD alerts were detected in {indicator} in {location}, which affected an area of approximately {area}.'
+        'In the last {timeframe}, {count} GLAD alerts were detected in {indicator} in {location}, which affected an area of approximately {area}. The top {topRegions} regions accounted for {topPercent} of all GLAD alerts.'
     }
   },
   settings: {
     indicator: 'gadm28',
     threshold: 30,
-    extentYear: 2000,
+    extentYear: 2010,
     unit: 'ha',
     weeks: 4,
     pageSize: 5,

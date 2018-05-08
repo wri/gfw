@@ -29,10 +29,10 @@ export const parseData = createSelector(
         percentage: extent / totalArea * 100
       },
       {
-        label: hasPlantations ? 'Degraded Forest' : 'Other Tree Cover',
-        value: totalExtent - extent - plantations,
+        label: 'Other Tree Cover',
+        value: totalExtent - extent,
         color: colorRange[1],
-        percentage: (totalExtent - extent - plantations) / totalArea * 100
+        percentage: (totalExtent - extent) / totalArea * 100
       },
       {
         label: 'Non-Forest',

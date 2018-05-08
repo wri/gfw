@@ -1,5 +1,5 @@
 export const initialState = {
-  title: 'Forest cover',
+  title: 'FAO forest cover',
   config: {
     size: 'small',
     categories: ['land-cover'],
@@ -7,7 +7,7 @@ export const initialState = {
     type: 'fao',
     metaKey: 'widget_forest_cover_fao',
     sortOrder: {
-      landcover: 5
+      landCover: 5
     },
     colors: 'extent',
     sentences: {

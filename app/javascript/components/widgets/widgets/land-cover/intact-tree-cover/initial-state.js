@@ -1,5 +1,5 @@
 export default {
-  title: 'Intact forest extent',
+  title: 'Intact forest',
   config: {
     size: 'small',
     indicators: [
@@ -9,8 +9,8 @@ export default {
       'ifl_2013__landmark'
     ],
     categories: ['land-cover'],
-    admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds', 'extentYears'],
+    admins: ['country', 'region', 'subRegion'],
+    selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_ifl',
     layers: ['forest2000', 'forest2010', 'ifl_2013_deg'],

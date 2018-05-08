@@ -1,16 +1,16 @@
 export default {
-  title: 'Tree cover extent',
+  title: 'Tree cover',
   config: {
     size: 'small',
     indicators: ['gadm28', 'mining', 'landmark', 'wdpa'],
     categories: ['summary', 'land-cover'],
-    admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds', 'extentYears'],
+    admins: ['country', 'region', 'subRegion'],
+    selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_tree_cover',
     layers: ['forest2000', 'forest2010'],
     sortOrder: {
-      summary: 1,
+      summary: 4,
       landCover: 1
     },
     sentences: {
@@ -20,7 +20,7 @@ export default {
         'As of {year}, there was {value} of {location} tree cover within {indicator}.',
       initial: 'As of {year}, {location} had {value} of tree cover.',
       withIndicator:
-        'As of {year}, {indicator} in {location} had {value} of tree cover.'
+        'As of {year}, {location} had {percentage} tree cover within {indicator}.'
     }
   },
   settings: {

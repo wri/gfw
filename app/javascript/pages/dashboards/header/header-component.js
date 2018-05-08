@@ -24,7 +24,7 @@ class Header extends PureComponent {
       error,
       setShareModal,
       shareData,
-      location,
+      payload,
       forestAtlasLink
     } = this.props;
 
@@ -35,7 +35,7 @@ class Header extends PureComponent {
           <Button
             className="theme-button-small theme-button-grey square"
             extLink={`http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/iso/tree_cover_stats_2016_${
-              location.country
+              payload.country
             }.xlsx`}
             trackingData={{
               title: 'download',
@@ -66,10 +66,10 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
-              {!location.country && <h3>{location.type}</h3>}
+              {!payload.country && <h3>{payload.type || 'Global'}</h3>}
               <Dropdown
                 theme="theme-dropdown-dark"
-                placeholder="Country"
+                placeholder="Select a country"
                 noItemsFound="No country found"
                 noSelectedValue="Select a country"
                 value={locationNames.country}
@@ -84,12 +84,12 @@ class Header extends PureComponent {
                 arrowPosition="left"
                 clearable
               />
-              {location.country &&
+              {payload.country &&
                 locationOptions.regions &&
                 locationOptions.regions.length > 1 && (
                   <Dropdown
                     theme="theme-dropdown-dark"
-                    placeholder="Region"
+                    placeholder="Select a region"
                     noItemsFound="No region found"
                     noSelectedValue="Select a region"
                     value={locationNames.region}
@@ -107,14 +107,14 @@ class Header extends PureComponent {
                     clearable
                   />
                 )}
-              {location.region &&
+              {payload.region &&
                 locationNames.region &&
                 locationNames.region.value &&
                 locationOptions.subRegions &&
                 locationOptions.subRegions.length > 1 && (
                   <Dropdown
                     theme="theme-dropdown-dark"
-                    placeholder="Region"
+                    placeholder="Select a region"
                     noItemsFound="No region found"
                     noSelectedValue="Select a region"
                     value={locationNames.subRegion}
@@ -179,7 +179,7 @@ Header.propTypes = {
   getHeaderDescription: PropTypes.func.isRequired,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
+  payload: PropTypes.object.isRequired,
   forestAtlasLink: PropTypes.object
 };
 

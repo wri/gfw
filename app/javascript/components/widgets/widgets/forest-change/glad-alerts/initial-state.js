@@ -8,6 +8,7 @@ export default {
     type: 'loss',
     selectors: ['weeks'],
     metaKey: 'widget_deforestation_graph',
+    interactive: true,
     customLocationWhitelist: [
       'BRA',
       'COL',
@@ -34,7 +35,7 @@ export default {
     layers: ['umd_as_it_happens'],
     sortOrder: {
       summary: 6,
-      forestChange: 4
+      forestChange: 7
     },
     sentences: {
       initial:

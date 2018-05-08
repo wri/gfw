@@ -8,6 +8,7 @@ import { getColorPalette } from 'utils/data';
 const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
 const getIndicator = state => state.indicator || null;
+const getCurrentLabel = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -60,8 +61,8 @@ export const parseConfig = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getIndicator, getSentences],
-  (data, settings, indicator, sentences) => {
+  [parseData, getSettings, getIndicator, getSentences, getCurrentLabel],
+  (data, settings, indicator, sentences, currentLabel) => {
     if (!data || isEmpty(data)) return null;
     const { initial, containsIndicator } = sentences;
     const { startYear, endYear, unit } = settings;
@@ -72,13 +73,14 @@ export const getSentence = createSelector(
     let indicatorText = '';
     if (indicator && indicator.value === 'mining') {
       indicatorText = ` ${indicator.label.toLowerCase()} regions`;
-    } else if (indicator && indicator.value !== 'gadm28') {
+    } else if (indicator) {
       indicatorText = ` ${indicator.label.toLowerCase()}`;
     }
 
     const params = {
       type: emissionType,
       value: `${format('.3s')(totalEmissions)}t`,
+      location: currentLabel,
       startYear,
       endYear,
       indicatorText

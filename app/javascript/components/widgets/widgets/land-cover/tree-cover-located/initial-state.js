@@ -1,5 +1,5 @@
 export default {
-  title: 'Where is tree cover located',
+  title: 'Location of tree cover',
   config: {
     size: 'small',
     indicators: [
@@ -31,7 +31,7 @@ export default {
     metaKey: 'widget_forest_location',
     layers: ['forest2000', 'forest2010'],
     sortOrder: {
-      summary: 2,
+      summary: 5,
       landCover: 2
     },
     sentences: {
