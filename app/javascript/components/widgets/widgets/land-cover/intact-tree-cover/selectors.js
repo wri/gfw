@@ -52,10 +52,8 @@ export const getSentence = createSelector(
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
       .reduce((sum, d) => sum + d);
-    const intactPercentage =
-      parsedData.find(d => d.label === 'Intact Forest').value /
-      totalExtent *
-      100;
+    const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
+    const intactPercentage = intactData && intactData / totalExtent * 100;
     let indicatorLabel = indicator.label;
     switch (indicator.value) {
       case 'ifl_2013__mining':
@@ -67,7 +65,6 @@ export const getSentence = createSelector(
       default:
         indicatorLabel = 'Intact forest';
     }
-
     const params = {
       location: `${currentLabel}'s`,
       indicator: indicatorLabel,
