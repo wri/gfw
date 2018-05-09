@@ -85,8 +85,7 @@ export const getSentence = createSelector(
       globalWithIndicator,
       globalInitial
     } = sentences;
-    const locationData =
-      currentLabel && data.find(l => l.id === currentLabel.value);
+    const locationData = currentLabel && data.find(l => l.id === currentLabel);
     const gain = locationData ? locationData.gain : sumBy(data, 'gain');
     const globalPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
     const areaPercent = locationData
@@ -106,7 +105,9 @@ export const getSentence = createSelector(
     };
 
     let sentence = indicator ? withIndicator : initial;
-    if (currentLabel === 'global') { sentence = indicator ? globalWithIndicator : globalInitial; }
+    if (currentLabel === 'global') {
+      sentence = indicator ? globalWithIndicator : globalInitial;
+    }
 
     return {
       sentence,

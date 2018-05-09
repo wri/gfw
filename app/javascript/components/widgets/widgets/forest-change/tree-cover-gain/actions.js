@@ -11,8 +11,8 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
         let mappedData = [];
         if (gainData && gainData.length) {
           mappedData = gainData.map(item => {
-            const gain = item.gain ? item.gain : 0;
-            const extent = item.value ? item.value : 0;
+            const gain = item.gain || 0;
+            const extent = item.value || 0;
             return {
               id: item.region,
               gain,
