@@ -8,7 +8,12 @@ export const getData = ({ params, dispatch, setWidgetData, widget, state }) => {
         (data.length &&
           data.find(d => d.iso === state().location.payload.country)) ||
         null;
-      dispatch(setWidgetData({ data: hasCountryData ? data : {}, widget }));
+      dispatch(
+        setWidgetData({
+          data: hasCountryData || params.type === 'global' ? data : {},
+          widget
+        })
+      );
     })
     .catch(error => {
       dispatch(setWidgetData({ widget, error: true }));

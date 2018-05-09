@@ -13,9 +13,9 @@ export const initialState = {
     colors: 'loss',
     sentences: {
       globalInitial:
-        'According to the FAO, the {location} rate of deforestation was {rate}, in {year}.',
+        'According to the FAO, the {location} rate of deforestation in {year} was {rate}.',
       globalHuman:
-        'According to the FAO, the {location} rate of deforestation was {rate}, in {year}, of which {human} was due to human activity.',
+        'According to the FAO, the {location} rate of deforestation in {year} was {rate}, of which {human} was due to human activity.',
       initial:
         'According to the FAO the rate of deforestation in {location} was {rate}, in {year}.',
       humanDeforest:
