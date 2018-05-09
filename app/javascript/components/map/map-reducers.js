@@ -1,8 +1,24 @@
 export const initialState = {
   loading: false,
   error: false,
-  options: {},
   layerSpec: {},
+  options: {
+    mapTypeId: 'GFWdefault',
+    backgroundColor: '#99b3cc',
+    disableDefaultUI: true,
+    panControl: false,
+    zoomControl: false,
+    mapTypeControl: false,
+    scaleControl: true,
+    streetViewControl: false,
+    overviewMapControl: false,
+    tilt: 0,
+    scrollwheel: false,
+    center: { lat: 15, lng: 27 },
+    zoom: 2,
+    minZoom: 2,
+    maxZoom: 14
+  },
   settings: {},
   showMapMobile: false
 };
@@ -18,7 +34,7 @@ const setLayerSpec = (state, { payload }) => ({
   loading: false
 });
 
-const setMapSettings = (state, { payload }) => ({
+const setMapOptions = (state, { payload }) => ({
   ...state,
   options: payload
 });
@@ -29,18 +45,20 @@ const setShowMapMobile = (state, { payload }) => ({
 });
 
 const setMapZoom = (state, { payload }) => {
-  let zoom = !payload.sum ? payload.value : state.options.zoom + payload.value;
-  if (zoom > 20) {
-    zoom = 20;
-  } else if (zoom < 1) {
-    zoom = 1;
+  const { maxZoom, minZoom, zoom } = state.options;
+  const { value, sum } = payload;
+  let newZoom = sum ? zoom + sum : value;
+  if (zoom > maxZoom) {
+    newZoom = minZoom;
+  } else if (zoom < minZoom) {
+    newZoom = minZoom;
   }
 
   return {
     ...state,
     options: {
       ...state.options,
-      zoom
+      zoom: newZoom
     }
   };
 };
@@ -48,7 +66,7 @@ const setMapZoom = (state, { payload }) => {
 export default {
   setLayerSpecLoading,
   setLayerSpec,
-  setMapSettings,
+  setMapOptions,
   setMapZoom,
   setShowMapMobile
 };

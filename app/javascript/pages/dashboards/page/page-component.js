@@ -71,23 +71,6 @@ class Page extends PureComponent {
           >
             <div className="map-container">
               <Map
-                maxZoom={14}
-                minZoom={2}
-                mapOptions={{
-                  mapTypeId: 'GFWdefault',
-                  backgroundColor: '#99b3cc',
-                  disableDefaultUI: true,
-                  panControl: false,
-                  zoomControl: false,
-                  mapTypeControl: false,
-                  scaleControl: true,
-                  streetViewControl: false,
-                  overviewMapControl: false,
-                  tilt: 0,
-                  scrollwheel: false,
-                  center: { lat: 15, lng: 27 },
-                  zoom: 2
-                }}
                 areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
                 widgetKey={activeWidget}
@@ -102,8 +85,8 @@ class Page extends PureComponent {
               enabled: true,
               top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
             }}
-            handleZoomIn={() => setMapZoom({ value: 1, sum: true })}
-            handleZoomOut={() => setMapZoom({ value: -1, sum: true })}
+            handleZoomIn={() => setMapZoom({ sum: 1 })}
+            handleZoomOut={() => setMapZoom({ sum: -1 })}
           />
         )}
         <Share />

@@ -4,7 +4,7 @@ import { fetchLayerSpec } from 'services/layer-spec';
 
 const setLayerSpecLoading = createAction('setLayerSpecLoading');
 const setLayerSpec = createAction('setLayerSpec');
-const setMapSettings = createAction('setMapSettings');
+const setMapOptions = createAction('setMapOptions');
 const setMapZoom = createAction('setMapZoom');
 const setShowMapMobile = createAction('setShowMapMobile');
 
@@ -32,7 +32,7 @@ const getLayerSpec = createThunkAction(
 export default {
   setLayerSpecLoading,
   setLayerSpec,
-  setMapSettings,
+  setMapOptions,
   setMapZoom,
   getLayerSpec,
   setShowMapMobile
