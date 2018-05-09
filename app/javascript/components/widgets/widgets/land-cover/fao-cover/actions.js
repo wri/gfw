@@ -14,14 +14,15 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
         const fao = getFAOResponse.data.rows;
         const ranking = getRankingResponse.data.rows;
         if (fao.length && ranking.length) {
-          fao.forEach(
-            (fao.area_ha = parseFloat(fao.area_ha.replace(',', '')) * 1000)
-          );
-          let faoData = fao[0];
+          const faoTotal = fao.map(f => ({
+            ...f,
+            area_ha: parseFloat(f.area_ha.replace(',', '')) * 1000
+          }));
+          let faoData = faoTotal[0];
           if (fao.length > 1) {
             faoData = {};
-            Object.keys(omit(fao[0], ['iso', 'name'])).forEach(k => {
-              faoData[k] = sumBy(fao, k);
+            Object.keys(omit(faoTotal[0], ['iso', 'name'])).forEach(k => {
+              faoData[k] = sumBy(faoTotal, k);
             });
           }
           data = {

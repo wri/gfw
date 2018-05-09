@@ -109,11 +109,11 @@ export const checkWidgetNeedsLocations = createSelector(
       !!faoCountries.find(c => c.value === location.country) || null;
     return widgets.filter(
       w =>
-        w.config.admins.indexOf(adminLevel) > -1 &&
-        (!w.config.locationCheck || (locations && locations.length > 1)) &&
-        (w.config.type !== 'fao' || isFaoCountry) &&
-        (!w.config.customLocationWhitelist ||
-          w.config.customLocationWhitelist.indexOf(location.country) > -1)
+        w.config.admins.indexOf(adminLevel) > -1 ||
+        ((!w.config.locationCheck || (locations && locations.length > 1)) &&
+          (w.config.type !== 'fao' || isFaoCountry) &&
+          (!w.config.customLocationWhitelist ||
+            w.config.customLocationWhitelist.indexOf(location.country) > -1))
     );
   }
 );
