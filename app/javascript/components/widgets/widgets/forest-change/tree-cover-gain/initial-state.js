@@ -14,7 +14,7 @@ export default {
     ],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
-    admins: ['country', 'region', 'subRegion'],
+    admins: ['global', 'country', 'region', 'subRegion'],
     selectors: ['indicators', 'thresholds', 'extentYears', 'units'],
     type: 'gain',
     metaKey: 'widget_tree_cover_gain',
@@ -24,10 +24,14 @@ export default {
       forestChange: 6
     },
     sentences: {
+      globalInitial:
+        'From 2001 to 2012, {gain} of tree cover was gained {location}, equivalent to a {percent} increase since {extentYear}.',
+      globalWithIndicator:
+        'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}, equivalent to a {percent} increase since {extentYear}.',
       initial:
         'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain.',
       withIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercentage} of global tree cover gain within {indicator_alt}.'
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain within {indicator_alt}.'
     }
   },
   settings: {

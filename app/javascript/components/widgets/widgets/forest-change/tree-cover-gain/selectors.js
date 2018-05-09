@@ -12,7 +12,7 @@ const getLocation = state => state.payload || null;
 const getLocationsMeta = state => state[state.adminKey] || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
-const getCurrentLocation = state => state.currentLocation || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
@@ -39,12 +39,9 @@ export const parseData = createSelector(
     getLocationsMeta,
     getColors
   ],
-  (data, settings, location, currentLocation, meta, colors) => {
+  (data, settings, location, currentLabel, meta, colors) => {
     if (!data || !data.length) return null;
-    const locationIndex = findIndex(
-      data,
-      d => d.id === (currentLocation && currentLocation.value)
-    );
+    const locationIndex = findIndex(data, d => d.id === currentLabel);
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
     if (locationIndex < 2) {
@@ -80,18 +77,25 @@ export const parseData = createSelector(
 
 export const getSentence = createSelector(
   [getSortedData, getSettings, getIndicator, getCurrentLocation, getSentences],
-  (data, settings, indicator, currentLocation, sentences) => {
+  (data, settings, indicator, currentLabel, sentences) => {
     if (!data || !data.length) return null;
-    const { initial, withIndicator } = sentences;
+    const {
+      initial,
+      withIndicator,
+      globalWithIndicator,
+      globalInitial
+    } = sentences;
     const locationData =
-      currentLocation && data.find(l => l.id === currentLocation.value);
-    const gain = locationData && locationData.gain;
+      currentLabel && data.find(l => l.id === currentLabel.value);
+    const gain = locationData ? locationData.gain : sumBy(data, 'gain');
     const globalPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
-    const areaPercent = (locationData && locationData.percentage) || 0;
+    const areaPercent = locationData
+      ? locationData.percentage
+      : 100 * gain / sumBy(data, 'extent');
     const indicatorName = indicator ? indicator.label : 'region-wide';
 
     const params = {
-      location: currentLocation && currentLocation.label,
+      location: currentLabel === 'global' ? 'globally' : currentLabel,
       gain: `${format('.3s')(gain)}ha`,
       indicator: indicatorName.toLowerCase(),
       indicator_alt: indicatorName.toLowerCase(),
@@ -101,7 +105,8 @@ export const getSentence = createSelector(
       extentYear: settings.extentYear
     };
 
-    const sentence = indicator ? withIndicator : initial;
+    let sentence = indicator ? withIndicator : initial;
+    if (currentLabel === 'global') { sentence = indicator ? globalWithIndicator : globalInitial; }
 
     return {
       sentence,

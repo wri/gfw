@@ -1,22 +1,23 @@
 import axios from 'axios';
 
-import { getGainRanked, getExtent } from 'services/forest-data';
+import { getGainRanked } from 'services/forest-data';
 
 export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   axios
-    .all([getGainRanked(params), getExtent(params)])
+    .all([getGainRanked(params)])
     .then(
-      axios.spread((gainResponse, extentResponse) => {
+      axios.spread(gainResponse => {
         const gainData = gainResponse.data.data;
-        const extentData = extentResponse.data.data;
         let mappedData = [];
-        if (gainData && gainData.length && extentData && extentData.length) {
+        if (gainData && gainData.length) {
           mappedData = gainData.map(item => {
             const gain = item.gain ? item.gain : 0;
+            const extent = item.value ? item.value : 0;
             return {
               id: item.region,
               gain,
-              percentage: 100 * gain / extentData[0].value
+              extent,
+              percentage: extent ? 100 * gain / extent : 0
             };
           });
         }
