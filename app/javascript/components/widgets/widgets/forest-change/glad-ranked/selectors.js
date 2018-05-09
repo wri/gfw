@@ -61,10 +61,13 @@ export const parseData = createSelector(
       const counts = sumBy(regionData, 'count');
       const countsAreaPerc =
         countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
+      const countsPerHa =
+        counts && regionExtent ? counts / regionExtent.extent : 0;
       return {
         id: k,
         color: colors.main,
         percentage: countsAreaPerc,
+        countsPerHa,
         count: counts,
         area: countsArea,
         value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
@@ -91,11 +94,25 @@ export const getSentence = createSelector(
   (data, settings, options, location, indicator, currentLabel, sentences) => {
     if (!data || !options || !currentLabel) return '';
     const { initial } = sentences;
+    const totalCount = sumBy(data, 'count');
+    let percentileCount = 0;
+    let percentileLength = 0;
+
+    while (
+      (percentileLength < data.length && percentileCount / totalCount < 0.5) ||
+      (percentileLength < 10 && data.length > 10)
+    ) {
+      percentileCount += data[percentileLength].count;
+      percentileLength += 1;
+    }
+    const topCount = percentileCount / totalCount * 100;
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
       area: `${format('.2s')(sumBy(data, 'area'))}ha`,
-      location: `${currentLabel}`,
+      topPercent: `${format('.2s')(topCount)}%`,
+      topRegions: percentileLength,
+      location: currentLabel,
       indicator: `${indicator ? `${indicator.label} in ` : ''}`
     };
     return { sentence: initial, params };

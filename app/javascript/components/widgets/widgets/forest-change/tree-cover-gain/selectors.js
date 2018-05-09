@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
+import sumBy from 'lodash/sumBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
@@ -80,30 +81,27 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [getSortedData, getSettings, getIndicator, getCurrentLocation, getSentences],
   (data, settings, indicator, currentLocation, sentences) => {
-    if (!data || !data.length || !currentLocation) return null;
-    const {
-      initial,
-      withGain,
-      withIndicator,
-      withGainAndIndicator
-    } = sentences;
+    if (!data || !data.length) return null;
+    const { initial, withIndicator } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const gain = locationData && locationData.gain;
+    const globalPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
+    const indicatorName = indicator ? indicator.label : 'region-wide';
 
     const params = {
       location: currentLocation && currentLocation.label,
       gain: `${format('.3s')(gain)}ha`,
-      region: indicator ? indicator.label : 'region-wide',
-      percentage: `${format('.1f')(areaPercent)}%`,
+      indicator: indicatorName.toLowerCase(),
+      indicator_alt: indicatorName.toLowerCase(),
+      percent: areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
+      globalPercent:
+        globalPercent >= 0.1 ? `${format('.1f')(globalPercent)}%` : '<0.1%',
       extentYear: settings.extentYear
     };
 
-    let sentence = gain ? withGain : initial;
-    if (indicator) {
-      sentence = gain ? withGainAndIndicator : withIndicator;
-    }
+    const sentence = indicator ? withIndicator : initial;
 
     return {
       sentence,

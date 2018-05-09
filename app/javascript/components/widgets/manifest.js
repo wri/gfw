@@ -5,6 +5,8 @@ import * as treeCoverLocated from './widgets/land-cover/tree-cover-located';
 import * as intactTreeCover from './widgets/land-cover/intact-tree-cover';
 import * as primaryForest from './widgets/land-cover/primary-forest';
 import * as faoCover from './widgets/land-cover/fao-cover';
+import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantations';
+import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
 
 // Forest change
 import * as gladAlerts from './widgets/forest-change/glad-alerts';
@@ -18,10 +20,6 @@ import * as treeLossPlantations from './widgets/forest-change/tree-loss-plantati
 import * as treeLoss from './widgets/forest-change/tree-loss';
 import * as faoDeforest from './widgets/forest-change/fao-deforest';
 import * as faoReforest from './widgets/forest-change/fao-reforest';
-
-// Land use
-import * as treeCoverPlantations from './widgets/land-use/tree-cover-plantations';
-import * as rankedPlantations from './widgets/land-use/ranked-plantations';
 
 // Conservation
 import * as gladBiodiversity from './widgets/conservation/glad-biodiversity';
@@ -42,7 +40,9 @@ export {
   primaryForest,
   treeCoverLocated,
   faoCover,
-  // // forest change
+  treeCoverPlantations,
+  rankedPlantations,
+  // forest change
   gladAlerts,
   gladRanked,
   fires,
@@ -54,15 +54,12 @@ export {
   treeLoss,
   faoDeforest,
   faoReforest,
-  // // land use
-  treeCoverPlantations,
-  rankedPlantations,
-  // // conservation
+  // conservation
   gladBiodiversity,
-  // // people
+  // people
   economicImpact,
   forestryEmployment,
-  // // climate
+  // climate
   emissions,
   emissionsDeforestation
 };

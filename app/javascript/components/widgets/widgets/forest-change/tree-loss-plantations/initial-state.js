@@ -1,5 +1,5 @@
 export const initialState = {
-  title: 'Tree cover loss for plantations',
+  title: 'Forest loss in natural forest',
   config: {
     size: 'large',
     showIndicators: ['plantations'],
@@ -11,7 +11,7 @@ export const initialState = {
     metaKey: 'widget_plantations_tree_cover_loss',
     layers: ['loss', 'plantations_by_type'],
     sortOrder: {
-      summary: 7
+      forestChange: 100
     },
     sentences: {
       initial:
