@@ -51,7 +51,7 @@ export const handleActionTrack = state => nextDispatch => action => {
     // process event if available
     if (event) {
       const evalProp = prop =>
-        (typeof prop === 'string' ? prop : prop(payload));
+        typeof prop === 'string' ? prop : prop(payload);
       const eventPayload = {
         ...['category', 'action', 'label'].reduce(
           (val, prop) => ({ ...val, [prop]: evalProp(event[prop]) }),

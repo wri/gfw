@@ -21,6 +21,7 @@ const Button = props => {
     className,
     theme,
     disabled,
+    active,
     onClick,
     tooltip,
     trackingData,
@@ -28,7 +29,7 @@ const Button = props => {
   } = props;
   const classNames = `c-button ${theme || ''} ${className || ''} ${
     disabled ? 'disabled' : ''
-  }`;
+  } ${active ? '--active' : ''}`;
   const isDeviceTouch = isTouch();
   const handleClick = () => {
     if (onClick) {
@@ -95,6 +96,7 @@ Button.propTypes = {
   link: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   theme: PropTypes.string,
   disabled: PropTypes.bool,
+  active: PropTypes.bool,
   onClick: PropTypes.func,
   extLink: PropTypes.string,
   tooltip: PropTypes.object,

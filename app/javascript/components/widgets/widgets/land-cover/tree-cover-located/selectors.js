@@ -68,13 +68,13 @@ export const getSentence = createSelector(
       percentileExtent += data[percentileLength].extent;
       percentileLength += 1;
     }
-    const topExtent = percentileExtent / totalExtent * 100;
+    const topExtent = percentileExtent / (totalExtent || 0) * 100;
 
     const params = {
       location: currentLabel,
       region: topRegion.label,
       indicator: indicator && indicator.label,
-      percentage: `${format('.0f')(topExtent)}%`,
+      percentage: topExtent ? `${format('.0f')(topExtent)}%` : '0%',
       relPercentage: `${format('.0f')(topRegion.percentage)}%`,
       averagePerc: `${format('.0f')(avgExtentPercentage)}%`,
       extent: `${format('.3s')(topRegion.extent)}ha`,

@@ -23,7 +23,7 @@ const getSentences = state => state.config.sentences || null;
 const getPlanationKeys = createSelector(
   [getPlantations],
   plantations =>
-    (plantations ? Object.keys(groupBy(plantations, 'label')) : null)
+    plantations ? Object.keys(groupBy(plantations, 'label')) : null
 );
 
 export const parseData = createSelector(
