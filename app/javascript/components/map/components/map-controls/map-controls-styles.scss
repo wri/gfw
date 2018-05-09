@@ -3,10 +3,6 @@
 .c-map-controls {
   width: rem(38px);
 
-  button {
-    box-shadow: 0 1px 2px rgba($black, 0.25);
-  }
-
   button:first-child {
     border-bottom: solid 1px rgba($medium-grey, 0.2);
   }

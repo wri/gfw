@@ -94,13 +94,14 @@ define(
       getRegions: function() {
         var iso = this.status.get('iso');
 
-        CountryService.getRegionsList({ iso: iso.country })
-          .then(function(results) {
+        CountryService.getRegionsList({ iso: iso.country }).then(
+          function(results) {
             this.status.set({
               regions: results
             });
             this.view.render();
-          }.bind(this));
+          }.bind(this)
+        );
       },
 
       getSubRegions: function() {
@@ -109,12 +110,14 @@ define(
         CountryService.getSubRegionsList({
           iso: iso.country,
           region: iso.region
-        }).then(function(results) {
-          this.status.set({
-            subRegions: results
-          });
-          this.view.render();
-        }.bind(this));
+        }).then(
+          function(results) {
+            this.status.set({
+              subRegions: results
+            });
+            this.view.render();
+          }.bind(this)
+        );
       },
 
       /**

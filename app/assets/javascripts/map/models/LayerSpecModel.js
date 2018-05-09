@@ -207,10 +207,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
      * @return {object} layers
      */
     positionizer: function(layers) {
-      var layerOrder = _.intersection(
-        this.layerOrder,
-        _.pluck(layers, 'slug')
-      );
+      var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
       _.each(
         layerOrder,
         _.bind(function(slug, i) {
@@ -293,10 +290,9 @@ define(['underscore', 'backbone'], function(_, Backbone) {
           var category = this.get(categoryName);
           if (category) {
             categories.push(
-              _.sortBy(
-                this.positionizer(category),
-                function(layer){ return layer.position; }
-              ).reverse()
+              _.sortBy(this.positionizer(category), function(layer) {
+                return layer.position;
+              }).reverse()
             );
           }
         }, this)

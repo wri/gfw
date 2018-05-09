@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Application entry point.
  */
@@ -29,6 +30,7 @@ require([
   'map/views/NavMobileView',
   'map/views/GuideView',
   'map/views/controls/GuideButtonView',
+  'map/views/ReactMapMiddleView',
   'views/HeaderView',
   'views/FooterView',
   'views/NotificationsView',
@@ -56,6 +58,7 @@ require([
   NavMobileView,
   GuideView,
   GuideButtonView,
+  ReactMapMiddleView,
   HeaderView,
   FooterView,
   NotificationsView,
@@ -65,6 +68,9 @@ require([
     $el: $('body'),
 
     init: function() {
+      window.App = {
+        Views: {}
+      };
       var router = new Router(this);
       this._cartodbHack();
       this._handlebarsPlugins();
@@ -80,6 +86,7 @@ require([
       if (!Backbone.History.started) {
         Backbone.history.start({ pushState: true });
       }
+      window.dispatchEvent(new Event('mapLoaded'));
     },
 
     _fetchData: function() {
@@ -87,16 +94,20 @@ require([
       // we shouldn't create any view.
       countryService
         .getCountries()
-        .then(function(results) {
-          this.countries = results;
-          this._initViews();
-        }.bind(this))
-        .catch(function(e) {
-          console.warn(e);
-          // Fallback when request is timing out
-          this.countries = FallbackDataHelper.getCountryNames();
-          this._initViews();
-        }.bind(this));
+        .then(
+          function(results) {
+            this.countries = results;
+            this._initViews();
+          }.bind(this)
+        )
+        .catch(
+          function(e) {
+            console.warn(e);
+            // Fallback when request is timing out
+            this.countries = FallbackDataHelper.getCountryNames();
+            this._initViews();
+          }.bind(this)
+        );
     },
     /**
      * Initialize Application Views.
@@ -122,6 +133,7 @@ require([
       new NotificationsView(this.map, this.countries);
       new GuideView(this.map, this.countries);
       new GuideButtonView(this.map, this.countries);
+      window.App.Views.ReactMapMiddleView = new ReactMapMiddleView(this.map);
 
       this._initApp();
     },
@@ -137,14 +149,11 @@ require([
     },
 
     _handlebarsPlugins: function() {
-      Handlebars.registerHelper(
-        'firstLetter',
-        function(text) {
-          return text.charAt(0).toUpperCase();
-        }
-      );
+      Handlebars.registerHelper('firstLetter', function(text) {
+        return text.charAt(0).toUpperCase();
+      });
 
-      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+      Handlebars.registerHelper('ifCond', function(v1, operator, v2, options) {
         switch (operator) {
           case '==':
             return v1 == v2 ? options.fn(this) : options.inverse(this);
@@ -172,7 +181,7 @@ require([
 
     _googleMapsHelper: function() {
       if (!google.maps.Polygon.prototype.getBounds) {
-        google.maps.Polygon.prototype.getBounds = function () {
+        google.maps.Polygon.prototype.getBounds = function() {
           var bounds = new google.maps.LatLngBounds();
           var paths = this.getPaths();
           var path;
