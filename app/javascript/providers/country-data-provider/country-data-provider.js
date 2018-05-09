@@ -38,7 +38,7 @@ class CountryDataProvider extends PureComponent {
     const hasRegionChanged = region !== this.props.location.region;
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
 
-    if (!country) {
+    if (!country && country !== this.props.location.country) {
       setGeostore({});
     }
 

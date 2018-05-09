@@ -33,7 +33,6 @@ class Page extends PureComponent {
       locationNames,
       widgetAnchor,
       activeWidget,
-      locationGeoJson,
       setMapZoom,
       widgets,
       title
@@ -71,7 +70,6 @@ class Page extends PureComponent {
           >
             <div className="map-container">
               <Map
-                areaHighlight={locationGeoJson}
                 isParentLoading={isGeostoreLoading}
                 widgetKey={activeWidget}
               />
@@ -112,7 +110,6 @@ Page.propTypes = {
   locationNames: PropTypes.object,
   widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  locationGeoJson: PropTypes.object,
   activeWidget: PropTypes.string,
   setMapZoom: PropTypes.func,
   title: PropTypes.string
