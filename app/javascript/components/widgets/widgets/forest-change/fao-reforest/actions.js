@@ -7,7 +7,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
       const hasCountryData = (data.length && data.find(d => d.iso)) || null;
       dispatch(
         setWidgetData({
-          data: hasCountryData ? {} : data,
+          data: hasCountryData ? data : {},
           widget
         })
       );
