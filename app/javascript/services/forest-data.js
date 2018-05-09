@@ -28,7 +28,7 @@ const SQL_QUERIES = {
   lossRanked:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as loss, SUM({extent_year}) as extent, FROM data WHERE polyname = '{polyname}' AND thresh={threshold} GROUP BY polyname, iso, nested(year_data.year)",
   fao:
-    "SELECT fao.iso, fao.name, forest_planted, forest_primary, forest_regenerated, fao.forest_primary, fao.extent, a.land as area_ha FROM gfw2_countries as fao INNER JOIN umd_nat_staging as a ON fao.iso = a.iso WHERE fao.iso = '{country}' AND a.year = 2001 AND a.thresh = 30",
+    'SELECT country AS iso, name, plantfor * 1000 AS planted_forest, primfor * 1000 AS forest_primary, natregfor * 1000 AS forest_regenerated, forest * 1000 AS extent, totarea as area_ha FROM table_1_forest_area_and_characteristics WHERE {location} year = 2015',
   faoExtent:
     'SELECT country AS iso, name, year, reforest * 1000 AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY rate DESC',
   faoDeforest:
@@ -185,8 +185,8 @@ export const getLoss = ({
 
 export const getFAO = ({ country }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.fao}`.replace(
-    '{country}',
-    country
+    '{location}',
+    country ? `country = '${country}' AND` : ''
   );
   return axios.get(url);
 };
