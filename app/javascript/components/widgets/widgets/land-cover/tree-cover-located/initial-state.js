@@ -35,17 +35,18 @@ export default {
       landCover: 2
     },
     sentences: {
-      global: '',
+      globalInitial:
+        '{location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
+      globalHasPercentage:
+        '{location}, {region} had the largest relative tree cover of {value}, compared to a national average of {average}.',
+      globalHasIndicator:
+        'Within For {indicator} {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
       initial:
-        'In {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {extent} compared to an average of {averageExtent}.',
+        'In {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {value} compared to an average of {average}.',
       hasIndicator:
-        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {extent} compared to an average of {averageExtent}.',
-      largePercentile:
-        'In {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
-      largePercentileWithIndicator:
-        'For {indicator} in {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
+        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {value} compared to an average of {average}.',
       hasPercentage:
-        '{region} had the largest relative tree cover of {relPercentage}, compared to a regional average of {averagePerc}.'
+        '{region} had the largest relative tree cover of {value}, compared to a regional average of {average}.'
     },
     data: [
       {
