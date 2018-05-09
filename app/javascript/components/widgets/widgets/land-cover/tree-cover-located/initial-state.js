@@ -24,7 +24,7 @@ export default {
     ],
     units: ['ha', '%'],
     categories: ['summary', 'land-cover'],
-    admins: ['global', 'country', 'region'],
+    admins: ['country', 'region'],
     selectors: ['indicators', 'thresholds', 'units', 'extentYears'],
     locationCheck: true,
     type: 'extent',

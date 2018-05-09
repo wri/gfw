@@ -9,7 +9,7 @@ export default {
     selectors: ['weeks'],
     metaKey: 'widget_deforestation_graph',
     interactive: true,
-    customLocationWhitelist: [
+    locationWhitelist: [
       'BRA',
       'COL',
       'ECU',

@@ -16,7 +16,7 @@ export default {
     admins: ['country', 'region'],
     selectors: ['indicators', 'thresholds', 'units', 'extentYears', 'weeks'],
     metaKey: 'widget_deforestation_alert_location',
-    customLocationWhitelist: [
+    locationWhitelist: [
       'BRA',
       'COL',
       'ECU',

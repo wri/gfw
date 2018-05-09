@@ -10,7 +10,7 @@ export default {
     ],
     categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
-    customLocationWhitelist: ['IDN', 'COD'],
+    locationWhitelist: ['IDN', 'COD'],
     selectors: ['indicators', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_primary_forest',

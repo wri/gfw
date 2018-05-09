@@ -12,7 +12,7 @@ export default {
     sortOrder: {
       people: 1
     },
-    customLocationWhitelist: [
+    locationWhitelist: [
       'AGO',
       'ALB',
       'ARG',
