@@ -29,6 +29,7 @@ class Page extends PureComponent {
       showMapMobile,
       setShowMapMobile,
       links,
+      isCacheListLoading,
       isGeostoreLoading,
       location,
       locationOptions,
@@ -91,7 +92,7 @@ class Page extends PureComponent {
                   zoom: 8
                 }}
                 areaHighlight={locationGeoJson}
-                isParentLoading={isGeostoreLoading}
+                isParentLoading={isCacheListLoading && isGeostoreLoading}
                 widgetKey={activeWidget}
               />
             </div>
@@ -112,8 +113,8 @@ class Page extends PureComponent {
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CacheProvider />
-        <CountryDataProvider />
-        <WhitelistsProvider />
+        {!isCacheListLoading && <CountryDataProvider />}
+        {!isCacheListLoading && <WhitelistsProvider />}
         <Meta
           page={
             locationNames &&
@@ -130,6 +131,7 @@ Page.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
+  isCacheListLoading: PropTypes.bool,
   isGeostoreLoading: PropTypes.bool,
   location: PropTypes.object,
   locationOptions: PropTypes.object,
