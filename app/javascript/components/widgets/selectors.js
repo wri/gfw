@@ -89,19 +89,8 @@ export const getWidgets = createSelector([], () =>
   }))
 );
 
-export const filterWidgetsByCategory = createSelector(
-  [getWidgets, getCategory],
-  (widgets, category) =>
-    sortBy(
-      widgets.filter(
-        w => w.enabled && w.config.categories.indexOf(category) > -1
-      ),
-      `config.sortOrder[${camelCase(category)}]`
-    )
-);
-
 export const checkWidgetAdminLevel = createSelector(
-  [filterWidgetsByCategory, getAdminLevel],
+  [getWidgets, getAdminLevel],
   (widgets, adminLevel) =>
     widgets.filter(w => w.config.admins.indexOf(adminLevel) > -1)
 );
@@ -116,7 +105,6 @@ export const checkWidgetNeedsLocations = createSelector(
   ],
   (widgets, locations, countryData, location, adminLevel) => {
     if (adminLevel === 'global') return widgets;
-    // check widget can be show for current location
     const { faoCountries } = countryData;
     const isFaoCountry =
       !!faoCountries.find(c => c.value === location.country) || null;
@@ -155,7 +143,7 @@ export const filterWidgetByIndicator = createSelector(
   }
 );
 
-export const filterWidgets = createSelector(
+export const checkWidgetHasData = createSelector(
   [filterWidgetByIndicator, getIndicatorWhitelist, getAdminLevel],
   (widgets, whitelist, admin) => {
     if (admin === 'global') return widgets;
@@ -168,6 +156,17 @@ export const filterWidgets = createSelector(
       );
     });
   }
+);
+
+export const filterWidgets = createSelector(
+  [checkWidgetHasData, getCategory],
+  (widgets, category) =>
+    sortBy(
+      widgets.filter(
+        w => w.enabled && w.config.categories.indexOf(category) > -1
+      ),
+      `config.sortOrder[${camelCase(category)}]`
+    )
 );
 
 export const getActiveWidget = createSelector(
