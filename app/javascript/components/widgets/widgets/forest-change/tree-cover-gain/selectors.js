@@ -12,7 +12,8 @@ const getLocation = state => state.payload || null;
 const getLocationsMeta = state => state[state.adminKey] || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getCurrentLocation = state => state.currentLocation || null;
+const getCurrentLabel = state => state.currentLabel || null;
 const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
@@ -39,9 +40,9 @@ export const parseData = createSelector(
     getLocationsMeta,
     getColors
   ],
-  (data, settings, location, currentLabel, meta, colors) => {
+  (data, settings, location, currentLocation, meta, colors) => {
     if (!data || !data.length) return null;
-    const locationIndex = findIndex(data, d => d.id === currentLabel);
+    const locationIndex = findIndex(data, d => d.id === currentLocation.value);
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
     if (locationIndex < 2) {
@@ -76,8 +77,15 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getSortedData, getSettings, getIndicator, getCurrentLocation, getSentences],
-  (data, settings, indicator, currentLabel, sentences) => {
+  [
+    getSortedData,
+    getSettings,
+    getIndicator,
+    getCurrentLocation,
+    getCurrentLabel,
+    getSentences
+  ],
+  (data, settings, indicator, currentLocation, currentLabel, sentences) => {
     if (!data || !data.length) return null;
     const {
       initial,
@@ -85,7 +93,8 @@ export const getSentence = createSelector(
       globalWithIndicator,
       globalInitial
     } = sentences;
-    const locationData = currentLabel && data.find(l => l.id === currentLabel);
+    const locationData =
+      currentLabel && data.find(l => l.id === currentLocation.value);
     const gain = locationData ? locationData.gain : sumBy(data, 'gain');
     const globalPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
     const areaPercent = locationData
