@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import findIndex from 'lodash/findIndex';
 import moment from 'moment';
 import { format } from 'd3-format';
-import { sortByKey } from 'utils/data';
 
 const getData = state => state.data || null;
 const getDataStatus = state => state.dataStatus || null;
@@ -15,14 +14,9 @@ const getFilteredData = createSelector(
     if (!data || isEmpty(data)) return null;
 
     const { clouds } = settings;
-    const dataFiltered = data.filter(
-      item => Math.round(item.attributes.cloud_score) <= clouds
-    );
-    return sortByKey(
-      dataFiltered.map(item => item.attributes),
-      'date_time',
-      true
-    );
+    return data
+      .filter(item => Math.round(item.attributes.cloud_score) <= clouds)
+      .map(item => item.attributes);
   }
 );
 
