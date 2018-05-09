@@ -116,8 +116,8 @@ export const getSentence = createSelector(
         typeof accumulator !== 'object'
           ? accumulator
           : accumulator.emissions
-            .map(a => a.value)
-            .reduce((iSum, value) => iSum + value);
+              .map(a => a.value)
+              .reduce((iSum, value) => iSum + value);
       const itemCount = item.emissions
         .map(a => a.value)
         .reduce((iSum, value) => iSum + value);
