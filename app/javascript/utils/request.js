@@ -16,7 +16,7 @@ const request = {
     if (cacheKeys.indexOf(key) === -1) {
       const axiosInstance = axios.create();
       axiosInstance.interceptors.response.use(response =>
-        addKey(key, response.data.data).then(() => response)
+        addKey(key, response.data).then(() => response)
       );
       return axiosInstance.get(url);
     }

@@ -7,7 +7,7 @@ class CacheController < ApplicationController
       data = JSON.parse(data)
     end
 
-    render :json => { data: data }
+    render :json => data
   end
 
   def add
