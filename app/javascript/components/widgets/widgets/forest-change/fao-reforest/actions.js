@@ -1,16 +1,13 @@
 import { getFAOExtent } from 'services/forest-data';
 
-export const getData = ({ params, dispatch, setWidgetData, widget, state }) => {
+export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   getFAOExtent({ ...params })
     .then(response => {
       const data = response.data.rows;
-      const hasCountryData =
-        (data.length &&
-          data.find(d => d.iso === state().location.payload.country)) ||
-        null;
+      const hasCountryData = (data.length && data.find(d => d.iso)) || null;
       dispatch(
         setWidgetData({
-          data: hasCountryData || params.type === 'global' ? data : {},
+          data: hasCountryData ? {} : data,
           widget
         })
       );
