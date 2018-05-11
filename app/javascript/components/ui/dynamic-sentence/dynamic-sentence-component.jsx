@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './widget-dynamic-sentence-styles.scss';
+import './dynamic-sentence-styles.scss';
 
 class WidgetDynamicSentence extends PureComponent {
   render() {
@@ -26,7 +26,7 @@ class WidgetDynamicSentence extends PureComponent {
 
     return (
       <p
-        className={`c-widget-dynamic-sentence ${className || ''}`}
+        className={`c-dynamic-sentence ${className || ''}`}
         dangerouslySetInnerHTML={{ __html: formattedSentence }}
       />
     );

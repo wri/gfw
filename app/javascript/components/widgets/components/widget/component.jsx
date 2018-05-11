@@ -5,10 +5,10 @@ import isEmpty from 'lodash/isEmpty';
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
+import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from '../widget-header';
 import WidgetSettingsStatement from '../widget-settings-statement';
-import WidgetDynamicSentence from '../widget-dynamic-sentence';
 
 import './styles.scss';
 
@@ -64,7 +64,7 @@ class Widget extends PureComponent {
           {!error &&
             sentence &&
             !isEmpty(data) && (
-              <WidgetDynamicSentence
+              <DynamicSentence
                 className={`sentence ${
                   config.interactive ? 'interactive' : ''
                 }`}

@@ -5,6 +5,7 @@ import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
+import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
@@ -19,13 +20,12 @@ class Header extends PureComponent {
       handleCountryChange,
       handleRegionChange,
       handleSubRegionChange,
-      getHeaderDescription,
       loading,
-      error,
       setShareModal,
       shareData,
       payload,
-      forestAtlasLink
+      forestAtlasLink,
+      sentence
     } = this.props;
 
     return (
@@ -142,13 +142,7 @@ class Header extends PureComponent {
             <div className="description text -title-xs">
               {!loading && (
                 <div>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: error
-                        ? 'An error occured while fetching data. Please try again later.'
-                        : getHeaderDescription()
-                    }}
-                  />
+                  <DynamicSentence className="sentence" sentence={sentence} />
                   {forestAtlasLink && (
                     <Button
                       className="forest-atlas-btn"
@@ -170,17 +164,16 @@ class Header extends PureComponent {
 Header.propTypes = {
   className: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
   locationNames: PropTypes.object.isRequired,
   locationOptions: PropTypes.object.isRequired,
   handleCountryChange: PropTypes.func.isRequired,
   handleRegionChange: PropTypes.func.isRequired,
   handleSubRegionChange: PropTypes.func.isRequired,
-  getHeaderDescription: PropTypes.func.isRequired,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   payload: PropTypes.object.isRequired,
-  forestAtlasLink: PropTypes.object
+  forestAtlasLink: PropTypes.object,
+  sentence: PropTypes.object
 };
 
 export default Header;

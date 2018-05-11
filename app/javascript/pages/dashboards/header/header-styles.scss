@@ -56,19 +56,12 @@
     }
   }
 
-  .description {
+  .sentence {
     color: rgba($white, 0.9);
-    line-height: 1.6;
+    font-size: rem(18px);
+    font-weight: 400;
     margin-top: rem(10px);
     min-height: rem(90px);
-
-    p {
-      margin-bottom: rem(15px);
-
-      @media screen and (min-width: $screen-l) {
-        margin-bottom: rem(30px);
-      }
-    }
 
     b {
       color: $green-gfw;

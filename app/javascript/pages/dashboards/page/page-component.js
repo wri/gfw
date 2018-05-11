@@ -29,8 +29,6 @@ class Page extends PureComponent {
       setShowMapMobile,
       links,
       isGeostoreLoading,
-      locationOptions,
-      locationNames,
       widgetAnchor,
       activeWidget,
       setMapZoom,
@@ -50,11 +48,7 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header
-            className="header"
-            locationOptions={locationOptions}
-            locationNames={locationNames}
-          />
+          <Header className="header" />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
@@ -89,13 +83,13 @@ class Page extends PureComponent {
         )}
         <Share />
         <ModalMeta />
-        {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />
         <Meta
           title={title}
           description="Data about forest change, tenure, forest related employment and land use in"
         />
+        {widgetAnchor && <ScrollTo target={widgetAnchor} />}
       </div>
     );
   }
@@ -106,8 +100,6 @@ Page.propTypes = {
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   isGeostoreLoading: PropTypes.bool,
-  locationOptions: PropTypes.object,
-  locationNames: PropTypes.object,
   widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeWidget: PropTypes.string,
