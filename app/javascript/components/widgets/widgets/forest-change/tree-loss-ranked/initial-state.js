@@ -44,7 +44,7 @@ export const initialState = {
       initial:
         'From {startYear} to {endYear}, {location} lost {loss} of tree cover {indicator}, equivalent to a {percent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
       withIndicator:
-        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {globalPercent} of global tree cover gain within {indicator_alt}.'
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {globalPercent} of global tree cover loss.'
     }
   },
   settings: {
