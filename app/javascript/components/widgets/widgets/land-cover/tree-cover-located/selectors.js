@@ -11,8 +11,7 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state =>
-  (state.payload.region ? state.subRegions : state.regions) || null;
+const getLocationsMeta = state => state[state.adminKey] || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -53,7 +52,14 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, currentLabel, sentences) => {
     if (!data || !options || !currentLabel) return null;
-    const { initial, hasPercentage, hasIndicator } = sentences;
+    const {
+      hasPercentage,
+      initial,
+      hasIndicator,
+      globalInitial,
+      globalHasPercentage,
+      globalWithIndicator
+    } = sentences;
     const topRegion = data.length && data[0];
     const totalExtent = sumBy(data, 'extent');
     const avgExtent = sumBy(data, 'extent') / data.length;
@@ -71,20 +77,28 @@ export const getSentence = createSelector(
     const topExtent = percentileExtent / (totalExtent || 0) * 100;
 
     const params = {
-      location: currentLabel,
+      location: currentLabel === 'global' ? 'Globally' : currentLabel,
       region: topRegion.label,
       indicator: indicator && indicator.label,
       percentage: topExtent ? `${format('.0f')(topExtent)}%` : '0%',
-      relPercentage: `${format('.0f')(topRegion.percentage)}%`,
-      averagePerc: `${format('.0f')(avgExtentPercentage)}%`,
-      extent: `${format('.3s')(topRegion.extent)}ha`,
-      averageExtent: `${format('.3s')(avgExtent)}ha`,
-      count: percentileLength
+      value:
+        settings.unit === '%'
+          ? `${format('.0f')(topRegion.percentage)}%`
+          : `${format('.3s')(topRegion.extent)}ha`,
+      average:
+        settings.unit === '%'
+          ? `${format('.0f')(avgExtentPercentage)}%`
+          : `${format('.3s')(avgExtent)}ha`,
+      count: percentileLength,
+      metric: settings.unit === '%' ? 'relative tree cover' : 'tree cover'
     };
 
-    let sentence = settings.unit === '%' ? hasPercentage : initial;
-    if (indicator) {
-      sentence = hasIndicator;
+    let sentence = currentLabel === 'global' ? globalInitial : initial;
+    if (settings.unit === '%') {
+      sentence =
+        currentLabel === 'global' ? globalHasPercentage : hasPercentage;
+    } else if (indicator) {
+      sentence = currentLabel === 'global' ? globalWithIndicator : hasIndicator;
     }
 
     return {
