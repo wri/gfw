@@ -40,6 +40,23 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
     });
   }
 
+  const category = query && query.category;
+  const locationUrl = `${country || ''}${region ? `/${region}` : ''}${
+    subRegion ? `/${subRegion}` : ''
+  }`;
+  const locationPath = `dashboards/${type || 'global'}/${locationUrl}`;
+  const widgetQuery = `widget=${widget}`;
+  const widgetState =
+    query && query[widget] ? `&${widget}=${query[widget]}` : '';
+  const categoryQuery = category ? `&category=${category}` : '';
+
+  const shareUrl = `${window.location.origin}/${locationPath}?${widgetQuery}${
+    widgetState ? `${widgetState}` : ''
+  }${categoryQuery}#${widget}`;
+  const embedUrl = `${window.location.origin}/embed/${locationPath}?${
+    widgetQuery
+  }${widgetState}`;
+
   return {
     ...Widgets[widget],
     ...selectorData,
@@ -50,12 +67,8 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
     parsedData: parseData && parseData(selectorData),
     parsedConfig: parseConfig && parseConfig(selectorData),
     sentence: getSentence && getSentence(selectorData),
-    extLink: `${window.location.host}/dashboards/${type ||
-      'global'}/${country || ''}${region ? `/${region}` : ''}${
-      subRegion ? `/${subRegion}` : ''
-    }?${query && query.category ? `category=${query.category}` : ''}&widget=${
-      widget
-    }${query && query[widget] ? `&${widget}=${query[widget]}` : ''}#${widget}`
+    shareUrl,
+    embedUrl
   };
 };
 

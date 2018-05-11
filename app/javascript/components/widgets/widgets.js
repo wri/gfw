@@ -37,7 +37,7 @@ const mapStateToProps = (
 
   const { query, payload } = location;
   const { region } = payload;
-  const { widget } = query;
+  const widget = query && query.widget;
   const category = (query && query.category) || 'summary';
   const widgetData = {
     category,

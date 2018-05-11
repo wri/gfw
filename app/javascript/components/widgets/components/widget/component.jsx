@@ -17,7 +17,7 @@ class Widget extends PureComponent {
     const {
       widget,
       currentLabel,
-      extLink,
+      shareUrl,
       settings,
       config,
       embed,
@@ -85,7 +85,7 @@ class Widget extends PureComponent {
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
               <p>For more info</p>
-              <Button className="embed-btn" extLink={extLink}>
+              <Button className="embed-btn" extLink={shareUrl}>
                 EXPLORE ON GFW
               </Button>
             </div>
@@ -104,7 +104,7 @@ Widget.propTypes = {
   onMap: PropTypes.bool,
   highlightColor: PropTypes.string,
   currentLabel: PropTypes.string,
-  extLink: PropTypes.string,
+  shareUrl: PropTypes.string,
   query: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
