@@ -7,7 +7,7 @@ SitemapGenerator::Sitemap.create do
   add '/dashboards/global', :changefreq => 'weekly', :priority => 0.8
   add '/dashboards/country', :changefreq => 'weekly', :priority => 0.8
 
-  Country.find_all.each do |country|
+  Dashboards.find_all_countries.each do |country|
     add "/dashboards/country/#{country['iso']}", :changefreq => 'weekly', :priority => 0.6
   end
 

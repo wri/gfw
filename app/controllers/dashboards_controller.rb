@@ -24,6 +24,6 @@ class DashboardsController < ApplicationController
   private
 
   def set_title
-    @location = params[:iso] ? Dashboards.find_by_iso(params[:iso]) : "#{params[:type] && params[:type].capitalize || 'Global'} Dashboard"
+    @location = params[:iso] ? Dashboards.find_country_by_iso(params[:iso]) : "#{params[:type] && params[:type].capitalize || 'Global'} Dashboard"
   end
 end
