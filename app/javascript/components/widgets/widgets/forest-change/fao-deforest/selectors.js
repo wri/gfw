@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
+import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 
 const getData = state => state.data || null;
@@ -49,18 +50,29 @@ export const getSentence = createSelector(
   ],
   (data, location, currentLabel, settings, period, sentences) => {
     if (!data || !data.fao) return '';
-    const { initial, noDeforest, humanDeforest } = sentences;
+    const {
+      initial,
+      noDeforest,
+      humanDeforest,
+      globalInitial,
+      globalHuman
+    } = sentences;
     const topFao = data.fao.filter(d => d.year === settings.period);
     const { deforest, humdef } = topFao[0];
+    const totalDeforest = sumBy(data.rank, 'deforest');
 
-    let sentence = noDeforest;
-    if (deforest) {
-      sentence = humdef ? humanDeforest : initial;
-    }
+    let sentence = humdef ? humanDeforest : initial;
+    if (currentLabel === 'global') {
+      sentence = humdef ? globalHuman : globalInitial;
+    } else if (!deforest) sentence = noDeforest;
+
     const params = {
       location: currentLabel,
       year: period && period.label,
-      rate: `${format('.3s')(deforest)}ha/yr`,
+      rate:
+        currentLabel === 'global'
+          ? `${format('.3s')(totalDeforest)}ha/yr`
+          : `${format('.3s')(deforest)}ha/yr`,
       human: `${format('.3s')(humdef)}ha/yr`
     };
 

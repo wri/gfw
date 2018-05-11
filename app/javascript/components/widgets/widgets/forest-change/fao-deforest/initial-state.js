@@ -3,7 +3,7 @@ export const initialState = {
   config: {
     size: 'small',
     categories: ['forest-change'],
-    admins: ['country'],
+    admins: ['global', 'country'],
     selectors: ['periods'],
     type: 'fao',
     metaKey: 'widget_deforestation_fao',
@@ -12,6 +12,10 @@ export const initialState = {
     },
     colors: 'loss',
     sentences: {
+      globalInitial:
+        'According to the FAO, the {location} rate of deforestation in {year} was {rate}.',
+      globalHuman:
+        'According to the FAO, the {location} rate of deforestation in {year} was {rate}, of which {human} was due to human activity.',
       initial:
         'According to the FAO the rate of deforestation in {location} was {rate}, in {year}.',
       humanDeforest:
