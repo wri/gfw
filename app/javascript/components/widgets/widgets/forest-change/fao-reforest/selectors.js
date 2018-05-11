@@ -68,7 +68,7 @@ export const getSentence = createSelector(
 
     let sentence = globalInitial;
     if (currentLabel !== 'global') {
-      sentence = countryData.value > 0 ? initial : noReforest;
+      sentence = countryData && countryData.value > 0 ? initial : noReforest;
     }
 
     const params = {
@@ -77,7 +77,7 @@ export const getSentence = createSelector(
       rate:
         currentLabel === 'global'
           ? `${format('.3s')(globalRate)}ha/yr`
-          : `${format('.3s')(countryData.value)}ha/yr`
+          : `${format('.3s')(countryData && countryData.value)}ha/yr`
     };
 
     return {
