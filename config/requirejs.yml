@@ -4,7 +4,6 @@ modules:
   - name: 'landing'
   - name: 'stories'
   - name: 'connect'
-  - name: 'static-pages'
 
 waitSeconds: 200
 
