@@ -36,9 +36,9 @@ export default {
     },
     sentences: {
       initial:
-        'In {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {extent} compared to an average of {averageExtent}.',
+        'In {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
       hasIndicator:
-        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {extent} compared to an average of {averageExtent}.',
+        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
       largePercentile:
         'In {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
       largePercentileWithIndicator:

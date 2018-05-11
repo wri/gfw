@@ -77,7 +77,7 @@ export const getSentence = createSelector(
       percentage: topExtent ? `${format('.0f')(topExtent)}%` : '0%',
       relPercentage: `${format('.0f')(topRegion.percentage)}%`,
       averagePerc: `${format('.0f')(avgExtentPercentage)}%`,
-      extent: `${format('.3s')(topRegion.extent)}ha`,
+      extent: `${format('.2s')(topRegion.extent)}ha`,
       averageExtent: `${format('.3s')(avgExtent)}ha`,
       count: percentileLength
     };
