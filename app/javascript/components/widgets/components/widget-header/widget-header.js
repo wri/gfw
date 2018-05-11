@@ -18,21 +18,24 @@ const mapStateToProps = (
   { location, modalMeta },
   { currentLabel, widget, title, config, indicatorWhitelist }
 ) => {
-  const { country, region, subRegion, type } = location.payload;
+  const { payload, query } = location;
+  const { country, region, subRegion, type } = payload;
+  const category = query && query.category;
   const locationUrl = `${country || ''}${region ? `/${region}` : ''}${
     subRegion ? `/${subRegion}` : ''
   }`;
+  const typePath = type || 'global';
+  const widgetQuery = `widget=${widget}`;
+  const widgetState = query[widget] ? `&${widget}=${query[widget]}` : '';
+  const categoryQuery = category ? `category=${category}` : '';
 
-  const embedUrl = `${window.location.origin}/dashboards/embed/${type ||
-    'global'}/${widget}/${locationUrl}${
-    location.query && location.query[widget]
-      ? `?${widget}=${location.query[widget]}`
-      : ''
-  }${
-    location.query && location.query.category
-      ? `&category=${location.query.category}`
-      : ''
-  }`;
+  const shareUrl = `${window.location.origin}/dashboards/${typePath}/${
+    locationUrl
+  }?${widgetQuery}${widgetState ? `&${widgetState}` : ''} #${widget}`;
+  const embedUrl = `${window.location.origin}/dashboards/${typePath}/embed/${
+    widget
+  }/${locationUrl}?${widgetQuery}${widgetState}`;
+
   const size = config.size;
   const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
   const widgetMetaKey =
@@ -55,16 +58,7 @@ const mapStateToProps = (
     shareData: {
       title: 'Share this widget',
       subtitle: `${title} in ${currentLabel || ''}`,
-      shareUrl: `http://${window.location.host}/dashboards/${type ||
-        'global'}/${locationUrl}?${
-        location.query && location.query.category
-          ? `category=${location.query.category}&`
-          : ''
-      }widget=${widget}${
-        location.query && location.query[widget]
-          ? `&${widget}=${location.query[widget]}`
-          : ''
-      }#${widget}`,
+      shareUrl,
       embedUrl,
       embedSettings:
         config.size === 'small'

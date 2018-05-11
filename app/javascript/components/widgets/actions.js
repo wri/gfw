@@ -3,6 +3,7 @@ import { createThunkAction } from 'utils/redux';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
+import { COUNTRY, EMBED } from 'pages/dashboards/router';
 import * as WIDGETS from './manifest';
 
 export const setWidgetSettings = createAction('setWidgetSettings');
@@ -31,7 +32,7 @@ export const setWidgetSettingsUrl = createThunkAction(
       };
     }
     dispatch({
-      type: 'location/COUNTRY',
+      type: location.type === 'location/EMBED' ? EMBED : COUNTRY,
       payload: location.payload,
       query: {
         ...location.query,

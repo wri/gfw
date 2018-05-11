@@ -14,12 +14,7 @@ const actions = { ...mapActions };
 
 const mapStateToProps = ({ countryData, whitelists, location, map }) => {
   const category = (location.query && location.query.category) || 'summary';
-  const {
-    countryWhitelistLoading,
-    regionWhitelistLoading,
-    regionWhitelist,
-    countryWhitelist
-  } = whitelists;
+  const { regionWhitelist, countryWhitelist } = whitelists;
   const adminData = {
     ...countryData,
     ...location
@@ -55,7 +50,6 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     locationNames,
     locationOptions,
     currentLocation: locationNames && locationNames && locationNames.label,
-    loading: countryWhitelistLoading || regionWhitelistLoading,
     title: !location.payload.country
       ? `${upperFirst(location.payload.type) || 'Global'} Dashboard`
       : locationNames && locationNames.label

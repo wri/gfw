@@ -71,6 +71,12 @@ Gfw::Application.routes.draw do
 
   # country
   get '/country', to: redirect('/dashboards/global')
+  get '/country/embed/:widget/:iso', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:iso]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/embed/:widget/:iso/:region', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:iso]}/#{params[:region]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/embed/:widget/:iso/:region/:sub_region', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?widget=#{params[:widget]}&#{req.query_string}" }
   get '/country/*all', to: redirect { |params, req| "/dashboards#{req.fullpath}" }
 
   # countries
@@ -92,8 +98,8 @@ Gfw::Application.routes.draw do
   get '/embed/map/*path' => 'map#embed'
 
   # dashboards
-  get '/dashboards/:type/embed/:widget(/:iso)(/:region)(/:sub_region)' => 'dashboards#embed'
   get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
+  get '/embed/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#embed'
 
   # about
   get '/about' => 'about#index'

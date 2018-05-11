@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 import Widgets from 'components/widgets';
 import CountryDataProvider from 'providers/country-data-provider';
@@ -11,12 +10,10 @@ import './embed-styles.scss';
 
 class Embed extends PureComponent {
   render() {
-    const { widgetKey } = this.props;
-
     return (
       <div className="c-embed">
         <div className="widget-wrapper">
-          <Widgets widget={widgetKey} embed />
+          <Widgets embed />
         </div>
         <Share />
         <ModalMeta />
@@ -26,9 +23,5 @@ class Embed extends PureComponent {
     );
   }
 }
-
-Embed.propTypes = {
-  widgetKey: PropTypes.string.isRequired
-};
 
 export default Embed;

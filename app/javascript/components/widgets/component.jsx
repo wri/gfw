@@ -21,7 +21,7 @@ class Widgets extends PureComponent {
       embed
     } = this.props;
 
-    return widget ? (
+    return widget && embed ? (
       <Widget
         {...this.props}
         widget={widget.name}

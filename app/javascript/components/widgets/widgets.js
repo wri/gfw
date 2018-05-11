@@ -15,7 +15,7 @@ const mapStateToProps = (
   { location, countryData, whitelists, widgets },
   ownProps
 ) => {
-  const { widget, activeWidget } = ownProps;
+  const { activeWidget } = ownProps;
   // loaders
   const {
     isCountriesLoading,
@@ -36,14 +36,14 @@ const mapStateToProps = (
     regionWhitelistLoading;
 
   const { query, payload } = location;
+  const { region } = payload;
+  const { widget } = query;
   const category = (query && query.category) || 'summary';
   const widgetData = {
     category,
     ...location,
     countryData,
-    indicatorWhitelist: location.payload.region
-      ? regionWhitelist
-      : countryWhitelist
+    indicatorWhitelist: region ? regionWhitelist : countryWhitelist
   };
   const currentLocation = getAdminSelected({ countryData, payload });
 
