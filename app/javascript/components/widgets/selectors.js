@@ -22,6 +22,9 @@ const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
 const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
 const getWidgetQuery = state => state.activeWidget || null;
+const getCountries = state => state.countries || null;
+const getRegions = state => state.regions || null;
+const getSubRegions = state => state.subRegions || null;
 
 // get all possible widget settings options
 const options = {
@@ -68,15 +71,61 @@ export const getLocationOptions = createSelector(
 );
 
 export const getAdminSelected = createSelector(
-  [getAdminLevel, getAdminKey, getCountryData, getLocation],
-  (adminLevel, adminKey, locations, location) => {
-    const current =
-      locations[adminKey] &&
-      locations[adminKey].find(i => i.value === location[adminLevel]);
+  [
+    getCountries,
+    getRegions,
+    getSubRegions,
+    getLocation,
+    getAdminKey,
+    getAdminLevel
+  ],
+  (countries, regions, subRegions, location, adminKey, adminLevel) => {
+    const country =
+      (countries && countries.find(i => i.value === location.country)) || null;
+    const region =
+      (regions && regions.find(i => i.value === location.region)) || null;
+    const subRegion =
+      (subRegions && subRegions.find(i => i.value === location.subRegion)) ||
+      null;
+    const type = {
+      label: location.type || 'global',
+      value: location.type || 'global'
+    };
+
+    let current = type;
+    let parentLevel = null;
+    let parentKey = null;
+    let childLevel = null;
+    let childKey = null;
+    if (location.subRegion) {
+      current = subRegion;
+      parentKey = 'regions';
+      parentLevel = 'region';
+    } else if (location.region) {
+      current = region;
+      parentKey = 'countries';
+      parentLevel = 'country';
+      childKey = 'subRegions';
+      childLevel = 'subRegion';
+    } else if (location.country) {
+      current = country;
+      parentKey = 'global';
+      childKey = 'regions';
+      childLevel = 'region';
+    }
+
     return {
+      type,
+      country,
+      region,
+      subRegion,
       ...current,
       adminKey,
-      adminLevel
+      adminLevel,
+      parentKey,
+      parentLevel,
+      childKey,
+      childLevel
     };
   }
 );

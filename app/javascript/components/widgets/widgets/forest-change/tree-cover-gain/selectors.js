@@ -9,12 +9,15 @@ import { format } from 'd3-format';
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state => state[state.adminKey] || null;
+const getLocationsMeta = state =>
+  state[state.adminKey] || state.countries || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
 const getCurrentLocation = state => state.currentLocation || null;
 const getCurrentLabel = state => state.currentLabel || null;
+const getAdminLevel = state => state.adminLevel || null;
 const getSentences = state => state.config.sentences || null;
+const getParentLocation = state => state[state.parentLevel] || null;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -83,39 +86,47 @@ export const getSentence = createSelector(
     getIndicator,
     getCurrentLocation,
     getCurrentLabel,
-    getSentences
+    getSentences,
+    getParentLocation,
+    getAdminLevel
   ],
-  (data, settings, indicator, currentLocation, currentLabel, sentences) => {
+  (
+    data,
+    settings,
+    indicator,
+    currentLocation,
+    currentLabel,
+    sentences,
+    parent,
+    adminLevel
+  ) => {
     if (!data || !data.length) return null;
     const {
       initial,
       withIndicator,
-      globalWithIndicator,
-      globalInitial
+      regionInitial,
+      regionWithIndicator
     } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const gain = locationData ? locationData.gain : sumBy(data, 'gain');
     const globalPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
-    const areaPercent = locationData
-      ? locationData.percentage
-      : 100 * gain / sumBy(data, 'extent');
-    const indicatorName = indicator ? indicator.label : 'region-wide';
+    const areaPercent = (locationData && locationData.percentage) || 0;
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
       gain: `${format('.3s')(gain)}ha`,
-      indicator: indicatorName.toLowerCase(),
-      indicator_alt: indicatorName.toLowerCase(),
+      indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
       percent: areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
       globalPercent:
         globalPercent >= 0.1 ? `${format('.1f')(globalPercent)}%` : '<0.1%',
-      extentYear: settings.extentYear
+      extentYear: settings.extentYear,
+      parent: parent && parent.label
     };
 
     let sentence = indicator ? withIndicator : initial;
-    if (currentLabel === 'global') {
-      sentence = indicator ? globalWithIndicator : globalInitial;
+    if (adminLevel === 'region' || adminLevel === 'subRegion') {
+      sentence = indicator ? regionWithIndicator : regionInitial;
     }
 
     return {
