@@ -27,7 +27,11 @@ export default {
       initial:
         'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain.',
       withIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercentage} of global tree cover gain within {indicator_alt}.'
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain.',
+      regionInitial:
+        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of all tree cover gain in {parent}.',
+      regionWithIndicator:
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of all tree cover gain in {parent}.'
     }
   },
   settings: {

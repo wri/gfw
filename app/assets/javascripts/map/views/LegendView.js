@@ -822,12 +822,15 @@ define(
           var layerArray = this.model.get('layers_status');
           var mapLayer = this.map.overlayMapTypes.getAt(index);
 
-          _.map(layerArray, function(l, i) {
-            if (l.name === layer) {
-              this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
-            }
-            iCount += 1;
-          });
+          _.map(
+            layerArray,
+            function(l, i) {
+              if (l.name === layer) {
+                this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
+              }
+              iCount += 1;
+            }.bind(this)
+          );
         }
 
         window.dispatchEvent(
