@@ -56,9 +56,10 @@ const mapStateToProps = (
           : { width: 670, height: 490 },
       socialText: `${title} in ${currentLabel || ''}`
     },
-    title: currentLabel
-      ? `${title} in ${currentLabel}`
-      : `${location.payload.type} ${title}`
+    title:
+      currentLabel !== 'global'
+        ? `${title} in ${currentLabel}`
+        : `${location.payload.type || 'global'} ${title}`
   };
 };
 

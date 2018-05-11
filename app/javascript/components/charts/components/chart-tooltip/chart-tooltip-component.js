@@ -28,7 +28,7 @@ class WidgetChartTooltip extends PureComponent {
                               style={{ backgroundColor: d.color }}
                             />
                           )}
-                          {<span>{values[d.label] || d.label}</span>}
+                          {<span>{d.label || values[d.label]}</span>}
                         </div>
                       )}
                       {d.unit && d.unitFormat
