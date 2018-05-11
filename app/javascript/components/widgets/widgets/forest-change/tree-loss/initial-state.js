@@ -22,7 +22,7 @@ export const initialState = {
       'plantations__landmark'
     ],
     categories: ['summary', 'forest-change'],
-    admins: ['country', 'region', 'subRegion'],
+    admins: ['global', 'country', 'region', 'subRegion'],
     selectors: [
       'indicators',
       'startYears',
