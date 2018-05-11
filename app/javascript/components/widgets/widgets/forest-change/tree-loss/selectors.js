@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
-import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { biomassToCO2 } from 'utils/calculations';
@@ -21,21 +20,15 @@ export const parseData = createSelector(
   (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear } = settings;
-    const filterData = data.filter(
-      d => d.year >= startYear && d.year <= endYear
-    );
-    const groupByYear = groupBy(filterData, 'year');
-    const sumData = Object.keys(groupBy(data, 'year')).map(y => {
-      const area = sumBy(groupByYear[y], 'area') || 0;
-      const emissions = sumBy(groupByYear[y], 'emissions') || 0;
-      return {
-        year: y,
-        area,
-        emissions,
-        percentage: (area && area / extent * 100) || 0
-      };
-    });
-    return sumData;
+
+    return data
+      .filter(d => d.year >= startYear && d.year <= endYear)
+      .map(d => ({
+        ...d,
+        area: d.area || 0,
+        emissions: d.emissions || 0,
+        percentage: (d.area && d.area && d.area / extent * 100) || 0
+      }));
   }
 );
 

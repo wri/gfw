@@ -97,7 +97,7 @@ export const getRangeYears = createSelector(
         data.lossByRegion.length &&
         data.lossByRegion[0].loss) ||
       data;
-    if (isEmpty(yearsData) || !Array.isArray(data)) return null;
+    if (isEmpty(yearsData) || !Array.isArray(yearsData)) return null;
     return uniq(yearsData.map(d => d.year))
       .filter(
         d =>
