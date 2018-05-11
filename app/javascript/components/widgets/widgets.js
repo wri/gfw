@@ -44,7 +44,7 @@ const mapStateToProps = (
       ? regionWhitelist
       : countryWhitelist
   };
-  const currentLocation = getAdminSelected({ countryData, payload });
+  const currentLocation = getAdminSelected({ ...countryData, payload });
 
   return {
     loading,
@@ -53,6 +53,7 @@ const mapStateToProps = (
     adminKey: getAdminKey({ payload }),
     currentLocation,
     currentLabel: currentLocation && currentLocation.label,
+    ...currentLocation,
     ...widgetData,
     ...whitelists,
     ...countryData,
