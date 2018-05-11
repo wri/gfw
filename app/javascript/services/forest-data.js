@@ -32,7 +32,7 @@ const SQL_QUERIES = {
   faoExtent:
     'SELECT country AS iso, name, year, reforest * 1000 AS rate, forest*1000 AS extent FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {period} AND reforest > 0 ORDER BY rate DESC',
   faoDeforest:
-    "SELECT fao.country, fao.name, fao.deforest * 1000 AS deforest, fao.humdef, fao.year FROM table_1_forest_area_and_characteristics as fao WHERE fao.country = '{country}'",
+    'SELECT fao.country, fao.name, fao.deforest * 1000 AS deforest, fao.humdef, fao.year FROM table_1_forest_area_and_characteristics as fao {location}',
   faoDeforestRank:
     'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest from rank',
   faoEcoLive:
@@ -201,8 +201,8 @@ export const getFAOExtent = ({ period }) => {
 
 export const getFAODeforest = ({ country }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoDeforest}`.replace(
-    '{country}',
-    country
+    '{location}',
+    country ? `WHERE fao.country = '${country}'` : ''
   );
   return axios.get(url);
 };

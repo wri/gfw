@@ -3,7 +3,7 @@ export const initialState = {
   config: {
     size: 'small',
     categories: ['forest-change'],
-    admins: ['country'],
+    admins: ['global', 'country'],
     selectors: ['periods'],
     type: 'fao',
     metaKey: 'widget_rate_of_restoration_fao',
@@ -12,9 +12,11 @@ export const initialState = {
     },
     colors: 'gain',
     sentences: {
+      globalInitial:
+        'According to the FAO, the {location} rate of reforestation in {year} was {rate}.',
       initial:
-        'According to the FAO the rate of deforestation in {location} was {rate}, in {year}',
-      noReforest: 'No deforestation data in {location}.'
+        'According to the FAO the rate of reforestation in {location} was {rate}, in {year}',
+      noReforest: 'No reforestation data in {location}.'
     }
   },
   settings: {
