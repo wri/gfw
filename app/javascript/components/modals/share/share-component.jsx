@@ -60,6 +60,7 @@ class Share extends PureComponent {
               theme="theme-button-light"
               className="input-button"
               onClick={() => handleCopyToClipboard(this.textInput)}
+              disabled={loading}
             >
               {copied ? 'COPIED!' : 'COPY'}
             </Button>

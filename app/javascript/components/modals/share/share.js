@@ -7,22 +7,19 @@ import reducers, { initialState } from './share-reducers';
 import ShareComponent from './share-component';
 
 const mapStateToProps = ({ share, location }) => ({
-  open: share.open,
-  selected: share.selected,
-  copied: share.copied,
-  data: share.data,
-  loading: share.loading,
+  ...share,
   location
 });
 
 class ShareContainer extends PureComponent {
   handleCopyToClipboard = input => {
-    const { setShareCopied, data } = this.props;
+    const { setShareCopied } = this.props;
     input.select();
 
     try {
       document.execCommand('copy');
-      setShareCopied(data);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2500);
     } catch (err) {
       alert('This browser does not support clipboard access'); // eslint-disable-line
     }
@@ -42,8 +39,7 @@ class ShareContainer extends PureComponent {
 }
 
 ShareContainer.propTypes = {
-  setShareCopied: PropTypes.func.isRequired,
-  data: PropTypes.object
+  setShareCopied: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };

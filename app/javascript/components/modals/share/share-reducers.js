@@ -29,9 +29,9 @@ const setShareSelected = (state, { payload }) => ({
   copied: false
 });
 
-const setShareCopied = state => ({
+const setShareCopied = (state, { payload }) => ({
   ...state,
-  copied: true
+  copied: payload
 });
 
 const setShareLoading = (state, { payload }) => ({
