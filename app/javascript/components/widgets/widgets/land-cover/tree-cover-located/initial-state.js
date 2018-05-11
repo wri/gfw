@@ -70,5 +70,5 @@ export default {
     pageSize: 5,
     page: 0
   },
-  enabled: true
+  enabled: false
 };

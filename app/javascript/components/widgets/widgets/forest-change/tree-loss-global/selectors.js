@@ -44,16 +44,16 @@ export const getFilteredData = createSelector(
 
 export const getTopIsos = createSelector([getFilteredData], data => {
   if (isEmpty(data)) return null;
-  const datasasd = groupBy(sortByKey(data, 'area'), 'iso');
-  const top = sortByKey(
-    Object.keys(datasasd).map(k => ({
+  const groupedLoss = groupBy(sortByKey(data, 'area'), 'iso');
+  const sortedLoss = sortByKey(
+    Object.keys(groupedLoss).map(k => ({
       iso: k,
-      area: sumBy(datasasd[k], 'area')
+      area: sumBy(groupedLoss[k], 'area')
     })),
     'area',
     true
   ).slice(0, 5);
-  return top.map(d => d.iso);
+  return sortedLoss.map(d => d.iso);
 });
 
 // get lists selected
@@ -61,13 +61,17 @@ export const parseData = createSelector(
   [getFilteredData, getTopIsos],
   (data, isos) => {
     if (isEmpty(data)) return null;
-    const filterData = data.filter(d => isos.indexOf(d.iso) > -1);
-    const otherData = groupData(data.filter(d => isos.indexOf(d.iso) === -1));
-    const allData = [...filterData, ...otherData];
-    const dsada = groupBy(allData, 'year');
-    const finasdsa = Object.keys(dsada).map(y => {
+    const allCountries = Object.keys(groupBy(data, 'iso'));
+    const topData = data.filter(d => isos.indexOf(d.iso) > -1);
+    let otherData = [];
+    if (allCountries.length && allCountries.length > 5) {
+      otherData = groupData(data.filter(d => isos.indexOf(d.iso) === -1));
+    }
+    const allData = [...topData, ...otherData];
+    const groupedData = groupBy(allData, 'year');
+    const finasdsa = Object.keys(groupedData).map(y => {
       const datakeys = {};
-      dsada[y].forEach(d => {
+      groupedData[y].forEach(d => {
         datakeys[d.iso] = d.area || 0;
       });
 
@@ -84,9 +88,11 @@ export const parseData = createSelector(
 export const parseConfig = createSelector(
   [getColors, parseData, getTopIsos, getCountries],
   (colors, data, isos, countries) => {
-    if (!data || !data.length) return null;
+    if (isEmpty(data)) return null;
     const yKeys = {};
-    const keys = [...isos, 'Other'];
+    const allCountries = Object.keys(groupBy(data, 'iso'));
+    const keys =
+      allCountries && allCountries.length > 5 ? [...isos, 'Other'] : isos;
     const colorRange = getColorPalette(colors.ramp, keys.length).reverse();
     keys.reverse().forEach((k, index) => {
       yKeys[k] = {
