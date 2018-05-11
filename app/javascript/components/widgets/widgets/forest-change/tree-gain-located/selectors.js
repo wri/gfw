@@ -98,7 +98,7 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      indicator: indicator && indicator.value,
+      indicator: indicator && indicator.label,
       location: currentLabel,
       topGain: `${format('.0f')(topGain)}%`,
       percentileLength,
