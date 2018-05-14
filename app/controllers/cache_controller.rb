@@ -14,9 +14,9 @@ class CacheController < ApplicationController
     id = params[:id]
     data = params[:data].to_json
     expire = params[:expire] || 86400
-    $redis.set(id, data, expire)
+    $redis.set(id, data, ex: expire)
 
-    render :json => { id: id, data: data }
+    render :json => { id: id, data: data, expire: expire }
   end
 
   def keys
