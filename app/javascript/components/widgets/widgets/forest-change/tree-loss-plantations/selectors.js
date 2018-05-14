@@ -85,7 +85,7 @@ export const getSentence = createSelector(
       startYear,
       endYear,
       lossPhrase,
-      value: `${format('.2s')(totalOutsideLoss)}t of CO<sub>2</sub> emissions`
+      value: `${format('.3s')(totalOutsideLoss)}t of CO<sub>2</sub> emissions`
     };
 
     return {

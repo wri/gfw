@@ -66,7 +66,8 @@ export const parseData = createSelector(
       return {
         id: k,
         color: colors.main,
-        percentage: countsAreaPerc,
+        percentage:
+          countsAreaPerc >= 0.1 ? `${format('.2r')(countsAreaPerc)}%` : '<0.1%',
         countsPerHa,
         count: counts,
         area: countsArea,
@@ -109,11 +110,11 @@ export const getSentence = createSelector(
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
-      area: `${format('.2s')(sumBy(data, 'area'))}ha`,
-      topPercent: `${format('.2s')(topCount)}%`,
+      area: `${format('.3s')(sumBy(data, 'area'))}ha`,
+      topPercent: `${format('.2r')(topCount)}%`,
       topRegions: percentileLength,
       location: currentLabel,
-      indicator: `${indicator ? `${indicator.label} in ` : ''}`
+      indicator: `${indicator ? `${indicator.label.toLowerCase()} in ` : ''}`
     };
     return { sentence: initial, params };
   }

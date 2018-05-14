@@ -120,11 +120,11 @@ export const getSentence = createSelector(
       location: currentLabel === 'global' ? 'globally' : currentLabel,
       gain: `${format('.3s')(gain)}ha`,
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
-      percent: areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
+      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
       globalPercent:
-        globalPercent >= 0.1 ? `${format('.1f')(globalPercent)}%` : '<0.1%',
+        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%',
       gainPercent:
-        gainPercent >= 0.1 ? `${format('.1f')(gainPercent)}%` : '<0.1%',
+        gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '<0.1%',
       extentYear: settings.extentYear,
       parent: parent && parent.label
     };

@@ -80,15 +80,15 @@ export const getSentence = createSelector(
     const params = {
       location: currentLabel === 'global' ? 'Globally' : currentLabel,
       region: topRegion.label,
-      indicator: indicator && indicator.label,
-      percentage: topExtent ? `${format('.0f')(topExtent)}%` : '0%',
+      indicator: indicator && indicator.label.toLowerCase(),
+      percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
       value:
         settings.unit === '%'
-          ? `${format('.0f')(topRegion.percentage)}%`
+          ? `${format('.2r')(topRegion.percentage)}%`
           : `${format('.3s')(topRegion.extent)}ha`,
       average:
         settings.unit === '%'
-          ? `${format('.0f')(avgExtentPercentage)}%`
+          ? `${format('.2r')(avgExtentPercentage)}%`
           : `${format('.3s')(avgExtent)}ha`,
       count: percentileLength,
       metric: settings.unit === '%' ? 'relative tree cover' : 'tree cover'
@@ -101,7 +101,6 @@ export const getSentence = createSelector(
     } else if (indicator) {
       sentence = currentLabel === 'global' ? globalWithIndicator : hasIndicator;
     }
-
     return {
       sentence,
       params
