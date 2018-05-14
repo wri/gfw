@@ -2,16 +2,7 @@ export default {
   title: 'Tree cover gain',
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'wdpa',
-      'plantations',
-      'landmark',
-      'mining',
-      'kba',
-      'aze',
-      'tcl'
-    ],
+    indicators: ['gadm28', 'wdpa', 'plantations', 'landmark', 'mining'],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region', 'subRegion'],
