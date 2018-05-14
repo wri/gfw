@@ -11,8 +11,7 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state =>
-  state[state.adminKey] || state.countries || null;
+const getLocationsMeta = state => state[state.childKey] || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -22,16 +21,17 @@ export const parseData = createSelector(
   (data, settings, location, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
+    const { type, country, region } = location;
     data.forEach(d => {
-      const region = meta.find(l => d.id === l.value);
-      if (region || meta === 'global') {
+      const regionMeta = meta.find(l => d.id === l.value);
+      if (regionMeta) {
         dataMapped.push({
-          label: (region && region.label) || '',
+          label: (regionMeta && regionMeta.label) || '',
           extent: d.extent,
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
-          path: `/dashboards/country/${location.country}/${
-            location.region ? `${location.region}/` : ''
+          path: `/dashboards/${type || 'global'}/${country}/${
+            region ? `${region}/` : ''
           }${d.id}`,
           color: colors.main
         });

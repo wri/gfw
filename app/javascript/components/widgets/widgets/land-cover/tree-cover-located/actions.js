@@ -1,7 +1,10 @@
 import { getLocations, fetchExtentRanked } from 'services/forest-data';
 
 export const getData = ({ params, dispatch, setWidgetData, widget }) => {
-  (params.type === 'global' ? fetchExtentRanked(params) : getLocations(params))
+  (!params.type || params.type === 'global'
+    ? fetchExtentRanked(params)
+    : getLocations(params)
+  )
     .then(response => {
       const { data } = response.data;
       let mappedData = {};
@@ -11,7 +14,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
           extent: d.extent || 0,
           percentage: d.extent ? d.extent / d.total * 100 : 0
         }));
-        if (params.type === 'global') {
+        if (!params.type || params.type === 'global') {
           mappedData = data.map(d => ({
             id: d.iso,
             extent: d.value || 0,
