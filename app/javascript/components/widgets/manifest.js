@@ -35,32 +35,33 @@ import * as emissionsDeforestation from './widgets/climate/emissions-deforestati
 
 export {
   // land cover
-  // treeCover,
-  // treeCoverRanked,
-  // intactTreeCover,
-  // primaryForest,
-  // treeCoverLocated,
-  // faoCover,
-  // treeCoverPlantations,
-  // rankedPlantations,
-  // // forest change
-  // gladAlerts,
-  // gladRanked,
-  // fires,
-  // treeLossLocated,
-  // treeCoverGain,
-  // treeGainLocated,
-  // treeLossRanked,
-  // treeLossPlantations,
-  treeLoss
-  // faoDeforest,
-  // faoReforest,
-  // // conservation
-  // gladBiodiversity,
-  // // people
-  // economicImpact,
-  // forestryEmployment,
-  // // climate
-  // emissions,
-  // emissionsDeforestation
+  treeCover,
+  treeCoverRanked,
+  intactTreeCover,
+  primaryForest,
+  treeCoverLocated,
+  faoCover,
+  treeCoverPlantations,
+  rankedPlantations,
+  // forest change
+  gladAlerts,
+  gladRanked,
+  fires,
+  treeLossLocated,
+  treeCoverGain,
+  treeGainLocated,
+  treeLossRanked,
+  treeLossPlantations,
+  treeLoss,
+  treeLossGlobal,
+  faoDeforest,
+  faoReforest,
+  // conservation
+  gladBiodiversity,
+  // people
+  economicImpact,
+  forestryEmployment,
+  // climate
+  emissions,
+  emissionsDeforestation
 };
