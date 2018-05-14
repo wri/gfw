@@ -11,7 +11,8 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state => state[state.adminKey] || null;
+const getLocationsMeta = state =>
+  state[state.adminKey] || state.countries || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -23,7 +24,7 @@ export const parseData = createSelector(
     const dataMapped = [];
     data.forEach(d => {
       const region = meta.find(l => d.id === l.value);
-      if (region) {
+      if (region || meta === 'global') {
         dataMapped.push({
           label: (region && region.label) || '',
           extent: d.extent,
