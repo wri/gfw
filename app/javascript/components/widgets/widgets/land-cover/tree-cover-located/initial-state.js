@@ -42,9 +42,9 @@ export default {
       globalHasIndicator:
         'Within For {indicator} {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
       initial:
-        'In {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {value} compared to an average of {average}.',
+        'In {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
       hasIndicator:
-        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. This region has the largest tree cover at {value} compared to an average of {average}.',
+        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
       hasPercentage:
         '{region} had the largest relative tree cover of {value}, compared to a regional average of {average}.'
     },
