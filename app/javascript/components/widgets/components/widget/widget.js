@@ -110,7 +110,8 @@ class WidgetContainer extends PureComponent {
       this.props.settings &&
       (!isEqual(payload, this.props.payload) ||
         !isEqual(settings.threshold, this.props.settings.threshold) ||
-        !isEqual(settings.indicator, this.props.settings.indicator) ||
+        !isEqual(settings.forestType, this.props.settings.forestType) ||
+        !isEqual(settings.landCategory, this.props.settings.landCategory) ||
         !isEqual(settings.extentYear, this.props.settings.extentYear) ||
         !isEqual(settings.period, this.props.settings.period) ||
         !isEqual(settings.type, this.props.settings.type))

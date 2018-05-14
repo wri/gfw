@@ -6,7 +6,8 @@ import isEmpty from 'lodash/isEmpty';
 import camelCase from 'lodash/camelCase';
 import sortBy from 'lodash/sortBy';
 
-import indicators from 'data/indicators.json';
+import forestTypes from 'data/forest-types.json';
+import landCategories from 'data/land-categories.json';
 import thresholds from 'data/thresholds.json';
 import units from 'data/units.json';
 import periods from 'data/periods.json';
@@ -28,7 +29,8 @@ const getSubRegions = state => state.subRegions || null;
 
 // get all possible widget settings options
 const options = {
-  indicators,
+  forestTypes,
+  landCategories,
   thresholds,
   units,
   periods,

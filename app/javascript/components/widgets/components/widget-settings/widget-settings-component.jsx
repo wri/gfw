@@ -11,14 +11,14 @@ class WidgetSettings extends PureComponent {
       settings,
       config,
       loading,
-      currentLabel,
       onSettingsChange,
       widget,
       setModalMeta
     } = this.props;
     const {
       units,
-      indicators,
+      forestTypes,
+      landCategories,
       periods,
       thresholds,
       years,
@@ -31,24 +31,42 @@ class WidgetSettings extends PureComponent {
 
     return (
       <div className="c-widget-settings">
-        {indicators && (
+        {forestTypes && (
           <Dropdown
             theme="theme-select-light"
-            label={`REFINE LOCATION WITHIN ${currentLabel &&
-              currentLabel.toUpperCase()}`}
-            value={settings.indicator}
-            options={indicators}
+            label="FOREST TYPE"
+            value={settings.forestType}
+            options={forestTypes}
             onChange={option =>
               onSettingsChange({
-                value: { indicator: (option && option.value) || 'gadm28' },
+                value: { forestType: (option && option.value) || '' },
                 widget
               })
             }
             disabled={loading}
             optionsAction={setModalMeta}
             optionsActionKey="metaKey"
-            clearable={config.indicators[0] === 'gadm28'}
-            noSelectedValue={`All of ${currentLabel}`}
+            clearable={config.forestTypes[0] === 'gadm28'}
+            noSelectedValue="All types"
+          />
+        )}
+        {landCategories && (
+          <Dropdown
+            theme="theme-select-light"
+            label="LAND CATEGORY"
+            value={settings.landCategory}
+            options={landCategories}
+            onChange={option =>
+              onSettingsChange({
+                value: { landCategory: (option && option.value) || '' },
+                widget
+              })
+            }
+            disabled={loading}
+            optionsAction={setModalMeta}
+            optionsActionKey="metaKey"
+            clearable
+            noSelectedValue="All categories"
           />
         )}
         {types && (
@@ -202,7 +220,8 @@ class WidgetSettings extends PureComponent {
 }
 
 WidgetSettings.propTypes = {
-  indicators: PropTypes.array,
+  forestTypes: PropTypes.array,
+  landCategories: PropTypes.array,
   thresholds: PropTypes.array,
   units: PropTypes.array,
   periods: PropTypes.array,
@@ -212,7 +231,6 @@ WidgetSettings.propTypes = {
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,
-  currentLabel: PropTypes.string,
   options: PropTypes.object,
   onSettingsChange: PropTypes.func,
   widget: PropTypes.string,

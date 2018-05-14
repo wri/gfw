@@ -47,6 +47,17 @@ const getLocationQuery = (country, region, subRegion) =>
     region ? ` adm1 = ${region} AND` : ''
   }${subRegion ? ` adm2 = ${subRegion} AND` : ''}`;
 
+const getIndicatorQuery = (forestType, landCategory) => {
+  if (landCategory && !forestType) {
+    return landCategory;
+  } else if (landCategory && forestType) {
+    return `${forestType}__${landCategory}`;
+  } else if (!landCategory && forestType) {
+    return forestType;
+  }
+  return 'gadm28';
+};
+
 export const getLocations = ({
   country,
   region,
@@ -102,14 +113,15 @@ export const getExtent = ({
   country,
   region,
   subRegion,
-  indicator,
+  forestType,
+  landCategory,
   threshold,
   extentYear
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{indicator}', indicator)
+    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
   return axios.get(url);
 };
@@ -173,13 +185,14 @@ export const getLoss = ({
   country,
   region,
   subRegion,
-  indicator,
+  forestType,
+  landCategory,
   threshold
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.loss}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{indicator}', indicator);
+    .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
   return axios.get(url);
 };
 

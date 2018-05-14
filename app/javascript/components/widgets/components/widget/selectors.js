@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
 import lowerCase from 'lodash/lowerCase';
 import { sortByKey } from 'utils/data';
+import { pluralise } from 'utils/strings';
 
 // get list data
 const getData = state => state.data || null;
@@ -19,10 +20,10 @@ export const getOptionsSelected = createSelector(
     if (!options || !settings) return null;
     const optionsMeta = {};
     Object.keys(settings).forEach(o => {
-      const optionsKey = `${o}s`;
+      const optionsKey = pluralise(o);
       if (options[optionsKey]) {
         optionsMeta[o] = options[optionsKey].find(
-          opt => opt.value === settings[o] && opt.value !== 'gadm28'
+          opt => opt.value === settings[o]
         );
       }
     });
@@ -31,7 +32,7 @@ export const getOptionsSelected = createSelector(
 );
 
 // get options
-export const getIndicators = createSelector(
+export const getForestTypes = createSelector(
   [getLocationWhitelist, getLocation, getConfig, getOptions],
   (locationWhitelist, location, config, options) => {
     if (isEmpty(location)) {
@@ -41,11 +42,48 @@ export const getIndicators = createSelector(
 
     return sortByKey(
       sortByKey(
-        options.indicators
+        options.forestTypes
           .filter(
             i =>
-              config.indicators.indexOf(i.value) > -1 &&
+              config.forestTypes.indexOf(i.value) > -1 &&
               (isEmpty(whitelist) || whitelist.indexOf(i.value) > -1) &&
+              i.value !== 'gadm28' &&
+              (!config.type ||
+                config.type === 'extent' ||
+                (locationWhitelist[i.value] &&
+                  locationWhitelist[i.value][config.type]))
+          )
+          .map(item => {
+            const indicator = item;
+            if (indicator.metaKey === 'primary_forest') {
+              indicator.metaKey = `${lowerCase(location.country)}_${
+                indicator.metaKey
+              }${location.country === 'IDN' ? 's' : ''}`;
+            }
+            return indicator;
+          }),
+        'label'
+      ),
+      'category'
+    );
+  }
+);
+
+export const getLandCategories = createSelector(
+  [getLocationWhitelist, getLocation, getConfig, getOptions],
+  (locationWhitelist, location, config, options) => {
+    if (isEmpty(location) || isEmpty(locationWhitelist)) {
+      return null;
+    }
+    const whitelist = Object.keys(locationWhitelist);
+
+    return sortByKey(
+      sortByKey(
+        options.landCategories
+          .filter(
+            i =>
+              config.landCategories.indexOf(i.value) > -1 &&
+              whitelist.indexOf(i.value) > -1 &&
               i.value !== 'gadm28' &&
               (isEmpty(locationWhitelist) ||
                 !config.type ||

@@ -2,29 +2,13 @@ export const initialState = {
   title: 'Tree cover loss',
   config: {
     size: 'large',
-    indicators: [
-      'gadm28',
-      'ifl_2013',
-      'mining',
-      'wdpa',
-      'landmark',
-      'primary_forest',
-      'ifl_2013',
-      'ifl_2013__wdpa',
-      'ifl_2013__mining',
-      'ifl_2013__landmark',
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark',
-      'plantations__mining',
-      'plantations__wdpa',
-      'plantations__landmark'
-    ],
+    forestTypes: ['gadm28', 'ifl_2013', 'primary_forest'],
+    landCategories: ['mining', 'wdpa', 'landmark', 'primary_forest'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region', 'subRegion'],
     selectors: [
-      'indicators',
+      'forestTypes',
+      'landCategories',
       'startYears',
       'endYears',
       'thresholds',
@@ -49,7 +33,8 @@ export const initialState = {
     }
   },
   settings: {
-    indicator: 'gadm28',
+    forestType: '',
+    landCategory: '',
     threshold: 30,
     startYear: 2001,
     endYear: 2016,
