@@ -73,13 +73,14 @@ export const getSentence = createSelector(
         : selectedFAO.male;
       females = parseInt(selectedFAO.female, 10);
     }
+    const percentage = 100 * females / employees;
 
     const params = {
       location: `${currentLocation &&
         currentLocation &&
         currentLocation.label}'s`,
       value: `${employees ? format('.3s')(employees) : 'no'}`,
-      percent: `${format('.2s')(100 * females / employees)}%`,
+      percent: percentage >= 0.1 ? `${format('.2r')(percentage)}%` : '<0.1%',
       year
     };
 

@@ -55,8 +55,8 @@ export const getSentence = createSelector(
       firstSpecies: top[0].label,
       secondSpecies: top.length > 1 && top[1].label,
       type: settings.type === 'bound2' ? 'species' : 'type',
-      extent: `${format('.2s')(sumBy(top, 'value'))}ha`,
-      other: `${format('.2s')(sumBy(data.slice(2), 'value'))}ha`,
+      extent: `${format('.3s')(sumBy(top, 'value'))}ha`,
+      other: `${format('.3s')(sumBy(data.slice(2), 'value'))}ha`,
       count: data.length - top.length,
       topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`
     };

@@ -116,8 +116,8 @@ export const getSentence = createSelector(
         typeof accumulator !== 'object'
           ? accumulator
           : accumulator.emissions
-              .map(a => a.value)
-              .reduce((iSum, value) => iSum + value);
+            .map(a => a.value)
+            .reduce((iSum, value) => iSum + value);
       const itemCount = item.emissions
         .map(a => a.value)
         .reduce((iSum, value) => iSum + value);
@@ -137,7 +137,7 @@ export const getSentence = createSelector(
       percentage:
         Math.abs(emissionFraction) < 0.1
           ? '<0.1%'
-          : `${format('.1f')(Math.abs(emissionFraction))}%`,
+          : `${format('.2r')(Math.abs(emissionFraction))}%`,
       value: `${format('.3s')(
         Math.abs(emissionsCount / (endYear - startYear))
       )}tCO₂e/yr`,

@@ -170,7 +170,10 @@ export const getSentence = createSelector(
         currentLocation &&
         currentLocation.label}'s`,
       value: `${formatUSD(selectedFAO[0].net_usd, false)} USD`,
-      percentage: `${format('.2f')(selectedFAO[0].net_perc)}%`,
+      percentage:
+        selectedFAO[0].net_perc >= 0.1
+          ? `${format('2r')(selectedFAO[0].net_perc)}%`
+          : '<0.1%',
       year: settings.year
     };
 
