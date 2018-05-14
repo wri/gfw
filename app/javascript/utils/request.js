@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getKey, addKey } from 'services/cache';
 
+const EXPIRE_DEFAULT = 86400;
 let cacheKeys = [];
 let cacheError = false;
 
@@ -15,13 +16,13 @@ export const cacheMiddleware = () => nextDispatch => action => {
 };
 
 const request = {
-  get(url) {
+  get(url, expire = EXPIRE_DEFAULT) {
     const key = btoa(url);
     if (cacheError || cacheKeys.indexOf(key) === -1) {
       const axiosInstance = axios.create();
       if (!cacheError) {
         axiosInstance.interceptors.response.use(response =>
-          addKey(key, response.data).then(() => response)
+          addKey(key, response.data, expire).then(() => response)
         );
       }
       return axiosInstance.get(url);

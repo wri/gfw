@@ -18,14 +18,15 @@ export const getKey = id => {
   return axios.get(url);
 };
 
-export const addKey = (id, data) => {
+export const addKey = (id, data, expire) => {
   const url = REQUEST_URL + QUERIES.add;
   return axios({
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     data: {
       id,
-      data
+      data,
+      expire
     },
     url
   });

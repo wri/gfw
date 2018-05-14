@@ -13,7 +13,8 @@ class CacheController < ApplicationController
   def add
     id = params[:id]
     data = params[:data].to_json
-    $redis.set(id, data)
+    expire = params[:expire] || 86400
+    $redis.set(id, data, expire)
 
     render :json => { id: id, data: data }
   end
