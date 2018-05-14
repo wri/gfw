@@ -58,6 +58,7 @@ class Page extends PureComponent {
             location={location}
             locationOptions={locationOptions}
             locationNames={locationNames}
+            isParentLoading={isCacheListLoading}
           />
           <SubNavMenu
             className="nav"
@@ -92,7 +93,7 @@ class Page extends PureComponent {
                   zoom: 8
                 }}
                 areaHighlight={locationGeoJson}
-                isParentLoading={isCacheListLoading && isGeostoreLoading}
+                isParentLoading={isCacheListLoading || isGeostoreLoading}
                 widgetKey={activeWidget}
               />
             </div>
@@ -113,8 +114,8 @@ class Page extends PureComponent {
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CacheProvider />
-        {!isCacheListLoading && <CountryDataProvider />}
-        {!isCacheListLoading && <WhitelistsProvider />}
+        <CountryDataProvider isParentLoading={isCacheListLoading} />
+        <WhitelistsProvider isParentLoading={isCacheListLoading} />
         <Meta
           page={
             locationNames &&

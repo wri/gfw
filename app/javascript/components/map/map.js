@@ -45,9 +45,8 @@ class MapContainer extends PureComponent {
   }
 
   componentDidMount() {
-    const { mapOptions, getLayerSpec, setMapSettings } = this.props;
+    const { mapOptions, setMapSettings } = this.props;
     this.buildMap();
-    getLayerSpec();
     setMapSettings(mapOptions);
   }
 
@@ -57,9 +56,15 @@ class MapContainer extends PureComponent {
       bounds,
       layersKeys,
       settings,
-      options
+      options,
+      getLayerSpec
     } = nextProps;
-    if (isParentLoading !== this.props.isParentLoading && bounds) {
+    const parentLoadingChanged = isParentLoading !== this.props.isParentLoading;
+
+    if (parentLoadingChanged) {
+      getLayerSpec();
+    }
+    if (parentLoadingChanged && bounds) {
       this.boundMap(nextProps.bounds);
       this.setAreaHighlight();
       this.updateLayers(layersKeys, this.props.layersKeys, settings);
