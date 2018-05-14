@@ -23,17 +23,8 @@ export const getCountryWhitelist = createThunkAction(
       dispatch(setCountryWhitelistLoading(true));
       getCountryWhitelistProvider(country)
         .then(response => {
-          const data = {};
-          if (response.data && response.data.data.length) {
-            response.data.data.forEach(d => {
-              data[d.polyname] = {
-                extent_2000: d.total_extent_2000,
-                extent_2010: d.total_extent_2010,
-                loss: d.total_loss,
-                gain: d.total_gain
-              };
-            });
-          }
+          const data =
+            response.data.data && response.data.data.map(d => d.polyname);
           dispatch(setCountryWhitelist(data));
         })
         .catch(error => {

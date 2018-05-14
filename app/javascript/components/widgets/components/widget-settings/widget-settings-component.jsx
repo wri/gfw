@@ -9,7 +9,6 @@ class WidgetSettings extends PureComponent {
   render() {
     const {
       settings,
-      config,
       loading,
       onSettingsChange,
       widget,
@@ -46,7 +45,7 @@ class WidgetSettings extends PureComponent {
             disabled={loading}
             optionsAction={setModalMeta}
             optionsActionKey="metaKey"
-            clearable={config.forestTypes[0] === 'gadm28'}
+            clearable
             noSelectedValue="All types"
           />
         )}
@@ -227,7 +226,6 @@ WidgetSettings.propTypes = {
   periods: PropTypes.array,
   years: PropTypes.array,
   settings: PropTypes.object,
-  config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,

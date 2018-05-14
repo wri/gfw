@@ -43,7 +43,7 @@ const mapStateToProps = (
     category,
     ...location,
     countryData,
-    indicatorWhitelist: region ? regionWhitelist : countryWhitelist
+    whitelist: region ? regionWhitelist : countryWhitelist
   };
   const currentLocation = getAdminSelected({ ...countryData, payload });
 
@@ -56,8 +56,8 @@ const mapStateToProps = (
     currentLabel: currentLocation && currentLocation.label,
     ...currentLocation,
     ...widgetData,
-    ...whitelists,
     ...countryData,
+    ...whitelists,
     colors,
     activeWidget,
     ...(!!widget && { widget: widgets[widget] })

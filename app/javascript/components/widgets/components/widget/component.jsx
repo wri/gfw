@@ -111,7 +111,7 @@ Widget.propTypes = {
   error: PropTypes.bool,
   active: PropTypes.bool,
   colors: PropTypes.object,
-  whitelist: PropTypes.object,
+  whitelist: PropTypes.array,
   Component: PropTypes.any,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

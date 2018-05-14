@@ -21,7 +21,7 @@ import * as WIDGETS from 'components/widgets/manifest';
 const getCountryData = state => state.countryData || null;
 const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
-const getIndicatorWhitelist = state => state.indicatorWhitelist || null;
+const getWhitelist = state => state.whitelist || null;
 const getWidgetQuery = state => state.activeWidget || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
@@ -174,7 +174,7 @@ export const checkWidgetNeedsLocations = createSelector(
 );
 
 export const filterWidgetByIndicator = createSelector(
-  [checkWidgetNeedsLocations, getIndicatorWhitelist, getAdminLevel],
+  [checkWidgetNeedsLocations, getWhitelist, getAdminLevel],
   (widgets, whitelist, admin) => {
     if (!widgets) return null;
     if (admin === 'global') return widgets;
@@ -195,7 +195,7 @@ export const filterWidgetByIndicator = createSelector(
 );
 
 export const checkWidgetHasData = createSelector(
-  [filterWidgetByIndicator, getIndicatorWhitelist, getAdminLevel],
+  [filterWidgetByIndicator, getWhitelist, getAdminLevel],
   (widgets, whitelist, admin) => {
     if (admin === 'global') return widgets;
     return widgets.filter(w => {

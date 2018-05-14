@@ -12,7 +12,7 @@ const getOptions = state => state.options || null;
 const getConfig = state => state.config || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
-const getLocationWhitelist = state => state.indicatorWhitelist || null;
+const getWhitelist = state => state.whitelist || null;
 
 export const getOptionsSelected = createSelector(
   [getOptions, getSettings],
@@ -33,77 +33,52 @@ export const getOptionsSelected = createSelector(
 
 // get options
 export const getForestTypes = createSelector(
-  [getLocationWhitelist, getLocation, getConfig, getOptions],
-  (locationWhitelist, location, config, options) => {
-    if (isEmpty(location)) {
-      return null;
+  [getWhitelist, getLocation, getConfig, getOptions],
+  (whitelist, location, config, options) => {
+    if (isEmpty(options)) return null;
+    const { forestTypes } = options;
+    const { country } = location;
+    let filteredOptions = forestTypes;
+
+    if (!isEmpty(whitelist)) {
+      filteredOptions = forestTypes.filter(
+        i =>
+          whitelist.indexOf(i.value) > -1 &&
+          config.forestTypes.indexOf(i.value) > -1
+      );
     }
-    const whitelist = locationWhitelist && Object.keys(locationWhitelist);
 
     return sortByKey(
-      sortByKey(
-        options.forestTypes
-          .filter(
-            i =>
-              config.forestTypes.indexOf(i.value) > -1 &&
-              (isEmpty(whitelist) || whitelist.indexOf(i.value) > -1) &&
-              i.value !== 'gadm28' &&
-              (!config.type ||
-                config.type === 'extent' ||
-                (locationWhitelist[i.value] &&
-                  locationWhitelist[i.value][config.type]))
-          )
-          .map(item => {
-            const indicator = item;
-            if (indicator.metaKey === 'primary_forest') {
-              indicator.metaKey = `${lowerCase(location.country)}_${
-                indicator.metaKey
-              }${location.country === 'IDN' ? 's' : ''}`;
-            }
-            return indicator;
-          }),
-        'label'
-      ),
-      'category'
+      filteredOptions.map(i => ({
+        ...i,
+        metaKey:
+          i.metaKey === 'primary_forest'
+            ? `${lowerCase(country)}_${i.metaKey}${
+              country === 'IDN' ? 's' : ''
+            }`
+            : i.metaKey
+      })),
+      'label'
     );
   }
 );
 
 export const getLandCategories = createSelector(
-  [getLocationWhitelist, getLocation, getConfig, getOptions],
-  (locationWhitelist, location, config, options) => {
-    if (isEmpty(location) || isEmpty(locationWhitelist)) {
-      return null;
-    }
-    const whitelist = Object.keys(locationWhitelist);
+  [getWhitelist, getConfig, getOptions],
+  (whitelist, config, options) => {
+    if (isEmpty(options)) return null;
+    const { landCategories } = options;
+    let filteredOptions = landCategories;
 
-    return sortByKey(
-      sortByKey(
-        options.landCategories
-          .filter(
-            i =>
-              config.landCategories.indexOf(i.value) > -1 &&
-              whitelist.indexOf(i.value) > -1 &&
-              i.value !== 'gadm28' &&
-              (isEmpty(locationWhitelist) ||
-                !config.type ||
-                config.type === 'extent' ||
-                (locationWhitelist[i.value] &&
-                  locationWhitelist[i.value][config.type]))
-          )
-          .map(item => {
-            const indicator = item;
-            if (indicator.metaKey === 'primary_forest') {
-              indicator.metaKey = `${lowerCase(location.country)}_${
-                indicator.metaKey
-              }${location.country === 'IDN' ? 's' : ''}`;
-            }
-            return indicator;
-          }),
-        'label'
-      ),
-      'category'
-    );
+    if (!isEmpty(whitelist)) {
+      filteredOptions = landCategories.filter(
+        i =>
+          whitelist.indexOf(i.value) > -1 &&
+          config.landCategories.indexOf(i.value) > -1
+      );
+    }
+
+    return sortByKey(filteredOptions, 'label');
   }
 );
 
