@@ -1,12 +1,8 @@
 export const initialState = {
-  cacheListLoading: false,
-  cacheList: []
+  cacheListLoading: true,
+  cacheList: [],
+  error: false
 };
-
-const setCacheListLoading = (state, { payload }) => ({
-  ...state,
-  cacheListLoading: payload
-});
 
 const setCacheList = (state, { payload }) => ({
   ...state,
@@ -14,7 +10,13 @@ const setCacheList = (state, { payload }) => ({
   cacheList: payload
 });
 
+const setCacheError = (state, { payload }) => ({
+  ...state,
+  cacheListLoading: false,
+  error: payload
+});
+
 export default {
-  setCacheListLoading,
-  setCacheList
+  setCacheList,
+  setCacheError
 };
