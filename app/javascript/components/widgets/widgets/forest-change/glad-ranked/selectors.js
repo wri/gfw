@@ -94,7 +94,7 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, currentLabel, sentences) => {
     if (!data || !options || !currentLabel) return '';
-    const { initial } = sentences;
+    const { initial, oneRegion } = sentences;
     const totalCount = sumBy(data, 'count');
     let percentileCount = 0;
     let percentileLength = 0;
@@ -116,6 +116,7 @@ export const getSentence = createSelector(
       location: currentLabel,
       indicator: `${indicator ? `${indicator.label.toLowerCase()} in ` : ''}`
     };
-    return { sentence: initial, params };
+    const sentence = percentileLength === 1 ? oneRegion : initial;
+    return { sentence, params };
   }
 );
