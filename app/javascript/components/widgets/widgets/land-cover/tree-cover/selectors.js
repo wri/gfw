@@ -65,9 +65,9 @@ export const getSentence = createSelector(
     const params = {
       year: settings.extentYear,
       location: currentLabel || 'global',
-      indicator: indicator && indicator.label,
+      indicator: indicator && indicator.label.toLowerCase(),
       percentage:
-        percentCover >= 0.1 ? `${format('.1f')(percentCover)}%` : '<0.1%',
+        percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%',
       value: `${format('.3s')(data.cover)}ha`
     };
     let sentence = indicator ? withIndicator : initial;

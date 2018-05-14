@@ -11,7 +11,7 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
-const getLocationsMeta = state => state[state.adminKey] || null;
+const getLocationsMeta = state => state[state.childKey] || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -21,16 +21,17 @@ export const parseData = createSelector(
   (data, settings, location, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
+    const { type, country, region } = location;
     data.forEach(d => {
-      const region = meta.find(l => d.id === l.value);
-      if (region) {
+      const regionMeta = meta.find(l => d.id === l.value);
+      if (regionMeta) {
         dataMapped.push({
-          label: (region && region.label) || '',
+          label: (regionMeta && regionMeta.label) || '',
           extent: d.extent,
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
-          path: `/dashboards/country/${location.country}/${
-            location.region ? `${location.region}/` : ''
+          path: `/dashboards/${type || 'global'}/${country}/${
+            region ? `${region}/` : ''
           }${d.id}`,
           color: colors.main
         });
@@ -79,15 +80,15 @@ export const getSentence = createSelector(
     const params = {
       location: currentLabel === 'global' ? 'Globally' : currentLabel,
       region: topRegion.label,
-      indicator: indicator && indicator.label,
-      percentage: topExtent ? `${format('.0f')(topExtent)}%` : '0%',
+      indicator: indicator && indicator.label.toLowerCase(),
+      percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
       value:
         settings.unit === '%'
-          ? `${format('.0f')(topRegion.percentage)}%`
+          ? `${format('.2r')(topRegion.percentage)}%`
           : `${format('.3s')(topRegion.extent)}ha`,
       average:
         settings.unit === '%'
-          ? `${format('.0f')(avgExtentPercentage)}%`
+          ? `${format('.2r')(avgExtentPercentage)}%`
           : `${format('.3s')(avgExtent)}ha`,
       count: percentileLength,
       metric: settings.unit === '%' ? 'relative tree cover' : 'tree cover'
@@ -100,7 +101,6 @@ export const getSentence = createSelector(
     } else if (indicator) {
       sentence = currentLabel === 'global' ? globalWithIndicator : hasIndicator;
     }
-
     return {
       sentence,
       params

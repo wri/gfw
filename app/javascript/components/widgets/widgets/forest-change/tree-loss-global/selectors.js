@@ -168,7 +168,7 @@ export const getSentence = createSelector(
       startYear,
       endYear,
       loss: `${format('.3s')(totalLoss)}ha`,
-      percent: `${format('.1f')(percentageLoss)}%`,
+      percent: `${format('.2r')(percentageLoss)}%`,
       emissions: `${format('.3s')(totalEmissions)}t`,
       extentYear
     };

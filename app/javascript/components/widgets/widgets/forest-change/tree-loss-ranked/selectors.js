@@ -135,9 +135,9 @@ export const getSentence = createSelector(
       startYear,
       endYear,
       loss: loss ? `${format('.3s')(loss)}ha` : '0ha',
-      percent: areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
+      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
       globalPercent:
-        globalPercent >= 0.1 ? `${format('.1f')(globalPercent)}%` : '<0.1%',
+        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%',
       extentYear: settings.extentYear
     };
 

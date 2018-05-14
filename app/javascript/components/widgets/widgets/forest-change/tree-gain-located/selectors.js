@@ -98,18 +98,18 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      indicator: indicator && indicator.value,
+      indicator: indicator && indicator.value.toLowerCase(),
       location: currentLabel,
-      topGain: `${format('.0f')(topGain)}%`,
+      topGain: `${format('.2r')(topGain)}%`,
       percentileLength,
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
         topRegion.percentage > 1 && settings.unit === '%'
-          ? `${format('.0f')(topRegion.percentage)}%`
+          ? `${format('.2r')(topRegion.percentage)}%`
           : `${format('.3s')(topRegion.gain)}ha`,
       average:
         topRegion.percentage > 1 && settings.unit === '%'
-          ? `${format('.0f')(avgGainPercentage)}%`
+          ? `${format('.2r')(avgGainPercentage)}%`
           : `${format('.3s')(avgGain)}ha`
     };
 

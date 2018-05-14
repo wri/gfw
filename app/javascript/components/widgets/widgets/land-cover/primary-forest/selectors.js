@@ -79,7 +79,7 @@ export const getSentence = createSelector(
       percentage:
         primaryPercentage < 0.1
           ? '<0.1%'
-          : `${format('.0f')(primaryPercentage)}%`,
+          : `${format('.2r')(primaryPercentage)}%`,
       primary: 'primary forest',
       extentYear: settings.extentYear
     };
