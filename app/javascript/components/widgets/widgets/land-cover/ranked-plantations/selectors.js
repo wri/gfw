@@ -116,7 +116,7 @@ export const getSentence = createSelector(
       ),
       'value'
     );
-    const plantationLabel = topPlantation.label;
+    const plantationLabel = topPlantation.label.toLowerCase();
     const isPlural = endsWith(plantationLabel, 's');
 
     const params = {
