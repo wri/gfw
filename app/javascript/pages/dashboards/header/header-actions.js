@@ -20,7 +20,7 @@ export const getHeaderData = createThunkAction(
         .all([
           getExtent(params),
           getLoss(params),
-          getLoss({ ...params, indicator: 'plantations' })
+          getLoss({ ...params, forestType: 'plantations' })
         ])
         .then(
           axios.spread((totalExtent, totalLoss, plantationsLoss) => {
