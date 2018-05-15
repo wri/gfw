@@ -6,7 +6,7 @@ import CATEGORIES from 'data/categories.json';
 import mapActions from 'components/map/map-actions';
 
 import { filterWidgets } from 'components/widgets/selectors';
-import { getLinks } from './page-selectors';
+import { getLinks, getTitle } from './page-selectors';
 import Component from './page-component';
 
 const actions = { ...mapActions };
@@ -38,6 +38,7 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     widgets,
     activeWidget: activeWidget || (widgets && widgets[0] && widgets[0].name),
     widgetAnchor,
+    title: getTitle({ countries: countryData.countries, ...location }),
     ...location,
     ...countryData
   };
