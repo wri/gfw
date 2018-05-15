@@ -97,8 +97,8 @@ export const getAdminSelected = createSelector(
     let current = type;
     let parentLevel = null;
     let parentKey = null;
-    let childLevel = null;
-    let childKey = null;
+    let childLevel = 'country';
+    let childKey = 'countries';
     if (location.subRegion) {
       current = subRegion;
       parentKey = 'regions';

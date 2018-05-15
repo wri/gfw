@@ -48,14 +48,16 @@ export default {
     },
     sentences: {
       initial:
-        'In the last {timeframe}, {count} GLAD alerts were detected in {indicator} in {location}, which affected an area of approximately {area}. The top {topRegions} regions accounted for {topPercent} of all GLAD alerts.'
+        'In the last {timeframe}, {count} GLAD alerts were detected in {indicator} in {location}, which affected an area of approximately {area}. The top {topRegions} regions accounted for {topPercent} of all GLAD alerts.',
+      oneRegion:
+        'In the last {timeframe}, {count} GLAD alerts were detected in {indicator} in {location}, which affected an area of approximately {area}. The top {topRegions} region accounted for {topPercent} of all GLAD alerts.'
     }
   },
   settings: {
     indicator: 'gadm28',
     threshold: 30,
     extentYear: 2010,
-    unit: 'ha',
+    unit: '%',
     weeks: 4,
     pageSize: 5,
     page: 0,

@@ -5,7 +5,7 @@ class DashboardsController < ApplicationController
 
   def index
     @title = @location && @location["name"] || @location
-    @desc = "Data about forest change, tenure, forest related employment and land use in #{@location}"
+    @desc = "Data about forest change, tenure, forest related employment and land use in #{@title}"
     # if params[:widget]
     #   widgets_config = JSON.parse(File.read(Rails.root.join('app', 'javascript', 'components', 'widget', 'widget-config.json')))
     #   widget_data = widgets_config[params[:widget]]
@@ -16,8 +16,8 @@ class DashboardsController < ApplicationController
   end
 
   def embed
-    @title = @location["name"]
-    @desc = "Data about forest change, tenure, forest related employment and land use in #{@location}"
+    @title = @location && @location["name"] || @location
+    @desc = "Data about forest change, tenure, forest related employment and land use in #{@title}"
     render layout: 'application_react_embed'
   end
 

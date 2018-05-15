@@ -24,7 +24,7 @@ export default {
   settings: {
     indicator: 'gadm28',
     threshold: 30,
-    unit: 'ha',
+    unit: '%',
     extentYear: 2000,
     layers: ['forest2010']
   },

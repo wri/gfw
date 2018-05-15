@@ -17,7 +17,7 @@ const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 const getCountries = state => state.config && state.countries;
 
-const groupData = (data, extent) => {
+const groupData = data => {
   const groupByYear = groupBy(data, 'year');
   const sumData = Object.keys(groupBy(data, 'year')).map(y => {
     const area = sumBy(groupByYear[y], 'area') || 0;
@@ -26,8 +26,7 @@ const groupData = (data, extent) => {
       iso: 'Other',
       year: y,
       area,
-      emissions,
-      percentage: (area && area / extent * 100) || 0
+      emissions
     };
   });
   return sumData;
@@ -64,12 +63,13 @@ export const parseData = createSelector(
     const allCountries = Object.keys(groupBy(data, 'iso'));
     const topData = data.filter(d => isos.indexOf(d.iso) > -1);
     let otherData = [];
-    if (allCountries.length && allCountries.length > 5) {
+    if (allCountries && allCountries.length > 5) {
       otherData = groupData(data.filter(d => isos.indexOf(d.iso) === -1));
     }
     const allData = [...topData, ...otherData];
     const groupedData = groupBy(allData, 'year');
-    const finasdsa = Object.keys(groupedData).map(y => {
+
+    return Object.keys(groupedData).map(y => {
       const datakeys = {};
       groupedData[y].forEach(d => {
         datakeys[d.iso] = d.area || 0;
@@ -80,13 +80,11 @@ export const parseData = createSelector(
         ...datakeys
       };
     });
-
-    return finasdsa;
   }
 );
 
 export const parseConfig = createSelector(
-  [getColors, parseData, getTopIsos, getCountries],
+  [getColors, getFilteredData, getTopIsos, getCountries],
   (colors, data, isos, countries) => {
     if (isEmpty(data)) return null;
     const yKeys = {};
@@ -168,7 +166,7 @@ export const getSentence = createSelector(
       startYear,
       endYear,
       loss: `${format('.3s')(totalLoss)}ha`,
-      percent: `${format('.1f')(percentageLoss)}%`,
+      percent: `${format('.2r')(percentageLoss)}%`,
       emissions: `${format('.3s')(totalEmissions)}t`,
       extentYear
     };

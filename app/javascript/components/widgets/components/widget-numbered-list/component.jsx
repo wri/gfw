@@ -18,7 +18,7 @@ class WidgetTreeLocated extends PureComponent {
         data={parsedData}
         settings={{
           ...settings,
-          format: settings.unit === '%' ? '.0f' : '.2s'
+          format: settings.unit === '%' ? '.2r' : '.3s'
         }}
         handlePageChange={change =>
           setWidgetSettingsUrl({

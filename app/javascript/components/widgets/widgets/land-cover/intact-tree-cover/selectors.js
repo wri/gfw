@@ -86,7 +86,7 @@ export const getSentence = createSelector(
       percentage:
         intactPercentage < 0.1
           ? '<0.1%'
-          : `${format('.0f')(intactPercentage)}%`,
+          : `${format('.2r')(intactPercentage)}%`,
       intact: 'intact forest'
     };
 

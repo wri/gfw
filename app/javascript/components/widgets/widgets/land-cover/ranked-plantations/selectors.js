@@ -23,7 +23,7 @@ const getSentences = state => state.config.sentences || null;
 const getPlanationKeys = createSelector(
   [getPlantations],
   plantations =>
-    plantations ? Object.keys(groupBy(plantations, 'label')) : null
+    (plantations ? Object.keys(groupBy(plantations, 'label')) : null)
 );
 
 export const parseData = createSelector(
@@ -116,14 +116,14 @@ export const getSentence = createSelector(
       ),
       'value'
     );
-    const plantationLabel = topPlantation.label;
+    const plantationLabel = topPlantation.label.toLowerCase();
     const isPlural = endsWith(plantationLabel, 's');
 
     const params = {
       location: currentLabel,
       region: topRegion.region,
       topType: `${plantationLabel}${isPlural ? 's' : ''} plantations`,
-      percentage: `${format('.1f')(data[0].total)}%`
+      percentage: `${format('.2r')(data[0].total)}%`
     };
 
     return {
