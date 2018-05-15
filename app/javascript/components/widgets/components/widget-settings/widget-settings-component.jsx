@@ -28,6 +28,15 @@ class WidgetSettings extends PureComponent {
       types,
       weeks
     } = this.props.options;
+    const hasExtraOptions =
+      units ||
+      periods ||
+      years ||
+      startYears ||
+      endYears ||
+      extentYears ||
+      types ||
+      weeks;
 
     return (
       <div className="c-widget-settings">
@@ -207,6 +216,7 @@ class WidgetSettings extends PureComponent {
           )}
         {thresholds && (
           <Dropdown
+            className={hasExtraOptions ? 'threshold-border' : ''}
             theme="theme-dropdown-button canopy-select"
             label="CANOPY DENSITY"
             value={settings.threshold}

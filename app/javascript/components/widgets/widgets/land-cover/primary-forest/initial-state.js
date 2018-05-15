@@ -2,16 +2,12 @@ export default {
   title: 'Primary forest',
   config: {
     size: 'small',
-    indicators: [
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark'
-    ],
+    forestTypes: ['primary_forest'],
+    landCategories: ['mining', 'wdpa', 'landmark'],
     categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
     locationWhitelist: ['IDN', 'COD'],
-    selectors: ['indicators', 'thresholds'],
+    selectors: ['forestTypes', 'landCategories', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_primary_forest',
     layers: ['forest2000'],

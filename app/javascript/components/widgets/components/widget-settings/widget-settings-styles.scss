@@ -40,9 +40,12 @@
   }
 
   .canopy-select {
-    border-top: solid 1px $border;
-    padding-top: rem(15px);
     margin-top: rem(10px);
+
+    &.threshold-border {
+      border-top: solid 1px $border;
+      padding-top: rem(15px);
+    }
 
     .dd__wrapper {
       max-width: rem(85px);

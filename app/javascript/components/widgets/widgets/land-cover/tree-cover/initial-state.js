@@ -2,10 +2,10 @@ export default {
   title: 'Tree cover',
   config: {
     size: 'small',
-    indicators: ['gadm28', 'mining', 'landmark', 'wdpa'],
+    landCategories: ['mining', 'landmark', 'wdpa'],
     categories: ['summary', 'land-cover'],
     admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds'],
+    selectors: ['landCategories', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_tree_cover',
     layers: ['forest2000', 'forest2010'],

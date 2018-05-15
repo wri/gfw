@@ -2,11 +2,11 @@ export default {
   title: 'Tree cover extent',
   config: {
     size: 'small',
-    indicators: ['gadm28', 'wdpa', 'kba', 'aze', 'tcl'],
+    landCategories: ['wdpa', 'kba', 'aze', 'tcl'],
     units: ['ha', '%'],
     categories: ['land-cover'],
     admins: ['country'],
-    selectors: ['indicators', 'thresholds', 'extentYears', 'units'],
+    selectors: ['landCategories', 'thresholds', 'extentYears', 'units'],
     type: 'extent',
     metaKey: 'widget_forest_cover_ranking',
     layers: ['forest2000', 'forest2010'],
