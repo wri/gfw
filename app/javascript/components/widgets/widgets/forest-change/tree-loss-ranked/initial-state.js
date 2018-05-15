@@ -52,7 +52,7 @@ export const initialState = {
     threshold: 50,
     startYear: 2001,
     endYear: 2016,
-    unit: 'ha',
+    unit: '%',
     extentYear: 2000,
     layers: ['loss']
   },
