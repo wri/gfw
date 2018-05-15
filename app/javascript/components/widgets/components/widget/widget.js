@@ -80,20 +80,17 @@ class WidgetContainer extends PureComponent {
       getData,
       getWidgetData,
       widget,
-      data,
       geostore
     } = this.props;
-    if (isEmpty(data)) {
-      getWidgetData({
-        widget,
-        getData,
-        params: {
-          ...payload,
-          ...settings,
-          geostore
-        }
-      });
-    }
+    getWidgetData({
+      widget,
+      getData,
+      params: {
+        ...payload,
+        ...settings,
+        geostore
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -140,8 +137,7 @@ WidgetContainer.propTypes = {
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
   widget: PropTypes.string,
-  geostore: PropTypes.object,
-  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  geostore: PropTypes.object
 };
 
 export default connect(mapStateToProps, null)(WidgetContainer);
