@@ -56,7 +56,7 @@ export default {
     indicator: 'gadm28',
     threshold: 30,
     extentYear: 2000,
-    unit: 'ha',
+    unit: '%',
     pageSize: 5,
     page: 0,
     startYear: 2001,

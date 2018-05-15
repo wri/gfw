@@ -32,7 +32,7 @@ export default {
   settings: {
     indicator: 'gadm28',
     threshold: 50,
-    unit: 'ha',
+    unit: '%',
     extentYear: 2010,
     layers: ['forestgain']
   },
