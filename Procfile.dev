@@ -1,3 +1,4 @@
 web: bundle exec rails s
+web: redis-cli flushdb
 # watcher: ./bin/webpack-watcher
 webpacker: ./bin/webpack-dev-server
