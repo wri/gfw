@@ -65,8 +65,8 @@ module Gfw
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = true
 
-    config.cache_store = :redis_store, "redis://localhost:6379/0/cache", { expires_in: 90.minutes }
-
+    config.cache_store = :redis_store, "redis://localhost:6379/0/cache"
+  
     ActiveSupport.halt_callback_chains_on_return_false = false
   end
 end
