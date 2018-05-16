@@ -32,7 +32,7 @@ export const fetchGladAlerts = ({ country, region, subRegion }) => {
   }`
     .replace('{location}', getLocation(country, region, subRegion))
     .replace('{polyname}', 'gadm28');
-  return request.get(url, 3600);
+  return request.get(url, 3600, 'gladRequest');
 };
 
 export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
@@ -41,12 +41,12 @@ export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
     .replace('{polyname}', indicator);
-  return request.get(url, 3600);
+  return request.get(url, 3600, 'gladRequest');
 };
 
 export const fetchGLADLatest = () => {
   const url = `${REQUEST_URL}/glad-alerts/latest`;
-  return request.get(url, 3600);
+  return request.get(url, 3600, 'gladRequest');
 };
 
 export const fetchViirsAlerts = ({

@@ -1,0 +1,7 @@
+[
+  {
+    "id": "gladRequest",
+    "type": "excludeWeekDay",
+    "data": [4, 5]
+  }
+]
