@@ -25,9 +25,10 @@ const request = {
       const axiosInstance = axios.create();
       const haveException = checkException(exceptionId);
       if (!cacheError && !haveException) {
-        axiosInstance.interceptors.response.use(response =>
-          addKey(key, response.data, expire, exceptionId).then(() => response)
-        );
+        axiosInstance.interceptors.response.use(response => {
+          addKey(key, response.data, expire, exceptionId);
+          return response;
+        });
       }
       return axiosInstance.get(url);
     }
