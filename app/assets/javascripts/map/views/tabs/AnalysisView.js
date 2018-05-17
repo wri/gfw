@@ -466,7 +466,7 @@ define([
      * Star drawing manager and add an overlaycomplete
      * listener.
      */
-    _startDrawingManager: function() {
+    _startDrawingManager: function() {
       this.presenter.deleteMultiPoligon();
       this.model.set('is_drawing', true);
       this.drawingManager = new google.maps.drawing.DrawingManager({

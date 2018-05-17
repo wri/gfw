@@ -177,9 +177,7 @@ define(
     'map/views/layers/HaitiWatershedLayer',
     'map/views/layers/EcuUserProtectedAreasLayer',
     'map/views/layers/BolUserFireFrequencyLayer',
-    // high resolution maps
-    'map/views/layers/SentinelLayer',
-    'map/views/layers/SentinelTilesLayer',
+    'map/views/layers/RecentImageryLayer',
     // Layer dialog templates
     // 'text!templates/dialogs/loss_dialog.handlebars',
     // Layers timelines
@@ -366,9 +364,7 @@ define(
     HaitiWatershedLayer,
     EcuUserProtectedAreasLayer,
     BolUserFireFrequencyLayer,
-    // highres layers
-    SentinelLayer,
-    SentinelTilesLayer,
+    RecentImageryLayer,
     // Layer dialog templates
     // loss_dialog,
     // Layer timelines
@@ -777,11 +773,8 @@ define(
       usa_forest_ownership: {
         view: UsaForestOwnershipLayer
       },
-      highres: {
-        view: SentinelLayer
-      },
       sentinel_tiles: {
-        view: SentinelTilesLayer
+        view: RecentImageryLayer
       },
       guyra: {
         view: GuyraLayer,

@@ -359,23 +359,20 @@ define(
                 layer.title = 'Tree plantations';
               }
 
-              layer.sublayers = layers.filter(
-                function(l) { return l.parent_layer === layer.slug; }
-              );
+              layer.sublayers = layers.filter(function(l) {
+                return l.parent_layer === layer.slug;
+              });
 
               var subLayers =
                 layer.sublayers.length &&
-                layer.sublayers.reduce(
-                  function(state, l) {
-                    var slugData = {};
-                    slugData[l.slug] = {
-                      color: l.category_color,
-                      checked: 'checked'
-                    };
-                    return Object.assign(state, slugData);
-                  },
-                  {}
-                );
+                layer.sublayers.reduce(function(state, l) {
+                  var slugData = {};
+                  slugData[l.slug] = {
+                    color: l.category_color,
+                    checked: 'checked'
+                  };
+                  return Object.assign(state, slugData);
+                }, {});
 
               layer.detailsTpl = this.detailsTemplates[layer.slug](
                 Object.assign(
@@ -433,9 +430,7 @@ define(
         if ($('.categories').filter('.-country')) {
           var accordionCountry = $('.categories').filter('.-country');
           if ($(accordionCountry).find('.js-tree-plantation')) {
-            var selectOption = $(accordionCountry).find(
-              '.js-tree-plantation'
-            );
+            var selectOption = $(accordionCountry).find('.js-tree-plantation');
             $(selectOption).removeClass('js-tree-plantation');
             $(selectOption).addClass('js-tree-plantation-country');
           }
@@ -447,7 +442,9 @@ define(
 
       getLayersByCategory: function(layers) {
         var subscriptionsAllowed = datasetsHelper.getListSubscriptionsAllowed();
-        var filteredLayers = _.filter(layers, function(layer) { return !layer.parent_layer; });
+        var filteredLayers = _.filter(layers, function(layer) {
+          return !layer.parent_layer;
+        });
         return _.groupBy(filteredLayers, function(layer) {
           layer.allowSubscription =
             layer && subscriptionsAllowed.indexOf(layer.slug) > -1;
@@ -575,8 +572,7 @@ define(
           function(div) {
             var $div = $(div);
             var $toggle = $div.find('.onoffswitch');
-            var optionSelected =
-              layerOptions.indexOf($div.data('option')) > -1;
+            var optionSelected = layerOptions.indexOf($div.data('option')) > -1;
             var color = $toggle.data('color') || '#F69';
 
             if (optionSelected) {
@@ -630,6 +626,9 @@ define(
         var layerSlug = $(e.currentTarget).data('slug');
         this.presenter.toggleLayer(layerSlug);
         this.removeSublayers(layerSlug);
+        window.dispatchEvent(
+          new CustomEvent('removeLayer', { detail: layerSlug })
+        );
       },
 
       showTooltip: function(e) {
@@ -642,7 +641,13 @@ define(
         var dataSource = $(e.target).attr('data-source');
         if (text != '') {
           $('body').append(
-            '<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:' + top + 'px; left:' + left + 'px;"><div class="triangle"><span>' + text + '</span><p>Click to see more</p></div></div>'
+            '<div class="tooltip-info-legend" id="tooltip-info-legend" style="top:' +
+              top +
+              'px; left:' +
+              left +
+              'px;"><div class="triangle"><span>' +
+              text +
+              '</span><p>Click to see more</p></div></div>'
           );
         }
         $('.tooltip-info-legend').css(
@@ -658,7 +663,7 @@ define(
       },
 
       removeSublayers: function(layerSlug) {
-        var $subLayers = this.$el.find('[data-parent=\'' + layerSlug + '\']');
+        var $subLayers = this.$el.find("[data-parent='" + layerSlug + "']");
 
         if ($subLayers.length > 0) {
           var _this = this;
@@ -675,7 +680,7 @@ define(
       },
 
       hiddenSublayers: function(layerSlug) {
-        var $subLayers = this.$el.find('[data-parent=\'' + layerSlug + '\']');
+        var $subLayers = this.$el.find("[data-parent='" + layerSlug + "']");
 
         if ($subLayers.length > 0) {
           var _this = this;
@@ -817,13 +822,25 @@ define(
           var layerArray = this.model.get('layers_status');
           var mapLayer = this.map.overlayMapTypes.getAt(index);
 
-          _.map(layerArray, function(l, i) {
-            if (l.name === layer) {
-              this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
-            }
-            iCount += 1;
-          });
+          _.map(
+            layerArray,
+            function(l, i) {
+              if (l.name === layer) {
+                this.map.overlayMapTypes.setAt(l.index, l.layerInformation);
+              }
+              iCount += 1;
+            }.bind(this)
+          );
         }
+
+        window.dispatchEvent(
+          new CustomEvent('toogleLayerVisibility', {
+            detail: {
+              slug: layer,
+              visibility: true
+            }
+          })
+        );
       },
 
       hiddenLayer: function(e) {
@@ -872,6 +889,15 @@ define(
           this.model.set('layers_status', layerArray);
           this.map.overlayMapTypes.removeAt(index);
         }
+
+        window.dispatchEvent(
+          new CustomEvent('toogleLayerVisibility', {
+            detail: {
+              slug: layer,
+              visibility: false
+            }
+          })
+        );
       },
 
       _getOverlayIndex: function(name) {
