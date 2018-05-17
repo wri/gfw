@@ -13,6 +13,8 @@ export const getCacheList = createThunkAction(
       .then(response => {
         if (response.data.data) {
           dispatch(setCacheList(response.data.data));
+        } else {
+          dispatch(setCacheError(true));
         }
       })
       .catch(error => {
