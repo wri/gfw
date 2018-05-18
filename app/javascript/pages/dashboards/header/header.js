@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import upperFirst from 'lodash/upperFirst';
 
 import { COUNTRY } from 'pages/dashboards/router';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
@@ -23,7 +22,7 @@ const mapStateToProps = ({ countryData, location, header, widgets }) => {
     isRegionsLoading,
     isSubRegionsLoading
   } = countryData;
-  const { country, type } = location.payload;
+  const { country } = location.payload;
   const countryDataLoading =
     isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
   const externalLinks =
@@ -48,9 +47,6 @@ const mapStateToProps = ({ countryData, location, header, widgets }) => {
       shareUrl: `${window.location.href}`
     },
     widgets,
-    title: !country
-      ? `${upperFirst(type) || 'Global'} Dashboard`
-      : locationNames && locationNames.label,
     sentence: getSentence({ locationNames, ...header }),
     ...location
   };

@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 import qs from 'query-string';
+import upperFirst from 'lodash/upperFirst';
+import isEmpty from 'lodash/isEmpty';
 
 // get list data
 const getCategories = state => state.categories || null;
@@ -7,8 +9,6 @@ const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
 const getQuery = state => state.query || null;
 const getCountries = state => state.countries || null;
-const getRegions = state => state.regions || null;
-const getSubRegions = state => state.subRegions || null;
 
 export const getLinks = createSelector(
   [getCategories, getCategory, getLocation, getQuery],
@@ -30,28 +30,15 @@ export const getLinks = createSelector(
 );
 
 // get lists selected
-export const getAdminsSelected = createSelector(
-  [getCountries, getRegions, getSubRegions, getLocation],
-  (countries, regions, subRegions, location) => {
-    const country =
-      (countries && countries.find(i => i.value === location.country)) || null;
-    const region =
-      (regions && regions.find(i => i.value === location.region)) || null;
-    const subRegion =
-      (subRegions && subRegions.find(i => i.value === location.subRegion)) ||
-      null;
-    let current = country;
-    if (location.subRegion) {
-      current = subRegion;
-    } else if (location.region) {
-      current = region;
-    }
+export const getTitle = createSelector(
+  [getCountries, getLocation],
+  (countries, location) => {
+    const { type, country } = location;
+    if (isEmpty(countries) && country) return null;
+    const activeCountry = countries.find(c => c.value === country);
 
-    return {
-      ...current,
-      country,
-      region,
-      subRegion
-    };
+    return !activeCountry
+      ? `${upperFirst(type) || 'Global'} Dashboard`
+      : activeCountry && activeCountry.label;
   }
 );

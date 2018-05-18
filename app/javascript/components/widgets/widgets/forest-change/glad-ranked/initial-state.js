@@ -2,19 +2,19 @@ export default {
   title: 'Location of deforestation Alerts',
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'mining',
-      'landmark',
-      'ifl_2013',
-      'wdpa',
-      'plantations',
-      'primary_forest'
-    ],
+    forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
+    landCategories: ['mining', 'landmark', 'wdpa'],
     units: ['ha', '%'],
     categories: ['forest-change'],
     admins: ['country', 'region'],
-    selectors: ['indicators', 'thresholds', 'units', 'extentYears', 'weeks'],
+    selectors: [
+      'forestTypes',
+      'landCategories',
+      'thresholds',
+      'units',
+      'extentYears',
+      'weeks'
+    ],
     metaKey: 'widget_deforestation_alert_location',
     locationWhitelist: [
       'BRA',

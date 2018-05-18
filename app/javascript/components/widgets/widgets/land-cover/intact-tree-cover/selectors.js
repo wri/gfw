@@ -8,18 +8,18 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getCurrentLocation = state => state.currentLabel;
 const getIndicator = state => state.indicator || null;
-const getIndicatorWhitelist = state => state.countryWhitelist;
+const getWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist, getColors, getCurrentLocation],
+  [getData, getSettings, getWhitelist, getColors, getCurrentLocation],
   (data, settings, whitelist, colors, currentLabel) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent, plantations } = data;
     const hasPlantations =
-      !currentLabel || Object.keys(whitelist).indexOf('plantations') > -1;
+      !currentLabel || whitelist.indexOf('plantations') > -1;
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
     const parsedData = [
       {
@@ -56,7 +56,7 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !indicator) return null;
+    if (!parsedData) return null;
     const {
       initial,
       withIndicator,
@@ -69,8 +69,8 @@ export const getSentence = createSelector(
       .reduce((sum, d) => sum + d);
     const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
     const intactPercentage = intactData && intactData / totalExtent * 100;
-    let indicatorLabel = indicator.label;
-    switch (indicator.value) {
+    let indicatorLabel = indicator && indicator.label;
+    switch (indicator && indicator.value) {
       case 'ifl_2013__mining':
         indicatorLabel = 'Mining concessions';
         break;
@@ -90,11 +90,14 @@ export const getSentence = createSelector(
       intact: 'intact forest'
     };
 
-    let sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
+    let sentence =
+      indicator && indicator.value === 'ifl_2013' ? initial : withIndicator;
 
     if (!currentLabel) {
       sentence =
-        indicator.value === 'ifl_2013' ? globalInitial : globalWithIndicator;
+        indicator && indicator.value === 'ifl_2013'
+          ? globalInitial
+          : globalWithIndicator;
     }
     return {
       sentence,

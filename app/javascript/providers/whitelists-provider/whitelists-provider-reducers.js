@@ -1,8 +1,8 @@
 export const initialState = {
   countryWhitelistLoading: false,
   regionWhitelistLoading: false,
-  countryWhitelist: {},
-  regionWhitelist: {}
+  countryWhitelist: [],
+  regionWhitelist: []
 };
 
 const setCountryWhitelistLoading = (state, { payload }) => ({
