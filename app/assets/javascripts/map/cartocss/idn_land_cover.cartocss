@@ -8,99 +8,99 @@
   line-opacity: 0.0;
 
   // primary forest
-  [keterangan='Hutan Lahan Kering Primer']{
+  [desc_in='Hutan Lahan Kering Primer']{
   	polygon-fill:#0A633C;
   }
   // secondary forest
-  [keterangan='Hutan Lahan Kering Sekunder']{
+  [desc_in='Hutan Lahan Kering Sekunder']{
     polygon-fill:#149C61;
   }
   //primary mangrove forest
-  [keterangan='Hutan Mangrove Primer']{
+  [desc_in='Hutan Mangrove Primer']{
   	polygon-fill:#06ef9f;
   }
   //secondary mangrove forest
-  [keterangan='Hutan Mangrove Sekunder']{
+  [desc_in='Hutan Mangrove Sekunder']{
   	polygon-fill:#05c984;
   }
   // Industrial Plantation Forest
-  [keterangan='Hutan Tanaman Industri ( HTI )']{
+  [desc_in='Hutan Tanaman Industri ( HTI )']{
   	polygon-fill:#D9AA3B;
   }
   // Dryland farming - agriculture
-  [keterangan='Pertanian Lahan Kering']{
+  [desc_in='Pertanian Lahan Kering']{
   	polygon-fill:#FCF0A8;
   }
   // Dryland farm - mixed
-  [keterangan='Pertanian Lahan Kering Campur']{
+  [desc_in='Pertanian Lahan Kering Campur']{
   	polygon-fill:#FCF0A8;
   }
   // Rice farming - mixed
-  [keterangan='Sawah']{
+  [desc_in='Sawah']{
   	polygon-fill:#FCF0A8;
   }
   //Plantation
-  [keterangan='Perkebunan']{
+  [desc_in='Perkebunan']{
   	polygon-fill:#EBBFC7;
   }
   //Forest Plantation
-  [keterangan='Hutan Tanaman']{
+  [desc_in='Hutan Tanaman']{
   	polygon-fill:#EBBFC7;
   }
   //Grassland
-  [keterangan='Savana']{
+  [desc_in='Savana']{
   	polygon-fill:#C5D68D;
   }
   //Shrub
-  [keterangan='Belukar']{
+  [desc_in='Belukar']{
    	polygon-fill:#4F6027;
   }
   //Savanna / Meadow
-  [keterangan='Savanna/ Padang rumput']{
+  [desc_in='Savanna/ Padang rumput']{
    	polygon-fill:#CFC28D;
   }
   //Swamps
-  [keterangan='Belukar Rawa']{
+  [desc_in='Belukar Rawa']{
   	polygon-fill:#b4be68;
   }
   //primary swamp forest
-  [keterangan='Hutan Rawa Primer']{
+  [desc_in='Hutan Rawa Primer']{
   	polygon-fill:#b4be68;
   }
   //Swamp
-  [keterangan='Rawa']{
+  [desc_in='Rawa']{
   	polygon-fill:#b4be68;
   }
   // secondary swamp forest
-  [keterangan='Hutan Rawa Sekunder']{
+  [desc_in='Hutan Rawa Sekunder']{
     polygon-fill:#898f4e;
   }
   //bare ground
-  [keterangan='Tanah Terbuka']{
+  [desc_in='Tanah Terbuka']{
   	polygon-fill:#F5EEE7;
   }
   //Settlement
-  [keterangan='Pemukiman']{
+  [desc_in='Pemukiman']{
   	polygon-fill:#9A180F;
   }
   //airport/harbour
-  [keterangan='Bandara/ Pelabuhan']{
+  [desc_in='Bandara/ Pelabuhan']{
   	polygon-fill:#9A180F;
   }
   //mining
-  [keterangan='Pertambangan']{
+  [desc_in='Pertambangan']{
   	polygon-fill:#FF3728;
   }
   //Fish pond
-  [keterangan='Tambak']{
+  [desc_in='Tambak']{
   	polygon-fill:#a3e7e2;
   }
   //water-body
-  [keterangan='Badan Air']{
+  [desc_in='Badan Air']{
   	polygon-fill:#1284BE;
   }
   //Tansmigrasi (not sure what that is)
-  [keterangan='Transmigrasi']{
+  [desc_in='Transmigrasi']{
   	polygon-fill:#D1D3D3;
   }
 }
