@@ -27,7 +27,6 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     unit: 'biomassCarbon',
     threshold: 30,
     startYear: 2001,

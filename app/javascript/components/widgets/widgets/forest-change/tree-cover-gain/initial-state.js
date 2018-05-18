@@ -37,7 +37,6 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 50,
     unit: '%',
     extentYear: 2010,

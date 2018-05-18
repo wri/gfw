@@ -17,7 +17,6 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 0,
     type: 'bound2',
     pageSize: 5,

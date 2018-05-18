@@ -31,7 +31,6 @@ export const initialState = {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 50,
     startYear: 2001,
     endYear: 2016,

@@ -2,11 +2,10 @@ export default {
   title: 'Intact forest',
   config: {
     size: 'small',
-    forestTypes: ['ifl_2013'],
     landCategories: ['wdpa', 'mining', 'landmark'],
     categories: ['land-cover'],
     admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['forestTypes', 'landCategories', 'thresholds'],
+    selectors: ['landCategories', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_ifl',
     layers: ['forest2000', 'forest2010', 'ifl_2013_deg'],
@@ -24,7 +23,7 @@ export default {
     }
   },
   settings: {
-    indicator: 'ifl_2013',
+    forestType: 'ifl_2013',
     threshold: 30,
     extentYear: 2010,
     layers: ['forest2010', 'ifl_2013_deg']

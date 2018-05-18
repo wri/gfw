@@ -57,7 +57,11 @@ class WidgetSettings extends PureComponent {
                 disabled={loading}
                 optionsAction={setModalMeta}
                 optionsActionKey="metaKey"
-                clearable
+                clearable={
+                  settings.hasOwnProperty('clearable') // eslint-disable-line
+                    ? settings.clearable
+                    : true
+                }
                 noSelectedValue="All types"
               />
             )}
@@ -76,7 +80,11 @@ class WidgetSettings extends PureComponent {
                 disabled={loading}
                 optionsAction={setModalMeta}
                 optionsActionKey="metaKey"
-                clearable
+                clearable={
+                  settings.hasOwnProperty('clearable') // eslint-disable-line
+                    ? settings.clearable
+                    : true
+                }
                 noSelectedValue="All categories"
               />
             )}

@@ -22,7 +22,6 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 30,
     unit: '%',
     extentYear: 2000,

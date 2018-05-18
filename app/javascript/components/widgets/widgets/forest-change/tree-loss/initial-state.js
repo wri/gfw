@@ -33,8 +33,6 @@ export const initialState = {
     }
   },
   settings: {
-    forestType: '',
-    landCategory: '',
     threshold: 30,
     startYear: 2001,
     endYear: 2016,

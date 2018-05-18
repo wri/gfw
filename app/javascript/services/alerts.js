@@ -40,7 +40,7 @@ export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
     region ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
-    .replace('{polyname}', indicator);
+    .replace('{polyname}', indicator || 'gadm28');
   return axios.get(url);
 };
 
