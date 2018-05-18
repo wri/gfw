@@ -101,6 +101,6 @@
   }
   //Tansmigrasi (not sure what that is)
   [desc_in='Transmigrasi']{
-  	polygon-fill:#D1D3D3;
+  	polygon-fill:#67829D;
   }
 }
