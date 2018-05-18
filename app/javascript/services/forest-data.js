@@ -277,7 +277,7 @@ export const getGainRanked = ({
   }
 
   const location = region
-    ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
+    ? `iso = '${country}' AND ${subRegion ? `adm1 = ${region} AND` : ''}`
     : '';
 
   const url = `${REQUEST_URL}${SQL_QUERIES.gainRanked}`

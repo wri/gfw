@@ -42,7 +42,10 @@ export const getCountries = createThunkAction(
               [...gadm28Countries.data.rows, ...faoCountries.data.rows],
               'iso'
             );
-            const countries = allCountries.filter(c => c.iso !== 'XCA');
+            const countries = uniqBy(
+              allCountries.filter(c => c.iso !== 'XCA'),
+              'iso'
+            );
             dispatch(setGadmCountries(gadm28Countries.data.rows));
             dispatch(setFAOCountries(faoCountries.data.rows));
             dispatch(setCountries(countries));
@@ -64,7 +67,7 @@ export const getRegions = createThunkAction(
       dispatch(setRegionsLoading(true));
       getRegionsProvider(country)
         .then(response => {
-          dispatch(setRegions(response.data.rows));
+          dispatch(setRegions(uniqBy(response.data.rows), 'id'));
           dispatch(setRegionsLoading(false));
         })
         .catch(error => {
@@ -91,7 +94,7 @@ export const getSubRegions = createThunkAction(
             const blackList = blacklistResponse.data.rows.map(i => i.adm2);
             const subRegionList =
               rows && rows.filter(r => blackList.indexOf(r.id) === -1);
-            dispatch(setSubRegions(subRegionList));
+            dispatch(setSubRegions(uniqBy(subRegionList, 'id')));
             dispatch(setSubRegionsLoading(false));
           })
         )
