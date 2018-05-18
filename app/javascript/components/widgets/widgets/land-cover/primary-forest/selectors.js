@@ -46,7 +46,7 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !currentLabel || !indicator) return null;
+    if (!parsedData || !currentLabel) return null;
     const { initial, withIndicator } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
@@ -57,8 +57,8 @@ export const getSentence = createSelector(
       totalExtent *
       100;
 
-    let indicatorLabel = indicator.label;
-    switch (indicator.value) {
+    let indicatorLabel = indicator && indicator.label;
+    switch (indicator && indicator.value) {
       case 'primary_forest__mining':
         indicatorLabel = 'Mining concessions';
         break;
@@ -84,7 +84,9 @@ export const getSentence = createSelector(
     };
 
     const sentence =
-      indicator.value === 'primary_forest' ? initial : withIndicator;
+      indicator && indicator.value === 'primary_forest'
+        ? initial
+        : withIndicator;
 
     return {
       sentence,
