@@ -24,10 +24,7 @@ export const parseData = createSelector(
     const colorRange = getColorPalette(colors.ramp, hasPlantations ? 2 : 1);
     const parsedData = [
       {
-        label:
-          hasPlantations && indicator === 'gadm28'
-            ? 'Natural Forest'
-            : 'Tree cover',
+        label: hasPlantations && !indicator ? 'Natural Forest' : 'Tree cover',
         value: cover - plantations,
         color: colorRange[0],
         percentage: (cover - plantations) / totalArea * 100
@@ -39,7 +36,7 @@ export const parseData = createSelector(
         percentage: (totalArea - cover) / totalArea * 100
       }
     ];
-    if (indicator === 'gadm28' && hasPlantations) {
+    if (!indicator && hasPlantations) {
       parsedData.splice(1, 0, {
         label: 'Plantations',
         value: plantations,
