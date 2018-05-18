@@ -67,14 +67,13 @@ export const getSentence = createSelector(
     if (isEmpty(data) || !currentLabel) return null;
     const { initial, noPrimary } = sentences;
     const { area_ha, extent, forest_primary } = data;
-    const primaryForest = extent / 100 * forest_primary;
-    const sentence = primaryForest > 0 ? initial : noPrimary;
+    const sentence = forest_primary > 0 ? initial : noPrimary;
     const params = {
       location: currentLabel,
       extent: `${format('.3s')(extent)}ha`,
       primaryPercent:
-        primaryForest > 0
-          ? `${format('.0f')(primaryForest / area_ha * 100)}%`
+        forest_primary > 0
+          ? `${format('.0f')(forest_primary / area_ha * 100)}%`
           : `${format('.0f')(extent / area_ha * 100)}%`
     };
     return {
