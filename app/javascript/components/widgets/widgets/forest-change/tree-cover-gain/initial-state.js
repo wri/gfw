@@ -2,11 +2,18 @@ export default {
   title: 'Tree cover gain',
   config: {
     size: 'small',
-    indicators: ['gadm28', 'wdpa', 'plantations', 'landmark', 'mining'],
+    forestTypes: ['plantations'],
+    landCategories: ['wdpa', 'landmark', 'mining'],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
     admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds', 'extentYears', 'units'],
+    selectors: [
+      'forestTypes',
+      'landCategories',
+      'thresholds',
+      'extentYears',
+      'units'
+    ],
     type: 'gain',
     metaKey: 'widget_tree_cover_gain',
     layers: ['forestgain'],

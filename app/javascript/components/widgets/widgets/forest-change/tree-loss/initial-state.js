@@ -2,8 +2,8 @@ export const initialState = {
   title: 'Tree cover loss',
   config: {
     size: 'large',
-    forestTypes: ['gadm28', 'ifl_2013', 'primary_forest'],
-    landCategories: ['mining', 'wdpa', 'landmark', 'primary_forest'],
+    forestTypes: ['ifl_2013', 'primary_forest'],
+    landCategories: ['mining', 'wdpa', 'landmark'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region', 'subRegion'],
     selectors: [

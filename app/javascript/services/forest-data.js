@@ -61,7 +61,8 @@ const getIndicatorQuery = (forestType, landCategory) => {
 export const getLocations = ({
   country,
   region,
-  indicator,
+  forestType,
+  landCategory,
   threshold,
   extentYear
 }) => {
@@ -76,12 +77,18 @@ export const getLocations = ({
     .replace('{extent}', region ? 'area_gadm28' : 'sum(area_gadm28)')
     .replace('{iso}', country)
     .replace('{threshold}', threshold)
-    .replace('{indicator}', indicator)
+    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
   return axios.get(url);
 };
 
-export const getLocationsLoss = ({ country, region, indicator, threshold }) => {
+export const getLocationsLoss = ({
+  country,
+  region,
+  forestType,
+  landCategory,
+  threshold
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locationsLoss}`
     .replace('{select}', region ? 'adm2' : 'adm1')
     .replace('{group}', region ? 'adm2' : 'adm1')
@@ -89,22 +96,32 @@ export const getLocationsLoss = ({ country, region, indicator, threshold }) => {
     .replace('{iso}', country)
     .replace('{region}', region ? `AND adm1 = ${region}` : '')
     .replace('{threshold}', threshold)
-    .replace('{indicator}', indicator);
+    .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
   return axios.get(url);
 };
 
-export const fetchLossRanked = ({ extentYear, indicator, threshold }) => {
+export const fetchLossRanked = ({
+  extentYear,
+  forestType,
+  landCategory,
+  threshold
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.lossRanked}`
     .replace('{extent_year}', getExtentYear(extentYear))
-    .replace('{polyname}', indicator)
+    .replace('{polyname}', getIndicatorQuery(forestType, landCategory))
     .replace('{threshold}', threshold);
   return axios.get(url);
 };
 
-export const fetchExtentRanked = ({ extentYear, indicator, threshold }) => {
+export const fetchExtentRanked = ({
+  extentYear,
+  forestType,
+  landCategory,
+  threshold
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.rankedExtent}`
     .replace('{extent_year}', getExtentYear(extentYear))
-    .replace('{polyname}', indicator)
+    .replace('{polyname}', getIndicatorQuery(forestType, landCategory))
     .replace('{threshold}', threshold);
   return axios.get(url);
 };
@@ -150,7 +167,8 @@ export const getMultiRegionExtent = ({
   country,
   region,
   subRegion,
-  indicator,
+  forestType,
+  landCategory,
   threshold,
   extentYear
 }) => {
@@ -158,25 +176,36 @@ export const getMultiRegionExtent = ({
     .replace(/{region}/g, region ? 'adm2' : 'adm1')
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{indicator}', indicator)
+    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
   return axios.get(url);
 };
 
-export const getGain = ({ country, region, subRegion, indicator }) => {
+export const getGain = ({
+  country,
+  region,
+  subRegion,
+  forestType,
+  landCategory
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gain}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
-    .replace('{indicator}', indicator);
+    .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
   return axios.get(url);
 };
 
-export const getGainLocations = ({ country, region, indicator }) => {
+export const getGainLocations = ({
+  country,
+  region,
+  forestType,
+  landCategory
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gainLocations}`
     .replace('{location}', getLocationQuery(country, region))
     .replace('{admin}', region ? 'adm2' : 'adm1')
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
-    .replace('{indicator}', indicator)
+    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{grouping}', !region ? 'GROUP BY adm1 ORDER BY adm1' : '');
   return axios.get(url);
 };
@@ -236,7 +265,8 @@ export const getGainRanked = ({
   country,
   region,
   subRegion,
-  indicator,
+  forestType,
+  landCategory,
   extentYear
 }) => {
   let regionValue = 'iso';
@@ -247,13 +277,13 @@ export const getGainRanked = ({
   }
 
   const location = region
-    ? `iso = '${country}' ${subRegion ? `AND adm1 = ${region}` : ''}`
+    ? `iso = '${country}' AND ${subRegion ? `adm1 = ${region} AND` : ''}`
     : '';
 
   const url = `${REQUEST_URL}${SQL_QUERIES.gainRanked}`
     .replace('{region}', regionValue)
     .replace('{location}', location)
     .replace('{extentYear}', getExtentYear(extentYear))
-    .replace('{polyname}', indicator);
+    .replace('{polyname}', getIndicatorQuery(forestType, landCategory));
   return axios.get(url);
 };

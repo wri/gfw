@@ -198,8 +198,7 @@ WidgetHeader.propTypes = {
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,
-  citation: PropTypes.string,
-  whitelist: PropTypes.object
+  citation: PropTypes.string
 };
 
 export default WidgetHeader;

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import Dropdown from 'components/ui/dropdown';
 
@@ -9,7 +10,6 @@ class WidgetSettings extends PureComponent {
   render() {
     const {
       settings,
-      config,
       loading,
       onSettingsChange,
       widget,
@@ -28,46 +28,59 @@ class WidgetSettings extends PureComponent {
       types,
       weeks
     } = this.props.options;
+    const hasExtraOptions =
+      units ||
+      periods ||
+      years ||
+      startYears ||
+      endYears ||
+      extentYears ||
+      types ||
+      weeks;
 
     return (
       <div className="c-widget-settings">
-        {forestTypes && (
-          <Dropdown
-            theme="theme-select-light"
-            label="FOREST TYPE"
-            value={settings.forestType}
-            options={forestTypes}
-            onChange={option =>
-              onSettingsChange({
-                value: { forestType: (option && option.value) || '' },
-                widget
-              })
-            }
-            disabled={loading}
-            optionsAction={setModalMeta}
-            optionsActionKey="metaKey"
-            clearable={config.forestTypes[0] === 'gadm28'}
-            noSelectedValue="All types"
-          />
-        )}
-        {landCategories && (
-          <Dropdown
-            theme="theme-select-light"
-            label="LAND CATEGORY"
-            value={settings.landCategory}
-            options={landCategories}
-            onChange={option =>
-              onSettingsChange({
-                value: { landCategory: (option && option.value) || '' },
-                widget
-              })
-            }
-            disabled={loading}
-            optionsAction={setModalMeta}
-            optionsActionKey="metaKey"
-            clearable
-            noSelectedValue="All categories"
-          />
+        {(!isEmpty(forestTypes) || !isEmpty(landCategories)) && (
+          <div className="intersections">
+            {!isEmpty(forestTypes) && (
+              <Dropdown
+                theme="theme-select-light"
+                label="FOREST TYPE"
+                value={settings.forestType}
+                options={forestTypes}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { forestType: (option && option.value) || '' },
+                    widget
+                  })
+                }
+                disabled={loading}
+                optionsAction={setModalMeta}
+                optionsActionKey="metaKey"
+                clearable
+                noSelectedValue="All types"
+              />
+            )}
+            {!isEmpty(landCategories) && (
+              <Dropdown
+                theme="theme-select-light"
+                label="LAND CATEGORY"
+                value={settings.landCategory}
+                options={landCategories}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { landCategory: (option && option.value) || '' },
+                    widget
+                  })
+                }
+                disabled={loading}
+                optionsAction={setModalMeta}
+                optionsActionKey="metaKey"
+                clearable
+                noSelectedValue="All categories"
+              />
+            )}
+          </div>
         )}
         {types && (
           <Dropdown
@@ -203,6 +216,7 @@ class WidgetSettings extends PureComponent {
           )}
         {thresholds && (
           <Dropdown
+            className={hasExtraOptions ? 'threshold-border' : ''}
             theme="theme-dropdown-button canopy-select"
             label="CANOPY DENSITY"
             value={settings.threshold}
@@ -227,7 +241,6 @@ WidgetSettings.propTypes = {
   periods: PropTypes.array,
   years: PropTypes.array,
   settings: PropTypes.object,
-  config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,

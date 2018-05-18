@@ -6,11 +6,19 @@
   padding: rem(25px) rem(25px) rem(10px);
 
   > div {
-    margin-bottom: 20px;
+    margin-bottom: rem(20px);
+  }
+
+  .intersections {
+    border-bottom: solid 1px $border;
+
+    > div {
+      margin-bottom: rem(20px);
+    }
   }
 
   .title {
-    font-size: 14px;
+    font-size: rem(14px);
     color: $slate;
   }
 
@@ -32,9 +40,12 @@
   }
 
   .canopy-select {
-    border-top: solid 1px $border;
-    padding-top: rem(15px);
     margin-top: rem(10px);
+
+    &.threshold-border {
+      border-top: solid 1px $border;
+      padding-top: rem(15px);
+    }
 
     .dd__wrapper {
       max-width: rem(85px);

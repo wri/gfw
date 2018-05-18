@@ -16,20 +16,12 @@ const actions = {
 
 const mapStateToProps = (
   { location, modalMeta },
-  {
-    currentLabel,
-    widget,
-    title,
-    config,
-    indicatorWhitelist,
-    shareUrl,
-    embedUrl
-  }
+  { currentLabel, widget, title, config, whitelist, shareUrl, embedUrl }
 ) => {
   const size = config.size;
   const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
   const widgetMetaKey =
-    widget === 'treeCover' && indicatorWhitelist.plantations
+    widget === 'treeCover' && whitelist && whitelist.indexOf('plantations')
       ? 'widget_natural_vs_planted'
       : config.metaKey;
 

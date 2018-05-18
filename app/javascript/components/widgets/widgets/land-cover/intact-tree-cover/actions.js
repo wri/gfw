@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getData = ({ params, dispatch, setWidgetData, widget, state }) => {
   const { countryWhitelist, regionWhitelist } = state().whitelists;
   const { region } = state().location.payload;
-  const whitelist = Object.keys(region ? regionWhitelist : countryWhitelist);
+  const whitelist = region ? regionWhitelist : countryWhitelist;
   axios
     .all([
       getExtent({ ...params, indicator: 'gadm28' }),
