@@ -14,13 +14,11 @@ export default {
     },
     sentences: {
       initialSpecies:
-        'In {location}, {firstSpecies} and {secondSpecies} represent the largest plantation area by {type}, spanning {extent}.',
+        'In {location}, {firstSpecies} and {secondSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
       singleSpecies:
-        'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent}.',
-      remainingSpecies:
-        'The remaining {other} is distributed between {count} other plantation species.',
+        'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
       initialTypes:
-        'In {location}, the largest plantation area by type are {topType}, spanning {extent}.'
+        'In {location}, the largest plantation area by type are {topType}, spanning {extent} and {percent} of land area.'
     }
   },
   settings: {
