@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
-import { getColorPalette } from 'utils/data';
 
 // get list data
 const getData = state => state.data || null;
@@ -17,41 +16,47 @@ export const parseData = createSelector(
     const {
       area_ha,
       extent,
-      forest_planted,
+      planted_forest,
       forest_primary,
       forest_regenerated
     } = data;
-    const colorRange = getColorPalette(colors.ramp, 3);
-    const naturallyRegenerated = extent / 100 * forest_regenerated;
-    const primaryForest = forest_primary ? extent / 100 * forest_primary : 0;
-    const plantedForest = extent / 100 * forest_planted;
-    const nonForest =
-      area_ha - (naturallyRegenerated + primaryForest + plantedForest);
-    const total =
-      naturallyRegenerated + primaryForest + plantedForest + area_ha;
+    const colorRange = colors.ramp;
+    const naturallyRegenerated = extent / 100 * forest_regenerated || 0;
+    const primaryForest = extent / 100 * forest_primary || 0;
+    const plantedForest = extent / 100 * planted_forest || 0;
+    const otherCover =
+      extent - (naturallyRegenerated + primaryForest + plantedForest);
+    const nonForest = area_ha - extent;
+
     return [
       {
-        label: 'Naturally regenerated Forest',
+        label: 'Naturally Regenerated Forest',
         value: naturallyRegenerated,
-        percentage: naturallyRegenerated / total * 100,
-        color: colorRange[0]
+        percentage: naturallyRegenerated / area_ha * 100,
+        color: colorRange[1]
       },
       {
         label: 'Primary Forest',
         value: primaryForest,
-        percentage: primaryForest / total * 100,
-        color: colorRange[1]
+        percentage: primaryForest / area_ha * 100,
+        color: colorRange[2]
       },
       {
         label: 'Planted Forest',
         value: plantedForest,
-        percentage: plantedForest / total * 100,
-        color: colorRange[2]
+        percentage: plantedForest / area_ha * 100,
+        color: colorRange[4]
+      },
+      {
+        label: 'Other Tree Cover',
+        value: otherCover,
+        percentage: otherCover / area_ha * 100,
+        color: colorRange[6]
       },
       {
         label: 'Non-Forest',
         value: nonForest,
-        percentage: nonForest / total * 100,
+        percentage: nonForest / area_ha * 100,
         color: colors.nonForest
       }
     ];

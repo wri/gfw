@@ -1,4 +1,6 @@
 import axios from 'axios';
+import sumBy from 'lodash/sumBy';
+import omit from 'lodash/omit';
 
 import { getFAO } from 'services/forest-data';
 import { getRanking } from 'services/country';
@@ -12,8 +14,19 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
         const fao = getFAOResponse.data.rows;
         const ranking = getRankingResponse.data.rows;
         if (fao.length && ranking.length) {
+          const faoTotal = fao.map(f => ({
+            ...f,
+            area_ha: parseFloat(f.area_ha.replace(',', '')) * 1000
+          }));
+          let faoData = faoTotal[0];
+          if (fao.length > 1) {
+            faoData = {};
+            Object.keys(omit(faoTotal[0], ['iso', 'name'])).forEach(k => {
+              faoData[k] = sumBy(faoTotal, k);
+            });
+          }
           data = {
-            ...fao[0],
+            ...faoData,
             rank: ranking[0].rank || 0
           };
         }
