@@ -38,18 +38,13 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [parseData, getSettings, getCurrentLocation, getSentences],
-  (data, settings, currentLabel, sentences) => {
+  [getData, parseData, getSettings, getCurrentLocation, getSentences],
+  (rawData, data, settings, currentLabel, sentences) => {
     if (isEmpty(data) || !sentences) return null;
-    const {
-      initialSpecies,
-      singleSpecies,
-      remainingSpecies,
-      initialTypes
-    } = sentences;
+    const { initialSpecies, singleSpecies, initialTypes } = sentences;
     const top =
       settings.type === 'bound2' ? data.slice(0, 2) : data.slice(0, 1);
-
+    const areaPerc = 100 * sumBy(top, 'value') / rawData.totalArea;
     const params = {
       location: currentLabel,
       firstSpecies: top[0].label.toLowerCase(),
@@ -58,13 +53,13 @@ export const getSentence = createSelector(
       extent: `${format('.3s')(sumBy(top, 'value'))}ha`,
       other: `${format('.3s')(sumBy(data.slice(2), 'value'))}ha`,
       count: data.length - top.length,
-      topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`
+      topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
+      percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '<0.1%'
     };
     const sentence =
       settings.type === 'bound1'
         ? initialTypes
-        : `${top.length > 1 ? initialSpecies : singleSpecies} ${data.length >
-            top.length && remainingSpecies}`;
+        : `${top.length > 1 ? initialSpecies : singleSpecies}`;
 
     return {
       sentence,

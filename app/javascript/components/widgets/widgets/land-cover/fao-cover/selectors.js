@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
-import { getColorPalette } from 'utils/data';
 
 // get list data
 const getData = state => state.data || null;
@@ -16,31 +15,39 @@ export const parseData = createSelector(
     if (isEmpty(data)) return null;
     const {
       area_ha,
+      extent,
       planted_forest,
       forest_primary,
       forest_regenerated
     } = data;
-    const colorRange = getColorPalette(colors.ramp, 3);
-    const nonForest =
-      area_ha - (forest_regenerated + forest_primary + planted_forest);
+    const colorRange = colors.ramp;
+    const otherCover =
+      extent - (forest_regenerated + forest_primary + planted_forest);
+    const nonForest = area_ha - extent;
     return [
       {
-        label: 'Naturally regenerated Forest',
+        label: 'Naturally Regenerated Forest',
         value: forest_regenerated,
         percentage: forest_regenerated / area_ha * 100,
-        color: colorRange[0]
+        color: colorRange[1]
       },
       {
         label: 'Primary Forest',
         value: forest_primary,
         percentage: forest_primary / area_ha * 100,
-        color: colorRange[1]
+        color: colorRange[2]
       },
       {
         label: 'Planted Forest',
         value: planted_forest,
         percentage: planted_forest / area_ha * 100,
-        color: colorRange[2]
+        color: colorRange[4]
+      },
+      {
+        label: 'Other Tree Cover',
+        value: otherCover,
+        percentage: otherCover / area_ha * 100,
+        color: colorRange[6]
       },
       {
         label: 'Non-Forest',
