@@ -131,7 +131,7 @@ class HeaderContainer extends PureComponent {
         data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
       )
     );
-    const location = locationNames.current && locationNames.current.label;
+    const location = locationNames && locationNames.label;
     let firstSentence = '';
     let secondSentence = '';
     if (data.extent > 0) {

@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
-import { getColorPalette } from 'utils/data';
 
 // get list data
 const getData = state => state.data || null;
@@ -17,41 +16,45 @@ export const parseData = createSelector(
     const {
       area_ha,
       extent,
-      forest_planted,
+      planted_forest,
       forest_primary,
       forest_regenerated
     } = data;
-    const colorRange = getColorPalette(colors.ramp, 3);
-    const naturallyRegenerated = extent / 100 * forest_regenerated;
-    const primaryForest = forest_primary ? extent / 100 * forest_primary : 0;
-    const plantedForest = extent / 100 * forest_planted;
+    const colorRange = colors.ramp;
+    const otherCover =
+      extent - (forest_regenerated + forest_primary + planted_forest);
     const nonForest =
-      area_ha - (naturallyRegenerated + primaryForest + plantedForest);
-    const total =
-      naturallyRegenerated + primaryForest + plantedForest + area_ha;
+      area_ha - (forest_regenerated + forest_primary + planted_forest);
+
     return [
       {
-        label: 'Naturally regenerated Forest',
-        value: naturallyRegenerated,
-        percentage: naturallyRegenerated / total * 100,
-        color: colorRange[0]
-      },
-      {
-        label: 'Primary Forest',
-        value: primaryForest,
-        percentage: primaryForest / total * 100,
+        label: 'Naturally Regenerated Forest',
+        value: forest_regenerated || 0,
+        percentage: forest_regenerated / area_ha * 100 || 0,
         color: colorRange[1]
       },
       {
-        label: 'Planted Forest',
-        value: plantedForest,
-        percentage: plantedForest / total * 100,
+        label: 'Primary Forest',
+        value: forest_primary || 0,
+        percentage: forest_primary / area_ha * 100 || 0,
         color: colorRange[2]
+      },
+      {
+        label: 'Planted Forest',
+        value: planted_forest || 0,
+        percentage: planted_forest / area_ha * 100 || 0,
+        color: colorRange[4]
+      },
+      {
+        label: 'Other Tree Cover',
+        value: otherCover,
+        percentage: otherCover / area_ha * 100,
+        color: colorRange[6]
       },
       {
         label: 'Non-Forest',
         value: nonForest,
-        percentage: nonForest / total * 100,
+        percentage: nonForest / area_ha * 100,
         color: colors.nonForest
       }
     ];
@@ -64,14 +67,13 @@ export const getSentence = createSelector(
     if (isEmpty(data) || !currentLabel) return null;
     const { initial, noPrimary } = sentences;
     const { area_ha, extent, forest_primary } = data;
-    const primaryForest = extent / 100 * forest_primary;
-    const sentence = primaryForest > 0 ? initial : noPrimary;
+    const sentence = forest_primary > 0 ? initial : noPrimary;
     const params = {
       location: currentLabel,
       extent: `${format('.3s')(extent)}ha`,
       primaryPercent:
-        primaryForest > 0
-          ? `${format('.0f')(primaryForest / area_ha * 100)}%`
+        forest_primary > 0
+          ? `${format('.0f')(forest_primary / area_ha * 100)}%`
           : `${format('.0f')(extent / area_ha * 100)}%`
     };
     return {
