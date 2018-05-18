@@ -56,7 +56,7 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !indicator) return null;
+    if (!parsedData) return null;
     const {
       initial,
       withIndicator,
@@ -69,8 +69,8 @@ export const getSentence = createSelector(
       .reduce((sum, d) => sum + d);
     const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
     const intactPercentage = intactData && intactData / totalExtent * 100;
-    let indicatorLabel = indicator.label;
-    switch (indicator.value) {
+    let indicatorLabel = indicator && indicator.label;
+    switch (indicator && indicator.value) {
       case 'ifl_2013__mining':
         indicatorLabel = 'Mining concessions';
         break;
@@ -90,11 +90,14 @@ export const getSentence = createSelector(
       intact: 'intact forest'
     };
 
-    let sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
+    let sentence =
+      indicator && indicator.value === 'ifl_2013' ? initial : withIndicator;
 
     if (!currentLabel) {
       sentence =
-        indicator.value === 'ifl_2013' ? globalInitial : globalWithIndicator;
+        indicator && indicator.value === 'ifl_2013'
+          ? globalInitial
+          : globalWithIndicator;
     }
     return {
       sentence,
