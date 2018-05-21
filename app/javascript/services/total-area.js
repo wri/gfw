@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 
 const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
@@ -28,5 +28,5 @@ export const getArea = ({ country, region, subRegion }) => {
       country
     );
   }
-  return axios.get(url);
+  return request.get(url);
 };

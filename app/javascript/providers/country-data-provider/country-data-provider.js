@@ -10,30 +10,31 @@ const mapStateToProps = state => ({
 });
 
 class CountryDataProvider extends PureComponent {
-  componentWillMount() {
+  componentWillReceiveProps(nextProps) {
     const {
-      location,
+      isParentLoading,
+      location: { country, region, subRegion }
+    } = nextProps;
+    const {
       getCountries,
       getRegions,
       getSubRegions,
       getGeostore,
       getCountryLinks
     } = this.props;
-    getCountries();
-    getRegions(location.country);
-    if (location.region) {
-      getSubRegions(location.country, location.region);
-    }
-    getGeostore(location.country, location.region, location.subRegion);
-    getCountryLinks();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { country, region, subRegion } = nextProps.location;
-    const { getRegions, getSubRegions, getGeostore } = this.props;
     const hasCountryChanged = country !== this.props.location.country;
     const hasRegionChanged = region !== this.props.location.region;
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
+
+    if (isParentLoading !== this.props.isParentLoading) {
+      getCountries();
+      getRegions(country);
+      if (region) {
+        getSubRegions(country, region);
+      }
+      getGeostore(country, region, subRegion);
+      getCountryLinks();
+    }
 
     if (hasCountryChanged) {
       getRegions(country);
@@ -62,6 +63,7 @@ class CountryDataProvider extends PureComponent {
 
 CountryDataProvider.propTypes = {
   location: PropTypes.object.isRequired,
+  isParentLoading: PropTypes.bool.isRequired,
   getCountries: PropTypes.func.isRequired,
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,

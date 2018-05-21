@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 
+import CacheProvider from 'providers/cache-provider';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 
@@ -28,6 +29,7 @@ class Page extends PureComponent {
       showMapMobile,
       setShowMapMobile,
       links,
+      isCacheListLoading,
       isGeostoreLoading,
       location,
       locationOptions,
@@ -56,6 +58,7 @@ class Page extends PureComponent {
             location={location}
             locationOptions={locationOptions}
             locationNames={locationNames}
+            isParentLoading={isCacheListLoading}
           />
           <SubNavMenu
             className="nav"
@@ -90,7 +93,7 @@ class Page extends PureComponent {
                   zoom: 8
                 }}
                 areaHighlight={locationGeoJson}
-                isParentLoading={isGeostoreLoading}
+                isParentLoading={isCacheListLoading || isGeostoreLoading}
                 widgetKey={activeWidget}
               />
             </div>
@@ -110,8 +113,9 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        <CountryDataProvider />
-        <WhitelistsProvider />
+        <CacheProvider />
+        <CountryDataProvider isParentLoading={isCacheListLoading} />
+        <WhitelistsProvider isParentLoading={isCacheListLoading} />
         <Meta
           page={
             locationNames &&
@@ -128,6 +132,7 @@ Page.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
+  isCacheListLoading: PropTypes.bool,
   isGeostoreLoading: PropTypes.bool,
   location: PropTypes.object,
   locationOptions: PropTypes.object,
