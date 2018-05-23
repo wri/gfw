@@ -104,7 +104,6 @@
     "lodash": "4.17.4",
     "lodash-math": "0.0.7",
     "moment": "2.19.3",
-    "numeral": "2.0.6",
     "path-complete-extname": "0.1.0",
     "postcss-loader": "2.0.6",
     "postcss-smart-import": "0.7.5",
