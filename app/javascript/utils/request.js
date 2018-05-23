@@ -26,7 +26,9 @@ const request = {
       const haveException = checkException(exceptionId);
       if (!cacheError && !haveException) {
         axiosInstance.interceptors.response.use(response =>
-          addKey(key, response.data, expire, exceptionId).then(() => response)
+          addKey(key, response.data, expire, exceptionId)
+            .then(() => response)
+            .catch(() => response)
         );
       }
       return axiosInstance.get(url);
