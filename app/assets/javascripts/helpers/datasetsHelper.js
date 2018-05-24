@@ -92,7 +92,7 @@ define([
       sub_title: 'daily, 250m, tropics, WRI/Google',
       layerSlug: ['forma_month_3'],
       slug: 'forma250GFW',
-      slug_source: 'forma',
+      slug_source: 'forma_250_alerts',
       analysisSlug: 'forma250GFW',
       layer_id: null,
       order: 80
@@ -103,7 +103,7 @@ define([
       sub_title: 'daily, 250m, tropics, WRI/Google',
       layerSlug: ['forma_activity'],
       slug: 'forma-alerts',
-      slug_source: 'forma',
+      slug_source: 'forma_250_active_clearing_alerts',
       analysisSlug: 'forma-alerts',
       layer_id: null,
       order: 80
