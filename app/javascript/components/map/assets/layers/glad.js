@@ -94,6 +94,7 @@ class Glad extends Canvas {
 
         if (
           confidence >= confidenceValue &&
+          day > 0 &&
           (day >= startDay || (0 && day <= endDay))
         ) {
           const intensity = getIntensity(band3);

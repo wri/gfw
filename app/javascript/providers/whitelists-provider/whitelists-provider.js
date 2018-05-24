@@ -10,20 +10,22 @@ const mapStateToProps = state => ({
 });
 
 class WhitelistProvider extends PureComponent {
-  componentWillMount() {
-    const { location, getCountryWhitelist, getRegionWhitelist } = this.props;
-    getCountryWhitelist(location.country);
-    if (location.region) {
-      getRegionWhitelist(location.country, location.region, location.subRegion);
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { country, region, subRegion } = nextProps.location;
+    const {
+      isParentLoading,
+      location: { country, region, subRegion }
+    } = nextProps;
     const { getCountryWhitelist, getRegionWhitelist } = this.props;
     const hasCountryChanged = country !== this.props.location.country;
     const hasRegionChanged = region !== this.props.location.region;
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
+
+    if (isParentLoading !== this.props.isParentLoading) {
+      getCountryWhitelist(country);
+      if (region) {
+        getRegionWhitelist(country, region, subRegion);
+      }
+    }
 
     if (hasCountryChanged) {
       getCountryWhitelist(country);
@@ -41,6 +43,7 @@ class WhitelistProvider extends PureComponent {
 
 WhitelistProvider.propTypes = {
   location: PropTypes.object.isRequired,
+  isParentLoading: PropTypes.bool.isRequired,
   getCountryWhitelist: PropTypes.func.isRequired,
   getRegionWhitelist: PropTypes.func.isRequired
 };

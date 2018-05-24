@@ -145,6 +145,11 @@ Gfw::Application.routes.draw do
   post 'data/upload' => 'data#upload'
   get  'data/show' => 'data#show'
 
+  #cache
+  get '/cache/keys' => 'cache#keys'
+  post '/cache/add' => 'cache#add'
+  get '/cache/*id' => 'cache#index'
+
   # sitemap
   get '/sitemap' => 'sitemap#index'
 

@@ -99,20 +99,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 class HeaderContainer extends PureComponent {
-  componentDidMount() {
-    const { location, settings, getHeaderData } = this.props;
-    getHeaderData({ ...location, ...settings });
-    if (location.region) {
-      getHeaderData({ ...location, ...settings });
-    }
-    if (location.subRegion) {
-      getHeaderData({ ...location, ...settings });
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
-    const { location, settings } = nextProps;
+    const { location, isParentLoading, settings } = nextProps;
     const { getHeaderData } = this.props;
+
+    if (isParentLoading !== this.props.isParentLoading) {
+      getHeaderData({ ...location, ...settings });
+      if (location.region) {
+        getHeaderData({ ...location, ...settings });
+      }
+      if (location.subRegion) {
+        getHeaderData({ ...location, ...settings });
+      }
+    }
 
     if (!isEqual(location, this.props.location)) {
       getHeaderData({ ...nextProps.location, ...settings });
@@ -171,6 +170,7 @@ class HeaderContainer extends PureComponent {
 
 HeaderContainer.propTypes = {
   location: PropTypes.object.isRequired,
+  isParentLoading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object.isRequired,
   getHeaderData: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
