@@ -53,7 +53,7 @@ export const getSentence = createSelector(
   ],
   (data, settings, options, location, indicator, currentLabel, sentences) => {
     if (!data || !options || !currentLabel) return null;
-    const { initial, hasPercentage, hasIndicator } = sentences;
+    const { initial, hasPercentage, hasIndicator, noCover } = sentences;
     const topRegion = data.length && data[0];
     const totalExtent = sumBy(data, 'extent');
     const avgExtent = sumBy(data, 'extent') / data.length;
@@ -85,6 +85,9 @@ export const getSentence = createSelector(
     let sentence = settings.unit === '%' ? hasPercentage : initial;
     if (indicator) {
       sentence = hasIndicator;
+    }
+    if (params.percentage === '0%') {
+      sentence = noCover;
     }
 
     return {
