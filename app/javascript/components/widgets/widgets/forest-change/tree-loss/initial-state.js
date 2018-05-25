@@ -39,7 +39,7 @@ export const initialState = {
     },
     sentences: {
       initial:
-        'From blah thing {startYear} and {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
+        'From {startYear} and {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
       withIndicator:
         'From {startYear} and {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
       noLoss:
