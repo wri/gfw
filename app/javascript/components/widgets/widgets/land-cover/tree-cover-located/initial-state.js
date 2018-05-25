@@ -44,7 +44,8 @@ export default {
       largePercentileWithIndicator:
         'For {indicator} in {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
       hasPercentage:
-        '{region} had the largest relative tree cover of {relPercentage}, compared to a regional average of {averagePerc}.'
+        '{region} had the largest relative tree cover of {relPercentage}, compared to a regional average of {averagePerc}.',
+      noCover: 'No tree cover was identified in {location}.'
     },
     data: [
       {
