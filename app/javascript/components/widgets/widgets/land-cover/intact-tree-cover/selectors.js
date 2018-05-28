@@ -14,8 +14,8 @@ const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getWhitelist, getColors],
-  (data, settings, whitelist, colors) => {
+  [getData, getSettings, getColors],
+  (data, settings, colors) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent } = data;
     const colorRange = getColorPalette(colors.ramp, 2);
