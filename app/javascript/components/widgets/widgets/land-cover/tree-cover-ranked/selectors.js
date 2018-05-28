@@ -94,15 +94,18 @@ export const getSentence = createSelector(
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const extent = locationData && locationData.extent;
-    const areaPercent = 100 * extent / sumBy(rawData, 'extent') || 0;
+    const landPercent = 100 * extent / locationData.area || 0;
+    const globalPercent = 100 * extent / sumBy(rawData, 'extent') || 0;
 
     const params = {
       extentYear: settings.extentYear,
       location: currentLocation.label,
       extent: `${extent ? format('.3s')(extent) : '0'}ha`,
       indicator: indicator && indicator.value.toLowerCase(),
-      percentage:
-        areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%'
+      landPercentage:
+        landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '<0.1%',
+      globalPercentage:
+        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%'
     };
 
     const sentence = indicator ? withInd : initial;
