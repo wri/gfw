@@ -29,7 +29,6 @@ class Page extends PureComponent {
       showMapMobile,
       setShowMapMobile,
       links,
-      isCacheListLoading,
       isGeostoreLoading,
       widgetAnchor,
       activeWidget,
@@ -50,7 +49,7 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header className="header" isParentLoading={isCacheListLoading} />
+          <Header className="header" />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
@@ -65,10 +64,7 @@ class Page extends PureComponent {
             bottomBoundary=".l-country"
           >
             <div className="map-container">
-              <Map
-                isParentLoading={isCacheListLoading || isGeostoreLoading}
-                widgetKey={activeWidget}
-              />
+              <Map widgetKey={activeWidget} />
             </div>
           </Sticky>
         </div>
@@ -103,7 +99,6 @@ Page.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
-  isCacheListLoading: PropTypes.bool,
   isGeostoreLoading: PropTypes.bool,
   widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

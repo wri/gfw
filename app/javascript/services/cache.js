@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REQUEST_URL = `${process.env.GFW_URL}/cache`;
+const REQUEST_URL = '/cache';
 
 const QUERIES = {
   keys: '/keys',

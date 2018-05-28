@@ -16,7 +16,7 @@ import HeaderComponent from './header-component';
 
 const actions = { ...ownActions, ...shareActions };
 
-const mapStateToProps = ({ countryData, location, header, widgets }) => {
+const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -34,10 +34,12 @@ const mapStateToProps = ({ countryData, location, header, widgets }) => {
     );
   const locationOptions = { ...countryData };
   const locationNames = getAdminsSelected({ ...countryData, ...location });
+  const cacheLoading = cache.cacheListLoading;
 
   return {
     ...header,
-    loading: countryDataLoading || header.loading,
+    loading: countryDataLoading || header.loading || cacheLoading,
+    cacheLoading,
     forestAtlasLink,
     externalLinks,
     locationNames,
@@ -110,9 +112,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 class HeaderContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {
-    const { isParentLoading, payload, settings, getHeaderData } = nextProps;
+    const { cacheLoading, payload, settings, getHeaderData } = nextProps;
     if (
-      isParentLoading !== this.props.isParentLoading ||
+      cacheLoading !== this.props.cacheLoading ||
       !isEqual(payload, this.props.payload)
     ) {
       getHeaderData({ ...payload, ...settings });
@@ -130,7 +132,7 @@ HeaderContainer.propTypes = {
   payload: PropTypes.object.isRequired,
   getHeaderData: PropTypes.func.isRequired,
   settings: PropTypes.object.isRequired,
-  isParentLoading: PropTypes.bool
+  cacheLoading: PropTypes.bool
 };
 
 export { actions, reducers, initialState };

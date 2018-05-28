@@ -16,8 +16,8 @@ import reducers, { initialState } from './map-reducers';
 import { getLayers } from './map-selectors';
 
 const mapStateToProps = (
-  { map, countryData, widgets },
-  { isParentLoading, widgetKey }
+  { map, countryData, widgets, cache },
+  { widgetKey }
 ) => {
   const widget = widgets[widgetKey];
   const widgetSettings = widget && widget.settings;
@@ -26,7 +26,9 @@ const mapStateToProps = (
   return {
     ...map,
     ...countryData.geostore,
-    loading: map.loading || isParentLoading,
+    loading:
+      map.loading || cache.cacheListLoading || countryData.isGeostoreLoading,
+    cacheLoading: cache.cacheListLoading,
     settings: { ...map.settings, ...widgetSettings },
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
@@ -53,11 +55,10 @@ class MapContainer extends PureComponent {
       options,
       geojson,
       getLayerSpec,
-      isParentLoading
+      cacheLoading
     } = nextProps;
     const { zoom } = options;
-    const parentLoadingChanged = isParentLoading !== this.props.isParentLoading;
-    if (parentLoadingChanged) {
+    if (cacheLoading !== this.props.cacheLoading) {
       getLayerSpec();
     }
     // sync geostore with map
@@ -198,7 +199,7 @@ MapContainer.propTypes = {
   getLayerSpec: PropTypes.func.isRequired,
   setMapZoom: PropTypes.func.isRequired,
   geojson: PropTypes.object,
-  isParentLoading: PropTypes.bool
+  cacheLoading: PropTypes.bool
 };
 
 export { reducers, initialState, actions };
