@@ -7,7 +7,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget, state }) => {
   const whitelist = region ? regionWhitelist : countryWhitelist;
   axios
     .all([
-      getExtent({ ...params, indicator: 'gadm28' }),
+      getExtent({ ...params, forestType: 'gadm28' }),
       getExtent({ ...params })
     ])
     .then(

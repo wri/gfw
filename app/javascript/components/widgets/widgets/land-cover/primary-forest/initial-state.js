@@ -23,7 +23,7 @@ export default {
   settings: {
     forestType: 'primary_forest',
     threshold: 30,
-    extentYear: 2000,
+    extentYear: 2010,
     layers: ['forest2000']
   },
   enabled: true
