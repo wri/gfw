@@ -17,9 +17,9 @@ export const initialState = {
       globalHuman:
         'According to the FAO, the {location} rate of deforestation in {year} was {rate}, of which {human} was due to human activity.',
       initial:
-        'According to the FAO the rate of deforestation in {location} was {rate}, in {year}.',
+        'According to the FAO, the rate of deforestation in {location} was {rate} in {year}.',
       humanDeforest:
-        'According to the FAO the rate of deforestation in {location} was {rate} in {year}, of which {human} was due to human activity.',
+        'According to the FAO, the rate of deforestation in {location} was {rate} in {year}, of which {human} was due to human activity.',
       noDeforest: 'No deforestation data in {location}.'
     }
   },

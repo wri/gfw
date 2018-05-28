@@ -114,7 +114,7 @@ export const getSentence = createSelector(
       topPercent: `${format('.2r')(topCount)}%`,
       topRegions: percentileLength,
       location: currentLabel,
-      indicator: `${indicator ? `${indicator.label.toLowerCase()} in ` : ''}`
+      indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
     };
     const sentence = percentileLength === 1 ? oneRegion : initial;
     return { sentence, params };

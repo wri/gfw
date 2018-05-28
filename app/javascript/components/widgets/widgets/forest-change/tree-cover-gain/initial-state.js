@@ -2,7 +2,7 @@ export default {
   title: 'Tree cover gain',
   config: {
     size: 'small',
-    forestTypes: ['plantations'],
+    forestTypes: [],
     landCategories: ['wdpa', 'landmark', 'mining'],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
@@ -39,7 +39,7 @@ export default {
   settings: {
     threshold: 50,
     unit: '%',
-    extentYear: 2010,
+    extentYear: 2000,
     layers: ['forestgain']
   },
   enabled: true

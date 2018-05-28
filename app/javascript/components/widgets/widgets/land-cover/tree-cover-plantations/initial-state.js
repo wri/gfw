@@ -1,5 +1,5 @@
 export default {
-  title: 'Plantations extent',
+  title: 'Plantations in',
   config: {
     size: 'small',
     categories: ['land-cover'],
@@ -18,7 +18,7 @@ export default {
       singleSpecies:
         'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
       initialTypes:
-        'In {location}, the largest plantation area by type are {topType}, spanning {extent} and {percent} of land area.'
+        'In {location}, the largest plantation area by type is {topType}, spanning {extent} and {percent} of land area.'
     }
   },
   settings: {
