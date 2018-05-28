@@ -33,14 +33,14 @@ export const parseData = createSelector(
       },
       {
         label: 'Primary Forest',
-        value: forest_primary,
-        percentage: forest_primary / area_ha * 100,
+        value: forest_primary || 0,
+        percentage: forest_primary / area_ha * 100 || 0,
         color: colorRange[2]
       },
       {
         label: 'Planted Forest',
-        value: planted_forest,
-        percentage: planted_forest / area_ha * 100,
+        value: planted_forest || 0,
+        percentage: planted_forest / area_ha * 100 || 0,
         color: colorRange[4]
       },
       {

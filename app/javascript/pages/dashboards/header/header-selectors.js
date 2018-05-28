@@ -46,7 +46,7 @@ export const getSentence = createSelector(
     if (error) {
       return 'An error occured while fetching data. Please try again later.';
     }
-    if (isEmpty(data) || isEmpty(locationNames)) return null;
+    if (isEmpty(data) || isEmpty(locationNames)) return {};
     const { initial, withLoss, withPlantationLoss } = sentences;
     const extent = format('.3s')(data.extent);
     const percentageCover = format('.1f')(data.extent / data.totalArea * 100);

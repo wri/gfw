@@ -31,7 +31,7 @@ export const mapData = createSelector(
           'area_loss'
         ) || 0;
       const locationExtent = extent.filter(l => l.id === d.id);
-      const percentage = loss / locationExtent[0].extent * 100;
+      const percentage = loss / locationExtent[0].extent * 100 || 0;
       return {
         label: (region && region.label) || '',
         loss,
@@ -86,7 +86,8 @@ export const getSentence = createSelector(
       initial,
       withIndicator,
       initialPercent,
-      withIndicatorPercent
+      withIndicatorPercent,
+      noLoss
     } = sentences;
     const { startYear, endYear } = settings;
     const totalLoss = sumBy(data, 'loss');
@@ -103,10 +104,13 @@ export const getSentence = createSelector(
       percentileLoss += data[percentileLength].loss;
       percentileLength += 1;
     }
-    const topLoss = percentileLoss / totalLoss * 100;
+    const topLoss = percentileLoss / totalLoss * 100 || 0;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
       sentence = !indicator ? initial : withIndicator;
+    }
+    if (percentileLength === 0) {
+      sentence = noLoss;
     }
 
     const params = {

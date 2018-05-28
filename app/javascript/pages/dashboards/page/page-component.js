@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 
+import CacheProvider from 'providers/cache-provider';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 
@@ -28,6 +29,7 @@ class Page extends PureComponent {
       showMapMobile,
       setShowMapMobile,
       links,
+      isCacheListLoading,
       isGeostoreLoading,
       widgetAnchor,
       activeWidget,
@@ -48,7 +50,7 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header className="header" />
+          <Header className="header" isParentLoading={isCacheListLoading} />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
@@ -64,7 +66,7 @@ class Page extends PureComponent {
           >
             <div className="map-container">
               <Map
-                isParentLoading={isGeostoreLoading}
+                isParentLoading={isCacheListLoading || isGeostoreLoading}
                 widgetKey={activeWidget}
               />
             </div>
@@ -83,8 +85,10 @@ class Page extends PureComponent {
         )}
         <Share />
         <ModalMeta />
-        <CountryDataProvider />
-        <WhitelistsProvider />
+        {widgetAnchor && <ScrollTo target={widgetAnchor} />}
+        <CacheProvider />
+        <CountryDataProvider isParentLoading={isCacheListLoading} />
+        <WhitelistsProvider isParentLoading={isCacheListLoading} />
         <Meta
           title={title}
           description="Data about forest change, tenure, forest related employment and land use in"
@@ -99,6 +103,7 @@ Page.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
+  isCacheListLoading: PropTypes.bool,
   isGeostoreLoading: PropTypes.bool,
   widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

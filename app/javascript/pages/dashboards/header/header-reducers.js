@@ -11,12 +11,7 @@ export const initialState = {
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of forest excluding tree plantations, equivalent to {emission} of CO₂ of emissions.'
     }
   },
-  data: {
-    totalArea: 0,
-    extent: 0,
-    totalLoss: {},
-    plantationsLoss: {}
-  },
+  data: {},
   settings: {
     indicator: 'gadm28',
     threshold: 30

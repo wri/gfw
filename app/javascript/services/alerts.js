@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 
 const REQUEST_URL = process.env.GFW_API_HOST_PROD;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -32,7 +32,7 @@ export const fetchGladAlerts = ({ country, region, subRegion }) => {
   }`
     .replace('{location}', getLocation(country, region, subRegion))
     .replace('{polyname}', 'gadm28');
-  return axios.get(url);
+  return request.get(url, 3600, 'gladRequest');
 };
 
 export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
@@ -41,12 +41,12 @@ export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
     .replace('{polyname}', indicator || 'gadm28');
-  return axios.get(url);
+  return request.get(url, 3600, 'gladRequest');
 };
 
 export const fetchGLADLatest = () => {
   const url = `${REQUEST_URL}/glad-alerts/latest`;
-  return axios.get(url);
+  return request.get(url, 3600, 'gladRequest');
 };
 
 export const fetchViirsAlerts = ({
@@ -65,5 +65,5 @@ export const fetchViirsAlerts = ({
     )
     .replace('{geostore}', subRegion && geostore ? geostore.hash : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
-  return axios.get(url);
+  return request.get(url);
 };

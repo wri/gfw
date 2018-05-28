@@ -116,7 +116,7 @@ export const getSentence = createSelector(
   (data, settings, indicator, currentLocation, sentences) => {
     if (!data || !data.length || !currentLocation) return null;
     const { startYear, endYear } = settings;
-    const { initial, withIndicator } = sentences;
+    const { initial, withIndicator, noLoss } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const loss = locationData && locationData.loss;
@@ -127,7 +127,10 @@ export const getSentence = createSelector(
     const indicatorName = !indicator
       ? 'region-wide'
       : `${indicator.label.toLowerCase()}`;
-    const sentence = !indicator ? initial : withIndicator;
+    let sentence = !indicator ? initial : withIndicator;
+    if (loss === 0) {
+      sentence = noLoss;
+    }
     const params = {
       indicator: indicatorName,
       location: currentLocation && currentLocation.label,

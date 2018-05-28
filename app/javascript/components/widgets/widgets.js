@@ -12,7 +12,7 @@ import {
 } from './selectors';
 
 const mapStateToProps = (
-  { location, countryData, whitelists, widgets },
+  { location, countryData, whitelists, widgets, cache },
   ownProps
 ) => {
   const { activeWidget } = ownProps;
@@ -33,7 +33,8 @@ const mapStateToProps = (
     isRegionsLoading ||
     isSubRegionsLoading ||
     countryWhitelistLoading ||
-    regionWhitelistLoading;
+    regionWhitelistLoading ||
+    cache.cacheListLoading;
 
   const { query, payload } = location;
   const { region } = payload;

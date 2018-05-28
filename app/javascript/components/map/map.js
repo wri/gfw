@@ -40,15 +40,26 @@ class MapContainer extends PureComponent {
   }
 
   componentDidMount() {
-    const { getLayerSpec, layersKeys } = this.props;
-    getLayerSpec();
+    const { layersKeys } = this.props;
     this.buildMap();
     this.setLayers(layersKeys);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { bounds, layersKeys, settings, options, geojson } = nextProps;
+    const {
+      bounds,
+      layersKeys,
+      settings,
+      options,
+      geojson,
+      getLayerSpec,
+      isParentLoading
+    } = nextProps;
     const { zoom } = options;
+    const parentLoadingChanged = isParentLoading !== this.props.isParentLoading;
+    if (parentLoadingChanged) {
+      getLayerSpec();
+    }
     // sync geostore with map
     if (!isEmpty(bounds) && !isEqual(bounds, this.props.bounds)) {
       this.boundMap(bounds);
@@ -186,7 +197,8 @@ MapContainer.propTypes = {
   options: PropTypes.object,
   getLayerSpec: PropTypes.func.isRequired,
   setMapZoom: PropTypes.func.isRequired,
-  geojson: PropTypes.object
+  geojson: PropTypes.object,
+  isParentLoading: PropTypes.bool
 };
 
 export { reducers, initialState, actions };

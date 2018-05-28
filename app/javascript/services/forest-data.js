@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
 const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
@@ -79,7 +79,7 @@ export const getLocations = ({
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getLocationsLoss = ({
@@ -97,7 +97,7 @@ export const getLocationsLoss = ({
     .replace('{region}', region ? `AND adm1 = ${region}` : '')
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const fetchLossRanked = ({
@@ -110,7 +110,7 @@ export const fetchLossRanked = ({
     .replace('{extent_year}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicatorQuery(forestType, landCategory))
     .replace('{threshold}', threshold);
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const fetchExtentRanked = ({
@@ -123,7 +123,7 @@ export const fetchExtentRanked = ({
     .replace('{extent_year}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicatorQuery(forestType, landCategory))
     .replace('{threshold}', threshold);
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getExtent = ({
@@ -140,7 +140,7 @@ export const getExtent = ({
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getPlantationsExtent = ({
@@ -160,7 +160,7 @@ export const getPlantationsExtent = ({
       '{type}',
       groupByRegion ? `${region ? 'adm2' : 'adm1'}, ${type}` : type
     );
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getMultiRegionExtent = ({
@@ -178,7 +178,7 @@ export const getMultiRegionExtent = ({
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getGain = ({
@@ -192,7 +192,7 @@ export const getGain = ({
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getGainLocations = ({
@@ -207,7 +207,7 @@ export const getGainLocations = ({
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
     .replace('{grouping}', !region ? 'GROUP BY adm1 ORDER BY adm1' : '');
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getLoss = ({
@@ -222,7 +222,7 @@ export const getLoss = ({
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getFAO = ({ country }) => {
@@ -230,7 +230,7 @@ export const getFAO = ({ country }) => {
     '{location}',
     country ? `country = '${country}' AND` : ''
   );
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getFAOExtent = ({ period }) => {
@@ -238,7 +238,7 @@ export const getFAOExtent = ({ period }) => {
     '{period}',
     period
   );
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getFAODeforest = ({ country }) => {
@@ -246,19 +246,19 @@ export const getFAODeforest = ({ country }) => {
     '{location}',
     country ? `WHERE fao.country = '${country}'` : ''
   );
-  return axios.get(url);
+  return request.get(url);
 };
 export const getFAODeforestRank = ({ period }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoDeforestRank}`.replace(
     '{year}',
     period
   );
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getFAOEcoLive = () => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoEcoLive}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getGainRanked = ({
@@ -285,5 +285,5 @@ export const getGainRanked = ({
     .replace('{location}', location)
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicatorQuery(forestType, landCategory));
-  return axios.get(url);
+  return request.get(url);
 };

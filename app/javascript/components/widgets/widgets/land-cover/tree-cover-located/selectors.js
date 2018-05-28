@@ -59,7 +59,8 @@ export const getSentence = createSelector(
       hasIndicator,
       globalInitial,
       globalHasPercentage,
-      globalWithIndicator
+      globalWithIndicator,
+      noCover
     } = sentences;
     const topRegion = data.length && data[0];
     const totalExtent = sumBy(data, 'extent');
@@ -101,6 +102,10 @@ export const getSentence = createSelector(
     } else if (indicator) {
       sentence = currentLabel === 'global' ? globalWithIndicator : hasIndicator;
     }
+    if (params.percentage === '0%') {
+      sentence = noCover;
+    }
+
     return {
       sentence,
       params
