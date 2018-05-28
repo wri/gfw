@@ -5,14 +5,15 @@ import PropTypes from 'prop-types';
 import * as actions from './country-data-provider-actions';
 import reducers, { initialState } from './country-data-provider-reducers';
 
-const mapStateToProps = state => ({
-  location: state.location.payload
+const mapStateToProps = ({ location, cache }) => ({
+  location: location.payload,
+  cacheLoading: cache.cacheListLoading
 });
 
 class CountryDataProvider extends PureComponent {
   componentWillReceiveProps(nextProps) {
     const {
-      isParentLoading,
+      cacheLoading,
       location: { country, region, subRegion }
     } = nextProps;
     const {
@@ -28,7 +29,7 @@ class CountryDataProvider extends PureComponent {
     const hasRegionChanged = region !== this.props.location.region;
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
 
-    if (isParentLoading !== this.props.isParentLoading) {
+    if (cacheLoading !== this.props.cacheLoading) {
       getCountries();
       if (country) {
         getRegions(country);
@@ -71,7 +72,7 @@ class CountryDataProvider extends PureComponent {
 
 CountryDataProvider.propTypes = {
   location: PropTypes.object.isRequired,
-  isParentLoading: PropTypes.bool.isRequired,
+  cacheLoading: PropTypes.bool.isRequired,
   getCountries: PropTypes.func.isRequired,
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,

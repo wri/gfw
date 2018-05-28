@@ -87,8 +87,8 @@ class Page extends PureComponent {
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CacheProvider />
-        <CountryDataProvider isParentLoading={isCacheListLoading} />
-        <WhitelistsProvider isParentLoading={isCacheListLoading} />
+        <CountryDataProvider />
+        <WhitelistsProvider />
         <Meta
           title={title}
           description="Data about forest change, tenure, forest related employment and land use in"
