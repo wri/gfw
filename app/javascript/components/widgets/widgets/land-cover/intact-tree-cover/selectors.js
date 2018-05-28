@@ -14,13 +14,11 @@ const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getWhitelist, getColors, getCurrentLocation],
-  (data, settings, whitelist, colors, currentLabel) => {
+  [getData, getSettings, getColors],
+  (data, settings, colors) => {
     if (isEmpty(data)) return null;
-    const { totalArea, totalExtent, extent, plantations } = data;
-    const hasPlantations =
-      !currentLabel || whitelist.indexOf('plantations') > -1;
-    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 3 : 2);
+    const { totalArea, totalExtent, extent } = data;
+    const colorRange = getColorPalette(colors.ramp, 2);
     const parsedData = [
       {
         label: 'Intact Forest',
@@ -41,14 +39,6 @@ export const parseData = createSelector(
         percentage: (totalArea - totalExtent) / totalArea * 100
       }
     ];
-    if (currentLabel && hasPlantations) {
-      parsedData.splice(2, 0, {
-        label: 'Plantations',
-        value: plantations,
-        color: colorRange[2],
-        percentage: plantations / totalArea * 100
-      });
-    }
     return parsedData;
   }
 );
