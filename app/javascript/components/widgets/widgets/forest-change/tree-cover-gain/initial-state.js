@@ -2,7 +2,6 @@ export default {
   title: 'Tree cover gain',
   config: {
     size: 'small',
-    forestTypes: [],
     landCategories: ['wdpa', 'landmark', 'mining'],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
