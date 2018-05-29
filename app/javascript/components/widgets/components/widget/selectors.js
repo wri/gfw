@@ -74,7 +74,9 @@ export const getForestTypes = createSelector(
 
     return sortByKey(
       filteredOptions
-        .filter(f => config.forestTypes.indexOf(f.value) > -1)
+        .filter(
+          f => config.forestTypes && config.forestTypes.indexOf(f.value) > -1
+        )
         .map(i => ({
           ...i,
           metaKey:
@@ -103,7 +105,10 @@ export const getLandCategories = createSelector(
     }
 
     return sortByKey(
-      filteredOptions.filter(l => config.landCategories.indexOf(l.value) > -1),
+      filteredOptions.filter(
+        l =>
+          config.landCategories && config.landCategories.indexOf(l.value) > -1
+      ),
       'label'
     );
   }
