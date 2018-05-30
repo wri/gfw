@@ -68,7 +68,7 @@ export const getSentence = createSelector(
         indicatorLabel = 'intact forest';
     }
     const params = {
-      location: currentLabel !== 'global' ? `${currentLabel}'s` : "the world's",
+      location: currentLabel !== 'global' ? `${currentLabel}'s` : currentLabel,
       indicator: indicatorLabel,
       percentage:
         intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`

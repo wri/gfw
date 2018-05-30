@@ -16,7 +16,7 @@ export default {
       initial:
         'As of 2013, {percentage} of {location} tree cover was <b>intact forest</b>.',
       withIndicator:
-        'As of 2013, {percentage} of {location} tree cover within {indicator} was <b>intact forest</b>.'
+        'As of 2013, {percentage} of {location} tree cover in {indicator} was <b>intact forest</b>.'
     }
   },
   settings: {

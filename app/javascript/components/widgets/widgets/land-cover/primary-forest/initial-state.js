@@ -17,7 +17,7 @@ export default {
       initial:
         'As of {extentYear}, {percentage} of {location} total tree cover was <b>primary forest</b>.',
       withIndicator:
-        'As of {extentYear}, {percentage} of {location} total tree cover within {indicator} was <b>primary forest</b>.'
+        'As of {extentYear}, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.'
     }
   },
   settings: {
