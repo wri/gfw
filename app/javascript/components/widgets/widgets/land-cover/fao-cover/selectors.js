@@ -71,13 +71,13 @@ export const getSentence = createSelector(
         : extent / area_ha * 100;
 
     const params = {
-      location: currentLabel || 'globally',
+      location: currentLabel !== 'global' ? currentLabel : 'globally',
       extent: `${format('.3s')(extent)}ha`,
       primaryPercent:
         primaryPercent >= 0.1 ? `${format('.2r')(primaryPercent)}%` : '<0.1%'
     };
     let sentence = forest_primary > 0 ? initial : noPrimary;
-    if (!currentLabel) {
+    if (currentLabel === 'global') {
       sentence = forest_primary > 0 ? globalInitial : globalNoPrimary;
     }
     return {
