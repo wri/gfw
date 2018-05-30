@@ -16,7 +16,7 @@ const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
-export const parseData = createSelector(
+export const parseList = createSelector(
   [getData, getSettings, getLocation, getLocationsMeta, getColors],
   (data, settings, location, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
@@ -37,12 +37,18 @@ export const parseData = createSelector(
         });
       }
     });
-    return sortByKey(uniqBy(dataMapped, 'label'), 'value', true);
+    return sortByKey(dataMapped, 'extent', true);
   }
 );
 
+export const parseData = createSelector([parseList], data => {
+  if (isEmpty(data)) return null;
+  return sortByKey(uniqBy(data, 'label'), 'value', true);
+});
+
 export const getSentence = createSelector(
   [
+    parseList,
     parseData,
     getSettings,
     getOptions,
@@ -51,15 +57,26 @@ export const getSentence = createSelector(
     getCurrentLocation,
     getSentences
   ],
-  (data, settings, options, location, indicator, currentLabel, sentences) => {
+  (
+    list,
+    data,
+    settings,
+    options,
+    location,
+    indicator,
+    currentLabel,
+    sentences
+  ) => {
     if (!data || !options || !currentLabel) return null;
     const {
-      hasPercentage,
       initial,
       hasIndicator,
       globalInitial,
-      globalHasPercentage,
       globalWithIndicator,
+      percInitial,
+      percHasIndicator,
+      percGlobalInitial,
+      percGlobalWithIndicator,
       noCover
     } = sentences;
     const topRegion = data.length && data[0];
@@ -69,11 +86,11 @@ export const getSentence = createSelector(
     let percentileExtent = 0;
     let percentileLength = 0;
     while (
-      (percentileLength < data.length &&
-        percentileExtent / totalExtent < 0.5) ||
-      (percentileLength < 10 && data.length > 10)
+      percentileLength < data.length &&
+      percentileExtent / totalExtent < 0.5 &&
+      data.length !== 10
     ) {
-      percentileExtent += data[percentileLength].extent;
+      percentileExtent += list[percentileLength].extent;
       percentileLength += 1;
     }
     const topExtent = percentileExtent / (totalExtent || 0) * 100;
@@ -83,6 +100,7 @@ export const getSentence = createSelector(
       region: topRegion.label,
       indicator: indicator && indicator.label.toLowerCase(),
       percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
+      year: settings.extentYear,
       value:
         settings.unit === '%'
           ? `${format('.2r')(topRegion.percentage)}%`
@@ -92,18 +110,24 @@ export const getSentence = createSelector(
           ? `${format('.2r')(avgExtentPercentage)}%`
           : `${format('.3s')(avgExtent)}ha`,
       count: percentileLength,
-      metric: settings.unit === '%' ? 'relative tree cover' : 'tree cover'
+      metric: settings.unit === '%' ? 'relative' : ''
     };
 
-    let sentence = currentLabel === 'global' ? globalInitial : initial;
-    if (settings.unit === '%') {
-      sentence =
-        currentLabel === 'global' ? globalHasPercentage : hasPercentage;
-    } else if (indicator) {
-      sentence = currentLabel === 'global' ? globalWithIndicator : hasIndicator;
-    }
-    if (params.percentage === '0%') {
-      sentence = noCover;
+    let sentence = noCover;
+    if (params.percentage !== '0%' && settings.unit === '%') {
+      sentence = currentLabel === 'global' ? percGlobalInitial : percInitial;
+      if (indicator) {
+        sentence =
+          currentLabel === 'global'
+            ? percGlobalWithIndicator
+            : percHasIndicator;
+      }
+    } else if (params.percentage !== '0%' && settings.unit === 'ha') {
+      sentence = currentLabel === 'global' ? globalInitial : initial;
+      if (indicator) {
+        sentence =
+          currentLabel === 'global' ? globalWithIndicator : hasIndicator;
+      }
     }
 
     return {
