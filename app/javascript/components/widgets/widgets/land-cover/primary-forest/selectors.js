@@ -60,21 +60,21 @@ export const getSentence = createSelector(
     let indicatorLabel = indicator && indicator.label;
     switch (indicator && indicator.value) {
       case 'primary_forest__mining':
-        indicatorLabel = 'Mining concessions';
+        indicatorLabel = 'mining concessions';
         break;
       case 'primary_forest__landmark':
-        indicatorLabel = 'Indigenous lands';
+        indicatorLabel = 'indigenous lands';
         break;
       case 'primary_forest__wdpa':
-        indicatorLabel = 'Protected areas';
+        indicatorLabel = 'protected areas';
         break;
       default:
-        indicatorLabel = 'Primary forests';
+        indicatorLabel = 'primary forests';
     }
 
     const params = {
       location: `${currentLabel}'s`,
-      indicator: indicatorLabel.toLowerCase(),
+      indicator: indicatorLabel,
       percentage:
         primaryPercentage < 0.1
           ? '<0.1%'

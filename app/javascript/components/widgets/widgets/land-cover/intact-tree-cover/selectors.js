@@ -56,20 +56,20 @@ export const getSentence = createSelector(
     let indicatorLabel = indicator && indicator.label;
     switch (indicator && indicator.value) {
       case 'ifl_2013__mining':
-        indicatorLabel = 'Mining concessions';
+        indicatorLabel = 'mining concessions';
         break;
       case 'ifl_2013__wdpa':
-        indicatorLabel = 'Protected areas';
+        indicatorLabel = 'protected areas';
         break;
       case 'ifl_2013__landmark':
-        indicatorLabel = 'Indigenous lands';
+        indicatorLabel = 'indigenous lands';
         break;
       default:
-        indicatorLabel = 'Intact forest';
+        indicatorLabel = 'intact forest';
     }
     const params = {
       location: currentLabel !== 'global' ? `${currentLabel}'s` : "the world's",
-      indicator: indicatorLabel.toLowerCase(),
+      indicator: indicatorLabel,
       percentage:
         intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`
     };
