@@ -15,9 +15,9 @@ export default {
     },
     sentences: {
       globalInitial:
-        'As of {year}, there was {value} of {location} tree cover.',
+        'As of {year}, {percentage} of {location} land cover was tree cover.',
       globalWithIndicator:
-        'As of {year}, there was {value} of {location} tree cover within {indicator}.',
+        'As of {year}, {percentage} of {location} land cover within {indicator} was tree cover.',
       initial: 'As of {year}, {location} had {value} of tree cover.',
       withIndicator:
         'As of {year}, {location} had {percentage} tree cover within {indicator}.'
