@@ -1,5 +1,7 @@
 export default {
-  title: 'Deforestation Alerts',
+  title: {
+    withLocation: 'Deforestation Alerts in {location}'
+  },
   config: {
     size: 'large',
     categories: ['summary', 'forest-change'],

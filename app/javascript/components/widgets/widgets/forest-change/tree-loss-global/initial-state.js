@@ -1,5 +1,7 @@
 export default {
-  title: 'Tree cover loss',
+  title: {
+    global: 'Global Tree cover loss'
+  },
   config: {
     admins: ['global'],
     forestTypes: ['ifl_2013'],

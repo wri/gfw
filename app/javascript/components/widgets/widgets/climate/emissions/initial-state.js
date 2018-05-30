@@ -1,5 +1,7 @@
 export default {
-  title: 'Historical emissions',
+  title: {
+    withLocation: 'Historical emissions in {location}'
+  },
   config: {
     size: 'small',
     categories: ['climate'],

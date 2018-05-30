@@ -1,5 +1,7 @@
 export default {
-  title: 'Primary forest',
+  title: {
+    withLocation: 'Primary forest in {location}'
+  },
   config: {
     size: 'small',
     landCategories: ['mining', 'wdpa', 'landmark'],
