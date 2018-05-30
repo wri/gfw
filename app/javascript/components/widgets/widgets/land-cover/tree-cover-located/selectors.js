@@ -109,8 +109,7 @@ export const getSentence = createSelector(
         settings.unit === '%'
           ? `${format('.2r')(avgExtentPercentage)}%`
           : `${format('.3s')(avgExtent)}ha`,
-      count: percentileLength,
-      metric: settings.unit === '%' ? 'relative' : ''
+      count: percentileLength
     };
 
     let sentence = noCover;
