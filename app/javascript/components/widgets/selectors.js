@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 import { sortByKey } from 'utils/data';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
-import isEmpty from 'lodash/isEmpty';
 import camelCase from 'lodash/camelCase';
 import sortBy from 'lodash/sortBy';
 
@@ -178,14 +177,13 @@ export const filterWidgetByIndicator = createSelector(
   (widgets, whitelist, admin) => {
     if (!widgets) return null;
     if (admin === 'global') return widgets;
-    const whitelistKeys = !isEmpty(whitelist) ? Object.keys(whitelist) : null;
 
     return widgets.filter(widget => {
       const { showIndicators } = widget.config;
       let showByIndicators = true;
       if (showIndicators && whitelist) {
-        const totalIndicators = concat(showIndicators, whitelistKeys).length;
-        const reducedIndicators = uniq(concat(showIndicators, whitelistKeys))
+        const totalIndicators = concat(showIndicators, whitelist).length;
+        const reducedIndicators = uniq(concat(showIndicators, whitelist))
           .length;
         showByIndicators = totalIndicators !== reducedIndicators;
       }
@@ -194,23 +192,8 @@ export const filterWidgetByIndicator = createSelector(
   }
 );
 
-export const checkWidgetHasData = createSelector(
-  [filterWidgetByIndicator, getWhitelist, getAdminLevel],
-  (widgets, whitelist, admin) => {
-    if (admin === 'global') return widgets;
-    return widgets.filter(w => {
-      const { type } = w.config;
-      return (
-        type !== 'loss' ||
-        type !== 'gain' ||
-        (whitelist && whitelist.gadm28 && whitelist.gadm28[type])
-      );
-    });
-  }
-);
-
 export const filterWidgets = createSelector(
-  [checkWidgetHasData, getCategory],
+  [filterWidgetByIndicator, getCategory],
   (widgets, category) =>
     sortBy(
       widgets.filter(

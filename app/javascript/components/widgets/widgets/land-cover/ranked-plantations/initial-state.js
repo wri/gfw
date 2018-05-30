@@ -4,6 +4,7 @@ export default {
     size: 'small',
     categories: ['land-cover'],
     admins: ['country', 'region'],
+    showIndicators: ['plantations'],
     selectors: ['types'],
     type: 'plantations',
     metaKey: 'widget_plantations_ranked',

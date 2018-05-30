@@ -24,9 +24,7 @@ const mapStateToProps = ({ cache, countryData, whitelists, location, map }) => {
     category,
     ...location,
     countryData,
-    indicatorWhitelist: location.payload.region
-      ? regionWhitelist
-      : countryWhitelist
+    whitelist: location.payload.region ? regionWhitelist : countryWhitelist
   };
   const widgets = filterWidgets(widgetData);
 
