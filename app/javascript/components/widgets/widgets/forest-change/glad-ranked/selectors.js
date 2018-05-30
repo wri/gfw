@@ -66,8 +66,7 @@ export const parseData = createSelector(
       return {
         id: k,
         color: colors.main,
-        percentage:
-          countsAreaPerc >= 0.1 ? `${format('.2r')(countsAreaPerc)}%` : '<0.1%',
+        percentage: `${format('.2r')(countsAreaPerc)}%`,
         countsPerHa,
         count: counts,
         area: countsArea,
