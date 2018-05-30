@@ -6,10 +6,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget, state }) => {
   const { region } = state().location.payload;
   const whitelist = region ? regionWhitelist : countryWhitelist;
   axios
-    .all([
-      getExtent({ ...params, forestType: 'gadm28' }),
-      getExtent({ ...params })
-    ])
+    .all([getExtent({ ...params, forestType: '' }), getExtent({ ...params })])
     .then(
       axios.spread((gadm28Response, iflResponse) => {
         const gadmExtent = gadm28Response.data && gadm28Response.data.data;

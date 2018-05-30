@@ -74,12 +74,11 @@ export const getSentence = createSelector(
 
     const params = {
       location: `${currentLabel}'s`,
-      indicator: indicatorLabel,
+      indicator: indicatorLabel.toLowerCase(),
       percentage:
         primaryPercentage < 0.1
           ? '<0.1%'
           : `${format('.2r')(primaryPercentage)}%`,
-      primary: 'primary forest',
       extentYear: settings.extentYear
     };
 
