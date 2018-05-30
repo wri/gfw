@@ -100,8 +100,9 @@ export const getSentence = createSelector(
     let percentileLength = 0;
 
     while (
-      (percentileLength < data.length && percentileCount / totalCount < 0.5) ||
-      (percentileLength < 10 && data.length > 10)
+      percentileLength < data.length &&
+      percentileCount / totalCount < 0.5 &&
+      data.length !== 10
     ) {
       percentileCount += data[percentileLength].count;
       percentileLength += 1;

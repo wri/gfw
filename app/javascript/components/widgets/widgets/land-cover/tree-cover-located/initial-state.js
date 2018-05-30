@@ -24,17 +24,21 @@ export default {
     },
     sentences: {
       globalInitial:
-        '{location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
-      globalHasPercentage:
-        '{location}, {region} had the largest relative tree cover of {value}, compared to a national average of {average}.',
-      globalHasIndicator:
-        'Within For {indicator} {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover. {region} had the most tree cover at {value} compared to an average of {average}.',
+      globalWithIndicator:
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover in {indicator}. {region} had the most tree cover at {value} compared to an average of {average}.',
       initial:
-        'In {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover. {region} had the most tree cover at {value} compared to an average of {average}.',
       hasIndicator:
-        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {value} compared to an average of {average}.',
-      hasPercentage:
-        '{region} had the largest relative tree cover of {value}, compared to a regional average of {average}.',
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover in {indicator}. {region} had the most tree cover at {value} compared to an average of {average}.',
+      percGlobalInitial:
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover. {region} had the most relative tree cover at {value} compared to an average of {average}.',
+      percGlobalWithIndicator:
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover in {indicator}. {region} had the most relative tree cover at {value} compared to an average of {average}.',
+      percInitial:
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover. {region} had the most relative tree cover at {value} compared to an average of {average}.',
+      percHasIndicator:
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover in {indicator}. {region} had the most relative tree cover at {value} compared to an average of {average}.',
       noCover: 'No tree cover was identified in {location}.'
     },
     data: [
