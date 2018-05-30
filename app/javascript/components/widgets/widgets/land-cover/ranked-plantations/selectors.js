@@ -91,7 +91,7 @@ export const parseConfig = createSelector(
       yAxisDotFill: '#d4d4d4',
       tooltip: dataKeys.map(item => ({
         key: item,
-        label: `${item} label`,
+        label: item,
         color: colorsByType[item],
         unit: '%',
         unitFormat: value => format('.1f')(value)
