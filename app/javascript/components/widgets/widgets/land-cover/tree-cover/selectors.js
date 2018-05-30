@@ -68,7 +68,7 @@ export const getSentence = createSelector(
       value: `${format('.3s')(data.cover)}ha`
     };
     let sentence = indicator ? withIndicator : initial;
-    if (!currentLabel) {
+    if (currentLabel === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
     return { sentence, params };
