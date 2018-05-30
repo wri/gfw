@@ -8,7 +8,6 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getCurrentLocation = state => state.currentLabel;
 const getIndicator = state => state.indicator || null;
-const getWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -47,12 +46,7 @@ export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
     if (!parsedData) return null;
-    const {
-      initial,
-      withIndicator,
-      globalInitial,
-      globalWithIndicator
-    } = sentences;
+    const { initial, withIndicator } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
@@ -62,33 +56,27 @@ export const getSentence = createSelector(
     let indicatorLabel = indicator && indicator.label;
     switch (indicator && indicator.value) {
       case 'ifl_2013__mining':
-        indicatorLabel = 'Mining concessions';
+        indicatorLabel = 'mining concessions';
         break;
       case 'ifl_2013__wdpa':
-        indicatorLabel = 'Protected areas';
+        indicatorLabel = 'protected areas';
+        break;
+      case 'ifl_2013__landmark':
+        indicatorLabel = 'indigenous lands';
         break;
       default:
-        indicatorLabel = 'Intact forest';
+        indicatorLabel = 'intact forest';
     }
     const params = {
-      location: currentLabel || 'global',
+      location: currentLabel !== 'global' ? `${currentLabel}'s` : currentLabel,
       indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1
-          ? '<0.1%'
-          : `${format('.2r')(intactPercentage)}%`,
-      intact: 'intact forest'
+        intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`
     };
 
-    let sentence =
+    const sentence =
       indicator && indicator.value === 'ifl_2013' ? initial : withIndicator;
 
-    if (!currentLabel) {
-      sentence =
-        indicator && indicator.value === 'ifl_2013'
-          ? globalInitial
-          : globalWithIndicator;
-    }
     return {
       sentence,
       params

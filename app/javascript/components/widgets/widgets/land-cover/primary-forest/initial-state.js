@@ -15,9 +15,9 @@ export default {
     },
     sentences: {
       initial:
-        'As of {extentYear}, {percentage} of {location} total tree cover was {primary}.',
+        'As of {extentYear}, {percentage} of {location} total tree cover was <b>primary forest</b>.',
       withIndicator:
-        'As of {extentYear}, {percentage} of {location} total tree cover was {primary} within {indicator}.'
+        'As of {extentYear}, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.'
     }
   },
   settings: {
