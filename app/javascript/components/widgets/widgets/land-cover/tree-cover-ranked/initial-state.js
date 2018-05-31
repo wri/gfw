@@ -4,11 +4,18 @@ export default {
   },
   config: {
     size: 'small',
+    forestTypes: ['ifl_2013'],
     landCategories: ['wdpa', 'kba', 'aze', 'tcl'],
     units: ['ha', '%'],
     categories: ['land-cover'],
     admins: ['country'],
-    selectors: ['landCategories', 'thresholds', 'extentYears', 'units'],
+    selectors: [
+      'forestTypes',
+      'landCategories',
+      'thresholds',
+      'extentYears',
+      'units'
+    ],
     type: 'extent',
     metaKey: 'widget_forest_cover_ranking',
     layers: ['forest2000', 'forest2010'],

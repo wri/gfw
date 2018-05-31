@@ -23,7 +23,7 @@ export const initialState = {
     layers: ['loss'],
     sortOrder: {
       summary: 5,
-      forestChange: 3
+      forestChange: 4
     },
     sentences: {
       initial:

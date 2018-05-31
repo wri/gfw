@@ -13,7 +13,7 @@ export const initialState = {
     metaKey: 'widget_plantations_tree_cover_loss',
     layers: ['loss', 'plantations_by_type'],
     sortOrder: {
-      forestChange: 100
+      forestChange: 2
     },
     sentences: {
       initial:

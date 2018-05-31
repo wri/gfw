@@ -8,7 +8,7 @@ export default {
     landCategories: ['mining', 'landmark', 'wdpa'],
     categories: ['summary', 'land-cover'],
     admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['landCategories', 'thresholds'],
+    selectors: ['landCategories', 'thresholds', 'extentYears'],
     type: 'extent',
     metaKey: 'widget_tree_cover',
     layers: ['forest2000', 'forest2010'],

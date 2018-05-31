@@ -11,7 +11,7 @@ export const initialState = {
     type: 'fao',
     metaKey: 'widget_deforestation_fao',
     sortOrder: {
-      forestChange: 3
+      forestChange: 5
     },
     colors: 'loss',
     sentences: {
