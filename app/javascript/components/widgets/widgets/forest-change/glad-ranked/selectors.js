@@ -20,7 +20,7 @@ const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
-export const parseData = createSelector(
+export const parseList = createSelector(
   [
     getData,
     getLatestDates,
@@ -77,13 +77,19 @@ export const parseData = createSelector(
         }${k}`
       };
     });
-    return sortBy(mappedData, 'value').reverse();
+    return sortBy(mappedData, 'area').reverse();
   }
 );
+
+export const parseData = createSelector([parseList], data => {
+  if (isEmpty(data)) return null;
+  return sortBy(data, 'value').reverse();
+});
 
 export const getSentence = createSelector(
   [
     parseData,
+    parseList,
     getSettings,
     getOptions,
     getLocation,
@@ -91,7 +97,16 @@ export const getSentence = createSelector(
     getCurrentLocation,
     getSentences
   ],
-  (data, settings, options, location, indicator, currentLabel, sentences) => {
+  (
+    data,
+    list,
+    settings,
+    options,
+    location,
+    indicator,
+    currentLabel,
+    sentences
+  ) => {
     if (!data || !options || !currentLabel) return '';
     const { initial, oneRegion } = sentences;
     const totalCount = sumBy(data, 'count');
@@ -103,7 +118,7 @@ export const getSentence = createSelector(
       percentileCount / totalCount < 0.5 &&
       data.length !== 10
     ) {
-      percentileCount += data[percentileLength].count;
+      percentileCount += list[percentileLength].count;
       percentileLength += 1;
     }
     const topCount = percentileCount / totalCount * 100;
