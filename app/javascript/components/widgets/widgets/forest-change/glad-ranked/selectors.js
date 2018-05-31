@@ -6,6 +6,8 @@ import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 
+import { getAdminPath } from '../../../utils';
+
 // get list data
 const getData = state => (state.data && state.data.alerts) || null;
 const getLatestDates = state => (state.data && state.data.latest) || null;
@@ -14,6 +16,7 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
   (!state.payload.region ? state.regions : state.subRegions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
@@ -27,10 +30,11 @@ export const parseData = createSelector(
     getExtent,
     getSettings,
     getLocation,
+    getQuery,
     getLocationsMeta,
     getColors
   ],
-  (data, latest, extent, settings, location, meta, colors) => {
+  (data, latest, extent, settings, location, query, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const latestWeek = moment(latest)
       .subtract(1, 'weeks')
@@ -73,9 +77,7 @@ export const parseData = createSelector(
         area: countsArea,
         value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
         label: (region && region.label) || '',
-        path: `/dashboards/country/${location.country}/${
-          location.region ? `${location.region}/` : ''
-        }${k}`
+        path: getAdminPath({ ...location, query, id: k })
       };
     });
     return sortBy(mappedData, 'value').reverse();

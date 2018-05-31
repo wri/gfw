@@ -4,6 +4,7 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
+import { getAdminPath } from '../../../utils';
 
 // get list data
 const getData = state => state.data || null;
@@ -11,17 +12,17 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationsMeta = state => state[state.childKey] || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const parseList = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta, getColors],
-  (data, settings, location, meta, colors) => {
+  [getData, getSettings, getLocation, getLocationsMeta, getColors, getQuery],
+  (data, settings, location, meta, colors, query) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
-    const { type, country, region } = location;
     data.forEach(d => {
       const regionMeta = meta.find(l => d.id === l.value);
       if (regionMeta) {
@@ -30,9 +31,7 @@ export const parseList = createSelector(
           extent: d.extent,
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
-          path: `/dashboards/${type || 'global'}/${country}/${
-            region ? `${region}/` : ''
-          }${d.id}`,
+          path: getAdminPath({ ...location, query, id: d.id }),
           color: colors.main
         });
       }
@@ -79,7 +78,7 @@ export const getSentence = createSelector(
       percGlobalWithIndicator,
       noCover
     } = sentences;
-    const topRegion = data.length && data[0];
+    const topRegion = (data.length && data[0]) || {};
     const totalExtent = sumBy(data, 'extent');
     const avgExtent = sumBy(data, 'extent') / data.length;
     const avgExtentPercentage = sumBy(data, 'percentage') / data.length;

@@ -5,6 +5,8 @@ import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
+import { getAdminPath } from '../../../utils';
+
 // get list data
 const getGain = state => (state.data && state.data.gain) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
@@ -12,6 +14,7 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
@@ -19,8 +22,16 @@ const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
-  [getGain, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
-  (data, extent, settings, location, meta, colors) => {
+  [
+    getGain,
+    getExtent,
+    getSettings,
+    getLocation,
+    getQuery,
+    getLocationsMeta,
+    getColors
+  ],
+  (data, extent, settings, location, query, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
@@ -33,9 +44,7 @@ export const getSortedData = createSelector(
           gain: d.gain,
           percentage,
           value: settings.unit === 'ha' ? d.gain : percentage,
-          path: `/dashboards/country/${location.country}/${
-            location.region ? `${location.region}/` : ''
-          }${d.id}`,
+          path: getAdminPath({ ...location, query, id: d.id }),
           color: colors.main
         });
       }
@@ -78,7 +87,7 @@ export const getSentence = createSelector(
       withIndicatorPercent
     } = sentences;
     const totalGain = sumBy(data, 'gain');
-    const topRegion = sortedData.length && sortedData[0];
+    const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
     const avgGainPercentage = sumBy(data, 'percentage') / data.length;
     const avgGain = sumBy(data, 'gain') / data.length;
     let percentileGain = 0;

@@ -105,7 +105,7 @@ export const getSentence = createSelector(
   (data, settings, location, currentLabel, sentences) => {
     if (!data || !data.length) return null;
     const { initial } = sentences;
-    const topRegion = data[0];
+    const topRegion = data[0] || {};
     const topPlantation = maxBy(
       remove(
         Object.keys(topRegion).map(k => ({
