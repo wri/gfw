@@ -1,8 +1,14 @@
 {
   "extent": {
     "main": "#a0c746",
-    "ramp": ["#364a08", "#506917", "#6b8729", "#84a637", "#a0c746", "#b8d86d", "#c7e67c", "#d2f189", "#dff7a6"],
+    "ramp": ["#364a08", "#42590E", "#506917", "#6b8729", "#84a637", "#a0c746", "#b8d86d", "#c7e67c", "#d2f189", "#dff7a6"],
+    "naturalForest": "#506917",
+    "intactForest": "#6b8729",
+    "primaryForest": "#84a637",
+    "plantedForest": "#a0c746",
+    "otherCover": "#c7e67c",
     "nonForest": "#e7e5a4"
+
   },
   "loss": {
     "main": "#fe6598",

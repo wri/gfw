@@ -20,7 +20,6 @@ export const parseData = createSelector(
       forest_primary,
       forest_regenerated
     } = data;
-    const colorRange = colors.ramp;
     const otherCover =
       extent - (forest_regenerated + forest_primary + planted_forest);
     const nonForest = area_ha - extent;
@@ -29,25 +28,25 @@ export const parseData = createSelector(
         label: 'Naturally Regenerated Forest',
         value: forest_regenerated,
         percentage: forest_regenerated / area_ha * 100,
-        color: colorRange[1]
+        color: colors.naturalForest
       },
       {
         label: 'Primary Forest',
         value: forest_primary || 0,
         percentage: forest_primary / area_ha * 100 || 0,
-        color: colorRange[2]
+        color: colors.primaryForest
       },
       {
         label: 'Planted Forest',
         value: planted_forest || 0,
         percentage: planted_forest / area_ha * 100 || 0,
-        color: colorRange[4]
+        color: colors.plantedForest
       },
       {
         label: 'Other Tree Cover',
         value: otherCover,
         percentage: otherCover / area_ha * 100,
-        color: colorRange[6]
+        color: colors.otherCover
       },
       {
         label: 'Non-Forest',
