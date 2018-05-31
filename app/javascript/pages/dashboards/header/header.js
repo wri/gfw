@@ -6,6 +6,7 @@ import isEqual from 'lodash/isEqual';
 
 import { COUNTRY } from 'pages/dashboards/router';
 import { deburrUpper } from 'utils/data';
+import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 import shareActions from 'components/modals/share/share-actions';
 import { getAdminsSelected, getSentence } from './header-selectors';
@@ -53,10 +54,29 @@ const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
   };
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { query, widgets } = ownProps;
+  const widgetQueries = {};
+  if (query) {
+    Object.keys(query).forEach(key => {
+      if (widgets.map(w => w.name).indexOf(key) > -1) {
+        const widget = widgets.find(w => w.name === key);
+        widgetQueries[key] = encodeStateForUrl({
+          ...decodeUrlForState(query[key]),
+          forestType: widget.settings.forestType || '',
+          landCategory: widget.settings.landCategory || ''
+        });
+      }
+    });
+  }
+  const newQuery = {
+    ...query,
+    ...widgetQueries
+  };
+
+  return bindActionCreators(
     {
-      handleCountryChange: (country, query) => ({
+      handleCountryChange: country => ({
         type: COUNTRY,
         payload: {
           type: country ? 'country' : 'global',
@@ -64,12 +84,9 @@ const mapDispatchToProps = dispatch =>
           region: undefined,
           subRegion: undefined
         },
-        ...(!!query &&
-          query.category && {
-            query: { category: query.category }
-          })
+        query: newQuery
       }),
-      handleRegionChange: (country, region, query) => ({
+      handleRegionChange: (country, region) => ({
         type: COUNTRY,
         payload: {
           type: 'country',
@@ -77,12 +94,9 @@ const mapDispatchToProps = dispatch =>
           ...(!!region && region.value && { region: region.value }),
           subRegion: undefined
         },
-        ...(!!query &&
-          query.category && {
-            query: { category: query.category }
-          })
+        query: newQuery
       }),
-      handleSubRegionChange: (country, region, subRegion, query) => ({
+      handleSubRegionChange: (country, region, subRegion) => ({
         type: COUNTRY,
         payload: {
           type: 'country',
@@ -90,15 +104,13 @@ const mapDispatchToProps = dispatch =>
           region: region.value,
           ...(!!subRegion && subRegion.value && { subRegion: subRegion.value })
         },
-        ...(!!query &&
-          query.category && {
-            query: { category: query.category }
-          })
+        query: newQuery
       }),
       ...actions
     },
     dispatch
   );
+};
 
 class HeaderContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {
