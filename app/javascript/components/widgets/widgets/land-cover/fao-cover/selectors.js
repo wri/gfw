@@ -45,7 +45,7 @@ export const parseData = createSelector(
       },
       {
         label: 'Other Tree Cover',
-        value: otherCover,
+        value: otherCover > 0 ? otherCover : 0,
         percentage: otherCover / area_ha * 100,
         color: colorRange[6]
       },

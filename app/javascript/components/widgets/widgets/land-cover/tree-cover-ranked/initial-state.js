@@ -26,7 +26,7 @@ export default {
   settings: {
     threshold: 30,
     unit: '%',
-    extentYear: 2000,
+    extentYear: 2010,
     layers: ['forest2010']
   },
   enabled: true
