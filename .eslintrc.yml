@@ -36,6 +36,7 @@ rules:
   jsx-a11y/href-no-hash: 0
   react/jsx-filename-extension: 0
   react/sort-comp: 0
+  react/no-find-dom-node: 0
   camelcase: 0
   no-mixed-operators: 0
   class-methods-use-this: 0
