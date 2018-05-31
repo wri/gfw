@@ -108,10 +108,14 @@ export const getSentence = createSelector(
       percentileLength += 1;
     }
     const topCount = percentileCount / totalCount * 100;
+    const countArea = sumBy(data, 'area');
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
-      area: `${format('.3s')(sumBy(data, 'area'))}ha`,
+      area:
+        countArea < 1
+          ? `${format('.3r')(countArea)}ha`
+          : `${format('.3s')(countArea)}ha`,
       topPercent: `${format('.2r')(topCount)}%`,
       topRegions: percentileLength,
       location: currentLabel,
