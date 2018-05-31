@@ -75,12 +75,12 @@ export const getSentence = createSelector(
     if (currentLabel !== 'global') {
       sentence = countryData && countryData.value > 0 ? initial : noReforest;
     }
+    const formatType = rate < 1 ? '.3r' : '.3s';
 
     const params = {
       location: currentLabel,
       year: period && period.label,
-      rate:
-        rate < 1 ? `${format('.3r')(rate)}ha/yr` : `${format('.3s')(rate)}ha/yr`
+      rate: `${format(formatType)(rate)}ha/yr`
     };
 
     return {

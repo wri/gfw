@@ -70,17 +70,14 @@ export const getSentence = createSelector(
       sentence = humdef ? globalHuman : globalInitial;
     } else if (!deforest) sentence = noDeforest;
 
+    const rateFormat = rate < 1 ? '.3r' : '.3s';
+    const humanFormat = humdef < 1 ? '.3r' : '.3s';
+
     const params = {
       location: currentLabel,
       year: period && period.label,
-      rate:
-        rate < 1
-          ? `${format('.3r')(rate)}ha/yr`
-          : `${format('.3s')(rate)}ha/yr`,
-      human:
-        humdef < 1
-          ? `${format('.3r')(humdef)}ha/yr`
-          : `${format('.3s')(humdef)}ha/yr`
+      rate: `${format(rateFormat)(rate)}ha/yr`,
+      human: `${format(humanFormat)(humdef)}ha/yr`
     };
 
     return {
