@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
 import { COUNTRY } from 'pages/dashboards/router';
+import { isParent } from 'utils/dom';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -105,7 +106,11 @@ class WidgetHeader extends PureComponent {
                 trigger="click"
                 interactive
                 onRequestClose={() => {
-                  if (!modalClosing) {
+                  const isTargetOnTooltip = isParent(
+                    this.widgetSettingsRef,
+                    window.event.path
+                  );
+                  if (!modalClosing && !isTargetOnTooltip) {
                     this.setState({ tooltipOpen: false });
                   }
                 }}
@@ -113,7 +118,14 @@ class WidgetHeader extends PureComponent {
                 arrow
                 useContext
                 open={tooltipOpen}
-                html={<WidgetSettings {...this.props} />}
+                html={
+                  <WidgetSettings
+                    ref={node => {
+                      this.widgetSettingsRef = node;
+                    }}
+                    {...this.props}
+                  />
+                }
               >
                 <Button
                   className="theme-button-small square"
