@@ -25,7 +25,8 @@ class Header extends PureComponent {
       shareData,
       payload,
       forestAtlasLink,
-      sentence
+      sentence,
+      query
     } = this.props;
 
     return (
@@ -42,7 +43,7 @@ class Header extends PureComponent {
               ...location
             }}
             tooltip={{
-              text: `Download the country data${
+              text: `Download the data${
                 locationNames.country
                   ? ` for ${locationNames.country.label}`
                   : ''
@@ -74,7 +75,7 @@ class Header extends PureComponent {
                 noSelectedValue="Select a country"
                 value={locationNames.country}
                 options={locationOptions.countries}
-                onChange={handleCountryChange}
+                onChange={country => handleCountryChange(country, query)}
                 searchable
                 disabled={loading}
                 tooltip={{
@@ -95,7 +96,7 @@ class Header extends PureComponent {
                     value={locationNames.region}
                     options={locationOptions.regions}
                     onChange={region =>
-                      handleRegionChange(locationNames.country, region)
+                      handleRegionChange(locationNames.country, region, query)
                     }
                     searchable
                     disabled={loading}
@@ -123,7 +124,8 @@ class Header extends PureComponent {
                       handleSubRegionChange(
                         locationNames.country,
                         locationNames.region,
-                        subRegion
+                        subRegion,
+                        query
                       )
                     }
                     searchable
@@ -173,7 +175,8 @@ Header.propTypes = {
   shareData: PropTypes.object.isRequired,
   payload: PropTypes.object.isRequired,
   forestAtlasLink: PropTypes.object,
-  sentence: PropTypes.object
+  sentence: PropTypes.object,
+  query: PropTypes.object
 };
 
 export default Header;
