@@ -31,32 +31,30 @@ export const setCountryLinks = createAction('setCountryLinks');
 
 export const getCountries = createThunkAction(
   'getCountries',
-  () => (dispatch, state) => {
-    if (!state().countryData.isCountriesLoading) {
-      dispatch(setCountriesLoading(true));
-      axios
-        .all([getCountriesProvider(), getFAOCountriesProvider()])
-        .then(
-          axios.spread((gadm28Countries, faoCountries) => {
-            const allCountries = uniqBy(
-              [...gadm28Countries.data.rows, ...faoCountries.data.rows],
-              'iso'
-            );
-            const countries = uniqBy(
-              allCountries.filter(c => c.iso !== 'XCA'),
-              'iso'
-            );
-            dispatch(setGadmCountries(gadm28Countries.data.rows));
-            dispatch(setFAOCountries(faoCountries.data.rows));
-            dispatch(setCountries(countries));
-            dispatch(setCountriesLoading(false));
-          })
-        )
-        .catch(error => {
+  () => dispatch => {
+    dispatch(setCountriesLoading(true));
+    axios
+      .all([getCountriesProvider(), getFAOCountriesProvider()])
+      .then(
+        axios.spread((gadm28Countries, faoCountries) => {
+          const allCountries = uniqBy(
+            [...gadm28Countries.data.rows, ...faoCountries.data.rows],
+            'iso'
+          );
+          const countries = uniqBy(
+            allCountries.filter(c => c.iso !== 'XCA'),
+            'iso'
+          );
+          dispatch(setGadmCountries(gadm28Countries.data.rows));
+          dispatch(setFAOCountries(faoCountries.data.rows));
+          dispatch(setCountries(countries));
           dispatch(setCountriesLoading(false));
-          console.info(error);
-        });
-    }
+        })
+      )
+      .catch(error => {
+        dispatch(setCountriesLoading(false));
+        console.info(error);
+      });
   }
 );
 
