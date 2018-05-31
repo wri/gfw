@@ -94,7 +94,7 @@ export const getSentence = createSelector(
     const firesCount =
       (data &&
         data.map(item => item.value).reduce((sum, item) => sum + item)) ||
-      'no';
+      'No';
     const params = {
       location: currentLabel,
       count: Number.isInteger(firesCount) ? format(',')(firesCount) : firesCount
