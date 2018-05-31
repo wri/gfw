@@ -1,6 +1,6 @@
 export default {
   title: {
-    withLocation: 'Tree cover extent in {location}'
+    withLocation: 'Forest in {location} compared to other areas'
   },
   config: {
     size: 'small',

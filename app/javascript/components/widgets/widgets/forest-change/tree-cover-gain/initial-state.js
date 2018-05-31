@@ -1,7 +1,7 @@
 export default {
   title: {
     global: 'Global Tree cover gain',
-    withLocation: 'Tree cover gain in {location}'
+    withLocation: 'Tree cover gain in {location} compared to other areas'
   },
   config: {
     size: 'small',
