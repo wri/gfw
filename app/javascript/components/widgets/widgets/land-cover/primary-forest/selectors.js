@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -17,19 +16,18 @@ export const parseData = createSelector(
   (data, settings, colors) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent } = data;
-    const colorRange = getColorPalette(colors.ramp, 2);
     const secondaryExtent = totalExtent - extent < 0 ? 0 : totalExtent - extent;
     const parsedData = [
       {
         label: 'Primary Forest',
         value: extent,
-        color: colorRange[0],
+        color: colors.primaryForest,
         percentage: extent / totalArea * 100
       },
       {
         label: 'Other Tree Cover',
         value: secondaryExtent,
-        color: colorRange[1],
+        color: colors.otherCover,
         percentage: secondaryExtent / totalArea * 100
       },
       {

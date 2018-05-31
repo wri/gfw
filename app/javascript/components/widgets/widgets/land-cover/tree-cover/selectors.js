@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -22,12 +21,11 @@ export const parseData = createSelector(
     const hasPlantations =
       (currentLabel !== 'global' && isEmpty(whitelist)) ||
       whitelist.indexOf('plantations') > -1;
-    const colorRange = getColorPalette(colors.ramp, hasPlantations ? 2 : 1);
     const parsedData = [
       {
         label: hasPlantations && !indicator ? 'Natural Forest' : 'Tree cover',
         value: cover - plantations,
-        color: colorRange[0],
+        color: colors.naturalForest,
         percentage: (cover - plantations) / totalArea * 100
       },
       {
@@ -41,7 +39,7 @@ export const parseData = createSelector(
       parsedData.splice(1, 0, {
         label: 'Plantations',
         value: plantations,
-        color: colorRange[1],
+        color: colors.plantedForest,
         percentage: plantations / totalArea * 100
       });
     }
