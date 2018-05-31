@@ -1,5 +1,7 @@
 export default {
-  title: 'Emissions from biomass loss',
+  title: {
+    withLocation: 'Emissions from biomass loss in {location}'
+  },
   config: {
     size: 'small',
     indicators: [

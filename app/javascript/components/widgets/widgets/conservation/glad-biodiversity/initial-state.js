@@ -1,5 +1,7 @@
 export default {
-  title: 'Deforestation Alerts in Biodiversity Areas',
+  title: {
+    withLocation: 'Deforestation Alerts in Biodiversity Areas in {location}'
+  },
   config: {
     landCategories: ['kba', 'aze', 'wdpa'],
     categories: ['conservation'],

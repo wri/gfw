@@ -1,5 +1,7 @@
 export default {
-  title: 'Tree cover extent',
+  title: {
+    withLocation: 'Tree cover extent in {location}'
+  },
   config: {
     size: 'small',
     landCategories: ['wdpa', 'kba', 'aze', 'tcl'],

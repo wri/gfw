@@ -1,5 +1,7 @@
 export default {
-  title: 'Location of plantations',
+  title: {
+    withLocation: 'Location of plantations in {location}'
+  },
   config: {
     size: 'small',
     categories: ['land-cover'],

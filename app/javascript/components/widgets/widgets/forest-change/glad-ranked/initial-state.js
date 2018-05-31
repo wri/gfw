@@ -1,5 +1,7 @@
 export default {
-  title: 'Location of deforestation Alerts',
+  title: {
+    withLocation: 'Location of deforestation Alerts in {location}'
+  },
   config: {
     size: 'small',
     forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],

@@ -24,7 +24,10 @@ const mapStateToProps = (
     widget === 'treeCover' && whitelist && whitelist.indexOf('plantations')
       ? 'widget_natural_vs_planted'
       : config.metaKey;
-
+  const parsedTitle =
+    title && currentLabel !== 'global'
+      ? title.withLocation.replace('{location}', currentLabel)
+      : title.global;
   return {
     location,
     size,
@@ -32,26 +35,23 @@ const mapStateToProps = (
     widgetMetaKey,
     modalOpen: modalMeta.open,
     modalClosing: modalMeta.closing,
-    citation: `Global Forest Watch. “${title} in ${
-      currentLabel
+    citation: `Global Forest Watch. “${
+      parsedTitle
     }”. Accessed on ${moment().format(
       'MMMM Do YYYY'
     )} from www.globalforestwatch.org.`,
     shareData: {
       title: 'Share this widget',
-      subtitle: `${title} in ${currentLabel || ''}`,
+      subtitle: parsedTitle,
       shareUrl,
       embedUrl,
       embedSettings:
         config.size === 'small'
           ? { width: 315, height: 460 }
           : { width: 670, height: 490 },
-      socialText: `${title} in ${currentLabel || ''}`
+      socialText: parsedTitle
     },
-    title:
-      currentLabel !== 'global'
-        ? `${title} in ${currentLabel}`
-        : `${location.payload.type || 'global'} ${title}`
+    title: parsedTitle
   };
 };
 

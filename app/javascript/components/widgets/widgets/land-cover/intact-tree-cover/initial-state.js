@@ -1,5 +1,8 @@
 export default {
-  title: 'Intact forest',
+  title: {
+    global: 'Global Intact forest',
+    withLocation: 'Intact forest in {location}'
+  },
   config: {
     size: 'small',
     landCategories: ['wdpa', 'mining', 'landmark'],

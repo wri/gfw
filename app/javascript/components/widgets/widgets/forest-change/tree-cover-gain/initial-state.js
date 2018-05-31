@@ -1,5 +1,8 @@
 export default {
-  title: 'Tree cover gain',
+  title: {
+    global: 'Global Tree cover gain',
+    withLocation: 'Tree cover gain in {location}'
+  },
   config: {
     size: 'small',
     landCategories: ['wdpa', 'landmark', 'mining'],
