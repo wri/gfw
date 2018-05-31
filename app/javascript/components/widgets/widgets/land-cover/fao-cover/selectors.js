@@ -72,7 +72,10 @@ export const getSentence = createSelector(
 
     const params = {
       location: currentLabel !== 'global' ? currentLabel : 'globally',
-      extent: `${format('.3s')(extent)}ha`,
+      extent:
+        extent < 1
+          ? `${format('.3r')(extent)}ha`
+          : `${format('.3s')(extent)}ha`,
       primaryPercent:
         primaryPercent >= 0.1 ? `${format('.2r')(primaryPercent)}%` : '<0.1%'
     };

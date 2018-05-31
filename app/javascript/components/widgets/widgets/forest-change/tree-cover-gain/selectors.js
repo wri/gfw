@@ -118,7 +118,7 @@ export const getSentence = createSelector(
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
-      gain: `${format('.3s')(gain)}ha`,
+      gain: gain < 1 ? `${format('.3r')(gain)}ha` : `${format('.3s')(gain)}ha`,
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
       percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
       globalPercent:

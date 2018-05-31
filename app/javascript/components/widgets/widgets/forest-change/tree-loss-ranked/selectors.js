@@ -137,7 +137,7 @@ export const getSentence = createSelector(
       indicator_alt: indicatorName,
       startYear,
       endYear,
-      loss: loss ? `${format('.3s')(loss)}ha` : '0ha',
+      loss: loss < 1 ? `${format('.3r')(loss)}ha` : `${format('.3s')(loss)}ha`,
       percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
       globalPercent:
         globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%',
