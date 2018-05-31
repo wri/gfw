@@ -80,7 +80,7 @@ class Widget extends PureComponent {
               />
             )}
         </div>
-        <WidgetSettingsStatement settings={settings} />
+        <WidgetSettingsStatement settings={settings} type={config.type} />
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
