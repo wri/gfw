@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
 import { COUNTRY } from 'pages/dashboards/router';
-import { isMouseOnBounds, isParent } from 'utils/dom';
+import { isParent } from 'utils/dom';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -107,22 +106,11 @@ class WidgetHeader extends PureComponent {
                 trigger="click"
                 interactive
                 onRequestClose={() => {
-                  const widgetSettingsNode = ReactDOM.findDOMNode(
-                    this.widgetSettingsRef
-                  );
                   const isTargetOnTooltip = isParent(
-                    widgetSettingsNode,
+                    this.widgetSettingsRef,
                     window.event.path
                   );
-                  const isMouseOnTooltip = isMouseOnBounds(
-                    window.event,
-                    widgetSettingsNode.getBoundingClientRect()
-                  );
-                  if (
-                    !modalClosing &&
-                    !isMouseOnTooltip &&
-                    !isTargetOnTooltip
-                  ) {
+                  if (!modalClosing && !isTargetOnTooltip) {
                     this.setState({ tooltipOpen: false });
                   }
                 }}

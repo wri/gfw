@@ -1,12 +1,7 @@
-export const isMouseOnBounds = (event, bounds) => {
-  const { x, y, width, height } = bounds;
-  return (
-    (event.x - x) * (event.x - x + width) <= 0 &&
-    (event.y - y) * (event.y - y + height) <= 0
-  );
-};
+import ReactDOM from 'react-dom';
 
-export const isParent = (possibleParent, parents) => {
+export const isParent = (node, parents) => {
+  const possibleParent = ReactDOM.findDOMNode(node);
   const haveParent = parents.filter(el => el === possibleParent);
   return haveParent.length !== 0;
 };
