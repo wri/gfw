@@ -34,7 +34,8 @@ class Page extends PureComponent {
       activeWidget,
       setMapZoom,
       widgets,
-      title
+      title,
+      query
     } = this.props;
 
     return (
@@ -49,7 +50,7 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header className="header" />
+          <Header className="header" widgets={widgets} query={query} />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
@@ -104,7 +105,8 @@ Page.propTypes = {
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeWidget: PropTypes.string,
   setMapZoom: PropTypes.func,
-  title: PropTypes.string
+  title: PropTypes.string,
+  query: PropTypes.object
 };
 
 export default Page;
