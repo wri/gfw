@@ -66,7 +66,10 @@ export const getSentence = createSelector(
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%',
-      value: `${format('.3s')(data.cover)}ha`
+      value:
+        data.cover < 1
+          ? `${format('.3r')(data.cover)}ha`
+          : `${format('.3s')(data.cover)}ha`
     };
     let sentence = indicator ? withIndicator : initial;
     if (currentLabel === 'global') {

@@ -1,5 +1,7 @@
 export default {
-  title: 'Fires',
+  title: {
+    withLocation: 'Fires in {location}'
+  },
   config: {
     size: 'small',
     categories: ['forest-change', 'summary'],

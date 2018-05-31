@@ -94,6 +94,15 @@ export const getSentence = createSelector(
     }
     const topExtent = percentileExtent / (totalExtent || 0) * 100;
 
+    const topRegionExtent =
+      topRegion.extent < 1
+        ? `${format('.3r')(topRegion.extent)}ha`
+        : `${format('.3s')(topRegion.extent)}ha`;
+    const aveRegionExtent =
+      avgExtent < 1
+        ? `${format('.3r')(avgExtent)}ha`
+        : `${format('.3s')(avgExtent)}ha`;
+
     const params = {
       location: currentLabel === 'global' ? 'Globally' : currentLabel,
       region: topRegion.label,
@@ -103,11 +112,11 @@ export const getSentence = createSelector(
       value:
         settings.unit === '%'
           ? `${format('.2r')(topRegion.percentage)}%`
-          : `${format('.3s')(topRegion.extent)}ha`,
+          : topRegionExtent,
       average:
         settings.unit === '%'
           ? `${format('.2r')(avgExtentPercentage)}%`
-          : `${format('.3s')(avgExtent)}ha`,
+          : aveRegionExtent,
       count: percentileLength
     };
 

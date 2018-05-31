@@ -1,5 +1,7 @@
 export const initialState = {
-  title: 'Forest loss in natural forest',
+  title: {
+    withLocation: 'Forest loss in natural forest in {location}'
+  },
   config: {
     size: 'large',
     showIndicators: ['plantations'],

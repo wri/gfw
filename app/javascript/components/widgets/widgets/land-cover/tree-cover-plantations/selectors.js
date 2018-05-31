@@ -45,13 +45,21 @@ export const getSentence = createSelector(
     const top =
       settings.type === 'bound2' ? data.slice(0, 2) : data.slice(0, 1);
     const areaPerc = 100 * sumBy(top, 'value') / rawData.totalArea;
+    const topExtent = sumBy(top, 'value');
+    const otherExtent = sumBy(data.slice(2), 'value');
     const params = {
       location: currentLabel,
       firstSpecies: top[0].label.toLowerCase(),
       secondSpecies: top.length > 1 && top[1].label.toLowerCase(),
       type: settings.type === 'bound2' ? 'species' : 'type',
-      extent: `${format('.3s')(sumBy(top, 'value'))}ha`,
-      other: `${format('.3s')(sumBy(data.slice(2), 'value'))}ha`,
+      extent:
+        topExtent < 1
+          ? `${format('.3r')(topExtent)}ha`
+          : `${format('.3s')(topExtent)}ha`,
+      other:
+        otherExtent < 1
+          ? `${format('.3r')(otherExtent)}ha`
+          : `${format('.3s')(otherExtent)}ha`,
       count: data.length - top.length,
       topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
       percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '<0.1%'

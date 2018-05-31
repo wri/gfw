@@ -1,5 +1,8 @@
 export const initialState = {
-  title: 'FAO reforestation',
+  title: {
+    global: 'Global FAO reforestation',
+    withLocation: 'FAO reforestation in {location}'
+  },
   config: {
     size: 'small',
     categories: ['forest-change'],

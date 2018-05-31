@@ -95,7 +95,10 @@ export const getSentence = createSelector(
     const params = {
       extentYear: settings.extentYear,
       location: currentLocation.label,
-      extent: `${extent ? format('.3s')(extent) : '0'}ha`,
+      extent:
+        extent < 1
+          ? `${format('.3r')(extent)}ha`
+          : `${format('.3s')(extent)}ha`,
       indicator: indicator && indicator.value.toLowerCase(),
       landPercentage:
         landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '<0.1%',

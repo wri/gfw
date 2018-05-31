@@ -1,5 +1,7 @@
 export default {
-  title: 'Tree cover extent',
+  title: {
+    withLocation: 'Forest in {location} compared to other areas'
+  },
   config: {
     size: 'small',
     landCategories: ['wdpa', 'kba', 'aze', 'tcl'],
@@ -24,7 +26,7 @@ export default {
   settings: {
     threshold: 30,
     unit: '%',
-    extentYear: 2000,
+    extentYear: 2010,
     layers: ['forest2010']
   },
   enabled: true

@@ -23,7 +23,7 @@ const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
-export const parseData = createSelector(
+export const parseList = createSelector(
   [
     getData,
     getLatestDates,
@@ -70,8 +70,7 @@ export const parseData = createSelector(
       return {
         id: k,
         color: colors.main,
-        percentage:
-          countsAreaPerc >= 0.1 ? `${format('.2r')(countsAreaPerc)}%` : '<0.1%',
+        percentage: `${format('.2r')(countsAreaPerc)}%`,
         countsPerHa,
         count: counts,
         area: countsArea,
@@ -80,13 +79,19 @@ export const parseData = createSelector(
         path: getAdminPath({ ...location, query, id: k })
       };
     });
-    return sortBy(mappedData, 'value').reverse();
+    return sortBy(mappedData, 'area').reverse();
   }
 );
+
+export const parseData = createSelector([parseList], data => {
+  if (isEmpty(data)) return null;
+  return sortBy(data, 'value').reverse();
+});
 
 export const getSentence = createSelector(
   [
     parseData,
+    parseList,
     getSettings,
     getOptions,
     getLocation,
@@ -94,7 +99,16 @@ export const getSentence = createSelector(
     getCurrentLocation,
     getSentences
   ],
-  (data, settings, options, location, indicator, currentLabel, sentences) => {
+  (
+    data,
+    list,
+    settings,
+    options,
+    location,
+    indicator,
+    currentLabel,
+    sentences
+  ) => {
     if (!data || !options || !currentLabel) return '';
     const { initial, oneRegion } = sentences;
     const totalCount = sumBy(data, 'count');
@@ -106,14 +120,18 @@ export const getSentence = createSelector(
       percentileCount / totalCount < 0.5 &&
       data.length !== 10
     ) {
-      percentileCount += data[percentileLength].count;
+      percentileCount += list[percentileLength].count;
       percentileLength += 1;
     }
     const topCount = percentileCount / totalCount * 100;
+    const countArea = sumBy(data, 'area');
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
-      area: `${format('.3s')(sumBy(data, 'area'))}ha`,
+      area:
+        countArea < 1
+          ? `${format('.3r')(countArea)}ha`
+          : `${format('.3s')(countArea)}ha`,
       topPercent: `${format('.2r')(topCount)}%`,
       topRegions: percentileLength,
       location: currentLabel,

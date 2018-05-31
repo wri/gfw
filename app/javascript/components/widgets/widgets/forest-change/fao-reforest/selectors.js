@@ -68,6 +68,8 @@ export const getSentence = createSelector(
     Object.keys(sortedData).forEach(k => {
       globalRate += sortedData[k].rate;
     });
+    const rate =
+      currentLabel === 'global' ? globalRate : countryData && countryData.value;
 
     let sentence = globalInitial;
     if (currentLabel !== 'global') {
@@ -78,9 +80,7 @@ export const getSentence = createSelector(
       location: currentLabel,
       year: period && period.label,
       rate:
-        currentLabel === 'global'
-          ? `${format('.3s')(globalRate)}ha/yr`
-          : `${format('.3s')(countryData && countryData.value)}ha/yr`
+        rate < 1 ? `${format('.3r')(rate)}ha/yr` : `${format('.3s')(rate)}ha/yr`
     };
 
     return {

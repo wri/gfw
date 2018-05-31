@@ -101,6 +101,16 @@ export const getSentence = createSelector(
       percentileGain += data[percentileLength].gain;
       percentileLength += 1;
     }
+    const value =
+      topRegion.percentage > 0 && settings.unit === '%'
+        ? `${format('.2r')(topRegion.percentage)}%`
+        : `${format('.3s')(topRegion.gain)}ha`;
+
+    const average =
+      topRegion.percentage > 0 && settings.unit === '%'
+        ? `${format('.2r')(avgGainPercentage)}%`
+        : `${format('.3s')(avgGain)}ha`;
+
     const topGain = percentileGain / totalGain * 100;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
@@ -114,13 +124,13 @@ export const getSentence = createSelector(
       percentileLength,
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
-        topRegion.percentage > 1 && settings.unit === '%'
-          ? `${format('.2r')(topRegion.percentage)}%`
-          : `${format('.3s')(topRegion.gain)}ha`,
+        topRegion.gain < 1 && settings.unit === 'ha'
+          ? `${format('.3r')(topRegion.gain)}ha`
+          : value,
       average:
-        topRegion.percentage > 1 && settings.unit === '%'
-          ? `${format('.2r')(avgGainPercentage)}%`
-          : `${format('.3s')(avgGain)}ha`
+        avgGain < 1 && settings.unit === 'ha'
+          ? `${format('.3r')(avgGain)}ha`
+          : average
     };
 
     return {

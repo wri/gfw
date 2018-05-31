@@ -1,5 +1,7 @@
 export default {
-  title: 'Location of tree cover gain in',
+  title: {
+    withLocation: 'Location of tree cover gain in {location}'
+  },
   config: {
     size: 'small',
     forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],

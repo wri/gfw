@@ -1,5 +1,8 @@
 export default {
-  title: 'Location of tree cover',
+  title: {
+    global: 'Global Location of forest',
+    withLocation: 'Location of forest in {location}'
+  },
   config: {
     size: 'small',
     forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],

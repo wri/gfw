@@ -1,5 +1,7 @@
 export const initialState = {
-  title: 'Tree cover loss',
+  title: {
+    withLocation: 'Tree cover loss in {location} compared to other areas'
+  },
   config: {
     size: 'small',
     forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
