@@ -71,13 +71,14 @@ class Widget extends PureComponent {
                 sentence={sentence}
               />
             )}
-          {!error && (
-            <Component
-              {...this.props}
-              data={parsedData}
-              config={parsedConfig}
-            />
-          )}
+          {!error &&
+            !isEmpty(parsedData) && (
+              <Component
+                {...this.props}
+                data={parsedData}
+                config={parsedConfig}
+              />
+            )}
         </div>
         <WidgetSettingsStatement settings={settings} type={config.type} />
         {embed &&
