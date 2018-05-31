@@ -1,7 +1,7 @@
 import { sortByKey } from 'utils/data';
 
 export const initialState = {
-  isCountriesLoading: false,
+  isCountriesLoading: true,
   isRegionsLoading: false,
   isSubRegionsLoading: false,
   isGeostoreLoading: false,
