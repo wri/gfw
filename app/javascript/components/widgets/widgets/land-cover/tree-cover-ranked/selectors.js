@@ -99,7 +99,7 @@ export const getSentence = createSelector(
         extent < 1
           ? `${format('.3r')(extent)}ha`
           : `${format('.3s')(extent)}ha`,
-      indicator: indicator && indicator.value.toLowerCase(),
+      indicator: indicator && indicator.label.toLowerCase(),
       landPercentage:
         landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '<0.1%',
       globalPercentage:

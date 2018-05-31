@@ -112,7 +112,7 @@ export const getSentence = createSelector(
     const aveFormat = avgGain < 1 ? '.3r' : '.3s';
 
     const params = {
-      indicator: indicator && indicator.value.toLowerCase(),
+      indicator: indicator && indicator.label.toLowerCase(),
       location: currentLabel,
       topGain: `${format('.2r')(topGain)}%`,
       percentileLength,
