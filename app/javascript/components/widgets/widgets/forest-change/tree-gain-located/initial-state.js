@@ -9,19 +9,13 @@ export default {
     units: ['ha', '%'],
     categories: ['forest-change'],
     admins: ['country', 'region'],
-    selectors: [
-      'forestTypes',
-      'landCategories',
-      'thresholds',
-      'units',
-      'extentYears'
-    ],
+    selectors: ['forestTypes', 'landCategories', 'units', 'extentYears'],
     locationCheck: true,
     type: 'gain',
     layers: ['forestgain'],
     metaKey: 'widget_tree_cover_gain_location',
     sortOrder: {
-      forestChange: 5
+      forestChange: 6
     },
     sentences: {
       initial:
@@ -35,7 +29,7 @@ export default {
     }
   },
   settings: {
-    threshold: 30,
+    threshold: 0,
     unit: '%',
     extentYear: 2000,
     pageSize: 5,

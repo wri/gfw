@@ -24,7 +24,7 @@ export default {
     metaKey: 'widget_tree_cover_loss_location',
     sortOrder: {
       summary: 2,
-      forestChange: 2
+      forestChange: 3
     },
     sentences: {
       initial:

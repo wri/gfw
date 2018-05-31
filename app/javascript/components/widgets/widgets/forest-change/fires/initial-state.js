@@ -11,7 +11,7 @@ export default {
     type: 'fires',
     sortOrder: {
       summary: 7,
-      forestChange: 9
+      forestChange: 11
     },
     sentences: {
       initial: '{count} active fires detected in {location} in the last 7 days.'

@@ -46,7 +46,7 @@ export default {
     layers: ['umd_as_it_happens'],
     sortOrder: {
       summary: 6,
-      forestChange: 8
+      forestChange: 10
     },
     sentences: {
       initial:
