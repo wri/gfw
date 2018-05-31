@@ -37,7 +37,7 @@ const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
 
   return {
     ...header,
-    loading: countryDataLoading || header.loading || cacheLoading,
+    loading: countryDataLoading || header.loading,
     cacheLoading,
     forestAtlasLink,
     externalLinks,

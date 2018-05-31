@@ -68,24 +68,27 @@ class Header extends PureComponent {
           <div className="columns small-12 large-6">
             <div className="select-container">
               {!payload.country && <h3>{payload.type || 'Global'}</h3>}
-              <Dropdown
-                theme="theme-dropdown-dark"
-                placeholder="Select a country"
-                noItemsFound="No country found"
-                noSelectedValue="Select a country"
-                value={locationNames.country}
-                options={locationOptions.countries}
-                onChange={country => handleCountryChange(country, query)}
-                searchable
-                disabled={loading}
-                tooltip={{
-                  text: 'Choose the country you want to explore',
-                  delay: 1000
-                }}
-                arrowPosition="left"
-                clearable
-              />
+              {locationOptions.countries && (
+                <Dropdown
+                  theme="theme-dropdown-dark"
+                  placeholder="Select a country"
+                  noItemsFound="No country found"
+                  noSelectedValue="Select a country"
+                  value={locationNames.country}
+                  options={locationOptions.countries}
+                  onChange={country => handleCountryChange(country, query)}
+                  searchable
+                  disabled={loading}
+                  tooltip={{
+                    text: 'Choose the country you want to explore',
+                    delay: 1000
+                  }}
+                  arrowPosition="left"
+                  clearable
+                />
+              )}
               {payload.country &&
+                locationOptions.countries &&
                 locationOptions.regions &&
                 locationOptions.regions.length > 1 && (
                   <Dropdown
@@ -109,6 +112,7 @@ class Header extends PureComponent {
                   />
                 )}
               {payload.region &&
+                locationNames.regions &&
                 locationNames.region &&
                 locationNames.region.value &&
                 locationOptions.subRegions &&
