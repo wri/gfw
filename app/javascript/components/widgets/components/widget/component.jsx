@@ -96,7 +96,7 @@ class Widget extends PureComponent {
 
 Widget.propTypes = {
   widget: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.object.isRequired,
   setWidgetSettingsUrl: PropTypes.func.isRequired,
   settings: PropTypes.object,
   config: PropTypes.object,
