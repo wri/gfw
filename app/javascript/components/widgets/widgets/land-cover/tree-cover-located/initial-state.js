@@ -1,7 +1,7 @@
 export default {
   title: {
-    global: 'Global Location of tree cover',
-    withLocation: 'Location of tree cover in {location}'
+    global: 'Global Location of forest',
+    withLocation: 'Location of forest in {location}'
   },
   config: {
     size: 'small',

@@ -1,6 +1,6 @@
 export const initialState = {
   title: {
-    withLocation: 'Tree cover loss in {location}'
+    withLocation: 'Tree cover loss in {location} compared to other areas'
   },
   config: {
     size: 'small',
