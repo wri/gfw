@@ -3,8 +3,11 @@ import findIndex from 'lodash/findIndex';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 
+import { getAdminPath } from '../../../utils';
+
 const getData = state => state.data || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
@@ -12,8 +15,8 @@ const getPeriod = state => state.period || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const parseData = createSelector(
-  [getData, getLocation, getColors],
-  (data, location, colors) => {
+  [getData, getLocation, getColors, getQuery],
+  (data, location, colors, query) => {
     if (!data || !data.rank) return null;
 
     const { rank } = data;
@@ -33,7 +36,7 @@ export const parseData = createSelector(
       ...d,
       label: d.name,
       color: colors.main,
-      path: `/dashboards/country/${d.iso}`,
+      path: getAdminPath({ query, id: d.iso }),
       value: d.deforest
     }));
   }

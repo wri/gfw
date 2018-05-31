@@ -5,10 +5,13 @@ import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
+import { getAdminPath } from '../../../utils';
+
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
   state[state.adminKey] || state.countries || null;
 const getColors = state => state.colors || null;
@@ -39,11 +42,12 @@ export const parseData = createSelector(
     getSortedData,
     getSettings,
     getLocation,
+    getQuery,
     getCurrentLocation,
     getLocationsMeta,
     getColors
   ],
-  (data, settings, location, currentLocation, meta, colors) => {
+  (data, settings, location, query, currentLocation, meta, colors) => {
     if (!data || !data.length) return null;
     const locationIndex = findIndex(data, d => d.id === currentLocation.value);
     let trimStart = locationIndex - 2;
@@ -59,20 +63,17 @@ export const parseData = createSelector(
     const dataTrimmed = data.slice(trimStart, trimEnd);
     return dataTrimmed.map(d => {
       const locationData = meta && meta.find(l => d.id === l.value);
-      let path = '/dashboards/country/';
-      if (location.subRegion) {
-        path += `${location.country}/${location.region}/${d.id}`;
-      } else if (location.region) {
-        path += `${location.country}/${d.id}`;
-      } else {
-        path += d.id;
-      }
 
       return {
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        path,
+        path: getAdminPath({
+          ...location,
+          country: location.region && location.country,
+          query,
+          id: d.id
+        }),
         value: settings.unit === 'ha' ? d.gain : d.percentage
       };
     });

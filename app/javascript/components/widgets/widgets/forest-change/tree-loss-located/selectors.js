@@ -5,6 +5,8 @@ import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
+import { getAdminPath } from '../../../utils';
+
 // get list data
 const getLoss = state => (state.data && state.data.lossByRegion) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
@@ -12,6 +14,7 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
   (state.payload.region ? state.subRegions : state.regions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
@@ -19,8 +22,8 @@ const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const mapData = createSelector(
-  [getLoss, getExtent, getSettings, getLocation, getLocationsMeta],
-  (data, extent, settings, location, meta) => {
+  [getLoss, getExtent, getSettings, getLocation, getLocationsMeta, getQuery],
+  (data, extent, settings, location, meta, query) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
     const mappedData = data.map(d => {
@@ -37,9 +40,7 @@ export const mapData = createSelector(
         loss,
         percentage,
         value: settings.unit === 'ha' ? loss : percentage,
-        path: `/dashboards/country/${location.country}/${
-          location.region ? `${location.region}/` : ''
-        }${d.id}`
+        path: getAdminPath({ ...location, query, id: d.id })
       };
     });
 
@@ -91,7 +92,7 @@ export const getSentence = createSelector(
     } = sentences;
     const { startYear, endYear } = settings;
     const totalLoss = sumBy(data, 'loss');
-    const topRegion = sortedData.length && sortedData[0];
+    const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
     const avgLossPercentage = sumBy(data, 'percentage') / data.length;
     const avgLoss = sumBy(data, 'loss') / data.length;
     let percentileLoss = 0;
