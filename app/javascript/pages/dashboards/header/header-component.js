@@ -112,7 +112,7 @@ class Header extends PureComponent {
                   />
                 )}
               {payload.region &&
-                locationNames.regions &&
+                locationOptions.regions &&
                 locationNames.region &&
                 locationNames.region.value &&
                 locationOptions.subRegions &&
