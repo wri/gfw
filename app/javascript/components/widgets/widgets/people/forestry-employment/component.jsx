@@ -7,10 +7,11 @@ import WidgetPieChartLegend from 'components/widgets/components/widget-pie-chart
 class WidgetForestryEmployment extends PureComponent {
   render() {
     const { data } = this.props;
-    return data ? (
-      <WidgetPieChartLegend {...this.props} />
-    ) : (
+
+    return data[0].noContent ? (
       <NoContent message="No gender data available" />
+    ) : (
+      <WidgetPieChartLegend {...this.props} />
     );
   }
 }
