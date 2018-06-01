@@ -24,7 +24,9 @@ export const initialState = {
   },
   settings: {
     period: 2010,
-    unit: 'ha/year'
+    unit: 'ha/year',
+    pageSize: 5,
+    page: 0
   },
   enabled: true
 };
