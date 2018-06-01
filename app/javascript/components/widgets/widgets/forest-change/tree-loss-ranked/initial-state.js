@@ -8,7 +8,7 @@ export const initialState = {
     forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
     landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
-    categories: ['summary', 'forest-change'],
+    categories: ['forest-change'],
     admins: ['global', 'country'],
     selectors: [
       'forestTypes',
