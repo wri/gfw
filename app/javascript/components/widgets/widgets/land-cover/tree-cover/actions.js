@@ -17,10 +17,10 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
           plantations
         };
       }
-      if (params.indicator !== 'gadm28') {
+      if (params.indicator) {
         dispatch(setWidgetData({ data, widget }));
       } else {
-        getExtent({ ...params, indicator: 'plantations' }).then(
+        getExtent({ ...params, forestType: 'plantations' }).then(
           plantationsResponse => {
             const plantationsData =
               plantationsResponse.data && plantationsResponse.data.data;

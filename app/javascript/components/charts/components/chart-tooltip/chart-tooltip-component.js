@@ -20,7 +20,7 @@ class WidgetChartTooltip extends PureComponent {
                       key={d.key}
                       className={`data-line ${d.position || ''}`}
                     >
-                      {d.label && (
+                      {(d.label || d.labelKey) && (
                         <div className="data-label">
                           {d.color && (
                             <div
@@ -28,7 +28,7 @@ class WidgetChartTooltip extends PureComponent {
                               style={{ backgroundColor: d.color }}
                             />
                           )}
-                          {<span>{values[d.label] || d.label}</span>}
+                          {<span>{d.label || values[d.labelKey]}</span>}
                         </div>
                       )}
                       {d.unit && d.unitFormat

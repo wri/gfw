@@ -25,17 +25,13 @@ Gfw::Application.routes.draw do
 
   # howto
   get '/howto/video' => redirect("/howto")
-  get '/howto/general_questions' => redirect("/howto/faqs")
-  get '/howto/terminology' => redirect("/howto/faqs")
-  get '/howto/data' => redirect("/howto/faqs")
-  get '/howto/web_platform' => redirect("/howto/faqs")
-  get '/howto/for_business' => redirect("/howto/faqs")
   get '/howto/analyze-forest-change' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
   get '/howto/subscribe-to-alerts-and-user-stories' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
+  get '/howto/*all' => redirect("/howto/faqs")
 
   # sources
   get '/sources' => redirect("http://data.globalforestwatch.org/")
-  get '/sources(/:section)' => redirect("http://data.globalforestwatch.org/")
+  get '/sources/*all' => redirect("http://data.globalforestwatch.org/")
 
   # stories
   get '/stayinformed/crowdsourced-stories' => redirect('/stories')
@@ -68,12 +64,24 @@ Gfw::Application.routes.draw do
 
   # about
   get '/partners' => redirect('/about')
+  get '/about/small_grants_fund' => redirect('/getinvolved/apply-to-the-small-grants-fund')
 
   # map
   get '/glad', to: redirect('/map/3/15.00/27.00/ALL/grayscale/umd_as_it_happens')
 
   # country
-  get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
+  get '/country', to: redirect('/dashboards/global')
+  get '/country/embed/:widget/:iso', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:iso]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/embed/:widget/:iso/:region', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:iso]}/#{params[:region]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/embed/:widget/:iso/:region/:sub_region', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/*all', to: redirect { |params, req| "/dashboards#{req.fullpath}" }
+
+  # countries
+  get '/countries' => redirect('/dashboards/global')
+  get '/countries/*all' => redirect('/dashboards/global')
 
   ########### /LEGACY #############
 
@@ -86,31 +94,15 @@ Gfw::Application.routes.draw do
   # map
   get '/map' => 'map#index'
   get '/map/*path' => 'map#index'
-  get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers/:sublayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/embed/map' => 'map#embed'
   get '/embed/map/*path' => 'map#embed'
-  get '/embed/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/embed/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers/:sublayers)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
-  # countries
-  get '/countries' => 'countries#index'
-  get '/countries/overview' => 'countries#overview'
-  get '/embed/countries/overview' => 'embed#countries_overview'
-
-  # country dashboard
-  get '/country/embed/:widget/:iso(/:region)(/:sub_region)' => 'country#embed'
-  get '/country/:iso(/:region)(/:sub_region)' => 'country#show', as: :country
-  get '/embed/country/:id' => 'embed#countries_show'
-  get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
-  get '/embed/country/:id/:area_id' => 'embed#countries_show'
+  # dashboards
+  get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
+  get '/embed/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#embed'
 
   # about
   get '/about' => 'about#index'
-  get '/about/small_grants_fund' => redirect('/getinvolved/apply-to-the-small-grants-fund')
   get '/about(/:section)' => 'about#index'
 
   # Small Grunts Fund
@@ -144,6 +136,11 @@ Gfw::Application.routes.draw do
   # data
   post 'data/upload' => 'data#upload'
   get  'data/show' => 'data#show'
+
+  #cache
+  get '/cache/keys' => 'cache#keys'
+  post '/cache/add' => 'cache#add'
+  get '/cache/*id' => 'cache#index'
 
   # sitemap
   get '/sitemap' => 'sitemap#index'

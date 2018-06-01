@@ -1,12 +1,21 @@
 export default {
-  title: 'Tree cover extent',
+  title: {
+    withLocation: 'Forest in {location} compared to other areas'
+  },
   config: {
     size: 'small',
-    indicators: ['gadm28', 'wdpa', 'kba', 'aze', 'tcl'],
+    forestTypes: ['ifl_2013'],
+    landCategories: ['wdpa', 'kba', 'aze', 'tcl'],
     units: ['ha', '%'],
     categories: ['land-cover'],
     admins: ['country'],
-    selectors: ['indicators', 'thresholds', 'extentYears', 'units'],
+    selectors: [
+      'forestTypes',
+      'landCategories',
+      'thresholds',
+      'extentYears',
+      'units'
+    ],
     type: 'extent',
     metaKey: 'widget_forest_cover_ranking',
     layers: ['forest2000', 'forest2010'],
@@ -16,16 +25,15 @@ export default {
     },
     sentences: {
       initial:
-        'As of {extentYear}, {location} represented {percentage} of global tree cover.',
+        "As of {extentYear}, {location} had {extent} of tree cover, equivalent to {landPercentage} of it's land area and {globalPercentage} of global tree cover.",
       withInd:
-        'As of {extentYear}, {location} represented {percentage} of global tree cover in {indicator}.'
+        "As of {extentYear}, {location} had {extent} of tree cover, equivalent to {landPercentage} of it's land area and {globalPercentage} of global tree cover in {indicator}."
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 30,
-    unit: 'ha',
-    extentYear: 2000,
+    unit: '%',
+    extentYear: 2010,
     layers: ['forest2010']
   },
   enabled: true

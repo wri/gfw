@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -8,29 +7,27 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getCurrentLocation = state => state.currentLabel;
 const getIndicator = state => state.indicator || null;
-const getIndicatorWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist, getColors],
-  (data, settings, whitelist, colors) => {
-    if (isEmpty(data) || isEmpty(whitelist)) return null;
+  [getData, getSettings, getColors],
+  (data, settings, colors) => {
+    if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent } = data;
-    const colorRange = getColorPalette(colors.ramp, 2);
     const secondaryExtent = totalExtent - extent < 0 ? 0 : totalExtent - extent;
     const parsedData = [
       {
         label: 'Primary Forest',
         value: extent,
-        color: colorRange[0],
+        color: colors.primaryForest,
         percentage: extent / totalArea * 100
       },
       {
         label: 'Other Tree Cover',
         value: secondaryExtent,
-        color: colorRange[1],
+        color: colors.otherCover,
         percentage: secondaryExtent / totalArea * 100
       },
       {
@@ -47,30 +44,24 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !currentLabel || !indicator) return null;
+    if (!parsedData || !currentLabel) return null;
     const { initial, withIndicator } = sentences;
-    const totalExtent = parsedData
-      .filter(d => d.label !== 'Non-Forest')
-      .map(d => d.value)
-      .reduce((sum, d) => sum + d);
-    const primaryPercentage =
-      parsedData.find(d => d.label === 'Primary Forest').value /
-      totalExtent *
-      100;
+    const primaryPercentage = parsedData.find(d => d.label === 'Primary Forest')
+      .percentage;
 
-    let indicatorLabel = indicator.label;
-    switch (indicator.value) {
+    let indicatorLabel = indicator && indicator.label;
+    switch (indicator && indicator.value) {
       case 'primary_forest__mining':
-        indicatorLabel = 'Mining concessions';
+        indicatorLabel = 'mining concessions';
         break;
       case 'primary_forest__landmark':
-        indicatorLabel = 'Indigenous lands';
+        indicatorLabel = 'indigenous lands';
         break;
       case 'primary_forest__wdpa':
-        indicatorLabel = 'Protected areas';
+        indicatorLabel = 'protected areas';
         break;
       default:
-        indicatorLabel = 'Primary forests';
+        indicatorLabel = 'primary forests';
     }
 
     const params = {
@@ -79,13 +70,14 @@ export const getSentence = createSelector(
       percentage:
         primaryPercentage < 0.1
           ? '<0.1%'
-          : `${format('.0f')(primaryPercentage)}%`,
-      primary: 'primary forest',
+          : `${format('.2r')(primaryPercentage)}%`,
       extentYear: settings.extentYear
     };
 
     const sentence =
-      indicator.value === 'primary_forest' ? initial : withIndicator;
+      indicator && indicator.value === 'primary_forest'
+        ? initial
+        : withIndicator;
 
     return {
       sentence,

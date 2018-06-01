@@ -1,22 +1,24 @@
 export default {
-  title: 'Location of deforestation Alerts',
+  title: {
+    withLocation: 'Location of deforestation Alerts in {location}'
+  },
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'mining',
-      'landmark',
-      'ifl_2013',
-      'wdpa',
-      'plantations',
-      'primary_forest'
-    ],
+    forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
+    landCategories: ['mining', 'landmark', 'wdpa'],
     units: ['ha', '%'],
     categories: ['forest-change'],
     admins: ['country', 'region'],
-    selectors: ['indicators', 'thresholds', 'units', 'extentYears', 'weeks'],
+    selectors: [
+      'forestTypes',
+      'landCategories',
+      'thresholds',
+      'units',
+      'extentYears',
+      'weeks'
+    ],
     metaKey: 'widget_deforestation_alert_location',
-    customLocationWhitelist: [
+    locationWhitelist: [
       'BRA',
       'COL',
       'ECU',
@@ -44,7 +46,7 @@ export default {
     layers: ['umd_as_it_happens'],
     sortOrder: {
       summary: 6,
-      forestChange: 8
+      forestChange: 10
     },
     sentences: {
       initial:
@@ -54,10 +56,9 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 30,
     extentYear: 2010,
-    unit: 'ha',
+    unit: '%',
     weeks: 4,
     pageSize: 5,
     page: 0,

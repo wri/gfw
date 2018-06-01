@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 import './pie-chart-legend-styles.scss';
 
@@ -17,9 +17,10 @@ class PieChartLegend extends PureComponent {
     return (
       <ul className={`c-pie-chart-legend ${className} ${sizeClass}`}>
         {data.map((item, index) => {
-          const value = `${format(config.format)(item[config.key])}${
-            config.unit
-          }`;
+          const value = `${formatNumber({
+            num: item[config.key],
+            unit: config.unit
+          })}`;
           return (
             <li className="legend-item" key={index.toString()}>
               <div className="legend-title">

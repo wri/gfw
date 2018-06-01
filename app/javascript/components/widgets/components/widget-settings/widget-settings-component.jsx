@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import Dropdown from 'components/ui/dropdown';
 
@@ -9,16 +10,15 @@ class WidgetSettings extends PureComponent {
   render() {
     const {
       settings,
-      config,
       loading,
-      currentLocation,
       onSettingsChange,
       widget,
       setModalMeta
     } = this.props;
     const {
       units,
-      indicators,
+      forestTypes,
+      landCategories,
       periods,
       thresholds,
       years,
@@ -28,29 +28,67 @@ class WidgetSettings extends PureComponent {
       types,
       weeks
     } = this.props.options;
+    const hasExtraOptions =
+      units ||
+      periods ||
+      years ||
+      startYears ||
+      endYears ||
+      extentYears ||
+      types ||
+      weeks;
 
     return (
       <div className="c-widget-settings">
-        {indicators && (
-          <Dropdown
-            theme="theme-select-light"
-            label={`REFINE LOCATION WITHIN ${currentLocation &&
-              currentLocation.label.toUpperCase()}`}
-            value={settings.indicator}
-            options={indicators}
-            onChange={option =>
-              onSettingsChange({
-                value: { indicator: (option && option.value) || 'gadm28' },
-                widget
-              })
-            }
-            disabled={loading}
-            optionsAction={setModalMeta}
-            optionsActionKey="metaKey"
-            clearable={config.indicators[0] === 'gadm28'}
-            noSelectedValue={`All of ${currentLocation &&
-              currentLocation.label}`}
-          />
+        {(!isEmpty(forestTypes) || !isEmpty(landCategories)) && (
+          <div className="intersections">
+            {!isEmpty(forestTypes) && (
+              <Dropdown
+                theme="theme-select-light"
+                label="FOREST TYPE"
+                value={settings.forestType}
+                options={forestTypes}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { forestType: (option && option.value) || '' },
+                    widget
+                  })
+                }
+                disabled={loading}
+                optionsAction={setModalMeta}
+                optionsActionKey="metaKey"
+                clearable={
+                  settings.hasOwnProperty('clearable') // eslint-disable-line
+                    ? settings.clearable
+                    : true
+                }
+                noSelectedValue="All types"
+              />
+            )}
+            {!isEmpty(landCategories) && (
+              <Dropdown
+                theme="theme-select-light"
+                label="LAND CATEGORY"
+                value={settings.landCategory}
+                options={landCategories}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { landCategory: (option && option.value) || '' },
+                    widget
+                  })
+                }
+                disabled={loading}
+                optionsAction={setModalMeta}
+                optionsActionKey="metaKey"
+                clearable={
+                  settings.hasOwnProperty('clearable') // eslint-disable-line
+                    ? settings.clearable
+                    : true
+                }
+                noSelectedValue="All categories"
+              />
+            )}
+          </div>
         )}
         {types && (
           <Dropdown
@@ -186,6 +224,7 @@ class WidgetSettings extends PureComponent {
           )}
         {thresholds && (
           <Dropdown
+            className={hasExtraOptions ? 'threshold-border' : ''}
             theme="theme-dropdown-button canopy-select"
             label="CANOPY DENSITY"
             value={settings.threshold}
@@ -203,17 +242,16 @@ class WidgetSettings extends PureComponent {
 }
 
 WidgetSettings.propTypes = {
-  indicators: PropTypes.array,
+  forestTypes: PropTypes.array,
+  landCategories: PropTypes.array,
   thresholds: PropTypes.array,
   units: PropTypes.array,
   periods: PropTypes.array,
   years: PropTypes.array,
   settings: PropTypes.object,
-  config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,
-  currentLocation: PropTypes.object,
   options: PropTypes.object,
   onSettingsChange: PropTypes.func,
   widget: PropTypes.string,

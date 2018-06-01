@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import ChartToolTip from '../components/chart-tooltip';
 
@@ -16,7 +15,8 @@ class CustomPieChart extends PureComponent {
       outerRadius,
       startAngle,
       endAngle,
-      className
+      className,
+      tooltip
     } = this.props;
 
     return (
@@ -39,20 +39,7 @@ class CustomPieChart extends PureComponent {
                 />
               ))}
             </Pie>
-            <Tooltip
-              content={
-                <ChartToolTip
-                  settings={[
-                    {
-                      key: 'percentage',
-                      label: 'label',
-                      unit: '%',
-                      unitFormat: value => format('.1f')(value)
-                    }
-                  ]}
-                />
-              }
-            />
+            <Tooltip content={<ChartToolTip settings={tooltip} />} />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -68,7 +55,8 @@ CustomPieChart.propTypes = {
   outerRadius: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   startAngle: PropTypes.number,
   endAngle: PropTypes.number,
-  className: PropTypes.string
+  className: PropTypes.string,
+  tooltip: PropTypes.array
 };
 
 CustomPieChart.defaultProps = {

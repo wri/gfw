@@ -4,12 +4,9 @@ import axios from 'axios';
 export const getData = ({ params, dispatch, setWidgetData, widget, state }) => {
   const { countryWhitelist, regionWhitelist } = state().whitelists;
   const { region } = state().location.payload;
-  const whitelist = Object.keys(region ? regionWhitelist : countryWhitelist);
+  const whitelist = region ? regionWhitelist : countryWhitelist;
   axios
-    .all([
-      getExtent({ ...params, indicator: 'gadm28' }),
-      getExtent({ ...params })
-    ])
+    .all([getExtent({ ...params, forestType: '' }), getExtent({ ...params })])
     .then(
       axios.spread((gadm28Response, iflResponse) => {
         const gadmExtent = gadm28Response.data && gadm28Response.data.data;

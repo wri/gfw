@@ -1,9 +1,12 @@
 export default {
-  title: 'Location of plantations',
+  title: {
+    withLocation: 'Location of plantations in {location}'
+  },
   config: {
     size: 'small',
     categories: ['land-cover'],
     admins: ['country', 'region'],
+    showIndicators: ['plantations'],
     selectors: ['types'],
     type: 'plantations',
     metaKey: 'widget_plantations_ranked',
@@ -17,7 +20,6 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 0,
     type: 'bound2',
     pageSize: 5,

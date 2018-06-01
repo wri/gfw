@@ -1,4 +1,4 @@
-import axios from 'axios';
+import request from 'utils/request';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
 const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
@@ -23,7 +23,7 @@ export const getCountryWhitelistProvider = admin0 => {
     '{iso}',
     admin0
   );
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getRegionWhitelistProvider = (admin0, admin1, admin2) => {
@@ -31,12 +31,12 @@ export const getRegionWhitelistProvider = (admin0, admin1, admin2) => {
     '{location}',
     getLocationQuery(admin0, admin1, admin2)
   );
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getWaterBodiesBlacklistProvider = (admin0, admin1) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getWaterBodiesWhitelist}`
     .replace('{country}', admin0)
     .replace('{region}', admin1);
-  return axios.get(url);
+  return request.get(url);
 };

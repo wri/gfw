@@ -18,6 +18,7 @@ import * as treeGainLocated from './widgets/forest-change/tree-gain-located';
 import * as treeLossRanked from './widgets/forest-change/tree-loss-ranked';
 import * as treeLossPlantations from './widgets/forest-change/tree-loss-plantations';
 import * as treeLoss from './widgets/forest-change/tree-loss';
+import * as treeLossGlobal from './widgets/forest-change/tree-loss-global';
 import * as faoDeforest from './widgets/forest-change/fao-deforest';
 import * as faoReforest from './widgets/forest-change/fao-reforest';
 
@@ -52,6 +53,7 @@ export {
   treeLossRanked,
   treeLossPlantations,
   treeLoss,
+  treeLossGlobal,
   faoDeforest,
   faoReforest,
   // conservation

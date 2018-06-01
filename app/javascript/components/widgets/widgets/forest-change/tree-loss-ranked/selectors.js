@@ -7,6 +7,8 @@ import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
+import { getAdminPath } from '../../../utils';
+
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
@@ -14,6 +16,7 @@ const getLocation = state => state.payload || null;
 const getLocationsMeta = state => state.countries || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
+const getQuery = state => state.query || null;
 const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -70,9 +73,10 @@ export const parseData = createSelector(
     getLocation,
     getCurrentLocation,
     getLocationsMeta,
-    getColors
+    getColors,
+    getQuery
   ],
-  (data, settings, location, currentLocation, meta, colors) => {
+  (data, settings, location, currentLocation, meta, colors, query) => {
     if (!data || !data.length) return null;
     const locationIndex = findIndex(
       data,
@@ -91,20 +95,17 @@ export const parseData = createSelector(
     const dataTrimmed = data.slice(trimStart, trimEnd);
     return dataTrimmed.map(d => {
       const locationData = meta && meta.find(l => d.id === l.value);
-      let path = '/country/';
-      if (location.subRegion) {
-        path += `${location.country}/${location.region}/${d.id}`;
-      } else if (location.region) {
-        path += `${location.country}/${d.id}`;
-      } else {
-        path += d.id;
-      }
 
       return {
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        path,
+        path: getAdminPath({
+          ...location,
+          country: location.region && location.country,
+          query,
+          id: d.id
+        }),
         value: settings.unit === 'ha' ? d.loss : d.percentage
       };
     });
@@ -116,7 +117,7 @@ export const getSentence = createSelector(
   (data, settings, indicator, currentLocation, sentences) => {
     if (!data || !data.length || !currentLocation) return null;
     const { startYear, endYear } = settings;
-    const { initial, withIndicator } = sentences;
+    const { initial, withIndicator, noLoss } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const loss = locationData && locationData.loss;
@@ -127,17 +128,20 @@ export const getSentence = createSelector(
     const indicatorName = !indicator
       ? 'region-wide'
       : `${indicator.label.toLowerCase()}`;
-    const sentence = !indicator ? initial : withIndicator;
+    let sentence = !indicator ? initial : withIndicator;
+    if (loss === 0) {
+      sentence = noLoss;
+    }
     const params = {
       indicator: indicatorName,
       location: currentLocation && currentLocation.label,
       indicator_alt: indicatorName,
       startYear,
       endYear,
-      loss: loss ? `${format('.3s')(loss)}ha` : '0ha',
-      percent: areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%',
+      loss: loss < 1 ? `${format('.3r')(loss)}ha` : `${format('.3s')(loss)}ha`,
+      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
       globalPercent:
-        globalPercent >= 0.1 ? `${format('.1f')(globalPercent)}%` : '<0.1%',
+        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%',
       extentYear: settings.extentYear
     };
 

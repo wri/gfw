@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { getColorPalette } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
@@ -8,28 +7,26 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getCurrentLocation = state => state.currentLabel;
 const getIndicator = state => state.indicator || null;
-const getIndicatorWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getIndicatorWhitelist, getColors],
-  (data, settings, whitelist, colors) => {
-    if (isEmpty(data) || isEmpty(whitelist)) return null;
+  [getData, getSettings, getColors],
+  (data, settings, colors) => {
+    if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent } = data;
-    const colorRange = getColorPalette(colors.ramp, 2);
     const parsedData = [
       {
         label: 'Intact Forest',
         value: extent,
-        color: colorRange[0],
+        color: colors.intactForest,
         percentage: extent / totalArea * 100
       },
       {
         label: 'Other Tree Cover',
         value: totalExtent - extent,
-        color: colorRange[1],
+        color: colors.otherCover,
         percentage: (totalExtent - extent) / totalArea * 100
       },
       {
@@ -46,36 +43,48 @@ export const parseData = createSelector(
 export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !currentLabel || !indicator) return null;
-    const { initial, withIndicator } = sentences;
+    if (!parsedData) return null;
+    const {
+      initial,
+      withIndicator,
+      noIntact,
+      noIntactWithIndicator
+    } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
       .reduce((sum, d) => sum + d);
     const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
     const intactPercentage = intactData && intactData / totalExtent * 100;
-    let indicatorLabel = indicator.label;
-    switch (indicator.value) {
+    let indicatorLabel = indicator && indicator.label;
+    switch (indicator && indicator.value) {
       case 'ifl_2013__mining':
-        indicatorLabel = 'Mining concessions';
+        indicatorLabel = 'mining concessions';
         break;
       case 'ifl_2013__wdpa':
-        indicatorLabel = 'Protected areas';
+        indicatorLabel = 'protected areas';
+        break;
+      case 'ifl_2013__landmark':
+        indicatorLabel = 'indigenous lands';
         break;
       default:
-        indicatorLabel = 'Intact forest';
+        indicatorLabel = 'intact forest';
     }
     const params = {
-      location: `${currentLabel}'s`,
+      location: currentLabel !== 'global' ? `${currentLabel}'s` : currentLabel,
       indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1
-          ? '<0.1%'
-          : `${format('.0f')(intactPercentage)}%`,
-      intact: 'intact forest'
+        intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`
     };
 
-    const sentence = indicator.value === 'ifl_2013' ? initial : withIndicator;
+    let sentence =
+      indicator && indicator.value === 'ifl_2013' ? initial : withIndicator;
+    if (intactPercentage === 0) {
+      sentence =
+        indicator && indicator.value === 'ifl_2013'
+          ? noIntact
+          : noIntactWithIndicator;
+    }
 
     return {
       sentence,

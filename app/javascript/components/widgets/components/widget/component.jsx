@@ -5,10 +5,10 @@ import isEmpty from 'lodash/isEmpty';
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
+import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from '../widget-header';
 import WidgetSettingsStatement from '../widget-settings-statement';
-import WidgetDynamicSentence from '../widget-dynamic-sentence';
 
 import './styles.scss';
 
@@ -17,7 +17,7 @@ class Widget extends PureComponent {
     const {
       widget,
       currentLabel,
-      payload,
+      shareUrl,
       settings,
       config,
       embed,
@@ -64,7 +64,7 @@ class Widget extends PureComponent {
           {!error &&
             sentence &&
             !isEmpty(data) && (
-              <WidgetDynamicSentence
+              <DynamicSentence
                 className={`sentence ${
                   config.interactive ? 'interactive' : ''
                 }`}
@@ -80,21 +80,12 @@ class Widget extends PureComponent {
               />
             )}
         </div>
-        <WidgetSettingsStatement settings={settings} />
+        <WidgetSettingsStatement settings={settings} type={config.type} />
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
               <p>For more info</p>
-              <Button
-                className="embed-btn"
-                extLink={`http://globalforestwatch.org/country/${
-                  payload.country
-                }${payload.region ? `/${payload.region}` : ''}${
-                  payload.subRegion ? `/${payload.subRegion}` : ''
-                }?widget=${widget}${
-                  query && query[widget] ? `&${widget}=${query[widget]}` : ''
-                }#${widget}`}
-              >
+              <Button className="embed-btn" extLink={shareUrl}>
                 EXPLORE ON GFW
               </Button>
             </div>
@@ -106,21 +97,21 @@ class Widget extends PureComponent {
 
 Widget.propTypes = {
   widget: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.object.isRequired,
   setWidgetSettingsUrl: PropTypes.func.isRequired,
   settings: PropTypes.object,
   config: PropTypes.object,
   onMap: PropTypes.bool,
   highlightColor: PropTypes.string,
   currentLabel: PropTypes.string,
-  payload: PropTypes.object,
+  shareUrl: PropTypes.string,
   query: PropTypes.object,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
   error: PropTypes.bool,
   active: PropTypes.bool,
   colors: PropTypes.object,
-  whitelist: PropTypes.object,
+  whitelist: PropTypes.array,
   Component: PropTypes.any,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

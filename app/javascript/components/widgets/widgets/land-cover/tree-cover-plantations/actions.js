@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   axios
     .all([
-      getExtent({ ...params, indicator: 'gadm28' }),
+      getExtent({ ...params, forestType: '' }),
       getPlantationsExtent(params)
     ])
     .then(

@@ -23,7 +23,7 @@ const getSentences = state => state.config.sentences || null;
 const getPlanationKeys = createSelector(
   [getPlantations],
   plantations =>
-    plantations ? Object.keys(groupBy(plantations, 'label')) : null
+    (plantations ? Object.keys(groupBy(plantations, 'label')) : null)
 );
 
 export const parseData = createSelector(
@@ -63,11 +63,11 @@ export const parseData = createSelector(
         region: regionLabel && regionLabel.label,
         ...yKeys,
         total: totalRegionPlantations / totalArea * 100,
-        path: `${embed ? `http://${window.location.host}` : ''}/country/${
-          location.country
-        }/${location.region ? `${location.region}/` : ''}${regionId}${
-          query ? `?${query}` : ''
-        }`,
+        path: `${
+          embed ? `http://${window.location.host}` : ''
+        }/dashboards/country/${location.country}/${
+          location.region ? `${location.region}/` : ''
+        }${regionId}${query ? `?${query}` : ''}`,
         extLink: embed
       };
     });
@@ -91,7 +91,7 @@ export const parseConfig = createSelector(
       yAxisDotFill: '#d4d4d4',
       tooltip: dataKeys.map(item => ({
         key: item,
-        label: `${item} label`,
+        label: item,
         color: colorsByType[item],
         unit: '%',
         unitFormat: value => format('.1f')(value)
@@ -105,7 +105,7 @@ export const getSentence = createSelector(
   (data, settings, location, currentLabel, sentences) => {
     if (!data || !data.length) return null;
     const { initial } = sentences;
-    const topRegion = data[0];
+    const topRegion = data[0] || {};
     const topPlantation = maxBy(
       remove(
         Object.keys(topRegion).map(k => ({
@@ -116,14 +116,14 @@ export const getSentence = createSelector(
       ),
       'value'
     );
-    const plantationLabel = topPlantation.label;
+    const plantationLabel = topPlantation.label.toLowerCase();
     const isPlural = endsWith(plantationLabel, 's');
 
     const params = {
       location: currentLabel,
       region: topRegion.region,
       topType: `${plantationLabel}${isPlural ? 's' : ''} plantations`,
-      percentage: `${format('.1f')(data[0].total)}%`
+      percentage: `${format('.2r')(data[0].total)}%`
     };
 
     return {

@@ -16,26 +16,18 @@ const actions = {
 
 const mapStateToProps = (
   { location, modalMeta },
-  { currentLocation, widget, title, config, indicatorWhitelist }
+  { currentLabel, widget, title, config, whitelist, shareUrl, embedUrl }
 ) => {
-  const locationUrl = `${location.payload.country}${
-    location.payload.region ? `/${location.payload.region}` : ''
-  }${location.payload.subRegion ? `/${location.payload.subRegion}` : ''}`;
-
-  const embedUrl = `${window.location.origin}/country/embed/${widget}/${
-    locationUrl
-  }${
-    location.query && location.query[widget]
-      ? `?${widget}=${location.query[widget]}`
-      : ''
-  }`;
   const size = config.size;
   const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
   const widgetMetaKey =
-    widget === 'treeCover' && indicatorWhitelist.plantations
+    widget === 'treeCover' && whitelist && whitelist.indexOf('plantations')
       ? 'widget_natural_vs_planted'
       : config.metaKey;
-
+  const parsedTitle =
+    title && currentLabel !== 'global'
+      ? title.withLocation.replace('{location}', currentLabel)
+      : title.global;
   return {
     location,
     size,
@@ -43,29 +35,23 @@ const mapStateToProps = (
     widgetMetaKey,
     modalOpen: modalMeta.open,
     modalClosing: modalMeta.closing,
-    citation: `Global Forest Watch. “${title} in ${currentLocation &&
-      currentLocation.label}”. Accessed on ${moment().format(
+    citation: `Global Forest Watch. “${
+      parsedTitle
+    }”. Accessed on ${moment().format(
       'MMMM Do YYYY'
     )} from www.globalforestwatch.org.`,
     shareData: {
       title: 'Share this widget',
-      subtitle: `${title} in ${currentLocation ? currentLocation.label : ''}`,
-      shareUrl: `http://${window.location.host}/country/${locationUrl}?${
-        location.query && location.query.category
-          ? `category=${location.query.category}&`
-          : ''
-      }widget=${widget}${
-        location.query && location.query[widget]
-          ? `&${widget}=${location.query[widget]}`
-          : ''
-      }#${widget}`,
+      subtitle: parsedTitle,
+      shareUrl,
       embedUrl,
       embedSettings:
         config.size === 'small'
           ? { width: 315, height: 460 }
           : { width: 670, height: 490 },
-      socialText: `${title} in ${currentLocation ? currentLocation.label : ''}`
-    }
+      socialText: parsedTitle
+    },
+    title: parsedTitle
   };
 };
 

@@ -74,7 +74,7 @@ $input-button-width: rem(100px);
     .input-loader {
       justify-content: flex-start;
 
-      .spinner {
+      > div {
         width: rem(20px);
         height: rem(20px);
         border-width: 2px;

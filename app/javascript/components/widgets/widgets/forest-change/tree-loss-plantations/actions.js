@@ -3,7 +3,10 @@ import { getLoss } from 'services/forest-data';
 
 export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   axios
-    .all([getLoss(params), getLoss({ ...params, indicator: 'gadm28' })])
+    .all([
+      getLoss({ ...params, forestType: 'plantations' }),
+      getLoss({ ...params, forestType: '' })
+    ])
     .then(
       axios.spread((plantationsloss, gadmLoss) => {
         let data = {};
