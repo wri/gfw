@@ -4,7 +4,7 @@ export const initialState = {
   layerSpec: {},
   options: {
     mapTypeId: 'GFWdefault',
-    backgroundColor: '#99b3cc',
+    backgroundColor: '#A4DBFD',
     disableDefaultUI: true,
     panControl: false,
     zoomControl: false,
