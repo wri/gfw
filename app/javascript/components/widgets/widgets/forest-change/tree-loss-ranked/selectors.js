@@ -78,21 +78,24 @@ export const parseData = createSelector(
   ],
   (data, settings, location, currentLocation, meta, colors, query) => {
     if (!data || !data.length) return null;
-    const locationIndex = findIndex(
-      data,
-      d => d.id === (currentLocation && currentLocation.value)
-    );
-    let trimStart = locationIndex - 2;
-    let trimEnd = locationIndex + 3;
-    if (locationIndex < 2) {
-      trimStart = 0;
-      trimEnd = 5;
+    let dataTrimmed = data;
+    if (location.country) {
+      const locationIndex = findIndex(
+        data,
+        d => d.id === currentLocation.value
+      );
+      let trimStart = locationIndex - 2;
+      let trimEnd = locationIndex + 3;
+      if (locationIndex < 2) {
+        trimStart = 0;
+        trimEnd = 5;
+      }
+      if (locationIndex > data.length - 3) {
+        trimStart = data.length - 5;
+        trimEnd = data.length;
+      }
+      dataTrimmed = data.slice(trimStart, trimEnd);
     }
-    if (locationIndex > data.length - 3) {
-      trimStart = data.length - 5;
-      trimEnd = data.length;
-    }
-    const dataTrimmed = data.slice(trimStart, trimEnd);
     return dataTrimmed.map(d => {
       const locationData = meta && meta.find(l => d.id === l.value);
 
@@ -117,31 +120,48 @@ export const getSentence = createSelector(
   (data, settings, indicator, currentLocation, sentences) => {
     if (!data || !data.length || !currentLocation) return null;
     const { startYear, endYear } = settings;
-    const { initial, withIndicator, noLoss } = sentences;
+    const {
+      initial,
+      withIndicator,
+      globalInitial,
+      globalWithIndicator,
+      noLoss
+    } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
+
     const loss = locationData && locationData.loss;
+    const globalLoss = sumBy(data, 'loss');
+    const globalExtent = sumBy(data, 'extent');
+    const lossArea = currentLocation.label === 'global' ? globalLoss : loss;
     const areaPercent =
-      (locationData && format('.1f')(locationData.percentage)) || 0;
-    const globalPercent =
-      loss && locationData ? 100 * loss / sumBy(data, 'loss') : 0;
+      currentLocation.label === 'global'
+        ? 100 * globalLoss / globalExtent
+        : (locationData && format('.1f')(locationData.percentage)) || 0;
+    const lossPercent = loss && locationData ? 100 * loss / globalLoss : 0;
     const indicatorName = !indicator
       ? 'region-wide'
       : `${indicator.label.toLowerCase()}`;
     let sentence = !indicator ? initial : withIndicator;
-    if (loss === 0) {
-      sentence = noLoss;
-    }
+    if (currentLocation.label === 'global') { sentence = !indicator ? globalInitial : globalWithIndicator; }
+    if (loss === 0) sentence = noLoss;
     const params = {
       indicator: indicatorName,
-      location: currentLocation && currentLocation.label,
+      location:
+        currentLocation.label === 'global'
+          ? 'globally'
+          : currentLocation && currentLocation.label,
       indicator_alt: indicatorName,
       startYear,
       endYear,
-      loss: loss < 1 ? `${format('.3r')(loss)}ha` : `${format('.3s')(loss)}ha`,
-      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
+      loss:
+        lossArea < 1
+          ? `${format('.3r')(lossArea)}ha`
+          : `${format('.3s')(lossArea)}ha`,
+      localPercent:
+        areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
       globalPercent:
-        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%',
+        lossPercent >= 0.1 ? `${format('.2r')(lossPercent)}%` : '<0.1%',
       extentYear: settings.extentYear
     };
 
