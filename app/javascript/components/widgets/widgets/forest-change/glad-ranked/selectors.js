@@ -6,6 +6,8 @@ import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 
+import { getAdminPath } from '../../../utils';
+
 // get list data
 const getData = state => (state.data && state.data.alerts) || null;
 const getLatestDates = state => (state.data && state.data.latest) || null;
@@ -14,23 +16,25 @@ const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
   (!state.payload.region ? state.regions : state.subRegions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
-export const parseData = createSelector(
+export const parseList = createSelector(
   [
     getData,
     getLatestDates,
     getExtent,
     getSettings,
     getLocation,
+    getQuery,
     getLocationsMeta,
     getColors
   ],
-  (data, latest, extent, settings, location, meta, colors) => {
+  (data, latest, extent, settings, location, query, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const latestWeek = moment(latest)
       .subtract(1, 'weeks')
@@ -66,24 +70,28 @@ export const parseData = createSelector(
       return {
         id: k,
         color: colors.main,
-        percentage: countsAreaPerc,
+        percentage: `${format('.2r')(countsAreaPerc)}%`,
         countsPerHa,
         count: counts,
         area: countsArea,
         value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
         label: (region && region.label) || '',
-        path: `/country/${location.country}/${
-          location.region ? `${location.region}/` : ''
-        }${k}`
+        path: getAdminPath({ ...location, query, id: k })
       };
     });
-    return sortBy(mappedData, 'value').reverse();
+    return sortBy(mappedData, 'area').reverse();
   }
 );
+
+export const parseData = createSelector([parseList], data => {
+  if (isEmpty(data)) return null;
+  return sortBy(data, 'value').reverse();
+});
 
 export const getSentence = createSelector(
   [
     parseData,
+    parseList,
     getSettings,
     getOptions,
     getLocation,
@@ -91,7 +99,16 @@ export const getSentence = createSelector(
     getCurrentLocation,
     getSentences
   ],
-  (data, settings, options, location, indicator, currentLabel, sentences) => {
+  (
+    data,
+    list,
+    settings,
+    options,
+    location,
+    indicator,
+    currentLabel,
+    sentences
+  ) => {
     if (!data || !options || !currentLabel) return '';
     const { initial, oneRegion } = sentences;
     const totalCount = sumBy(data, 'count');
@@ -99,21 +116,24 @@ export const getSentence = createSelector(
     let percentileLength = 0;
 
     while (
-      (percentileLength < data.length && percentileCount / totalCount < 0.5) ||
-      (percentileLength < 10 && data.length > 10)
+      percentileLength < data.length &&
+      percentileCount / totalCount < 0.5 &&
+      data.length !== 10
     ) {
-      percentileCount += data[percentileLength].count;
+      percentileCount += list[percentileLength].count;
       percentileLength += 1;
     }
     const topCount = percentileCount / totalCount * 100;
+    const countArea = sumBy(data, 'area');
+    const formatType = countArea < 1 ? '.3r' : '.3s';
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
       count: format(',')(sumBy(data, 'count')),
-      area: `${format('.2s')(sumBy(data, 'area'))}ha`,
-      topPercent: `${format('.2s')(topCount)}%`,
+      area: `${format(formatType)(countArea)}ha`,
+      topPercent: `${format('.2r')(topCount)}%`,
       topRegions: percentileLength,
       location: currentLabel,
-      indicator: `${indicator ? `${indicator.label} in ` : ''}`
+      indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
     };
     const sentence = percentileLength === 1 ? oneRegion : initial;
     return { sentence, params };

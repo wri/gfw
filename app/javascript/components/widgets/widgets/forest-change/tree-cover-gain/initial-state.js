@@ -1,36 +1,44 @@
 export default {
-  title: 'Tree cover gain',
+  title: {
+    global: 'Global Tree cover gain',
+    withLocation: 'Tree cover gain in {location} compared to other areas'
+  },
   config: {
     size: 'small',
-    indicators: ['gadm28', 'wdpa', 'plantations', 'landmark', 'mining'],
+    landCategories: ['wdpa', 'landmark', 'mining'],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
-    admins: ['country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds', 'extentYears', 'units'],
+    admins: ['global', 'country', 'region', 'subRegion'],
+    selectors: ['forestTypes', 'landCategories', 'units'],
     type: 'gain',
     metaKey: 'widget_tree_cover_gain',
     layers: ['forestgain'],
     sortOrder: {
       summary: 3,
-      forestChange: 6
+      forestChange: 7
     },
     sentences: {
+      globalInitial:
+        'From 2001 to 2012, {gain} of tree cover was gained {location}.',
+      globalWithIndicator:
+        'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}.',
       initial:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of global tree cover gain.',
       withIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of global tree cover gain.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of global tree cover gain.',
       regionInitial:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of all tree cover gain in {parent}.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
       regionWithIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {globalPercent} of all tree cover gain in {parent}.'
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.'
     }
   },
   settings: {
-    indicator: 'gadm28',
-    threshold: 50,
+    threshold: 0,
+    extentYear: 2000,
     unit: 'ha',
-    extentYear: 2010,
-    layers: ['forestgain']
+    layers: ['forestgain'],
+    pageSize: 5,
+    page: 0
   },
   enabled: true
 };

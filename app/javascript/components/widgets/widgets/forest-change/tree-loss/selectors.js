@@ -64,7 +64,7 @@ export const parseConfig = createSelector([getColors], colors => ({
     {
       key: 'percentage',
       unit: '%',
-      unitFormat: value => format('.1f')(value)
+      unitFormat: value => format('.2r')(value)
     }
   ]
 }));
@@ -82,13 +82,11 @@ export const getSentence = createSelector(
     if (!data) return null;
     const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
     const { startYear, endYear, extentYear } = settings;
-
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
-
     let sentence = indicator ? withIndicator : initial;
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
@@ -99,8 +97,11 @@ export const getSentence = createSelector(
       location: currentLabel,
       startYear,
       endYear,
-      loss: `${format('.3s')(totalLoss)}ha`,
-      percent: `${format('.1f')(percentageLoss)}%`,
+      loss:
+        totalLoss < 1 && totalLoss > 0
+          ? `${format('.3r')(totalLoss)}ha`
+          : `${format('.3s')(totalLoss)}ha`,
+      percent: `${format('.2r')(percentageLoss)}%`,
       emissions: `${format('.3s')(totalEmissions)}t`,
       extentYear
     };

@@ -1,31 +1,22 @@
 export default {
-  title: 'Location of tree cover',
+  title: {
+    global: 'Global Location of forest',
+    withLocation: 'Location of forest in {location}'
+  },
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'ifl_2013',
-      'mining',
-      'wdpa',
-      'plantations',
-      'landmark',
-      'primary_forest',
-      'ifl_2013',
-      'ifl_2013__wdpa',
-      'ifl_2013__mining',
-      'ifl_2013__landmark',
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark',
-      'plantations__mining',
-      'plantations__wdpa',
-      'plantations__landmark'
-    ],
+    forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
+    landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
     categories: ['summary', 'land-cover'],
-    admins: ['country', 'region'],
-    selectors: ['indicators', 'thresholds', 'units', 'extentYears'],
+    admins: ['global', 'country', 'region'],
+    selectors: [
+      'forestTypes',
+      'landCategories',
+      'thresholds',
+      'units',
+      'extentYears'
+    ],
     locationCheck: true,
     type: 'extent',
     metaKey: 'widget_forest_location',
@@ -35,16 +26,22 @@ export default {
       landCover: 2
     },
     sentences: {
+      globalInitial:
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover. {region} had the most tree cover at {value} compared to an average of {average}.',
+      globalWithIndicator:
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover in {indicator}. {region} had the most tree cover at {value} compared to an average of {average}.',
       initial:
-        'In {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover. {region} had the most tree cover at {value} compared to an average of {average}.',
       hasIndicator:
-        'For {indicator} in {location}, {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
-      largePercentile:
-        'In {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
-      largePercentileWithIndicator:
-        'For {indicator} in {location}, the top {count} regions represent {percentage} of all tree cover. {region} has the largest tree cover at {extent} compared to an average of {averageExtent}.',
-      hasPercentage:
-        '{region} had the largest relative tree cover of {relPercentage}, compared to a regional average of {averagePerc}.',
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover in {indicator}. {region} had the most tree cover at {value} compared to an average of {average}.',
+      percGlobalInitial:
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover. {region} had the most relative tree cover at {value} compared to an average of {average}.',
+      percGlobalWithIndicator:
+        '{location} as of {year}, the top {count} countries represent {percentage} of all tree cover in {indicator}. {region} had the most relative tree cover at {value} compared to an average of {average}.',
+      percInitial:
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover. {region} had the most relative tree cover at {value} compared to an average of {average}.',
+      percHasIndicator:
+        'In {location} as of {year}, the top {count} regions represent {percentage} of all tree cover in {indicator}. {region} had the most relative tree cover at {value} compared to an average of {average}.',
       noCover: 'No tree cover was identified in {location}.'
     },
     data: [
@@ -61,11 +58,10 @@ export default {
     ]
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 30,
     extentYear: 2010,
     layers: ['forest2010'],
-    unit: 'ha',
+    unit: '%',
     pageSize: 5,
     page: 0
   },

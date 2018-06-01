@@ -1,5 +1,7 @@
 export default {
-  title: 'Deforestation Alerts',
+  title: {
+    withLocation: 'Deforestation Alerts in {location}'
+  },
   config: {
     size: 'large',
     categories: ['summary', 'forest-change'],
@@ -9,7 +11,7 @@ export default {
     selectors: ['weeks'],
     metaKey: 'widget_deforestation_graph',
     interactive: true,
-    customLocationWhitelist: [
+    locationWhitelist: [
       'BRA',
       'COL',
       'ECU',
@@ -35,7 +37,7 @@ export default {
     layers: ['umd_as_it_happens'],
     sortOrder: {
       summary: 6,
-      forestChange: 7
+      forestChange: 9
     },
     sentences: {
       initial:

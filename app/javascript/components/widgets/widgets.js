@@ -12,9 +12,10 @@ import {
 } from './selectors';
 
 const mapStateToProps = (
-  { location, countryData, whitelists },
-  { widgets, activeWidget }
+  { location, countryData, whitelists, widgets },
+  ownProps
 ) => {
+  const { activeWidget } = ownProps;
   // loaders
   const {
     isCountriesLoading,
@@ -35,30 +36,31 @@ const mapStateToProps = (
     regionWhitelistLoading;
 
   const { query, payload } = location;
+  const { region } = payload;
+  const widget = query && query.widget;
   const category = (query && query.category) || 'summary';
   const widgetData = {
     category,
     ...location,
     countryData,
-    indicatorWhitelist: location.payload.region
-      ? regionWhitelist
-      : countryWhitelist
+    whitelist: region ? regionWhitelist : countryWhitelist
   };
   const currentLocation = getAdminSelected({ ...countryData, payload });
 
   return {
     loading,
-    widgets: widgets || filterWidgets(widgetData),
+    widgets: (!widget && ownProps.widgets) || filterWidgets(widgetData),
     options: getOptions(),
     adminKey: getAdminKey({ payload }),
     currentLocation,
     currentLabel: currentLocation && currentLocation.label,
     ...currentLocation,
     ...widgetData,
-    ...whitelists,
     ...countryData,
+    ...whitelists,
     colors,
-    activeWidget
+    activeWidget,
+    ...(!!widget && { widget: widgets[widget] })
   };
 };
 

@@ -1,5 +1,7 @@
 export default {
-  title: 'Forestry Employment',
+  title: {
+    withLocation: 'Forestry Employment in {location}'
+  },
   config: {
     size: 'small',
     categories: ['people'],

@@ -4,9 +4,13 @@ import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
+import { getAdminPath } from '../../../utils';
+
 const getData = state => state.data || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getColors = state => state.colors || null;
+const getCurrentLocation = state => state.currentLabel || null;
 const getSettings = state => state.settings || null;
 const getPeriod = state => state.period || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -20,44 +24,67 @@ export const getSortedData = createSelector([getData], data => {
 });
 
 export const parseData = createSelector(
-  [getSortedData, getLocation, getColors],
-  (data, location, colors) => {
+  [getSortedData, getLocation, getColors, getQuery],
+  (data, location, colors, query) => {
     if (!data || !data.length) return null;
-    const locationIndex = findIndex(data, d => d.iso === location.country);
-    let trimStart = locationIndex - 2;
-    let trimEnd = locationIndex + 3;
-    if (locationIndex < 2) {
-      trimStart = 0;
-      trimEnd = 5;
+    let dataTrimmed = data;
+    if (location.country) {
+      const locationIndex = findIndex(data, d => d.iso === location.country);
+      let trimStart = locationIndex - 2;
+      let trimEnd = locationIndex + 3;
+      if (locationIndex < 2) {
+        trimStart = 0;
+        trimEnd = 5;
+      }
+      if (locationIndex > data.length - 3) {
+        trimStart = data.length - 5;
+        trimEnd = data.length;
+      }
+      dataTrimmed = data.slice(trimStart, trimEnd);
     }
-    if (locationIndex > data.length - 3) {
-      trimStart = data.length - 5;
-      trimEnd = data.length;
-    }
-    const dataTrimmed = data.slice(trimStart, trimEnd);
+
     return dataTrimmed.map(d => ({
       ...d,
       label: d.name,
       color: colors.main,
-      path: `/country/${d.iso}`,
+      path: getAdminPath({ query, id: d.iso }),
       value: d.rate
     }));
   }
 );
 
 export const getSentence = createSelector(
-  [parseData, getLocation, getSettings, getPeriod, getSentences],
-  (data, location, settings, period, sentences) => {
+  [
+    getSortedData,
+    parseData,
+    getLocation,
+    getSettings,
+    getPeriod,
+    getSentences,
+    getCurrentLocation
+  ],
+  (sortedData, data, location, settings, period, sentences, currentLabel) => {
     if (!data || !data.length) return null;
-    const { initial, noReforest } = sentences;
+    const { initial, noReforest, globalInitial } = sentences;
     const countryData = data.find(d => location.country === d.iso) || null;
 
-    const sentence = countryData.value > 0 ? initial : noReforest;
+    let globalRate = 0;
+    Object.keys(sortedData).forEach(k => {
+      globalRate += sortedData[k].rate;
+    });
+    const rate =
+      currentLabel === 'global' ? globalRate : countryData && countryData.value;
+
+    let sentence = globalInitial;
+    if (currentLabel !== 'global') {
+      sentence = countryData && countryData.value > 0 ? initial : noReforest;
+    }
+    const formatType = rate < 1 ? '.3r' : '.3s';
 
     const params = {
-      location: countryData.label,
+      location: currentLabel,
       year: period && period.label,
-      rate: `${format('.3s')(countryData.value)}ha/yr`
+      rate: `${format(formatType)(rate)}ha/yr`
     };
 
     return {

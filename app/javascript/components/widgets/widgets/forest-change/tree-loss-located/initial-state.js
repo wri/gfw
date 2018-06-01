@@ -1,32 +1,17 @@
 export default {
-  title: 'Location of tree cover loss',
+  title: {
+    withLocation: 'Location of tree cover loss in {location}'
+  },
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'ifl_2013',
-      'mining',
-      'wdpa',
-      'plantations',
-      'landmark',
-      'primary_forest',
-      'ifl_2013',
-      'ifl_2013__wdpa',
-      'ifl_2013__mining',
-      'ifl_2013__landmark',
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark',
-      'plantations__mining',
-      'plantations__wdpa',
-      'plantations__landmark'
-    ],
+    forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
+    landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region'],
     selectors: [
-      'indicators',
+      'forestTypes',
+      'landCategories',
       'thresholds',
       'units',
       'startYears',
@@ -39,7 +24,7 @@ export default {
     metaKey: 'widget_tree_cover_loss_location',
     sortOrder: {
       summary: 2,
-      forestChange: 2
+      forestChange: 3
     },
     sentences: {
       initial:
@@ -54,10 +39,9 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 30,
     extentYear: 2000,
-    unit: 'ha',
+    unit: '%',
     pageSize: 5,
     page: 0,
     startYear: 2001,

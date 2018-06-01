@@ -1,5 +1,7 @@
 export default {
-  title: 'Economic Impact of forests',
+  title: {
+    withLocation: 'Economic Impact of forests in {location}'
+  },
   config: {
     size: 'large',
     categories: ['people'],
@@ -12,7 +14,7 @@ export default {
     sortOrder: {
       people: 1
     },
-    customLocationWhitelist: [
+    locationWhitelist: [
       'AGO',
       'ALB',
       'ARG',

@@ -32,12 +32,12 @@ export const getFilteredData = createSelector(
 export const parseData = createSelector(
   [getFilteredData, getSettings, getColors],
   (data, settings, colors) => {
-    if (isEmpty(data)) return null;
+    if (isEmpty(data)) return [{ noContent: true }];
 
     const { year } = settings;
     const selectedFAO = data.filter(item => item.year === year);
     const { male, female } = selectedFAO[0];
-    if (!female) return null;
+    if (!female) return [{ noContent: true }];
 
     const total = male + female;
     const formatedData = [
@@ -73,13 +73,14 @@ export const getSentence = createSelector(
         : selectedFAO.male;
       females = parseInt(selectedFAO.female, 10);
     }
+    const percentage = 100 * females / employees;
 
     const params = {
       location: `${currentLocation &&
         currentLocation &&
         currentLocation.label}'s`,
       value: `${employees ? format('.3s')(employees) : 'no'}`,
-      percent: `${format('.2s')(100 * females / employees)}%`,
+      percent: percentage >= 0.1 ? `${format('.2r')(percentage)}%` : '<0.1%',
       year
     };
 

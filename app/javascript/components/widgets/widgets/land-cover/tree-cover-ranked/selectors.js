@@ -4,11 +4,13 @@ import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import sumBy from 'lodash/sumBy';
+import { getAdminPath } from '../../../utils';
 
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.payload || null;
+const getQuery = state => state.query || null;
 const getLocationsMeta = state => state.countries || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
@@ -37,9 +39,10 @@ export const parseData = createSelector(
     getLocation,
     getCurrentLocation,
     getLocationsMeta,
-    getColors
+    getColors,
+    getQuery
   ],
-  (data, settings, location, currentLocation, meta, colors) => {
+  (data, settings, location, currentLocation, meta, colors, query) => {
     if (!data || !data.length || !currentLocation || !meta) return null;
     const locationIndex = findIndex(
       data,
@@ -59,20 +62,12 @@ export const parseData = createSelector(
     const dataTrimmed = data.slice(trimStart, trimEnd);
     return dataTrimmed.map(d => {
       const locationData = meta && meta.find(l => d.id === l.value);
-      let path = '/country/';
-      if (location.subRegion) {
-        path += `${location.country}/${location.region}/${d.id}`;
-      } else if (location.region) {
-        path += `${location.country}/${d.id}`;
-      } else {
-        path += d.id;
-      }
 
       return {
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        path,
+        path: getAdminPath({ ...location, query, id: d.id }),
         value: settings.unit === 'ha' ? d.extent : d.percentage
       };
     });
@@ -94,15 +89,21 @@ export const getSentence = createSelector(
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const extent = locationData && locationData.extent;
-    const areaPercent = 100 * extent / sumBy(rawData, 'extent') || 0;
+    const landPercent = 100 * extent / locationData.area || 0;
+    const globalPercent = 100 * extent / sumBy(rawData, 'extent') || 0;
 
     const params = {
       extentYear: settings.extentYear,
       location: currentLocation.label,
-      extent: `${extent ? format('.3s')(extent) : '0'}ha`,
-      indicator: indicator && indicator.label,
-      percentage:
-        areaPercent >= 0.1 ? `${format('.1f')(areaPercent)}%` : '<0.1%'
+      extent:
+        extent < 1
+          ? `${format('.3r')(extent)}ha`
+          : `${format('.3s')(extent)}ha`,
+      indicator: indicator && indicator.label.toLowerCase(),
+      landPercentage:
+        landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '<0.1%',
+      globalPercentage:
+        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%'
     };
 
     const sentence = indicator ? withInd : initial;

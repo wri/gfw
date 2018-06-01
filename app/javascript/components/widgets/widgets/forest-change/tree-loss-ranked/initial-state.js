@@ -1,32 +1,17 @@
 export const initialState = {
-  title: 'Tree cover loss',
+  title: {
+    withLocation: 'Tree cover loss in {location} compared to other areas'
+  },
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'ifl_2013',
-      'mining',
-      'wdpa',
-      'plantations',
-      'landmark',
-      'primary_forest',
-      'ifl_2013',
-      'ifl_2013__wdpa',
-      'ifl_2013__mining',
-      'ifl_2013__landmark',
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark',
-      'plantations__mining',
-      'plantations__wdpa',
-      'plantations__landmark'
-    ],
+    forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
+    landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
     categories: ['forest-change'],
     admins: ['country'],
     selectors: [
-      'indicators',
+      'forestTypes',
+      'landCategories',
       'thresholds',
       'extentYears',
       'units',
@@ -38,7 +23,7 @@ export const initialState = {
     layers: ['loss'],
     sortOrder: {
       summary: 5,
-      forestChange: 3
+      forestChange: 4
     },
     sentences: {
       initial:
@@ -49,11 +34,10 @@ export const initialState = {
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 50,
     startYear: 2001,
     endYear: 2016,
-    unit: 'ha',
+    unit: '%',
     extentYear: 2000,
     layers: ['loss']
   },

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'd3-format';
 
 import PieChart from 'components/charts/pie-chart';
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
@@ -22,7 +23,19 @@ class WidgetTreeCover extends PureComponent {
             key: 'value'
           }}
         />
-        <PieChart className="cover-pie-chart" data={data} maxSize={140} />
+        <PieChart
+          className="cover-pie-chart"
+          data={data}
+          maxSize={140}
+          tooltip={[
+            {
+              key: 'percentage',
+              unit: '%',
+              labelKey: 'label',
+              unitFormat: value => format('.1f')(value)
+            }
+          ]}
+        />
       </div>
     );
   }

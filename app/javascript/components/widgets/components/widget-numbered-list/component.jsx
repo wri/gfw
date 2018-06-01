@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import NumberedList from 'components/numbered-list';
 
-class WidgetTreeLocated extends PureComponent {
+class WidgetNumberedList extends PureComponent {
   render() {
     const {
       parsedData,
@@ -18,7 +18,7 @@ class WidgetTreeLocated extends PureComponent {
         data={parsedData}
         settings={{
           ...settings,
-          format: settings.unit === '%' ? '.0f' : '.2s'
+          format: settings.unit === '%' ? '.2r' : '.3s'
         }}
         handlePageChange={change =>
           setWidgetSettingsUrl({
@@ -32,7 +32,7 @@ class WidgetTreeLocated extends PureComponent {
   }
 }
 
-WidgetTreeLocated.propTypes = {
+WidgetNumberedList.propTypes = {
   parsedData: PropTypes.array,
   settings: PropTypes.object.isRequired,
   setWidgetSettingsUrl: PropTypes.func.isRequired,
@@ -40,4 +40,4 @@ WidgetTreeLocated.propTypes = {
   widget: PropTypes.string
 };
 
-export default WidgetTreeLocated;
+export default WidgetNumberedList;

@@ -107,7 +107,11 @@ class CustomComposedChart extends PureComponent {
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
-              cursor={{ fill: '#d6d6d9' }}
+              cursor={{
+                opacity: 0.5,
+                stroke: '#d6d6d9',
+                ...(!!bars && { strokeWidth: `${1.2 * (100 / data.length)}%` })
+              }}
               content={<ChartToolTip settings={tooltip} />}
             />
             {areas &&

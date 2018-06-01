@@ -1,30 +1,16 @@
 export const initialState = {
-  title: 'Tree cover loss',
+  title: {
+    withLocation: 'Tree cover loss in {location}'
+  },
   config: {
     size: 'large',
-    indicators: [
-      'gadm28',
-      'ifl_2013',
-      'mining',
-      'wdpa',
-      'landmark',
-      'primary_forest',
-      'ifl_2013',
-      'ifl_2013__wdpa',
-      'ifl_2013__mining',
-      'ifl_2013__landmark',
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark',
-      'plantations__mining',
-      'plantations__wdpa',
-      'plantations__landmark'
-    ],
+    forestTypes: ['ifl_2013', 'primary_forest'],
+    landCategories: ['mining', 'wdpa', 'landmark'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region', 'subRegion'],
     selectors: [
-      'indicators',
+      'forestTypes',
+      'landCategories',
       'startYears',
       'endYears',
       'thresholds',
@@ -39,17 +25,16 @@ export const initialState = {
     },
     sentences: {
       initial:
-        'From {startYear} and {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
       withIndicator:
-        'From {startYear} and {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {emissions} of CO\u2082 emissions.',
       noLoss:
-        'From {startYear} and {endYear}, {location} lost {loss} of tree cover.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover.',
       noLossWithIndicator:
-        'From {startYear} and {endYear}, {location} lost {loss} of tree cover in {indicator}.'
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}.'
     }
   },
   settings: {
-    indicator: 'gadm28',
     threshold: 30,
     startYear: 2001,
     endYear: 2016,

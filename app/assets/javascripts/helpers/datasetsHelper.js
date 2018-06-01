@@ -1,14 +1,9 @@
-define([
-  'underscore'
-], function(
-  _
-) {
-
+define(['underscore'], (_) => {
   /**
-  * List of the datasets of the platform
-  */
+   * List of the datasets of the platform
+   */
 
-  var datasetList = {
+  const datasetList = {
     'glad-alerts': {
       title: 'GLAD tree cover loss alerts',
       long_title: 'weekly GLAD tree cover loss alerts',
@@ -68,7 +63,7 @@ define([
       title: 'Tree cover loss data',
       long_title: 'annual tree cover loss data',
       sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA',
-      layerSlug: ['loss','gain'],
+      layerSlug: ['loss', 'gain'],
       slug: 'umd-loss-gain',
       slug_source: 'tree_cover_loss',
       analysisSlug: 'umd-loss-gain',
@@ -86,7 +81,7 @@ define([
       layer_id: null,
       order: 70
     },
-    'forma250GFW': {
+    forma250GFW: {
       title: 'FORMA alerts',
       long_title: 'FORMA alerts',
       sub_title: 'daily, 250m, tropics, WRI/Google',
@@ -108,7 +103,7 @@ define([
       layer_id: null,
       order: 80
     },
-    'story': {
+    story: {
       title: 'User stories',
       long_title: '',
       sub_title: 'stories submitted by GFW users',
@@ -122,10 +117,10 @@ define([
   };
 
   /**
-  * List of the datasets that allows subscriptions
-  */
+   * List of the datasets that allows subscriptions
+   */
 
-  var subscriptionsAllowed = [
+  const subscriptionsAllowed = [
     'loss',
     'imazon',
     'terrailoss',
@@ -140,13 +135,12 @@ define([
     'forma_month_3'
   ];
 
-  var datasetHelper = {
-
+  const datasetHelper = {
     /**
      * Returns the list of key datasets
      * @returns {Object} key languages list
      */
-    getList: function() {
+    getList() {
       return datasetList;
     },
 
@@ -155,18 +149,18 @@ define([
      * @param {Object} datasets slugs
      * @returns {Object} key languages list
      */
-    getFilteredList: function(datasets, selected) {
-      var layersSelected = selected || [];
-      var filteredDatasets = [];
+    getFilteredList(datasets, selected) {
+      const layersSelected = selected || [];
+      let filteredDatasets = [];
 
       // Global layers
       filteredDatasets.push(_.extend({}, datasetList['umd-loss-gain']));
       filteredDatasets.push(_.extend({}, datasetList['viirs-active-fires']));
-      filteredDatasets.push(_.extend({}, datasetList['story']));
+      filteredDatasets.push(_.extend({}, datasetList.story));
 
       if (datasets) {
-        for (var dataset in datasetList) {
-          var currentDataset = _.extend({}, datasetList[dataset]);
+        for (const dataset in datasetList) {
+          const currentDataset = _.extend({}, datasetList[dataset]);
 
           if (datasets.indexOf(currentDataset.analysisSlug) !== -1) {
             filteredDatasets.push(currentDataset);
@@ -174,18 +168,18 @@ define([
         }
       }
 
-      filteredDatasets = _.map(filteredDatasets, function(dataset) {
-        if (layersSelected.indexOf(dataset.slug) !== -1 ||
+      filteredDatasets = _.map(filteredDatasets, (dataset) => {
+        if (
+          layersSelected.indexOf(dataset.slug) !== -1 ||
           layersSelected.indexOf(dataset.layerSlug[0]) !== -1 ||
-          layersSelected.indexOf(dataset.analysisSlug) !== -1) {
+          layersSelected.indexOf(dataset.analysisSlug) !== -1
+        ) {
           dataset.checked = true;
         }
         return dataset;
       });
 
-      filteredDatasets = _.sortBy(filteredDatasets, function(data) {
-        return data.order;
-      })
+      filteredDatasets = _.sortBy(filteredDatasets, (data) => data.order);
 
       return filteredDatasets;
     },
@@ -196,14 +190,17 @@ define([
      * @param {string} selected language
      * @returns {Array} list of languages with selection
      */
-    getListSelected: function(selectedDatasets) {
-      var selectedList = {};
-      for (var dataset in datasetList) {
+    getListSelected(selectedDatasets) {
+      const selectedList = {};
+      for (const dataset in datasetList) {
         selectedList[dataset] = _.extend({}, datasetList[dataset]);
 
-        if (selectedDatasets && (selectedDatasets.indexOf(dataset) != -1 || 
-          selectedDatasets.indexOf(selectedList[dataset].layerSlug[0]) != -1)) {
-          selectedList[dataset].checked = true
+        if (
+          selectedDatasets &&
+          (selectedDatasets.indexOf(dataset) != -1 ||
+            selectedDatasets.indexOf(selectedList[dataset].layerSlug[0]) != -1)
+        ) {
+          selectedList[dataset].checked = true;
         }
       }
       return selectedList;
@@ -214,12 +211,10 @@ define([
      * that allow subscriptions
      * @returns {Array} list of the datasets
      */
-    getListSubscriptionsAllowed: function() {
+    getListSubscriptionsAllowed() {
       return subscriptionsAllowed;
     }
-
-  }
+  };
 
   return datasetHelper;
-
 });

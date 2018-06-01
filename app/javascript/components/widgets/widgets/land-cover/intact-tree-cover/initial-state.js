@@ -1,16 +1,14 @@
 export default {
-  title: 'Intact forest',
+  title: {
+    global: 'Global Intact forest',
+    withLocation: 'Intact forest in {location}'
+  },
   config: {
     size: 'small',
-    indicators: [
-      'ifl_2013',
-      'ifl_2013__wdpa',
-      'ifl_2013__mining',
-      'ifl_2013__landmark'
-    ],
+    landCategories: ['wdpa', 'mining', 'landmark'],
     categories: ['land-cover'],
-    admins: ['country', 'region', 'subRegion'],
-    selectors: ['indicators', 'thresholds'],
+    admins: ['global', 'country', 'region', 'subRegion'],
+    selectors: ['landCategories', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_ifl',
     layers: ['forest2000', 'forest2010', 'ifl_2013_deg'],
@@ -19,13 +17,17 @@ export default {
     },
     sentences: {
       initial:
-        'As of 2013, {percentage} of {location} total tree cover was {intact}.',
+        'As of 2013, {percentage} of {location} tree cover was <b>intact forest</b>.',
       withIndicator:
-        'As of 2013, {percentage} of {location} total tree cover was {intact} within {indicator}.'
+        'As of 2013, {percentage} of {location} tree cover in {indicator} was <b>intact forest</b>.',
+      noIntact:
+        'As of 2013, <b>none</b> of {location} tree cover was <b>intact forest</b>.',
+      noIntactwithIndicator:
+        'As of 2013, <b>none</b> of {location} tree cover in {indicator} was <b>intact forest</b>.'
     }
   },
   settings: {
-    indicator: 'ifl_2013',
+    forestType: 'ifl_2013',
     threshold: 30,
     extentYear: 2010,
     layers: ['forest2010', 'ifl_2013_deg']

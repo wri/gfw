@@ -1,17 +1,14 @@
 export default {
-  title: 'Primary forest',
+  title: {
+    withLocation: 'Primary forest in {location}'
+  },
   config: {
     size: 'small',
-    indicators: [
-      'primary_forest',
-      'primary_forest__mining',
-      'primary_forest__wdpa',
-      'primary_forest__landmark'
-    ],
+    landCategories: ['mining', 'wdpa', 'landmark'],
     categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
-    customLocationWhitelist: ['IDN', 'COD'],
-    selectors: ['indicators', 'thresholds'],
+    locationWhitelist: ['IDN', 'COD'],
+    selectors: ['landCategories', 'thresholds'],
     type: 'extent',
     metaKey: 'widget_primary_forest',
     layers: ['forest2000'],
@@ -20,15 +17,15 @@ export default {
     },
     sentences: {
       initial:
-        'As of {extentYear}, {percentage} of {location} total tree cover was {primary}.',
+        'As of {extentYear}, {percentage} of {location} total tree cover was <b>primary forest</b>.',
       withIndicator:
-        'As of {extentYear}, {percentage} of {location} total tree cover was {primary} within {indicator}.'
+        'As of {extentYear}, {percentage} of {location} total tree cover in {indicator} was <b>primary forest</b>.'
     }
   },
   settings: {
-    indicator: 'primary_forest',
+    forestType: 'primary_forest',
     threshold: 30,
-    extentYear: 2000,
+    extentYear: 2010,
     layers: ['forest2000']
   },
   enabled: true

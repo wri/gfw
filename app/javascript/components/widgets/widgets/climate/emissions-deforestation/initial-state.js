@@ -1,5 +1,7 @@
 export default {
-  title: 'Emissions from biomass loss',
+  title: {
+    withLocation: 'Emissions from biomass loss in {location}'
+  },
   config: {
     size: 'small',
     indicators: [
@@ -27,7 +29,6 @@ export default {
     }
   },
   settings: {
-    indicator: 'gadm28',
     unit: 'biomassCarbon',
     threshold: 30,
     startYear: 2001,
