@@ -1,5 +1,6 @@
 export const initialState = {
   title: {
+    global: 'Global Tree cover loss',
     withLocation: 'Tree cover loss in {location} compared to other areas'
   },
   config: {
@@ -7,8 +8,8 @@ export const initialState = {
     forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
     landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
-    categories: ['forest-change'],
-    admins: ['country'],
+    categories: ['summary', 'forest-change'],
+    admins: ['global', 'country'],
     selectors: [
       'forestTypes',
       'landCategories',
@@ -26,20 +27,26 @@ export const initialState = {
       forestChange: 4
     },
     sentences: {
+      globalInitial:
+        'From {startYear} to {endYear}, {loss} of tree cover was lost {location}, equivalent to a {localPercent} decrease since {extentYear}.',
+      globalWithIndicator:
+        'From {startYear} to {endYear}, {loss} of tree cover was lost {location}, within {indicator} equivalent to a {localPercent} decrease since {extentYear}',
       initial:
-        'From {startYear} to {endYear}, {location} lost {loss} of tree cover {indicator}, equivalent to a {percent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
       withIndicator:
-        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
       noLoss: 'There was no tree cover loss identified in {location}.'
     }
   },
   settings: {
-    threshold: 50,
+    threshold: 30,
     startYear: 2001,
     endYear: 2016,
     unit: '%',
     extentYear: 2000,
-    layers: ['loss']
+    layers: ['loss'],
+    pageSize: 5,
+    page: 0
   },
   enabled: true
 };
