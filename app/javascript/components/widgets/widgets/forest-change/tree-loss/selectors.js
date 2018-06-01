@@ -97,9 +97,10 @@ export const getSentence = createSelector(
       location: currentLabel,
       startYear,
       endYear,
-      loss: totalLoss
-        ? `${format('.3r')(totalLoss)}ha`
-        : `${format('.3s')(totalLoss)}ha`,
+      loss:
+        totalLoss < 1 && totalLoss > 0
+          ? `${format('.3r')(totalLoss)}ha`
+          : `${format('.3s')(totalLoss)}ha`,
       percent: `${format('.2r')(percentageLoss)}%`,
       emissions: `${format('.3s')(totalEmissions)}t`,
       extentYear
