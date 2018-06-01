@@ -13,7 +13,7 @@ export const getStatement = createSelector(
     const { extentYear, threshold } = settings;
     const statements = compact([
       extentYear ? `${extentYear} tree cover extent` : null,
-      threshold ? `>${threshold}% tree canopy` : null,
+      threshold || threshold === 0 ? `>${threshold}% tree canopy` : null,
       type === 'loss'
         ? 'these estimates do not take tree cover gain into account'
         : null

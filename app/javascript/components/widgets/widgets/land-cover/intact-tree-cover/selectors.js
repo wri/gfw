@@ -44,7 +44,12 @@ export const getSentence = createSelector(
   [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
   (parsedData, settings, currentLabel, indicator, sentences) => {
     if (!parsedData) return null;
-    const { initial, withIndicator } = sentences;
+    const {
+      initial,
+      withIndicator,
+      noIntact,
+      noIntactWithIndicator
+    } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
       .map(d => d.value)
@@ -72,8 +77,14 @@ export const getSentence = createSelector(
         intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`
     };
 
-    const sentence =
+    let sentence =
       indicator && indicator.value === 'ifl_2013' ? initial : withIndicator;
+    if (intactPercentage === 0) {
+      sentence =
+        indicator && indicator.value === 'ifl_2013'
+          ? noIntact
+          : noIntactWithIndicator;
+    }
 
     return {
       sentence,
