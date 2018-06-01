@@ -113,7 +113,6 @@ export const getSentence = createSelector(
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const gain = locationData ? locationData.gain : sumBy(data, 'gain');
-    const globalPercent = gain ? 100 * gain / sumBy(data, 'extent') : 0;
     const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
 
@@ -122,11 +121,8 @@ export const getSentence = createSelector(
       gain: gain < 1 ? `${format('.3r')(gain)}ha` : `${format('.3s')(gain)}ha`,
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
       percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
-      globalPercent:
-        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%',
       gainPercent:
         gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '<0.1%',
-      extentYear: settings.extentYear,
       parent: parent && parent.label
     };
 

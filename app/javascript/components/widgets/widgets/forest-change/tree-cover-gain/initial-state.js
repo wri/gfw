@@ -9,7 +9,7 @@ export default {
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
     admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['forestTypes', 'landCategories', 'extentYears', 'units'],
+    selectors: ['forestTypes', 'landCategories', 'units'],
     type: 'gain',
     metaKey: 'widget_tree_cover_gain',
     layers: ['forestgain'],
@@ -19,23 +19,23 @@ export default {
     },
     sentences: {
       globalInitial:
-        'From 2001 to 2012, {gain} of tree cover was gained {location}, equivalent to a {globalPercent} increase since {extentYear}.',
+        'From 2001 to 2012, {gain} of tree cover was gained {location}.',
       globalWithIndicator:
-        'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}, equivalent to a {globalPercent} increase since {extentYear}.',
+        'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}.',
       initial:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {gainPercent} of global tree cover gain.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of global tree cover gain.',
       withIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {gainPercent} of global tree cover gain.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of global tree cover gain.',
       regionInitial:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator}, equivalent to a {percent} increase since {extentYear} and {gainPercent} of all tree cover gain in {parent}.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
       regionWithIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator}, equivalent to a {percent} increase since {extentYear} and {gainPercent} of all tree cover gain in {parent}.'
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.'
     }
   },
   settings: {
     threshold: 0,
-    unit: '%',
     extentYear: 2000,
+    unit: 'ha',
     layers: ['forestgain']
   },
   enabled: true

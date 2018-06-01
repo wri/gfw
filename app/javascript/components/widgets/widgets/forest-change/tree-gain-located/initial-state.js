@@ -30,7 +30,7 @@ export default {
   },
   settings: {
     threshold: 0,
-    unit: '%',
+    unit: 'ha',
     extentYear: 2000,
     pageSize: 5,
     page: 0,
