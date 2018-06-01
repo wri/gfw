@@ -46,8 +46,13 @@ export const getSentence = createSelector(
   (parsedData, settings, currentLabel, indicator, sentences) => {
     if (!parsedData || !currentLabel) return null;
     const { initial, withIndicator } = sentences;
-    const primaryPercentage = parsedData.find(d => d.label === 'Primary Forest')
-      .percentage;
+    const totalExtent = parsedData
+      .filter(d => d.label !== 'Non-Forest')
+      .map(d => d.value)
+      .reduce((sum, d) => sum + d);
+    const primaryData = parsedData.find(d => d.label === 'Primary Forest')
+      .value;
+    const primaryPercentage = primaryData && primaryData / totalExtent * 100;
 
     let indicatorLabel = indicator && indicator.label;
     switch (indicator && indicator.value) {

@@ -1,6 +1,6 @@
 export default {
   title: {
-    global: 'Global Tree cover loss'
+    global: 'Annual Global Tree cover loss'
   },
   config: {
     admins: ['global'],
