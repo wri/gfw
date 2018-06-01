@@ -18,20 +18,23 @@ export const parseData = createSelector(
   [getData, getLocation, getColors, getQuery],
   (data, location, colors, query) => {
     if (!data || !data.rank) return null;
-
     const { rank } = data;
-    const locationIndex = findIndex(rank, d => d.iso === location.country);
-    let trimStart = locationIndex - 2;
-    let trimEnd = locationIndex + 3;
-    if (locationIndex < 2) {
-      trimStart = 0;
-      trimEnd = 5;
+    let dataTrimmed = rank;
+    if (location.country) {
+      const locationIndex = findIndex(rank, d => d.iso === location.country);
+      let trimStart = locationIndex - 2;
+      let trimEnd = locationIndex + 3;
+      if (locationIndex < 2) {
+        trimStart = 0;
+        trimEnd = 5;
+      }
+      if (locationIndex > rank.length - 3) {
+        trimStart = rank.length - 5;
+        trimEnd = rank.length;
+      }
+      dataTrimmed = rank.slice(trimStart, trimEnd);
     }
-    if (locationIndex > rank.length - 3) {
-      trimStart = rank.length - 5;
-      trimEnd = rank.length;
-    }
-    const dataTrimmed = rank.slice(trimStart, trimEnd);
+
     return dataTrimmed.map(d => ({
       ...d,
       label: d.name,

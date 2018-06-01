@@ -61,11 +61,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     Object.keys(query).forEach(key => {
       if (widgets.map(w => w.name).indexOf(key) > -1) {
         const widget = widgets.find(w => w.name === key);
-        widgetQueries[key] = encodeStateForUrl({
-          ...decodeUrlForState(query[key]),
-          forestType: widget.settings.forestType || '',
-          landCategory: widget.settings.landCategory || ''
-        });
+        if (widget.settings) {
+          const { forestType, landCategory, page } = widget.settings;
+          widgetQueries[key] = encodeStateForUrl({
+            ...decodeUrlForState(query[key]),
+            forestType: forestType || '',
+            landCategory: landCategory || '',
+            ...(!!(page === 0) && { page: 0 })
+          });
+        }
       }
     });
   }

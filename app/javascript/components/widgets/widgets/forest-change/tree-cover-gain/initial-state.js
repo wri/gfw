@@ -36,7 +36,9 @@ export default {
     threshold: 0,
     extentYear: 2000,
     unit: 'ha',
-    layers: ['forestgain']
+    layers: ['forestgain'],
+    pageSize: 5,
+    page: 0
   },
   enabled: true
 };
