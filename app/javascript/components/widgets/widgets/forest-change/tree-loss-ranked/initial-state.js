@@ -5,7 +5,7 @@ export const initialState = {
   },
   config: {
     size: 'small',
-    forestTypes: ['ifl_2013', 'plantations', 'primary_forest'],
+    forestTypes: ['ifl_2013'],
     landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
     categories: ['forest-change'],
