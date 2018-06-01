@@ -16,11 +16,12 @@ export const parseData = createSelector(
   [getData, getSettings, getWhitelist, getColors, getCurrentLocation],
   (data, settings, whitelist, colors, currentLabel) => {
     if (isEmpty(data)) return null;
-    const { totalArea, cover, plantations } = data;
+    const { totalArea, cover } = data;
     const { indicator } = settings;
     const hasPlantations =
       (currentLabel !== 'global' && isEmpty(whitelist)) ||
       whitelist.indexOf('plantations') > -1;
+    const plantations = hasPlantations ? data.plantations : 0;
     const parsedData = [
       {
         label: hasPlantations && !indicator ? 'Natural Forest' : 'Tree cover',
