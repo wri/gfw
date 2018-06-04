@@ -62,6 +62,7 @@ export const getSentence = createSelector(
     const params = {
       year: settings.extentYear,
       location: currentLabel || 'global',
+      location_alt: `${currentLabel}'s`,
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%',

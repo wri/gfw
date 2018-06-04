@@ -7,10 +7,10 @@ export default {
     size: 'small',
     forestTypes: ['ifl_2013'],
     landCategories: ['wdpa', 'landmark', 'mining'],
-    units: ['ha', '%'],
+    units: ['ha'],
     categories: ['summary', 'forest-change'],
     admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['forestTypes', 'landCategories', 'units'],
+    selectors: ['forestTypes', 'landCategories'],
     type: 'gain',
     metaKey: 'widget_tree_cover_gain',
     layers: ['forestgain'],
@@ -24,9 +24,9 @@ export default {
       globalWithIndicator:
         'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}.',
       initial:
-        'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of global tree cover gain.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} of global total.',
       withIndicator:
-        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of global tree cover gain.',
+        'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of global total.',
       regionInitial:
         'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
       regionWithIndicator:
@@ -34,8 +34,7 @@ export default {
     }
   },
   settings: {
-    threshold: 0,
-    extentYear: 2000,
+    threshold: 50,
     unit: 'ha',
     layers: ['forestgain'],
     pageSize: 5,

@@ -110,7 +110,7 @@ export const getSentence = createSelector(
     sentences
   ) => {
     if (!data || !options || !currentLabel) return '';
-    const { initial, oneRegion } = sentences;
+    const { initial, withInd } = sentences;
     const totalCount = sumBy(data, 'count');
     let percentileCount = 0;
     let percentileLength = 0;
@@ -131,11 +131,14 @@ export const getSentence = createSelector(
       count: format(',')(sumBy(data, 'count')),
       area: `${format(formatType)(countArea)}ha`,
       topPercent: `${format('.2r')(topCount)}%`,
-      topRegions: percentileLength,
+      topRegions:
+        percentileLength === 1
+          ? `${percentileLength} region`
+          : `${percentileLength} regions`,
       location: currentLabel,
       indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
     };
-    const sentence = percentileLength === 1 ? oneRegion : initial;
+    const sentence = indicator ? withInd : initial;
     return { sentence, params };
   }
 );
