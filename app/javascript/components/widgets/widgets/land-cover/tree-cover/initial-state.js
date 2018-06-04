@@ -23,7 +23,7 @@ export default {
         'As of {year}, {percentage} of {location} land cover within {indicator} was tree cover.',
       initial: 'As of {year}, {percentage} of {location} was tree cover.',
       withIndicator:
-        'As of {year}, {percentage} of {location_alt} tree cover was in {indicator}.'
+        "As of {year}, {percentage} of {location}<b>'s</b> tree cover was in {indicator}."
     }
   },
   settings: {

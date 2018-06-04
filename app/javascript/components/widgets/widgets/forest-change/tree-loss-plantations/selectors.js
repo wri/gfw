@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
 
 // get list data
@@ -93,7 +94,7 @@ export const getSentence = createSelector(
       endYear,
       lossPhrase,
       value: `${format('.3s')(outsideEmissions)}t`,
-      percentage: percentage < 0.1 ? '<0.1%' : `${format('.2r')(percentage)}%`
+      percentage: `${formatNumber({ num: percentage, unit: '%' })}`
     };
 
     return {
