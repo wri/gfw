@@ -94,7 +94,7 @@ export const getSentence = createSelector(
       endYear,
       lossPhrase,
       value: `${format('.3s')(outsideEmissions)}t`,
-      percentage: `${formatNumber({ num: percentage, unit: '%' })}`
+      percentage: formatNumber({ num: percentage, unit: '%' })
     };
 
     return {
