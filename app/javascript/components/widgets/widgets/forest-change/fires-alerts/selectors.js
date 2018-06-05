@@ -53,6 +53,16 @@ const runningMean = (data, windowSize) => {
   return smoothedMean;
 };
 
+export const translateMeans = means => {
+  if (!means || !means.length) return null;
+  const latest = '2018-04-01';
+  const currentWeek = moment(latest).isoWeek();
+  const firstHalf = means.slice(0, currentWeek);
+  const secondHalf = means.slice(currentWeek);
+
+  return secondHalf.concat(firstHalf);
+};
+
 export const getData = createSelector([getAlerts], data => {
   if (!data || isEmpty(data)) return null;
   const groupedByYear = groupBy(data, 'year');
@@ -87,7 +97,7 @@ export const getData = createSelector([getAlerts], data => {
   return zeroFilledData;
 });
 
-export const getMeans = createSelector([getData], data => {
+export const getMeans = createSelector([getData, translateMeans], data => {
   if (!data) return null;
   const minYear = minBy(data, 'year').year;
   const maxYear = maxBy(data, 'year').year;
@@ -102,10 +112,11 @@ export const getMeans = createSelector([getData], data => {
   const rightMeans = meanData(getYearsObj(rightYears, 0, 6));
   const allMeans = concat(leftMeans, centralMeans, rightMeans);
   const smoothedMeans = runningMean(allMeans, 12);
+  const translatedMeans = translateMeans(smoothedMeans);
   const pastYear = data.slice(-52);
   const parsedData = pastYear.map((d, i) => ({
     ...d,
-    mean: smoothedMeans[i]
+    mean: translatedMeans[i]
   }));
   return parsedData;
 });
