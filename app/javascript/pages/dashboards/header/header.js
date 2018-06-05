@@ -32,6 +32,9 @@ const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
     externalLinks.find(l =>
       deburrUpper(l.title).indexOf(deburrUpper('forest atlas'))
     );
+  const downloadLink = `http://gfw2-data.s3.amazonaws.com/country/umd_country_stats${
+    country ? '/iso' : ''
+  }/tree_cover_stats_2016${country ? `_${country}` : ''}.xlsx`;
   const locationOptions = { ...countryData };
   const locationNames = getAdminsSelected({ ...countryData, ...location });
   const cacheLoading = cache.cacheListLoading;
@@ -40,6 +43,7 @@ const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
     ...header,
     loading: countryDataLoading || header.loading,
     cacheLoading,
+    downloadLink,
     forestAtlasLink,
     externalLinks,
     locationNames,
