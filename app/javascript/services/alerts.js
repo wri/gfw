@@ -54,7 +54,7 @@ export const fetchGLADLatest = () => {
   return request.get(url, 3600, 'gladRequest');
 };
 
-export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
+export const fetchFiresAlerts = ({ country, region, subRegion, datasets }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
   if (subRegion) {
     fires_summary_table = FIRES_ADM2_DATASET;
@@ -66,7 +66,7 @@ export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
   }`
     .replace('{location}', getLocation(country, region, subRegion))
     .replace('{polyname}', 'gadm28')
-    .replace('{dataset}', dataset);
+    .replace('{dataset}', datasets);
   return request.get(url);
 };
 

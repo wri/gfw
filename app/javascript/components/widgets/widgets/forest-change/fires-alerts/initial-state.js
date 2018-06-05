@@ -6,10 +6,10 @@ export default {
     size: 'large',
     categories: ['summary', 'forest-change'],
     weeks: [13, 26, 52],
-    dataset: ['MODIS', 'VIIRS'],
+    datasets: ['VIIRS', 'MODIS'],
     admins: ['country', 'region', 'subRegion'],
     type: 'fires',
-    selectors: ['weeks', 'dataset'],
+    selectors: ['weeks', 'datasets'],
     metaKey: 'widget_fire_alert_location',
     interactive: true,
     locationWhitelist: [
@@ -160,7 +160,7 @@ export default {
   settings: {
     period: 'week',
     weeks: 13,
-    dataset: 'VIIRS',
+    datasets: 'VIIRS',
     layers: ['viirs_fires_alerts'],
     layerStartDate: null,
     layerEndDate: null

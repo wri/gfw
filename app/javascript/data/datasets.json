@@ -1,0 +1,12 @@
+[
+  {
+    "label": "VIIRS",
+    "value": "VIIRS",
+    "metaKey": "viirs_fires_alerts"
+  },
+  {
+    "label": "MODIS",
+    "value": "MODIS",
+    "metaKey": null    
+  }
+]

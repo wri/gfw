@@ -19,6 +19,8 @@ const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 const getActiveData = state => state.settings.activeData || null;
 const getWeeks = state => (state.settings && state.settings.weeks) || null;
+const getDatasets = state =>
+  (state.settings && state.settings.datasets) || null;
 const getSentences = state => state.config.sentences || null;
 
 const getYearsObj = (data, startSlice, endSlice) => {
@@ -244,8 +246,8 @@ export const parseConfig = createSelector([getColors], colors => {
 });
 
 export const getSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences, getSettings],
-  (data, colors, activeData, sentences, settings) => {
+  [parseData, getColors, getActiveData, getSentences, getSettings, getDatasets],
+  (data, colors, activeData, sentences, settings, dataset) => {
     if (!data) return null;
     let lastDate = data[data.length - 1];
     if (!isEmpty(activeData)) {
@@ -281,7 +283,7 @@ export const getSentence = createSelector(
     const date = moment(lastDate.date).format('Do of MMMM YYYY');
     const params = {
       date,
-      dataset: settings.dataset,
+      dataset,
       count: {
         value: format(',')(lastDate.count),
         color: colors.main
