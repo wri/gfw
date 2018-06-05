@@ -12,7 +12,7 @@ const QUERIES = {
   gladIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
-    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{fire_type}'",
+    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{service}'",
   viirsAlerts:
     '{location}?group=true&period={period}&thresh=0&geostore={geostore}'
 };
@@ -66,7 +66,7 @@ export const fetchFiresAlerts = ({ country, region, subRegion }) => {
   }`
     .replace('{location}', getLocation(country, region, subRegion))
     .replace('{polyname}', 'gadm28')
-    .replace('{fire_type}', 'VIIRS');
+    .replace('{service}', 'VIIRS');
   return request.get(url);
 };
 

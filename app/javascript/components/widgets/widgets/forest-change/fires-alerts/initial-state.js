@@ -6,9 +6,10 @@ export default {
     size: 'large',
     categories: ['summary', 'forest-change'],
     weeks: [13, 26, 52],
+    dataset: ['MODIS', 'VIIRS'],
     admins: ['country', 'region', 'subRegion'],
-    type: 'loss',
-    selectors: ['weeks'],
+    type: 'fires',
+    selectors: ['weeks', 'dataset'],
     metaKey: 'widget_fire_alert_location',
     interactive: true,
     locationWhitelist: [
@@ -153,12 +154,13 @@ export default {
     },
     sentences: {
       initial:
-        'There were {count} VIIRS alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.'
+        'There were {count} {dataset} fire alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.'
     }
   },
   settings: {
     period: 'week',
     weeks: 13,
+    dataset: 'VIIRS',
     layers: ['viirs_fires_alerts'],
     layerStartDate: null,
     layerEndDate: null

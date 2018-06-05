@@ -16,6 +16,7 @@ const MIN_YEAR = 2016;
 // get list data
 const getAlerts = state => (state.data && state.data.alerts) || null;
 const getColors = state => state.colors || null;
+const getSettings = state => state.settings || null;
 const getActiveData = state => state.settings.activeData || null;
 const getWeeks = state => (state.settings && state.settings.weeks) || null;
 const getSentences = state => state.config.sentences || null;
@@ -232,8 +233,8 @@ export const parseConfig = createSelector([getColors], colors => {
 });
 
 export const getSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences],
-  (data, colors, activeData, sentences) => {
+  [parseData, getColors, getActiveData, getSentences, getSettings],
+  (data, colors, activeData, sentences, settings) => {
     if (!data) return null;
     let lastDate = data[data.length - 1];
     if (!isEmpty(activeData)) {
@@ -269,6 +270,7 @@ export const getSentence = createSelector(
     const date = moment(lastDate.date).format('Do of MMMM YYYY');
     const params = {
       date,
+      dataset: settings.dataset,
       count: {
         value: format(',')(lastDate.count),
         color: colors.main
