@@ -26,7 +26,8 @@ class Header extends PureComponent {
       payload,
       forestAtlasLink,
       sentence,
-      query
+      query,
+      downloadLink
     } = this.props;
 
     return (
@@ -35,9 +36,7 @@ class Header extends PureComponent {
         <div className="share-buttons">
           <Button
             className="theme-button-small theme-button-grey square"
-            extLink={`http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/iso/tree_cover_stats_2016_${
-              payload.country
-            }.xlsx`}
+            extLink={downloadLink}
             trackingData={{
               title: 'download',
               ...location
@@ -180,7 +179,8 @@ Header.propTypes = {
   payload: PropTypes.object.isRequired,
   forestAtlasLink: PropTypes.object,
   sentence: PropTypes.object,
-  query: PropTypes.object
+  query: PropTypes.object,
+  downloadLink: PropTypes.string
 };
 
 export default Header;
