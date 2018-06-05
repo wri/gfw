@@ -53,6 +53,15 @@ const runningMean = (data, windowSize) => {
   return smoothedMean;
 };
 
+export const translateMeans = (means, latest) => {
+  if (!means || !means.length) return null;
+  const currentWeek = moment(latest).isoWeek();
+  const firstHalf = means.slice(0, currentWeek);
+  const secondHalf = means.slice(currentWeek);
+
+  return secondHalf.concat(firstHalf);
+};
+
 export const getData = createSelector(
   [getAlerts, getLatestDates],
   (data, latest) => {
@@ -90,28 +99,32 @@ export const getData = createSelector(
   }
 );
 
-export const getMeans = createSelector([getData], data => {
-  if (!data) return null;
-  const minYear = minBy(data, 'year').year;
-  const maxYear = maxBy(data, 'year').year;
-  const grouped = groupBy(data, 'week');
-  const centralMeans = Object.keys(grouped).map(d => {
-    const weekData = grouped[d];
-    return meanBy(weekData, 'count');
-  });
-  const leftYears = data.filter(d => d.year !== maxYear);
-  const rightYears = data.filter(d => d.year !== minYear);
-  const leftMeans = meanData(getYearsObj(leftYears, -6));
-  const rightMeans = meanData(getYearsObj(rightYears, 0, 6));
-  const allMeans = concat(leftMeans, centralMeans, rightMeans);
-  const smoothedMeans = runningMean(allMeans, 12);
-  const pastYear = data.slice(-52);
-  const parsedData = pastYear.map((d, i) => ({
-    ...d,
-    mean: smoothedMeans[i]
-  }));
-  return parsedData;
-});
+export const getMeans = createSelector(
+  [getData, getLatestDates],
+  (data, latest) => {
+    if (!data) return null;
+    const minYear = minBy(data, 'year').year;
+    const maxYear = maxBy(data, 'year').year;
+    const grouped = groupBy(data, 'week');
+    const centralMeans = Object.keys(grouped).map(d => {
+      const weekData = grouped[d];
+      return meanBy(weekData, 'count');
+    });
+    const leftYears = data.filter(d => d.year !== maxYear);
+    const rightYears = data.filter(d => d.year !== minYear);
+    const leftMeans = meanData(getYearsObj(leftYears, -6));
+    const rightMeans = meanData(getYearsObj(rightYears, 0, 6));
+    const allMeans = concat(leftMeans, centralMeans, rightMeans);
+    const smoothedMeans = runningMean(allMeans, 12);
+    const translatedMean = translateMeans(smoothedMeans, latest);
+    const pastYear = data.slice(-52);
+    const parsedData = pastYear.map((d, i) => ({
+      ...d,
+      mean: translatedMean[i]
+    }));
+    return parsedData;
+  }
+);
 
 export const getStdDev = createSelector(
   [getMeans, getData],
