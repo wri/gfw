@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
@@ -84,7 +83,7 @@ export const getSentence = createSelector(
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
-      (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
+      (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
     let sentence = indicator ? withIndicator : initial;
