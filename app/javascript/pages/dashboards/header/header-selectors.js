@@ -54,7 +54,7 @@ export const getSentence = createSelector(
     const lossWithOutPlantations = format('.2s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
-    const emissionsWithoutPlantations = format('.2s')(
+    const emissionsWithoutPlantations = format('.3s')(
       biomassToCO2(
         data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
       )
