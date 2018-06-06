@@ -6,7 +6,6 @@ export default {
     size: 'large',
     categories: ['summary', 'forest-change'],
     weeks: [13, 26, 52],
-    datasets: ['VIIRS', 'MODIS'],
     admins: ['country', 'region', 'subRegion'],
     type: 'fires',
     selectors: ['weeks', 'datasets'],
@@ -160,7 +159,7 @@ export default {
   settings: {
     period: 'week',
     weeks: 13,
-    datasets: 'VIIRS',
+    dataset: 'VIIRS',
     layers: ['viirs_fires_alerts'],
     layerStartDate: null,
     layerEndDate: null

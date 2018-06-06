@@ -124,11 +124,11 @@ class WidgetSettings extends PureComponent {
           <Dropdown
             theme="theme-select-light"
             label="FIRES DATASET"
-            value={settings.datasets}
+            value={settings.dataset}
             options={datasets}
             disabled={loading}
             onChange={option =>
-              onSettingsChange({ value: { datasets: option.value }, widget })
+              onSettingsChange({ value: { dataset: option.value }, widget })
             }
           />
         )}

@@ -7,7 +7,8 @@ import ComposedChart from 'components/charts/composed-chart';
 
 class WidgetGladAlerts extends PureComponent {
   shouldComponentUpdate = nextProps =>
-    nextProps.settings.weeks !== this.props.settings.weeks;
+    nextProps.settings.weeks !== this.props.settings.weeks ||
+    nextProps.settings.dataset !== this.props.settings.dataset;
 
   handleMouseMove = debounce(data => {
     const { setWidgetSettings, widget } = this.props;
