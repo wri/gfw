@@ -99,7 +99,14 @@ class CustomComposedChart extends PureComponent {
                 <CustomTick
                   dataMax={maxYValue}
                   unit={unit || ''}
-                  unitFormat={unitFormat || (value => format('.2s')(value))}
+                  unitFormat={
+                    unitFormat ||
+                    (value => {
+                      const formattedValue =
+                        value < 1 ? format('.2r')(value) : format('.2s')(value);
+                      return formattedValue;
+                    })
+                  }
                   fill="#555555"
                 />
               }
