@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { biomassToCO2 } from 'utils/calculations';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
@@ -53,8 +54,10 @@ export const getSentence = createSelector(
     const lossWithOutPlantations = format('.2s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
-    const emissionsWithoutPlantations = format('.3s')(
-      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
+    const emissionsWithoutPlantations = format('.2s')(
+      biomassToCO2(
+        data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
+      )
     );
     const location = locationNames && locationNames.label;
 
