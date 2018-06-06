@@ -17,7 +17,7 @@ export const initialState = {
     },
     sentences: {
       initial:
-        'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occured within {lossPhrase}. The total loss within natural forest was equivalent to {value} of CO<sub>2</sub> emissions.'
+        'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was equivalent to {value} of CO<sub>2</sub> emissions.'
     }
   },
   settings: {
