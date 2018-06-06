@@ -101,11 +101,8 @@ class CustomComposedChart extends PureComponent {
                   unit={unit || ''}
                   unitFormat={
                     unitFormat ||
-                    (value => {
-                      const formattedValue =
-                        value < 1 ? format('.2r')(value) : format('.2s')(value);
-                      return formattedValue;
-                    })
+                    (value =>
+                      (value < 1 ? format('.2r')(value) : format('.2s')(value)))
                   }
                   fill="#555555"
                 />
