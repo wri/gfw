@@ -9,6 +9,7 @@ import * as WIDGETS from './manifest';
 export const setWidgetSettings = createAction('setWidgetSettings');
 export const setWidgetLoading = createAction('setWidgetLoading');
 export const setWidgetData = createAction('setWidgetData');
+export const settingsItemSelected = createAction('settingsItemSelected');
 
 export const getWidgetData = createThunkAction(
   'getWidgetData',
@@ -23,6 +24,12 @@ export const getWidgetData = createThunkAction(
 export const setWidgetSettingsUrl = createThunkAction(
   'setWidgetSettingsUrl',
   ({ value, widget }) => (dispatch, state) => {
+    dispatch(
+      settingsItemSelected({
+        value,
+        widget
+      })
+    );
     const { location } = state();
     let params = value;
     if (location.query && location.query[widget]) {
@@ -68,6 +75,7 @@ export const setWidgetSettingsStore = createThunkAction(
 export default {
   setWidgetSettingsUrl,
   setWidgetSettingsStore,
+  settingsItemSelected,
   setWidgetData,
   getWidgetData,
   setWidgetLoading,

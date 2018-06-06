@@ -71,7 +71,7 @@ export const getSentence = createSelector(
     };
 
     let sentence = initial;
-    if (data.extent > 0 && data.totalLoss.area && data.plantationsLoss.area) {
+    if (data.extent > 0 && data.totalLoss.area) {
       sentence =
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
     }

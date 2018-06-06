@@ -16,6 +16,8 @@ const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
 const getCurrentLocation = state => state.currentLocation || null;
 const getSentences = state => state.config.sentences || null;
+const getForestType = state => state.forestType || null;
+const getLandCategory = state => state.landCategory || null;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -80,12 +82,23 @@ export const getSentence = createSelector(
     parseData,
     getSettings,
     getIndicator,
+    getForestType,
+    getLandCategory,
     getCurrentLocation,
     getSentences
   ],
-  (rawData, data, settings, indicator, currentLocation, sentences) => {
+  (
+    rawData,
+    data,
+    settings,
+    indicator,
+    forestType,
+    landCategory,
+    currentLocation,
+    sentences
+  ) => {
     if (!data || !data.length || !currentLocation) return null;
-    const { initial, withInd } = sentences;
+    const { initial, withInd, forestTypeOnly } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const extent = locationData && locationData.extent;
@@ -105,7 +118,8 @@ export const getSentence = createSelector(
         globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%'
     };
 
-    const sentence = indicator ? withInd : initial;
+    let sentence = indicator ? withInd : initial;
+    if (forestType && !landCategory) sentence = forestTypeOnly;
 
     return {
       sentence,
