@@ -11,6 +11,8 @@ const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
+const getLandCategory = state => state.landCategory || null;
+const getForestType = state => state.forestType || null;
 const getLocation = state => state.payload || null;
 const getQuery = state => state.query || null;
 const getLocationsMeta = state => state[state.childKey] || null;
@@ -53,6 +55,8 @@ export const getSentence = createSelector(
     getOptions,
     getLocation,
     getIndicator,
+    getForestType,
+    getLandCategory,
     getCurrentLocation,
     getSentences
   ],
@@ -63,6 +67,8 @@ export const getSentence = createSelector(
     options,
     location,
     indicator,
+    forestType,
+    landCategory,
     currentLabel,
     sentences
   ) => {
@@ -70,12 +76,16 @@ export const getSentence = createSelector(
     const {
       initial,
       hasIndicator,
+      landCatOnly,
       globalInitial,
       globalWithIndicator,
+      globalLandCatOnly,
       percInitial,
       percHasIndicator,
+      percLandCatOnly,
       percGlobalInitial,
       percGlobalWithIndicator,
+      percGlobalLandCatOnly,
       noCover
     } = sentences;
     const topRegion = (data.length && data[0]) || {};
@@ -126,7 +136,10 @@ export const getSentence = createSelector(
     let sentence = noCover;
     if (params.percentage !== '0%' && settings.unit === '%') {
       sentence = currentLabel === 'global' ? percGlobalInitial : percInitial;
-      if (indicator) {
+      if (landCategory && !forestType) {
+        sentence =
+          currentLabel === 'global' ? percGlobalLandCatOnly : percLandCatOnly;
+      } else if (indicator) {
         sentence =
           currentLabel === 'global'
             ? percGlobalWithIndicator
@@ -134,12 +147,13 @@ export const getSentence = createSelector(
       }
     } else if (params.percentage !== '0%' && settings.unit === 'ha') {
       sentence = currentLabel === 'global' ? globalInitial : initial;
-      if (indicator) {
+      if (landCategory && !forestType) {
+        sentence = currentLabel === 'global' ? globalLandCatOnly : landCatOnly;
+      } else if (indicator) {
         sentence =
           currentLabel === 'global' ? globalWithIndicator : hasIndicator;
       }
     }
-
     return {
       sentence,
       params
