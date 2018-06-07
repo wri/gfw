@@ -50,6 +50,7 @@ define([
     },
 
     getRefreshTiles: function (year, url) {
+      console.log('gettiles', year, url);
       var requestId = GET_REQUEST_REFRESH_TILES_ID + '_' + year;
 
       this.defineRequest(
