@@ -29,7 +29,6 @@ define([], function () {
             return z > 11
               ? tileUrl.replace('{z}/{x}/{y}', z + '/' + x + '/' +ll.y)
               : 'https://storage.googleapis.com/landsat-cache/{0}/{1}/{2}/{3}.png'.format(year, z, x, ll.y);
-              console.log('Here', year, z, x);
             break;
           default:
             return window.gfw.config.GFW_API_HOST + '/gee/landsat_composites/{0}/{1}/{2}.png?year={3}'.format(z, x, ll.y, year);
