@@ -12,6 +12,17 @@ const QUERIES = {
     '{location}?group=true&period={period}&thresh=0&geostore={geostore}'
 };
 
+const getIndicatorQuery = (forestType, landCategory) => {
+  if (landCategory && !forestType) {
+    return landCategory;
+  } else if (landCategory && forestType) {
+    return `${forestType}__${landCategory}`;
+  } else if (!landCategory && forestType) {
+    return forestType;
+  }
+  return 'gadm28';
+};
+
 const getLocationQuery = (country, region, subRegion) =>
   `${country}${region ? `/${region}` : ''}${subRegion ? `/${subRegion}` : ''}`;
 
@@ -35,12 +46,17 @@ export const fetchGladAlerts = ({ country, region, subRegion }) => {
   return request.get(url, 3600, 'gladRequest');
 };
 
-export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
+export const fetchGladIntersectionAlerts = ({
+  country,
+  region,
+  forestType,
+  landCategory
+}) => {
   const url = `${REQUEST_URL}/query/${
     region ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
-    .replace('{polyname}', indicator || 'gadm28');
+    .replace('{polyname}', getIndicatorQuery(forestType, landCategory));
   return request.get(url, 3600, 'gladRequest');
 };
 
