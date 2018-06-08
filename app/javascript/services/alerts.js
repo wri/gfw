@@ -1,4 +1,5 @@
 import request from 'utils/request';
+import { getIndicator } from 'utils/strings';
 
 const REQUEST_URL = process.env.GFW_API_HOST_PROD;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -10,17 +11,6 @@ const QUERIES = {
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   viirsAlerts:
     '{location}?group=true&period={period}&thresh=0&geostore={geostore}'
-};
-
-const getIndicatorQuery = (forestType, landCategory) => {
-  if (landCategory && !forestType) {
-    return landCategory;
-  } else if (landCategory && forestType) {
-    return `${forestType}__${landCategory}`;
-  } else if (!landCategory && forestType) {
-    return forestType;
-  }
-  return 'gadm28';
 };
 
 const getLocationQuery = (country, region, subRegion) =>
@@ -56,7 +46,7 @@ export const fetchGladIntersectionAlerts = ({
     region ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
-    .replace('{polyname}', getIndicatorQuery(forestType, landCategory));
+    .replace('{polyname}', getIndicator(forestType, landCategory));
   return request.get(url, 3600, 'gladRequest');
 };
 
