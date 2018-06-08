@@ -4,6 +4,7 @@ import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
+import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
@@ -93,7 +94,7 @@ export const getSentence = createSelector(
       startYear,
       endYear,
       lossPhrase,
-      value: `${format('.3s')(outsideEmissions)}t`,
+      value: `${format('.3s')(biomassToCO2(outsideEmissions))}t`,
       percentage: formatNumber({ num: percentage, unit: '%' })
     };
 
