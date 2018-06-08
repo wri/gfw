@@ -1,4 +1,5 @@
 import request from 'utils/request';
+import { getIndicator } from 'utils/strings';
 
 const REQUEST_URL = process.env.GFW_API_HOST_PROD;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -35,12 +36,17 @@ export const fetchGladAlerts = ({ country, region, subRegion }) => {
   return request.get(url, 3600, 'gladRequest');
 };
 
-export const fetchGladIntersectionAlerts = ({ country, region, indicator }) => {
+export const fetchGladIntersectionAlerts = ({
+  country,
+  region,
+  forestType,
+  landCategory
+}) => {
   const url = `${REQUEST_URL}/query/${
     region ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(country, region))
-    .replace('{polyname}', indicator || 'gadm28');
+    .replace('{polyname}', getIndicator(forestType, landCategory));
   return request.get(url, 3600, 'gladRequest');
 };
 
