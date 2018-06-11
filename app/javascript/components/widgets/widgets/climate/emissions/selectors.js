@@ -50,7 +50,7 @@ export const parseData = createSelector([getSortedData], sortedData => {
       e1Percentage: e1Value / totalEmissions * 100,
       e2Value,
       e2Percentage: e2Value / totalEmissions * 100,
-      total: e1Value + e2Value
+      total: totalEmissions
     });
   });
   return chartData;
