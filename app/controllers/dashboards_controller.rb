@@ -25,5 +25,8 @@ class DashboardsController < ApplicationController
 
   def set_title
     @location = params[:iso] ? Dashboards.find_country_by_iso(params[:iso]) : "#{params[:type] && params[:type].capitalize || 'Global'} Dashboard"
+    if !@location
+      redirect_to action: "index", type: 'global'
+    end
   end
 end
