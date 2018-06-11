@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 
-import CacheProvider from 'providers/cache-provider';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 
@@ -83,7 +82,6 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        <CacheProvider />
         <CountryDataProvider />
         <WhitelistsProvider />
         <Meta
