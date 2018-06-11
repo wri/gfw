@@ -52,7 +52,12 @@ class WidgetSettings extends PureComponent {
                 options={forestTypes}
                 onChange={option =>
                   onSettingsChange({
-                    value: { forestType: (option && option.value) || '' },
+                    value: {
+                      forestType: (option && option.value) || '',
+                      ...(!!(option && option.value === 'ifl_2013') && {
+                        extentYear: 2010
+                      })
+                    },
                     widget
                   })
                 }
@@ -136,31 +141,32 @@ class WidgetSettings extends PureComponent {
                 }
               />
             )}
-            {extentYears && (
-              <Dropdown
-                theme="theme-select-light"
-                label="EXTENT YEAR"
-                value={settings.extentYear}
-                options={extentYears}
-                disabled={loading}
-                onChange={option => {
-                  const layers = [...settings.layers];
-                  if (layers.length) {
-                    const activeIndex = settings.layers.indexOf(
-                      `forest${settings.extentYear}`
-                    );
-                    layers[activeIndex] = `forest${option.value}`;
-                  }
-                  onSettingsChange({
-                    value: {
-                      extentYear: option.value,
-                      layers
-                    },
-                    widget
-                  });
-                }}
-              />
-            )}
+            {extentYears &&
+              settings.forestType !== 'ifl_2013' && (
+                <Dropdown
+                  theme="theme-select-light"
+                  label="EXTENT YEAR"
+                  value={settings.extentYear}
+                  options={extentYears}
+                  disabled={loading}
+                  onChange={option => {
+                    const layers = [...settings.layers];
+                    if (layers.length) {
+                      const activeIndex = settings.layers.indexOf(
+                        `forest${settings.extentYear}`
+                      );
+                      layers[activeIndex] = `forest${option.value}`;
+                    }
+                    onSettingsChange({
+                      value: {
+                        extentYear: option.value,
+                        layers
+                      },
+                      widget
+                    });
+                  }}
+                />
+              )}
             {units && (
               <Dropdown
                 theme="theme-select-light"
