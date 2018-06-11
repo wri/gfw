@@ -12,12 +12,12 @@ import moment from 'moment';
 import { getColorPalette } from 'utils/data';
 
 // get list data
-const getAlerts = state => (state.data && state.data.alerts) || null;
+const getAlerts = state => state.data || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 const getActiveData = state => state.settings.activeData || null;
-const getWeeks = state => (state.settings && state.settings.weeks) || null;
-const getDataset = state => (state.settings && state.settings.dataset) || null;
+const getWeeks = state => state.settings.weeks || null;
+const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.config.sentences || null;
 
 const getYearsObj = (data, startSlice, endSlice) => {

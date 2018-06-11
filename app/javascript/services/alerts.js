@@ -67,7 +67,7 @@ export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
     .replace('{location}', getLocation(country, region, subRegion))
     .replace('{polyname}', 'gadm28')
     .replace('{dataset}', dataset);
-  return request.get(url);
+  return request.get(url, 3600, 'firesRequest');
 };
 
 export const fetchViirsAlerts = ({
