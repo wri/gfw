@@ -37,6 +37,12 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+
+      .text-date {
+        margin-bottom: rem(20px);
+        font-size: rem(14px);
+        color: $slate;
+      }
     }
   }
 
