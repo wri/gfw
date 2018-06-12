@@ -143,9 +143,8 @@ class WidgetSettings extends PureComponent {
               />
             )}
             {extentYears &&
-              ((config.type !== 'extent' && config.type !== 'loss') ||
-                (settings.forestType !== 'ifl_2013' &&
-                  config.type === 'extent') ||
+              settings.forestType !== 'ifl_2013' &&
+              (config.type !== 'loss' ||
                 !settings.unit ||
                 (settings.unit === '%' && config.type === 'loss')) && (
                 <Dropdown
