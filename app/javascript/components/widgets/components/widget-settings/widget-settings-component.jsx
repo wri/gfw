@@ -10,6 +10,7 @@ class WidgetSettings extends PureComponent {
   render() {
     const {
       settings,
+      config,
       loading,
       onSettingsChange,
       widget,
@@ -142,7 +143,11 @@ class WidgetSettings extends PureComponent {
               />
             )}
             {extentYears &&
-              settings.forestType !== 'ifl_2013' && (
+              ((config.type !== 'extent' && config.type !== 'loss') ||
+                (settings.forestType !== 'ifl_2013' &&
+                  config.type === 'extent') ||
+                !settings.unit ||
+                (settings.unit === '%' && config.type === 'loss')) && (
                 <Dropdown
                   theme="theme-select-light"
                   label="EXTENT YEAR"
@@ -263,6 +268,7 @@ WidgetSettings.propTypes = {
   periods: PropTypes.array,
   years: PropTypes.array,
   settings: PropTypes.object,
+  config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,
