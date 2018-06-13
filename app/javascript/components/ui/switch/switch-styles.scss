@@ -1,0 +1,12 @@
+@import '~styles/settings.scss';
+
+.c-switch {
+  .label {
+    margin-bottom: rem(10px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: 400;
+    font-size: 13px;
+  }
+}
