@@ -19,7 +19,7 @@ export const getStatement = createSelector(
         ? 'these estimates do not take tree cover gain into account'
         : null,
       datasets
-        ? `* this dataset is available in ${datasets} countries only`
+        ? `*this dataset is available in ${datasets} countries only`
         : null
     ]);
 
