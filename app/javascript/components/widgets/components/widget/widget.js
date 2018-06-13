@@ -16,7 +16,7 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
   const { country, region, subRegion, type } = location.payload;
   // widget consts
   const { config, settings } = widgets[widget];
-  const { getOptionsSelected, getIndicator, getNonGlobalDatasets } = Selectors;
+  const { getOptionsSelected, getIndicator } = Selectors;
   const highlightColor = colors.main || '#a0c746';
   const haveMapLayers = settings && !isEmpty(settings.layers);
   const onMap = active && haveMapLayers;
@@ -40,10 +40,6 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
         : options[selector];
     });
   }
-  const nonGlobalDatasets = getNonGlobalDatasets({
-    ...widgets.global,
-    ...selectorData
-  });
 
   const category = query && query.category;
   const locationUrl = `${country || ''}${region ? `/${region}` : ''}${
@@ -74,7 +70,7 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
     sentence: getSentence && getSentence(selectorData),
     shareUrl,
     embedUrl,
-    nonGlobalDatasets
+    ...widgets.global
   };
 };
 

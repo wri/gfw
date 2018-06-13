@@ -15,7 +15,6 @@ const getLocation = state => state.payload || null;
 const getWhitelist = state => state.whitelist || null;
 const getForestType = state => state.forestType || null;
 const getLandCategory = state => state.landCategory || null;
-const getGlobalDatasets = state => state.nonGlobalDatasets || null;
 
 export const getOptionsSelected = createSelector(
   [getOptions, getSettings],
@@ -55,24 +54,6 @@ export const getIndicator = createSelector(
       label,
       value
     };
-  }
-);
-
-export const getNonGlobalDatasets = createSelector(
-  [
-    getIndicator,
-    getForestType,
-    getLandCategory,
-    getLocation,
-    getGlobalDatasets
-  ],
-  (indicator, forestType, landCategory, location, datasets) => {
-    if (!datasets || location.type !== 'global') return null;
-    return (
-      datasets[indicator && indicator.value] ||
-      datasets[forestType && forestType.value] ||
-      datasets[landCategory && landCategory.value]
-    );
   }
 );
 

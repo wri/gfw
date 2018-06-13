@@ -8,7 +8,7 @@ import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from '../widget-header';
-import WidgetSettingsStatement from '../widget-settings-statement';
+import WidgetFooter from '../widget-footer';
 
 import './styles.scss';
 
@@ -79,7 +79,7 @@ class Widget extends PureComponent {
               />
             )}
         </div>
-        <WidgetSettingsStatement {...this.props} />
+        <WidgetFooter {...this.props} />
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
