@@ -100,6 +100,7 @@ class WidgetSettings extends PureComponent {
   render() {
     const {
       settings,
+      config,
       loading,
       onSettingsChange,
       widget,
@@ -114,6 +115,7 @@ class WidgetSettings extends PureComponent {
       years,
       startYears,
       endYears,
+      datasets,
       extentYears,
       types,
       weeks
@@ -125,6 +127,7 @@ class WidgetSettings extends PureComponent {
       startYears ||
       endYears ||
       extentYears ||
+      datasets ||
       types ||
       weeks;
 
@@ -138,7 +141,12 @@ class WidgetSettings extends PureComponent {
             options={forestTypes}
             onChange={option =>
               onSettingsChange({
-                value: { forestType: (option && option.value) || '' },
+                value: {
+                  forestType: (option && option.value) || '',
+                  ...(!!(option && option.value === 'ifl_2013') && {
+                    extentYear: 2010
+                  })
+                },
                 widget
               })
             }
@@ -176,7 +184,7 @@ class WidgetSettings extends PureComponent {
             noSelectedValue="All categories"
           />
         )}
-        {types && (
+        {hasExtraOptions && types && (
           <Dropdown
             theme="theme-select-light"
             label="DISPLAY TREES BY"
@@ -186,8 +194,10 @@ class WidgetSettings extends PureComponent {
             onChange={option => {
               const layers = [...settings.layers];
               if (layers.length) {
-                const type = settings.type === 'bound2' ? 'species' : 'type';
-                const newType = option.value === 'bound2' ? 'species' : 'type';
+                const type =
+                  settings.type === 'bound2' ? 'species' : 'type';
+                const newType =
+                  option.value === 'bound2' ? 'species' : 'type';
                 const activeIndex = settings.layers.indexOf(
                   `plantations_by_${type}`
                 );
@@ -204,7 +214,7 @@ class WidgetSettings extends PureComponent {
             infoAction={() => setModalMeta('widget_tree_cover_extent')}
           />
         )}
-        {weeks && (
+        {hasExtraOptions && weeks && (
           <Dropdown
             theme="theme-select-light"
             label="SHOW DATA FOR THE LAST"
@@ -216,16 +226,20 @@ class WidgetSettings extends PureComponent {
             }
           />
         )}
-        {extentYears &&
-          this.getExtentYears(
-            extentYears,
-            widget,
-            loading,
-            settings,
-            onSettingsChange
-          )}
-        {units && this.getUnit(units, widget, settings, onSettingsChange)}
-        {periods && (
+        {hasExtraOptions && extentYears &&
+          settings.forestType !== 'ifl_2013' &&
+          (config.type !== 'loss' ||
+            !settings.unit ||
+            (settings.unit === '%' && config.type === 'loss')) &&
+            this.getExtentYears(
+              extentYears,
+              widget,
+              loading,
+              settings,
+              onSettingsChange
+            )}
+        {hasExtraOptions && units && this.getUnit(units, widget, settings, onSettingsChange)}
+        {hasExtraOptions && periods && (
           <Dropdown
             theme="theme-select-light"
             label="YEAR"
@@ -236,7 +250,7 @@ class WidgetSettings extends PureComponent {
             }
           />
         )}
-        {years && (
+        {hasExtraOptions && years && (
           <Dropdown
             theme="theme-select-light"
             label="YEAR"
@@ -247,7 +261,7 @@ class WidgetSettings extends PureComponent {
             }
           />
         )}
-        {startYears &&
+        {hasExtraOptions && startYears &&
           endYears && (
             <div className="years-select">
               <span className="label">YEARS</span>
@@ -308,6 +322,7 @@ WidgetSettings.propTypes = {
   periods: PropTypes.array,
   years: PropTypes.array,
   settings: PropTypes.object,
+  config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,

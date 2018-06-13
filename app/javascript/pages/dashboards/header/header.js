@@ -34,7 +34,7 @@ const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
     );
   const downloadLink = `http://gfw2-data.s3.amazonaws.com/country/umd_country_stats${
     country ? '/iso' : ''
-  }/tree_cover_stats_2016${country ? `_${country}` : ''}.xlsx`;
+  }/tree_cover_stats_2017${country ? `_${country}` : ''}.xlsx`;
   const locationOptions = { ...countryData };
   const locationNames = getAdminsSelected({ ...countryData, ...location });
   const cacheLoading = cache.cacheListLoading;

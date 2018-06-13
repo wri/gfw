@@ -7,13 +7,9 @@
 
   > div {
     margin-bottom: rem(20px);
-  }
 
-  .intersections {
-    border-bottom: solid 1px $border;
-
-    > div {
-      margin-bottom: rem(20px);
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 
