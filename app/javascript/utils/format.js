@@ -16,5 +16,5 @@ export const formatNumber = ({ num, unit }) => {
   } else if (num > 0 && num < 0.01 && unit !== '%') {
     formattedNum = '<0.01';
   }
-  return `${formattedNum}${unit}`;
+  return `${formattedNum}${unit || ''}`;
 };

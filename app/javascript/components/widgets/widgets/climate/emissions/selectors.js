@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
 
 const EMISSIONS_KEYS = [
@@ -40,12 +41,16 @@ export const parseData = createSelector([getSortedData], sortedData => {
   const { data, total } = sortedData;
   const chartData = [];
   data[0].emissions.forEach((item, i) => {
+    const e1Value = item.value;
+    const e2Value = data[1].emissions[i].value;
+    const totalEmissions = total.emissions[i].value;
     chartData.push({
       year: item.year,
-      e1Value: item.value,
-      e1Percentage: item.value / total.emissions[i].value * 100,
-      e2Value: data[1].emissions[i].value,
-      e2Percentage: data[1].emissions[i].value / total.emissions[i].value * 100
+      e1Value,
+      e1Percentage: e1Value / totalEmissions * 100,
+      e2Value,
+      e2Percentage: e2Value / totalEmissions * 100,
+      total: totalEmissions
     });
   });
   return chartData;
@@ -81,10 +86,16 @@ export const parseConfig = createSelector(
           }
         }
       },
+      unit: 'tCO₂e',
       tooltip: [
         {
-          key: 'year',
-          position: 'right'
+          key: 'year'
+        },
+        {
+          key: 'total',
+          label: 'Total',
+          unit: 'tCO₂e',
+          unitFormat: num => formatNumber({ num })
         },
         {
           key: 'e1Percentage',
