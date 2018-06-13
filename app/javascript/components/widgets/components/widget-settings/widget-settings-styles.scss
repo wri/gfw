@@ -26,6 +26,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: rem(10px);
     font-size: 13px;
 
     .select-container {
@@ -52,13 +53,16 @@
 
     &.threshold-border {
       position: relative;
-      border-top: solid 1px $border;
-      padding-top: rem(15px);
+      padding-top: rem(40px);
 
       &::before {
         content: '';
         position: absolute;
-        width: 100%;
+        top: rem(10px);
+        left: rem(-25px);
+        width: calc(100% + #{rem(50px)});
+        height: rem(1px);
+        background-color: $border;
       }
     }
 

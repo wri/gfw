@@ -130,55 +130,51 @@ class WidgetSettings extends PureComponent {
 
     return (
       <div className="c-widget-settings">
-        {(!isEmpty(forestTypes) || !isEmpty(landCategories)) && (
-          <div className="intersections">
-            {!isEmpty(forestTypes) && (
-              <Dropdown
-                theme="theme-select-light"
-                label="FOREST TYPE"
-                value={settings.forestType}
-                options={forestTypes}
-                onChange={option =>
-                  onSettingsChange({
-                    value: { forestType: (option && option.value) || '' },
-                    widget
-                  })
-                }
-                disabled={loading}
-                optionsAction={setModalMeta}
-                optionsActionKey="metaKey"
-                clearable={
-                  settings.hasOwnProperty('clearable') // eslint-disable-line
-                    ? settings.clearable
-                    : true
-                }
-                noSelectedValue="All types"
-              />
-            )}
-            {!isEmpty(landCategories) && (
-              <Dropdown
-                theme="theme-select-light"
-                label="LAND CATEGORY"
-                value={settings.landCategory}
-                options={landCategories}
-                onChange={option =>
-                  onSettingsChange({
-                    value: { landCategory: (option && option.value) || '' },
-                    widget
-                  })
-                }
-                disabled={loading}
-                optionsAction={setModalMeta}
-                optionsActionKey="metaKey"
-                clearable={
-                  settings.hasOwnProperty('clearable') // eslint-disable-line
-                    ? settings.clearable
-                    : true
-                }
-                noSelectedValue="All categories"
-              />
-            )}
-          </div>
+        {!isEmpty(forestTypes) && (
+          <Dropdown
+            theme="theme-select-light"
+            label="FOREST TYPE"
+            value={settings.forestType}
+            options={forestTypes}
+            onChange={option =>
+              onSettingsChange({
+                value: { forestType: (option && option.value) || '' },
+                widget
+              })
+            }
+            disabled={loading}
+            optionsAction={setModalMeta}
+            optionsActionKey="metaKey"
+            clearable={
+              settings.hasOwnProperty('clearable') // eslint-disable-line
+                ? settings.clearable
+                : true
+            }
+            noSelectedValue="All types"
+          />
+        )}
+        {!isEmpty(landCategories) && (
+          <Dropdown
+            theme="theme-select-light"
+            label="LAND CATEGORY"
+            value={settings.landCategory}
+            options={landCategories}
+            onChange={option =>
+              onSettingsChange({
+                value: { landCategory: (option && option.value) || '' },
+                widget
+              })
+            }
+            disabled={loading}
+            optionsAction={setModalMeta}
+            optionsActionKey="metaKey"
+            clearable={
+              settings.hasOwnProperty('clearable') // eslint-disable-line
+                ? settings.clearable
+                : true
+            }
+            noSelectedValue="All categories"
+          />
         )}
         {types && (
           <Dropdown
