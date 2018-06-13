@@ -23,13 +23,10 @@
   }
 
   .years-select {
-    .label {
-      display: block;
-      margin-bottom: rem(5px);
-      text-align: left;
-      font-weight: 400;
-      font-size: rem(13px);
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
 
     .select-container {
       display: flex;
@@ -37,14 +34,32 @@
       justify-content: space-between;
       align-items: center;
     }
+
+    .text-date {
+      margin: 0 10px;
+    }
   }
 
   .canopy-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: rem(10px);
 
+    .label {
+      margin-bottom: 0;
+    }
+
     &.threshold-border {
+      position: relative;
       border-top: solid 1px $border;
       padding-top: rem(15px);
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+      }
     }
 
     .dd__wrapper {
