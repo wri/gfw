@@ -7,13 +7,13 @@ const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
-    "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT SUM({extentYear}) as value, SUM(area_admin) as total_area FROM data WHERE {location} thresh = {threshold} AND polyname = '{indicator}'",
   plantationsExtent:
     "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} thresh = 0 AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   multiRegionExtent:
-    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
+    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_admin) as total FROM data WHERE {location} thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
   rankedExtent:
-    "SELECT polyname, SUM({extent_year}) as value, SUM(area_gadm28) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
+    "SELECT polyname, SUM({extent_year}) as value, SUM(area_admin) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} polyname = '{indicator}' AND thresh = 0",
   gainRanked:
@@ -64,7 +64,7 @@ export const getLocations = ({
         !region ? ')' : ''
       }`
     )
-    .replace('{extent}', region ? 'area_gadm28' : 'sum(area_gadm28)')
+    .replace('{extent}', region ? 'area_admin' : 'sum(area_admin)')
     .replace('{iso}', country)
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory))

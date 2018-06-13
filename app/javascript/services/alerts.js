@@ -32,7 +32,7 @@ export const fetchGladAlerts = ({ country, region, subRegion }) => {
     QUERIES.gladIntersectionAlerts
   }`
     .replace('{location}', getLocation(country, region, subRegion))
-    .replace('{polyname}', 'gadm28');
+    .replace('{polyname}', 'admin');
   return request.get(url, 3600, 'gladRequest');
 };
 

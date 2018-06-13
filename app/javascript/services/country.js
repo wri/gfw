@@ -4,13 +4,13 @@ const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountries:
-    "SELECT iso, country as name FROM umd_nat_staging WHERE iso != 'TWN' AND iso != 'XCA' GROUP BY iso, name ORDER BY name",
+    "SELECT iso, name_engli as name FROM gadm36_countries WHERE iso != 'TWN' AND iso != 'XCA' ORDER BY name",
   getFAOCountries:
     'SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics',
   getRegions:
-    "SELECT id_1 as id, name_1 as name FROM gadm28_adm1 WHERE iso = '{iso}' ORDER BY name ",
+    "SELECT id_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '{iso}' ORDER BY name ",
   getSubRegions:
-    "SELECT id_2 as id, name_2 as name FROM gadm28_adm2 WHERE iso = '{iso}' AND id_1 = '{admin1}' ORDER BY name",
+    "SELECT id_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND id_1 = '{admin1}' ORDER BY name",
   getCountryLinks:
     'SELECT iso, external_links FROM external_links_gfw WHERE forest_atlas is true',
   getRanking:
