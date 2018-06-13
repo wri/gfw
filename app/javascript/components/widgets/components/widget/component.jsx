@@ -18,7 +18,6 @@ class Widget extends PureComponent {
       widget,
       currentLabel,
       shareUrl,
-      settings,
       config,
       embed,
       loading,
@@ -80,7 +79,7 @@ class Widget extends PureComponent {
               />
             )}
         </div>
-        <WidgetSettingsStatement settings={settings} type={config.type} />
+        <WidgetSettingsStatement {...this.props} />
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">

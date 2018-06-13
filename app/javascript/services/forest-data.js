@@ -37,7 +37,9 @@ const SQL_QUERIES = {
   faoDeforestRank:
     'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest from rank',
   faoEcoLive:
-    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999'
+    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
+  nonGlobalDatasets:
+    "SELECT iso, polyname FROM data WHERE polyname IN ('plantations', 'mining', 'primary_forest', 'landmark', 'plantations__mining', 'plantations__landmark', 'primary_forest__mining', 'primary_forest__landmark') GROUP BY iso, polyname ORDER BY polyname, iso"
 };
 
 const getExtentYear = year =>
@@ -277,3 +279,6 @@ export const getGainRanked = ({
     .replace('{polyname}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
+
+export const getNonGlobalDatasets = () =>
+  request.get(`${REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`);
