@@ -14,7 +14,7 @@ define([
 
   var GET_REQUEST_NEWS_ID = 'NewsService:getNews';
 
-  var APIURL = window.gfw.config.GFW_API_HOST_PROD;
+  var APIURL = window.gfw.config.GFW_API;
 
   var APIURLS = {
     'getNews'   : '/query/{newsDataset}?sql=SELECT name, description, link FROM {newsTable}',

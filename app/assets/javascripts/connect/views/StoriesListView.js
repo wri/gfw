@@ -91,7 +91,7 @@ define([
       //}
 
       //if (urlParams.migration_id !== undefined) {
-        //window.location = window.gfw.config.GFW_API_HOST + '/v2/migrations/' +
+        //window.location = window.gfw.config.GFW_API_OLD + '/v2/migrations/' +
           //urlParams.migration_id + '/migrate';
       //}
     //},

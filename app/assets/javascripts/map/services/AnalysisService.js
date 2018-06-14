@@ -26,7 +26,7 @@ define([
 
   'use strict';
 
-  var URL = window.gfw.config.GFW_API_HOST_NEW_API;
+  var URL = window.gfw.config.GFW_API;
 
   var AnalysisService = Class.extend({
 

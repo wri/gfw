@@ -7,7 +7,7 @@ define([
   var Story = Backbone.Model.extend({
     type: 'story',
 
-    urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/story/',
+    urlRoot: window.gfw.config.GFW_API + '/story/',
 
     sync: function(method, model, options) {
       options || (options = {});
