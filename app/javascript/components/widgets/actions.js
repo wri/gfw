@@ -2,7 +2,9 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
+import groupBy from 'lodash/groupBy';
 import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
+import { getNonGlobalDatasets } from 'services/forest-data';
 import { COUNTRY, EMBED } from 'pages/dashboards/router';
 import * as WIDGETS from './manifest';
 
@@ -10,6 +12,7 @@ export const setWidgetSettings = createAction('setWidgetSettings');
 export const setWidgetLoading = createAction('setWidgetLoading');
 export const setWidgetData = createAction('setWidgetData');
 export const settingsItemSelected = createAction('settingsItemSelected');
+export const setGlobalData = createAction('setGlobalData');
 
 export const getWidgetData = createThunkAction(
   'getWidgetData',
@@ -72,12 +75,33 @@ export const setWidgetSettingsStore = createThunkAction(
   }
 );
 
+export const getGlobalData = createThunkAction(
+  'getGlobalData',
+  () => dispatch => {
+    getNonGlobalDatasets().then(response => {
+      const { data } = response.data;
+      const groupedData = groupBy(data, 'polyname');
+      const nonGlobalDatasets = {};
+      Object.keys(groupedData).forEach(d => {
+        nonGlobalDatasets[d] = groupedData[d].length;
+      });
+      dispatch(
+        setGlobalData({
+          nonGlobalDatasets
+        })
+      );
+    });
+  }
+);
+
 export default {
   setWidgetSettingsUrl,
   setWidgetSettingsStore,
   settingsItemSelected,
   setWidgetData,
   getWidgetData,
+  getGlobalData,
   setWidgetLoading,
-  setWidgetSettings
+  setWidgetSettings,
+  setGlobalData
 };
