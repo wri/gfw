@@ -6,10 +6,10 @@
 }
 
 #ifl_2000_2013_2016[class="IFL2000"] {
-  polygon-fill:  #B0B156;
+  polygon-fill:  #969904;
 }
 
 #ifl_2000_2013_2016[class="IFL2013"] {
-  polygon-fill:  #b19b56;
+  polygon-fill:  #635731;
 }
 
