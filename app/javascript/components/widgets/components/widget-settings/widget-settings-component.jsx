@@ -133,135 +133,146 @@ class WidgetSettings extends PureComponent {
 
     return (
       <div className="c-widget-settings">
-        {!isEmpty(forestTypes) && (
-          <Dropdown
-            theme="theme-select-light"
-            label="FOREST TYPE"
-            value={settings.forestType}
-            options={forestTypes}
-            onChange={option =>
-              onSettingsChange({
-                value: {
-                  forestType: (option && option.value) || '',
-                  ...(!!(option && option.value === 'ifl_2013') && {
-                    extentYear: 2010
+        {(!isEmpty(forestTypes) || !isEmpty(landCategories)) && (
+          <div className="intersections">
+            {!isEmpty(forestTypes) && (
+              <Dropdown
+                theme="theme-select-light"
+                label="FOREST TYPE"
+                value={settings.forestType}
+                options={forestTypes}
+                onChange={option =>
+                  onSettingsChange({
+                    value: {
+                      forestType: (option && option.value) || '',
+                      ...(!!(option && option.value === 'ifl_2013') && {
+                        extentYear: 2010
+                      })
+                    },
+                    widget
                   })
-                },
-                widget
-              })
-            }
-            disabled={loading}
-            optionsAction={setModalMeta}
-            optionsActionKey="metaKey"
-            clearable={
-              settings.hasOwnProperty('clearable') // eslint-disable-line
-                ? settings.clearable
-                : true
-            }
-            noSelectedValue="All types"
-          />
+                }
+                disabled={loading}
+                optionsAction={setModalMeta}
+                optionsActionKey="metaKey"
+                clearable={
+                  settings.hasOwnProperty('clearable') // eslint-disable-line
+                    ? settings.clearable
+                    : true
+                }
+                noSelectedValue="All types"
+              />
+            )}
+            {!isEmpty(landCategories) && (
+              <Dropdown
+                theme="theme-select-light"
+                label="LAND CATEGORY"
+                value={settings.landCategory}
+                options={landCategories}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { landCategory: (option && option.value) || '' },
+                    widget
+                  })
+                }
+                disabled={loading}
+                optionsAction={setModalMeta}
+                optionsActionKey="metaKey"
+                clearable={
+                  settings.hasOwnProperty('clearable') // eslint-disable-line
+                    ? settings.clearable
+                    : true
+                }
+                noSelectedValue="All categories"
+              />
+            )}
+          </div>
         )}
-        {!isEmpty(landCategories) && (
-          <Dropdown
-            theme="theme-select-light"
-            label="LAND CATEGORY"
-            value={settings.landCategory}
-            options={landCategories}
-            onChange={option =>
-              onSettingsChange({
-                value: { landCategory: (option && option.value) || '' },
-                widget
-              })
-            }
-            disabled={loading}
-            optionsAction={setModalMeta}
-            optionsActionKey="metaKey"
-            clearable={
-              settings.hasOwnProperty('clearable') // eslint-disable-line
-                ? settings.clearable
-                : true
-            }
-            noSelectedValue="All categories"
-          />
-        )}
-        {hasExtraOptions && types && (
-          <Dropdown
-            theme="theme-select-light"
-            label="DISPLAY TREES BY"
-            value={settings.type}
-            options={types}
-            disabled={loading}
-            onChange={option => {
-              const layers = [...settings.layers];
-              if (layers.length) {
-                const type =
-                  settings.type === 'bound2' ? 'species' : 'type';
-                const newType =
-                  option.value === 'bound2' ? 'species' : 'type';
-                const activeIndex = settings.layers.indexOf(
-                  `plantations_by_${type}`
-                );
-                layers[activeIndex] = `plantations_by_${newType}`;
+        {hasExtraOptions &&
+          types && (
+            <Dropdown
+              theme="theme-select-light"
+              label="DISPLAY TREES BY"
+              value={settings.type}
+              options={types}
+              disabled={loading}
+              onChange={option => {
+                const layers = [...settings.layers];
+                if (layers.length) {
+                  const type = settings.type === 'bound2' ? 'species' : 'type';
+                  const newType =
+                    option.value === 'bound2' ? 'species' : 'type';
+                  const activeIndex = settings.layers.indexOf(
+                    `plantations_by_${type}`
+                  );
+                  layers[activeIndex] = `plantations_by_${newType}`;
+                }
+                onSettingsChange({
+                  value: {
+                    type: option.value,
+                    layers
+                  },
+                  widget
+                });
+              }}
+              infoAction={() => setModalMeta('widget_tree_cover_extent')}
+            />
+          )}
+        {hasExtraOptions &&
+          weeks && (
+            <Dropdown
+              theme="theme-select-light"
+              label="SHOW DATA FOR THE LAST"
+              value={settings.weeks}
+              options={weeks}
+              disabled={loading}
+              onChange={option =>
+                onSettingsChange({ value: { weeks: option.value }, widget })
               }
-              onSettingsChange({
-                value: {
-                  type: option.value,
-                  layers
-                },
-                widget
-              });
-            }}
-            infoAction={() => setModalMeta('widget_tree_cover_extent')}
-          />
-        )}
-        {hasExtraOptions && weeks && (
-          <Dropdown
-            theme="theme-select-light"
-            label="SHOW DATA FOR THE LAST"
-            value={settings.weeks}
-            options={weeks}
-            disabled={loading}
-            onChange={option =>
-              onSettingsChange({ value: { weeks: option.value }, widget })
-            }
-          />
-        )}
-        {hasExtraOptions && extentYears &&
+            />
+          )}
+        {hasExtraOptions &&
+          extentYears &&
           settings.forestType !== 'ifl_2013' &&
           (config.type !== 'loss' ||
             !settings.unit ||
             (settings.unit === '%' && config.type === 'loss')) &&
-            this.getExtentYears(
-              extentYears,
-              widget,
-              loading,
-              settings,
-              onSettingsChange
-            )}
-        {hasExtraOptions && units && this.getUnit(units, widget, settings, onSettingsChange)}
-        {hasExtraOptions && periods && (
-          <Dropdown
-            theme="theme-select-light"
-            label="YEAR"
-            value={settings.period}
-            options={periods}
-            onChange={option =>
-              onSettingsChange({ value: { period: option.value }, widget })
-            }
-          />
-        )}
-        {hasExtraOptions && years && (
-          <Dropdown
-            theme="theme-select-light"
-            label="YEAR"
-            value={settings.year}
-            options={years}
-            onChange={option =>
-              onSettingsChange({ value: { year: option.value }, widget })
-            }
-          />
-        )}
-        {hasExtraOptions && startYears &&
+          this.getExtentYears(
+            extentYears,
+            widget,
+            loading,
+            settings,
+            onSettingsChange
+          )}
+        {hasExtraOptions &&
+          units &&
+          this.getUnit(units, widget, settings, onSettingsChange)}
+        {hasExtraOptions &&
+          periods && (
+            <Dropdown
+              theme="theme-select-light"
+              label="YEAR"
+              value={settings.period}
+              options={periods}
+              onChange={option =>
+                onSettingsChange({ value: { period: option.value }, widget })
+              }
+            />
+          )}
+        {hasExtraOptions &&
+          years && (
+            <Dropdown
+              theme="theme-select-light"
+              label="YEAR"
+              value={settings.year}
+              options={years}
+              onChange={option =>
+                onSettingsChange({ value: { year: option.value }, widget })
+              }
+            />
+          )}
+        {hasExtraOptions &&
+          startYears &&
           endYears && (
             <div className="years-select">
               <span className="label">YEARS</span>

@@ -1,15 +1,25 @@
 @import '~styles/settings.scss';
 
+$settings-items-margin: rem(20px);
+
 .c-widget-settings {
-  width: rem(310px);
+  width: rem(290px);
   background-color: $white;
-  padding: rem(25px) rem(25px) rem(10px);
+  padding: rem(25px) rem(25px) rem(5px);
 
   > div {
-    margin-bottom: rem(20px);
+    margin-bottom: $settings-items-margin;
+  }
+
+  .intersections {
+    border-bottom: 1px solid $border;
+
+    > div {
+      margin-bottom: $settings-items-margin;
+    }
 
     &:last-child {
-      margin-bottom: 0;
+      border-bottom: 0;
     }
   }
 
@@ -41,7 +51,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: rem(10px);
 
     .label {
       margin-bottom: 0;
@@ -49,7 +58,7 @@
 
     &.threshold-border {
       position: relative;
-      padding-top: rem(40px);
+      padding: rem(40px) 0 rem(6px) 0;
 
       &::before {
         content: '';
