@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Other",
+    "value": 0
+  },
+  {
+    "label": "No data",
+    "value": 0
+  },
+  {
+    "label": "Agriculture",
+    "value": 0
+  },
+  {
+    "label": "Forest",
+    "value": 0
+  },
+  {
+    "label": "Shrubland",
+    "value": 0
+  },
+  {
+    "label": "Grassland",
+    "value": 0
+  },
+  {
+    "label": "Sparse vegetation",
+    "value": 0
+  },
+  {
+    "label": "Wetland",
+    "value": 0
+  },
+  {
+    "label": "Settlement",
+    "value": 0
+  },
+  {
+    "label": "Bare",
+    "value": 0
+  },
+  {
+    "label": "Water",
+    "value": 0
+  },
+  {
+    "label": "Permanent Snow and Ice",
+    "value": 0
+  }
+]

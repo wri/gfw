@@ -40,6 +40,20 @@
       "Mosaic of medium-sized plantations": "#d5a6ea",
       "Mosaic of small-sized plantations": "#a6d19f",
       "Clearing/ very young plantation": "#d5b7a0"
+    },
+    "categories": {
+      "Other": "#fdada9",
+      "No data": "#98a7c4",
+      "Agriculture": "#9993a3",
+      "Forest": "#dada95",
+      "Shrubland": "#d1e6ab",
+      "Grassland": "#9ebbf2",
+      "Sparse vegetation": "#fcc4c1",
+      "Wetland": "#a4fdff",
+      "Settlement": "#fefe97",
+      "Bare": "#e1efc8",
+      "Water": "#dcd9d9",
+      "Permanent Snow and Ice": "#d5a6ea"
     }
   },
   "emissions": {
