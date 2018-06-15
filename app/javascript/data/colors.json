@@ -42,18 +42,17 @@
       "Clearing/ very young plantation": "#d5b7a0"
     },
     "categories": {
-      "Other": "#fdada9",
-      "No data": "#98a7c4",
-      "Agriculture": "#9993a3",
-      "Forest": "#dada95",
-      "Shrubland": "#d1e6ab",
-      "Grassland": "#9ebbf2",
-      "Sparse vegetation": "#fcc4c1",
-      "Wetland": "#a4fdff",
-      "Settlement": "#fefe97",
-      "Bare": "#e1efc8",
-      "Water": "#dcd9d9",
-      "Permanent Snow and Ice": "#d5a6ea"
+      "Other": "#000000",
+      "Agriculture": "#D2A965",
+      "Forest": "#157764",
+      "Shrubland": "#596B2C",
+      "Grassland": "#CCDB98",
+      "Sparse vegetation": "#D5C998",
+      "Wetland": "#2789D4",
+      "Settlement": "#E9462B",
+      "Bare": "#F6F0EA",
+      "Water": "#A3DCFF",
+      "Permanent Snow and Ice": "#e0e0e0"
     }
   },
   "emissions": {
