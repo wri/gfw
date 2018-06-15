@@ -12,8 +12,17 @@ Object.keys(Widgets).forEach(key => {
 });
 
 export const initialState = {
+  global: {},
   ...widgets
 };
+
+const setGlobalData = (state, { payload }) => ({
+  ...state,
+  global: {
+    ...state.global,
+    ...payload
+  }
+});
 
 const setWidgetLoading = (state, { payload }) => ({
   ...state,
@@ -62,5 +71,6 @@ export default {
   setWidgetSettings,
   setWidgetLoading,
   setWidgetData,
-  setWidgetActive
+  setWidgetActive,
+  setGlobalData
 };
