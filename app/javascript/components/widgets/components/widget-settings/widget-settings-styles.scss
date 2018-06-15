@@ -5,10 +5,11 @@ $settings-items-margin: rem(20px);
 .c-widget-settings {
   width: rem(290px);
   background-color: $white;
-  padding: rem(25px) rem(25px) rem(5px);
+  padding: rem(25px) 0 rem(5px);
 
   > div {
     margin-bottom: $settings-items-margin;
+    padding: 0 rem(25px);
   }
 
   .intersections {
@@ -58,7 +59,8 @@ $settings-items-margin: rem(20px);
 
     &.threshold-border {
       position: relative;
-      padding: rem(40px) 0 rem(6px) 0;
+      padding-top: rem(40px);
+      padding-bottom: rem(6px);
 
       &::before {
         content: '';
