@@ -1,6 +1,7 @@
 import request from 'utils/request';
 
 const REQUEST_URL = process.env.GFW_API_HOST_PROD;
+const REQUEST_URL_STAGING = process.env.GFW_API_HOST_NEW_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
 const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
@@ -61,7 +62,7 @@ export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
   } else if (region) {
     fires_summary_table = FIRES_ADM1_DATASET;
   }
-  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
+  const url = `${REQUEST_URL_STAGING}/query/${fires_summary_table}?sql=${
     QUERIES.firesIntersectionAlerts
   }`
     .replace('{location}', getLocation(country, region, subRegion))
