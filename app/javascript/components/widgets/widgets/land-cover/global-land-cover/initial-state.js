@@ -6,25 +6,20 @@ export default {
     size: 'small',
     categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
+    selectors: ['years'],
+    years: [2015],
     type: 'plantations',
-    layers: ['plantations_by_type', 'plantations_by_species'],
     metaKey: 'widget_global_land_cover',
     sortOrder: {
       landCover: 100
     },
     sentences: {
-      initialSpecies:
-        'In {location}, {firstSpecies} and {secondSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
-      singleSpecies:
-        'In {location}, {firstSpecies} represent the largest plantation area by {type}, spanning {extent} and {percent} of land area.',
-      initialTypes:
-        'In {location}, the largest plantation area by type is {topType}, spanning {extent} and {percent} of land area.'
+      initial:
+        'The land use of {location} in {year} is mostly {category}, covering an area of {extent}.'
     }
   },
   settings: {
-    threshold: 0,
-    type: 'bound2',
-    layers: ['plantations_by_species']
+    year: 2015
   },
   enabled: true
 };

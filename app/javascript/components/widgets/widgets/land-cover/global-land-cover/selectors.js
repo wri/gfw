@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import isEmpty from 'lodash/isEmpty';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-import endsWith from 'lodash/endsWith';
 
 import globalLandCoverCategories from 'data/global-land-cover-categories.json';
 
@@ -53,39 +52,20 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, parseData, getSettings, getCurrentLocation, getSentences],
-  (rawData, data, settings, currentLabel, sentences) => {
+  [parseData, getSettings, getCurrentLocation, getSentences],
+  (data, settings, currentLabel, sentences) => {
     if (isEmpty(data) || !sentences) return null;
-    const { initialSpecies, singleSpecies, initialTypes } = sentences;
-    const top =
-      settings.type === 'bound2' ? data.slice(0, 2) : data.slice(0, 1);
-    const areaPerc = 100 * sumBy(top, 'value') / rawData.totalArea;
-    const topExtent = sumBy(top, 'value');
-    const otherExtent = sumBy(data.slice(2), 'value');
+    const { initial } = sentences;
+    const { year } = settings;
+    const { label, area_ha } = data[0];
     const params = {
       location: currentLabel,
-      firstSpecies: top[0].label.toLowerCase(),
-      secondSpecies: top.length > 1 && top[1].label.toLowerCase(),
-      type: settings.type === 'bound2' ? 'species' : 'type',
-      extent:
-        topExtent < 1
-          ? `${format('.3r')(topExtent)}ha`
-          : `${format('.3s')(topExtent)}ha`,
-      other:
-        otherExtent < 1
-          ? `${format('.3r')(otherExtent)}ha`
-          : `${format('.3s')(otherExtent)}ha`,
-      count: data.length - top.length,
-      topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
-      percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '<0.1%'
+      year,
+      category: label,
+      extent: `${format('.3s')(area_ha)}ha`
     };
-    const sentence =
-      settings.type === 'bound1'
-        ? initialTypes
-        : `${top.length > 1 ? initialSpecies : singleSpecies}`;
-
     return {
-      sentence,
+      sentence: initial,
       params
     };
   }
