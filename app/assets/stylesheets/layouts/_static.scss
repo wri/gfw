@@ -69,9 +69,10 @@
   }
   header {
     font-weight: 300;
+    text-align: center;
   }
   h2,h3,p{
-    max-width: 1024px;
+    max-width: 100%;
   }
   h2 {
     font-size: 35px;
@@ -131,6 +132,7 @@
     a {
       width: 100%;
       margin: 0 auto;
+      margin-bottom: 10px;
       @media (max-width: $br-mobile-portrait - 1) {
         height: auto;
         line-height: 1;
@@ -145,7 +147,7 @@
         display: inline-block;
       }
       @media (min-width: $br-mobile) {
-        min-width: 200px;
+        min-width: 150px;
         text-align: center;
       }
       &.with-icon{
