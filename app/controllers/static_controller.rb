@@ -1,5 +1,5 @@
 class StaticController < ApplicationController
-  skip_before_action :check_browser, :only => :old
+  skip_before_action :check_browser, :only => :browser_support
   respond_to :html
   respond_to :json, :only => :keepstories
 
