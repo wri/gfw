@@ -44,27 +44,23 @@ Gfw::Application.routes.draw do
   # getinvolved
   get '/getinvolved' => redirect("/developers-corner")
   get '/getinvolved(/:section)' => redirect("/developers-corner")
-
-  # static
-  get '/data' => redirect("sources")
   get '/getinvolved/apply-to-the-small-grants-fund' => redirect('/small-grants-fund')
   get '/getinvolved/develop-your-own-app' => redirect('/developers-corner')
   get '/getinvolved/provide-feedback' => redirect('/getinvolved')
+
+  # static
   get '/feedback' => redirect("about")
 
   # explore
   get '/explore' , to: redirect('/developers-corner/gallery/')
   get '/explore(/:section)' , to: redirect('/developers-corner/gallery/')
 
-  # howto
-  get '/howto', to: redirect('/howto/')
-
   # developers corner
   get '/developers-corner', to: redirect('/developers-corner/')
 
   # about
   get '/partners' => redirect('/about')
-  get '/about/small_grants_fund' => redirect('/getinvolved/apply-to-the-small-grants-fund')
+  get '/about/small_grants_fund' => redirect('/small-grants-fund')
 
   # map
   get '/glad', to: redirect('/map/3/15.00/27.00/ALL/grayscale/umd_as_it_happens')
@@ -82,6 +78,12 @@ Gfw::Application.routes.draw do
   # countries
   get '/countries' => redirect('/dashboards/global')
   get '/countries/*all' => redirect('/dashboards/global')
+
+  # howto
+  get '/howto', to: redirect('/howto/')
+
+  # data
+  get '/data', to: redirect('http://data.globalforestwatch.org')
 
   ########### /LEGACY #############
 

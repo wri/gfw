@@ -69,7 +69,8 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
     parsedConfig: parseConfig && parseConfig(selectorData),
     sentence: getSentence && getSentence(selectorData),
     shareUrl,
-    embedUrl
+    embedUrl,
+    ...widgets.global
   };
 };
 
