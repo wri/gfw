@@ -18,3 +18,8 @@ export const formatNumber = ({ num, unit }) => {
   }
   return `${formattedNum}${unit || ''}`;
 };
+
+export const buildGadm36Id = (country, region, subRegion) =>
+  `${country}${region ? `.${region}` : ''}${
+    subRegion ? `.${subRegion}_1` : '_1'
+  }`;

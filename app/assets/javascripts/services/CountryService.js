@@ -11,11 +11,11 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     countriesConfigDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
     countriesConfigTable: 'gfw_countries_config',
     countriesDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
-    countriesTable: 'gadm28_countries',
+    countriesTable: 'gadm36_countries',
     regionsDataset: '098b33df-6871-4e53-a5ff-b56a7d989f9a',
-    regionsTable: 'gadm28_adm1',
+    regionsTable: 'gadm36_adm1',
     subRegionsDataset: 'b3d076cc-b150-4ccb-a93e-eca05d9ac2bf',
-    subRegionsTable: 'gadm28_adm2'
+    subRegionsTable: 'gadm36_adm2'
   };
 
   var GET_REQUEST_COUNTRY_CONFIG_ID = 'CountryService:getCountries',
@@ -36,11 +36,11 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     showCountry:
       "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
-      "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' ORDER BY name_1",
+      "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, gid_1, name_1 FROM {regionsTable} WHERE iso='{iso}' ORDER BY name_1",
     showRegion:
-      "/query/{regionsDataset}?sql=SELECT id_1, name_1, geojson FROM {regionsTable} WHERE iso='{iso}' AND id_1={region} ORDER BY name_1",
+      "/query/{regionsDataset}?sql=SELECT gid_1, name_1, geojson FROM {regionsTable} WHERE iso='{iso}' AND gid_1='{region}' ORDER BY name_1",
     getSubRegionsList:
-      "/sql?q=SELECT id_2 as id, name_2 as name FROM gadm28_adm2 WHERE iso = '{iso}' AND id_1 = '{region}' ORDER BY name"
+      "/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND gid_1 = '{region}' ORDER BY name"
   };
 
   var CountriesService = Class.extend({

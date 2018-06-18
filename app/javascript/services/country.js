@@ -1,4 +1,5 @@
 import request from 'utils/request';
+import { buildGadm36Id } from 'utils/format';
 
 const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
 
@@ -8,9 +9,9 @@ const SQL_QUERIES = {
   getFAOCountries:
     'SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics',
   getRegions:
-    "SELECT id_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '{iso}' ORDER BY name ",
+    "SELECT gid_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '{iso}' ORDER BY name ",
   getSubRegions:
-    "SELECT id_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND id_1 = '{admin1}' ORDER BY name",
+    "SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND gid_1 = '{admin1}' ORDER BY name",
   getCountryLinks:
     'SELECT iso, external_links FROM external_links_gfw WHERE forest_atlas is true',
   getRanking:
@@ -40,7 +41,7 @@ export const getRegionsProvider = country => {
 export const getSubRegionsProvider = (admin0, admin1) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getSubRegions}`
     .replace('{iso}', admin0)
-    .replace('{admin1}', admin1);
+    .replace('{admin1}', buildGadm36Id(admin1));
   return request.get(url);
 };
 

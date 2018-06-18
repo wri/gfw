@@ -1,3 +1,5 @@
+/*eslint-disable*/
+
 define([], function() {
   var fallbackDataHelper = {
     /**
