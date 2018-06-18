@@ -131,6 +131,7 @@
     "react-slick": "0.18.1",
     "react-stickynode": "1.4.1",
     "react-tippy": "1.2.2",
+    "react-toggle": "^4.0.2",
     "recharts": "1.0.0-beta.1",
     "redux": "3.7.2",
     "redux-actions": "2.2.1",
