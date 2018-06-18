@@ -34,7 +34,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     getCountriesList:
       "/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable} WHERE iso != 'XCA' AND iso != 'TWN' ORDER BY name",
     showCountry:
-      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, topojson FROM {countriesTable} WHERE iso='{iso}'",
+      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, ST_AsGeoJSON(the_geom) AS topojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
       "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, gid_1, name_1 FROM {regionsTable} WHERE iso='{iso}' ORDER BY name_1",
     showRegion:
