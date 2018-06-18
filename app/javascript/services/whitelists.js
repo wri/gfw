@@ -1,4 +1,5 @@
 import request from 'utils/request';
+import { buildGadm36Id } from 'utils/format';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
 const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
@@ -10,7 +11,7 @@ const SQL_QUERIES = {
   getRegionWhitelist:
     'SELECT polyname, SUM(area_extent_2000) as total_extent_2000, SUM(area_extent) as total_extent_2010, SUM(area_gain) as total_gain, SUM(year_data.area_loss) as total_loss FROM data WHERE thresh = 0 AND {location} GROUP BY polyname',
   getWaterBodiesWhitelist:
-    "SELECT iso, adm1, adm2 from water_bodies_gadm36 WHERE iso = '{country}' AND adm1 = {region}"
+    "SELECT iso, adm1, adm2 from water_bodies_gadm36 WHERE iso = '{country}' AND gid_1 = '{region}'"
 };
 
 const getLocationQuery = (country, region, subRegion) =>
@@ -36,7 +37,7 @@ export const getRegionWhitelistProvider = (admin0, admin1, admin2) => {
 
 export const getWaterBodiesBlacklistProvider = (admin0, admin1) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.getWaterBodiesWhitelist}`
-    .replace('{country}', admin0)
-    .replace('{region}', admin1);
+    .replace('{country}', buildGadm36Id(admin0))
+    .replace('{region}', buildGadm36Id(admin0, admin1));
   return request.get(url);
 };
