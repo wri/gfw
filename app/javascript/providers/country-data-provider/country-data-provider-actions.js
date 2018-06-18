@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import { parseGadm36Id } from 'utils/format';
 import axios from 'axios';
 import uniqBy from 'lodash/uniqBy';
 
@@ -57,7 +58,14 @@ export const getRegions = createThunkAction(
       dispatch(setRegionsLoading(true));
       getRegionsProvider(country)
         .then(response => {
-          dispatch(setRegions(uniqBy(response.data.rows), 'id'));
+          const parsedResponse = [];
+          uniqBy(response.data.rows).forEach(row => {
+            parsedResponse.push({
+              id: parseGadm36Id(row.id).adm1,
+              name: row.name
+            });
+          });
+          dispatch(setRegions(parsedResponse, 'id'));
           dispatch(setRegionsLoading(false));
         })
         .catch(error => {
@@ -81,9 +89,17 @@ export const getSubRegions = createThunkAction(
         .then(
           axios.spread((subRegions, blacklistResponse) => {
             const { rows } = subRegions.data;
+            const parsedResponse = [];
+            uniqBy(rows).forEach(row => {
+              parsedResponse.push({
+                id: parseGadm36Id(row.id).adm2,
+                name: row.name
+              });
+            });
             const blackList = blacklistResponse.data.rows.map(i => i.adm2);
             const subRegionList =
-              rows && rows.filter(r => blackList.indexOf(r.id) === -1);
+              parsedResponse &&
+              parsedResponse.filter(r => blackList.indexOf(r.id) === -1);
             dispatch(setSubRegions(uniqBy(subRegionList, 'id')));
             dispatch(setSubRegionsLoading(false));
           })
