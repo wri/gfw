@@ -8,7 +8,7 @@ define([
   var Stories = Backbone.Collection.extend({
     model: Story,
 
-    url: window.gfw.config.GFW_API_HOST_NEW_API + '/user/stories',
+    url: window.gfw.config.GFW_API + '/user/stories',
 
     comparator: function(subscription) {
       return -moment(subscription.get('created')).unix();

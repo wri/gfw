@@ -3,7 +3,7 @@ define([
   'jquery'
 ], function(Class, $) {
 
-  var CONVERTER_URL = window.gfw.config.GFW_API_HOST + "/api/ogr/convert";
+  var CONVERTER_URL = window.gfw.config.GFW_API_OLD + "/api/ogr/convert";
 
   var ShapefileService = Class.extend({
 
