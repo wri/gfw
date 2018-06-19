@@ -9,7 +9,7 @@ define([
 
   var SAVE_REQUEST_ID = 'ShapefileService:save';
 
-  var URL = window.gfw.config.GFW_API_HOST_NEW_API + '/ogr/convert';
+  var URL = window.gfw.config.GFW_API + '/ogr/convert';
 
   var ShapefileService = Class.extend({
 

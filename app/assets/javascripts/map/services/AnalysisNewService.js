@@ -20,8 +20,8 @@ define(
 
     var GET_REQUEST_ID = 'AnalysisService:get';
 
-    var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
-    var APIURLV2 = window.gfw.config.GFW_API_HOST_API_V2;
+    var APIURL = window.gfw.config.GFW_API;
+    var APIURLV2 = window.gfw.config.GFW_API + '/v2';
 
     var APIURLS = {
       draw: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
