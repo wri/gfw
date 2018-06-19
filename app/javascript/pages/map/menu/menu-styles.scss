@@ -1,0 +1,71 @@
+@import '~styles/settings.scss';
+
+$map-menu-items-size: rem(76px);
+$map-menu-flap-width: rem(290px);
+
+.c-map-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 2;
+
+  &__logo {
+    position: relative;
+    width: $map-menu-items-size;
+    height: $map-menu-items-size;
+    z-index: 2;
+  }
+
+  &__buttons-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: $map-menu-items-size;
+    height: calc(100% - #{$map-menu-items-size});
+    box-shadow: inset -1px 0 0 0 $white-calcium;
+    background-color: $white;
+    z-index: 2;
+
+    &:hover {
+      background-color: $white-tree;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    height: $map-menu-items-size;
+
+    &:hover {
+      background-color: $white;
+      border-top: 1px solid $white-calcium;
+      border-bottom: 1px solid $white-calcium;
+    }
+  }
+
+  &__item-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-size: 11px;
+    line-height: 0.91;
+    letter-spacing: -0.2px;
+    color: $greyish-brown;
+    cursor: pointer;
+  }
+
+  &__item-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $map-menu-flap-width;
+    height: 100%;
+    background-color: $white;
+    z-index: 1;
+    transform: translateX(#{$map-menu-items-size - $map-menu-flap-width});
+  }
+}
