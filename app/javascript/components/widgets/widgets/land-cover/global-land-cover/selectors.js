@@ -44,10 +44,10 @@ export const parseData = createSelector(
     const dataParsed = dataMerged.filter(el => el.value !== 0).map(el => ({
       ...el,
       percentage: 100 * el.value / total,
-      area_ha: el.value * 300 * 300 / 1e4,
+      value: el.value * 300 * 300 / 1e4,
       color: colors.categories[el.label]
     }));
-    return sortByKey(dataParsed.filter(d => d !== null), 'area_ha', true);
+    return sortByKey(dataParsed.filter(d => d !== null), 'value', true);
   }
 );
 
@@ -57,12 +57,12 @@ export const getSentence = createSelector(
     if (isEmpty(data) || !sentences) return null;
     const { initial } = sentences;
     const { year } = settings;
-    const { label, area_ha } = data[0];
+    const { label, value } = data[0];
     const params = {
       location: currentLabel,
       year,
       category: label,
-      extent: `${format('.3s')(area_ha)}ha`
+      extent: `${format('.3s')(value)}ha`
     };
     return {
       sentence: initial,
