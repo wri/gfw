@@ -36,7 +36,7 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     widgets,
     activeWidget: activeWidget || (widgets && widgets[0] && widgets[0].name),
     widgetAnchor,
-    title: getTitle({ countries: countryData.countries, ...location }),
+    title: getTitle({ ...countryData, ...location }),
     ...location,
     ...countryData
   };

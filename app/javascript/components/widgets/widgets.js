@@ -1,4 +1,7 @@
+import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import colors from 'data/colors.json';
 
 import Component from './component';
@@ -64,6 +67,23 @@ const mapStateToProps = (
   };
 };
 
+class WidgetsContainer extends PureComponent {
+  componentDidMount() {
+    const { getGlobalData } = this.props;
+    getGlobalData();
+  }
+
+  render() {
+    return createElement(Component, {
+      ...this.props
+    });
+  }
+}
+
+WidgetsContainer.propTypes = {
+  getGlobalData: PropTypes.func
+};
+
 export { actions, reducers, initialState };
 
-export default connect(mapStateToProps, actions)(Component);
+export default connect(mapStateToProps, actions)(WidgetsContainer);

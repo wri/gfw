@@ -9,10 +9,12 @@ const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
 const getQuery = state => state.query || null;
 const getCountries = state => state.countries || null;
+const getRegions = state => state.regions || null;
+const getSubRegions = state => state.subRegions || null;
 
 export const getLinks = createSelector(
-  [getCategories, getCategory, getLocation, getQuery],
-  (categories, activeCategory, location, query) =>
+  [getCategories, getCategory, getQuery],
+  (categories, activeCategory, query) =>
     categories.map(category => {
       const newQuery = {
         ...query,
@@ -31,14 +33,25 @@ export const getLinks = createSelector(
 
 // get lists selected
 export const getTitle = createSelector(
-  [getCountries, getLocation],
-  (countries, location) => {
-    const { type, country } = location;
-    if (isEmpty(countries) && country) return null;
+  [getCountries, getRegions, getSubRegions, getLocation],
+  (countries, regions, subRegions, location) => {
+    const { type, country, region, subRegion } = location;
+    if (
+      (isEmpty(countries) && country) ||
+      (isEmpty(regions) && region) ||
+      (isEmpty(subRegions) && subRegion)
+    ) {
+      return null;
+    }
     const activeCountry = countries.find(c => c.value === country);
+    const activeRegion = regions && regions.find(r => r.value === region);
+    const activeSubRegion =
+      subRegions && subRegions.find(s => s.value === subRegion);
 
     return !activeCountry
       ? `${upperFirst(type) || 'Global'} Dashboard`
-      : activeCountry && activeCountry.label;
+      : `${activeSubRegion ? `${activeSubRegion.label}, ` : ''}${
+        activeRegion ? `${activeRegion.label}, ` : ''
+      }${activeCountry && activeCountry.label}`;
   }
 );

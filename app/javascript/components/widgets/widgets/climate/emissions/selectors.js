@@ -1,13 +1,10 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
 
-const EMISSIONS_KEYS = [
-  'Total including LUCF',
-  'Land-Use Change and Forestry',
-  'Agriculture'
-];
+const EMISSIONS_KEYS = ['Total including LUCF', 'Land-Use Change and Forestry'];
 
 // get list data
 const getData = state => state.data || null;
@@ -40,12 +37,13 @@ export const parseData = createSelector([getSortedData], sortedData => {
   const { data, total } = sortedData;
   const chartData = [];
   data[0].emissions.forEach((item, i) => {
+    const e1Value = item.value;
+    const totalEmissions = total.emissions[i].value;
     chartData.push({
       year: item.year,
-      e1Value: item.value,
-      e1Percentage: item.value / total.emissions[i].value * 100,
-      e2Value: data[1].emissions[i].value,
-      e2Percentage: data[1].emissions[i].value / total.emissions[i].value * 100
+      e1Value,
+      e1Percentage: e1Value / totalEmissions * 100,
+      total: totalEmissions
     });
   });
   return chartData;
@@ -69,34 +67,24 @@ export const parseConfig = createSelector(
             background: false,
             activeDot: false,
             stackId: 1
-          },
-          e2Value: {
-            fill: colorRange[1],
-            stroke: colorRange[1],
-            opacity: 1,
-            strokeWidth: 0,
-            background: false,
-            activeDot: false,
-            stackId: 1
           }
         }
       },
+      unit: 'tCO₂e',
       tooltip: [
         {
-          key: 'year',
-          position: 'right'
+          key: 'year'
+        },
+        {
+          key: 'total',
+          label: 'Total',
+          unit: 'tCO₂e',
+          unitFormat: num => formatNumber({ num })
         },
         {
           key: 'e1Percentage',
-          label: 'Agriculture',
-          color: colorRange[0],
-          unit: '%',
-          unitFormat: value => format('.1f')(value)
-        },
-        {
-          key: 'e2Percentage',
           label: 'Land-Use Change and Forestry',
-          color: colorRange[1],
+          color: colorRange[0],
           unit: '%',
           unitFormat: value => format('.1f')(value)
         }
@@ -111,18 +99,9 @@ export const getSentence = createSelector(
     if (!sortedData || !sortedData.data.length) return '';
     const { positive, negative } = sentences;
     const { data, total } = sortedData;
-    const emissionsCount = data.reduce((accumulator, item) => {
-      const accumulatorCount =
-        typeof accumulator !== 'object'
-          ? accumulator
-          : accumulator.emissions
-            .map(a => a.value)
-            .reduce((iSum, value) => iSum + value);
-      const itemCount = item.emissions
-        .map(a => a.value)
-        .reduce((iSum, value) => iSum + value);
-      return accumulatorCount + itemCount;
-    });
+    const emissionsCount = data[0].emissions
+      .map(a => a.value)
+      .reduce((iSum, value) => iSum + value);
     const totalEmissionsCount = total.emissions.reduce(
       (accumulator, item) =>
         (typeof accumulator !== 'object' ? accumulator : accumulator.value) +

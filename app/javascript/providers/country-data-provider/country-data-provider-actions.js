@@ -37,17 +37,9 @@ export const getCountries = createThunkAction(
       .all([getCountriesProvider(), getFAOCountriesProvider()])
       .then(
         axios.spread((gadm28Countries, faoCountries) => {
-          const allCountries = uniqBy(
-            [...gadm28Countries.data.rows, ...faoCountries.data.rows],
-            'iso'
-          );
-          const countries = uniqBy(
-            allCountries.filter(c => c.iso !== 'XCA'),
-            'iso'
-          );
           dispatch(setGadmCountries(gadm28Countries.data.rows));
           dispatch(setFAOCountries(faoCountries.data.rows));
-          dispatch(setCountries(countries));
+          dispatch(setCountries(gadm28Countries.data.rows));
           dispatch(setCountriesLoading(false));
         })
       )

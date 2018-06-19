@@ -1,19 +1,26 @@
 @import '~styles/settings.scss';
 
+$settings-items-margin: rem(20px);
+
 .c-widget-settings {
-  width: rem(250px);
+  width: rem(290px);
   background-color: $white;
-  padding: rem(25px) rem(25px) rem(10px);
+  padding: rem(25px) 0 rem(5px);
 
   > div {
-    margin-bottom: rem(20px);
+    margin-bottom: $settings-items-margin;
+    padding: 0 rem(25px);
   }
 
   .intersections {
-    border-bottom: solid 1px $border;
+    border-bottom: 1px solid $border;
 
     > div {
-      margin-bottom: rem(20px);
+      margin-bottom: $settings-items-margin;
+    }
+
+    &:last-child {
+      border-bottom: 0;
     }
   }
 
@@ -23,13 +30,11 @@
   }
 
   .years-select {
-    .label {
-      display: block;
-      margin-bottom: rem(5px);
-      text-align: left;
-      font-weight: 400;
-      font-size: rem(13px);
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: rem(10px);
+    font-size: 13px;
 
     .select-container {
       display: flex;
@@ -37,14 +42,35 @@
       justify-content: space-between;
       align-items: center;
     }
+
+    .text-date {
+      margin: 0 10px;
+    }
   }
 
   .canopy-select {
-    margin-top: rem(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .label {
+      margin-bottom: 0;
+    }
 
     &.threshold-border {
-      border-top: solid 1px $border;
-      padding-top: rem(15px);
+      position: relative;
+      padding-top: rem(40px);
+      padding-bottom: rem(6px);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: rem(10px);
+        left: rem(-25px);
+        width: calc(100% + #{rem(50px)});
+        height: rem(1px);
+        background-color: $border;
+      }
     }
 
     .dd__wrapper {
