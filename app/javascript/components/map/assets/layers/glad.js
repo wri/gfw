@@ -6,7 +6,7 @@ import Canvas from './abstract/canvas';
 const OPTIONS = {
   dataMaxZoom: 12,
   urlTemplate: `https://wri-tiles.s3.amazonaws.com/glad_${
-    process.env.FEATURE_ENV === 'staging' ? 'staging' : 'prod'
+    process.env.RACK_ENV === 'staging' ? 'staging' : 'prod'
   }/tiles/{z}/{x}/{y}.png`,
   startDate: '2015-01-01'
 };
