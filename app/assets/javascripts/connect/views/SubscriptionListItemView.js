@@ -83,7 +83,7 @@ define([
      */
     getConfirmationURL: function() {
       var subscription = this.subscription.toJSON();
-      return window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions/' + subscription.id + '/send_confirmation';
+      return window.gfw.config.GFW_API + '/subscriptions/' + subscription.id + '/send_confirmation';
     },
 
     /**

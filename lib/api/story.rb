@@ -12,7 +12,7 @@ module Api
                       format: { :with => /@/ }
 
     def self.visible
-      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories?bust=1", headers: { "Accept" => "application/json" })
+      response = Typhoeus.get("#{ENV['GFW_API_OLD']}/stories?bust=1", headers: { "Accept" => "application/json" })
 
       if response.success?
         JSON.parse(response.body).select { |r| r['visible'] }
@@ -49,7 +49,7 @@ module Api
           :title => params['title']
         }.to_json
 
-        response = Typhoeus.post("#{ENV['GFW_API_HOST']}/stories/new", body: options, headers: { 'Content-Type' => 'application/json' })
+        response = Typhoeus.post("#{ENV['GFW_API_OLD']}/stories/new", body: options, headers: { 'Content-Type' => 'application/json' })
 
         if response.success?
           Story.new(JSON.parse(response.body))
@@ -68,7 +68,7 @@ module Api
     end
 
     def self.find_by_id_or_token(id)
-      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories/#{id}", headers: { "Accept" => "application/json" })
+      response = Typhoeus.get("#{ENV['GFW_API_OLD']}/stories/#{id}", headers: { "Accept" => "application/json" })
 
       if response.success?
         Story.new(JSON.parse(response.body))
