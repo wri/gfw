@@ -5,18 +5,18 @@ require "shellwords"
 require "yaml"
 require "socket"
 
-ENV["RAILS_ENV"] ||= "development"
-RAILS_ENV = ENV["RAILS_ENV"]
+ENV["RACK_ENV"] ||= "development"
+RACK_ENV = ENV["RACK_ENV"]
 
-ENV["NODE_ENV"] ||= RAILS_ENV
-NODE_ENV = ENV["NODE_ENV"]
+ENV["RACK_ENV"] ||= RACK_ENV
+RACK_ENV = ENV["RACK_ENV"]
 
 APP_PATH          = File.expand_path("../", __dir__)
 CONFIG_FILE       = File.join(APP_PATH, "config/webpacker.yml")
 NODE_MODULES_PATH = File.join(APP_PATH, "node_modules")
-WEBPACK_CONFIG    = File.join(APP_PATH, "config/webpack/#{NODE_ENV}.js")
+WEBPACK_CONFIG    = File.join(APP_PATH, "config/webpack/#{RACK_ENV}.js")
 
-DEFAULT_LISTEN_HOST_ADDR = NODE_ENV == 'development' ? 'localhost' : '0.0.0.0'
+DEFAULT_LISTEN_HOST_ADDR = RACK_ENV == 'development' ? 'localhost' : '0.0.0.0'
 
 def args(key)
   index = ARGV.index(key)
@@ -24,7 +24,7 @@ def args(key)
 end
 
 begin
-  dev_server = YAML.load_file(CONFIG_FILE)[RAILS_ENV]["dev_server"]
+  dev_server = YAML.load_file(CONFIG_FILE)[RACK_ENV]["dev_server"]
 
   HOSTNAME          = args('--host') || dev_server["host"]
   PORT              = args('--port') || dev_server["port"]

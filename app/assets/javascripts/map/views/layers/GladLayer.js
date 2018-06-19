@@ -21,7 +21,7 @@ define(
     Presenter
   ) {
     'use strict';
-    var env = window.gfw.config.FEATURE_ENV === 'staging' ? 'staging' : 'prod';
+    var env = window.gfw.config.RACK_ENV === 'staging' ? 'staging' : 'prod';
     var TILE_URL =
       'https://wri-tiles.s3.amazonaws.com/glad_' +
       env +
