@@ -9,7 +9,7 @@ define([
 
   var GET_REQUEST_ID = 'CoverageService:get';
 
-  var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
+  var APIURL = window.gfw.config.GFW_API;
 
   var APIURLS = {
     'country'      : '/coverage/intersect/admin/{country}',

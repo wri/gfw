@@ -1,7 +1,7 @@
 import request from 'utils/request';
 import { getIndicator } from 'utils/strings';
 
-const REQUEST_URL = process.env.GFW_API_HOST_PROD;
+const REQUEST_URL = process.env.GFW_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
 const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;

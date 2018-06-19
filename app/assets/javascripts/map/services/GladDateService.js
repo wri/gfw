@@ -7,7 +7,7 @@ define([
 
   var REQUEST_ID = 'GladDateService:fetchDates';
 
-  var API = window.gfw.config.GFW_API_HOST_PROD;
+  var API = window.gfw.config.GFW_API;
 
   var GladDateService = Class.extend({
 
