@@ -11,11 +11,11 @@ use Rack::ReverseProxy do
   # Forward the path /gfw-assets* to ENV['GFW_ASSETS_URL']*
   reverse_proxy(/^\/gfw-assets\/?(.*)$/, "#{ENV['GFW_ASSETS_URL']}$1")
 
-  # Forward the path /howto/* to ENV['HOWTO_URL']/*
-  reverse_proxy(/^\/howto(\/.*)$/, "#{ENV['HOWTO_URL']}$1")
+  # Forward the path /howto/* to ENV['GFW_HOWTO_URL']/*
+  reverse_proxy(/^\/howto(\/.*)$/, "#{ENV['GFW_HOWTO_URL']}$1")
 
-  # Forward the path /howto/* to ENV['HOWTO_URL']/*
-  reverse_proxy(/^\/developers-corner(\/.*)$/, "#{ENV['DEVELOPERS_URL']}$1")
+  # Forward the path /howto/* to ENV['GFW_HOWTO_URL']/*
+  reverse_proxy(/^\/developers-corner(\/.*)$/, "#{ENV['GFW_DEVELOPERS_URL']}$1")
 
 end
 

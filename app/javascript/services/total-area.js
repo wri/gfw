@@ -1,7 +1,7 @@
 import request from 'utils/request';
 import { buildGadm36Id } from 'utils/format';
 
-const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountryArea:

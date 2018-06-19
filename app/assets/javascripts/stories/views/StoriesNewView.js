@@ -550,7 +550,7 @@ define([
     renderPlaceHolder: function() {
       this.$el.html(this.template({
         alreadyLoggedIn: this.alreadyLoggedIn,
-        apiHost: window.gfw.config.GFW_API_AUTH
+        apiHost: window.gfw.config.GFW_API
       }));
       return this;
     },

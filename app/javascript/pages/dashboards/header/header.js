@@ -16,7 +16,7 @@ import HeaderComponent from './header-component';
 
 const actions = { ...ownActions, ...shareActions };
 
-const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
+const mapStateToProps = ({ countryData, location, header, widgets }) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
@@ -37,12 +37,10 @@ const mapStateToProps = ({ countryData, location, header, widgets, cache }) => {
   }/tree_cover_stats_2017${country ? `_${country}` : ''}.xlsx`;
   const locationOptions = { ...countryData };
   const locationNames = getAdminsSelected({ ...countryData, ...location });
-  const cacheLoading = cache.cacheListLoading;
 
   return {
     ...header,
     loading: countryDataLoading || header.loading,
-    cacheLoading,
     downloadLink,
     forestAtlasLink,
     externalLinks,
@@ -121,12 +119,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 class HeaderContainer extends PureComponent {
+  componentWillMount() {
+    const { payload, settings, getHeaderData } = this.props;
+    getHeaderData({ ...payload, ...settings });
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { cacheLoading, payload, settings, getHeaderData } = nextProps;
-    if (
-      cacheLoading !== this.props.cacheLoading ||
-      !isEqual(payload, this.props.payload)
-    ) {
+    const { payload, settings, getHeaderData } = nextProps;
+    if (!isEqual(payload, this.props.payload)) {
       getHeaderData({ ...payload, ...settings });
     }
   }
@@ -141,8 +141,7 @@ class HeaderContainer extends PureComponent {
 HeaderContainer.propTypes = {
   payload: PropTypes.object.isRequired,
   getHeaderData: PropTypes.func.isRequired,
-  settings: PropTypes.object.isRequired,
-  cacheLoading: PropTypes.bool
+  settings: PropTypes.object.isRequired
 };
 
 export { actions, reducers, initialState };

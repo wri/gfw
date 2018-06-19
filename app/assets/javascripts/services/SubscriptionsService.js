@@ -9,7 +9,7 @@ define([
 
   var POST_REQUEST_SUBSCRIPTIONS_ID = 'SubscriptionsService:testWebhook';
 
-  var APIURL = window.gfw.config.GFW_API_HOST_PROD;
+  var APIURL = window.gfw.config.GFW_API;
 
   var APIURLS = {
     'testWebhook': '/subscriptions/check-hook',

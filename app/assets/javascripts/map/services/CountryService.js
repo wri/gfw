@@ -13,7 +13,7 @@ define([
   var GET_REQUEST_ID = 'CountryService:get',
       SHOW_REQUEST_ID = 'CountryService:show';
 
-  var URL = window.gfw.config.GFW_API_HOST + '/countries/{id}';
+  var URL = window.gfw.config.GFW_API_OLD + '/countries/{id}';
 
 
   var CountryService = Class.extend({

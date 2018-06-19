@@ -25,8 +25,8 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     SHOW_REQUEST_REGION_ID = 'CountryService:showRegion',
     GET_REQUEST_SUBREGIONS_LIST_ID = 'CountryService:getRegionsList';
 
-  var APIURL = window.gfw.config.GFW_API_HOST_PROD;
-  var CARTO_API_URL = window.gfw.config.CARTO_API_URL;
+  var APIURL = window.gfw.config.GFW_API;
+  var CARTO_API = window.gfw.config.CARTO_API;
 
   var APIURLS = {
     getCountryConfig:
@@ -222,7 +222,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
         function(resolve, reject) {
           var status = _.extend({}, CONFIG, params);
           var url = new UriTemplate(
-            CARTO_API_URL + APIURLS.getSubRegionsList
+            CARTO_API + APIURLS.getSubRegionsList
           ).fillFromObject(status);
 
           this.defineRequest(GET_REQUEST_SUBREGIONS_LIST_ID, url, {

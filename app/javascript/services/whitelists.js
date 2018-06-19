@@ -2,8 +2,8 @@ import request from 'utils/request';
 import { buildGadm36Id } from 'utils/format';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
-const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
-const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.GFW_API}/query/${DATASET}?sql=`;
+const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountryWhitelist:
