@@ -16,7 +16,7 @@ import reducers, { initialState } from './map-reducers';
 import { getLayers } from './map-selectors';
 
 const mapStateToProps = ({ map, countryData, widgets }, { widgetKey }) => {
-  const widget = widgets[widgetKey];
+  const widget = widget ? widgets[widgetKey] : null;
   const widgetSettings = widget && widget.settings;
   const activeLayers = widgetSettings && widgetSettings.layers;
 
