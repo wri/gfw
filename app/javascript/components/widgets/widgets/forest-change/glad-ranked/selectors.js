@@ -110,15 +110,14 @@ export const getSentence = createSelector(
     sentences
   ) => {
     if (!data || !options || !currentLabel) return '';
-    const { initial, oneRegion } = sentences;
+    const { initial, withInd } = sentences;
     const totalCount = sumBy(data, 'count');
     let percentileCount = 0;
     let percentileLength = 0;
-
     while (
-      percentileLength < data.length &&
+      percentileLength < list.length &&
       percentileCount / totalCount < 0.5 &&
-      data.length !== 10
+      percentileLength !== 10
     ) {
       percentileCount += list[percentileLength].count;
       percentileLength += 1;
@@ -128,14 +127,17 @@ export const getSentence = createSelector(
     const formatType = countArea < 1 ? '.3r' : '.3s';
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
-      count: format(',')(sumBy(data, 'count')),
+      count: format(',')(totalCount),
       area: `${format(formatType)(countArea)}ha`,
       topPercent: `${format('.2r')(topCount)}%`,
-      topRegions: percentileLength,
+      topRegions:
+        percentileLength === 1
+          ? `${percentileLength} region`
+          : `${percentileLength} regions`,
       location: currentLabel,
       indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
     };
-    const sentence = percentileLength === 1 ? oneRegion : initial;
+    const sentence = indicator ? withInd : initial;
     return { sentence, params };
   }
 );

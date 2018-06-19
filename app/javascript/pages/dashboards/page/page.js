@@ -11,7 +11,7 @@ import Component from './page-component';
 
 const actions = { ...mapActions };
 
-const mapStateToProps = ({ cache, countryData, whitelists, location, map }) => {
+const mapStateToProps = ({ countryData, whitelists, location, map }) => {
   const category = (location.query && location.query.category) || 'summary';
   const { regionWhitelist, countryWhitelist } = whitelists;
   const widgetHash =
@@ -31,13 +31,12 @@ const mapStateToProps = ({ cache, countryData, whitelists, location, map }) => {
   return {
     showMapMobile: map.showMapMobile,
     links: getLinks({ categories: CATEGORIES, ...location, category }),
-    isCacheListLoading: cache.cacheListLoading,
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
     widgets,
     activeWidget: activeWidget || (widgets && widgets[0] && widgets[0].name),
     widgetAnchor,
-    title: getTitle({ countries: countryData.countries, ...location }),
+    title: getTitle({ ...countryData, ...location }),
     ...location,
     ...countryData
   };

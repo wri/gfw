@@ -1,8 +1,9 @@
 import request from 'utils/request';
+import { getIndicator } from 'utils/strings';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
-const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/query/${DATASET}?sql=`;
-const CARTO_REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.GFW_API}/query/${DATASET}?sql=`;
+const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
@@ -36,7 +37,9 @@ const SQL_QUERIES = {
   faoDeforestRank:
     'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest from rank',
   faoEcoLive:
-    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999'
+    'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
+  nonGlobalDatasets:
+    "SELECT iso, polyname FROM data WHERE polyname IN ('plantations', 'mining', 'primary_forest', 'landmark', 'plantations__mining', 'plantations__landmark', 'primary_forest__mining', 'primary_forest__landmark') GROUP BY iso, polyname ORDER BY polyname, iso"
 };
 
 const getExtentYear = year =>
@@ -46,17 +49,6 @@ const getLocationQuery = (country, region, subRegion) =>
   `${country ? `iso = '${country}' AND` : ''}${
     region ? ` adm1 = ${region} AND` : ''
   }${subRegion ? ` adm2 = ${subRegion} AND` : ''}`;
-
-const getIndicatorQuery = (forestType, landCategory) => {
-  if (landCategory && !forestType) {
-    return landCategory;
-  } else if (landCategory && forestType) {
-    return `${forestType}__${landCategory}`;
-  } else if (!landCategory && forestType) {
-    return forestType;
-  }
-  return 'gadm28';
-};
 
 export const getLocations = ({
   country,
@@ -77,7 +69,7 @@ export const getLocations = ({
     .replace('{extent}', region ? 'area_gadm28' : 'sum(area_gadm28)')
     .replace('{iso}', country)
     .replace('{threshold}', threshold)
-    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
+    .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
   return request.get(url);
 };
@@ -96,7 +88,7 @@ export const getLocationsLoss = ({
     .replace('{iso}', country)
     .replace('{region}', region ? `AND adm1 = ${region}` : '')
     .replace('{threshold}', threshold)
-    .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
+    .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
 
@@ -108,7 +100,7 @@ export const fetchLossRanked = ({
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.lossRanked}`
     .replace('{extent_year}', getExtentYear(extentYear))
-    .replace('{polyname}', getIndicatorQuery(forestType, landCategory))
+    .replace('{polyname}', getIndicator(forestType, landCategory))
     .replace('{threshold}', threshold);
   return request.get(url);
 };
@@ -121,7 +113,7 @@ export const fetchExtentRanked = ({
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.rankedExtent}`
     .replace('{extent_year}', getExtentYear(extentYear))
-    .replace('{polyname}', getIndicatorQuery(forestType, landCategory))
+    .replace('{polyname}', getIndicator(forestType, landCategory))
     .replace('{threshold}', threshold);
   return request.get(url);
 };
@@ -138,7 +130,7 @@ export const getExtent = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
+    .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
   return request.get(url);
 };
@@ -176,7 +168,7 @@ export const getMultiRegionExtent = ({
     .replace(/{region}/g, region ? 'adm2' : 'adm1')
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
+    .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
   return request.get(url);
 };
@@ -191,7 +183,7 @@ export const getGain = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.gain}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
-    .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
+    .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
 
@@ -205,7 +197,7 @@ export const getGainLocations = ({
     .replace('{location}', getLocationQuery(country, region))
     .replace('{admin}', region ? 'adm2' : 'adm1')
     .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
-    .replace('{indicator}', getIndicatorQuery(forestType, landCategory))
+    .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{grouping}', !region ? 'GROUP BY adm1 ORDER BY adm1' : '');
   return request.get(url);
 };
@@ -221,7 +213,7 @@ export const getLoss = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.loss}`
     .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{threshold}', threshold)
-    .replace('{indicator}', getIndicatorQuery(forestType, landCategory));
+    .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
 
@@ -284,6 +276,9 @@ export const getGainRanked = ({
     .replace('{region}', regionValue)
     .replace('{location}', location)
     .replace('{extentYear}', getExtentYear(extentYear))
-    .replace('{polyname}', getIndicatorQuery(forestType, landCategory));
+    .replace('{polyname}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
+
+export const getNonGlobalDatasets = () =>
+  request.get(`${REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`);

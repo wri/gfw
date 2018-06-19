@@ -32,9 +32,9 @@ export const initialState = {
       globalWithIndicator:
         'From {startYear} to {endYear}, {loss} of tree cover was lost {location}, within {indicator} equivalent to a {localPercent} decrease since {extentYear}',
       initial:
-        'From {startYear} to {endYear}, {location} lost {loss} of tree cover {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of global total.',
       withIndicator:
-        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of global tree cover loss.',
+        'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of global total.',
       noLoss: 'There was no tree cover loss identified in {location}.'
     }
   },

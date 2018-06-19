@@ -1,10 +1,10 @@
 import request from 'utils/request';
 
-const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountries:
-    'SELECT iso, country as name FROM umd_nat_staging GROUP BY iso, name ORDER BY name',
+    "SELECT iso, country as name FROM umd_nat_staging WHERE iso != 'TWN' AND iso != 'XCA' GROUP BY iso, name ORDER BY name",
   getFAOCountries:
     'SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics',
   getRegions:

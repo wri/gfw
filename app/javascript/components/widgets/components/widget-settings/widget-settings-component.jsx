@@ -3,13 +3,104 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import Dropdown from 'components/ui/dropdown';
+import Switch from 'components/ui/switch';
 
 import './widget-settings-styles.scss';
 
 class WidgetSettings extends PureComponent {
+  getUnit = (units, widget, settings, onSettingsChange) => {
+    if (units.length === 2) {
+      return (
+        <Switch
+          theme="theme-switch-light"
+          label="UNIT"
+          value={settings.unit}
+          options={units}
+          onChange={option =>
+            onSettingsChange({ value: { unit: option }, widget })
+          }
+        />
+      );
+    }
+
+    return (
+      <Dropdown
+        theme="theme-select-light"
+        label="UNIT"
+        value={settings.unit}
+        options={units}
+        onChange={option =>
+          onSettingsChange({ value: { unit: option.value }, widget })
+        }
+      />
+    );
+  };
+
+  getExtentYears = (
+    extentYears,
+    widget,
+    loading,
+    settings,
+    onSettingsChange
+  ) => {
+    if (extentYears.length === 2) {
+      return (
+        <Switch
+          theme="theme-switch-light"
+          label="EXTENT YEAR"
+          value={settings.extentYear}
+          options={extentYears}
+          onChange={option => {
+            const layers = [...settings.layers];
+            if (layers.length) {
+              const activeIndex = settings.layers.indexOf(
+                `forest${settings.extentYear}`
+              );
+              layers[activeIndex] = `forest${option}`;
+            }
+            onSettingsChange({
+              value: {
+                extentYear: option,
+                layers
+              },
+              widget
+            });
+          }}
+        />
+      );
+    }
+
+    return (
+      <Dropdown
+        theme="theme-select-light"
+        label="EXTENT YEAR"
+        value={settings.extentYear}
+        options={extentYears}
+        disabled={loading}
+        onChange={option => {
+          const layers = [...settings.layers];
+          if (layers.length) {
+            const activeIndex = settings.layers.indexOf(
+              `forest${settings.extentYear}`
+            );
+            layers[activeIndex] = `forest${option.value}`;
+          }
+          onSettingsChange({
+            value: {
+              extentYear: option.value,
+              layers
+            },
+            widget
+          });
+        }}
+      />
+    );
+  };
+
   render() {
     const {
       settings,
+      config,
       loading,
       onSettingsChange,
       widget,
@@ -24,10 +115,10 @@ class WidgetSettings extends PureComponent {
       years,
       startYears,
       endYears,
+      datasets,
       extentYears,
       types,
-      weeks,
-      datasets
+      weeks
     } = this.props.options;
     const hasExtraOptions =
       units ||
@@ -36,6 +127,7 @@ class WidgetSettings extends PureComponent {
       startYears ||
       endYears ||
       extentYears ||
+      datasets ||
       types ||
       weeks ||
       datasets;
@@ -52,7 +144,12 @@ class WidgetSettings extends PureComponent {
                 options={forestTypes}
                 onChange={option =>
                   onSettingsChange({
-                    value: { forestType: (option && option.value) || '' },
+                    value: {
+                      forestType: (option && option.value) || '',
+                      ...(!!(option && option.value === 'ifl_2013') && {
+                        extentYear: 2010
+                      })
+                    },
                     widget
                   })
                 }
@@ -92,35 +189,37 @@ class WidgetSettings extends PureComponent {
             )}
           </div>
         )}
-        {types && (
-          <Dropdown
-            theme="theme-select-light"
-            label="DISPLAY TREES BY"
-            value={settings.type}
-            options={types}
-            disabled={loading}
-            onChange={option => {
-              const layers = [...settings.layers];
-              if (layers.length) {
-                const type = settings.type === 'bound2' ? 'species' : 'type';
-                const newType = option.value === 'bound2' ? 'species' : 'type';
-                const activeIndex = settings.layers.indexOf(
-                  `plantations_by_${type}`
-                );
-                layers[activeIndex] = `plantations_by_${newType}`;
-              }
-              onSettingsChange({
-                value: {
-                  type: option.value,
-                  layers
-                },
-                widget
-              });
-            }}
-            infoAction={() => setModalMeta('widget_tree_cover_extent')}
-          />
-        )}
-        {datasets && (
+        {hasExtraOptions &&
+          types && (
+            <Dropdown
+              theme="theme-select-light"
+              label="DISPLAY TREES BY"
+              value={settings.type}
+              options={types}
+              disabled={loading}
+              onChange={option => {
+                const layers = [...settings.layers];
+                if (layers.length) {
+                  const type = settings.type === 'bound2' ? 'species' : 'type';
+                  const newType =
+                    option.value === 'bound2' ? 'species' : 'type';
+                  const activeIndex = settings.layers.indexOf(
+                    `plantations_by_${type}`
+                  );
+                  layers[activeIndex] = `plantations_by_${newType}`;
+                }
+                onSettingsChange({
+                  value: {
+                    type: option.value,
+                    layers
+                  },
+                  widget
+                });
+              }}
+              infoAction={() => setModalMeta('widget_tree_cover_extent')}
+            />
+          )}
+        {hasExtraOptions && datasets && (
           <Dropdown
             theme="theme-select-light"
             label="FIRES DATASET"
@@ -132,77 +231,61 @@ class WidgetSettings extends PureComponent {
             }
           />
         )}
-        {weeks && (
-          <Dropdown
-            theme="theme-select-light"
-            label="SHOW DATA FOR THE LAST"
-            value={settings.weeks}
-            options={weeks}
-            disabled={loading}
-            onChange={option =>
-              onSettingsChange({ value: { weeks: option.value }, widget })
-            }
-          />
-        )}
-        {extentYears && (
-          <Dropdown
-            theme="theme-select-light"
-            label="EXTENT YEAR"
-            value={settings.extentYear}
-            options={extentYears}
-            disabled={loading}
-            onChange={option => {
-              const layers = [...settings.layers];
-              if (layers.length) {
-                const activeIndex = settings.layers.indexOf(
-                  `forest${settings.extentYear}`
-                );
-                layers[activeIndex] = `forest${option.value}`;
+        {hasExtraOptions &&
+          weeks && (
+            <Dropdown
+              theme="theme-select-light"
+              label="SHOW DATA FOR THE LAST"
+              value={settings.weeks}
+              options={weeks}
+              disabled={loading}
+              onChange={option =>
+                onSettingsChange({ value: { weeks: option.value }, widget })
               }
-              onSettingsChange({
-                value: {
-                  extentYear: option.value,
-                  layers
-                },
-                widget
-              });
-            }}
-          />
-        )}
-        {units && (
-          <Dropdown
-            theme="theme-select-light"
-            label="UNIT"
-            value={settings.unit}
-            options={units}
-            onChange={option =>
-              onSettingsChange({ value: { unit: option.value }, widget })
-            }
-          />
-        )}
-        {periods && (
-          <Dropdown
-            theme="theme-select-light"
-            label="YEAR"
-            value={settings.period}
-            options={periods}
-            onChange={option =>
-              onSettingsChange({ value: { period: option.value }, widget })
-            }
-          />
-        )}
-        {years && (
-          <Dropdown
-            theme="theme-select-light"
-            label="YEAR"
-            value={settings.year}
-            options={years}
-            onChange={option =>
-              onSettingsChange({ value: { year: option.value }, widget })
-            }
-          />
-        )}
-        {startYears &&
+            />
+          )}
+        {hasExtraOptions &&
+          extentYears &&
+          settings.forestType !== 'ifl_2013' &&
+          (config.type !== 'loss' ||
+            !settings.unit ||
+            (settings.unit === '%' && config.type === 'loss')) &&
+          this.getExtentYears(
+            extentYears,
+            widget,
+            loading,
+            settings,
+            onSettingsChange
+          )}
+        {hasExtraOptions &&
+          units &&
+          this.getUnit(units, widget, settings, onSettingsChange)}
+        {hasExtraOptions &&
+          periods && (
+            <Dropdown
+              theme="theme-select-light"
+              label="YEAR"
+              value={settings.period}
+              options={periods}
+              onChange={option =>
+                onSettingsChange({ value: { period: option.value }, widget })
+              }
+            />
+          )}
+        {hasExtraOptions &&
+          years && (
+            <Dropdown
+              theme="theme-select-light"
+              label="YEAR"
+              value={settings.year}
+              options={years}
+              onChange={option =>
+                onSettingsChange({ value: { year: option.value }, widget })
+              }
+            />
+          )}
+        {hasExtraOptions &&
+          startYears &&
           endYears && (
             <div className="years-select">
               <span className="label">YEARS</span>
@@ -264,6 +347,7 @@ WidgetSettings.propTypes = {
   periods: PropTypes.array,
   years: PropTypes.array,
   settings: PropTypes.object,
+  config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
   loading: PropTypes.bool,

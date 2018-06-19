@@ -2,7 +2,9 @@ import { createSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
+import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
@@ -19,13 +21,13 @@ export const parseData = createSelector(
     if (!loss || !totalLoss) return null;
     const { startYear, endYear } = settings;
     const totalLossByYear = groupBy(totalLoss, 'year');
-
     return loss
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
         ...d,
         outsideAreaLoss: totalLossByYear[d.year][0].area - d.area,
         areaLoss: d.area || 0,
+        totalLoss: totalLossByYear[d.year][0].area || 0,
         outsideCo2Loss: totalLossByYear[d.year][0].emissions - d.emissions,
         co2Loss: d.emissions || 0
       }));
@@ -74,10 +76,17 @@ export const getSentence = createSelector(
     if (!data) return null;
     const { initial } = sentences;
     const { startYear, endYear } = settings;
-    const totalLoss = sumBy(data, 'areaLoss') || 0;
-    const totalOutsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
+    const plantationsLoss = sumBy(data, 'areaLoss') || 0;
+    const totalLoss = sumBy(data, 'totalLoss') || 0;
+    const outsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
+    const outsideEmissions = sumBy(data, 'outsideCo2Loss') || 0;
+
     const lossPhrase =
-      totalLoss > totalOutsideLoss ? 'plantations' : 'natural forest';
+      plantationsLoss > outsideLoss ? 'plantations' : 'natural forest';
+    const percentage =
+      plantationsLoss > outsideLoss
+        ? 100 * plantationsLoss / totalLoss
+        : 100 * outsideLoss / totalLoss;
 
     const sentence = initial;
     const params = {
@@ -85,7 +94,8 @@ export const getSentence = createSelector(
       startYear,
       endYear,
       lossPhrase,
-      value: `${format('.3s')(totalOutsideLoss)}t of CO<sub>2</sub> emissions`
+      value: `${format('.3s')(biomassToCO2(outsideEmissions))}t`,
+      percentage: formatNumber({ num: percentage, unit: '%' })
     };
 
     return {

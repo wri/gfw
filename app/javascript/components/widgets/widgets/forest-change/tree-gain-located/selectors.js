@@ -96,7 +96,7 @@ export const getSentence = createSelector(
     while (
       percentileLength < data.length &&
       percentileGain / totalGain < 0.5 &&
-      data.length !== 10
+      percentileLength !== 10
     ) {
       percentileGain += data[percentileLength].gain;
       percentileLength += 1;

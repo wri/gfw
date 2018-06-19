@@ -1,6 +1,7 @@
 export const initialState = {
-  loading: true,
+  loading: false,
   error: false,
+  data: {},
   config: {
     sentences: {
       initial:
@@ -8,12 +9,10 @@ export const initialState = {
       withLoss:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of forest, equivalent to {emission} of CO₂ of emissions.',
       withPlantationLoss:
-        'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of forest excluding tree plantations, equivalent to {emission} of CO₂ of emissions.'
+        'In 2010, {location} had {extent} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest, equivalent to {emission} of CO₂ of emissions.'
     }
   },
-  data: {},
   settings: {
-    indicator: 'gadm28',
     threshold: 30
   }
 };

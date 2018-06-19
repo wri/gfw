@@ -50,9 +50,9 @@ export default {
     },
     sentences: {
       initial:
-        'In the last {timeframe}, {count} GLAD alerts were detected in {indicator} in {location}, which affected an area of approximately {area}. The top {topRegions} regions accounted for {topPercent} of all GLAD alerts.',
-      oneRegion:
-        'In the last {timeframe}, {count} GLAD alerts were detected in {indicator} in {location}, which affected an area of approximately {area}. The top {topRegions} region accounted for {topPercent} of all GLAD alerts.'
+        'In the last {timeframe} in {location}, {count} GLAD alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.',
+      withInd:
+        'In the last {timeframe} in {location}, {count} GLAD alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.'
     }
   },
   settings: {

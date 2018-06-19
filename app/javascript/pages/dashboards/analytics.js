@@ -1,11 +1,15 @@
 import shareActions from 'components/modals/share/share-actions';
 import modalActions from 'components/modals/meta/meta-actions';
 import buttonActions from 'components/ui/button/button-actions';
+import widgetActions from 'components/widgets/actions';
 import { COUNTRY } from 'pages/dashboards/router';
-import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 
-const allActions = { ...shareActions, ...buttonActions, ...modalActions };
+const allActions = {
+  ...shareActions,
+  ...buttonActions,
+  ...modalActions,
+  ...widgetActions
+};
 const actions = Object.keys(allActions).reduce(
   (state, action) => ({
     ...state,
@@ -76,24 +80,11 @@ export const ANALYTICS_EVENTS = [
     label: payload => payload.subtitle
   },
   {
-    name: COUNTRY,
-    category: 'Country Page',
-    action: 'User changes widget settings',
-    label: 'User changed settings',
-    condition: payload => {
-      const location = payload && payload.location;
-      const current =
-        location &&
-        location.current &&
-        location.current.query &&
-        omit(location.current.query, ['widget', 'category']);
-      const prev =
-        location &&
-        location.prev &&
-        location.prev.query &&
-        omit(location.prev.query, ['widget', 'category']);
-      return current && prev && !isEqual(current, prev);
-    }
+    name: actions.settingsItemSelected,
+    category: 'Country Widget Settings',
+    action: payload => `Change ${Object.keys(payload.value)[0]}`,
+    label: payload =>
+      `${payload.value[Object.keys(payload.value)[0]]} | ${payload.widget}`
   },
   {
     name: actions.buttonClicked,

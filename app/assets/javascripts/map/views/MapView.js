@@ -555,7 +555,7 @@ define(
       },
 
       _setLandsatTiles: function() {
-        for (var i = 1999; i <= 2016; i++) {
+        for (var i = 1999; i <= 2017; i++) {
           if (i >= 2013) {
             landsatService.getTiles(i).then(
               function (year, results) {

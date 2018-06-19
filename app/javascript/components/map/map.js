@@ -15,10 +15,7 @@ import actions from './map-actions';
 import reducers, { initialState } from './map-reducers';
 import { getLayers } from './map-selectors';
 
-const mapStateToProps = (
-  { map, countryData, widgets, cache },
-  { widgetKey }
-) => {
+const mapStateToProps = ({ map, countryData, widgets }, { widgetKey }) => {
   const widget = widgets[widgetKey];
   const widgetSettings = widget && widget.settings;
   const activeLayers = widgetSettings && widgetSettings.layers;
@@ -26,9 +23,7 @@ const mapStateToProps = (
   return {
     ...map,
     ...countryData.geostore,
-    loading:
-      map.loading || cache.cacheListLoading || countryData.isGeostoreLoading,
-    cacheLoading: cache.cacheListLoading,
+    loading: map.loading || countryData.isGeostoreLoading,
     settings: { ...map.settings, ...widgetSettings },
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
@@ -42,25 +37,15 @@ class MapContainer extends PureComponent {
   }
 
   componentDidMount() {
-    const { layersKeys } = this.props;
+    const { layersKeys, getLayerSpec } = this.props;
+    getLayerSpec();
     this.buildMap();
     this.setLayers(layersKeys);
   }
 
   componentWillReceiveProps(nextProps) {
-    const {
-      bounds,
-      layersKeys,
-      settings,
-      options,
-      geojson,
-      getLayerSpec,
-      cacheLoading
-    } = nextProps;
+    const { bounds, layersKeys, settings, options, geojson } = nextProps;
     const { zoom } = options;
-    if (cacheLoading !== this.props.cacheLoading) {
-      getLayerSpec();
-    }
     // sync geostore with map
     if (!isEmpty(bounds) && !isEqual(bounds, this.props.bounds)) {
       this.boundMap(bounds);
@@ -198,8 +183,7 @@ MapContainer.propTypes = {
   options: PropTypes.object,
   getLayerSpec: PropTypes.func.isRequired,
   setMapZoom: PropTypes.func.isRequired,
-  geojson: PropTypes.object,
-  cacheLoading: PropTypes.bool
+  geojson: PropTypes.object
 };
 
 export { reducers, initialState, actions };
