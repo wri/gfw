@@ -14,6 +14,7 @@
     <% if controller_name != 'map' %>
       <%= render 'shared/gfw_assets' %>
     <% end %>
+    <%= render 'shared/cache_keys' %>
     <%= render 'shared/track' %>
 
     <%= yield :head %>
