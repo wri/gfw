@@ -8,7 +8,7 @@ module.exports = {
     use: [
       {
         loader: 'css-loader',
-        options: { minimize: env.RAILS_ENV === 'production' }
+        options: { minimize: env.NODE_ENV === 'production' }
       },
       { loader: 'postcss-loader', options: { sourceMap: true } },
       'resolve-url-loader',
