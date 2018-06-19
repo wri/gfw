@@ -10,3 +10,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+*[draggable="true"] {
+  cursor: move;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}

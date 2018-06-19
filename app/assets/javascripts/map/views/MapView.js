@@ -285,6 +285,7 @@ define(
           ].view(layer, options, this.map));
 
           layerView.addLayer(layer.position, _addNext);
+          mps.publish('Layer/add', [layer.slug]);
         }
       },
 
@@ -554,7 +555,7 @@ define(
       },
 
       _setLandsatTiles: function() {
-        for (var i = 1999; i <= 2016; i++) {
+        for (var i = 1999; i <= 2017; i++) {
           if (i >= 2013) {
             landsatService.getTiles(i).then(
               function (year, results) {

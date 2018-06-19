@@ -1,10 +1,10 @@
-import axios from 'axios';
+import request from 'utils/request';
 
-const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}/gfw-metadata`;
+const REQUEST_URL = `${process.env.GFW_API}/gfw-metadata`;
 
 export const getMeta = slug => {
   const url = `${REQUEST_URL}/${slug}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export default {

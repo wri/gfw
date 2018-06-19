@@ -177,7 +177,7 @@ define([
         if (!!vidID) {
           $thumb.find('.inner_box').css('background-image','url('+ vidID +')');
           $thumb.data('orderid', media.attributes.embedUrl);
-        } else {
+        } else {
           var videos = this.story.get('media').filter( function(model) {
             return !!model.get('embedUrl')
           });
@@ -459,7 +459,7 @@ define([
         target.parentNode.insertBefore(this.sourceDrag, target.nextSibling);
       }
 
-      var orderedArray = _.map(this.$('.sortable'), function(sort) {
+      var orderedArray = _.map(this.$('.sortable'), function(sort) {
         return $(sort).data('orderid');
       })
 
@@ -550,7 +550,7 @@ define([
     renderPlaceHolder: function() {
       this.$el.html(this.template({
         alreadyLoggedIn: this.alreadyLoggedIn,
-        apiHost: window.gfw.config.GFW_API_AUTH
+        apiHost: window.gfw.config.GFW_API
       }));
       return this;
     },

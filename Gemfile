@@ -19,6 +19,9 @@ gem 'rmagick', :require => false
 gem 'mini_magick'
 gem 'unf'
 gem 'sitemap_generator'
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
 
 # requirejs
 gem 'erubis'

@@ -1,8 +1,11 @@
+import { sortByKey } from 'utils/data';
+
 export const initialState = {
-  isCountriesLoading: false,
+  isCountriesLoading: true,
   isRegionsLoading: false,
   isSubRegionsLoading: false,
   isGeostoreLoading: false,
+  isCountryLinksLoading: false,
   countries: [],
   gadmCountries: [],
   faoCountries: [],
@@ -26,7 +29,7 @@ const mapLocations = locations => {
       });
     }
   });
-  return locationsMapped;
+  return sortByKey(locationsMapped, 'label');
 };
 
 const setCountriesLoading = (state, { payload }) => ({

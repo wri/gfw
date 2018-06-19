@@ -1,10 +1,10 @@
-import axios from 'axios';
+import request from 'utils/request';
 
-const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   getCountries:
-    'SELECT iso, country as name FROM umd_nat_staging GROUP BY iso, name ORDER BY name',
+    "SELECT iso, country as name FROM umd_nat_staging WHERE iso != 'TWN' AND iso != 'XCA' GROUP BY iso, name ORDER BY name",
   getFAOCountries:
     'SELECT DISTINCT country AS iso, name FROM table_1_forest_area_and_characteristics',
   getRegions:
@@ -21,12 +21,12 @@ const SQL_QUERIES = {
 
 export const getCountriesProvider = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getCountries}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getFAOCountriesProvider = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getFAOCountries}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getRegionsProvider = country => {
@@ -34,24 +34,24 @@ export const getRegionsProvider = country => {
     '{iso}',
     country
   );
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getSubRegionsProvider = (admin0, admin1) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getSubRegions}`
     .replace('{iso}', admin0)
     .replace('{admin1}', admin1);
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getCountryLinksProvider = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getCountryLinks}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getCountriesLatLng = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getCountriesLatLng}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const getRanking = ({ country }) => {
@@ -59,5 +59,5 @@ export const getRanking = ({ country }) => {
     '{country}',
     country
   );
-  return axios.get(url);
+  return request.get(url);
 };

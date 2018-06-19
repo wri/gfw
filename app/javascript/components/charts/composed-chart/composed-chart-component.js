@@ -51,6 +51,7 @@ class CustomComposedChart extends PureComponent {
       handleMouseMove,
       handleMouseLeave
     } = this.props;
+
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
@@ -98,7 +99,11 @@ class CustomComposedChart extends PureComponent {
                 <CustomTick
                   dataMax={maxYValue}
                   unit={unit || ''}
-                  unitFormat={unitFormat || (value => format('.2s')(value))}
+                  unitFormat={
+                    unitFormat ||
+                    (value =>
+                      (value < 1 ? format('.2r')(value) : format('.2s')(value)))
+                  }
                   fill="#555555"
                 />
               }
@@ -106,7 +111,11 @@ class CustomComposedChart extends PureComponent {
             />
             <CartesianGrid vertical={false} strokeDasharray="3 4" />
             <Tooltip
-              cursor={{ fill: '#d6d6d9' }}
+              cursor={{
+                opacity: 0.5,
+                stroke: '#d6d6d9',
+                ...(!!bars && { strokeWidth: `${1.2 * (100 / data.length)}%` })
+              }}
               content={<ChartToolTip settings={tooltip} />}
             />
             {areas &&

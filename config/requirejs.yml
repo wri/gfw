@@ -3,9 +3,7 @@ modules:
   - name: 'static'
   - name: 'landing'
   - name: 'stories'
-  - name: 'countries'
   - name: 'connect'
-  - name: 'static-pages'
 
 waitSeconds: 200
 

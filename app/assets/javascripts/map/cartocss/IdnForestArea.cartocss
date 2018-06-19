@@ -1,13 +1,13 @@
 // Label: Sanctuary Reserve Area + Nature Conservation Area
-#forest_area[fungsi_kws=1],
-#forest_area[fungsi_kws=1002],
-#forest_area[fungsi_kws=10021],
-#forest_area[fungsi_kws=10022],
-#forest_area[fungsi_kws=10023],
-#forest_area[fungsi_kws=10024],
-#forest_area[fungsi_kws=10025],
-#forest_area[fungsi_kws=10026],
-#forest_area[fungsi_kws=100201],{
+#forest_area[fungsikawa=1],
+#forest_area[fungsikawa=1002],
+#forest_area[fungsikawa=10021],
+#forest_area[fungsikawa=10022],
+#forest_area[fungsikawa=10023],
+#forest_area[fungsikawa=10024],
+#forest_area[fungsikawa=10025],
+#forest_area[fungsikawa=10026],
+#forest_area[fungsikawa=100201],{
   polygon-fill: #FEA189;
   polygon-opacity: 0.9;
   line-color: #FFF;
@@ -15,11 +15,11 @@
   line-opacity: 0.2;}
 
 // Label: Marine Protected Area
-#forest_area[fungsi_kws=100202],
-#forest_area[fungsi_kws=100251],
-#forest_area[fungsi_kws=100241],
-#forest_area[fungsi_kws=100221],
-#forest_area[fungsi_kws=100211] {
+#forest_area[fungsikawa=100202],
+#forest_area[fungsikawa=100251],
+#forest_area[fungsikawa=100241],
+#forest_area[fungsikawa=100221],
+#forest_area[fungsikawa=100211] {
   polygon-fill: #FF00FF;
   polygon-opacity: 0.1;
   line-color: #FF00FF;
@@ -27,7 +27,7 @@
   line-opacity: 0.9;}
 
 // Protected Forest
-#forest_area[fungsi_kws=1001],{
+#forest_area[fungsikawa=1001],{
   polygon-fill: #00ff7b;
   polygon-opacity: 0.9;
   line-color: #FFF;
@@ -35,7 +35,7 @@
   line-opacity: 0.2;}
 
 //Limited Production Forest
-#forest_area[fungsi_kws=1003],{
+#forest_area[fungsikawa=1003],{
   polygon-fill: #FFFEAA;
   polygon-opacity: 0.9;
   line-color: #FFF;
@@ -43,7 +43,7 @@
   line-opacity: 0.2;}
 
 // Production Forest
-#forest_area[fungsi_kws=1004],{
+#forest_area[fungsikawa=1004],{
   polygon-fill: #FFA7C0;
   polygon-opacity: 0.9;
   line-color: #FFF;
@@ -51,7 +51,7 @@
   line-opacity: 0.2;}
 
 //  Convertible Production Forest
-#forest_area[fungsi_kws=1005],{
+#forest_area[fungsikawa=1005],{
   polygon-fill: #FFA9A9;
   polygon-opacity: 0.9;
   line-color: #FFF;
@@ -59,7 +59,7 @@
   line-opacity: 0.2;}
 
 //Another Utilization Area
-#forest_area[fungsi_kws=1007],{
+#forest_area[fungsikawa=1007],{
   polygon-fill:  #D8D8D8;
   polygon-opacity: 0.9;
   line-color: #FFF;

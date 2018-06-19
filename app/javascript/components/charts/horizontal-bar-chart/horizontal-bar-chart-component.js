@@ -26,7 +26,7 @@ class HorizontalBarChart extends PureComponent {
 
     return (
       <div className={`c-horizontal-bar-chart ${className}`}>
-        <ResponsiveContainer>
+        <ResponsiveContainer width="99%">
           <BarChart
             data={pageData}
             margin={{ top: 15, right: 0, left: -24, bottom: 0 }}

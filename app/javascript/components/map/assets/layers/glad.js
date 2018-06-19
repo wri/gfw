@@ -6,7 +6,7 @@ import Canvas from './abstract/canvas';
 const OPTIONS = {
   dataMaxZoom: 12,
   urlTemplate: `https://wri-tiles.s3.amazonaws.com/glad_${
-    process.env.FEATURE_ENV === 'staging' ? 'staging' : 'prod'
+    process.env.RAILS_ENV === 'production' ? 'prod' : 'staging'
   }/tiles/{z}/{x}/{y}.png`,
   startDate: '2015-01-01'
 };
@@ -94,6 +94,7 @@ class Glad extends Canvas {
 
         if (
           confidence >= confidenceValue &&
+          day > 0 &&
           (day >= startDay || (0 && day <= endDay))
         ) {
           const intensity = getIntensity(band3);

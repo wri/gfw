@@ -77,7 +77,7 @@ define([
     el: '#contributeDataView',
 
     model: new (Backbone.Model.extend({
-      urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/form/contribution-data/',
+      urlRoot: window.gfw.config.GFW_API + '/form/contribution-data/',
       sync: function(method, model, options) {
         options || (options = {});
 
@@ -245,7 +245,7 @@ define([
      * - onChangeInput
      * - onSubmitContribution
      */
-    onChangeFieldset: function(e) {
+    onChangeFieldset: function(e) {
       var fieldset = this.$form.find('input[name="data_show"]:checked').data('fieldset');
       // Hide/open current filedset
       this.$fieldsets.toggleClass('-active', false);
@@ -267,7 +267,7 @@ define([
 
     },
 
-    onChangeUploadType: function() {
+    onChangeUploadType: function() {
       var uploadtype = this.$form.find('input[name="data_uploadtype"]:checked').data('uploadtype');
       // Hide/open current filedset
       this.$fieldFileUploadType.toggleClass('-active', false);

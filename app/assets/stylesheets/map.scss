@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Compass
 @import "compass/reset";
 @import "compass/css3";
@@ -12,7 +13,6 @@
   "basemaps/*.png",
   "home-icons/*.png",
   "static-logos/*.png",
-  "country-icons/*.png",
   "stories-icons/*.png";
 
 // Global
@@ -29,7 +29,7 @@
 @import "modules/shared";
 @import "modules/buttons";
 @import "modules/icons";
-@import "modules/slick";
+//@import "modules/slick";
 @import "modules/notifications";
 @import "modules/modal";
 @import "modules/modal_new";

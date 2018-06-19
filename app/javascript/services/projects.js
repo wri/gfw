@@ -1,6 +1,6 @@
-import axios from 'axios';
+import request from 'utils/request';
 
-const REQUEST_URL = `${process.env.CARTO_API_URL}/sql?q=`;
+const REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   aboutImpacts: 'SELECT * FROM gfw_outcomes_for_about_page_images',
@@ -11,15 +11,15 @@ const SQL_QUERIES = {
 
 export const fetchAboutProjects = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.aboutImpacts}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const fetchAllProjects = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.allProjects}`;
-  return axios.get(url);
+  return request.get(url);
 };
 
 export const fetchSGFProjects = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.sgfProjects}`;
-  return axios.get(url);
+  return request.get(url);
 };

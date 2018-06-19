@@ -19,7 +19,7 @@ const sectionsReducers = {
 
 // Components
 import * as projectsModal from 'pages/about/section-projects/section-projects-modal';
-import * as modalVideo from 'components/modal-video';
+import * as modalVideo from 'components/modals/video';
 
 const componentsReducers = {
   projectsModal: handleActions(projectsModal),

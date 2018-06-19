@@ -16,7 +16,7 @@ define([
   var IdnForestArea = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, fungsi_kws, legend as name, cartodb_id, \'{tableName}\' AS tablename, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, fungsikawa, legend_en as name, cartodb_id, \'{tableName}\' AS tablename, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
       cartocss: IdnForestAreaCartocss,
       infowindow: true,
       interactivity: 'cartodb_id, tablename, layer, name, analysis',

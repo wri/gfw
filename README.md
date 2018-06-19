@@ -56,6 +56,11 @@ $ rvm install 2.4.0
 $ rvm use 2.4.0
 ```
 
+Now let's install redis:
+```bash
+$ brew install redis
+```
+
 Now let's install Ruby on Rails:
 
 ```bash
@@ -94,6 +99,13 @@ The app should now be accessible on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 We follow a [Gitflow Worklow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) for development and deployment. Our `master` branch goes to production, `develop` goes to `master`. We also have a staging branch which is detached from the workflow that can be used to merge multiple branches for deployment to the staging site. Additionally you can deploy `develop` or feature branches to staging if desired.
 
 ![gitflow workflow](https://www.atlassian.com/dam/jcr:b5259cce-6245-49f2-b89b-9871f9ee3fa4/03%20(2).svg)
+
+#### Clear Redis cache
+If you need to clear the Redis cache after deploy, run these commands on your local terminal:
+```bash
+$ heroku redis:cli -a MY_APP_ID --confirm MY_APP_ID
+$ flushall
+```
 
 ## Releases
 

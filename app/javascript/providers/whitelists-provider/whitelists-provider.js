@@ -5,27 +5,25 @@ import PropTypes from 'prop-types';
 import * as actions from './whitelists-provider-actions';
 import reducers, { initialState } from './whitelists-provider-reducers';
 
-const mapStateToProps = state => ({
-  location: state.location.payload
+const mapStateToProps = ({ location }) => ({
+  location: location.payload
 });
 
-class CountryDataProvider extends PureComponent {
-  componentWillMount() {
+class WhitelistProvider extends PureComponent {
+  componentDidMount() {
     const {
-      location,
+      location: { country, region, subRegion },
       getCountryWhitelist,
-      getRegionWhitelist,
-      getWaterBodiesWhitelist
+      getRegionWhitelist
     } = this.props;
-    getCountryWhitelist(location.country);
-    if (location.region) {
-      getRegionWhitelist(location.country, location.region, location.subRegion);
+    getCountryWhitelist(country);
+    if (region) {
+      getRegionWhitelist(country, region, subRegion);
     }
-    getWaterBodiesWhitelist();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { country, region, subRegion } = nextProps.location;
+    const { location: { country, region, subRegion } } = nextProps;
     const { getCountryWhitelist, getRegionWhitelist } = this.props;
     const hasCountryChanged = country !== this.props.location.country;
     const hasRegionChanged = region !== this.props.location.region;
@@ -45,12 +43,11 @@ class CountryDataProvider extends PureComponent {
   }
 }
 
-CountryDataProvider.propTypes = {
+WhitelistProvider.propTypes = {
   location: PropTypes.object.isRequired,
   getCountryWhitelist: PropTypes.func.isRequired,
-  getRegionWhitelist: PropTypes.func.isRequired,
-  getWaterBodiesWhitelist: PropTypes.func.isRequired
+  getRegionWhitelist: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
-export default connect(mapStateToProps, actions)(CountryDataProvider);
+export default connect(mapStateToProps, actions)(WhitelistProvider);

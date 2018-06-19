@@ -10,6 +10,8 @@ import {
   getSubRegionsProvider,
   getCountryLinksProvider
 } from 'services/country';
+import { getWaterBodiesBlacklistProvider } from 'services/whitelists';
+
 import { getGeostoreProvider } from 'services/geostore';
 import BOUNDS from 'data/bounds.json';
 
@@ -29,28 +31,22 @@ export const setCountryLinks = createAction('setCountryLinks');
 
 export const getCountries = createThunkAction(
   'getCountries',
-  () => (dispatch, state) => {
-    if (!state().countryData.isCountriesLoading) {
-      dispatch(setCountriesLoading(true));
-      axios
-        .all([getCountriesProvider(), getFAOCountriesProvider()])
-        .then(
-          axios.spread((gadm28Countries, faoCountries) => {
-            const countries = uniqBy(
-              [...gadm28Countries.data.rows, ...faoCountries.data.rows],
-              'iso'
-            );
-            dispatch(setGadmCountries(gadm28Countries.data.rows));
-            dispatch(setFAOCountries(faoCountries.data.rows));
-            dispatch(setCountries(countries));
-            dispatch(setCountriesLoading(false));
-          })
-        )
-        .catch(error => {
+  () => dispatch => {
+    dispatch(setCountriesLoading(true));
+    axios
+      .all([getCountriesProvider(), getFAOCountriesProvider()])
+      .then(
+        axios.spread((gadm28Countries, faoCountries) => {
+          dispatch(setGadmCountries(gadm28Countries.data.rows));
+          dispatch(setFAOCountries(faoCountries.data.rows));
+          dispatch(setCountries(gadm28Countries.data.rows));
           dispatch(setCountriesLoading(false));
-          console.info(error);
-        });
-    }
+        })
+      )
+      .catch(error => {
+        dispatch(setCountriesLoading(false));
+        console.info(error);
+      });
   }
 );
 
@@ -61,7 +57,7 @@ export const getRegions = createThunkAction(
       dispatch(setRegionsLoading(true));
       getRegionsProvider(country)
         .then(response => {
-          dispatch(setRegions(response.data.rows));
+          dispatch(setRegions(uniqBy(response.data.rows), 'id'));
           dispatch(setRegionsLoading(false));
         })
         .catch(error => {
@@ -77,11 +73,21 @@ export const getSubRegions = createThunkAction(
   (country, region) => (dispatch, state) => {
     if (!state().countryData.isSubRegionsLoading) {
       dispatch(setSubRegionsLoading(true));
-      getSubRegionsProvider(country, region)
-        .then(response => {
-          dispatch(setSubRegions(response.data.rows));
-          dispatch(setSubRegionsLoading(false));
-        })
+      axios
+        .all([
+          getSubRegionsProvider(country, region),
+          getWaterBodiesBlacklistProvider(country, region)
+        ])
+        .then(
+          axios.spread((subRegions, blacklistResponse) => {
+            const { rows } = subRegions.data;
+            const blackList = blacklistResponse.data.rows.map(i => i.adm2);
+            const subRegionList =
+              rows && rows.filter(r => blackList.indexOf(r.id) === -1);
+            dispatch(setSubRegions(uniqBy(subRegionList, 'id')));
+            dispatch(setSubRegionsLoading(false));
+          })
+        )
         .catch(error => {
           dispatch(setSubRegionsLoading(false));
           console.info(error);

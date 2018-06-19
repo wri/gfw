@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Carousel from 'components/carousel';
-import Card from 'components/card';
+import Carousel from 'components/ui/carousel';
+import Card from 'components/ui/card';
 
 import './section-impacts-styles.scss';
 

@@ -1,0 +1,80 @@
+@import '~styles/settings.scss';
+
+$settings-items-margin: rem(20px);
+
+.c-widget-settings {
+  width: rem(290px);
+  background-color: $white;
+  padding: rem(25px) 0 rem(5px);
+
+  > div {
+    margin-bottom: $settings-items-margin;
+    padding: 0 rem(25px);
+  }
+
+  .intersections {
+    border-bottom: 1px solid $border;
+
+    > div {
+      margin-bottom: $settings-items-margin;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .title {
+    font-size: rem(14px);
+    color: $slate;
+  }
+
+  .years-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: rem(10px);
+    font-size: 13px;
+
+    .select-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .text-date {
+      margin: 0 10px;
+    }
+  }
+
+  .canopy-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .label {
+      margin-bottom: 0;
+    }
+
+    &.threshold-border {
+      position: relative;
+      padding-top: rem(40px);
+      padding-bottom: rem(6px);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: rem(10px);
+        left: rem(-25px);
+        width: calc(100% + #{rem(50px)});
+        height: rem(1px);
+        background-color: $border;
+      }
+    }
+
+    .dd__wrapper {
+      max-width: rem(85px);
+    }
+  }
+}

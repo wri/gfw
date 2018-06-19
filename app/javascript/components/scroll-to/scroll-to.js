@@ -7,8 +7,8 @@ class ScrollTo extends PureComponent {
     setTimeout(this.handleScroll, 150);
   }
 
-  handleFadeOut = (el, intColor) => {
-    el.style.backgroundColor = intColor; // eslint-disable-line
+  handleFadeOut = el => {
+    el.style.backgroundColor = null; // eslint-disable-line
   };
 
   handleFadeIn = el => {

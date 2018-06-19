@@ -21,8 +21,11 @@ define(
     Presenter
   ) {
     'use strict';
-    var env = window.gfw.config.FEATURE_ENV === 'staging' ? 'staging' : 'prod';
-    var TILE_URL = 'https://wri-tiles.s3.amazonaws.com/glad_' + env + '/tiles{/z}{/x}{/y}.png';
+    var env = window.gfw.config.RAILS_ENV === 'production' ? 'prod' : 'staging';
+    var TILE_URL =
+      'https://wri-tiles.s3.amazonaws.com/glad_' +
+      env +
+      '/tiles{/z}{/x}{/y}.png';
     var START_DATE = '2015-01-01';
 
     var getConfidence = function(number) {
@@ -109,10 +112,7 @@ define(
           ];
         }
 
-        var timeLinesStartDay = this.timelineExtent[0].diff(
-          startDate,
-          'days'
-        );
+        var timeLinesStartDay = this.timelineExtent[0].diff(startDate, 'days');
         var timeLinesEndDay =
           numberOfDays - endDate.diff(this.timelineExtent[1], 'days');
 
@@ -136,6 +136,7 @@ define(
 
             if (
               confidence >= confidenceValue &&
+              day > 0 &&
               (day >= timeLinesStartDay && day <= timeLinesEndDay)
             ) {
               var intensity = getIntensity(band3);

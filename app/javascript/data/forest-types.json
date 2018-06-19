@@ -1,0 +1,17 @@
+[
+  {
+    "label": "Plantations",
+    "value": "plantations",
+    "metaKey": "gfw_plantations"
+  },
+  {
+    "label": "Intact Forest Landscapes",
+    "value": "ifl_2013",
+    "metaKey": "intact_forest_landscapes_change"
+  },
+  {
+    "label": "Primary Forests",
+    "value": "primary_forest",
+    "metaKey": "primary_forest"
+  }
+]

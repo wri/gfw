@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Globe from 'components/globe';
 import ProjectsModal from 'pages/about/section-projects/section-projects-modal';
 import ItemsList from 'components/items-list';
-import Button from 'components/button';
+import Button from 'components/ui/button';
 
 import growth from 'pages/about/section-projects/images/growth.png';
 import './section-projects-styles.scss';
