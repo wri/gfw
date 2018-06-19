@@ -59,10 +59,7 @@ export const sortData = createSelector(
       uniqBy(data, 'id'),
       settings.unit === 'ha' ? 'loss' : 'percentage',
       true
-    ).map((d, i) => ({
-      ...d,
-      rank: i + 1
-    }));
+    );
   }
 );
 
@@ -78,10 +75,23 @@ export const parseData = createSelector(
   ],
   (data, settings, location, currentLocation, meta, colors, query) => {
     if (!data || !data.length) return null;
-    let dataTrimmed = data;
+    let dataTrimmed = [];
+    data.forEach(d => {
+      const locationMeta = meta && meta.find(l => d.id === l.value);
+      if (locationMeta) {
+        dataTrimmed.push({
+          ...d,
+          label: locationMeta.label
+        });
+      }
+    });
+    dataTrimmed = dataTrimmed.map((d, i) => ({
+      ...d,
+      rank: i + 1
+    }));
     if (location.country) {
       const locationIndex = findIndex(
-        data,
+        dataTrimmed,
         d => d.id === currentLocation.value
       );
       let trimStart = locationIndex - 2;
@@ -90,28 +100,23 @@ export const parseData = createSelector(
         trimStart = 0;
         trimEnd = 5;
       }
-      if (locationIndex > data.length - 3) {
-        trimStart = data.length - 5;
-        trimEnd = data.length;
+      if (locationIndex > dataTrimmed.length - 3) {
+        trimStart = dataTrimmed.length - 5;
+        trimEnd = dataTrimmed.length;
       }
-      dataTrimmed = data.slice(trimStart, trimEnd);
+      dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-    return dataTrimmed.map(d => {
-      const locationData = meta && meta.find(l => d.id === l.value);
-
-      return {
-        ...d,
-        label: (locationData && locationData.label) || '',
-        color: colors.main,
-        path: getAdminPath({
-          ...location,
-          country: location.region && location.country,
-          query,
-          id: d.id
-        }),
-        value: settings.unit === 'ha' ? d.loss : d.percentage
-      };
-    });
+    return dataTrimmed.map(d => ({
+      ...d,
+      color: colors.main,
+      path: getAdminPath({
+        ...location,
+        country: location.region && location.country,
+        query,
+        id: d.id
+      }),
+      value: settings.unit === 'ha' ? d.loss : d.percentage
+    }));
   }
 );
 
@@ -143,7 +148,9 @@ export const getSentence = createSelector(
       ? 'region-wide'
       : `${indicator.label.toLowerCase()}`;
     let sentence = !indicator ? initial : withIndicator;
-    if (currentLocation.label === 'global') { sentence = !indicator ? globalInitial : globalWithIndicator; }
+    if (currentLocation.label === 'global') {
+      sentence = !indicator ? globalInitial : globalWithIndicator;
+    }
     if (loss === 0) sentence = noLoss;
     const params = {
       indicator: indicatorName,

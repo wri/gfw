@@ -6,25 +6,17 @@ import CACHE_EXCEPTIONS from 'data/cache-exceptions.json';
 
 const EXPIRE_DEFAULT = 86400;
 let cacheKeys = [];
-let cacheError = false;
-
-export const cacheMiddleware = () => nextDispatch => action => {
-  if (action.type === 'setCacheList') {
-    cacheKeys = action.payload;
-  }
-  if (action.type === 'setCacheError') {
-    cacheError = true;
-  }
-  nextDispatch(action);
-};
 
 const request = {
   get(url, expire = EXPIRE_DEFAULT, exceptionId = null) {
+    if (cacheKeys.length) {
+      cacheKeys = window.RequestCache.keys;
+    }
     const key = btoa(url);
-    if (cacheError || cacheKeys.indexOf(key) === -1) {
+    if (cacheKeys.indexOf(key) === -1) {
       const axiosInstance = axios.create();
       const haveException = checkException(exceptionId);
-      if (!cacheError && !haveException) {
+      if (!haveException) {
         axiosInstance.interceptors.response.use(response =>
           addKey(key, response.data, expire, exceptionId)
             .then(() => response)

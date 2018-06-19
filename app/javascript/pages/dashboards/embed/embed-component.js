@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import Widgets from 'components/widgets';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
-import CacheProvider from 'providers/cache-provider';
 import Share from 'components/modals/share';
 import ModalMeta from 'components/modals/meta';
 
@@ -18,7 +17,6 @@ class Embed extends PureComponent {
         </div>
         <Share />
         <ModalMeta />
-        <CacheProvider />
         <CountryDataProvider />
         <WhitelistsProvider />
       </div>
