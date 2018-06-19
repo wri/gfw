@@ -5,8 +5,8 @@ export default {
   config: {
     size: 'small',
     categories: ['land-cover'],
-    admins: ['country', 'region', 'subRegion'],
-    selectors: ['years'],
+    admins: ['country', 'region'],
+    selectors: [],
     years: [2015],
     type: 'plantations',
     metaKey: 'widget_global_land_cover',
