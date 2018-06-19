@@ -6,9 +6,6 @@ require "shellwords"
 ENV["RACK_ENV"] ||= "development"
 RACK_ENV = ENV["RACK_ENV"]
 
-ENV["RACK_ENV"] ||= RACK_ENV
-RACK_ENV = ENV["RACK_ENV"]
-
 APP_PATH          = File.expand_path("../", __dir__)
 NODE_MODULES_PATH = File.join(APP_PATH, "node_modules")
 WEBPACK_CONFIG    = File.join(APP_PATH, "config/webpack/#{RACK_ENV}.js")

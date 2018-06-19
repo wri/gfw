@@ -70,7 +70,7 @@ define(
       render: function() {
         this.$el.html('').append(
           this.template({
-            staging: window.gfw.config.RACK_ENV === 'staging'
+            staging: window.gfw.config.FEATURE_ENV === 'staging'
           })
         );
         this.cache();
