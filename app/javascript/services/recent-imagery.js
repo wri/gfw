@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REQUEST_URL = `${process.env.GFW_API_HOST_PROD}`;
+const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
   recentTiles:

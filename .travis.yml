@@ -6,6 +6,9 @@ node_js:
 rvm:
   - 2.4.0
 
+services:
+  - redis-server
+
 cache:
   bundler: true
   directories:

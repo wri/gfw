@@ -1,0 +1,49 @@
+@import '~styles/settings.scss';
+
+.theme-switch-light {
+  .react-toggle {
+    width: 100%;
+  }
+
+  .react-toggle-track {
+    width: 100%;
+    height: rem(34px);
+    background-color: transparent !important;
+    border: solid 1px $border;
+
+    > div {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      font-size: 13px;
+      color: $slate;
+    }
+
+    .react-toggle-track-check {
+      left: 0;
+    }
+
+    .react-toggle-track-x {
+      right: 0;
+    }
+  }
+
+  .react-toggle-thumb {
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: transparent;
+    border-radius: 30px;
+    border: solid 1px $green-gfw;
+    box-shadow: none !important;
+  }
+
+  .react-toggle--checked {
+    .react-toggle-thumb {
+      left: 50%;
+    }
+  }
+}
