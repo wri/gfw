@@ -10,7 +10,7 @@ import 'styles/styles.scss';
 import reducers from './reducers';
 import router from './router';
 
-import Root from './root';
+import Page from './page';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = applyMiddleware(
@@ -25,7 +25,7 @@ const store = createStore(
 
 const Map = () => (
   <Provider store={store}>
-    <Root />
+    <Page />
   </Provider>
 );
 

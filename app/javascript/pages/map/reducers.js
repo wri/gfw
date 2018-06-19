@@ -5,13 +5,6 @@ import { handleActions } from 'utils/redux';
 // Routes
 import router from './router';
 
-// Pages
-import * as map from 'pages/map/root';
-
-const pagesReducers = {
-  root: handleActions(map)
-};
-
 // Components
 import * as recentImageryComponent from 'pages/map/recent-imagery';
 
@@ -21,7 +14,6 @@ const componentsReducers = {
 };
 
 export default combineReducers({
-  ...pagesReducers,
   ...componentsReducers,
   location: router.reducer
 });
