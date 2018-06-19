@@ -8,8 +8,8 @@
 // layout file, like app/views/layouts/application.html.erb
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Map from 'pages/map';
+import Map from 'pages/map_legacy';
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Map />, document.getElementById('map-page'));
+  ReactDOM.render(<Map />, document.getElementById('react-map'));
 });

@@ -15,7 +15,7 @@ const routeChangeThunk = (dispatch, getState) => {
 export const routes = {
   [MAP]: {
     path:
-      '/v2/map/:zoom?/:latitude?/:longitude?/:iso?/:basemap?/:layers?/:sublayers?'
+      '/map/:zoom?/:latitude?/:longitude?/:iso?/:basemap?/:layers?/:sublayers?'
   }
 };
 
