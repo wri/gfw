@@ -133,7 +133,6 @@ export const getExtent = ({
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
-  console.log(url)
   return request.get(url);
 };
 
