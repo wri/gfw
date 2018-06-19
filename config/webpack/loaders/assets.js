@@ -8,9 +8,7 @@ module.exports = {
       options: {
         publicPath,
         name:
-          env.RAILS_ENV === 'production'
-            ? '[name]-[hash].[ext]'
-            : '[name].[ext]'
+          env.NODE_ENV === 'production' ? '[name]-[hash].[ext]' : '[name].[ext]'
       }
     }
   ]
