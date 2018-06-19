@@ -18,3 +18,16 @@ export const formatNumber = ({ num, unit }) => {
   }
   return `${formattedNum}${unit || ''}`;
 };
+
+export const buildGadm36Id = (country, region, subRegion) =>
+  `${country}${region ? `.${region}` : ''}${
+    subRegion ? `.${subRegion}_1` : '_1'
+  }`;
+
+export const parseGadm36Id = gid => {
+  const ids = gid.split('.');
+  const adm0 = ids[0] || null;
+  const adm1 = ids[1] && ids[1].split('_')[0];
+  const adm2 = ids[2] && ids[2].split('_')[0];
+  return { adm0, adm1, adm2 };
+};
