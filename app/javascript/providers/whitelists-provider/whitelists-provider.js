@@ -5,28 +5,29 @@ import PropTypes from 'prop-types';
 import * as actions from './whitelists-provider-actions';
 import reducers, { initialState } from './whitelists-provider-reducers';
 
-const mapStateToProps = ({ cache, location }) => ({
-  location: location.payload,
-  cacheLoading: cache.cacheListLoading
+const mapStateToProps = ({ location }) => ({
+  location: location.payload
 });
 
 class WhitelistProvider extends PureComponent {
-  componentWillReceiveProps(nextProps) {
+  componentDidMount() {
     const {
-      cacheLoading,
-      location: { country, region, subRegion }
-    } = nextProps;
+      location: { country, region, subRegion },
+      getCountryWhitelist,
+      getRegionWhitelist
+    } = this.props;
+    getCountryWhitelist(country);
+    if (region) {
+      getRegionWhitelist(country, region, subRegion);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { location: { country, region, subRegion } } = nextProps;
     const { getCountryWhitelist, getRegionWhitelist } = this.props;
     const hasCountryChanged = country !== this.props.location.country;
     const hasRegionChanged = region !== this.props.location.region;
     const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
-
-    if (cacheLoading !== this.props.cacheLoading) {
-      getCountryWhitelist(country);
-      if (region) {
-        getRegionWhitelist(country, region, subRegion);
-      }
-    }
 
     if (hasCountryChanged) {
       getCountryWhitelist(country);
@@ -44,7 +45,6 @@ class WhitelistProvider extends PureComponent {
 
 WhitelistProvider.propTypes = {
   location: PropTypes.object.isRequired,
-  cacheLoading: PropTypes.bool.isRequired,
   getCountryWhitelist: PropTypes.func.isRequired,
   getRegionWhitelist: PropTypes.func.isRequired
 };
