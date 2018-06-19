@@ -12,7 +12,7 @@ case "$1" in
         ;;
     test)
         echo "Running Test"
-        bundle exec rake db:exists RACK_ENV=test
+        bundle exec rake db:exists RAILS_ENV=test
 
         export SECRET_KEY_BASE=$(rake secret)
 
@@ -20,7 +20,7 @@ case "$1" in
         ;;
     start)
         echo "Running Start"
-        bundle exec rake db:exists RACK_ENV=production
+        bundle exec rake db:exists RAILS_ENV=production
 
         export SECRET_KEY_BASE=$(rake secret)
 

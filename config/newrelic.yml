@@ -33,7 +33,7 @@ common: &default_settings
   # dashboard page. If you want to map this instance into multiple
   # apps, like "AJAX Requests" and "All UI" then specify a semicolon
   # separated list of up to three distinct names, or a yaml list.
-  # Defaults to the capitalized RACK_ENV or RACK_ENV (i.e.,
+  # Defaults to the capitalized RAILS_ENV or RAILS_ENV (i.e.,
   # Production, Staging, etc)
   #
   # Example:
@@ -179,7 +179,7 @@ common: &default_settings
 # Application Environments
 # ------------------------------------------
 # Environment-specific settings are in this section.
-# For Rails applications, RACK_ENV is used to determine the environment.
+# For Rails applications, RAILS_ENV is used to determine the environment.
 # For Java applications, pass -Dnewrelic.environment <environment> to set
 # the environment.
 

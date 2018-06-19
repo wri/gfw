@@ -382,7 +382,7 @@ define(
                     startYear: options.startYear,
                     layerTitle: layer.title,
                     layerSlug: layer.slug,
-                    staging: window.gfw.config.RACK_ENV !== 'production'
+                    staging: window.gfw.config.RAILS_ENV !== 'production'
                   },
                   subLayers
                 )
