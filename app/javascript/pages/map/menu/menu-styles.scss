@@ -24,23 +24,41 @@ $map-menu-flap-width: rem(290px);
     justify-content: space-between;
     width: $map-menu-items-size;
     height: calc(100% - #{$map-menu-items-size});
-    box-shadow: inset -1px 0 0 0 $white-calcium;
     background-color: $white;
     z-index: 2;
 
-    &:hover {
+    &::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: rem(1px);
+      height: 100%;
+      background-color: $white-calcium;
+      z-index: 2;
+    }
+
+    &:hover,
+    &.--has-selection {
       background-color: $white-tree;
     }
   }
 
   &__item {
+    position: relative;
     width: 100%;
     height: $map-menu-items-size;
+    z-index: 1;
 
-    &:hover {
+    &:hover,
+    &.--selected {
       background-color: $white;
       border-top: 1px solid $white-calcium;
       border-bottom: 1px solid $white-calcium;
+    }
+
+    &.--selected {
+      z-index: 3;
     }
   }
 
