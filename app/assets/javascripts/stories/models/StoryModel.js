@@ -9,7 +9,7 @@ define([
   'use strict';
 
   var Story = Backbone.Model.extend({
-    urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/story/',
+    urlRoot: window.gfw.config.GFW_API + '/story/',
 
     defaults: {
       media: new MediaCollection()

@@ -14,7 +14,7 @@ define([
   var Subscription = Backbone.Model.extend({
     type: 'subscription',
 
-    urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions',
+    urlRoot: window.gfw.config.GFW_API + '/subscriptions',
 
     sync: function(method, model, options) {
       options || (options = {});

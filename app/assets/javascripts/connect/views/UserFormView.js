@@ -74,7 +74,7 @@ define([
       var languagesList = languagesHelper.getListSelected(userLang);
 
       this.$el.html(this.template({
-        action: window.gfw.config.GFW_API_HOST+'/user',
+        action: window.gfw.config.GFW_API_OLD+'/user',
         redirect: window.location.href,
         user: this.user.toJSON(),
         errors: this.validator.messages,

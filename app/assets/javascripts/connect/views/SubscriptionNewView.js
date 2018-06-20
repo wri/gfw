@@ -282,7 +282,7 @@ define([
       this.$el.html(this.templates.default({
         aoi: this.subscription.get('aoi'),
         loggedIn: this.router.alreadyLoggedIn,
-        apiHost: window.gfw.config.GFW_API_AUTH
+        apiHost: window.gfw.config.GFW_API
       }));
       this.cache();
       this.renderChosen();

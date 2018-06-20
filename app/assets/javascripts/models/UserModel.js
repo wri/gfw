@@ -6,7 +6,7 @@ define([
 
   var User = Backbone.Model.extend({
 
-    urlRoot: window.gfw.config.GFW_API_HOST_NEW_API + '/user',
+    urlRoot: window.gfw.config.GFW_API + '/user',
 
     setEmailIfEmpty: function(email) {
       if (_.isEmpty(this.get('email'))) {
@@ -65,7 +65,7 @@ define([
     checkLogged: function () {
       return new Promise(function(resolve, reject) {
         $.ajax({
-          url: window.gfw.config.GFW_API_AUTH + '/auth/check-logged',
+          url: window.gfw.config.GFW_API + '/auth/check-logged',
           dataType: 'json',
           xhrFields: {
             withCredentials: true

@@ -9,7 +9,7 @@ define([
   var Subscriptions = Backbone.Collection.extend({
     model: Subscription,
 
-    url: window.gfw.config.GFW_API_HOST_NEW_API + '/subscriptions',
+    url: window.gfw.config.GFW_API + '/subscriptions',
 
     comparator: function(subscription) {
       return -moment(subscription.get('createdAt')).unix()
