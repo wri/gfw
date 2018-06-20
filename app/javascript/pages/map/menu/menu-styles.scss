@@ -85,5 +85,10 @@ $map-menu-flap-width: rem(290px);
     background-color: $white;
     z-index: 1;
     transform: translateX(#{$map-menu-items-size - $map-menu-flap-width});
+    transition: transform 0.5s ease-in-out;
+
+    &.--showed {
+      transform: translateX($map-menu-items-size);
+    }
   }
 }
