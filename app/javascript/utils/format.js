@@ -29,5 +29,5 @@ export const parseGadm36Id = gid => {
   const adm0 = ids[0] || null;
   const adm1 = ids[1] && ids[1].split('_')[0];
   const adm2 = ids[2] && ids[2].split('_')[0];
-  return { adm0, adm1, adm2 };
+  return { adm0, adm1: parseInt(adm1, 10), adm2: parseInt(adm2, 10) };
 };
