@@ -4,7 +4,7 @@ export default {
   },
   config: {
     size: 'small',
-    forestTypes: ['ifl_2013'],
+    forestTypes: ['ifl'],
     landCategories: ['wdpa', 'kba', 'aze', 'tcl'],
     units: ['ha', '%'],
     categories: ['land-cover'],

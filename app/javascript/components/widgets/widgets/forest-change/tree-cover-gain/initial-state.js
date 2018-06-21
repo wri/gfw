@@ -5,7 +5,7 @@ export default {
   },
   config: {
     size: 'small',
-    forestTypes: ['ifl_2013'],
+    forestTypes: ['ifl'],
     landCategories: ['wdpa', 'landmark', 'mining'],
     units: ['ha'],
     categories: ['summary', 'forest-change'],

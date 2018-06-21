@@ -4,7 +4,7 @@ export const initialState = {
   },
   config: {
     size: 'large',
-    forestTypes: ['ifl_2013', 'primary_forest'],
+    forestTypes: ['ifl', 'primary_forest'],
     landCategories: ['mining', 'wdpa', 'landmark'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region', 'subRegion'],

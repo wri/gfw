@@ -145,7 +145,7 @@ class WidgetSettings extends PureComponent {
                   onSettingsChange({
                     value: {
                       forestType: (option && option.value) || '',
-                      ...(!!(option && option.value === 'ifl_2013') && {
+                      ...(!!(option && option.value === 'ifl') && {
                         extentYear: 2010
                       })
                     },
@@ -233,7 +233,7 @@ class WidgetSettings extends PureComponent {
           )}
         {hasExtraOptions &&
           extentYears &&
-          settings.forestType !== 'ifl_2013' &&
+          settings.forestType !== 'ifl' &&
           (config.type !== 'loss' ||
             !settings.unit ||
             (settings.unit === '%' && config.type === 'loss')) &&
