@@ -1,0 +1,33 @@
+@import '~styles/settings';
+
+.c-layers-block {
+  position: relative;
+  padding: rem(20px) 0;
+
+  &__header {
+    margin-bottom: rem(20px);
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: $greyish-brown;
+  }
+
+  &__description {
+    font-size: 12px;
+    letter-spacing: -0.3px;
+    color: $hot-grey;
+  }
+
+  &:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: rem(-20px);
+    width: calc(100% + #{rem(20px)});
+    height: rem(1px);
+    background-color: rgba($hot-grey, 0.3);
+  }
+}

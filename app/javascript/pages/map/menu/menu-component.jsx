@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 import gfwLogo from 'assets/logos/gfw.png';
+import closeIcon from 'assets/icons/close.svg';
 
 import './menu-styles.scss';
 
@@ -34,12 +35,12 @@ class Menu extends PureComponent {
     const { sections, selectedSection } = this.props;
     if (!selectedSection) return null;
 
-    const { Component } = sections[selectedSection];
-    return <Component />;
+    const { Component, data } = sections[selectedSection];
+    return <Component data={data} />;
   };
 
   render() {
-    const { sections, selectedSection } = this.props;
+    const { sections, selectedSection, setSelectedSection } = this.props;
 
     return (
       <div className="c-map-menu">
@@ -57,11 +58,6 @@ class Menu extends PureComponent {
             {Object.keys(sections).map(key =>
               this.renderMenuItem(key, sections[key])
             )}
-            <li className="c-map-menu__item" />
-            <li className="c-map-menu__item" />
-            <li className="c-map-menu__item" />
-            <li className="c-map-menu__item" />
-            <li className="c-map-menu__item" />
           </ul>
           <ul>
             <li className="c-map-menu__item" />
@@ -69,10 +65,17 @@ class Menu extends PureComponent {
           </ul>
         </div>
         <div
-          className={`c-map-menu__item-flap ${
-            selectedSection ? '--showed' : ''
-          }`}
+          className={`c-map-menu__flap ${selectedSection ? '--showed' : ''}`}
         >
+          <button
+            className="c-map-menu__flap__close"
+            onClick={() => {
+              setSelectedSection(null);
+            }}
+          >
+            <Icon icon={closeIcon} />
+            {name}
+          </button>
           {this.renderMenuFlapComponent()}
         </div>
       </div>
