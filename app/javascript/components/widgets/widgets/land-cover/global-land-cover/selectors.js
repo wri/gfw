@@ -44,7 +44,7 @@ export const parseData = createSelector(
     const dataParsed = dataMerged.filter(el => el.value !== 0).map(el => ({
       ...el,
       percentage: 100 * el.value / total,
-      value: el.value * 300 * 300 / 1e4,
+      value: el.value,
       color: colors.categories[el.label]
     }));
     return sortByKey(dataParsed.filter(d => d !== null), 'value', true);
