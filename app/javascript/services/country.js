@@ -11,7 +11,7 @@ const SQL_QUERIES = {
   getRegions:
     "SELECT gid_1 as id, name_1 as name FROM gadm36_adm1 WHERE iso = '{iso}' ORDER BY name ",
   getSubRegions:
-    "SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND gid_1 = '{adm1}' ORDER BY name",
+    "SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND gid_1 = '{adm1}' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name",
   getCountryLinks:
     'SELECT iso, external_links FROM external_links_gfw WHERE forest_atlas is true',
   getRanking:
