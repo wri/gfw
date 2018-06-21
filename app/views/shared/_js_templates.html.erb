@@ -590,7 +590,7 @@
 
 <script id='analysis_subscribe-template' type='text/x-underscore-template'>
   <div class='content'>
-    <%= form_for :area, :url => "//#{ENV['GFW_API_HOST']}/subscribe", :html => { :method => :post, :class => 'save-area' } do |f| %>
+    <%= form_for :area, :url => "//#{ENV['GFW_API_OLD']}/subscribe", :html => { :method => :post, :class => 'save-area' } do |f| %>
       <%= f.hidden_field :the_geom %>
 
       <a href='#' class='close'><svg><use xlink:href='#shape-close'></use></svg></a>

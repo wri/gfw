@@ -10,7 +10,7 @@ define([
   var GET_REQUEST_LANDSAT_TILES_ID = 'LandsatService:getTiles';
   var GET_REQUEST_REFRESH_TILES_ID = 'LandsatService:getRefreshTiles';
 
-  var APIURL = window.gfw.config.GFW_API_HOST_PROD;
+  var APIURL = window.gfw.config.GFW_API;
 
   var APIURLS = {
     'getTiles': '/landsat-tiles/{year}'

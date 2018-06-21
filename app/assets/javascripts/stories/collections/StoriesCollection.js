@@ -8,7 +8,7 @@ define([
   var Stories = Backbone.Collection.extend({
     model: Story,
 
-    url: window.gfw.config.GFW_API_HOST_NEW_API + '/story/',
+    url: window.gfw.config.GFW_API + '/story/',
 
     initialize: function(models, options) {
       options = options || {};

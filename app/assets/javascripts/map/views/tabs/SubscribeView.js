@@ -75,7 +75,7 @@ define([
         this.presenter.subscription.formattedTopic().long_title : '';
 
       this.$el.html(this.template({
-        apiHost: window.gfw.config.GFW_API_AUTH,
+        apiHost: window.gfw.config.GFW_API,
         loggedIn: loggedIn,
         email: this.presenter.user.get('email'),
         date: moment().format('MMM D, YYYY'),

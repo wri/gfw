@@ -22,7 +22,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
-        apiHost: window.gfw.config.GFW_API_AUTH,
+        apiHost: window.gfw.config.GFW_API,
         message: this.message
       }));
 
