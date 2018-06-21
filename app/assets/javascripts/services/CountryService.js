@@ -36,11 +36,11 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     showCountry:
       "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, ST_AsGeoJSON(the_geom) AS topojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
-      "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, gid_1, name_1 FROM {regionsTable} WHERE iso='{iso}' ORDER BY name_1",
+      "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, gid_1, name_1 FROM {regionsTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN' ORDER BY name_1",
     showRegion:
       "/query/{regionsDataset}?sql=SELECT gid_1, name_1, ST_AsGeoJSON(the_geom) AS geojson FROM {regionsTable} WHERE iso='{iso}' AND gid_1='{region}' ORDER BY name_1",
     getSubRegionsList:
-      "/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND gid_1 = '{region}' ORDER BY name"
+      "/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' AND type_2 not in ('Waterbody') ORDER BY name"
   };
 
   var CountriesService = Class.extend({
