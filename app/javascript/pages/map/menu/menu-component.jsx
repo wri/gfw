@@ -26,6 +26,7 @@ class Menu extends PureComponent {
         >
           <Icon icon={icon} className="icon" />
           {name}
+          <div className="c-map-menu__item-badge">3</div>
         </button>
       </li>
     );

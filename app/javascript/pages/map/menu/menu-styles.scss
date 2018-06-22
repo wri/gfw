@@ -66,6 +66,7 @@ $map-menu-flap-close-size: rem(32px);
   }
 
   &__item-button {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,6 +85,23 @@ $map-menu-flap-close-size: rem(32px);
       fill: $ashes-grey;
       margin-bottom: rem(6px);
     }
+  }
+
+  &__item-badge {
+    position: absolute;
+    top: rem(13px);
+    right: rem(21px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(14px);
+    height: rem(14px);
+    background-color: $green-gfw;
+    border-radius: 100%;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    color: $white;
   }
 
   &__flap {
