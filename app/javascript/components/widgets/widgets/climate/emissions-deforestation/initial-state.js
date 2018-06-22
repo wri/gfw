@@ -10,7 +10,7 @@ export default {
       'mining',
       'wdpa',
       'primary_forest',
-      'ifl_2013',
+      'ifl',
       'landmark'
     ],
     categories: ['climate'],
