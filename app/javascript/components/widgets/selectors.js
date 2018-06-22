@@ -38,22 +38,11 @@ const options = {
   weeks
 };
 
-// global widgets cannot have the following indicators
-const globalBlacklist = ['ifl'];
-
 export const getOptions = () => {
   const optionsMeta = {};
   Object.keys(options).forEach(oKey => {
-    if (oKey === 'weeks') {
-      optionsMeta[oKey] = options[oKey];
-    } else if (oKey === 'forestTypes' || oKey === 'landCategories') {
-      optionsMeta[oKey] = sortByKey(
-        options[oKey].filter(o => globalBlacklist.indexOf(o.value) === -1),
-        'label'
-      );
-    } else {
-      optionsMeta[oKey] = sortByKey(options[oKey], 'label');
-    }
+    optionsMeta[oKey] =
+      oKey === 'weeks' ? options[oKey] : sortByKey(options[oKey], 'label');
   });
   return optionsMeta;
 };
