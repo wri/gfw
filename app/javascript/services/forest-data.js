@@ -51,11 +51,6 @@ const getLocationQuery = (country, region, subRegion) =>
     region ? `AND adm1 = ${region}` : ''
   }${subRegion ? `AND adm2 = ${subRegion}` : ''}`;
 
-// const getLocationQuery = (country, region, subRegion) =>
-//   `${country ? `iso = '${country}' AND` : ''}${
-//     region ? ` adm1 = ${region} AND` : ''
-//   }${subRegion ? ` adm2 = ${subRegion} AND` : ''}`;
-
 export const getLocations = ({
   country,
   region,
