@@ -3,6 +3,7 @@
 $map-menu-items-size: rem(76px);
 $map-menu-flap-width: rem(290px);
 $map-menu-flap-close-size: rem(32px);
+
 .c-map-menu {
   position: absolute;
   top: 0;
@@ -39,8 +40,7 @@ $map-menu-flap-close-size: rem(32px);
       z-index: 2;
     }
 
-    &:hover,
-    &.--has-selection {
+    &.--has-selection {
       background-color: $white-tree;
     }
   }
@@ -50,16 +50,18 @@ $map-menu-flap-close-size: rem(32px);
     width: 100%;
     height: $map-menu-items-size;
     z-index: 1;
-
-    &:hover,
-    &.--selected {
-      background-color: $white;
-      border-top: 1px solid $white-calcium;
-      border-bottom: 1px solid $white-calcium;
-    }
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
 
     &.--selected {
+      background-color: $white;
+      border-top-color: $white-calcium;
+      border-bottom-color: $white-calcium;
       z-index: 3;
+    }
+
+    &:first-child {
+      border-top-color: transparent;
     }
   }
 
