@@ -9,7 +9,7 @@
 
   // primary forest
   [desc_in='Hutan Lahan Kering Primer']{
-  	polygon-fill:#60E663;
+  	polygon-fill:#35B538;
   }
   // secondary forest
   [desc_in='Hutan Lahan Kering Sekunder']{
@@ -17,19 +17,19 @@
   }
   //primary mangrove forest
   [desc_in='Hutan Mangrove Primer']{
-  	polygon-fill:#8DA700;
+  	polygon-fill:#35B538;
   }
   //primary swamp forest
   [desc_in='Hutan Rawa Primer']{
-  	polygon-fill:#C1A700;
+  	polygon-fill:#35B538;
   }
   //secondary mangrove forest
   [desc_in='Hutan Mangrove Sekunder']{
-  	polygon-fill:#60E666;
+  	polygon-fill:#72FE00;
   }
   // secondary swamp forest
   [desc_in='Hutan Rawa Sekunder']{
-    polygon-fill:#74FF00;
+    polygon-fill:#72FE00;
   }
   // Industrial Plantation Forest
   [desc_in='Hutan Tanaman']{
@@ -37,11 +37,11 @@
   }
   //Shrub
   [desc_in='Belukar']{
-   	polygon-fill:#ECC0A7;
+   	polygon-fill:#CCDB98;
   }
   //Plantation
   [desc_in='Perkebunan']{
-  	polygon-fill:#E5D299;
+  	polygon-fill:#CEA561;
   }
   //Settlement
   [desc_in='Pemukiman']{
@@ -49,7 +49,7 @@
   }
   //bare ground
   [desc_in='Tanah Terbuka']{
-  	polygon-fill:#D60073;
+  	polygon-fill:#EE6F30;
   }
   //cloud
   [desc_in='Awan']{
@@ -57,43 +57,43 @@
   }
   //Savannah
   [desc_in='Savana']{
-  	polygon-fill:#D5FE00;
+  	polygon-fill:#CCDB98;
   }
   //water-body
   [desc_in='Badan Air']{
   	polygon-fill:#1284BE;
   }
-  //Swamps
+  //Swamp/shrub
   [desc_in='Belukar Rawa']{
-  	polygon-fill:#ECC0A7;
+  	polygon-fill:#99E5E5;
   }
   // Dryland farming - agriculture
   [desc_in='Pertanian Lahan Kering']{
-  	polygon-fill:#F6FEA7;
+  	polygon-fill:#CEA561;
   }
-  // Dryland farm - mixed
+  // Dryland farm -shrub mixed dryland farm
   [desc_in='Pertanian Lahan Kering Campur']{
-  	polygon-fill:#EEF500;
+  	polygon-fill:#CEA561;
   }
   // Rice field
   [desc_in='Sawah']{
-  	polygon-fill:#A7D6FF;
+  	polygon-fill:#CEA561;
   }
   //Fish pond
   [desc_in='Tambak']{
-  	polygon-fill:#7CF5F5;
+  	polygon-fill:#EE6F30;
   }
   //Airport/harbour
   [desc_in='Bandara/ Pelabuhan']{
-  	polygon-fill:#D60074;
+  	polygon-fill:#EE6F30;
   }
   //Tansmigrasi (not sure what that is)
   [desc_in='Transmigrasi']{
-  	polygon-fill:#728DA7;
+  	polygon-fill:#000000;
   }
   //mining
   [desc_in='Pertambangan']{
-  	polygon-fill:#A70000;
+  	polygon-fill:#EE6F30;
   }
   //Swamp
   [desc_in='Rawa']{
