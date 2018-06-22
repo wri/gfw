@@ -68,7 +68,7 @@ export const getForestTypes = createSelector(
 
     if (!isEmpty(config.forestTypes)) {
       filteredOptions = filteredOptions.filter(
-        f => config.forestTypes.indexOf(f.value) > -1
+        f => config.forestTypes.indexOf(f.value) === -1
       );
     }
 
@@ -102,7 +102,7 @@ export const getLandCategories = createSelector(
 
     if (!isEmpty(config.forestTypes)) {
       filteredOptions = filteredOptions.filter(
-        f => config.landCategories.indexOf(f.value) > -1
+        f => config.landCategories.indexOf(f.value) === -1
       );
     }
 
