@@ -78,7 +78,8 @@ define(
     'text!map/templates/legend/bol_user_fire_frequency.handlebars',
     'text!map/templates/legend/sentinel_tiles.handlebars',
     'text!map/templates/legend/biodiversity_intactness.handlebars',
-    'text!map/templates/legend/biodiversity_completeness.handlebars'
+    'text!map/templates/legend/biodiversity_completeness.handlebars',
+    'text!map/templates/legend/rspo.handlebars'
   ],
   function(
     mps,
@@ -151,7 +152,8 @@ define(
     bol_user_fire_frequencyTpl,
     sentinel_tilesTpl,
     biodiversity_intactnessTpl,
-    biodiversity_completenessTpl
+    biodiversity_completenessTpl,
+    rspoTpl
   ) {
     var LegendView = Backbone.View.extend({
       el: '#module-legend',
@@ -255,7 +257,8 @@ define(
         biodiversity_intactness: Handlebars.compile(biodiversity_intactnessTpl),
         biodiversity_completeness: Handlebars.compile(
           biodiversity_completenessTpl
-        )
+        ),
+        rspo_oil_palm: Handlebars.compile(rspoTpl)
       },
 
       events: {

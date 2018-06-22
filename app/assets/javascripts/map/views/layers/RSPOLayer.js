@@ -3,26 +3,21 @@
  *
  * @return rpso class (extends CartoDBLayerClass)
  */
-define([
-    'abstract/layer/CartoDBLayerClass',
-    'text!map/cartocss/rspo.cartocss'
-  ], function(CartoDBLayerClass, rspoCartoCSS) {
-
-    'use strict';
-
-    var RSPOLayer = CartoDBLayerClass.extend({
-
+define(
+  ['abstract/layer/CartoDBLayerClass', 'text!map/cartocss/rspo.cartocss'],
+  (CartoDBLayerClass, rspoCartoCSS) => {
+    const RSPOLayer = CartoDBLayerClass.extend({
       options: {
-        sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\' as tablename, _group as group, company, membership, rspo_cert, \'{tableName}\' AS layer FROM {tableName}',
+        sql:
+          "SELECT cartodb_id, the_geom_webmercator, '{tableName}' as tablename, _group as group, company, membership, rspo_cert, plantation, '{tableName}' AS layer, {analysis} AS analysis FROM {tableName}",
         infowindow: true,
-        interactivity: 'cartodb_id, tablename, group, company, membership, rspo_cert',
-        analysis: false,
+        interactivity:
+          'cartodb_id, tablename, group, company, plantation, membership, rspo_cert, analysis',
+        analysis: true,
         cartocss: rspoCartoCSS
       }
-
-
     });
 
     return RSPOLayer;
-
-  });
+  }
+);
