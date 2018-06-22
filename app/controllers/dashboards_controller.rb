@@ -29,7 +29,7 @@ class DashboardsController < ApplicationController
         @location = Dashboards.find_adm2_by_iso_id(params[:iso], params[:region], params[:sub_region])
       elsif params[:region]
         @location = Dashboards.find_adm1_by_iso_id(params[:iso], params[:region])
-      elsif params[:iso]
+      else
         @location = Dashboards.find_country_by_iso(params[:iso])
       end
       if !@location
