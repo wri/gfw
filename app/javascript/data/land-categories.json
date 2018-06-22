@@ -16,7 +16,7 @@
   },
   {
     "label": "Tiger Conservation Landscapes",
-    "value": "tcl",
+    "value": "tiger_cl",
     "metaKey": "tiger_conservation_landscapes"
   },
   {
@@ -28,5 +28,30 @@
     "label": "Indigenous Lands",
     "value": "landmark",
     "metaKey": "gfw_land_rights"
+  },
+  {
+    "label": "Indonesia peat lands",
+    "value": "idn_mys_peatlands",
+    "metaKey": "idn_peat_lands"
+  },
+  {
+    "label": "Indonesia forest moratorium",
+    "value": "idn_forest_moratorium",
+    "metaKey": "idn_forest_moratorium"
+  },
+  {
+    "label": "Oil palm",
+    "value": "oil_palm",
+    "metaKey": "gfw_oil_palm"
+  },
+  {
+    "label": "Wood fiber",
+    "value": "wood_fiber",
+    "metaKey": "gfw_wood_fiber"
+  },
+  {
+    "label": "Managed forests",
+    "value": "managed_forests",
+    "metaKey": "gfw_logging"
   }
 ]
