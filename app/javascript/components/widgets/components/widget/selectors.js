@@ -66,6 +66,12 @@ export const getForestTypes = createSelector(
     const { country } = location;
     let filteredOptions = forestTypes;
 
+    if (!isEmpty(config.forestTypes)) {
+      filteredOptions = filteredOptions.filter(
+        f => config.forestTypes.indexOf(f.value) > -1
+      );
+    }
+
     if (!isEmpty(whitelist)) {
       filteredOptions = forestTypes.filter(
         i => whitelist.indexOf(i.value) > -1
@@ -73,19 +79,15 @@ export const getForestTypes = createSelector(
     }
 
     return sortByKey(
-      filteredOptions
-        .filter(
-          f => config.forestTypes && config.forestTypes.indexOf(f.value) > -1
-        )
-        .map(i => ({
-          ...i,
-          metaKey:
-            i.metaKey === 'primary_forest'
-              ? `${lowerCase(country)}_${i.metaKey}${
-                country === 'IDN' ? 's' : ''
-              }`
-              : i.metaKey
-        })),
+      filteredOptions.map(i => ({
+        ...i,
+        metaKey:
+          i.metaKey === 'primary_forest'
+            ? `${lowerCase(country)}_${i.metaKey}${
+              country === 'IDN' ? 's' : ''
+            }`
+            : i.metaKey
+      })),
       'label'
     );
   }
@@ -98,19 +100,19 @@ export const getLandCategories = createSelector(
     const { landCategories } = options;
     let filteredOptions = landCategories;
 
+    if (!isEmpty(config.forestTypes)) {
+      filteredOptions = filteredOptions.filter(
+        f => config.landCategories.indexOf(f.value) > -1
+      );
+    }
+
     if (!isEmpty(whitelist)) {
       filteredOptions = landCategories.filter(
         i => whitelist.indexOf(i.value) > -1
       );
     }
 
-    return sortByKey(
-      filteredOptions.filter(
-        l =>
-          config.landCategories && config.landCategories.indexOf(l.value) > -1
-      ),
-      'label'
-    );
+    return sortByKey(filteredOptions, 'label');
   }
 );
 
