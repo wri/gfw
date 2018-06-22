@@ -1,0 +1,23 @@
+#gfw_rspo[rspo_cert='True']{
+  polygon-fill: #ffa146;
+  polygon-opacity: 0.7;
+  line-color: #ffa146;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+
+#gfw_rspo[rspo_cert='False']{
+  polygon-fill: #ff6361;
+  polygon-opacity: 0.7;
+  line-color:#ff6361 ;
+  line-width: 0.5;
+  line-opacity: 1;
+}
+
+#gfw_rspo[rspo_cert='Unknown']{
+  polygon-fill: #bc5090;
+  polygon-opacity: 0.7;
+  line-color: #bc5090;
+  line-width: 0.5;
+  line-opacity: 1;
+}

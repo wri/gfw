@@ -43,6 +43,7 @@ define(
     'map/views/layers/ColMiningLayer',
     'map/views/layers/KhmMiningLayer',
     'map/views/layers/OilPalmLayer',
+    'map/views/layers/RSPOLayer',
     'map/views/layers/IdnSuitabilityLayer',
     'map/views/layers/CogOilPalmLayer',
     'map/views/layers/LbrOilPalmLayer',
@@ -230,6 +231,7 @@ define(
     ColMiningLayer,
     KhmMiningLayer,
     OilPalmLayer,
+    RSPOLayer,
     IdnSuitabilityLayer,
     CogOilPalmLayer,
     LbrOilPalmLayer,
@@ -495,6 +497,9 @@ define(
       },
       oil_palm: {
         view: OilPalmLayer
+      },
+      rspo_oil_palm: {
+        view: RSPOLayer
       },
       idn_suitability: {
         view: IdnSuitabilityLayer

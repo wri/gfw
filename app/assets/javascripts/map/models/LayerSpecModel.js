@@ -125,6 +125,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'idn_suitability',
       'mys_oil_palm',
       'oil_palm',
+      'rspo_oil_palm',
       'bra_mining',
       'bra_soy',
       'mex_mining',
