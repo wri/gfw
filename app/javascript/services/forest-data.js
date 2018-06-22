@@ -226,7 +226,7 @@ export const getLoss = ({
 export const getFAO = ({ country }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.fao}`.replace(
     '{location}',
-    country ? `country = '${country}'` : ''
+    country ? `country = '${country}'` : '1 = 1'
   );
   return request.get(url);
 };
