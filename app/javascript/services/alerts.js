@@ -71,7 +71,7 @@ export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
     QUERIES.firesIntersectionAlerts
   }`
     .replace('{location}', getLocation(country, region, subRegion))
-    .replace('{polyname}', 'gadm28')
+    .replace('{polyname}', 'admin')
     .replace('{dataset}', dataset);
   return request.get(url, 3600, 'firesRequest');
 };
