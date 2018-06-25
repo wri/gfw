@@ -11,12 +11,7 @@ class ForestChange extends PureComponent {
         {data &&
           data.map(block => {
             const { name } = block;
-            return (
-              <LayersBlock
-                key={`layers-block-${name}`}
-                {...block}
-              />
-            );
+            return <LayersBlock key={`layers-block-${name}`} {...block} />;
           })}
       </div>
     );
