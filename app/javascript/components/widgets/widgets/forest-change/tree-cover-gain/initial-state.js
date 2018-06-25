@@ -6,7 +6,6 @@ export default {
   config: {
     size: 'small',
     forestTypes: ['ifl'],
-    landCategories: ['wdpa', 'landmark', 'mining'],
     units: ['ha'],
     categories: ['summary', 'forest-change'],
     admins: ['global', 'country', 'region', 'subRegion'],

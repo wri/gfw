@@ -6,7 +6,6 @@ export const initialState = {
   config: {
     size: 'small',
     forestTypes: ['ifl'],
-    landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
     categories: ['forest-change'],
     admins: ['global', 'country'],

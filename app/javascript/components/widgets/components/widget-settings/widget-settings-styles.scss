@@ -1,26 +1,23 @@
 @import '~styles/settings.scss';
 
-$settings-items-margin: rem(20px);
+$settings-items-margin: rem(25px);
 
 .c-widget-settings {
   width: rem(290px);
   background-color: $white;
-  padding: rem(25px) 0 rem(5px);
+  padding: rem(20px) 0 rem(5px);
 
   > div {
     margin-bottom: $settings-items-margin;
-    padding: 0 rem(25px);
-  }
-
-  .intersections {
     border-bottom: 1px solid $border;
-
-    > div {
-      margin-bottom: $settings-items-margin;
-    }
+    padding: 0 $settings-items-margin;
 
     &:last-child {
       border-bottom: 0;
+    }
+
+    > div {
+      margin-bottom: $settings-items-margin;
     }
   }
 
@@ -57,20 +54,8 @@ $settings-items-margin: rem(20px);
       margin-bottom: 0;
     }
 
-    &.threshold-border {
-      position: relative;
-      padding-top: rem(40px);
-      padding-bottom: rem(6px);
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: rem(10px);
-        left: rem(-25px);
-        width: calc(100% + #{rem(50px)});
-        height: rem(1px);
-        background-color: $border;
-      }
+    .container {
+      margin-bottom: 0;
     }
 
     .dd__wrapper {
