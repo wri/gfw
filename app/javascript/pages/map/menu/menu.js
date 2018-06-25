@@ -8,9 +8,10 @@ import { getSections, getSectionData } from './menu-selectors';
 import MenuComponent from './menu-component';
 
 const mapStateToProps = ({ mapMenu }) => {
-  const { selectedSection } = mapMenu;
+  const { selectedSection, countries } = mapMenu;
   const selectorsParams = {
-    selectedSection
+    selectedSection,
+    countries
   };
   return {
     selectedSection,

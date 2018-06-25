@@ -8,9 +8,12 @@ import climateBubblesIcon from 'assets/icons/climate-bubbles.svg';
 import featherIcon from 'assets/icons/feather.svg';
 import worldIcon from 'assets/icons/world.svg';
 import searchIcon from 'assets/icons/search.svg';
-import ForestChange from './components/forest-change';
+
+import ForestChange from './components/sections/forest-change';
+import Countries from './components/sections/countries';
 
 const getSelectedSection = state => state.selectedSection || null;
+const getCountries = state => state.countries || null;
 
 export const getSections = createSelector([], () => [
   {
@@ -95,7 +98,7 @@ export const getSections = createSelector([], () => [
     countries: {
       name: 'COUNTRIES',
       icon: worldIcon,
-      Component: ForestChange
+      Component: Countries
     }
   },
   {
@@ -112,11 +115,44 @@ export const getSections = createSelector([], () => [
   }
 ]);
 
+export const getCountriesData = createSelector([getCountries], () => [
+  {
+    name: 'SELECT COUNTRY',
+    layers: [
+      {
+        name: 'Brazil land cover',
+        description: '(2000-2016, MapBiomas)',
+        slugs: ['umd_as_it_happens', 'places_to_watch'],
+        meta: 'umd_landsat_alerts'
+      },
+      {
+        name: 'Brazil biomes',
+        slugs: ['forma_month_3'],
+        meta: 'forma_250_alerts'
+      },
+      {
+        name: 'Brazil indigenous lands',
+        slugs: ['forma_month_3'],
+        meta: 'forma_250_alerts'
+      }
+    ]
+  },
+  {
+    text:
+      'User from <b>Brazil</b>? <a href="#">Add your own data</a> to the Global Forest Watch interactive map.'
+  }
+]);
+
 export const getSectionData = createSelector(
-  [getSections, getSelectedSection],
-  (sections, selectedSection) => {
+  [getSections, getSelectedSection, getCountriesData],
+  (sections, selectedSection, countries) => {
     if (isEmpty(sections) || !selectedSection) return null;
 
-    return sections[0][selectedSection];
+    const section = sections[0][selectedSection];
+    if (selectedSection === 'countries') {
+      section.data = countries;
+    }
+
+    return section;
   }
 );

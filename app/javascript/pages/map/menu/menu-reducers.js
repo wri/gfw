@@ -1,5 +1,6 @@
 export const initialState = {
-  selectedSection: null
+  selectedSection: null,
+  countries: null
 };
 
 const setSelectedSection = (state, { payload }) => ({

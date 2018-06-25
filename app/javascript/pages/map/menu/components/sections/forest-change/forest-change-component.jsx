@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import LayersBlock from 'pages/map/menu/components/layers-block';
+import LayerToggle from 'pages/map/menu/components/layer-toggle';
+import MenuBlock from 'pages/map/menu/components/menu-block';
 
 class ForestChange extends PureComponent {
   render() {
@@ -9,15 +10,20 @@ class ForestChange extends PureComponent {
     return (
       <div className="c-forest-change">
         {data &&
-          data.map(block => {
+          data.map((block, i) => {
             const { name, description, layers } = block;
             return (
-              <LayersBlock
-                key={`layers-block-${name}`}
+              <MenuBlock
+                key={`menu-block-forest-${i}`}
                 name={name}
                 description={description}
                 layers={layers}
-              />
+              >
+                {layers &&
+                  layers.map(layer => (
+                    <LayerToggle key={`toogle-${layer.name}`} data={layer} />
+                  ))}
+              </MenuBlock>
             );
           })}
       </div>
