@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import LayerToggle from 'pages/map/menu/components/layer-toggle';
+import Dropdown from 'components/ui/dropdown';
 import MenuBlock from 'pages/map/menu/components/menu-block';
+import LayerToggle from 'pages/map/menu/components/layer-toggle';
 
 class Countries extends PureComponent {
   render() {
@@ -18,6 +19,17 @@ class Countries extends PureComponent {
                 name={name}
                 description={description}
               >
+                <Dropdown
+                  theme="theme-dropdown-light"
+                  placeholder="Select a country"
+                  noItemsFound="No country found"
+                  noSelectedValue="Select a country"
+                  options={[]}
+                  onChange={() => {}}
+                  searchable
+                  arrowPosition="left"
+                  clearable
+                />
                 {layers &&
                   layers.map(layer => (
                     <LayerToggle key={`toogle-${layer.name}`} data={layer} />
