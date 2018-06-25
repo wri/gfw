@@ -14,6 +14,7 @@ import Menu from './components/menu';
 
 import './dropdown-styles.scss';
 import './themes/dropdown-dark.scss';
+import './themes/dropdown-light.scss';
 import './themes/dropdown-button.scss';
 
 class Dropdown extends PureComponent {
