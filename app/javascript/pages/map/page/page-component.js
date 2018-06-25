@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import Proptypes from 'prop-types';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
@@ -15,31 +14,22 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   render() {
-    const { setMapZoom } = this.props;
     return (
       <div className="l-map">
-        <CountryDataProvider />
-        <Map activeWidget={null} />
+        <Map />
         <MapMenu />
         <div className="map-actions">
-          <MapControls
-            className="map-controls"
-            handleZoomIn={() => setMapZoom({ sum: 1 })}
-            handleZoomOut={() => setMapZoom({ sum: -1 })}
-          />
+          <MapControls className="map-controls" share />
           <DragDropContextProvider backend={HTML5Backend}>
             <RecentImagery />
           </DragDropContextProvider>
         </div>
         <Share />
         <ModalMeta />
+        <CountryDataProvider />
       </div>
     );
   }
 }
-
-Page.propTypes = {
-  setMapZoom: Proptypes.func.isRequired
-};
 
 export default Page;

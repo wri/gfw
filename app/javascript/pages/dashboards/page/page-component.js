@@ -31,7 +31,6 @@ class Page extends PureComponent {
       isGeostoreLoading,
       widgetAnchor,
       activeWidget,
-      setMapZoom,
       widgets,
       title,
       query
@@ -75,8 +74,6 @@ class Page extends PureComponent {
               enabled: true,
               top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
             }}
-            handleZoomIn={() => setMapZoom({ sum: 1 })}
-            handleZoomOut={() => setMapZoom({ sum: -1 })}
           />
         )}
         <Share />
@@ -102,7 +99,6 @@ Page.propTypes = {
   widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeWidget: PropTypes.string,
-  setMapZoom: PropTypes.func,
   title: PropTypes.string,
   query: PropTypes.object
 };
