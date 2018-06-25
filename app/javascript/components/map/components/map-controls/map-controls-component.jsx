@@ -44,8 +44,8 @@ class MapControls extends PureComponent {
                 shareUrl: window.location.href,
                 embedUrl: window.location.href,
                 embedSettings: {
-                  width: 300,
-                  height: 300
+                  width: 670,
+                  height: 490
                 }
               })
             }
