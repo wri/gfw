@@ -5,9 +5,11 @@ import Dropdown from 'components/ui/dropdown';
 import MenuBlock from 'pages/map/menu/components/menu-block';
 import LayerToggle from 'pages/map/menu/components/layer-toggle';
 
+import './countries-styles.scss';
+
 class Countries extends PureComponent {
   render() {
-    const { data } = this.props;
+    const { countries, data, search, setMenuCountries } = this.props;
     return (
       <div className="c-countries">
         {data &&
@@ -19,17 +21,20 @@ class Countries extends PureComponent {
                 name={name}
                 description={description}
               >
-                <Dropdown
-                  theme="theme-dropdown-light"
-                  placeholder="Select a country"
-                  noItemsFound="No country found"
-                  noSelectedValue="Select a country"
-                  options={[]}
-                  onChange={() => {}}
-                  searchable
-                  arrowPosition="left"
-                  clearable
-                />
+                {i === 0 && (
+                  <Dropdown
+                    className="c-countries__select"
+                    theme="theme-dropdown-light"
+                    placeholder="Select a country"
+                    noItemsFound="No country found"
+                    noSelectedValue="Select a country"
+                    value={search}
+                    options={countries}
+                    onChange={country => setMenuCountries({ search: country })}
+                    searchable
+                    clearable
+                  />
+                )}
                 {layers &&
                   layers.map(layer => (
                     <LayerToggle key={`toogle-${layer.name}`} data={layer} />
@@ -49,7 +54,10 @@ class Countries extends PureComponent {
 }
 
 Countries.propTypes = {
-  data: PropTypes.array
+  countries: PropTypes.array,
+  data: PropTypes.array,
+  search: PropTypes.object,
+  setMenuCountries: PropTypes.func
 };
 
 export default Countries;
