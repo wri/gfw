@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 
 import PageComponent from './page-component';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ location, countryData }) => ({
+  ...location,
+  ...countryData
+});
 
 class PageContainer extends PureComponent {
   render() {
@@ -13,4 +16,4 @@ class PageContainer extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps, null)(PageContainer);
+export default connect(mapStateToProps, {})(PageContainer);
