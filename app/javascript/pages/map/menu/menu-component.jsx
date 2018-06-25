@@ -33,10 +33,10 @@ class Menu extends PureComponent {
   };
 
   renderMenuFlapComponent = () => {
-    const { sections, selectedSection } = this.props;
-    if (!selectedSection) return null;
+    const { selectedSectionData } = this.props;
+    if (!selectedSectionData) return null;
 
-    const { Component, data } = sections[selectedSection];
+    const { Component, data } = selectedSectionData;
     return <Component data={data} />;
   };
 
@@ -55,15 +55,14 @@ class Menu extends PureComponent {
             selectedSection ? '--has-selection' : ''
           }`}
         >
-          <ul>
-            {Object.keys(sections).map(key =>
-              this.renderMenuItem(key, sections[key])
-            )}
-          </ul>
-          <ul>
-            <li className="c-map-menu__item" />
-            <li className="c-map-menu__item" />
-          </ul>
+          {sections &&
+            sections.map((block, i) => (
+              <ul key={`map-menu-block-${i}`}>
+                {Object.keys(block).map(key =>
+                  this.renderMenuItem(key, block[key])
+                )}
+              </ul>
+            ))}
         </div>
         <div
           className={`c-map-menu__flap ${selectedSection ? '--showed' : ''}`}
@@ -85,8 +84,9 @@ class Menu extends PureComponent {
 }
 
 Menu.propTypes = {
-  sections: PropTypes.object,
+  sections: PropTypes.array,
   selectedSection: PropTypes.string,
+  selectedSectionData: PropTypes.object,
   setSelectedSection: PropTypes.func.isRequired
 };
 
