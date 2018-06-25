@@ -37,7 +37,7 @@ export const initialState = {
   settings: {
     threshold: 30,
     startYear: 2001,
-    endYear: 2016,
+    endYear: 2017,
     extentYear: 2000,
     layers: ['loss']
   },
