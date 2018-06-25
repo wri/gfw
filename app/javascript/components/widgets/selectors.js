@@ -42,7 +42,7 @@ export const getOptions = () => {
   const optionsMeta = {};
   Object.keys(options).forEach(oKey => {
     optionsMeta[oKey] =
-      oKey !== 'weeks' ? sortByKey(options[oKey], 'label') : options[oKey];
+      oKey === 'weeks' ? options[oKey] : sortByKey(options[oKey], 'label');
   });
   return optionsMeta;
 };

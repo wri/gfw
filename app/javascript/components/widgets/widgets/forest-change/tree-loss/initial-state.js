@@ -4,8 +4,7 @@ export const initialState = {
   },
   config: {
     size: 'large',
-    forestTypes: ['ifl', 'primary_forest'],
-    landCategories: ['mining', 'wdpa', 'landmark'],
+    forestTypes: ['ifl', 'primary_forest', 'mangrove_2010_gmw'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region', 'subRegion'],
     selectors: [

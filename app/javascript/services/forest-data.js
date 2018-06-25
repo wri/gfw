@@ -1,5 +1,7 @@
 import request from 'utils/request';
 import { getIndicator } from 'utils/strings';
+import forestTypes from 'data/forest-types.json';
+import landCategories from 'data/land-categories.json';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
 const REQUEST_URL = `${process.env.GFW_API}/query/${DATASET}?sql=`;
@@ -39,7 +41,7 @@ const SQL_QUERIES = {
   faoEcoLive:
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   nonGlobalDatasets:
-    "SELECT iso, polyname FROM data WHERE polyname IN ('plantations', 'mining', 'primary_forest', 'landmark', 'plantations__mining', 'plantations__landmark', 'primary_forest__mining', 'primary_forest__landmark') GROUP BY iso, polyname ORDER BY polyname, iso"
+    'SELECT iso, polyname FROM data WHERE polyname IN ({indicators}) GROUP BY iso, polyname ORDER BY polyname, iso'
 };
 
 const getExtentYear = year =>
@@ -49,6 +51,20 @@ const getLocationQuery = (country, region, subRegion) =>
   `${country ? `iso = '${country}' AND` : ''}${
     region ? ` adm1 = ${region} AND` : ''
   }${subRegion ? ` adm2 = ${subRegion} AND` : ''}`;
+
+const getIndicatorsFromData = (types, categories) => {
+  let indicators = '';
+  const filterCats = categories.filter(c => !c.global);
+  types.filter(t => !t.global).forEach((t, i) => {
+    indicators = !i ? `'${t.value}'` : `${indicators}, '${t.value}'`;
+    filterCats.filter(c => !c.global).forEach(c => {
+      indicators = `${indicators}, '${c.value}'`;
+      indicators = `${indicators}, '${t.value}__${c.value}'`;
+    });
+  });
+
+  return indicators;
+};
 
 export const getLocations = ({
   country,
@@ -280,5 +296,10 @@ export const getGainRanked = ({
   return request.get(url);
 };
 
-export const getNonGlobalDatasets = () =>
-  request.get(`${REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`);
+export const getNonGlobalDatasets = () => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`.replace(
+    '{indicators}',
+    getIndicatorsFromData(forestTypes, landCategories)
+  );
+  return request.get(url);
+};
