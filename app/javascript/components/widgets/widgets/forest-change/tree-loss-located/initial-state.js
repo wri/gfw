@@ -4,8 +4,6 @@ export default {
   },
   config: {
     size: 'small',
-    forestTypes: ['ifl', 'plantations', 'primary_forest'],
-    landCategories: ['mining', 'wdpa', 'landmark'],
     units: ['ha', '%'],
     categories: ['summary', 'forest-change'],
     admins: ['country', 'region'],

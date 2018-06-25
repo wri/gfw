@@ -68,12 +68,12 @@ export const getForestTypes = createSelector(
 
     if (!isEmpty(config.forestTypes)) {
       filteredOptions = filteredOptions.filter(
-        f => config.forestTypes.indexOf(f.value) === -1
+        f => config.forestTypes.indexOf(f.value) > -1
       );
     }
 
     if (!isEmpty(whitelist)) {
-      filteredOptions = forestTypes.filter(
+      filteredOptions = filteredOptions.filter(
         i => whitelist.indexOf(i.value) > -1
       );
     }
@@ -100,14 +100,14 @@ export const getLandCategories = createSelector(
     const { landCategories } = options;
     let filteredOptions = landCategories;
 
-    if (!isEmpty(config.forestTypes)) {
+    if (!isEmpty(config.landCategories)) {
       filteredOptions = filteredOptions.filter(
-        f => config.landCategories.indexOf(f.value) === -1
+        f => config.landCategories.indexOf(f.value) > -1
       );
     }
 
     if (!isEmpty(whitelist)) {
-      filteredOptions = landCategories.filter(
+      filteredOptions = filteredOptions.filter(
         i => whitelist.indexOf(i.value) > -1
       );
     }

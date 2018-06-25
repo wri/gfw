@@ -5,7 +5,6 @@ export default {
   config: {
     size: 'small',
     forestTypes: ['ifl'],
-    landCategories: ['wdpa', 'kba', 'aze', 'tcl'],
     units: ['ha', '%'],
     categories: ['land-cover'],
     admins: ['country'],

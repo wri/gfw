@@ -4,18 +4,15 @@ export default {
   },
   config: {
     size: 'small',
-    indicators: [
-      'gadm28',
-      'bra_biomes',
-      'mining',
-      'wdpa',
-      'primary_forest',
-      'ifl',
-      'landmark'
-    ],
     categories: ['climate'],
     admins: ['country', 'region', 'subRegion'],
-    selectors: ['indicators', 'startYears', 'endYears', 'units'],
+    selectors: [
+      'forestTypes',
+      'landCategories',
+      'startYears',
+      'endYears',
+      'units'
+    ],
     units: ['biomassCarbon', 'co2Emissions'],
     yearRange: ['2001', '2016'],
     metaKey: 'widget_carbon_emissions_tree_cover_loss',
