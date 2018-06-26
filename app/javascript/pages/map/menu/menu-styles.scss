@@ -21,7 +21,6 @@ $map-menu-items-size: rem(76px);
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     width: $map-menu-items-size;
     height: calc(100% - #{$map-menu-items-size});
     background-color: $white;
@@ -46,7 +45,8 @@ $map-menu-items-size: rem(76px);
   &__item {
     position: relative;
     width: 100%;
-    height: $map-menu-items-size;
+    height: 12.5%;
+    max-height: $map-menu-items-size;
     z-index: 1;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
@@ -60,6 +60,14 @@ $map-menu-items-size: rem(76px);
 
     &:first-child {
       border-top-color: transparent;
+    }
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+
+    &:nth-child(7) {
+      margin-top: auto;
     }
   }
 

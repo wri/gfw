@@ -49,20 +49,17 @@ class Menu extends PureComponent {
             src={gfwLogo}
             alt="Global Forest Watch"
           />
-          <div
-            className={`c-map-menu__buttons-group ${
-              selectedSection ? '--has-selection' : ''
-            }`}
-          >
-            {sections &&
-              sections.map((block, i) => (
-                <ul key={`map-menu-block-${i}`}>
-                  {Object.keys(block).map(key =>
-                    this.renderMenuItem(key, block[key])
-                  )}
-                </ul>
-              ))}
-          </div>
+          {sections && (
+            <ul
+              className={`c-map-menu__buttons-group ${
+                selectedSection ? '--has-selection' : ''
+              }`}
+            >
+              {Object.keys(sections).map(key =>
+                this.renderMenuItem(key, sections[key])
+              )}
+            </ul>
+          )}
         </div>
         <MenuFlap
           section={selectedSection}
@@ -76,7 +73,7 @@ class Menu extends PureComponent {
 }
 
 Menu.propTypes = {
-  sections: PropTypes.array,
+  sections: PropTypes.object,
   selectedSection: PropTypes.string,
   selectedSectionData: PropTypes.object,
   setSelectedSection: PropTypes.func.isRequired
