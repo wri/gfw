@@ -3,8 +3,8 @@
 .c-map-controls {
   width: rem(38px);
 
-  button:first-child {
-    border-bottom: solid 1px rgba($medium-grey, 0.2);
+  button {
+    margin-bottom: rem(5px);
   }
 
   .plus-icon {

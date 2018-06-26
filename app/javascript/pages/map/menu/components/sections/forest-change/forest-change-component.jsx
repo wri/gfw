@@ -11,13 +11,11 @@ class ForestChange extends PureComponent {
       <div className="c-forest-change">
         {data &&
           data.map((block, i) => {
-            const { name, description, layers } = block;
+            const { layers } = block;
             return (
               <MenuBlock
                 key={`menu-block-forest-${i}`}
-                name={name}
-                description={description}
-                layers={layers}
+                {...block}
               >
                 {layers &&
                   layers.map(layer => (

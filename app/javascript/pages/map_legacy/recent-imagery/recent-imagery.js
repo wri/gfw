@@ -49,7 +49,7 @@ const mapStateToProps = ({ recentImagery }) => {
 
 class RecentImageryContainer extends PureComponent {
   componentDidMount() {
-    // this.middleView = window.App.Views.ReactMapMiddleView;
+    this.middleView = window.App.Views.ReactMapMiddleView;
     this.boundsPolygon = null;
     this.boundsPolygonInfowindow = null;
     this.activatedFromUrl = false;
