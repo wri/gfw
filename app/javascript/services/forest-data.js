@@ -41,16 +41,17 @@ const SQL_QUERIES = {
   faoEcoLive:
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   nonGlobalDatasets:
-    'SELECT iso, polyname FROM data WHERE polyname IN ({indicators}) GROUP BY iso, polyname ORDER BY polyname, iso'
+    'SELECT iso, polyname FROM data WHERE polyname IN ({indicators}) GROUP BY iso, polyname ORDER BY polyname, iso',
+  globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}'
 };
 
 const getExtentYear = year =>
   (year === 2000 ? 'area_extent_2000' : 'area_extent');
 
 const getLocationQuery = (country, region, subRegion) =>
-  `${country ? `iso = '${country}' AND` : ''}${
-    region ? ` adm1 = ${region} AND` : ''
-  }${subRegion ? ` adm2 = ${subRegion} AND` : ''}`;
+  `${country ? `iso = '${country}'` : ''}${
+    region ? `AND adm1 = ${region}` : ''
+  }${subRegion ? `AND adm2 = ${subRegion}` : ''}`;
 
 const getIndicatorsFromData = (types, categories) => {
   let indicators = '';
@@ -300,6 +301,14 @@ export const getNonGlobalDatasets = () => {
   const url = `${REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`.replace(
     '{indicators}',
     getIndicatorsFromData(forestTypes, landCategories)
+  );
+  return request.get(url);
+};
+
+export const getGlobalLandCover = ({ country, region, subRegion }) => {
+  const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.globalLandCover}`.replace(
+    '{location}',
+    getLocationQuery(country, region, subRegion)
   );
   return request.get(url);
 };

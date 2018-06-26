@@ -7,6 +7,7 @@ import * as primaryForest from './widgets/land-cover/primary-forest';
 import * as faoCover from './widgets/land-cover/fao-cover';
 import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantations';
 import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
+import * as globalLandCover from './widgets/land-cover/global-land-cover';
 
 // Forest change
 import * as gladAlerts from './widgets/forest-change/glad-alerts';
@@ -43,6 +44,7 @@ export {
   faoCover,
   treeCoverPlantations,
   rankedPlantations,
+  globalLandCover,
   // forest change
   gladAlerts,
   gladRanked,
