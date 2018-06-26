@@ -5,7 +5,6 @@ export default {
   },
   config: {
     size: 'small',
-    landCategories: ['wdpa', 'mining', 'landmark'],
     categories: ['land-cover'],
     admins: ['global', 'country', 'region', 'subRegion'],
     selectors: ['landCategories', 'thresholds'],
@@ -27,7 +26,7 @@ export default {
     }
   },
   settings: {
-    forestType: 'ifl_2013',
+    forestType: 'ifl',
     threshold: 30,
     extentYear: 2010,
     layers: ['forest2010', 'ifl_2013_deg']
