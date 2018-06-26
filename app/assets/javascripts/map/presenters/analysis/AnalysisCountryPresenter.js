@@ -205,7 +205,13 @@ define(
         var isoDisabled = this.status.get('isoDisabled');
         // Draw geojson depending if it's a country or a region
         if (!!iso.country && iso.country !== 'ALL' && !isoDisabled) {
-          !!iso.region ? this.showRegion() : this.showCountry();
+          if (iso.subRegion) {
+            this.showSubRegion();
+          } else if (iso.region) {
+            this.showRegion();
+          } else {
+            this.showCountry();
+          }
         }
 
         // Get regions
@@ -255,17 +261,10 @@ define(
         var iso = this.status.get('iso');
         CountryService.showCountry({ iso: iso.country }).then(
           function(results) {
-            try {
-              var resTopojson = JSON.parse(results.topojson);
-              var objects = _.findWhere(resTopojson.objects, {
-                type: 'MultiPolygon'
-              });
-              var geojson = topojson.feature(resTopojson, objects),
-                geometry = geojson.geometry;
+            var geometry = JSON.parse(results.geojson);
 
-              // Draw geojson of country if isoDisabled is equal to true
-              this.view.drawGeojson(geometry);
-            } catch (error) {}
+            // Draw geojson of country if isoDisabled is equal to true
+            this.view.drawGeojson(geometry);
           }.bind(this)
         );
       },
@@ -300,7 +299,6 @@ define(
 
       getSubRegions: function() {
         var iso = this.status.get('iso');
-
         CountryService.getSubRegionsList({
           iso: iso.country,
           region: iso.region
@@ -309,6 +307,23 @@ define(
             this.status.set({
               subRegions: results
             });
+          }.bind(this)
+        );
+      },
+
+      showSubRegion: function() {
+        var iso = this.status.get('iso');
+
+        CountryService.showSubRegion({
+          iso: iso.country,
+          region: iso.region,
+          subRegion: iso.subRegion
+        }).then(
+          function(results) {
+            var geometry = JSON.parse(results.geojson);
+
+            // Draw geojson of country if isoDisabled is equal to true
+            this.view.drawGeojson(geometry);
           }.bind(this)
         );
       },

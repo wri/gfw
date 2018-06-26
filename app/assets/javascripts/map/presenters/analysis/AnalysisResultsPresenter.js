@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /**
  * The AnalysisResultsPresenter class for the AnalysisResultsView.
  *
@@ -67,7 +68,7 @@ define(
        */
       _subscriptions: [
         {
-          'Place/go': function (place) {
+          'Place/go': function(place) {
             this._setBaselayer(place.layerSpec.getBaselayers());
             this.status.set(
               'loss_gain_and_extent',
@@ -77,7 +78,7 @@ define(
           }
         },
         {
-          'LayerNav/change': function (layerSpec) {
+          'LayerNav/change': function(layerSpec) {
             this._setBaselayer(layerSpec.getBaselayers());
             this.status.set(
               'loss_gain_and_extent',
@@ -86,17 +87,17 @@ define(
           }
         },
         {
-          'AnalysisService/results': function (results) {
+          'AnalysisService/results': function(results) {
             this._renderResults(results);
           }
         },
         {
-          'AnalysisResults/totalArea': function (area) {
+          'AnalysisResults/totalArea': function(area) {
             this._setTotalArea(area);
           }
         },
         {
-          'AnalysisTool/iso-drawn': function (multipolygon) {
+          'AnalysisTool/iso-drawn': function(multipolygon) {
             var isoTotalArea = geojsonUtilsHelper.getHectares(multipolygon);
             this.status.set('isoTotalArea', isoTotalArea);
           }
@@ -108,22 +109,22 @@ define(
            *
            * @param  {Object} resource Analysis resource
            */
-          'AnalysisService/get': function (resource) {
+          'AnalysisService/get': function(resource) {
             this.status.set('resource', resource);
           }
         },
         {
-          'AnalysisResults/Delete': function () {
+          'AnalysisResults/Delete': function() {
             this.view._deleteAnalysisView();
           }
         },
         {
-          'Analysis/toggle': function (boolean) {
+          'Analysis/toggle': function(boolean) {
             this.view.toogleAnalysis(boolean);
           }
         },
         {
-          'DownloadView/create': function (downloadView) {
+          'DownloadView/create': function(downloadView) {
             this.view.downloadView = downloadView;
           }
         }
@@ -296,8 +297,8 @@ define(
         if (p.download) {
           p.download.cdb = p.download.kml
             ? encodeURIComponent(
-              p.download.kml + '&filename=GFW_Analysis_Results'
-            )
+                p.download.kml + '&filename=GFW_Analysis_Results'
+              )
             : null;
         }
 

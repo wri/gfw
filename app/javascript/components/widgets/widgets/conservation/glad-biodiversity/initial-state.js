@@ -3,7 +3,7 @@ export default {
     withLocation: 'Deforestation Alerts in Biodiversity Areas in {location}'
   },
   config: {
-    landCategories: ['kba', 'aze', 'wdpa'],
+    landCategories: ['kba', 'aze', 'tiger_cl', 'wdpa'],
     categories: ['conservation'],
     selectors: [
       'landCategories',

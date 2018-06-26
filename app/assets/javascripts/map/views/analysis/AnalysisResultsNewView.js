@@ -212,10 +212,7 @@ define(
           layersSlugs.push(key);
         });
 
-        if (
-          layersSlugs.indexOf('umd_as_it_happens') !== -1 ||
-          layersSlugs.indexOf('terrailoss') !== -1
-        ) {
+        if (layersSlugs.indexOf('terrailoss') !== -1) {
           showRegions = false;
         }
         return showRegions;

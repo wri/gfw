@@ -45,7 +45,7 @@ export const parseConfig = createSelector([getColors], colors => ({
   xAxis: {
     tickFormatter: tick => {
       const year = moment(tick, 'YYYY');
-      if ([2001, 2016].includes(tick)) {
+      if ([2001, 2017].includes(tick)) {
         return year.format('YYYY');
       }
       return year.format('YY');
