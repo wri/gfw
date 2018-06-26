@@ -1,8 +1,6 @@
 @import '~styles/settings.scss';
 
 $map-menu-items-size: rem(76px);
-$map-menu-flap-width: rem(290px);
-$map-menu-flap-close-size: rem(32px);
 
 .c-map-menu {
   position: absolute;
@@ -102,43 +100,5 @@ $map-menu-flap-close-size: rem(32px);
     font-weight: 500;
     letter-spacing: -0.3px;
     color: $white;
-  }
-
-  &__flap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: $map-menu-flap-width;
-    height: 100%;
-    padding: 0 rem(20px) rem(20px) rem(20px);
-    background-color: $white;
-    z-index: 1;
-    transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width});
-    transition: transform 0.3s ease-in-out;
-
-    &.--showed {
-      transform: translateX($map-menu-items-size);
-    }
-
-    &__close {
-      position: absolute;
-      top: rem(8px);
-      right: -$map-menu-flap-close-size;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: $map-menu-flap-close-size;
-      height: $map-menu-flap-close-size;
-      background-color: $white;
-      border-radius: 2px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      cursor: pointer;
-
-      .c-icon {
-        width: rem(12px);
-        height: rem(12px);
-      }
-    }
   }
 }

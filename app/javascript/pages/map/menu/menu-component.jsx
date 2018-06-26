@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import MenuFlap from 'pages/map/menu/components/menu-flap';
+
 import Icon from 'components/ui/icon';
 import gfwLogo from 'assets/logos/gfw.png';
-import closeIcon from 'assets/icons/close.svg';
 
 import './menu-styles.scss';
 
@@ -32,52 +33,43 @@ class Menu extends PureComponent {
     );
   };
 
-  renderMenuFlapComponent = () => {
-    const { selectedSectionData } = this.props;
-    if (!selectedSectionData) return null;
-
-    const { Component, data } = selectedSectionData;
-    return <Component data={data} />;
-  };
-
   render() {
-    const { sections, selectedSection, setSelectedSection } = this.props;
+    const {
+      sections,
+      selectedSection,
+      selectedSectionData,
+      setSelectedSection
+    } = this.props;
 
     return (
-      <div className="c-map-menu">
-        <img
-          className="c-map-menu__logo"
-          src={gfwLogo}
-          alt="Global Forest Watch"
-        />
-        <div
-          className={`c-map-menu__buttons-group ${
-            selectedSection ? '--has-selection' : ''
-          }`}
-        >
-          {sections &&
-            sections.map((block, i) => (
-              <ul key={`map-menu-block-${i}`}>
-                {Object.keys(block).map(key =>
-                  this.renderMenuItem(key, block[key])
-                )}
-              </ul>
-            ))}
-        </div>
-        <div
-          className={`c-map-menu__flap ${selectedSection ? '--showed' : ''}`}
-        >
-          <button
-            className="c-map-menu__flap__close"
-            onClick={() => {
-              setSelectedSection(null);
-            }}
+      <div>
+        <div className="c-map-menu">
+          <img
+            className="c-map-menu__logo"
+            src={gfwLogo}
+            alt="Global Forest Watch"
+          />
+          <div
+            className={`c-map-menu__buttons-group ${
+              selectedSection ? '--has-selection' : ''
+            }`}
           >
-            <Icon icon={closeIcon} />
-            {name}
-          </button>
-          {this.renderMenuFlapComponent()}
+            {sections &&
+              sections.map((block, i) => (
+                <ul key={`map-menu-block-${i}`}>
+                  {Object.keys(block).map(key =>
+                    this.renderMenuItem(key, block[key])
+                  )}
+                </ul>
+              ))}
+          </div>
         </div>
+        <MenuFlap
+          section={selectedSection}
+          Component={selectedSectionData ? selectedSectionData.Component : null}
+          data={selectedSectionData ? selectedSectionData.data : null}
+          onClickClose={() => setSelectedSection(null)}
+        />
       </div>
     );
   }
