@@ -261,17 +261,10 @@ define(
         var iso = this.status.get('iso');
         CountryService.showCountry({ iso: iso.country }).then(
           function(results) {
-            try {
-              var resTopojson = JSON.parse(results.geojson);
-              var objects = _.findWhere(resTopojson.objects, {
-                type: 'MultiPolygon'
-              });
-              var geojson = geojson.feature(resTopojson, objects),
-                geometry = geojson.geometry;
+            var geometry = JSON.parse(results.geojson);
 
-              // Draw geojson of country if isoDisabled is equal to true
-              this.view.drawGeojson(geometry);
-            } catch (error) {}
+            // Draw geojson of country if isoDisabled is equal to true
+            this.view.drawGeojson(geometry);
           }.bind(this)
         );
       },
@@ -306,7 +299,6 @@ define(
 
       getSubRegions: function() {
         var iso = this.status.get('iso');
-
         CountryService.getSubRegionsList({
           iso: iso.country,
           region: iso.region

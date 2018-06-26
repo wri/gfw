@@ -20,8 +20,8 @@ define(
 
     var GET_REQUEST_ID = 'AnalysisService:get';
 
-    var APIURL = window.gfw.config.GFW_API;
-    var APIURLV2 = window.gfw.config.GFW_API + '/v3';
+    var APIURL = 'https://production-api.globalforestwatch.org';
+    var APIURLV2 = 'https://production-api.globalforestwatch.org' + '/v3';
 
     var APIURLS = {
       draw: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
@@ -35,8 +35,9 @@ define(
     var AnalysisService = Class.extend({
       get: function(status) {
         if (
-          status.baselayers.indexOf('umd_as_it_happens') > -1 ||
-          status.baselayers.indexOf('places_to_watch') > -1
+          (status.baselayers.indexOf('umd_as_it_happens') > -1 ||
+            status.baselayers.indexOf('places_to_watch') > -1) &&
+          status.type === 'draw'
         ) {
           var umdUrl = UriTemplate(APIURLS['draw']).fillFromObject({
             dataset: 'umd-loss-gain',
@@ -150,7 +151,12 @@ define(
           function(resolve, reject) {
             resolve({
               url: UriTemplate(APIURLS[this.analysis.type]).fillFromObject(
-                this.analysis
+                Object.assign({}, this.analysis, {
+                  dataset:
+                    this.analysis.type === 'country'
+                      ? 'umd-loss-gain'
+                      : this.analysis.dataset
+                })
               )
             });
           }.bind(this)
@@ -197,9 +203,7 @@ define(
       },
 
       getApiHost: function(dataset) {
-        return dataset === 'umd-loss-gain' && this.analysis.type === 'country'
-          ? APIURLV2
-          : APIURL;
+        return this.analysis.type === 'country' ? APIURLV2 : APIURL;
       },
 
       /**

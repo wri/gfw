@@ -23,7 +23,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     SHOW_REQUEST_COUNTRY_ID = 'CountryService:showCountry',
     GET_REQUEST_REGIONS_LIST_ID = 'CountryService:getRegionsList',
     SHOW_REQUEST_REGION_ID = 'CountryService:showRegion',
-    GET_REQUEST_SUBREGIONS_LIST_ID = 'CountryService:getRegionsList',
+    GET_REQUEST_SUBREGIONS_LIST_ID = 'CountryService:getSubRegionsList',
     SHOW_REQUEST_SUBREGION_ID = 'CountryService:showSubRegion';
 
   var APIURL = window.gfw.config.GFW_API;
@@ -73,11 +73,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
             APIURL + APIURLS.getCountryConfig
           ).fillFromObject(status);
 
-          this.defineRequest(datasetId, url, {
-            type: 'persist',
-            duration: 1,
-            unit: 'days'
-          });
+          this.defineRequest(datasetId, url);
 
           var requestConfig = {
             resourceId: datasetId,
@@ -101,11 +97,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
             APIURL + APIURLS.getCountriesList
           ).fillFromObject(CONFIG);
 
-          this.defineRequest(GET_REQUEST_COUNTRIES_LIST_ID, url, {
-            type: 'persist',
-            duration: 1,
-            unit: 'days'
-          });
+          this.defineRequest(GET_REQUEST_COUNTRIES_LIST_ID, url);
 
           var requestConfig = {
             resourceId: GET_REQUEST_COUNTRIES_LIST_ID,
@@ -136,11 +128,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
                 var url = new UriTemplate(
                   APIURL + APIURLS.showCountry
                 ).fillFromObject(status);
-                this.defineRequest(datasetId, url, {
-                  type: 'persist',
-                  duration: 1,
-                  unit: 'days'
-                });
+                this.defineRequest(datasetId, url);
                 var requestConfig = {
                   resourceId: datasetId,
                   success: function(res, status) {
@@ -175,11 +163,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
             APIURL + APIURLS.getRegionsList
           ).fillFromObject(status);
 
-          this.defineRequest(GET_REQUEST_REGIONS_LIST_ID, url, {
-            type: 'persist',
-            duration: 1,
-            unit: 'days'
-          });
+          this.defineRequest(GET_REQUEST_REGIONS_LIST_ID, url);
 
           var requestConfig = {
             resourceId: GET_REQUEST_REGIONS_LIST_ID,
@@ -220,11 +204,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
             status
           );
 
-          this.defineRequest(datasetId, url, {
-            type: 'persist',
-            duration: 1,
-            unit: 'days'
-          });
+          this.defineRequest(datasetId, url);
 
           var requestConfig = {
             resourceId: datasetId,
@@ -251,11 +231,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var url = new UriTemplate(
             CARTO_API + APIURLS.getSubRegionsList
           ).fillFromObject(status);
-          this.defineRequest(GET_REQUEST_SUBREGIONS_LIST_ID, url, {
-            type: 'persist',
-            duration: 1,
-            unit: 'days'
-          });
+          this.defineRequest(GET_REQUEST_SUBREGIONS_LIST_ID, url);
 
           var requestConfig = {
             resourceId: GET_REQUEST_SUBREGIONS_LIST_ID,
@@ -305,11 +281,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
             CARTO_API + APIURLS.showSubRegion
           ).fillFromObject(status);
 
-          this.defineRequest(datasetId, url, {
-            type: 'persist',
-            duration: 1,
-            unit: 'days'
-          });
+          this.defineRequest(datasetId, url);
 
           var requestConfig = {
             resourceId: datasetId,
