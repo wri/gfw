@@ -205,7 +205,13 @@ define(
         var isoDisabled = this.status.get('isoDisabled');
         // Draw geojson depending if it's a country or a region
         if (!!iso.country && iso.country !== 'ALL' && !isoDisabled) {
-          !!iso.region ? this.showRegion() : this.showCountry();
+          if (iso.subRegion) {
+            this.showSubRegion();
+          } else if (iso.region) {
+            this.showRegion();
+          } else {
+            this.showCountry();
+          }
         }
 
         // Get regions
@@ -256,11 +262,11 @@ define(
         CountryService.showCountry({ iso: iso.country }).then(
           function(results) {
             try {
-              var resTopojson = JSON.parse(results.topojson);
+              var resTopojson = JSON.parse(results.geojson);
               var objects = _.findWhere(resTopojson.objects, {
                 type: 'MultiPolygon'
               });
-              var geojson = topojson.feature(resTopojson, objects),
+              var geojson = geojson.feature(resTopojson, objects),
                 geometry = geojson.geometry;
 
               // Draw geojson of country if isoDisabled is equal to true
@@ -309,6 +315,23 @@ define(
             this.status.set({
               subRegions: results
             });
+          }.bind(this)
+        );
+      },
+
+      showSubRegion: function() {
+        var iso = this.status.get('iso');
+
+        CountryService.showSubRegion({
+          iso: iso.country,
+          region: iso.region,
+          subRegion: iso.subRegion
+        }).then(
+          function(results) {
+            var geometry = JSON.parse(results.geojson);
+
+            // Draw geojson of country if isoDisabled is equal to true
+            this.view.drawGeojson(geometry);
           }.bind(this)
         );
       },

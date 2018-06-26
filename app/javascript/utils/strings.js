@@ -9,5 +9,5 @@ export const getIndicator = (forestType, landCategory) => {
   } else if (!landCategory && forestType) {
     return forestType;
   }
-  return 'gadm28';
+  return 'admin';
 };
