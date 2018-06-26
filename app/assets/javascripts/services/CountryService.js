@@ -23,7 +23,8 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     SHOW_REQUEST_COUNTRY_ID = 'CountryService:showCountry',
     GET_REQUEST_REGIONS_LIST_ID = 'CountryService:getRegionsList',
     SHOW_REQUEST_REGION_ID = 'CountryService:showRegion',
-    GET_REQUEST_SUBREGIONS_LIST_ID = 'CountryService:getRegionsList';
+    GET_REQUEST_SUBREGIONS_LIST_ID = 'CountryService:getRegionsList',
+    SHOW_REQUEST_SUBREGION_ID = 'CountryService:showSubRegion';
 
   var APIURL = window.gfw.config.GFW_API;
   var CARTO_API = window.gfw.config.CARTO_API;
@@ -34,13 +35,15 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     getCountriesList:
       "/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable} WHERE iso != 'XCA' AND iso != 'TWN' ORDER BY name",
     showCountry:
-      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, ST_AsGeoJSON(the_geom) AS topojson FROM {countriesTable} WHERE iso='{iso}'",
+      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, ST_AsGeoJSON(the_geom) AS geojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
       "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, gid_1 as id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN' ORDER BY name_1",
     showRegion:
       "/query/{regionsDataset}?sql=SELECT gid_1 as id_1, name_1, ST_AsGeoJSON(the_geom) AS geojson FROM {regionsTable} WHERE iso='{iso}' AND gid_1='{region}' ORDER BY name_1",
     getSubRegionsList:
-      "/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' ORDER BY name"
+      "/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' ORDER BY name",
+    showSubRegion:
+      "/sql?q=SELECT gid_2 as id, name_2 as name, ST_AsGeoJSON(the_geom) AS geojson FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' AND gid_2 = '{subRegion}' ORDER BY name"
   };
 
   var parseGadm36Id = function(gid) {
@@ -138,7 +141,6 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
                   duration: 1,
                   unit: 'days'
                 });
-
                 var requestConfig = {
                   resourceId: datasetId,
                   success: function(res, status) {
@@ -276,6 +278,51 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           this.currentRequest[GET_REQUEST_SUBREGIONS_LIST_ID] = ds.request(
             requestConfig
           );
+        }.bind(this)
+      );
+    },
+
+    showSubRegion: function(params) {
+      var datasetId =
+        SHOW_REQUEST_SUBREGION_ID +
+        '_' +
+        params.iso +
+        '_' +
+        params.region +
+        '_' +
+        params.subRegion;
+      return new Promise(
+        function(resolve, reject) {
+          var status = _.extend({}, CONFIG, params, {
+            region: buildGadm36Id(params.iso, params.region),
+            subRegion: buildGadm36Id(
+              params.iso,
+              params.region,
+              params.subRegion
+            )
+          });
+          var url = new UriTemplate(
+            CARTO_API + APIURLS.showSubRegion
+          ).fillFromObject(status);
+
+          this.defineRequest(datasetId, url, {
+            type: 'persist',
+            duration: 1,
+            unit: 'days'
+          });
+
+          var requestConfig = {
+            resourceId: datasetId,
+            success: function(res, status) {
+              var data = res.rows.length >= 0 ? res.rows[0] : [];
+              resolve(data, status);
+            },
+            error: function(errors) {
+              reject(errors);
+            }
+          };
+
+          ds.request(requestConfig);
         }.bind(this)
       );
     },
