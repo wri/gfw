@@ -2,16 +2,25 @@
   {
     "label": "Plantations",
     "value": "plantations",
-    "metaKey": "gfw_plantations"
+    "metaKey": "gfw_plantations",
+    "global": false
   },
   {
     "label": "Intact Forest Landscapes",
-    "value": "ifl_2013",
-    "metaKey": "intact_forest_landscapes_change"
+    "value": "ifl",
+    "metaKey": "intact_forest_landscapes_change",
+    "global": true
   },
   {
     "label": "Primary Forests",
     "value": "primary_forest",
-    "metaKey": "primary_forest"
+    "metaKey": "primary_forest",
+    "global": false
+  },
+  {
+    "label": "Mangrove forests",
+    "value": "mangroves",
+    "metaKey": "mangrove_2010_gmw",
+    "global": false
   }
 ]

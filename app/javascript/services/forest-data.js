@@ -1,5 +1,7 @@
 import request from 'utils/request';
 import { getIndicator } from 'utils/strings';
+import forestTypes from 'data/forest-types.json';
+import landCategories from 'data/land-categories.json';
 
 const DATASET = process.env.COUNTRIES_PAGE_DATASET;
 const REQUEST_URL = `${process.env.GFW_API}/query/${DATASET}?sql=`;
@@ -7,13 +9,13 @@ const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const SQL_QUERIES = {
   extent:
-    "SELECT SUM({extentYear}) as value, SUM(area_gadm28) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+    "SELECT SUM({extentYear}) as value, SUM(area_admin) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
   plantationsExtent:
     "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = 0 AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   multiRegionExtent:
-    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_gadm28) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
+    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_admin) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
   rankedExtent:
-    "SELECT polyname, SUM({extent_year}) as value, SUM(area_gadm28) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
+    "SELECT polyname, SUM({extent_year}) as value, SUM(area_admin) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = 0",
   gainRanked:
@@ -39,7 +41,7 @@ const SQL_QUERIES = {
   faoEcoLive:
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   nonGlobalDatasets:
-    "SELECT iso, polyname FROM data WHERE polyname IN ('plantations', 'mining', 'primary_forest', 'landmark', 'plantations__mining', 'plantations__landmark', 'primary_forest__mining', 'primary_forest__landmark') GROUP BY iso, polyname ORDER BY polyname, iso",
+    'SELECT iso, polyname FROM data WHERE polyname IN ({indicators}) GROUP BY iso, polyname ORDER BY polyname, iso',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}'
 };
 
@@ -48,8 +50,22 @@ const getExtentYear = year =>
 
 const getLocationQuery = (country, region, subRegion) =>
   `${country ? `iso = '${country}'` : '1 = 1'}${
-    region ? `AND adm1 = ${region}` : ''
-  }${subRegion ? `AND adm2 = ${subRegion}` : ''}`;
+    region ? ` AND adm1 = ${region}` : ''
+  }${subRegion ? ` AND adm2 = ${subRegion}` : ''}`;
+
+const getIndicatorsFromData = (types, categories) => {
+  let indicators = '';
+  const filterCats = categories.filter(c => !c.global);
+  types.filter(t => !t.global).forEach((t, i) => {
+    indicators = !i ? `'${t.value}'` : `${indicators}, '${t.value}'`;
+    filterCats.filter(c => !c.global).forEach(c => {
+      indicators = `${indicators}, '${c.value}'`;
+      indicators = `${indicators}, '${t.value}__${c.value}'`;
+    });
+  });
+
+  return indicators;
+};
 
 export const getLocations = ({
   country,
@@ -67,7 +83,7 @@ export const getLocations = ({
         !region ? ')' : ''
       }`
     )
-    .replace('{extent}', region ? 'area_gadm28' : 'sum(area_gadm28)')
+    .replace('{extent}', region ? 'area_admin' : 'sum(area_admin)')
     .replace('{iso}', country)
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory))
@@ -220,8 +236,7 @@ export const getLoss = ({
 
 export const getFAO = ({ country }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.fao}`.replace(
-    '{location}',
-    getLocationQuery(country)
+    '{location}', country ? `country = '${country}'` : '1 = 1'
   );
   return request.get(url);
 };
@@ -281,8 +296,13 @@ export const getGainRanked = ({
   return request.get(url);
 };
 
-export const getNonGlobalDatasets = () =>
-  request.get(`${REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`);
+export const getNonGlobalDatasets = () => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.nonGlobalDatasets}`.replace(
+    '{indicators}',
+    getIndicatorsFromData(forestTypes, landCategories)
+  );
+  return request.get(url);
+};
 
 export const getGlobalLandCover = ({ country, region, subRegion }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.globalLandCover}`.replace(
