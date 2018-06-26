@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
-import RecentImagery from 'pages/map/recent-imagery';
+import RecentImagery from 'pages/map_legacy/recent-imagery';
 
 import './root-styles.scss';
 
