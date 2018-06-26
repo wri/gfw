@@ -7,7 +7,7 @@ const OPTIONS = {
   urlTemplate:
     'https://storage.googleapis.com/wri-public/Hansen15/tiles/hansen_world/v1/tc{threshold}/{z}/{x}/{y}.png',
   startYear: 2001,
-  endYear: 2016
+  endYear: 2017
 };
 
 class Loss extends Canvas {

@@ -58,13 +58,13 @@ export const getSentence = createSelector(
     const intactPercentage = intactData && intactData / totalExtent * 100;
     let indicatorLabel = indicator && indicator.label;
     switch (indicator && indicator.value) {
-      case 'ifl_2013__mining':
+      case 'ifl__mining':
         indicatorLabel = 'mining concessions';
         break;
-      case 'ifl_2013__wdpa':
+      case 'ifl__wdpa':
         indicatorLabel = 'protected areas';
         break;
-      case 'ifl_2013__landmark':
+      case 'ifl__landmark':
         indicatorLabel = 'indigenous lands';
         break;
       default:
@@ -78,10 +78,10 @@ export const getSentence = createSelector(
     };
 
     let sentence =
-      indicator && indicator.value === 'ifl_2013' ? initial : withIndicator;
+      indicator && indicator.value === 'ifl' ? initial : withIndicator;
     if (intactPercentage === 0) {
       sentence =
-        indicator && indicator.value === 'ifl_2013'
+        indicator && indicator.value === 'ifl'
           ? noIntact
           : noIntactWithIndicator;
     }
