@@ -100,7 +100,8 @@ export const getSections = createSelector([], () => ({
   explore: {
     name: 'EXPLORE',
     icon: truckIcon,
-    Component: ForestChange
+    Component: ForestChange,
+    bigFlap: true
   },
   search: {
     name: 'SEARCH',
