@@ -2,31 +2,67 @@
   {
     "label": "Mining concessions",
     "value": "mining",
-    "metaKey": "gfw_mining"
+    "metaKey": "gfw_mining",
+    "global": false
   },
   {
     "label": "Protected Areas",
     "value": "wdpa",
-    "metaKey": "wdpa_protected_areas"
+    "metaKey": "wdpa_protected_areas",
+    "global": true
   },
   {
     "label": "Key Biodiversity Areas",
     "value": "kba",
-    "metaKey": "key_biodiversity_areas"
+    "metaKey": "key_biodiversity_areas",
+    "global": true
   },
   {
     "label": "Tiger Conservation Landscapes",
-    "value": "tcl",
-    "metaKey": "tiger_conservation_landscapes"
+    "value": "tiger_cl",
+    "metaKey": "tiger_conservation_landscapes",
+    "global": false
   },
   {
     "label": "Alliance for Zero Extinction",
     "value": "aze",
-    "metaKey": "alliance_for_zero_extinction_sites"
+    "metaKey": "alliance_for_zero_extinction_sites",
+    "global": true
   },
   {
     "label": "Indigenous Lands",
     "value": "landmark",
-    "metaKey": "gfw_land_rights"
+    "metaKey": "gfw_land_rights",
+    "global": false
+  },
+  {
+    "label": "Indonesia peat lands",
+    "value": "idn_mys_peatlands",
+    "metaKey": "idn_peat_lands",
+    "global": false
+  },
+  {
+    "label": "Indonesia forest moratorium",
+    "value": "idn_forest_moratorium",
+    "metaKey": "idn_forest_moratorium",
+    "global": false
+  },
+  {
+    "label": "Oil palm concessions",
+    "value": "oil_palm",
+    "metaKey": "gfw_oil_palm",
+    "global": false
+  },
+  {
+    "label": "Wood fiber concessions",
+    "value": "wood_fiber",
+    "metaKey": "gfw_wood_fiber",
+    "global": false
+  },
+  {
+    "label": "Managed forests",
+    "value": "managed_forests",
+    "metaKey": "gfw_logging",
+    "global": false
   }
 ]

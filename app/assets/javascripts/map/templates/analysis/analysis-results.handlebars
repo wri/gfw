@@ -31,43 +31,49 @@
 
 
     {{!-- LOSS --}}
-    {{#ifCond resource.slug "===" 'umd-loss-gain'}}
-      {{#if resource.baselayers.loss}}
-        <li>
-          <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{resource.dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-          <span class="stats-count" style="color: {{resource.baselayers.loss.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
-        </li>
-      {{/if}}
-
-      {{#if resource.baselayers.forestgain}}
-        <li>
-          <span class="stats-title">Gain 2001-2012</span>
-          <span class="stats-count" style="color: {{resource.baselayers.forestgain.title_color}};"><strong>{{resource.alerts.gainAlerts}}</strong> ha</span>
-        </li>
-      {{/if}}
-
-      {{#if resource.baselayers.forest2000}}
+    {{#if resource.baselayers.loss}}
       <li>
-        <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-        <span class="stats-count" style="color: {{resource.baselayers.forest2000.title_color}};"><strong>{{resource.alerts.treeExtent}}</strong> ha</span>
+        <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{resource.dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+        <span class="stats-count" style="color: {{resource.baselayers.loss.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
       </li>
-      {{/if}}
+    {{/if}}
 
-      {{#if resource.baselayers.forest2010}}
+    {{#if resource.baselayers.forestgain}}
       <li>
-        <span class="stats-title">Tree cover (2010)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-        <span class="stats-count" style="color: {{resource.baselayers.forest2010.title_color}};"><strong>{{resource.alerts.treeExtent2010}}</strong> ha</span>
+        <span class="stats-title">Gain 2001-2012</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forestgain.title_color}};"><strong>{{resource.alerts.gainAlerts}}</strong> ha</span>
       </li>
-      {{/if}}
+    {{/if}}
 
-      <li>
-        <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-      </li>
+    {{#if resource.baselayers.forest2000}}
+    <li>
+      <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+      <span class="stats-count" style="color: {{resource.baselayers.forest2000.title_color}};"><strong>{{resource.alerts.treeExtent}}</strong> ha</span>
+    </li>
+    {{/if}}
 
+    {{#if resource.baselayers.forest2010}}
+    <li>
+      <span class="stats-title">Tree cover (2010)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+      <span class="stats-count" style="color: {{resource.baselayers.forest2010.title_color}};"><strong>{{resource.alerts.treeExtent2010}}</strong> ha</span>
+    </li>
+    {{/if}}
+
+    {{!-- GLAD --}}
+    {{#if resource.baselayers.umd_as_it_happens}}
       <li>
-        <div class="stats-notice">NOTE: tree cover loss and gain statistics cannot be compared against each other. <a href="#" class="source" data-source="loss-compare-gain">Learn more</a>.</div>
+        <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
-    {{/ifCond}}
+    {{/if}}
+
+    <li>
+      <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
+    </li>
+
+    <li>
+      <div class="stats-notice">NOTE: tree cover loss and gain statistics cannot be compared against each other. <a href="#" class="source" data-source="loss-compare-gain">Learn more</a>.</div>
+    </li>
 
     {{!-- PRODES --}}
     {{#ifCond resource.slug "===" 'prodes-loss'}}
@@ -89,23 +95,11 @@
       </li>
     {{/ifCond}}
 
-
-
-
     {{!-- GUYRA --}}
     {{#ifCond resource.slug "===" 'guira-loss'}}
       <li>
         <span class="stats-title">Grand Chaco tree cover loss:</span>
         <span class="stats-count" style="color: {{resource.baselayers.guyra.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
-      </li>
-    {{/ifCond}}
-
-
-    {{!-- GLAD --}}
-    {{#ifCond resource.slug "===" 'glad-alerts'}}
-      <li>
-        <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
       </li>
     {{/ifCond}}
 
