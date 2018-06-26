@@ -67,21 +67,11 @@ export const getSentence = createSelector(
     parseData,
     getSettings,
     getOptions,
-    getLocation,
     getIndicator,
     getCurrentLocation,
     getSentences
   ],
-  (
-    data,
-    sortedData,
-    settings,
-    options,
-    location,
-    indicator,
-    currentLabel,
-    sentences
-  ) => {
+  (data, sortedData, settings, options, indicator, currentLabel, sentences) => {
     if (!data || !options || !currentLabel) return '';
     const {
       initial,

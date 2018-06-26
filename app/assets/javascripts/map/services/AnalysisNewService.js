@@ -20,8 +20,8 @@ define(
 
     var GET_REQUEST_ID = 'AnalysisService:get';
 
-    var APIURL = window.gfw.config.GFW_API;
-    var APIURLV2 = window.gfw.config.GFW_API + '/v2';
+    var APIURL = 'https://production-api.globalforestwatch.org';
+    var APIURLV2 = 'https://production-api.globalforestwatch.org' + '/v3';
 
     var APIURLS = {
       draw: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
@@ -34,44 +34,116 @@ define(
 
     var AnalysisService = Class.extend({
       get: function(status) {
-        return new Promise(
-          function(resolve, reject) {
-            this.analysis = this.buildAnalysisFromStatus(status);
-            this.apiHost = this.getApiHost(this.analysis.dataset);
-            this.getUrl().then(
-              function(data) {
-                ds.define(GET_REQUEST_ID, {
-                  cache: false,
-                  url: this.apiHost + data.url,
-                  type: 'GET',
-                  dataType: 'json',
-                  decoder: function(data, status, xhr, success, error) {
-                    if (status === 'success') {
-                      success(data, xhr);
-                    } else if (status === 'fail' || status === 'error') {
-                      error(xhr.responseText);
-                    } else if (status !== 'abort') {
-                      error(xhr.responseText);
-                    }
-                  }
-                });
+        if (
+          (status.baselayers.indexOf('umd_as_it_happens') > -1 ||
+            status.baselayers.indexOf('places_to_watch') > -1) &&
+          status.type === 'draw'
+        ) {
+          var umdUrl = UriTemplate(APIURLS['draw']).fillFromObject({
+            dataset: 'umd-loss-gain',
+            geostore: status.geostore,
+            period: status.period,
+            thresh: status.threshold,
+            gladConfirmOnly: status.gladConfirmOnly
+          });
+          return fetch(APIURL + umdUrl)
+            .then(function(response) {
+              return response.json();
+            })
+            .then(
+              function(umdResponse) {
+                return new Promise(
+                  function(resolve, reject) {
+                    this.analysis = this.buildAnalysisFromStatus(status);
+                    this.apiHost = this.getApiHost(this.analysis.dataset);
+                    this.getUrl().then(
+                      function(data) {
+                        ds.define(GET_REQUEST_ID, {
+                          cache: false,
+                          url: this.apiHost + data.url,
+                          type: 'GET',
+                          dataType: 'json',
+                          decoder: function(data, status, xhr, success, error) {
+                            if (status === 'success') {
+                              success(data, xhr);
+                            } else if (
+                              status === 'fail' ||
+                              status === 'error'
+                            ) {
+                              error(xhr.responseText);
+                            } else if (status !== 'abort') {
+                              error(xhr.responseText);
+                            }
+                          }
+                        });
 
-                var requestConfig = {
-                  resourceId: GET_REQUEST_ID,
-                  success: function(response, status) {
-                    resolve(response, status);
-                  }.bind(this),
-                  error: function(errors) {
-                    reject(errors);
+                        var requestConfig = {
+                          resourceId: GET_REQUEST_ID,
+                          success: function(response, status) {
+                            var data = {
+                              data: {
+                                attributes: Object.assign(
+                                  {},
+                                  response.data.attributes,
+                                  umdResponse.data.attributes
+                                )
+                              }
+                            };
+                            resolve(data, status);
+                          }.bind(this),
+                          error: function(errors) {
+                            reject(errors);
+                          }.bind(this)
+                        };
+
+                        this.abortRequest();
+                        this.currentRequest = ds.request(requestConfig);
+                      }.bind(this)
+                    );
                   }.bind(this)
-                };
-
-                this.abortRequest();
-                this.currentRequest = ds.request(requestConfig);
+                );
               }.bind(this)
             );
-          }.bind(this)
-        );
+        } else {
+          return new Promise(
+            function(resolve, reject) {
+              this.analysis = this.buildAnalysisFromStatus(status);
+              this.apiHost = this.getApiHost(this.analysis.dataset);
+              this.getUrl().then(
+                function(data) {
+                  ds.define(GET_REQUEST_ID, {
+                    cache: false,
+                    url: this.apiHost + data.url,
+                    type: 'GET',
+                    dataType: 'json',
+                    decoder: function(data, status, xhr, success, error) {
+                      if (status === 'success') {
+                        success(data, xhr);
+                      } else if (status === 'fail' || status === 'error') {
+                        error(xhr.responseText);
+                      } else if (status !== 'abort') {
+                        error(xhr.responseText);
+                      }
+                    }
+                  });
+
+                  var requestConfig = {
+                    resourceId: GET_REQUEST_ID,
+                    success: function(response, status) {
+                      resolve(response, status);
+                    }.bind(this),
+                    error: function(errors) {
+                      reject(errors);
+                    }.bind(this)
+                  };
+
+                  this.abortRequest();
+                  this.currentRequest = ds.request(requestConfig);
+                }.bind(this)
+              );
+            }.bind(this)
+          );
+        }
       },
 
       getUrl: function() {
@@ -79,7 +151,12 @@ define(
           function(resolve, reject) {
             resolve({
               url: UriTemplate(APIURLS[this.analysis.type]).fillFromObject(
-                this.analysis
+                Object.assign({}, this.analysis, {
+                  dataset:
+                    this.analysis.type === 'country'
+                      ? 'umd-loss-gain'
+                      : this.analysis.dataset
+                })
               )
             });
           }.bind(this)
@@ -126,9 +203,7 @@ define(
       },
 
       getApiHost: function(dataset) {
-        return dataset === 'umd-loss-gain' && this.analysis.type === 'country'
-          ? APIURLV2
-          : APIURL;
+        return this.analysis.type === 'country' ? APIURLV2 : APIURL;
       },
 
       /**

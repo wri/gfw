@@ -1,6 +1,6 @@
 import request from 'utils/request';
 
-const REQUEST_URL = `${process.env.RESOURCE_WATCH_API}/geostore/admin/`;
+const REQUEST_URL = `${process.env.GFW_API}/v2/geostore/admin/`;
 
 export const getGeostoreProvider = (country, region, subRegion) => {
   const url = `${REQUEST_URL}${country}${region ? `/${region}` : ''}${

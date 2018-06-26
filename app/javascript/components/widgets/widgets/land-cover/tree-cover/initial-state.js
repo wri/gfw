@@ -5,7 +5,6 @@ export default {
   },
   config: {
     size: 'small',
-    landCategories: ['mining', 'landmark', 'wdpa'],
     categories: ['summary', 'land-cover'],
     admins: ['global', 'country', 'region', 'subRegion'],
     selectors: ['landCategories', 'thresholds', 'extentYears'],
