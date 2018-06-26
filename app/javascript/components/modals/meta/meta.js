@@ -5,7 +5,16 @@ import actions from './meta-actions';
 import reducers, { initialState } from './meta-reducers';
 import ModalMetaComponent from './meta-component';
 
-const MASTER_META_FIELDS = ['title', 'subtitle', 'citation', 'overview'];
+const MASTER_META_FIELDS = [
+  'title',
+  'subtitle',
+  'citation',
+  'overview',
+  'learn_more',
+  'download_data',
+  'map_service',
+  'amazon_link'
+];
 const MASTER_TABLE_FIELDS = [
   'function',
   'resolution',

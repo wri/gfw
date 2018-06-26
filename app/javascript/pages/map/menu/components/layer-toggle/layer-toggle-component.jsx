@@ -11,7 +11,7 @@ import './layer-toggle-styles.scss';
 
 class LayerToggle extends PureComponent {
   render() {
-    const { data: { name, description } } = this.props;
+    const { data: { name, description, meta }, setModalMeta } = this.props;
 
     return (
       <div className="c-layer-toggle">
@@ -21,7 +21,7 @@ class LayerToggle extends PureComponent {
             <div className="c-layer-toggle__name">{name}</div>
             <Button
               className="theme-button-tiny square info-button"
-              onClick={() => {}}
+              onClick={() => setModalMeta(meta)}
             >
               <Icon icon={infoIcon} className="info-icon" />
             </Button>
@@ -34,7 +34,8 @@ class LayerToggle extends PureComponent {
 }
 
 LayerToggle.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  setModalMeta: PropTypes.func
 };
 
 export default LayerToggle;
