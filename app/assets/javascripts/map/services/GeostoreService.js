@@ -1,100 +1,88 @@
-define([
-  'Class',
-  'uri',
-  'bluebird',
-  'map/services/DataService'
-], function(Class, UriTemplate, Promise, ds) {
+define(['Class', 'uri', 'bluebird', 'map/services/DataService'], (
+  Class,
+  UriTemplate,
+  Promise,
+  ds
+) => {
+  let GET_REQUEST_ID = 'GeostoreService:get',
+    SAVE_REQUEST_ID = 'GeostoreService:save';
 
-  'use strict';
+  const URL = 'https://production-api.globalforestwatch.org' + '/geostore/{id}';
 
-  var GET_REQUEST_ID = 'GeostoreService:get',
-      SAVE_REQUEST_ID = 'GeostoreService:save';
-
-  var URL = 'https://production-api.globalforestwatch.org' + '/geostore/{id}';
-
-  var GeostoreService = Class.extend({
-
-    get: function(id) {
-      return new Promise(function(resolve, reject) {
-
-        var url = new UriTemplate(URL).fillFromObject({id: id});
+  const GeostoreService = Class.extend({
+    get(id) {
+      return new Promise(((resolve, reject) => {
+        const url = new UriTemplate(URL).fillFromObject({ id });
 
         ds.define(GET_REQUEST_ID, {
           cache: false,
-          url: url,
+          url,
           type: 'GET'
         });
 
-        var requestConfig = {
+        const requestConfig = {
           resourceId: GET_REQUEST_ID,
           success: resolve
         };
 
         ds.request(requestConfig);
-
-      });
+      }));
     },
 
-    save: function(geojson) {
-      return new Promise(function(resolve, reject) {
-
-        var url = new UriTemplate(URL).fillFromObject({});
+    save(geojson) {
+      return new Promise(((resolve, reject) => {
+        const url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(SAVE_REQUEST_ID, {
           cache: false,
-          url: url,
+          url,
           type: 'POST',
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         });
 
-        var requestConfig = {
+        const requestConfig = {
           resourceId: SAVE_REQUEST_ID,
           data: JSON.stringify({
-            geojson: geojson
+            geojson
           }),
-          success: function(response) {
+          success(response) {
             resolve(response.data.id);
           },
           error: reject
         };
 
         ds.request(requestConfig);
-
-      });
+      }));
     },
 
-    use: function(provider) {
-      return new Promise(function(resolve, reject) {
-
-        var url = new UriTemplate(URL).fillFromObject({});
+    use(provider) {
+      return new Promise(((resolve, reject) => {
+        const url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(SAVE_REQUEST_ID, {
           cache: false,
-          url: url,
+          url,
           type: 'POST',
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         });
 
-        var requestConfig = {
+        const requestConfig = {
           resourceId: SAVE_REQUEST_ID,
           data: JSON.stringify({
-            provider: provider
+            provider
           }),
-          success: function(response) {
+          success(response) {
             resolve(response.data.id);
           },
           error: reject
         };
 
         ds.request(requestConfig);
-
-      });
+      }));
     }
-
   });
 
   return new GeostoreService();
-
 });
