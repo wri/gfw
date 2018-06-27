@@ -10,6 +10,7 @@ import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
 import MapControls from 'components/map/components/map-controls';
 import RecentImagery from 'pages/map/recent-imagery';
+import DataAnalysisMenu from 'pages/map/data-analysis-menu';
 
 import './page-styles.scss';
 
@@ -25,6 +26,7 @@ class Page extends PureComponent {
             <RecentImagery />
           </DragDropContextProvider>
         </div>
+        <DataAnalysisMenu className="data-analysis-menu" />
         <Share />
         <ModalMeta />
         <CountryDataProvider />
