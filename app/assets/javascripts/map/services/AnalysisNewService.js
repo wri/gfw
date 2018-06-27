@@ -82,11 +82,17 @@ define(
                           success: function(response, status) {
                             var data = {
                               data: {
-                                attributes: Object.assign(
-                                  {},
-                                  response.data.attributes,
-                                  umdResponse.data.attributes
-                                )
+                                attributes: {
+                                  areaHa: umdResponse.data.attributes.areaHa,
+                                  gain: umdResponse.data.attributes.gain,
+                                  loss: response.data.attributes.value,
+                                  treeExtent:
+                                    umdResponse.data.attributes.treeExtent,
+                                  treeExtent2010:
+                                    umdResponse.data.attributes.treeExtent2010,
+                                  downloadUrls:
+                                    response.data.attributes.downloadUrls
+                                }
                               }
                             };
                             resolve(data, status);
