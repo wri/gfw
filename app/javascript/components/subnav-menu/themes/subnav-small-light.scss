@@ -1,0 +1,31 @@
+@import '~styles/settings';
+$subnav-height: rem(40px);
+
+.theme-subnav-small-light {
+  height: $subnav-height;
+
+  .buttons {
+    padding: 0;
+
+    li {
+      width: auto;
+      max-width: auto;
+      border-right: 0;
+
+      > * {
+        padding: 0 rem(26px);
+        border-radius: 0;
+
+        &.active {
+          border-left: 1px solid rgba($slate, 0.2);
+          border-right: 1px solid rgba($slate, 0.2);
+        }
+      }
+
+      &:first-child,
+      &:first-child > *.active {
+        border-left: 0;
+      }
+    }
+  }
+}

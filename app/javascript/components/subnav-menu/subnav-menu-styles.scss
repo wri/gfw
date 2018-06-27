@@ -10,7 +10,7 @@ $subnav-height: rem(60px);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: $subnav-height;
+    height: 100%;
     overflow-x: scroll;
     -ms-overflow-style: none;
     padding: 0 $mobile-gutter;
@@ -31,7 +31,7 @@ $subnav-height: rem(60px);
         max-width: rem(180px);
       }
 
-      > a {
+      > * {
         position: relative;
         display: flex;
         justify-content: center;
