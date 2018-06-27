@@ -9,12 +9,15 @@ $subnav-height: rem(40px);
 
     li {
       width: auto;
-      max-width: auto;
-      border-right: 0;
+      max-width: none;
+      border-left: 0 !important;
+      border-right: 0 !important;
 
       > * {
         padding: 0 rem(26px);
         border-radius: 0;
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
 
         &.active {
           border-left: 1px solid rgba($slate, 0.2);
@@ -22,9 +25,8 @@ $subnav-height: rem(40px);
         }
       }
 
-      &:first-child,
       &:first-child > *.active {
-        border-left: 0;
+        border-left: 1px solid transparent;
       }
     }
   }
