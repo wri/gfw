@@ -45,6 +45,10 @@ $subnav-height: rem(60px);
         &.active {
           background-color: $white;
         }
+
+        svg {
+          margin-right: rem(5px);
+        }
       }
 
       &:first-child {
