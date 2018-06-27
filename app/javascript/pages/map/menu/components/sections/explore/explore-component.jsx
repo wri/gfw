@@ -8,11 +8,23 @@ import './explore-styles.scss';
 
 class Explore extends PureComponent {
   render() {
-    const { data } = this.props;
+    const { section, data, setMenuExplore } = this.props;
     const links = [
-      { label: 'Topics', active: true, onClick: () => {} },
-      { label: 'Places to watch', onClick: () => {} },
-      { label: 'Stories', onClick: () => {} }
+      {
+        label: 'Topics',
+        active: section === 'topics',
+        onClick: () => setMenuExplore({ section: 'topics' })
+      },
+      {
+        label: 'Places to watch',
+        active: section === 'places-to-watch',
+        onClick: () => setMenuExplore({ section: 'places-to-watch' })
+      },
+      {
+        label: 'Stories',
+        active: section === 'stories',
+        onClick: () => setMenuExplore({ section: 'stories' })
+      }
     ];
     return (
       <div className="c-explore">
@@ -56,7 +68,9 @@ class Explore extends PureComponent {
 }
 
 Explore.propTypes = {
-  data: PropTypes.array
+  section: PropTypes.string,
+  data: PropTypes.array,
+  setMenuExplore: PropTypes.func
 };
 
 export default Explore;

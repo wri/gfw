@@ -1,9 +1,18 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 
+import actions from 'pages/map/menu/menu-actions';
+import { getData } from './explore-selectors';
+
 import ExploreComponent from './explore-component';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ mapMenu }) => {
+  const { explore } = mapMenu;
+  return {
+    section: explore.section,
+    data: getData()
+  };
+};
 
 class ExploreContainer extends PureComponent {
   render() {
@@ -13,4 +22,4 @@ class ExploreContainer extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps, null)(ExploreContainer);
+export default connect(mapStateToProps, actions)(ExploreContainer);
