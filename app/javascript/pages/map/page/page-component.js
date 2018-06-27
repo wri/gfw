@@ -3,6 +3,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
 import CountryDataProvider from 'providers/country-data-provider';
+import DatasetsProvider from 'providers/datasets-provider';
 import Map from 'components/map';
 import MapMenu from 'pages/map/menu';
 import ModalMeta from 'components/modals/meta';
@@ -27,6 +28,7 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         <CountryDataProvider />
+        <DatasetsProvider />
       </div>
     );
   }

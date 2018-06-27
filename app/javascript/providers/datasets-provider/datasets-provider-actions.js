@@ -10,7 +10,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
   dispatch(setDatasetsLoading({ loading: true, error: false }));
   getDatasetsProvider()
     .then(datasets => {
-      dispatch(setDatasetsData(datasets.data));
+      dispatch(setDatasetsData((datasets.data && datasets.data.data) || []));
     })
     .catch(error => {
       dispatch(setDatasetsLoading({ loading: false, error: true }));
