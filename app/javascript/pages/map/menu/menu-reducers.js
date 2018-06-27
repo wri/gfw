@@ -1,6 +1,9 @@
 export const initialState = {
   selectedSection: null,
-  countries: null
+  countries: null,
+  explore: {
+    section: 'topics'
+  }
 };
 
 const setSelectedSection = (state, { payload }) => ({

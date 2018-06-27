@@ -10,9 +10,11 @@ import searchIcon from 'assets/icons/search.svg';
 
 import ForestChange from './components/sections/forest-change';
 import Countries from './components/sections/countries';
+import Explore from './components/sections/explore';
 
 const getSelectedSection = state => state.selectedSection || null;
 const getCountries = state => state.countries || null;
+const getExplore = state => state.explore || null;
 
 export const getSections = createSelector([], () => ({
   'forest-change': {
@@ -100,7 +102,7 @@ export const getSections = createSelector([], () => ({
   explore: {
     name: 'EXPLORE',
     icon: truckIcon,
-    Component: ForestChange,
+    Component: Explore,
     bigFlap: true
   },
   search: {
@@ -138,14 +140,42 @@ export const getCountriesData = createSelector([getCountries], () => [
   }
 ]);
 
+export const getExploreData = createSelector([getExplore], () => [
+  {
+    id: 0,
+    title: 'Climate',
+    summary:
+      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
+    image: 'https://www.globalforestwatch.org/assets/covers/stories-cover.png'
+  },
+  {
+    id: 1,
+    title: 'Climate',
+    summary:
+      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
+    image: 'https://www.globalforestwatch.org/assets/covers/stories-cover.png'
+  },
+  {
+    id: 2,
+    title: 'Climate',
+    summary:
+      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
+    image: 'https://www.globalforestwatch.org/assets/covers/stories-cover.png'
+  }
+]);
+
 export const getSectionData = createSelector(
-  [getSections, getSelectedSection, getCountriesData],
-  (sections, selectedSection, countries) => {
+  [getSections, getSelectedSection, getCountriesData, getExploreData],
+  (sections, selectedSection, countries, explore) => {
     if (!sections || !selectedSection) return null;
 
     const section = sections[selectedSection];
     if (selectedSection === 'countries') {
       section.data = countries;
+    }
+
+    if (selectedSection === 'explore') {
+      section.data = explore;
     }
 
     return section;

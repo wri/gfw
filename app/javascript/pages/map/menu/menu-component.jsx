@@ -37,7 +37,7 @@ class Menu extends PureComponent {
     const {
       sections,
       selectedSection,
-      selectedSectionData,
+      sectionData,
       setSelectedSection
     } = this.props;
 
@@ -63,12 +63,10 @@ class Menu extends PureComponent {
         </div>
         <MenuFlap
           section={selectedSection}
-          Component={selectedSectionData ? selectedSectionData.Component : null}
-          data={selectedSectionData ? selectedSectionData.data : null}
+          Component={sectionData ? sectionData.Component : null}
+          data={sectionData ? sectionData.data : null}
           isBig={
-            selectedSectionData && selectedSectionData.bigFlap
-              ? selectedSectionData.bigFlap
-              : false
+            sectionData && sectionData.bigFlap ? sectionData.bigFlap : false
           }
           onClickClose={() => setSelectedSection(null)}
         />
@@ -80,7 +78,7 @@ class Menu extends PureComponent {
 Menu.propTypes = {
   sections: PropTypes.object,
   selectedSection: PropTypes.string,
-  selectedSectionData: PropTypes.object,
+  sectionData: PropTypes.object,
   setSelectedSection: PropTypes.func.isRequired
 };
 

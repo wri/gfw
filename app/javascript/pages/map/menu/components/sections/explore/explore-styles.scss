@@ -1,0 +1,30 @@
+@import '~styles/settings.scss';
+
+$explore-nav-height: rem(40px);
+$explore-content-margin: rem(30px);
+
+.c-explore {
+  &__description {
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: -0.2px;
+    margin-bottom: rem(30px);
+  }
+
+  &__content {
+    height: calc(100vh - #{$explore-nav-height + $explore-content-margin});
+    margin-top: rem(30px);
+    padding: 0 rem(5px);
+    overflow: auto;
+
+    .c-card {
+      margin-bottom: rem(30px);
+    }
+  }
+
+  .column,
+  .columns {
+    padding-right: rem(15px);
+    padding-left: rem(15px);
+  }
+}
