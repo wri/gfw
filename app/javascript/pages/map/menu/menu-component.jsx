@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import MenuFlap from 'pages/map/menu/components/menu-flap';
+
 import Icon from 'components/ui/icon';
 import gfwLogo from 'assets/logos/gfw.png';
-import closeIcon from 'assets/icons/close.svg';
 
 import './menu-styles.scss';
 
@@ -32,61 +33,51 @@ class Menu extends PureComponent {
     );
   };
 
-  renderMenuFlapComponent = () => {
-    const { selectedSectionData } = this.props;
-    if (!selectedSectionData) return null;
-
-    const { Component, data } = selectedSectionData;
-    return <Component data={data} />;
-  };
-
   render() {
-    const { sections, selectedSection, setSelectedSection } = this.props;
+    const {
+      sections,
+      selectedSection,
+      sectionData,
+      setSelectedSection
+    } = this.props;
 
     return (
-      <div className="c-map-menu">
-        <img
-          className="c-map-menu__logo"
-          src={gfwLogo}
-          alt="Global Forest Watch"
+      <div>
+        <div className="c-map-menu">
+          <img
+            className="c-map-menu__logo"
+            src={gfwLogo}
+            alt="Global Forest Watch"
+          />
+          {sections && (
+            <ul
+              className={`c-map-menu__buttons-group ${
+                selectedSection ? '--has-selection' : ''
+              }`}
+            >
+              {Object.keys(sections).map(key =>
+                this.renderMenuItem(key, sections[key])
+              )}
+            </ul>
+          )}
+        </div>
+        <MenuFlap
+          section={selectedSection}
+          Component={sectionData ? sectionData.Component : null}
+          isBig={
+            sectionData && sectionData.bigFlap ? sectionData.bigFlap : false
+          }
+          onClickClose={() => setSelectedSection(null)}
         />
-        <div
-          className={`c-map-menu__buttons-group ${
-            selectedSection ? '--has-selection' : ''
-          }`}
-        >
-          {sections &&
-            sections.map((block, i) => (
-              <ul key={`map-menu-block-${i}`}>
-                {Object.keys(block).map(key =>
-                  this.renderMenuItem(key, block[key])
-                )}
-              </ul>
-            ))}
-        </div>
-        <div
-          className={`c-map-menu__flap ${selectedSection ? '--showed' : ''}`}
-        >
-          <button
-            className="c-map-menu__flap__close"
-            onClick={() => {
-              setSelectedSection(null);
-            }}
-          >
-            <Icon icon={closeIcon} />
-            {name}
-          </button>
-          {this.renderMenuFlapComponent()}
-        </div>
       </div>
     );
   }
 }
 
 Menu.propTypes = {
-  sections: PropTypes.array,
+  sections: PropTypes.object,
   selectedSection: PropTypes.string,
-  selectedSectionData: PropTypes.object,
+  sectionData: PropTypes.object,
   setSelectedSection: PropTypes.func.isRequired
 };
 

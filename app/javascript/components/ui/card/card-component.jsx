@@ -4,14 +4,15 @@ import Button from 'components/ui/button';
 import Dotdotdot from 'react-dotdotdot';
 
 import './card-styles.scss';
+import './themes/card-small.scss';
 
 class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { className, data, onClick } = this.props;
+    const { className, theme, data, buttons } = this.props;
 
     return (
-      <div className={`c-card ${className || ''}`}>
+      <div className={`c-card ${className || ''} ${theme || ''}`}>
         {data.image && (
           <div
             className="image"
@@ -28,21 +29,14 @@ class Card extends PureComponent {
             </div>
           )}
           {data.meta && <p className="meta">{data.meta}</p>}
-          {data.extLink && (
-            <Button className="read-more" extLink={data.extLink}>
-              READ MORE
-            </Button>
-          )}
-          {data.link && (
-            <Button className="read-more" extLink={data.link}>
-              READ MORE
-            </Button>
-          )}
-          {onClick && (
-            <Button className="read-more" onClick={onClick}>
-              READ MORE
-            </Button>
-          )}
+          <div className="buttons">
+            {buttons &&
+              buttons.map((button, i) => (
+                <Button key={`card-button-${i}`} {...button}>
+                  {button.text}
+                </Button>
+              ))}
+          </div>
         </div>
       </div>
     );
@@ -52,6 +46,8 @@ class Card extends PureComponent {
 Card.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
+  theme: PropTypes.string,
+  buttons: PropTypes.array,
   onClick: PropTypes.func
 };
 

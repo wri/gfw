@@ -1,0 +1,28 @@
+@import '~styles/settings.scss';
+
+$summary-color: #aaa;
+
+.theme-card-small {
+  .image {
+    height: rem(120px);
+  }
+
+  .body {
+    padding: rem(23px) rem(20px) rem(20px) rem(20px);
+
+    .title {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: normal;
+      margin-bottom: rem(5px);
+    }
+
+    .summary {
+      font-size: 12px;
+      line-height: 1.33;
+      letter-spacing: -0.2px;
+      color: $summary-color;
+    }
+  }
+}

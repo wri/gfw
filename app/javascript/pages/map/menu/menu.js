@@ -8,15 +8,16 @@ import { getSections, getSectionData } from './menu-selectors';
 import MenuComponent from './menu-component';
 
 const mapStateToProps = ({ mapMenu }) => {
-  const { selectedSection, countries } = mapMenu;
+  const { selectedSection, countries, explore } = mapMenu;
   const selectorsParams = {
     selectedSection,
-    countries
+    countries,
+    explore
   };
   return {
     selectedSection,
     sections: getSections(selectorsParams),
-    selectedSectionData: getSectionData(selectorsParams)
+    sectionData: getSectionData(selectorsParams)
   };
 };
 
