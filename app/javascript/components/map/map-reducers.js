@@ -13,9 +13,8 @@ export const initialState = {
     streetViewControl: false,
     overviewMapControl: false,
     tilt: 0,
-    scrollwheel: false,
     center: { lat: 15, lng: 27 },
-    zoom: 2,
+    zoom: 3,
     minZoom: 2,
     maxZoom: 14
   },

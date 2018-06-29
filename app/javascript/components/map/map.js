@@ -15,16 +15,17 @@ import actions from './map-actions';
 import reducers, { initialState } from './map-reducers';
 import { getLayers } from './map-selectors';
 
-const mapStateToProps = ({ map, countryData, widgets }, { widgetKey }) => {
+const mapStateToProps = ({ map, countryData, widgets }, { widgetKey, options, layers }) => {
   const widget = widget ? widgets[widgetKey] : null;
   const widgetSettings = widget && widget.settings;
-  const activeLayers = widgetSettings && widgetSettings.layers;
+  const activeLayers = widgetSettings && widgetSettings.layers || layers;
 
   return {
     ...map,
     ...countryData.geostore,
     loading: map.loading || countryData.isGeostoreLoading,
     settings: { ...map.settings, ...widgetSettings },
+    options: { ...map.options, ...options },
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
   };
