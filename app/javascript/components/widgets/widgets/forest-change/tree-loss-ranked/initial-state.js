@@ -5,8 +5,7 @@ export const initialState = {
   },
   config: {
     size: 'small',
-    forestTypes: ['ifl_2013'],
-    landCategories: ['mining', 'wdpa', 'landmark'],
+    forestTypes: ['ifl'],
     units: ['ha', '%'],
     categories: ['forest-change'],
     admins: ['global', 'country'],
@@ -41,7 +40,7 @@ export const initialState = {
   settings: {
     threshold: 30,
     startYear: 2001,
-    endYear: 2016,
+    endYear: 2017,
     unit: '%',
     extentYear: 2000,
     layers: ['loss'],

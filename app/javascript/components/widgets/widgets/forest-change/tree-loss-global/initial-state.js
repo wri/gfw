@@ -4,7 +4,7 @@ export default {
   },
   config: {
     admins: ['global'],
-    forestTypes: ['ifl_2013'],
+    forestTypes: ['ifl'],
     landCategories: ['wdpa'],
     sentences: {
       initial:

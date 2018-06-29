@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
+import { parseGadm36Id } from 'utils/format';
 import axios from 'axios';
 import uniqBy from 'lodash/uniqBy';
 
@@ -10,7 +11,6 @@ import {
   getSubRegionsProvider,
   getCountryLinksProvider
 } from 'services/country';
-import { getWaterBodiesBlacklistProvider } from 'services/whitelists';
 
 import { getGeostoreProvider } from 'services/geostore';
 import BOUNDS from 'data/bounds.json';
@@ -57,7 +57,14 @@ export const getRegions = createThunkAction(
       dispatch(setRegionsLoading(true));
       getRegionsProvider(country)
         .then(response => {
-          dispatch(setRegions(uniqBy(response.data.rows), 'id'));
+          const parsedResponse = [];
+          uniqBy(response.data.rows).forEach(row => {
+            parsedResponse.push({
+              id: parseGadm36Id(row.id).adm1,
+              name: row.name
+            });
+          });
+          dispatch(setRegions(parsedResponse, 'id'));
           dispatch(setRegionsLoading(false));
         })
         .catch(error => {
@@ -73,21 +80,19 @@ export const getSubRegions = createThunkAction(
   (country, region) => (dispatch, state) => {
     if (!state().countryData.isSubRegionsLoading) {
       dispatch(setSubRegionsLoading(true));
-      axios
-        .all([
-          getSubRegionsProvider(country, region),
-          getWaterBodiesBlacklistProvider(country, region)
-        ])
-        .then(
-          axios.spread((subRegions, blacklistResponse) => {
-            const { rows } = subRegions.data;
-            const blackList = blacklistResponse.data.rows.map(i => i.adm2);
-            const subRegionList =
-              rows && rows.filter(r => blackList.indexOf(r.id) === -1);
-            dispatch(setSubRegions(uniqBy(subRegionList, 'id')));
-            dispatch(setSubRegionsLoading(false));
-          })
-        )
+      getSubRegionsProvider(country, region)
+        .then(subRegions => {
+          const { rows } = subRegions.data;
+          const parsedResponse = [];
+          uniqBy(rows).forEach(row => {
+            parsedResponse.push({
+              id: parseGadm36Id(row.id).adm2,
+              name: row.name
+            });
+          });
+          dispatch(setSubRegions(uniqBy(parsedResponse, 'id')));
+          dispatch(setSubRegionsLoading(false));
+        })
         .catch(error => {
           dispatch(setSubRegionsLoading(false));
           console.info(error);

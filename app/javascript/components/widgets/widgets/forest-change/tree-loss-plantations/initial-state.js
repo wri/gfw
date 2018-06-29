@@ -8,7 +8,7 @@ export const initialState = {
     categories: ['forest-change'],
     admins: ['country', 'region', 'subRegion'],
     selectors: ['startYears', 'endYears', 'thresholds'],
-    yearRange: ['2013', '2016'],
+    yearRange: ['2013', '2017'],
     type: 'loss',
     metaKey: 'widget_plantations_tree_cover_loss',
     layers: ['loss', 'plantations_by_type'],
@@ -23,7 +23,7 @@ export const initialState = {
   settings: {
     threshold: 30,
     startYear: 2013,
-    endYear: 2016,
+    endYear: 2017,
     layers: ['loss', 'plantations_by_type']
   },
   enabled: true

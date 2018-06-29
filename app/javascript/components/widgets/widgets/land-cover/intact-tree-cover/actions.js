@@ -32,10 +32,10 @@ export const getData = ({ params, dispatch, setWidgetData, widget, state }) => {
         } else {
           let polyname = 'plantations';
           switch (params.indicator) {
-            case 'ifl_2013__wdpa':
+            case 'ifl__wdpa':
               polyname = 'plantations__wdpa';
               break;
-            case 'ifl_2013__mining':
+            case 'ifl__mining':
               polyname = 'plantations__mining';
               break;
             default:

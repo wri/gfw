@@ -4,7 +4,6 @@ export default {
   },
   config: {
     size: 'small',
-    landCategories: ['mining', 'wdpa', 'landmark'],
     categories: ['land-cover'],
     admins: ['country', 'region', 'subRegion'],
     locationWhitelist: ['IDN', 'COD'],
