@@ -1,5 +1,6 @@
 export const initialState = {
-  selectedSection: null
+  selectedSection: null,
+  countries: null
 };
 
 const setSelectedSection = (state, { payload }) => ({
@@ -7,6 +8,15 @@ const setSelectedSection = (state, { payload }) => ({
   selectedSection: state.selectedSection === payload ? null : payload
 });
 
+const setMenuCountries = (state, { payload }) => ({
+  ...state,
+  countries: {
+    ...state.countries,
+    ...payload
+  }
+});
+
 export default {
-  setSelectedSection
+  setSelectedSection,
+  setMenuCountries
 };

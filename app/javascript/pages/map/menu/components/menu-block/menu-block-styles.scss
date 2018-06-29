@@ -1,6 +1,6 @@
 @import '~styles/settings';
 
-.c-layers-block {
+.c-menu-block {
   position: relative;
   padding: rem(20px) 0;
 
@@ -19,6 +19,20 @@
     font-size: 12px;
     letter-spacing: -0.3px;
     color: $hot-grey;
+  }
+
+  &__text {
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: -0.3px;
+
+    b {
+      font-weight: 500;
+    }
+
+    a {
+      color: $green-gfw;
+    }
   }
 
   &:not(:last-child)::before {
