@@ -1,5 +1,9 @@
 export const initialState = {
-  selectedSection: null
+  selectedSection: null,
+  countries: null,
+  explore: {
+    section: 'topics'
+  }
 };
 
 const setSelectedSection = (state, { payload }) => ({
@@ -7,6 +11,24 @@ const setSelectedSection = (state, { payload }) => ({
   selectedSection: state.selectedSection === payload ? null : payload
 });
 
+const setMenuCountries = (state, { payload }) => ({
+  ...state,
+  countries: {
+    ...state.countries,
+    ...payload
+  }
+});
+
+const setMenuExplore = (state, { payload }) => ({
+  ...state,
+  explore: {
+    ...state.explore,
+    ...payload
+  }
+});
+
 export default {
-  setSelectedSection
+  setSelectedSection,
+  setMenuCountries,
+  setMenuExplore
 };

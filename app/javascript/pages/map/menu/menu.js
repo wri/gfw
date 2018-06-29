@@ -3,15 +3,21 @@ import { connect } from 'react-redux';
 
 import actions from './menu-actions';
 import reducers, { initialState } from './menu-reducers';
-import { getSections } from './menu-selectors';
+import { getSections, getSectionData } from './menu-selectors';
 
 import MenuComponent from './menu-component';
 
 const mapStateToProps = ({ mapMenu }) => {
-  const { selectedSection } = mapMenu;
+  const { selectedSection, countries, explore } = mapMenu;
+  const selectorsParams = {
+    selectedSection,
+    countries,
+    explore
+  };
   return {
-    sections: getSections(),
-    selectedSection
+    selectedSection,
+    sections: getSections(selectorsParams),
+    sectionData: getSectionData(selectorsParams)
   };
 };
 

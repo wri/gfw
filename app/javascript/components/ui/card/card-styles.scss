@@ -55,6 +55,11 @@
       text-transform: uppercase;
     }
 
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
     .read-more {
       max-width: rem(150px);
       margin-top: rem(30px);

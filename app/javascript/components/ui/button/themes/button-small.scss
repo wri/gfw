@@ -1,6 +1,7 @@
 @import '~styles/settings';
 
 .theme-button-small {
+  max-width: rem(90px);
   height: rem(20px);
   border-radius: rem(10px);
   padding: 0 rem(10px);

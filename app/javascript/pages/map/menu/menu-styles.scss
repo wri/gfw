@@ -1,8 +1,6 @@
 @import '~styles/settings.scss';
 
 $map-menu-items-size: rem(76px);
-$map-menu-flap-width: rem(290px);
-$map-menu-flap-close-size: rem(32px);
 
 .c-map-menu {
   position: absolute;
@@ -23,7 +21,6 @@ $map-menu-flap-close-size: rem(32px);
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     width: $map-menu-items-size;
     height: calc(100% - #{$map-menu-items-size});
     background-color: $white;
@@ -48,7 +45,8 @@ $map-menu-flap-close-size: rem(32px);
   &__item {
     position: relative;
     width: 100%;
-    height: $map-menu-items-size;
+    height: 12.5%;
+    max-height: $map-menu-items-size;
     z-index: 1;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
@@ -62,6 +60,14 @@ $map-menu-flap-close-size: rem(32px);
 
     &:first-child {
       border-top-color: transparent;
+    }
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+
+    &:nth-child(7) {
+      margin-top: auto;
     }
   }
 
@@ -102,43 +108,5 @@ $map-menu-flap-close-size: rem(32px);
     font-weight: 500;
     letter-spacing: -0.3px;
     color: $white;
-  }
-
-  &__flap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: $map-menu-flap-width;
-    height: 100%;
-    padding: 0 rem(20px) rem(20px) rem(20px);
-    background-color: $white;
-    z-index: 1;
-    transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width});
-    transition: transform 0.3s ease-in-out;
-
-    &.--showed {
-      transform: translateX($map-menu-items-size);
-    }
-
-    &__close {
-      position: absolute;
-      top: rem(8px);
-      right: -$map-menu-flap-close-size;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: $map-menu-flap-close-size;
-      height: $map-menu-flap-close-size;
-      background-color: $white;
-      border-radius: 2px;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      cursor: pointer;
-
-      .c-icon {
-        width: rem(12px);
-        height: rem(12px);
-      }
-    }
   }
 }

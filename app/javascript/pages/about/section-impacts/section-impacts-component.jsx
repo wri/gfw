@@ -21,7 +21,17 @@ class SectionImpacts extends PureComponent {
           {data &&
             data.map(c => (
               <div key={c.id}>
-                <Card key={c.title} data={c} />
+                <Card
+                  key={c.title}
+                  data={c}
+                  buttons={[
+                    {
+                      className: 'read-more',
+                      text: 'READ MORE',
+                      extLink: c.extLink
+                    }
+                  ]}
+                />
               </div>
             ))}
         </Carousel>
