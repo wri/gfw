@@ -36,7 +36,17 @@ define(
       get: function(status) {
         if (
           (status.baselayers.indexOf('umd_as_it_happens') > -1 ||
-            status.baselayers.indexOf('places_to_watch') > -1) &&
+            status.baselayers.indexOf('places_to_watch') > -1 ||
+            status.baselayers.indexOf('terrailoss') > -1 ||
+            status.baselayers.indexOf('forma_month_3') > -1 ||
+            status.baselayers.indexOf('forma_activity') > -1 ||
+            status.baselayers.indexOf('imazon') > -1 ||
+            status.baselayers.indexOf('guyra') > -1 ||
+            status.baselayers.indexOf('viirs_fires_alerts') > -1 ||
+            status.baselayers.indexOf('umd_as_it_happens_per') > -1 ||
+            status.baselayers.indexOf('umd_as_it_happens_cog') > -1 ||
+            status.baselayers.indexOf('umd_as_it_happens_idn') > -1 ||
+            status.baselayers.indexOf('prodes') > -1) &&
           status.type === 'draw'
         ) {
           var umdUrl = UriTemplate(APIURLS['draw']).fillFromObject({
@@ -85,7 +95,9 @@ define(
                                 attributes: {
                                   areaHa: umdResponse.data.attributes.areaHa,
                                   gain: umdResponse.data.attributes.gain,
-                                  loss: response.data.attributes.value,
+                                  loss:
+                                    response.data.attributes.value ||
+                                    response.data.attributes.alertCounts,
                                   treeExtent:
                                     umdResponse.data.attributes.treeExtent,
                                   treeExtent2010:
