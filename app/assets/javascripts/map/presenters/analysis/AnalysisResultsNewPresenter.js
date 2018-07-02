@@ -149,7 +149,7 @@ define(
 
         // Alerts
         p.alerts = {};
-        p.alerts.totalAlerts = this.roundNumber(results.value || 0);
+        p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
 
         // Options
         p.options = {};
@@ -208,7 +208,7 @@ define(
         }
 
         if (p.slug === 'forma250GFW') {
-          p.alerts.totalAlerts = this.roundNumber(results.alertCounts || 0);
+          p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
         }
 
         return p;
