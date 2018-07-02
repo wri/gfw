@@ -13,12 +13,11 @@ $map-menu-flap-close-size: rem(32px);
   height: 100vh;
   background-color: $white;
   z-index: 12;
-  transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width});
-  transition: transform 0.3s ease-in-out;
+  transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width-big});
+  transition: transform 0.3s linear;
 
   &.--big {
     width: $map-menu-flap-width-big;
-    transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width-big});
   }
 
   &.--showed {
