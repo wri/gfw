@@ -19,7 +19,9 @@ export const initialState = {
     minZoom: 2,
     maxZoom: 14
   },
-  settings: {},
+  settings: {
+    layers: ['forest2000', 'forestgain', 'loss']
+  },
   showMapMobile: false
 };
 

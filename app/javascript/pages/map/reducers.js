@@ -14,6 +14,7 @@ import * as ModalMetaComponent from 'components/modals/meta';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
+import * as datasetsProviderComponent from 'providers/datasets-provider';
 
 // Component Reducers
 const componentsReducers = {
@@ -26,7 +27,8 @@ const componentsReducers = {
 
 // Provider Reducers
 const providersReducers = {
-  countryData: handleActions(countryDataProviderComponent)
+  countryData: handleActions(countryDataProviderComponent),
+  datasets: handleActions(datasetsProviderComponent)
 };
 
 export default combineReducers({

@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import { Link as AnchorLink } from 'react-scroll';
 import { NavLink } from 'redux-first-router-link';
 
+import Icon from 'components/ui/icon';
+
 import './subnav-menu-styles.scss';
-import './themes/subnav-dark.scss';
-import './themes/subnav-small-light.scss';
+import './themes/subnav-dark.scss'; // eslint-disable-line
+import './themes/subnav-plain.scss'; // eslint-disable-line
+import './themes/subnav-small-light.scss'; // eslint-disable-line
 
 class SubNavMenu extends PureComponent {
   render() {
@@ -27,6 +30,7 @@ class SubNavMenu extends PureComponent {
                     smooth
                     duration={500}
                   >
+                    {link.icon && <Icon icon={link.icon} />}
                     {link.label}
                   </AnchorLink>
                 );
@@ -52,6 +56,7 @@ class SubNavMenu extends PureComponent {
                     exact
                     isActive={checkActive ? () => link.active : null}
                   >
+                    {link.icon && <Icon icon={link.icon} />}
                     {link.label}
                   </NavLink>
                 );

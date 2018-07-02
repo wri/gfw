@@ -12,7 +12,7 @@ $map-menu-flap-close-size: rem(32px);
   width: $map-menu-flap-width;
   height: 100vh;
   background-color: $white;
-  z-index: 1;
+  z-index: 12;
   transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width-big});
   transition: transform 0.3s linear;
 
