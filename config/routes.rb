@@ -99,7 +99,6 @@ Gfw::Application.routes.draw do
   get '/embed/map' => 'map_legacy#embed'
   get '/embed/map/*path' => 'map_legacy#embed'
   get '/v2/map' => 'map#index'
-  get '/v2/map/*all' => 'map#index'
 
   # dashboards
   get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'

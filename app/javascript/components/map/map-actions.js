@@ -1,12 +1,38 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import { fetchLayerSpec } from 'services/layer-spec';
+import { setComponentStateToUrl, setUrlStateToStore } from 'utils/stateToUrl';
 
 const setLayerSpecLoading = createAction('setLayerSpecLoading');
 const setLayerSpec = createAction('setLayerSpec');
-const setMapOptions = createAction('setMapOptions');
-const setMapZoom = createAction('setMapZoom');
-const setShowMapMobile = createAction('setShowMapMobile');
+
+// map state url actions
+const setMapState = createAction('setMapState');
+
+export const setMapSettings = createThunkAction(
+  'setMapSettings',
+  change => (dispatch, state) => {
+    setComponentStateToUrl({
+      key: 'map',
+      change,
+      state,
+      dispatch
+    });
+  }
+);
+
+export const setMapUrlToStore = createThunkAction(
+  'setMapUrlToStore',
+  query => (dispatch, getState) => {
+    setUrlStateToStore({
+      key: 'map',
+      query,
+      setState: setMapState,
+      dispatch,
+      getState
+    });
+  }
+);
 
 const getLayerSpec = createThunkAction('getLayerSpec', () => dispatch => {
   dispatch(setLayerSpecLoading({ loading: true, error: false }));
@@ -27,8 +53,8 @@ const getLayerSpec = createThunkAction('getLayerSpec', () => dispatch => {
 export default {
   setLayerSpecLoading,
   setLayerSpec,
-  setMapOptions,
-  setMapZoom,
+  setMapState,
+  setMapUrlToStore,
   getLayerSpec,
-  setShowMapMobile
+  setMapSettings
 };

@@ -11,18 +11,23 @@ import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
   render() {
-    const { className, activeTab, layerGroups, legendLoading } = this.props;
+    const {
+      className,
+      activeTab = 'data',
+      layerGroups,
+      legendLoading
+    } = this.props;
     const links = [
       {
         label: 'DATA',
         icon: landTreeIcon,
-        path: '/v2/map/data',
+        path: '/v2/map',
         active: activeTab === 'data'
       },
       {
         label: 'ANALYSIS',
         icon: truckIcon,
-        path: '/v2/map/analysis',
+        path: '/v2/map',
         active: activeTab === 'analysis'
       }
     ];

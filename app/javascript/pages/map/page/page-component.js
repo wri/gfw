@@ -16,14 +16,9 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   render() {
-    const { mapOptions, layers } = this.props;
-
     return (
       <div className="l-map">
-        <Map
-          options={mapOptions}
-          layers={layers}
-        />
+        <Map />
         <MapMenu />
         <div className="map-actions">
           <MapControls className="map-controls" share />

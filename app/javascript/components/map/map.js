@@ -15,17 +15,17 @@ import actions from './map-actions';
 import reducers, { initialState } from './map-reducers';
 import { getLayers } from './map-selectors';
 
-const mapStateToProps = ({ map, countryData, widgets }, { widgetKey, options, layers }) => {
-  const widget = widget ? widgets[widgetKey] : null;
+const mapStateToProps = ({ map, countryData, widgets }, { widgetKey }) => {
+  const widget = widgetKey ? widgets[widgetKey] : null;
   const widgetSettings = widget && widget.settings;
-  const activeLayers = widgetSettings && widgetSettings.layers || layers;
+  const activeLayers =
+    (widgetSettings && widgetSettings.layers) || map.settings.layers;
 
   return {
     ...map,
     ...countryData.geostore,
     loading: map.loading || countryData.isGeostoreLoading,
     settings: { ...map.settings, ...widgetSettings },
-    options: { ...map.options, ...options },
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
     layersKeys: activeLayers
   };
@@ -45,8 +45,8 @@ class MapContainer extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { bounds, layersKeys, settings, options, geojson } = nextProps;
-    const { zoom } = options;
+    const { bounds, layersKeys, settings, geojson } = nextProps;
+    const { zoom } = settings;
     // sync geostore with map
     if (!isEmpty(bounds) && !isEqual(bounds, this.props.bounds)) {
       this.boundMap(bounds);
@@ -66,7 +66,7 @@ class MapContainer extends PureComponent {
     // sync zoom with map
     if (
       zoom &&
-      this.props.options.zoom !== zoom &&
+      this.props.settings.zoom !== zoom &&
       this.map.getZoom() !== zoom
     ) {
       this.map.setZoom(zoom);
@@ -74,21 +74,21 @@ class MapContainer extends PureComponent {
   }
 
   buildMap() {
-    const { options } = this.props;
-    this.map = new google.maps.Map(document.getElementById('map'), options); // eslint-disable-line
+    const { settings } = this.props;
+    this.map = new google.maps.Map(document.getElementById('map'), settings); // eslint-disable-line
     this.map.mapTypes.set('GFWdefault', GFWdefault());
-    this.map.setMapTypeId(options.mapTypeId);
+    this.map.setMapTypeId(settings.mapTypeId);
     this.map.overlayMapTypes.setAt(10, GFWLabels());
   }
 
   boundMap(bounds) {
-    const { setMapZoom } = this.props;
+    const { setMapSettings } = this.props;
     const boundsMap = new google.maps.LatLngBounds(); // eslint-disable-line
     bounds.forEach(item => {
       boundsMap.extend(new google.maps.LatLng(item[1], item[0])); // eslint-disable-line
     });
     this.map.fitBounds(boundsMap);
-    setMapZoom({ value: this.map.getZoom() });
+    setMapSettings({ zoom: this.map.getZoom() });
   }
 
   removeDataLayers() {
@@ -98,9 +98,9 @@ class MapContainer extends PureComponent {
   }
 
   resetMap() {
-    const { setMapZoom } = this.props;
-    const { center, zoom } = initialState.options;
-    setMapZoom({ value: zoom });
+    const { setMapSettings } = this.props;
+    const { center, zoom } = initialState.settings;
+    setMapSettings({ zoom });
     this.map.setCenter(center);
     this.removeDataLayers();
   }
@@ -125,7 +125,7 @@ class MapContainer extends PureComponent {
 
   removeLayers(layers) {
     this.map.overlayMapTypes.forEach((l, index) => {
-      if (l && l.options && layers.indexOf(l.options.slug)) {
+      if (l && l.settings && layers.indexOf(l.settings.slug)) {
         this.map.overlayMapTypes.removeAt(index);
       }
     });
@@ -181,9 +181,8 @@ MapContainer.propTypes = {
   bounds: PropTypes.array,
   layersKeys: PropTypes.array,
   settings: PropTypes.object,
-  options: PropTypes.object,
   getLayerSpec: PropTypes.func.isRequired,
-  setMapZoom: PropTypes.func.isRequired,
+  setMapSettings: PropTypes.func.isRequired,
   geojson: PropTypes.object
 };
 

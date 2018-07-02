@@ -2,7 +2,7 @@ export const initialState = {
   loading: true,
   error: false,
   layerSpec: {},
-  options: {
+  settings: {
     mapTypeId: 'GFWdefault',
     backgroundColor: '#A4DBFD',
     disableDefaultUI: true,
@@ -13,15 +13,17 @@ export const initialState = {
     streetViewControl: false,
     overviewMapControl: false,
     tilt: 0,
-    center: { lat: 15, lng: 27 },
+    center: { lat: 15.0, lng: 27.0 },
     zoom: 3,
     minZoom: 2,
-    maxZoom: 14
-  },
-  settings: {
-    layers: ['forest2000', 'forestgain', 'loss']
-  },
-  showMapMobile: false
+    maxZoom: 14,
+    layers: ['forest2000'],
+    adm0: null,
+    adm1: null,
+    adm2: null,
+    showMapMobile: false,
+    threshold: 30
+  }
 };
 
 const setLayerSpecLoading = (state, { payload }) => ({
@@ -35,9 +37,20 @@ const setLayerSpec = (state, { payload }) => ({
   loading: false
 });
 
-const setMapOptions = (state, { payload }) => ({
+const setMapSettings = (state, { payload }) => ({
   ...state,
-  options: payload
+  settings: {
+    ...state.settings,
+    ...payload
+  }
+});
+
+const setMapState = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    ...payload
+  }
 });
 
 const setShowMapMobile = (state, { payload }) => ({
@@ -46,7 +59,7 @@ const setShowMapMobile = (state, { payload }) => ({
 });
 
 const setMapZoom = (state, { payload }) => {
-  const { maxZoom, minZoom, zoom } = state.options;
+  const { maxZoom, minZoom, zoom } = state.settings;
   const { value, sum } = payload;
   let newZoom = sum ? zoom + sum : value;
   if (zoom > maxZoom) {
@@ -57,8 +70,8 @@ const setMapZoom = (state, { payload }) => {
 
   return {
     ...state,
-    options: {
-      ...state.options,
+    settings: {
+      ...state.settings,
       zoom: newZoom
     }
   };
@@ -67,7 +80,8 @@ const setMapZoom = (state, { payload }) => {
 export default {
   setLayerSpecLoading,
   setLayerSpec,
-  setMapOptions,
+  setMapSettings,
   setMapZoom,
-  setShowMapMobile
+  setShowMapMobile,
+  setMapState
 };

@@ -13,25 +13,26 @@ import './map-controls-styles.scss';
 class MapControls extends PureComponent {
   render() {
     const {
-      setMapZoom,
+      setMapSettings,
       className,
       stickyOptions,
       setShareModal,
-      share
+      share,
+      settings
     } = this.props;
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
           <Button
             theme="theme-button-map-control"
-            onClick={() => setMapZoom({ sum: 1 })}
+            onClick={() => setMapSettings({ zoom: settings.zoom + 1 })}
             tooltip={{ text: 'Zoom in' }}
           >
             <Icon icon={plusIcon} className="plus-icon" />
           </Button>
           <Button
             theme="theme-button-map-control"
-            onClick={() => setMapZoom({ sum: -1 })}
+            onClick={() => setMapSettings({ zoom: settings.zoom - 1 })}
             tooltip={{ text: 'Zoom out' }}
           >
             <Icon icon={minusIcon} className="minus-icon" />
@@ -63,10 +64,11 @@ class MapControls extends PureComponent {
 
 MapControls.propTypes = {
   className: Proptypes.string,
-  setMapZoom: Proptypes.func,
+  setMapSettings: Proptypes.func,
   stickyOptions: Proptypes.object,
   setShareModal: Proptypes.func,
-  share: Proptypes.bool
+  share: Proptypes.bool,
+  settings: Proptypes.object
 };
 
 export default MapControls;
