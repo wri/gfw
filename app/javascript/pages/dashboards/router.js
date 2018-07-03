@@ -2,6 +2,7 @@ import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import queryString from 'query-string';
 import { setWidgetSettingsStore } from 'components/widgets/actions';
+import { setMapUrlToStore } from 'components/map/map-actions';
 import { handlePageTrack } from 'utils/analytics';
 
 const history = createHistory();
@@ -14,6 +15,9 @@ const routeChangeThunk = (dispatch, getState) => {
   const { query } = getState().location;
   if (query) {
     dispatch(setWidgetSettingsStore(query));
+  }
+  if (query && query.map) {
+    dispatch(setMapUrlToStore(query));
   }
 
   // track page with GA
