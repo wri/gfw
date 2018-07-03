@@ -63,7 +63,7 @@ class Page extends PureComponent {
             bottomBoundary=".l-country"
           >
             <div className="map-container">
-              <Map widgetKey={activeWidget} />
+              <Map widgetKey={activeWidget} miniLegend />
             </div>
           </Sticky>
         </div>
