@@ -13,7 +13,7 @@ export default {
   zoom: 3,
   minZoom: 2,
   maxZoom: 14,
-  layers: [],
+  layers: ['loss'],
   adm0: null,
   adm1: null,
   adm2: null,

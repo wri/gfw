@@ -4,6 +4,8 @@ import { DragDropContextProvider } from 'react-dnd';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import DatasetsProvider from 'providers/datasets-provider';
+import LayerSpecProvider from 'providers/layerspec-provider';
+
 import Map from 'components/map';
 import MapMenu from 'pages/map/menu';
 import ModalMeta from 'components/modals/meta';
@@ -31,6 +33,7 @@ class Page extends PureComponent {
         <ModalMeta />
         <CountryDataProvider />
         <DatasetsProvider />
+        <LayerSpecProvider />
       </div>
     );
   }

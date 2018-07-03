@@ -28,7 +28,7 @@ const mapStateToProps = (
   return {
     ...countryData.geostore,
     layerSpec: layerSpec.data,
-    loading: datasets.loading,
+    loading: datasets.loading || layerSpec.loading,
     defaultSettings: initialState,
     settings: mapSettings,
     layers: getLayers({ layers: activeLayers, layerSpec: layerSpec.data }),
