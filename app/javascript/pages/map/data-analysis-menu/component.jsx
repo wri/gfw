@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MapLegend from 'components/map/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
+import Widgets from 'components/widgets';
 
 import landTreeIcon from 'assets/icons/land-tree.svg';
 import truckIcon from 'assets/icons/truck.svg';
@@ -11,7 +12,13 @@ import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
   render() {
-    const { className, activeTab, layerGroups, legendLoading } = this.props;
+    const {
+      className,
+      activeTab,
+      layerGroups,
+      legendLoading,
+      widgets
+    } = this.props;
     const links = [
       {
         label: 'DATA',
@@ -46,7 +53,9 @@ class DataAnalysisMenu extends PureComponent {
             />
           </div>
         ) : (
-          <div className="analysis">Analysis</div>
+          <div className="analysis">
+            <Widgets widgets={widgets} />
+          </div>
         )}
       </div>
     );
@@ -57,7 +66,8 @@ DataAnalysisMenu.propTypes = {
   layerGroups: PropTypes.array,
   activeTab: PropTypes.string,
   className: PropTypes.string,
-  legendLoading: PropTypes.bool
+  legendLoading: PropTypes.bool,
+  widgets: PropTypes.array
 };
 
 export default DataAnalysisMenu;
