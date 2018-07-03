@@ -6,7 +6,11 @@ export const decodeUrlForState = url => {
   const paramsParsed = {};
   const params = queryString.parse(url);
   Object.keys(params).forEach(key => {
-    paramsParsed[key] = JSON.parse(atob(params[key]));
+    try {
+      paramsParsed[key] = JSON.parse(atob(params[key]));
+    } catch (err) {
+      paramsParsed[key] = params[key];
+    }
   });
   return paramsParsed;
 };
@@ -14,27 +18,32 @@ export const decodeUrlForState = url => {
 export const encodeStateForUrl = params => {
   const paramsParsed = {};
   Object.keys(params).forEach(key => {
-    paramsParsed[key] = btoa(JSON.stringify(params[key]));
+    if (typeof params[key] === 'object') {
+      paramsParsed[key] = btoa(JSON.stringify(params[key]));
+    } else {
+      paramsParsed[key] = params[key];
+    }
   });
   return queryString.stringify(paramsParsed);
 };
 
-export const setComponentStateToUrl = ({ key, change, state }) => {
+export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
   const { location } = state();
   let params = change;
-  if (location.query && location.query[key]) {
+  if (location.query && location.query[subKey || key]) {
     params = {
-      ...location.query[key],
+      ...location.query[subKey || key],
       ...change
     };
   }
+
   return {
     key,
     type: location.type,
     payload: location.payload,
     query: {
       ...location.query,
-      [key]: params
+      [subKey || key]: params
     }
   };
 };
