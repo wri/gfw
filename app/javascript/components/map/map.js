@@ -16,7 +16,7 @@ import initialState from './map-initial-state';
 import { getLayers, getMapSettings } from './map-selectors';
 
 const mapStateToProps = (
-  { countryData, widgets, location, datasets },
+  { countryData, widgets, location, datasets, layerSpec },
   { widgetKey }
 ) => {
   const widget = widgetKey ? widgets[widgetKey] : null;
@@ -27,10 +27,11 @@ const mapStateToProps = (
 
   return {
     ...countryData.geostore,
+    layerSpec: layerSpec.data,
     loading: datasets.loading,
     defaultSettings: initialState,
     settings: mapSettings,
-    layers: getLayers({ layers: activeLayers }),
+    layers: getLayers({ layers: activeLayers, layerSpec: layerSpec.data }),
     layersKeys: activeLayers
   };
 };
@@ -183,6 +184,7 @@ class MapContainer extends PureComponent {
 MapContainer.propTypes = {
   bounds: PropTypes.array,
   layersKeys: PropTypes.array,
+  layerSpec: PropTypes.object,
   settings: PropTypes.object,
   getLayerSpec: PropTypes.func.isRequired,
   setMapSettings: PropTypes.func.isRequired,

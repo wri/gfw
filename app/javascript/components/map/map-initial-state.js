@@ -17,6 +17,5 @@ export default {
   adm0: null,
   adm1: null,
   adm2: null,
-  showMapMobile: false,
   threshold: 30
 };

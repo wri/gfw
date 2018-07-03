@@ -3,15 +3,17 @@ import replace from 'lodash/replace';
 
 import CATEGORIES from 'data/categories.json';
 
+import { filterWidgets } from 'components/widgets/selectors';
 import mapActions from 'components/map/map-actions';
 
-import { filterWidgets } from 'components/widgets/selectors';
+import * as ownActions from './page-actions';
+import reducers, { initialState } from './page-reducers';
 import { getLinks, getTitle } from './page-selectors';
 import Component from './page-component';
 
-const actions = { ...mapActions };
+const actions = { ...mapActions, ...ownActions };
 
-const mapStateToProps = ({ countryData, whitelists, location, map }) => {
+const mapStateToProps = ({ page, countryData, whitelists, location }) => {
   const category = (location.query && location.query.category) || 'summary';
   const { regionWhitelist, countryWhitelist } = whitelists;
   const widgetHash =
@@ -29,7 +31,7 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
   const widgets = filterWidgets(widgetData);
 
   return {
-    showMapMobile: map.showMapMobile,
+    showMapMobile: page.showMapMobile,
     links: getLinks({ categories: CATEGORIES, ...location, category }),
     isGeostoreLoading: countryData.isGeostoreLoading,
     category,
@@ -41,5 +43,7 @@ const mapStateToProps = ({ countryData, whitelists, location, map }) => {
     ...countryData
   };
 };
+
+export { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(Component);
