@@ -20,6 +20,7 @@ class MapControls extends PureComponent {
       share,
       settings
     } = this.props;
+
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
@@ -27,6 +28,7 @@ class MapControls extends PureComponent {
             theme="theme-button-map-control"
             onClick={() => setMapSettings({ zoom: settings.zoom + 1 })}
             tooltip={{ text: 'Zoom in' }}
+            disabled={settings.zoom === settings.maxZoom}
           >
             <Icon icon={plusIcon} className="plus-icon" />
           </Button>
@@ -34,6 +36,7 @@ class MapControls extends PureComponent {
             theme="theme-button-map-control"
             onClick={() => setMapSettings({ zoom: settings.zoom - 1 })}
             tooltip={{ text: 'Zoom out' }}
+            disabled={settings.zoom === settings.minZoom}
           >
             <Icon icon={minusIcon} className="minus-icon" />
           </Button>

@@ -7,7 +7,6 @@ import router from './router';
 
 // Components
 import * as recentImageryComponent from 'pages/map/recent-imagery';
-import * as MapComponent from 'components/map';
 import * as MapMenuComponent from 'pages/map/menu';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
@@ -20,7 +19,6 @@ import * as datasetsProviderComponent from 'providers/datasets-provider';
 const componentsReducers = {
   share: handleActions(ShareComponent),
   modalMeta: handleActions(ModalMetaComponent),
-  map: handleActions(MapComponent),
   mapMenu: handleActions(MapMenuComponent),
   recentImagery: handleActions(recentImageryComponent)
 };

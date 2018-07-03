@@ -1,39 +1,40 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import { fetchLayerSpec } from 'services/layer-spec';
-import { setComponentStateToUrl, setUrlStateToStore } from 'utils/stateToUrl';
-
-const setLayerSpecLoading = createAction('setLayerSpecLoading');
-const setLayerSpec = createAction('setLayerSpec');
-
-// map state url actions
-const setMapState = createAction('setMapState');
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 export const setMapSettings = createThunkAction(
   'setMapSettings',
   change => (dispatch, state) => {
-    setComponentStateToUrl({
-      key: 'map',
-      change,
-      state,
-      dispatch
-    });
+    dispatch(
+      setComponentStateToUrl({
+        key: 'map',
+        change,
+        state
+      })
+    );
   }
 );
 
-export const setMapUrlToStore = createThunkAction(
-  'setMapUrlToStore',
-  query => (dispatch, getState) => {
-    setUrlStateToStore({
-      key: 'map',
-      query,
-      setState: setMapState,
-      dispatch,
-      getState
-    });
-  }
-);
+// These action sync the url with the store. Not neccessary for now.
 
+// const setMapState = createAction('setMapState');
+
+// export const setMapUrlToStore = createThunkAction(
+//   'setMapUrlToStore',
+//   query => (dispatch, getState) => {
+//     dispatch(setUrlStateToStore({
+//       key: 'map',
+//       query,
+//       setState: setMapState,
+//       getState
+//     }));
+//   }
+// );
+
+// soon to be depreciated
+const setLayerSpecLoading = createAction('setLayerSpecLoading');
+const setLayerSpec = createAction('setLayerSpec');
 const getLayerSpec = createThunkAction('getLayerSpec', () => dispatch => {
   dispatch(setLayerSpecLoading({ loading: true, error: false }));
   fetchLayerSpec()
@@ -53,8 +54,6 @@ const getLayerSpec = createThunkAction('getLayerSpec', () => dispatch => {
 export default {
   setLayerSpecLoading,
   setLayerSpec,
-  setMapState,
-  setMapUrlToStore,
   getLayerSpec,
   setMapSettings
 };

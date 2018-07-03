@@ -1,0 +1,22 @@
+export default {
+  mapTypeId: 'GFWdefault',
+  backgroundColor: '#A4DBFD',
+  disableDefaultUI: true,
+  panControl: false,
+  zoomControl: false,
+  mapTypeControl: false,
+  scaleControl: true,
+  streetViewControl: false,
+  overviewMapControl: false,
+  tilt: 0,
+  center: { lat: 15.0, lng: 27.0 },
+  zoom: 3,
+  minZoom: 2,
+  maxZoom: 14,
+  layers: [],
+  adm0: null,
+  adm1: null,
+  adm2: null,
+  showMapMobile: false,
+  threshold: 30
+};

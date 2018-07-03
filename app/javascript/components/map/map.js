@@ -12,21 +12,25 @@ import GFWLabels from './assets/maptypes/GFWLabels';
 
 import MapComponent from './map-component';
 import actions from './map-actions';
-import reducers, { initialState } from './map-reducers';
-import { getLayers } from './map-selectors';
+import initialState from './map-initial-state';
+import { getLayers, getMapSettings } from './map-selectors';
 
-const mapStateToProps = ({ map, countryData, widgets }, { widgetKey }) => {
+const mapStateToProps = (
+  { countryData, widgets, location, datasets },
+  { widgetKey }
+) => {
   const widget = widgetKey ? widgets[widgetKey] : null;
   const widgetSettings = widget && widget.settings;
+  const mapSettings = getMapSettings(location);
   const activeLayers =
-    (widgetSettings && widgetSettings.layers) || map.settings.layers;
+    (widgetSettings && widgetSettings.layers) || mapSettings.layers;
 
   return {
-    ...map,
     ...countryData.geostore,
-    loading: map.loading || countryData.isGeostoreLoading,
-    settings: { ...map.settings, ...widgetSettings },
-    layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
+    loading: datasets.loading,
+    defaultSettings: initialState,
+    settings: mapSettings,
+    layers: getLayers({ layers: activeLayers }),
     layersKeys: activeLayers
   };
 };
@@ -98,8 +102,8 @@ class MapContainer extends PureComponent {
   }
 
   resetMap() {
-    const { setMapSettings } = this.props;
-    const { center, zoom } = initialState.settings;
+    const { setMapSettings, defaultSettings } = this.props;
+    const { center, zoom } = defaultSettings;
     setMapSettings({ zoom });
     this.map.setCenter(center);
     this.removeDataLayers();
@@ -177,15 +181,15 @@ class MapContainer extends PureComponent {
 }
 
 MapContainer.propTypes = {
-  layerSpec: PropTypes.object.isRequired,
   bounds: PropTypes.array,
   layersKeys: PropTypes.array,
   settings: PropTypes.object,
   getLayerSpec: PropTypes.func.isRequired,
   setMapSettings: PropTypes.func.isRequired,
-  geojson: PropTypes.object
+  geojson: PropTypes.object,
+  defaultSettings: PropTypes.object
 };
 
-export { reducers, initialState, actions };
+export { actions };
 
 export default connect(mapStateToProps, actions)(MapContainer);

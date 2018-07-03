@@ -11,7 +11,8 @@ const setDatasetsLoading = (state, { payload }) => ({
 
 const setDatasetsData = (state, { payload }) => ({
   ...state,
-  data: payload
+  data: payload,
+  loading: false
 });
 
 export default {

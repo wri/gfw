@@ -31,8 +31,8 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   loading: Proptypes.bool.isRequired,
-  error: Proptypes.bool.isRequired,
   layers: Proptypes.array,
+  error: Proptypes.bool,
   miniLegend: Proptypes.bool
 };
 
