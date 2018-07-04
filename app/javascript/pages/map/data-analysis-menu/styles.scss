@@ -18,5 +18,17 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+
+    .c-widget {
+      &:not(:last-child)::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: calc(100% - #{rem(20px)});
+        height: rem(1px);
+        background-color: rgba($hot-grey, 0.3);
+      }
+    }
   }
 }
