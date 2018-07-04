@@ -9,6 +9,7 @@ const getData = state => state.data || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
+const getMinimalist = state => state.minimalist || false;
 
 export const filterData = createSelector([getData], data => {
   if (!data || isEmpty(data)) return null;
@@ -36,11 +37,12 @@ export const parseData = createSelector([filterData], data => {
 });
 
 export const parseConfig = createSelector(
-  [parseData, getColors],
-  (data, colors) => {
+  [parseData, getColors, getMinimalist],
+  (data, colors, minimalist) => {
     if (!data || !data.length) return null;
 
-    return {
+    let config = {
+      height: 250,
       gradients: [
         {
           attributes: {
@@ -84,6 +86,18 @@ export const parseConfig = createSelector(
         }
       ]
     };
+    if (minimalist) {
+      config = {
+        ...config,
+        height: 110,
+        xAxis: {
+          ...config.xAxis,
+          tick: { fontSize: '10px', fill: '#aaaaaa' }
+        }
+      };
+    }
+
+    return config;
   }
 );
 

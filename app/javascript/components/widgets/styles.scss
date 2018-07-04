@@ -65,6 +65,11 @@
     position: relative;
     min-height: rem(460px);
   }
+
+  &.minimalist {
+    padding: 0;
+    grid-gap: 0;
+  }
 }
 
 .tippy-popper .tippy-tooltip.widget-tooltip-theme {

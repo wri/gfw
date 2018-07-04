@@ -35,6 +35,7 @@ class WidgetHeader extends PureComponent {
       location,
       query,
       embed,
+      minimalist,
       shareData,
       setShareModal,
       setModalMeta,
@@ -53,6 +54,7 @@ class WidgetHeader extends PureComponent {
         <div className="title">{title}</div>
         <div className="options">
           {!embed &&
+            !minimalist &&
             haveMapLayers && (
               <Button
                 className={`map-button ${active ? '-active' : ''}`}
@@ -97,6 +99,7 @@ class WidgetHeader extends PureComponent {
               </Button>
             )}
           {settings &&
+            !minimalist &&
             !isEmpty(options) && (
               <Tooltip
                 className="widget-tooltip-theme"
@@ -146,6 +149,7 @@ class WidgetHeader extends PureComponent {
               </Tooltip>
             )}
           {!embed &&
+            !minimalist &&
             (!isEmpty(options) || haveMapLayers) && (
               <div className="separator" />
             )}
@@ -170,19 +174,21 @@ class WidgetHeader extends PureComponent {
             >
               <Icon icon={infoIcon} />
             </Button>
-            <Button
-              className="theme-button-small square"
-              onClick={() => setShareModal(shareData)}
-              tooltip={{
-                theme: 'tip',
-                position: 'top',
-                arrow: true,
-                disabled: isDeviceTouch,
-                html: <Tip text="Share or embed this widget" />
-              }}
-            >
-              <Icon icon={shareIcon} />
-            </Button>
+            {!minimalist && (
+              <Button
+                className="theme-button-small square"
+                onClick={() => setShareModal(shareData)}
+                tooltip={{
+                  theme: 'tip',
+                  position: 'top',
+                  arrow: true,
+                  disabled: isDeviceTouch,
+                  html: <Tip text="Share or embed this widget" />
+                }}
+              >
+                <Icon icon={shareIcon} />
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -199,6 +205,7 @@ WidgetHeader.propTypes = {
   location: PropTypes.object,
   query: PropTypes.object,
   embed: PropTypes.bool,
+  minimalist: PropTypes.bool,
   haveMapLayers: PropTypes.bool,
   isDeviceTouch: PropTypes.bool,
   size: PropTypes.string,

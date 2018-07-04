@@ -12,4 +12,16 @@
   span {
     font-weight: 500;
   }
+
+  .c-widgets.minimalist & {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.33;
+    letter-spacing: -0.3px;
+    color: $hot-grey;
+
+    b {
+      color: $greyish-brown;
+    }
+  }
 }

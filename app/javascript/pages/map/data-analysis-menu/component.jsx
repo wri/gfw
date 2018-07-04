@@ -54,7 +54,7 @@ class DataAnalysisMenu extends PureComponent {
           </div>
         ) : (
           <div className="analysis">
-            <Widgets widgets={widgets} />
+            <Widgets widgets={widgets} analysis minimalist />
           </div>
         )}
       </div>
