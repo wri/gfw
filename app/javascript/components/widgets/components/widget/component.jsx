@@ -36,7 +36,7 @@ class Widget extends PureComponent {
 
     return (
       <div
-        className={`c-widget ${config.size || ''}`}
+        className={`c-widget ${minimalist ? 'large' : config.size || ''}`}
         id={widget}
         style={{
           ...(!!onMap && {
