@@ -13,7 +13,7 @@ import GFWLabels from './assets/maptypes/GFWLabels';
 import MapComponent from './map-component';
 import actions from './map-actions';
 import initialState from './map-initial-state';
-import { getLayers, getMapSettings } from './map-selectors';
+import { getMapProps } from './map-selectors';
 
 const mapStateToProps = (
   { countryData, widgets, location, datasets, layerSpec },
@@ -21,18 +21,13 @@ const mapStateToProps = (
 ) => {
   const widget = widgetKey ? widgets[widgetKey] : null;
   const widgetSettings = widget && widget.settings;
-  const mapSettings = getMapSettings(location);
-  const activeLayers =
-    (widgetSettings && widgetSettings.layers) || mapSettings.layers;
 
   return {
     ...countryData.geostore,
     layerSpec: layerSpec.data,
     loading: datasets.loading || layerSpec.loading,
     defaultSettings: initialState,
-    settings: mapSettings,
-    layers: getLayers({ layers: activeLayers, layerSpec: layerSpec.data }),
-    layersKeys: activeLayers
+    ...getMapProps({ location, widgetSettings, layerSpec: layerSpec.data })
   };
 };
 
