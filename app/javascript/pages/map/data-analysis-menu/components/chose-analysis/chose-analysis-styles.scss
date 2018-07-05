@@ -1,0 +1,14 @@
+@import '~styles/settings';
+
+.c-chose-analysis {
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    color: $greyish-brown;
+  }
+
+  &__options {
+    display: flex;
+    justify-content: space-between;
+  }
+}
