@@ -1,7 +1,7 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
-import queryString from 'query-string';
-import { setWidgetSettingsStore } from 'components/widgets/actions';
+import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
+
 import { handlePageTrack } from 'utils/analytics';
 
 const history = createHistory();
@@ -10,12 +10,6 @@ export const COUNTRY = 'location/COUNTRY';
 export const EMBED = 'location/EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
-  // sync store with widget settings
-  const { query } = getState().location;
-  if (query) {
-    dispatch(setWidgetSettingsStore(query));
-  }
-
   // track page with GA
   handlePageTrack(getState().location);
 };
@@ -35,6 +29,9 @@ export const routes = {
 };
 
 export default connectRoutes(history, routes, {
-  querySerializer: queryString,
+  querySerializer: {
+    parse: decodeUrlForState,
+    stringify: encodeStateForUrl
+  },
   onAfterChange: routeChangeThunk
 });

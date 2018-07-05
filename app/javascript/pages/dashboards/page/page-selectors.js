@@ -7,17 +7,17 @@ import isEmpty from 'lodash/isEmpty';
 const getCategories = state => state.categories || null;
 const getCategory = state => state.category || null;
 const getLocation = state => state.payload || null;
-const getQuery = state => state.query || null;
+const getSearch = state => state.search || null;
 const getCountries = state => state.countries || null;
 const getRegions = state => state.regions || null;
 const getSubRegions = state => state.subRegions || null;
 
 export const getLinks = createSelector(
-  [getCategories, getCategory, getQuery],
-  (categories, activeCategory, query) =>
+  [getCategories, getCategory, getSearch],
+  (categories, activeCategory, search) =>
     categories.map(category => {
       const newQuery = {
-        ...query,
+        ...qs.parse(search),
         category: category.value,
         widget: undefined
       };

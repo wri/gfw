@@ -6,7 +6,6 @@ import isEqual from 'lodash/isEqual';
 
 import { COUNTRY } from 'pages/dashboards/router';
 import { deburrUpper } from 'utils/data';
-import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 import shareActions from 'components/modals/share/share-actions';
 import { getAdminsSelected, getSentence } from './header-selectors';
@@ -65,12 +64,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         const widget = widgets.find(w => w.name === key);
         if (widget.settings) {
           const { forestType, landCategory, page } = widget.settings;
-          widgetQueries[key] = encodeStateForUrl({
-            ...decodeUrlForState(query[key]),
+          widgetQueries[key] = {
+            ...query[key],
             forestType: forestType || '',
             landCategory: landCategory || '',
             ...(!!(page === 0) && { page: 0 })
-          });
+          };
         }
       }
     });

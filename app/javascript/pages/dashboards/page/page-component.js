@@ -5,6 +5,8 @@ import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
+import LayerSpecProvider from 'providers/layerspec-provider';
+import DatasetsProvider from 'providers/datasets-provider';
 
 import Meta from 'components/meta';
 import Widgets from 'components/widgets';
@@ -55,7 +57,11 @@ class Page extends PureComponent {
             links={links}
             checkActive
           />
-          <Widgets widgets={widgets} activeWidget={activeWidget} />
+          <Widgets
+            widgets={widgets}
+            activeWidget={activeWidget}
+            setShowMapMobile={setShowMapMobile}
+          />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Sticky
@@ -63,7 +69,7 @@ class Page extends PureComponent {
             bottomBoundary=".l-country"
           >
             <div className="map-container">
-              <Map widgetKey={activeWidget} />
+              <Map widgetKey={activeWidget} miniLegend />
             </div>
           </Sticky>
         </div>
@@ -81,6 +87,8 @@ class Page extends PureComponent {
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />
+        <LayerSpecProvider />
+        <DatasetsProvider />
         <Meta
           title={title}
           description="Data about forest change, tenure, forest related employment and land use in"

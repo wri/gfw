@@ -1,7 +1,7 @@
 import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
-import queryString from 'query-string';
 import { handlePageTrack } from 'utils/analytics';
+import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 const history = createHistory();
 
@@ -14,12 +14,14 @@ const routeChangeThunk = (dispatch, getState) => {
 
 export const routes = {
   [MAP]: {
-    path:
-      '/v2/map/:zoom?/:latitude?/:longitude?/:iso?/:basemap?/:layers?/:sublayers?'
+    path: '/v2/map'
   }
 };
 
 export default connectRoutes(history, routes, {
-  querySerializer: queryString,
+  querySerializer: {
+    parse: decodeUrlForState,
+    stringify: encodeStateForUrl
+  },
   onAfterChange: routeChangeThunk
 });

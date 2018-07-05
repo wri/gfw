@@ -15,7 +15,11 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
   const { query } = location;
   const { country, region, subRegion, type } = location.payload;
   // widget consts
-  const { config, settings } = widgets[widget];
+  const settings = Selectors.getWidgetSettings({
+    settings: widgets[widget].settings,
+    urlState: query && query[widget]
+  });
+  const { config } = widgets[widget];
   const { getOptionsSelected, getIndicator } = Selectors;
   const highlightColor = colors.main || '#a0c746';
   const haveMapLayers = settings && !isEmpty(settings.layers);
@@ -28,6 +32,7 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
   const selectorData = {
     ...ownProps,
     ...widgets[widget],
+    settings,
     ...optionsSelected,
     indicator: optionsSelected && getIndicator({ ...optionsSelected })
   };
