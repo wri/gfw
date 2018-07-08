@@ -1,5 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 
 import { filterWidgetByAnalysis } from 'components/widgets/selectors';
 import { getActiveLayers } from './selectors';
@@ -17,12 +19,27 @@ const mapStateToProps = ({ location, datasets, dataAnalysis }) => ({
 });
 
 class DataAnalysisMenuContainer extends PureComponent {
+  componentWillReceiveProps(nextProps) {
+    const { analysis, getGeostore, getAnalysis } = nextProps;
+    if (!isEqual(analysis.polygon, this.props.analysis.polygon)) {
+      getGeostore(analysis.polygon);
+    }
+    if (!isEqual(analysis.geostore, this.props.analysis.geostore)) {
+      getAnalysis(analysis.geostore);
+    }
+  }
+
   render() {
     return createElement(Component, {
       ...this.props
     });
   }
 }
+DataAnalysisMenuContainer.propTypes = {
+  analysis: PropTypes.object,
+  getGeostore: PropTypes.func,
+  getAnalysis: PropTypes.func
+};
 
 export { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(DataAnalysisMenuContainer);

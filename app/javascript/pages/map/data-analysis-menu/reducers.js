@@ -1,6 +1,9 @@
 export const initialState = {
   analysis: {
-    option: null
+    option: null,
+    polygon: null,
+    geostore: null,
+    data: null
   }
 };
 
