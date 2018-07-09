@@ -1,12 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
+import flatten from 'lodash/flatten';
 
 import initialState from './map-initial-state';
 
 // get list data
-const getLayerSpec = state => state.layerSpec || null;
-const getWidgetSettings = state => state.widgetSettings || null;
 const getMapUrlState = state => (state.query && state.query.map) || null;
+const getDatasets = state => state.datasets;
 
 // get map settings
 export const getMapSettings = createSelector(getMapUrlState, urlState => ({
@@ -14,28 +13,43 @@ export const getMapSettings = createSelector(getMapUrlState, urlState => ({
   ...urlState
 }));
 
-export const getActiveLayers = createSelector(
-  [getMapSettings, getWidgetSettings],
-  (mapSettings, widgetSettings) => {
-    if (isEmpty(mapSettings)) return null;
-    return (widgetSettings && widgetSettings.layers) || mapSettings.layers;
+export const getLayers = createSelector(
+  getMapSettings,
+  settings => settings.layers
+);
+
+export const getLayerGroups = createSelector(
+  [getDatasets, getLayers],
+  (datasets, layers) => {
+    if (!datasets || !datasets.length || !layers || !layers.length) return null;
+    return layers
+      .map(l => {
+        const dataset = datasets.find(d => d.id === l.dataset);
+        return {
+          ...dataset,
+          layers:
+            dataset.layer && dataset.layer.length > 0
+              ? dataset.layer.map(layer => ({
+                ...layer,
+                opacity: l.opacity,
+                visible: l.visible,
+                active: l.layer === layer.id
+              }))
+              : []
+        };
+      })
+      .filter(l => l.layers && l.layers.length > 0);
   }
 );
 
-// get lists selected
-export const getLayers = createSelector(
-  [getActiveLayers, getLayerSpec],
-  (layers, layerSpec) => {
-    if (!layers || isEmpty(layers)) return null;
-    return layers.map(l => ({
-      slug: l,
-      ...layerSpec[l]
-    }));
-  }
-);
+export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
+  if (!layerGroups || !layerGroups.length) return null;
+  return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
+});
 
 export const getMapProps = createStructuredSelector({
-  layers: getLayers,
+  stateLayers: getLayers,
   settings: getMapSettings,
-  layersKeys: getActiveLayers
+  layerGroups: getLayerGroups,
+  activeLayers: getActiveLayers
 });

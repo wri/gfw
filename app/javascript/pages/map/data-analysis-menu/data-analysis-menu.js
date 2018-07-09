@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 
-import { getActiveLayers } from './selectors';
+import { getLayerGroups } from 'components/map/map-selectors';
 import Component from './component';
 
 const mapStateToProps = ({ location, datasets }) => ({
-  layerGroups: getActiveLayers({ datasets: datasets.data }),
+  layerGroups: getLayerGroups({ ...location, datasets: datasets.data }),
   activeTab: location.payload.zoom,
   legendLoading: datasets.loading
 });

@@ -27,7 +27,12 @@ const mapStateToProps = (
     layerSpec: layerSpec.data,
     loading: datasets.loading || layerSpec.loading,
     defaultSettings: initialState,
-    ...getMapProps({ location, widgetSettings, layerSpec: layerSpec.data })
+    ...getMapProps({
+      ...location,
+      widgetSettings,
+      layerSpec: layerSpec.data,
+      datasets: datasets.data
+    })
   };
 };
 

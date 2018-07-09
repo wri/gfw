@@ -6,5 +6,5 @@ export const getDatasetsProvider = () =>
   request.get(
     `${
       REQUEST_URL
-    }/dataset?application=rw&includes=metadata,vocabulary,layer,timeline&page[size]=5`
+    }/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999`
   );
