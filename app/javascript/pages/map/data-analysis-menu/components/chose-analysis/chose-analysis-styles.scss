@@ -1,14 +1,53 @@
 @import '~styles/settings';
 
 .c-chose-analysis {
+  padding: rem(27px) rem(20px);
+
   &__title {
     font-size: 14px;
     font-weight: 500;
     color: $greyish-brown;
+    text-align: center;
   }
 
   &__options {
     display: flex;
     justify-content: space-between;
+    margin-top: rem(18px);
+
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .icon {
+      fill: $ashes-grey;
+
+      &.square-point {
+        width: rem(21px);
+        height: rem(21px);
+        margin-bottom: rem(12px);
+      }
+
+      &.flag {
+        width: rem(18px);
+        height: rem(18px);
+        margin-bottom: rem(15px);
+      }
+
+      &.polygon {
+        width: rem(25px);
+        height: rem(25px);
+        margin-bottom: rem(8px);
+      }
+    }
+
+    .label {
+      font-size: 11px;
+      line-height: 1.18;
+      color: $ashes-grey;
+    }
   }
 }

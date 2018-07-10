@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import MapLegend from 'components/map/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
-import Widgets from 'components/widgets';
 import ChoseAnalysis from 'pages/map/data-analysis-menu/components/chose-analysis';
 import PolygonAnalysis from 'pages/map/data-analysis-menu/components/polygon-analysis';
+import LocationAnalysis from 'pages/map/data-analysis-menu/components/location-analysis';
 
 import landTreeIcon from 'assets/icons/land-tree.svg';
 import truckIcon from 'assets/icons/truck.svg';
@@ -19,8 +19,7 @@ class DataAnalysisMenu extends PureComponent {
       activeTab,
       layerGroups,
       legendLoading,
-      analysis,
-      widgets
+      analysis
     } = this.props;
     const links = [
       {
@@ -58,9 +57,7 @@ class DataAnalysisMenu extends PureComponent {
         ) : (
           <div className="analysis">
             {!analysis.option && <ChoseAnalysis />}
-            {analysis.option === 'country' && (
-              <Widgets widgets={widgets} analysis minimalist />
-            )}
+            {analysis.option === 'location' && <LocationAnalysis />}
             {analysis.option === 'polygon' && <PolygonAnalysis />}
           </div>
         )}
@@ -74,8 +71,7 @@ DataAnalysisMenu.propTypes = {
   activeTab: PropTypes.string,
   className: PropTypes.string,
   legendLoading: PropTypes.bool,
-  analysis: PropTypes.object,
-  widgets: PropTypes.array
+  analysis: PropTypes.object
 };
 
 export default DataAnalysisMenu;

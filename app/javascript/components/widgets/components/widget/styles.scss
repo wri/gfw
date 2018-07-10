@@ -68,7 +68,8 @@
   }
 
   .c-widgets.minimalist & {
-    min-height: 0;
+    padding: rem(20px);
+    min-height: rem(120px);
     border: 0;
 
     .container .sentence {

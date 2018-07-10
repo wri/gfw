@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import Icon from 'components/ui/icon';
+import squarePointIcon from 'assets/icons/square-point.svg';
+import flagIcon from 'assets/icons/flag.svg';
+import polygonIcon from 'assets/icons/polygon.svg';
 import './chose-analysis-styles.scss';
 
 class ChoseAnalysis extends PureComponent {
@@ -17,21 +21,24 @@ class ChoseAnalysis extends PureComponent {
               setAnalysisData({ option: null });
             }}
           >
-            CLICK A LAYER ON THE MAP
+            <Icon icon={squarePointIcon} className="icon square-point" />
+            <div className="label">CLICK A LAYER ON THE MAP</div>
           </button>
           <button
             onClick={() => {
-              setAnalysisData({ option: 'country' });
+              setAnalysisData({ option: 'location' });
             }}
           >
-            SELECT A COUNTRY OR REGION
+            <Icon icon={flagIcon} className="icon flag" />
+            <div className="label">SELECT A COUNTRY OR REGION</div>
           </button>
           <button
             onClick={() => {
               setAnalysisData({ option: 'polygon' });
             }}
           >
-            DRAW OR UPLOAD SHAPE
+            <Icon icon={polygonIcon} className="icon polygon" />
+            <div className="label">DRAW OR UPLOAD SHAPE</div>
           </button>
         </div>
       </div>
