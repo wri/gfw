@@ -1,14 +1,32 @@
 @import '~styles/settings';
 
-.c-chose-analysis {
-  &__title {
-    font-size: 14px;
-    font-weight: 500;
-    color: $greyish-brown;
+.c-polygon-analysis {
+  padding: 0 rem(20px);
+
+  &__chooser {
+    padding: rem(20px) 0;
   }
 
-  &__options {
+  &__chooser-title {
+    font-size: 21px;
+    text-align: center;
+    margin-bottom: rem(10px);
+  }
+
+  &__chooser-input {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 rem(10px);
+    height: rem(40px);
+    border: 1px dashed $green-gfw;
+    border-radius: 40px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  &__chooser-separator {
+    padding: rem(10px) 0;
+    text-align: center;
   }
 }
