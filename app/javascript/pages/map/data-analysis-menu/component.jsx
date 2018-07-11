@@ -25,13 +25,13 @@ class DataAnalysisMenu extends PureComponent {
       {
         label: 'DATA',
         icon: landTreeIcon,
-        path: '/v2/map',
+        path: '/v2/map/data',
         active: activeTab === 'data'
       },
       {
         label: 'ANALYSIS',
         icon: truckIcon,
-        path: '/v2/map',
+        path: '/v2/map/analysis',
         active: activeTab === 'analysis'
       }
     ];
