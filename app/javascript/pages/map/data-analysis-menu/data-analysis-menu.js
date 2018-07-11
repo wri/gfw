@@ -19,10 +19,16 @@ const mapStateToProps = ({ location, datasets, dataAnalysis }) => ({
 class DataAnalysisMenuContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {
     const { analysis, getGeostore, getAnalysis } = nextProps;
-    if (!isEqual(analysis.polygon, this.props.analysis.polygon)) {
+    if (
+      analysis.polygon !== null &&
+      !isEqual(analysis.polygon, this.props.analysis.polygon)
+    ) {
       getGeostore(analysis.polygon);
     }
-    if (!isEqual(analysis.geostore, this.props.analysis.geostore)) {
+    if (
+      analysis.geostore !== null &&
+      !isEqual(analysis.geostore, this.props.analysis.geostore)
+    ) {
       getAnalysis(analysis.geostore);
     }
   }
