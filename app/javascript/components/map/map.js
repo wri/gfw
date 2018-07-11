@@ -15,6 +15,8 @@ import actions from './map-actions';
 import initialState from './map-initial-state';
 import { getMapProps } from './map-selectors';
 
+// const L = window.L;
+
 const mapStateToProps = (
   { countryData, widgets, location, datasets, layerSpec },
   { widgetKey }
@@ -44,46 +46,57 @@ class MapContainer extends PureComponent {
 
   componentDidMount() {
     const { layersKeys, getLayerSpec } = this.props;
-    getLayerSpec();
+    // getLayerSpec();
     this.buildMap();
-    this.setLayers(layersKeys);
+    // this.setLayers(layersKeys);
   }
 
   componentWillReceiveProps(nextProps) {
     const { bounds, layersKeys, settings, geojson } = nextProps;
     const { zoom } = settings;
-    // sync geostore with map
-    if (!isEmpty(bounds) && !isEqual(bounds, this.props.bounds)) {
-      this.boundMap(bounds);
-      this.setAreaHighlight(geojson);
-    } else if (!bounds && !isEqual(bounds, this.props.bounds)) {
-      this.resetMap();
-    }
+    // // sync geostore with map
+    // if (!isEmpty(bounds) && !isEqual(bounds, this.props.bounds)) {
+    //   this.boundMap(bounds);
+    //   this.setAreaHighlight(geojson);
+    // } else if (!bounds && !isEqual(bounds, this.props.bounds)) {
+    //   this.resetMap();
+    // }
 
-    // sync layers with map
-    if (
-      !isEqual(layersKeys, this.props.layersKeys) ||
-      !isEqual(settings, this.props.settings)
-    ) {
-      this.updateLayers(layersKeys, this.props.layersKeys, settings);
-    }
+    // // sync layers with map
+    // if (
+    //   !isEqual(layersKeys, this.props.layersKeys) ||
+    //   !isEqual(settings, this.props.settings)
+    // ) {
+    //   this.updateLayers(layersKeys, this.props.layersKeys, settings);
+    // }
 
-    // sync zoom with map
-    if (
-      zoom &&
-      this.props.settings.zoom !== zoom &&
-      this.map.getZoom() !== zoom
-    ) {
-      this.map.setZoom(zoom);
-    }
+    // // sync zoom with map
+    // if (
+    //   zoom &&
+    //   this.props.settings.zoom !== zoom &&
+    //   this.map.getZoom() !== zoom
+    // ) {
+    //   this.map.setZoom(zoom);
+    // }
   }
 
   buildMap() {
     const { settings } = this.props;
-    this.map = new google.maps.Map(document.getElementById('map'), settings); // eslint-disable-line
-    this.map.mapTypes.set('GFWdefault', GFWdefault());
-    this.map.setMapTypeId(settings.mapTypeId);
-    this.map.overlayMapTypes.setAt(10, GFWLabels());
+    // this.map = new google.maps.Map(document.getElementById('map'), settings); // eslint-disable-line
+    // this.map.mapTypes.set('GFWdefault', GFWdefault());
+    // this.map.setMapTypeId(settings.mapTypeId);
+    // this.map.overlayMapTypes.setAt(10, GFWLabels());
+
+    this.map = L.map('map', {
+      zoomControl: false
+    }).setView([27, 12], 3);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(this.map);
+    L.control.zoom({
+      position:'topright'
+    }).addTo(this.map);
   }
 
   boundMap(bounds) {
