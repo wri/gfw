@@ -1,10 +1,23 @@
 @import '~styles/settings';
 
 .c-polygon-analysis {
-  padding: 0 rem(20px);
+  padding: rem(20px);
 
-  &__chooser {
-    padding: rem(20px) 0;
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    color: $greyish-brown;
+    cursor: pointer;
+    outline: none;
+
+    .icon {
+      position: relative;
+      top: rem(1px);
+      width: rem(12px);
+      height: rem(12px);
+      margin-right: rem(7px);
+      transform: rotateZ(90deg);
+    }
   }
 
   &__chooser-title {

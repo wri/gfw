@@ -5,6 +5,7 @@ import Dropzone from 'react-dropzone';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
+import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import infoIcon from 'assets/icons/info.svg';
 import config from './upload-file-config.json';
 
@@ -83,9 +84,24 @@ class PolygonAnalysis extends PureComponent {
   };
 
   render() {
-    const { analysis: { data } } = this.props;
+    const { analysis: { data }, setAnalysisData } = this.props;
     return (
       <div className="c-polygon-analysis">
+        <div
+          className="c-polygon-analysis__title"
+          onClick={() => {
+            setAnalysisData({
+              option: null,
+              polygon: null,
+              geostore: null,
+              data: null
+            });
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          <Icon icon={arrowDownIcon} className="icon" />
+        </div>
         {!data && this.renderChooser()}
         {data && this.renderData()}
       </div>
