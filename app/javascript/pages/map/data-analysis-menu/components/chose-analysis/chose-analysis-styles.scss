@@ -14,40 +14,117 @@
     display: flex;
     justify-content: space-between;
     margin-top: rem(18px);
+    padding-bottom: rem(15px);
 
     button {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       cursor: pointer;
+
+      .icon {
+        fill: $ashes-grey;
+
+        &.square-point {
+          width: rem(21px);
+          height: rem(21px);
+          margin-bottom: rem(12px);
+        }
+
+        &.flag {
+          width: rem(18px);
+          height: rem(18px);
+          margin-bottom: rem(15px);
+        }
+
+        &.polygon {
+          width: rem(25px);
+          height: rem(25px);
+          margin-bottom: rem(8px);
+        }
+      }
+
+      .label {
+        font-size: 11px;
+        line-height: 1.18;
+        color: $ashes-grey;
+      }
+
+      &.selected {
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: rem(-15px);
+          left: rem(10px);
+          width: calc(100% - #{rem(20px)});
+          height: rem(2px);
+          background-color: $green-gfw;
+        }
+
+        .icon {
+          fill: $green-gfw;
+        }
+
+        .label {
+          color: $green-gfw;
+        }
+      }
+    }
+  }
+
+  &__layer {
+    padding-top: rem(33px);
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: -0.3px;
+
+    &-title {
+      color: $greyish-brown;
     }
 
-    .icon {
-      fill: $ashes-grey;
-
-      &.square-point {
-        width: rem(21px);
-        height: rem(21px);
-        margin-bottom: rem(12px);
-      }
-
-      &.flag {
-        width: rem(18px);
-        height: rem(18px);
-        margin-bottom: rem(15px);
-      }
-
-      &.polygon {
-        width: rem(25px);
-        height: rem(25px);
-        margin-bottom: rem(8px);
-      }
+    &-select {
+      margin-top: rem(17px);
     }
 
-    .label {
-      font-size: 11px;
-      line-height: 1.18;
-      color: $ashes-grey;
+    &-description {
+      margin-top: rem(24px);
+      color: $hot-grey;
+    }
+  }
+
+  &__location {
+    padding-top: rem(20px);
+
+    &-select:not(:last-child) {
+      margin-bottom: rem(5px);
+    }
+  }
+
+  &__polygon {
+    padding-top: rem(20px);
+
+    &-title {
+      font-size: 21px;
+      text-align: center;
+      margin-bottom: rem(10px);
+    }
+
+    &-input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 rem(10px);
+      height: rem(40px);
+      border: 1px dashed $green-gfw;
+      border-radius: 40px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    &-separator {
+      padding: rem(10px) 0;
+      text-align: center;
     }
   }
 }

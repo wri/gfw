@@ -56,9 +56,14 @@ class DataAnalysisMenu extends PureComponent {
           </div>
         ) : (
           <div className="analysis">
-            {!analysis.option && <ChoseAnalysis />}
-            {analysis.option === 'location' && <LocationAnalysis />}
-            {analysis.option === 'polygon' && <PolygonAnalysis />}
+            {analysis.loading && <Loader />}
+            {!analysis.loading &&
+              !analysis.location &&
+              !analysis.data && <ChoseAnalysis selected={analysis.option} />}
+            {analysis.option === 'location' &&
+              analysis.location && <LocationAnalysis />}
+            {analysis.option === 'polygon' &&
+              analysis.data && <PolygonAnalysis />}
           </div>
         )}
       </div>

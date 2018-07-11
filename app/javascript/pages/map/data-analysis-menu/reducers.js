@@ -1,6 +1,8 @@
 export const initialState = {
   analysis: {
-    option: null,
+    loading: false,
+    option: 'layer',
+    location: null,
     polygon: null,
     geostore: null,
     data: null

@@ -13,11 +13,13 @@
   }
 
   .analysis {
+    position: relative;
+    width: 100%;
+    min-height: rem(200px);
     background: $white;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
 
     .c-widget {
       &:not(:last-child)::before {

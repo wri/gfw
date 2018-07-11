@@ -5,11 +5,16 @@ import { getGeostoreKey } from 'services/geostore';
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
 
-import uploadFileConfig from './components/polygon-analysis/upload-file-config.json';
+import uploadFileConfig from './components/chose-analysis/upload-file-config.json';
 
 const setAnalysisData = createAction('setAnalysisData');
 
 const getGeostore = createThunkAction('getGeostore', geoJSON => dispatch => {
+  dispatch(
+    setAnalysisData({
+      loading: true
+    })
+  );
   getGeostoreKey(geoJSON)
     .then(response => {
       if (response.data) {
@@ -31,7 +36,8 @@ const getAnalysis = createThunkAction('getAnalysis', geostore => dispatch => {
       if (response.data) {
         dispatch(
           setAnalysisData({
-            data: response.data.data.attributes
+            data: response.data.data.attributes,
+            loading: false
           })
         );
       }
@@ -42,6 +48,11 @@ const getAnalysis = createThunkAction('getAnalysis', geostore => dispatch => {
 });
 
 const uploadShape = createThunkAction('uploadShape', shapeFile => dispatch => {
+  dispatch(
+    setAnalysisData({
+      loading: true
+    })
+  );
   uploadShapeFile(shapeFile)
     .then(response => {
       const features = response.data
