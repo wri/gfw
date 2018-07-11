@@ -16,7 +16,7 @@ class DataAnalysisMenu extends PureComponent {
   render() {
     const {
       className,
-      activeTab,
+      activeTab = 'data',
       layerGroups,
       legendLoading,
       analysis
@@ -25,13 +25,13 @@ class DataAnalysisMenu extends PureComponent {
       {
         label: 'DATA',
         icon: landTreeIcon,
-        path: '/v2/map/data',
+        path: '/v2/map',
         active: activeTab === 'data'
       },
       {
         label: 'ANALYSIS',
         icon: truckIcon,
-        path: '/v2/map/analysis',
+        path: '/v2/map',
         active: activeTab === 'analysis'
       }
     ];

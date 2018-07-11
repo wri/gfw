@@ -9,7 +9,7 @@ import './map-styles.scss';
 
 class Map extends PureComponent {
   render() {
-    const { loading, error, layers } = this.props;
+    const { loading, error, layers, miniLegend } = this.props;
     return (
       <div className="c-map">
         {loading && (
@@ -20,7 +20,10 @@ class Map extends PureComponent {
             <NoContent message="An error occured. Please try again later." />
           )}
         <div id="map" className="c-map" />
-        {!loading && layers && layers.length && <MiniLegend layers={layers} />}
+        {miniLegend &&
+          !loading &&
+          layers &&
+          layers.length && <MiniLegend layers={layers} />}
       </div>
     );
   }
@@ -28,8 +31,9 @@ class Map extends PureComponent {
 
 Map.propTypes = {
   loading: Proptypes.bool.isRequired,
-  error: Proptypes.bool.isRequired,
-  layers: Proptypes.array
+  layers: Proptypes.array,
+  error: Proptypes.bool,
+  miniLegend: Proptypes.bool
 };
 
 export default Map;

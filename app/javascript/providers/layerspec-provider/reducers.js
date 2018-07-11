@@ -1,21 +1,21 @@
 export const initialState = {
   loading: false,
   error: false,
-  data: []
+  data: {}
 };
 
-const setDatasetsLoading = (state, { payload }) => ({
+const setLayerSpecLoading = (state, { payload }) => ({
   ...state,
   ...payload
 });
 
-const setDatasetsData = (state, { payload }) => ({
+const setLayers = (state, { payload }) => ({
   ...state,
   data: payload,
   loading: false
 });
 
 export default {
-  setDatasetsData,
-  setDatasetsLoading
+  setLayers,
+  setLayerSpecLoading
 };

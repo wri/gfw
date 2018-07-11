@@ -1,7 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { Legend, LegendItemToolbar, LegendItemTypes } from 'wri-api-components';
+import {
+  Legend,
+  LegendItemToolbar,
+  LegendItemTypes,
+  Icons
+} from 'wri-api-components';
 
 import '../../../../../../node_modules/wri-api-components/dist/components.css';
 import './legend-styles.scss';
@@ -11,6 +16,7 @@ class MapLegend extends PureComponent {
     const { layerGroups } = this.props;
     return (
       <div className="c-legend">
+        <Icons />
         {layerGroups &&
           layerGroups.length > 0 && (
             <Legend

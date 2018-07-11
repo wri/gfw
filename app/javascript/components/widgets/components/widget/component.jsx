@@ -29,7 +29,7 @@ class Widget extends PureComponent {
       highlightColor,
       Component,
       sentence,
-      setWidgetSettingsUrl,
+      setWidgetSettings,
       parsedData,
       parsedConfig
     } = this.props;
@@ -49,7 +49,7 @@ class Widget extends PureComponent {
           })
         }}
       >
-        <WidgetHeader {...this.props} onSettingsChange={setWidgetSettingsUrl} />
+        <WidgetHeader {...this.props} onSettingsChange={setWidgetSettings} />
         <div className="container">
           {!loading &&
             !error &&
@@ -98,7 +98,7 @@ class Widget extends PureComponent {
 Widget.propTypes = {
   widget: PropTypes.string.isRequired,
   title: PropTypes.object.isRequired,
-  setWidgetSettingsUrl: PropTypes.func.isRequired,
+  setWidgetSettings: PropTypes.func.isRequired,
   settings: PropTypes.object,
   config: PropTypes.object,
   onMap: PropTypes.bool,

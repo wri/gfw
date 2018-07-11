@@ -3,12 +3,16 @@ import { createThunkAction } from 'utils/redux';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import groupBy from 'lodash/groupBy';
-import { encodeStateForUrl, decodeUrlForState } from 'utils/stateToUrl';
+import {
+  encodeStateForUrl,
+  decodeUrlForState,
+  setComponentStateToUrl
+} from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/forest-data';
 import { COUNTRY, EMBED } from 'pages/dashboards/router';
 import * as WIDGETS from './manifest';
 
-export const setWidgetSettings = createAction('setWidgetSettings');
+// export const setWidgetSettings = createAction('setWidgetSettings');
 export const setWidgetLoading = createAction('setWidgetLoading');
 export const setWidgetData = createAction('setWidgetData');
 export const settingsItemSelected = createAction('settingsItemSelected');
@@ -21,6 +25,26 @@ export const getWidgetData = createThunkAction(
       dispatch(setWidgetLoading(widget));
       getData({ params, dispatch, setWidgetData, widget, state });
     }
+  }
+);
+
+export const setWidgetSettings = createThunkAction(
+  'setWidgetSettings',
+  ({ value, widget }) => (dispatch, state) => {
+    dispatch(
+      settingsItemSelected({
+        value,
+        widget
+      })
+    );
+    dispatch(
+      setComponentStateToUrl({
+        key: 'widget',
+        subKey: widget,
+        change: value,
+        state
+      })
+    );
   }
 );
 

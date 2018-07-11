@@ -8,7 +8,7 @@ class WidgetNumberedList extends PureComponent {
     const {
       parsedData,
       settings,
-      setWidgetSettingsUrl,
+      setWidgetSettings,
       embed,
       widget
     } = this.props;
@@ -21,7 +21,7 @@ class WidgetNumberedList extends PureComponent {
           format: settings.unit === '%' ? '.2r' : '.3s'
         }}
         handlePageChange={change =>
-          setWidgetSettingsUrl({
+          setWidgetSettings({
             value: { page: settings.page + change },
             widget
           })
@@ -35,7 +35,7 @@ class WidgetNumberedList extends PureComponent {
 WidgetNumberedList.propTypes = {
   parsedData: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  setWidgetSettingsUrl: PropTypes.func.isRequired,
+  setWidgetSettings: PropTypes.func.isRequired,
   embed: PropTypes.bool,
   widget: PropTypes.string
 };

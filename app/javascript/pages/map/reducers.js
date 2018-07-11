@@ -7,7 +7,6 @@ import router from './router';
 
 // Components
 import * as recentImageryComponent from 'pages/map/recent-imagery';
-import * as MapComponent from 'components/map';
 import * as MapMenuComponent from 'pages/map/menu';
 import * as DataAnalysisMenuComponent from 'pages/map/data-analysis-menu';
 import * as ShareComponent from 'components/modals/share';
@@ -18,12 +17,12 @@ import * as WidgetsComponent from 'components/widgets';
 import * as countryDataProviderComponent from 'providers/country-data-provider';
 import * as whitelistsProviderComponent from 'providers/whitelists-provider';
 import * as datasetsProviderComponent from 'providers/datasets-provider';
+import * as layerSpecProviderComponent from 'providers/layerspec-provider';
 
 // Component Reducers
 const componentsReducers = {
   share: handleActions(ShareComponent),
   modalMeta: handleActions(ModalMetaComponent),
-  map: handleActions(MapComponent),
   mapMenu: handleActions(MapMenuComponent),
   dataAnalysis: handleActions(DataAnalysisMenuComponent),
   recentImagery: handleActions(recentImageryComponent),
@@ -34,7 +33,8 @@ const componentsReducers = {
 const providersReducers = {
   countryData: handleActions(countryDataProviderComponent),
   whitelists: handleActions(whitelistsProviderComponent),
-  datasets: handleActions(datasetsProviderComponent)
+  datasets: handleActions(datasetsProviderComponent),
+  layerSpec: handleActions(layerSpecProviderComponent)
 };
 
 export default combineReducers({
