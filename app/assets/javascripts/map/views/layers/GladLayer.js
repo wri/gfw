@@ -23,11 +23,10 @@ define(
     'use strict';
     var env = window.gfw.config.RAILS_ENV === 'production' ? 'prod' : 'staging';
     var TILE_URL =
-      'https://wri-tiles.s3.amazonaws.com/glad_' +
+      'https://d178s5l0vmo3yy.cloudfront.net/glad_' +
       env +
       '/tiles{/z}{/x}{/y}.png';
     var START_DATE = '2015-01-01';
-
     var getConfidence = function(number) {
       var confidence = -1;
       if (number >= 100 && number < 200) {
