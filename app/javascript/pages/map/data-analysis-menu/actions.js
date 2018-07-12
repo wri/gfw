@@ -37,7 +37,8 @@ const getAnalysis = createThunkAction('getAnalysis', geostore => dispatch => {
         dispatch(
           setAnalysisData({
             data: response.data.data.attributes,
-            loading: false
+            loading: false,
+            showResults: true
           })
         );
       }

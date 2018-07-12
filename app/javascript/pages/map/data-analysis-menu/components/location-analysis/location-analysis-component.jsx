@@ -16,7 +16,8 @@ class LocationAnalysis extends PureComponent {
           className="c-location-analysis__title"
           onClick={() => {
             setAnalysisData({
-              option: null
+              option: 'location',
+              showResults: false
             });
           }}
           role="button"

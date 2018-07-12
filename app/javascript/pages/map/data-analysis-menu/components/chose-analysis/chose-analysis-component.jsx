@@ -34,39 +34,61 @@ class ChoseAnalysis extends PureComponent {
     </div>
   );
 
-  renderLocationOption = () => (
-    <div className="c-chose-analysis__location">
-      <Dropdown
-        className="c-chose-analysis__location-select"
-        theme="theme-dropdown-light"
-        placeholder="Select country"
-        noItemsFound="No country found"
-        noSelectedValue="Select country"
-        searchable
-        clearable
-      />
-      <Dropdown
-        className="c-chose-analysis__location-select"
-        theme="theme-dropdown-light"
-        placeholder="Select region (optional)"
-        noItemsFound="No region found"
-        noSelectedValue="Select region (optional)"
-        disabled
-        searchable
-        clearable
-      />
-      <Dropdown
-        className="c-chose-analysis__location-select"
-        theme="theme-dropdown-light"
-        placeholder="Select region (optional)"
-        noItemsFound="No region found"
-        noSelectedValue="Select region (optional)"
-        disabled
-        searchable
-        clearable
-      />
-    </div>
-  );
+  renderLocationOption = () => {
+    const { countries, location, setAnalysisData } = this.props;
+    return (
+      <div className="c-chose-analysis__location">
+        <Dropdown
+          className="c-chose-analysis__location-select"
+          theme="theme-dropdown-light"
+          placeholder="Select country"
+          noItemsFound="No country found"
+          noSelectedValue="Select country"
+          options={countries}
+          value={location.country}
+          onChange={country =>
+            setAnalysisData({
+              location: {
+                ...location,
+                country
+              }
+            })
+          }
+          searchable
+          clearable
+        />
+        <Dropdown
+          className="c-chose-analysis__location-select"
+          theme="theme-dropdown-light"
+          placeholder="Select region (optional)"
+          noItemsFound="No region found"
+          noSelectedValue="Select region (optional)"
+          disabled
+          searchable
+          clearable
+        />
+        <Dropdown
+          className="c-chose-analysis__location-select"
+          theme="theme-dropdown-light"
+          placeholder="Select region (optional)"
+          noItemsFound="No region found"
+          noSelectedValue="Select region (optional)"
+          disabled
+          searchable
+          clearable
+        />
+        <Button
+          onClick={() => {
+            setAnalysisData({
+              showResults: true
+            });
+          }}
+        >
+          ANALYZE
+        </Button>
+      </div>
+    );
+  };
   renderPolygonOption = () => (
     <div className="c-chose-analysis__polygon">
       <div className="c-chose-analysis__polygon-title">
@@ -127,7 +149,7 @@ class ChoseAnalysis extends PureComponent {
           <button
             className={selected === 'layer' ? 'selected' : ''}
             onClick={() => {
-              setAnalysisData({ option: 'layer' });
+              setAnalysisData({ option: 'layer', showResults: false });
             }}
           >
             <Icon icon={squarePointIcon} className="icon square-point" />
@@ -136,7 +158,7 @@ class ChoseAnalysis extends PureComponent {
           <button
             className={selected === 'location' ? 'selected' : ''}
             onClick={() => {
-              setAnalysisData({ option: 'location' });
+              setAnalysisData({ option: 'location', showResults: false });
             }}
           >
             <Icon icon={flagIcon} className="icon flag" />
@@ -145,7 +167,7 @@ class ChoseAnalysis extends PureComponent {
           <button
             className={selected === 'polygon' ? 'selected' : ''}
             onClick={() => {
-              setAnalysisData({ option: 'polygon' });
+              setAnalysisData({ option: 'polygon', showResults: false });
             }}
           >
             <Icon icon={polygonIcon} className="icon polygon" />
@@ -162,6 +184,8 @@ class ChoseAnalysis extends PureComponent {
 
 ChoseAnalysis.propTypes = {
   selected: PropTypes.string,
+  countries: PropTypes.array,
+  location: PropTypes.object,
   setAnalysisData: PropTypes.func,
   uploadShape: PropTypes.func
 };
