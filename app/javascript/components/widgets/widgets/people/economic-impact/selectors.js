@@ -139,6 +139,7 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = () => ({
+  height: 250,
   yKeys: {
     bars: {
       value: {

@@ -1,0 +1,45 @@
+@import '~styles/settings';
+
+.c-polygon-analysis {
+  padding: rem(20px);
+
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    color: $greyish-brown;
+    cursor: pointer;
+    outline: none;
+
+    .icon {
+      position: relative;
+      top: rem(1px);
+      width: rem(12px);
+      height: rem(12px);
+      margin-right: rem(7px);
+      transform: rotateZ(90deg);
+    }
+  }
+
+  &__chooser-title {
+    font-size: 21px;
+    text-align: center;
+    margin-bottom: rem(10px);
+  }
+
+  &__chooser-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 rem(10px);
+    height: rem(40px);
+    border: 1px dashed $green-gfw;
+    border-radius: 40px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  &__chooser-separator {
+    padding: rem(10px) 0;
+    text-align: center;
+  }
+}

@@ -20,6 +20,7 @@ class Widget extends PureComponent {
       shareUrl,
       config,
       embed,
+      minimalist,
       loading,
       error,
       data,
@@ -35,7 +36,7 @@ class Widget extends PureComponent {
 
     return (
       <div
-        className={`c-widget ${config.size || ''}`}
+        className={`c-widget ${minimalist ? 'large' : config.size || ''}`}
         id={widget}
         style={{
           ...(!!onMap && {
@@ -79,7 +80,7 @@ class Widget extends PureComponent {
               />
             )}
         </div>
-        <WidgetFooter {...this.props} />
+        {!minimalist && <WidgetFooter {...this.props} />}
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
@@ -106,6 +107,7 @@ Widget.propTypes = {
   shareUrl: PropTypes.string,
   query: PropTypes.object,
   embed: PropTypes.bool,
+  minimalist: PropTypes.bool,
   loading: PropTypes.bool,
   error: PropTypes.bool,
   active: PropTypes.bool,

@@ -203,6 +203,12 @@ export const filterWidgets = createSelector(
     )
 );
 
+export const filterWidgetByAnalysis = createSelector([getWidgets], widgets => {
+  if (!widgets) return null;
+
+  return widgets.filter(widget => widget.analysis);
+});
+
 export const getActiveWidget = createSelector(
   [filterWidgets, getWidgetQuery],
   (widgets, widgetQuery) => {

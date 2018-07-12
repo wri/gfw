@@ -64,9 +64,7 @@ class Menu extends PureComponent {
         <MenuFlap
           section={selectedSection}
           Component={sectionData ? sectionData.Component : null}
-          isBig={
-            sectionData && sectionData.bigFlap ? sectionData.bigFlap : false
-          }
+          isBig={(sectionData && sectionData.bigFlap) || false}
           onClickClose={() => setSelectedSection(null)}
         />
       </div>

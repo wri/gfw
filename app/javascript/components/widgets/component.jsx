@@ -18,7 +18,8 @@ class Widgets extends PureComponent {
       category,
       colors,
       widget,
-      embed
+      embed,
+      minimalist
     } = this.props;
 
     return widget && embed ? (
@@ -28,7 +29,11 @@ class Widgets extends PureComponent {
         colors={colors[widget.config.colors || widget.config.type] || colors}
       />
     ) : (
-      <div className={`c-widgets ${embed ? 'embed' : ''}`}>
+      <div
+        className={`c-widgets ${embed ? 'embed' : ''} ${
+          minimalist ? 'minimalist' : ''
+        }`}
+      >
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
@@ -62,6 +67,7 @@ Widgets.propTypes = {
   widgets: PropTypes.array,
   widget: PropTypes.object,
   embed: PropTypes.bool,
+  minimalist: PropTypes.bool,
   activeWidget: PropTypes.string,
   category: PropTypes.string,
   WidgetsFuncs: PropTypes.object,
