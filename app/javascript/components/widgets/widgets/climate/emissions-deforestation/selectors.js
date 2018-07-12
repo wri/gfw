@@ -34,6 +34,7 @@ export const parseConfig = createSelector(
     const colorRange = getColorPalette(colors.ramp, 2);
     const { unit } = settings;
     return {
+      height: 250,
       xKey: 'year',
       yKeys: {
         areas: {

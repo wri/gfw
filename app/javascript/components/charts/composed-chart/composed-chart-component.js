@@ -42,7 +42,10 @@ class CustomComposedChart extends PureComponent {
       tooltip,
       unit,
       unitFormat,
-      height
+      height,
+      yTicksHide,
+      gridHide,
+      margin
     } = this.props.config;
     const {
       className,
@@ -60,7 +63,14 @@ class CustomComposedChart extends PureComponent {
         <ResponsiveContainer width="99%">
           <ComposedChart
             data={data}
-            margin={{ top: 15, right: 0, left: 42, bottom: 0 }}
+            margin={
+              margin || {
+                top: 15,
+                right: 0,
+                left: 42,
+                bottom: 0
+              }
+            }
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -89,27 +99,31 @@ class CustomComposedChart extends PureComponent {
               tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
               {...xAxis}
             />
-            <YAxis
-              axisLine={false}
-              strokeDasharray="3 4"
-              tickSize={-42}
-              mirror
-              tickMargin={0}
-              tick={
-                <CustomTick
-                  dataMax={maxYValue}
-                  unit={unit || ''}
-                  unitFormat={
-                    unitFormat ||
-                    (value =>
-                      (value < 1 ? format('.2r')(value) : format('.2s')(value)))
-                  }
-                  fill="#555555"
-                />
-              }
-              {...yAxis}
-            />
-            <CartesianGrid vertical={false} strokeDasharray="3 4" />
+            {!yTicksHide && (
+              <YAxis
+                axisLine={false}
+                strokeDasharray="3 4"
+                tickSize={-42}
+                mirror
+                tickMargin={0}
+                tick={
+                  <CustomTick
+                    dataMax={maxYValue}
+                    unit={unit || ''}
+                    unitFormat={
+                      unitFormat ||
+                      (value =>
+                        (value < 1 ? format('.2r')(value) : format('.2s')(value)))
+                    }
+                    fill="#555555"
+                  />
+                }
+                {...yAxis}
+              />
+            )}
+            {!gridHide && (
+              <CartesianGrid vertical={false} strokeDasharray="3 4" />
+            )}
             <Tooltip
               cursor={{
                 opacity: 0.5,

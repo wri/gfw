@@ -40,5 +40,6 @@ export const initialState = {
     extentYear: 2000,
     layers: ['loss']
   },
-  enabled: true
+  enabled: true,
+  analysis: true
 };

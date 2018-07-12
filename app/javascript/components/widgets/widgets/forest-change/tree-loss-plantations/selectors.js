@@ -37,6 +37,7 @@ export const parseData = createSelector(
 export const parseConfig = createSelector([getColors], colors => {
   const colorRange = getColorPalette(colors.ramp, 2);
   return {
+    height: 250,
     xKey: 'year',
     yKeys: {
       bars: {
