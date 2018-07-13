@@ -37,7 +37,7 @@
   }
   //Shrub
   [desc_in='Belukar']{
-   	polygon-fill:#CCDB98;
+   	polygon-fill:#4F6027;
   }
   //Plantation
   [desc_in='Perkebunan']{
@@ -57,7 +57,7 @@
   }
   //Savannah
   [desc_in='Savana']{
-  	polygon-fill:#CCDB98;
+  	polygon-fill:#4F6027;
   }
   //water-body
   [desc_in='Badan Air']{
