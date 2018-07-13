@@ -15,10 +15,10 @@ export default {
   maxZoom: 14,
   layers: [
     {
-      dataset: '20aead6e-fef9-41c7-92c8-ea00edcae077',
-      layer: '84698937-429c-4141-8752-8d8f36a7e98c',
+      dataset: '3f3da1e2-0891-4fed-9460-a53c01ba211a',
+      layer: 'c3bf6eb4-4d36-441a-8935-67a15d618397',
       opacity: 1,
-      visible: true
+      visibility: true
     }
   ],
   adm0: null,

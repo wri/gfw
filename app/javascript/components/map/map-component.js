@@ -1,17 +1,26 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 
+import { LayerManager, Layer } from 'layer-manager/dist/react';
+import { PluginLeaflet } from 'layer-manager';
+
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
-import MiniLegend from 'components/map/components/mini-legend';
 
 import './map-styles.scss';
 
 class Map extends PureComponent {
   render() {
-    const { loading, error, layers, miniLegend } = this.props;
+    const { loading, error, activeLayers, map } = this.props;
+
     return (
-      <div className="c-map">
+      <React.Fragment>
+        <div id="c-map" className="c-map" />
+        {map && (
+          <LayerManager map={map} plugin={PluginLeaflet}>
+            {activeLayers && activeLayers.map(l => <Layer key={l.id} {...l} />)}
+          </LayerManager>
+        )}
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
@@ -19,21 +28,17 @@ class Map extends PureComponent {
           error && (
             <NoContent message="An error occured. Please try again later." />
           )}
-        <div id="map" className="c-map" />
-        {miniLegend &&
-          !loading &&
-          layers &&
-          layers.length && <MiniLegend layers={layers} />}
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 Map.propTypes = {
-  loading: Proptypes.bool.isRequired,
-  layers: Proptypes.array,
+  loading: Proptypes.bool,
+  activeLayers: Proptypes.array,
   error: Proptypes.bool,
-  miniLegend: Proptypes.bool
+  miniLegend: Proptypes.bool,
+  map: Proptypes.object
 };
 
 export default Map;

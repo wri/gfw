@@ -6,6 +6,7 @@ import initialState from './map-initial-state';
 // get list data
 const getMapUrlState = state => (state.query && state.query.map) || null;
 const getDatasets = state => state.datasets;
+const getLoading = state => state.loading;
 
 // get map settings
 export const getMapSettings = createSelector(getMapUrlState, urlState => ({
@@ -32,7 +33,7 @@ export const getLayerGroups = createSelector(
               ? dataset.layer.map(layer => ({
                 ...layer,
                 opacity: l.opacity,
-                visible: l.visible,
+                visibility: l.visibility,
                 active: l.layer === layer.id
               }))
               : []
@@ -51,5 +52,6 @@ export const getMapProps = createStructuredSelector({
   stateLayers: getLayers,
   settings: getMapSettings,
   layerGroups: getLayerGroups,
-  activeLayers: getActiveLayers
+  activeLayers: getActiveLayers,
+  loading: getLoading
 });

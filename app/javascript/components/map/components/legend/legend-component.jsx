@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -8,28 +8,25 @@ import {
   Icons
 } from 'wri-api-components';
 
-import '../../../../../../node_modules/wri-api-components/dist/components.css';
 import './legend-styles.scss';
 
-class MapLegend extends PureComponent {
+class MapLegend extends Component {
   render() {
     const { layerGroups } = this.props;
     return (
       <div className="c-legend">
         <Icons />
-        {layerGroups &&
-          layerGroups.length > 0 && (
-            <Legend
-              {...this.props}
-              // List item
-              LegendItemToolbar={<LegendItemToolbar />}
-              LegendItemTypes={<LegendItemTypes />}
-            />
-          )}
+        {layerGroups && <Legend {...this.props} />}
       </div>
     );
   }
 }
+
+MapLegend.defaultProps = {
+  maxHeight: 300,
+  LegendItemToolbar: <LegendItemToolbar />,
+  LegendItemTypes: <LegendItemTypes />
+};
 
 MapLegend.propTypes = {
   layerGroups: PropTypes.array

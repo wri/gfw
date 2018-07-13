@@ -17,8 +17,6 @@ class DataAnalysisMenu extends PureComponent {
     const {
       className,
       activeTab = 'data',
-      layerGroups,
-      legendLoading,
       analysis,
       menuSectionData
     } = this.props;
@@ -52,13 +50,7 @@ class DataAnalysisMenu extends PureComponent {
         />
         {activeTab === 'data' ? (
           <div className="legend">
-            {legendLoading && <Loader className="legend-loader" />}
-            <MapLegend
-              layerGroups={layerGroups}
-              collapsable={false}
-              maxHeight={500}
-              maxWidth={290}
-            />
+            <MapLegend collapsable={false} maxHeight={500} maxWidth={290} />
           </div>
         ) : (
           <div className="analysis">
@@ -78,10 +70,8 @@ class DataAnalysisMenu extends PureComponent {
 }
 
 DataAnalysisMenu.propTypes = {
-  layerGroups: PropTypes.array,
   activeTab: PropTypes.string,
   className: PropTypes.string,
-  legendLoading: PropTypes.bool,
   analysis: PropTypes.object,
   menuSectionData: PropTypes.object
 };

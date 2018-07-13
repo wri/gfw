@@ -12,6 +12,7 @@ import * as DataAnalysisMenuComponent from 'pages/map/data-analysis-menu';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as WidgetsComponent from 'components/widgets';
+import * as PopupComponent from 'components/map/components/popup';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
@@ -26,7 +27,8 @@ const componentsReducers = {
   mapMenu: handleActions(MapMenuComponent),
   dataAnalysis: handleActions(DataAnalysisMenuComponent),
   recentImagery: handleActions(recentImageryComponent),
-  widgets: handleActions(WidgetsComponent)
+  widgets: handleActions(WidgetsComponent),
+  popup: handleActions(PopupComponent)
 };
 
 // Provider Reducers
