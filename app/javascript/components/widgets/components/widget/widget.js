@@ -52,7 +52,9 @@ const mapStateToProps = ({ widgets }, ownProps) => {
   const locationPath = `dashboards/${type || 'global'}/${locationUrl}`;
   const widgetQuery = `widget=${widget}`;
   const widgetState =
-    query && query[widget] ? `&${widget}=${query[widget]}` : '';
+    query && query[widget]
+      ? `&${widget}=${btoa(JSON.stringify(query[widget]))}`
+      : '';
   const categoryQuery = category ? `&category=${category}` : '';
 
   const shareUrl = `${window.location.origin}/${locationPath}?${widgetQuery}${
