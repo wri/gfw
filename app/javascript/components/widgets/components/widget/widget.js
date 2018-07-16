@@ -10,10 +10,9 @@ import Component from './component';
 import * as Widgets from '../../manifest';
 import * as Selectors from './selectors';
 
-const mapStateToProps = ({ widgets, location }, ownProps) => {
-  const { widget, colors, active, options } = ownProps;
-  const { query } = location;
-  const { country, region, subRegion, type } = location.payload;
+const mapStateToProps = ({ widgets }, ownProps) => {
+  const { widget, colors, active, options, location, query } = ownProps;
+  const { country, region, subRegion, type } = location;
   // widget consts
   const settings = Selectors.getWidgetSettings({
     settings: widgets[widget].settings,
@@ -82,7 +81,7 @@ const mapStateToProps = ({ widgets, location }, ownProps) => {
 class WidgetContainer extends PureComponent {
   componentDidMount() {
     const {
-      payload,
+      location,
       settings,
       getData,
       getWidgetData,
@@ -93,7 +92,7 @@ class WidgetContainer extends PureComponent {
       widget,
       getData,
       params: {
-        ...payload,
+        ...location,
         ...settings,
         geostore
       }
@@ -102,7 +101,7 @@ class WidgetContainer extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const {
-      payload,
+      location,
       settings,
       getData,
       getWidgetData,
@@ -112,7 +111,7 @@ class WidgetContainer extends PureComponent {
     if (
       settings &&
       this.props.settings &&
-      (!isEqual(payload, this.props.payload) ||
+      (!isEqual(location, this.props.location) ||
         !isEqual(settings.threshold, this.props.settings.threshold) ||
         !isEqual(settings.forestType, this.props.settings.forestType) ||
         !isEqual(settings.landCategory, this.props.settings.landCategory) ||
@@ -124,7 +123,7 @@ class WidgetContainer extends PureComponent {
         widget,
         getData,
         params: {
-          ...payload,
+          ...location,
           ...settings,
           geostore
         }
@@ -141,7 +140,7 @@ class WidgetContainer extends PureComponent {
 
 WidgetContainer.propTypes = {
   settings: PropTypes.object,
-  payload: PropTypes.object,
+  location: PropTypes.object,
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
   widget: PropTypes.string,

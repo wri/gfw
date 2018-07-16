@@ -19,7 +19,7 @@ import * as WIDGETS from 'components/widgets/manifest';
 // get list data
 const getCountryData = state => state.countryData || null;
 const getCategory = state => state.category || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getWhitelist = state => state.whitelist || null;
 const getWidgetQuery = state => state.activeWidget || null;
 const getCountries = state => state.countries || null;

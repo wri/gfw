@@ -63,7 +63,7 @@ class WidgetHeader extends PureComponent {
                 }`}
                 link={{
                   type: COUNTRY,
-                  payload: { ...location.payload },
+                  payload: { ...location },
                   query: {
                     ...query,
                     widget
@@ -213,7 +213,7 @@ WidgetHeader.propTypes = {
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   setModalMeta: PropTypes.func.isRequired,
-  setShowMapMobile: PropTypes.func.isRequired,
+  setShowMapMobile: PropTypes.func,
   modalOpen: PropTypes.bool,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,

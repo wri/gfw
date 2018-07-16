@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
 // get list data
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getLocationNames = state => state.locationNames || null;
 const getData = state => state.data || null;
 const getCountries = state => state.countries || null;

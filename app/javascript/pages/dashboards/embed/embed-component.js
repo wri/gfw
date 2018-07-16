@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import Widgets from 'components/widgets';
 import CountryDataProvider from 'providers/country-data-provider';
@@ -10,10 +11,11 @@ import './embed-styles.scss';
 
 class Embed extends PureComponent {
   render() {
+    const { payload, query } = this.props;
     return (
       <div className="c-embed">
         <div className="widget-wrapper">
-          <Widgets embed />
+          <Widgets location={payload} query={query} embed />
         </div>
         <Share />
         <ModalMeta />
@@ -23,5 +25,10 @@ class Embed extends PureComponent {
     );
   }
 }
+
+Embed.propTypes = {
+  payload: PropTypes.object,
+  query: PropTypes.object
+};
 
 export default Embed;
