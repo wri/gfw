@@ -50,7 +50,7 @@ class ChoseAnalysis extends PureComponent {
             setAnalysisData({
               location: {
                 ...location,
-                country
+                country: country.value
               }
             })
           }

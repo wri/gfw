@@ -4,9 +4,9 @@ export const initialState = {
     showResults: false,
     option: 'layer',
     location: {
-      country: null,
-      region: null,
-      subRegion: null
+      country: undefined,
+      region: undefined,
+      subRegion: undefined
     },
     polygon: null,
     geostore: null,

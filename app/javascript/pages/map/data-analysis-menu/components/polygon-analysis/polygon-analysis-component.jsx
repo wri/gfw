@@ -15,7 +15,7 @@ class PolygonAnalysis extends PureComponent {
           className="c-polygon-analysis__title"
           onClick={() => {
             setAnalysisData({
-              option: null,
+              option: 'polygon',
               polygon: null,
               geostore: null,
               data: null
