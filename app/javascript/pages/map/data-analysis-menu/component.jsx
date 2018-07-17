@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import CountryDataProvider from 'providers/country-data-provider';
+import WhitelistsProvider from 'providers/whitelists-provider';
 import MapLegend from 'components/map/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
@@ -67,6 +69,8 @@ class DataAnalysisMenu extends PureComponent {
               analysis.showResults && <PolygonAnalysis />}
           </div>
         )}
+        <CountryDataProvider location={analysis.location} />
+        <WhitelistsProvider />
       </div>
     );
   }

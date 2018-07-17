@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
-import CountryDataProvider from 'providers/country-data-provider';
-import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LayerSpecProvider from 'providers/layerspec-provider';
 
@@ -32,8 +30,6 @@ class Page extends PureComponent {
         <DataAnalysisMenu className="data-analysis-menu" />
         <Share />
         <ModalMeta />
-        <CountryDataProvider />
-        <WhitelistsProvider />
         <DatasetsProvider />
         <LayerSpecProvider />
       </div>

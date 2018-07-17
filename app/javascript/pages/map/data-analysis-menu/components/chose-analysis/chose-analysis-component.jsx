@@ -35,7 +35,7 @@ class ChoseAnalysis extends PureComponent {
   );
 
   renderLocationOption = () => {
-    const { countries, location, setAnalysisData } = this.props;
+    const { countryData, location, setAnalysisData } = this.props;
     return (
       <div className="c-chose-analysis__location">
         <Dropdown
@@ -44,13 +44,15 @@ class ChoseAnalysis extends PureComponent {
           placeholder="Select country"
           noItemsFound="No country found"
           noSelectedValue="Select country"
-          options={countries}
+          options={countryData.countries}
           value={location.country}
           onChange={country =>
             setAnalysisData({
               location: {
                 ...location,
-                country: country.value
+                country: country ? country.value : null,
+                region: country ? location.region : null,
+                subRegion: country ? location.subRegion : null
               }
             })
           }
@@ -63,6 +65,17 @@ class ChoseAnalysis extends PureComponent {
           placeholder="Select region (optional)"
           noItemsFound="No region found"
           noSelectedValue="Select region (optional)"
+          options={countryData.regions}
+          value={location.region}
+          onChange={region =>
+            setAnalysisData({
+              location: {
+                ...location,
+                region: region ? region.value : null,
+                subRegion: region ? location.subRegion : null
+              }
+            })
+          }
           disabled
           searchable
           clearable
@@ -73,6 +86,16 @@ class ChoseAnalysis extends PureComponent {
           placeholder="Select region (optional)"
           noItemsFound="No region found"
           noSelectedValue="Select region (optional)"
+          options={countryData.subRegions}
+          value={location.subRegion}
+          onChange={subRegion =>
+            setAnalysisData({
+              location: {
+                ...location,
+                subRegion: subRegion ? subRegion.value : null
+              }
+            })
+          }
           disabled
           searchable
           clearable
@@ -184,7 +207,7 @@ class ChoseAnalysis extends PureComponent {
 
 ChoseAnalysis.propTypes = {
   selected: PropTypes.string,
-  countries: PropTypes.array,
+  countryData: PropTypes.object,
   location: PropTypes.object,
   setAnalysisData: PropTypes.func,
   uploadShape: PropTypes.func
