@@ -1,12 +1,14 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import { getData } from './forest-change-selectors';
+import { getLayers } from 'components/map/map-selectors';
+import { getParsedDatasets } from './forest-change-selectors';
 
 import ForestChangeComponent from './forest-change-component';
 
-const mapStateToProps = () => ({
-  data: getData()
+const mapStateToProps = ({ datasets }) => ({
+  datasets: getParsedDatasets({ ...datasets }),
+  layers: getLayers({ ...location })
 });
 
 class ForestChangeContainer extends PureComponent {

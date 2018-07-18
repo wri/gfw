@@ -1,5 +1,24 @@
 import { createSelector } from 'reselect';
 
+const getDatasets = state => state.datasets || null;
+
+export const getParsedDatasets = createSelector(
+  [getDatasets],
+  (datasets) => {
+    if (!datasets) return null;
+    return datasets.map(d => {
+      const metadata = d.metadata && d.metadata.length && d.metadata[0];
+      const { name, source } = metadata;
+      return {
+        name: name || d.name,
+        description: source,
+        id: d.id,
+        layer: d.layer && d.layer.length && d.layer[0].id
+      };
+    });
+  }
+);
+
 export const getData = createSelector([], () => [
   {
     name: 'DEFORESTATION ALERTS',

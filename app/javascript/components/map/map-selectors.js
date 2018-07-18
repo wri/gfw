@@ -49,7 +49,7 @@ export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
 });
 
 export const getMapProps = createStructuredSelector({
-  stateLayers: getLayers,
+  layers: getLayers,
   settings: getMapSettings,
   layerGroups: getLayerGroups,
   activeLayers: getActiveLayers,

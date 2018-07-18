@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import remove from 'lodash/remove';
 
 import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
@@ -11,11 +12,29 @@ import './layer-toggle-styles.scss';
 
 class LayerToggle extends PureComponent {
   render() {
-    const { data: { name, description, meta }, setModalMeta } = this.props;
-
+    const { data: { name, description, meta, id, layer }, setModalMeta, setMapSettings, layers } = this.props;
+    const isChecked = !!layers.find(l => l.dataset === id);
+    console.log('layers', layers);
     return (
       <div className="c-layer-toggle">
-        <Switch theme="theme-switch-toggle" onChange={() => {}} />
+        <Switch
+          theme="theme-switch-toggle"
+          checked={isChecked}
+          onChange={value => {
+            let newLayers = layers.splice(0);
+            if (!value) {
+              newLayers = remove(layers, l => l.dataset === id);
+            } else {
+              newLayers = [{
+                dataset: id,
+                opacity: 1,
+                visibility: true,
+                layer
+              }].concat(newLayers);
+            }
+            setMapSettings({ layers: newLayers });
+          }}
+        />
         <div className="c-layer-toggle__content">
           <div className="c-layer-toggle__header">
             <div className="c-layer-toggle__name">{name}</div>

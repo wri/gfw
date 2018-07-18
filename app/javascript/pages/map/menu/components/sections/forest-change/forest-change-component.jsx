@@ -8,21 +8,20 @@ import './forest-change-styles.scss';
 
 class ForestChange extends PureComponent {
   render() {
-    const { data } = this.props;
+    const { data, datasets, layers } = this.props;
+
     return (
       <div className="c-forest-change">
-        {data &&
-          data.map((block, i) => {
-            const { layers } = block;
-            return (
-              <MenuBlock key={`menu-block-forest-${i}`} {...block}>
-                {layers &&
-                  layers.map(layer => (
-                    <LayerToggle key={`toogle-${layer.name}`} data={layer} />
-                  ))}
-              </MenuBlock>
-            );
-          })}
+        {datasets &&
+          datasets.map(d => (
+            // <MenuBlock key={`menu-block-forest-${i}`} {...block}>
+              // {layers &&
+                // layers.map(layer => (
+                  <LayerToggle key={`toogle-${d.name}`} data={d} layers={layers} />
+                // ))}
+            // </MenuBlock>
+          ))
+        }
       </div>
     );
   }

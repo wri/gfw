@@ -11,8 +11,8 @@ import './map-styles.scss';
 
 class Map extends PureComponent {
   render() {
-    const { loading, error, activeLayers, map } = this.props;
-
+    const { loading, error, activeLayers, map, stateLayers } = this.props;
+    console.log('state', stateLayers);
     return (
       <React.Fragment>
         <div id="c-map" className="c-map" />

@@ -7,7 +7,7 @@ import { getSections, getSectionData } from './menu-selectors';
 
 import MenuComponent from './menu-component';
 
-const mapStateToProps = ({ mapMenu }) => {
+const mapStateToProps = ({ mapMenu, datasets }) => {
   const { selectedSection, countries, explore } = mapMenu;
   const selectorsParams = {
     selectedSection,
