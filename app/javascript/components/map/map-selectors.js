@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import createCachedSelector from 're-reselect';
 import flatten from 'lodash/flatten';
 
 import initialState from './map-initial-state';
@@ -14,10 +15,10 @@ export const getMapSettings = createSelector(getMapUrlState, urlState => ({
   ...urlState
 }));
 
-export const getLayers = createSelector(
+export const getLayers = createCachedSelector(
   getMapSettings,
   settings => settings.layers
-);
+)((state, settings) => settings);
 
 export const getLayerGroups = createSelector(
   [getDatasets, getLayers],
