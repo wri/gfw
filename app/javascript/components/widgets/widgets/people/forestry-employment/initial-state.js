@@ -22,7 +22,8 @@ export default {
     }
   },
   settings: {
-    year: 2010
+    year: 2010,
+    unit: ''
   },
   enabled: true
 };
