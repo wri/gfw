@@ -272,7 +272,7 @@ export const getSentence = createSelector(
       lastDate.count <= lastDate.plusStdDev[1] &&
       lastDate.count > lastDate.minusStdDev[0]
     ) {
-      status = 'normal';
+      status = 'average';
       statusColor = colorRange[2];
     } else if (
       lastDate.count >= lastDate.twoMinusStdDev[0] &&
