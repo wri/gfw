@@ -10,11 +10,11 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
   var CONFIG = {
     countriesConfigDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
     countriesConfigTable: 'gfw_countries_config',
-    countriesDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
+    countriesDataset: 'a8dc9474-ba42-4ae3-a7d3-d8df5f1e78df',
     countriesTable: 'gadm36_countries',
-    regionsDataset: '098b33df-6871-4e53-a5ff-b56a7d989f9a',
+    regionsDataset: '8f22dec5-2aea-49d6-8a7b-c494dbb8095c',
     regionsTable: 'gadm36_adm1',
-    subRegionsDataset: 'b3d076cc-b150-4ccb-a93e-eca05d9ac2bf',
+    subRegionsDataset: '7cc6ac21-c8ef-4dd8-a181-8967721a15a4',
     subRegionsTable: 'gadm36_adm2'
   };
 
@@ -35,7 +35,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     getCountriesList:
       "/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable} WHERE iso != 'XCA' AND iso != 'TWN' ORDER BY name",
     showCountry:
-      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, ST_AsGeoJSON(the_geom) AS geojson FROM {countriesTable} WHERE iso='{iso}'",
+      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, ST_AsGeoJSON(ST_Simplify(the_geom,0.1)) AS geojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
       "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, gid_1 as id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN' ORDER BY name_1",
     showRegion:
@@ -203,7 +203,6 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var url = new UriTemplate(APIURL + APIURLS.showRegion).fillFromObject(
             status
           );
-
           this.defineRequest(datasetId, url);
 
           var requestConfig = {
@@ -280,7 +279,6 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var url = new UriTemplate(
             CARTO_API + APIURLS.showSubRegion
           ).fillFromObject(status);
-
           this.defineRequest(datasetId, url);
 
           var requestConfig = {
