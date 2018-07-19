@@ -148,7 +148,22 @@ define(
                   var requestConfig = {
                     resourceId: GET_REQUEST_ID,
                     success: function(response, status) {
-                      resolve(response, status);
+                      var data = {
+                        data: {
+                          attributes: {
+                            areaHa: response.data.attributes.areaHa,
+                            gain: response.data.attributes.gain,
+                            loss:
+                              response.data.attributes.value ||
+                              response.data.attributes.alertCounts,
+                            treeExtent: response.data.attributes.treeExtent,
+                            treeExtent2010:
+                              response.data.attributes.treeExtent2010,
+                            downloadUrls: response.data.attributes.downloadUrls
+                          }
+                        }
+                      };
+                      resolve(data, status);
                     }.bind(this),
                     error: function(errors) {
                       reject(errors);
