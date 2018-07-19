@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 
 import ComposedChart from 'components/charts/composed-chart';
 
-class WidgetGladAlerts extends PureComponent {
+class WidgetAlerts extends PureComponent {
   shouldComponentUpdate = nextProps =>
     nextProps.settings.weeks !== this.props.settings.weeks ||
     nextProps.data !== this.props.data ||
@@ -57,7 +57,7 @@ class WidgetGladAlerts extends PureComponent {
   }
 }
 
-WidgetGladAlerts.propTypes = {
+WidgetAlerts.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   settings: PropTypes.object,
@@ -66,4 +66,4 @@ WidgetGladAlerts.propTypes = {
   active: PropTypes.bool
 };
 
-export default WidgetGladAlerts;
+export default WidgetAlerts;
