@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import debounce from 'lodash/debounce';
 
 import ComposedChart from 'components/charts/composed-chart';
 
-class WidgetAlerts extends PureComponent {
+class WidgetAlerts extends Component {
   shouldComponentUpdate = nextProps =>
     nextProps.settings.weeks !== this.props.settings.weeks ||
     nextProps.data !== this.props.data ||
