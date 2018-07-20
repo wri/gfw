@@ -12,28 +12,30 @@ import {
   getChartConfig
 } from 'components/widgets/components/widget-alerts/selectors-utils';
 
-const MIN_YEAR = 2015;
+const LATEST = '2018-04-01';
 
 // get list data
-const getAlerts = state => (state.data && state.data.alerts) || null;
-const getLatestDates = state => (state.data && state.data.latest) || null;
+const getAlerts = state => state.data || null;
 const getColors = state => state.colors || null;
+const getSettings = state => state.settings || null;
 const getActiveData = state => state.settings.activeData || null;
-const getWeeks = state => (state.settings && state.settings.weeks) || null;
+const getWeeks = state => state.settings.weeks || null;
+const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.config.sentences || null;
 
 export const getData = createSelector(
-  [getAlerts, getLatestDates],
-  (data, latest) => {
+  [getAlerts, getDataset],
+  (data, dataset) => {
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
-    const latestFullWeek = moment(latest).subtract(1, 'weeks');
+    const latestFullWeek = moment(LATEST);
     const lastWeek = {
       isoWeek: latestFullWeek.isoWeek(),
       year: latestFullWeek.year()
     };
-    for (let i = MIN_YEAR; i <= lastWeek.year; i += 1) {
+    const min_year = dataset === 'MODIS' ? 2012 : 2016;
+    for (let i = min_year; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
     const yearLengths = {};
@@ -59,13 +61,10 @@ export const getData = createSelector(
   }
 );
 
-export const getMeans = createSelector(
-  [getData, getLatestDates],
-  (data, latest) => {
-    if (!data) return null;
-    return getMeansData(data, latest);
-  }
-);
+export const getMeans = createSelector([getData], data => {
+  if (!data) return null;
+  return getMeansData(data, LATEST);
+});
 
 export const getStdDev = createSelector(
   [getMeans, getData],
@@ -85,18 +84,13 @@ export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
   return data.slice(-weeks);
 });
 
-export const parseConfig = createSelector(
-  [getColors, getLatestDates],
-  (colors, latest) => {
-    if (!latest) return null;
-
-    return getChartConfig(colors, latest);
-  }
+export const parseConfig = createSelector([getColors], colors =>
+  getChartConfig(colors, LATEST)
 );
 
 export const getSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences],
-  (data, colors, activeData, sentences) => {
+  [parseData, getColors, getActiveData, getSentences, getSettings, getDataset],
+  (data, colors, activeData, sentences, settings, dataset) => {
     if (!data) return null;
     let lastDate = data[data.length - 1];
     if (!isEmpty(activeData)) {
@@ -120,7 +114,7 @@ export const getSentence = createSelector(
       lastDate.count <= lastDate.plusStdDev[1] &&
       lastDate.count > lastDate.minusStdDev[0]
     ) {
-      status = 'normal';
+      status = 'average';
       statusColor = colorRange[2];
     } else if (
       lastDate.count >= lastDate.twoMinusStdDev[0] &&
@@ -132,6 +126,7 @@ export const getSentence = createSelector(
     const date = moment(lastDate.date).format('Do of MMMM YYYY');
     const params = {
       date,
+      dataset,
       count: {
         value: format(',')(lastDate.count),
         color: colors.main

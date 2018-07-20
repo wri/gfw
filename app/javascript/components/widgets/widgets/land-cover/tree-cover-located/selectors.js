@@ -53,7 +53,6 @@ export const getSentence = createSelector(
     parseData,
     getSettings,
     getOptions,
-    getLocation,
     getIndicator,
     getForestType,
     getLandCategory,
@@ -61,11 +60,10 @@ export const getSentence = createSelector(
     getSentences
   ],
   (
-    list,
+    sortedList,
     data,
     settings,
     options,
-    location,
     indicator,
     forestType,
     landCategory,
@@ -95,11 +93,11 @@ export const getSentence = createSelector(
     let percentileExtent = 0;
     let percentileLength = 0;
     while (
-      percentileLength < data.length &&
+      percentileLength < sortedList.length &&
       percentileExtent / totalExtent < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileExtent += list[percentileLength].extent;
+      percentileExtent += sortedList[percentileLength].extent;
       percentileLength += 1;
     }
     const topExtent = percentileExtent / (totalExtent || 0) * 100;
