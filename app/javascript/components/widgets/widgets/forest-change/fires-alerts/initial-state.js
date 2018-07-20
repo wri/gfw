@@ -146,7 +146,6 @@ export default {
       'SVK',
       'URY'
     ],
-    layers: ['viirs_fires_alerts'],
     sortOrder: {
       summary: 100,
       forestChange: 100
@@ -159,8 +158,7 @@ export default {
   settings: {
     period: 'week',
     weeks: 13,
-    dataset: 'VIIRS',
-    layers: ['viirs_fires_alerts'],
+    dataset: 'MODIS',
     layerStartDate: null,
     layerEndDate: null
   },
