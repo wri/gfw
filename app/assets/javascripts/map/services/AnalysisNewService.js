@@ -55,6 +55,7 @@ define(
             useid: status.useid,
             dataset: 'umd-loss-gain',
             geostore: status.geostore || status.useGeostore,
+            wdpaid: status.wdpaid,
             period: status.period,
             thresh: status.threshold,
             gladConfirmOnly: status.gladConfirmOnly
@@ -97,8 +98,10 @@ define(
                                 attributes: {
                                   areaHa: umdResponse.data.attributes.areaHa,
                                   gain: umdResponse.data.attributes.gain,
-                                  loss: response.data.attributes.value,
-                                  alerts: response.data.attributes.alertCounts,
+                                  loss: umdResponse.data.attributes.loss,
+                                  alerts:
+                                    response.data.attributes.value ||
+                                    response.data.attributes.alertCounts,
                                   treeExtent:
                                     umdResponse.data.attributes.treeExtent,
                                   treeExtent2010:
@@ -108,7 +111,6 @@ define(
                                 }
                               }
                             };
-                            console.log(response, umdResponse);
                             resolve(data, status);
                           }.bind(this),
                           error: function(errors) {
