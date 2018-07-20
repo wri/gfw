@@ -86,27 +86,51 @@ define(
                             }
                           }
                         });
+                        console.log('UMD', umdResponse);
+                        console.log('RESPONSE', response);
 
                         var requestConfig = {
                           resourceId: GET_REQUEST_ID,
                           success: function(response, status) {
-                            var data = {
-                              data: {
-                                attributes: {
-                                  areaHa: umdResponse.data.attributes.areaHa,
-                                  gain: umdResponse.data.attributes.gain,
-                                  loss:
-                                    response.data.attributes.value ||
-                                    response.data.attributes.alertCounts,
-                                  treeExtent:
-                                    umdResponse.data.attributes.treeExtent,
-                                  treeExtent2010:
-                                    umdResponse.data.attributes.treeExtent2010,
-                                  downloadUrls:
-                                    response.data.attributes.downloadUrls
+                            var data = {};
+                            if (this.analysis.type === 'country') {
+                              data = {
+                                data: {
+                                  attributes: {
+                                    areaHa:
+                                      response.data.attributes.totals.areaHa,
+                                    gain: response.data.attributes.totals.gain,
+                                    loss: response.data.attributes.totals.loss,
+                                    alerts:
+                                      response.data.attributes.totals
+                                        .gladAlerts,
+                                    treeExtent:
+                                      response.data.attributes.totals
+                                        .extent2000,
+                                    treeExtent2010:
+                                      response.data.attributes.totals.extent2010
+                                  }
                                 }
-                              }
-                            };
+                              };
+                            } else {
+                              data = {
+                                data: {
+                                  attributes: {
+                                    areaHa: response.data.attributes.areaHa,
+                                    gain: response.data.attributes.gain,
+                                    loss: response.data.attributes.value,
+                                    alerts:
+                                      response.data.attributes.alertCounts,
+                                    treeExtent:
+                                      response.data.attributes.treeExtent,
+                                    treeExtent2010:
+                                      response.data.attributes.treeExtent2010,
+                                    downloadUrls:
+                                      response.data.attributes.downloadUrls
+                                  }
+                                }
+                              };
+                            }
                             resolve(data, status);
                           }.bind(this),
                           error: function(errors) {
@@ -148,21 +172,42 @@ define(
                   var requestConfig = {
                     resourceId: GET_REQUEST_ID,
                     success: function(response, status) {
-                      var data = {
-                        data: {
-                          attributes: {
-                            areaHa: response.data.attributes.areaHa,
-                            gain: response.data.attributes.gain,
-                            loss:
-                              response.data.attributes.value ||
-                              response.data.attributes.alertCounts,
-                            treeExtent: response.data.attributes.treeExtent,
-                            treeExtent2010:
-                              response.data.attributes.treeExtent2010,
-                            downloadUrls: response.data.attributes.downloadUrls
+                      var data = {};
+                      if (this.analysis.type === 'country') {
+                        data = {
+                          data: {
+                            attributes: {
+                              areaHa: response.data.attributes.totals.areaHa,
+                              gain: response.data.attributes.totals.gain,
+                              loss: response.data.attributes.totals.loss,
+                              alerts:
+                                response.data.attributes.totals.gladAlerts,
+                              treeExtent:
+                                response.data.attributes.totals.extent2000,
+                              treeExtent2010:
+                                response.data.attributes.totals.extent2010
+                            }
                           }
-                        }
-                      };
+                        };
+                      } else {
+                        console.log('RESPONSE', response);
+                        data = {
+                          data: {
+                            attributes: {
+                              areaHa: response.data.attributes.areaHa,
+                              gain: response.data.attributes.gain,
+                              loss: response.data.attributes.loss,
+                              alerts: response.data.attributes.alertCounts,
+                              treeExtent: response.data.attributes.treeExtent,
+                              treeExtent2010:
+                                response.data.attributes.treeExtent2010,
+                              downloadUrls:
+                                response.data.attributes.downloadUrls
+                            }
+                          }
+                        };
+                      }
+                      console.log('PARSED DATA', data);
                       resolve(data, status);
                     }.bind(this),
                     error: function(errors) {

@@ -171,8 +171,15 @@ define(
         /**
          * Exceptions
          */
-        var results =
-          type == 'country' ? results.totals || results.total : results;
+        if (
+          p.baselayers &&
+          typeof p.baselayers.places_to_watch !== 'undefined' &&
+          type == 'country'
+        ) {
+          p.alerts.totalAlerts = this.roundNumber(results.alerts || 0);
+        }
+        // var results =
+        //   type == 'country' ? results.totals || results.total : results;
         p.areaHa = this.roundNumber(results.areaHa || 0);
         p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
         p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
