@@ -28,7 +28,7 @@ define(
       country:
         '/{dataset}/admin{/country}{/region}{/subRegion}{?period,thresh,gladConfirmOnly}',
       wdpaid: '/{dataset}/wdpa{/wdpaid}{?period,thresh,gladConfirmOnly}',
-      use: '/{dataset}/use{/use}{/useid}{?period,thresh,gladConfirmOnly}',
+      use: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
       'use-geostore': '/{dataset}{?geostore,period,thresh,gladConfirmOnly}'
     };
     var AnalysisService = Class.extend({
@@ -46,11 +46,15 @@ define(
             status.baselayers.indexOf('umd_as_it_happens_cog') > -1 ||
             status.baselayers.indexOf('umd_as_it_happens_idn') > -1 ||
             status.baselayers.indexOf('prodes') > -1) &&
-          status.type === 'draw'
+          (status.type === 'draw' ||
+            status.type === 'use-geostore' ||
+            status.type === 'wdpaid' ||
+            status.type === 'use')
         ) {
-          var umdUrl = UriTemplate(APIURLS['draw']).fillFromObject({
+          var umdUrl = UriTemplate(APIURLS[status.type]).fillFromObject({
+            useid: status.useid,
             dataset: 'umd-loss-gain',
-            geostore: status.geostore,
+            geostore: status.geostore || status.useGeostore,
             period: status.period,
             thresh: status.threshold,
             gladConfirmOnly: status.gladConfirmOnly
@@ -104,6 +108,7 @@ define(
                                 }
                               }
                             };
+                            console.log(response, umdResponse);
                             resolve(data, status);
                           }.bind(this),
                           error: function(errors) {
