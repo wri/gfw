@@ -86,8 +86,6 @@ define(
                             }
                           }
                         });
-                        console.log('UMD', umdResponse);
-                        console.log('RESPONSE', response);
 
                         var requestConfig = {
                           resourceId: GET_REQUEST_ID,
