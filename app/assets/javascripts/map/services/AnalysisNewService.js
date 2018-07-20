@@ -190,14 +190,13 @@ define(
                           }
                         };
                       } else {
-                        console.log('RESPONSE', response);
                         data = {
                           data: {
                             attributes: {
                               areaHa: response.data.attributes.areaHa,
                               gain: response.data.attributes.gain,
                               loss: response.data.attributes.loss,
-                              alerts: response.data.attributes.alertCounts,
+                              alerts: response.data.attributes.value,
                               treeExtent: response.data.attributes.treeExtent,
                               treeExtent2010:
                                 response.data.attributes.treeExtent2010,
@@ -207,7 +206,6 @@ define(
                           }
                         };
                       }
-                      console.log('PARSED DATA', data);
                       resolve(data, status);
                     }.bind(this),
                     error: function(errors) {
