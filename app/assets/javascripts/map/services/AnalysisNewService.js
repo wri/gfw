@@ -28,10 +28,9 @@ define(
       country:
         '/{dataset}/admin{/country}{/region}{/subRegion}{?period,thresh,gladConfirmOnly}',
       wdpaid: '/{dataset}/wdpa{/wdpaid}{?period,thresh,gladConfirmOnly}',
-      use: '/{dataset}/use{/use}{/useid}{?period,thresh,gladConfirmOnly}',
+      use: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
       'use-geostore': '/{dataset}{?geostore,period,thresh,gladConfirmOnly}'
     };
-
     var AnalysisService = Class.extend({
       get: function(status) {
         if (
@@ -47,11 +46,16 @@ define(
             status.baselayers.indexOf('umd_as_it_happens_cog') > -1 ||
             status.baselayers.indexOf('umd_as_it_happens_idn') > -1 ||
             status.baselayers.indexOf('prodes') > -1) &&
-          status.type === 'draw'
+          (status.type === 'draw' ||
+            status.type === 'use-geostore' ||
+            status.type === 'wdpaid' ||
+            status.type === 'use')
         ) {
-          var umdUrl = UriTemplate(APIURLS['draw']).fillFromObject({
+          var umdUrl = UriTemplate(APIURLS[status.type]).fillFromObject({
+            useid: status.useid,
             dataset: 'umd-loss-gain',
-            geostore: status.geostore,
+            geostore: status.geostore || status.useGeostore,
+            wdpaid: status.wdpaid,
             period: status.period,
             thresh: status.threshold,
             gladConfirmOnly: status.gladConfirmOnly
@@ -86,7 +90,6 @@ define(
                             }
                           }
                         });
-
                         var requestConfig = {
                           resourceId: GET_REQUEST_ID,
                           success: function(response, status) {
@@ -95,7 +98,8 @@ define(
                                 attributes: {
                                   areaHa: umdResponse.data.attributes.areaHa,
                                   gain: umdResponse.data.attributes.gain,
-                                  loss:
+                                  loss: umdResponse.data.attributes.loss,
+                                  alerts:
                                     response.data.attributes.value ||
                                     response.data.attributes.alertCounts,
                                   treeExtent:
@@ -148,21 +152,40 @@ define(
                   var requestConfig = {
                     resourceId: GET_REQUEST_ID,
                     success: function(response, status) {
-                      var data = {
-                        data: {
-                          attributes: {
-                            areaHa: response.data.attributes.areaHa,
-                            gain: response.data.attributes.gain,
-                            loss:
-                              response.data.attributes.value ||
-                              response.data.attributes.alertCounts,
-                            treeExtent: response.data.attributes.treeExtent,
-                            treeExtent2010:
-                              response.data.attributes.treeExtent2010,
-                            downloadUrls: response.data.attributes.downloadUrls
+                      var data = {};
+                      if (this.analysis.type === 'country') {
+                        data = {
+                          data: {
+                            attributes: {
+                              areaHa: response.data.attributes.totals.areaHa,
+                              gain: response.data.attributes.totals.gain,
+                              loss: response.data.attributes.totals.loss,
+                              alerts:
+                                response.data.attributes.totals.gladAlerts,
+                              treeExtent:
+                                response.data.attributes.totals.extent2000,
+                              treeExtent2010:
+                                response.data.attributes.totals.extent2010
+                            }
                           }
-                        }
-                      };
+                        };
+                      } else {
+                        data = {
+                          data: {
+                            attributes: {
+                              areaHa: response.data.attributes.areaHa,
+                              gain: response.data.attributes.gain,
+                              loss: response.data.attributes.loss,
+                              alerts: response.data.attributes.value,
+                              treeExtent: response.data.attributes.treeExtent,
+                              treeExtent2010:
+                                response.data.attributes.treeExtent2010,
+                              downloadUrls:
+                                response.data.attributes.downloadUrls
+                            }
+                          }
+                        };
+                      }
                       resolve(data, status);
                     }.bind(this),
                     error: function(errors) {
