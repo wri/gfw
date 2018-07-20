@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
+import CountryDataProvider from 'providers/country-data-provider';
+import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LayerSpecProvider from 'providers/layerspec-provider';
 
@@ -17,6 +20,8 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   render() {
+    const { analysis } = this.props;
+
     return (
       <div className="l-map">
         <Map />
@@ -30,11 +35,17 @@ class Page extends PureComponent {
         <DataAnalysisMenu className="data-analysis-menu" />
         <Share />
         <ModalMeta />
+        <CountryDataProvider location={analysis.location} />
+        <WhitelistsProvider />
         <DatasetsProvider />
         <LayerSpecProvider />
       </div>
     );
   }
 }
+
+Page.propTypes = {
+  analysis: PropTypes.object
+};
 
 export default Page;
