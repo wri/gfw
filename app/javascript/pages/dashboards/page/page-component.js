@@ -93,7 +93,7 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        <CountryDataProvider />
+        <CountryDataProvider location={payload} />
         <WhitelistsProvider />
         <LayerSpecProvider />
         <DatasetsProvider />

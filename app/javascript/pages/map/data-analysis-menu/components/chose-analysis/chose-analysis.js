@@ -5,7 +5,7 @@ import actions from 'pages/map/data-analysis-menu/actions';
 import Component from './chose-analysis-component';
 
 const mapStateToProps = ({ countryData, dataAnalysis }) => ({
-  countries: countryData.countries,
+  countryData,
   location: dataAnalysis.analysis.location
 });
 

@@ -19,7 +19,7 @@ class Embed extends PureComponent {
         </div>
         <Share />
         <ModalMeta />
-        <CountryDataProvider />
+        <CountryDataProvider location={payload} />
         <WhitelistsProvider />
       </div>
     );
