@@ -129,7 +129,8 @@ class WidgetSettings extends PureComponent {
       extentYears ||
       datasets ||
       types ||
-      weeks;
+      weeks ||
+      datasets;
 
     return (
       <div className="c-widget-settings">
@@ -218,6 +219,18 @@ class WidgetSettings extends PureComponent {
                   });
                 }}
                 infoAction={() => setModalMeta('widget_tree_cover_extent')}
+              />
+            )}
+            {datasets && (
+              <Dropdown
+                theme="theme-select-light"
+                label="FIRES DATASET"
+                value={settings.dataset}
+                options={datasets}
+                disabled={loading}
+                onChange={option =>
+                  onSettingsChange({ value: { dataset: option.value }, widget })
+                }
               />
             )}
             {weeks && (
@@ -325,6 +338,7 @@ class WidgetSettings extends PureComponent {
 WidgetSettings.propTypes = {
   forestTypes: PropTypes.array,
   landCategories: PropTypes.array,
+  datasets: PropTypes.array,
   thresholds: PropTypes.array,
   units: PropTypes.array,
   periods: PropTypes.array,
