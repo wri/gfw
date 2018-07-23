@@ -39,6 +39,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'us_land_cover_change',
       'colombia_forest_change',
       'intact_forest',
+      'primary_forest',
       'pantropical',
       'idn_primary',
       'ifl_2013_deg',
