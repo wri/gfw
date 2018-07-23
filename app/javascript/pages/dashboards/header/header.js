@@ -55,7 +55,7 @@ const mapStateToProps = (
       socialText: `${(locationNames &&
         locationNames.country &&
         `${locationNames.country.label}'s`) ||
-        upperFirst(location.payload.type)} dashboard`
+        upperFirst(location.type)} dashboard`
     },
     widgets,
     sentence: getSentence({ locationNames, ...header }),
