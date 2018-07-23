@@ -3,18 +3,23 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
+import { getSectionData } from 'pages/map/menu/menu-selectors';
 import { getActiveLayers } from './selectors';
 import actions from './actions';
 import reducers, { initialState } from './reducers';
 
 import Component from './component';
 
-const mapStateToProps = ({ location, datasets, dataAnalysis }) => ({
-  layerGroups: getActiveLayers({ datasets: datasets.data }),
-  activeTab: location.payload.tab,
-  legendLoading: datasets.loading,
-  analysis: dataAnalysis.analysis
-});
+const mapStateToProps = ({ location, datasets, dataAnalysis, mapMenu }) => {
+  const { selectedSection } = mapMenu;
+  return {
+    layerGroups: getActiveLayers({ datasets: datasets.data }),
+    activeTab: location.payload.tab,
+    legendLoading: datasets.loading,
+    analysis: dataAnalysis.analysis,
+    menuSectionData: getSectionData({ selectedSection })
+  };
+};
 
 class DataAnalysisMenuContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {

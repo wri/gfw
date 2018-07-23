@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import upperFirst from 'lodash/upperFirst';
 
 import { COUNTRY } from 'pages/dashboards/router';
 import { deburrUpper } from 'utils/data';
@@ -50,7 +51,11 @@ const mapStateToProps = (
     locationOptions,
     shareData: {
       title: 'Share this Dashboard',
-      shareUrl: `${window.location.href}`
+      shareUrl: `${window.location.href}`,
+      socialText: `${(locationNames &&
+        locationNames.country &&
+        `${locationNames.country.label}'s`) ||
+        upperFirst(location.payload.type)} dashboard`
     },
     widgets,
     sentence: getSentence({ locationNames, ...header }),

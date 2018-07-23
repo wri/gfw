@@ -40,6 +40,19 @@
       "Mosaic of medium-sized plantations": "#d5a6ea",
       "Mosaic of small-sized plantations": "#a6d19f",
       "Clearing/ very young plantation": "#d5b7a0"
+    },
+    "categories": {
+      "Other": "#000000",
+      "Agriculture": "#D2A965",
+      "Forest": "#157764",
+      "Shrubland": "#596B2C",
+      "Grassland": "#CCDB98",
+      "Sparse vegetation": "#D5C998",
+      "Wetland": "#2789D4",
+      "Settlement": "#E9462B",
+      "Bare": "#F6F0EA",
+      "Water": "#A3DCFF",
+      "Permanent Snow and Ice": "#e0e0e0"
     }
   },
   "emissions": {
@@ -47,7 +60,8 @@
     "ramp": ["#073452", "#204665", "#345978", "#476c8c", "#5b80a0", "#799ab7", "#97b4cf", "#b5cfe7", "#d4ebff"]
   },
   "fires": {
-    "main": "#f14600"
+    "main": "#f14600",
+    "ramp": ["#B32100", "#C32B00", "#D33400", "#E23D00", "#f14600", "#f35e00", "#f57205", "#f68513", "#f79622"]
   },
   "employment": {
     "main": "#A878F3",

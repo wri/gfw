@@ -140,6 +140,14 @@ export const getWeeks = createSelector(
   }
 );
 
+export const getDatasets = createSelector(
+  [getConfig, getOptions],
+  (config, options) => {
+    if (!config || !config.datasets) return options.datasets;
+    return options.datasets.filter(w => config.datasets.indexOf(w.value) > -1);
+  }
+);
+
 export const getRangeYears = createSelector(
   [getData, getConfig],
   (data, config) => {

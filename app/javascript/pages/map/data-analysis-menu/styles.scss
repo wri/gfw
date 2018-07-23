@@ -6,6 +6,15 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
   background: $white;
   z-index: 12;
+  transition: transform 0.3s linear;
+
+  &.-relocate {
+    transform: translateX(292px);
+  }
+
+  &.-relocate-big {
+    transform: translateX(552px);
+  }
 
   .legend {
     position: relative;

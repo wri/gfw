@@ -94,11 +94,11 @@ export const getSentence = createSelector(
     let percentileLength = 0;
 
     while (
-      percentileLength < data.length &&
+      percentileLength < sortedData.length &&
       percentileGain / totalGain < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileGain += data[percentileLength].gain;
+      percentileGain += sortedData[percentileLength].gain;
       percentileLength += 1;
     }
 

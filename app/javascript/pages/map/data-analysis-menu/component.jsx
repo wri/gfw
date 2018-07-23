@@ -19,7 +19,8 @@ class DataAnalysisMenu extends PureComponent {
       activeTab = 'data',
       layerGroups,
       legendLoading,
-      analysis
+      analysis,
+      menuSectionData
     } = this.props;
     const links = [
       {
@@ -35,9 +36,14 @@ class DataAnalysisMenu extends PureComponent {
         active: activeTab === 'analysis'
       }
     ];
+    const relocateClass = menuSectionData
+      ? `-relocate${menuSectionData.bigFlap ? '-big' : ''}`
+      : '';
 
     return (
-      <div className={`c-data-analysis-menu ${className || ''}`}>
+      <div
+        className={`c-data-analysis-menu ${className || ''} ${relocateClass}`}
+      >
         <SubNavMenu
           className="nav"
           theme="theme-subnav-plain"
@@ -77,7 +83,8 @@ DataAnalysisMenu.propTypes = {
   activeTab: PropTypes.string,
   className: PropTypes.string,
   legendLoading: PropTypes.bool,
-  analysis: PropTypes.object
+  analysis: PropTypes.object,
+  menuSectionData: PropTypes.object
 };
 
 export default DataAnalysisMenu;

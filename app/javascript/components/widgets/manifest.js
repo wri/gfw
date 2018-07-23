@@ -7,11 +7,13 @@ import * as primaryForest from './widgets/land-cover/primary-forest';
 import * as faoCover from './widgets/land-cover/fao-cover';
 import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantations';
 import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
+import * as globalLandCover from './widgets/land-cover/global-land-cover';
 
 // Forest change
 import * as gladAlerts from './widgets/forest-change/glad-alerts';
 import * as gladRanked from './widgets/forest-change/glad-ranked';
 import * as fires from './widgets/forest-change/fires';
+import * as firesAlerts from './widgets/forest-change/fires-alerts';
 import * as treeLossLocated from './widgets/forest-change/tree-loss-located';
 import * as treeCoverGain from './widgets/forest-change/tree-cover-gain';
 import * as treeGainLocated from './widgets/forest-change/tree-gain-located';
@@ -43,10 +45,12 @@ export {
   faoCover,
   treeCoverPlantations,
   rankedPlantations,
+  globalLandCover,
   // forest change
   gladAlerts,
   gladRanked,
   fires,
+  firesAlerts,
   treeLossLocated,
   treeCoverGain,
   treeGainLocated,

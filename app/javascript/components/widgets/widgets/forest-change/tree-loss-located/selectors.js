@@ -93,9 +93,10 @@ export const getSentence = createSelector(
       percentileLoss / totalLoss < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileLoss += data[percentileLength].loss;
+      percentileLoss += sortedData[percentileLength].loss;
       percentileLength += 1;
     }
+
     const topLoss = percentileLoss / totalLoss * 100 || 0;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
 
