@@ -167,7 +167,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'mangrove_2',
       'guyra',
       'terrailoss',
-      'viirs_fires_alerts',
       'imazon',
       'peru_forma_250',
       'brazil_forma_250',
@@ -188,7 +187,8 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'forma_activity',
       'oil_palm',
       'oil_palm_mills',
-      'dam_hotspots'
+      'dam_hotspots',
+      'viirs_fires_alerts'
     ],
 
     categoryOrder: [
