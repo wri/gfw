@@ -149,7 +149,7 @@ define(
 
         // Alerts
         p.alerts = {};
-        p.alerts.totalAlerts = this.roundNumber(results.value || 0);
+        p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
 
         // Options
         p.options = {};
@@ -171,10 +171,13 @@ define(
         /**
          * Exceptions
          */
-        var results =
-          type == 'country' ? results.totals || results.total : results;
+        // If glads enpoint; api response schema is different!
+        p.alerts.totalAlerts =
+          p.baselayers && typeof p.baselayers.umd_as_it_happens !== 'undefined'
+            ? this.roundNumber(results.alerts || 0)
+            : this.roundNumber(results.loss || 0);
+
         p.areaHa = this.roundNumber(results.areaHa || 0);
-        p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
         p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
         p.alerts.treeExtent = this.roundNumber(
           results.extent2000 || results.treeExtent || 0
@@ -208,9 +211,8 @@ define(
         }
 
         if (p.slug === 'forma250GFW') {
-          p.alerts.totalAlerts = this.roundNumber(results.alertCounts || 0);
+          p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
         }
-
         return p;
       },
 

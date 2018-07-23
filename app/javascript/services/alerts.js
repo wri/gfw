@@ -5,10 +5,15 @@ const REQUEST_URL = process.env.GFW_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
 const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
+const FIRES_ISO_DATASET = process.env.FIRES_ISO_DATASET;
+const FIRES_ADM1_DATASET = process.env.FIRES_ADM1_DATASET;
+const FIRES_ADM2_DATASET = process.env.FIRES_ADM2_DATASET;
 
 const QUERIES = {
   gladIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
+  firesIntersectionAlerts:
+    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   viirsAlerts:
     '{location}?group=true&period={period}&thresh=0&geostore={geostore}'
 };
@@ -53,6 +58,22 @@ export const fetchGladIntersectionAlerts = ({
 export const fetchGLADLatest = () => {
   const url = `${REQUEST_URL}/glad-alerts/latest`;
   return request.get(url, 3600, 'gladRequest');
+};
+
+export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
+  let fires_summary_table = FIRES_ISO_DATASET;
+  if (subRegion) {
+    fires_summary_table = FIRES_ADM2_DATASET;
+  } else if (region) {
+    fires_summary_table = FIRES_ADM1_DATASET;
+  }
+  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
+    QUERIES.firesIntersectionAlerts
+  }`
+    .replace('{location}', getLocation(country, region, subRegion))
+    .replace('{polyname}', 'admin')
+    .replace('{dataset}', dataset);
+  return request.get(url, 3600, 'firesRequest');
 };
 
 export const fetchViirsAlerts = ({
