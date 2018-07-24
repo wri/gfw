@@ -12,6 +12,7 @@ export default {
     metaKey: 'widget_fire_alert_location',
     interactive: true,
     locationWhitelist: [
+      'IDN',
       'CMR',
       'GAB',
       'COG',
