@@ -13,6 +13,12 @@ export default {
     interactive: true,
     locationWhitelist: [
       'IDN',
+      'MEX',
+      'AUS',
+      'THA',
+      'MMR',
+      'KHM',
+      'MWI',
       'CMR',
       'GAB',
       'COG',
