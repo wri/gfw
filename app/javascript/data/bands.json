@@ -1,0 +1,10 @@
+[
+  {
+    "label": "Natural color",
+    "value": 0
+  },
+  {
+    "label": "Vegetation Health",
+    "value": "[\"B11\",\"B8\",\"B4\"]"
+  }
+]

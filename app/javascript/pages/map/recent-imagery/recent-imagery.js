@@ -100,13 +100,15 @@ class RecentImageryContainer extends PureComponent {
     if (
       (active && active !== this.props.active) ||
       !isEqual(settings.date, this.props.settings.date) ||
-      !isEqual(settings.weeks, this.props.settings.weeks)
+      !isEqual(settings.weeks, this.props.settings.weeks) ||
+      !isEqual(settings.bands, this.props.settings.bands)
     ) {
       getData({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
         start: dates.start,
-        end: dates.end
+        end: dates.end,
+        bands: settings.bands
       });
     }
     if (!active && active !== this.props.active) {
@@ -142,7 +144,7 @@ class RecentImageryContainer extends PureComponent {
     const { map } = this.middleView;
 
     this.mapIdleEvent = map.addListener('idle', () => {
-      const { visible, dates, getData } = this.props;
+      const { visible, dates, settings, getData } = this.props;
       if (visible) {
         const needNewTile = !google.maps.geometry.poly.containsLocation(
           map.getCenter(),
@@ -153,7 +155,8 @@ class RecentImageryContainer extends PureComponent {
             latitude: map.getCenter().lng(),
             longitude: map.getCenter().lat(),
             start: dates.start,
-            end: dates.end
+            end: dates.end,
+            bands: settings.bands
           });
         }
       }
