@@ -19,6 +19,7 @@ define(
     'map/views/layers/IntactForestLayer',
     'map/views/layers/IntactForestLayer2000',
     'map/views/layers/IntactForestLayer2013',
+    'map/views/layers/PrimaryForestLayer',
     'map/views/layers/PantropicalLayer',
     'map/views/layers/IdnPrimaryLayer',
     'map/views/layers/LoggingLayer',
@@ -207,6 +208,7 @@ define(
     IntactForestLayer,
     IntactForestLayer2000,
     IntactForestLayer2013,
+    PrimaryForestLayer,
     PantropicalLayer,
     IdnPrimaryLayer,
     LoggingLayer,
@@ -425,6 +427,9 @@ define(
       },
       ifl_2013_deg: {
         view: IntactForestLayer2013
+      },
+      primary_forest: {
+        view: PrimaryForestLayer
       },
       pantropical: {
         view: PantropicalLayer
