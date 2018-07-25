@@ -5,8 +5,8 @@ const REQUEST_URL = `${process.env.GFW_API}`;
 const QUERIES = {
   recentTiles:
     '/recent-tiles?lat={latitude}&lon={longitude}&start={start}&end={end}&bands={bands}',
-  tiles: '/recent-tiles/tiles',
-  thumbs: '/recent-tiles/thumbs'
+  tiles: '/recent-tiles/tiles?bands={bands}',
+  thumbs: '/recent-tiles/thumbs?bands={bands}'
 };
 
 export const getRecentTiles = ({
@@ -26,14 +26,17 @@ export const getRecentTiles = ({
   return axios.get(url, { cancelToken: token });
 };
 
-export const getTiles = ({ sources, token }) =>
-  axios.post(`${REQUEST_URL}${QUERIES.tiles}`, {
+export const getTiles = ({ sources, token, bands }) =>
+  axios.post(`${REQUEST_URL}${QUERIES.tiles}`.replace('{bands}', bands || ''), {
     source_data: sources,
     cancelToken: token
   });
 
-export const getThumbs = ({ sources, token }) =>
-  axios.post(`${REQUEST_URL}${QUERIES.thumbs}`, {
-    source_data: sources,
-    cancelToken: token
-  });
+export const getThumbs = ({ sources, token, bands }) =>
+  axios.post(
+    `${REQUEST_URL}${QUERIES.thumbs}`.replace('{bands}', bands || ''),
+    {
+      source_data: sources,
+      cancelToken: token
+    }
+  );

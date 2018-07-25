@@ -5,6 +5,6 @@
   },
   {
     "label": "Vegetation Health",
-    "value": "[\"B11\",\"B8\",\"B4\"]"
+    "value": "[B11,B8,B4]"
   }
 ]

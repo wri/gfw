@@ -136,7 +136,7 @@ class RecentImageryContainer extends PureComponent {
         dataStatus.requestFails !== this.props.dataStatus.requestFails ||
         isNewTile)
     ) {
-      getMoreTiles({ sources, dataStatus });
+      getMoreTiles({ sources, dataStatus, bands: settings.bands });
     }
   }
 
