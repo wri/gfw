@@ -27,7 +27,7 @@ export const getData = createSelector(
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
-    const latestFullWeek = moment().subtract(5, 'w');
+    const latestFullWeek = moment().subtract(2, 'w');
     const lastWeek = {
       isoWeek: latestFullWeek.isoWeek(),
       year: latestFullWeek.year()
@@ -64,7 +64,7 @@ export const getMeans = createSelector([getData], data => {
   return getMeansData(
     data,
     moment()
-      .subtract(5, 'w')
+      .subtract(2, 'w')
       .format('YYYY-MM-DD')
   );
 });
@@ -91,7 +91,7 @@ export const parseConfig = createSelector([getColors], colors =>
   getChartConfig(
     colors,
     moment()
-      .subtract(5, 'w')
+      .subtract(2, 'w')
       .format('YYYY-MM-DD')
   )
 );
