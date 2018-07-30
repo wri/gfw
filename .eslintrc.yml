@@ -38,6 +38,7 @@ rules:
   react/sort-comp: 0
   react/no-find-dom-node: 0
   react/no-array-index-key: 0
+  react/no-danger: 0
   camelcase: 0
   no-mixed-operators: 0
   class-methods-use-this: 0

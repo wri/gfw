@@ -35,6 +35,7 @@ class Page extends PureComponent {
       activeWidget,
       widgets,
       title,
+      payload,
       query
     } = this.props;
 
@@ -50,7 +51,12 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header className="header" widgets={widgets} query={query} />
+          <Header
+            className="header"
+            widgets={widgets}
+            location={payload}
+            query={query}
+          />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
@@ -61,6 +67,8 @@ class Page extends PureComponent {
             widgets={widgets}
             activeWidget={activeWidget}
             setShowMapMobile={setShowMapMobile}
+            location={payload}
+            query={query}
           />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
@@ -85,7 +93,7 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        <CountryDataProvider />
+        <CountryDataProvider location={payload} />
         <WhitelistsProvider />
         <LayerSpecProvider />
         <DatasetsProvider />
@@ -108,6 +116,7 @@ Page.propTypes = {
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeWidget: PropTypes.string,
   title: PropTypes.string,
+  payload: PropTypes.object,
   query: PropTypes.object
 };
 

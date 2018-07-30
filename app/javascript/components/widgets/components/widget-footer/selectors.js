@@ -8,7 +8,7 @@ const getNonGlobalDatasets = state => state.nonGlobalDatasets || null;
 const getIndicator = state => state.indicator || null;
 const getForestType = state => state.forestType || null;
 const getLandCategory = state => state.landCategory || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 
 export const getNonGlobalIndicator = createSelector(
   [

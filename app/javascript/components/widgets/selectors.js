@@ -13,13 +13,14 @@ import periods from 'data/periods.json';
 import extentYears from 'data/extent-years.json';
 import types from 'data/types.json';
 import weeks from 'data/weeks.json';
+import datasets from 'data/datasets.json';
 
 import * as WIDGETS from 'components/widgets/manifest';
 
 // get list data
 const getCountryData = state => state.countryData || null;
 const getCategory = state => state.category || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getWhitelist = state => state.whitelist || null;
 const getWidgetQuery = state => state.activeWidget || null;
 const getCountries = state => state.countries || null;
@@ -35,7 +36,8 @@ const options = {
   periods,
   extentYears,
   types,
-  weeks
+  weeks,
+  datasets
 };
 
 export const getOptions = () => {

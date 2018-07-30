@@ -13,10 +13,10 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
-  (state.payload.region ? state.subRegions : state.regions) || null;
+  (state.location.region ? state.subRegions : state.regions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
@@ -94,11 +94,11 @@ export const getSentence = createSelector(
     let percentileLength = 0;
 
     while (
-      percentileLength < data.length &&
+      percentileLength < sortedData.length &&
       percentileGain / totalGain < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileGain += data[percentileLength].gain;
+      percentileGain += sortedData[percentileLength].gain;
       percentileLength += 1;
     }
 

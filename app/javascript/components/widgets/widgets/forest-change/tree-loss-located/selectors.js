@@ -13,10 +13,10 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
-  (state.payload.region ? state.subRegions : state.regions) || null;
+  (state.location.region ? state.subRegions : state.regions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -93,9 +93,10 @@ export const getSentence = createSelector(
       percentileLoss / totalLoss < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileLoss += data[percentileLength].loss;
+      percentileLoss += sortedData[percentileLength].loss;
       percentileLength += 1;
     }
+
     const topLoss = percentileLoss / totalLoss * 100 || 0;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
 

@@ -25,21 +25,8 @@
     position: relative;
     width: 100%;
     min-height: rem(200px);
+    max-height: 70vh;
+    overflow: auto;
     background: $white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .c-widget {
-      &:not(:last-child)::before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: calc(100% - #{rem(20px)});
-        height: rem(1px);
-        background-color: rgba($hot-grey, 0.3);
-      }
-    }
   }
 }

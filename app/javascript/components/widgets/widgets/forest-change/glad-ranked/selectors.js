@@ -15,10 +15,10 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
-  (!state.payload.region ? state.regions : state.subRegions) || null;
+  (!state.location.region ? state.regions : state.subRegions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
@@ -94,32 +94,22 @@ export const getSentence = createSelector(
     parseList,
     getSettings,
     getOptions,
-    getLocation,
     getIndicator,
     getCurrentLocation,
     getSentences
   ],
-  (
-    data,
-    list,
-    settings,
-    options,
-    location,
-    indicator,
-    currentLabel,
-    sentences
-  ) => {
+  (data, sortedList, settings, options, indicator, currentLabel, sentences) => {
     if (!data || !options || !currentLabel) return '';
     const { initial, withInd } = sentences;
     const totalCount = sumBy(data, 'count');
     let percentileCount = 0;
     let percentileLength = 0;
     while (
-      percentileLength < list.length &&
+      percentileLength < sortedList.length &&
       percentileCount / totalCount < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileCount += list[percentileLength].count;
+      percentileCount += sortedList[percentileLength].count;
       percentileLength += 1;
     }
     const topCount = percentileCount / totalCount * 100;

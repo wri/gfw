@@ -12,7 +12,7 @@ const getOptions = state => state.options || null;
 const getConfig = state => state.config || null;
 const getSettings = state => state.settings || null;
 const getUrlState = state => state.urlState || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getWhitelist = state => state.whitelist || null;
 const getForestType = state => state.forestType || null;
 const getLandCategory = state => state.landCategory || null;
@@ -137,6 +137,14 @@ export const getWeeks = createSelector(
   (config, options) => {
     if (!config || !config.weeks) return options.weeks;
     return options.weeks.filter(w => config.weeks.indexOf(w.value) > -1);
+  }
+);
+
+export const getDatasets = createSelector(
+  [getConfig, getOptions],
+  (config, options) => {
+    if (!config || !config.datasets) return options.datasets;
+    return options.datasets.filter(w => config.datasets.indexOf(w.value) > -1);
   }
 );
 

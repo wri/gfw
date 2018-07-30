@@ -1,7 +1,8 @@
 @import '~styles/settings';
 
 .c-polygon-analysis {
-  padding: rem(20px);
+  width: 100%;
+  padding: rem(18px) rem(20px) rem(20px) rem(20px);
 
   &__title {
     font-size: 14px;
@@ -20,26 +21,43 @@
     }
   }
 
-  &__chooser-title {
-    font-size: 21px;
-    text-align: center;
-    margin-bottom: rem(10px);
+  &__stats {
+    padding-top: rem(4px);
   }
 
-  &__chooser-input {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 rem(10px);
-    height: rem(40px);
-    border: 1px dashed $green-gfw;
-    border-radius: 40px;
-    font-size: 13px;
-    cursor: pointer;
-  }
+  &__stat {
+    padding-top: rem(17px);
 
-  &__chooser-separator {
-    padding: rem(10px) 0;
-    text-align: center;
+    &__title {
+      margin-bottom: 3px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: $warm-grey;
+
+      small {
+        font-size: 9px;
+        font-weight: normal;
+        text-transform: lowercase;
+      }
+    }
+
+    &__value {
+      font-size: 15px;
+      font-weight: 500;
+      color: $slate;
+    }
+
+    &.c-polygon-analysis__stat--loss &__value {
+      color: $loss;
+    }
+
+    &.c-polygon-analysis__stat--gain &__value {
+      color: $gain;
+    }
+
+    &.c-polygon-analysis__stat--extent &__value {
+      color: $extent;
+    }
   }
 }

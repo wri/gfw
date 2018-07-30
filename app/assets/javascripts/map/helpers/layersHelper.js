@@ -28,6 +28,7 @@ define(
     'map/views/layers/CodLoggingLayer',
     'map/views/layers/GabLoggingLayer',
     'map/views/layers/GnqLoggingLayer',
+    'map/views/layers/IdnLandCoverLayer',
     'map/views/layers/IdnForestArea',
     'map/views/layers/IdnLoggingLayer',
     'map/views/layers/LbrLoggingLayer',
@@ -215,6 +216,7 @@ define(
     CodLoggingLayer,
     GabLoggingLayer,
     GnqLoggingLayer,
+    IdnLandCoverLayer,
     IdnForestArea,
     IdnLoggingLayer,
     LbrLoggingLayer,
@@ -450,6 +452,9 @@ define(
       },
       gnq_logging: {
         view: GnqLoggingLayer
+      },
+      idn_land_cover: {
+        view: IdnLandCoverLayer
       },
       idn_forest_area: {
         view: IdnForestArea

@@ -10,7 +10,7 @@ import { getAdminPath } from '../../../utils';
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
 const getLocationsMeta = state =>
   state[state.adminKey] || state.countries || null;
@@ -21,6 +21,9 @@ const getCurrentLabel = state => state.currentLabel || null;
 const getAdminLevel = state => state.adminLevel || null;
 const getSentences = state => state.config.sentences || null;
 const getParentLocation = state => state[state.parentLevel] || null;
+
+const haveData = (data, currentLocation) =>
+  data.filter(item => item.id === currentLocation.value).length;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -44,11 +47,26 @@ export const parseData = createSelector(
     getLocation,
     getQuery,
     getCurrentLocation,
+    getCurrentLabel,
     getLocationsMeta,
     getColors
   ],
-  (data, settings, location, query, currentLocation, meta, colors) => {
-    if (!data || !data.length) return null;
+  (
+    data,
+    settings,
+    location,
+    query,
+    currentLocation,
+    currentLabel,
+    meta,
+    colors
+  ) => {
+    if (
+      !data ||
+      !data.length ||
+      (currentLabel !== 'global' && !haveData(data, currentLocation))
+    ) { return null; }
+
     let dataTrimmed = [];
     data.forEach(d => {
       const locationMeta = meta && meta.find(l => d.id === l.value);
@@ -113,7 +131,11 @@ export const getSentence = createSelector(
     parent,
     adminLevel
   ) => {
-    if (!data || !data.length) return null;
+    if (
+      !data ||
+      !data.length ||
+      (currentLabel !== 'global' && !haveData(data, currentLocation))
+    ) { return null; }
     const {
       initial,
       withIndicator,
