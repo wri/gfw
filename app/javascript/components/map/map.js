@@ -1,12 +1,10 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import MapComponent from './map-component';
 import actions from './map-actions';
 import { getMapProps } from './map-selectors';
-
-const L = window.L;
 
 const mapStateToProps = (
   { countryData, widgets, location, datasets },
@@ -26,37 +24,9 @@ const mapStateToProps = (
 };
 
 class MapContainer extends PureComponent {
-  componentDidMount() {
-    this.initMap();
-    this.initBasemap();
-  }
-
-  initMap = () => {
-    this.map = L.map('c-map', {
-      ...this.props
-    }).setView([27, 12], 3);
-  };
-
-  initBasemap = () => {
-    const { tileLayer, labelLayer, maxZoom, attribution } = this.props;
-
-    L.tileLayer(tileLayer, {
-      maxZoom,
-      attribution
-    }).addTo(this.map);
-
-    L.tileLayer(labelLayer, {
-      maxZoom,
-      attribution
-    })
-      .addTo(this.map)
-      .setZIndex(1001);
-  };
-
   render() {
     return createElement(MapComponent, {
-      ...this.props,
-      map: this.map
+      ...this.props
     });
   }
   // missing fit to bound from geostore, reset map, area highlight
@@ -73,13 +43,6 @@ MapContainer.defaultProps = {
   minZoom: 2,
   attribution:
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-};
-
-MapContainer.propTypes = {
-  tileLayer: PropTypes.string,
-  labelLayer: PropTypes.string,
-  maxZoom: PropTypes.number,
-  attribution: PropTypes.string
 };
 
 export { actions };

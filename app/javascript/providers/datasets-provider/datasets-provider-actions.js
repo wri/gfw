@@ -18,7 +18,8 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
       if (!Array.isArray(datasets)) {
         datasets = [datasets];
       }
-      datasets = datasets.map(d => ({
+
+      datasets = datasets.filter(d => d.layer.length).map(d => ({
         ...d,
         dataset: d.id,
         layer: d.layer.map(l => ({

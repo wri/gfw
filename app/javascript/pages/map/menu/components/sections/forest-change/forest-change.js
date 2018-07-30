@@ -6,7 +6,7 @@ import { getParsedDatasets } from './forest-change-selectors';
 
 import ForestChangeComponent from './forest-change-component';
 
-const mapStateToProps = ({ datasets }) => ({
+const mapStateToProps = ({ datasets, location }) => ({
   datasets: getParsedDatasets({ ...datasets }),
   layers: getLayers({ ...location })
 });

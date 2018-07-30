@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
+import { Map } from 'wri-api-components';
 
 import { LayerManager, Layer } from 'layer-manager/dist/react';
 import { PluginLeaflet } from 'layer-manager';
@@ -9,18 +10,20 @@ import NoContent from 'components/ui/no-content';
 
 import './map-styles.scss';
 
-class Map extends PureComponent {
+class MapComponent extends PureComponent {
   render() {
-    const { loading, error, activeLayers, map, stateLayers } = this.props;
-    console.log('state', stateLayers);
+    const { loading, error, activeLayers } = this.props;
+
     return (
       <React.Fragment>
-        <div id="c-map" className="c-map" />
-        {map && (
-          <LayerManager map={map} plugin={PluginLeaflet}>
-            {activeLayers && activeLayers.map(l => <Layer key={l.id} {...l} />)}
-          </LayerManager>
-        )}
+        <Map>
+          {map => (
+            <LayerManager map={map} plugin={PluginLeaflet}>
+              {activeLayers &&
+                activeLayers.map(l => <Layer key={l.id} {...l} />)}
+            </LayerManager>
+          )}
+        </Map>
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
@@ -33,12 +36,11 @@ class Map extends PureComponent {
   }
 }
 
-Map.propTypes = {
+MapComponent.propTypes = {
   loading: Proptypes.bool,
   activeLayers: Proptypes.array,
   error: Proptypes.bool,
-  miniLegend: Proptypes.bool,
   map: Proptypes.object
 };
 
-export default Map;
+export default MapComponent;
