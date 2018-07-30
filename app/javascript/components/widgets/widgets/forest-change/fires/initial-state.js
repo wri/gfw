@@ -14,12 +14,12 @@ export default {
       forestChange: 11
     },
     sentences: {
-      initial: '{count} active fires detected in {location} in the last 7 days.'
+      initial: '{count} active fires detected in {location} in the last 6 days.'
     }
   },
   settings: {
-    period: 'week',
-    periodValue: 1,
+    period: 'days',
+    periodValue: 6,
     layers: ['viirs_fires_alerts']
   },
   enabled: true,
