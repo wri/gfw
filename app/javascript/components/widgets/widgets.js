@@ -14,11 +14,8 @@ import {
   getAdminKey
 } from './selectors';
 
-const mapStateToProps = (
-  { location, countryData, whitelists, widgets },
-  ownProps
-) => {
-  const { activeWidget } = ownProps;
+const mapStateToProps = ({ countryData, whitelists, widgets }, ownProps) => {
+  const { activeWidget, location, query } = ownProps;
   // loaders
   const {
     isCountriesLoading,
@@ -38,23 +35,22 @@ const mapStateToProps = (
     countryWhitelistLoading ||
     regionWhitelistLoading;
 
-  const { query, payload } = location;
-  const { region } = payload;
+  const { region } = location;
   const widget = query && query.widget;
   const category = (query && query.category) || 'summary';
   const widgetData = {
     category,
-    ...location,
+    location,
     countryData,
     whitelist: region ? regionWhitelist : countryWhitelist
   };
-  const currentLocation = getAdminSelected({ ...countryData, payload });
+  const currentLocation = getAdminSelected({ ...countryData, location });
 
   return {
     loading,
     widgets: (!widget && ownProps.widgets) || filterWidgets(widgetData),
     options: getOptions(),
-    adminKey: getAdminKey({ payload }),
+    adminKey: getAdminKey({ location }),
     currentLocation,
     currentLabel: currentLocation && currentLocation.label,
     ...currentLocation,

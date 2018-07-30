@@ -15,8 +15,18 @@ const actions = {
 };
 
 const mapStateToProps = (
-  { location, modalMeta },
-  { currentLabel, widget, title, config, whitelist, shareUrl, embedUrl }
+  { modalMeta },
+  {
+    currentLabel,
+    widget,
+    title,
+    config,
+    whitelist,
+    shareUrl,
+    embedUrl,
+    location,
+    query
+  }
 ) => {
   const size = config.size;
   const isDeviceTouch = isTouch() || window.innerWidth < SCREEN_L;
@@ -30,6 +40,7 @@ const mapStateToProps = (
       : title.global;
   return {
     location,
+    query,
     size,
     isDeviceTouch,
     widgetMetaKey,

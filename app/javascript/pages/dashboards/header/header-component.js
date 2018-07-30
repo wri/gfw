@@ -23,7 +23,7 @@ class Header extends PureComponent {
       loading,
       setShareModal,
       shareData,
-      payload,
+      location,
       forestAtlasLink,
       sentence,
       query,
@@ -66,7 +66,7 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
-              {!payload.country && <h3>{payload.type || 'Global'}</h3>}
+              {!location.country && <h3>{location.type || 'Global'}</h3>}
               {locationOptions.countries && (
                 <Dropdown
                   theme="theme-dropdown-dark"
@@ -86,7 +86,7 @@ class Header extends PureComponent {
                   clearable
                 />
               )}
-              {payload.country &&
+              {location.country &&
                 locationOptions.countries &&
                 locationOptions.regions &&
                 locationOptions.regions.length > 1 && (
@@ -110,7 +110,7 @@ class Header extends PureComponent {
                     clearable
                   />
                 )}
-              {payload.region &&
+              {location.region &&
                 locationOptions.regions &&
                 locationNames.region &&
                 locationNames.region.value &&
@@ -176,7 +176,7 @@ Header.propTypes = {
   handleSubRegionChange: PropTypes.func.isRequired,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
-  payload: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   forestAtlasLink: PropTypes.object,
   sentence: PropTypes.object,
   query: PropTypes.object,

@@ -16,13 +16,16 @@ import HeaderComponent from './header-component';
 
 const actions = { ...ownActions, ...shareActions };
 
-const mapStateToProps = ({ countryData, location, header, widgets }) => {
+const mapStateToProps = (
+  { countryData, header, widgets },
+  { location, query }
+) => {
   const {
     isCountriesLoading,
     isRegionsLoading,
     isSubRegionsLoading
   } = countryData;
-  const { country } = location.payload;
+  const { country } = location;
   const countryDataLoading =
     isCountriesLoading || isRegionsLoading || isSubRegionsLoading;
   const externalLinks =
@@ -36,7 +39,7 @@ const mapStateToProps = ({ countryData, location, header, widgets }) => {
     country ? '/iso' : ''
   }/tree_cover_stats_2017${country ? `_${country}` : ''}.xlsx`;
   const locationOptions = { ...countryData };
-  const locationNames = getAdminsSelected({ ...countryData, ...location });
+  const locationNames = getAdminsSelected({ ...countryData, location });
 
   return {
     ...header,
@@ -52,11 +55,12 @@ const mapStateToProps = ({ countryData, location, header, widgets }) => {
       socialText: `${(locationNames &&
         locationNames.country &&
         `${locationNames.country.label}'s`) ||
-        upperFirst(location.payload.type)} dashboard`
+        upperFirst(location.type)} dashboard`
     },
     widgets,
     sentence: getSentence({ locationNames, ...header }),
-    ...location
+    location,
+    query
   };
 };
 
@@ -124,14 +128,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 class HeaderContainer extends PureComponent {
   componentWillMount() {
-    const { payload, settings, getHeaderData } = this.props;
-    getHeaderData({ ...payload, ...settings });
+    const { location, settings, getHeaderData } = this.props;
+    getHeaderData({ ...location, ...settings });
   }
 
   componentWillReceiveProps(nextProps) {
-    const { payload, settings, getHeaderData } = nextProps;
-    if (!isEqual(payload, this.props.payload)) {
-      getHeaderData({ ...payload, ...settings });
+    const { location, settings, getHeaderData } = nextProps;
+    if (!isEqual(location, this.props.location)) {
+      getHeaderData({ ...location, ...settings });
     }
   }
 
@@ -143,7 +147,7 @@ class HeaderContainer extends PureComponent {
 }
 
 HeaderContainer.propTypes = {
-  payload: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   getHeaderData: PropTypes.func.isRequired,
   settings: PropTypes.object.isRequired
 };

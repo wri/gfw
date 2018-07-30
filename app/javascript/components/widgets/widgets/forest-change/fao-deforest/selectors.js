@@ -6,7 +6,7 @@ import { format } from 'd3-format';
 import { getAdminPath } from '../../../utils';
 
 const getData = state => state.data || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;

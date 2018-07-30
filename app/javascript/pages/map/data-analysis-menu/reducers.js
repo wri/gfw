@@ -1,8 +1,13 @@
 export const initialState = {
   analysis: {
     loading: false,
+    showResults: false,
     option: 'layer',
-    location: null,
+    location: {
+      country: null,
+      region: null,
+      subRegion: null
+    },
     polygon: null,
     geostore: null,
     data: null
