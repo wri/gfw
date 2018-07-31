@@ -67,21 +67,14 @@
       </li>
     {{/if}}
 
-    <li>
-      <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-    </li>
-
-    <li>
-      <div class="stats-notice">NOTE: tree cover loss and gain statistics cannot be compared against each other. <a href="#" class="source" data-source="loss-compare-gain">Learn more</a>.</div>
-    </li>
 
     {{!-- PRODES --}}
-    {{#ifCond resource.slug "===" 'prodes-loss'}}
+    {{#if resource.baselayers.prodes}}
       <li>
         <span class="stats-title">Prodes tree cover loss ({{resource.dates.dateRange}})</span>
         <span class="stats-count" style="color: {{resource.baselayers.prodes.title_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
       </li>
-    {{/ifCond}}
+    {{/if}}
 
     {{!-- IMAZON --}}
     {{#ifCond resource.slug "===" 'imazon-alerts'}}
@@ -162,6 +155,15 @@
         <span class="stats-count" style="color: {{resource.baselayers.viirs_fires_alerts.title_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> VIIRS active fire alerts</span>
       </li>
     {{/ifCond}}
+
+    <li>
+      <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
+    </li>
+
+    <li>
+      <div class="stats-notice">NOTE: tree cover loss and gain statistics cannot be compared against each other. <a href="#" class="source" data-source="loss-compare-gain">Learn more</a>.</div>
+    </li>
+    
   </ul>
 </div>
 

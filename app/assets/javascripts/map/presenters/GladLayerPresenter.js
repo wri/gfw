@@ -46,7 +46,11 @@ define([
 
     setConfirmedStatus: function(layerOptions) {
       layerOptions = layerOptions || [];
-      this.status.set('hideUnconfirmed', layerOptions.indexOf('gladConfirmOnly') > -1);
+      var isHideUnconfirmed = layerOptions.indexOf('gladConfirmOnly') > -1;
+      this.status.set('hideUnconfirmed', isHideUnconfirmed);
+      if (isHideUnconfirmed) {
+        ga('send', 'event', 'Map', 'Toggle', 'Confirmed GLAD | GLAD coverage');
+      }
     },
 
     animationStarted: function(bounds) {

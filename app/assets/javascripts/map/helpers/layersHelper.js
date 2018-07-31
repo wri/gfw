@@ -19,6 +19,7 @@ define(
     'map/views/layers/IntactForestLayer',
     'map/views/layers/IntactForestLayer2000',
     'map/views/layers/IntactForestLayer2013',
+    'map/views/layers/PrimaryForestLayer',
     'map/views/layers/PantropicalLayer',
     'map/views/layers/IdnPrimaryLayer',
     'map/views/layers/LoggingLayer',
@@ -28,6 +29,7 @@ define(
     'map/views/layers/CodLoggingLayer',
     'map/views/layers/GabLoggingLayer',
     'map/views/layers/GnqLoggingLayer',
+    'map/views/layers/IdnLandCoverLayer',
     'map/views/layers/IdnForestArea',
     'map/views/layers/IdnLoggingLayer',
     'map/views/layers/LbrLoggingLayer',
@@ -206,6 +208,7 @@ define(
     IntactForestLayer,
     IntactForestLayer2000,
     IntactForestLayer2013,
+    PrimaryForestLayer,
     PantropicalLayer,
     IdnPrimaryLayer,
     LoggingLayer,
@@ -215,6 +218,7 @@ define(
     CodLoggingLayer,
     GabLoggingLayer,
     GnqLoggingLayer,
+    IdnLandCoverLayer,
     IdnForestArea,
     IdnLoggingLayer,
     LbrLoggingLayer,
@@ -424,6 +428,9 @@ define(
       ifl_2013_deg: {
         view: IntactForestLayer2013
       },
+      primary_forest: {
+        view: PrimaryForestLayer
+      },
       pantropical: {
         view: PantropicalLayer
       },
@@ -450,6 +457,9 @@ define(
       },
       gnq_logging: {
         view: GnqLoggingLayer
+      },
+      idn_land_cover: {
+        view: IdnLandCoverLayer
       },
       idn_forest_area: {
         view: IdnForestArea

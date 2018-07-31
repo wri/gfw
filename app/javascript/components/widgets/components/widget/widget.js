@@ -118,7 +118,8 @@ class WidgetContainer extends PureComponent {
         !isEqual(settings.landCategory, this.props.settings.landCategory) ||
         !isEqual(settings.extentYear, this.props.settings.extentYear) ||
         !isEqual(settings.period, this.props.settings.period) ||
-        !isEqual(settings.type, this.props.settings.type))
+        !isEqual(settings.type, this.props.settings.type) ||
+        !isEqual(settings.dataset, this.props.settings.dataset))
     ) {
       getWidgetData({
         widget,
