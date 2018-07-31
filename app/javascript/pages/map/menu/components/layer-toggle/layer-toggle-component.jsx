@@ -34,9 +34,9 @@ class LayerToggle extends PureComponent {
               <Icon icon={infoIcon} className="info-icon" />
             </Button>
           </div>
-          <div className="c-layer-toggle__description">
-            {subtitle && `(${subtitle})`}
-          </div>
+          {subtitle && (
+            <div className="c-layer-toggle__subtitle">{`(${subtitle})`}</div>
+          )}
         </div>
       </div>
     );
