@@ -8,7 +8,7 @@ import './menu-flap-styles.scss';
 
 class MenuFlap extends PureComponent {
   render() {
-    const { section, Component, isBig, onClickClose } = this.props;
+    const { section, isBig, onClickClose, children } = this.props;
 
     return (
       <div
@@ -20,15 +20,15 @@ class MenuFlap extends PureComponent {
           <Icon icon={closeIcon} />
           {name}
         </button>
-        {Component && <Component />}
+        {children}
       </div>
     );
   }
 }
 
 MenuFlap.propTypes = {
+  children: PropTypes.node,
   section: PropTypes.string,
-  Component: PropTypes.func,
   isBig: PropTypes.bool,
   onClickClose: PropTypes.func
 };

@@ -6,5 +6,5 @@ export const getDatasetsProvider = () =>
   request.get(
     `${
       REQUEST_URL
-    }/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&published=true&env=production`
+    }/dataset?application=gfw&includes=metadata,vocabulary,layer&page[size]=9999&hash=${new Date()}`
   );

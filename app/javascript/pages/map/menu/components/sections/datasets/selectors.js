@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect';
+import camelCase from 'lodash/camelCase';
 
 const getDatasets = state => state.datasets || null;
+const getCategory = state => state.category || null;
 
-export const getParsedDatasets = createSelector([getDatasets], datasets => {
+export const getParsedDatasets = createSelector([getDatasets, getCategory], (datasets, category) => {
   if (!datasets) return null;
-  return datasets.map(d => {
+  return datasets.filter(d => d.vocabulary && d.vocabulary.length && d.vocabulary[0].tags.indexOf(camelCase(category)) > -1).map(d => {
     const metadata = d.metadata && d.metadata.length && d.metadata[0];
     const { name, source } = metadata;
     return {

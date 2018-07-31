@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
-import { getSectionData } from 'pages/map/menu/menu-selectors';
+import { getActiveSection } from 'pages/map/menu/menu-selectors';
 import actions from './actions';
 import reducers, { initialState } from './reducers';
 
 import Component from './component';
 
-const mapStateToProps = ({ location, dataAnalysis, mapMenu }) => {
+const mapStateToProps = ({ location, dataAnalysis, mapMenu, datasets }) => {
   const { selectedSection } = mapMenu;
   return {
     activeTab: location.payload.tab,
     analysis: dataAnalysis.analysis,
-    menuSectionData: getSectionData({ selectedSection })
+    menuSectionData: getActiveSection({ selectedSection, ...datasets })
   };
 };
 

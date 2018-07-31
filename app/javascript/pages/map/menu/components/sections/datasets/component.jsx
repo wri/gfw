@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import LayerToggle from 'pages/map/menu/components/layer-toggle';
 // import MenuBlock from 'pages/map/menu/components/menu-block';
 
-import './forest-change-styles.scss';
+import './styles.scss';
 
 class ForestChange extends PureComponent {
   render() {

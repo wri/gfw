@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import treesIcon from 'assets/icons/trees.svg';
 import landTreeIcon from 'assets/icons/land-tree.svg';
@@ -7,62 +7,106 @@ import climateBubblesIcon from 'assets/icons/climate-bubbles.svg';
 import featherIcon from 'assets/icons/feather.svg';
 import worldIcon from 'assets/icons/world.svg';
 import searchIcon from 'assets/icons/search.svg';
+import { getLayers } from 'components/map/map-selectors';
 
 import ForestChange from './components/sections/forest-change';
 import Countries from './components/sections/countries';
 import Explore from './components/sections/explore';
 
-const getSelectedSection = state => state.selectedSection || null;
-
-export const getSections = createSelector([], () => ({
-  'forest-change': {
+const menuSections = [
+  {
+    slug: 'forestChange',
     name: 'FOREST CHANGE',
     icon: treesIcon,
     Component: ForestChange
   },
-  'land-cover': {
+  {
+    slug: 'landCover',
     name: 'LAND COVER',
     icon: landTreeIcon,
     Component: ForestChange
   },
-  'land-use': {
+  {
+    slug: 'landUse',
     name: 'LAND USE',
     icon: truckIcon,
     Component: ForestChange
   },
-  climate: {
+  {
+    slug: 'climate',
     name: 'CLIMATE',
     icon: climateBubblesIcon,
     Component: ForestChange
   },
-  biodiversity: {
+  {
+    slug: 'biodiversity',
     name: 'BIODIVERSITY',
     icon: featherIcon,
     Component: ForestChange
   },
-  countries: {
+  {
+    slug: 'countries',
     name: 'COUNTRIES',
     icon: worldIcon,
     Component: Countries
   },
-  explore: {
+  {
+    slug: 'explore',
     name: 'EXPLORE',
     icon: truckIcon,
     Component: Explore,
-    bigFlap: true
+    large: true
   },
-  search: {
+  {
+    slug: 'search',
     name: 'SEARCH',
     icon: searchIcon,
     Component: ForestChange
   }
-}));
+];
 
-export const getSectionData = createSelector(
-  [getSections, getSelectedSection],
+const getSelectedSection = state => state.selectedSection || null;
+const getDatasets = state => state.datasets || null;
+
+export const getSections = createSelector(getDatasets, datasets =>
+  menuSections.map(s => ({
+    ...s,
+    datasets: datasets && datasets
+      .filter(d => d.vocabulary && d.vocabulary.length && d.vocabulary[0].tags.indexOf(s.slug) > -1)
+      .map(d => {
+        const metadata = d.metadata && d.metadata.length && d.metadata[0];
+        const { name, source } = metadata;
+        return {
+          name: name || d.name,
+          description: source,
+          id: d.id,
+          layer: d.layer && d.layer.length && d.layer[0].id
+        };
+      })
+  }))
+);
+
+export const getSectionsWithCount = createSelector(
+  [getSections, getLayers],
+  (sections, layers) => {
+    if (!layers) return sections;
+    return sections.map(s => ({
+      ...s,
+      layerCount: s.datasets.filter(d => layers && layers.map(l => l.dataset).indexOf(d.id) > -1).length
+    }));
+  }
+);
+
+export const getActiveSection = createSelector(
+  [getSectionsWithCount, getSelectedSection],
   (sections, selectedSection) => {
     if (!sections || !selectedSection) return null;
 
-    return sections[selectedSection];
+    return sections.find(s => s.slug === selectedSection);
   }
 );
+
+export const getMenuProps = createStructuredSelector({
+  sections: getSectionsWithCount,
+  activeSection: getActiveSection
+});
