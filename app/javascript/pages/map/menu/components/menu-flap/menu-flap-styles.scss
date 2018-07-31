@@ -15,7 +15,7 @@ $map-menu-flap-close-size: rem(32px);
   z-index: 12;
   transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width-big});
   transition: transform 0.3s linear;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: -3px 0 3px -3px rgba(0, 0, 0, 0.25);
 
   &.--big {
     width: $map-menu-flap-width-big;
@@ -38,7 +38,7 @@ $map-menu-flap-close-size: rem(32px);
     border-radius: 2px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: -1px 0 3px -3px rgba(0, 0, 0, 0.25);
     cursor: pointer;
 
     .c-icon {

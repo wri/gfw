@@ -6,13 +6,11 @@ import landTreeIcon from 'assets/icons/land-tree.svg';
 import truckIcon from 'assets/icons/truck.svg';
 import climateBubblesIcon from 'assets/icons/climate-bubbles.svg';
 import featherIcon from 'assets/icons/feather.svg';
-import worldIcon from 'assets/icons/world.svg';
 import searchIcon from 'assets/icons/search.svg';
 
 import { getLayers } from 'components/map/map-selectors';
 
 import Datasets from './components/sections/datasets';
-import Countries from './components/sections/countries';
 import Explore from './components/sections/explore';
 
 const menuSections = [
@@ -62,12 +60,6 @@ const menuSections = [
     name: 'BIODIVERSITY',
     icon: featherIcon,
     Component: Datasets
-  },
-  {
-    slug: 'countries',
-    name: 'COUNTRIES',
-    icon: worldIcon,
-    Component: Countries
   },
   {
     slug: 'explore',

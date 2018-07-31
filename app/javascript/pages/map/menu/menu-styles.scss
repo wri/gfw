@@ -66,8 +66,14 @@ $map-menu-items-size: rem(76px);
       border-bottom-color: transparent;
     }
 
+    &:nth-child(6) {
+      position: absolute;
+      bottom: $map-menu-items-size;
+    }
+
     &:nth-child(7) {
-      margin-top: auto;
+      position: absolute;
+      bottom: 0;
     }
   }
 

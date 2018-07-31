@@ -20,7 +20,7 @@
 
   &__name {
     font-size: 14px;
-    line-height: 1.21;
+    line-height: 1.4;
     letter-spacing: -0.3px;
     color: $slate;
   }
@@ -31,5 +31,9 @@
     letter-spacing: -0.3px;
     color: $hot-grey;
     margin-top: rem(3px);
+  }
+
+  .info-button {
+    margin-left: rem(5px);
   }
 }
