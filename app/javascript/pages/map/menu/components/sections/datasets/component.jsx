@@ -2,33 +2,37 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import LayerToggle from 'pages/map/menu/components/layer-toggle';
-// import MenuBlock from 'pages/map/menu/components/menu-block';
+import MenuBlock from 'pages/map/menu/components/menu-block';
 
 import './styles.scss';
 
-class ForestChange extends PureComponent {
+class Datasets extends PureComponent {
   render() {
-    const { datasets, layers } = this.props;
+    const { datasets, subCategories, onToggleLayer } = this.props;
 
     return (
-      <div className="c-forest-change">
-        {datasets &&
-          datasets.map(d => (
-            // <MenuBlock key={`menu-block-forest-${i}`} {...block}>
-            // {layers &&
-            // layers.map(layer => (
-            <LayerToggle key={`toogle-${d.name}`} data={d} layers={layers} />
-            // ))}
-            // </MenuBlock>
+      <div className="c-datasets">
+        {subCategories
+          ? subCategories.map(subCat => (
+            <MenuBlock key={subCat.slug} {...subCat}>
+              {subCat.datasets &&
+                  subCat.datasets.map(d => (
+                    <LayerToggle key={d.id} data={d} onToggle={onToggleLayer} />
+                  ))}
+            </MenuBlock>
+          ))
+          : datasets.map(d => (
+            <LayerToggle key={d.id} data={d} onToggle={onToggleLayer} />
           ))}
       </div>
     );
   }
 }
 
-ForestChange.propTypes = {
+Datasets.propTypes = {
   datasets: PropTypes.array,
-  layers: PropTypes.array
+  onToggleLayer: PropTypes.func,
+  subCategories: PropTypes.array
 };
 
-export default ForestChange;
+export default Datasets;

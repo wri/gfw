@@ -5,14 +5,14 @@ import './menu-block-styles.scss';
 
 class MenuBlock extends PureComponent {
   render() {
-    const { name, description, children } = this.props;
+    const { title, subTitle, children } = this.props;
     return (
       <div className="c-menu-block">
-        {(name || description) && (
+        {(title || subTitle) && (
           <div className="c-menu-block__header">
-            {name && <div className="c-menu-block__title">{name}</div>}
-            {description && (
-              <div className="c-menu-block__description">{description}</div>
+            {title && <div className="c-menu-block__title">{title}</div>}
+            {subTitle && (
+              <div className="c-menu-block__subtitle">{subTitle}</div>
             )}
           </div>
         )}
@@ -23,8 +23,8 @@ class MenuBlock extends PureComponent {
 }
 
 MenuBlock.propTypes = {
-  name: PropTypes.string,
-  description: PropTypes.string,
+  title: PropTypes.string,
+  subTitle: PropTypes.string,
   children: PropTypes.node
 };
 

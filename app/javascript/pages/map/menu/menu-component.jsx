@@ -14,7 +14,8 @@ class Menu extends PureComponent {
       sections,
       activeSection,
       selectedSection,
-      setSelectedSection
+      setSelectedSection,
+      onToggleLayer
     } = this.props;
 
     return (
@@ -42,13 +43,17 @@ class Menu extends PureComponent {
                   >
                     <button
                       className="c-map-menu__item-button"
-                      onClick={() => { setSelectedSection(slug); }}
+                      onClick={() => {
+                        setSelectedSection(slug);
+                      }}
                     >
                       <Icon icon={icon} className="icon" />
                       {name}
-                      {!!layerCount &&
-                        <div className="c-map-menu__item-badge">{layerCount}</div>
-                      }
+                      {!!layerCount && (
+                        <div className="c-map-menu__item-badge">
+                          {layerCount}
+                        </div>
+                      )}
                     </button>
                   </li>
                 );
@@ -61,11 +66,13 @@ class Menu extends PureComponent {
           isBig={activeSection && activeSection.large}
           onClickClose={() => setSelectedSection(null)}
         >
-          {activeSection && activeSection.Component &&
-            <activeSection.Component
-              data={activeSection.datasets}
-            />
-          }
+          {activeSection &&
+            activeSection.Component && (
+              <activeSection.Component
+                {...activeSection}
+                onToggleLayer={onToggleLayer}
+              />
+            )}
         </MenuFlap>
       </div>
     );
@@ -76,7 +83,9 @@ Menu.propTypes = {
   sections: PropTypes.array,
   selectedSection: PropTypes.string,
   activeSection: PropTypes.object,
-  setSelectedSection: PropTypes.func.isRequired
+  setSelectedSection: PropTypes.func.isRequired,
+  layers: PropTypes.array,
+  onToggleLayer: PropTypes.func
 };
 
 export default Menu;

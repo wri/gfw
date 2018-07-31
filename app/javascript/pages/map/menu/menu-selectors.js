@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import flatten from 'lodash/flatten';
 
 import treesIcon from 'assets/icons/trees.svg';
 import landTreeIcon from 'assets/icons/land-tree.svg';
@@ -7,9 +8,10 @@ import climateBubblesIcon from 'assets/icons/climate-bubbles.svg';
 import featherIcon from 'assets/icons/feather.svg';
 import worldIcon from 'assets/icons/world.svg';
 import searchIcon from 'assets/icons/search.svg';
+
 import { getLayers } from 'components/map/map-selectors';
 
-import ForestChange from './components/sections/forest-change';
+import Datasets from './components/sections/datasets';
 import Countries from './components/sections/countries';
 import Explore from './components/sections/explore';
 
@@ -18,31 +20,38 @@ const menuSections = [
     slug: 'forestChange',
     name: 'FOREST CHANGE',
     icon: treesIcon,
-    Component: ForestChange
+    Component: Datasets,
+    subCategories: [
+      {
+        slug: 'forestChange',
+        title: 'Deforestation Alerts',
+        subTitle: '(near real time)'
+      }
+    ]
   },
   {
     slug: 'landCover',
     name: 'LAND COVER',
     icon: landTreeIcon,
-    Component: ForestChange
+    Component: Datasets
   },
   {
     slug: 'landUse',
     name: 'LAND USE',
     icon: truckIcon,
-    Component: ForestChange
+    Component: Datasets
   },
   {
     slug: 'climate',
     name: 'CLIMATE',
     icon: climateBubblesIcon,
-    Component: ForestChange
+    Component: Datasets
   },
   {
     slug: 'biodiversity',
     name: 'BIODIVERSITY',
     icon: featherIcon,
-    Component: ForestChange
+    Component: Datasets
   },
   {
     slug: 'countries',
@@ -61,7 +70,7 @@ const menuSections = [
     slug: 'search',
     name: 'SEARCH',
     icon: searchIcon,
-    Component: ForestChange
+    Component: Datasets
   }
 ];
 
@@ -69,36 +78,72 @@ const getSelectedSection = state => state.selectedSection || null;
 const getDatasets = state => state.datasets || null;
 
 export const getSections = createSelector(getDatasets, datasets =>
-  menuSections.map(s => ({
-    ...s,
-    datasets: datasets && datasets
-      .filter(d => d.vocabulary && d.vocabulary.length && d.vocabulary[0].tags.indexOf(s.slug) > -1)
-      .map(d => {
-        const metadata = d.metadata && d.metadata.length && d.metadata[0];
-        const { name, source } = metadata;
-        return {
-          name: name || d.name,
-          description: source,
-          id: d.id,
-          layer: d.layer && d.layer.length && d.layer[0].id
-        };
-      })
-  }))
+  menuSections.map(s => {
+    const sectionDatasets =
+      datasets &&
+      datasets
+        .filter(
+          d => flatten(d.vocabulary.map(v => v.tags)).indexOf(s.slug) > -1
+        )
+        .map(d => {
+          const metadata = d.metadata && d.metadata.length && d.metadata[0];
+          const { name, source } = metadata;
+          return {
+            name: name || d.name,
+            description: source,
+            id: d.id,
+            layer: d.layer && d.layer.length && d.layer[0].id,
+            tags: flatten(d.vocabulary.map(v => v.tags))
+          };
+        });
+    let subCategoriesWithDatasets = s.subCategories;
+    if (subCategoriesWithDatasets) {
+      subCategoriesWithDatasets = s.subCategories.map(subCat => ({
+        ...subCat,
+        datasets: sectionDatasets.filter(d => d.tags.indexOf(subCat.slug) > -1)
+      }));
+    }
+    return {
+      ...s,
+      datasets: sectionDatasets,
+      subCategories: subCategoriesWithDatasets
+    };
+  })
 );
 
-export const getSectionsWithCount = createSelector(
+export const getSectionsWithData = createSelector(
   [getSections, getLayers],
   (sections, layers) => {
     if (!layers) return sections;
+    const datasetIds = layers.map(d => d.dataset);
     return sections.map(s => ({
       ...s,
-      layerCount: s.datasets.filter(d => layers && layers.map(l => l.dataset).indexOf(d.id) > -1).length
+      layerCount: s.datasets.filter(
+        d => layers && datasetIds.indexOf(d.id) > -1
+      ).length,
+      datasets:
+        s.datasets &&
+        s.datasets.map(d => ({
+          ...d,
+          active: datasetIds.indexOf(d.id) > -1
+        })),
+      subCategories:
+        s.subCategories &&
+        s.subCategories.map(subCat => ({
+          ...subCat,
+          datasets:
+            subCat.datasets &&
+            subCat.datasets.map(d => ({
+              ...d,
+              active: datasetIds.indexOf(d.id) > -1
+            }))
+        }))
     }));
   }
 );
 
 export const getActiveSection = createSelector(
-  [getSectionsWithCount, getSelectedSection],
+  [getSectionsWithData, getSelectedSection],
   (sections, selectedSection) => {
     if (!sections || !selectedSection) return null;
 
@@ -107,6 +152,8 @@ export const getActiveSection = createSelector(
 );
 
 export const getMenuProps = createStructuredSelector({
-  sections: getSectionsWithCount,
-  activeSection: getActiveSection
+  sections: getSectionsWithData,
+  activeSection: getActiveSection,
+  selectedSection: getSelectedSection,
+  layers: getLayers
 });
