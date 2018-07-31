@@ -11,12 +11,23 @@ import NoContent from 'components/ui/no-content';
 import './map-styles.scss';
 
 class MapComponent extends PureComponent {
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      this.map.invalidateSize();
+    });
+  }
+
   render() {
     const { loading, error, activeLayers } = this.props;
 
     return (
       <React.Fragment>
-        <Map>
+        <Map
+          customClass="c-map"
+          onReady={map => {
+            this.map = map;
+          }}
+        >
           {map => (
             <LayerManager map={map} plugin={PluginLeaflet}>
               {activeLayers &&
