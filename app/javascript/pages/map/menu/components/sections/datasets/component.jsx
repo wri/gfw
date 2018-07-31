@@ -8,7 +8,7 @@ import './styles.scss';
 
 class Datasets extends PureComponent {
   render() {
-    const { datasets, subCategories, onToggleLayer } = this.props;
+    const { datasets, subCategories, onToggleLayer, onInfoClick } = this.props;
 
     return (
       <div className="c-datasets">
@@ -17,12 +17,22 @@ class Datasets extends PureComponent {
             <MenuBlock key={subCat.slug} {...subCat}>
               {subCat.datasets &&
                   subCat.datasets.map(d => (
-                    <LayerToggle key={d.id} data={d} onToggle={onToggleLayer} />
+                    <LayerToggle
+                      key={d.id}
+                      data={d}
+                      onToggle={onToggleLayer}
+                      onInfoClick={onInfoClick}
+                    />
                   ))}
             </MenuBlock>
           ))
           : datasets.map(d => (
-            <LayerToggle key={d.id} data={d} onToggle={onToggleLayer} />
+            <LayerToggle
+              key={d.id}
+              data={d}
+              onToggle={onToggleLayer}
+              onInfoClick={onInfoClick}
+            />
           ))}
       </div>
     );
@@ -32,6 +42,7 @@ class Datasets extends PureComponent {
 Datasets.propTypes = {
   datasets: PropTypes.array,
   onToggleLayer: PropTypes.func,
+  onInfoClick: PropTypes.func,
   subCategories: PropTypes.array
 };
 

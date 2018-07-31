@@ -26,6 +26,16 @@ const menuSections = [
         slug: 'forestChange',
         title: 'Deforestation Alerts',
         subTitle: '(near real time)'
+      },
+      {
+        slug: 'landCover',
+        title: 'Fire Alerts',
+        subTitle: '(near real time)'
+      },
+      {
+        slug: 'landUse',
+        title: 'Tree Cover Change',
+        subTitle: '(near real time)'
       }
     ]
   },
