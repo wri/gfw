@@ -20,8 +20,8 @@ define(
 
     var GET_REQUEST_ID = 'AnalysisService:get';
 
-    var APIURL = 'https://production-api.globalforestwatch.org';
-    var APIURLV2 = 'https://production-api.globalforestwatch.org' + '/v3';
+    var APIURLV2 = window.gfw.config.GFW_API + '/v3';
+    var APIURL = window.gfw.config.GFW_API;
 
     var APIURLS = {
       draw: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
