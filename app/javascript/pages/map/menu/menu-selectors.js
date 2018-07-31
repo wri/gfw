@@ -86,6 +86,7 @@ const menuSections = [
 
 const getSelectedSection = state => state.selectedSection || null;
 const getDatasets = state => state.datasets || null;
+const getLoading = state => state.loading || null;
 
 export const getSections = createSelector(getDatasets, datasets =>
   menuSections.map(s => {
@@ -165,5 +166,6 @@ export const getMenuProps = createStructuredSelector({
   sections: getSectionsWithData,
   activeSection: getActiveSection,
   selectedSection: getSelectedSection,
-  layers: getLayers
+  layers: getLayers,
+  loading: getLoading
 });

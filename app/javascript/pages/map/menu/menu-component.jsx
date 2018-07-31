@@ -16,7 +16,8 @@ class Menu extends PureComponent {
       selectedSection,
       setSelectedSection,
       onToggleLayer,
-      setModalMeta
+      setModalMeta,
+      loading
     } = this.props;
 
     return (
@@ -47,6 +48,7 @@ class Menu extends PureComponent {
                       onClick={() => {
                         setSelectedSection(slug);
                       }}
+                      disabled={loading}
                     >
                       <Icon icon={icon} className="icon" />
                       {name}
@@ -88,7 +90,8 @@ Menu.propTypes = {
   setSelectedSection: PropTypes.func.isRequired,
   layers: PropTypes.array,
   onToggleLayer: PropTypes.func,
-  setModalMeta: PropTypes.func
+  setModalMeta: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default Menu;

@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
+
+import NoContent from 'components/ui/no-content';
 
 import LayerToggle from 'pages/map/menu/components/layer-toggle';
 import MenuBlock from 'pages/map/menu/components/menu-block';
@@ -15,15 +18,21 @@ class Datasets extends PureComponent {
         {subCategories
           ? subCategories.map(subCat => (
             <MenuBlock key={subCat.slug} {...subCat}>
-              {subCat.datasets &&
-                  subCat.datasets.map(d => (
-                    <LayerToggle
-                      key={d.id}
-                      data={d}
-                      onToggle={onToggleLayer}
-                      onInfoClick={onInfoClick}
-                    />
-                  ))}
+              {!isEmpty(subCat.datasets) ? (
+                subCat.datasets.map(d => (
+                  <LayerToggle
+                    key={d.id}
+                    data={d}
+                    onToggle={onToggleLayer}
+                    onInfoClick={onInfoClick}
+                  />
+                ))
+              ) : (
+                <NoContent
+                  className="no-datasets"
+                  message="No datasets available"
+                />
+              )}
             </MenuBlock>
           ))
           : datasets.map(d => (

@@ -4,4 +4,10 @@
   padding: rem(20px);
   max-height: 100%;
   overflow: scroll;
+
+  .no-datasets {
+    position: relative;
+    font-size: rem(13px);
+    margin-bottom: rem(10px);
+  }
 }
