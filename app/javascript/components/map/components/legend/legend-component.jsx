@@ -4,20 +4,28 @@ import PropTypes from 'prop-types';
 import {
   Legend,
   LegendItemToolbar,
+  LegendItemButtonOpacity,
+  LegendItemButtonVisibility,
+  LegendItemButtonInfo,
+  LegendItemButtonRemove,
   LegendItemTypes,
   LegendListItem,
   Icons
 } from 'wri-api-components';
 
+import Loader from 'components/ui/loader';
+
 import './legend-styles.scss';
 
 class MapLegend extends Component {
   render() {
-    const { layerGroups, ...rest } = this.props;
+    const { layerGroups, loading, ...rest } = this.props;
     return (
       <div className="c-legend">
         <Icons />
-        {layerGroups &&
+        {loading && <Loader />}
+        {!loading &&
+          layerGroups &&
           !!layerGroups.length && (
             <Legend layerGroups={layerGroups} collapsable={false}>
               {layerGroups.map((lg, i) => (
@@ -25,7 +33,14 @@ class MapLegend extends Component {
                   index={i}
                   key={lg.id}
                   layerGroup={lg}
-                  toolbar={<LegendItemToolbar {...rest} />}
+                  toolbar={
+                    <LegendItemToolbar {...rest}>
+                      <LegendItemButtonOpacity />
+                      <LegendItemButtonVisibility />
+                      <LegendItemButtonInfo />
+                      <LegendItemButtonRemove />
+                    </LegendItemToolbar>
+                  }
                 >
                   <LegendItemTypes />
                 </LegendListItem>
@@ -44,7 +59,8 @@ MapLegend.defaultProps = {
 };
 
 MapLegend.propTypes = {
-  layerGroups: PropTypes.array
+  layerGroups: PropTypes.array,
+  loading: PropTypes.bool
 };
 
 export default MapLegend;

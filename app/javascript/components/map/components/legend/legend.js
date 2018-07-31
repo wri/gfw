@@ -2,13 +2,21 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as actions from '../../map-actions';
+import modalActions from 'components/modals/meta/meta-actions';
+import mapActions from 'components/map/map-actions';
+
 import { getLayers, getLayerGroups } from '../../map-selectors';
 import Component from './legend-component';
 
+const actions = {
+  ...mapActions,
+  ...modalActions
+};
+
 const mapStateToProps = ({ location, datasets }) => ({
   layers: getLayers({ ...location }),
-  layerGroups: getLayerGroups({ ...datasets, ...location })
+  layerGroups: getLayerGroups({ ...datasets, ...location }),
+  ...datasets
 });
 
 class Legend extends PureComponent {
@@ -70,6 +78,11 @@ class Legend extends PureComponent {
     setMapSettings({ layers });
   };
 
+  onChangeInfo = layer => {
+    const { setModalMeta } = this.props;
+    setModalMeta(layer.layerConfig.body.metadata);
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
@@ -77,14 +90,16 @@ class Legend extends PureComponent {
       onChangeVisibility: this.onChangeVisibility,
       onChangeOrder: this.onChangeOrder,
       onChangeLayer: this.onChangeLayer,
-      onRemoveLayer: this.onRemoveLayer
+      onRemoveLayer: this.onRemoveLayer,
+      onChangeInfo: this.onChangeInfo
     });
   }
 }
 
 Legend.propTypes = {
   layers: PropTypes.array,
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
+  setModalMeta: PropTypes.func
 };
 
 export default connect(mapStateToProps, actions)(Legend);
