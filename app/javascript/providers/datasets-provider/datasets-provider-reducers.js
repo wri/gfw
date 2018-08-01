@@ -1,7 +1,7 @@
 export const initialState = {
   loading: false,
   error: false,
-  data: []
+  datasets: []
 };
 
 const setDatasetsLoading = (state, { payload }) => ({
@@ -9,13 +9,13 @@ const setDatasetsLoading = (state, { payload }) => ({
   ...payload
 });
 
-const setDatasetsData = (state, { payload }) => ({
+const setDatasets = (state, { payload }) => ({
   ...state,
-  data: payload,
+  datasets: payload,
   loading: false
 });
 
 export default {
-  setDatasetsData,
+  setDatasets,
   setDatasetsLoading
 };

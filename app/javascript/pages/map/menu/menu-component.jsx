@@ -9,36 +9,15 @@ import gfwLogo from 'assets/logos/gfw.png';
 import './menu-styles.scss';
 
 class Menu extends PureComponent {
-  renderMenuItem = (key, section) => {
-    const { selectedSection, setSelectedSection } = this.props;
-    const { name, icon } = section;
-    return (
-      <li
-        key={`menu_${key}`}
-        className={`c-map-menu__item ${
-          selectedSection === key ? '--selected' : ''
-        }`}
-      >
-        <button
-          className="c-map-menu__item-button"
-          onClick={() => {
-            setSelectedSection(key);
-          }}
-        >
-          <Icon icon={icon} className="icon" />
-          {name}
-          <div className="c-map-menu__item-badge">3</div>
-        </button>
-      </li>
-    );
-  };
-
   render() {
     const {
       sections,
+      activeSection,
       selectedSection,
-      sectionData,
-      setSelectedSection
+      setSelectedSection,
+      onToggleLayer,
+      setModalMeta,
+      loading
     } = this.props;
 
     return (
@@ -55,28 +34,64 @@ class Menu extends PureComponent {
                 selectedSection ? '--has-selection' : ''
               }`}
             >
-              {Object.keys(sections).map(key =>
-                this.renderMenuItem(key, sections[key])
-              )}
+              {sections.map(section => {
+                const { slug, name, icon, layerCount } = section;
+                return (
+                  <li
+                    key={`menu_${slug}`}
+                    className={`c-map-menu__item ${
+                      selectedSection === slug ? '--selected' : ''
+                    }`}
+                  >
+                    <button
+                      className="c-map-menu__item-button"
+                      onClick={() => {
+                        setSelectedSection(slug);
+                      }}
+                      disabled={loading}
+                    >
+                      <Icon icon={icon} className="icon" />
+                      {name}
+                      {!!layerCount && (
+                        <div className="c-map-menu__item-badge">
+                          {layerCount}
+                        </div>
+                      )}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
         <MenuFlap
           section={selectedSection}
-          Component={sectionData ? sectionData.Component : null}
-          isBig={(sectionData && sectionData.bigFlap) || false}
+          isBig={activeSection && activeSection.large}
           onClickClose={() => setSelectedSection(null)}
-        />
+        >
+          {activeSection &&
+            activeSection.Component && (
+              <activeSection.Component
+                {...activeSection}
+                onToggleLayer={onToggleLayer}
+                onInfoClick={setModalMeta}
+              />
+            )}
+        </MenuFlap>
       </div>
     );
   }
 }
 
 Menu.propTypes = {
-  sections: PropTypes.object,
+  sections: PropTypes.array,
   selectedSection: PropTypes.string,
-  sectionData: PropTypes.object,
-  setSelectedSection: PropTypes.func.isRequired
+  activeSection: PropTypes.object,
+  setSelectedSection: PropTypes.func.isRequired,
+  layers: PropTypes.array,
+  onToggleLayer: PropTypes.func,
+  setModalMeta: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default Menu;

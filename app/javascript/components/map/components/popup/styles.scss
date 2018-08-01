@@ -1,0 +1,38 @@
+.c-popup {
+  padding: 20px;
+
+  .layer-select {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .values {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .label {
+    width: 40%;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 4px;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  top: 5px;
+  right: 5px;
+}

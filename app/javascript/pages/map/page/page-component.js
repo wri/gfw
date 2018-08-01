@@ -6,7 +6,6 @@ import { DragDropContextProvider } from 'react-dnd';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
-import LayerSpecProvider from 'providers/layerspec-provider';
 
 import Map from 'components/map';
 import MapMenu from 'pages/map/menu';
@@ -38,7 +37,6 @@ class Page extends PureComponent {
         <CountryDataProvider location={analysis.location} />
         <WhitelistsProvider />
         <DatasetsProvider />
-        <LayerSpecProvider />
       </div>
     );
   }
