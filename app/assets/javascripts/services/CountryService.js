@@ -26,19 +26,19 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
 
   var APIURLS = {
     getCountryConfig:
-      "v2/sql?q=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN'",
+      "/sql?q=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN'",
     getCountriesList:
-      "v2/sql?q=SELECT name_engli as name, iso FROM {countriesTable} WHERE iso != 'XCA' AND iso != 'TWN' ORDER BY name",
+      "/sql?q=SELECT name_engli as name, iso FROM {countriesTable} WHERE iso != 'XCA' AND iso != 'TWN' ORDER BY name",
     showCountry:
-      "v2/sql?q=SELECT name_engli as name, iso, ST_AsGeoJSON(ST_Simplify(the_geom,0.1)) AS geojson FROM {countriesTable} WHERE iso='{iso}'",
+      "/sql?q=SELECT name_engli as name, iso, ST_AsGeoJSON(ST_Simplify(the_geom,0.1)) AS geojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
-      "v2/sql?q=SELECT cartodb_id, iso, bbox as bounds, gid_1 as id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN' ORDER BY name_1",
+      "/sql?q=SELECT cartodb_id, iso, bbox as bounds, gid_1 as id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN' ORDER BY name_1",
     showRegion:
-      "v2/sql?q=SELECT gid_1 as id_1, name_1, ST_AsGeoJSON(the_geom) AS geojson FROM {regionsTable} WHERE iso='{iso}' AND gid_1='{region}' ORDER BY name_1",
+      "/sql?q=SELECT gid_1 as id_1, name_1, ST_AsGeoJSON(the_geom) AS geojson FROM {regionsTable} WHERE iso='{iso}' AND gid_1='{region}' ORDER BY name_1",
     getSubRegionsList:
-      "v2/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' ORDER BY name",
+      "/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' ORDER BY name",
     showSubRegion:
-      "v2/sql?q=SELECT gid_2 as id, name_2 as name, ST_AsGeoJSON(the_geom) AS geojson FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' AND gid_2 = '{subRegion}' ORDER BY name"
+      "/sql?q=SELECT gid_2 as id, name_2 as name, ST_AsGeoJSON(the_geom) AS geojson FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' AND gid_2 = '{subRegion}' ORDER BY name"
   };
 
   var parseGadm36Id = function(gid) {
@@ -97,7 +97,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: GET_REQUEST_COUNTRIES_LIST_ID,
             success: function(res, status) {
-              resolve(res.data, status);
+              resolve(res.rows, status);
             },
             error: function(errors) {
               reject(errors);
