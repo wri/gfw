@@ -61,7 +61,6 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
       return new Promise(
         function(resolve, reject) {
           var url = new UriTemplate(URL).fillFromObject({ id: id });
-          console.log(URL);
           ds.define(SHOW_REQUEST_ID, {
             cache: { type: 'persist', duration: 1, unit: 'days' },
             url: url,
