@@ -94,11 +94,14 @@ export const getForestTypes = createSelector(
 );
 
 export const getLandCategories = createSelector(
-  [getWhitelist, getConfig, getOptions],
-  (whitelist, config, options) => {
+  [getWhitelist, getConfig, getOptions, getLocation],
+  (whitelist, config, options, location) => {
     if (isEmpty(options)) return null;
     const { landCategories } = options;
-    let filteredOptions = landCategories;
+    const { type } = location;
+
+    let filteredOptions =
+      type === 'global' ? landCategories.filter(l => l.global) : landCategories;
 
     if (!isEmpty(config.landCategories)) {
       filteredOptions = filteredOptions.filter(
