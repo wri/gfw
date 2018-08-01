@@ -1,7 +1,73 @@
 @import '~styles/settings.scss';
 
 .c-legend {
+  font-family: $font-family-1;
+
   > div {
     border: 0;
   }
+}
+
+/* legend component styles */
+.wri_api__c-legend-item {
+  font-family: inherit;
+
+  .wri_api__legend-item-header > h3 {
+    font-size: rem(14px);
+    font-weight: 400;
+    color: $slate;
+  }
+
+  svg {
+    fill: $warm-grey;
+    stroke: $warm-grey;
+
+    &:hover {
+      fill: $medium-grey;
+      stroke: $medium-grey;
+    }
+  }
+
+  .wri_api__icon-square {
+    border-radius: rem(6px);
+  }
+}
+
+.wri_api__c-legend-item-toolbar > * {
+  margin-right: 8px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+/* legend tooltip styles */
+.c-rc-tooltip.-default {
+  font-family: $font-family-1;
+
+  .rc-tooltip-inner {
+    padding: rem(10px);
+    background-color: $tip;
+    font-size: 12px;
+    color: $slate;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .input-range__label {
+    font-family: inherit;
+  }
+
+  .input-range__track--active {
+    background-color: $green-gfw;
+  }
+
+  .input-range__slider {
+    background-color: $green-gfw;
+  }
+}
+
+.c-rc-tooltip.-default.rc-tooltip-placement-top .rc-tooltip-arrow {
+  border-top-color: $tip;
 }
