@@ -42,7 +42,7 @@ class MapLegend extends Component {
             >
               {layerGroups.map((lg, i) => {
                 const activeLayer = lg.layers.find(l => l.active);
-                const { decodeParams, legendConfig } = activeLayer;
+                const { decodeParams, legendConfig, decodeFunction } = activeLayer;
                 return (
                   <LegendListItem
                     index={i}
@@ -59,7 +59,7 @@ class MapLegend extends Component {
                     }
                   >
                     <LegendItemTypes />
-                    {decodeParams &&
+                    {decodeFunction && decodeParams &&
                       decodeParams.startDate && (
                         <Timeline
                           className="timeline"
