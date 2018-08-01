@@ -83,6 +83,24 @@ class Legend extends PureComponent {
     setModalMeta(layer.layerConfig.body.metadata);
   };
 
+  onChangeTimeline = (currentLayer, range) => {
+    const { setMapSettings, layers } = this.props;
+    setMapSettings({
+      layers: layers.map(l => {
+        const layer = { ...l };
+        if (l.layer === currentLayer.id) {
+          layer.decodeParams = {
+            ...layer.decodeParams
+          };
+          layer.decodeParams.startDate = range[0];
+          layer.decodeParams.endDate = range[1];
+          layer.decodeParams.trimEndDate = range[2];
+        }
+        return layer;
+      })
+    });
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
@@ -91,7 +109,8 @@ class Legend extends PureComponent {
       onChangeOrder: this.onChangeOrder,
       onChangeLayer: this.onChangeLayer,
       onRemoveLayer: this.onRemoveLayer,
-      onChangeInfo: this.onChangeInfo
+      onChangeInfo: this.onChangeInfo,
+      onChangeTimeline: this.onChangeTimeline
     });
   }
 }

@@ -67,10 +67,12 @@ export default {
       z,
       params = { startDate: '2001-01-01', endDate: '2017-12-01' }
     ) => {
+      'use asm';
+
       const components = 4;
       const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
-      const yearStart = parseInt(moment(params.startDate).format('YYYY'), 10);
-      const yearEnd = parseInt(moment(params.endDate).format('YYYY'), 10);
+      const yearStart = new Date(params.startDate).getUTCFullYear();
+      const yearEnd = new Date(params.endDate).getUTCFullYear();
       const imgData = data;
 
       const myscale = scalePow()
@@ -98,7 +100,7 @@ export default {
     decodeParams: {
       interval: 'years',
       intervalStep: 1,
-      dateFormat: 'YYYY-MM-DD',
+      dateFormat: 'YYYY',
       speed: 100
     }
   },

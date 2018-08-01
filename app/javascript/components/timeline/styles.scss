@@ -1,0 +1,44 @@
+@import '../../../../node_modules/rc-slider/assets/index.css';
+@import '~styles/settings.scss';
+
+.c-timeline {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.range {
+  width: calc(100% - 30px);
+  margin-left: 5px;
+}
+
+.play-btn {
+  border-color: transparent;
+  border-style: none;
+  border-width: 0;
+  padding: 0;
+  cursor: pointer;
+  width: rem(20px);
+}
+
+.play-btn:focus {
+  outline: none;
+}
+
+.rc-slider-handle {
+  &::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background-color: $slate-dark;
+    position: absolute;
+    border-radius: 4px;
+    top: calc(50% - 2px);
+    left: calc(50% - 2px);
+  }
+}
+
+.rc-slider-disabled {
+  background-color: transparent;
+}
