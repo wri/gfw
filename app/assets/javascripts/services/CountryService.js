@@ -73,7 +73,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: datasetId,
             success: function(res, status) {
-              resolve(res.data, status);
+              resolve(res.rows, status);
             },
             error: function(errors) {
               reject(errors);
@@ -129,7 +129,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
                   success: function(res, status) {
                     var dataCountryConfig =
                       countryConfig.length >= 0 ? countryConfig[0] : [];
-                    var dataCountry = res.data.length >= 0 ? res.data[0] : [];
+                    var dataCountry = res.rows.length >= 0 ? res.rows[0] : [];
                     var data = _.extend({}, dataCountry, dataCountryConfig);
                     resolve(data, status);
                   },
@@ -163,7 +163,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: GET_REQUEST_REGIONS_LIST_ID,
             success: function(res, status) {
-              var data = res.data.map(d => {
+              var data = res.rows.map(d => {
                 var ids = parseGadm36Id(d.id_1);
                 return {
                   iso: d.iso,
@@ -203,7 +203,8 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: datasetId,
             success: function(res, status) {
-              var data = res.data.length >= 0 ? res.data[0] : [];
+              var data = res.rows.length >= 0 ? res.rows[0] : [];
+              console.log(data);
               resolve(data, status);
             },
             error: function(errors) {
