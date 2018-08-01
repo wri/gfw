@@ -21,19 +21,17 @@ const menuSections = [
     Component: Datasets,
     subCategories: [
       {
-        slug: 'forestChange',
+        slug: 'deforestationAlerts',
         title: 'Deforestation Alerts',
         subTitle: '(near real time)'
       },
       {
-        slug: 'landCover',
-        title: 'Fire Alerts',
-        subTitle: '(near real time)'
+        slug: 'fireAlerts',
+        title: 'Fire Alerts'
       },
       {
-        slug: 'landUse',
-        title: 'Tree Cover Change',
-        subTitle: '(near real time)'
+        slug: 'treeCoverChange',
+        title: 'Tree Cover Change'
       }
     ]
   },
