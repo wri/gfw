@@ -34,7 +34,7 @@ export const getLayerGroups = createSelector(
           ...dataset,
           ...l,
           layers:
-            dataset.layer && dataset.layer.length > 0
+            dataset && dataset.layer && dataset.layer.length > 0
               ? dataset.layer.map(layer => {
                 const decodeFunction = decodeLayersConfig[layer.id];
                 const paramsConfig = layer.layerConfig.params_config;
@@ -51,8 +51,11 @@ export const getLayerGroups = createSelector(
                         url:
                             layer.layerConfig.body.url || layer.layerConfig.url,
                         ...paramsConfig.reduce((obj, param) => {
-                          obj[param.key] = param.default;
-                          return obj;
+                          const newObj = {
+                            ...obj,
+                            [param.key]: param.default
+                          };
+                          return newObj;
                         }, {}),
                         ...l.params
                       }
@@ -61,8 +64,11 @@ export const getLayerGroups = createSelector(
                       !!sqlConfig.length && {
                       sqlParams: {
                         ...sqlConfig.reduce((obj, param) => {
-                          obj[param.key] = param.default;
-                          return obj;
+                          const newObj = {
+                            ...obj,
+                            [param.key]: param.default
+                          };
+                          return newObj;
                         }, {}),
                         ...l.decodeParams
                       },
@@ -76,18 +82,22 @@ export const getLayerGroups = createSelector(
                         ...decodeFunction.decodeParams,
                         ...decodeConfig.reduce((obj, param) => {
                           const { key } = param;
-                          obj[key] =
-                              param.default || moment().format('YYYY-MM-DD');
-                          if (key === 'startDate') {
-                            obj.minDate = param.default;
-                          }
-                          if (key === 'endDate') {
-                            obj.maxDate =
-                                param.default || moment().format('YYYY-MM-DD');
-                            obj.trimEndDate =
-                                param.default || moment().format('YYYY-MM-DD');
-                          }
-                          return obj;
+                          const newObj = {
+                            ...obj,
+                            [key]:
+                                param.default || moment().format('YYYY-MM-DD'),
+                            ...(!!(key === 'startDate') && {
+                              minDate: param.default
+                            }),
+                            ...(!!(key === 'endDate') && {
+                              maxDate:
+                                  param.default ||
+                                  moment().format('YYYY-MM-DD'),
+                              trimEndDate:
+                                  param.default || moment().format('YYYY-MM-DD')
+                            })
+                          };
+                          return newObj;
                         }, {}),
                         ...l.decodeParams
                       }
