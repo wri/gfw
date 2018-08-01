@@ -19,7 +19,7 @@ import './legend-styles.scss';
 
 class MapLegend extends Component {
   render() {
-    const { layerGroups, loading, ...rest } = this.props;
+    const { layerGroups, onChangeOrder, loading, ...rest } = this.props;
     return (
       <div className="c-legend">
         <Icons />
@@ -27,7 +27,11 @@ class MapLegend extends Component {
         {!loading &&
           layerGroups &&
           !!layerGroups.length && (
-            <Legend layerGroups={layerGroups} collapsable={false}>
+            <Legend
+              layerGroups={layerGroups}
+              collapsable={false}
+              onChangeOrder={onChangeOrder}
+            >
               {layerGroups.map((lg, i) => (
                 <LegendListItem
                   index={i}
@@ -60,7 +64,8 @@ MapLegend.defaultProps = {
 
 MapLegend.propTypes = {
   layerGroups: PropTypes.array,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  onChangeOrder: PropTypes.func
 };
 
 export default MapLegend;
