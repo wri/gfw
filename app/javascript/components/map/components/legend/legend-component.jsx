@@ -38,6 +38,7 @@ class MapLegend extends Component {
       onChangeTimeline,
       onChangeThreshold,
       onToggleLayer,
+      onChangeInfo,
       loading,
       ...rest
     } = this.props;
@@ -87,6 +88,7 @@ class MapLegend extends Component {
                                   <LayerToggle
                                     data={{ ...l, layer: l.id }}
                                     onToggle={onToggleLayer}
+                                    onInfoClick={onChangeInfo}
                                     small
                                   />
                                 </div>
@@ -148,7 +150,8 @@ MapLegend.propTypes = {
   onChangeOrder: PropTypes.func,
   onChangeTimeline: PropTypes.func,
   onChangeThreshold: PropTypes.func,
-  onToggleLayer: PropTypes.func
+  onToggleLayer: PropTypes.func,
+  onChangeInfo: PropTypes.func
 };
 
 export default MapLegend;
