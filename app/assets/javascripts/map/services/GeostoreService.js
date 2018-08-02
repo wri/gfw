@@ -10,8 +10,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
   var GET_REQUEST_ID = 'GeostoreService:get',
     SAVE_REQUEST_ID = 'GeostoreService:save';
 
-  var URL = window.gfw.config.GFW_API;
-  +'/geostore/{id}';
+  var URL = window.gfw.config.GFW_API + '/geostore/{id}';
 
   var GeostoreService = Class.extend({
     get: function(id) {
@@ -36,7 +35,6 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     save: function(geojson) {
       return new Promise(function(resolve, reject) {
         var url = new UriTemplate(URL).fillFromObject({});
-
         ds.define(SAVE_REQUEST_ID, {
           cache: false,
           url: url,
