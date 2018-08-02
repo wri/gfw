@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Legend,
   LegendItemToolbar,
-  LegendItemButtonLayers,
   LegendItemButtonOpacity,
   LegendItemButtonVisibility,
   LegendItemButtonInfo,
@@ -70,7 +69,6 @@ class MapLegend extends Component {
                     layerGroup={lg}
                     toolbar={
                       <LegendItemToolbar {...rest}>
-                        <LegendItemButtonLayers />
                         <LegendItemButtonOpacity />
                         <LegendItemButtonVisibility />
                         <LegendItemButtonInfo />
@@ -82,14 +80,14 @@ class MapLegend extends Component {
                     {lg.layers &&
                       lg.layers.length > 1 && (
                         <div className="multi-layer-menu">
-                          {lg.layers.map(l => (
+                          {lg.layers.map((l, index) => (index ? (
                             <div className="layer-toggle" key={l.id}>
                               <LayerToggle
                                 data={{ ...l, layer: l.id }}
                                 onToggle={onToggleLayer}
                               />
                             </div>
-                          ))}
+                          ) : null))}
                         </div>
                       )}
                     {params &&

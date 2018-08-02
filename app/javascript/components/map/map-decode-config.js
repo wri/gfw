@@ -192,5 +192,88 @@ export default {
       dateFormat: 'YYYY-MM-DD',
       speed: 20
     }
+  },
+  '9a370f5a-6631-44e3-a955-7f3884c27d91': {
+    decodeFunction: (
+      data,
+      w,
+      h,
+      z,
+      params = { minDate: '2015-01-01', startDate: '2016-12-01' }
+    ) => {
+      // fixed variables
+      const imgData = data;
+      const { startDate, endDate, minDate, maxDate, weeks } = params;
+
+      const minDateTime = new Date(minDate).getTime();
+      const maxDateTime = new Date(maxDate).getTime();
+      const numberOfDays = dateDiff(minDateTime, maxDateTime);
+
+      // timeline or hover effect active range
+      const startDateTime = new Date(startDate).getTime();
+      const endDateTime = new Date(endDate).getTime();
+      const activeStartDay =
+        numberOfDays - dateDiff(startDateTime, maxDateTime);
+      const activeEndDay = numberOfDays - dateDiff(endDateTime, maxDateTime);
+
+      // show specified weeks from end date
+      const rangeStartDate = weeks && numberOfDays - 7 * weeks;
+      // get start and end day
+      const startDay = activeStartDay || rangeStartDate || 0;
+      const endDay = activeEndDay || numberOfDays;
+
+      const confidenceValue = -1;
+      const pixelComponents = 4; // RGBA
+      let pixelPos = 0;
+
+      for (let i = 0; i < w; ++i) {
+        for (let j = 0; j < h; ++j) {
+          pixelPos = (j * w + i) * pixelComponents;
+          // day 0 is 2015-01-01 until latest date from fetch
+          const day = imgData[pixelPos] * 255 + imgData[pixelPos + 1];
+          const band3 = data[pixelPos + 2];
+          // get confidence
+          let confidence = -1;
+          if (data[band3] >= 100 && data[band3] < 200) {
+            confidence = 0;
+          } else if (data[band3] >= 200) {
+            confidence = 1;
+          }
+
+          if (
+            confidence >= confidenceValue &&
+            day > 0 &&
+            day >= startDay &&
+            day <= endDay
+          ) {
+            // get intensity
+            let intensity = (band3 % 100) * 50;
+            if (intensity > 255) {
+              intensity = 255;
+            }
+            if (day >= numberOfDays - 7 && day <= numberOfDays) {
+              imgData[pixelPos] = 219;
+              imgData[pixelPos + 1] = 168;
+              imgData[pixelPos + 2] = 0;
+              imgData[pixelPos + 3] = intensity;
+            } else {
+              imgData[pixelPos] = 220;
+              imgData[pixelPos + 1] = 102;
+              imgData[pixelPos + 2] = 153;
+              imgData[pixelPos + 3] = intensity;
+            }
+            continue; // eslint-disable-line
+          }
+
+          imgData[pixelPos + 3] = 0;
+        }
+      }
+    },
+    decodeParams: {
+      interval: 'weeks',
+      intervalStep: 1,
+      dateFormat: 'YYYY-MM-DD',
+      speed: 20
+    }
   }
 };
