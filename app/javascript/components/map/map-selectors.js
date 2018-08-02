@@ -44,7 +44,7 @@ export const getLayerGroups = createSelector(
                 return {
                   ...layer,
                   ...l,
-                  active: l.layer === layer.id,
+                  active: l.layers && l.layers.indexOf(layer.id) > -1,
                   ...(!!paramsConfig &&
                       !!paramsConfig.length && {
                       params: {

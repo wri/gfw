@@ -12,7 +12,7 @@ import './layer-toggle-styles.scss';
 class LayerToggle extends PureComponent {
   render() {
     const {
-      data: { name, subtitle, meta, layer, id, active },
+      data: { name, subtitle, meta, layer, dataset, active },
       onInfoClick,
       onToggle
     } = this.props;
@@ -22,7 +22,7 @@ class LayerToggle extends PureComponent {
         <Switch
           theme="theme-switch-toggle"
           checked={active}
-          onChange={value => onToggle({ id, layerId: layer }, value)}
+          onChange={value => onToggle({ dataset, layer }, value)}
         />
         <div className="c-layer-toggle__content">
           <div className="c-layer-toggle__header">

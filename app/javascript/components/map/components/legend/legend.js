@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import remove from 'lodash/remove';
 
 import modalActions from 'components/modals/meta/meta-actions';
 import mapActions from 'components/map/map-actions';
@@ -67,6 +68,22 @@ class Legend extends PureComponent {
     });
   };
 
+  onToggleLayer = (layer, value) => {
+    const { layers, setMapSettings } = this.props;
+    const { dataset } = layer;
+    const datasetIndex = layers.findIndex(l => l.dataset === dataset);
+    const newLayers = [...layers];
+    let newDataset = newLayers[datasetIndex];
+    newDataset = {
+      ...newDataset,
+      layers: !value
+        ? remove(newDataset.layers, l => l !== layer.layer)
+        : [...newDataset.layers, layer.layer]
+    };
+    newLayers[datasetIndex] = newDataset;
+    setMapSettings({ layers: newLayers || [] });
+  };
+
   onRemoveLayer = currentLayer => {
     const { setMapSettings } = this.props;
     const layers = this.props.layers.splice(0);
@@ -124,6 +141,7 @@ class Legend extends PureComponent {
       onChangeVisibility: this.onChangeVisibility,
       onChangeOrder: this.onChangeOrder,
       onChangeLayer: this.onChangeLayer,
+      onToggleLayer: this.onToggleLayer,
       onRemoveLayer: this.onRemoveLayer,
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,

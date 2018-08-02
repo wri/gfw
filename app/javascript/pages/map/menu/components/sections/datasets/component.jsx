@@ -22,7 +22,7 @@ class Datasets extends PureComponent {
                 subCat.datasets.map(d => (
                   <LayerToggle
                     key={d.id}
-                    data={d}
+                    data={{ ...d, dataset: d.id }}
                     onToggle={onToggleLayer}
                     onInfoClick={onInfoClick}
                   />
@@ -38,7 +38,7 @@ class Datasets extends PureComponent {
           : datasets.map(d => (
             <LayerToggle
               key={d.id}
-              data={d}
+              data={{ ...d, dataset: d.id }}
               onToggle={onToggleLayer}
               onInfoClick={onInfoClick}
             />

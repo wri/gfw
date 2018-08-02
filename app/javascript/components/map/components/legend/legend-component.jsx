@@ -17,6 +17,7 @@ import {
 import Loader from 'components/ui/loader';
 import Timeline from 'components/timeline';
 import Dropdown from 'components/ui/dropdown';
+import LayerToggle from 'pages/map/menu/components/layer-toggle';
 
 import './legend-styles.scss';
 
@@ -37,6 +38,7 @@ class MapLegend extends Component {
       onChangeOrder,
       onChangeTimeline,
       onChangeThreshold,
+      onToggleLayer,
       loading,
       ...rest
     } = this.props;
@@ -77,6 +79,19 @@ class MapLegend extends Component {
                     }
                   >
                     <LegendItemTypes />
+                    {lg.layers &&
+                      lg.layers.length > 1 && (
+                        <div className="multi-layer-menu">
+                          {lg.layers.map(l => (
+                            <div className="layer-toggle" key={l.id}>
+                              <LayerToggle
+                                data={{ ...l, layer: l.id }}
+                                onToggle={onToggleLayer}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     {params &&
                       (params.thresh || params.threshold) && (
                         <div className="threshold">
@@ -130,7 +145,8 @@ MapLegend.propTypes = {
   loading: PropTypes.bool,
   onChangeOrder: PropTypes.func,
   onChangeTimeline: PropTypes.func,
-  onChangeThreshold: PropTypes.func
+  onChangeThreshold: PropTypes.func,
+  onToggleLayer: PropTypes.func
 };
 
 export default MapLegend;
