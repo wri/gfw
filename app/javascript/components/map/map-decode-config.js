@@ -111,7 +111,13 @@ export default {
   },
   // GLADs
   'dd5df87f-39c2-4aeb-a462-3ef969b20b66': {
-    decodeFunction: (data, w, h, z, params = { minDate: '2015-01-01', startDate: '2016-12-01' }) => {
+    decodeFunction: (
+      data,
+      w,
+      h,
+      z,
+      params = { minDate: '2015-01-01', startDate: '2016-12-01' }
+    ) => {
       // fixed variables
       const imgData = data;
       const { startDate, endDate, minDate, maxDate, weeks } = params;
@@ -123,7 +129,8 @@ export default {
       // timeline or hover effect active range
       const startDateTime = new Date(startDate).getTime();
       const endDateTime = new Date(endDate).getTime();
-      const activeStartDay = numberOfDays - dateDiff(startDateTime, maxDateTime);
+      const activeStartDay =
+        numberOfDays - dateDiff(startDateTime, maxDateTime);
       const activeEndDay = numberOfDays - dateDiff(endDateTime, maxDateTime);
 
       // show specified weeks from end date
@@ -183,7 +190,7 @@ export default {
       interval: 'weeks',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 50
+      speed: 20
     }
   }
 };

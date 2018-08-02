@@ -9,8 +9,22 @@
 
   .timeline {
     margin-left: -23px;
-    padding: rem(15px) 0;
+    padding: rem(5px) 0 rem(25px);
     width: calc(100% + 20px);
+  }
+
+  .threshold {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    padding: rem(10px) 0;
+    color: #aaa;
+    font-size: rem(12px);
+
+    .thresh-dropdown {
+      max-width: rem(55px);
+      padding: 0 rem(5px);
+    }
   }
 }
 

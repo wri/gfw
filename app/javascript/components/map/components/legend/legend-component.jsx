@@ -16,8 +16,19 @@ import {
 
 import Loader from 'components/ui/loader';
 import Timeline from 'components/timeline';
+import Dropdown from 'components/ui/dropdown';
 
 import './legend-styles.scss';
+
+const thresholdOptions = [
+  { label: '10%', value: 10 },
+  { label: '15%', value: 15 },
+  { label: '20%', value: 20 },
+  { label: '25%', value: 25 },
+  { label: '30%', value: 30 },
+  { label: '50%', value: 50 },
+  { label: '75%', value: 75 }
+];
 
 class MapLegend extends Component {
   render() {
@@ -25,6 +36,7 @@ class MapLegend extends Component {
       layerGroups,
       onChangeOrder,
       onChangeTimeline,
+      onChangeThreshold,
       loading,
       ...rest
     } = this.props;
@@ -42,7 +54,13 @@ class MapLegend extends Component {
             >
               {layerGroups.map((lg, i) => {
                 const activeLayer = lg.layers.find(l => l.active);
-                const { decodeParams, legendConfig, decodeFunction } = activeLayer;
+                const {
+                  decodeParams,
+                  legendConfig,
+                  decodeFunction,
+                  params
+                } = activeLayer;
+
                 return (
                   <LegendListItem
                     index={i}
@@ -59,7 +77,24 @@ class MapLegend extends Component {
                     }
                   >
                     <LegendItemTypes />
-                    {decodeFunction && decodeParams &&
+                    {params &&
+                      (params.thresh || params.threshold) && (
+                        <div className="threshold">
+                          <span >{`Displaying ${activeLayer.name.toLowerCase()} with`}</span>
+                          <Dropdown
+                            className="thresh-dropdown"
+                            theme="theme-dropdown-button-small"
+                            value={params.thresh || params.threshold}
+                            options={thresholdOptions}
+                            onChange={value =>
+                              onChangeThreshold(activeLayer, value.value)
+                            }
+                          />
+                          <span>canopy density.</span>
+                        </div>
+                      )}
+                    {decodeFunction &&
+                      decodeParams &&
                       decodeParams.startDate && (
                         <Timeline
                           className="timeline"
@@ -94,7 +129,8 @@ MapLegend.propTypes = {
   layerGroups: PropTypes.array,
   loading: PropTypes.bool,
   onChangeOrder: PropTypes.func,
-  onChangeTimeline: PropTypes.func
+  onChangeTimeline: PropTypes.func,
+  onChangeThreshold: PropTypes.func
 };
 
 export default MapLegend;

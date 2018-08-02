@@ -16,6 +16,7 @@ import './dropdown-styles.scss';
 import './themes/dropdown-dark.scss';
 import './themes/dropdown-light.scss';
 import './themes/dropdown-button.scss';
+import './themes/dropdown-button-small.scss';
 
 class Dropdown extends PureComponent {
   render() {
