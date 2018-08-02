@@ -92,7 +92,7 @@ class Legend extends PureComponent {
     setMapSettings({
       layers: layers.map(l => {
         const layer = { ...l };
-        if (l.layer === currentLayer.id) {
+        if (l.layers.indexOf(currentLayer.id) > -1) {
           layer.decodeParams = {
             ...layer.decodeParams
           };
@@ -110,7 +110,7 @@ class Legend extends PureComponent {
     setMapSettings({
       layers: layers.map(l => {
         const layer = { ...l };
-        if (l.layer === currentLayer.id) {
+        if (l.layers.indexOf(currentLayer.id) > -1) {
           layer.params = {
             ...layer.params
           };

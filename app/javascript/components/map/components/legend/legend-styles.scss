@@ -9,7 +9,7 @@
 
   .timeline {
     margin-left: -23px;
-    padding: rem(5px) 0 rem(25px);
+    padding: rem(5px) rem(5px) rem(25px) 0;
     width: calc(100% + 20px);
   }
 
@@ -28,7 +28,7 @@
 
   .multi-layer-menu {
     margin-top: rem(20px);
-    padding: rem(20px) 0;
+    padding: rem(20px) 0 rem(10px);
     border-top: solid 1px $border;
 
     > div {
@@ -45,19 +45,28 @@
 .wri_api__c-legend-item {
   font-family: inherit;
 
+  .wri_api__icon-square {
+    margin-top: 3px;
+    margin-right: 11px;
+  }
+
   .wri_api__legend-item-header > h3 {
     font-size: rem(14px);
     font-weight: 400;
     color: $slate;
   }
 
-  svg {
-    fill: $warm-grey;
-    stroke: $warm-grey;
+  .wri_api__c-legend-button {
+    .wri_api__c-icon {
+      fill: $warm-grey;
+      stroke: $warm-grey;
+    }
 
     &:hover {
-      fill: $medium-grey;
-      stroke: $medium-grey;
+      .wri_api__c-icon {
+        fill: $medium-grey;
+        stroke: $medium-grey;
+      }
     }
   }
 

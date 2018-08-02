@@ -14,21 +14,23 @@ class LayerToggle extends PureComponent {
     const {
       data: { name, subtitle, meta, layer, dataset, active },
       onInfoClick,
-      onToggle
+      onToggle,
+      small
     } = this.props;
 
     return (
-      <div className="c-layer-toggle">
+      <div className={`c-layer-toggle ${small ? '-small' : ''}`}>
         <Switch
-          theme="theme-switch-toggle"
+          theme={`theme-switch-toggle ${small ? '-small' : ''}`}
           checked={active}
           onChange={value => onToggle({ dataset, layer }, value)}
+          small={small}
         />
         <div className="c-layer-toggle__content">
           <div className="c-layer-toggle__header">
             <div className="c-layer-toggle__name">{name}</div>
             <Button
-              className="theme-button-tiny square info-button"
+              className="theme-button-tiny theme-button-grey-filled square info-button"
               onClick={() => onInfoClick(meta)}
             >
               <Icon icon={infoIcon} className="info-icon" />
@@ -46,7 +48,8 @@ class LayerToggle extends PureComponent {
 LayerToggle.propTypes = {
   data: PropTypes.object,
   onInfoClick: PropTypes.func,
-  onToggle: PropTypes.func
+  onToggle: PropTypes.func,
+  small: PropTypes.bool
 };
 
 export default LayerToggle;

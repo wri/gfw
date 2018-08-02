@@ -190,7 +190,7 @@ export default {
       interval: 'weeks',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 20
+      speed: 50
     }
   },
   '9a370f5a-6631-44e3-a955-7f3884c27d91': {
@@ -273,7 +273,7 @@ export default {
       interval: 'weeks',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 20
+      speed: 50
     }
   }
 };

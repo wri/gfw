@@ -37,4 +37,16 @@
   .info-button {
     margin-left: rem(5px);
   }
+
+  /* small theme */
+  &.-small {
+    .c-layer-toggle__content {
+      margin-top: rem(-1px);
+    }
+
+    .c-layer-toggle__name {
+      font-size: rem(12px);
+      margin-top: -2px;
+    }
+  }
 }

@@ -80,14 +80,18 @@ class MapLegend extends Component {
                     {lg.layers &&
                       lg.layers.length > 1 && (
                         <div className="multi-layer-menu">
-                          {lg.layers.map((l, index) => (index ? (
-                            <div className="layer-toggle" key={l.id}>
-                              <LayerToggle
-                                data={{ ...l, layer: l.id }}
-                                onToggle={onToggleLayer}
-                              />
-                            </div>
-                          ) : null))}
+                          {lg.layers.map(
+                            (l, index) =>
+                              (index ? (
+                                <div className="layer-toggle" key={l.id}>
+                                  <LayerToggle
+                                    data={{ ...l, layer: l.id }}
+                                    onToggle={onToggleLayer}
+                                    small
+                                  />
+                                </div>
+                              ) : null)
+                          )}
                         </div>
                       )}
                     {params &&
