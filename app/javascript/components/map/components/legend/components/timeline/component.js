@@ -7,7 +7,7 @@ import Icon from 'components/ui/icon';
 import { Tooltip } from 'wri-api-components';
 
 import PlayIcon from 'assets/icons/play.svg';
-import PauseIcon from 'assets/icons/close.svg';
+import PauseIcon from 'assets/icons/pause.svg';
 
 import './styles.scss';
 

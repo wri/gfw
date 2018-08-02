@@ -14,21 +14,12 @@ import {
 } from 'wri-api-components';
 
 import Loader from 'components/ui/loader';
-import Timeline from 'components/timeline';
-import Dropdown from 'components/ui/dropdown';
-import LayerToggle from 'pages/map/menu/components/layer-toggle';
+
+import Timeline from './components/timeline';
+import LayerListMenu from './components/layer-list-menu';
+import ThresholdSelector from './components/threshold-selector';
 
 import './legend-styles.scss';
-
-const thresholdOptions = [
-  { label: '10%', value: 10 },
-  { label: '15%', value: 15 },
-  { label: '20%', value: 20 },
-  { label: '25%', value: 25 },
-  { label: '30%', value: 30 },
-  { label: '50%', value: 50 },
-  { label: '75%', value: 75 }
-];
 
 class MapLegend extends Component {
   render() {
@@ -78,39 +69,15 @@ class MapLegend extends Component {
                     }
                   >
                     <LegendItemTypes />
-                    {lg.layers &&
-                      lg.layers.length > 1 && (
-                        <div className="multi-layer-menu">
-                          {lg.layers.map(
-                            (l, index) =>
-                              (index ? (
-                                <div className="layer-toggle" key={l.id}>
-                                  <LayerToggle
-                                    data={{ ...l, layer: l.id }}
-                                    onToggle={onToggleLayer}
-                                    onInfoClick={onChangeInfo}
-                                    small
-                                  />
-                                </div>
-                              ) : null)
-                          )}
-                        </div>
-                      )}
                     {params &&
                       (params.thresh || params.threshold) && (
-                        <div className="threshold">
-                          <span >{`Displaying ${activeLayer.name.toLowerCase()} with`}</span>
-                          <Dropdown
-                            className="thresh-dropdown"
-                            theme="theme-dropdown-button-small"
-                            value={params.thresh || params.threshold}
-                            options={thresholdOptions}
-                            onChange={value =>
-                              onChangeThreshold(activeLayer, value.value)
-                            }
-                          />
-                          <span>canopy density.</span>
-                        </div>
+                        <ThresholdSelector
+                          className="threshold"
+                          name={activeLayer.name.toLowerCase()}
+                          threshold={params.thresh || params.threshold}
+                          onChange={onChangeThreshold}
+                          layer={activeLayer}
+                        />
                       )}
                     {decodeFunction &&
                       decodeParams &&
@@ -126,6 +93,15 @@ class MapLegend extends Component {
                             legendConfig.items &&
                             legendConfig.items[0].color
                           }
+                        />
+                      )}
+                    {lg.layers &&
+                      lg.layers.length > 1 && (
+                        <LayerListMenu
+                          className="sub-layer-menu"
+                          layers={lg.layers}
+                          onToggle={onToggleLayer}
+                          onInfoClick={onChangeInfo}
                         />
                       )}
                   </LegendListItem>

@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import NoContent from 'components/ui/no-content';
 
-import LayerToggle from 'pages/map/menu/components/layer-toggle';
+import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import MenuBlock from 'pages/map/menu/components/menu-block';
 
 import './styles.scss';

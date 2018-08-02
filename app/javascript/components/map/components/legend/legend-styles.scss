@@ -7,33 +7,21 @@
     border: 0;
   }
 
+  .threshold {
+    margin-bottom: rem(15px);
+  }
+
   .timeline {
     margin-left: -23px;
-    padding: rem(5px) rem(5px) rem(25px) 0;
+    padding: 0 rem(5px) 0 0;
     width: calc(100% + 20px);
+    margin-bottom: rem(40px);
   }
 
-  .threshold {
-    display: flex;
-    flex-flow: row wrap;
-    padding: rem(10px) 0;
-    color: #aaa;
-    font-size: rem(12px);
-
-    .thresh-dropdown {
-      max-width: rem(55px);
-      padding: 0 rem(5px);
-    }
-  }
-
-  .multi-layer-menu {
-    margin-top: rem(20px);
-    padding: rem(20px) 0 rem(10px);
+  .sub-layer-menu {
     border-top: solid 1px $border;
-
-    > div {
-      margin-bottom: rem(10px);
-    }
+    padding-top: rem(15px);
+    margin-bottom: rem(10px);
   }
 }
 
@@ -85,6 +73,10 @@
   &:last-child {
     margin-right: 0;
   }
+}
+
+.wri_api__c-legend-item-types {
+  margin-bottom: rem(15px);
 }
 
 /* legend tooltip styles */
