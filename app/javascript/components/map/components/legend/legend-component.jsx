@@ -18,6 +18,7 @@ import Loader from 'components/ui/loader';
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
 import ThresholdSelector from './components/threshold-selector';
+import LayerSelectorMenu from './components/layer-selector-menu';
 
 import './legend-styles.scss';
 
@@ -25,10 +26,12 @@ class MapLegend extends Component {
   render() {
     const {
       layerGroups,
+      layers,
       onChangeOrder,
       onChangeTimeline,
       onChangeThreshold,
       onToggleLayer,
+      onChangeLayer,
       onChangeInfo,
       loading,
       ...rest
@@ -79,6 +82,15 @@ class MapLegend extends Component {
                           layer={activeLayer}
                         />
                       )}
+                    {lg.layers &&
+                      lg.layers.length > 1 && (
+                        <LayerSelectorMenu
+                          className="layer-selector"
+                          layerGroup={lg}
+                          layers={layers}
+                          onChange={onChangeLayer}
+                        />
+                      )}
                     {decodeFunction &&
                       decodeParams &&
                       decodeParams.startDate && (
@@ -127,7 +139,9 @@ MapLegend.propTypes = {
   onChangeTimeline: PropTypes.func,
   onChangeThreshold: PropTypes.func,
   onToggleLayer: PropTypes.func,
-  onChangeInfo: PropTypes.func
+  onChangeLayer: PropTypes.func,
+  onChangeInfo: PropTypes.func,
+  layers: PropTypes.array
 };
 
 export default MapLegend;

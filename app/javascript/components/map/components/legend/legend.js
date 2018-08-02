@@ -71,6 +71,23 @@ class Legend extends PureComponent {
     setMapSettings({ layers: newLayers || [] });
   };
 
+  onChangeLayer = (layerGroup, newLayerKey) => {
+    const { setMapSettings, layers } = this.props;
+    setMapSettings({
+      layers: layers.map(l => {
+        const layer = l;
+        if (l.dataset === layerGroup.dataset) {
+          layer.layers = [
+            layerGroup.layers.find(
+              lg => lg.applicationConfig.selectorConfig.value === newLayerKey
+            ).id
+          ];
+        }
+        return layer;
+      })
+    });
+  };
+
   onRemoveLayer = currentLayer => {
     const { setMapSettings } = this.props;
     const layers = this.props.layers.splice(0);
@@ -128,6 +145,7 @@ class Legend extends PureComponent {
       onChangeVisibility: this.onChangeVisibility,
       onChangeOrder: this.onChangeOrder,
       onToggleLayer: this.onToggleLayer,
+      onChangeLayer: this.onChangeLayer,
       onRemoveLayer: this.onRemoveLayer,
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,

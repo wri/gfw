@@ -5,7 +5,7 @@ import LayerToggle from '../layer-toggle';
 
 import './styles.scss';
 
-class ThresholdSelector extends PureComponent {
+class LayerListMenu extends PureComponent {
   render() {
     const { className, layers, onToggle, onInfoClick } = this.props;
 
@@ -29,11 +29,11 @@ class ThresholdSelector extends PureComponent {
   }
 }
 
-ThresholdSelector.propTypes = {
+LayerListMenu.propTypes = {
   className: PropTypes.string,
   layers: PropTypes.array,
   onToggle: PropTypes.func,
   onInfoClick: PropTypes.func
 };
 
-export default ThresholdSelector;
+export default LayerListMenu;
