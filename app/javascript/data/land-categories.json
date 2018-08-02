@@ -3,7 +3,7 @@
     "label": "Mining concessions",
     "value": "mining",
     "metaKey": "gfw_mining",
-    "global": false
+    "global": true
   },
   {
     "label": "Protected Areas",
@@ -21,7 +21,7 @@
     "label": "Tiger Conservation Landscapes",
     "value": "tiger_cl",
     "metaKey": "tiger_conservation_landscapes",
-    "global": false
+    "global": true
   },
   {
     "label": "Alliance for Zero Extinction",
@@ -33,7 +33,7 @@
     "label": "Indigenous Lands",
     "value": "landmark",
     "metaKey": "gfw_land_rights",
-    "global": false
+    "global": true
   },
   {
     "label": "Indonesia peat lands",
@@ -51,18 +51,18 @@
     "label": "Oil palm concessions",
     "value": "oil_palm",
     "metaKey": "gfw_oil_palm",
-    "global": false
+    "global": true
   },
   {
     "label": "Wood fiber concessions",
     "value": "wood_fiber",
     "metaKey": "gfw_wood_fiber",
-    "global": false
+    "global": true
   },
   {
     "label": "Managed forests",
     "value": "managed_forests",
     "metaKey": "gfw_logging",
-    "global": false
+    "global": true
   }
 ]

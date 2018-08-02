@@ -3,7 +3,7 @@
     "label": "Plantations",
     "value": "plantations",
     "metaKey": "gfw_plantations",
-    "global": false
+    "global": true
   },
   {
     "label": "Intact Forest Landscapes",
@@ -15,12 +15,12 @@
     "label": "Primary Forests",
     "value": "primary_forest",
     "metaKey": "primary_forest",
-    "global": false
+    "global": true
   },
   {
     "label": "Mangrove forests",
     "value": "mangroves",
     "metaKey": "mangrove_2010_gmw",
-    "global": false
+    "global": true
   }
 ]
