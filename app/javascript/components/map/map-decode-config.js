@@ -9,7 +9,9 @@ function dateDiff(firstDate, secondDate) {
 export default {
   // Tree cover 2010
   '78747ea1-34a9-4aa7-b099-bdb8948200f4': {
-    decodeFunction: (data, w, h, z, params = {}) => {
+    decodeFunction: (data, w, h, z) => {
+      'use asm';
+
       const components = 4;
       const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
       const imgData = data;
@@ -37,7 +39,9 @@ export default {
   },
   // Tree cover 2000
   'c05c32fd-289c-4b20-8d73-dc2458234e04': {
-    decodeFunction: (data, w, h, z, params = {}) => {
+    decodeFunction: (data, w, h, z) => {
+      'use asm';
+
       const components = 4;
       const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
       const imgData = data;
@@ -118,6 +122,8 @@ export default {
       z,
       params = { minDate: '2015-01-01', startDate: '2016-12-01' }
     ) => {
+      'use asm';
+
       // fixed variables
       const imgData = data;
       const { startDate, endDate, minDate, maxDate, weeks } = params;
@@ -201,6 +207,8 @@ export default {
       z,
       params = { minDate: '2015-01-01', startDate: '2016-12-01' }
     ) => {
+      'use asm';
+
       // fixed variables
       const imgData = data;
       const { startDate, endDate, minDate, maxDate, weeks } = params;

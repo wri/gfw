@@ -66,13 +66,21 @@ export const getLayerGroups = createSelector(
                         ...sqlConfig.reduce((obj, param) => {
                           const newObj = {
                             ...obj,
-                            [param.key]: param.default
+                            [param.key]: param.key_params.reduce(
+                              (subObj, item) => {
+                                const keyValues = {
+                                  ...subObj,
+                                  [item.key]: null
+                                };
+                                return keyValues;
+                              },
+                              {}
+                            )
                           };
                           return newObj;
                         }, {}),
-                        ...l.decodeParams
-                      },
-                      ...l.sqlParams
+                        ...l.sqlParams
+                      }
                     }),
                   ...decodeFunction,
                   ...(!!decodeConfig &&
