@@ -27,6 +27,6 @@ export const getSelectedLayer = createSelector(getActiveLayer, layer => {
 
 export const getLayerSelectorProps = createStructuredSelector({
   options: getLayerOptions,
-  activeLayer: getActiveLayer,
+  activeLayerd: getActiveLayer,
   selectedOption: getSelectedLayer
 });

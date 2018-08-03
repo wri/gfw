@@ -49,13 +49,8 @@ class MapLegend extends Component {
               onChangeOrder={onChangeOrder}
             >
               {layerGroups.map((lg, i) => {
-                const activeLayer = lg.layers.find(l => l.active);
-                const {
-                  decodeParams,
-                  legendConfig,
-                  decodeFunction,
-                  params
-                } = activeLayer;
+                const activeLayer = lg.layers.find(l => !!l.active);
+                const { legendConfig, params, timelineConfig } = activeLayer;
 
                 return (
                   <LegendListItem
@@ -72,11 +67,11 @@ class MapLegend extends Component {
                     }
                   >
                     <LegendItemTypes />
-                    {params &&
+                    {activeLayer &&
+                      params &&
                       (params.thresh || params.threshold) && (
                         <ThresholdSelector
                           className="threshold"
-                          name={activeLayer.name.toLowerCase()}
                           threshold={params.thresh || params.threshold}
                           onChange={onChangeThreshold}
                           layer={activeLayer}
@@ -91,22 +86,20 @@ class MapLegend extends Component {
                           onChange={onChangeLayer}
                         />
                       )}
-                    {decodeFunction &&
-                      decodeParams &&
-                      decodeParams.startDate && (
-                        <Timeline
-                          className="timeline"
-                          handleChange={range =>
-                            onChangeTimeline(activeLayer, range)
-                          }
-                          {...decodeParams}
-                          customColor={
-                            legendConfig &&
-                            legendConfig.items &&
-                            legendConfig.items[0].color
-                          }
-                        />
-                      )}
+                    {timelineConfig && (
+                      <Timeline
+                        className="timeline"
+                        handleChange={range =>
+                          onChangeTimeline(activeLayer, range)
+                        }
+                        {...timelineConfig}
+                        customColor={
+                          legendConfig &&
+                          legendConfig.items &&
+                          legendConfig.items[0].color
+                        }
+                      />
+                    )}
                     {lg.layers &&
                       lg.layers.length > 1 && (
                         <LayerListMenu

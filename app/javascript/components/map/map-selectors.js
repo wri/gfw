@@ -1,14 +1,42 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
-import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
 
 import initialState from './map-initial-state';
 import decodeLayersConfig from './map-decode-config';
 
 // get list data
 const getMapUrlState = state => (state.query && state.query.map) || null;
-const getDatasets = state => state.datasets;
+const getDatasets = state => state.datasets.filter(d => !isEmpty(d.layer));
 const getLoading = state => state.loading;
+
+const reduceParams = params => {
+  if (!params) return null;
+  return params.reduce((obj, param) => {
+    const newObj = {
+      ...obj,
+      [param.key]: param.default
+    };
+    return newObj;
+  }, {});
+};
+
+const reduceSqlParams = params => {
+  if (!params) return null;
+  return params.reduce((obj, param) => {
+    const newObj = {
+      ...obj,
+      [param.key]: param.key_params.reduce((subObj, item) => {
+        const keyValues = {
+          ...subObj,
+          [item.key]: item.value
+        };
+        return keyValues;
+      }, {})
+    };
+    return newObj;
+  }, {});
+};
 
 // get map settings
 export const getMapSettings = createSelector(getMapUrlState, urlState => ({
@@ -21,106 +49,110 @@ export const getLayers = createSelector(
   settings => settings.layers
 );
 
+export const getDatasetIds = createSelector([getLayers], layers => {
+  if (!layers || !layers.length) return null;
+  return layers.map(l => l.dataset);
+});
+
+export const getActiveDatasets = createSelector(
+  [getDatasets, getDatasetIds],
+  (datasets, datasetIds) => {
+    if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
+    return datasets.filter(d => datasetIds.indexOf(d.id) > -1);
+  }
+);
+
+export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
+  if (isEmpty(datasets)) return null;
+  return datasets.map(d => {
+    const { layer } = d;
+    return {
+      ...d,
+      layers:
+        layer &&
+        layer.map(l => {
+          const {
+            params_config,
+            decode_config,
+            sql_config,
+            body,
+            url
+          } = l.layerConfig;
+          const decodeFunction = decodeLayersConfig[l.id];
+          return {
+            ...l,
+            ...(!isEmpty(params_config) && {
+              params: {
+                url: body.url || url,
+                ...reduceParams(params_config)
+              }
+            }),
+            ...(!isEmpty(sql_config) && {
+              sqlParams: {
+                ...reduceSqlParams(sql_config)
+              }
+            }),
+            ...decodeFunction,
+            ...(!isEmpty(decode_config) && {
+              decodeParams: {
+                ...(decodeFunction && decodeFunction.decodeParams),
+                ...reduceParams(decode_config)
+              }
+            })
+          };
+        })
+    };
+  });
+});
+
 export const getLayerGroups = createSelector(
-  [getDatasets, getLayers],
+  [getParsedDatasets, getLayers],
   (datasets, layers) => {
-    if (!datasets || !datasets.length || !layers || !layers.length) return null;
+    if (isEmpty(datasets) || isEmpty(layers)) return null;
 
-    return layers
-      .map(l => {
-        const dataset = datasets.find(d => d.id === l.dataset);
-
-        return {
-          ...dataset,
+    return datasets.map(d => {
+      const layerConfig = layers.find(l => l.dataset === d.id) || {};
+      const { params, sqlParams, decodeParams } = layerConfig;
+      return {
+        ...d,
+        ...layerConfig,
+        layers: d.layers.map(l => ({
           ...l,
-          layers:
-            dataset && dataset.layer && dataset.layer.length > 0
-              ? dataset.layer.map(layer => {
-                const decodeFunction = decodeLayersConfig[layer.id];
-                const paramsConfig = layer.layerConfig.params_config;
-                const decodeConfig = layer.layerConfig.decode_config;
-                const sqlConfig = layer.layerConfig.sql_config;
-
-                return {
-                  ...layer,
-                  ...l,
-                  active: l.layers && l.layers.indexOf(layer.id) > -1,
-                  ...(!!paramsConfig &&
-                      !!paramsConfig.length && {
-                      params: {
-                        url:
-                            layer.layerConfig.body.url || layer.layerConfig.url,
-                        ...paramsConfig.reduce((obj, param) => {
-                          const newObj = {
-                            ...obj,
-                            [param.key]: param.default
-                          };
-                          return newObj;
-                        }, {}),
-                        ...l.params
-                      }
-                    }),
-                  ...(!!sqlConfig &&
-                      !!sqlConfig.length && {
-                      sqlParams: {
-                        ...sqlConfig.reduce((obj, param) => {
-                          const newObj = {
-                            ...obj,
-                            [param.key]: param.key_params.reduce(
-                              (subObj, item) => {
-                                const keyValues = {
-                                  ...subObj,
-                                  [item.key]: null
-                                };
-                                return keyValues;
-                              },
-                              {}
-                            )
-                          };
-                          return newObj;
-                        }, {}),
-                        ...l.sqlParams
-                      }
-                    }),
-                  ...decodeFunction,
-                  ...(!!decodeConfig &&
-                      !!decodeConfig.length &&
-                      !!decodeFunction && {
-                      decodeParams: {
-                        ...decodeFunction.decodeParams,
-                        ...decodeConfig.reduce((obj, param) => {
-                          const { key } = param;
-                          const newObj = {
-                            ...obj,
-                            [key]:
-                                param.default || moment().format('YYYY-MM-DD'),
-                            ...(!!(key === 'startDate') && {
-                              minDate: param.default
-                            }),
-                            ...(!!(key === 'endDate') && {
-                              maxDate:
-                                  param.default ||
-                                  moment().format('YYYY-MM-DD'),
-                              trimEndDate:
-                                  param.default || moment().format('YYYY-MM-DD')
-                            })
-                          };
-                          return newObj;
-                        }, {}),
-                        ...l.decodeParams
-                      }
-                    })
-                };
-              })
-              : []
-        };
-      })
-      .filter(l => l.layers && l.layers.length > 0);
+          ...layerConfig,
+          active:
+            layerConfig &&
+            layerConfig.layers &&
+            layerConfig.layers.indexOf(l.id) > -1,
+          params: {
+            ...l.params,
+            ...params
+          },
+          sqlParams: {
+            ...l.sqlParams,
+            ...sqlParams
+          },
+          decodeParams: {
+            ...l.decodeParams,
+            ...decodeParams
+          },
+          ...(l.decodeParams &&
+            l.decodeParams.startDate && {
+              timelineConfig: {
+                ...l.decodeParams,
+                minDate: l.decodeParams && l.decodeParams.startDate,
+                maxDate: l.decodeParams && l.decodeParams.endDate,
+                trimEndDate: l.decodeParams && l.decodeParams.endDate,
+                ...decodeParams
+              }
+            })
+        }))
+      };
+    });
   }
 );
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
-  if (!layerGroups || !layerGroups.length) return null;
+  if (isEmpty(layerGroups)) return null;
   return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
 });
 

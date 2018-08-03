@@ -17,17 +17,18 @@ const options = [
 
 class ThresholdSelector extends PureComponent {
   render() {
-    const { name, threshold, onChange, layer, className } = this.props;
+    const { threshold, onChange, layer, className } = this.props;
 
     return (
       <div className={`c-threshold-selector ${className || ''}`}>
-        <span>{`Displaying ${name} with`}</span>
+        <span>{`Displaying ${layer[0] &&
+          layer[0].name.toLowerCase()} with`}</span>
         <Dropdown
           className="thresh-dropdown"
           theme="theme-dropdown-button-small"
           value={threshold}
           options={options}
-          onChange={value => onChange(layer, value.value)}
+          onChange={value => onChange(layer[0], value.value)}
         />
         <span>canopy density.</span>
       </div>
@@ -37,10 +38,9 @@ class ThresholdSelector extends PureComponent {
 
 ThresholdSelector.propTypes = {
   className: PropTypes.string,
-  name: PropTypes.string,
   threshold: PropTypes.number,
   onChange: PropTypes.func,
-  layer: PropTypes.object
+  layer: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 
 export default ThresholdSelector;

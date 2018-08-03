@@ -7,7 +7,7 @@ import Icon from 'components/ui/icon';
 
 import infoIcon from 'assets/icons/info.svg';
 
-import './layer-toggle-styles.scss';
+import './styles.scss';
 
 class LayerToggle extends PureComponent {
   render() {
