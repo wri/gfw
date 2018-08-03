@@ -39,7 +39,7 @@ class MapLegend extends Component {
     return (
       <div className="c-legend">
         <Icons />
-        {loading && <Loader />}
+        {loading && <Loader className="datasets-loader" />}
         {!loading &&
           layerGroups &&
           !!layerGroups.length && (

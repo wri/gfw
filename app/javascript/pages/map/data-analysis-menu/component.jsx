@@ -18,19 +18,20 @@ class DataAnalysisMenu extends PureComponent {
       className,
       activeTab = 'data',
       analysis,
-      menuSectionData
+      menuSectionData,
+      search
     } = this.props;
     const links = [
       {
         label: 'DATA',
         icon: landTreeIcon,
-        path: '/v2/map/data',
+        path: `/v2/map/data${search ? `?${search}` : ''}`,
         active: activeTab === 'data'
       },
       {
         label: 'ANALYSIS',
         icon: truckIcon,
-        path: '/v2/map/analysis',
+        path: `/v2/map/analysis${search ? `?${search}` : ''}`,
         active: activeTab === 'analysis'
       }
     ];
@@ -74,7 +75,8 @@ DataAnalysisMenu.propTypes = {
   activeTab: PropTypes.string,
   className: PropTypes.string,
   analysis: PropTypes.object,
-  menuSectionData: PropTypes.object
+  menuSectionData: PropTypes.object,
+  search: PropTypes.string
 };
 
 export default DataAnalysisMenu;

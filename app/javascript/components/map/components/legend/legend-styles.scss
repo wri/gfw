@@ -7,6 +7,11 @@
     border: 0;
   }
 
+  .datasets-loader {
+    position: relative;
+    min-height: rem(200px);
+  }
+
   .threshold {
     margin-bottom: rem(15px);
   }
