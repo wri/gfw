@@ -7,6 +7,7 @@
   background: $white;
   transition: transform 0.3s linear;
   z-index: 2;
+  overflow-y: scroll;
 
   &.-relocate {
     transform: translateX(292px);
