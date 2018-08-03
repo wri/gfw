@@ -17,7 +17,7 @@ class LayerSelectorMenu extends PureComponent {
     } = this.props;
 
     return (
-      <div className={`c-threshold-selector ${className || ''}`}>
+      <div className={`c-layer-selector-menu ${className || ''}`}>
         <span>{`Displaying ${name} for`}</span>
         <Dropdown
           className="layer-selector"

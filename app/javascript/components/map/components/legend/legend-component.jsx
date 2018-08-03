@@ -49,7 +49,8 @@ class MapLegend extends Component {
               onChangeOrder={onChangeOrder}
             >
               {layerGroups.map((lg, i) => {
-                const activeLayer = lg.layers.find(l => !!l.active);
+                const { isSelectorLayer, isMultiLayer } = lg;
+                const activeLayer = lg.layers.find(l => !!l.active) || {};
                 const { legendConfig, params, timelineConfig } = activeLayer;
 
                 return (
@@ -77,15 +78,14 @@ class MapLegend extends Component {
                           layer={activeLayer}
                         />
                       )}
-                    {lg.layers &&
-                      lg.layers.length > 1 && (
-                        <LayerSelectorMenu
-                          className="layer-selector"
-                          layerGroup={lg}
-                          layers={layers}
-                          onChange={onChangeLayer}
-                        />
-                      )}
+                    {isSelectorLayer && (
+                      <LayerSelectorMenu
+                        className="layer-selector"
+                        layerGroup={lg}
+                        layers={layers}
+                        onChange={onChangeLayer}
+                      />
+                    )}
                     {timelineConfig && (
                       <Timeline
                         className="timeline"
@@ -100,15 +100,14 @@ class MapLegend extends Component {
                         }
                       />
                     )}
-                    {lg.layers &&
-                      lg.layers.length > 1 && (
-                        <LayerListMenu
-                          className="sub-layer-menu"
-                          layers={lg.layers}
-                          onToggle={onToggleLayer}
-                          onInfoClick={onChangeInfo}
-                        />
-                      )}
+                    {isMultiLayer && (
+                      <LayerListMenu
+                        className="sub-layer-menu"
+                        layers={lg.layers}
+                        onToggle={onToggleLayer}
+                        onInfoClick={onChangeInfo}
+                      />
+                    )}
                   </LegendListItem>
                 );
               })}

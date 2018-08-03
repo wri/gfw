@@ -65,9 +65,12 @@ export const getActiveDatasets = createSelector(
 export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
   if (isEmpty(datasets)) return null;
   return datasets.map(d => {
-    const { layer } = d;
+    const { layer, metadata } = d;
+    const appMeta = metadata.find(m => m.application === 'gfw');
+
     return {
       ...d,
+      ...(appMeta && appMeta.info),
       layers:
         layer &&
         layer.map(l => {

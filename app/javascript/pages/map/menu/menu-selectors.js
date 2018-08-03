@@ -93,7 +93,12 @@ export const getSections = createSelector(getDatasets, datasets =>
             name: name || d.name,
             description: source,
             id: d.id,
-            layer: d.layer && d.layer.length && d.layer[0].id,
+            layer:
+              d.layer &&
+              d.layer.length &&
+              d.layer.find(
+                l => l.applicationConfig && l.applicationConfig.default
+              ).id,
             tags: flatten(d.vocabulary.map(v => v.tags))
           };
         });
