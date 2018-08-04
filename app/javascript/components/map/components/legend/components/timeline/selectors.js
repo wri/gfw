@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import range from 'lodash/range';
 
+import { dateDiffInDays } from 'utils/dates';
+
 const getDates = state => state.dates;
 
 export const getDatesAsNumbers = createSelector(getDates, dates => {
@@ -9,10 +11,10 @@ export const getDatesAsNumbers = createSelector(getDates, dates => {
   const { minDate, maxDate, startDate, endDate, trimEndDate } = dates;
   return {
     min: 0,
-    max: moment(maxDate).diff(minDate, 'days'),
-    start: moment(startDate).diff(minDate, 'days'),
-    end: moment(endDate).diff(minDate, 'days'),
-    trim: moment(trimEndDate).diff(minDate, 'days')
+    max: dateDiffInDays(maxDate, minDate),
+    start: dateDiffInDays(startDate, minDate),
+    end: dateDiffInDays(endDate, minDate),
+    trim: dateDiffInDays(trimEndDate, minDate)
   };
 });
 

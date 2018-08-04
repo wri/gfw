@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'wri-api-components';
 
@@ -28,7 +28,7 @@ class MapComponent extends PureComponent {
     } = this.props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Map
           customClass="c-map"
           onReady={map => {
@@ -52,7 +52,7 @@ class MapComponent extends PureComponent {
           error && (
             <NoContent message="An error occured. Please try again later." />
           )}
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

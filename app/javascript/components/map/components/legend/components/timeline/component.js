@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+
+import { addToDate, formatDate } from 'utils/dates';
 
 import { Range, Handle } from 'rc-slider';
 import Icon from 'components/ui/icon';
@@ -15,9 +16,8 @@ class Timeline extends Component {
   renderHandle = props => {
     const { minDate, isPlaying, dateFormat } = this.props;
     const { value, dragging, index, ...restProps } = props;
-    const date = moment(minDate)
-      .add(value, 'days')
-      .format(dateFormat);
+    const date = formatDate(addToDate(minDate, value), dateFormat);
+
     return (
       <Tooltip
         key={index}
@@ -50,7 +50,6 @@ class Timeline extends Component {
       endDate,
       trimEndDate,
       color,
-      formatDate,
       marks,
       customColor,
       trackStyle,
@@ -60,7 +59,10 @@ class Timeline extends Component {
     return (
       <div className={`c-timeline ${className}`}>
         <button className="play-btn" onClick={handleTogglePlay}>
-          <Icon icon={isPlaying ? PauseIcon : PlayIcon} />
+          <Icon
+            className={isPlaying ? 'pause' : 'play'}
+            icon={isPlaying ? PauseIcon : PlayIcon}
+          />
         </button>
         <Range
           className="range"

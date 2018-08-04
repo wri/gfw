@@ -1,10 +1,6 @@
 import { scalePow } from 'd3-scale';
 
-function dateDiff(firstDate, secondDate) {
-  // Take the difference between the dates and divide by milliseconds per day.
-  // Round to nearest whole number to deal with DST.
-  return Math.round((secondDate - firstDate) / (1000 * 60 * 60 * 24));
-}
+import { dateDiffInDays } from 'utils/dates';
 
 export default {
   // Tree cover 2010
@@ -128,16 +124,17 @@ export default {
       const imgData = data;
       const { startDate, endDate, minDate, maxDate, weeks } = params;
 
-      const minDateTime = new Date(minDate).getTime();
-      const maxDateTime = new Date(maxDate).getTime();
-      const numberOfDays = dateDiff(minDateTime, maxDateTime);
+      const minDateTime = new Date(minDate);
+      const maxDateTime = new Date(maxDate);
+      const numberOfDays = dateDiffInDays(minDateTime, maxDateTime);
 
       // timeline or hover effect active range
-      const startDateTime = new Date(startDate).getTime();
-      const endDateTime = new Date(endDate).getTime();
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
       const activeStartDay =
-        numberOfDays - dateDiff(startDateTime, maxDateTime);
-      const activeEndDay = numberOfDays - dateDiff(endDateTime, maxDateTime);
+        numberOfDays - dateDiffInDays(startDateTime, maxDateTime);
+      const activeEndDay =
+        numberOfDays - dateDiffInDays(endDateTime, maxDateTime);
 
       // show specified weeks from end date
       const rangeStartDate = weeks && numberOfDays - 7 * weeks;
@@ -213,16 +210,17 @@ export default {
       const imgData = data;
       const { startDate, endDate, minDate, maxDate, weeks } = params;
 
-      const minDateTime = new Date(minDate).getTime();
-      const maxDateTime = new Date(maxDate).getTime();
-      const numberOfDays = dateDiff(minDateTime, maxDateTime);
+      const minDateTime = new Date(minDate);
+      const maxDateTime = new Date(maxDate);
+      const numberOfDays = dateDiffInDays(minDateTime, maxDateTime);
 
       // timeline or hover effect active range
-      const startDateTime = new Date(startDate).getTime();
-      const endDateTime = new Date(endDate).getTime();
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
       const activeStartDay =
-        numberOfDays - dateDiff(startDateTime, maxDateTime);
-      const activeEndDay = numberOfDays - dateDiff(endDateTime, maxDateTime);
+        numberOfDays - dateDiffInDays(startDateTime, maxDateTime);
+      const activeEndDay =
+        numberOfDays - dateDiffInDays(endDateTime, maxDateTime);
 
       // show specified weeks from end date
       const rangeStartDate = weeks && numberOfDays - 7 * weeks;

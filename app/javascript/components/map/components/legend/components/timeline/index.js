@@ -1,69 +1,12 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import isEqual from 'lodash/isEqual';
+
+import { addToDate, dateDiffInDays, formatDate } from 'utils/dates';
 
 import TimelineComponent from './component';
 import { getTicks } from './selectors';
-
-const requestAnimFrame = (function () {
-  return (
-    window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function (/* function */ callback, /* DOMElement */ element) {
-      window.setTimeout(callback, 1000 / 60);
-    }
-  );
-}());
-
-const requestTimeout = function (fn, delay) {
-  if (
-    !window.requestAnimationFrame &&
-    !window.webkitRequestAnimationFrame &&
-    !(
-      window.mozRequestAnimationFrame && window.mozCancelRequestAnimationFrame
-    ) && // Firefox 5 ships without cancel support
-    !window.oRequestAnimationFrame &&
-    !window.msRequestAnimationFrame
-  ) {
-    return window.setTimeout(fn, delay);
-  }
-
-  let start = new Date().getTime(),
-    handle = new Object();
-
-  function loop() {
-    let current = new Date().getTime(),
-      delta = current - start;
-
-    delta >= delay ? fn.call() : (handle.value = requestAnimFrame(loop));
-  }
-
-  handle.value = requestAnimFrame(loop);
-  return handle;
-};
-
-const clearRequestTimeout = function (handle) {
-  window.cancelAnimationFrame
-    ? window.cancelAnimationFrame(handle.value)
-    : window.webkitCancelAnimationFrame
-      ? window.webkitCancelAnimationFrame(handle.value)
-      : window.webkitCancelRequestAnimationFrame
-        ? window.webkitCancelRequestAnimationFrame(
-          handle.value
-        ) /* Support for legacy API */
-        : window.mozCancelRequestAnimationFrame
-          ? window.mozCancelRequestAnimationFrame(handle.value)
-          : window.oCancelRequestAnimationFrame
-            ? window.oCancelRequestAnimationFrame(handle.value)
-            : window.msCancelRequestAnimationFrame
-              ? window.msCancelRequestAnimationFrame(handle.value)
-              : clearTimeout(handle);
-};
 
 const mapStateToProps = (
   state,
@@ -89,10 +32,10 @@ class TimelineContainer extends PureComponent {
     this.state = {
       isPlaying: false,
       min: 0,
-      max: moment(maxDate).diff(minDate, 'days'),
-      start: moment(startDate).diff(minDate, 'days'),
-      end: moment(endDate).diff(minDate, 'days'),
-      trim: moment(trimEndDate).diff(minDate, 'days')
+      max: dateDiffInDays(maxDate, minDate),
+      start: dateDiffInDays(startDate, minDate),
+      end: dateDiffInDays(endDate, minDate),
+      trim: dateDiffInDays(trimEndDate, minDate)
     };
   }
 
@@ -109,18 +52,20 @@ class TimelineContainer extends PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    this.stopTimeline();
+  }
+
   incrementTimeline = nextState => {
     const { speed, minDate, intervalStep, interval } = this.props;
     const { start, end, trim } = nextState;
 
-    this.interval = requestTimeout(() => {
-      const currentEndDate = moment(minDate)
-        .add(end, 'days')
-        .format('YYYY-MM-DD');
-      let newEndDate = moment(currentEndDate)
-        .add(intervalStep, interval)
-        .format('YYYY-MM-DD');
-      newEndDate = moment(newEndDate).diff(minDate, 'days');
+    this.interval = setTimeout(() => {
+      const currentEndDate = formatDate(addToDate(minDate, end));
+      let newEndDate = dateDiffInDays(
+        formatDate(addToDate(currentEndDate, intervalStep, interval)),
+        minDate
+      );
       if (end === trim) {
         newEndDate = start;
       } else if (newEndDate >= trim) {
@@ -136,8 +81,7 @@ class TimelineContainer extends PureComponent {
   };
 
   stopTimeline = () => {
-    // clearInterval(this.interval);
-    clearRequestTimeout(this.interval);
+    clearInterval(this.interval);
   };
 
   handleTogglePlay = () => {
@@ -156,12 +100,8 @@ class TimelineContainer extends PureComponent {
   };
 
   formatRange = range => {
-    const { dateFormat, minDate } = this.props;
-    return range.map(r =>
-      moment(minDate)
-        .add(r, 'days')
-        .format(dateFormat)
-    );
+    const { minDate } = this.props;
+    return range.map(r => formatDate(addToDate(minDate, r)));
   };
 
   render() {
@@ -215,7 +155,6 @@ TimelineContainer.propTypes = {
   endDate: PropTypes.string,
   trimEndDate: PropTypes.string,
   handleChange: PropTypes.func,
-  dateFormat: PropTypes.string,
   intervalStep: PropTypes.number,
   interval: PropTypes.string,
   speed: PropTypes.number

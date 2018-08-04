@@ -2,6 +2,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 
+import { formatDate } from 'utils/dates';
+
 import initialState from './map-initial-state';
 import decodeLayersConfig from './map-decode-config';
 
@@ -17,7 +19,10 @@ const reduceParams = params => {
   return params.reduce((obj, param) => {
     const newObj = {
       ...obj,
-      [param.key]: param.default
+      [param.key]:
+        param.key === 'endDate' && !param.default
+          ? formatDate(new Date())
+          : param.default
     };
     return newObj;
   }, {});
