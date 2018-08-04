@@ -9,19 +9,15 @@ import { getMapProps } from './map-selectors';
 const mapStateToProps = (
   { countryData, widgets, location, datasets },
   { widgetKey }
-) => {
-  const widget = widgetKey ? widgets[widgetKey] : null;
-  const widgetSettings = widget && widget.settings;
-
-  return {
-    ...countryData.geostore,
-    ...getMapProps({
-      ...location,
-      widgetSettings,
-      ...datasets
-    })
-  };
-};
+) => ({
+  ...getMapProps({
+    ...countryData,
+    ...location,
+    ...datasets,
+    ...widgets,
+    widgetKey
+  })
+});
 
 class MapContainer extends PureComponent {
   render() {
@@ -29,20 +25,24 @@ class MapContainer extends PureComponent {
       ...this.props
     });
   }
-  // missing fit to bound from geostore, reset map, area highlight
 }
 
 MapContainer.defaultProps = {
-  zoomControl: false,
-  center: [27, 12],
-  zoom: 3,
-  tileLayer: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
-  labelLayer:
-    'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
-  maxZoom: 19,
-  minZoom: 2,
-  attribution:
-    '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  mapOptions: {
+    center: [27, 12],
+    zoom: 3,
+    zoomControl: false,
+    maxZoom: 19,
+    minZoom: 2,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  },
+  basemap: {
+    url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
+  },
+  label: {
+    url: 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
+  }
 };
 
 export { actions };
