@@ -49,7 +49,11 @@ class MapLegend extends Component {
               onChangeOrder={onChangeOrder}
             >
               {layerGroups.map((lg, i) => {
-                const { isSelectorLayer, isMultiLayer } = lg;
+                const {
+                  isSelectorLayer,
+                  isMultiLayer,
+                  selectorLayerConfig
+                } = lg;
                 const activeLayer = lg.layers.find(l => !!l.active) || {};
                 const { legendConfig, params, timelineConfig } = activeLayer;
 
@@ -82,8 +86,8 @@ class MapLegend extends Component {
                       <LayerSelectorMenu
                         className="layer-selector"
                         layerGroup={lg}
-                        layers={layers}
                         onChange={onChangeLayer}
+                        {...selectorLayerConfig}
                       />
                     )}
                     {timelineConfig && (

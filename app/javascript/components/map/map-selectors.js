@@ -83,11 +83,17 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
   if (isEmpty(datasets)) return null;
   return datasets.map(d => {
     const { layer, metadata } = d;
-    const appMeta = metadata.find(m => m.application === 'gfw');
-
+    const appMeta = metadata.find(m => m.application === 'gfw') || {};
+    const { info } = appMeta || {};
     return {
       ...d,
-      ...(appMeta && appMeta.info),
+      ...info,
+      ...(info &&
+        info.isSelectorLayer && {
+          selectorLayerConfig: {
+            options: layer.map(l => l.applicationConfig.selectorConfig)
+          }
+        }),
       layers:
         layer &&
         layer.map(l => {
@@ -133,9 +139,17 @@ export const getLayerGroups = createSelector(
     return datasets.map(d => {
       const layerConfig = layers.find(l => l.dataset === d.id) || {};
       const { params, sqlParams, decodeParams } = layerConfig;
+
       return {
         ...d,
         ...layerConfig,
+        ...(d.selectorLayerConfig && {
+          selectorLayerConfig: {
+            ...d.selectorLayerConfig,
+            selected: d.layers.find(l => l.id === layerConfig.layers[0])
+              .applicationConfig.selectorConfig
+          }
+        }),
         layers: d.layers.map(l => ({
           ...l,
           ...layerConfig,

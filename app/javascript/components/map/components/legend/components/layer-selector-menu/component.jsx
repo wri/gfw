@@ -10,7 +10,7 @@ class LayerSelectorMenu extends PureComponent {
     const {
       name,
       layerGroup,
-      selectedOption,
+      selected,
       options,
       onChange,
       className
@@ -22,7 +22,7 @@ class LayerSelectorMenu extends PureComponent {
         <Dropdown
           className="layer-selector"
           theme="theme-dropdown-button-small"
-          value={selectedOption}
+          value={selected}
           options={options}
           onChange={value => onChange(layerGroup, value.value)}
         />
@@ -37,7 +37,7 @@ LayerSelectorMenu.propTypes = {
   options: PropTypes.array,
   layerGroup: PropTypes.object,
   onChange: PropTypes.func,
-  selectedOption: PropTypes.object
+  selected: PropTypes.object
 };
 
 export default LayerSelectorMenu;
