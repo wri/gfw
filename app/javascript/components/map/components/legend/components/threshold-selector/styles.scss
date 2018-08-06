@@ -3,7 +3,7 @@
 .c-threshold-selector {
   display: flex;
   flex-flow: row wrap;
-  color: #aaa;
+  color: $slate;
   font-size: rem(12px);
 
   .thresh-dropdown {

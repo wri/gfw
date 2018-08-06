@@ -25,10 +25,10 @@ class ThresholdSelector extends PureComponent {
           layer[0].name.toLowerCase()} with`}</span>
         <Dropdown
           className="thresh-dropdown"
-          theme="theme-dropdown-button-small"
           value={threshold}
           options={options}
-          onChange={value => onChange(layer[0], value.value)}
+          onChange={e => onChange(layer[0], parseInt(e.target.value, 10))}
+          native
         />
         <span>canopy density.</span>
       </div>

@@ -3,7 +3,7 @@
 .c-layer-selector-menu {
   display: flex;
   flex-flow: row wrap;
-  color: #aaa;
+  color: $slate;
   font-size: rem(12px);
 
   .layer-selector {

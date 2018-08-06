@@ -1,0 +1,62 @@
+@import '~styles/settings.scss';
+
+/* legend component styles */
+.wri_api__c-legend-list {
+  overflow-x: hidden;
+}
+
+.wri_api__c-legend-item {
+  font-family: inherit;
+
+  .wri_api__icon-square {
+    margin-top: 3px;
+    margin-right: 11px;
+  }
+
+  .wri_api__legend-item-header > h3 {
+    font-size: rem(14px);
+    font-weight: 400;
+    color: $slate;
+  }
+
+  .wri_api__c-legend-button {
+    .wri_api__c-icon {
+      fill: $warm-grey;
+      stroke: $warm-grey;
+    }
+
+    &:hover {
+      .wri_api__c-icon {
+        fill: $medium-grey;
+        stroke: $medium-grey;
+      }
+    }
+  }
+
+  .wri_api__icon-square {
+    border-radius: rem(6px);
+  }
+
+  .wri_api__c-legend-handler {
+    top: 18px;
+  }
+}
+
+.wri_api__c-legend-item-toolbar > * {
+  margin-right: 8px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.wri_api__c-legend-item-types {
+  margin-bottom: rem(15px);
+}
+
+.wri_api__c-legend-item-button-opacity-tooltip {
+  margin: rem(-10px);
+  padding: rem(10px);
+  background-color: $white;
+  border-radius: 2px;
+}

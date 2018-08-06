@@ -8,7 +8,7 @@ $dd-button-height: rem(18px);
   .container {
     max-width: rem(70px);
 
-    .selector {
+    .c-selector {
       border-radius: rem(18px);
       border-color: $border;
       height: $dd-button-height;
@@ -40,19 +40,19 @@ $dd-button-height: rem(18px);
         border-right: none;
         transform-origin: 0 0;
         transform: rotate(-45deg);
-        top: calc(#{$dd-button-height} + #{rem(11px)});
+        top: calc(#{$dd-button-height} + #{rem(6px)});
         left: calc(50% - 14px);
         border-bottom-color: #fff;
         box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
         z-index: 3;
       }
     }
+  }
 
-    .menu {
-      top: calc(#{$dd-button-height} + #{rem(12px)});
-      border: 0;
-      box-shadow: $pop-box-shadow;
-    }
+  .c-selector-menu {
+    top: calc(#{$dd-button-height} + #{rem(6px)});
+    border: 0;
+    box-shadow: $pop-box-shadow;
   }
 
   .arrow {

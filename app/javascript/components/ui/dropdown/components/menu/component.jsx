@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Item from './item';
+import Item from '../item';
+
+import './styles.scss';
 
 const Menu = props => {
   const {
+    className,
     isOpen,
     activeValue,
     activeLabel,
@@ -19,7 +22,7 @@ const Menu = props => {
   } = props;
 
   return !isOpen ? null : (
-    <div className="menu">
+    <div className={`c-selector-menu ${className || ''}`}>
       {items && items.length ? (
         items.map((item, index) => (
           <Item
@@ -56,7 +59,8 @@ Menu.propTypes = {
   optionsAction: PropTypes.func,
   optionsActionKey: PropTypes.string,
   noItemsFound: PropTypes.string,
-  handleSelectGroup: PropTypes.func
+  handleSelectGroup: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default Menu;
