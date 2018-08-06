@@ -1,13 +1,14 @@
 @import '~styles/settings.scss';
 
 .c-data-analysis-menu {
-  max-height: 80%;
   width: rem(290px);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
   background: $white;
   transition: transform 0.3s linear;
   z-index: 2;
   overflow-y: scroll;
+  max-height: 80%;
+  height: auto;
 
   &.-relocate {
     transform: translateX(292px);
@@ -15,6 +16,10 @@
 
   &.-relocate-big {
     transform: translateX(552px);
+  }
+
+  .nav {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
   }
 
   .legend {

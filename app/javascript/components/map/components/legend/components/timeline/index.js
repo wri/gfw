@@ -126,7 +126,7 @@ TimelineContainer.defaultProps = {
   count: 2,
   trackStyle: [
     { backgroundColor: 'green', borderRadius: '0px' },
-    { backgroundColor: '#d6d6d9' }
+    { backgroundColor: '#d6d6d9', borderRadius: '0px' }
   ],
   handleStyle: [
     {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import chroma from 'chroma-js';
 
 import { addToDate, formatDate } from 'utils/dates';
 
@@ -58,7 +59,7 @@ class Timeline extends Component {
 
     return (
       <div className={`c-timeline ${className}`}>
-        <button className="play-btn" onClick={handleTogglePlay}>
+        <button className="control-btn" onClick={handleTogglePlay}>
           <Icon
             className={isPlaying ? 'pause' : 'play'}
             icon={isPlaying ? PauseIcon : PlayIcon}
@@ -74,7 +75,10 @@ class Timeline extends Component {
           value={[start, end, trim]}
           trackStyle={[
             { ...trackStyle[0], backgroundColor: customColor },
-            trackStyle[1],
+            {
+              ...trackStyle[1],
+              backgroundColor: chroma(customColor).darken(1.3)
+            },
             trackStyle[2]
           ]}
           {...props}
