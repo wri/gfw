@@ -179,5 +179,130 @@ export default {
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD'
     }
+  },
+  // Biomass Loss
+  'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': {
+    decodeFunction: (
+      data,
+      w,
+      h,
+      z,
+      params
+    ) => {
+      'use asm';
+
+      const imgData = data;
+      const { startDate, endDate } = params;
+      // We'll force the use of a 32bit integer wit `value |0`
+      // More info here: http://asmjs.org/spec/latest/
+      const components = 4 | 0;
+      const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
+
+      const yearStart = 2001;
+      const yearEnd = 2016;
+
+      const myscale = scalePow()
+        .exponent(exp)
+        .domain([0, 256])
+        .range([0, 256]);
+
+      const buckets = [
+        255,
+        31,
+        38, // first bucket R G B
+        210,
+        31,
+        38,
+        210,
+        31,
+        38,
+        241,
+        152,
+        19,
+        255,
+        208,
+        11
+      ]; // last bucket
+      const countBuckets = (buckets.length / 3) | 0; //3: three bands
+
+      for (let i = 0 | 0; i < w; ++i) {
+        for (let j = 0 | 0; j < h; ++j) {
+          const pixelPos = ((j * w + i) * components) | 0;
+          // exit if year = 0 to reduce memory use
+          if (imgData[pixelPos] === 0) {
+            imgData[pixelPos + 3] = 0 | 0; //alpha channel 0-255
+          } else {
+            // get values from data
+            let intensity = imgData[pixelPos + 1] | 0;
+            intensity = myscale(intensity) | 0;
+            imgData[pixelPos + 3] = 0 | 0;
+            // filter range from dashboard
+            if (intensity >= 0 && intensity <= 255) {
+              const yearLoss = (2000 + imgData[pixelPos]) | 0;
+              if (yearLoss >= yearStart && yearLoss < yearEnd) {
+                var bucket = ~~(countBuckets * intensity / 256) * 3;
+                imgData[pixelPos] = buckets[bucket]; //R 0-255
+                imgData[pixelPos + 1] = buckets[bucket + 1]; //G 0-255
+                imgData[pixelPos + 2] = buckets[bucket + 2]; //B 0-255
+                imgData[pixelPos + 3] = intensity | 0; //alpha channel 0-255
+              }
+            }
+          }
+        }
+      }
+    },
+    decodeParams: {
+      interval: 'years',
+      intervalStep: 1,
+      dateFormat: 'YYYY-MM-DD',
+      speed: 100
+    }
+  },
+  // Woody Biomass
+  'f10bded4-94e2-40b6-8602-ae5bdfc07c08': {
+    decodeFunction: (
+      data,
+      w,
+      h,
+      z,
+      params
+    ) => {
+      "use asm";
+      // We'll force the use of a 32bit integer wit `value |0`
+      // More info here: http://asmjs.org/spec/latest/
+      const imgData = data;
+      const components = 4;
+      const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
+
+      const myscale = scalePow()
+        .exponent(exp)
+        .domain([0, 256])
+        .range([0, 256]);
+
+      const c = [112, 168, 256, // first bucket
+               76,  83,  122,
+               210, 31,  38,
+               241, 152, 19,
+               255, 208, 11]; // last bucket
+      const countBuckets = c.length / 3 |0; //3: three bands
+
+      for(let i = 0 |0; i < w; ++i) {
+        for(let j = 0 |0; j < h; ++j) {
+          const pixelPos  = ((j * w + i) * components) |0;
+          const intensity = imgData[pixelPos+2];
+          imgData[pixelPos + 3] = 0;
+          const intensity_scaled = myscale(intensity) |0;
+          const bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
+
+          imgData[pixelPos] = 255-intensity;
+          imgData[pixelPos + 1] = 128;
+          imgData[pixelPos + 2] = 0;
+          if(intensity>0){imgData[pixelPos + 3] = intensity};
+        }
+      }
+    },
+    decodeParams: {}
   }
 };
+
+
