@@ -97,16 +97,18 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
       layers:
         layer &&
         layer.map(l => {
+          const { layerConfig, applicationConfig } = l;
           const {
             params_config,
             decode_config,
             sql_config,
             body,
             url
-          } = l.layerConfig;
+          } = layerConfig;
           const decodeFunction = decodeLayersConfig[l.id];
           return {
             ...l,
+            ...applicationConfig,
             ...(!isEmpty(params_config) && {
               params: {
                 url: body.url || url,

@@ -87,19 +87,19 @@ export const getSections = createSelector(getDatasets, datasets =>
           d => flatten(d.vocabulary.map(v => v.tags)).indexOf(s.slug) > -1
         )
         .map(d => {
-          const metadata = d.metadata && d.metadata.length && d.metadata[0];
-          const { name, source } = metadata;
+          const { layer, metadata, vocabulary } = d;
+          const appMeta = metadata.find(m => m.application === 'gfw') || {};
+          const { info } = appMeta || {};
           return {
-            name: name || d.name,
-            description: source,
-            id: d.id,
+            ...d,
+            ...info,
             layer:
-              d.layer &&
-              d.layer.length &&
-              d.layer.find(
+              layer &&
+              layer.length &&
+              layer.find(
                 l => l.applicationConfig && l.applicationConfig.default
               ).id,
-            tags: flatten(d.vocabulary.map(v => v.tags))
+            tags: flatten(vocabulary.map(v => v.tags))
           };
         });
     let subCategoriesWithDatasets = s.subCategories;

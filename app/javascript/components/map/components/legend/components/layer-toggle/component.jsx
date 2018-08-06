@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Switch from 'components/ui/switch';
+import Toggle from 'components/ui/toggle';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -12,7 +12,7 @@ import './styles.scss';
 class LayerToggle extends PureComponent {
   render() {
     const {
-      data: { name, subtitle, meta, layer, dataset, active },
+      data: { name, subtitle, meta, layer, dataset, active, color, colour },
       onInfoClick,
       onToggle,
       small
@@ -20,11 +20,11 @@ class LayerToggle extends PureComponent {
 
     return (
       <div className={`c-layer-toggle ${small ? '-small' : ''}`}>
-        <Switch
-          theme={`theme-switch-toggle ${small ? '-small' : ''}`}
-          checked={active}
-          onChange={value => onToggle({ dataset, layer }, value)}
-          small={small}
+        <Toggle
+          theme={!small ? 'toggle-large' : ''}
+          value={active}
+          onToggle={value => onToggle({ dataset, layer }, value)}
+          color={color || colour}
         />
         <div className="c-layer-toggle__content">
           <div className="c-layer-toggle__header">
