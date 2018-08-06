@@ -53,7 +53,17 @@ const menuSections = [
     slug: 'climate',
     name: 'CLIMATE',
     icon: climateBubblesIcon,
-    Component: Datasets
+    Component: Datasets,
+    subCategories: [
+      {
+        slug: 'carbonDensity',
+        title: 'Carbon Density'
+      },
+      {
+        slug: 'carbonEmissions',
+        title: 'Carbon Emissions'
+      }
+    ]
   },
   {
     slug: 'biodiversity',
