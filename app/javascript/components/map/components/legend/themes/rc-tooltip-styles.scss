@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
 /* legend tooltip styles */
-.c-rc-tooltip.-default {
+.c-rc-tooltip.-default:not(.-opacity) {
   font-family: $font-family-1;
 
   .rc-tooltip-inner {
@@ -14,8 +14,28 @@
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
   }
 
+  .rc-tooltip-arrow {
+    border-top-color: $tip;
+  }
+}
+
+.c-rc-tooltip.-opacity {
+  font-family: $font-family-1;
+
+  .rc-tooltip-inner {
+    font-size: 12px;
+    color: $slate;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+  }
+
   .input-range__label {
     font-family: inherit;
+  }
+
+  .input-range__track {
+    background-color: rgba(0, 0, 0, 0.29);
   }
 
   .input-range__track--active {
@@ -23,10 +43,26 @@
   }
 
   .input-range__slider {
-    background-color: $green-gfw;
-  }
-}
+    position: relative;
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    background-color: $white;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.29);
 
-.c-rc-tooltip.-default.rc-tooltip-placement-top .rc-tooltip-arrow {
-  border-top-color: $tip;
+    &:active {
+      transform: none;
+    }
+
+    &::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background-color: $slate-dark;
+      position: absolute;
+      border-radius: 4px;
+      top: calc(50% - 2px);
+      left: calc(50% - 2px);
+    }
+  }
 }
