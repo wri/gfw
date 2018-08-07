@@ -21,6 +21,7 @@ class LayerSelectorMenu extends PureComponent {
         <span>{`Displaying ${name} for`}</span>
         <Dropdown
           className="layer-selector"
+          theme="theme-dropdown-native-button"
           value={selected}
           options={options}
           onChange={e => onChange(layerGroup, e.target.value)}

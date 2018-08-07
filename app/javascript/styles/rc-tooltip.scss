@@ -15,8 +15,10 @@
       box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.1);
     }
 
-    .rc-tooltip-arrow {
-      border-top-color: $tip;
+    &.rc-tooltip-placement-top {
+      .rc-tooltip-arrow {
+        border-top-color: $tip;
+      }
     }
   }
 
@@ -26,8 +28,10 @@
       padding: rem(15px);
     }
 
-    .rc-tooltip-arrow {
-      border-top-color: $white;
+    &.rc-tooltip-placement-top {
+      .rc-tooltip-arrow {
+        border-top-color: $white;
+      }
     }
   }
 }

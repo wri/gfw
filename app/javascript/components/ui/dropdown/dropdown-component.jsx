@@ -18,6 +18,8 @@ import './themes/dropdown-dark.scss';
 import './themes/dropdown-light.scss';
 import './themes/dropdown-button.scss';
 import './themes/dropdown-button-small.scss';
+import './themes/dropdown-native.scss';
+import './themes/dropdown-native-button.scss';
 
 class Dropdown extends PureComponent {
   render() {
@@ -109,7 +111,11 @@ class Dropdown extends PureComponent {
     );
 
     return (
-      <div className={`c-dropdown ${theme || ''} ${className || ''}`}>
+      <div
+        className={`c-dropdown ${
+          native ? 'theme-dropdown-native' : ''
+        } ${theme || ''} ${className || ''}`}
+      >
         {label && (
           <div className="label">
             {label}

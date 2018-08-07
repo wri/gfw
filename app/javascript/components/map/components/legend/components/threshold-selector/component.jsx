@@ -25,6 +25,7 @@ class ThresholdSelector extends PureComponent {
           layer[0].name.toLowerCase()} with`}</span>
         <Dropdown
           className="thresh-dropdown"
+          theme="theme-dropdown-native-button"
           value={threshold}
           options={options}
           onChange={e => onChange(layer[0], parseInt(e.target.value, 10))}

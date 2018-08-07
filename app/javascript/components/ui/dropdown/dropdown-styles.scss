@@ -8,44 +8,6 @@ $dd-font-size: rem(13px);
   width: auto;
   text-align: left;
 
-  .select-wrapper {
-    border: 1px solid $border;
-    border-radius: 15px;
-    position: relative;
-    width: fit-content;
-    cursor: pointer;
-    z-index: 2;
-
-    select {
-      border: 0;
-      background-color: transparent;
-      color: $slate;
-      font-family: $font-family-1;
-      font-size: rem(12px);
-      appearance: none;
-      padding: 0 rem(18px) 0 rem(8px);
-      z-index: 2;
-      height: 100%;
-      width: auto;
-      cursor: pointer;
-      position: relative;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    .arrow-icon {
-      position: absolute;
-      right: rem(8px);
-      top: calc(50% - 4px);
-      width: 8px;
-      height: 8px;
-      z-index: 1;
-      fill: $slate;
-    }
-  }
-
   .label {
     margin-bottom: rem(5px);
     display: flex;

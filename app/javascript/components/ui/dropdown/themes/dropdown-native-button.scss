@@ -1,0 +1,13 @@
+@import '~styles/settings.scss';
+
+$dd-height: rem(18px);
+$dd-font-size: rem(12px);
+
+.theme-dropdown-native-button {
+  .select-wrapper {
+    select {
+      font-size: $dd-font-size;
+      height: $dd-height;
+    }
+  }
+}
