@@ -13,6 +13,8 @@ $dd-font-size: rem(13px);
     border-radius: 15px;
     position: relative;
     width: fit-content;
+    cursor: pointer;
+    z-index: 2;
 
     select {
       border: 0;
@@ -25,6 +27,8 @@ $dd-font-size: rem(13px);
       z-index: 2;
       height: 100%;
       width: auto;
+      cursor: pointer;
+      position: relative;
 
       &:focus {
         outline: none;

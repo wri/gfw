@@ -14,7 +14,7 @@
   }
 
   .threshold {
-    margin-bottom: rem(15px);
+    margin-bottom: rem(10px);
   }
 
   .timeline {
@@ -27,6 +27,10 @@
   .sub-layer-menu {
     border-top: solid 1px $border;
     padding-top: rem(15px);
+    margin-bottom: rem(10px);
+  }
+
+  .loss-statement {
     margin-bottom: rem(10px);
   }
 }

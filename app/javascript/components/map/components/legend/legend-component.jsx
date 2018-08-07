@@ -19,6 +19,7 @@ import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
 import ThresholdSelector from './components/threshold-selector';
 import LayerSelectorMenu from './components/layer-selector-menu';
+import LossStatement from './components/loss-statement';
 
 import './legend-styles.scss';
 
@@ -53,7 +54,8 @@ class MapLegend extends Component {
                   isSelectorLayer,
                   isMultiLayer,
                   selectorLayerConfig,
-                  color
+                  color,
+                  isLossLayer
                 } = lg;
                 const activeLayer = lg.layers.find(l => !!l.active) || {};
                 const { legendConfig, params, timelineConfig } = activeLayer;
@@ -105,6 +107,9 @@ class MapLegend extends Component {
                         onChange={onChangeLayer}
                         {...selectorLayerConfig}
                       />
+                    )}
+                    {isLossLayer && (
+                      <LossStatement className="loss-statement" />
                     )}
                     {timelineConfig && (
                       <Timeline

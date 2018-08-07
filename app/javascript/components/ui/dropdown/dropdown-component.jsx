@@ -62,14 +62,17 @@ class Dropdown extends PureComponent {
         {({ getInputProps, getItemProps, getRootProps }) =>
           (native ? (
             <div className="select-wrapper">
-              <select value={value.value} onChange={onChange}>
+              <select value={value && value.value} onChange={onChange}>
                 {options &&
                   !!options.length &&
-                  options.map(o => (
-                    <option key={o.value} value={o.value}>
-                      {o.label}
-                    </option>
-                  ))}
+                  options.map(
+                    o =>
+                      o && (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      )
+                  )}
               </select>
               <Icon icon={arrowIcon} className="arrow-icon" />
             </div>
