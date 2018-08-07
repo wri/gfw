@@ -9,7 +9,7 @@ export default {
     selectors: [],
     years: [2015],
     type: 'plantations',
-    metaKey: 'widget_global_land_cover',
+    metaKey: 'widget_land_cover_esa',
     sortOrder: {
       landCover: 100
     },
