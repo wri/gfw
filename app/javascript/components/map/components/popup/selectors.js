@@ -1,32 +1,38 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import flatten from 'lodash/flatten';
+import intersection from 'lodash/intersection';
+
+import { getLayers } from '../../map-selectors';
 
 const getSelected = state => state.selected;
 const getInteractions = state => state.interactions;
-const getLayers = state => state.layers;
+const getLatLng = state => state.latlng;
+
+export const getActiveLayers = createSelector(
+  [getLayers, getInteractions],
+  (layers, interactions) => {
+    if (!layers || !interactions) return null;
+    const interactionLayerIds = Object.keys(interactions);
+    const layerIds = flatten(layers.map(l => l.layers));
+    return intersection(interactionLayerIds, layerIds);
+  }
+);
 
 export const getSelectedLayer = createSelector(
-  [getSelected, getLayers, getInteractions],
+  [getSelected, getActiveLayers, getInteractions],
   (selected, layers, interactions) => {
     if (selected && interactions[selected]) return selected;
-    const interactionLayers = Object.keys(interactions);
-    const topActiveLayer = layers.find(
-      l => interactionLayers.indexOf(l.layer) > -1
-    );
-    return topActiveLayer && topActiveLayer.layer;
+    return layers[0];
   }
 );
 
 export const getLayerOptions = createSelector(
-  [getLayers, getInteractions],
+  [getActiveLayers, getInteractions],
   (layers, interactions) => {
     if (!layers || !interactions) return null;
-    const interactionIds = Object.keys(interactions);
-    const interactiveLayers = layers.filter(
-      l => interactionIds.indexOf(l.layer) > -1
-    );
-    return interactiveLayers.map(i => ({
-      label: interactions[i.layer].label,
-      value: i.layer
+    return layers.map(i => ({
+      label: interactions[i].label,
+      value: i
     }));
   }
 );
@@ -44,7 +50,9 @@ export const getSelectedData = createSelector(
 );
 
 export const getPopupProps = createStructuredSelector({
-  selectedLayer: getSelectedLayer,
-  interactionLayers: getLayerOptions,
-  data: getSelectedData
+  value: getSelectedLayer,
+  options: getLayerOptions,
+  data: getSelectedData,
+  interactions: getInteractions,
+  latlng: getLatLng
 });

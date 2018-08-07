@@ -1,50 +1,71 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { MapPopup } from 'wri-api-components';
+
+import Button from 'components/ui/button/button-component';
+import Dropdown from 'components/ui/dropdown/dropdown-component';
+
 class Popup extends Component {
   render() {
     const {
+      map,
       data,
-      interactionLayers,
-      selectedLayer,
+      latlng,
+      options,
+      value,
+      interactions,
       setInteractionSelected
     } = this.props;
+
     return (
-      <div className="c-popup">
-        {interactionLayers &&
-          interactionLayers.length > 0 && (
-            <select
-              className="layer-select"
-              name="interactionLayers"
-              value={selectedLayer}
-              onChange={e => setInteractionSelected(e.target.value)}
-            >
-              {interactionLayers.map(o => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
+      <MapPopup
+        map={map}
+        latlng={latlng}
+        data={{ ...interactions, selected: value }}
+      >
+        <div className="c-popup">
+          {options &&
+            options.length > 1 && (
+              <Dropdown
+                className="layer-selector"
+                theme="theme-dropdown-native-plain"
+                value={value}
+                options={options}
+                onChange={e => setInteractionSelected(e.target.value)}
+                native
+              />
+            )}
+          {options &&
+            options.length === 1 && (
+              <div className="popup-title">{options[0].label}</div>
+            )}
+          <div className="values">
+            {data &&
+              data.map(d => (
+                <div key={d.label} className="wrapper">
+                  <div className="label">{d.label}:</div>
+                  <div className="value">{d.value || 'n/a'}</div>
+                </div>
               ))}
-            </select>
-          )}
-        <div className="values">
-          {data &&
-            data.map(d => (
-              <div key={d.label} className="wrapper">
-                <div className="label">{d.label}:</div>
-                <div className="value">{d.value || 'n/a'}</div>
-              </div>
-            ))}
+          </div>
+          <div className="nav-footer">
+            <Button>Analyse</Button>
+          </div>
         </div>
-      </div>
+      </MapPopup>
     );
   }
 }
 
 Popup.propTypes = {
+  map: PropTypes.object,
   data: PropTypes.array,
-  interactionLayers: PropTypes.array,
-  selectedLayer: PropTypes.string,
-  setInteractionSelected: PropTypes.func
+  options: PropTypes.array,
+  value: PropTypes.string,
+  setInteractionSelected: PropTypes.func,
+  latlng: PropTypes.object,
+  interactions: PropTypes.object
 };
 
 export default Popup;

@@ -1,5 +1,5 @@
 export const initialState = {
-  latlng: [],
+  latlng: {},
   interactions: {},
   selected: ''
 };

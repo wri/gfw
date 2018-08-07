@@ -20,6 +20,7 @@ import './themes/dropdown-button.scss';
 import './themes/dropdown-button-small.scss';
 import './themes/dropdown-native.scss';
 import './themes/dropdown-native-button.scss';
+import './themes/dropdown-native-plain.scss';
 
 class Dropdown extends PureComponent {
   render() {
@@ -64,7 +65,10 @@ class Dropdown extends PureComponent {
         {({ getInputProps, getItemProps, getRootProps }) =>
           (native ? (
             <div className="select-wrapper">
-              <select value={value && value.value} onChange={onChange}>
+              <select
+                value={value && (value.value || value)}
+                onChange={onChange}
+              >
                 {options &&
                   !!options.length &&
                   options.map(

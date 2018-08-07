@@ -7,6 +7,7 @@ import { PluginLeaflet } from 'layer-manager';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
+import Popup from './components/popup';
 
 import './map-styles.scss';
 
@@ -39,10 +40,13 @@ class MapComponent extends PureComponent {
           label={label}
         >
           {map => (
-            <LayerManager map={map} plugin={PluginLeaflet}>
-              {activeLayers &&
-                activeLayers.map(l => <Layer key={l.id} {...l} />)}
-            </LayerManager>
+            <Fragment>
+              <LayerManager map={map} plugin={PluginLeaflet}>
+                {activeLayers &&
+                  activeLayers.map(l => <Layer key={l.id} {...l} />)}
+              </LayerManager>
+              <Popup map={map} />
+            </Fragment>
           )}
         </Map>
         {loading && (

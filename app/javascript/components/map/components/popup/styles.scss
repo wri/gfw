@@ -1,9 +1,18 @@
-.c-popup {
-  padding: 20px;
+@import '~styles/settings.scss';
 
-  .layer-select {
+.c-popup {
+  padding: 5px;
+  font-family: $font-family-1;
+
+  .popup-title {
+    font-size: rem(16px);
+    margin-bottom: rem(15px);
+    color: $slate;
+    font-weight: 400;
+  }
+
+  .layer-selector {
     margin-bottom: 20px;
-    width: 100%;
   }
 
   .values {
@@ -23,13 +32,17 @@
 
   .label {
     width: 40%;
-    font-weight: bold;
+    font-weight: 400;
     margin-right: 15px;
+  }
+
+  .nav-footer {
+    margin-top: rem(10px);
   }
 }
 
 .leaflet-popup-content-wrapper {
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .leaflet-container a.leaflet-popup-close-button {
