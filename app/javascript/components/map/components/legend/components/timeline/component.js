@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import chroma from 'chroma-js';
 
-import { addToDate, formatDate } from 'utils/dates';
+import { addToDate, formatDatePretty } from 'utils/dates';
 
 import { Range, Handle } from 'rc-slider';
 import Icon from 'components/ui/icon';
@@ -17,7 +17,7 @@ class Timeline extends Component {
   renderHandle = props => {
     const { minDate, isPlaying, dateFormat } = this.props;
     const { value, dragging, index, ...restProps } = props;
-    const date = formatDate(addToDate(minDate, value), dateFormat);
+    const date = formatDatePretty(addToDate(minDate, value), dateFormat);
 
     return (
       <Tooltip

@@ -75,6 +75,35 @@ export const formatDate = (date, format = 'YYYY-MM-DD') => {
   return compact([year, month, day]).join('-');
 };
 
+export const formatDatePretty = (date, dateFormat) => {
+  const d = new Date(date);
+  const hasDays = dateFormat.includes('DD');
+  const hasMonths = dateFormat.includes('MM');
+  const months = [
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEPT',
+    'OCT',
+    'NOV',
+    'DEC'
+  ];
+  let day = d.getDate().toString();
+  const month = d.getMonth();
+  const year = d.getFullYear();
+
+  if (day.length < 2) day = `0${day}`;
+
+  return `${hasDays ? `${day} ` : ''}${hasMonths ? `${months[month]} ` : ''}${
+    year
+  }`;
+};
+
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 // a and b are javascript Date objects
