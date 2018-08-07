@@ -27,7 +27,8 @@ const menuSections = [
       },
       {
         slug: 'fireAlerts',
-        title: 'Fire Alerts'
+        title: 'Fire Alerts',
+        subTitle: '(near real time)'
       },
       {
         slug: 'treeCoverChange',
@@ -45,7 +46,21 @@ const menuSections = [
     slug: 'landUse',
     name: 'LAND USE',
     icon: truckIcon,
-    Component: Datasets
+    Component: Datasets,
+    subCategories: [
+      {
+        slug: 'concessions',
+        title: 'Concessions'
+      },
+      {
+        slug: 'infrastructure',
+        title: 'Infrastructure'
+      },
+      {
+        slug: 'people',
+        title: 'People'
+      }
+    ]
   },
   {
     slug: 'climate',
@@ -60,6 +75,10 @@ const menuSections = [
       {
         slug: 'carbonEmissions',
         title: 'Carbon Emissions'
+      },
+      {
+        slug: 'carbonGains',
+        title: 'Carbon Gains'
       }
     ]
   },
@@ -67,7 +86,13 @@ const menuSections = [
     slug: 'biodiversity',
     name: 'BIODIVERSITY',
     icon: featherIcon,
-    Component: Datasets
+    Component: Datasets,
+    subCategories: [
+      {
+        slug: 'conservation',
+        title: 'Conservation'
+      }
+    ]
   },
   {
     slug: 'explore',
