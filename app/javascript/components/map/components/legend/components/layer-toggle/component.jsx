@@ -12,7 +12,7 @@ import './styles.scss';
 class LayerToggle extends PureComponent {
   render() {
     const {
-      data: { name, subtitle, meta, layer, dataset, active, color, colour },
+      data: { name, subtitle, meta, layer, dataset, active, color },
       onInfoClick,
       onToggle,
       small
@@ -24,7 +24,7 @@ class LayerToggle extends PureComponent {
           theme={!small ? 'toggle-large' : ''}
           value={active}
           onToggle={value => onToggle({ dataset, layer }, value)}
-          color={color || colour}
+          color={color}
         />
         <div className="c-layer-toggle__content">
           <div className="c-layer-toggle__header">
