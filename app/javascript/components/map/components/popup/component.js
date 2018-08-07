@@ -22,7 +22,7 @@ class Popup extends Component {
       <MapPopup
         map={map}
         latlng={latlng}
-        data={{ ...interactions, selected: value }}
+        data={{ ...interactions, selected: value, options, data }}
       >
         <div className="c-popup">
           {options &&
