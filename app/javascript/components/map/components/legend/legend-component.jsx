@@ -66,7 +66,21 @@ class MapLegend extends Component {
                     key={lg.id}
                     layerGroup={lg}
                     toolbar={
-                      <LegendItemToolbar {...rest}>
+                      <LegendItemToolbar
+                        {...rest}
+                        enabledStyle={{
+                          fill: color || '#97be32'
+                        }}
+                        defaultStyle={{
+                          fill: '#999'
+                        }}
+                        disabledStyle={{
+                          fill: '#d6d6d9'
+                        }}
+                        focusStyle={{
+                          fill: '#676867'
+                        }}
+                      >
                         <LegendItemButtonOpacity
                           className="-plain"
                           handleStyle={[
@@ -81,7 +95,6 @@ class MapLegend extends Component {
                             { backgroundColor: color || '#97be32' },
                             { backgroundColor: '#d6d6d9' }
                           ]}
-                          color={color}
                         />
                         <LegendItemButtonVisibility />
                         <LegendItemButtonInfo />
