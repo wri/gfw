@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import LayerToggle from '../layer-toggle';
+import LayerMoreInfo from '../layer-more-info';
 
 import './styles.scss';
 
@@ -21,6 +22,9 @@ class LayerListMenu extends PureComponent {
                   onInfoClick={onInfoClick}
                   small
                 />
+                {l.moreInfo && (
+                  <LayerMoreInfo className="more-info" {...l.moreInfo} />
+                )}
               </div>
             ) : null)
         )}

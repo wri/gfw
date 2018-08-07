@@ -5,6 +5,14 @@
   max-height: 100%;
   overflow: scroll;
 
+  .dataset-toggle {
+    margin-bottom: rem(20px);
+
+    &:last-child {
+      margin-bottom: rem(5px);
+    }
+  }
+
   .no-datasets {
     position: relative;
     font-size: rem(13px);

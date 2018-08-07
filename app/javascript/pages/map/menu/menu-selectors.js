@@ -125,15 +125,14 @@ export const getSections = createSelector(getDatasets, datasets =>
           const { layer, metadata, vocabulary } = d;
           const appMeta = metadata.find(m => m.application === 'gfw') || {};
           const { info } = appMeta || {};
+          const defaultLayer =
+            layer &&
+            layer.length &&
+            layer.find(l => l.applicationConfig && l.applicationConfig.default);
           return {
             ...d,
             ...info,
-            layer:
-              layer &&
-              layer.length &&
-              layer.find(
-                l => l.applicationConfig && l.applicationConfig.default
-              ).id,
+            layer: defaultLayer && defaultLayer.id,
             tags: flatten(vocabulary.map(v => v.tags))
           };
         });

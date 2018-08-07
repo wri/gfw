@@ -12,6 +12,7 @@ import './styles.scss';
 class LayerToggle extends PureComponent {
   render() {
     const {
+      className,
       data: { name, subtitle, meta, layer, dataset, active, color },
       onInfoClick,
       onToggle,
@@ -19,7 +20,9 @@ class LayerToggle extends PureComponent {
     } = this.props;
 
     return (
-      <div className={`c-layer-toggle ${small ? '-small' : ''}`}>
+      <div
+        className={`c-layer-toggle ${small ? '-small' : ''} ${className || ''}`}
+      >
         <Toggle
           theme={!small ? 'toggle-large' : ''}
           value={active}
@@ -46,6 +49,7 @@ class LayerToggle extends PureComponent {
 }
 
 LayerToggle.propTypes = {
+  className: PropTypes.string,
   data: PropTypes.object,
   onInfoClick: PropTypes.func,
   onToggle: PropTypes.func,

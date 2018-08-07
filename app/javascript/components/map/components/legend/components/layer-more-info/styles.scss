@@ -1,0 +1,11 @@
+@import '~styles/settings';
+
+.c-layer-more-info {
+  a {
+    color: $green-gfw;
+
+    &:hover {
+      color: darken($green-gfw, 10%);
+    }
+  }
+}

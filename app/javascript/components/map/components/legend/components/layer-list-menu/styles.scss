@@ -2,6 +2,14 @@
 
 .c-layer-list-menu {
   > div {
-    margin-bottom: rem(10px);
+    margin-bottom: rem(15px);
+
+    &:last-child {
+      margin-bottom: rem(5px);
+    }
+  }
+
+  .more-info {
+    margin-top: rem(10px);
   }
 }
