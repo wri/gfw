@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
 
 import { formatDate } from 'utils/dates';
 
@@ -96,39 +97,44 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
         }),
       layers:
         layer &&
-        layer.map(l => {
-          const { layerConfig, applicationConfig } = l;
-          const {
-            params_config,
-            decode_config,
-            sql_config,
-            body,
-            url
-          } = layerConfig;
-          const decodeFunction = decodeLayersConfig[l.id];
-          return {
-            ...l,
-            ...applicationConfig,
-            ...(!isEmpty(params_config) && {
-              params: {
-                url: body.url || url,
-                ...reduceParams(params_config)
-              }
-            }),
-            ...(!isEmpty(sql_config) && {
-              sqlParams: {
-                ...reduceSqlParams(sql_config)
-              }
-            }),
-            ...decodeFunction,
-            ...(!isEmpty(decode_config) && {
-              decodeParams: {
-                ...(decodeFunction && decodeFunction.decodeParams),
-                ...reduceParams(decode_config)
-              }
-            })
-          };
-        })
+        sortBy(
+          layer.map((l, i) => {
+            const { layerConfig, applicationConfig } = l;
+            const { sortOrder } = applicationConfig || {};
+            const {
+              params_config,
+              decode_config,
+              sql_config,
+              body,
+              url
+            } = layerConfig;
+            const decodeFunction = decodeLayersConfig[l.id];
+            return {
+              ...l,
+              ...applicationConfig,
+              sortOrder: applicationConfig.default ? 0 : sortOrder || i + 1,
+              ...(!isEmpty(params_config) && {
+                params: {
+                  url: body.url || url,
+                  ...reduceParams(params_config)
+                }
+              }),
+              ...(!isEmpty(sql_config) && {
+                sqlParams: {
+                  ...reduceSqlParams(sql_config)
+                }
+              }),
+              ...decodeFunction,
+              ...(!isEmpty(decode_config) && {
+                decodeParams: {
+                  ...(decodeFunction && decodeFunction.decodeParams),
+                  ...reduceParams(decode_config)
+                }
+              })
+            };
+          }),
+          'sortOrder'
+        )
     };
   });
 });

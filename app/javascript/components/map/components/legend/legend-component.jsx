@@ -57,8 +57,10 @@ class MapLegend extends Component {
                   color,
                   isLossLayer
                 } = lg;
-                const activeLayer = lg.layers.find(l => !!l.active) || {};
-                const { legendConfig, params, timelineConfig } = activeLayer;
+                const activeLayers = lg.layers.filter(l => l.active) || [];
+                const activeLayer = activeLayers && activeLayers[0];
+                const { legendConfig, params, timelineConfig } =
+                  activeLayer || {};
 
                 return (
                   <LegendListItem
