@@ -53,6 +53,7 @@ class MapLegend extends Component {
                 const {
                   isSelectorLayer,
                   isMultiLayer,
+                  isMultiSelectorLayer,
                   selectorLayerConfig,
                   color,
                   isLossLayer
@@ -116,14 +117,16 @@ class MapLegend extends Component {
                           layer={activeLayer}
                         />
                       )}
-                    {isSelectorLayer && (
-                      <LayerSelectorMenu
-                        className="layer-selector"
-                        layerGroup={lg}
-                        onChange={onChangeLayer}
-                        {...selectorLayerConfig}
-                      />
-                    )}
+                    {(isSelectorLayer || isMultiSelectorLayer) &&
+                      selectorLayerConfig && (
+                        <LayerSelectorMenu
+                          className="layer-selector"
+                          layerGroup={lg}
+                          multi={isMultiSelectorLayer}
+                          onChange={onChangeLayer}
+                          {...selectorLayerConfig}
+                        />
+                      )}
                     {isLossLayer && (
                       <LossStatement className="loss-statement" />
                     )}

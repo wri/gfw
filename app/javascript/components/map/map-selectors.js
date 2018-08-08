@@ -86,15 +86,18 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
     const { layer, metadata } = d;
     const appMeta = metadata.find(m => m.application === 'gfw') || {};
     const { info } = appMeta || {};
+    const { isSelectorLayer, isMultiSelectorLayer } = info || {};
     return {
       ...d,
       ...info,
-      ...(info &&
-        info.isSelectorLayer && {
-          selectorLayerConfig: {
-            options: layer.map(l => l.applicationConfig.selectorConfig)
-          }
-        }),
+      ...((isSelectorLayer || isMultiSelectorLayer) && {
+        selectorLayerConfig: {
+          options: layer.map(l => ({
+            ...l.applicationConfig.selectorConfig,
+            value: l.id
+          }))
+        }
+      }),
       layers:
         layer &&
         sortBy(
@@ -154,8 +157,9 @@ export const getLayerGroups = createSelector(
         ...(d.selectorLayerConfig && {
           selectorLayerConfig: {
             ...d.selectorLayerConfig,
-            selected: d.layers.find(l => l.id === layerConfig.layers[0])
-              .applicationConfig.selectorConfig
+            selected: d.selectorLayerConfig.options.find(
+              l => l.value === layerConfig.layers[0]
+            )
           }
         }),
         layers: d.layers.map(l => ({

@@ -77,11 +77,7 @@ class Legend extends PureComponent {
       layers: layers.map(l => {
         const layer = l;
         if (l.dataset === layerGroup.dataset) {
-          layer.layers = [
-            layerGroup.layers.find(
-              lg => lg.applicationConfig.selectorConfig.value === newLayerKey
-            ).id
-          ];
+          layer.layers = [newLayerKey];
         }
         return layer;
       })
