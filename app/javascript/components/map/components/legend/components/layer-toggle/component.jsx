@@ -13,7 +13,7 @@ class LayerToggle extends PureComponent {
   render() {
     const {
       className,
-      data: { name, subtitle, meta, layer, dataset, active, color },
+      data: { name, subtitle, metadata, layer, dataset, active, color },
       onInfoClick,
       onToggle,
       small
@@ -34,7 +34,7 @@ class LayerToggle extends PureComponent {
             <div className="c-layer-toggle__name">{name}</div>
             <Button
               className="theme-button-tiny theme-button-grey-filled square info-button"
-              onClick={() => onInfoClick(meta)}
+              onClick={() => onInfoClick(metadata)}
             >
               <Icon icon={infoIcon} className="info-icon" />
             </Button>
