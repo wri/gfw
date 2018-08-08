@@ -17,8 +17,10 @@
 
     .label {
       width: 40%;
-      font-weight: 400;
+      min-width: 40%;
+      font-weight: 500;
       margin-right: 15px;
+      text-transform: uppercase;
     }
   }
 }

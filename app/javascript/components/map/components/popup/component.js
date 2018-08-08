@@ -63,7 +63,7 @@ class Popup extends Component {
               <DataTable data={tableData} />
               {
                 <div className="nav-footer">
-                  <Button>Analyse</Button>
+                  <Button>Analyze</Button>
                 </div>
               }
             </div>
