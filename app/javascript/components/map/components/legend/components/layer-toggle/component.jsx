@@ -33,7 +33,9 @@ class LayerToggle extends PureComponent {
           <div className="c-layer-toggle__header">
             <div className="c-layer-toggle__name">{name}</div>
             <Button
-              className="theme-button-tiny theme-button-grey-filled square info-button"
+              className={`theme-button-tiny ${
+                small ? 'theme-button-grey-filled' : ''
+              } square info-button`}
               onClick={() => onInfoClick(metadata)}
             >
               <Icon icon={infoIcon} className="info-icon" />
