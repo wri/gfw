@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import Proptypes from 'prop-types';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Map } from 'wri-api-components';
 
 import { LayerManager, Layer } from 'layer-manager/dist/react';
@@ -18,15 +18,25 @@ class MapComponent extends PureComponent {
   }
 
   render() {
-    const { loading, error, activeLayers } = this.props;
+    const {
+      loading,
+      error,
+      activeLayers,
+      mapOptions,
+      basemap,
+      label
+    } = this.props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Map
           customClass="c-map"
           onReady={map => {
             this.map = map;
           }}
+          mapOptions={mapOptions}
+          basemap={basemap}
+          label={label}
         >
           {map => (
             <LayerManager map={map} plugin={PluginLeaflet}>
@@ -42,16 +52,19 @@ class MapComponent extends PureComponent {
           error && (
             <NoContent message="An error occured. Please try again later." />
           )}
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
 
 MapComponent.propTypes = {
-  loading: Proptypes.bool,
-  activeLayers: Proptypes.array,
-  error: Proptypes.bool,
-  map: Proptypes.object
+  loading: PropTypes.bool,
+  activeLayers: PropTypes.array,
+  error: PropTypes.bool,
+  map: PropTypes.object,
+  mapOptions: PropTypes.object,
+  basemap: PropTypes.object,
+  label: PropTypes.object
 };
 
 export default MapComponent;

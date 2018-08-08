@@ -1,10 +1,13 @@
 import { scalePow } from 'd3-scale';
-import moment from 'moment';
+
+import { dateDiffInDays } from 'utils/dates';
 
 export default {
   // Tree cover 2010
   '78747ea1-34a9-4aa7-b099-bdb8948200f4': {
-    decodeFunction: (data, w, h, z, params = {}) => {
+    decodeFunction: (data, w, h, z) => {
+      'use asm';
+
       const components = 4;
       const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
       const imgData = data;
@@ -32,7 +35,9 @@ export default {
   },
   // Tree cover 2000
   'c05c32fd-289c-4b20-8d73-dc2458234e04': {
-    decodeFunction: (data, w, h, z, params = {}) => {
+    decodeFunction: (data, w, h, z) => {
+      'use asm';
+
       const components = 4;
       const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
       const imgData = data;
@@ -67,10 +72,12 @@ export default {
       z,
       params = { startDate: '2001-01-01', endDate: '2017-12-01' }
     ) => {
+      'use asm';
+
       const components = 4;
       const exp = z < 11 ? 0.3 + (z - 3) / 20 : 1;
-      const yearStart = parseInt(moment(params.startDate).format('YYYY'), 10);
-      const yearEnd = parseInt(moment(params.endDate).format('YYYY'), 10);
+      const yearStart = new Date(params.startDate).getUTCFullYear();
+      const yearEnd = new Date(params.endDate).getUTCFullYear();
       const imgData = data;
 
       const myscale = scalePow()
@@ -98,7 +105,7 @@ export default {
     decodeParams: {
       interval: 'years',
       intervalStep: 1,
-      dateFormat: 'YYYY-MM-DD',
+      dateFormat: 'YYYY',
       speed: 100
     }
   },
@@ -111,15 +118,23 @@ export default {
       z,
       params = { minDate: '2015-01-01', startDate: '2016-12-01' }
     ) => {
+      'use asm';
+
       // fixed variables
       const imgData = data;
       const { startDate, endDate, minDate, maxDate, weeks } = params;
-      const numberOfDays = moment(maxDate).diff(minDate, 'days');
+
+      const minDateTime = new Date(minDate);
+      const maxDateTime = new Date(maxDate);
+      const numberOfDays = dateDiffInDays(minDateTime, maxDateTime);
 
       // timeline or hover effect active range
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
       const activeStartDay =
-        numberOfDays - moment(maxDate).diff(startDate, 'days');
-      const activeEndDay = numberOfDays - moment(maxDate).diff(endDate, 'days');
+        numberOfDays - dateDiffInDays(startDateTime, maxDateTime);
+      const activeEndDay =
+        numberOfDays - dateDiffInDays(endDateTime, maxDateTime);
 
       // show specified weeks from end date
       const rangeStartDate = weeks && numberOfDays - 7 * weeks;
@@ -175,9 +190,96 @@ export default {
       }
     },
     decodeParams: {
-      interval: 'months',
+      interval: 'weeks',
       intervalStep: 1,
-      dateFormat: 'YYYY-MM-DD'
+      dateFormat: 'YYYY-MM-DD',
+      speed: 50
+    }
+  },
+  '9a370f5a-6631-44e3-a955-7f3884c27d91': {
+    decodeFunction: (
+      data,
+      w,
+      h,
+      z,
+      params = { minDate: '2015-01-01', startDate: '2016-12-01' }
+    ) => {
+      'use asm';
+
+      // fixed variables
+      const imgData = data;
+      const { startDate, endDate, minDate, maxDate, weeks } = params;
+
+      const minDateTime = new Date(minDate);
+      const maxDateTime = new Date(maxDate);
+      const numberOfDays = dateDiffInDays(minDateTime, maxDateTime);
+
+      // timeline or hover effect active range
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
+      const activeStartDay =
+        numberOfDays - dateDiffInDays(startDateTime, maxDateTime);
+      const activeEndDay =
+        numberOfDays - dateDiffInDays(endDateTime, maxDateTime);
+
+      // show specified weeks from end date
+      const rangeStartDate = weeks && numberOfDays - 7 * weeks;
+      // get start and end day
+      const startDay = activeStartDay || rangeStartDate || 0;
+      const endDay = activeEndDay || numberOfDays;
+
+      const confidenceValue = -1;
+      const pixelComponents = 4; // RGBA
+      let pixelPos = 0;
+
+      for (let i = 0; i < w; ++i) {
+        for (let j = 0; j < h; ++j) {
+          pixelPos = (j * w + i) * pixelComponents;
+          // day 0 is 2015-01-01 until latest date from fetch
+          const day = imgData[pixelPos] * 255 + imgData[pixelPos + 1];
+          const band3 = data[pixelPos + 2];
+          // get confidence
+          let confidence = -1;
+          if (data[band3] >= 100 && data[band3] < 200) {
+            confidence = 0;
+          } else if (data[band3] >= 200) {
+            confidence = 1;
+          }
+
+          if (
+            confidence >= confidenceValue &&
+            day > 0 &&
+            day >= startDay &&
+            day <= endDay
+          ) {
+            // get intensity
+            let intensity = (band3 % 100) * 50;
+            if (intensity > 255) {
+              intensity = 255;
+            }
+            if (day >= numberOfDays - 7 && day <= numberOfDays) {
+              imgData[pixelPos] = 219;
+              imgData[pixelPos + 1] = 168;
+              imgData[pixelPos + 2] = 0;
+              imgData[pixelPos + 3] = intensity;
+            } else {
+              imgData[pixelPos] = 220;
+              imgData[pixelPos + 1] = 102;
+              imgData[pixelPos + 2] = 153;
+              imgData[pixelPos + 3] = intensity;
+            }
+            continue; // eslint-disable-line
+          }
+
+          imgData[pixelPos + 3] = 0;
+        }
+      }
+    },
+    decodeParams: {
+      interval: 'weeks',
+      intervalStep: 1,
+      dateFormat: 'YYYY-MM-DD',
+      speed: 50
     }
   },
   // Biomass Loss

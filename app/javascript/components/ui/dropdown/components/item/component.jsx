@@ -7,6 +7,8 @@ import Button from 'components/ui/button';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import infoIcon from 'assets/icons/info.svg';
 
+import './styles.scss';
+
 const Item = props => {
   const {
     index,
@@ -34,7 +36,7 @@ const Item = props => {
 
   return (
     <div
-      className={`item-wrapper
+      className={`c-selector-item-wrapper
         ${isActive ? 'show' : ''}
         ${!group ? 'base' : ''}
         ${isGroupParentActive ? 'selected' : ''}
@@ -52,7 +54,7 @@ const Item = props => {
         {...getItemProps({
           item,
           index,
-          className: `item ${isHighlighted ? 'highlight' : ''}`
+          className: `c-selector-item ${isHighlighted ? 'highlight' : ''}`
         })}
         {...!!groupParent && {
           onClick: () => handleSelectGroup(item)

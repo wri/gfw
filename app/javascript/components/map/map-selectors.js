@@ -1,108 +1,200 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
-import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
+
+import { formatDate } from 'utils/dates';
 
 import initialState from './map-initial-state';
 import decodeLayersConfig from './map-decode-config';
 
 // get list data
 const getMapUrlState = state => (state.query && state.query.map) || null;
-const getDatasets = state => state.datasets;
+const getDatasets = state => state.datasets.filter(d => !isEmpty(d.layer));
 const getLoading = state => state.loading;
+const getWidget = state => state[state.widgetKey] || null;
+const getGeostore = state => state.geostore || null;
+
+const reduceParams = params => {
+  if (!params) return null;
+  return params.reduce((obj, param) => {
+    const newObj = {
+      ...obj,
+      [param.key]:
+        param.key === 'endDate' && !param.default
+          ? formatDate(new Date())
+          : param.default
+    };
+    return newObj;
+  }, {});
+};
+
+const reduceSqlParams = params => {
+  if (!params) return null;
+  return params.reduce((obj, param) => {
+    const newObj = {
+      ...obj,
+      [param.key]: param.key_params.reduce((subObj, item) => {
+        const keyValues = {
+          ...subObj,
+          [item.key]: item.value
+        };
+        return keyValues;
+      }, {})
+    };
+    return newObj;
+  }, {});
+};
 
 // get map settings
-export const getMapSettings = createSelector(getMapUrlState, urlState => ({
-  ...initialState,
-  ...urlState
-}));
+
+export const getWidgetSettings = createSelector(
+  getWidget,
+  widget => widget && widget.settings
+);
+
+export const getMapSettings = createSelector(
+  [getMapUrlState, getWidgetSettings],
+  (urlState, widgetState) => ({
+    ...initialState,
+    ...urlState,
+    ...widgetState
+  })
+);
 
 export const getLayers = createSelector(
   getMapSettings,
   settings => settings.layers
 );
 
-export const getLayerGroups = createSelector(
-  [getDatasets, getLayers],
-  (datasets, layers) => {
-    if (!datasets || !datasets.length || !layers || !layers.length) return null;
+export const getDatasetIds = createSelector([getLayers], layers => {
+  if (!layers || !layers.length) return null;
+  return layers.map(l => l.dataset);
+});
 
-    return layers
-      .map(l => {
-        const dataset = datasets.find(d => d.id === l.dataset);
+export const getActiveDatasets = createSelector(
+  [getDatasets, getDatasetIds],
+  (datasets, datasetIds) => {
+    if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
+    return datasets.filter(d => datasetIds.indexOf(d.id) > -1);
+  }
+);
 
-        return {
-          ...dataset,
-          ...l,
-          layers:
-            dataset.layer && dataset.layer.length > 0
-              ? dataset.layer.map(layer => {
-                const decodeFunction = decodeLayersConfig[layer.id];
-                const paramsConfig = layer.layerConfig.params_config;
-                const decodeConfig = layer.layerConfig.decode_config;
-                const sqlConfig = layer.layerConfig.sql_config;
-
-                return {
-                  ...layer,
-                  ...l,
-                  active: l.layer === layer.id,
-                  ...(!!paramsConfig &&
-                      !!paramsConfig.length && {
-                      params: {
-                        url:
-                            layer.layerConfig.body.url || layer.layerConfig.url,
-                        ...paramsConfig.reduce((obj, param) => {
-                          obj[param.key] = param.default;
-                          return obj;
-                        }, {}),
-                        ...l.params
-                      }
-                    }),
-                  ...(!!sqlConfig &&
-                      !!sqlConfig.length && {
-                      sqlParams: {
-                        ...sqlConfig.reduce((obj, param) => {
-                          obj[param.key] = param.default;
-                          return obj;
-                        }, {}),
-                        ...l.decodeParams
-                      },
-                      ...l.sqlParams
-                    }),
-                  ...decodeFunction,
-                  ...(!!decodeConfig &&
-                      !!decodeConfig.length &&
-                      !!decodeFunction && {
-                      decodeParams: {
-                        ...decodeFunction.decodeParams,
-                        ...decodeConfig.reduce((obj, param) => {
-                          const { key } = param;
-                          obj[key] =
-                              param.default || moment().format('YYYY-MM-DD');
-                          if (key === 'startDate') {
-                            obj.minDate = param.default;
-                          }
-                          if (key === 'endDate') {
-                            obj.maxDate =
-                                param.default || moment().format('YYYY-MM-DD');
-                            obj.trimEndDate =
-                                param.default || moment().format('YYYY-MM-DD');
-                          }
-                          return obj;
-                        }, {}),
-                        ...l.decodeParams
-                      }
-                    })
-                };
+export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
+  if (isEmpty(datasets)) return null;
+  return datasets.map(d => {
+    const { layer, metadata } = d;
+    const appMeta = metadata.find(m => m.application === 'gfw') || {};
+    const { info } = appMeta || {};
+    return {
+      ...d,
+      ...info,
+      ...(info &&
+        info.isSelectorLayer && {
+          selectorLayerConfig: {
+            options: layer.map(l => l.applicationConfig.selectorConfig)
+          }
+        }),
+      layers:
+        layer &&
+        sortBy(
+          layer.map((l, i) => {
+            const { layerConfig, applicationConfig } = l;
+            const { sortOrder } = applicationConfig || {};
+            const {
+              params_config,
+              decode_config,
+              sql_config,
+              body,
+              url
+            } = layerConfig;
+            const decodeFunction = decodeLayersConfig[l.id];
+            return {
+              ...l,
+              ...applicationConfig,
+              sortOrder: applicationConfig.default ? 0 : sortOrder || i + 1,
+              ...(!isEmpty(params_config) && {
+                params: {
+                  url: body.url || url,
+                  ...reduceParams(params_config)
+                }
+              }),
+              ...(!isEmpty(sql_config) && {
+                sqlParams: {
+                  ...reduceSqlParams(sql_config)
+                }
+              }),
+              ...decodeFunction,
+              ...(!isEmpty(decode_config) && {
+                decodeParams: {
+                  ...(decodeFunction && decodeFunction.decodeParams),
+                  ...reduceParams(decode_config)
+                }
               })
-              : []
-        };
-      })
-      .filter(l => l.layers && l.layers.length > 0);
+            };
+          }),
+          'sortOrder'
+        )
+    };
+  });
+});
+
+export const getLayerGroups = createSelector(
+  [getParsedDatasets, getLayers],
+  (datasets, layers) => {
+    if (isEmpty(datasets) || isEmpty(layers)) return null;
+
+    return datasets.map(d => {
+      const layerConfig = layers.find(l => l.dataset === d.id) || {};
+      const { params, sqlParams, decodeParams } = layerConfig;
+
+      return {
+        ...d,
+        ...layerConfig,
+        ...(d.selectorLayerConfig && {
+          selectorLayerConfig: {
+            ...d.selectorLayerConfig,
+            selected: d.layers.find(l => l.id === layerConfig.layers[0])
+              .applicationConfig.selectorConfig
+          }
+        }),
+        layers: d.layers.map(l => ({
+          ...l,
+          ...layerConfig,
+          active:
+            layerConfig &&
+            layerConfig.layers &&
+            layerConfig.layers.indexOf(l.id) > -1,
+          params: {
+            ...l.params,
+            ...params
+          },
+          sqlParams: {
+            ...l.sqlParams,
+            ...sqlParams
+          },
+          decodeParams: {
+            ...l.decodeParams,
+            ...decodeParams
+          },
+          ...(l.decodeParams &&
+            l.decodeParams.startDate && {
+              timelineConfig: {
+                ...l.decodeParams,
+                minDate: l.decodeParams && l.decodeParams.startDate,
+                maxDate: l.decodeParams && l.decodeParams.endDate,
+                trimEndDate: l.decodeParams && l.decodeParams.endDate,
+                ...decodeParams
+              }
+            })
+        }))
+      };
+    });
   }
 );
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
-  if (!layerGroups || !layerGroups.length) return null;
+  if (isEmpty(layerGroups)) return null;
   return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
 });
 
@@ -111,5 +203,6 @@ export const getMapProps = createStructuredSelector({
   settings: getMapSettings,
   layerGroups: getLayerGroups,
   activeLayers: getActiveLayers,
-  loading: getLoading
+  loading: getLoading,
+  geostore: getGeostore
 });

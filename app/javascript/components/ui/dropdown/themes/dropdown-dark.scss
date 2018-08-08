@@ -7,7 +7,7 @@ $dd-dark-font-size: rem(40px);
   color: $white;
   font-weight: 300;
 
-  .selector {
+  .c-selector {
     border: 0;
     height: $dd-dark-height;
     padding: 0;
@@ -55,7 +55,7 @@ $dd-dark-font-size: rem(40px);
     }
   }
 
-  .menu {
+  .c-selector-menu {
     border: solid 1px $border;
     font-size: rem(18px);
     font-weight: 400;

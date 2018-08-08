@@ -14,7 +14,8 @@ const mapStateToProps = ({ location, dataAnalysis, mapMenu, datasets }) => {
   return {
     activeTab: location.payload.tab,
     analysis: dataAnalysis.analysis,
-    menuSectionData: getActiveSection({ selectedSection, ...datasets })
+    menuSectionData: getActiveSection({ selectedSection, ...datasets }),
+    ...location
   };
 };
 

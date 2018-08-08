@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import NoContent from 'components/ui/no-content';
 
-import LayerToggle from 'pages/map/menu/components/layer-toggle';
+import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import MenuBlock from 'pages/map/menu/components/menu-block';
 
 import './styles.scss';
@@ -22,7 +22,8 @@ class Datasets extends PureComponent {
                 subCat.datasets.map(d => (
                   <LayerToggle
                     key={d.id}
-                    data={d}
+                    className="dataset-toggle"
+                    data={{ ...d, dataset: d.id }}
                     onToggle={onToggleLayer}
                     onInfoClick={onInfoClick}
                   />
@@ -38,7 +39,8 @@ class Datasets extends PureComponent {
           : datasets.map(d => (
             <LayerToggle
               key={d.id}
-              data={d}
+              className="dataset-toggle"
+              data={{ ...d, dataset: d.id }}
               onToggle={onToggleLayer}
               onInfoClick={onInfoClick}
             />

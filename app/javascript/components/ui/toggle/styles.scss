@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.c-toggle {
+  width: rem(16px);
+  height: rem(10px);
+  background-color: $light-grey;
+  border-radius: rem(8px);
+  position: relative;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    top: 2px;
+    background-color: $white;
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+
+  &.-active {
+    background-color: $green-gfw;
+
+    &::before {
+      transform: translateX(6px);
+    }
+  }
+}

@@ -6,9 +6,12 @@ import Icon from 'components/ui/icon';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import closeIcon from 'assets/icons/close.svg';
 
+import './styles.scss';
+
 const Selector = props => {
   const {
     isOpen,
+    className,
     arrowPosition,
     onSelectorClick,
     clearable,
@@ -22,8 +25,11 @@ const Selector = props => {
   } = props;
 
   return (
-    <div ref={innerRef} className={`container ${isOpen ? 'is-open' : ''}`}>
-      <div className={`selector ${arrowPosition ? 'align-left' : ''}`}>
+    <div
+      ref={innerRef}
+      className={`container ${isOpen ? 'is-open' : ''} ${className || ''}`}
+    >
+      <div className={`c-selector ${arrowPosition ? 'align-left' : ''}`}>
         {arrowPosition === 'left' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
             <Icon className="arrow" icon={arrowDownIcon} />
@@ -66,7 +72,8 @@ Selector.propTypes = {
   searchable: PropTypes.bool,
   inputProps: PropTypes.func,
   handleClearSelection: PropTypes.func,
-  innerRef: PropTypes.func
+  innerRef: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default Selector;

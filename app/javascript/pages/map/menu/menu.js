@@ -27,19 +27,19 @@ const mapStateToProps = ({ mapMenu, datasets, location }) => ({
 });
 
 class MenuContainer extends PureComponent {
-  onToggleLayer = (layer, value) => {
+  onToggleLayer = (data, value) => {
     const { layers, setMapSettings } = this.props;
-    const { id, layerId } = layer;
+    const { dataset, layer } = data;
     let newLayers = [...layers];
     if (!value) {
-      newLayers = remove(newLayers, l => l.dataset !== id);
+      newLayers = remove(newLayers, l => l.dataset !== dataset);
     } else {
       newLayers = [
         {
-          dataset: id,
+          dataset,
           opacity: 1,
           visibility: true,
-          layer: layerId
+          layers: [layer]
         }
       ].concat([...newLayers]);
     }

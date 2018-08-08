@@ -8,6 +8,7 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
 import infoIcon from 'assets/icons/info.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg';
 
 import Selector from './components/selector';
 import Menu from './components/menu';
@@ -16,6 +17,9 @@ import './dropdown-styles.scss';
 import './themes/dropdown-dark.scss';
 import './themes/dropdown-light.scss';
 import './themes/dropdown-button.scss';
+import './themes/dropdown-button-small.scss';
+import './themes/dropdown-native.scss';
+import './themes/dropdown-native-button.scss';
 
 class Dropdown extends PureComponent {
   render() {
@@ -43,7 +47,11 @@ class Dropdown extends PureComponent {
       items,
       activeValue,
       activeLabel,
-      highlightedIndex
+      highlightedIndex,
+      native,
+      value,
+      onChange,
+      options
     } = this.props;
 
     const dropdown = (
@@ -53,39 +61,61 @@ class Dropdown extends PureComponent {
         onOuterClick={checkModalClosing}
         {...this.props}
       >
-        {({ getInputProps, getItemProps, getRootProps }) => (
-          <Selector
-            isOpen={isOpen}
-            arrowPosition={arrowPosition}
-            onSelectorClick={onSelectorClick}
-            clearable={clearable}
-            activeValue={activeValue}
-            activeLabel={activeLabel}
-            searchable={searchable}
-            inputProps={() => buildInputProps(getInputProps)}
-            handleClearSelection={() => handleClearSelection()}
-            {...getRootProps({ refKey: 'innerRef' })}
-          >
-            <Menu
+        {({ getInputProps, getItemProps, getRootProps }) =>
+          (native ? (
+            <div className="select-wrapper">
+              <select value={value && value.value} onChange={onChange}>
+                {options &&
+                  !!options.length &&
+                  options.map(
+                    o =>
+                      o && (
+                        <option key={o.value} value={o.value}>
+                          {o.label}
+                        </option>
+                      )
+                  )}
+              </select>
+              <Icon icon={arrowIcon} className="arrow-icon" />
+            </div>
+          ) : (
+            <Selector
               isOpen={isOpen}
+              arrowPosition={arrowPosition}
+              onSelectorClick={onSelectorClick}
+              clearable={clearable}
               activeValue={activeValue}
               activeLabel={activeLabel}
-              items={items}
-              showGroup={showGroup}
-              getItemProps={getItemProps}
-              highlightedIndex={highlightedIndex}
-              optionsAction={optionsAction}
-              optionsActionKey={optionsActionKey}
-              noItemsFound={noItemsFound}
-              handleSelectGroup={handleSelectGroup}
-            />
-          </Selector>
-        )}
+              searchable={searchable}
+              inputProps={() => buildInputProps(getInputProps)}
+              handleClearSelection={() => handleClearSelection()}
+              {...getRootProps({ refKey: 'innerRef' })}
+            >
+              <Menu
+                isOpen={isOpen}
+                activeValue={activeValue}
+                activeLabel={activeLabel}
+                items={items}
+                showGroup={showGroup}
+                getItemProps={getItemProps}
+                highlightedIndex={highlightedIndex}
+                optionsAction={optionsAction}
+                optionsActionKey={optionsActionKey}
+                noItemsFound={noItemsFound}
+                handleSelectGroup={handleSelectGroup}
+              />
+            </Selector>
+          ))
+        }
       </Downshift>
     );
 
     return (
-      <div className={`c-dropdown ${theme || ''} ${className || ''}`}>
+      <div
+        className={`c-dropdown ${
+          native ? 'theme-dropdown-native' : ''
+        } ${theme || ''} ${className || ''}`}
+      >
         {label && (
           <div className="label">
             {label}
@@ -157,7 +187,9 @@ Dropdown.propTypes = {
   items: PropTypes.array,
   activeValue: PropTypes.object,
   activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  highlightedIndex: PropTypes.number
+  highlightedIndex: PropTypes.number,
+  native: PropTypes.bool,
+  onChange: PropTypes.func
 };
 
 export default Dropdown;
