@@ -21,7 +21,8 @@ export const initialState = {
     selectedTileSource: null,
     date: null,
     weeks: 13,
-    clouds: 25
+    clouds: 25,
+    bands: 0
   }
 };
 
