@@ -101,7 +101,7 @@ class Legend extends PureComponent {
 
   onChangeInfo = layer => {
     const { setModalMeta } = this.props;
-    setModalMeta(layer.layerConfig.body.metadata);
+    setModalMeta(layer.metadata);
   };
 
   onChangeTimeline = (currentLayer, range) => {

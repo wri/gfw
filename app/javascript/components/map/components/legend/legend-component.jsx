@@ -82,6 +82,7 @@ class MapLegend extends Component {
                         focusStyle={{
                           fill: '#676867'
                         }}
+                        onChangeInfo={onChangeInfo}
                       >
                         <LegendItemButtonOpacity
                           className="-plain"
