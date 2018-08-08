@@ -32,7 +32,9 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                     setInteraction({
                       ...e,
                       label: l.name,
+                      article: l.name === 'Places to Watch',
                       id: l.id,
+                      value: l.id,
                       config: l.interactionConfig.output
                     })
                   );

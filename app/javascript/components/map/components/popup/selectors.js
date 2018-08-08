@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import flatten from 'lodash/flatten';
-import intersection from 'lodash/intersection';
+import isEmpty from 'lodash/isEmpty';
 
 import { getLayers } from '../../map-selectors';
 
@@ -8,40 +7,71 @@ const getSelected = state => state.selected;
 const getInteractions = state => state.interactions;
 const getLatLng = state => state.latlng;
 
-export const getActiveLayers = createSelector(
-  [getLayers, getInteractions],
-  (layers, interactions) => {
-    if (!layers || !interactions) return null;
-    const interactionLayerIds = Object.keys(interactions);
-    const layerIds = flatten(layers.map(l => l.layers));
-    return intersection(interactionLayerIds, layerIds);
+export const filterInteractions = createSelector(
+  [getInteractions],
+  interactions => {
+    if (isEmpty(interactions)) return null;
+    return Object.values(interactions)
+      .filter(i => !isEmpty(i.data))
+      .map(i => ({
+        ...i
+      }));
   }
 );
 
-export const getSelectedLayer = createSelector(
-  [getSelected, getActiveLayers, getInteractions],
-  (selected, layers, interactions) => {
-    if (selected && interactions[selected]) return selected;
-    return layers[0];
+export const getSelectedInteraction = createSelector(
+  [filterInteractions, getSelected],
+  (options, selected) => {
+    if (isEmpty(options)) return null;
+    const article = options.find(o => o.article);
+    if (article) return article;
+    if (!selected || options.length === 1) return options[0];
+    return options.find(o => o.value === selected);
   }
 );
 
-export const getLayerOptions = createSelector(
-  [getActiveLayers, getInteractions],
-  (layers, interactions) => {
-    if (!layers || !interactions) return null;
-    return layers.map(i => ({
-      label: interactions[i].label,
-      value: i
-    }));
+export const getCardData = createSelector(
+  [getSelectedInteraction],
+  interaction => {
+    if (isEmpty(interaction) || !interaction.article) return null;
+    const { data } = interaction;
+
+    return {
+      image: data.image,
+      imageCredit: data.image_source,
+      title: data.name,
+      summary: data.description,
+      buttons: [
+        {
+          text: 'READ MORE',
+          extLink: '#',
+          theme: 'theme-button-light theme-button-small'
+        },
+        {
+          text: 'ANALYSE',
+          extLink: '#',
+          theme: 'theme-button-small'
+        }
+      ]
+    };
+
+    // when config is updated in API
+    // return config.reduce((obj, param) => {
+    //   const newObj = {
+    //     ...obj,
+    //     [param.key]: data[param.column]
+    //   };
+    //   return newObj;
+    // }, {});
   }
 );
 
-export const getSelectedData = createSelector(
-  [getSelectedLayer, getInteractions],
-  (layer, interactions) => {
-    if (!layer || !interactions || !interactions[layer]) return null;
-    const { config, ...data } = interactions[layer];
+export const getTableData = createSelector(
+  [getSelectedInteraction],
+  interaction => {
+    if (isEmpty(interaction) || interaction.article) return null;
+    const { config, data } = interaction;
+
     return config.map(c => ({
       label: c.property,
       value: data[c.column]
@@ -50,9 +80,10 @@ export const getSelectedData = createSelector(
 );
 
 export const getPopupProps = createStructuredSelector({
-  value: getSelectedLayer,
-  options: getLayerOptions,
-  data: getSelectedData,
-  interactions: getInteractions,
-  latlng: getLatLng
+  interactions: filterInteractions,
+  selected: getSelectedInteraction,
+  tableData: getTableData,
+  cardData: getCardData,
+  latlng: getLatLng,
+  layers: getLayers
 });

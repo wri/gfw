@@ -43,20 +43,22 @@ class Explore extends PureComponent {
                 <div key={item.id} className="column small-6">
                   <Card
                     theme="theme-card-small"
-                    data={item}
-                    buttons={[
-                      {
-                        text: 'READ MORE',
-                        extLink: '#',
-                        theme: 'theme-button-light theme-button-small'
-                      },
-                      {
-                        text: 'VIEW ON MAP',
-                        extLink: '#',
-                        onClick: () => {},
-                        theme: 'theme-button-small'
-                      }
-                    ]}
+                    data={{
+                      ...item,
+                      buttons: [
+                        {
+                          text: 'READ MORE',
+                          extLink: '#',
+                          theme: 'theme-button-light theme-button-small'
+                        },
+                        {
+                          text: 'VIEW ON MAP',
+                          extLink: '#',
+                          onClick: () => {},
+                          theme: 'theme-button-small'
+                        }
+                      ]
+                    }}
                   />
                 </div>
               ))}

@@ -1,51 +1,56 @@
 @import '~styles/settings.scss';
 
 .c-popup {
-  padding: 5px;
   font-family: $font-family-1;
+  border-radius: 2px;
 
-  .popup-title {
-    font-size: rem(16px);
-    margin-bottom: rem(15px);
+  .popup-card {
+    border: 0;
+  }
+
+  .popup-table {
+    padding: rem(25px);
+
+    .popup-title {
+      font-size: rem(16px);
+      margin-bottom: rem(15px);
+      color: $slate;
+      font-weight: 400;
+    }
+
+    .layer-selector {
+      margin-bottom: 20px;
+    }
+
+    .nav-footer {
+      margin-top: rem(15px);
+    }
+  }
+
+  .theme-button-small {
+    color: $white;
+  }
+
+  .theme-button-light {
     color: $slate;
-    font-weight: 400;
-  }
-
-  .layer-selector {
-    margin-bottom: 20px;
-  }
-
-  .values {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .wrapper {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .label {
-    width: 40%;
-    font-weight: 400;
-    margin-right: 15px;
-  }
-
-  .nav-footer {
-    margin-top: rem(10px);
   }
 }
 
+.leaflet-popup-content {
+  margin: 0;
+}
+
 .leaflet-popup-content-wrapper {
-  border-radius: 2px;
+  border-radius: 0;
+  padding: 0;
 }
 
 .leaflet-container a.leaflet-popup-close-button {
   top: 5px;
   right: 5px;
+}
+
+.leaflet-container a {
+  color: inherit;
+  -webkit-tap-highlight-color: unset;
 }

@@ -8,19 +8,19 @@ $summary-color: #aaa;
   }
 
   .body {
-    padding: rem(23px) rem(20px) rem(20px) rem(20px);
+    padding: rem(15px) rem(20px) rem(20px) rem(20px);
 
     .title {
       font-size: 14px;
       font-weight: 400;
       line-height: 1;
       letter-spacing: normal;
-      margin-bottom: rem(5px);
+      margin-bottom: rem(10px);
     }
 
     .summary {
       font-size: 12px;
-      line-height: 1.33;
+      line-height: 1.4;
       letter-spacing: -0.2px;
       color: $summary-color;
     }
