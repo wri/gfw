@@ -16,13 +16,14 @@ class LayerSelectorMenu extends PureComponent {
       onChange,
       className
     } = this.props;
+    const optionName = selected.group || name;
 
     return (
       <div className={`c-layer-selector-menu ${className || ''}`}>
         {groups &&
           !!groups.length && (
-            <div className="menu-wrapper">
-              <span>{`Displaying ${name} for`}</span>
+            <div className="menu-wrapper -group">
+              <span>{`Displaying ${name.toLowerCase()} for`}</span>
               <Dropdown
                 className="layer-selector"
                 theme="theme-dropdown-native-button"
@@ -36,7 +37,7 @@ class LayerSelectorMenu extends PureComponent {
         {options &&
           !!options.length && (
             <div className="menu-wrapper">
-              <span>{`Displaying ${selected.group} for`}</span>
+              <span>{`Displaying ${optionName.toLowerCase()} for`}</span>
               <Dropdown
                 className="layer-selector"
                 theme="theme-dropdown-native-button"
