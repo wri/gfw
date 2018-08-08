@@ -1,17 +1,50 @@
-import React, { PureComponent } from 'react';
-import Proptypes from 'prop-types';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { Map } from 'wri-api-components';
+
+import { LayerManager, Layer } from 'layer-manager/dist/react';
+import { PluginLeaflet } from 'layer-manager';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
-import MiniLegend from 'components/map/components/mini-legend';
 
 import './map-styles.scss';
 
-class Map extends PureComponent {
+class MapComponent extends PureComponent {
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      this.map.invalidateSize();
+    });
+  }
+
   render() {
-    const { loading, error, layers, miniLegend } = this.props;
+    const {
+      loading,
+      error,
+      activeLayers,
+      mapOptions,
+      basemap,
+      label
+    } = this.props;
+
     return (
-      <div className="c-map">
+      <Fragment>
+        <Map
+          customClass="c-map"
+          onReady={map => {
+            this.map = map;
+          }}
+          mapOptions={mapOptions}
+          basemap={basemap}
+          label={label}
+        >
+          {map => (
+            <LayerManager map={map} plugin={PluginLeaflet}>
+              {activeLayers &&
+                activeLayers.map(l => <Layer key={l.id} {...l} />)}
+            </LayerManager>
+          )}
+        </Map>
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
@@ -19,21 +52,19 @@ class Map extends PureComponent {
           error && (
             <NoContent message="An error occured. Please try again later." />
           )}
-        <div id="map" className="c-map" />
-        {miniLegend &&
-          !loading &&
-          layers &&
-          layers.length && <MiniLegend layers={layers} />}
-      </div>
+      </Fragment>
     );
   }
 }
 
-Map.propTypes = {
-  loading: Proptypes.bool.isRequired,
-  layers: Proptypes.array,
-  error: Proptypes.bool,
-  miniLegend: Proptypes.bool
+MapComponent.propTypes = {
+  loading: PropTypes.bool,
+  activeLayers: PropTypes.array,
+  error: PropTypes.bool,
+  map: PropTypes.object,
+  mapOptions: PropTypes.object,
+  basemap: PropTypes.object,
+  label: PropTypes.object
 };
 
-export default Map;
+export default MapComponent;

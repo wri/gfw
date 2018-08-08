@@ -9,14 +9,15 @@ import './location-analysis-styles.scss';
 
 class LocationAnalysis extends PureComponent {
   render() {
-    const { widgets, setAnalysisData } = this.props;
+    const { location, widgets, setAnalysisData } = this.props;
     return (
       <div className="c-location-analysis">
         <div
           className="c-location-analysis__title"
           onClick={() => {
             setAnalysisData({
-              option: null
+              option: 'location',
+              showResults: false
             });
           }}
           role="button"
@@ -29,13 +30,14 @@ class LocationAnalysis extends PureComponent {
           <div className="c-location-analysis__area-title">SELECTED AREA</div>
           <div className="c-location-analysis__area-value">41.2Mha</div>
         </div>
-        <Widgets widgets={widgets} analysis minimalist />
+        <Widgets widgets={widgets} location={location} analysis minimalist />
       </div>
     );
   }
 }
 
 LocationAnalysis.propTypes = {
+  location: PropTypes.object,
   widgets: PropTypes.array,
   setAnalysisData: PropTypes.func
 };

@@ -17,22 +17,21 @@ class DataAnalysisMenu extends PureComponent {
     const {
       className,
       activeTab = 'data',
-      layerGroups,
-      legendLoading,
       analysis,
-      menuSectionData
+      menuSectionData,
+      search
     } = this.props;
     const links = [
       {
         label: 'DATA',
         icon: landTreeIcon,
-        path: '/v2/map/data',
+        path: `/v2/map/data${search ? `?${search}` : ''}`,
         active: activeTab === 'data'
       },
       {
         label: 'ANALYSIS',
         icon: truckIcon,
-        path: '/v2/map/analysis',
+        path: `/v2/map/analysis${search ? `?${search}` : ''}`,
         active: activeTab === 'analysis'
       }
     ];
@@ -52,24 +51,19 @@ class DataAnalysisMenu extends PureComponent {
         />
         {activeTab === 'data' ? (
           <div className="legend">
-            {legendLoading && <Loader className="legend-loader" />}
-            <MapLegend
-              layerGroups={layerGroups}
-              collapsable={false}
-              maxHeight={500}
-              maxWidth={290}
-            />
+            <MapLegend collapsable={false} maxHeight={500} maxWidth={290} />
           </div>
         ) : (
           <div className="analysis">
             {analysis.loading && <Loader />}
             {!analysis.loading &&
-              !analysis.location &&
-              !analysis.data && <ChoseAnalysis selected={analysis.option} />}
+              !analysis.showResults && (
+                <ChoseAnalysis selected={analysis.option} />
+              )}
             {analysis.option === 'location' &&
-              analysis.location && <LocationAnalysis />}
+              analysis.showResults && <LocationAnalysis />}
             {analysis.option === 'polygon' &&
-              analysis.data && <PolygonAnalysis />}
+              analysis.showResults && <PolygonAnalysis />}
           </div>
         )}
       </div>
@@ -78,12 +72,11 @@ class DataAnalysisMenu extends PureComponent {
 }
 
 DataAnalysisMenu.propTypes = {
-  layerGroups: PropTypes.array,
   activeTab: PropTypes.string,
   className: PropTypes.string,
-  legendLoading: PropTypes.bool,
   analysis: PropTypes.object,
-  menuSectionData: PropTypes.object
+  menuSectionData: PropTypes.object,
+  search: PropTypes.string
 };
 
 export default DataAnalysisMenu;

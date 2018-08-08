@@ -2,6 +2,7 @@
 
 .c-map-controls {
   width: rem(38px);
+  z-index: 10;
 
   button {
     margin-bottom: rem(5px);

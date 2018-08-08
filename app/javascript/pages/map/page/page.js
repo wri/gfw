@@ -5,9 +5,10 @@ import actions from 'components/map/map-actions';
 
 import PageComponent from './page-component';
 
-const mapStateToProps = ({ location, countryData }) => ({
+const mapStateToProps = ({ location, countryData, dataAnalysis }) => ({
   ...location,
-  ...countryData
+  ...countryData,
+  ...dataAnalysis
 });
 
 class PageContainer extends PureComponent {

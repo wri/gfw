@@ -9,21 +9,20 @@ import './themes/switch-toggle.scss';
 
 class Switch extends PureComponent {
   render() {
-    const { theme, label, value, options, onChange } = this.props;
+    const { theme, label, options, onChange, checked } = this.props;
     const icons = options
       ? {
         checked: options[0].label,
         unchecked: options[1].label
       }
       : false;
-    const defaultChecked = options ? options[1].value === value : false;
 
     return (
       <div className={`c-switch ${theme || ''}`}>
         {label && <div className="label">{label}</div>}
         <Toggle
           icons={icons}
-          defaultChecked={defaultChecked}
+          checked={checked}
           onChange={e => {
             let result = e.target.checked;
             if (options) {
@@ -41,7 +40,7 @@ class Switch extends PureComponent {
 Switch.propTypes = {
   theme: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  checked: PropTypes.bool,
   options: PropTypes.array,
   onChange: PropTypes.func
 };

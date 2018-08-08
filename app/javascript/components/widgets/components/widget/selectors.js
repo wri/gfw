@@ -12,7 +12,7 @@ const getOptions = state => state.options || null;
 const getConfig = state => state.config || null;
 const getSettings = state => state.settings || null;
 const getUrlState = state => state.urlState || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getWhitelist = state => state.whitelist || null;
 const getForestType = state => state.forestType || null;
 const getLandCategory = state => state.landCategory || null;

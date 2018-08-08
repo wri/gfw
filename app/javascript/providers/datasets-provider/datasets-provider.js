@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 import * as actions from './datasets-provider-actions';
 import reducers, { initialState } from './datasets-provider-reducers';
 
-const mapStateToProps = ({ location }) => ({
-  location: location.payload
-});
-
 class DatasetsProvider extends PureComponent {
   componentDidMount() {
     const { getDatasets } = this.props;
@@ -25,4 +21,4 @@ DatasetsProvider.propTypes = {
 };
 
 export { actions, reducers, initialState };
-export default connect(mapStateToProps, actions)(DatasetsProvider);
+export default connect(null, actions)(DatasetsProvider);

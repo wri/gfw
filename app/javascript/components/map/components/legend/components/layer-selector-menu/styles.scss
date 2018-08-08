@@ -1,0 +1,12 @@
+@import '~styles/settings';
+
+.c-layer-selector-menu {
+  display: flex;
+  flex-flow: row wrap;
+  color: $slate;
+  font-size: rem(12px);
+
+  .layer-selector {
+    margin-left: rem(5px);
+  }
+}

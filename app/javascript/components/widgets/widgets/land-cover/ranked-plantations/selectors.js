@@ -11,10 +11,10 @@ import endsWith from 'lodash/endsWith';
 const getPlantations = state => (state.data && state.data.plantations) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.search || null;
 const getLocationsMeta = state =>
-  (state.payload.region ? state.subRegions : state.regions) || null;
+  (state.location.region ? state.subRegions : state.regions) || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getColors = state => state.colors || null;
 const getEmbed = state => state.embed || null;

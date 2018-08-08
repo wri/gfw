@@ -1,0 +1,21 @@
+@import '~styles/settings.scss';
+
+.c-datasets {
+  padding: rem(20px);
+  max-height: 100%;
+  overflow: scroll;
+
+  .dataset-toggle {
+    margin-bottom: rem(20px);
+
+    &:last-child {
+      margin-bottom: rem(5px);
+    }
+  }
+
+  .no-datasets {
+    position: relative;
+    font-size: rem(13px);
+    margin-bottom: rem(10px);
+  }
+}

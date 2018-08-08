@@ -9,7 +9,7 @@ import { getAdminPath } from '../../../utils';
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
 const getLocationsMeta = state => state.countries || null;
 const getColors = state => state.colors || null;

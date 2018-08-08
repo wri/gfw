@@ -13,7 +13,7 @@ const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLandCategory = state => state.landCategory || null;
 const getForestType = state => state.forestType || null;
-const getLocation = state => state.payload || null;
+const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
 const getLocationsMeta = state => state[state.childKey] || null;
 const getCurrentLocation = state => state.currentLabel || null;

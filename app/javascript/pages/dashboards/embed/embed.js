@@ -1,3 +1,8 @@
+import { connect } from 'react-redux';
 import EmbedComponent from './embed-component';
 
-export default EmbedComponent;
+const mapStateToProps = ({ location }) => ({
+  ...location
+});
+
+export default connect(mapStateToProps, null)(EmbedComponent);

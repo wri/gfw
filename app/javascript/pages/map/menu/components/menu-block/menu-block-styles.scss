@@ -2,7 +2,8 @@
 
 .c-menu-block {
   position: relative;
-  padding: rem(20px) 0;
+  margin-bottom: rem(20px);
+  padding-bottom: rem(20px);
 
   &__header {
     margin-bottom: rem(20px);
@@ -13,9 +14,10 @@
     font-weight: 500;
     line-height: 1.1;
     color: $greyish-brown;
+    text-transform: uppercase;
   }
 
-  &__description {
+  &__subtitle {
     font-size: 12px;
     letter-spacing: -0.3px;
     color: $hot-grey;

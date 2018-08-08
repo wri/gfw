@@ -1,0 +1,51 @@
+@import '~styles/settings';
+
+.c-layer-toggle {
+  display: flex;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__content {
+    flex: 1;
+    padding-left: rem(6px);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__name {
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: -0.3px;
+    color: $slate;
+    margin-top: -2px;
+  }
+
+  &__subtitle {
+    font-size: 12px;
+    line-height: normal;
+    letter-spacing: -0.3px;
+    color: $hot-grey;
+    margin-top: rem(3px);
+  }
+
+  .info-button {
+    margin-left: rem(5px);
+  }
+
+  /* small theme */
+  &.-small {
+    .c-layer-toggle__content {
+      margin-top: rem(-1px);
+    }
+
+    .c-layer-toggle__name {
+      font-size: rem(12px);
+      margin-top: -2px;
+    }
+  }
+}

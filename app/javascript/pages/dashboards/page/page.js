@@ -24,7 +24,8 @@ const mapStateToProps = ({ page, countryData, whitelists, location }) => {
     (location.query && location.query.widget);
   const widgetData = {
     category,
-    ...location,
+    location: location.payload,
+    query: location.query,
     countryData,
     whitelist: location.payload.region ? regionWhitelist : countryWhitelist
   };

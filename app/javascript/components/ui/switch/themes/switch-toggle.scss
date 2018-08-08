@@ -10,7 +10,7 @@
       height: 100%;
       background-color: $light-grey;
     }
-  
+
     .react-toggle-thumb {
       top: rem(2px);
       left: rem(2px);
@@ -34,6 +34,26 @@
       .react-toggle-track,
       &:hover .react-toggle-track {
         background-color: $green-gfw;
+      }
+    }
+  }
+
+  &.-small {
+    .react-toggle {
+      width: rem(16px);
+      height: rem(10px);
+
+      .react-toggle-thumb {
+        top: rem(2px);
+        left: rem(2px);
+        width: rem(6px);
+        height: rem(6px);
+      }
+
+      &--checked {
+        .react-toggle-thumb {
+          left: 50%;
+        }
       }
     }
   }

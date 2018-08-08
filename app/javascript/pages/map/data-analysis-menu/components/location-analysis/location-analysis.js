@@ -6,7 +6,8 @@ import { filterWidgetByAnalysis } from 'components/widgets/selectors';
 
 import Component from './location-analysis-component';
 
-const mapStateToProps = () => ({
+const mapStateToProps = ({ dataAnalysis }) => ({
+  location: dataAnalysis.analysis.location,
   widgets: filterWidgetByAnalysis()
 });
 
