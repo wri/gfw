@@ -1,23 +1,21 @@
-define([
-  'Class',
-  'uri',
-  'bluebird',
-  'map/services/DataService'
-], function(Class, UriTemplate, Promise, ds) {
-
+/* eslint-disable */
+define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
+  Class,
+  UriTemplate,
+  Promise,
+  ds
+) {
   'use strict';
 
   var GET_REQUEST_ID = 'GeostoreService:get',
-      SAVE_REQUEST_ID = 'GeostoreService:save';
+    SAVE_REQUEST_ID = 'GeostoreService:save';
 
-  var URL = 'https://production-api.globalforestwatch.org' + '/geostore/{id}';
+  var URL = window.gfw.config.GFW_API + '/geostore/{id}';
 
   var GeostoreService = Class.extend({
-
     get: function(id) {
       return new Promise(function(resolve, reject) {
-
-        var url = new UriTemplate(URL).fillFromObject({id: id});
+        var url = new UriTemplate(URL).fillFromObject({ id: id });
 
         ds.define(GET_REQUEST_ID, {
           cache: false,
@@ -31,15 +29,12 @@ define([
         };
 
         ds.request(requestConfig);
-
       });
     },
 
     save: function(geojson) {
       return new Promise(function(resolve, reject) {
-
         var url = new UriTemplate(URL).fillFromObject({});
-
         ds.define(SAVE_REQUEST_ID, {
           cache: false,
           url: url,
@@ -60,13 +55,11 @@ define([
         };
 
         ds.request(requestConfig);
-
       });
     },
 
     use: function(provider) {
       return new Promise(function(resolve, reject) {
-
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(SAVE_REQUEST_ID, {
@@ -89,12 +82,9 @@ define([
         };
 
         ds.request(requestConfig);
-
       });
     }
-
   });
 
   return new GeostoreService();
-
 });

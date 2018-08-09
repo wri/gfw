@@ -13,7 +13,7 @@ export default {
       'endYears',
       'units'
     ],
-    units: ['biomassCarbon', 'co2Emissions'],
+    units: ['co2Emissions', 'biomassCarbon'],
     yearRange: ['2001', '2017'],
     metaKey: 'widget_carbon_emissions_tree_cover_loss',
     type: 'loss',
@@ -26,7 +26,7 @@ export default {
     }
   },
   settings: {
-    unit: 'biomassCarbon',
+    unit: 'co2Emissions',
     threshold: 30,
     startYear: 2001,
     endYear: 2017

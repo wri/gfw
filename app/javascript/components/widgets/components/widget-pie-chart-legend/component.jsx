@@ -17,10 +17,10 @@ class WidgetTreeCover extends PureComponent {
           className="cover-legend"
           data={data}
           config={{
-            ...settings,
             format: '.3s',
             unit: 'ha',
-            key: 'value'
+            key: 'value',
+            ...settings
           }}
         />
         <PieChart

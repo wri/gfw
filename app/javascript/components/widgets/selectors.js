@@ -13,6 +13,7 @@ import periods from 'data/periods.json';
 import extentYears from 'data/extent-years.json';
 import types from 'data/types.json';
 import weeks from 'data/weeks.json';
+import datasets from 'data/datasets.json';
 
 import * as WIDGETS from 'components/widgets/manifest';
 
@@ -35,7 +36,8 @@ const options = {
   periods,
   extentYears,
   types,
-  weeks
+  weeks,
+  datasets
 };
 
 export const getOptions = () => {

@@ -22,7 +22,7 @@ export const getFilteredData = createSelector(
       .map(item => ({
         male: item.femempl
           ? (item.forempl - item.femempl) * 1000
-          : item.forempl,
+          : item.forempl * 1000,
         female: item.femempl ? item.femempl * 1000 : null,
         year: item.year
       }));

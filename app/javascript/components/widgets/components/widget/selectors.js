@@ -94,11 +94,14 @@ export const getForestTypes = createSelector(
 );
 
 export const getLandCategories = createSelector(
-  [getWhitelist, getConfig, getOptions],
-  (whitelist, config, options) => {
+  [getWhitelist, getConfig, getOptions, getLocation],
+  (whitelist, config, options, location) => {
     if (isEmpty(options)) return null;
     const { landCategories } = options;
-    let filteredOptions = landCategories;
+    const { type } = location;
+
+    let filteredOptions =
+      type === 'global' ? landCategories.filter(l => l.global) : landCategories;
 
     if (!isEmpty(config.landCategories)) {
       filteredOptions = filteredOptions.filter(
@@ -131,6 +134,14 @@ export const getWeeks = createSelector(
   (config, options) => {
     if (!config || !config.weeks) return options.weeks;
     return options.weeks.filter(w => config.weeks.indexOf(w.value) > -1);
+  }
+);
+
+export const getDatasets = createSelector(
+  [getConfig, getOptions],
+  (config, options) => {
+    if (!config || !config.datasets) return options.datasets;
+    return options.datasets.filter(w => config.datasets.indexOf(w.value) > -1);
   }
 );
 

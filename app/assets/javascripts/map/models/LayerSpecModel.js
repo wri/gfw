@@ -39,6 +39,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'us_land_cover_change',
       'colombia_forest_change',
       'intact_forest',
+      'primary_forest',
       'pantropical',
       'idn_primary',
       'ifl_2013_deg',
@@ -56,6 +57,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'col_plantations_by_species',
       'khm_plantations_by_type',
       'khm_plantations_by_species',
+      'idn_forest_cover',
       'idn_forest_area',
       'idn_plantations_by_type',
       'idn_plantations_by_species',
@@ -107,8 +109,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'mys_proteced_areas_sabah',
       'per_protected_areas',
       // Land USE
-      'dam_hotspots',
-      'oil_palm_mills',
       'per_prod_for',
       'concesiones_wrapper',
       'concesiones_forestalesNS',
@@ -170,7 +170,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'mangrove_2',
       'guyra',
       'terrailoss',
-      'viirs_fires_alerts',
       'imazon',
       'peru_forma_250',
       'brazil_forma_250',
@@ -188,7 +187,10 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'uncurated_places_to_watch',
       'places_to_watch',
       'forma_month_3',
-      'forma_activity'
+      'forma_activity',
+      'oil_palm_mills',
+      'dam_hotspots',
+      'viirs_fires_alerts'
     ],
 
     categoryOrder: [

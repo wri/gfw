@@ -8,13 +8,9 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
   'use strict';
 
   var CONFIG = {
-    countriesConfigDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
     countriesConfigTable: 'gfw_countries_config',
-    countriesDataset: '134caa0a-21f7-451d-a7fe-30db31a424aa',
     countriesTable: 'gadm36_countries',
-    regionsDataset: '098b33df-6871-4e53-a5ff-b56a7d989f9a',
     regionsTable: 'gadm36_adm1',
-    subRegionsDataset: 'b3d076cc-b150-4ccb-a93e-eca05d9ac2bf',
     subRegionsTable: 'gadm36_adm2'
   };
 
@@ -26,20 +22,19 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     GET_REQUEST_SUBREGIONS_LIST_ID = 'CountryService:getSubRegionsList',
     SHOW_REQUEST_SUBREGION_ID = 'CountryService:showSubRegion';
 
-  var APIURL = window.gfw.config.GFW_API;
   var CARTO_API = window.gfw.config.CARTO_API;
 
   var APIURLS = {
     getCountryConfig:
-      "/query/{countriesConfigDataset}?sql=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN'",
+      "/sql?q=SELECT iso, indepth FROM {countriesConfigTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN'",
     getCountriesList:
-      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso FROM {countriesTable} WHERE iso != 'XCA' AND iso != 'TWN' ORDER BY name",
+      "/sql?q=SELECT name_engli as name, iso FROM {countriesTable} WHERE iso != 'XCA' AND iso != 'TWN' ORDER BY name",
     showCountry:
-      "/query/{countriesDataset}?sql=SELECT name_engli as name, iso, ST_AsGeoJSON(the_geom) AS geojson FROM {countriesTable} WHERE iso='{iso}'",
+      "/sql?q=SELECT name_engli as name, iso, ST_AsGeoJSON(ST_Simplify(the_geom,0.1)) AS geojson FROM {countriesTable} WHERE iso='{iso}'",
     getRegionsList:
-      "/query/{regionsDataset}?sql=SELECT cartodb_id, iso, bbox as bounds, gid_1 as id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN' ORDER BY name_1",
+      "/sql?q=SELECT cartodb_id, iso, bbox as bounds, gid_1 as id_1, name_1 FROM {regionsTable} WHERE iso='{iso}' AND iso != 'XCA' AND iso != 'TWN' ORDER BY name_1",
     showRegion:
-      "/query/{regionsDataset}?sql=SELECT gid_1 as id_1, name_1, ST_AsGeoJSON(the_geom) AS geojson FROM {regionsTable} WHERE iso='{iso}' AND gid_1='{region}' ORDER BY name_1",
+      "/sql?q=SELECT gid_1 as id_1, name_1, ST_AsGeoJSON(the_geom) AS geojson FROM {regionsTable} WHERE iso='{iso}' AND gid_1='{region}' ORDER BY name_1",
     getSubRegionsList:
       "/sql?q=SELECT gid_2 as id, name_2 as name FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' ORDER BY name",
     showSubRegion:
@@ -70,7 +65,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
         function(resolve, reject) {
           var status = _.extend({}, CONFIG, params);
           var url = new UriTemplate(
-            APIURL + APIURLS.getCountryConfig
+            CARTO_API + APIURLS.getCountryConfig
           ).fillFromObject(status);
 
           this.defineRequest(datasetId, url);
@@ -78,7 +73,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: datasetId,
             success: function(res, status) {
-              resolve(res.data, status);
+              resolve(res.rows, status);
             },
             error: function(errors) {
               reject(errors);
@@ -94,7 +89,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
       return new Promise(
         function(resolve, reject) {
           var url = new UriTemplate(
-            APIURL + APIURLS.getCountriesList
+            CARTO_API + APIURLS.getCountriesList
           ).fillFromObject(CONFIG);
 
           this.defineRequest(GET_REQUEST_COUNTRIES_LIST_ID, url);
@@ -102,7 +97,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: GET_REQUEST_COUNTRIES_LIST_ID,
             success: function(res, status) {
-              resolve(res.data, status);
+              resolve(res.rows, status);
             },
             error: function(errors) {
               reject(errors);
@@ -126,7 +121,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
               function(countryConfig) {
                 var status = _.extend({}, CONFIG, params);
                 var url = new UriTemplate(
-                  APIURL + APIURLS.showCountry
+                  CARTO_API + APIURLS.showCountry
                 ).fillFromObject(status);
                 this.defineRequest(datasetId, url);
                 var requestConfig = {
@@ -134,7 +129,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
                   success: function(res, status) {
                     var dataCountryConfig =
                       countryConfig.length >= 0 ? countryConfig[0] : [];
-                    var dataCountry = res.data.length >= 0 ? res.data[0] : [];
+                    var dataCountry = res.rows.length >= 0 ? res.rows[0] : [];
                     var data = _.extend({}, dataCountry, dataCountryConfig);
                     resolve(data, status);
                   },
@@ -160,7 +155,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
         function(resolve, reject) {
           var status = _.extend({}, CONFIG, params);
           var url = new UriTemplate(
-            APIURL + APIURLS.getRegionsList
+            CARTO_API + APIURLS.getRegionsList
           ).fillFromObject(status);
 
           this.defineRequest(GET_REQUEST_REGIONS_LIST_ID, url);
@@ -168,7 +163,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: GET_REQUEST_REGIONS_LIST_ID,
             success: function(res, status) {
-              var data = res.data.map(d => {
+              var data = res.rows.map(d => {
                 var ids = parseGadm36Id(d.id_1);
                 return {
                   iso: d.iso,
@@ -200,16 +195,16 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var status = _.extend({}, CONFIG, params, {
             region: buildGadm36Id(params.iso, params.region)
           });
-          var url = new UriTemplate(APIURL + APIURLS.showRegion).fillFromObject(
-            status
-          );
-
+          var url = new UriTemplate(
+            CARTO_API + APIURLS.showRegion
+          ).fillFromObject(status);
           this.defineRequest(datasetId, url);
 
           var requestConfig = {
             resourceId: datasetId,
             success: function(res, status) {
-              var data = res.data.length >= 0 ? res.data[0] : [];
+              var data = res.rows.length >= 0 ? res.rows[0] : [];
+              console.log(data);
               resolve(data, status);
             },
             error: function(errors) {
@@ -280,7 +275,6 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var url = new UriTemplate(
             CARTO_API + APIURLS.showSubRegion
           ).fillFromObject(status);
-
           this.defineRequest(datasetId, url);
 
           var requestConfig = {

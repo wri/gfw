@@ -80,6 +80,8 @@ define(
     'text!map/templates/legend/biodiversity_intactness.handlebars',
     'text!map/templates/legend/biodiversity_completeness.handlebars',
     'text!map/templates/legend/rspo.handlebars'
+    'text!map/templates/legend/idn_land_cover.handlebars'
+
   ],
   function(
     mps,
@@ -153,7 +155,8 @@ define(
     sentinel_tilesTpl,
     biodiversity_intactnessTpl,
     biodiversity_completenessTpl,
-    rspoTpl
+    rspoTpl,
+    idn_land_coverTpl
   ) {
     var LegendView = Backbone.View.extend({
       el: '#module-legend',
@@ -255,10 +258,9 @@ define(
         bol_user_fire_frequency: Handlebars.compile(bol_user_fire_frequencyTpl),
         sentinel_tiles: Handlebars.compile(sentinel_tilesTpl),
         biodiversity_intactness: Handlebars.compile(biodiversity_intactnessTpl),
-        biodiversity_completeness: Handlebars.compile(
-          biodiversity_completenessTpl
-        ),
-        rspo_oil_palm: Handlebars.compile(rspoTpl)
+        biodiversity_completeness: Handlebars.compile(biodiversity_completenessTpl),
+        rspo_oil_palm: Handlebars.compile(rspoTpl),
+        idn_land_cover: Handlebars.compile(idn_land_coverTpl)
       },
 
       events: {
