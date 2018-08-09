@@ -4,9 +4,6 @@ import chroma from 'chroma-js';
 
 import { addToDate, formatDatePretty } from 'utils/dates';
 
-import { Tooltip } from 'wri-api-components';
-import { Handle } from 'rc-slider';
-
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider';
 
@@ -16,25 +13,9 @@ import PauseIcon from 'assets/icons/pause.svg';
 import './styles.scss';
 
 class Timeline extends Component {
-  renderHandle = props => {
-    const { minDate, isPlaying, dateFormat } = this.props;
-    const { value, dragging, index, ...restProps } = props;
-    const date = formatDatePretty(addToDate(minDate, value), dateFormat);
-
-    return (
-      <Tooltip
-        key={index}
-        overlay={date}
-        overlayClassName="c-rc-tooltip -default"
-        overlayStyle={{ color: '#fff' }}
-        placement="top"
-        mouseLeaveDelay={0}
-        destroyTooltipOnHide
-        visible={dragging || (isPlaying && index === 1)}
-      >
-        <Handle value={value} {...restProps} />
-      </Tooltip>
-    );
+  formatDate = value => {
+    const { minDate, dateFormat } = this.props;
+    return formatDatePretty(addToDate(minDate, value), dateFormat);
   };
 
   render() {
@@ -71,7 +52,6 @@ class Timeline extends Component {
           className="range"
           marks={marks}
           disabled={isPlaying}
-          handle={this.renderHandle}
           min={min}
           max={max}
           value={[start, end, trim]}
@@ -79,6 +59,8 @@ class Timeline extends Component {
           {...props}
           onChange={handleOnChange}
           onAfterChange={handleOnAfterChange}
+          formatValue={this.formatDate}
+          showTooltip={index => isPlaying && index === 1}
           range
         />
       </div>

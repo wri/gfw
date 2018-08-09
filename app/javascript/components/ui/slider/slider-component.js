@@ -10,18 +10,20 @@ import './styles.scss';
 
 class Slider extends PureComponent {
   renderHandle = props => {
+    const { formatValue, showTooltip } = this.props;
     const { value, dragging, index, ...restProps } = props;
+    const formattedValue = formatValue(value);
 
     return (
       <Tooltip
         key={index}
-        overlay={value}
+        overlay={formattedValue}
         overlayClassName="c-rc-tooltip -default"
         overlayStyle={{ color: '#fff' }}
         placement="top"
         mouseLeaveDelay={0}
         destroyTooltipOnHide
-        visible={dragging}
+        visible={dragging || showTooltip(index)}
       >
         <Handle value={value} {...restProps} />
       </Tooltip>
@@ -40,7 +42,7 @@ class Slider extends PureComponent {
     } = this.props;
     const Component = range ? Range : RCSlider;
     const handleNum = value.length;
-    const handleStyles = fill(Array(handleNum), { display: 'none' });
+    const handleStyles = fill(Array(handleNum), { visibility: 'hidden' });
     handleStyles[0] = handleStyle;
     handleStyles[handleNum - 1] = handleStyle;
 
@@ -72,7 +74,7 @@ Slider.defaultProps = {
     border: '0px'
   },
   railStyle: { backgroundColor: '#d6d6d9' },
-  dotStyle: { display: 'none', border: '0px' },
+  dotStyle: { visibility: 'hidden', border: '0px' },
   pushable: true
 };
 
@@ -85,7 +87,9 @@ Slider.propTypes = {
   range: PropTypes.bool,
   handleStyle: PropTypes.object,
   trackStyle: PropTypes.object,
-  trackColors: PropTypes.array
+  trackColors: PropTypes.array,
+  formatValue: PropTypes.func,
+  showTooltip: PropTypes.func
 };
 
 export default Slider;

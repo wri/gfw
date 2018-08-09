@@ -8,8 +8,8 @@
 }
 
 .range {
-  width: calc(100% - 30px);
-  margin-left: 10px;
+  width: 100%;
+  margin-left: rem(5px);
   cursor: pointer;
 }
 
