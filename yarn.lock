@@ -7851,9 +7851,9 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.15.tgz#e19c1413206d4d2d745378a277d085a8fca7fc64"
+layer-manager@^1.0.16:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.16.tgz#a29676643512849d3b78c2119cd3a127515c2f5b"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"

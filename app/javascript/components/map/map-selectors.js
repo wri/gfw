@@ -207,7 +207,7 @@ export const getLayerGroups = createSelector(
 );
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
-  if (isEmpty(layerGroups)) return null;
+  if (isEmpty(layerGroups)) return [];
   return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
 });
 

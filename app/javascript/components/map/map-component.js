@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'wri-api-components';
 
-import { LayerManager, Layer } from 'layer-manager/dist/react';
+import { LayerManager } from 'layer-manager/dist/react';
 import { PluginLeaflet } from 'layer-manager';
 
 import Loader from 'components/ui/loader';
@@ -41,10 +41,11 @@ class MapComponent extends PureComponent {
         >
           {map => (
             <Fragment>
-              <LayerManager map={map} plugin={PluginLeaflet}>
-                {activeLayers &&
-                  activeLayers.map(l => <Layer key={l.id} {...l} />)}
-              </LayerManager>
+              <LayerManager
+                map={map}
+                plugin={PluginLeaflet}
+                layersSpec={activeLayers}
+              />
               <Popup map={map} />
             </Fragment>
           )}
@@ -65,7 +66,6 @@ MapComponent.propTypes = {
   loading: PropTypes.bool,
   activeLayers: PropTypes.array,
   error: PropTypes.bool,
-  map: PropTypes.object,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object
