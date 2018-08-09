@@ -4,9 +4,11 @@ import chroma from 'chroma-js';
 
 import { addToDate, formatDatePretty } from 'utils/dates';
 
-import { Range, Handle } from 'rc-slider';
-import Icon from 'components/ui/icon';
 import { Tooltip } from 'wri-api-components';
+import { Handle } from 'rc-slider';
+
+import Icon from 'components/ui/icon';
+import Slider from 'components/ui/slider';
 
 import PlayIcon from 'assets/icons/play.svg';
 import PauseIcon from 'assets/icons/pause.svg';
@@ -65,7 +67,7 @@ class Timeline extends Component {
             icon={isPlaying ? PauseIcon : PlayIcon}
           />
         </button>
-        <Range
+        <Slider
           className="range"
           marks={marks}
           disabled={isPlaying}
@@ -73,22 +75,25 @@ class Timeline extends Component {
           min={min}
           max={max}
           value={[start, end, trim]}
-          trackStyle={[
-            { ...trackStyle[0], backgroundColor: customColor },
-            {
-              ...trackStyle[1],
-              backgroundColor: chroma(customColor).darken(1.3)
-            },
-            trackStyle[2]
-          ]}
+          trackColors={[customColor, chroma(customColor).darken(1.3)]}
           {...props}
           onChange={handleOnChange}
           onAfterChange={handleOnAfterChange}
+          range
         />
       </div>
     );
   }
 }
+
+Timeline.defaultProps = {
+  dateFormat: 'YYYY-MM-DD',
+  interval: 'years',
+  intervalStep: 1,
+  speed: 200,
+  count: 2,
+  pushable: true
+};
 
 Timeline.propTypes = {
   className: PropTypes.string,
