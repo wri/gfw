@@ -53,10 +53,12 @@ class MapLegend extends Component {
                 const {
                   isSelectorLayer,
                   isMultiLayer,
+                  isMultiSelectorLayer,
                   selectorLayerConfig,
                   color,
                   isLossLayer,
-                  metadata
+                  metadata,
+                  id
                 } = lg;
                 const activeLayers = lg.layers.filter(l => l.active) || [];
                 const activeLayer = activeLayers && activeLayers[0];
@@ -66,7 +68,7 @@ class MapLegend extends Component {
                 return (
                   <LegendListItem
                     index={i}
-                    key={lg.id}
+                    key={id}
                     layerGroup={lg}
                     toolbar={
                       <LegendItemToolbar
@@ -117,14 +119,16 @@ class MapLegend extends Component {
                           layer={activeLayer}
                         />
                       )}
-                    {isSelectorLayer && (
-                      <LayerSelectorMenu
-                        className="layer-selector"
-                        layerGroup={lg}
-                        onChange={onChangeLayer}
-                        {...selectorLayerConfig}
-                      />
-                    )}
+                    {(isSelectorLayer || isMultiSelectorLayer) &&
+                      selectorLayerConfig && (
+                        <LayerSelectorMenu
+                          className="layer-selector"
+                          layerGroup={lg}
+                          multi={isMultiSelectorLayer}
+                          onChange={onChangeLayer}
+                          {...selectorLayerConfig}
+                        />
+                      )}
                     {isLossLayer && (
                       <LossStatement className="loss-statement" />
                     )}

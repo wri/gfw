@@ -90,16 +90,19 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
       (layer &&
         layer.find(l => l.applicationConfig && l.applicationConfig.default)) ||
       layer[0];
+    const { isSelectorLayer, isMultiSelectorLayer } = info || {};
 
     return {
       ...d,
       ...info,
-      ...(info &&
-        info.isSelectorLayer && {
-          selectorLayerConfig: {
-            options: layer.map(l => l.applicationConfig.selectorConfig)
-          }
-        }),
+      ...((isSelectorLayer || isMultiSelectorLayer) && {
+        selectorLayerConfig: {
+          options: layer.map(l => ({
+            ...l.applicationConfig.selectorConfig,
+            value: l.id
+          }))
+        }
+      }),
       metadata:
         defaultLayer &&
         defaultLayer.applicationConfig &&
@@ -163,8 +166,9 @@ export const getLayerGroups = createSelector(
         ...(d.selectorLayerConfig && {
           selectorLayerConfig: {
             ...d.selectorLayerConfig,
-            selected: d.layers.find(l => l.id === layerConfig.layers[0])
-              .applicationConfig.selectorConfig
+            selected: d.selectorLayerConfig.options.find(
+              l => l.value === layerConfig.layers[0]
+            )
           }
         }),
         layers: d.layers.map(l => ({
