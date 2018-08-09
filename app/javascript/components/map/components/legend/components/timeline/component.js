@@ -4,9 +4,8 @@ import chroma from 'chroma-js';
 
 import { addToDate, formatDatePretty } from 'utils/dates';
 
-import { Range, Handle } from 'rc-slider';
 import Icon from 'components/ui/icon';
-import { Tooltip } from 'wri-api-components';
+import Slider from 'components/ui/slider';
 
 import PlayIcon from 'assets/icons/play.svg';
 import PauseIcon from 'assets/icons/pause.svg';
@@ -14,25 +13,9 @@ import PauseIcon from 'assets/icons/pause.svg';
 import './styles.scss';
 
 class Timeline extends Component {
-  renderHandle = props => {
-    const { minDate, isPlaying, dateFormat } = this.props;
-    const { value, dragging, index, ...restProps } = props;
-    const date = formatDatePretty(addToDate(minDate, value), dateFormat);
-
-    return (
-      <Tooltip
-        key={index}
-        overlay={date}
-        overlayClassName="c-rc-tooltip -default"
-        overlayStyle={{ color: '#fff' }}
-        placement="top"
-        mouseLeaveDelay={0}
-        destroyTooltipOnHide
-        visible={dragging || (isPlaying && index === 1)}
-      >
-        <Handle value={value} {...restProps} />
-      </Tooltip>
-    );
+  formatDate = value => {
+    const { minDate, dateFormat } = this.props;
+    return formatDatePretty(addToDate(minDate, value), dateFormat);
   };
 
   render() {
@@ -65,30 +48,34 @@ class Timeline extends Component {
             icon={isPlaying ? PauseIcon : PlayIcon}
           />
         </button>
-        <Range
+        <Slider
           className="range"
           marks={marks}
           disabled={isPlaying}
-          handle={this.renderHandle}
           min={min}
           max={max}
           value={[start, end, trim]}
-          trackStyle={[
-            { ...trackStyle[0], backgroundColor: customColor },
-            {
-              ...trackStyle[1],
-              backgroundColor: chroma(customColor).darken(1.3)
-            },
-            trackStyle[2]
-          ]}
+          trackColors={[customColor, chroma(customColor).darken(1.3)]}
           {...props}
           onChange={handleOnChange}
           onAfterChange={handleOnAfterChange}
+          formatValue={this.formatDate}
+          showTooltip={index => isPlaying && index === 1}
+          range
         />
       </div>
     );
   }
 }
+
+Timeline.defaultProps = {
+  dateFormat: 'YYYY-MM-DD',
+  interval: 'years',
+  intervalStep: 1,
+  speed: 200,
+  count: 2,
+  pushable: true
+};
 
 Timeline.propTypes = {
   className: PropTypes.string,

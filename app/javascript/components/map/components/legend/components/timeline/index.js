@@ -118,36 +118,6 @@ class TimelineContainer extends PureComponent {
   }
 }
 
-TimelineContainer.defaultProps = {
-  dateFormat: 'YYYY-MM-DD',
-  interval: 'years',
-  intervalStep: 1,
-  speed: 200,
-  count: 2,
-  trackStyle: [
-    { backgroundColor: 'green', borderRadius: '0px' },
-    { backgroundColor: '#d6d6d9', borderRadius: '0px' }
-  ],
-  handleStyle: [
-    {
-      backgroundColor: 'white',
-      borderRadius: '2px',
-      boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
-      border: '0px'
-    },
-    { visibility: 'hidden' },
-    {
-      backgroundColor: 'white',
-      borderRadius: '2px',
-      boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
-      border: '0px'
-    }
-  ],
-  railStyle: { backgroundColor: '#d6d6d9' },
-  dotStyle: { display: 'none', border: '0px' },
-  pushable: true
-};
-
 TimelineContainer.propTypes = {
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
