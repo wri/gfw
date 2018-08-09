@@ -34,17 +34,23 @@ export const getCardData = createSelector(
   [getSelectedInteraction],
   interaction => {
     if (isEmpty(interaction) || !interaction.article) return null;
-    const { data } = interaction;
+    const { data, config } = interaction;
+
+    const articleData = config.reduce((obj, param) => {
+      const newObj = {
+        ...obj,
+        [param.renderKey]: data[param.column]
+      };
+      return newObj;
+    }, {});
+    const { readMoreLink } = articleData || {};
 
     return {
-      image: data.image,
-      imageCredit: data.image_source,
-      title: data.name,
-      summary: data.description,
+      ...articleData,
       buttons: [
         {
           text: 'READ MORE',
-          extLink: '#',
+          extLink: readMoreLink,
           theme: 'theme-button-light theme-button-small'
         },
         {
@@ -54,15 +60,6 @@ export const getCardData = createSelector(
         }
       ]
     };
-
-    // when config is updated in API
-    // return config.reduce((obj, param) => {
-    //   const newObj = {
-    //     ...obj,
-    //     [param.key]: data[param.column]
-    //   };
-    //   return newObj;
-    // }, {});
   }
 );
 
