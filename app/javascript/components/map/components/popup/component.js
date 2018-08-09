@@ -1,50 +1,88 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+
+import { MapPopup } from 'wri-api-components';
+
+import Button from 'components/ui/button/button-component';
+import Dropdown from 'components/ui/dropdown/dropdown-component';
+import Card from 'components/ui/card';
+
+import DataTable from './components/data-table';
 
 class Popup extends Component {
+  componentDidUpdate(prevProps) {
+    const { layers, clearInteractions } = prevProps;
+    if (!isEqual(layers.length, this.props.layers.length)) {
+      clearInteractions();
+    }
+  }
+
   render() {
     const {
-      data,
-      interactionLayers,
-      selectedLayer,
+      map,
+      tableData,
+      cardData,
+      latlng,
+      interactions,
+      selected,
       setInteractionSelected
     } = this.props;
+
     return (
-      <div className="c-popup">
-        {interactionLayers &&
-          interactionLayers.length > 0 && (
-            <select
-              className="layer-select"
-              name="interactionLayers"
-              value={selectedLayer}
-              onChange={e => setInteractionSelected(e.target.value)}
-            >
-              {interactionLayers.map(o => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
+      <MapPopup
+        map={map}
+        latlng={!isEmpty(interactions) ? latlng : null}
+        data={{ interactions, selected }}
+      >
+        <div className="c-popup">
+          {cardData ? (
+            <Card
+              className="popup-card"
+              theme="theme-card-small"
+              data={cardData}
+            />
+          ) : (
+            <div className="popup-table">
+              {interactions &&
+                interactions.length > 1 && (
+                  <Dropdown
+                    className="layer-selector"
+                    theme="theme-dropdown-native-plain"
+                    value={selected}
+                    options={interactions}
+                    onChange={e => setInteractionSelected(e.target.value)}
+                    native
+                  />
+                )}
+              {selected &&
+                interactions.length === 1 && (
+                  <div className="popup-title">{selected.label}</div>
+                )}
+              <DataTable data={tableData} />
+              {
+                <div className="nav-footer">
+                  <Button>Analyze</Button>
+                </div>
+              }
+            </div>
           )}
-        <div className="values">
-          {data &&
-            data.map(d => (
-              <div key={d.label} className="wrapper">
-                <div className="label">{d.label}:</div>
-                <div className="value">{d.value || 'n/a'}</div>
-              </div>
-            ))}
         </div>
-      </div>
+      </MapPopup>
     );
   }
 }
 
 Popup.propTypes = {
-  data: PropTypes.array,
-  interactionLayers: PropTypes.array,
-  selectedLayer: PropTypes.string,
-  setInteractionSelected: PropTypes.func
+  map: PropTypes.object,
+  setInteractionSelected: PropTypes.func,
+  latlng: PropTypes.object,
+  selected: PropTypes.object,
+  interactions: PropTypes.array,
+  tableData: PropTypes.array,
+  cardData: PropTypes.object,
+  layers: PropTypes.array
 };
 
 export default Popup;

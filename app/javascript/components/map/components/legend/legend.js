@@ -77,11 +77,7 @@ class Legend extends PureComponent {
       layers: layers.map(l => {
         const layer = l;
         if (l.dataset === layerGroup.dataset) {
-          layer.layers = [
-            layerGroup.layers.find(
-              lg => lg.applicationConfig.selectorConfig.value === newLayerKey
-            ).id
-          ];
+          layer.layers = [newLayerKey];
         }
         return layer;
       })
@@ -99,9 +95,11 @@ class Legend extends PureComponent {
     setMapSettings({ layers });
   };
 
-  onChangeInfo = layer => {
+  onChangeInfo = metadata => {
     const { setModalMeta } = this.props;
-    setModalMeta(layer.layerConfig.body.metadata);
+    if (metadata && typeof metadata === 'string') {
+      setModalMeta(metadata);
+    }
   };
 
   onChangeTimeline = (currentLayer, range) => {

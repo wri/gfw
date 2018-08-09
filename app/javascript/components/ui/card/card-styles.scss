@@ -1,5 +1,7 @@
 @import '~styles/settings.scss';
 
+$summary-color: #aaa;
+
 .c-card {
   position: relative;
   width: 100%;
@@ -15,15 +17,6 @@
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-
-    span {
-      display: block;
-      font-size: 12px;
-      position: absolute;
-      bottom: rem(10px);
-      right: rem(10px);
-      color: rgba(255, 255, 255, 0.8);
-    }
   }
 
   .body {
@@ -32,6 +25,13 @@
 
     @media screen and (min-width: $screen-m) {
       padding: rem(25px);
+    }
+
+    span {
+      font-size: 12px;
+      margin-bottom: rem(10px);
+      color: $summary-color;
+      display: block;
     }
 
     .title {

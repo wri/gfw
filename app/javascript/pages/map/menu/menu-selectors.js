@@ -23,12 +23,12 @@ const menuSections = [
       {
         slug: 'deforestationAlerts',
         title: 'Deforestation Alerts',
-        subTitle: '(near real time)'
+        subTitle: 'near real time'
       },
       {
         slug: 'fireAlerts',
         title: 'Fire Alerts',
-        subTitle: '(near real time)'
+        subTitle: 'near real time'
       },
       {
         slug: 'treeCoverChange',
@@ -128,12 +128,17 @@ export const getSections = createSelector(getDatasets, datasets =>
           const defaultLayer =
             layer &&
             layer.length &&
-            layer.find(l => l.applicationConfig && l.applicationConfig.default);
+            (layer.find(
+              l => l.applicationConfig && l.applicationConfig.default
+            ) ||
+              layer[0]);
+
           return {
             ...d,
             ...info,
             layer: defaultLayer && defaultLayer.id,
-            tags: flatten(vocabulary.map(v => v.tags))
+            tags: flatten(vocabulary.map(v => v.tags)),
+            ...(defaultLayer && defaultLayer.applicationConfig)
           };
         });
     let subCategoriesWithDatasets = s.subCategories;

@@ -1,5 +1,5 @@
 export const initialState = {
-  latlng: [],
+  latlng: {},
   interactions: {},
   selected: ''
 };
@@ -13,9 +13,7 @@ const setInteraction = (state, { payload }) => {
     interactions: {
       ...interactions,
       [payload.id]: {
-        ...payload.data,
-        label: payload.label,
-        config: payload.config
+        ...payload
       }
     }
   };
@@ -26,7 +24,15 @@ const setInteractionSelected = (state, { payload }) => ({
   selected: payload
 });
 
+const clearInteractions = state => ({
+  ...state,
+  interactions: {},
+  latlng: null,
+  selected: ''
+});
+
 export default {
   setInteraction,
-  setInteractionSelected
+  setInteractionSelected,
+  clearInteractions
 };
