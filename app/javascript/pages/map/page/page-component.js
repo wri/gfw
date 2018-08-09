@@ -12,7 +12,7 @@ import MapMenu from 'pages/map/menu';
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
 import MapControls from 'components/map/components/map-controls';
-import RecentImagery from 'pages/map/recent-imagery';
+import RecentImagery from 'components/map/components/recent-imagery';
 import DataAnalysisMenu from 'pages/map/data-analysis-menu';
 
 import './page-styles.scss';
@@ -26,10 +26,13 @@ class Page extends PureComponent {
         <Map />
         <MapMenu />
         <div className="map-actions">
+          <div className="menus">
+            <DragDropContextProvider backend={HTML5Backend}>
+              <RecentImagery />
+            </DragDropContextProvider>
+            <div className="basemaps" />
+          </div>
           <MapControls className="map-controls" share />
-          <DragDropContextProvider backend={HTML5Backend}>
-            <RecentImagery />
-          </DragDropContextProvider>
         </div>
         <DataAnalysisMenu className="data-analysis-menu" />
         <Share />

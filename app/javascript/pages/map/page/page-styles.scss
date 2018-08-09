@@ -2,14 +2,16 @@
 
 .l-map {
   .map-actions {
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
     position: absolute;
     bottom: rem(15px);
     right: rem(15px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    z-index: 2;
+
+    .menus {
+      margin-bottom: rem(10px);
+    }
   }
 
   .data-analysis-menu {
