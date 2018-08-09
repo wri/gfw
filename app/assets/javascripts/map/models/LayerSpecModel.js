@@ -124,6 +124,8 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'idn_oil_palm',
       'idn_suitability',
       'mys_oil_palm',
+      'oil_palm',
+      'rspo_oil_palm',
       'bra_mining',
       'bra_soy',
       'mex_mining',
@@ -186,7 +188,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'places_to_watch',
       'forma_month_3',
       'forma_activity',
-      'oil_palm',
       'oil_palm_mills',
       'dam_hotspots',
       'viirs_fires_alerts'
