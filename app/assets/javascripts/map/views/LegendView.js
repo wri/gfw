@@ -79,7 +79,7 @@ define(
     'text!map/templates/legend/sentinel_tiles.handlebars',
     'text!map/templates/legend/biodiversity_intactness.handlebars',
     'text!map/templates/legend/biodiversity_completeness.handlebars',
-    'text!map/templates/legend/rspo.handlebars'
+    'text!map/templates/legend/rspo.handlebars',
     'text!map/templates/legend/idn_land_cover.handlebars'
 
   ],
