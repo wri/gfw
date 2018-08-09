@@ -23,12 +23,12 @@ const menuSections = [
       {
         slug: 'deforestationAlerts',
         title: 'Deforestation Alerts',
-        subTitle: '(near real time)'
+        subTitle: 'near real time'
       },
       {
         slug: 'fireAlerts',
         title: 'Fire Alerts',
-        subTitle: '(near real time)'
+        subTitle: 'near real time'
       },
       {
         slug: 'treeCoverChange',

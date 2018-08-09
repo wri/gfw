@@ -42,7 +42,7 @@ class LayerToggle extends PureComponent {
             </Button>
           </div>
           {subtitle && (
-            <div className="c-layer-toggle__subtitle">{`(${subtitle})`}</div>
+            <div className="c-layer-toggle__subtitle">{`${subtitle}`}</div>
           )}
         </div>
       </div>
