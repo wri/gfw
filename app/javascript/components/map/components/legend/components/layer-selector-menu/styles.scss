@@ -1,12 +1,23 @@
 @import '~styles/settings';
 
 .c-layer-selector-menu {
-  display: flex;
-  flex-flow: row wrap;
-  color: $slate;
-  font-size: rem(12px);
+  .menu-wrapper {
+    display: inline-block;
+    color: $slate;
+    font-size: rem(12px);
 
-  .layer-selector {
-    margin-left: rem(5px);
+    &.-group {
+      margin-bottom: rem(10px);
+    }
+
+    span {
+      display: inline;
+      line-height: 1.6;
+    }
+
+    .layer-selector {
+      margin-left: rem(5px);
+      display: inline-block;
+    }
   }
 }
