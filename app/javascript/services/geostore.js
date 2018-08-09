@@ -8,9 +8,11 @@ const QUERIES = {
 };
 
 export const getGeostoreProvider = (country, region, subRegion) => {
-  const url = `${REQUEST_URL}${QUERIES.admin}${country}${
-    region ? `/${region}` : ''
-  }${subRegion ? `/${subRegion}` : ''}`;
+  const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
+  const baseThresh = bigCountries.includes(country) ? 0.05 : 0.005;
+  const url = `${REQUEST_URL}${country}${
+    region ? `/${region}` : `?simplify=${baseThresh}`
+  }${subRegion ? `/${subRegion}` : `?simplify=${baseThresh / 10}`}`;
   return request.get(url);
 };
 

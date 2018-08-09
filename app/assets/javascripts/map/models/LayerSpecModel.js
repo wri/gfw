@@ -109,8 +109,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'mys_proteced_areas_sabah',
       'per_protected_areas',
       // Land USE
-      'dam_hotspots',
-      'oil_palm_mills',
       'per_prod_for',
       'concesiones_wrapper',
       'concesiones_forestalesNS',
@@ -127,6 +125,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'idn_suitability',
       'mys_oil_palm',
       'oil_palm',
+      'rspo_oil_palm',
       'bra_mining',
       'bra_soy',
       'mex_mining',
@@ -171,7 +170,6 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'mangrove_2',
       'guyra',
       'terrailoss',
-      'viirs_fires_alerts',
       'imazon',
       'peru_forma_250',
       'brazil_forma_250',
@@ -189,7 +187,10 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'uncurated_places_to_watch',
       'places_to_watch',
       'forma_month_3',
-      'forma_activity'
+      'forma_activity',
+      'oil_palm_mills',
+      'dam_hotspots',
+      'viirs_fires_alerts'
     ],
 
     categoryOrder: [

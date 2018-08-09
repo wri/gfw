@@ -410,6 +410,18 @@
           <h4>Region:</h4>
           <p>{{content.data.region}}</p>
         {{/if}}
+        {{#if content.data.plantation}}
+          <h4>Plantation:</h4>
+          <p>{{content.data.plantation}}</p>
+        {{/if}}
+        {{#if content.data.membership}}
+          <h4>Membership:</h4>
+          <p>{{content.data.membership}}</p>
+        {{/if}}
+        {{#if content.data.rspo_cert}}
+          <h4>RSPO Certified:</h4>
+          <p>{{content.data.rspo_cert}}</p>
+        {{/if}}
         {{#if content.data.type_text}}
           <h4>Plantation type:</h4>
           <p>{{content.data.type_text}}</p>
@@ -501,7 +513,7 @@
         {{#if content.data.certification_status}}
           <h4>Certification status:</h4>
           <p>{{content.data.certification_status}}</p>
-        {{/if}}        
+        {{/if}}
         {{#if content.data.license_no}}
           <h4>License No:</h4>
           <p>{{content.data.license_no}}</p>

@@ -23,7 +23,8 @@ export const parseData = createSelector(
       .map(d => ({
         ...d,
         biomassCarbon: biomassToC(d.emissions),
-        co2Emissions: biomassToCO2(d.emissions)
+        co2Emissions: biomassToCO2(d.emissions),
+        biomass: d.emissions
       }));
   }
 );
@@ -67,10 +68,14 @@ export const getSentence = createSelector(
     if (!data || isEmpty(data)) return null;
     const { initial, containsIndicator } = sentences;
     const { startYear, endYear, unit } = settings;
-    const totalEmissions = data
-      .map(d => d[unit])
+    const totalBiomass = data
+      .map(d => d.biomass)
       .reduce((sum, d) => (d ? sum + d : sum));
     const emissionType = unit === 'biomassCarbon' ? 'carbon' : 'CO2';
+    const totalEmissions =
+      unit === 'biomassCarbon'
+        ? biomassToC(totalBiomass)
+        : biomassToCO2(totalBiomass);
     let indicatorText = '';
     if (indicator && indicator.value === 'mining') {
       indicatorText = ` ${indicator.label.toLowerCase()} regions`;
