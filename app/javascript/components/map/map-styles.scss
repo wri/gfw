@@ -6,6 +6,12 @@
   .wri_api__map-container {
     position: absolute !important;
   }
+
+  .map-controls {
+    position: absolute;
+    bottom: rem(15px);
+    right: rem(15px);
+  }
 }
 
 .map-loader {

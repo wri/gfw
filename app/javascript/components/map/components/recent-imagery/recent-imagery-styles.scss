@@ -2,18 +2,14 @@
 
 .c-recent-imagery {
   &__button {
-    width: rem(38px);
     transition: transform 0.25s cubic-bezier(0.445, 0.05, 0.55, 0.95);
     z-index: 19;
+    width: 100%;
+    box-shadow: 0 1px 2px rgba($black, 0.25);
 
     .satellite-icon {
       width: rem(20px);
       height: rem(20px);
-    }
-
-    span {
-      display: none;
-      text-align: left;
     }
 
     &--timeline-open {
@@ -29,8 +25,6 @@
 
   @media screen and (min-width: rem(1000px)) {
     &__button {
-      width: rem(76px);
-
       .satellite-icon {
         margin-right: rem(5px);
       }

@@ -27,24 +27,6 @@ class MapContainer extends PureComponent {
   }
 }
 
-MapContainer.defaultProps = {
-  mapOptions: {
-    center: [27, 12],
-    zoom: 3,
-    zoomControl: false,
-    maxZoom: 19,
-    minZoom: 2,
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  },
-  basemap: {
-    url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
-  },
-  label: {
-    url: 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
-  }
-};
-
 export { actions };
 
 export default connect(mapStateToProps, actions)(MapContainer);
