@@ -55,7 +55,8 @@ class MapLegend extends Component {
                   isMultiLayer,
                   selectorLayerConfig,
                   color,
-                  isLossLayer
+                  isLossLayer,
+                  metadata
                 } = lg;
                 const activeLayers = lg.layers.filter(l => l.active) || [];
                 const activeLayer = activeLayers && activeLayers[0];
@@ -82,7 +83,7 @@ class MapLegend extends Component {
                         focusStyle={{
                           fill: '#676867'
                         }}
-                        onChangeInfo={onChangeInfo}
+                        onChangeInfo={() => onChangeInfo(metadata)}
                       >
                         <LegendItemButtonOpacity
                           className="-plain"
@@ -100,7 +101,7 @@ class MapLegend extends Component {
                           ]}
                         />
                         <LegendItemButtonVisibility />
-                        <LegendItemButtonInfo />
+                        {metadata && <LegendItemButtonInfo />}
                         <LegendItemButtonRemove />
                       </LegendItemToolbar>
                     }

@@ -86,6 +86,11 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
     const { layer, metadata } = d;
     const appMeta = metadata.find(m => m.application === 'gfw') || {};
     const { info } = appMeta || {};
+    const defaultLayer =
+      (layer &&
+        layer.find(l => l.applicationConfig && l.applicationConfig.default)) ||
+      layer[0];
+
     return {
       ...d,
       ...info,
@@ -95,6 +100,10 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
             options: layer.map(l => l.applicationConfig.selectorConfig)
           }
         }),
+      metadata:
+        defaultLayer &&
+        defaultLayer.applicationConfig &&
+        defaultLayer.applicationConfig.metadata,
       layers:
         layer &&
         sortBy(

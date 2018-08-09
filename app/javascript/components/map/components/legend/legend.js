@@ -99,9 +99,8 @@ class Legend extends PureComponent {
     setMapSettings({ layers });
   };
 
-  onChangeInfo = layer => {
+  onChangeInfo = metadata => {
     const { setModalMeta } = this.props;
-    const { metadata } = layer || {};
     if (metadata && typeof metadata === 'string') {
       setModalMeta(metadata);
     }
