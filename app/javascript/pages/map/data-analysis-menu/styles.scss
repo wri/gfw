@@ -5,10 +5,7 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
   background: $white;
   transition: transform 0.3s linear;
-  z-index: 2;
-  overflow-y: scroll;
-  max-height: 80%;
-  height: auto;
+  position: relative;
 
   &.-relocate {
     transform: translateX(292px);
@@ -19,18 +16,19 @@
   }
 
   .nav {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
-  }
-
-  .legend {
+    border-bottom: solid 1px $border;
     position: relative;
+    z-index: 2;
+    height: auto;
   }
 
+  .legend,
   .analysis {
     position: relative;
-    width: 100%;
-    max-height: 70vh;
-    overflow: auto;
-    background: $white;
+    overflow-y: scroll;
+    display: flex;
+    flex: 1;
+    max-height: calc(100vh - 200px);
+    z-index: 1;
   }
 }
