@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 import Sticky from 'react-stickynode';
+import { format } from 'd3-format';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -11,7 +12,7 @@ import shareIcon from 'assets/icons/share.svg';
 import fullScreenIcon from 'assets/icons/fit-zoom.svg';
 import printIcon from 'assets/icons/print.svg';
 import globeIcon from 'assets/icons/globe.svg';
-import satelliteIcon from 'assets/icons/satellite.svg';
+import sateliteIcon from 'assets/icons/satellite.svg';
 
 import './map-controls-styles.scss';
 
@@ -24,10 +25,10 @@ class MapControlsButtons extends PureComponent {
       share,
       settings,
       map,
-      isTimelineOpen,
       active,
       toogleRecentImagery
     } = this.props;
+    const { zoom, minZoom, maxZoom, center } = settings || {};
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
@@ -40,7 +41,7 @@ class MapControlsButtons extends PureComponent {
               onClick={() => toogleRecentImagery()}
               tooltip={{ text: 'Recent Imagery' }}
             >
-              <Icon icon={satelliteIcon} className="satellite-icon" />
+              <Icon icon={sateliteIcon} className="satelite-icon" />
             </Button>
             <Button
               className="basemaps-btn"
@@ -53,17 +54,17 @@ class MapControlsButtons extends PureComponent {
           <div className="controls-wrapper">
             <Button
               theme="theme-button-map-control"
-              onClick={() => map.setZoom(settings.zoom + 1)}
+              onClick={() => map.setZoom(zoom + 1)}
               tooltip={{ text: 'Zoom in' }}
-              disabled={settings.zoom === settings.maxZoom}
+              disabled={zoom === maxZoom}
             >
               <Icon icon={plusIcon} className="plus-icon" />
             </Button>
             <Button
               theme="theme-button-map-control"
-              onClick={() => map.setZoom(settings.zoom - 1)}
+              onClick={() => map.setZoom(zoom - 1)}
               tooltip={{ text: 'Zoom out' }}
-              disabled={settings.zoom === settings.minZoom}
+              disabled={zoom === minZoom}
             >
               <Icon icon={minusIcon} className="minus-icon" />
             </Button>
@@ -105,6 +106,12 @@ class MapControlsButtons extends PureComponent {
               <Icon icon={printIcon} className="fullscreen-icon" />
             </Button>
           </div>
+          <div className="map-position">
+            <span>{settings.zoom}</span>
+            <span>{`${format('.6f')(center.lat)}, ${format('.6f')(
+              center.lng
+            )}`}</span>
+          </div>
         </Sticky>
       </div>
     );
@@ -118,7 +125,9 @@ MapControlsButtons.propTypes = {
   setShareModal: Proptypes.func,
   share: Proptypes.bool,
   settings: Proptypes.object,
-  map: Proptypes.object
+  map: Proptypes.object,
+  active: Proptypes.bool,
+  toogleRecentImagery: Proptypes.func
 };
 
 export default MapControlsButtons;

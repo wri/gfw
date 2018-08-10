@@ -1,5 +1,8 @@
 export default {
-  center: [27, 12],
+  center: {
+    lat: 27,
+    lng: 12
+  },
   zoom: 3,
   zoomControl: false,
   maxZoom: 19,
@@ -10,6 +13,7 @@ export default {
   label: {
     url: 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
   },
+  attributionControl: false,
   layers: [
     {
       dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
