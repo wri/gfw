@@ -1,13 +1,18 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'wri-api-components';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContextProvider } from 'react-dnd';
 
 import { LayerManager } from 'layer-manager/dist/react';
 import { PluginLeaflet } from 'layer-manager';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
+
 import Popup from './components/popup';
+import MapControlButtons from './components/map-controls';
+import RecentImagery from './components/recent-imagery';
 
 import './map-styles.scss';
 
@@ -25,7 +30,8 @@ class MapComponent extends PureComponent {
       activeLayers,
       mapOptions,
       basemap,
-      label
+      label,
+      setMapSettings
     } = this.props;
 
     return (
@@ -38,6 +44,14 @@ class MapComponent extends PureComponent {
           mapOptions={mapOptions}
           basemap={basemap}
           label={label}
+          events={{
+            zoomend: (e, map) => {
+              setMapSettings({ zoom: map.getZoom() });
+            },
+            dragend: (e, map) => {
+              setMapSettings({ center: map.getCenter() });
+            }
+          }}
         >
           {map => (
             <Fragment>
@@ -47,6 +61,10 @@ class MapComponent extends PureComponent {
                 layersSpec={activeLayers}
               />
               <Popup map={map} />
+              <MapControlButtons className="map-controls" map={map} share />
+              <DragDropContextProvider backend={HTML5Backend}>
+                <RecentImagery map={map} />
+              </DragDropContextProvider>
             </Fragment>
           )}
         </Map>
@@ -68,7 +86,8 @@ MapComponent.propTypes = {
   error: PropTypes.bool,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
-  label: PropTypes.object
+  label: PropTypes.object,
+  setMapSettings: PropTypes.func
 };
 
 export default MapComponent;

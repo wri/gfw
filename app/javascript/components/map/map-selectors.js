@@ -67,6 +67,30 @@ export const getLayers = createSelector(
   settings => settings.layers
 );
 
+export const getMapOptions = createSelector(getMapSettings, settings => {
+  if (!settings) return null;
+  const {
+    center,
+    zoom,
+    minZoom,
+    maxZoom,
+    zoomControl,
+    basemap,
+    label,
+    attributionControl
+  } = settings;
+  return {
+    center,
+    zoom,
+    minZoom,
+    maxZoom,
+    zoomControl,
+    label,
+    basemap,
+    attributionControl
+  };
+});
+
 export const getDatasetIds = createSelector([getLayers], layers => {
   if (!layers || !layers.length) return null;
   return layers.map(l => l.dataset);
@@ -214,6 +238,7 @@ export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
 export const getMapProps = createStructuredSelector({
   layers: getLayers,
   settings: getMapSettings,
+  mapOptions: getMapOptions,
   layerGroups: getLayerGroups,
   activeLayers: getActiveLayers,
   loading: getLoading,

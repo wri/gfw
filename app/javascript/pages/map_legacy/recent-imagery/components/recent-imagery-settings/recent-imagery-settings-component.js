@@ -8,13 +8,14 @@ import Carousel from 'components/ui/carousel';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
-import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
 
 import WEEKS from 'data/weeks.json';
 import draggerIcon from 'assets/icons/dragger.svg';
 import closeIcon from 'assets/icons/close.svg';
 import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
+
+import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
 class RecentImagerySettings extends PureComponent {
   constructor(props) {

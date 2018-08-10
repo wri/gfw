@@ -1,17 +1,6 @@
 @import '~styles/settings.scss';
 
 .l-map {
-  .map-actions {
-    position: absolute;
-    bottom: rem(15px);
-    right: rem(15px);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    z-index: 2;
-  }
-
   .data-analysis-menu {
     position: absolute;
     left: rem(90px);

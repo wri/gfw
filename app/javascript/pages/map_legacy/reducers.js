@@ -13,7 +13,7 @@ const pagesReducers = {
 };
 
 // Components
-import * as recentImageryComponent from 'pages/map/recent-imagery';
+import * as recentImageryComponent from 'pages/map_legacy/recent-imagery';
 
 // Component Reducers
 const componentsReducers = {
