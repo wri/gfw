@@ -6,7 +6,7 @@ import { handleActions } from 'utils/redux';
 import router from './router';
 
 // Components
-import * as recentImageryComponent from 'pages/map/recent-imagery';
+import * as recentImageryComponent from 'components/map/components/recent-imagery';
 import * as MapMenuComponent from 'pages/map/menu';
 import * as DataAnalysisMenuComponent from 'pages/map/data-analysis-menu';
 import * as ShareComponent from 'components/modals/share';
