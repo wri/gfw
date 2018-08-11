@@ -110,14 +110,8 @@ export default {
     }
   },
   // GLADs
-  'dd5df87f-39c2-4aeb-a462-3ef969b20b66': {
-    decodeFunction: (
-      data,
-      w,
-      h,
-      z,
-      params = { minDate: '2015-01-01', startDate: '2016-12-01' }
-    ) => {
+  '95b34906-d998-496b-80e7-9d8e2a70cd25': {
+    decodeFunction: (data, w, h, z, params) => {
       'use asm';
 
       // fixed variables
@@ -196,7 +190,8 @@ export default {
       speed: 50
     }
   },
-  '9a370f5a-6631-44e3-a955-7f3884c27d91': {
+  // GLADS staging
+  '959514e3-149a-46f5-890a-121b272e4b9d': {
     decodeFunction: (
       data,
       w,
@@ -284,13 +279,7 @@ export default {
   },
   // Biomass Loss
   'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': {
-    decodeFunction: (
-      data,
-      w,
-      h,
-      z,
-      params
-    ) => {
+    decodeFunction: (data, w, h, z, params) => {
       'use asm';
 
       const imgData = data;
@@ -325,14 +314,14 @@ export default {
         208,
         11
       ]; // last bucket
-      const countBuckets = (buckets.length / 3) | 0; //3: three bands
+      const countBuckets = (buckets.length / 3) | 0; // 3: three bands
 
       for (let i = 0 | 0; i < w; ++i) {
         for (let j = 0 | 0; j < h; ++j) {
           const pixelPos = ((j * w + i) * components) | 0;
           // exit if year = 0 to reduce memory use
           if (imgData[pixelPos] === 0) {
-            imgData[pixelPos + 3] = 0 | 0; //alpha channel 0-255
+            imgData[pixelPos + 3] = 0 | 0; // alpha channel 0-255
           } else {
             // get values from data
             let intensity = imgData[pixelPos + 1] | 0;
@@ -342,11 +331,11 @@ export default {
             if (intensity >= 0 && intensity <= 255) {
               const yearLoss = (2000 + imgData[pixelPos]) | 0;
               if (yearLoss >= yearStart && yearLoss < yearEnd) {
-                var bucket = ~~(countBuckets * intensity / 256) * 3;
-                imgData[pixelPos] = buckets[bucket]; //R 0-255
-                imgData[pixelPos + 1] = buckets[bucket + 1]; //G 0-255
-                imgData[pixelPos + 2] = buckets[bucket + 2]; //B 0-255
-                imgData[pixelPos + 3] = intensity | 0; //alpha channel 0-255
+                const bucket = ~~(countBuckets * intensity / 256) * 3;
+                imgData[pixelPos] = buckets[bucket]; // R 0-255
+                imgData[pixelPos + 1] = buckets[bucket + 1]; // G 0-255
+                imgData[pixelPos + 2] = buckets[bucket + 2]; // B 0-255
+                imgData[pixelPos + 3] = intensity | 0; // alpha channel 0-255
               }
             }
           }
@@ -362,14 +351,9 @@ export default {
   },
   // Woody Biomass
   'f10bded4-94e2-40b6-8602-ae5bdfc07c08': {
-    decodeFunction: (
-      data,
-      w,
-      h,
-      z,
-      params
-    ) => {
-      "use asm";
+    decodeFunction: (data, w, h, z, params) => {
+      'use asm';
+
       // We'll force the use of a 32bit integer wit `value |0`
       // More info here: http://asmjs.org/spec/latest/
       const imgData = data;
@@ -381,30 +365,42 @@ export default {
         .domain([0, 256])
         .range([0, 256]);
 
-      const c = [112, 168, 256, // first bucket
-               76,  83,  122,
-               210, 31,  38,
-               241, 152, 19,
-               255, 208, 11]; // last bucket
-      const countBuckets = c.length / 3 |0; //3: three bands
+      const c = [
+        112,
+        168,
+        256, // first bucket
+        76,
+        83,
+        122,
+        210,
+        31,
+        38,
+        241,
+        152,
+        19,
+        255,
+        208,
+        11
+      ]; // last bucket
+      const countBuckets = (c.length / 3) | 0; // 3: three bands
 
-      for(let i = 0 |0; i < w; ++i) {
-        for(let j = 0 |0; j < h; ++j) {
-          const pixelPos  = ((j * w + i) * components) |0;
-          const intensity = imgData[pixelPos+2];
+      for (let i = 0 | 0; i < w; ++i) {
+        for (let j = 0 | 0; j < h; ++j) {
+          const pixelPos = ((j * w + i) * components) | 0;
+          const intensity = imgData[pixelPos + 2];
           imgData[pixelPos + 3] = 0;
-          const intensity_scaled = myscale(intensity) |0;
-          const bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
+          const intensity_scaled = myscale(intensity) | 0;
+          const bucket = ~~(countBuckets * intensity_scaled / 256) * 3;
 
-          imgData[pixelPos] = 255-intensity;
+          imgData[pixelPos] = 255 - intensity;
           imgData[pixelPos + 1] = 128;
           imgData[pixelPos + 2] = 0;
-          if(intensity>0){imgData[pixelPos + 3] = intensity};
+          if (intensity > 0) {
+            imgData[pixelPos + 3] = intensity;
+          }
         }
       }
     },
     decodeParams: {}
   }
 };
-
-
