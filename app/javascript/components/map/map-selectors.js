@@ -189,7 +189,7 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
   });
 });
 
-export const getLayerGroups = createSelector(
+export const getDatasetsWithConfig = createSelector(
   [getParsedDatasets, getLayers],
   (datasets, layers) => {
     if (isEmpty(datasets) || isEmpty(layers)) return null;
@@ -241,6 +241,14 @@ export const getLayerGroups = createSelector(
         }))
       };
     });
+  }
+);
+
+export const getLayerGroups = createSelector(
+  [getDatasetsWithConfig, getLayers],
+  (datasets, layers) => {
+    if (isEmpty(datasets) || isEmpty(layers)) return null;
+    return layers.map(l => datasets.find(d => d.id === l.dataset));
   }
 );
 
