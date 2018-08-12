@@ -6,15 +6,26 @@ import NoContent from 'components/ui/no-content';
 
 import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import MenuBlock from 'pages/map/menu/components/menu-block';
+import Pill from 'components/ui/pill';
 
 import './styles.scss';
 
 class Datasets extends PureComponent {
   render() {
-    const { datasets, subCategories, onToggleLayer, onInfoClick } = this.props;
+    const {
+      datasets,
+      subCategories,
+      onToggleLayer,
+      onInfoClick,
+      selectedCountries
+    } = this.props;
 
     return (
       <div className="c-datasets">
+        <div className="countries-selection">
+          {selectedCountries &&
+            selectedCountries.map(c => <Pill key={c.value}>{c.label}</Pill>)}
+        </div>
         {subCategories
           ? subCategories.map(subCat => (
             <MenuBlock key={subCat.slug} {...subCat}>
@@ -54,7 +65,8 @@ Datasets.propTypes = {
   datasets: PropTypes.array,
   onToggleLayer: PropTypes.func,
   onInfoClick: PropTypes.func,
-  subCategories: PropTypes.array
+  subCategories: PropTypes.array,
+  selectedCountries: PropTypes.array
 };
 
 export default Datasets;

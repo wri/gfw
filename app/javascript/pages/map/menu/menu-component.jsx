@@ -17,7 +17,9 @@ class Menu extends PureComponent {
       setSelectedSection,
       onToggleLayer,
       setModalMeta,
-      loading
+      loading,
+      countries,
+      selectedCountries
     } = this.props;
 
     return (
@@ -75,6 +77,8 @@ class Menu extends PureComponent {
                 {...activeSection}
                 onToggleLayer={onToggleLayer}
                 onInfoClick={setModalMeta}
+                countries={countries}
+                selectedCountries={selectedCountries}
               />
             )}
         </MenuFlap>
@@ -91,7 +95,9 @@ Menu.propTypes = {
   layers: PropTypes.array,
   onToggleLayer: PropTypes.func,
   setModalMeta: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  countries: PropTypes.array,
+  selectedCountries: PropTypes.array
 };
 
 export default Menu;

@@ -1,0 +1,20 @@
+@import '~styles/settings';
+$pill-height: rem(25px);
+
+.c-pill {
+  height: $pill-height;
+  border: solid 1px $border;
+  border-radius: 15px;
+  color: $slate;
+  font-size: rem(13px);
+  padding: rem(2px) rem(8px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  svg {
+    width: rem(8px);
+    height: rem(8px);
+    margin-left: rem(5px);
+  }
+}

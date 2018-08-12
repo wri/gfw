@@ -5,6 +5,16 @@
   max-height: 100%;
   overflow: scroll;
 
+  .countries-selection {
+    display: flex;
+    flex-wrap: wrap;
+
+    > * {
+      margin-bottom: rem(10px);
+      margin-right: rem(10px);
+    }
+  }
+
   .dataset-toggle {
     margin-bottom: rem(20px);
 

@@ -18,11 +18,12 @@ const actions = {
   ...ownActions
 };
 
-const mapStateToProps = ({ mapMenu, datasets, location }) => ({
+const mapStateToProps = ({ mapMenu, datasets, location, countryData }) => ({
   ...getMenuProps({
     ...datasets,
     ...location,
-    ...mapMenu
+    ...mapMenu,
+    ...countryData
   })
 });
 

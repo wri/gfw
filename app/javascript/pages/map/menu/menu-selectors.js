@@ -112,6 +112,16 @@ const menuSections = [
 const getSelectedSection = state => state.selectedSection || null;
 const getDatasets = state => state.datasets || null;
 const getLoading = state => state.loading || null;
+const getCountries = state => state.countries || null;
+const getLocation = state => state.payload || null;
+
+const getActiveCountries = createSelector(
+  [getCountries, getLocation],
+  (countries, location) => {
+    if (!countries) return null;
+    return countries.filter(c => c.value === location.country);
+  }
+);
 
 export const getSections = createSelector(getDatasets, datasets =>
   menuSections.map(s => {
@@ -200,6 +210,8 @@ export const getMenuProps = createStructuredSelector({
   sections: getSectionsWithData,
   activeSection: getActiveSection,
   selectedSection: getSelectedSection,
+  countries: getCountries,
+  selectedCountries: getActiveCountries,
   layers: getLayers,
   loading: getLoading
 });
