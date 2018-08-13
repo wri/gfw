@@ -29,7 +29,7 @@ const reduceParams = params => {
   }, {});
 };
 
-const reduceSqlParams = params => {
+const reduceSqlParams = (params, isos) => {
   if (!params) return null;
   return params.reduce((obj, param) => {
     const newObj = {
@@ -37,7 +37,10 @@ const reduceSqlParams = params => {
       [param.key]: param.key_params.reduce((subObj, item) => {
         const keyValues = {
           ...subObj,
-          [item.key]: item.value
+          [item.key]:
+            item.key === 'country'
+              ? `${isos.join(' OR country = ')}`
+              : item.value
         };
         return keyValues;
       }, {})
@@ -122,6 +125,7 @@ export const getActiveDatasets = createSelector(
 
 export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
   if (isEmpty(datasets)) return null;
+  const isos = ["'BRA'", "'CAN'"];
   return datasets.map(d => {
     const { layer, metadata } = d;
     const appMeta = metadata.find(m => m.application === 'gfw') || {};
@@ -175,7 +179,7 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
                 }),
                 ...(!isEmpty(sql_config) && {
                   sqlParams: {
-                    ...reduceSqlParams(sql_config)
+                    ...reduceSqlParams(sql_config, isos)
                   }
                 }),
                 ...decodeFunction,
