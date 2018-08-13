@@ -1,4 +1,5 @@
 export default {
   selectedCountries: [],
-  selectedSection: ''
+  selectedSection: '',
+  exploreSection: 'topics'
 };

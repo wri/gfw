@@ -101,7 +101,8 @@ const menuSections = [
     name: 'EXPLORE',
     icon: truckIcon,
     Component: Explore,
-    large: true
+    large: true,
+    section: 'topics'
   },
   {
     slug: 'search',
@@ -124,6 +125,11 @@ export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
 export const getSelectedSection = createSelector(
   [getMenuSettings],
   settings => settings.selectedSection
+);
+
+export const getExploreSection = createSelector(
+  [getMenuSettings],
+  settings => settings.exploreSection
 );
 
 const getUnselectedCountries = createSelector(
@@ -231,6 +237,7 @@ export const getMenuProps = createStructuredSelector({
   sections: getSectionsWithData,
   activeSection: getActiveSection,
   selectedSection: getSelectedSection,
+  exploreSection: getExploreSection,
   countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
   layers: getLayers,

@@ -18,8 +18,8 @@ class Menu extends PureComponent {
       setModalMeta,
       loading,
       countries,
-      selectedCountries,
-      setMenuSettings
+      setMenuSettings,
+      ...rest
     } = this.props;
 
     return (
@@ -78,8 +78,8 @@ class Menu extends PureComponent {
                 onToggleLayer={onToggleLayer}
                 onInfoClick={setModalMeta}
                 countries={countries}
-                selectedCountries={selectedCountries}
                 setMenuSettings={setMenuSettings}
+                {...rest}
               />
             )}
         </MenuFlap>
