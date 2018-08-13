@@ -5,9 +5,8 @@ import remove from 'lodash/remove';
 
 import modalActions from 'components/modals/meta/meta-actions';
 import mapActions from 'components/map/map-actions';
-import ownActions from './menu-actions';
+import * as ownActions from './menu-actions';
 
-import reducers, { initialState } from './menu-reducers';
 import { getMenuProps } from './menu-selectors';
 
 import MenuComponent from './menu-component';
@@ -22,8 +21,8 @@ const mapStateToProps = ({ mapMenu, datasets, location, countryData }) => ({
   ...getMenuProps({
     ...datasets,
     ...location,
-    ...mapMenu,
-    ...countryData
+    ...countryData,
+    ...mapMenu
   })
 });
 
@@ -60,6 +59,6 @@ MenuContainer.propTypes = {
   setMapSettings: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export { actions };
 
 export default connect(mapStateToProps, actions)(MenuContainer);

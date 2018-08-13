@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import remove from 'lodash/remove';
 
 import NoContent from 'components/ui/no-content';
 
 import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import MenuBlock from 'pages/map/menu/components/menu-block';
 import Pill from 'components/ui/pill';
+import Dropdown from 'components/ui/dropdown';
 
 import './styles.scss';
 
@@ -17,14 +19,56 @@ class Datasets extends PureComponent {
       subCategories,
       onToggleLayer,
       onInfoClick,
-      selectedCountries
+      countries,
+      selectedCountries,
+      setMenuSettings
     } = this.props;
 
     return (
       <div className="c-datasets">
         <div className="countries-selection">
-          {selectedCountries &&
-            selectedCountries.map(c => <Pill key={c.value}>{c.label}</Pill>)}
+          <span className="sub-title">country-specific data</span>
+          <div className="pills">
+            {selectedCountries &&
+              selectedCountries.map(c => (
+                <Pill
+                  key={c.value}
+                  label={c.label}
+                  onRemove={() => {
+                    const newCountries = remove(
+                      selectedCountries,
+                      sc => sc.value !== c.value
+                    );
+                    setMenuSettings({
+                      selectedCountries: newCountries
+                        ? newCountries.map(nc => nc.value)
+                        : []
+                    });
+                  }}
+                >
+                  {c.label}
+                </Pill>
+              ))}
+            {countries && (
+              <Dropdown
+                className="country-dropdown"
+                theme="theme-dropdown-button theme-dropdown-button-small"
+                placeholder="+ Add country"
+                noItemsFound="No country found"
+                noSelectedValue="+ Add country"
+                options={countries}
+                onChange={e => {
+                  setMenuSettings({
+                    selectedCountries: [
+                      ...selectedCountries.map(c => c.value),
+                      e.value
+                    ]
+                  });
+                }}
+                searchable
+              />
+            )}
+          </div>
         </div>
         {subCategories
           ? subCategories.map(subCat => (
@@ -66,7 +110,9 @@ Datasets.propTypes = {
   onToggleLayer: PropTypes.func,
   onInfoClick: PropTypes.func,
   subCategories: PropTypes.array,
-  selectedCountries: PropTypes.array
+  selectedCountries: PropTypes.array,
+  countries: PropTypes.array,
+  setMenuSettings: PropTypes.func
 };
 
 export default Datasets;

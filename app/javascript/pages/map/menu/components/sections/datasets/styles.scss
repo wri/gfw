@@ -7,11 +7,29 @@
 
   .countries-selection {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    margin-bottom: rem(20px);
 
-    > * {
-      margin-bottom: rem(10px);
-      margin-right: rem(10px);
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+
+      > * {
+        margin-bottom: rem(5px);
+        margin-right: rem(5px);
+      }
+    }
+
+    .sub-title {
+      text-transform: uppercase;
+      font-size: rem(11px);
+      color: $slate;
+      margin-bottom: rem(5px);
+      font-weight: 500;
+    }
+
+    .country-dropdown {
+      width: rem(99px);
     }
   }
 

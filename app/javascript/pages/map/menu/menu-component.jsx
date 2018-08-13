@@ -14,12 +14,12 @@ class Menu extends PureComponent {
       sections,
       activeSection,
       selectedSection,
-      setSelectedSection,
       onToggleLayer,
       setModalMeta,
       loading,
       countries,
-      selectedCountries
+      selectedCountries,
+      setMenuSettings
     } = this.props;
 
     return (
@@ -48,7 +48,7 @@ class Menu extends PureComponent {
                     <button
                       className="c-map-menu__item-button"
                       onClick={() => {
-                        setSelectedSection(slug);
+                        setMenuSettings({ selectedSection: slug });
                       }}
                       disabled={loading}
                     >
@@ -69,7 +69,7 @@ class Menu extends PureComponent {
         <MenuFlap
           section={selectedSection}
           isBig={activeSection && activeSection.large}
-          onClickClose={() => setSelectedSection(null)}
+          onClickClose={() => setMenuSettings({ selectedSection: '' })}
         >
           {activeSection &&
             activeSection.Component && (
@@ -79,6 +79,7 @@ class Menu extends PureComponent {
                 onInfoClick={setModalMeta}
                 countries={countries}
                 selectedCountries={selectedCountries}
+                setMenuSettings={setMenuSettings}
               />
             )}
         </MenuFlap>
@@ -91,7 +92,7 @@ Menu.propTypes = {
   sections: PropTypes.array,
   selectedSection: PropTypes.string,
   activeSection: PropTypes.object,
-  setSelectedSection: PropTypes.func.isRequired,
+  setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
   onToggleLayer: PropTypes.func,
   setModalMeta: PropTypes.func,

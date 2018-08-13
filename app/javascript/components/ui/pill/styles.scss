@@ -1,13 +1,14 @@
 @import '~styles/settings';
-$pill-height: rem(25px);
+$pill-height: rem(20px);
 
 .c-pill {
   height: $pill-height;
   border: solid 1px $border;
   border-radius: 15px;
-  color: $slate;
-  font-size: rem(13px);
-  padding: rem(2px) rem(8px);
+  color: $white;
+  background-color: $greyish-brown;
+  font-size: rem(12px);
+  padding: 0 rem(8px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,5 +17,7 @@ $pill-height: rem(25px);
     width: rem(8px);
     height: rem(8px);
     margin-left: rem(5px);
+    fill: $white;
+    cursor: pointer;
   }
 }

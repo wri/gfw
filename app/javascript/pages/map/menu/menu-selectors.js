@@ -10,6 +10,8 @@ import searchIcon from 'assets/icons/search.svg';
 
 import { getLayers } from 'components/map/map-selectors';
 
+import initialState from './menu-initial-state';
+
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 
@@ -109,17 +111,36 @@ const menuSections = [
   }
 ];
 
-const getSelectedSection = state => state.selectedSection || null;
+const getMenuUrlState = state => (state.query && state.query.menu) || null;
 const getDatasets = state => state.datasets || null;
 const getLoading = state => state.loading || null;
 const getCountries = state => state.countries || null;
-const getLocation = state => state.payload || null;
+
+export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
+  ...initialState,
+  ...urlState
+}));
+
+export const getSelectedSection = createSelector(
+  [getMenuSettings],
+  settings => settings.selectedSection
+);
+
+const getUnselectedCountries = createSelector(
+  [getCountries, getMenuSettings],
+  (countries, settings) => {
+    if (!countries) return null;
+    const { selectedCountries } = settings;
+    return countries.filter(c => selectedCountries.indexOf(c.value) === -1);
+  }
+);
 
 const getActiveCountries = createSelector(
-  [getCountries, getLocation],
-  (countries, location) => {
+  [getCountries, getMenuSettings],
+  (countries, settings) => {
     if (!countries) return null;
-    return countries.filter(c => c.value === location.country);
+    const { selectedCountries } = settings;
+    return countries.filter(c => selectedCountries.indexOf(c.value) > -1);
   }
 );
 
@@ -210,7 +231,7 @@ export const getMenuProps = createStructuredSelector({
   sections: getSectionsWithData,
   activeSection: getActiveSection,
   selectedSection: getSelectedSection,
-  countries: getCountries,
+  countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
   layers: getLayers,
   loading: getLoading

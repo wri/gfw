@@ -1,13 +1,11 @@
 @import '~styles/settings.scss';
 
-$dd-button-height: rem(18px);
+$dd-button-height: rem(20px);
 
 .theme-dropdown-button-small {
   text-align: center;
 
   .container {
-    max-width: rem(70px);
-
     .c-selector {
       border-radius: rem(18px);
       border-color: $border;
