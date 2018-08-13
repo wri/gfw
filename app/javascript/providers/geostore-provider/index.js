@@ -2,44 +2,28 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as actions from './country-data-provider-actions';
-import reducers, { initialState } from './country-data-provider-reducers';
+import * as actions from './actions';
+import reducers, { initialState } from './reducers';
 
-const mapStateToProps = (state, { location }) => ({
-  location
+const mapStateToProps = ({ location }) => ({
+  location: location.payload
 });
 
-class CountryDataProvider extends PureComponent {
+class GeostoreProvider extends PureComponent {
   componentDidMount() {
     const {
       location: { country, region, subRegion },
-      getCountries,
-      getRegions,
-      getSubRegions,
-      getGeostore,
-      getCountryLinks
+      getGeostore
     } = this.props;
-    getCountries();
 
     if (country) {
-      getCountryLinks();
-      getRegions(country);
       getGeostore(country, region, subRegion);
-    }
-    if (region) {
-      getSubRegions(country, region);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     const { location: { country, region, subRegion } } = nextProps;
-    const {
-      getRegions,
-      getSubRegions,
-      getGeostore,
-      setGeostore,
-      getCountryLinks
-    } = this.props;
+    const { getGeostore, setGeostore } = this.props;
     const hasCountryChanged =
       country !== this.props.location.country && country;
     const hasRegionChanged = region !== this.props.location.region;
@@ -50,18 +34,10 @@ class CountryDataProvider extends PureComponent {
     }
 
     if (hasCountryChanged) {
-      getCountryLinks();
-      getRegions(country);
-      if (region) {
-        getSubRegions(country, region);
-      }
       getGeostore(country, region, subRegion);
     }
 
     if (hasRegionChanged) {
-      if (region) {
-        getSubRegions(country, region);
-      }
       getGeostore(country, region, subRegion);
     }
 
@@ -75,15 +51,11 @@ class CountryDataProvider extends PureComponent {
   }
 }
 
-CountryDataProvider.propTypes = {
+GeostoreProvider.propTypes = {
   location: PropTypes.object.isRequired,
-  getCountries: PropTypes.func.isRequired,
-  getRegions: PropTypes.func.isRequired,
-  getSubRegions: PropTypes.func.isRequired,
   getGeostore: PropTypes.func.isRequired,
-  getCountryLinks: PropTypes.func.isRequired,
   setGeostore: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
-export default connect(mapStateToProps, actions)(CountryDataProvider);
+export default connect(mapStateToProps, actions)(GeostoreProvider);

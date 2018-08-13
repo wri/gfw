@@ -46,8 +46,6 @@ const reduceSqlParams = params => {
   }, {});
 };
 
-// get map settings
-
 export const getWidgetSettings = createSelector(
   getWidget,
   widget => widget && widget.settings
@@ -76,6 +74,12 @@ export const getLabels = createSelector(
   getMapSettings,
   settings => settings.label
 );
+
+export const getBBox = createSelector(getGeostore, geostore => {
+  const { bbox } = geostore;
+  if (isEmpty(bbox)) return {};
+  return { bbox, options: { padding: [10, 10] } };
+});
 
 export const getMapOptions = createSelector(getMapSettings, settings => {
   if (!settings) return null;
@@ -266,5 +270,5 @@ export const getMapProps = createStructuredSelector({
   layerGroups: getLayerGroups,
   activeLayers: getActiveLayers,
   loading: getLoading,
-  geostore: getGeostore
+  bbox: getBBox
 });

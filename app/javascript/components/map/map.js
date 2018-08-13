@@ -7,7 +7,7 @@ import actions from './map-actions';
 import { getMapProps } from './map-selectors';
 
 const mapStateToProps = (
-  { countryData, widgets, location, datasets },
+  { countryData, widgets, location, datasets, geostore },
   { widgetKey }
 ) => ({
   ...getMapProps({
@@ -15,6 +15,7 @@ const mapStateToProps = (
     ...location,
     ...datasets,
     ...widgets,
+    ...geostore,
     widgetKey
   })
 });

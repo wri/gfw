@@ -16,6 +16,7 @@ import * as PopupComponent from 'components/map/components/popup';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
+import * as geostoreProviderComponent from 'providers/geostore-provider';
 import * as whitelistsProviderComponent from 'providers/whitelists-provider';
 import * as datasetsProviderComponent from 'providers/datasets-provider';
 import * as layerSpecProviderComponent from 'providers/layerspec-provider';
@@ -34,6 +35,7 @@ const componentsReducers = {
 // Provider Reducers
 const providersReducers = {
   countryData: handleActions(countryDataProviderComponent),
+  geostore: handleActions(geostoreProviderComponent),
   whitelists: handleActions(whitelistsProviderComponent),
   datasets: handleActions(datasetsProviderComponent),
   layerSpec: handleActions(layerSpecProviderComponent)

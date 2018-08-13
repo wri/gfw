@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import CountryDataProvider from 'providers/country-data-provider';
+import GeostoreProvider from 'providers/geostore-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 
@@ -27,6 +28,7 @@ class Page extends PureComponent {
         <CountryDataProvider location={analysis.location} />
         <WhitelistsProvider />
         <DatasetsProvider />
+        <GeostoreProvider />
       </div>
     );
   }
