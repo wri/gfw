@@ -7,12 +7,20 @@ import closeIcon from 'assets/icons/close.svg';
 import './styles.scss';
 
 const Button = props => {
-  const { label, onRemove, className } = props;
+  const { label, onRemove, active } = props;
 
   return (
-    <div className={`c-pill ${className || ''}`}>
+    <div
+      className={`c-pill ${onRemove ? '-removable' : ''} ${
+        !active ? '-inactive' : ''
+      }`}
+    >
       {label}
-      <Icon icon={closeIcon} onClick={onRemove} />
+      {onRemove && (
+        <button onClick={onRemove}>
+          <Icon icon={closeIcon} />
+        </button>
+      )}
     </div>
   );
 };
@@ -20,7 +28,7 @@ const Button = props => {
 Button.propTypes = {
   label: PropTypes.string,
   onRemove: PropTypes.func,
-  className: PropTypes.string
+  active: PropTypes.bool
 };
 
 export default Button;
