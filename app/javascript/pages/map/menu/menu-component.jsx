@@ -47,11 +47,11 @@ class Menu extends PureComponent {
                   >
                     <button
                       className="c-map-menu__item-button"
-                      onClick={() => {
+                      onClick={() =>
                         setMenuSettings({
                           selectedSection: slug === selectedSection ? '' : slug
-                        });
-                      }}
+                        })
+                      }
                       disabled={loading}
                     >
                       <Icon icon={icon} className="icon" />
