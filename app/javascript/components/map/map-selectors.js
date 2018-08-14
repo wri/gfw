@@ -67,6 +67,16 @@ export const getLayers = createSelector(
   settings => settings.layers
 );
 
+export const getBasemap = createSelector(
+  getMapSettings,
+  settings => settings.basemap
+);
+
+export const getLabels = createSelector(
+  getMapSettings,
+  settings => settings.label
+);
+
 export const getMapOptions = createSelector(getMapSettings, settings => {
   if (!settings) return null;
   const {
@@ -100,7 +110,9 @@ export const getActiveDatasets = createSelector(
   [getDatasets, getDatasetIds],
   (datasets, datasetIds) => {
     if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
-    return datasets.filter(d => datasetIds.indexOf(d.id) > -1);
+    return datasets.filter(
+      d => datasetIds.indexOf(d.id) > -1 && d.env === 'production'
+    );
   }
 );
 
@@ -134,48 +146,50 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
       layers:
         layer &&
         sortBy(
-          layer.map((l, i) => {
-            const { layerConfig, applicationConfig } = l;
-            const { sortOrder } = applicationConfig || {};
-            const {
-              params_config,
-              decode_config,
-              sql_config,
-              body,
-              url
-            } = layerConfig;
-            const decodeFunction = decodeLayersConfig[l.id];
-            return {
-              ...l,
-              ...applicationConfig,
-              sortOrder: applicationConfig.default ? 0 : sortOrder || i + 1,
-              ...(!isEmpty(params_config) && {
-                params: {
-                  url: body.url || url,
-                  ...reduceParams(params_config)
-                }
-              }),
-              ...(!isEmpty(sql_config) && {
-                sqlParams: {
-                  ...reduceSqlParams(sql_config)
-                }
-              }),
-              ...decodeFunction,
-              ...(!isEmpty(decode_config) && {
-                decodeParams: {
-                  ...(decodeFunction && decodeFunction.decodeParams),
-                  ...reduceParams(decode_config)
-                }
-              })
-            };
-          }),
+          layer
+            .filter(l => l.env === 'production' && l.published)
+            .map((l, i) => {
+              const { layerConfig, applicationConfig } = l;
+              const { sortOrder } = applicationConfig || {};
+              const {
+                params_config,
+                decode_config,
+                sql_config,
+                body,
+                url
+              } = layerConfig;
+              const decodeFunction = decodeLayersConfig[l.id];
+              return {
+                ...l,
+                ...applicationConfig,
+                sortOrder: applicationConfig.default ? 0 : sortOrder || i + 1,
+                ...(!isEmpty(params_config) && {
+                  params: {
+                    url: body.url || url,
+                    ...reduceParams(params_config)
+                  }
+                }),
+                ...(!isEmpty(sql_config) && {
+                  sqlParams: {
+                    ...reduceSqlParams(sql_config)
+                  }
+                }),
+                ...decodeFunction,
+                ...(!isEmpty(decode_config) && {
+                  decodeParams: {
+                    ...(decodeFunction && decodeFunction.decodeParams),
+                    ...reduceParams(decode_config)
+                  }
+                })
+              };
+            }),
           'sortOrder'
         )
     };
   });
 });
 
-export const getLayerGroups = createSelector(
+export const getDatasetsWithConfig = createSelector(
   [getParsedDatasets, getLayers],
   (datasets, layers) => {
     if (isEmpty(datasets) || isEmpty(layers)) return null;
@@ -230,6 +244,14 @@ export const getLayerGroups = createSelector(
   }
 );
 
+export const getLayerGroups = createSelector(
+  [getDatasetsWithConfig, getLayers],
+  (datasets, layers) => {
+    if (isEmpty(datasets) || isEmpty(layers)) return null;
+    return layers.map(l => datasets.find(d => d.id === l.dataset));
+  }
+);
+
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return [];
   return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
@@ -239,6 +261,8 @@ export const getMapProps = createStructuredSelector({
   layers: getLayers,
   settings: getMapSettings,
   mapOptions: getMapOptions,
+  basemap: getBasemap,
+  label: getLabels,
   layerGroups: getLayerGroups,
   activeLayers: getActiveLayers,
   loading: getLoading,

@@ -1,3 +1,5 @@
+const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
+
 export default {
   center: {
     lat: 27,
@@ -8,10 +10,14 @@ export default {
   maxZoom: 19,
   minZoom: 2,
   basemap: {
-    url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
+    url: `https://api.mapbox.com/styles/v1/edbrett/cjknvzjev2bl92rmno1rr9ivr/tiles/256/{z}/{x}/{y}@2x?access_token=${
+      MAPBOX_TOKEN
+    }`
   },
   label: {
-    url: 'http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png'
+    url: `https://api.mapbox.com/styles/v1/edbrett/cjknwadi312uf2ro4dtt40eu0/tiles/256/{z}/{x}/{y}@2x?access_token=${
+      MAPBOX_TOKEN
+    }`
   },
   attributionControl: false,
   layers: [
