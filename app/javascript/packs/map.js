@@ -9,7 +9,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'pages/map';
+import store from 'pages/map/store';
+import { AppContainer } from 'react-hot-loader';
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Map />, document.getElementById('map-page'));
-});
+const render = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component />
+    </AppContainer>,
+    document.getElementById('map-page')
+  );
+};
+
+document.addEventListener('DOMContentLoaded', () => render(Map));
+
+if (module.hot) {
+  /* eslint-disable global-require */
+  module.hot.accept('pages/map/store', () => {
+    const nextRootReducer = require('pages/map/store');
+    store.replaceReducer(nextRootReducer);
+  });
+  module.hot.accept('pages/map', () => {
+    render(require('pages/map').default);
+  });
+}
