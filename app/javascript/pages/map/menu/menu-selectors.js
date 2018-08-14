@@ -1,13 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import isEmpty from 'lodash/isEmpty';
 import flatten from 'lodash/flatten';
 
-import { getLayers } from 'components/map/map-selectors';
+import { getLayers, getParsedDatasets } from 'components/map/map-selectors';
 
 import initialState from './menu-initial-state';
 import menuSections from './menu-sections';
 
 const getMenuUrlState = state => (state.query && state.query.menu) || null;
-const getDatasets = state => state.datasets || null;
 const getLoading = state => state.loading || null;
 const getCountries = state => state.countries || null;
 
@@ -26,8 +26,17 @@ export const getExploreSection = createSelector(
   settings => settings.exploreSection
 );
 
-const getUnselectedCountries = createSelector(
-  [getCountries, getMenuSettings],
+export const getAvailableCountries = createSelector(
+  [getCountries, getParsedDatasets],
+  (countries, datasets) => {
+    if (isEmpty(countries) || isEmpty(datasets)) return null;
+    const validIsos = flatten(datasets.map(d => d.iso));
+    return countries.filter(c => validIsos.indexOf(c.value) > -1);
+  }
+);
+
+export const getUnselectedCountries = createSelector(
+  [getAvailableCountries, getMenuSettings],
   (countries, settings) => {
     if (!countries) return null;
     const { selectedCountries } = settings;
@@ -35,7 +44,7 @@ const getUnselectedCountries = createSelector(
   }
 );
 
-const getActiveCountries = createSelector(
+export const getActiveCountries = createSelector(
   [getCountries, getMenuSettings],
   (countries, settings) => {
     if (!countries) return null;
@@ -45,45 +54,22 @@ const getActiveCountries = createSelector(
 );
 
 export const getSections = createSelector(
-  [getDatasets, getActiveCountries],
-  (datasets, countries) =>
-    menuSections.map(s => {
+  [getParsedDatasets, getActiveCountries],
+  (datasets, countries) => {
+    if (isEmpty(datasets)) return menuSections;
+    return menuSections.map(s => {
       const { slug, subCategories } = s;
       const sectionDatasets =
-        datasets &&
-        datasets
-          .filter(
-            d => flatten(d.vocabulary.map(v => v.tags)).indexOf(slug) > -1
-          )
-          .map(d => {
-            const { layer, metadata, vocabulary } = d;
-            const appMeta = metadata.find(m => m.application === 'gfw') || {};
-            const { info } = appMeta || {};
-            const defaultLayer =
-              layer &&
-              layer.length &&
-              (layer.find(
-                l => l.applicationConfig && l.applicationConfig.default
-              ) ||
-                layer[0]);
-            const { iso, id } = defaultLayer || {};
-
-            return {
-              ...d,
-              ...info,
-              iso,
-              layer: id,
-              tags: flatten(vocabulary.map(v => v.tags)),
-              ...(defaultLayer && defaultLayer.applicationConfig)
-            };
-          });
+        datasets && datasets.filter(d => d.tags.indexOf(slug) > -1);
       let subCategoriesWithDatasets = [];
       if (subCategories) {
         subCategoriesWithDatasets = subCategories.map(subCat => ({
           ...subCat,
-          datasets: sectionDatasets.filter(
-            d => d.tags.indexOf(subCat.slug) > -1 && d.global
-          )
+          datasets:
+            sectionDatasets &&
+            sectionDatasets.filter(
+              d => d.tags.indexOf(subCat.slug) > -1 && d.global
+            )
         }));
       }
       let countriesWithDatasets = [];
@@ -91,9 +77,11 @@ export const getSections = createSelector(
         countriesWithDatasets = countries.map(c => ({
           title: c.label,
           slug: c.value,
-          datasets: sectionDatasets.filter(
-            d => !d.global && d.iso.indexOf(c.value) > -1
-          )
+          datasets:
+            sectionDatasets &&
+            sectionDatasets.filter(
+              d => !d.global && d.iso.indexOf(c.value) > -1
+            )
         }));
       }
 
@@ -102,7 +90,8 @@ export const getSections = createSelector(
         datasets: sectionDatasets,
         subCategories: countriesWithDatasets.concat(subCategoriesWithDatasets)
       };
-    })
+    });
+  }
 );
 
 export const getSectionsWithData = createSelector(
@@ -110,29 +99,33 @@ export const getSectionsWithData = createSelector(
   (sections, layers) => {
     if (!layers) return sections;
     const datasetIds = layers.map(d => d.dataset);
-    return sections.map(s => ({
-      ...s,
-      layerCount: s.datasets.filter(
-        d => layers && datasetIds.indexOf(d.id) > -1
-      ).length,
-      datasets:
-        s.datasets &&
-        s.datasets.map(d => ({
-          ...d,
-          active: datasetIds.indexOf(d.id) > -1
-        })),
-      subCategories:
-        s.subCategories &&
-        s.subCategories.map(subCat => ({
-          ...subCat,
-          datasets:
-            subCat.datasets &&
-            subCat.datasets.map(d => ({
-              ...d,
-              active: datasetIds.indexOf(d.id) > -1
-            }))
-        }))
-    }));
+    return sections.map(s => {
+      const { datasets, subCategories } = s;
+
+      return {
+        ...s,
+        layerCount:
+          datasets &&
+          datasets.filter(d => layers && datasetIds.indexOf(d.id) > -1).length,
+        datasets:
+          datasets &&
+          datasets.map(d => ({
+            ...d,
+            active: datasetIds.indexOf(d.id) > -1
+          })),
+        subCategories:
+          subCategories &&
+          subCategories.map(subCat => ({
+            ...subCat,
+            datasets:
+              subCat.datasets &&
+              subCat.datasets.map(d => ({
+                ...d,
+                active: datasetIds.indexOf(d.id) > -1
+              }))
+          }))
+      };
+    });
   }
 );
 

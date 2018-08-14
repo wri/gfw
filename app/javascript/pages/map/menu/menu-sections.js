@@ -35,7 +35,13 @@ export default [
     slug: 'landCover',
     name: 'LAND COVER',
     icon: landTreeIcon,
-    Component: Datasets
+    Component: Datasets,
+    subCategories: [
+      {
+        slug: 'landCover',
+        title: 'Land Cover'
+      }
+    ]
   },
   {
     slug: 'landUse',

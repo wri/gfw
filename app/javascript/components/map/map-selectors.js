@@ -29,7 +29,7 @@ const reduceParams = params => {
   }, {});
 };
 
-const reduceSqlParams = (params, isos) => {
+const reduceSqlParams = params => {
   if (!params) return null;
   return params.reduce((obj, param) => {
     const newObj = {
@@ -37,10 +37,7 @@ const reduceSqlParams = (params, isos) => {
       [param.key]: param.key_params.reduce((subObj, item) => {
         const keyValues = {
           ...subObj,
-          [item.key]:
-            item.key === 'country'
-              ? `${isos.join(' OR country = ')}`
-              : item.value
+          [item.key]: item.value
         };
         return keyValues;
       }, {})
@@ -59,7 +56,7 @@ export const getMapSettings = createSelector(
   (urlState, widgetState) => ({
     ...initialState,
     ...urlState,
-    ...widgetState
+    ...(widgetState && widgetState)
   })
 );
 
@@ -108,25 +105,10 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
   };
 });
 
-export const getDatasetIds = createSelector([getLayers], layers => {
-  if (!layers || !layers.length) return null;
-  return layers.map(l => l.dataset);
-});
-
-export const getActiveDatasets = createSelector(
-  [getDatasets, getDatasetIds],
-  (datasets, datasetIds) => {
-    if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
-    return datasets.filter(
-      d => datasetIds.indexOf(d.id) > -1 && d.env === 'production'
-    );
-  }
-);
-
-export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
+export const getParsedDatasets = createSelector([getDatasets], datasets => {
   if (isEmpty(datasets)) return null;
-  const isos = ["'BRA'", "'CAN'"];
-  return datasets.map(d => {
+
+  return datasets.filter(d => d.env === 'production').map(d => {
     const { layer, metadata } = d;
     const appMeta = metadata.find(m => m.application === 'gfw') || {};
     const { info } = appMeta || {};
@@ -135,6 +117,7 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
         layer.find(l => l.applicationConfig && l.applicationConfig.default)) ||
       layer[0];
     const { isSelectorLayer, isMultiSelectorLayer } = info || {};
+    const { id, iso } = defaultLayer || {};
 
     return {
       ...d,
@@ -147,10 +130,10 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
           }))
         }
       }),
-      metadata:
-        defaultLayer &&
-        defaultLayer.applicationConfig &&
-        defaultLayer.applicationConfig.metadata,
+      ...(defaultLayer && defaultLayer.applicationConfig),
+      tags: flatten(d.vocabulary.map(v => v.tags)),
+      layer: id,
+      iso,
       layers:
         layer &&
         sortBy(
@@ -179,7 +162,7 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
                 }),
                 ...(!isEmpty(sql_config) && {
                   sqlParams: {
-                    ...reduceSqlParams(sql_config, isos)
+                    ...reduceSqlParams(sql_config)
                   }
                 }),
                 ...decodeFunction,
@@ -197,14 +180,29 @@ export const getParsedDatasets = createSelector(getActiveDatasets, datasets => {
   });
 });
 
+export const getDatasetIds = createSelector([getLayers], layers => {
+  if (!layers || !layers.length) return null;
+  return layers.map(l => l.dataset);
+});
+
+export const getActiveDatasets = createSelector(
+  [getParsedDatasets, getDatasetIds],
+  (datasets, datasetIds) => {
+    if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
+    return datasets.filter(
+      d => datasetIds.indexOf(d.id) > -1 && d.env === 'production'
+    );
+  }
+);
+
 export const getDatasetsWithConfig = createSelector(
-  [getParsedDatasets, getLayers],
+  [getActiveDatasets, getLayers],
   (datasets, layers) => {
     if (isEmpty(datasets) || isEmpty(layers)) return null;
 
     return datasets.map(d => {
       const layerConfig = layers.find(l => l.dataset === d.id) || {};
-      const { params, sqlParams, decodeParams } = layerConfig;
+      const { params, sqlParams, decodeParams } = layerConfig || {};
 
       return {
         ...d,
