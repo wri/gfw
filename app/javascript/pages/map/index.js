@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { hot } from 'react-hot-loader';
 
 import 'react-tippy/dist/tippy.css';
 import 'styles/styles.scss';
@@ -18,10 +19,19 @@ const store = createStore(
   composeEnhancers(router.enhancer, middlewares)
 );
 
+if (module.hot) {
+  // Enable Webpack hot module replacement for reducers
+  module.hot.accept('./reducers', () => {
+    // eslint-disable-next-line global-require
+    const nextRootReducer = require('./reducers');
+    store.replaceReducer(nextRootReducer);
+  });
+}
+
 const Map = () => (
   <Provider store={store}>
     <Page />
   </Provider>
 );
 
-export default Map;
+export default hot(module)(Map);
