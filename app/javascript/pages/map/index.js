@@ -1,22 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
 
 import 'react-tippy/dist/tippy.css';
 import 'styles/styles.scss';
 
-import reducers from './reducers';
-import router from './router';
-
 import Page from './page';
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = applyMiddleware(thunk, router.middleware);
-const store = createStore(
-  reducers,
-  composeEnhancers(router.enhancer, middlewares)
-);
+import store from './store';
 
 const Map = () => (
   <Provider store={store}>
