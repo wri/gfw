@@ -47,7 +47,7 @@ class Datasets extends PureComponent {
               selectedCountries.map(c => (
                 <Pill
                   key={c.value}
-                  active={countriesWithoutData.indexOf(c.label) > -1}
+                  active={!countriesWithoutData.includes(c.label)}
                   label={c.label}
                   onRemove={() => this.handleRemoveCountry(c.value)}
                 >

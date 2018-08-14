@@ -9,6 +9,7 @@ $map-menu-flap-width-big: rem(550px);
   top: 0;
   left: 0;
   width: $map-menu-flap-width;
+  overflow-x: hidden;
   height: 100vh;
   background-color: $white;
   z-index: 12;
@@ -26,8 +27,9 @@ $map-menu-flap-width-big: rem(550px);
 
   &__close {
     position: absolute;
-    top: rem(15px);
-    right: rem(15px);
+    top: 0;
+    right: 0;
+    padding: rem(15px);
     display: flex;
     justify-content: center;
     align-items: center;

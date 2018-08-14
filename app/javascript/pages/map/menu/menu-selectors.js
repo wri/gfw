@@ -141,13 +141,15 @@ export const getActiveSectionWithData = createSelector(
   [getActiveSection],
   section => {
     if (!section) return null;
-    const subCatsWithData = section.subCategories.filter(
-      s => !isEmpty(s.datasets)
-    );
+    const subCatsWithData =
+      section.subCategories &&
+      section.subCategories.filter(s => !isEmpty(s.datasets));
 
     return {
       ...section,
-      subCategories: subCatsWithData
+      ...(!isEmpty(subCatsWithData) && {
+        subCategories: subCatsWithData
+      })
     };
   }
 );
@@ -156,9 +158,9 @@ export const getZeroDataCountries = createSelector(
   [getActiveSection],
   section => {
     if (!section) return null;
-    const noDataCountries = section.subCategories.filter(s =>
-      isEmpty(s.datasets)
-    );
+    const noDataCountries =
+      section.subCategories &&
+      section.subCategories.filter(s => isEmpty(s.datasets));
     return noDataCountries ? noDataCountries.map(s => s.title) : null;
   }
 );

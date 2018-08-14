@@ -1,13 +1,13 @@
 @import '~styles/settings';
 
 .c-threshold-selector {
-  display: flex;
-  flex-flow: row wrap;
+  display: inline-block;
   color: $slate;
   font-size: rem(12px);
+  line-height: 1.6;
 
   .thresh-dropdown {
-    max-width: rem(55px);
     padding: 0 rem(5px);
+    display: inline-block;
   }
 }

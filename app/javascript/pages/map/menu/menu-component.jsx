@@ -76,18 +76,18 @@ class Menu extends PureComponent {
           isBig={activeSection && activeSection.large}
           onClickClose={() => setMenuSettings({ selectedSection: '' })}
         >
-          {Component && !loading ? (
-            <Component
-              {...activeSection}
-              onToggleLayer={onToggleLayer}
-              onInfoClick={setModalMeta}
-              countries={countries}
-              setMenuSettings={setMenuSettings}
-              {...rest}
-            />
-          ) : (
-            <Loader />
-          )}
+          {Component &&
+            !loading && (
+              <Component
+                {...activeSection}
+                onToggleLayer={onToggleLayer}
+                onInfoClick={setModalMeta}
+                countries={countries}
+                setMenuSettings={setMenuSettings}
+                {...rest}
+              />
+            )}
+          {loading && <Loader />}
         </MenuFlap>
       </div>
     );
