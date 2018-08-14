@@ -11,12 +11,7 @@ export const initialState = {
   faoCountries: [],
   regions: [],
   subRegions: [],
-  countryLinks: {},
-  geostore: {
-    hash: '',
-    areaHa: 0,
-    bounds: []
-  }
+  countryLinks: {}
 };
 
 const mapLocations = locations => {
@@ -45,11 +40,6 @@ const setRegionsLoading = (state, { payload }) => ({
 const setSubRegionsLoading = (state, { payload }) => ({
   ...state,
   isSubRegionsLoading: payload
-});
-
-const setGeostoreLoading = (state, { payload }) => ({
-  ...state,
-  isGeostoreLoading: payload
 });
 
 const setCountries = (state, { payload }) => ({
@@ -83,23 +73,14 @@ const setCountryLinks = (state, { payload }) => ({
   countryLinks: payload
 });
 
-const setGeostore = (state, { payload }) => ({
-  ...state,
-  geostore: {
-    ...payload
-  }
-});
-
 export default {
   setCountriesLoading,
   setRegionsLoading,
   setSubRegionsLoading,
-  setGeostoreLoading,
   setCountries,
   setFAOCountries,
   setGadmCountries,
   setRegions,
   setSubRegions,
-  setGeostore,
   setCountryLinks
 };

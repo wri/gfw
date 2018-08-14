@@ -3,7 +3,6 @@
 $map-menu-items-size: rem(76px);
 $map-menu-flap-width: rem(290px);
 $map-menu-flap-width-big: rem(550px);
-$map-menu-flap-close-size: rem(32px);
 
 .c-menu-flap {
   position: absolute;
@@ -13,9 +12,9 @@ $map-menu-flap-close-size: rem(32px);
   height: 100vh;
   background-color: $white;
   z-index: 12;
-  transform: translateX(#{$map-menu-items-size - $map-menu-flap-close-size - $map-menu-flap-width-big});
+  transform: translateX(#{$map-menu-items-size - $map-menu-flap-width-big});
   transition: transform 0.3s linear;
-  box-shadow: -3px 0 3px -3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
 
   &.--big {
     width: $map-menu-flap-width-big;
@@ -27,14 +26,11 @@ $map-menu-flap-close-size: rem(32px);
 
   &__close {
     position: absolute;
-    top: rem(8px);
-    right: -$map-menu-flap-close-size;
+    top: rem(15px);
+    right: rem(15px);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: $map-menu-flap-close-size;
-    height: $map-menu-flap-close-size;
-    background-color: $white;
     border-radius: 2px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -44,6 +40,7 @@ $map-menu-flap-close-size: rem(32px);
     .c-icon {
       width: rem(12px);
       height: rem(12px);
+      fill: $warm-grey;
     }
   }
 }

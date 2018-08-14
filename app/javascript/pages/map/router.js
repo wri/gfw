@@ -16,9 +16,6 @@ const routeChangeThunk = (dispatch, getState) => {
 export const routes = {
   [MAP]: {
     path: '/v2/map/:tab?/:country?/:region?/:subRegion?'
-  },
-  [COUNTRY]: {
-    path: '/dashboards/:type?/:country?/:region?/:subRegion?'
   }
 };
 

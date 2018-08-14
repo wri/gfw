@@ -9,15 +9,12 @@ import reducers, { initialState } from './reducers';
 
 import Component from './component';
 
-const mapStateToProps = ({ location, dataAnalysis, mapMenu, datasets }) => {
-  const { selectedSection } = mapMenu;
-  return {
-    activeTab: location.payload.tab,
-    analysis: dataAnalysis.analysis,
-    menuSectionData: getActiveSection({ selectedSection, ...datasets }),
-    ...location
-  };
-};
+const mapStateToProps = ({ location, dataAnalysis, datasets }) => ({
+  activeTab: location.payload.tab,
+  analysis: dataAnalysis.analysis,
+  menuSectionData: getActiveSection({ ...datasets, ...location }),
+  ...location
+});
 
 class DataAnalysisMenuContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {

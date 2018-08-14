@@ -10,6 +10,8 @@ import searchIcon from 'assets/icons/search.svg';
 
 import { getLayers } from 'components/map/map-selectors';
 
+import initialState from './menu-initial-state';
+
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 
@@ -99,7 +101,8 @@ const menuSections = [
     name: 'EXPLORE',
     icon: truckIcon,
     Component: Explore,
-    large: true
+    large: true,
+    section: 'topics'
   },
   {
     slug: 'search',
@@ -109,9 +112,43 @@ const menuSections = [
   }
 ];
 
-const getSelectedSection = state => state.selectedSection || null;
+const getMenuUrlState = state => (state.query && state.query.menu) || null;
 const getDatasets = state => state.datasets || null;
 const getLoading = state => state.loading || null;
+const getCountries = state => state.countries || null;
+
+export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
+  ...initialState,
+  ...urlState
+}));
+
+export const getSelectedSection = createSelector(
+  [getMenuSettings],
+  settings => settings.selectedSection
+);
+
+export const getExploreSection = createSelector(
+  [getMenuSettings],
+  settings => settings.exploreSection
+);
+
+const getUnselectedCountries = createSelector(
+  [getCountries, getMenuSettings],
+  (countries, settings) => {
+    if (!countries) return null;
+    const { selectedCountries } = settings;
+    return countries.filter(c => selectedCountries.indexOf(c.value) === -1);
+  }
+);
+
+const getActiveCountries = createSelector(
+  [getCountries, getMenuSettings],
+  (countries, settings) => {
+    if (!countries) return null;
+    const { selectedCountries } = settings;
+    return countries.filter(c => selectedCountries.indexOf(c.value) > -1);
+  }
+);
 
 export const getSections = createSelector(getDatasets, datasets =>
   menuSections.map(s => {
@@ -200,6 +237,9 @@ export const getMenuProps = createStructuredSelector({
   sections: getSectionsWithData,
   activeSection: getActiveSection,
   selectedSection: getSelectedSection,
+  exploreSection: getExploreSection,
+  countries: getUnselectedCountries,
+  selectedCountries: getActiveCountries,
   layers: getLayers,
   loading: getLoading
 });
