@@ -6,7 +6,8 @@
           "mode": "remove",
           "removeImport": true,
           "ignoreFilenames": ["node_modules"]
-        }]
+        }],
+        "react-hot-loader/babel"
       ]
     }
   },
