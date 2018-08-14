@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import remove from 'lodash/remove';
 
 import NoContent from 'components/ui/no-content';
 
@@ -13,6 +12,21 @@ import Dropdown from 'components/ui/dropdown';
 import './styles.scss';
 
 class Datasets extends PureComponent {
+  handleRemoveCountry = iso => {
+    const { selectedCountries, setMenuSettings } = this.props;
+    const newCountries = selectedCountries.filter(c => c.value !== iso);
+    setMenuSettings({
+      selectedCountries: newCountries ? newCountries.map(nc => nc.value) : []
+    });
+  };
+
+  handleAddCountry = country => {
+    const { selectedCountries, setMenuSettings } = this.props;
+    setMenuSettings({
+      selectedCountries: [...selectedCountries.map(c => c.value), country.value]
+    });
+  };
+
   render() {
     const {
       datasets,
@@ -20,8 +34,7 @@ class Datasets extends PureComponent {
       onToggleLayer,
       onInfoClick,
       countries,
-      selectedCountries,
-      setMenuSettings
+      selectedCountries
     } = this.props;
 
     return (
@@ -34,17 +47,7 @@ class Datasets extends PureComponent {
                 <Pill
                   key={c.value}
                   label={c.label}
-                  onRemove={() => {
-                    const newCountries = remove(
-                      selectedCountries,
-                      sc => sc.value !== c.value
-                    );
-                    setMenuSettings({
-                      selectedCountries: newCountries
-                        ? newCountries.map(nc => nc.value)
-                        : []
-                    });
-                  }}
+                  onRemove={() => this.handleRemoveCountry(c.value)}
                 >
                   {c.label}
                 </Pill>
@@ -57,14 +60,7 @@ class Datasets extends PureComponent {
                 noItemsFound="No country found"
                 noSelectedValue="+ Add country"
                 options={countries}
-                onChange={e => {
-                  setMenuSettings({
-                    selectedCountries: [
-                      ...selectedCountries.map(c => c.value),
-                      e.value
-                    ]
-                  });
-                }}
+                onChange={this.handleAddCountry}
                 searchable
               />
             )}
