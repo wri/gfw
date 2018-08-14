@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 import Sticky from 'react-stickynode';
+import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
 
+import Basemaps from 'components/map/components/basemaps';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -43,13 +45,20 @@ class MapControlsButtons extends PureComponent {
             >
               <Icon icon={sateliteIcon} className="satelite-icon" />
             </Button>
-            <Button
-              className="basemaps-btn"
-              theme="theme-button-map-control"
-              tooltip={{ text: 'Basemaps' }}
+            <Tooltip
+              theme="light"
+              position="top-end"
+              trigger="click"
+              html={<Basemaps />}
             >
-              <Icon icon={globeIcon} className="globe-icon" />
-            </Button>
+              <Button
+                className="basemaps-btn"
+                theme="theme-button-map-control"
+                tooltip={{ text: 'Basemaps', hideOnClick: false }}
+              >
+                <Icon icon={globeIcon} className="globe-icon" />
+              </Button>
+            </Tooltip>
           </div>
           <div className="controls-wrapper">
             <Button
