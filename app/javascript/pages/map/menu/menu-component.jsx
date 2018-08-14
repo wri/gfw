@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import MenuFlap from 'pages/map/menu/components/menu-flap';
 
 import Icon from 'components/ui/icon';
+import Loader from 'components/ui/loader';
+
 import gfwLogo from 'assets/logos/gfw.png';
 
 import './menu-styles.scss';
@@ -74,7 +76,7 @@ class Menu extends PureComponent {
           isBig={activeSection && activeSection.large}
           onClickClose={() => setMenuSettings({ selectedSection: '' })}
         >
-          {Component && (
+          {Component && !loading ? (
             <Component
               {...activeSection}
               onToggleLayer={onToggleLayer}
@@ -83,6 +85,8 @@ class Menu extends PureComponent {
               setMenuSettings={setMenuSettings}
               {...rest}
             />
+          ) : (
+            <Loader />
           )}
         </MenuFlap>
       </div>
