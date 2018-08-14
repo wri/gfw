@@ -120,7 +120,7 @@ See examples.
 
 A complete list of all currently used datasets and layers:
 
-```json
+```
 allLayers = [
     {
         'dataset': 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
