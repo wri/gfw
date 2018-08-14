@@ -60,8 +60,7 @@ class MapLegend extends Component {
                   metadata,
                   id
                 } = lg;
-                const activeLayers = lg.layers.filter(l => l.active) || [];
-                const activeLayer = activeLayers && activeLayers[0];
+                const activeLayer = lg.layers.find(l => l.active) || [];
                 const { legendConfig, params, timelineConfig } =
                   activeLayer || {};
 
@@ -116,7 +115,7 @@ class MapLegend extends Component {
                           className="threshold"
                           threshold={params.thresh || params.threshold}
                           onChange={onChangeThreshold}
-                          layer={activeLayer}
+                          layerData={activeLayer}
                         />
                       )}
                     {(isSelectorLayer || isMultiSelectorLayer) &&
