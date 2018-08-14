@@ -9,48 +9,56 @@ import { setInteraction } from 'components/map/components/popup/actions';
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
 
-export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
-  dispatch(setDatasetsLoading({ loading: true, error: false }));
-  getDatasetsProvider()
-    .then(response => {
-      const serializedDatasets = wriAPISerializer(response.data);
-      let datasets = serializedDatasets;
-      if (!Array.isArray(datasets)) {
-        datasets = [datasets];
-      }
+export const getDatasets = createThunkAction(
+  'getDatasets',
+  () => (dispatch, getState) => {
+    const state = getState();
+    if (state.datasets.datasets.length > 0) {
+      return;
+    }
 
-      datasets = datasets.filter(d => d.layer.length).map(d => ({
-        ...d,
-        dataset: d.id,
-        layer: d.layer.map(l => {
-          const { interactionConfig } = l;
-          const { output, article } = interactionConfig || {};
-          return {
-            ...l,
-            ...(!isEmpty(output) && {
-              interactivity: output.map(i => i.column),
-              events: {
-                click: e => {
-                  dispatch(
-                    setInteraction({
-                      ...e,
-                      label: l.name,
-                      article,
-                      id: l.id,
-                      value: l.id,
-                      config: output
-                    })
-                  );
+    dispatch(setDatasetsLoading({ loading: true, error: false }));
+    getDatasetsProvider()
+      .then(response => {
+        const serializedDatasets = wriAPISerializer(response.data);
+        let datasets = serializedDatasets;
+        if (!Array.isArray(datasets)) {
+          datasets = [datasets];
+        }
+
+        datasets = datasets.filter(d => d.layer.length).map(d => ({
+          ...d,
+          dataset: d.id,
+          layer: d.layer.map(l => {
+            const { interactionConfig } = l;
+            const { output, article } = interactionConfig || {};
+            return {
+              ...l,
+              ...(!isEmpty(output) && {
+                interactivity: output.map(i => i.column),
+                events: {
+                  click: e => {
+                    dispatch(
+                      setInteraction({
+                        ...e,
+                        label: l.name,
+                        article,
+                        id: l.id,
+                        value: l.id,
+                        config: output
+                      })
+                    );
+                  }
                 }
-              }
-            })
-          };
-        })
-      }));
-      dispatch(setDatasets(datasets.map(d => ({ ...d, dataset: d.id }))));
-    })
-    .catch(err => {
-      dispatch(setDatasetsLoading({ loading: false, error: true }));
-      console.warn(err);
-    });
-});
+              })
+            };
+          })
+        }));
+        dispatch(setDatasets(datasets.map(d => ({ ...d, dataset: d.id }))));
+      })
+      .catch(err => {
+        dispatch(setDatasetsLoading({ loading: false, error: true }));
+        console.warn(err);
+      });
+  }
+);

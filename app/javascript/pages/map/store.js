@@ -1,5 +1,6 @@
 /* eslint-disable import/first */
-import { combineReducers } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
 import { handleActions } from 'utils/redux';
 
 // Routes
@@ -39,8 +40,17 @@ const providersReducers = {
   layerSpec: handleActions(layerSpecProviderComponent)
 };
 
-export default combineReducers({
+const reducers = combineReducers({
   ...providersReducers,
   ...componentsReducers,
   location: router.reducer
 });
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const middlewares = applyMiddleware(thunk, router.middleware);
+const store = createStore(
+  reducers,
+  composeEnhancers(router.enhancer, middlewares)
+);
+
+export default store;

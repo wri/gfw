@@ -27,6 +27,7 @@ module.exports = merge(sharedConfig, {
     historyApiFallback: true,
     watchOptions: {
       ignored: /node_modules/
-    }
+    },
+    hot: true
   }
 });
