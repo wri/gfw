@@ -10,9 +10,13 @@ const Button = props => {
   const { label, onRemove } = props;
 
   return (
-    <div className="c-pill">
+    <div className={`c-pill ${onRemove ? '-removable' : ''}`}>
       {label}
-      <Icon icon={closeIcon} onClick={onRemove} />
+      {onRemove && (
+        <button onClick={onRemove}>
+          <Icon icon={closeIcon} />
+        </button>
+      )}
     </div>
   );
 };
