@@ -1,6 +1,8 @@
 
 # Documentation for GFW Layers & Datasets in API
 
+Generic documentation about how to make get, post, patch and del requests to the api can be found in the [RW-API DOCs](https://resource-watch.github.io/doc-api/index-rw.html). This includes basic information about Datasets, Layers, Vocabularies and Metadata.
+
 ## Dataset Syntax
 
 Syntax utilised by the front-end which dictate the appearance and behaviour of child layers in the application.
