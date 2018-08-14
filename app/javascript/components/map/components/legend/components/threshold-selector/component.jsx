@@ -21,14 +21,15 @@ class ThresholdSelector extends PureComponent {
 
     return (
       <div className={`c-threshold-selector ${className || ''}`}>
-        <span>{`Displaying ${layer[0] &&
-          layer[0].name.toLowerCase()} with`}</span>
+        <span>{`Displaying ${layer &&
+          layer.name &&
+          layer.name.toLowerCase()} with`}</span>
         <Dropdown
           className="thresh-dropdown"
           theme="theme-dropdown-native-button"
           value={threshold}
           options={options}
-          onChange={e => onChange(layer[0], parseInt(e.target.value, 10))}
+          onChange={e => onChange(layer, parseInt(e.target.value, 10))}
           native
         />
         <span>canopy density.</span>

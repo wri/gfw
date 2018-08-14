@@ -13,6 +13,10 @@ $pill-height: rem(20px);
   justify-content: space-between;
   align-items: center;
 
+  &.-inactive {
+    background-color: $hot-grey;
+  }
+
   svg {
     width: rem(8px);
     height: rem(8px);

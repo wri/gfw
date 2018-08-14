@@ -21,7 +21,8 @@ class Datasets extends PureComponent {
       onInfoClick,
       countries,
       selectedCountries,
-      setMenuSettings
+      setMenuSettings,
+      countriesWithoutData
     } = this.props;
 
     return (
@@ -33,6 +34,11 @@ class Datasets extends PureComponent {
               selectedCountries.map(c => (
                 <Pill
                   key={c.value}
+                  className={
+                    countriesWithoutData.indexOf(c.label) > -1
+                      ? '-inactive'
+                      : ''
+                  }
                   label={c.label}
                   onRemove={() => {
                     const newCountries = remove(
@@ -70,6 +76,16 @@ class Datasets extends PureComponent {
             )}
           </div>
         </div>
+        {countriesWithoutData && (
+          <p
+            className="no-datasets-message"
+            dangerouslySetInnerHTML={{
+              __html: `No datasets available for <strong>${countriesWithoutData.join(
+                '</strong>, <strong>'
+              )}</strong> in ${'category'}`
+            }}
+          />
+        )}
         {subCategories
           ? subCategories.map(subCat => (
             <MenuBlock key={subCat.slug} {...subCat}>
@@ -112,7 +128,8 @@ Datasets.propTypes = {
   subCategories: PropTypes.array,
   selectedCountries: PropTypes.array,
   countries: PropTypes.array,
-  setMenuSettings: PropTypes.func
+  setMenuSettings: PropTypes.func,
+  countriesWithoutData: PropTypes.array
 };
 
 export default Datasets;

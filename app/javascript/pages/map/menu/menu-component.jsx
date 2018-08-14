@@ -21,6 +21,7 @@ class Menu extends PureComponent {
       setMenuSettings,
       ...rest
     } = this.props;
+    const { Component } = activeSection || {};
 
     return (
       <div>
@@ -73,17 +74,16 @@ class Menu extends PureComponent {
           isBig={activeSection && activeSection.large}
           onClickClose={() => setMenuSettings({ selectedSection: '' })}
         >
-          {activeSection &&
-            activeSection.Component && (
-              <activeSection.Component
-                {...activeSection}
-                onToggleLayer={onToggleLayer}
-                onInfoClick={setModalMeta}
-                countries={countries}
-                setMenuSettings={setMenuSettings}
-                {...rest}
-              />
-            )}
+          {Component && (
+            <Component
+              {...activeSection}
+              onToggleLayer={onToggleLayer}
+              onInfoClick={setModalMeta}
+              countries={countries}
+              setMenuSettings={setMenuSettings}
+              {...rest}
+            />
+          )}
         </MenuFlap>
       </div>
     );

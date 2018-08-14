@@ -133,15 +133,41 @@ export const getActiveSection = createSelector(
   [getSectionsWithData, getSelectedSection],
   (sections, selectedSection) => {
     if (!sections || !selectedSection) return null;
-
     return sections.find(s => s.slug === selectedSection);
+  }
+);
+
+export const getActiveSectionWithData = createSelector(
+  [getActiveSection],
+  section => {
+    if (!section) return null;
+    const subCatsWithData = section.subCategories.filter(
+      s => !isEmpty(s.datasets)
+    );
+
+    return {
+      ...section,
+      subCategories: subCatsWithData
+    };
+  }
+);
+
+export const getZeroDataCountries = createSelector(
+  [getActiveSection],
+  section => {
+    if (!section) return null;
+    const noDataCountries = section.subCategories.filter(s =>
+      isEmpty(s.datasets)
+    );
+    return noDataCountries ? noDataCountries.map(s => s.title) : null;
   }
 );
 
 export const getMenuProps = createStructuredSelector({
   sections: getSectionsWithData,
-  activeSection: getActiveSection,
+  activeSection: getActiveSectionWithData,
   selectedSection: getSelectedSection,
+  countriesWithoutData: getZeroDataCountries,
   exploreSection: getExploreSection,
   countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
