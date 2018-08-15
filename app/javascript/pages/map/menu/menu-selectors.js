@@ -30,7 +30,7 @@ export const getAvailableCountries = createSelector(
   [getCountries, getParsedDatasets],
   (countries, datasets) => {
     if (isEmpty(countries) || isEmpty(datasets)) return null;
-    const validIsos = flatten(datasets.map(d => d.iso));
+    const validIsos = flatten(datasets.filter(d => !d.global).map(d => d.iso));
     return countries.filter(c => validIsos.indexOf(c.value) > -1);
   }
 );
