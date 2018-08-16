@@ -161,7 +161,7 @@ class WidgetSettings extends PureComponent {
                     ? settings.clearable
                     : true
                 }
-                noSelectedValue="All types"
+                noSelectedValue="All tree cover"
               />
             )}
             {!isEmpty(landCategories) && (
