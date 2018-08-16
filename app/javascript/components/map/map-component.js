@@ -12,6 +12,7 @@ import NoContent from 'components/ui/no-content';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
+import MapAttributions from './components/map-attributions';
 import RecentImagery from './components/recent-imagery';
 
 import './map-styles.scss';
@@ -69,12 +70,7 @@ class MapComponent extends PureComponent {
             </Fragment>
           )}
         </Map>
-        <div className="map-attributions">
-          <span>Map data ©2016 Google, INEGI</span>
-          <a href="/terms" rel="noopenner" target="_blank">
-            Terms of use
-          </a>
-        </div>
+        <MapAttributions className="map-attributions" />
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
