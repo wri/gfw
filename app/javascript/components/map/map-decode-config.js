@@ -110,7 +110,7 @@ export default {
     }
   },
   // GLADs
-  '95b34906-d998-496b-80e7-9d8e2a70cd25': {
+  'dd5df87f-39c2-4aeb-a462-3ef969b20b66': {
     decodeFunction: (data, w, h, z, params) => {
       'use asm';
 
@@ -120,22 +120,21 @@ export default {
 
       const minDateTime = new Date(minDate);
       const maxDateTime = new Date(maxDate);
-      const numberOfDays = dateDiffInDays(minDateTime, maxDateTime);
+      const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
 
       // timeline or hover effect active range
       const startDateTime = new Date(startDate);
       const endDateTime = new Date(endDate);
       const activeStartDay =
-        numberOfDays - dateDiffInDays(startDateTime, maxDateTime);
+        numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
       const activeEndDay =
-        numberOfDays - dateDiffInDays(endDateTime, maxDateTime);
+        numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
 
       // show specified weeks from end date
       const rangeStartDate = weeks && numberOfDays - 7 * weeks;
       // get start and end day
       const startDay = activeStartDay || rangeStartDate || 0;
       const endDay = activeEndDay || numberOfDays;
-
       const confidenceValue = -1;
       const pixelComponents = 4; // RGBA
       let pixelPos = 0;
@@ -192,13 +191,7 @@ export default {
   },
   // GLADS staging
   '959514e3-149a-46f5-890a-121b272e4b9d': {
-    decodeFunction: (
-      data,
-      w,
-      h,
-      z,
-      params = { minDate: '2015-01-01', startDate: '2016-12-01' }
-    ) => {
+    decodeFunction: (data, w, h, z, params) => {
       'use asm';
 
       // fixed variables
@@ -207,22 +200,21 @@ export default {
 
       const minDateTime = new Date(minDate);
       const maxDateTime = new Date(maxDate);
-      const numberOfDays = dateDiffInDays(minDateTime, maxDateTime);
+      const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
 
       // timeline or hover effect active range
       const startDateTime = new Date(startDate);
       const endDateTime = new Date(endDate);
       const activeStartDay =
-        numberOfDays - dateDiffInDays(startDateTime, maxDateTime);
+        numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
       const activeEndDay =
-        numberOfDays - dateDiffInDays(endDateTime, maxDateTime);
+        numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
 
       // show specified weeks from end date
       const rangeStartDate = weeks && numberOfDays - 7 * weeks;
       // get start and end day
       const startDay = activeStartDay || rangeStartDate || 0;
       const endDay = activeEndDay || numberOfDays;
-
       const confidenceValue = -1;
       const pixelComponents = 4; // RGBA
       let pixelPos = 0;

@@ -32,7 +32,8 @@ class MapComponent extends PureComponent {
       basemap,
       label,
       setMapSettings,
-      bbox
+      bbox,
+      recentImagery
     } = this.props;
     return (
       <Fragment>
@@ -63,9 +64,11 @@ class MapComponent extends PureComponent {
               />
               <Popup map={map} />
               <MapControlButtons className="map-controls" map={map} share />
-              <DragDropContextProvider backend={HTML5Backend}>
-                <RecentImagery map={map} />
-              </DragDropContextProvider>
+              {recentImagery &&
+                <DragDropContextProvider backend={HTML5Backend}>
+                  <RecentImagery map={map} />
+                </DragDropContextProvider>
+              }
             </Fragment>
           )}
         </Map>
@@ -89,7 +92,8 @@ MapComponent.propTypes = {
   basemap: PropTypes.object,
   label: PropTypes.object,
   setMapSettings: PropTypes.func,
-  bbox: PropTypes.object
+  bbox: PropTypes.object,
+  recentImagery: PropTypes.bool
 };
 
 export default MapComponent;

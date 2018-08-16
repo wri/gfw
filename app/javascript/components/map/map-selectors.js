@@ -114,7 +114,12 @@ export const getParsedDatasets = createSelector([getDatasets], datasets => {
     const { info } = appMeta || {};
     const defaultLayer =
       (layer &&
-        layer.find(l => l.applicationConfig && l.applicationConfig.default)) ||
+        layer.find(
+          l =>
+            l.env === 'production' &&
+            l.applicationConfig &&
+            l.applicationConfig.default
+        )) ||
       layer[0];
     const { isSelectorLayer, isMultiSelectorLayer } = info || {};
     const { id, iso } = defaultLayer || {};
@@ -232,6 +237,9 @@ export const getDatasetsWithConfig = createSelector(
           },
           decodeParams: {
             ...l.decodeParams,
+            minDate: l.decodeParams && l.decodeParams.startDate,
+            maxDate: l.decodeParams && l.decodeParams.endDate,
+            trimEndDate: l.decodeParams && l.decodeParams.endDate,
             ...decodeParams
           },
           ...(l.decodeParams &&
