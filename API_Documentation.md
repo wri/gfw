@@ -9,26 +9,26 @@ Syntax utilised by the front-end which dictate the appearance and behaviour of c
 
 ### Vocabulary Tags
 
-Datasets with `application` containing `gfw` may have the vocabulary: `categoryTab`. This vocabulary contaings the field `tags` which is an array of values used to categorise the dataset (and hence, it's attributed layers). The definition used here is that the first element of the `tags` array is the category tab it belongs to, and the second element is the subcategory.
+Datasets with `application` containing `gfw` may have the vocabulary: `categoryTab`. This vocabulary contaings the field `tags` which is an array of values used to categorise the dataset (and hence, it's attributed layers). The definition used here is that the first element of the `tags` array is the category tab it belongs to, and the second element is the subcategory. E.g. the VIIRS Alerts dataset has a vocabulary `categoryTab` with `tag: ['forestChange', 'fireAlerts']` and hence will be found in the *Forest Chanege* tab under the *Fire Alerts* subcategory.
 
-e.g. the VIIRS Alerts dataset has a vocabulary `categoryTab` with `tag: ['forestChange', 'fireAlerts']` and hence will be found in the *Forest Chanege* tab under the *Fire Alerts* subcategory.
+Note, the subcategories are defined in the GFW codebase - adding a new tag (e.g. [`forestChange`, `myNewTag`]) to a layer will not add a new item to the menu without an update to the corresponding GFW code also.
 
 ### Metadata
 
-Each dataset may contain a `metadata` key, which is an array of `application` specific metadata elements. To find metadata specific to the GFW platform filter metadat where `metadata.application == 'gfw'`.
+Each dataset may contain a `metadata` key, which is an array of `application` specific metadata elements. To find metadata specific to the GFW platform filter metadata where `metadata.application == 'gfw'`.
 
 Each metadata element must, by default, contain the keys: `language`, `application`, and `info`.
 
 The `info` value is an object with an open schema, and is used to hold information about how the appearance in the slide out tabs and legend should behave, as well as the hold the dataset's metadata key.
 
-- `info.name` - human readable name to be displayed in the slide out tab (string)
-- `info.description` - subtitle for the layer name, usually containing technical details about the data (string)
-- `info.colour` - the colour of the toggle (HEX format)
-- `info.metadata` - the metadata key for the dataset (populates metadata modal)
-- `info.isSelectorLayer` - indicates that layers should populate a selector drop-down in the legend (bool)
-- `info.isMultiLayer` - indicates that layers should populate separate toggles in the legend (bool)
-- `info.isMultiSelectorLayer` - indicates that layers should populate multiple selector drop-down in the legend (bool)
-- `info.isLossLayer` - indicates that layer is tree cover loss (bool)
+- `info.name` human readable name to be displayed in the slide out tab (string)
+- `info.description` subtitle for the layer name, usually containing technical details about the data (string)
+- `info.colour` the colour of the toggle (HEX format)
+- `info.metadata` the metadata key for the dataset (populates metadata modal)
+- `info.isSelectorLayer` indicates that layers should populate a selector drop-down in the legend (bool)
+- `info.isMultiLayer` indicates that layers should populate separate toggles in the legend (bool)
+- `info.isMultiSelectorLayer` indicates that layers should populate multiple selector drop-down in the legend (bool)
+- `info.isLossLayer` indicates that layer is tree cover loss (bool)
 
 NOTE: only include a key if it is to be used and/or `true` i.e. a layer is a *multiLayer* there is no need to include all of the others as *false*.
 
@@ -103,7 +103,7 @@ Defines how tooltips behave on click (currently only available for CARTO layers)
     "article": True
     }
 ```
-Here `output` is a list of all data surfaced on click. The `column` value must correspond to a CARTO table column. There may also be a key `article` (bool), which is used for tool tips with images and urls (like *Places to Watch)*. If  `Article: True` tehn the `output` elements should contain a `renderKey` definition so that each output can be rendered correctly. Possible `rendeKey` values are:
+Here `output` is a list of all data surfaced on click. The `column` value must correspond to a CARTO table column. There may also be a key `article` (bool), which is used for tool tips with images and urls (like *Places to Watch)*. If  `Article: True` then the `output` elements should contain a `renderKey` definition so that each output can be rendered correctly. Possible `rendeKey` values are:
 
 - image
 - imageCredit
