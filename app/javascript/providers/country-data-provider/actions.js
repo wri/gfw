@@ -12,13 +12,9 @@ import {
   getCountryLinksProvider
 } from 'services/country';
 
-import { getGeostoreProvider } from 'services/geostore';
-import BOUNDS from 'data/bounds.json';
-
 export const setCountriesLoading = createAction('setCountriesLoading');
 export const setRegionsLoading = createAction('setRegionsLoading');
 export const setSubRegionsLoading = createAction('setSubRegionsLoading');
-export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setCountryLinksLoading = createAction('setCountryLinksLoading');
 
 export const setCountries = createAction('setCountries');
@@ -26,7 +22,6 @@ export const setFAOCountries = createAction('setFAOCountries');
 export const setGadmCountries = createAction('setGadmCountries');
 export const setRegions = createAction('setRegions');
 export const setSubRegions = createAction('setSubRegions');
-export const setGeostore = createAction('setGeostore');
 export const setCountryLinks = createAction('setCountryLinks');
 
 export const getCountries = createThunkAction(
@@ -101,32 +96,6 @@ export const getSubRegions = createThunkAction(
   }
 );
 
-export const getGeostore = createThunkAction(
-  'getGeostore',
-  (country, region, subRegion) => (dispatch, state) => {
-    if (!state().countryData.isGeostoreLoading) {
-      dispatch(setGeostoreLoading(true));
-      getGeostoreProvider(country, region, subRegion)
-        .then(response => {
-          const { hash, areaHa, bbox, geojson } = response.data.data.attributes;
-          dispatch(
-            setGeostore({
-              hash,
-              geojson,
-              areaHa,
-              bounds: getBoxBounds(bbox, country, region)
-            })
-          );
-          dispatch(setGeostoreLoading(false));
-        })
-        .catch(error => {
-          dispatch(setGeostoreLoading(false));
-          console.info(error);
-        });
-    }
-  }
-);
-
 export const getCountryLinks = createThunkAction(
   'getCountryLinks',
   () => (dispatch, state) => {
@@ -149,16 +118,3 @@ export const getCountryLinks = createThunkAction(
     }
   }
 );
-
-const getBoxBounds = (cornerBounds, country, region) => {
-  if (!region && Object.keys(BOUNDS).includes(country)) {
-    return BOUNDS[country];
-  }
-  return [
-    [cornerBounds[0], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[1]]
-  ];
-};

@@ -5,6 +5,34 @@
   max-height: 100%;
   overflow: scroll;
 
+  .countries-selection {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: rem(20px);
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+
+      > * {
+        margin-bottom: rem(5px);
+        margin-right: rem(5px);
+      }
+    }
+
+    .sub-title {
+      text-transform: uppercase;
+      font-size: rem(11px);
+      color: $slate;
+      margin-bottom: rem(5px);
+      font-weight: 500;
+    }
+
+    .country-dropdown {
+      width: rem(99px);
+    }
+  }
+
   .dataset-toggle {
     margin-bottom: rem(20px);
 

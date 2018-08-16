@@ -28,6 +28,7 @@ module.exports = merge(sharedConfig, {
     watchOptions: {
       ignored: /node_modules/
     },
-    hot: true
+    hot: true,
+    hotOnly: true
   }
 });

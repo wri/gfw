@@ -6,13 +6,10 @@ import { getData } from './explore-selectors';
 
 import ExploreComponent from './explore-component';
 
-const mapStateToProps = ({ mapMenu }) => {
-  const { explore } = mapMenu;
-  return {
-    section: explore.section,
-    data: getData()
-  };
-};
+const mapStateToProps = (state, { exploreSection }) => ({
+  section: exploreSection,
+  data: getData()
+});
 
 class ExploreContainer extends PureComponent {
   render() {

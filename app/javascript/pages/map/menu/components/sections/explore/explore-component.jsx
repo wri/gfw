@@ -8,22 +8,22 @@ import './explore-styles.scss';
 
 class Explore extends PureComponent {
   render() {
-    const { section, data, setMenuExplore } = this.props;
+    const { section, data, setMenuSettings } = this.props;
     const links = [
       {
         label: 'Topics',
         active: section === 'topics',
-        onClick: () => setMenuExplore({ section: 'topics' })
+        onClick: () => setMenuSettings({ exploreSection: 'topics' })
       },
       {
         label: 'Places to watch',
         active: section === 'places-to-watch',
-        onClick: () => setMenuExplore({ section: 'places-to-watch' })
+        onClick: () => setMenuSettings({ exploreSection: 'places-to-watch' })
       },
       {
         label: 'Stories',
         active: section === 'stories',
-        onClick: () => setMenuExplore({ section: 'stories' })
+        onClick: () => setMenuSettings({ exploreSection: 'stories' })
       }
     ];
     return (
@@ -72,7 +72,7 @@ class Explore extends PureComponent {
 Explore.propTypes = {
   section: PropTypes.string,
   data: PropTypes.array,
-  setMenuExplore: PropTypes.func
+  setMenuSettings: PropTypes.func
 };
 
 export default Explore;

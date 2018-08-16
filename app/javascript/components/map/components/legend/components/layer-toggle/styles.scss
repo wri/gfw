@@ -31,6 +31,7 @@
     letter-spacing: -0.3px;
     color: $hot-grey;
     margin-top: rem(3px);
+    max-width: calc(100% - 20px);
   }
 
   .info-button {

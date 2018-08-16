@@ -14,10 +14,12 @@ class Menu extends PureComponent {
       sections,
       activeSection,
       selectedSection,
-      setSelectedSection,
       onToggleLayer,
       setModalMeta,
-      loading
+      loading,
+      countries,
+      setMenuSettings,
+      ...rest
     } = this.props;
 
     return (
@@ -45,9 +47,11 @@ class Menu extends PureComponent {
                   >
                     <button
                       className="c-map-menu__item-button"
-                      onClick={() => {
-                        setSelectedSection(slug);
-                      }}
+                      onClick={() =>
+                        setMenuSettings({
+                          selectedSection: slug === selectedSection ? '' : slug
+                        })
+                      }
                       disabled={loading}
                     >
                       <Icon icon={icon} className="icon" />
@@ -67,7 +71,7 @@ class Menu extends PureComponent {
         <MenuFlap
           section={selectedSection}
           isBig={activeSection && activeSection.large}
-          onClickClose={() => setSelectedSection(null)}
+          onClickClose={() => setMenuSettings({ selectedSection: '' })}
         >
           {activeSection &&
             activeSection.Component && (
@@ -75,6 +79,9 @@ class Menu extends PureComponent {
                 {...activeSection}
                 onToggleLayer={onToggleLayer}
                 onInfoClick={setModalMeta}
+                countries={countries}
+                setMenuSettings={setMenuSettings}
+                {...rest}
               />
             )}
         </MenuFlap>
@@ -87,11 +94,13 @@ Menu.propTypes = {
   sections: PropTypes.array,
   selectedSection: PropTypes.string,
   activeSection: PropTypes.object,
-  setSelectedSection: PropTypes.func.isRequired,
+  setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
   onToggleLayer: PropTypes.func,
   setModalMeta: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  countries: PropTypes.array,
+  selectedCountries: PropTypes.array
 };
 
 export default Menu;
