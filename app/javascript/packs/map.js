@@ -27,7 +27,7 @@ if (module.hot) {
   /* eslint-disable global-require */
   module.hot.accept('pages/map/store', () => {
     const nextRootReducer = require('pages/map/store');
-    store.replaceReducer(nextRootReducer);
+    store.replaceReducer(nextRootReducer.reducers);
   });
   module.hot.accept('pages/map', () => {
     render(require('pages/map').default);
