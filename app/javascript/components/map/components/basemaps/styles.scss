@@ -1,9 +1,11 @@
+@import '~styles/settings.scss';
 
 .c-basemaps {
+  height: 400px;
+  width: 290px;
+  background-color: $white;
 
-  .basemaps-container {
-    height: 400px;
-    width: 200px;
-    background-color: white;
+  .basemap-options-container {
+    display: flex;
   }
 }

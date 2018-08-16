@@ -3,6 +3,7 @@ import Proptypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
+import { connect } from 'react-redux';
 
 import Basemaps from 'components/map/components/basemaps';
 import Button from 'components/ui/button';
@@ -49,6 +50,9 @@ class MapControlsButtons extends PureComponent {
               theme="light"
               position="top-end"
               trigger="click"
+              useContext
+              hideOnClick={false}
+              interactive
               html={<Basemaps />}
             >
               <Button
@@ -139,4 +143,4 @@ MapControlsButtons.propTypes = {
   toogleRecentImagery: Proptypes.func
 };
 
-export default MapControlsButtons;
+export default connect()(MapControlsButtons);
