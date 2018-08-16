@@ -11,7 +11,7 @@ export default {
   dark: {
     id: 'dark',
     name: 'dark matter',
-    url: 'https://a.basemaps.cartocdn.com/dark_nolabels/{0}/{1}/{2}.png'
+    url: 'https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png'
   },
   landsat: {
     id: 'landsat',
@@ -21,16 +21,16 @@ export default {
   openstreet: {
     id: 'openstreet',
     name: 'open street maps',
-    url: 'https://a.tile.openstreetmap.org/{0}/{1}/{2}.png'
+    url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
   },
   positron: {
     id: 'positron',
     name: 'positron',
-    url: 'https://a.basemaps.cartocdn.com/light_nolabels/{0}/{1}/{2}.png'
+    url: 'https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
   },
   tree_height: {
     id: 'tree_height',
     name: 'tree height',
-    url: 'https://s3.amazonaws.com/wri-tiles/tree-height/{0}/{1}/{2}.png'
+    url: 'https://s3.amazonaws.com/wri-tiles/tree-height/{z}/{x}/{y}.png'
   }
 };

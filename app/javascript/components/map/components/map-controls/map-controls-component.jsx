@@ -4,6 +4,7 @@ import Sticky from 'react-stickynode';
 import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
 import { connect } from 'react-redux';
+import { isParent } from 'utils/dom';
 
 import Basemaps from 'components/map/components/basemaps';
 import Button from 'components/ui/button';
@@ -20,6 +21,25 @@ import sateliteIcon from 'assets/icons/satellite.svg';
 import './map-controls-styles.scss';
 
 class MapControlsButtons extends PureComponent {
+  state = {
+    showBasemaps: false
+  };
+
+  onTooltipRequestClose = ref => {
+    const node = ref.current;
+    if (!isParent(node, window.event.path)) {
+      this.toggleBasemaps();
+    }
+  };
+
+  toggleBasemaps = () =>
+    this.setState(state => ({ showBasemaps: !state.showBasemaps }));
+
+  createBasemapsRef = () => {
+    this.basemaps = React.createRef();
+    return this.basemaps;
+  };
+
   render() {
     const {
       className,
@@ -49,15 +69,21 @@ class MapControlsButtons extends PureComponent {
             <Tooltip
               theme="light"
               position="top-end"
-              trigger="click"
               useContext
-              hideOnClick
               interactive
-              html={<Basemaps />}
+              open={this.state.showBasemaps}
+              onRequestClose={() => this.onTooltipRequestClose(this.basemaps)}
+              html={
+                <Basemaps
+                  onClose={this.toggleBasemaps}
+                  ref={this.createBasemapsRef()}
+                />
+              }
             >
               <Button
                 className="basemaps-btn"
                 theme="theme-button-map-control"
+                onClick={this.toggleBasemaps}
                 tooltip={{ text: 'Basemaps', hideOnClick: false }}
               >
                 <Icon icon={globeIcon} className="globe-icon" />

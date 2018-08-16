@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
@@ -9,23 +10,32 @@ import schema from './basemaps-schema';
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
+  static propTypes = {
+    onClose: PropTypes.func.isRequired,
+    fowardedRef: PropTypes.any,
+    activeBasemap: PropTypes.object.isRequired,
+    selectBasemap: PropTypes.func.isRequired
+  };
+
   state = {
     items: [{ label: 'Admin', value: 0 }, { label: 'Admin1', value: 1 }],
     value: 0
   };
 
   render() {
-    const selected = 'default';
+    const { onClose, fowardedRef, activeBasemap, selectBasemap } = this.props;
     return (
-      <div className="c-basemaps">
+      <div className="c-basemaps" ref={fowardedRef}>
         <div className="basemaps-top-section">
           <div className="basemaps-header">
             <h2 className="basemaps-title">Basemap Options</h2>
             <div className="basemaps-actions">
-              <button className="basemaps-action-button">
-                <Icon icon={infoIcon} />
-              </button>
-              <button className="basemaps-action-button">
+              {false && (
+                <button className="basemaps-action-button">
+                  <Icon icon={infoIcon} />
+                </button>
+              )}
+              <button className="basemaps-action-button" onClick={onClose}>
                 <Icon icon={closeIcon} />
               </button>
             </div>
@@ -57,16 +67,21 @@ class Basemaps extends React.PureComponent {
                 <li
                   key={item.id}
                   className={cx('basemaps-list-item', {
-                    '-active': selected === item.id
+                    '-active': activeBasemap.id === item.id
                   })}
                 >
-                  <div
-                    className="basemaps-list-item-image"
-                    style={{
-                      backgroundImage: `url(/assets/basemaps/${item.id}.png)`
-                    }}
-                  />
-                  <p className="basemaps-list-item-name">{item.name}</p>
+                  <button
+                    className="basemaps-list-item-button"
+                    onClick={() => selectBasemap(item)}
+                  >
+                    <div
+                      className="basemaps-list-item-image"
+                      style={{
+                        backgroundImage: `url(/assets/basemaps/${item.id}.png)`
+                      }}
+                    />
+                    <p className="basemaps-list-item-name">{item.name}</p>
+                  </button>
                 </li>
               ))}
             </ul>
