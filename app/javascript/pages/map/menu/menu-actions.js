@@ -1,11 +1,15 @@
-import { createAction } from 'redux-actions';
+import { createThunkAction } from 'utils/redux';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-const setSelectedSection = createAction('setSelectedSection');
-const setMenuCountries = createAction('setMenuCountries');
-const setMenuExplore = createAction('setMenuExplore');
-
-export default {
-  setSelectedSection,
-  setMenuCountries,
-  setMenuExplore
-};
+export const setMenuSettings = createThunkAction(
+  'setMenuSettings',
+  change => (dispatch, state) => {
+    dispatch(
+      setComponentStateToUrl({
+        key: 'menu',
+        change,
+        state
+      })
+    );
+  }
+);

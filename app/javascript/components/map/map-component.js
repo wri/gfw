@@ -31,9 +31,9 @@ class MapComponent extends PureComponent {
       mapOptions,
       basemap,
       label,
-      setMapSettings
+      setMapSettings,
+      bbox
     } = this.props;
-
     return (
       <Fragment>
         <Map
@@ -44,6 +44,7 @@ class MapComponent extends PureComponent {
           mapOptions={mapOptions}
           basemap={basemap}
           label={label}
+          bounds={bbox}
           events={{
             zoomend: (e, map) => {
               setMapSettings({ zoom: map.getZoom() });
@@ -87,7 +88,8 @@ MapComponent.propTypes = {
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
+  bbox: PropTypes.object
 };
 
 export default MapComponent;
