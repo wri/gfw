@@ -47,7 +47,7 @@ export const getSentence = createSelector(
       return 'An error occured while fetching data. Please try again later.';
     }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
-    const { initial, withLoss, withPlantationLoss } = sentences;
+    const { initial, withLoss, withPlantationLoss, globalInitial } = sentences;
     const extent =
       data.extent < 1 ? format('.3r')(data.extent) : format('.3s')(data.extent);
     const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
@@ -75,6 +75,7 @@ export const getSentence = createSelector(
       sentence =
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
     }
+    if (!location) sentence = globalInitial;
 
     return {
       sentence,
