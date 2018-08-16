@@ -40,7 +40,7 @@ const providersReducers = {
   layerSpec: handleActions(layerSpecProviderComponent)
 };
 
-const reducers = combineReducers({
+export const reducers = combineReducers({
   ...providersReducers,
   ...componentsReducers,
   location: router.reducer
