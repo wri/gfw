@@ -1,3 +1,5 @@
+import basemaps from './components/basemaps/basemaps-schema';
+
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 
 export default {
@@ -9,11 +11,7 @@ export default {
   zoomControl: false,
   maxZoom: 19,
   minZoom: 2,
-  basemap: {
-    url: `https://api.mapbox.com/styles/v1/edbrett/cjknvzjev2bl92rmno1rr9ivr/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MAPBOX_TOKEN
-    }`
-  },
+  basemap: basemaps.default,
   label: {
     url: `https://api.mapbox.com/styles/v1/edbrett/cjknwadi312uf2ro4dtt40eu0/tiles/256/{z}/{x}/{y}@2x?access_token=${
       MAPBOX_TOKEN

@@ -1,11 +1,104 @@
 @import '~styles/settings.scss';
+$item-size: 55px;
+$top-section-height: 125px;
 
 .c-basemaps {
   height: 400px;
   width: 290px;
   background-color: $white;
 
-  .basemap-options-container {
+  .basemaps-header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 15px;
+  }
+
+  .basemaps-action-button {
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
+  }
+
+  .basemaps-title {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.62;
+    color: $slate;
+  }
+
+  .basemaps-top-section {
+    padding: 15px 15px 25px;
+    height: $top-section-height;
+  }
+
+  .basemaps-bottom-section {
+    height: calc(100% - #{$top-section-height});
+    padding: 25px;
+    border-top: 1px solid rgba($hot-grey, 0.3);
+  }
+
+  .basemaps-options-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .basemaps-options-wrapper {
+    &:first-child {
+      margin: 0 15px 0 0;
+    }
+  }
+
+  .basemap-list-scroll-wrapper {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .basemaps-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .basemaps-list-item {
+    display: inline-block;
+    width: $item-size;
+    margin: 0 35px 15px 0;
+    cursor: pointer;
+
+    &:nth-child(3n) {
+      margin: 0;
+    }
+
+    &:hover .basemaps-list-item-image,
+    &.-active .basemaps-list-item-image {
+      border: 3px solid $green-gfw;
+    }
+  }
+
+  .basemaps-list-item-image {
+    width: 100%;
+    height: $item-size;
+    border: 3px solid transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .basemaps-list-item-name {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: $slate-light;
+    margin: 6px 0 0;
   }
 }

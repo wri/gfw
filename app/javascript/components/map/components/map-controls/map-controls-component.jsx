@@ -51,7 +51,7 @@ class MapControlsButtons extends PureComponent {
               position="top-end"
               trigger="click"
               useContext
-              hideOnClick={false}
+              hideOnClick
               interactive
               html={<Basemaps />}
             >
