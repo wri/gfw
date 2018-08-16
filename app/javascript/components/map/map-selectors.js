@@ -14,6 +14,7 @@ const getDatasets = state => state.datasets.filter(d => !isEmpty(d.layer));
 const getLoading = state => state.loading;
 const getWidget = state => state[state.widgetKey] || null;
 const getGeostore = state => state.geostore || null;
+const getLatest = state => state.latest || null;
 
 const reduceParams = params => {
   if (!params) return null;
@@ -105,85 +106,91 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
   };
 });
 
-export const getParsedDatasets = createSelector([getDatasets], datasets => {
-  if (isEmpty(datasets)) return null;
+export const getParsedDatasets = createSelector(
+  [getDatasets, getLatest],
+  (datasets, latest) => {
+    if (isEmpty(datasets)) return null;
+    return datasets.filter(d => d.env === 'production').map(d => {
+      const { layer, metadata } = d;
+      const appMeta = metadata.find(m => m.application === 'gfw') || {};
+      const { info } = appMeta || {};
+      const defaultLayer =
+        (layer &&
+          layer.find(
+            l =>
+              l.env === 'production' &&
+              l.applicationConfig &&
+              l.applicationConfig.default
+          )) ||
+        layer[0];
+      const { isSelectorLayer, isMultiSelectorLayer } = info || {};
+      const { id, iso } = defaultLayer || {};
 
-  return datasets.filter(d => d.env === 'production').map(d => {
-    const { layer, metadata } = d;
-    const appMeta = metadata.find(m => m.application === 'gfw') || {};
-    const { info } = appMeta || {};
-    const defaultLayer =
-      (layer &&
-        layer.find(
-          l =>
-            l.env === 'production' &&
-            l.applicationConfig &&
-            l.applicationConfig.default
-        )) ||
-      layer[0];
-    const { isSelectorLayer, isMultiSelectorLayer } = info || {};
-    const { id, iso } = defaultLayer || {};
-
-    return {
-      ...d,
-      ...info,
-      ...((isSelectorLayer || isMultiSelectorLayer) && {
-        selectorLayerConfig: {
-          options: layer.map(l => ({
-            ...l.applicationConfig.selectorConfig,
-            value: l.id
-          }))
-        }
-      }),
-      ...(defaultLayer && defaultLayer.applicationConfig),
-      tags: flatten(d.vocabulary.map(v => v.tags)),
-      layer: id,
-      iso,
-      layers:
-        layer &&
-        sortBy(
-          layer
-            .filter(l => l.env === 'production' && l.published)
-            .map((l, i) => {
-              const { layerConfig, applicationConfig } = l;
-              const { sortOrder } = applicationConfig || {};
-              const {
-                params_config,
-                decode_config,
-                sql_config,
-                body,
-                url
-              } = layerConfig;
-              const decodeFunction = decodeLayersConfig[l.id];
-              return {
-                ...l,
-                ...applicationConfig,
-                sortOrder: applicationConfig.default ? 0 : sortOrder || i + 1,
-                ...(!isEmpty(params_config) && {
-                  params: {
-                    url: body.url || url,
-                    ...reduceParams(params_config)
-                  }
-                }),
-                ...(!isEmpty(sql_config) && {
-                  sqlParams: {
-                    ...reduceSqlParams(sql_config)
-                  }
-                }),
-                ...decodeFunction,
-                ...(!isEmpty(decode_config) && {
-                  decodeParams: {
-                    ...(decodeFunction && decodeFunction.decodeParams),
-                    ...reduceParams(decode_config)
-                  }
-                })
-              };
-            }),
-          'sortOrder'
-        )
-    };
-  });
-});
+      return {
+        ...d,
+        ...info,
+        ...((isSelectorLayer || isMultiSelectorLayer) && {
+          selectorLayerConfig: {
+            options: layer.map(l => ({
+              ...l.applicationConfig.selectorConfig,
+              value: l.id
+            }))
+          }
+        }),
+        ...(defaultLayer && defaultLayer.applicationConfig),
+        tags: flatten(d.vocabulary.map(v => v.tags)),
+        layer: id,
+        iso,
+        layers:
+          layer &&
+          sortBy(
+            layer
+              .filter(l => l.env === 'production' && l.published)
+              .map((l, i) => {
+                const { layerConfig, applicationConfig } = l;
+                const { sortOrder } = applicationConfig || {};
+                const {
+                  params_config,
+                  decode_config,
+                  sql_config,
+                  body,
+                  url
+                } = layerConfig;
+                const decodeFunction = decodeLayersConfig[l.id];
+                const latestDate = latest && latest[l.id];
+                return {
+                  ...l,
+                  ...applicationConfig,
+                  sortOrder: applicationConfig.default ? 0 : sortOrder || i + 1,
+                  ...(!isEmpty(params_config) && {
+                    params: {
+                      url: body.url || url,
+                      ...reduceParams(params_config)
+                    }
+                  }),
+                  ...(!isEmpty(sql_config) && {
+                    sqlParams: {
+                      ...reduceSqlParams(sql_config)
+                    }
+                  }),
+                  ...decodeFunction,
+                  ...(!isEmpty(decode_config) && {
+                    decodeParams: {
+                      ...(decodeFunction && decodeFunction.decodeParams),
+                      ...reduceParams(decode_config),
+                      ...(latestDate && {
+                        endDate: latestDate
+                      })
+                    }
+                  })
+                };
+              }),
+            'sortOrder'
+          )
+      };
+    });
+  }
+);
 
 export const getDatasetIds = createSelector([getLayers], layers => {
   if (!layers || !layers.length) return null;

@@ -64,11 +64,11 @@ class MapComponent extends PureComponent {
               />
               <Popup map={map} />
               <MapControlButtons className="map-controls" map={map} share />
-              {recentImagery &&
+              {recentImagery && (
                 <DragDropContextProvider backend={HTML5Backend}>
                   <RecentImagery map={map} />
                 </DragDropContextProvider>
-              }
+              )}
             </Fragment>
           )}
         </Map>

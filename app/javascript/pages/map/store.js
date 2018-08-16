@@ -21,6 +21,7 @@ import * as geostoreProviderComponent from 'providers/geostore-provider';
 import * as whitelistsProviderComponent from 'providers/whitelists-provider';
 import * as datasetsProviderComponent from 'providers/datasets-provider';
 import * as layerSpecProviderComponent from 'providers/layerspec-provider';
+import * as latestProviderComponent from 'providers/latest-provider';
 
 // Component Reducers
 const componentsReducers = {
@@ -39,7 +40,8 @@ const providersReducers = {
   geostore: handleActions(geostoreProviderComponent),
   whitelists: handleActions(whitelistsProviderComponent),
   datasets: handleActions(datasetsProviderComponent),
-  layerSpec: handleActions(layerSpecProviderComponent)
+  layerSpec: handleActions(layerSpecProviderComponent),
+  latest: handleActions(latestProviderComponent)
 };
 
 export const reducers = combineReducers({
