@@ -6,7 +6,7 @@ import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
 import infoIcon from 'assets/icons/info.svg';
 
-import schema from './basemaps-schema';
+import basemaps, { labels } from './basemaps-schema';
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
@@ -14,12 +14,19 @@ class Basemaps extends React.PureComponent {
     onClose: PropTypes.func.isRequired,
     fowardedRef: PropTypes.any,
     activeBasemap: PropTypes.object.isRequired,
-    selectBasemap: PropTypes.func.isRequired
+    selectBasemap: PropTypes.func.isRequired,
+    selectLabels: PropTypes.func.isRequired,
+    activeLabels: PropTypes.object.isRequired
   };
 
   state = {
     items: [{ label: 'Admin', value: 0 }, { label: 'Admin1', value: 1 }],
-    value: 0
+    labels: this.props.activeLabels
+  };
+
+  onLabelsChange = selected => {
+    this.setState({ labels: selected });
+    this.props.selectLabels(selected);
   };
 
   render() {
@@ -54,8 +61,9 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 className="theme-dropdown-button"
                 label="labels"
-                value={this.state.value}
-                options={this.state.items}
+                value={this.state.labels}
+                options={Object.values(labels)}
+                onChange={this.onLabelsChange}
               />
             </li>
           </ul>
@@ -63,7 +71,7 @@ class Basemaps extends React.PureComponent {
         <div className="basemaps-bottom-section">
           <div className="basemap-list-scroll-wrapper">
             <ul className="basemaps-list">
-              {Object.values(schema).map(item => (
+              {Object.values(basemaps).map(item => (
                 <li
                   key={item.id}
                   className={cx('basemaps-list-item', {
@@ -80,7 +88,7 @@ class Basemaps extends React.PureComponent {
                         backgroundImage: `url(/assets/basemaps/${item.id}.png)`
                       }}
                     />
-                    <p className="basemaps-list-item-name">{item.name}</p>
+                    <p className="basemaps-list-item-name">{item.label}</p>
                   </button>
                 </li>
               ))}

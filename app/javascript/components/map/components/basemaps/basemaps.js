@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setMapSettings } from 'components/map/map-actions';
-import { getBasemap } from 'components/map/map-selectors';
+import { getBasemap, getLabels } from 'components/map/map-selectors';
 import BasemapsComponent from './basemaps-component';
 
 function mapStateToProps(state) {
   return {
-    activeBasemap: getBasemap(state.location)
+    activeBasemap: getBasemap(state.location),
+    activeLabels: getLabels(state.location)
   };
 }
 
@@ -16,13 +17,17 @@ class BasemapsContainer extends React.Component {
     setMapSettings: PropTypes.func.isRequired
   };
 
-  selectBasemap = basemap => {
-    this.props.setMapSettings({ basemap });
-  };
+  selectBasemap = basemap => this.props.setMapSettings({ basemap });
+
+  selectLabels = label => this.props.setMapSettings({ label });
 
   render() {
     return (
-      <BasemapsComponent {...this.props} selectBasemap={this.selectBasemap} />
+      <BasemapsComponent
+        {...this.props}
+        selectBasemap={this.selectBasemap}
+        selectLabels={this.selectLabels}
+      />
     );
   }
 }

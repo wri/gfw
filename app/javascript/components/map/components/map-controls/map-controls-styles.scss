@@ -23,7 +23,7 @@
       }
     }
 
-    .satelite-icon {
+    .satellite-icon {
       width: rem(23px);
       height: rem(23px);
     }
@@ -31,6 +31,13 @@
     .globe-icon {
       width: rem(20px);
       height: rem(20px);
+    }
+
+    .satellite-icon,
+    .globe-icon {
+      &.-active {
+        fill: $green-gfw;
+      }
     }
   }
 

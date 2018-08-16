@@ -4,6 +4,7 @@ import Sticky from 'react-stickynode';
 import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 import { isParent } from 'utils/dom';
 
 import Basemaps from 'components/map/components/basemaps';
@@ -16,7 +17,7 @@ import shareIcon from 'assets/icons/share.svg';
 import fullScreenIcon from 'assets/icons/fit-zoom.svg';
 import printIcon from 'assets/icons/print.svg';
 import globeIcon from 'assets/icons/globe.svg';
-import sateliteIcon from 'assets/icons/satellite.svg';
+import satelliteIcon from 'assets/icons/satellite.svg';
 
 import './map-controls-styles.scss';
 
@@ -52,6 +53,7 @@ class MapControlsButtons extends PureComponent {
       toogleRecentImagery
     } = this.props;
     const { zoom, minZoom, maxZoom, center } = settings || {};
+    const { showBasemaps } = this.state;
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
@@ -64,14 +66,14 @@ class MapControlsButtons extends PureComponent {
               onClick={() => toogleRecentImagery()}
               tooltip={{ text: 'Recent Imagery' }}
             >
-              <Icon icon={sateliteIcon} className="satelite-icon" />
+              <Icon icon={satelliteIcon} className="satelite-icon" />
             </Button>
             <Tooltip
               theme="light"
               position="top-end"
               useContext
               interactive
-              open={this.state.showBasemaps}
+              open={showBasemaps}
               onRequestClose={() => this.onTooltipRequestClose(this.basemaps)}
               html={
                 <Basemaps
@@ -86,7 +88,10 @@ class MapControlsButtons extends PureComponent {
                 onClick={this.toggleBasemaps}
                 tooltip={{ text: 'Basemaps', hideOnClick: false }}
               >
-                <Icon icon={globeIcon} className="globe-icon" />
+                <Icon
+                  icon={globeIcon}
+                  className={cx('globe-icon', { '-active': showBasemaps })}
+                />
               </Button>
             </Tooltip>
           </div>
