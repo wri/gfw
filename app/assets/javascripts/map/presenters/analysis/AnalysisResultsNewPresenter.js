@@ -139,7 +139,6 @@ define(
             moment(this.status.get('begin')),
             moment(this.status.get('end'))
           ];
-
         // Layers
         p.slug = this.status.get('dataset');
         p.baselayers = this.status.get('baselayers_full');
@@ -191,6 +190,10 @@ define(
           dateRange[0].year(),
           dateRange[1].year() - 1
         );
+
+        if (p.slug === 'viirs-active-fires') {
+          p.alerts.totalAlerts = this.roundNumber(results.alerts || 0);
+        }
 
         if (p.slug === 'imazon-alerts') {
           p.alerts.degradAlerts =
