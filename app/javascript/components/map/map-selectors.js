@@ -148,7 +148,7 @@ export const getParsedDatasets = createSelector(
               .filter(l => l.env === 'production' && l.published)
               .map((l, i) => {
                 const { layerConfig, applicationConfig } = l;
-                const { sortOrder } = applicationConfig || {};
+                const { sortOrder, confirmedOnly } = applicationConfig || {};
                 const {
                   params_config,
                   decode_config,
@@ -182,6 +182,9 @@ export const getParsedDatasets = createSelector(
                         endDate: latestDate
                       })
                     }
+                  }),
+                  ...(confirmedOnly && {
+                    id: 'confirmedOnly'
                   })
                 };
               }),
@@ -209,12 +212,12 @@ export const getActiveDatasets = createSelector(
 
 export const getDatasetsWithConfig = createSelector(
   [getActiveDatasets, getLayers],
-  (datasets, layers) => {
-    if (isEmpty(datasets) || isEmpty(layers)) return null;
+  (datasets, allLayers) => {
+    if (isEmpty(datasets) || isEmpty(allLayers)) return null;
 
     return datasets.map(d => {
-      const layerConfig = layers.find(l => l.dataset === d.id) || {};
-      const { params, sqlParams, decodeParams } = layerConfig || {};
+      const layerConfig = allLayers.find(l => l.dataset === d.id) || {};
+      const { params, sqlParams, decodeParams, layers } = layerConfig || {};
 
       return {
         ...d,
@@ -223,17 +226,14 @@ export const getDatasetsWithConfig = createSelector(
           selectorLayerConfig: {
             ...d.selectorLayerConfig,
             selected: d.selectorLayerConfig.options.find(
-              l => l.value === layerConfig.layers[0]
+              l => l.value === layers[0]
             )
           }
         }),
         layers: d.layers.map(l => ({
           ...l,
           ...layerConfig,
-          active:
-            layerConfig &&
-            layerConfig.layers &&
-            layerConfig.layers.indexOf(l.id) > -1,
+          active: layers && layers.indexOf(l.id) > -1,
           params: {
             ...l.params,
             ...params
@@ -247,6 +247,10 @@ export const getDatasetsWithConfig = createSelector(
             minDate: l.decodeParams && l.decodeParams.startDate,
             maxDate: l.decodeParams && l.decodeParams.endDate,
             trimEndDate: l.decodeParams && l.decodeParams.endDate,
+            ...(layers &&
+              layers.indexOf('confirmedOnly') > -1 && {
+                confirmedOnly: true
+              }),
             ...decodeParams
           },
           ...(l.decodeParams &&
@@ -275,7 +279,9 @@ export const getLayerGroups = createSelector(
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return [];
-  return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
+  return flatten(layerGroups.map(d => d.layers)).filter(
+    l => l.active && !l.confirmedOnly
+  );
 });
 
 export const getMapProps = createStructuredSelector({

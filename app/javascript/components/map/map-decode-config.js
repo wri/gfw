@@ -116,7 +116,8 @@ export default {
 
       // fixed variables
       const imgData = data;
-      const { startDate, endDate, minDate, maxDate, weeks } = params;
+      const { startDate, endDate, minDate, maxDate, weeks, confirmedOnly } =
+        params || {};
 
       const minDateTime = new Date(minDate);
       const maxDateTime = new Date(maxDate);
@@ -135,7 +136,7 @@ export default {
       // get start and end day
       const startDay = activeStartDay || rangeStartDate || 0;
       const endDay = activeEndDay || numberOfDays;
-      const confidenceValue = -1;
+      const confidenceValue = confirmedOnly ? 200 : 0;
       const pixelComponents = 4; // RGBA
       let pixelPos = 0;
 
@@ -146,12 +147,7 @@ export default {
           const day = imgData[pixelPos] * 255 + imgData[pixelPos + 1];
           const band3 = data[pixelPos + 2];
           // get confidence
-          let confidence = -1;
-          if (data[band3] >= 100 && data[band3] < 200) {
-            confidence = 0;
-          } else if (data[band3] >= 200) {
-            confidence = 1;
-          }
+          const confidence = data[band3];
 
           if (
             confidence >= confidenceValue &&
