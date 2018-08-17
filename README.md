@@ -171,7 +171,7 @@ Map layers and relevent datasets are stored in the [RW-API](http://api.resourcew
 
 The schema used to style these layers, their legends, and define their interactions are specific to the *Global Forest Watch* platform.
 
-When creating or modifying layers/datasets for GFW, follow the schema and syntax outlined in the [API Documentation](API_Documentation.md) markdown file.
+When creating or modifying layers/datasets for GFW, follow the schema and syntax outlined in the [API Documentation](./docs/API_Documentation.md) markdown file.
 
 To view GFW-specific layers and datasets use the following endpoint:
 
