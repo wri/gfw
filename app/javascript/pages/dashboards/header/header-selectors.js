@@ -50,6 +50,10 @@ export const getSentence = createSelector(
     const { initial, withLoss, withPlantationLoss, globalInitial } = sentences;
     const extent =
       data.extent < 1 ? format('.3r')(data.extent) : format('.3s')(data.extent);
+    const naturalForest =
+      data.extent - data.plantationsExtent < 1
+        ? format('.3r')(data.extent - data.plantationsExtent)
+        : format('.3s')(data.extent - data.plantationsExtent);
     const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
     const lossWithOutPlantations = format('.2s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
@@ -63,6 +67,7 @@ export const getSentence = createSelector(
 
     const params = {
       extent: `${extent}ha`,
+      naturalForest: `${naturalForest}ha`,
       location: location || 'the world',
       percentage: `${percentageCover}%`,
       loss: `${lossWithOutPlantations}ha`,
