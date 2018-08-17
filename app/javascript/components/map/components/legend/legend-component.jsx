@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   Legend,
@@ -20,6 +21,7 @@ import LayerListMenu from './components/layer-list-menu';
 import ThresholdSelector from './components/threshold-selector';
 import LayerSelectorMenu from './components/layer-selector-menu';
 import LossStatement from './components/loss-statement';
+import CountriesStatement from './components/countries-statement';
 
 import './legend-styles.scss';
 
@@ -58,7 +60,9 @@ class MapLegend extends Component {
                   color,
                   isLossLayer,
                   metadata,
-                  id
+                  id,
+                  global,
+                  iso
                 } = lg;
                 const activeLayer = lg.layers.find(l => l.active) || [];
                 const { legendConfig, params, timelineConfig } =
@@ -131,6 +135,13 @@ class MapLegend extends Component {
                     {isLossLayer && (
                       <LossStatement className="loss-statement" />
                     )}
+                    {global &&
+                      !isEmpty(iso) && (
+                        <CountriesStatement
+                          className="countries-statement"
+                          isos={iso}
+                        />
+                      )}
                     {timelineConfig && (
                       <Timeline
                         className="timeline"
