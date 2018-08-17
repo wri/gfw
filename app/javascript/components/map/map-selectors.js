@@ -70,6 +70,11 @@ export const getBasemap = createSelector(
   settings => settings.basemap
 );
 
+export const getMapZoom = createSelector(
+  getMapSettings,
+  settings => settings.zoom
+);
+
 export const getLabels = createSelector(
   getMapSettings,
   settings => settings.label

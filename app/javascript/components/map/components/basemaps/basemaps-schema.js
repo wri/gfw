@@ -1,4 +1,4 @@
-const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
+const { MAPBOX_TOKEN } = process.env;
 
 export const labels = {
   default: {
@@ -31,7 +31,8 @@ export default {
   landsat: {
     id: 'landsat',
     label: 'landsat',
-    url: 'beats me!'
+    defaultUrl:
+      'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png'
   },
   openstreet: {
     id: 'openstreet',
