@@ -8,13 +8,14 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
       .subtract(params.periodValue, params.period)
       .format('YYYY-MM-DD')
   ];
+  // Viirs response too heavy at adm0 level, and returns error (CARTO).
+  // If country, use alternative service and parse data.
   if (params.country && !params.region && !params.subRegion) {
     fetchFiresStats({ ...params, dates })
       .then(response => {
         const firesResponse = response.data.data.attributes.value;
         const data = firesResponse.filter(v => v.alerts && v.day).map(el => ({
           type: 'viirs-fires',
-          id: undefined,
           attributes: {
             value: el.alerts,
             day: `${el.day}T00:00:00Z`
