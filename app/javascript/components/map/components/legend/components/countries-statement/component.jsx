@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
-import helpIcon from 'assets/images/help.png';
-
 import './styles.scss';
 
 class CountriesStatement extends PureComponent {
@@ -21,10 +19,7 @@ class CountriesStatement extends PureComponent {
         position="top"
         followCursor
       >
-        <div
-          className={`c-countries-statement ${className || ''}`}
-          style={{ cursor: `url(${helpIcon}), auto` }}
-        >
+        <div className={`c-countries-statement ${className || ''}`}>
           This layer is only available for <span>certain countries.</span>
         </div>
       </Tooltip>
