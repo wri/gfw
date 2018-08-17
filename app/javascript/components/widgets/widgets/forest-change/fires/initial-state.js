@@ -5,7 +5,7 @@ export default {
   config: {
     size: 'small',
     categories: ['forest-change', 'summary'],
-    admins: ['region', 'subRegion'],
+    admins: ['country', 'region', 'subRegion'],
     metaKey: 'widget_fire_alert_location',
     layers: ['viirs_fires_alerts'],
     type: 'fires',
