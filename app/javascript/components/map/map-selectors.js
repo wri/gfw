@@ -185,7 +185,7 @@ export const getParsedDatasets = createSelector(
                   })
                 };
               }),
-            'sortOrder'
+            'position'
           )
       };
     });

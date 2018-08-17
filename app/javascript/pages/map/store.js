@@ -8,7 +8,6 @@ import router from './router';
 
 // Components
 import * as recentImageryComponent from 'components/map/components/recent-imagery';
-import * as MapMenuComponent from 'pages/map/menu';
 import * as DataAnalysisMenuComponent from 'pages/map/data-analysis-menu';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
@@ -27,7 +26,6 @@ import * as latestProviderComponent from 'providers/latest-provider';
 const componentsReducers = {
   share: handleActions(ShareComponent),
   modalMeta: handleActions(ModalMetaComponent),
-  mapMenu: handleActions(MapMenuComponent),
   dataAnalysis: handleActions(DataAnalysisMenuComponent),
   recentImagery: handleActions(recentImageryComponent),
   widgets: handleActions(WidgetsComponent),
