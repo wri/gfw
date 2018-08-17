@@ -98,7 +98,7 @@ export const getSentence = createSelector(
     sentences
   ) => {
     if (!data || !data.length || !currentLocation) return null;
-    const { initial, withInd, forestTypeOnly } = sentences;
+    const { initial, withInd, landCatOnly } = sentences;
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
     const extent = locationData && locationData.extent;
@@ -119,7 +119,7 @@ export const getSentence = createSelector(
     };
 
     let sentence = indicator ? withInd : initial;
-    if (forestType && !landCategory) sentence = forestTypeOnly;
+    if (!forestType && landCategory) sentence = landCatOnly;
 
     return {
       sentence,
