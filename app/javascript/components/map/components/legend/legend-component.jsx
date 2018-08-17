@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
-import {
-  Legend,
+import Legend, {
   LegendItemToolbar,
   LegendItemButtonOpacity,
   LegendItemButtonVisibility,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
   LegendItemTypes,
-  LegendListItem,
-  Icons
-} from 'wri-api-components';
+  LegendListItem
+} from 'wri-api-components/dist/legend';
+
+import Icons from 'wri-api-components/dist/icons';
 
 import Loader from 'components/ui/loader';
 
