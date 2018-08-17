@@ -148,7 +148,8 @@ export const getParsedDatasets = createSelector(
               .filter(l => l.env === 'production' && l.published)
               .map((l, i) => {
                 const { layerConfig, applicationConfig } = l;
-                const { sortOrder, confirmedOnly } = applicationConfig || {};
+                const { position, confirmedOnly, multiConfig } =
+                  applicationConfig || {};
                 const {
                   params_config,
                   decode_config,
@@ -161,7 +162,11 @@ export const getParsedDatasets = createSelector(
                 return {
                   ...l,
                   ...applicationConfig,
-                  sortOrder: applicationConfig.default ? 0 : sortOrder || i + 1,
+                  position: applicationConfig.default
+                    ? 0
+                    : position ||
+                      (multiConfig && multiConfig.position) ||
+                      i + 1,
                   ...(!isEmpty(params_config) && {
                     params: {
                       url: body.url || url,
@@ -217,7 +222,8 @@ export const getDatasetsWithConfig = createSelector(
 
     return datasets.map(d => {
       const layerConfig = allLayers.find(l => l.dataset === d.id) || {};
-      const { params, sqlParams, decodeParams, layers } = layerConfig || {};
+      const { params, sqlParams, decodeParams, layers, visibility, opacity } =
+        layerConfig || {};
 
       return {
         ...d,
@@ -232,27 +238,35 @@ export const getDatasetsWithConfig = createSelector(
         }),
         layers: d.layers.map(l => ({
           ...l,
-          ...layerConfig,
+          visibility,
+          opacity,
           active: layers && layers.indexOf(l.id) > -1,
-          params: {
-            ...l.params,
-            ...params
-          },
-          sqlParams: {
-            ...l.sqlParams,
-            ...sqlParams
-          },
-          decodeParams: {
-            ...l.decodeParams,
-            minDate: l.decodeParams && l.decodeParams.startDate,
-            maxDate: l.decodeParams && l.decodeParams.endDate,
-            trimEndDate: l.decodeParams && l.decodeParams.endDate,
-            ...(layers &&
-              layers.indexOf('confirmedOnly') > -1 && {
-                confirmedOnly: true
-              }),
-            ...decodeParams
-          },
+          ...(!isEmpty(params) && {
+            params: {
+              ...l.params,
+              ...params
+            }
+          }),
+          ...(!isEmpty(sqlParams) && {
+            sqlParams: {
+              ...l.sqlParams,
+              ...sqlParams
+            }
+          }),
+          ...(!isEmpty(l.decodeParams) &&
+            l.decodeFunction && {
+              decodeParams: {
+                ...l.decodeParams,
+                minDate: l.decodeParams && l.decodeParams.startDate,
+                maxDate: l.decodeParams && l.decodeParams.endDate,
+                trimEndDate: l.decodeParams && l.decodeParams.endDate,
+                ...(layers &&
+                  layers.indexOf('confirmedOnly') > -1 && {
+                    confirmedOnly: true
+                  }),
+                ...decodeParams
+              }
+            }),
           ...(l.decodeParams &&
             l.decodeParams.startDate && {
               timelineConfig: {
