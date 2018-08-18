@@ -1,0 +1,8 @@
+@import '~styles/settings.scss';
+
+.c-my-gfw {
+  background-color: $white;
+  width: rem(320px);
+  padding: rem(15px);
+  border: solid 1px $border;
+}

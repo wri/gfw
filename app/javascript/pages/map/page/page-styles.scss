@@ -6,4 +6,12 @@
     left: rem(90px);
     top: rem(15px);
   }
+
+  .map-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
 }

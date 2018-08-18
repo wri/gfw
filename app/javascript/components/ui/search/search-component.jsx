@@ -59,14 +59,14 @@ class Search extends Component {
           onKeyUp={handleKeyUp}
           disabled={disabled}
         />
-        <Icon icon={searchIcon} className="icon" />
+        <Icon icon={searchIcon} className="icon-search" />
         {search && (
           <Button
             className="clear-btn"
             theme="theme-button-clear theme-button-small square"
             onClick={() => this.handleChange('')}
           >
-            <Icon icon={closeIcon} className="icon" />
+            <Icon icon={closeIcon} className="icon-close" />
           </Button>
         )}
       </div>

@@ -7,6 +7,7 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 
+import Header from 'components/header';
 import Map from 'components/map';
 import MapMenu from 'pages/map/menu';
 import ModalMeta from 'components/modals/meta';
@@ -21,6 +22,7 @@ class Page extends PureComponent {
 
     return (
       <div className="l-map">
+        <Header className="map-header" />
         <Map />
         <MapMenu />
         <DataAnalysisMenu className="data-analysis-menu" />
