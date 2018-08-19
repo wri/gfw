@@ -1,7 +1,3 @@
-import moreIcon from 'assets/icons/more.svg';
-
-import SubMenuPanel from './components/submenu-panel';
-
 export default {
   navMain: [
     {
@@ -21,24 +17,6 @@ export default {
     {
       label: 'About',
       path: '/map'
-    }
-  ],
-  navAlt: [
-    {
-      label: 'Lang',
-      subMenu: [
-        {
-          label: 'English'
-        }
-      ]
-    },
-    {
-      label: 'MyGFW'
-    },
-    {
-      label: 'More',
-      icon: moreIcon,
-      subMenu: SubMenuPanel
     }
   ],
   navPanel: [

@@ -13,7 +13,6 @@ import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as WidgetsComponent from 'components/widgets';
 import * as PopupComponent from 'components/map/components/popup';
-import * as HeaderComponent from 'components/header';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
@@ -30,8 +29,7 @@ const componentsReducers = {
   dataAnalysis: handleActions(DataAnalysisMenuComponent),
   recentImagery: handleActions(recentImageryComponent),
   widgets: handleActions(WidgetsComponent),
-  popup: handleActions(PopupComponent),
-  header: handleActions(HeaderComponent)
+  popup: handleActions(PopupComponent)
 };
 
 // Provider Reducers

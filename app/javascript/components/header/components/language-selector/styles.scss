@@ -1,0 +1,24 @@
+@import '~styles/settings.scss';
+
+.c-lang-selector {
+  background-color: $white;
+  width: rem(200px);
+  padding: rem(15px) rem(20px);
+  border: solid 1px $border;
+
+  > li {
+    > button {
+      text-transform: uppercase;
+      font-size: rem(14px);
+      padding: rem(15px) 0;
+      width: 100%;
+      color: $slate;
+      cursor: pointer;
+      text-align: left;
+
+      &:hover {
+        color: darken($slate, 30%);
+      }
+    }
+  }
+}

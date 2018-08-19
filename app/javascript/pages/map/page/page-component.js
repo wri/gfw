@@ -22,7 +22,7 @@ class Page extends PureComponent {
 
     return (
       <div className="l-map">
-        <Header className="map-header" />
+        <Header className="map-header" showPanel />
         <Map />
         <MapMenu />
         <DataAnalysisMenu className="data-analysis-menu" />

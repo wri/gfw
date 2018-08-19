@@ -17,16 +17,15 @@
     li {
       height: 100%;
       position: relative;
+      font-size: rem(14px);
 
-      a,
-      button {
+      .ext-link,
+      .menu-link {
         position: relative;
-        font-size: rem(14px);
         font-family: $font-family-1;
         color: $slate;
         height: 100%;
         text-transform: uppercase;
-        color: $slate;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -36,8 +35,8 @@
         }
       }
 
-      a {
-        &:after {
+      .ext-link {
+        &::after {
           content: '';
           height: rem(5px);
           position: absolute;
@@ -49,7 +48,7 @@
 
         .-active,
         &:hover {
-          &:after {
+          &::after {
             background-color: $green-gfw;
           }
         }
@@ -57,13 +56,9 @@
 
       svg {
         fill: $slate;
-      }
 
-      &:hover {
-        color: darken($slate, 30%);
-
-        svg {
-          fill: darken($slate, 30%);
+        &:hover {
+          color: darken($slate, 30%);
         }
       }
     }
@@ -81,7 +76,7 @@
         left: 0;
       }
 
-      > li a {
+      > li .ext-link {
         padding: 0 rem(20px);
       }
     }
@@ -97,6 +92,7 @@
       > li {
         margin-left: rem(30px);
         position: relative;
+        font-size: rem(12px);
 
         svg {
           margin-top: -1px;
@@ -106,44 +102,37 @@
 
       .sub-menu {
         position: absolute;
-        right: 0;
+        right: -5px;
         z-index: 1;
+
+        &::before,
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+        }
+
+        &::before {
+          top: -12px;
+          border-color: transparent transparent $border transparent;
+          border-width: 6px;
+          right: 6px;
+        }
+
+        &::after {
+          top: -10px;
+          border-color: transparent transparent $white transparent;
+          border-width: 5px;
+          right: 7px;
+        }
       }
 
       .icon-close,
       .icon-arrow {
         height: rem(10px);
-      }
-    }
-  }
-
-  .nav-panel {
-    height: calc(100vh - 56px);
-    background-color: $white;
-    padding: rem(40px) 0;
-
-    .menu-search {
-      margin-bottom: rem(20px);
-    }
-
-    .menu-section {
-      padding: rem(30px) 0;
-      border-bottom: solid 1px $border;
-
-      h4 {
-        text-transform: uppercase;
-        color: $slate;
-        font-size: rem(14px);
-        margin-bottom: rem(23px);
-      }
-
-      .more-links {
-        display: flex;
-        flex-wrap: wrap;
-
-        > li {
-          margin-bottom: rem(20px);
-        }
       }
     }
   }

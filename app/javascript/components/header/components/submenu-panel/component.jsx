@@ -1,22 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from 'components/ui/icon';
+// import Icon from 'components/ui/icon';
 import Search from 'components/ui/search';
 
 import './styles.scss';
 
 class Header extends PureComponent {
+  handleSubmit = e => {
+    e.preventDefault();
+  };
+
   render() {
-    const {
-      className
-    } = this.props;
+    const { className } = this.props;
 
     return (
       <div className={`c-submenu-panel ${className || ''}`}>
         <div className="row">
           <div className="column small-8 small-offset-2">
-            <Search className="menu-search" placeholder="Search" />
+            <form onSubmit={this.handleSubmit}>
+              <Search className="menu-search" placeholder="Search" />
+            </form>
             <div className="menu-section">
               <h4>Other applications</h4>
             </div>
