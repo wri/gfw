@@ -21,6 +21,7 @@ class Menu extends PureComponent {
       loading,
       countries,
       setMenuSettings,
+      toggleMenu,
       ...rest
     } = this.props;
     const { Component } = activeSection || {};
@@ -28,11 +29,13 @@ class Menu extends PureComponent {
     return (
       <div>
         <div className="c-map-menu">
-          <img
-            className="c-map-menu__logo"
-            src={gfwLogo}
-            alt="Global Forest Watch"
-          />
+          <button onClick={toggleMenu}>
+            <img
+              className="c-map-menu__logo"
+              src={gfwLogo}
+              alt="Global Forest Watch"
+            />
+          </button>
           {sections && (
             <ul
               className={`c-map-menu__buttons-group ${
@@ -104,7 +107,8 @@ Menu.propTypes = {
   setModalMeta: PropTypes.func,
   loading: PropTypes.bool,
   countries: PropTypes.array,
-  selectedCountries: PropTypes.array
+  selectedCountries: PropTypes.array,
+  toggleMenu: PropTypes.func
 };
 
 export default Menu;

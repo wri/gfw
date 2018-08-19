@@ -12,9 +12,23 @@ const mapStateToProps = ({ location, countryData, dataAnalysis }) => ({
 });
 
 class PageContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showHeader: false
+    };
+  }
+
+  handleShowMenu = () => {
+    const { showHeader } = this.state;
+    this.setState({ showHeader: !showHeader });
+  };
+
   render() {
     return createElement(PageComponent, {
-      ...this.props
+      ...this.props,
+      ...this.state,
+      handleShowMenu: this.handleShowMenu
     });
   }
 }

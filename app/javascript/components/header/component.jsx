@@ -27,19 +27,35 @@ class Header extends PureComponent {
       showLangSelector,
       handleLangSelect,
       isLoggedIn,
+      showHeader,
+      toggleMenu,
       languages,
       activeLang,
       navMain,
       apps,
-      moreLinks
+      moreLinks,
+      fullScreen
     } = this.props;
 
     return (
-      <div className={`c-header ${className || ''}`}>
-        <div className="nav-menu">
-          <div className="row column">
-            <div className="nav">
-              <ul className="nav-main">
+      (!fullScreen || (fullScreen && showHeader)) && (
+        <div
+          className={`c-header ${
+            fullScreen ? '-full-screen' : ''
+          } ${className || ''}`}
+        >
+          <div className="nav-menu">
+            <div className={!fullScreen ? 'row column' : ''}>
+              {fullScreen ? (
+                <button onClick={toggleMenu} className="logo">
+                  <img
+                    src={gfwLogo}
+                    alt="Global Forest Watch"
+                    width="76"
+                    height="76"
+                  />
+                </button>
+              ) : (
                 <a className="logo" href="/">
                   <img
                     src={gfwLogo}
@@ -48,66 +64,78 @@ class Header extends PureComponent {
                     height="76"
                   />
                 </a>
-                {navMain.map(item => (
-                  <li key={item.label}>
-                    <a href={item.path} className="ext-link">
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <ul className="nav-alt">
-                <li>
-                  <button
-                    className="menu-link"
-                    onClick={() => setShowLangSelector(!showLangSelector)}
-                  >
-                    {(activeLang && activeLang.name) || 'English'}
-                    <Icon className="icon-arrow" icon={arrowIcon} />
-                  </button>
-                  {showLangSelector && (
-                    <LangSelector
-                      className="sub-menu"
-                      languages={languages}
-                      handleLangSelect={handleLangSelect}
-                    />
-                  )}
-                </li>
-                <li>
-                  {isLoggedIn ? (
-                    <a className="ext-link" href="/my_gfw">
-                      My GFW
-                      <Icon icon={moreIcon} />
-                    </a>
-                  ) : (
+              )}
+              <div className="nav">
+                <ul className="nav-main">
+                  {navMain.map(item => (
+                    <li key={item.label}>
+                      <a href={item.path} className="ext-link">
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <ul className="nav-alt">
+                  <li>
                     <button
                       className="menu-link"
-                      onClick={() => setShowMyGfw(!showMyGfw)}
+                      onClick={() => setShowLangSelector(!showLangSelector)}
                     >
-                      My GFW
-                      <Icon icon={myGfwIcon} />
+                      {(activeLang && activeLang.name) || 'English'}
+                      <Icon className="icon-arrow" icon={arrowIcon} />
                     </button>
-                  )}
-                  {showMyGfw && <MyGFW className="sub-menu" />}
-                </li>
-                <li>
-                  <button
-                    className="menu-link"
-                    onClick={() => setShowPanel(!showPanel)}
-                  >
-                    More
-                    <Icon
-                      className={showPanel ? 'icon-close' : 'icon-more'}
-                      icon={showPanel ? closeIcon : moreIcon}
-                    />
-                  </button>
-                </li>
-              </ul>
+                    {showLangSelector && (
+                      <LangSelector
+                        className="sub-menu"
+                        languages={languages}
+                        handleLangSelect={handleLangSelect}
+                      />
+                    )}
+                  </li>
+                  <li>
+                    {isLoggedIn ? (
+                      <a className="ext-link" href="/my_gfw">
+                        My GFW
+                        <Icon icon={moreIcon} />
+                      </a>
+                    ) : (
+                      <button
+                        className="menu-link"
+                        onClick={() => setShowMyGfw(!showMyGfw)}
+                      >
+                        My GFW
+                        <Icon icon={myGfwIcon} />
+                      </button>
+                    )}
+                    {showMyGfw && <MyGFW className="sub-menu" />}
+                  </li>
+                  <li>
+                    <button
+                      className="menu-link"
+                      onClick={
+                        fullScreen ? toggleMenu : () => setShowPanel(!showPanel)
+                      }
+                    >
+                      {fullScreen ? 'Close' : 'More'}
+                      <Icon
+                        className={showPanel ? 'icon-close' : 'icon-more'}
+                        icon={showPanel ? closeIcon : moreIcon}
+                      />
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+          {showPanel && (
+            <SubmenuPanel
+              apps={apps}
+              moreLinks={moreLinks}
+              fullScreen={fullScreen}
+            />
+          )}
         </div>
-        {showPanel && <SubmenuPanel apps={apps} moreLinks={moreLinks} />}
-      </div>
+      )
     );
   }
 }
@@ -126,7 +154,10 @@ Header.propTypes = {
   activeLang: PropTypes.object,
   navMain: PropTypes.array,
   apps: PropTypes.array,
-  moreLinks: PropTypes.array
+  moreLinks: PropTypes.array,
+  fullScreen: PropTypes.bool,
+  showHeader: PropTypes.bool,
+  toggleMenu: PropTypes.func
 };
 
 export default Header;

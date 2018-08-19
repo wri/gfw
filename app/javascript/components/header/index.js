@@ -17,6 +17,7 @@ class HeaderContainer extends PureComponent {
       showPanel,
       showMyGfw,
       showLangSelector,
+      showHeader: false,
       languages,
       lang: txLang
     };
@@ -56,8 +57,8 @@ class HeaderContainer extends PureComponent {
     const { languages, lang } = this.state;
     const activeLang = languages && languages.find(l => l.code === lang);
     return createElement(Component, {
-      ...this.props,
       ...this.state,
+      ...this.props,
       setShowPanel: this.setShowPanel,
       setShowMyGfw: this.setShowMyGfw,
       setShowLangSelector: this.setShowLangSelector,

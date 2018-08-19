@@ -18,13 +18,19 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   render() {
-    const { analysis } = this.props;
+    const { analysis, handleShowMenu, showHeader } = this.props;
 
     return (
       <div className="l-map">
-        <Header className="map-header" showPanel />
+        <Header
+          className="map-header"
+          showPanel
+          fullScreen
+          showHeader={showHeader}
+          toggleMenu={handleShowMenu}
+        />
         <Map />
-        <MapMenu />
+        <MapMenu toggleMenu={handleShowMenu} />
         <DataAnalysisMenu className="data-analysis-menu" />
         <Share />
         <ModalMeta />
@@ -39,7 +45,9 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  analysis: PropTypes.object
+  analysis: PropTypes.object,
+  handleShowMenu: PropTypes.func,
+  showHeader: PropTypes.bool
 };
 
 export default Page;

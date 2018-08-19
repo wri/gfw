@@ -15,6 +15,7 @@ $map-menu-items-size: rem(76px);
     height: $map-menu-items-size;
     background-color: $white;
     z-index: 2;
+    cursor: pointer;
   }
 
   &__buttons-group {

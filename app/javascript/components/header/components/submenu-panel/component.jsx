@@ -14,10 +14,14 @@ class Header extends PureComponent {
   };
 
   render() {
-    const { className, apps, moreLinks } = this.props;
+    const { className, apps, moreLinks, fullScreen } = this.props;
 
     return (
-      <div className={`c-submenu-panel ${className || ''}`}>
+      <div
+        className={`c-submenu-panel ${
+          fullScreen ? '-full-screen' : ''
+        } ${className || ''}`}
+      >
         <div className="row">
           <div className="column small-12 medium-10 medium-offset-1">
             <form onSubmit={this.handleSubmit}>
@@ -83,7 +87,8 @@ class Header extends PureComponent {
 Header.propTypes = {
   className: PropTypes.string,
   apps: PropTypes.array,
-  moreLinks: PropTypes.array
+  moreLinks: PropTypes.array,
+  fullScreen: PropTypes.bool
 };
 
 export default Header;
