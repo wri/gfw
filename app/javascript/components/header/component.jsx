@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { SCREEN_L } from 'utils/constants';
 
 import Icon from 'components/ui/icon';
 
@@ -36,6 +37,7 @@ class Header extends PureComponent {
       moreLinks,
       fullScreen
     } = this.props;
+    const isMobile = window.innerWidth < SCREEN_L;
 
     return (
       (!fullScreen || (fullScreen && showHeader)) && (
@@ -66,49 +68,55 @@ class Header extends PureComponent {
                 </a>
               )}
               <div className="nav">
-                <ul className="nav-main">
-                  {navMain.map(item => (
-                    <li key={item.label}>
-                      <a href={item.path} className="ext-link">
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                {!isMobile && (
+                  <ul className="nav-main">
+                    {navMain.map(item => (
+                      <li key={item.label}>
+                        <a href={item.path} className="ext-link">
+                          {item.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <ul className="nav-alt">
-                  <li>
-                    <button
-                      className="menu-link"
-                      onClick={() => setShowLangSelector(!showLangSelector)}
-                    >
-                      {(activeLang && activeLang.name) || 'English'}
-                      <Icon className="icon-arrow" icon={arrowIcon} />
-                    </button>
-                    {showLangSelector && (
-                      <LangSelector
-                        className="sub-menu"
-                        languages={languages}
-                        handleLangSelect={handleLangSelect}
-                      />
-                    )}
-                  </li>
-                  <li>
-                    {isLoggedIn ? (
-                      <a className="ext-link" href="/my_gfw">
-                        My GFW
-                        <Icon icon={moreIcon} />
-                      </a>
-                    ) : (
+                  {!isMobile && (
+                    <li>
                       <button
                         className="menu-link"
-                        onClick={() => setShowMyGfw(!showMyGfw)}
+                        onClick={() => setShowLangSelector(!showLangSelector)}
                       >
-                        My GFW
-                        <Icon icon={myGfwIcon} />
+                        {(activeLang && activeLang.name) || 'English'}
+                        <Icon className="icon-arrow" icon={arrowIcon} />
                       </button>
-                    )}
-                    {showMyGfw && <MyGFW className="sub-menu" />}
-                  </li>
+                      {showLangSelector && (
+                        <LangSelector
+                          className="sub-menu"
+                          languages={languages}
+                          handleLangSelect={handleLangSelect}
+                        />
+                      )}
+                    </li>
+                  )}
+                  {!isMobile && (
+                    <li>
+                      {isLoggedIn ? (
+                        <a className="ext-link" href="/my_gfw">
+                          My GFW
+                          <Icon icon={moreIcon} />
+                        </a>
+                      ) : (
+                        <button
+                          className="menu-link"
+                          onClick={() => setShowMyGfw(!showMyGfw)}
+                        >
+                          My GFW
+                          <Icon icon={myGfwIcon} />
+                        </button>
+                      )}
+                      {showMyGfw && <MyGFW className="sub-menu" />}
+                    </li>
+                  )}
                   <li>
                     <button
                       className="menu-link"
