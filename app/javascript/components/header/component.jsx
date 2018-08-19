@@ -29,7 +29,9 @@ class Header extends PureComponent {
       isLoggedIn,
       languages,
       activeLang,
-      navMain
+      navMain,
+      apps,
+      moreLinks
     } = this.props;
 
     return (
@@ -104,7 +106,7 @@ class Header extends PureComponent {
             </div>
           </div>
         </div>
-        {showPanel && <SubmenuPanel />}
+        {showPanel && <SubmenuPanel apps={apps} moreLinks={moreLinks} />}
       </div>
     );
   }
@@ -122,7 +124,9 @@ Header.propTypes = {
   isLoggedIn: PropTypes.bool,
   languages: PropTypes.array,
   activeLang: PropTypes.object,
-  navMain: PropTypes.array
+  navMain: PropTypes.array,
+  apps: PropTypes.array,
+  moreLinks: PropTypes.array
 };
 
 export default Header;

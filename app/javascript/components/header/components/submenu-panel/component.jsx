@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-// import Icon from 'components/ui/icon';
+import Icon from 'components/ui/icon';
 import Search from 'components/ui/search';
+
+import moreIcon from 'assets/icons/more.svg';
 
 import './styles.scss';
 
@@ -12,31 +14,65 @@ class Header extends PureComponent {
   };
 
   render() {
-    const { className } = this.props;
+    const { className, apps, moreLinks } = this.props;
 
     return (
       <div className={`c-submenu-panel ${className || ''}`}>
         <div className="row">
-          <div className="column small-8 small-offset-2">
+          <div className="column small-12 medium-10 medium-offset-1">
             <form onSubmit={this.handleSubmit}>
               <Search className="menu-search" placeholder="Search" />
             </form>
             <div className="menu-section">
               <h4>Other applications</h4>
+              <div className="apps-slider">
+                {apps &&
+                  apps.map(d => (
+                    <a
+                      key={d.label}
+                      href={d.path}
+                      target="_blank"
+                      rel="noopener nofollower"
+                      className="app-card"
+                    >
+                      <div
+                        className="app-image"
+                        style={{ backgroundImage: `url('${d.image}')` }}
+                      />
+                    </a>
+                  ))}
+                <a
+                  href="https://developers.globalforestwatch.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="app-card"
+                >
+                  <div className="all-apps">
+                    <Icon className="icon-more" icon={moreIcon} />
+                    Explore all apps
+                  </div>
+                </a>
+              </div>
             </div>
             <div className="menu-section">
               <h4>More in GFW</h4>
-              <ul className="more-links row column">
-                <li className="small-12 medium-4 large-3">Developer Tools</li>
-                <li className="small-12 medium-4 large-3">How to Portal</li>
-                <li className="small-12 medium-4 large-3">Small Grants Fund</li>
-                <li className="small-12 medium-4 large-3">Open Data Portal</li>
-                <li className="small-12 medium-4 large-3">Contribute Data</li>
+              <ul className="more-links row">
+                {moreLinks.map(m => (
+                  <li
+                    key={m.label}
+                    className="column small-12 medium-4 large-3"
+                  >
+                    <a href={m.path} target="_blank" rel="noopener noreferrer">
+                      <Icon icon={m.icon} />
+                      {m.label}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="menu-section">
-              <a href="/sitemap">Sitemap</a>
-            </div>
+            <a className="title" href="/sitemap">
+              Sitemap
+            </a>
           </div>
         </div>
       </div>
@@ -45,7 +81,9 @@ class Header extends PureComponent {
 }
 
 Header.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  apps: PropTypes.array,
+  moreLinks: PropTypes.array
 };
 
 export default Header;
