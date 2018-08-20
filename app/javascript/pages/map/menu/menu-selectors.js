@@ -31,7 +31,7 @@ export const getAvailableCountries = createSelector(
   (countries, datasets) => {
     if (isEmpty(countries) || isEmpty(datasets)) return null;
     const validIsos = flatten(datasets.filter(d => !d.global).map(d => d.iso));
-    return countries.filter(c => validIsos.indexOf(c.value) > -1);
+    return countries.filter(c => validIsos.includes(c.value));
   }
 );
 
@@ -40,7 +40,7 @@ export const getUnselectedCountries = createSelector(
   (countries, settings) => {
     if (!countries) return null;
     const { selectedCountries } = settings;
-    return countries.filter(c => selectedCountries.indexOf(c.value) === -1);
+    return countries.filter(c => !selectedCountries.includes(c.value));
   }
 );
 
@@ -49,7 +49,7 @@ export const getActiveCountries = createSelector(
   (countries, settings) => {
     if (!countries) return null;
     const { selectedCountries } = settings;
-    return countries.filter(c => selectedCountries.indexOf(c.value) > -1);
+    return countries.filter(c => selectedCountries.includes(c.value));
   }
 );
 
@@ -60,7 +60,7 @@ export const getSections = createSelector(
     return menuSections.map(s => {
       const { slug, subCategories } = s;
       const sectionDatasets =
-        datasets && datasets.filter(d => d.tags.indexOf(slug) > -1);
+        datasets && datasets.filter(d => d.tags.includes(slug));
       let subCategoriesWithDatasets = [];
       if (subCategories) {
         subCategoriesWithDatasets = subCategories.map(subCat => ({
@@ -68,7 +68,7 @@ export const getSections = createSelector(
           datasets:
             sectionDatasets &&
             sectionDatasets.filter(
-              d => d.tags.indexOf(subCat.slug) > -1 && d.global
+              d => d.tags.includes(subCat.slug) && d.global
             )
         }));
       }
@@ -79,9 +79,7 @@ export const getSections = createSelector(
           slug: c.value,
           datasets:
             sectionDatasets &&
-            sectionDatasets.filter(
-              d => !d.global && d.iso.indexOf(c.value) > -1
-            )
+            sectionDatasets.filter(d => !d.global && d.iso.includes(c.value))
         }));
       }
 
@@ -106,12 +104,12 @@ export const getSectionsWithData = createSelector(
         ...s,
         layerCount:
           datasets &&
-          datasets.filter(d => layers && datasetIds.indexOf(d.id) > -1).length,
+          datasets.filter(d => layers && datasetIds.includes(d.id)).length,
         datasets:
           datasets &&
           datasets.map(d => ({
             ...d,
-            active: datasetIds.indexOf(d.id) > -1
+            active: datasetIds.includes(d.id)
           })),
         subCategories:
           subCategories &&
@@ -121,7 +119,7 @@ export const getSectionsWithData = createSelector(
               subCat.datasets &&
               subCat.datasets.map(d => ({
                 ...d,
-                active: datasetIds.indexOf(d.id) > -1
+                active: datasetIds.includes(d.id)
               }))
           }))
       };

@@ -109,6 +109,9 @@ export const getParsedDatasets = createSelector([getDatasets], datasets => {
     const { isSelectorLayer, isMultiSelectorLayer } = info || {};
     const { id, iso } = defaultLayer || {};
 
+    // we need a default layer so we can set it when toggled onto the map
+    if (!defaultLayer || !id || !iso) return null;
+
     return {
       ...d,
       ...info,
