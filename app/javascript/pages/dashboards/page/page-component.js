@@ -7,6 +7,7 @@ import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import LayerSpecProvider from 'providers/layerspec-provider';
 import DatasetsProvider from 'providers/datasets-provider';
+import GeostoreProvider from 'providers/geostore-provider';
 
 import Meta from 'components/meta';
 import Widgets from 'components/widgets';
@@ -100,6 +101,7 @@ class Page extends PureComponent {
         <WhitelistsProvider />
         <LayerSpecProvider />
         <DatasetsProvider />
+        <GeostoreProvider />
         <Meta
           title={title}
           description="Data about forest change, tenure, forest related employment and land use in"

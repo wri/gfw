@@ -20,6 +20,7 @@ import * as countryDataProviderComponent from 'providers/country-data-provider';
 import * as whitelistsProviderComponent from 'providers/whitelists-provider';
 import * as layerSpecProviderComponent from 'providers/layerspec-provider';
 import * as datasetsProviderComponent from 'providers/datasets-provider';
+import * as geostoreProviderComponent from 'providers/geostore-provider';
 
 // Page Reducers
 const pageReducers = {
@@ -40,7 +41,8 @@ const providersReducers = {
   countryData: handleActions(countryDataProviderComponent),
   whitelists: handleActions(whitelistsProviderComponent),
   layerSpec: handleActions(layerSpecProviderComponent),
-  datasets: handleActions(datasetsProviderComponent)
+  datasets: handleActions(datasetsProviderComponent),
+  geostore: handleActions(geostoreProviderComponent)
 };
 
 export default combineReducers({
