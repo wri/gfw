@@ -20,7 +20,9 @@ export const getHeaderData = createThunkAction(
         getExtent(params),
         getExtent({ ...params, forestType: 'plantations' }),
         getLoss(params),
-        getLoss({ ...params, forestType: 'plantations' })
+        getLoss({ ...params, forestType: 'plantations' }),
+        getLoss({ ...params, forestType: 'primary_forest' }),
+        getLoss({ ...params, forestType: 'ifl' })
       ])
       .then(
         axios.spread(
@@ -28,12 +30,16 @@ export const getHeaderData = createThunkAction(
             totalExtent,
             totalPlantationsExtent,
             totalLoss,
-            totalPlantationsLoss
+            totalPlantationsLoss,
+            totalPrimaryLoss,
+            totalIflLoss
           ) => {
             const extent = totalExtent.data.data;
             const loss = totalLoss.data.data;
             const plantationsExtent = totalPlantationsExtent.data.data;
             const plantationsLoss = totalPlantationsLoss.data.data;
+            const primaryLoss = totalPrimaryLoss.data.data;
+            const iflLoss = totalIflLoss.data.data;
             const groupedLoss = loss && groupBy(loss, 'year');
             const latestYear = max(Object.keys(groupedLoss));
             const summedLoss = sumBy(groupedLoss[latestYear], 'area');
@@ -51,6 +57,14 @@ export const getHeaderData = createThunkAction(
               plantationsLoss:
                 plantationsLoss && plantationsLoss.length
                   ? reverse(sortBy(plantationsLoss, 'year'))[0]
+                  : {},
+              primaryLoss:
+                primaryLoss && primaryLoss.length
+                  ? reverse(sortBy(primaryLoss, 'year'))[0]
+                  : {},
+              iflLoss:
+                iflLoss && iflLoss.length
+                  ? reverse(sortBy(iflLoss, 'year'))[0]
                   : {}
             };
             dispatch(setHeaderData(data));

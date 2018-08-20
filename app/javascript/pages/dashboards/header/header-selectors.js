@@ -47,7 +47,13 @@ export const getSentence = createSelector(
       return 'An error occured while fetching data. Please try again later.';
     }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
-    const { initial, withLoss, withPlantationLoss, globalInitial } = sentences;
+    const {
+      initial,
+      withLoss,
+      withPlantationLoss,
+      globalInitial,
+      indoInitial
+    } = sentences;
     const extent =
       data.extent < 1 ? format('.3r')(data.extent) : format('.3s')(data.extent);
     const naturalForest =
@@ -55,7 +61,7 @@ export const getSentence = createSelector(
         ? format('.3r')(data.extent - data.plantationsExtent)
         : format('.3s')(data.extent - data.plantationsExtent);
     const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
-    const lossWithOutPlantations = format('.2s')(
+    const lossWithOutPlantations = format('.3s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
     const emissionsWithoutPlantations = format('.3s')(
@@ -63,6 +69,8 @@ export const getSentence = createSelector(
         data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
       )
     );
+    const primaryLoss = format('.3s')(data.primaryLoss.area || 0);
+    const loss = format('.3s')(data.totalLoss.area || 0);
     const location = locationNames && locationNames.label;
 
     const params = {
@@ -72,7 +80,9 @@ export const getSentence = createSelector(
       percentage: `${percentageCover}%`,
       loss: `${lossWithOutPlantations}ha`,
       emission: `${emissionsWithoutPlantations}t`,
-      year: data.totalLoss.year
+      year: data.totalLoss.year,
+      treeCoverLoss: loss,
+      primaryLoss
     };
 
     let sentence = initial;
@@ -81,6 +91,7 @@ export const getSentence = createSelector(
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
     }
     if (!location) sentence = globalInitial;
+    else if (location === 'Indonesia') sentence = indoInitial;
 
     return {
       sentence,
