@@ -25,7 +25,7 @@ $top-section-height: 125px;
   }
 
   .basemaps-title {
-    font-size: 13px;
+    font-size: rem(13px);
     font-weight: 500;
     line-height: 1.62;
     color: $slate;
@@ -103,7 +103,7 @@ $top-section-height: 125px;
     display: inline-block;
     width: 100%;
     text-align: center;
-    font-size: 10px;
+    font-size: rem(10px);
     text-transform: uppercase;
     color: $slate-light;
     margin: 6px 0 0;

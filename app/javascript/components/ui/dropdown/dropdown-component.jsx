@@ -21,6 +21,7 @@ import './themes/dropdown-button-small.scss';
 import './themes/dropdown-native.scss';
 import './themes/dropdown-native-button.scss';
 import './themes/dropdown-native-plain.scss';
+import './themes/dropdown-native-inline.scss';
 
 class Dropdown extends PureComponent {
   render() {

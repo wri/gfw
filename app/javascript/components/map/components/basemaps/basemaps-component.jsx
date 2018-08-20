@@ -59,6 +59,7 @@ class Basemaps extends React.PureComponent {
         <p className="basemaps-list-item-name">
           {item.label}
           <Dropdown
+            className="theme-dropdown-native-inline"
             value={2015}
             options={[
               { label: 2015, value: 2015 },
