@@ -12,7 +12,6 @@ import decodeLayersConfig from './map-decode-config';
 const getMapUrlState = state => (state.query && state.query.map) || null;
 const getDatasets = state => state.datasets.filter(d => !isEmpty(d.layer));
 const getLoading = state => state.loading;
-const getWidget = state => state[state.widgetKey] || null;
 const getGeostore = state => state.geostore || null;
 
 const reduceParams = params => {
@@ -46,19 +45,10 @@ const reduceSqlParams = params => {
   }, {});
 };
 
-export const getWidgetSettings = createSelector(
-  getWidget,
-  widget => widget && widget.settings
-);
-
-export const getMapSettings = createSelector(
-  [getMapUrlState, getWidgetSettings],
-  (urlState, widgetState) => ({
-    ...initialState,
-    ...urlState,
-    ...(widgetState && widgetState)
-  })
-);
+export const getMapSettings = createSelector([getMapUrlState], urlState => ({
+  ...initialState,
+  ...urlState
+}));
 
 export const getLayers = createSelector(
   getMapSettings,
