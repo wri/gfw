@@ -1,0 +1,13 @@
+@import '~styles/settings.scss';
+
+.c-map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #b3e2ff;
+}
+
+.map-loader {
+  z-index: 10;
+  background-color: rgba($slate, 0.2);
+}

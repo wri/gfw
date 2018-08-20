@@ -13,6 +13,7 @@ import * as HeaderComponent from 'pages/dashboards/header';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as WidgetsComponent from 'components/widgets';
+import * as MapComponent from 'components/map-old';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
@@ -30,7 +31,8 @@ const componentsReducers = {
   share: handleActions(ShareComponent),
   modalMeta: handleActions(ModalMetaComponent),
   header: handleActions(HeaderComponent),
-  widgets: handleActions(WidgetsComponent)
+  widgets: handleActions(WidgetsComponent),
+  map: handleActions(MapComponent)
 };
 
 // Provider Reducers

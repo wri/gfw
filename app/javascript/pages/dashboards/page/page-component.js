@@ -11,8 +11,8 @@ import DatasetsProvider from 'providers/datasets-provider';
 import Meta from 'components/meta';
 import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
-import Map from 'components/map';
-import MapControls from 'components/map/components/map-controls';
+import Map from 'components/map-old';
+import MapControls from 'components/map-old/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -33,6 +33,7 @@ class Page extends PureComponent {
       isGeostoreLoading,
       widgetAnchor,
       activeWidget,
+      setMapZoom,
       widgets,
       title,
       payload,
@@ -88,6 +89,8 @@ class Page extends PureComponent {
               enabled: true,
               top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
             }}
+            handleZoomIn={() => setMapZoom({ sum: 1 })}
+            handleZoomOut={() => setMapZoom({ sum: -1 })}
           />
         )}
         <Share />
@@ -117,7 +120,8 @@ Page.propTypes = {
   activeWidget: PropTypes.string,
   title: PropTypes.string,
   payload: PropTypes.object,
-  query: PropTypes.object
+  query: PropTypes.object,
+  setMapZoom: PropTypes.func
 };
 
 export default Page;

@@ -1,0 +1,11 @@
+#intact_forest_landscapes {
+  polygon-opacity: 0.7;
+  polygon-fill: #136400;
+  line-width: 0;
+  line-opacity: 1;
+}
+
+#intact_forest_landscapes[class_name="IFL change 2000-2013"] {
+  polygon-fill:  rgb(152, 155, 5);
+}
+
