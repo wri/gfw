@@ -76,14 +76,14 @@ class Datasets extends PureComponent {
               {countriesWithoutData.map((c, i, a) => {
                 let separator = ', ';
                 if (i === a.length - 2) separator = ' or ';
-                if (i === a.length - 1) separator = '';
+                if (i === a.length - 1) separator = ' ';
                 return (
                   <Fragment key={c}>
                     <strong>{c}</strong>
                     {separator}
                   </Fragment>
                 );
-              })}{' '}
+              })}
               for {name && name.toLowerCase()}.
             </p>
           )}

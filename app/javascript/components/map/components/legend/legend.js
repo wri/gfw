@@ -14,9 +14,9 @@ const actions = {
   ...modalActions
 };
 
-const mapStateToProps = ({ location, datasets }) => ({
+const mapStateToProps = ({ location, datasets, countryData }) => ({
   layers: getLayers({ ...location }),
-  layerGroups: getLayerGroups({ ...datasets, ...location }),
+  layerGroups: getLayerGroups({ ...datasets, ...location, ...countryData }),
   ...datasets
 });
 
