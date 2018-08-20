@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -29,6 +29,7 @@ class Datasets extends PureComponent {
 
   render() {
     const {
+      name,
       datasets,
       subCategories,
       onToggleLayer,
@@ -68,16 +69,19 @@ class Datasets extends PureComponent {
             )}
           </div>
         </div>
-        {countriesWithoutData && (
-          <p
-            className="no-datasets-message"
-            dangerouslySetInnerHTML={{
-              __html: `No datasets available for <strong>${countriesWithoutData.join(
-                '</strong>, <strong>'
-              )}</strong> in ${'category'}`
-            }}
-          />
-        )}
+        {!!countriesWithoutData.length &&
+          !!selectedCountries.length && (
+            <p className="no-datasets-message">
+              No datasets available for{' '}
+              {countriesWithoutData.map((c, i, a) => (
+                <Fragment key={c}>
+                  <strong>{c}</strong>
+                  {`${i !== a.length - 1 ? ', ' : ''}`}
+                </Fragment>
+              ))}{' '}
+              in {name && name.toLowerCase()}.
+            </p>
+          )}
         {subCategories
           ? subCategories.map(subCat => (
             <MenuBlock key={subCat.slug} {...subCat}>
@@ -114,6 +118,7 @@ class Datasets extends PureComponent {
 }
 
 Datasets.propTypes = {
+  name: PropTypes.string,
   datasets: PropTypes.array,
   onToggleLayer: PropTypes.func,
   onInfoClick: PropTypes.func,
