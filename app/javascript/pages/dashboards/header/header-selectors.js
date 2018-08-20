@@ -61,6 +61,9 @@ export const getSentence = createSelector(
         ? format('.3r')(data.extent - data.plantationsExtent)
         : format('.3s')(data.extent - data.plantationsExtent);
     const percentageCover = format('.2r')(data.extent / data.totalArea * 100);
+    const percentageTreeCover = format('.2r')(
+      (data.extent - data.plantationsExtent) / data.totalArea * 100
+    );
     const lossWithOutPlantations = format('.3s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
@@ -69,6 +72,7 @@ export const getSentence = createSelector(
         data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
       )
     );
+    const emissions = format('.3s')(biomassToCO2(data.totalLoss.emissions));
     const primaryLoss = format('.3s')(data.primaryLoss.area || 0);
     const loss = format('.3s')(data.totalLoss.area || 0);
     const location = locationNames && locationNames.label;
@@ -78,8 +82,10 @@ export const getSentence = createSelector(
       naturalForest: `${naturalForest}ha`,
       location: location || 'the world',
       percentage: `${percentageCover}%`,
+      percentageTreeCover: `${percentageTreeCover}%`,
       loss: `${lossWithOutPlantations}ha`,
       emission: `${emissionsWithoutPlantations}t`,
+      emissionsTreeCover: `${emissions}t`,
       year: data.totalLoss.year,
       treeCoverLoss: loss,
       primaryLoss
