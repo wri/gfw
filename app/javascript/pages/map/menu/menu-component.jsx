@@ -21,7 +21,8 @@ class Menu extends PureComponent {
       loading,
       countries,
       setMenuSettings,
-      ...rest
+      selectedCountries,
+      countriesWithoutData
     } = this.props;
     const { Component } = activeSection || {};
 
@@ -84,7 +85,8 @@ class Menu extends PureComponent {
                 onInfoClick={setModalMeta}
                 countries={countries}
                 setMenuSettings={setMenuSettings}
-                {...rest}
+                selectedCountries={selectedCountries}
+                countriesWithoutData={countriesWithoutData}
               />
             )}
           {loading && <Loader />}
@@ -104,7 +106,8 @@ Menu.propTypes = {
   setModalMeta: PropTypes.func,
   loading: PropTypes.bool,
   countries: PropTypes.array,
-  selectedCountries: PropTypes.array
+  selectedCountries: PropTypes.array,
+  countriesWithoutData: PropTypes.array
 };
 
 export default Menu;
