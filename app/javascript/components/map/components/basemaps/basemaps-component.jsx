@@ -20,13 +20,21 @@ class Basemaps extends React.PureComponent {
   };
 
   state = {
-    items: [{ label: 'Admin', value: 0 }, { label: 'Admin1', value: 1 }],
-    labels: this.props.activeLabels
+    labels: this.props.activeLabels,
+    landsatYears: basemaps.landsat.availableYears.map(y => ({
+      label: y,
+      value: y
+    }))
   };
 
   onLabelsChange = selected => {
     this.setState({ labels: selected });
     this.props.selectLabels(selected);
+  };
+
+  onLansatChange = e => {
+    const activeLandsatYear = parseInt(e.currentTarget.value, 10);
+    this.props.selectBasemap(basemaps.landsat, activeLandsatYear);
   };
 
   renderButtonBasemap(item) {
@@ -48,27 +56,37 @@ class Basemaps extends React.PureComponent {
   }
 
   renderDropdownBasemap(item) {
+    const { selectBasemap, activeBasemap } = this.props;
+    const { landsatYears } = this.state;
+    const year = activeBasemap.year || landsatYears[0].value;
+
     return (
-      <div className="basemaps-list-item-button">
+      <button
+        className="basemaps-list-item-button"
+        onClick={() => selectBasemap(basemaps.landsat, year)}
+      >
         <div
           className="basemaps-list-item-image"
           style={{
             backgroundImage: `url(/assets/basemaps/${item.id}.png)`
           }}
         />
-        <p className="basemaps-list-item-name">
+        {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
+        <p
+          className="basemaps-list-item-name"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* eslint-enable jsx-a11y/no-noninteractive-element-interactions */}
           {item.label}
           <Dropdown
             className="theme-dropdown-native-inline"
-            value={2015}
-            options={[
-              { label: 2015, value: 2015 },
-              { label: 2016, value: 2016 }
-            ]}
+            value={year}
+            options={landsatYears}
             native
+            onChange={this.onLansatChange}
           />
         </p>
-      </div>
+      </button>
     );
   }
 

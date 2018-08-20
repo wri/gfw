@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Downshift from 'downshift';
+import { Tooltip } from 'react-tippy';
+import cx from 'classnames';
+
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
 import infoIcon from 'assets/icons/info.svg';
@@ -24,6 +26,49 @@ import './themes/dropdown-native-plain.scss';
 import './themes/dropdown-native-inline.scss';
 
 class Dropdown extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    label: PropTypes.string,
+    theme: PropTypes.string,
+    options: PropTypes.array,
+    infoAction: PropTypes.func,
+    modalOpen: PropTypes.bool,
+    modalClosing: PropTypes.bool,
+    tooltip: PropTypes.object,
+    value: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    placeholder: PropTypes.string,
+    searchable: PropTypes.bool,
+    noItemsFound: PropTypes.string,
+    optionsAction: PropTypes.func,
+    optionsActionKey: PropTypes.string,
+    arrowPosition: PropTypes.string,
+    noSelectedValue: PropTypes.string,
+    clearable: PropTypes.bool,
+    groupKey: PropTypes.string,
+    checkModalCloing: PropTypes.func,
+    handleStateChange: PropTypes.func,
+    handleClearSelection: PropTypes.func,
+    onInputClick: PropTypes.func,
+    onSelectorClick: PropTypes.func,
+    isDeviceTouch: PropTypes.bool,
+    inputValue: PropTypes.string,
+    isOpen: PropTypes.bool,
+    showGroup: PropTypes.string,
+    handleSelectGroup: PropTypes.func,
+    buildInputProps: PropTypes.func,
+    checkModalClosing: PropTypes.func,
+    items: PropTypes.array,
+    activeValue: PropTypes.object,
+    activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    highlightedIndex: PropTypes.number,
+    native: PropTypes.bool,
+    onChange: PropTypes.func
+  };
+
   render() {
     const {
       className,
@@ -117,9 +162,12 @@ class Dropdown extends PureComponent {
 
     return (
       <div
-        className={`c-dropdown ${
-          native ? 'theme-dropdown-native' : ''
-        } ${theme || ''} ${className || ''}`}
+        className={cx(
+          'c-dropdown',
+          { 'theme-dropdown-native': native },
+          theme,
+          className
+        )}
       >
         {label && (
           <div className="label">
@@ -153,48 +201,5 @@ class Dropdown extends PureComponent {
     );
   }
 }
-
-Dropdown.propTypes = {
-  className: PropTypes.string,
-  label: PropTypes.string,
-  theme: PropTypes.string,
-  options: PropTypes.array,
-  infoAction: PropTypes.func,
-  modalOpen: PropTypes.bool,
-  modalClosing: PropTypes.bool,
-  tooltip: PropTypes.object,
-  value: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-    PropTypes.number
-  ]),
-  placeholder: PropTypes.string,
-  searchable: PropTypes.bool,
-  noItemsFound: PropTypes.string,
-  optionsAction: PropTypes.func,
-  optionsActionKey: PropTypes.string,
-  arrowPosition: PropTypes.string,
-  noSelectedValue: PropTypes.string,
-  clearable: PropTypes.bool,
-  groupKey: PropTypes.string,
-  checkModalCloing: PropTypes.func,
-  handleStateChange: PropTypes.func,
-  handleClearSelection: PropTypes.func,
-  onInputClick: PropTypes.func,
-  onSelectorClick: PropTypes.func,
-  isDeviceTouch: PropTypes.bool,
-  inputValue: PropTypes.string,
-  isOpen: PropTypes.bool,
-  showGroup: PropTypes.string,
-  handleSelectGroup: PropTypes.func,
-  buildInputProps: PropTypes.func,
-  checkModalClosing: PropTypes.func,
-  items: PropTypes.array,
-  activeValue: PropTypes.object,
-  activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  highlightedIndex: PropTypes.number,
-  native: PropTypes.bool,
-  onChange: PropTypes.func
-};
 
 export default Dropdown;

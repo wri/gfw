@@ -54,7 +54,12 @@ export const setLandsatBasemap = createThunkAction(
     if (landsat.url !== null && landsat.url !== currentBasemap.url) {
       dispatch(
         setMapSettings({
-          basemap: { id: 'landsat', url: landsat.url, defaultUrl }
+          basemap: {
+            year,
+            defaultUrl,
+            id: 'landsat',
+            url: landsat.url
+          }
         })
       );
     }
@@ -62,5 +67,6 @@ export const setLandsatBasemap = createThunkAction(
 );
 
 export default {
-  setMapSettings
+  setMapSettings,
+  setLandsatBasemap
 };

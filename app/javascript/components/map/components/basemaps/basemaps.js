@@ -19,20 +19,11 @@ function mapStateToProps(state) {
 
 class BasemapsContainer extends React.Component {
   static propTypes = {
-    mapZoom: PropTypes.number,
-    activeBasemap: PropTypes.string,
     setMapSettings: PropTypes.func.isRequired,
     setLandsatBasemap: PropTypes.func.isRequired
   };
 
-  componentDidUpdate(prevProps) {
-    const { activeBasemap, mapZoom } = this.props;
-    if (prevProps.mapZoom !== mapZoom && activeBasemap.id === 'landsat') {
-      this.selectBasemap(activeBasemap, 2015);
-    }
-  }
-
-  selectBasemap = (basemap, year = 2015) => {
+  selectBasemap = (basemap, year) => {
     if (basemap.dynamic) {
       if (basemap.id === 'landsat') {
         return this.props.setLandsatBasemap(year, basemap.defaultUrl);
