@@ -54,7 +54,7 @@ export const getDatasets = createThunkAction(
             };
           })
         }));
-        dispatch(setDatasets(datasets.map(d => ({ ...d, dataset: d.id }))));
+        dispatch(setDatasets(datasets));
       })
       .catch(err => {
         dispatch(setDatasetsLoading({ loading: false, error: true }));
