@@ -237,25 +237,25 @@ class RecentImageryContainer extends PureComponent {
 
   addBoundsPolygonEvents() {
     const { setRecentImageryShowSettings } = this.props;
-    const { map } = this.middleView;
+    // const { map } = this.middleView;
     let clickTimeout = null;
-
+    // tooltip disabled for now due to Gmaps bug with info windows.
     google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
       this.boundsPolygon.setOptions({
         strokeColor: '#000000',
         strokeOpacity: 0.5,
         strokeWeight: 1
       });
-      this.boundsPolygonInfowindow.open(map);
+      // this.boundsPolygonInfowindow.open(map);
     });
     google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
       this.boundsPolygon.setOptions({
         strokeWeight: 0
       });
-      this.boundsPolygonInfowindow.close();
+      // this.boundsPolygonInfowindow.close();
     });
     google.maps.event.addListener(this.boundsPolygon, 'mousemove', e => {
-      this.boundsPolygonInfowindow.setPosition(e.latLng);
+      // this.boundsPolygonInfowindow.setPosition(e.latLng);
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {
