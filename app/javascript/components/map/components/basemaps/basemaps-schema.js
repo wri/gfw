@@ -31,6 +31,7 @@ export default {
   landsat: {
     id: 'landsat',
     label: 'landsat',
+    dynamic: true,
     defaultUrl:
       'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png'
   },

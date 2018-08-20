@@ -33,11 +33,10 @@ class BasemapsContainer extends React.Component {
   }
 
   selectBasemap = (basemap, year = 2015) => {
-    // for now, handling the dynamic url generation by id
-    // if in the future we decide to have more basemaps with dynamic URLs
-    // this should be replaced with a more general solution.
-    if (basemap.id === 'landsat') {
-      return this.props.setLandsatBasemap(year, basemap.defaultUrl);
+    if (basemap.dynamic) {
+      if (basemap.id === 'landsat') {
+        return this.props.setLandsatBasemap(year, basemap.defaultUrl);
+      }
     }
     return this.props.setMapSettings({ basemap });
   };

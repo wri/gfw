@@ -29,8 +29,50 @@ class Basemaps extends React.PureComponent {
     this.props.selectLabels(selected);
   };
 
+  renderButtonBasemap(item) {
+    const { selectBasemap } = this.props;
+    return (
+      <button
+        className="basemaps-list-item-button"
+        onClick={() => selectBasemap(item)}
+      >
+        <div
+          className="basemaps-list-item-image"
+          style={{
+            backgroundImage: `url(/assets/basemaps/${item.id}.png)`
+          }}
+        />
+        <p className="basemaps-list-item-name">{item.label}</p>
+      </button>
+    );
+  }
+
+  renderDropdownBasemap(item) {
+    return (
+      <div className="basemaps-list-item-button">
+        <div
+          className="basemaps-list-item-image"
+          style={{
+            backgroundImage: `url(/assets/basemaps/${item.id}.png)`
+          }}
+        />
+        <p className="basemaps-list-item-name">
+          {item.label}
+          <Dropdown
+            value={2015}
+            options={[
+              { label: 2015, value: 2015 },
+              { label: 2016, value: 2016 }
+            ]}
+            native
+          />
+        </p>
+      </div>
+    );
+  }
+
   render() {
-    const { onClose, fowardedRef, activeBasemap, selectBasemap } = this.props;
+    const { onClose, fowardedRef, activeBasemap } = this.props;
     return (
       <div className="c-basemaps" ref={fowardedRef}>
         <div className="basemaps-top-section">
@@ -78,18 +120,9 @@ class Basemaps extends React.PureComponent {
                     '-active': activeBasemap.id === item.id
                   })}
                 >
-                  <button
-                    className="basemaps-list-item-button"
-                    onClick={() => selectBasemap(item)}
-                  >
-                    <div
-                      className="basemaps-list-item-image"
-                      style={{
-                        backgroundImage: `url(/assets/basemaps/${item.id}.png)`
-                      }}
-                    />
-                    <p className="basemaps-list-item-name">{item.label}</p>
-                  </button>
+                  {item.dynamic
+                    ? this.renderDropdownBasemap(item)
+                    : this.renderButtonBasemap(item)}
                 </li>
               ))}
             </ul>
