@@ -60,7 +60,7 @@ export const getSentence = createSelector(
       data.extent - data.plantationsExtent < 1
         ? format('.3r')(data.extent - data.plantationsExtent)
         : format('.3s')(data.extent - data.plantationsExtent);
-    const percentageCover = format('.1f')(data.extent / data.totalArea * 100);
+    const percentageCover = format('.2r')(data.extent / data.totalArea * 100);
     const lossWithOutPlantations = format('.3s')(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
