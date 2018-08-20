@@ -61,7 +61,7 @@ export const getSentence = createSelector(
         ? format('.3r')(data.extent - data.plantationsExtent)
         : format('.3s')(data.extent - data.plantationsExtent);
     const percentageCover = format('.2r')(data.extent / data.totalArea * 100);
-    const percentageTreeCover = format('.2r')(
+    const percentageNatForest = format('.2r')(
       (data.extent - data.plantationsExtent) / data.totalArea * 100
     );
     const lossWithOutPlantations = format('.3s')(
@@ -82,7 +82,7 @@ export const getSentence = createSelector(
       naturalForest: `${naturalForest}ha`,
       location: location || 'the world',
       percentage: `${percentageCover}%`,
-      percentageTreeCover: `${percentageTreeCover}%`,
+      percentageNatForest: `${percentageNatForest}%`,
       loss: `${lossWithOutPlantations}ha`,
       emission: `${emissionsWithoutPlantations}t`,
       emissionsTreeCover: `${emissions}t`,
