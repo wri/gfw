@@ -7,7 +7,7 @@ export const initialState = {
       initial:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
       withLoss:
-        'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of forest, equivalent to {emission} of CO₂ of emissions.',
+        'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover, equivalent to {emission} of CO₂ of emissions.',
       globalInitial:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover, equivalent to {emission} of CO₂ of emissions.',
       withPlantationLoss:
