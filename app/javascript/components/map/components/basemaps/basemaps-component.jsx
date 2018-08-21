@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Dropdown from 'components/ui/dropdown';
@@ -71,12 +72,10 @@ class Basemaps extends React.PureComponent {
             backgroundImage: `url(/assets/basemaps/${item.id}.png)`
           }}
         />
-        {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
-        <p
+        <span
           className="basemaps-list-item-name"
           onClick={e => e.stopPropagation()}
         >
-          {/* eslint-enable jsx-a11y/no-noninteractive-element-interactions */}
           {item.label}
           <Dropdown
             className="theme-dropdown-native-inline"
@@ -85,7 +84,7 @@ class Basemaps extends React.PureComponent {
             native
             onChange={this.onLansatChange}
           />
-        </p>
+        </span>
       </button>
     );
   }
