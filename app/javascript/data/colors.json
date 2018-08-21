@@ -12,7 +12,14 @@
   "loss": {
     "main": "#fe6598",
     "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
-    "noLoss": "#e7e5a4"
+    "noLoss": "#e7e5a4",
+    "lossDrivers": {
+      "Large industrial plantation": "#2FBF71",
+      "Clearing/ very young plantation": "#AD3624",
+      "Mosaic of medium-sized plantations": "#F41D36",
+      "Mosaic of small-sized plantations": "#F4DB5A",
+      "Other": "#B235CC"
+    }
   },
   "gain": {
     "main": "#6d6de5",
