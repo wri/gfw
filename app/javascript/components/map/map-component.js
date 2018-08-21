@@ -1,10 +1,12 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
+
 import Map from 'wri-api-components/dist/map';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
-import { LayerManager } from 'layer-manager/dist/react';
+import { LayerManager, Layer } from 'layer-manager/dist/react';
 import { PluginLeaflet } from 'layer-manager';
 
 import Loader from 'components/ui/loader';
@@ -33,7 +35,8 @@ class MapComponent extends PureComponent {
       label,
       setMapSettings,
       bbox,
-      recentImagery
+      recentImagery,
+      setInteraction
     } = this.props;
     return (
       <Fragment>
@@ -57,11 +60,32 @@ class MapComponent extends PureComponent {
         >
           {map => (
             <Fragment>
-              <LayerManager
-                map={map}
-                plugin={PluginLeaflet}
-                layersSpec={activeLayers}
-              />
+              <LayerManager map={map} plugin={PluginLeaflet}>
+                {activeLayers.map(l => {
+                  const { interactionConfig } = l;
+                  const { output, article } = interactionConfig || {};
+                  const layer = {
+                    ...l,
+                    ...(!isEmpty(output) && {
+                      interactivity: output.map(i => i.column),
+                      events: {
+                        click: e => {
+                          setInteraction({
+                            ...e,
+                            label: l.name,
+                            article,
+                            id: l.id,
+                            value: l.id,
+                            config: output
+                          });
+                        }
+                      }
+                    })
+                  };
+
+                  return <Layer key={l.id} {...layer} />;
+                })}
+              </LayerManager>
               <Popup map={map} />
               <MapControlButtons className="map-controls" map={map} share />
               {recentImagery && (
@@ -92,6 +116,7 @@ MapComponent.propTypes = {
   basemap: PropTypes.object,
   label: PropTypes.object,
   setMapSettings: PropTypes.func,
+  setInteraction: PropTypes.func,
   bbox: PropTypes.object,
   recentImagery: PropTypes.bool
 };

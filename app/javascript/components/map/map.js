@@ -1,10 +1,16 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
 import MapComponent from './map-component';
-import actions from './map-actions';
 import { getMapProps } from './map-selectors';
+
+import { setInteraction } from './components/popup/actions';
+import ownActions from './map-actions';
+
+const actions = {
+  setInteraction,
+  ...ownActions
+};
 
 const mapStateToProps = ({ location, datasets, geostore, latest }) => ({
   ...getMapProps({
