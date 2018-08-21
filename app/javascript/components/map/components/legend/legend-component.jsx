@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 
 import Legend, {
   LegendItemToolbar,
@@ -20,8 +19,7 @@ import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
 import ThresholdSelector from './components/threshold-selector';
 import LayerSelectorMenu from './components/layer-selector-menu';
-import LossStatement from './components/loss-statement';
-import CountriesStatement from './components/countries-statement';
+import LayerStatement from './components/layer-statement';
 
 import './legend-styles.scss';
 
@@ -59,13 +57,13 @@ class MapLegend extends Component {
                   isMultiSelectorLayer,
                   selectorLayerConfig,
                   color,
-                  isLossLayer,
                   metadata,
                   id,
-                  global,
-                  iso
-                } = lg;
-                const activeLayer = lg.layers.find(l => l.active) || [];
+                  statementConfig
+                } =
+                  lg || {};
+
+                const activeLayer = (lg && lg.layers.find(l => l.active)) || [];
                 const { legendConfig, params, timelineConfig } =
                   activeLayer || {};
 
@@ -133,16 +131,12 @@ class MapLegend extends Component {
                           {...selectorLayerConfig}
                         />
                       )}
-                    {isLossLayer && (
-                      <LossStatement className="loss-statement" />
+                    {statementConfig && (
+                      <LayerStatement
+                        className="layer-statement"
+                        {...statementConfig}
+                      />
                     )}
-                    {global &&
-                      !isEmpty(iso) && (
-                        <CountriesStatement
-                          className="countries-statement"
-                          isos={iso}
-                        />
-                      )}
                     {timelineConfig && (
                       <Timeline
                         className="timeline"

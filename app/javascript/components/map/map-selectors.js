@@ -7,14 +7,15 @@ import { formatDate } from 'utils/dates';
 
 import initialState from './map-initial-state';
 import decodeLayersConfig from './map-decode-config';
+import statements from './map-statement-config';
 
 // get list data
 const getMapUrlState = state => (state.query && state.query.map) || null;
 const getDatasets = state => state.datasets.filter(d => !isEmpty(d.layer));
 const getLoading = state => state.loading;
-const getWidget = state => state[state.widgetKey] || null;
 const getGeostore = state => state.geostore || null;
 const getLatest = state => state.latest || null;
+const getCountries = state => state.countries || null;
 
 const reduceParams = params => {
   if (!params) return null;
@@ -47,19 +48,10 @@ const reduceSqlParams = params => {
   }, {});
 };
 
-export const getWidgetSettings = createSelector(
-  getWidget,
-  widget => widget && widget.settings
-);
-
-export const getMapSettings = createSelector(
-  [getMapUrlState, getWidgetSettings],
-  (urlState, widgetState) => ({
-    ...initialState,
-    ...urlState,
-    ...(widgetState && widgetState)
-  })
-);
+export const getMapSettings = createSelector([getMapUrlState], urlState => ({
+  ...initialState,
+  ...urlState
+}));
 
 export const getLayers = createSelector(
   getMapSettings,
@@ -107,8 +99,8 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
 });
 
 export const getParsedDatasets = createSelector(
-  [getDatasets, getLatest],
-  (datasets, latest) => {
+  [getDatasets, getLatest, getCountries],
+  (datasets, latest, countries) => {
     if (isEmpty(datasets)) return null;
     return datasets.filter(d => d.env === 'production').map(d => {
       const { layer, metadata } = d;
@@ -123,8 +115,30 @@ export const getParsedDatasets = createSelector(
               l.applicationConfig.default
           )) ||
         layer[0];
-      const { isSelectorLayer, isMultiSelectorLayer } = info || {};
-      const { id, iso } = defaultLayer || {};
+
+      // we need a default layer so we can set it when toggled onto the map
+      if (!defaultLayer) return null;
+
+      const { isSelectorLayer, isMultiSelectorLayer, isLossLayer } = info || {};
+      const { id, iso, applicationConfig } = defaultLayer || {};
+      const { global } = applicationConfig || {};
+
+      let statementConfig = null;
+      if (isLossLayer) {
+        statementConfig = {
+          ...statements.loss
+        };
+      } else if (global && !!iso.length && iso[0]) {
+        statementConfig = {
+          ...statements.isoLayer,
+          tooltipDesc:
+            countries &&
+            countries
+              .filter(c => iso.includes(c.value))
+              .map(c => c.label)
+              .join(', ')
+        };
+      }
 
       return {
         ...d,
@@ -137,19 +151,20 @@ export const getParsedDatasets = createSelector(
             }))
           }
         }),
-        ...(defaultLayer && defaultLayer.applicationConfig),
+        ...applicationConfig,
         tags: flatten(d.vocabulary.map(v => v.tags)),
         layer: id,
         iso,
+        statementConfig,
         layers:
           layer &&
           sortBy(
             layer
               .filter(l => l.env === 'production' && l.published)
               .map((l, i) => {
-                const { layerConfig, applicationConfig } = l;
+                const { layerConfig } = l;
                 const { position, confirmedOnly, multiConfig } =
-                  applicationConfig || {};
+                  l.applicationConfig || {};
                 const {
                   params_config,
                   decode_config,
@@ -159,14 +174,16 @@ export const getParsedDatasets = createSelector(
                 } = layerConfig;
                 const decodeFunction = decodeLayersConfig[l.id];
                 const latestDate = latest && latest[l.id];
+
                 return {
                   ...l,
-                  ...applicationConfig,
-                  position: applicationConfig.default
+                  ...l.applicationConfig,
+                  position: l.applicationConfig.default
                     ? 0
                     : position ||
                       (multiConfig && multiConfig.position) ||
                       i + 1,
+
                   ...(!isEmpty(params_config) && {
                     params: {
                       url: body.url || url,
@@ -210,7 +227,7 @@ export const getActiveDatasets = createSelector(
   (datasets, datasetIds) => {
     if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
     return datasets.filter(
-      d => datasetIds.indexOf(d.id) > -1 && d.env === 'production'
+      d => datasetIds.includes(d.id) && d.env === 'production'
     );
   }
 );
@@ -238,9 +255,10 @@ export const getDatasetsWithConfig = createSelector(
         }),
         layers: d.layers.map(l => ({
           ...l,
+
           visibility,
           opacity,
-          active: layers && layers.indexOf(l.id) > -1,
+          active: layers && layers.includes(l.id),
           ...(!isEmpty(params) && {
             params: {
               ...l.params,
@@ -261,7 +279,7 @@ export const getDatasetsWithConfig = createSelector(
                 maxDate: l.decodeParams && l.decodeParams.endDate,
                 trimEndDate: l.decodeParams && l.decodeParams.endDate,
                 ...(layers &&
-                  layers.indexOf('confirmedOnly') > -1 && {
+                  layers.includes('confirmedOnly') && {
                     confirmedOnly: true
                   }),
                 ...decodeParams

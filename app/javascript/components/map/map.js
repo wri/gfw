@@ -6,17 +6,11 @@ import MapComponent from './map-component';
 import actions from './map-actions';
 import { getMapProps } from './map-selectors';
 
-const mapStateToProps = (
-  { countryData, widgets, location, datasets, geostore, latest },
-  { widgetKey }
-) => ({
+const mapStateToProps = ({ location, datasets, geostore, latest }) => ({
   ...getMapProps({
-    ...countryData,
     ...location,
     ...datasets,
-    ...widgets,
     ...geostore,
-    widgetKey,
     latest: latest.data
   })
 });

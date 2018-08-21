@@ -12,7 +12,7 @@ const Button = props => {
   return (
     <div
       className={`c-pill ${onRemove ? '-removable' : ''} ${
-        !active ? '-inactive' : ''
+        active ? '-active' : ''
       }`}
     >
       {label}

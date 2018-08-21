@@ -60,6 +60,7 @@ class Dropdown extends PureComponent {
         itemToString={i => i && i.label}
         onStateChange={handleStateChange}
         onOuterClick={checkModalClosing}
+        onSelect={selectedItem => onChange(selectedItem)}
         {...this.props}
       >
         {({ getInputProps, getItemProps, getRootProps }) =>

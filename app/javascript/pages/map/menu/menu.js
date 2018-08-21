@@ -21,8 +21,8 @@ const mapStateToProps = ({ mapMenu, datasets, location, countryData }) => ({
   ...getMenuProps({
     ...datasets,
     ...location,
-    ...countryData,
-    ...mapMenu
+    ...mapMenu,
+    ...countryData
   })
 });
 
