@@ -12,12 +12,12 @@
     "value": "forest-change"
   },
   {
-    "label": "Conservation",
-    "value": "conservation"
+    "label": "Biodiversity",
+    "value": "biodiversity"
   },
   {
-    "label": "People",
-    "value": "people"
+    "label": "Land Use",
+    "value": "land-use"
   },
   {
     "label": "Climate",
