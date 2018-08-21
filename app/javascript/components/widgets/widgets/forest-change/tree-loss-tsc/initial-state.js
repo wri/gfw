@@ -1,6 +1,7 @@
 export default {
   title: {
-    withLocation: 'Annual tree cover loss by driver in {location}'
+    withLocation: 'Annual tree cover loss by driver in {location}',
+    global: 'Global annual tree cover loss by driver'
   },
   config: {
     admins: ['country'],
