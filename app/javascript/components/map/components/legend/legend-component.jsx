@@ -27,7 +27,6 @@ class MapLegend extends Component {
   render() {
     const {
       layerGroups,
-      layers,
       onChangeOrder,
       onChangeTimeline,
       onChangeThreshold,
@@ -58,13 +57,14 @@ class MapLegend extends Component {
                   color,
                   metadata,
                   id,
+                  layers,
                   statementConfig
                 } =
                   lg || {};
 
-                const activeLayer = (lg && lg.layers.find(l => l.active)) || [];
-                const { legendConfig, params, timelineConfig } =
-                  activeLayer || {};
+                const activeLayer =
+                  (layers && layers.find(l => l.active)) || {};
+                const { legendConfig, params, timelineConfig } = activeLayer;
 
                 return (
                   <LegendListItem
