@@ -8,7 +8,7 @@ class LandingController < ApplicationController
     @summary = [
       {
         "title" => "Be the first to see new deforestation",
-        "paragraph" => "Subscribe and get email notifications straight to your inbox as forest clearing happens.",
+        "paragraph" => "Subscribe and get email notifications straight to your inbox as forest clearing happens in select countries.",
         "button" => "SUBSCRIBE TO ALERTS",
         "url" => "/my_gfw/subscriptions/new",
         "background_orientation" => "left"

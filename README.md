@@ -165,6 +165,17 @@ We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browse
 
 <a href="https://www.browserstack.com"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" height="70" /></a>
 
+# RW API Documentation for GFW
+
+Map layers and relevent datasets are stored in the [RW-API](http://api.resourcewatch.org/) and the `globalforestwatch.org/v2/map` utilises the [layer-manager](https://github.com/Vizzuality/layer-manager) to render them.
+
+The schema used to style these layers, their legends, and define their interactions are specific to the *Global Forest Watch* platform.
+
+When creating or modifying layers/datasets for GFW, follow the schema and syntax outlined in the [API Documentation](./docs/API_Documentation.md) markdown file.
+
+To view GFW-specific layers and datasets use the following endpoint:
+
+https://api.resourcewatch.org/v1/dataset?app=gfw&includes=layer,vocabulary,metadata&page[size]=200
 
 # License
 
