@@ -3,15 +3,18 @@ $pill-height: rem(20px);
 
 .c-pill {
   height: $pill-height;
-  border: solid 1px $border;
   border-radius: 15px;
   color: $white;
-  background-color: $greyish-brown;
+  background-color: $hot-grey;
   font-size: rem(12px);
   padding: 0 rem(8px);
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &.-active {
+    background-color: $greyish-brown;
+  }
 
   &.-removable {
     padding-right: 0;

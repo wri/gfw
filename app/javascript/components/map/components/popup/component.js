@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 
-import { MapPopup } from 'wri-api-components';
+import { MapPopup } from 'wri-api-components/dist/map';
 
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown/dropdown-component';

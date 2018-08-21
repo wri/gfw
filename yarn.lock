@@ -6666,11 +6666,7 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoist-non-react-statics@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
-
-hoist-non-react-statics@^2.1.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
+hoist-non-react-statics@^2.1.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4, hoist-non-react-statics@^2.5.5:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
@@ -7768,17 +7764,17 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.16.tgz#a29676643512849d3b78c2119cd3a127515c2f5b"
+layer-manager@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.17.tgz#fb73ea8b2bb46f117e9e71f491296e53cd654817"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"
     wri-json-api-serializer "^1.0.1"
 
 layer-manager@^1.0.4:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.14.tgz#77e7a0148ba3b2d6f4fe8e456b98e498a0cef212"
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.19.tgz#c3a57183ab90984639c16ec885da4ff64e6ff86d"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"
@@ -11222,11 +11218,11 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-css-modules@^4.7.1:
-  version "4.7.4"
-  resolved "https://registry.yarnpkg.com/react-css-modules/-/react-css-modules-4.7.4.tgz#952830b656389e63df86f4a40a7d27da67ed91f2"
+react-css-modules@^4.7.6:
+  version "4.7.6"
+  resolved "https://registry.yarnpkg.com/react-css-modules/-/react-css-modules-4.7.6.tgz#747064e553894fd8957a9bfeacc26e7b8a8e1070"
   dependencies:
-    hoist-non-react-statics "^1.2.0"
+    hoist-non-react-statics "^2.5.5"
     lodash "^4.16.6"
     object-unfreeze "^1.1.0"
 
@@ -11452,6 +11448,12 @@ react-transition-group@^2.2.1:
     loose-envify "^1.3.1"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
+
+react-vega@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/react-vega/-/react-vega-4.0.2.tgz#3f2713c3efcc8fbf30e094e5c1ea0035ccea41d6"
+  dependencies:
+    prop-types "^15.6.1"
 
 react-with-direction@^1.3.0:
   version "1.3.0"
@@ -14345,16 +14347,16 @@ wrappy@1, wrappy@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-wri-api-components@^2.0.13:
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.0.13.tgz#9ccde3da9b6023cbf77fe607b309f9f5103c8f90"
+wri-api-components@^2.0.22-alpha-2:
+  version "2.0.22-alpha-2"
+  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.0.22-alpha-2.tgz#b9a6f69526406c80f7f88a96a2a91b26d310c05d"
   dependencies:
     layer-manager "^1.0.4"
     prop-types "^15.6.2"
     rc-slider "^8.6.1"
     rc-tooltip "3.7.0"
-    react-css-modules "^4.7.1"
     react-sortable-hoc "^0.6.8"
+    react-vega "^4.0.2"
     wri-json-api-serializer "^1.0.1"
 
 wri-json-api-serializer@^1.0.1:
