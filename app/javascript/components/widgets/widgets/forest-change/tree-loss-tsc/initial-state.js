@@ -4,7 +4,7 @@ export default {
     global: 'Global annual tree cover loss by driver'
   },
   config: {
-    admins: ['country'],
+    admins: ['global', 'country'],
     forestTypes: ['plantations'],
     landCategories: [],
     sentences: {
