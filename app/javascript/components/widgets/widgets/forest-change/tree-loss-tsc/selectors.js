@@ -137,7 +137,7 @@ export const getSentence = createSelector(
       location:
         currentLabel === 'global'
           ? {
-            value: 'globally',
+            value: 'the world',
             tooltip: 'this dataset is available in certain countries'
           }
           : currentLabel,
