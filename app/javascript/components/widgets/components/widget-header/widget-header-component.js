@@ -108,8 +108,10 @@ class WidgetHeader extends PureComponent {
                 onRequestClose={() => {
                   const isTargetOnTooltip = isParent(
                     this.widgetSettingsRef,
-                    window.event.path
+                    this.widgetSettingsRef.evt
                   );
+                  this.widgetSettingsRef.clearEvt();
+
                   if (!modalClosing && !isTargetOnTooltip) {
                     this.setState({ tooltipOpen: false });
                   }

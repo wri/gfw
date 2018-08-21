@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import Dropdown from 'components/ui/dropdown';
 import Switch from 'components/ui/switch';
+import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
 import './widget-settings-styles.scss';
 
@@ -104,7 +105,8 @@ class WidgetSettings extends PureComponent {
       loading,
       onSettingsChange,
       widget,
-      setModalMeta
+      setModalMeta,
+      getTooltipContentProps
     } = this.props;
     const {
       units,
@@ -133,7 +135,7 @@ class WidgetSettings extends PureComponent {
       datasets;
 
     return (
-      <div className="c-widget-settings">
+      <div className="c-widget-settings" {...getTooltipContentProps()}>
         {(!isEmpty(forestTypes) || !isEmpty(landCategories)) && (
           <div className="intersections">
             {!isEmpty(forestTypes) && (
@@ -351,7 +353,8 @@ WidgetSettings.propTypes = {
   options: PropTypes.object,
   onSettingsChange: PropTypes.func,
   widget: PropTypes.string,
-  setModalMeta: PropTypes.func
+  setModalMeta: PropTypes.func,
+  getTooltipContentProps: PropTypes.func.isRequired
 };
 
-export default WidgetSettings;
+export default withTooltipEvt(WidgetSettings);
