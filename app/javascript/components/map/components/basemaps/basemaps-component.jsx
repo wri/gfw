@@ -13,11 +13,11 @@ import './styles.scss';
 class Basemaps extends React.PureComponent {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
-    fowardedRef: PropTypes.any,
     activeBasemap: PropTypes.object.isRequired,
     selectBasemap: PropTypes.func.isRequired,
     selectLabels: PropTypes.func.isRequired,
-    activeLabels: PropTypes.object.isRequired
+    activeLabels: PropTypes.object.isRequired,
+    getTooltipContentProps: PropTypes.func.isRequired
   };
 
   state = {
@@ -90,9 +90,9 @@ class Basemaps extends React.PureComponent {
   }
 
   render() {
-    const { onClose, fowardedRef, activeBasemap } = this.props;
+    const { onClose, activeBasemap, getTooltipContentProps } = this.props;
     return (
-      <div className="c-basemaps" ref={fowardedRef}>
+      <div className="c-basemaps" {...getTooltipContentProps()}>
         <div className="basemaps-top-section">
           <div className="basemaps-header">
             <h2 className="basemaps-title">Basemap Options</h2>

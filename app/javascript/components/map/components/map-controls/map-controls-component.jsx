@@ -26,9 +26,10 @@ class MapControlsButtons extends PureComponent {
     showBasemaps: false
   };
 
-  onTooltipRequestClose = ref => {
-    const node = ref.current;
-    if (!isParent(node, window.event.path)) {
+  onTooltipRequestClose = () => {
+    const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
+    this.basemapsRef.clearEvt();
+    if (!isTargetOnTooltip) {
       this.toggleBasemaps();
     }
   };
@@ -36,9 +37,8 @@ class MapControlsButtons extends PureComponent {
   toggleBasemaps = () =>
     this.setState(state => ({ showBasemaps: !state.showBasemaps }));
 
-  createBasemapsRef = () => {
-    this.basemaps = React.createRef();
-    return this.basemaps;
+  setBasemapsRef = ref => {
+    this.basemapsRef = ref;
   };
 
   render() {
@@ -74,11 +74,11 @@ class MapControlsButtons extends PureComponent {
               useContext
               interactive
               open={showBasemaps}
-              onRequestClose={() => this.onTooltipRequestClose(this.basemaps)}
+              onRequestClose={this.onTooltipRequestClose}
               html={
                 <Basemaps
                   onClose={this.toggleBasemaps}
-                  ref={this.createBasemapsRef()}
+                  ref={this.setBasemapsRef}
                 />
               }
             >

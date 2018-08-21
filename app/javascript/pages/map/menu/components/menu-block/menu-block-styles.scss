@@ -2,8 +2,6 @@
 
 .c-menu-block {
   position: relative;
-  margin-bottom: rem(20px);
-  padding-bottom: rem(20px);
 
   &__header {
     margin-bottom: rem(20px);
@@ -37,13 +35,18 @@
     }
   }
 
-  &:not(:last-child)::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: rem(-20px);
-    width: calc(100% + #{rem(20px)});
-    height: rem(1px);
-    background-color: rgba($hot-grey, 0.3);
+  &:not(:last-child) {
+    margin-bottom: rem(20px);
+    padding-bottom: rem(20px);
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: rem(-20px);
+      width: calc(100% + #{rem(20px)});
+      height: rem(1px);
+      background-color: rgba($hot-grey, 0.3);
+    }
   }
 }

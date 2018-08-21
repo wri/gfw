@@ -1,0 +1,18 @@
+@import '~styles/settings.scss';
+
+.c-map-controls {
+  width: rem(38px);
+
+  button:first-child {
+    border-bottom: solid 1px rgba($medium-grey, 0.2);
+  }
+
+  .plus-icon {
+    width: rem(13px);
+    height: rem(13px);
+  }
+
+  .minus-icon {
+    width: rem(13px);
+  }
+}

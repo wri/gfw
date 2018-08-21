@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'wri-api-components';
+import Map from 'wri-api-components/dist/map';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
@@ -12,6 +12,7 @@ import NoContent from 'components/ui/no-content';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
+import MapAttributions from './components/map-attributions';
 import RecentImagery from './components/recent-imagery';
 
 import './map-styles.scss';
@@ -69,6 +70,7 @@ class MapComponent extends PureComponent {
             </Fragment>
           )}
         </Map>
+        <MapAttributions className="map-attributions" />
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}

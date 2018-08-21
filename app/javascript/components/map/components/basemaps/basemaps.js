@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setMapSettings, setLandsatBasemap } from 'components/map/map-actions';
 import {
   getBasemap,
@@ -45,11 +46,9 @@ class BasemapsContainer extends React.Component {
   }
 }
 
-const ConnectedBasemaps = connect(mapStateToProps, {
-  setMapSettings,
-  setLandsatBasemap
-})(BasemapsContainer);
-
-export default React.forwardRef((props, ref) => (
-  <ConnectedBasemaps {...props} fowardedRef={ref} />
-));
+export default withTooltipEvt(
+  connect(mapStateToProps, {
+    setMapSettings,
+    setLandsatBasemap
+  })(BasemapsContainer)
+);

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -29,12 +29,14 @@ class Datasets extends PureComponent {
 
   render() {
     const {
+      name,
       datasets,
       subCategories,
       onToggleLayer,
       onInfoClick,
       countries,
-      selectedCountries
+      selectedCountries,
+      countriesWithoutData
     } = this.props;
 
     return (
@@ -46,6 +48,7 @@ class Datasets extends PureComponent {
               selectedCountries.map(c => (
                 <Pill
                   key={c.value}
+                  active={!countriesWithoutData.includes(c.label)}
                   label={c.label}
                   onRemove={() => this.handleRemoveCountry(c.value)}
                 >
@@ -66,6 +69,24 @@ class Datasets extends PureComponent {
             )}
           </div>
         </div>
+        {!!countriesWithoutData.length &&
+          !!selectedCountries.length && (
+            <p className="no-datasets-message">
+              No datasets available in{' '}
+              {countriesWithoutData.map((c, i, a) => {
+                let separator = ', ';
+                if (i === a.length - 2) separator = ' or ';
+                if (i === a.length - 1) separator = ' ';
+                return (
+                  <Fragment key={c}>
+                    <strong>{c}</strong>
+                    {separator}
+                  </Fragment>
+                );
+              })}
+              for {name && name.toLowerCase()}.
+            </p>
+          )}
         {subCategories
           ? subCategories.map(subCat => (
             <MenuBlock key={subCat.slug} {...subCat}>
@@ -102,13 +123,15 @@ class Datasets extends PureComponent {
 }
 
 Datasets.propTypes = {
+  name: PropTypes.string,
   datasets: PropTypes.array,
   onToggleLayer: PropTypes.func,
   onInfoClick: PropTypes.func,
   subCategories: PropTypes.array,
   selectedCountries: PropTypes.array,
   countries: PropTypes.array,
-  setMenuSettings: PropTypes.func
+  setMenuSettings: PropTypes.func,
+  countriesWithoutData: PropTypes.array
 };
 
 export default Datasets;

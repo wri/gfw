@@ -69,6 +69,21 @@ class Dropdown extends PureComponent {
     onChange: PropTypes.func
   };
 
+  stateReducer = (state, changes) => {
+    switch (changes.type) {
+      case Downshift.stateChangeTypes.clickItem: {
+        return {
+          ...changes,
+          highlightedIndex: null,
+          isOpen: false,
+          selectedItem: { ...changes.selectedItem }
+        };
+      }
+      default:
+        return changes;
+    }
+  };
+
   render() {
     const {
       className,
@@ -106,6 +121,7 @@ class Dropdown extends PureComponent {
         itemToString={i => i && i.label}
         onStateChange={handleStateChange}
         onOuterClick={checkModalClosing}
+        stateReducer={this.stateReducer}
         {...this.props}
       >
         {({ getInputProps, getItemProps, getRootProps }) =>

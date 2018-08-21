@@ -36,7 +36,7 @@ class DataAnalysisMenu extends PureComponent {
       }
     ];
     const relocateClass = menuSectionData
-      ? `-relocate${menuSectionData.bigFlap ? '-big' : ''}`
+      ? `-relocate${menuSectionData.large ? '-big' : ''}`
       : '';
 
     return (

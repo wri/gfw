@@ -71,11 +71,11 @@ export const getSentence = createSelector(
     const totalBiomass = data
       .map(d => d.biomass)
       .reduce((sum, d) => (d ? sum + d : sum));
-    const emissionType = unit === 'biomassCarbon' ? 'carbon' : 'CO2';
+    const emissionType = unit === 'biomassCarbon' ? 'carbon' : 'CO\u2082';
     const totalEmissions =
       unit === 'biomassCarbon'
-        ? biomassToC(totalBiomass)
-        : biomassToCO2(totalBiomass);
+        ? biomassToC(totalBiomass) * 1e-6
+        : biomassToCO2(totalBiomass) * 1e-6;
     let indicatorText = '';
     if (indicator && indicator.value === 'mining') {
       indicatorText = ` ${indicator.label.toLowerCase()} regions`;
@@ -85,7 +85,10 @@ export const getSentence = createSelector(
 
     const params = {
       type: emissionType,
-      value: `${format('.3s')(totalEmissions)}t`,
+      value:
+        unit === 'biomassCarbon'
+          ? `${format('.3r')(totalEmissions)}Tg`
+          : `${format('.3r')(totalEmissions)}Mt`,
       location: currentLabel,
       startYear,
       endYear,

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Legend,
+import Legend, {
   LegendItemToolbar,
   LegendItemButtonOpacity,
   LegendItemButtonVisibility,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
   LegendItemTypes,
-  LegendListItem,
-  Icons
-} from 'wri-api-components';
+  LegendListItem
+} from 'wri-api-components/dist/legend';
+
+import Icons from 'wri-api-components/dist/icons';
 
 import Loader from 'components/ui/loader';
 
@@ -19,7 +19,7 @@ import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
 import ThresholdSelector from './components/threshold-selector';
 import LayerSelectorMenu from './components/layer-selector-menu';
-import LossStatement from './components/loss-statement';
+import LayerStatement from './components/layer-statement';
 
 import './legend-styles.scss';
 
@@ -27,7 +27,6 @@ class MapLegend extends Component {
   render() {
     const {
       layerGroups,
-      layers,
       onChangeOrder,
       onChangeTimeline,
       onChangeThreshold,
@@ -56,14 +55,16 @@ class MapLegend extends Component {
                   isMultiSelectorLayer,
                   selectorLayerConfig,
                   color,
-                  isLossLayer,
                   metadata,
-                  id
-                } = lg;
-                const activeLayers = lg.layers.filter(l => l.active) || [];
-                const activeLayer = activeLayers && activeLayers[0];
-                const { legendConfig, params, timelineConfig } =
-                  activeLayer || {};
+                  id,
+                  layers,
+                  statementConfig
+                } =
+                  lg || {};
+
+                const activeLayer =
+                  (layers && layers.find(l => l.active)) || {};
+                const { legendConfig, params, timelineConfig } = activeLayer;
 
                 return (
                   <LegendListItem
@@ -116,7 +117,7 @@ class MapLegend extends Component {
                           className="threshold"
                           threshold={params.thresh || params.threshold}
                           onChange={onChangeThreshold}
-                          layer={activeLayer}
+                          layerData={activeLayer}
                         />
                       )}
                     {(isSelectorLayer || isMultiSelectorLayer) &&
@@ -129,8 +130,11 @@ class MapLegend extends Component {
                           {...selectorLayerConfig}
                         />
                       )}
-                    {isLossLayer && (
-                      <LossStatement className="loss-statement" />
+                    {statementConfig && (
+                      <LayerStatement
+                        className="layer-statement"
+                        {...statementConfig}
+                      />
                     )}
                     {timelineConfig && (
                       <Timeline

@@ -41,6 +41,16 @@
     }
   }
 
+  .no-datasets-message {
+    font-size: rem(12px);
+    color: $slate;
+    margin-bottom: rem(25px);
+
+    strong {
+      font-weight: 500;
+    }
+  }
+
   .no-datasets {
     position: relative;
     font-size: rem(13px);
