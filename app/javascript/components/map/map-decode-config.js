@@ -147,7 +147,7 @@ export default {
           const day = imgData[pixelPos] * 255 + imgData[pixelPos + 1];
           const band3 = data[pixelPos + 2];
           // get confidence
-          const confidence = data[band3];
+          const confidence = band3;
 
           if (
             confidence >= confidenceValue &&
