@@ -22,5 +22,5 @@ export default {
     periodValue: 1,
     layers: ['viirs_fires_alerts']
   },
-  enabled: true
+  enabled: false
 };
