@@ -13,12 +13,14 @@ import * as HeaderComponent from 'pages/dashboards/header';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as WidgetsComponent from 'components/widgets';
+import * as MapComponent from 'components/map-old';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';
 import * as whitelistsProviderComponent from 'providers/whitelists-provider';
 import * as layerSpecProviderComponent from 'providers/layerspec-provider';
 import * as datasetsProviderComponent from 'providers/datasets-provider';
+import * as geostoreProviderComponent from 'providers/geostore-provider';
 
 // Page Reducers
 const pageReducers = {
@@ -30,7 +32,8 @@ const componentsReducers = {
   share: handleActions(ShareComponent),
   modalMeta: handleActions(ModalMetaComponent),
   header: handleActions(HeaderComponent),
-  widgets: handleActions(WidgetsComponent)
+  widgets: handleActions(WidgetsComponent),
+  map: handleActions(MapComponent)
 };
 
 // Provider Reducers
@@ -38,7 +41,8 @@ const providersReducers = {
   countryData: handleActions(countryDataProviderComponent),
   whitelists: handleActions(whitelistsProviderComponent),
   layerSpec: handleActions(layerSpecProviderComponent),
-  datasets: handleActions(datasetsProviderComponent)
+  datasets: handleActions(datasetsProviderComponent),
+  geostore: handleActions(geostoreProviderComponent)
 };
 
 export default combineReducers({
