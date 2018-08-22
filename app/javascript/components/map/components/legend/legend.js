@@ -120,16 +120,16 @@ class Legend extends PureComponent {
     });
   };
 
-  onChangeThreshold = (currentLayer, thresh) => {
+  onChangeParam = (currentLayer, newParam) => {
     const { setMapSettings, layers } = this.props;
     setMapSettings({
       layers: layers.map(l => {
         const layer = { ...l };
-        if (l.layers.indexOf(currentLayer.id) > -1) {
+        if (l.layers.includes(currentLayer.id)) {
           layer.params = {
-            ...layer.params
+            ...layer.params,
+            ...newParam
           };
-          layer.params.thresh = thresh;
         }
         return layer;
       })
@@ -161,7 +161,7 @@ class Legend extends PureComponent {
       onRemoveLayer: this.onRemoveLayer,
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,
-      onChangeThreshold: this.onChangeThreshold,
+      onChangeParam: this.onChangeParam,
       setConfirmed: this.setConfirmed
     });
   }

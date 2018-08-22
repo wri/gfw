@@ -38,6 +38,7 @@ class MapComponent extends PureComponent {
       recentImagery,
       setInteraction
     } = this.props;
+
     return (
       <Fragment>
         <Map

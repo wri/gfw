@@ -17,9 +17,10 @@ import Loader from 'components/ui/loader';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
-import ThresholdSelector from './components/threshold-selector';
+import ParamsSelector from './components/params-selector';
 import LayerSelectorMenu from './components/layer-selector-menu';
 import LayerStatement from './components/layer-statement';
+import LayerMoreInfo from './components/layer-more-info';
 
 import './legend-styles.scss';
 
@@ -33,6 +34,7 @@ class MapLegend extends Component {
       onChangeThreshold,
       onToggleLayer,
       onChangeLayer,
+      onChangeParam,
       onChangeInfo,
       loading,
       ...rest
@@ -64,7 +66,13 @@ class MapLegend extends Component {
                   lg || {};
 
                 const activeLayer = (lg && lg.layers.find(l => l.active)) || [];
-                const { legendConfig, params, timelineConfig } =
+                const {
+                  legendConfig,
+                  params,
+                  timelineConfig,
+                  moreInfo,
+                  paramsSelectorConfig
+                } =
                   activeLayer || {};
 
                 return (
@@ -112,15 +120,17 @@ class MapLegend extends Component {
                   >
                     <LegendItemTypes />
                     {activeLayer &&
+                      paramsSelectorConfig &&
                       params &&
-                      (params.thresh || params.threshold) && (
-                        <ThresholdSelector
-                          className="threshold"
-                          threshold={params.thresh || params.threshold}
-                          onChange={onChangeThreshold}
+                      paramsSelectorConfig.map(paramConfig => (
+                        <ParamsSelector
+                          className="param-selector"
+                          param={paramConfig}
+                          value={params[paramConfig.key] || paramConfig.default}
+                          onChange={onChangeParam}
                           layerData={activeLayer}
                         />
-                      )}
+                      ))}
                     {(isSelectorLayer || isMultiSelectorLayer) &&
                       selectorLayerConfig && (
                         <LayerSelectorMenu
@@ -159,6 +169,9 @@ class MapLegend extends Component {
                         onInfoClick={onChangeInfo}
                       />
                     )}
+                    {moreInfo && (
+                      <LayerMoreInfo className="more-info" {...moreInfo} />
+                    )}
                   </LegendListItem>
                 );
               })}
@@ -182,6 +195,7 @@ MapLegend.propTypes = {
   onChangeTimeline: PropTypes.func,
   onChangeThreshold: PropTypes.func,
   onToggleLayer: PropTypes.func,
+  onChangeParam: PropTypes.func,
   onChangeLayer: PropTypes.func,
   onChangeInfo: PropTypes.func,
   layers: PropTypes.array

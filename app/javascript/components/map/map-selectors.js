@@ -5,6 +5,8 @@ import sortBy from 'lodash/sortBy';
 
 import { formatDate } from 'utils/dates';
 
+import thresholdOptions from 'data/thresholds.json';
+
 import initialState from './map-initial-state';
 import decodeLayersConfig from './map-decode-config';
 import statements from './map-statement-config';
@@ -23,7 +25,7 @@ const reduceParams = params => {
     const newObj = {
       ...obj,
       [param.key]:
-        param.key === 'endDate' && !param.default
+        (param.key === 'endDate' || param.key === 'date') && !param.default
           ? formatDate(new Date())
           : param.default
     };
@@ -123,6 +125,7 @@ export const getParsedDatasets = createSelector(
       const { id, iso, applicationConfig } = defaultLayer || {};
       const { global } = applicationConfig || {};
 
+      // build statement config
       let statementConfig = null;
       if (isLossLayer) {
         statementConfig = {
@@ -142,7 +145,13 @@ export const getParsedDatasets = createSelector(
 
       return {
         ...d,
+        // default layer config
         ...info,
+        ...applicationConfig,
+        layer: id,
+        iso,
+        tags: flatten(d.vocabulary.map(v => v.tags)),
+        // dropdown selector config
         ...((isSelectorLayer || isMultiSelectorLayer) && {
           selectorLayerConfig: {
             options: layer.map(l => ({
@@ -151,11 +160,9 @@ export const getParsedDatasets = createSelector(
             }))
           }
         }),
-        ...applicationConfig,
-        tags: flatten(d.vocabulary.map(v => v.tags)),
-        layer: id,
-        iso,
+        // disclaimer statement config
         statementConfig,
+        // layers config
         layers:
           layer &&
           sortBy(
@@ -178,23 +185,46 @@ export const getParsedDatasets = createSelector(
                 return {
                   ...l,
                   ...l.applicationConfig,
+                  // sorting position
                   position: l.applicationConfig.default
                     ? 0
                     : position ||
                       (multiConfig && multiConfig.position) ||
                       i + 1,
-
+                  // params for tile url
                   ...(!isEmpty(params_config) && {
                     params: {
                       url: body.url || url,
                       ...reduceParams(params_config)
                     }
                   }),
+                  // params selector config
+                  ...(params_config && {
+                    paramsSelectorConfig: params_config
+                      .filter(p => p.key !== 'dataMaxZoom')
+                      .map(p => {
+                        const isThresh =
+                          p.key === 'threshold' || p.key === 'thresh';
+                        const prefixEnd = isThresh ? 'with' : 'for';
+                        const suffix = isThresh ? ' canopy density.' : '';
+                        const options = isThresh ? thresholdOptions : p.options;
+                        return {
+                          ...p,
+                          options,
+                          prefix: `Displaying ${
+                            l.name ? l.name.toLowerCase() : ''
+                          } ${prefixEnd} `,
+                          suffix
+                        };
+                      })
+                  }),
+                  // params for sql query
                   ...(!isEmpty(sql_config) && {
                     sqlParams: {
                       ...reduceSqlParams(sql_config)
                     }
                   }),
+                  // decode func and params for canvas layers
                   ...decodeFunction,
                   ...(!isEmpty(decode_config) && {
                     decodeParams: {
@@ -205,6 +235,7 @@ export const getParsedDatasets = createSelector(
                       })
                     }
                   }),
+                  // special key for GLAD alerts
                   ...(confirmedOnly && {
                     id: 'confirmedOnly'
                   })

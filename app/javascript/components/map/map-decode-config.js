@@ -144,7 +144,8 @@ const decodes = {
       interval: 'weeks',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 50
+      speed: 50,
+      startDate: '2015-01-01'
     }
   },
   biomassLoss: {
