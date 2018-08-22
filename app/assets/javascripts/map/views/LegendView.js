@@ -16,6 +16,7 @@ define(
     'helpers/datasetsHelper',
     'text!map/templates/legend/legend.handlebars',
     'text!map/templates/legend/loss.handlebars',
+    'text!map/templates/legend/loss_by_driver.handlebars',
     'text!map/templates/legend/imazon.handlebars',
     'text!map/templates/legend/fires.handlebars',
     'text!map/templates/legend/forest2000.handlebars',
@@ -92,6 +93,7 @@ define(
     datasetsHelper,
     tpl,
     lossTpl,
+    lossByDriverTpl,
     imazonTpl,
     firesTpl,
     forest2000Tpl,
@@ -176,6 +178,7 @@ define(
        */
       detailsTemplates: {
         loss: Handlebars.compile(lossTpl),
+        loss_by_driver: Handlebars.compile(lossByDriverTpl),
         imazon: Handlebars.compile(imazonTpl),
         forest2000: Handlebars.compile(forest2000Tpl),
         forest2010: Handlebars.compile(forest2010Tpl),

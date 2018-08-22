@@ -178,6 +178,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'drc_forma_250',
       'prodes',
       'loss',
+      'loss_by_driver',
       'forestgain',
       'gfw_landsat_alerts',
       'umd_as_it_happens',

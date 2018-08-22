@@ -26,6 +26,7 @@ define([
      */
     supportedLayers: [
       'loss',
+      'loss_by_driver',
       'forestgain',
       'forest2000',
       'forest2010'
