@@ -5,13 +5,18 @@ export default {
   },
   config: {
     admins: ['global', 'country'],
-    selectors: ['threshold', 'extentYears', 'startYears', 'endYears'],
+    selectors: ['thresholds', 'extentYears', 'startYears', 'endYears'],
     layers: ['loss_by_driver'],
     sentences: {
       initial:
         "Between {startYear} and {endYear}, {location} lost {loss} of tree cover loss. This loss is equal to {percent} of the area's tree cover in {extentYear}, and equivalent to {emissions} of CO\u2082 emissions."
     }
   },
-  enabled: true,
-  clearable: false
+  settings: {
+    threshold: 30,
+    startYear: 2001,
+    endYear: 2017,
+    layers: ['loss_by_driver']
+  },
+  enabled: true
 };
