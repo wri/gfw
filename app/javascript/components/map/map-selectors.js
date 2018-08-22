@@ -181,7 +181,7 @@ export const getParsedDatasets = createSelector(
                 } = layerConfig;
                 const decodeFunction = decodeLayersConfig[l.id];
                 const latestDate = latest && latest[l.id];
-
+                // console.log(latestDate);
                 return {
                   ...l,
                   ...l.applicationConfig,
@@ -195,13 +195,16 @@ export const getParsedDatasets = createSelector(
                   ...(!isEmpty(params_config) && {
                     params: {
                       url: body.url || url,
-                      ...reduceParams(params_config)
+                      ...reduceParams(params_config),
+                      ...(latestDate && {
+                        date: latestDate.split('-').join('')
+                      })
                     }
                   }),
                   // params selector config
                   ...(params_config && {
                     paramsSelectorConfig: params_config
-                      .filter(p => p.key !== 'dataMaxZoom')
+                      .filter(p => p.key !== 'dataMaxZoom' && p.key !== 'date')
                       .map(p => {
                         const isThresh =
                           p.key === 'threshold' || p.key === 'thresh';

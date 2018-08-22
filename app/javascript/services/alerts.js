@@ -60,6 +60,11 @@ export const fetchGLADLatest = () => {
   return request.get(url, 3600, 'gladRequest');
 };
 
+export const fetchFormaLatest = () => {
+  const url = 'https://api-dot-forma-250.appspot.com/tiles/latest';
+  return request.get(url, 3600, 'formaRequest');
+};
+
 export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
   if (subRegion) {

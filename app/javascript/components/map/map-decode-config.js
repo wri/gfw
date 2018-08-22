@@ -3,11 +3,17 @@ import { scalePow } from 'd3-scale';
 import { dateDiffInDays, getYear } from 'utils/dates';
 
 const getExp = z => (z < 11 ? 0.3 + (z - 3) / 20 : 1);
+
 const getScale = z =>
   scalePow()
     .exponent(getExp(z))
     .domain([0, 256])
     .range([0, 256]);
+
+const padNumber = number => {
+  const s = `00${number}`;
+  return s.substr(s.length - 3);
+};
 
 const decodes = {
   treeCover: {
@@ -134,9 +140,9 @@ const decodes = {
 
       // fixed variables
       const imgData = data;
+
       const { startDate, endDate, minDate, maxDate, weeks, confirmedOnly } =
         params || {};
-
       const minDateTime = new Date(minDate);
       const maxDateTime = new Date(maxDate);
       const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
@@ -154,6 +160,7 @@ const decodes = {
       // get start and end day
       const startDay = activeStartDay || rangeStartDate || 0;
       const endDay = activeEndDay || numberOfDays;
+
       const confidenceValue = confirmedOnly ? 200 : 0;
       const pixelComponents = 4; // RGBA
       let pixelPos = 0;
@@ -291,6 +298,70 @@ const decodes = {
       }
     },
     decodeParams: {}
+  },
+  forma: {
+    decodeFunction: (data, w, h, z, params) => {
+      'use asm';
+
+      const imgData = data;
+      const components = 4;
+
+      const { startDate, endDate, minDate, maxDate, weeks } = params || {};
+
+      const minDateTime = new Date(minDate);
+      const maxDateTime = new Date(maxDate);
+      const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
+
+      // timeline or hover effect active range
+      const startDateTime = new Date(startDate);
+      const endDateTime = new Date(endDate);
+      const activeStartDay =
+        numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
+      const activeEndDay =
+        numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
+
+      // show specified weeks from end date
+      const rangeStartDate = weeks && numberOfDays - 7 * weeks;
+      // get start and end day
+      const startDay = activeStartDay || rangeStartDate || 0;
+      const endDay = activeEndDay || numberOfDays;
+
+      for (let i = 0; i < w; ++i) {
+        for (let j = 0; j < h; ++j) {
+          const pixelPos = (j * w + i) * components;
+          const g = imgData[pixelPos + 1];
+          const b = imgData[pixelPos + 2];
+          const timeLoss = 255 * g + b;
+          let intensity = 0;
+
+          if (timeLoss >= startDay && timeLoss <= endDay) {
+            const band3_str = padNumber(imgData[pixelPos].toString());
+            const intensity_raw = parseInt(band3_str.slice(1, 3), 10);
+            // Scale the intensity to make it visible
+            intensity = intensity_raw * 55;
+            // Set intensity to 255 if it's > than that value
+            if (intensity > 255) {
+              intensity = 255;
+            }
+
+            imgData[pixelPos] = 220;
+            imgData[pixelPos + 1] = 102;
+            imgData[pixelPos + 2] = 153;
+            imgData[pixelPos + 3] = intensity;
+
+            continue;
+          }
+          imgData[pixelPos + 3] = 0;
+        }
+      }
+    },
+    decodeParams: {
+      interval: 'weeks',
+      intervalStep: 1,
+      dateFormat: 'YYYY-MM-DD',
+      speed: 50,
+      startDate: '2015-01-01'
+    }
   }
 };
 
@@ -301,5 +372,6 @@ export default {
   'dcb082a9-6fd7-4564-9110-ddf5d3d6681e': decodes.treeLossByDriver,
   'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
   'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
-  'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass
+  'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
+  '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma
 };
