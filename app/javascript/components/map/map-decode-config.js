@@ -15,6 +15,33 @@ const padNumber = number => {
   return s.substr(s.length - 3);
 };
 
+const getDayRange = params => {
+  const { startDate, endDate, minDate, maxDate, weeks } = params || {};
+
+  const minDateTime = new Date(minDate);
+  const maxDateTime = new Date(maxDate);
+  const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
+
+  // timeline or hover effect active range
+  const startDateTime = new Date(startDate);
+  const endDateTime = new Date(endDate);
+  const activeStartDay =
+    numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
+  const activeEndDay = numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
+
+  // show specified weeks from end date
+  const rangeStartDate = weeks && numberOfDays - 7 * weeks;
+  // get start and end day
+  const startDay = activeStartDay || rangeStartDate || 0;
+  const endDay = activeEndDay || numberOfDays;
+
+  return {
+    startDay,
+    endDay,
+    numberOfDays
+  };
+};
+
 const decodes = {
   treeCover: {
     decodeFunction: (data, w, h, z) => {
@@ -73,9 +100,7 @@ const decodes = {
       interval: 'years',
       intervalStep: 1,
       dateFormat: 'YYYY',
-      speed: 100,
-      startDate: '2001-01-01',
-      endDate: '2017-12-01'
+      speed: 100
     }
   },
   treeLossByDriver: {
@@ -94,26 +119,23 @@ const decodes = {
         for (let j = 0; j < h; ++j) {
           const pixelPos = (j * w + i) * components;
           const intensity = imgData[pixelPos];
+          const yearLoss = 2000 + imgData[pixelPos + 2];
           const lossCat = imgData[pixelPos + 1];
           let rgb = [255, 255, 255];
 
-          if (lossCat === 0) {
-            rgb = [47, 191, 113]; // forestry
-          } else if (lossCat === 1) {
-            rgb = [173, 54, 36]; // fire
-          } else if (lossCat === 2) {
+          if (lossCat === 1) {
             rgb = [244, 29, 54]; // commodities
+          } else if (lossCat === 2) {
+            rgb = [239, 211, 26]; // agri
           } else if (lossCat === 3) {
-            rgb = [244, 219, 90]; // agri
+            rgb = [47, 191, 113]; // forestry
           } else if (lossCat === 4) {
-            rgb = [178, 53, 204]; // urban
+            rgb = [173, 54, 36]; // fire
           } else if (lossCat === 5) {
-            rgb = [211, 211, 211]; // zero or minor loss
+            rgb = [178, 53, 204]; // urban
           }
 
-          const yearLoss = 2000 + imgData[pixelPos + 2];
-
-          if (yearLoss >= yearStart && yearLoss <= yearEnd) {
+          if (yearLoss >= yearStart && yearLoss < yearEnd) {
             imgData[pixelPos] = rgb[0];
             imgData[pixelPos + 1] =
               72 - z + rgb[1] - 3 * myScale(intensity) / z;
@@ -129,9 +151,7 @@ const decodes = {
       interval: 'years',
       intervalStep: 1,
       dateFormat: 'YYYY',
-      speed: 100,
-      startDate: '2001-01-01',
-      endDate: '2017-12-01'
+      speed: 100
     }
   },
   GLADs: {
@@ -140,26 +160,9 @@ const decodes = {
 
       // fixed variables
       const imgData = data;
+      const { confirmedOnly } = params;
 
-      const { startDate, endDate, minDate, maxDate, weeks, confirmedOnly } =
-        params || {};
-      const minDateTime = new Date(minDate);
-      const maxDateTime = new Date(maxDate);
-      const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
-
-      // timeline or hover effect active range
-      const startDateTime = new Date(startDate);
-      const endDateTime = new Date(endDate);
-      const activeStartDay =
-        numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
-      const activeEndDay =
-        numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
-
-      // show specified weeks from end date
-      const rangeStartDate = weeks && numberOfDays - 7 * weeks;
-      // get start and end day
-      const startDay = activeStartDay || rangeStartDate || 0;
-      const endDay = activeEndDay || numberOfDays;
+      const { startDay, endDay, numberOfDays } = getDayRange(params) || {};
 
       const confidenceValue = confirmedOnly ? 200 : 0;
       const pixelComponents = 4; // RGBA
@@ -207,8 +210,7 @@ const decodes = {
       interval: 'weeks',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 50,
-      startDate: '2015-01-01'
+      speed: 50
     }
   },
   biomassLoss: {
@@ -306,35 +308,17 @@ const decodes = {
       const imgData = data;
       const components = 4;
 
-      const { startDate, endDate, minDate, maxDate, weeks } = params || {};
-
-      const minDateTime = new Date(minDate);
-      const maxDateTime = new Date(maxDate);
-      const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
-
-      // timeline or hover effect active range
-      const startDateTime = new Date(startDate);
-      const endDateTime = new Date(endDate);
-      const activeStartDay =
-        numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
-      const activeEndDay =
-        numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
-
-      // show specified weeks from end date
-      const rangeStartDate = weeks && numberOfDays - 7 * weeks;
-      // get start and end day
-      const startDay = activeStartDay || rangeStartDate || 0;
-      const endDay = activeEndDay || numberOfDays;
+      const { startDay, endDay } = getDayRange(params) || {};
 
       for (let i = 0; i < w; ++i) {
         for (let j = 0; j < h; ++j) {
           const pixelPos = (j * w + i) * components;
           const g = imgData[pixelPos + 1];
           const b = imgData[pixelPos + 2];
-          const timeLoss = 255 * g + b;
+          const day = 255 * g + b;
           let intensity = 0;
 
-          if (timeLoss >= startDay && timeLoss <= endDay) {
+          if (day >= startDay && day <= endDay) {
             const band3_str = padNumber(imgData[pixelPos].toString());
             const intensity_raw = parseInt(band3_str.slice(1, 3), 10);
             // Scale the intensity to make it visible
@@ -348,8 +332,6 @@ const decodes = {
             imgData[pixelPos + 1] = 102;
             imgData[pixelPos + 2] = 153;
             imgData[pixelPos + 3] = intensity;
-
-            continue;
           }
           imgData[pixelPos + 3] = 0;
         }
@@ -362,6 +344,58 @@ const decodes = {
       speed: 50,
       startDate: '2015-01-01'
     }
+  },
+  terra: {
+    decodeFunction: (data, w, h, z, params) => {
+      'use asm';
+
+      const imgData = data;
+      const components = 4;
+
+      const { startDay, endDay, numberOfDays } = getDayRange(params) || {};
+
+      for (let i = 0; i < w; ++i) {
+        for (let j = 0; j < h; ++j) {
+          const pixelPos = (j * w + i) * components;
+
+          const r = imgData[pixelPos];
+          const g = imgData[pixelPos + 1];
+          const b = imgData[pixelPos + 2];
+          const intensity = Math.min(b * 4, 255);
+
+          const day = r + g;
+
+          if (day >= startDay && day <= endDay) {
+            if (day >= numberOfDays - 7 && day <= numberOfDays) {
+              imgData[pixelPos] = 219;
+              imgData[pixelPos + 1] = 168;
+              imgData[pixelPos + 2] = 0;
+              imgData[pixelPos + 3] = intensity;
+            } else {
+              imgData[pixelPos] = 220;
+              imgData[pixelPos + 1] = 102;
+              imgData[pixelPos + 2] = 153;
+              imgData[pixelPos + 3] = intensity;
+
+              if (day > this.top_date) {
+                imgData[pixelPos] = 233;
+                imgData[pixelPos + 1] = 189;
+                imgData[pixelPos + 2] = 21;
+                imgData[pixelPos + 3] = intensity;
+              }
+            }
+          }
+
+          imgData[pixelPos + 3] = 0;
+        }
+      }
+    },
+    decodeParams: {
+      interval: 'months',
+      intervalStep: 1,
+      dateFormat: 'YYYY-MM-DD',
+      speed: 50
+    }
   }
 };
 
@@ -373,5 +407,6 @@ export default {
   'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
   'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
   'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
-  '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma
+  '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
+  '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terra
 };

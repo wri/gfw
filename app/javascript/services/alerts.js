@@ -15,7 +15,9 @@ const QUERIES = {
   firesIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   viirsAlerts:
-    '{location}?group=true&period={period}&thresh=0&geostore={geostore}'
+    '{location}?group=true&period={period}&thresh=0&geostore={geostore}',
+  terraAlerts:
+    'SELECT count(*) as alerts FROM data GROUP BY day, year ORDER BY year, day'
 };
 
 const getLocationQuery = (country, region, subRegion) =>
@@ -55,16 +57,6 @@ export const fetchGladIntersectionAlerts = ({
   return request.get(url, 3600, 'gladRequest');
 };
 
-export const fetchGLADLatest = () => {
-  const url = `${REQUEST_URL}/glad-alerts/latest`;
-  return request.get(url, 3600, 'gladRequest');
-};
-
-export const fetchFormaLatest = () => {
-  const url = 'https://api-dot-forma-250.appspot.com/tiles/latest';
-  return request.get(url, 3600, 'formaRequest');
-};
-
 export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
   if (subRegion) {
@@ -98,4 +90,23 @@ export const fetchViirsAlerts = ({
     .replace('{geostore}', subRegion && geostore ? geostore.hash : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
+};
+
+// Latest Dates for Alerts
+
+export const fetchGLADLatest = () => {
+  const url = `${REQUEST_URL}/glad-alerts/latest`;
+  return request.get(url, 3600, 'gladRequest');
+};
+
+export const fetchFormaLatest = () => {
+  const url = 'https://api-dot-forma-250.appspot.com/tiles/latest';
+  return request.get(url, 3600, 'formaRequest');
+};
+
+export const fetchTerraLatest = () => {
+  const url = `https://production-api.globalforestwatch.org/query/bb80312e-b514-48ad-9252-336408603591/?sql=${
+    QUERIES.terraAlerts
+  }`;
+  return request.get(url, 3600, 'terraRequest');
 };

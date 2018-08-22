@@ -181,7 +181,7 @@ export const getParsedDatasets = createSelector(
                 } = layerConfig;
                 const decodeFunction = decodeLayersConfig[l.id];
                 const latestDate = latest && latest[l.id];
-                // console.log(latestDate);
+
                 return {
                   ...l,
                   ...l.applicationConfig,
