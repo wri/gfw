@@ -152,7 +152,7 @@
     "three": "0.87.1",
     "three-orbit-controls": "82.1.0",
     "webpack-manifest-plugin": "1.3.1",
-    "wri-api-components": "^2.0.22-alpha-2",
+    "wri-api-components": "^2.1.0",
     "wri-json-api-serializer": "^1.0.1"
   }
 }
