@@ -40,6 +40,7 @@ class Slider extends PureComponent {
       value,
       ...rest
     } = this.props;
+
     const Component = range ? Range : RCSlider;
     const handleNum = value.length;
     const handleStyles = fill(Array(handleNum), { visibility: 'hidden' });

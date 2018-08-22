@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 
-import { addToDate, dateDiffInDays, formatDate } from 'utils/dates';
+import {
+  addToDate,
+  dateDiffInDays,
+  formatDate,
+  formatDatePretty
+} from 'utils/dates';
 
 import TimelineComponent from './component';
 import { getTicks } from './selectors';
@@ -104,6 +109,11 @@ class TimelineContainer extends PureComponent {
     return range.map(r => formatDate(addToDate(minDate, r)));
   };
 
+  formatDateString = value => {
+    const { minDate, dateFormat } = this.props;
+    return formatDatePretty(addToDate(minDate, value), dateFormat);
+  };
+
   render() {
     return createElement(TimelineComponent, {
       ...this.props,
@@ -113,7 +123,7 @@ class TimelineContainer extends PureComponent {
       handleTogglePlay: this.handleTogglePlay,
       handleOnChange: this.handleOnChange,
       handleOnAfterChange: this.handleOnAfterChange,
-      formatDate: this.formatDate
+      formatDateString: this.formatDateString
     });
   }
 }
@@ -127,7 +137,8 @@ TimelineContainer.propTypes = {
   handleChange: PropTypes.func,
   intervalStep: PropTypes.number,
   interval: PropTypes.string,
-  speed: PropTypes.number
+  speed: PropTypes.number,
+  dateFormat: PropTypes.string
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);

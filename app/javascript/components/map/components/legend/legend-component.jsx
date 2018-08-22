@@ -124,6 +124,7 @@ class MapLegend extends Component {
                       params &&
                       paramsSelectorConfig.map(paramConfig => (
                         <ParamsSelector
+                          key={`${activeLayer.name}-${paramConfig.key}`}
                           className="param-selector"
                           param={paramConfig}
                           value={params[paramConfig.key] || paramConfig.default}

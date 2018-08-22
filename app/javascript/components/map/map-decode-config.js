@@ -72,6 +72,62 @@ const decodes = {
       endDate: '2017-12-01'
     }
   },
+  treeLossByDriver: {
+    decodeFunction: (data, w, h, z, params) => {
+      'use asm';
+
+      const components = 4;
+      const imgData = data;
+      const myScale = getScale(z);
+
+      const { startDate, endDate } = params;
+      const yearStart = getYear(startDate);
+      const yearEnd = getYear(endDate);
+
+      for (let i = 0; i < w; ++i) {
+        for (let j = 0; j < h; ++j) {
+          const pixelPos = (j * w + i) * components;
+          const intensity = imgData[pixelPos];
+          const lossCat = imgData[pixelPos + 1];
+          let rgb = [255, 255, 255];
+
+          if (lossCat === 0) {
+            rgb = [47, 191, 113]; // forestry
+          } else if (lossCat === 1) {
+            rgb = [173, 54, 36]; // fire
+          } else if (lossCat === 2) {
+            rgb = [244, 29, 54]; // commodities
+          } else if (lossCat === 3) {
+            rgb = [244, 219, 90]; // agri
+          } else if (lossCat === 4) {
+            rgb = [178, 53, 204]; // urban
+          } else if (lossCat === 5) {
+            rgb = [211, 211, 211]; // zero or minor loss
+          }
+
+          const yearLoss = 2000 + imgData[pixelPos + 2];
+
+          if (yearLoss >= yearStart && yearLoss <= yearEnd) {
+            imgData[pixelPos] = rgb[0];
+            imgData[pixelPos + 1] =
+              72 - z + rgb[1] - 3 * myScale(intensity) / z;
+            imgData[pixelPos + 2] = 33 - z + rgb[2] - intensity / z;
+            imgData[pixelPos + 3] = z < 13 ? myScale(intensity) : intensity;
+          } else {
+            imgData[pixelPos + 3] = 0;
+          }
+        }
+      }
+    },
+    decodeParams: {
+      interval: 'years',
+      intervalStep: 1,
+      dateFormat: 'YYYY',
+      speed: 100,
+      startDate: '2001-01-01',
+      endDate: '2017-12-01'
+    }
+  },
   GLADs: {
     decodeFunction: (data, w, h, z, params) => {
       'use asm';
@@ -242,6 +298,7 @@ export default {
   '78747ea1-34a9-4aa7-b099-bdb8948200f4': decodes.treeCover,
   'c05c32fd-289c-4b20-8d73-dc2458234e04': decodes.treeCover,
   'c3075c5a-5567-4b09-bc0d-96ed1673f8b6': decodes.treeCoverLoss,
+  'dcb082a9-6fd7-4564-9110-ddf5d3d6681e': decodes.treeLossByDriver,
   'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
   'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
   'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass
