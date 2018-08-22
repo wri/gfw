@@ -136,6 +136,20 @@ class Legend extends PureComponent {
     });
   };
 
+  setConfirmed = layer => {
+    const { layers, setMapSettings } = this.props;
+    const { dataset } = layer;
+    const datasetIndex = layers.findIndex(l => l.dataset === dataset);
+    const newLayers = [...layers];
+    let newDataset = newLayers[datasetIndex];
+    newDataset = {
+      ...newDataset,
+      confirmedOnly: true
+    };
+    newLayers[datasetIndex] = newDataset;
+    setMapSettings({ layers: newLayers || [] });
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
@@ -147,7 +161,8 @@ class Legend extends PureComponent {
       onRemoveLayer: this.onRemoveLayer,
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,
-      onChangeThreshold: this.onChangeThreshold
+      onChangeThreshold: this.onChangeThreshold,
+      setConfirmed: this.setConfirmed
     });
   }
 }
