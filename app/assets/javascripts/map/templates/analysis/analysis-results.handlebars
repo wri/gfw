@@ -38,6 +38,13 @@
       </li>
     {{/if}}
 
+    {{#if resource.baselayers.loss_by_driver}}
+      <li>
+        <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{resource.dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
+        <span class="stats-count" style="color: {{resource.baselayers.loss_by_driver.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
+      </li>
+    {{/if}}
+
     {{#if resource.baselayers.forestgain}}
       <li>
         <span class="stats-title">Gain 2001-2012</span>
