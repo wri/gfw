@@ -282,6 +282,7 @@ define(
         'click .js-toggle-threshold': 'toggleThreshold',
         'change .js-biodiversity-layer': 'toggleBiodiversityLayer',
         'change .js-tree-cover-year': 'toggleTreeCoverYear',
+        'change .js-loss-type': 'toggleLossType',
         'change .js-tree-plantation': 'togglePlantation',
         'change .js-tree-plantation-country': 'togglePlantationCountry',
         'change .js-toggle-concessions': 'toggleConcessions',
@@ -717,6 +718,14 @@ define(
         var layerSlugRemove = '';
         this.presenter.toggleLayer('forest2000');
         this.presenter.toggleLayer('forest2010');
+      },
+
+      // tree loss type
+      toggleLossType: function(e) {
+        var layerSlug = $(e.currentTarget).val();
+        var layerSlugRemove = '';
+        this.presenter.toggleLayer('loss');
+        this.presenter.toggleLayer('loss_by_driver');
       },
 
       toggleBiodiversityLayer: function(e) {

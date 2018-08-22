@@ -1,14 +1,23 @@
 {{#if threshold}}
   <div class="layer-details layer-details-loss">
-    <p class="canopy" title="Click the gear icon to change the tree cover canopy density">Displaying loss with <span class="canopy-button js-toggle-threshold"> > {{threshold}} %</span> canopy density.<br /></p>
-    
-     <ul class="layer-colors" style="padding-top: 10px">
+    <p class="canopy" title="Click the gear icon to change the tree cover canopy density">Displaying loss with <span class="canopy-button js-toggle-threshold"> > {{threshold}} %</span> canopy density.</p>
+  </div>
+{{/if}}
+<div class="layer-details layer-details-select">
+  <span class="container-select-option">
+    Display:
+    <div class="select-container">
+      <select class="select-option js-loss-type">
+        <option value="loss">Uncategorised Loss</option>
+        <option value="loss_by_driver" selected>Loss by Driver</option>
+      </select>
+    </div>
+  </span>
+  <ul class="layer-colors" style="padding-top: 10px">
       <li><i class="circle" style='background:#2FBF71;'></i>Forestry</li>
       <li><i class="circle" style='background:#AD3624;'></i>Wildfire</li>
       <li><i class="circle" style='background:#F41D36;'></i>Commodity Driven Deforestation</li>
       <li><i class="circle" style='background:#efd31a;'></i>Shifting Agriculture</li>
       <li><i class="circle" style='background:#B235CC;'></i>Urbanization</li>
-      {{!-- <li><i class="circle" style='background:#9e9e9e;'></i>Zero or Minor Loss</li> --}}
     </ul>
-  </div>
-{{/if}}
+</div>
