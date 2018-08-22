@@ -85,9 +85,8 @@ define(
 
             if (yearLoss >= yearStart && yearLoss < yearEnd) {
               imgdata[pixelPos] = rgb[0];
-              imgdata[pixelPos + 1] =
-                72 - z + rgb[1] - 3 * myscale(intensity) / z;
-              imgdata[pixelPos + 2] = 33 - z + rgb[2] - intensity / z;
+              imgdata[pixelPos + 1] = rgb[1];
+              imgdata[pixelPos + 2] = rgb[2];
               imgdata[pixelPos + 3] = z < 13 ? myscale(intensity) : intensity;
             } else {
               imgdata[pixelPos + 3] = 0;
