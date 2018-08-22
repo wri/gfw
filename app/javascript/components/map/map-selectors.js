@@ -14,6 +14,7 @@ const getMapUrlState = state => (state.query && state.query.map) || null;
 const getDatasets = state => state.datasets.filter(d => !isEmpty(d.layer));
 const getLoading = state => state.loading;
 const getGeostore = state => state.geostore || null;
+const getLatest = state => state.latest || null;
 const getCountries = state => state.countries || null;
 
 const reduceParams = params => {
@@ -103,10 +104,9 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
 });
 
 export const getParsedDatasets = createSelector(
-  [getDatasets, getCountries],
-  (datasets, countries) => {
+  [getDatasets, getLatest, getCountries],
+  (datasets, latest, countries) => {
     if (isEmpty(datasets)) return null;
-
     return datasets.filter(d => d.env === 'production').map(d => {
       const { layer, metadata } = d;
       const appMeta = metadata.find(m => m.application === 'gfw') || {};
@@ -114,7 +114,10 @@ export const getParsedDatasets = createSelector(
       const defaultLayer =
         (layer &&
           layer.find(
-            l => l.applicationConfig && l.applicationConfig.default
+            l =>
+              l.env === 'production' &&
+              l.applicationConfig &&
+              l.applicationConfig.default
           )) ||
         layer[0];
 
@@ -165,7 +168,8 @@ export const getParsedDatasets = createSelector(
               .filter(l => l.env === 'production' && l.published)
               .map((l, i) => {
                 const { layerConfig } = l;
-                const { sortOrder } = l.applicationConfig || {};
+                const { position, confirmedOnly, multiConfig } =
+                  l.applicationConfig || {};
                 const {
                   params_config,
                   decode_config,
@@ -174,14 +178,17 @@ export const getParsedDatasets = createSelector(
                   url
                 } = layerConfig;
                 const decodeFunction = decodeLayersConfig[l.id];
+                const latestDate = latest && latest[l.id];
 
                 return {
                   ...l,
                   ...l.applicationConfig,
-                  sortOrder:
-                    l.applicationConfig && l.applicationConfig.default
-                      ? 0
-                      : sortOrder || i + 1,
+                  position: l.applicationConfig.default
+                    ? 0
+                    : position ||
+                      (multiConfig && multiConfig.position) ||
+                      i + 1,
+
                   ...(!isEmpty(params_config) && {
                     params: {
                       url: body.url || url,
@@ -197,12 +204,18 @@ export const getParsedDatasets = createSelector(
                   ...(!isEmpty(decode_config) && {
                     decodeParams: {
                       ...(decodeFunction && decodeFunction.decodeParams),
-                      ...reduceParams(decode_config)
+                      ...reduceParams(decode_config),
+                      ...(latestDate && {
+                        endDate: latestDate
+                      })
                     }
+                  }),
+                  ...(confirmedOnly && {
+                    id: 'confirmedOnly'
                   })
                 };
               }),
-            'sortOrder'
+            'position'
           )
       };
     });
@@ -248,12 +261,13 @@ export const getActiveBoundaries = createSelector(
 
 export const getDatasetsWithConfig = createSelector(
   [getActiveDatasets, getLayers],
-  (datasets, layers) => {
-    if (isEmpty(datasets) || isEmpty(layers)) return null;
+  (datasets, allLayers) => {
+    if (isEmpty(datasets) || isEmpty(allLayers)) return null;
 
     return datasets.map(d => {
-      const layerConfig = layers.find(l => l.dataset === d.id) || {};
-      const { params, sqlParams, decodeParams } = layerConfig || {};
+      const layerConfig = allLayers.find(l => l.dataset === d.id) || {};
+      const { params, sqlParams, decodeParams, layers, visibility, opacity } =
+        layerConfig || {};
 
       return {
         ...d,
@@ -262,29 +276,42 @@ export const getDatasetsWithConfig = createSelector(
           selectorLayerConfig: {
             ...d.selectorLayerConfig,
             selected: d.selectorLayerConfig.options.find(
-              l => l.value === layerConfig.layers[0]
+              l => l.value === layers[0]
             )
           }
         }),
         layers: d.layers.map(l => ({
           ...l,
-          ...layerConfig,
-          active:
-            layerConfig &&
-            layerConfig.layers &&
-            layerConfig.layers.includes(l.id),
-          params: {
-            ...l.params,
-            ...params
-          },
-          sqlParams: {
-            ...l.sqlParams,
-            ...sqlParams
-          },
-          decodeParams: {
-            ...l.decodeParams,
-            ...decodeParams
-          },
+
+          visibility,
+          opacity,
+          active: layers && layers.includes(l.id),
+          ...(!isEmpty(params) && {
+            params: {
+              ...l.params,
+              ...params
+            }
+          }),
+          ...(!isEmpty(sqlParams) && {
+            sqlParams: {
+              ...l.sqlParams,
+              ...sqlParams
+            }
+          }),
+          ...(!isEmpty(l.decodeParams) &&
+            l.decodeFunction && {
+              decodeParams: {
+                ...l.decodeParams,
+                minDate: l.decodeParams && l.decodeParams.startDate,
+                maxDate: l.decodeParams && l.decodeParams.endDate,
+                trimEndDate: l.decodeParams && l.decodeParams.endDate,
+                ...(layers &&
+                  layers.includes('confirmedOnly') && {
+                    confirmedOnly: true
+                  }),
+                ...decodeParams
+              }
+            }),
           ...(l.decodeParams &&
             l.decodeParams.startDate && {
               timelineConfig: {
@@ -316,7 +343,9 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return [];
-  return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
+  return flatten(layerGroups.map(d => d.layers)).filter(
+    l => l.active && !l.confirmedOnly
+  );
 });
 
 export const getMapProps = createStructuredSelector({

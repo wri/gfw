@@ -7764,9 +7764,9 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.17.tgz#fb73ea8b2bb46f117e9e71f491296e53cd654817"
+layer-manager@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.18.tgz#14051b616ecb30932a4a5c436703bdb45f639022"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"
@@ -14347,11 +14347,13 @@ wrappy@1, wrappy@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-wri-api-components@^2.0.22-alpha-2:
-  version "2.0.22-alpha-2"
-  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.0.22-alpha-2.tgz#b9a6f69526406c80f7f88a96a2a91b26d310c05d"
+wri-api-components@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.1.0.tgz#d704969a39316f8eb2e3546a171e327b96f3c36b"
   dependencies:
+    classnames "^2.2.6"
     layer-manager "^1.0.4"
+    lodash "^4.17.10"
     prop-types "^15.6.2"
     rc-slider "^8.6.1"
     rc-tooltip "3.7.0"

@@ -36,6 +36,7 @@ class MapLegend extends Component {
       loading,
       ...rest
     } = this.props;
+
     return (
       <div className="c-legend">
         <Icons />

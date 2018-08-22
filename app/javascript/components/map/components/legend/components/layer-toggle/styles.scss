@@ -36,6 +36,10 @@
 
   .info-button {
     margin-left: rem(5px);
+
+    &.-help {
+      cursor: help;
+    }
   }
 
   /* small theme */
