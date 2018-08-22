@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
+import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { biomassToCO2 } from 'utils/calculations';
@@ -38,7 +39,7 @@ export const getDrivers = createSelector([getFilteredData], data => {
     'area',
     true
   );
-  return sortedLoss.map(d => d.driver);
+  return sortBy(sortedLoss.map(d => d.driver), 'area');
 });
 
 // get lists selected
@@ -49,9 +50,8 @@ export const parseData = createSelector([getFilteredData], data => {
   return Object.keys(groupedData).map(y => {
     const datakeys = {};
     groupedData[y].forEach(d => {
-      datakeys[d.bound1] = d.area || 0;
+      datakeys[`class_${d.bound1}`] = d.area || 0;
     });
-
     return {
       year: y,
       ...datakeys
@@ -64,10 +64,9 @@ export const parseConfig = createSelector(
   (colors, data, drivers) => {
     if (isEmpty(data)) return null;
     const yKeys = {};
-
     const categoryColors = colors.lossDrivers;
-    drivers.reverse().forEach(k => {
-      yKeys[k] = {
+    drivers.forEach(k => {
+      yKeys[`class_${k}`] = {
         fill: categoryColors[k],
         stackId: 1
       };
@@ -82,7 +81,7 @@ export const parseConfig = createSelector(
         .map(d => {
           const label = tscLossCategories[d - 1].label;
           return {
-            key: d,
+            key: `class_${d}`,
             label,
             unit: 'ha',
             color: categoryColors[d],

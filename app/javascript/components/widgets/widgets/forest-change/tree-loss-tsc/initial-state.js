@@ -6,6 +6,7 @@ export default {
   config: {
     admins: ['global', 'country'],
     selectors: ['threshold', 'extentYears', 'startYears', 'endYears'],
+    layers: ['loss_by_driver'],
     sentences: {
       initial:
         "Between {startYear} and {endYear}, {location} lost {loss} of tree cover loss. This loss is equal to {percent} of the area's tree cover in {extentYear}, and equivalent to {emissions} of CO\u2082 emissions."
