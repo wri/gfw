@@ -29,7 +29,7 @@ class MapControlsButtons extends PureComponent {
   onTooltipRequestClose = () => {
     const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
     this.basemapsRef.clearEvt();
-    if (!isTargetOnTooltip) {
+    if (!isTargetOnTooltip && this.state.showBasemaps) {
       this.toggleBasemaps();
     }
   };
@@ -86,7 +86,11 @@ class MapControlsButtons extends PureComponent {
                 className="basemaps-btn"
                 theme="theme-button-map-control"
                 onClick={this.toggleBasemaps}
-                tooltip={{ text: 'Basemaps', hideOnClick: false }}
+                tooltip={
+                  !showBasemaps
+                    ? { text: 'Basemaps', hideOnClick: false }
+                    : undefined
+                }
               >
                 <Icon
                   icon={globeIcon}

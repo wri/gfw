@@ -34,7 +34,6 @@ class Basemaps extends React.PureComponent {
   }
 
   state = {
-    labels: this.props.activeLabels,
     boundaries: Basemaps.getBoundariesItems(this.props.boundaries),
     landsatYears: basemaps.landsat.availableYears.map(y => ({
       label: y,
@@ -43,7 +42,6 @@ class Basemaps extends React.PureComponent {
   };
 
   onLabelsChange = selected => {
-    this.setState({ labels: selected });
     this.props.selectLabels(selected);
   };
 
@@ -106,6 +104,7 @@ class Basemaps extends React.PureComponent {
   render() {
     const {
       onClose,
+      activeLabels,
       activeBasemap,
       getTooltipContentProps,
       activeBoundaries,
@@ -145,7 +144,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 className="theme-dropdown-button"
                 label="labels"
-                value={this.state.labels}
+                value={activeLabels}
                 options={Object.values(labels)}
                 onChange={this.onLabelsChange}
               />

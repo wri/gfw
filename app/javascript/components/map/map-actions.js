@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createThunkAction } from 'utils/redux';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getMapZoom, getBasemap } from 'components/map/map-selectors';
@@ -45,11 +46,9 @@ export const setLandsatBasemap = createThunkAction(
       }
     };
     if (landsat.geeUrl === null) {
-      fetch(`${GFW_API}/v1/landsat-tiles/${year}`)
-        .then(res => (res.ok ? res.json() : Promise.reject(res.statusText)))
-        .then(json => {
-          landsat.geeUrl = json.data.attributes.url;
-        });
+      axios.get(`${GFW_API}/v1/landsat-tiles/${year}`).then(({ data: res }) => {
+        landsat.geeUrl = res.data.attributes.url;
+      });
     }
     if (landsat.url !== null && landsat.url !== currentBasemap.url) {
       dispatch(
