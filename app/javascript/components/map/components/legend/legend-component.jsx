@@ -123,16 +123,21 @@ class MapLegend extends Component {
                     {activeLayer &&
                       paramsSelectorConfig &&
                       params &&
-                      paramsSelectorConfig.map(paramConfig => (
-                        <ParamsSelector
-                          key={`${activeLayer.name}-${paramConfig.key}`}
-                          className="param-selector"
-                          param={paramConfig}
-                          value={params[paramConfig.key] || paramConfig.default}
-                          onChange={onChangeParam}
-                          layerData={activeLayer}
-                        />
-                      ))}
+                      paramsSelectorConfig.map(
+                        paramConfig =>
+                          (paramConfig.options ? (
+                            <ParamsSelector
+                              key={`${activeLayer.name}-${paramConfig.key}`}
+                              className="param-selector"
+                              param={paramConfig}
+                              value={
+                                params[paramConfig.key] || paramConfig.default
+                              }
+                              onChange={onChangeParam}
+                              layerData={activeLayer}
+                            />
+                          ) : null)
+                      )}
                     {(isSelectorLayer || isMultiSelectorLayer) &&
                       selectorLayerConfig && (
                         <LayerSelectorMenu
