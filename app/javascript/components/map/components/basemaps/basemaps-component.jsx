@@ -13,15 +13,29 @@ import './styles.scss';
 class Basemaps extends React.PureComponent {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
-    activeBasemap: PropTypes.object.isRequired,
-    selectBasemap: PropTypes.func.isRequired,
+    boundaries: PropTypes.array.isRequired,
     selectLabels: PropTypes.func.isRequired,
+    selectBasemap: PropTypes.func.isRequired,
     activeLabels: PropTypes.object.isRequired,
+    activeBasemap: PropTypes.object.isRequired,
+    selectBoundaries: PropTypes.func.isRequired,
+    activeBoundaries: PropTypes.object.isRequired,
     getTooltipContentProps: PropTypes.func.isRequired
   };
 
+  static getBoundariesItems(boundaries) {
+    return [
+      { value: null, label: 'No Boundaries' },
+      ...boundaries.map(boundary => ({
+        label: boundary.name,
+        value: { dataset: boundary.dataset, layers: [boundary.layer] }
+      }))
+    ];
+  }
+
   state = {
     labels: this.props.activeLabels,
+    boundaries: Basemaps.getBoundariesItems(this.props.boundaries),
     landsatYears: basemaps.landsat.availableYears.map(y => ({
       label: y,
       value: y
@@ -90,7 +104,17 @@ class Basemaps extends React.PureComponent {
   }
 
   render() {
-    const { onClose, activeBasemap, getTooltipContentProps } = this.props;
+    const {
+      onClose,
+      activeBasemap,
+      getTooltipContentProps,
+      activeBoundaries,
+      selectBoundaries
+    } = this.props;
+    const { boundaries } = this.state;
+    const selectedBoundaries = activeBoundaries
+      ? { label: activeBoundaries.name }
+      : boundaries[0];
     return (
       <div className="c-basemaps" {...getTooltipContentProps()}>
         <div className="basemaps-top-section">
@@ -112,9 +136,9 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 className="theme-dropdown-button"
                 label="boundaries"
-                value={this.state.value}
-                options={this.state.items}
-                onChange={value => this.setState({ value })}
+                value={selectedBoundaries}
+                options={boundaries}
+                onChange={selectBoundaries}
               />
             </li>
             <li className="basemaps-options-wrapper">
