@@ -5,14 +5,12 @@ export default {
   },
   config: {
     admins: ['global', 'country'],
-    forestTypes: ['plantations'],
-    landCategories: [],
+    selectors: ['threshold', 'extentYears', 'startYears', 'endYears'],
     sentences: {
       initial:
-        "Between {startYear} and {endYear}, {location} lost {loss} of tree cover loss. This loss is equal to {percent} of the area's tree cover in {extentYear}, and equivalent to {emissions} of CO\u2082 emissions.",
-      withInd:
-        "Between {startYear} and {endYear}, {location} lost {loss} of tree cover loss in {indicator}. This loss is equal to {percent} of the area's tree cover in {extentYear}, and equivalent to {emissions} of CO\u2082 emissions."
+        "Between {startYear} and {endYear}, {location} lost {loss} of tree cover loss. This loss is equal to {percent} of the area's tree cover in {extentYear}, and equivalent to {emissions} of CO\u2082 emissions."
     }
   },
-  enabled: true
+  enabled: true,
+  clearable: false
 };

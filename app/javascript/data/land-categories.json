@@ -64,5 +64,11 @@
     "value": "managed_forests",
     "metaKey": "gfw_logging",
     "global": true
+  },
+  {
+    "label": "TSC",
+    "value": "tsc",
+    "metaKey": "tsc",
+    "global": true
   }
 ]

@@ -7,6 +7,8 @@ import moment from 'moment';
 import { biomassToCO2 } from 'utils/calculations';
 import { sortByKey } from 'utils/data';
 
+import tscLossCategories from 'data/tsc-loss-categories.json';
+
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
@@ -78,10 +80,10 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       drivers
         .map(d => {
-          const driver = drivers && drivers.find(c => c === d);
+          const label = tscLossCategories[d - 1].label;
           return {
             key: d,
-            label: driver,
+            label,
             unit: 'ha',
             color: categoryColors[d],
             unitFormat: value => format('.3s')(value)
@@ -121,7 +123,7 @@ export const getSentence = createSelector(
   ],
   (data, extent, settings, currentLabel, indicator, sentences) => {
     if (!data) return null;
-    const { initial, withInd } = sentences;
+    const { initial } = sentences;
     const { startYear, endYear, extentYear } = settings;
 
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
@@ -130,7 +132,7 @@ export const getSentence = createSelector(
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
 
-    const sentence = indicator ? withInd : initial;
+    const sentence = initial;
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
