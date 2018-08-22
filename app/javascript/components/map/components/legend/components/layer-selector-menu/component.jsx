@@ -37,9 +37,9 @@ class LayerSelectorMenu extends PureComponent {
         {options &&
           !!options.length && (
             <div className="menu-wrapper">
-              <span>{`Displaying ${optionName.toLowerCase()} for`}</span>
+              <span>{`Displaying ${optionName.toLowerCase()} for `}</span>
               <Dropdown
-                className="layer-selector"
+                className="layer-selector-dropdown"
                 theme="theme-dropdown-native-button"
                 value={selected}
                 options={options}
