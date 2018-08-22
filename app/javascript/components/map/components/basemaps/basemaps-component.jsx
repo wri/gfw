@@ -19,7 +19,7 @@ class Basemaps extends React.PureComponent {
     activeLabels: PropTypes.object.isRequired,
     activeBasemap: PropTypes.object.isRequired,
     selectBoundaries: PropTypes.func.isRequired,
-    activeBoundaries: PropTypes.object.isRequired,
+    activeBoundaries: PropTypes.object,
     getTooltipContentProps: PropTypes.func.isRequired
   };
 

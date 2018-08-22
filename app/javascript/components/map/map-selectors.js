@@ -147,6 +147,7 @@ export const getParsedDatasets = createSelector(
 
       return {
         ...d,
+        dataset: d.id,
         ...info,
         ...((isSelectorLayer || isMultiSelectorLayer) && {
           selectorLayerConfig: {
