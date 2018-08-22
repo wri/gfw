@@ -14,10 +14,11 @@ const QUERIES = {
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  viirsAlerts:
-    '{location}?group=true&period={period}&thresh=0&geostore={geostore}',
   terraAlerts:
-    'SELECT count(*) as alerts FROM data GROUP BY day, year ORDER BY year, day'
+    'SELECT count(*) as alerts FROM data GROUP BY day, year ORDER BY year, day',
+  viirsAlerts: '{location}?group=true&period={period}&thresh=0',
+  firesStats:
+    '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs'
 };
 
 const getLocationQuery = (country, region, subRegion) =>
@@ -73,13 +74,7 @@ export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
   return request.get(url, 3600, 'firesRequest');
 };
 
-export const fetchViirsAlerts = ({
-  country,
-  region,
-  subRegion,
-  geostore,
-  dates
-}) => {
+export const fetchViirsAlerts = ({ country, region, subRegion, dates }) => {
   const url = `${REQUEST_URL}/viirs-active-fires/${!subRegion ? 'admin/' : ''}${
     QUERIES.viirsAlerts
   }`
@@ -87,7 +82,15 @@ export const fetchViirsAlerts = ({
       '{location}',
       !subRegion ? getLocationQuery(country, region, subRegion) : ''
     )
-    .replace('{geostore}', subRegion && geostore ? geostore.hash : '')
+    .replace('{period}', `${dates[1]},${dates[0]}`);
+  return request.get(url);
+};
+
+export const fetchFiresStats = ({ country, region, subRegion, dates }) => {
+  const url = `${REQUEST_URL}/fire-alerts/summary-stats/admin/${
+    QUERIES.firesStats
+  }`
+    .replace('{location}', getLocationQuery(country, region, subRegion))
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
 };

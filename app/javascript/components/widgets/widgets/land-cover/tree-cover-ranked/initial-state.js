@@ -25,9 +25,9 @@ export default {
     sentences: {
       initial:
         'As of {extentYear}, {location} had {extent} of tree cover, equivalent to {landPercentage} of its land area and {globalPercentage} of the global total.',
-      withInd:
+      landCatOnly:
         'As of {extentYear}, {location} had {extent} of tree cover in {indicator}, equivalent to {landPercentage} of its land area and {globalPercentage} of the global total.',
-      forestTypeOnly:
+      withInd:
         'As of {extentYear}, {location} had {extent} of {indicator}, equivalent to {landPercentage} of its land area and {globalPercentage} of the global total.'
     }
   },
