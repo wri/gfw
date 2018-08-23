@@ -87,7 +87,7 @@ define(
               imgdata[pixelPos] = rgb[0];
               imgdata[pixelPos + 1] = rgb[1];
               imgdata[pixelPos + 2] = rgb[2];
-              imgdata[pixelPos + 3] = z < 13 ? myscale(intensity) : intensity;
+              imgdata[pixelPos + 3] = myscale(intensity) * 1.5;
             } else {
               imgdata[pixelPos + 3] = 0;
             }
