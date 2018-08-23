@@ -50,7 +50,7 @@ class LossByDriver extends Canvas {
           imgdata[pixelPos] = rgb[0]; // eslint-disable-line
           imgdata[pixelPos + 1] = rgb[1]; // eslint-disable-line
           imgdata[pixelPos + 2] = rgb[2]; // eslint-disable-line
-          imgdata[pixelPos + 3] = z < 13 ? myscale(intensity) : intensity; // eslint-disable-line
+          imgdata[pixelPos + 3] = myscale(intensity) * 2; // eslint-disable-line
         } else {
           imgdata[pixelPos + 3] = 0; // eslint-disable-line
         }
