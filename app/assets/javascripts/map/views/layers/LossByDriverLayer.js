@@ -21,7 +21,7 @@ define(
         dataMaxZoom: 4,
         urlTemplate:
           'https://storage.googleapis.com/wri-public/lossyear_classification_map/2017/gfw/tiles/hansen_world/v2/tc{threshold}{/z}{/x}{/y}.png',
-        currentDate: ['2001-01-01', '2018-01-01']
+        currentDate: ['2001-01-01', '2015-01-01']
       },
 
       init: function(layer, options, map) {
