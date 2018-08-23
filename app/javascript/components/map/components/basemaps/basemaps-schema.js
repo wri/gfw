@@ -12,6 +12,7 @@ export const labels = {
   noLabels: {
     id: 'noLabels',
     label: 'No Labels',
+    value: 'no-labels',
     url: ''
   }
 };

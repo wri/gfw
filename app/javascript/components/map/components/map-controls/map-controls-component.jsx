@@ -72,6 +72,7 @@ class MapControlsButtons extends PureComponent {
               position="top-end"
               useContext
               interactive
+              animateFill={false}
               open={showBasemaps}
               onRequestClose={this.onTooltipRequestClose}
               html={

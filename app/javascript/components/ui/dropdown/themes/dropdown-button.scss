@@ -8,9 +8,11 @@ $dd-button-height: rem(28px);
       border-radius: rem(25px);
       border-color: $green-gfw;
       height: $dd-button-height;
+      padding: 0 rem(10px);
 
       .value {
         padding: 0;
+        right: rem(20px);
       }
     }
 
