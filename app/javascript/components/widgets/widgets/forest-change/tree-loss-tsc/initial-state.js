@@ -19,8 +19,10 @@ export default {
         'In {location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where {driver} ',
       globalInitial:
         '{location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where {driver} ',
-      perm: '(permenant) is the dominant driver of land cover change.',
-      temp: '(temporary) is the dominant driver of land cover change.'
+      perm:
+        '(permenant deforestation) is the dominant driver of land cover change.',
+      temp:
+        '(temporary deforestation) is the dominant driver of land cover change.'
     }
   },
   settings: {
