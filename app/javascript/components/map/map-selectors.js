@@ -276,7 +276,7 @@ export const getLayersDatasets = createSelector(
 export const getActiveDatasets = createSelector(
   [getLayersDatasets],
   datasets => {
-    if (!datasets) return null;
+    if (isEmpty(datasets)) return null;
     return datasets.filter(d => d.env === 'production');
   }
 );
@@ -284,7 +284,7 @@ export const getActiveDatasets = createSelector(
 export const getBoundaryDatasets = createSelector(
   [getParsedDatasets],
   datasets => {
-    if (!datasets) return null;
+    if (isEmpty(datasets)) return null;
     return datasets.filter(d => d.env === 'production' && d.isBoundary);
   }
 );
@@ -292,6 +292,7 @@ export const getBoundaryDatasets = createSelector(
 export const getActiveBoundaries = createSelector(
   [getBoundaryDatasets, getLayers],
   (datasets, layers) => {
+    if (isEmpty(datasets)) return null;
     const layerIds = layers.map(layer => layer.dataset);
     return datasets.find(d => layerIds.includes(d.dataset));
   }
