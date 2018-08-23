@@ -139,7 +139,7 @@ export const getSentence = createSelector(
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss =
-      (totalLoss && topDriver.area && topDriver.area / extent * 100) || 0;
+      (totalLoss && topDriver.area && topDriver.area / totalLoss * 100) || 0;
     const sentence = currentLabel === 'global' ? globalInitial : initial;
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),

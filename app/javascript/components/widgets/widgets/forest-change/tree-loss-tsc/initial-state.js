@@ -7,40 +7,7 @@ export default {
     admins: ['global', 'country'],
     selectors: ['thresholds', 'extentYears', 'startYears', 'endYears'],
     layers: ['loss_by_driver'],
-    startYears: [
-      2001,
-      2002,
-      2003,
-      2004,
-      2005,
-      2006,
-      2007,
-      2008,
-      2009,
-      2010,
-      2011,
-      2012,
-      2013,
-      2014,
-      2015
-    ],
-    endYears: [
-      2001,
-      2002,
-      2003,
-      2004,
-      2005,
-      2006,
-      2007,
-      2008,
-      2009,
-      2010,
-      2011,
-      2012,
-      2013,
-      2014,
-      2015
-    ],
+    yearRange: ['2001', '2015'],
     metaKey: 'tsc_drivers',
     sortOrder: {
       summary: 0,
@@ -49,9 +16,9 @@ export default {
     },
     sentences: {
       initial:
-        'In {location} from {startYear} and {endYear}, {percent} of tree cover loss occurred in areas where {driver} is the dominant driver of land cover change.',
+        'In {location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where {driver} is the dominant driver of land cover change.',
       globalInitial:
-        '{location} from {startYear} and {endYear}, {percent} of tree cover loss occurred in areas where {driver} is the dominant driver of land cover change.'
+        '{location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where {driver} is the dominant driver of land cover change.'
     }
   },
   settings: {
