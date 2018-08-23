@@ -89,7 +89,7 @@ class MapComponent extends PureComponent {
                 })}
               </LayerManager>
               <Popup map={map} />
-              <MapControlButtons className="map-controls" map={map} share />
+              <MapControlButtons className="map-controls" map={map} />
               {recentImagery && (
                 <DragDropContextProvider backend={HTML5Backend}>
                   <RecentImagery map={map} />

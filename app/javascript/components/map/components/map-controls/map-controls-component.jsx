@@ -46,7 +46,6 @@ class MapControlsButtons extends PureComponent {
       className,
       stickyOptions,
       setShareModal,
-      share,
       settings,
       map,
       active,
@@ -125,25 +124,23 @@ class MapControlsButtons extends PureComponent {
             >
               <Icon icon={fullScreenIcon} className="fullscreen-icon" />
             </Button>
-            {share && (
-              <Button
-                className="theme-button-map-control"
-                onClick={() =>
-                  setShareModal({
-                    title: 'Share this view',
-                    shareUrl: window.location.href,
-                    embedUrl: window.location.href,
-                    embedSettings: {
-                      width: 670,
-                      height: 490
-                    }
-                  })
-                }
-                tooltip={{ text: 'Share or embed this view' }}
-              >
-                <Icon icon={shareIcon} />
-              </Button>
-            )}
+            <Button
+              className="theme-button-map-control"
+              onClick={() =>
+                setShareModal({
+                  title: 'Share this view',
+                  shareUrl: window.location.href,
+                  embedUrl: window.location.href,
+                  embedSettings: {
+                    width: 670,
+                    height: 490
+                  }
+                })
+              }
+              tooltip={{ text: 'Share or embed this view' }}
+            >
+              <Icon icon={shareIcon} />
+            </Button>
             <Button
               theme="theme-button-map-control"
               onClick={() => {
@@ -155,7 +152,7 @@ class MapControlsButtons extends PureComponent {
             </Button>
           </div>
           <div className="map-position">
-            <span>{settings.zoom}</span>
+            <span>{zoom}</span>
             <span>{`${format('.6f')(center.lat)}, ${format('.6f')(
               center.lng
             )}`}</span>
@@ -171,7 +168,6 @@ MapControlsButtons.propTypes = {
   setMapSettings: Proptypes.func,
   stickyOptions: Proptypes.object,
   setShareModal: Proptypes.func,
-  share: Proptypes.bool,
   settings: Proptypes.object,
   map: Proptypes.object,
   active: Proptypes.bool,
