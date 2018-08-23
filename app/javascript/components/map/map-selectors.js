@@ -65,6 +65,11 @@ export const getBasemap = createSelector(
   settings => settings.basemap
 );
 
+export const getMapZoom = createSelector(
+  getMapSettings,
+  settings => settings.zoom
+);
+
 export const getLabels = createSelector(
   getMapSettings,
   settings => settings.label
@@ -145,7 +150,7 @@ export const getParsedDatasets = createSelector(
 
       return {
         ...d,
-        // default layer config
+        dataset: d.id,
         ...info,
         ...applicationConfig,
         layer: id,
@@ -256,13 +261,35 @@ export const getDatasetIds = createSelector([getLayers], layers => {
   return layers.map(l => l.dataset);
 });
 
-export const getActiveDatasets = createSelector(
+export const getLayersDatasets = createSelector(
   [getParsedDatasets, getDatasetIds],
   (datasets, datasetIds) => {
     if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
-    return datasets.filter(
-      d => datasetIds.includes(d.id) && d.env === 'production'
-    );
+    return datasets.filter(d => datasetIds.includes(d.id));
+  }
+);
+
+export const getActiveDatasets = createSelector(
+  [getLayersDatasets],
+  datasets => {
+    if (!datasets) return null;
+    return datasets.filter(d => d.env === 'production');
+  }
+);
+
+export const getBoundaryDatasets = createSelector(
+  [getParsedDatasets],
+  datasets => {
+    if (!datasets) return null;
+    return datasets.filter(d => d.env === 'production' && d.isBoundary);
+  }
+);
+
+export const getActiveBoundaries = createSelector(
+  [getBoundaryDatasets, getLayers],
+  (datasets, layers) => {
+    const layerIds = layers.map(layer => layer.dataset);
+    return datasets.find(d => layerIds.includes(d.dataset));
   }
 );
 
@@ -342,6 +369,11 @@ export const getLayerGroups = createSelector(
     return layers.map(l => datasets.find(d => d.id === l.dataset));
   }
 );
+
+export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
+  if (!groups) return null;
+  return groups.filter(g => !g.isBoundary);
+});
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return [];
