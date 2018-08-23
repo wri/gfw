@@ -158,8 +158,8 @@ export const getParsedDatasets = createSelector(
       return {
         ...d,
         dataset: d.id,
-        ...info,
         ...applicationConfig,
+        ...info,
         layer: id,
         iso,
         tags: flatten(d.vocabulary.map(v => v.tags)),
