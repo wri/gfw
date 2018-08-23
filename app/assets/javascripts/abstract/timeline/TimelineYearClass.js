@@ -37,7 +37,6 @@ define([
     },
 
     initialize: function(layer, currentDate) {
-      debugger;
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateCurrentDate');
       this.layer = layer;
       this.name = layer.slug;
