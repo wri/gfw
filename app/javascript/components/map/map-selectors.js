@@ -2,8 +2,10 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import moment from 'moment';
 
 import { formatDate } from 'utils/dates';
+import { deburrUpper } from 'utils/data';
 
 import thresholdOptions from 'data/thresholds.json';
 
@@ -19,15 +21,20 @@ const getGeostore = state => state.geostore || null;
 const getLatest = state => state.latest || null;
 const getCountries = state => state.countries || null;
 
-const reduceParams = params => {
+const reduceParams = (params, latestDate) => {
   if (!params) return null;
   return params.reduce((obj, param) => {
+    const { format, key } = param;
+    let paramValue = param.default;
+    const isDate = deburrUpper(param.key).includes('DATE');
+    if (isDate && !paramValue) {
+      const date = latestDate || formatDate(new Date());
+      paramValue = moment(date).format(format || 'YYYY-MM-DD');
+    }
+
     const newObj = {
       ...obj,
-      [param.key]:
-        (param.key === 'endDate' || param.key === 'date') && !param.default
-          ? formatDate(new Date())
-          : param.default
+      [key]: paramValue
     };
     return newObj;
   }, {});
@@ -200,10 +207,7 @@ export const getParsedDatasets = createSelector(
                   ...(!isEmpty(params_config) && {
                     params: {
                       url: body.url || url,
-                      ...reduceParams(params_config),
-                      ...(latestDate && {
-                        date: latestDate.split('-').join('')
-                      })
+                      ...reduceParams(params_config, latestDate)
                     }
                   }),
                   // params selector config
