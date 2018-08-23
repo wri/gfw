@@ -11,11 +11,9 @@ import NoContent from 'components/ui/no-content';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
-import draggerIcon from 'assets/icons/dragger.svg';
 import closeIcon from 'assets/icons/close.svg';
 
 import RecentImageryThumbnail from '../../components/recent-imagery-thumbnail';
-import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
 
 class RecentImagerySettings extends PureComponent {
@@ -31,7 +29,6 @@ class RecentImagerySettings extends PureComponent {
       selectedTile,
       tiles,
       settings: {
-        styles,
         thumbsToShow,
         selectedTileSource,
         date,
@@ -39,28 +36,22 @@ class RecentImagerySettings extends PureComponent {
         clouds,
         bands
       },
-      isDragging,
-      connectDragSource,
       setRecentImagerySettings,
       setRecentImageryShowSettings
     } = this.props;
-    let opacity = 1;
 
-    if (isDragging) {
-      opacity = 0;
-    }
-
-    return connectDragSource(
-      <div className="c-recent-imagery-settings" style={{ ...styles, opacity }}>
-        <Icon icon={draggerIcon} className="dragger-icon" />
-        <button
-          className="close-btn"
-          onClick={() => setRecentImageryShowSettings(false)}
-        >
-          <Icon icon={closeIcon} className="close-icon" />
-        </button>
-        <div className="c-recent-imagery-settings__title">
-          RECENT HI-RES SATELLITE IMAGERY
+    return (
+      <div className="c-recent-imagery-settings">
+        <div className="c-recent-imagery-settings__header">
+          <div className="c-recent-imagery-settings__header__title">
+            RECENT HI-RES SATELLITE IMAGERY
+          </div>
+          <button
+            className="close-btn"
+            onClick={() => setRecentImageryShowSettings(false)}
+          >
+            <Icon icon={closeIcon} className="close-icon" />
+          </button>
         </div>
         <div className="c-recent-imagery-settings__dates">
           <div className="c-recent-imagery-settings__dates__title">
@@ -98,7 +89,7 @@ class RecentImagerySettings extends PureComponent {
           <div className="c-recent-imagery-settings__clouds__title">
             MAXIMUM CLOUD COVER PERCENTAGE
           </div>
-          <Slider
+          {/*<Slider
             className="theme-slider-green"
             settings={{
               defaultValue: clouds,
@@ -115,7 +106,7 @@ class RecentImagerySettings extends PureComponent {
               tipFormatter: value => `${value}%`
             }}
             handleOnSliderChange={d => setRecentImagerySettings({ clouds: d })}
-          />
+          />*/}
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
           {tiles.length >= 1 && [
@@ -195,10 +186,8 @@ RecentImagerySettings.propTypes = {
   selectedTile: PropTypes.object,
   tiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
-  isDragging: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
   setRecentImagerySettings: PropTypes.func.isRequired,
   setRecentImageryShowSettings: PropTypes.func.isRequired
 };
 
-export default RecentImageryDrag(RecentImagerySettings);
+export default RecentImagerySettings;

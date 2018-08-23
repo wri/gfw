@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
 
+import RecentImagery from 'components/map/components/recent-imagery';
 import Basemaps from 'components/map/components/basemaps';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -23,22 +24,30 @@ import './map-controls-styles.scss';
 
 class MapControlsButtons extends PureComponent {
   state = {
-    showBasemaps: false
+    showBasemaps: false,
+    showRecentImagery: false
   };
 
-  onTooltipRequestClose = () => {
-    const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
-    this.basemapsRef.clearEvt();
-    if (!isTargetOnTooltip && this.state.showBasemaps) {
-      this.toggleBasemaps();
+  onTooltipRequestClose = (ref, toggle, open) => {
+    const isTargetOnTooltip = isParent(ref, ref.evt);
+    ref.clearEvt();
+    if (!isTargetOnTooltip && open) {
+      toggle();
     }
   };
 
   toggleBasemaps = () =>
     this.setState(state => ({ showBasemaps: !state.showBasemaps }));
 
+  toggleRecentImagery = () =>
+    this.setState(state => ({ showRecentImagery: !state.showRecentImagery }));
+
   setBasemapsRef = ref => {
     this.basemapsRef = ref;
+  };
+
+  setRecentImageryRef = ref => {
+    this.recentImageryRef = ref;
   };
 
   render() {
@@ -49,32 +58,57 @@ class MapControlsButtons extends PureComponent {
       share,
       settings,
       map,
-      active,
-      toogleRecentImagery
+      active
     } = this.props;
     const { zoom, minZoom, maxZoom, center } = settings || {};
-    const { showBasemaps } = this.state;
+    const { showBasemaps, showRecentImagery } = this.state;
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
           <div className="map-actions">
-            <Button
-              className="recent-imagery-btn"
-              theme="theme-button-map-control"
-              active={active}
-              onClick={() => toogleRecentImagery()}
-              tooltip={{ text: 'Recent Imagery' }}
+            <Tooltip
+              theme="light"
+              position="top-end"
+              useContext
+              interactive
+              open={showRecentImagery}
+              onRequestClose={() =>
+                this.onTooltipRequestClose(
+                  this.recentImageryRef,
+                  this.toggleRecentImagery,
+                  showRecentImagery
+                )
+              }
+              html={<RecentImagery map={map} ref={this.setRecentImageryRef} />}
             >
-              <Icon icon={satelliteIcon} className="satelite-icon" />
-            </Button>
+              <Button
+                className="recent-imagery-btn"
+                theme="theme-button-map-control"
+                active={active}
+                onClick={this.toggleRecentImagery}
+                tooltip={
+                  !showRecentImagery
+                    ? { text: 'Recent Imagery', hideOnClick: false }
+                    : undefined
+                }
+              >
+                <Icon icon={satelliteIcon} className="satelite-icon" />
+              </Button>
+            </Tooltip>
             <Tooltip
               theme="light"
               position="top-end"
               useContext
               interactive
               open={showBasemaps}
-              onRequestClose={this.onTooltipRequestClose}
+              onRequestClose={() =>
+                this.onTooltipRequestClose(
+                  this.basemapsRef,
+                  this.toggleBasemaps,
+                  showBasemaps
+                )
+              }
               html={
                 <Basemaps
                   onClose={this.toggleBasemaps}

@@ -17,12 +17,6 @@
     }
   }
 
-  &--dragging {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-  }
-
   @media screen and (min-width: rem(1000px)) {
     &__button {
       .satellite-icon {
