@@ -91,7 +91,7 @@ const decodes = {
           const intensity = imgData[pixelPos];
           const yearLoss = 2000 + imgData[pixelPos + 2];
 
-          if (yearLoss >= yearStart && yearLoss < yearEnd) {
+          if (yearLoss >= yearStart && yearLoss <= yearEnd) {
             imgData[pixelPos] = 220;
             imgData[pixelPos + 1] = 72 - z + 102 - 3 * myScale(intensity) / z;
             imgData[pixelPos + 2] = 33 - z + 153 - intensity / z;
@@ -273,6 +273,8 @@ const decodes = {
               }
             }
           }
+
+          continue; // eslint-disable-line
         }
       }
     },
@@ -303,6 +305,8 @@ const decodes = {
             imgData[pixelPos + 3] = intensity;
           }
         }
+
+        continue; // eslint-disable-line
       }
     },
     decodeParams: {}
@@ -394,7 +398,7 @@ const decodes = {
 
           const day = r + g;
 
-          if (day >= startDay || (1 && day <= endDay)) {
+          if (day >= startDay && day <= endDay) {
             if (day >= recentStartRange && day <= recentEndRange) {
               imgData[pixelPos] = 219;
               imgData[pixelPos + 1] = 168;
