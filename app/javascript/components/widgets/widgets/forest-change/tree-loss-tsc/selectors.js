@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import entries from 'lodash/entries';
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
@@ -46,12 +47,15 @@ export const getDrivers = createSelector([getFilteredData], data => {
 export const parseData = createSelector([getFilteredData], data => {
   if (isEmpty(data)) return null;
   const groupedData = groupBy(data, 'year');
-
   return Object.keys(groupedData).map(y => {
-    const datakeys = {};
-    groupedData[y].forEach(d => {
-      datakeys[`class_${d.bound1}`] = d.area || 0;
-    });
+    const groupedByBound = groupBy(groupedData[y], 'bound1');
+    const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
+      const areaSum = sumBy(value, 'area');
+      return {
+        ...acc,
+        [`class_${key}`]: areaSum
+      };
+    }, {});
     return {
       year: y,
       ...datakeys
@@ -124,7 +128,6 @@ export const getSentence = createSelector(
     if (!data) return null;
     const { initial } = sentences;
     const { startYear, endYear, extentYear } = settings;
-
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;

@@ -5,7 +5,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
   axios
     .all([
       getLoss({ ...params, landCategory: 'tsc' }),
-      getExtent({ ...params, landCategory: 'tsc' })
+      getExtent({ ...params })
     ])
     .then(
       axios.spread((loss, extent) => {

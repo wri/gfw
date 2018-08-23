@@ -151,7 +151,6 @@ export const getSentence = createSelector(
     if (!data) return null;
     const { initial, withInd } = sentences;
     const { startYear, endYear, extentYear } = settings;
-
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
