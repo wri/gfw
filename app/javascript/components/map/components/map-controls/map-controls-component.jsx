@@ -1,8 +1,13 @@
 import React, { PureComponent } from 'react';
 import Proptypes from 'prop-types';
 import Sticky from 'react-stickynode';
+import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
+import { connect } from 'react-redux';
+import cx from 'classnames';
+import { isParent } from 'utils/dom';
 
+import Basemaps from 'components/map/components/basemaps';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -12,11 +17,30 @@ import shareIcon from 'assets/icons/share.svg';
 import fullScreenIcon from 'assets/icons/fit-zoom.svg';
 import printIcon from 'assets/icons/print.svg';
 import globeIcon from 'assets/icons/globe.svg';
-import sateliteIcon from 'assets/icons/satellite.svg';
+import satelliteIcon from 'assets/icons/satellite.svg';
 
 import './map-controls-styles.scss';
 
 class MapControlsButtons extends PureComponent {
+  state = {
+    showBasemaps: false
+  };
+
+  onTooltipRequestClose = () => {
+    const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
+    this.basemapsRef.clearEvt();
+    if (!isTargetOnTooltip && this.state.showBasemaps) {
+      this.toggleBasemaps();
+    }
+  };
+
+  toggleBasemaps = () =>
+    this.setState(state => ({ showBasemaps: !state.showBasemaps }));
+
+  setBasemapsRef = ref => {
+    this.basemapsRef = ref;
+  };
+
   render() {
     const {
       className,
@@ -29,6 +53,7 @@ class MapControlsButtons extends PureComponent {
       toogleRecentImagery
     } = this.props;
     const { zoom, minZoom, maxZoom, center } = settings || {};
+    const { showBasemaps } = this.state;
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
@@ -41,15 +66,38 @@ class MapControlsButtons extends PureComponent {
               onClick={() => toogleRecentImagery()}
               tooltip={{ text: 'Recent Imagery' }}
             >
-              <Icon icon={sateliteIcon} className="satelite-icon" />
+              <Icon icon={satelliteIcon} className="satelite-icon" />
             </Button>
-            <Button
-              className="basemaps-btn"
-              theme="theme-button-map-control"
-              tooltip={{ text: 'Basemaps' }}
+            <Tooltip
+              theme="light"
+              position="top-end"
+              useContext
+              interactive
+              open={showBasemaps}
+              onRequestClose={this.onTooltipRequestClose}
+              html={
+                <Basemaps
+                  onClose={this.toggleBasemaps}
+                  ref={this.setBasemapsRef}
+                />
+              }
             >
-              <Icon icon={globeIcon} className="globe-icon" />
-            </Button>
+              <Button
+                className="basemaps-btn"
+                theme="theme-button-map-control"
+                onClick={this.toggleBasemaps}
+                tooltip={
+                  !showBasemaps
+                    ? { text: 'Basemaps', hideOnClick: false }
+                    : undefined
+                }
+              >
+                <Icon
+                  icon={globeIcon}
+                  className={cx('globe-icon', { '-active': showBasemaps })}
+                />
+              </Button>
+            </Tooltip>
           </div>
           <div className="controls-wrapper">
             <Button
@@ -130,4 +178,4 @@ MapControlsButtons.propTypes = {
   toogleRecentImagery: Proptypes.func
 };
 
-export default MapControlsButtons;
+export default connect()(MapControlsButtons);

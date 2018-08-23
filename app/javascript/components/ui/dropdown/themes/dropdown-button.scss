@@ -3,8 +3,6 @@
 $dd-button-height: rem(28px);
 
 .theme-dropdown-button {
-  text-align: center;
-
   .container {
     .c-selector {
       border-radius: rem(25px);
@@ -43,7 +41,14 @@ $dd-button-height: rem(28px);
     }
   }
 
-  .arrow {
-    display: none;
+  .arrow-btn .arrow {
+    fill: $green-gfw;
+  }
+
+  .label {
+    color: $warm-grey;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
   }
 }
