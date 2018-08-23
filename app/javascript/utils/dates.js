@@ -77,6 +77,8 @@ export const formatDate = (date, format = 'YYYY-MM-DD') => {
 
 export const getYear = date => new Date(date).getUTCFullYear();
 
+export const getDayOfYear = date => new Date(date).getDate();
+
 export const formatDatePretty = (date, dateFormat = 'YYYY-MM-DD') => {
   const d = new Date(date);
   const hasDays = dateFormat.includes('DD');

@@ -1,6 +1,12 @@
 import { scalePow } from 'd3-scale';
 
-import { dateDiffInDays, getYear } from 'utils/dates';
+import {
+  dateDiffInDays,
+  getYear,
+  getDayOfYear,
+  addToDate,
+  formatDate
+} from 'utils/dates';
 
 const getExp = z => (z < 11 ? 0.3 + (z - 3) / 20 : 1);
 
@@ -352,7 +358,28 @@ const decodes = {
       const imgData = data;
       const components = 4;
 
-      const { startDay, endDay, numberOfDays } = getDayRange(params) || {};
+      const { startDate, endDate, minDate, maxDate } = params || {};
+
+      const startYear = getYear(startDate);
+      const minYear = getYear(minDate);
+      const maxYear = getYear(maxDate);
+      const maxYearDay = getDayOfYear(maxDate);
+      const endYearDay = getDayOfYear(endDate);
+      const recentStartDate = formatDate(addToDate(maxDate, -1, 'months'));
+      const recentStartYear = getYear(recentStartDate);
+      const recentStartDay = getDayOfYear(recentStartDate);
+
+      const startDay =
+        (startYear - minYear) * 23 + Math.floor(endYearDay / 16 + 1);
+
+      const endDay =
+        (getYear(endDate) - minYear) * 23 + Math.floor(endYearDay / 16 + 1);
+
+      const recentStartRange =
+        (recentStartYear - minYear) * 23 + Math.floor(recentStartDay / 16 + 1);
+
+      const recentEndRange =
+        (maxYear - minYear) * 23 + Math.floor(maxYearDay / 16 + 1);
 
       for (let i = 0; i < w; ++i) {
         for (let j = 0; j < h; ++j) {
@@ -365,8 +392,8 @@ const decodes = {
 
           const day = r + g;
 
-          if (day >= startDay && day <= endDay) {
-            if (day >= numberOfDays - 7 && day <= numberOfDays) {
+          if (day >= startDay || (1 && day <= endDay)) {
+            if (day >= recentStartRange && day <= recentEndRange) {
               imgData[pixelPos] = 219;
               imgData[pixelPos + 1] = 168;
               imgData[pixelPos + 2] = 0;
@@ -384,6 +411,8 @@ const decodes = {
                 imgData[pixelPos + 3] = intensity;
               }
             }
+
+            continue; // eslint-disable-line
           }
 
           imgData[pixelPos + 3] = 0;
