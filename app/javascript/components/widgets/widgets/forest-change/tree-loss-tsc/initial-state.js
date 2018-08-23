@@ -49,7 +49,9 @@ export default {
     },
     sentences: {
       initial:
-        "Between {startYear} and {endYear}, {location} lost {loss} of tree cover loss. This loss is equal to {percent} of the area's tree cover in {extentYear}, and equivalent to {emissions} of CO\u2082 emissions."
+        'In {location} from {startYear} and {endYear}, {percent} of tree cover loss occurred in areas where {driver} is the dominant driver of land cover change.',
+      globalInitial:
+        '{location} from {startYear} and {endYear}, {percent} of tree cover loss occurred in areas where {driver} is the dominant driver of land cover change.'
     }
   },
   settings: {

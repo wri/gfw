@@ -40,7 +40,12 @@ export const getDrivers = createSelector([getFilteredData], data => {
     'area',
     true
   );
-  return sortBy(sortedLoss.map(d => d.driver), 'area');
+  return sortBy(
+    sortedLoss.map(d => ({
+      ...d
+    })),
+    'area'
+  ).reverse();
 });
 
 // get lists selected
@@ -70,8 +75,8 @@ export const parseConfig = createSelector(
     const yKeys = {};
     const categoryColors = colors.lossDrivers;
     drivers.forEach(k => {
-      yKeys[`class_${k}`] = {
-        fill: categoryColors[k],
+      yKeys[`class_${k.driver}`] = {
+        fill: categoryColors[k.driver],
         stackId: 1
       };
     });
@@ -83,12 +88,12 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       drivers
         .map(d => {
-          const label = tscLossCategories[d - 1].label;
+          const label = tscLossCategories[d.driver - 1].label;
           return {
-            key: `class_${d}`,
+            key: `class_${d.driver}`,
             label,
             unit: 'ha',
-            color: categoryColors[d],
+            color: categoryColors[d.driver],
             unitFormat: value => format('.3s')(value)
           };
         })
@@ -122,31 +127,32 @@ export const getSentence = createSelector(
     getSettings,
     getCurrentLocation,
     getIndicator,
-    getSentences
+    getSentences,
+    getDrivers
   ],
-  (data, extent, settings, currentLabel, indicator, sentences) => {
+  (data, extent, settings, currentLabel, indicator, sentences, drivers) => {
     if (!data) return null;
-    const { initial } = sentences;
+    const { initial, globalInitial } = sentences;
     const { startYear, endYear, extentYear } = settings;
+    const topDriver = drivers[0] || null;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss =
-      (totalLoss && extent && totalLoss / extent * 100) || 0;
-
-    const sentence = initial;
-
+      (totalLoss && topDriver.area && topDriver.area / extent * 100) || 0;
+    const sentence = currentLabel === 'global' ? globalInitial : initial;
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
       location:
         currentLabel === 'global'
           ? {
-            value: 'the world',
+            value: 'Globally',
             tooltip: 'this dataset is available in certain countries'
           }
           : currentLabel,
       startYear,
       endYear,
+      driver: tscLossCategories[topDriver.driver - 1].label.toLowerCase(),
       loss:
         totalLoss < 1
           ? `${format('.3s')(totalLoss)}ha`
