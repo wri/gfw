@@ -28,6 +28,7 @@ class RecentImagerySettings extends PureComponent {
     const {
       selectedTile,
       tiles,
+      onClose,
       settings: {
         thumbsToShow,
         selectedTileSource,
@@ -48,7 +49,7 @@ class RecentImagerySettings extends PureComponent {
           </div>
           <button
             className="close-btn"
-            onClick={() => setRecentImageryShowSettings(false)}
+            onClick={onClose}
           >
             <Icon icon={closeIcon} className="close-icon" />
           </button>
@@ -89,7 +90,7 @@ class RecentImagerySettings extends PureComponent {
           <div className="c-recent-imagery-settings__clouds__title">
             MAXIMUM CLOUD COVER PERCENTAGE
           </div>
-          {/*<Slider
+          {/* <Slider
             className="theme-slider-green"
             settings={{
               defaultValue: clouds,
@@ -106,7 +107,7 @@ class RecentImagerySettings extends PureComponent {
               tipFormatter: value => `${value}%`
             }}
             handleOnSliderChange={d => setRecentImagerySettings({ clouds: d })}
-          />*/}
+          /> */}
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
           {tiles.length >= 1 && [

@@ -9,6 +9,7 @@ class RecentImagery extends PureComponent {
   render() {
     const {
       tile,
+      onClose,
       allTiles,
       settings,
       setRecentImagerySettings,
@@ -23,6 +24,7 @@ class RecentImagery extends PureComponent {
           settings={settings}
           setRecentImagerySettings={setRecentImagerySettings}
           setRecentImageryShowSettings={setRecentImageryShowSettings}
+          onClose={onClose}
         />
       </div>
     );

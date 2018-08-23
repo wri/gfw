@@ -116,11 +116,11 @@ class RecentImageryContainer extends PureComponent {
 
   setEvents() {
     // TODO: event handler that checks if current tile contains map coordinates, if not request new tile.
-    const needNewTile = false
+    const needNewTile = false;
     if (needNewTile) {
       getData({
-        latitude: map.getCenter().lng(),
-        longitude: map.getCenter().lat(),
+        latitude: 0,
+        longitude: 0,
         start: dates.start,
         end: dates.end,
         bands: settings.bands
@@ -164,6 +164,6 @@ RecentImageryContainer.propTypes = {
 };
 
 export { actions, reducers, initialState };
-export default withTooltipEvent(connect(mapStateToProps, actions)(
-  RecentImageryContainer
-));
+export default withTooltipEvent(
+  connect(mapStateToProps, actions)(RecentImageryContainer)
+);

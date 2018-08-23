@@ -80,7 +80,13 @@ class MapControlsButtons extends PureComponent {
                   showRecentImagery
                 )
               }
-              html={<RecentImagery map={map} ref={this.setRecentImageryRef} />}
+              html={
+                <RecentImagery
+                  map={map}
+                  onClose={this.toggleRecentImagery}
+                  ref={this.setRecentImageryRef}
+                />
+              }
             >
               <Button
                 className="recent-imagery-btn"
