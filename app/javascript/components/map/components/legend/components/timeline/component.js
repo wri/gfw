@@ -26,19 +26,22 @@ class Timeline extends Component {
       marks,
       customColor,
       formatDateString,
-      intervalStep
+      intervalStep,
+      canPlay
     } = this.props;
 
     return (
       <div className={`c-timeline ${className}`}>
-        <button className="control-btn" onClick={handleTogglePlay}>
-          <Icon
-            className={isPlaying ? 'pause' : 'play'}
-            icon={isPlaying ? PauseIcon : PlayIcon}
-          />
-        </button>
+        {canPlay && (
+          <button className="control-btn" onClick={handleTogglePlay}>
+            <Icon
+              className={isPlaying ? 'pause' : 'play'}
+              icon={isPlaying ? PauseIcon : PlayIcon}
+            />
+          </button>
+        )}
         <Slider
-          className="range"
+          className={`range ${canPlay ? 'can-play' : ''}`}
           marks={marks}
           disabled={isPlaying}
           min={min}
@@ -71,7 +74,8 @@ Timeline.propTypes = {
   marks: PropTypes.object,
   formatDateString: PropTypes.func,
   customColor: PropTypes.string,
-  intervalStep: PropTypes.number
+  intervalStep: PropTypes.number,
+  canPlay: PropTypes.bool
 };
 
 export default Timeline;

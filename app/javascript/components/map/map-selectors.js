@@ -194,6 +194,18 @@ export const getParsedDatasets = createSelector(
                 const decodeFunction = decodeLayersConfig[l.id];
                 const latestDate = latest && latest[l.id];
 
+                // check for timeline params
+                const hasParamsTimeline =
+                  params_config &&
+                  params_config.map(p => p.key).includes('startDate');
+                const hasDecodeTimeline =
+                  decode_config &&
+                  decode_config.map(p => p.key).includes('startDate');
+                const params =
+                  params_config && reduceParams(params_config, latestDate);
+                const decodeParams =
+                  decode_config && reduceParams(decode_config);
+
                 return {
                   ...l,
                   ...l.applicationConfig,
@@ -203,11 +215,22 @@ export const getParsedDatasets = createSelector(
                     : position ||
                       (multiConfig && multiConfig.position) ||
                       i + 1,
+                  // check if needs timeline
+                  hasParamsTimeline,
+                  hasDecodeTimeline,
                   // params for tile url
                   ...(!isEmpty(params_config) && {
                     params: {
                       url: body.url || url,
-                      ...reduceParams(params_config, latestDate)
+                      ...params,
+                      ...(hasParamsTimeline && {
+                        minDate: params && params.startDate,
+                        maxDate: params && params.endDate,
+                        trimEndDate: params && params.endDate
+                      }),
+                      ...(latestDate && {
+                        endDate: latestDate
+                      })
                     }
                   }),
                   // params selector config
@@ -242,6 +265,12 @@ export const getParsedDatasets = createSelector(
                     decodeParams: {
                       ...(decodeFunction && decodeFunction.decodeParams),
                       ...reduceParams(decode_config),
+                      ...(hasDecodeTimeline && {
+                        minDate: decodeParams && decodeParams.startDate,
+                        maxDate: decodeParams && decodeParams.endDate,
+                        trimEndDate: decodeParams && decodeParams.endDate,
+                        canPlay: true
+                      }),
                       ...(latestDate && {
                         endDate: latestDate
                       })
@@ -305,7 +334,15 @@ export const getDatasetsWithConfig = createSelector(
 
     return datasets.map(d => {
       const layerConfig = allLayers.find(l => l.dataset === d.id) || {};
-      const { params, sqlParams, decodeParams, layers, visibility, opacity } =
+      const {
+        params,
+        sqlParams,
+        decodeParams,
+        timelineParams,
+        layers,
+        visibility,
+        opacity
+      } =
         layerConfig || {};
 
       return {
@@ -321,17 +358,17 @@ export const getDatasetsWithConfig = createSelector(
         }),
         layers: d.layers.map(l => ({
           ...l,
-
           visibility,
           opacity,
           active: layers && layers.includes(l.id),
-          ...(!isEmpty(params) && {
+          ...(!isEmpty(l.params) && {
             params: {
               ...l.params,
-              ...params
+              ...params,
+              ...timelineParams
             }
           }),
-          ...(!isEmpty(sqlParams) && {
+          ...(!isEmpty(l.sqlParams) && {
             sqlParams: {
               ...l.sqlParams,
               ...sqlParams
@@ -341,26 +378,25 @@ export const getDatasetsWithConfig = createSelector(
             l.decodeFunction && {
               decodeParams: {
                 ...l.decodeParams,
-                minDate: l.decodeParams && l.decodeParams.startDate,
-                maxDate: l.decodeParams && l.decodeParams.endDate,
-                trimEndDate: l.decodeParams && l.decodeParams.endDate,
                 ...(layers &&
                   layers.includes('confirmedOnly') && {
                     confirmedOnly: true
                   }),
-                ...decodeParams
+                ...decodeParams,
+                ...timelineParams
               }
             }),
-          ...(l.decodeParams &&
-            l.decodeParams.startDate && {
-              timelineConfig: {
-                ...l.decodeParams,
-                minDate: l.decodeParams && l.decodeParams.startDate,
-                maxDate: l.decodeParams && l.decodeParams.endDate,
-                trimEndDate: l.decodeParams && l.decodeParams.endDate,
-                ...decodeParams
-              }
-            })
+          ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
+            timelineConfig: {
+              ...(l.hasParamsTimeline && {
+                ...l.params
+              }),
+              ...(l.hasDecodeTimeline && {
+                ...l.decodeParams
+              }),
+              ...timelineParams
+            }
+          })
         }))
       };
     });

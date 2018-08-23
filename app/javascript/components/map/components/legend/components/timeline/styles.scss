@@ -8,8 +8,12 @@
 
   .range {
     width: 100%;
-    margin-left: rem(10px);
+    margin-left: rem(30px);
     cursor: pointer;
+
+    &.can-play {
+      margin-left: rem(10px);
+    }
   }
 
   .control-btn {

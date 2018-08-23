@@ -113,12 +113,12 @@ class Legend extends PureComponent {
       layers: layers.map(l => {
         const layer = { ...l };
         if (l.layers.indexOf(currentLayer.id) > -1) {
-          layer.decodeParams = {
-            ...layer.decodeParams
+          layer.timelineParams = {
+            ...layer.timelineParams
           };
-          layer.decodeParams.startDate = range[0];
-          layer.decodeParams.endDate = range[1];
-          layer.decodeParams.trimEndDate = range[2];
+          layer.timelineParams.startDate = range[0];
+          layer.timelineParams.endDate = range[1];
+          layer.timelineParams.trimEndDate = range[2];
         }
         return layer;
       })

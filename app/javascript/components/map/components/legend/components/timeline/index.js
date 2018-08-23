@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
 
-import { addToDate, dateDiffInDays, formatDatePretty } from 'utils/dates';
+import {
+  addToDate,
+  dateDiffInDays,
+  formatDatePretty,
+  formatDate
+} from 'utils/dates';
 
 import TimelineComponent from './component';
 import { getTicks } from './selectors';
@@ -110,7 +115,7 @@ class TimelineContainer extends PureComponent {
 
   formatRange = range => {
     const { minDate } = this.props;
-    return range.map(r => addToDate(minDate, r));
+    return range.map(r => formatDate(addToDate(minDate, r)));
   };
 
   formatDateString = value => {
