@@ -338,6 +338,8 @@ const decodes = {
             imgData[pixelPos + 1] = 102;
             imgData[pixelPos + 2] = 153;
             imgData[pixelPos + 3] = intensity;
+
+            continue; // eslint-disable-line
           }
           imgData[pixelPos + 3] = 0;
         }
