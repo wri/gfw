@@ -57,15 +57,6 @@ class Timeline extends Component {
   }
 }
 
-Timeline.defaultProps = {
-  dateFormat: 'YYYY-MM-DD',
-  interval: 'years',
-  intervalStep: 1,
-  speed: 200,
-  count: 2,
-  pushable: true
-};
-
 Timeline.propTypes = {
   className: PropTypes.string,
   isPlaying: PropTypes.bool,

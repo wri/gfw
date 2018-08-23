@@ -53,7 +53,7 @@ export const addToDate = (date, count, interval = 'days') => {
   } else if (interval === 'days') {
     result.setDate(result.getDate() + count);
   }
-  return result;
+  return formatDate(result);
 };
 
 export const formatDate = (date, format = 'YYYY-MM-DD') => {

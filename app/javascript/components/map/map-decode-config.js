@@ -216,7 +216,7 @@ const decodes = {
       interval: 'weeks',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 50
+      speed: 100
     }
   },
   biomassLoss: {
@@ -353,8 +353,7 @@ const decodes = {
       interval: 'weeks',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 50,
-      startDate: '2015-01-01'
+      speed: 100
     }
   },
   terra: {
@@ -429,7 +428,7 @@ const decodes = {
       interval: 'months',
       intervalStep: 1,
       dateFormat: 'YYYY-MM-DD',
-      speed: 50
+      speed: 100
     }
   }
 };

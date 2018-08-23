@@ -2,13 +2,9 @@ import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
+import moment from 'moment';
 
-import {
-  addToDate,
-  dateDiffInDays,
-  formatDate,
-  formatDatePretty
-} from 'utils/dates';
+import { addToDate, dateDiffInDays, formatDatePretty } from 'utils/dates';
 
 import TimelineComponent from './component';
 import { getTicks } from './selectors';
@@ -31,6 +27,15 @@ const mapStateToProps = (
 };
 
 class TimelineContainer extends PureComponent {
+  static defaultProps = {
+    dateFormat: 'YYYY-MM-DD',
+    interval: 'years',
+    intervalStep: 1,
+    speed: 200,
+    count: 2,
+    pushable: true
+  };
+
   constructor(props) {
     super(props);
     const { minDate, maxDate, startDate, endDate, trimEndDate } = props;
@@ -64,20 +69,19 @@ class TimelineContainer extends PureComponent {
   incrementTimeline = nextState => {
     const { speed, minDate, intervalStep, interval } = this.props;
     const { start, end, trim } = nextState;
-
     this.interval = setTimeout(() => {
-      const currentEndDate = formatDate(addToDate(minDate, end));
-      let newEndDate = dateDiffInDays(
-        formatDate(addToDate(currentEndDate, intervalStep, interval)),
-        minDate
-      );
+      const currentEndDate = moment(minDate).add(end, 'days');
+      const newEndDate = moment(currentEndDate).add(intervalStep, interval);
+      let newEndDays = moment(newEndDate).diff(minDate, 'days');
+
       if (end === trim) {
-        newEndDate = start;
-      } else if (newEndDate >= trim) {
-        newEndDate = trim;
+        newEndDays = start;
+      } else if (newEndDays >= trim) {
+        newEndDays = trim;
       }
-      this.handleOnChange([start, newEndDate, trim]);
-      this.handleOnAfterChange([start, newEndDate, trim]);
+
+      this.handleOnChange([start, newEndDays, trim]);
+      this.handleOnAfterChange([start, newEndDays, trim]);
     }, speed);
   };
 
@@ -106,7 +110,7 @@ class TimelineContainer extends PureComponent {
 
   formatRange = range => {
     const { minDate } = this.props;
-    return range.map(r => formatDate(addToDate(minDate, r)));
+    return range.map(r => addToDate(minDate, r));
   };
 
   formatDateString = value => {
