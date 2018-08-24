@@ -1,12 +1,12 @@
 @import '~styles/settings';
 
-.c-params-selector {
+.c-layer-selector {
   display: inline-block;
   color: $slate;
   font-size: rem(12px);
   line-height: 1.6;
 
-  .param-dropdown {
+  .layer-dropdown {
     display: inline-block;
   }
 }

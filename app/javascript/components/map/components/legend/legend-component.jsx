@@ -17,8 +17,8 @@ import Loader from 'components/ui/loader';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
-import ParamsSelector from './components/params-selector';
 import LayerSelectorMenu from './components/layer-selector-menu';
+import LayerSelector from './components/layer-selector';
 import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
 
@@ -126,15 +126,18 @@ class MapLegend extends Component {
                       paramsSelectorConfig.map(
                         paramConfig =>
                           (paramConfig.options ? (
-                            <ParamsSelector
+                            <LayerSelector
                               key={`${activeLayer.name}-${paramConfig.key}`}
                               className="param-selector"
-                              param={paramConfig}
+                              {...paramConfig}
                               value={
                                 params[paramConfig.key] || paramConfig.default
                               }
-                              onChange={onChangeParam}
-                              layerData={activeLayer}
+                              onChange={e =>
+                                onChangeParam(activeLayer, {
+                                  [paramConfig.key]: e
+                                })
+                              }
                             />
                           ) : null)
                       )}

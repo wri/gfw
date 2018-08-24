@@ -207,6 +207,7 @@ export const getParsedDatasets = createSelector(
                   params_config && reduceParams(params_config, latestDate);
                 const decodeParams =
                   decode_config && reduceParams(decode_config, latestDate);
+                const sqlParams = sql_config && reduceSqlParams(sql_config);
 
                 return {
                   ...l,
@@ -221,7 +222,7 @@ export const getParsedDatasets = createSelector(
                   hasParamsTimeline,
                   hasDecodeTimeline,
                   // params for tile url
-                  ...(!isEmpty(params_config) && {
+                  ...(params && {
                     params: {
                       url: body.url || url,
                       ...params,
@@ -234,36 +235,25 @@ export const getParsedDatasets = createSelector(
                   }),
                   // params selector config
                   ...(params_config && {
-                    paramsSelectorConfig: params_config
-                      .filter(p => p.key !== 'dataMaxZoom' && p.key !== 'date')
-                      .map(p => {
-                        const isThresh =
-                          p.key === 'threshold' || p.key === 'thresh';
-                        const prefixEnd = isThresh ? 'with' : 'for';
-                        const suffix = isThresh ? ' canopy density.' : '';
-                        const options = isThresh ? thresholdOptions : p.options;
-                        return {
-                          ...p,
-                          options,
-                          prefix: `Displaying ${
-                            l.name ? l.name.toLowerCase() : ''
-                          } ${prefixEnd} `,
-                          suffix
-                        };
+                    paramsSelectorConfig: params_config.map(p => ({
+                      ...p,
+                      ...(p.key.includes('thresh') && {
+                        sentence:
+                          'Displaying {name} with {selector} canopy density',
+                        options: thresholdOptions
                       })
+                    }))
                   }),
                   // params for sql query
-                  ...(!isEmpty(sql_config) && {
-                    sqlParams: {
-                      ...reduceSqlParams(sql_config)
-                    }
+                  ...(sqlParams && {
+                    sqlParams
                   }),
                   // decode func and params for canvas layers
                   ...decodeFunction,
-                  ...(!isEmpty(decode_config) && {
+                  ...(decodeParams && {
                     decodeParams: {
                       ...(decodeFunction && decodeFunction.decodeParams),
-                      ...reduceParams(decode_config),
+                      ...decodeParams,
                       ...(hasDecodeTimeline && {
                         minDate: decodeParams && decodeParams.startDate,
                         maxDate: decodeParams && decodeParams.endDate,
