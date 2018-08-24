@@ -104,12 +104,20 @@ class TimelineContainer extends PureComponent {
   };
 
   handleOnChange = range => {
-    this.setState({ start: range[0], end: range[1], trim: range[2] });
+    this.setState({
+      start: range[0],
+      end: this.props.canPlay ? range[1] : range[2],
+      trim: range[2]
+    });
   };
 
   handleOnAfterChange = range => {
     const { handleChange } = this.props;
-    const newRange = this.formatRange(range);
+    const newRange = this.formatRange([
+      range[0],
+      this.props.canPlay ? range[1] : range[2],
+      range[2]
+    ]);
     handleChange(newRange);
   };
 
@@ -147,7 +155,8 @@ TimelineContainer.propTypes = {
   intervalStep: PropTypes.number,
   interval: PropTypes.string,
   speed: PropTypes.number,
-  dateFormat: PropTypes.string
+  dateFormat: PropTypes.string,
+  canPlay: PropTypes.bool
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);
