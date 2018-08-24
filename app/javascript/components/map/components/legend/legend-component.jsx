@@ -14,6 +14,7 @@ import Legend, {
 import Icons from 'wri-api-components/dist/icons';
 
 import Loader from 'components/ui/loader';
+import NoContent from 'components/ui/no-content';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
@@ -43,6 +44,7 @@ class MapLegend extends Component {
       <div className="c-legend">
         <Icons />
         {loading && <Loader className="datasets-loader" />}
+        {!loading && !layerGroups && <NoContent message="No layers selected" />}
         {!loading &&
           layerGroups &&
           !!layerGroups.length && (
