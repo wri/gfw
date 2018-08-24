@@ -55,18 +55,19 @@ class Datasets extends PureComponent {
                   {c.label}
                 </Pill>
               ))}
-            {countries && (
-              <Dropdown
-                className="country-dropdown"
-                theme="theme-dropdown-button theme-dropdown-button-small"
-                placeholder="+ Add country"
-                noItemsFound="No country found"
-                noSelectedValue="+ Add country"
-                options={countries}
-                onChange={this.handleAddCountry}
-                searchable
-              />
-            )}
+            {countries &&
+              !!countries.length && (
+                <Dropdown
+                  className="country-dropdown"
+                  theme="theme-dropdown-button theme-dropdown-button-small"
+                  placeholder="+ Add country"
+                  noItemsFound="No country found"
+                  noSelectedValue="+ Add country"
+                  options={countries}
+                  onChange={this.handleAddCountry}
+                  searchable
+                />
+              )}
           </div>
         </div>
         {!!countriesWithoutData.length &&
