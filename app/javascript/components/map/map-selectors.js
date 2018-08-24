@@ -242,7 +242,16 @@ export const getParsedDatasets = createSelector(
                         sentence:
                           'Displaying {name} with {selector} canopy density',
                         options: thresholdOptions
-                      })
+                      }),
+                      ...(p.min &&
+                        p.max && {
+                          options: Array.from(
+                            Array(p.max - p.min + 1).keys()
+                          ).map(o => ({
+                            label: o + p.min,
+                            value: o + p.min
+                          }))
+                        })
                     }))
                   }),
                   // params for sql query

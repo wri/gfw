@@ -430,6 +430,126 @@ const decodes = {
       dateFormat: 'YYYY-MM-DD',
       speed: 100
     }
+  },
+  braLandCover: {
+    decodeFunction: (data, w, h, z) => {
+      'use asm';
+
+      const imgData = data;
+      const components = 4;
+      const myScale = getScale(z);
+
+      for (let i = 0; i < w; ++i) {
+        for (let j = 0; j < h; ++j) {
+          // maps over square
+          const pixelPos = (j * w + i) * components;
+          const intensity = imgData[pixelPos + 1];
+
+          imgData[pixelPos + 3] =
+            z < 13 ? myScale(intensity) * 256 : intensity * 256;
+
+          // Forest Formations
+          if (imgData[pixelPos] === 3) {
+            imgData[pixelPos] = 0;
+            imgData[pixelPos + 1] = 100;
+            imgData[pixelPos + 2] = 0;
+          } else if (imgData[pixelPos] === 4) {
+            // Savannah Formations
+            imgData[pixelPos] = 141;
+            imgData[pixelPos + 1] = 144;
+            imgData[pixelPos + 2] = 35;
+          } else if (imgData[pixelPos] === 5) {
+            // Mangroves
+            imgData[pixelPos] = 138;
+            imgData[pixelPos + 1] = 168;
+            imgData[pixelPos + 2] = 29;
+          } else if (imgData[pixelPos] === 9) {
+            // Planted Forest
+            imgData[pixelPos] = 232;
+            imgData[pixelPos + 1] = 163;
+            imgData[pixelPos + 2] = 229;
+          } else if (imgData[pixelPos] === 11) {
+            // Non-forest Wetlands
+            imgData[pixelPos] = 39;
+            imgData[pixelPos + 1] = 137;
+            imgData[pixelPos + 2] = 212;
+          } else if (imgData[pixelPos] === 12) {
+            // Grassland
+            imgData[pixelPos] = 204;
+            imgData[pixelPos + 1] = 219;
+            imgData[pixelPos + 2] = 152;
+          } else if (imgData[pixelPos] === 13) {
+            // Other Non-forest Vegetation
+            imgData[pixelPos] = 138;
+            imgData[pixelPos + 1] = 184;
+            imgData[pixelPos + 2] = 75;
+          } else if (imgData[pixelPos] === 15) {
+            // Pasture
+            imgData[pixelPos] = 255;
+            imgData[pixelPos + 1] = 184;
+            imgData[pixelPos + 2] = 126;
+          } else if (imgData[pixelPos] === 18) {
+            // Agriculture
+            imgData[pixelPos] = 210;
+            imgData[pixelPos + 1] = 169;
+            imgData[pixelPos + 2] = 101;
+          } else if (imgData[pixelPos] === 21) {
+            // Pasture or Agriculture
+            imgData[pixelPos] = 232;
+            imgData[pixelPos + 1] = 176;
+            imgData[pixelPos + 2] = 113;
+          } else if (imgData[pixelPos] === 23) {
+            // Beaches and Dunes
+            imgData[pixelPos] = 221;
+            imgData[pixelPos + 1] = 126;
+            imgData[pixelPos + 2] = 107;
+          } else if (imgData[pixelPos] === 24) {
+            // Urban Infrastructure
+            imgData[pixelPos] = 233;
+            imgData[pixelPos + 1] = 70;
+            imgData[pixelPos + 2] = 43;
+          } else if (imgData[pixelPos] === 25) {
+            // Other Non-vegetated Area
+            imgData[pixelPos] = 255;
+            imgData[pixelPos + 1] = 153;
+            imgData[pixelPos + 2] = 255;
+          } else if (imgData[pixelPos] === 26) {
+            // Water Bodies
+            imgData[pixelPos] = 163;
+            imgData[pixelPos + 1] = 220;
+            imgData[pixelPos + 2] = 254;
+          } else if (imgData[pixelPos] === 27) {
+            // Unobserved
+            imgData[pixelPos] = 235;
+            imgData[pixelPos + 1] = 236;
+            imgData[pixelPos + 2] = 236;
+            imgData[pixelPos + 3] = 0;
+          } else if (
+            imgData[pixelPos] === 1 ||
+            imgData[pixelPos] === 2 ||
+            imgData[pixelPos] === 10 ||
+            imgData[pixelPos] === 14
+          ) {
+            // Unknown / No data
+            imgData[pixelPos] = 256;
+            imgData[pixelPos + 1] = 256;
+            imgData[pixelPos + 2] = 256;
+            imgData[pixelPos + 3] = 0;
+          } else {
+            imgData[pixelPos] = 256;
+            imgData[pixelPos + 1] = 256;
+            imgData[pixelPos + 2] = 256;
+            imgData[pixelPos + 3] = 0;
+          }
+        }
+      }
+    },
+    decodeParams: {
+      interval: 'months',
+      intervalStep: 1,
+      dateFormat: 'YYYY-MM-DD',
+      speed: 100
+    }
   }
 };
 
@@ -442,5 +562,6 @@ export default {
   'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
   'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
-  '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terra
+  '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terra,
+  '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover
 };
