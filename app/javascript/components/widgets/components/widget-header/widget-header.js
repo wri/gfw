@@ -42,7 +42,9 @@ const mapStateToProps = (
     title.withPlantations &&
     whitelist &&
     whitelist.indexOf('plantations') > -1
-  ) { parsedTitle = title.withPlantations.replace('{location}', currentLabel); }
+  ) {
+    parsedTitle = title.withPlantations.replace('{location}', currentLabel);
+  }
 
   return {
     location,

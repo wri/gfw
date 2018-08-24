@@ -1,12 +1,11 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import remove from 'lodash/remove';
 
 import modalActions from 'components/modals/meta/meta-actions';
 import mapActions from 'components/map/map-actions';
 
-import { getLayers, getLayerGroups } from '../../map-selectors';
+import { getLayers, getLegendLayerGroups } from '../../map-selectors';
 import Component from './legend-component';
 
 const actions = {
@@ -16,7 +15,11 @@ const actions = {
 
 const mapStateToProps = ({ location, datasets, countryData }) => ({
   layers: getLayers({ ...location }),
-  layerGroups: getLayerGroups({ ...datasets, ...location, ...countryData }),
+  layerGroups: getLegendLayerGroups({
+    ...datasets,
+    ...location,
+    ...countryData
+  }),
   ...datasets
 });
 
@@ -55,20 +58,22 @@ class Legend extends PureComponent {
     setMapSettings({ layers: newLayers });
   };
 
-  onToggleLayer = (layer, value) => {
+  onToggleLayer = (layer, enable) => {
     const { layers, setMapSettings } = this.props;
     const { dataset } = layer;
-    const datasetIndex = layers.findIndex(l => l.dataset === dataset);
-    const newLayers = [...layers];
-    let newDataset = newLayers[datasetIndex];
-    newDataset = {
-      ...newDataset,
-      layers: !value
-        ? remove(newDataset.layers, l => l !== layer.layer)
-        : [...newDataset.layers, layer.layer]
-    };
-    newLayers[datasetIndex] = newDataset;
-    setMapSettings({ layers: newLayers || [] });
+    const newLayers = layers.map((newLayer, i) => {
+      if (newLayer.dataset === dataset) {
+        const newDataset = layers[i];
+        return {
+          ...newDataset,
+          layers: enable
+            ? [...newDataset.layers, layer.layer]
+            : newDataset.layers.filter(l => l !== layer.layer)
+        };
+      }
+      return newLayer;
+    });
+    setMapSettings({ layers: newLayers });
   };
 
   onChangeLayer = (layerGroup, newLayerKey) => {
@@ -86,7 +91,7 @@ class Legend extends PureComponent {
 
   onRemoveLayer = currentLayer => {
     const { setMapSettings } = this.props;
-    const layers = this.props.layers.splice(0);
+    const layers = [...this.props.layers];
     layers.forEach((l, i) => {
       if (l.dataset === currentLayer.dataset) {
         layers.splice(i, 1);
@@ -136,6 +141,20 @@ class Legend extends PureComponent {
     });
   };
 
+  setConfirmed = layer => {
+    const { layers, setMapSettings } = this.props;
+    const { dataset } = layer;
+    const datasetIndex = layers.findIndex(l => l.dataset === dataset);
+    const newLayers = [...layers];
+    let newDataset = newLayers[datasetIndex];
+    newDataset = {
+      ...newDataset,
+      confirmedOnly: true
+    };
+    newLayers[datasetIndex] = newDataset;
+    setMapSettings({ layers: newLayers || [] });
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
@@ -147,7 +166,8 @@ class Legend extends PureComponent {
       onRemoveLayer: this.onRemoveLayer,
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,
-      onChangeThreshold: this.onChangeThreshold
+      onChangeThreshold: this.onChangeThreshold,
+      setConfirmed: this.setConfirmed
     });
   }
 }

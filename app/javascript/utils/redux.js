@@ -18,8 +18,10 @@ export const bindActionsToReducers = (actions, reducerList) =>
     return { ...result, ...c };
   }, {});
 
-export const handleActions = ({ actions, reducers, initialState }) =>
-  handle(bindActionsToReducers(actions, [reducers]), initialState || {});
+export const handleActions = ({ actions, reducers, initialState }) => {
+  if (typeof reducers === 'undefined') { throw new Error('One of your reducers is undefined.'); }
+  return handle(bindActionsToReducers(actions, [reducers]), initialState || {});
+};
 
 // our own actioncreattor that can handle thunks
 // fires the action as init

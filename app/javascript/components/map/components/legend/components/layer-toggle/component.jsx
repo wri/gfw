@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Toggle from 'components/ui/toggle';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
+import { Tooltip } from 'react-tippy';
+import Tip from 'components/ui/tip';
 
 import infoIcon from 'assets/icons/info.svg';
 
@@ -12,7 +14,16 @@ import './styles.scss';
 class LayerToggle extends PureComponent {
   render() {
     const { className, data, onInfoClick, onToggle, small } = this.props;
-    const { name, subtitle, metadata, layer, dataset, active, color } = data;
+    const {
+      name,
+      subtitle,
+      metadata,
+      layer,
+      dataset,
+      active,
+      color,
+      description
+    } = data;
 
     return (
       <div
@@ -27,16 +38,25 @@ class LayerToggle extends PureComponent {
         <div className="c-layer-toggle__content">
           <div className="c-layer-toggle__header">
             <div className="c-layer-toggle__name">{name}</div>
-            {metadata &&
-              typeof metadata === 'string' && (
-                <Button
-                  className={`theme-button-tiny ${
-                    small ? 'theme-button-grey-filled' : ''
-                  } square info-button`}
-                  onClick={() => onInfoClick(metadata)}
+            {((!metadata && description) ||
+              (metadata && typeof metadata === 'string')) && (
+                <Tooltip
+                  theme="tip"
+                  arrow
+                  hideOnClick
+                  position="top"
+                  disabled={!description}
+                  html={<Tip text={description} />}
                 >
-                  <Icon icon={infoIcon} className="info-icon" />
-                </Button>
+                  <Button
+                    className={`theme-button-tiny ${
+                      small ? 'theme-button-grey-filled' : ''
+                    } square info-button ${!metadata ? '-help' : ''}`}
+                    onClick={metadata && (() => onInfoClick(metadata))}
+                  >
+                    <Icon icon={infoIcon} className="info-icon" />
+                  </Button>
+                </Tooltip>
               )}
           </div>
           {subtitle && (
