@@ -18,6 +18,7 @@ const QUERIES = {
   terraAlerts:
     'SELECT day, year FROM data ORDER BY year DESC, day DESC LIMIT 1',
   sadAlerts: 'SELECT max(date) as date FROM imazon_sad',
+  granChaco: 'SELECT max(date) as date FROM gran_chaco_deforestation',
   viirsAlerts: '{location}?group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs'
@@ -119,4 +120,9 @@ export const fetchTerraLatest = () => {
 export const fetchSADLatest = () => {
   const url = `${CARTO_API}/sql?q=${QUERIES.sadAlerts}`;
   return request.get(url, 3600, 'sadRequest');
+};
+
+export const fetchGranChacoLatest = () => {
+  const url = `${CARTO_API}/sql?q=${QUERIES.granChaco}`;
+  return request.get(url, 3600, 'granChacoRequest');
 };
