@@ -137,7 +137,7 @@ export const getParsedDatasets = createSelector(
 
       const { isSelectorLayer, isMultiSelectorLayer, isLossLayer } = info || {};
       const { id, iso, applicationConfig } = defaultLayer || {};
-      const { global } = applicationConfig || {};
+      const { global, selectorConfig } = applicationConfig || {};
 
       // build statement config
       let statementConfig = null;
@@ -171,7 +171,8 @@ export const getParsedDatasets = createSelector(
             options: layer.map(l => ({
               ...l.applicationConfig.selectorConfig,
               value: l.id
-            }))
+            })),
+            ...selectorConfig
           }
         }),
         // disclaimer statement config
