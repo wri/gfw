@@ -24,12 +24,12 @@ const getCountries = state => state.countries || null;
 const reduceParams = (params, latestDate) => {
   if (!params) return null;
   return params.reduce((obj, param) => {
-    const { format, key } = param;
+    const { format, key, interval, count } = param;
     let paramValue = param.default;
     const isDate = deburrUpper(param.key).includes('DATE');
     if (isDate && !paramValue) {
       let date = latestDate || formatDate(new Date());
-      if (key === 'recentDate') date = moment(date).subtract(1, 'month');
+      if (interval && count) date = moment(date).subtract(count, interval);
       paramValue = moment(date).format(format || 'YYYY-MM-DD');
     }
 
