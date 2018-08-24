@@ -5,7 +5,7 @@ export default {
   },
   config: {
     admins: ['global', 'country'],
-    selectors: ['thresholds', 'extentYears', 'startYears', 'endYears'],
+    selectors: ['thresholds', 'startYears', 'endYears'],
     layers: ['loss_by_driver'],
     yearRange: ['2001', '2015'],
     metaKey: 'tsc_drivers',
