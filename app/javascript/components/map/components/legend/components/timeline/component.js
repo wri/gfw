@@ -31,7 +31,7 @@ class Timeline extends Component {
     } = this.props;
 
     return (
-      <div className={`c-timeline ${className}`}>
+      <div className={`c-timeline ${className || ''}`}>
         {canPlay && (
           <button className="control-btn" onClick={handleTogglePlay}>
             <Icon

@@ -27,6 +27,7 @@ class LayerSelector extends PureComponent {
       nameRepl,
       '{selector}',
       <Dropdown
+        key={name}
         className="layer-dropdown"
         theme="theme-dropdown-native-button"
         value={value}

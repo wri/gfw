@@ -6,6 +6,7 @@
   background: $white;
   transition: transform 0.3s linear;
   position: relative;
+  z-index: 1;
 
   &.-relocate {
     transform: translateX(292px);
