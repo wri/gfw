@@ -18,11 +18,11 @@ class LayerSelector extends PureComponent {
   render() {
     const { onChange, className, options, value, sentence, name } = this.props;
 
-    const nameRepl = this.reduceSentence(
+    const nameRepl = sentence.includes('{name}') && name ? this.reduceSentence(
       sentence,
       '{name}',
       name && name.toLowerCase()
-    ).join('');
+    ).join('') : sentence;
     const selectorRepl = this.reduceSentence(
       nameRepl,
       '{selector}',

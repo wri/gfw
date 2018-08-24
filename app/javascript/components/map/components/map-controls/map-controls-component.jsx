@@ -66,7 +66,7 @@ class MapControlsButtons extends PureComponent {
               tooltip={{ text: 'Recent Imagery' }}
               disabled
             >
-              <Icon icon={satelliteIcon} className="satelite-icon" />
+              <Icon icon={satelliteIcon} className="satellite-icon" />
             </Button>
             <Tooltip
               theme="light"
