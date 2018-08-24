@@ -1,27 +1,6 @@
 @import '~styles/settings.scss';
 
 .c-slider {
-  .rc-slider-handle {
-    &::after {
-      content: '';
-      width: 4px;
-      height: 4px;
-      background-color: $slate-dark;
-      position: absolute;
-      border-radius: 4px;
-      top: calc(50% - 2px);
-      left: calc(50% - 2px);
-    }
-  }
-
-  .rc-slider-disabled {
-    background-color: transparent;
-  }
-
-  .rc-slider-mark {
-    width: 90%;
-  }
-
   &:not(.can-play) {
     .rc-slider {
       pointer-events: none;
@@ -37,3 +16,23 @@
   }
 }
 
+.rc-slider-handle {
+  &::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background-color: $slate-dark;
+    position: absolute;
+    border-radius: 4px;
+    top: calc(50% - 2px);
+    left: calc(50% - 2px);
+  }
+}
+
+.rc-slider-disabled {
+  background-color: transparent;
+}
+
+.rc-slider-mark {
+  width: 90%;
+}

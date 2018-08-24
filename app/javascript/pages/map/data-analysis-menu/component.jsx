@@ -31,7 +31,7 @@ class DataAnalysisMenu extends PureComponent {
       {
         label: 'ANALYSIS',
         icon: analysisIcon,
-        path: `/v2/map/analysis${search ? `?${search}` : ''}`,
+        path: `/v2/map/data${search ? `?${search}` : ''}`,
         active: activeTab === 'analysis'
       }
     ];
