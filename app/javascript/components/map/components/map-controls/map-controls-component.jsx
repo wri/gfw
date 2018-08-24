@@ -64,6 +64,7 @@ class MapControlsButtons extends PureComponent {
               active={active}
               onClick={() => toogleRecentImagery()}
               tooltip={{ text: 'Recent Imagery' }}
+              disabled
             >
               <Icon icon={satelliteIcon} className="satelite-icon" />
             </Button>
