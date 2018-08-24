@@ -352,48 +352,56 @@ export const getDatasetsWithConfig = createSelector(
             )
           }
         }),
-        layers: d.layers.map(l => ({
-          ...l,
-          visibility,
-          opacity,
-          active: layers && layers.includes(l.id),
-          ...(!isEmpty(l.params) && {
-            params: {
-              ...l.params,
-              ...params,
-              ...timelineParams
-            }
-          }),
-          ...(!isEmpty(l.sqlParams) && {
-            sqlParams: {
-              ...l.sqlParams,
-              ...sqlParams
-            }
-          }),
-          ...(!isEmpty(l.decodeParams) &&
-            l.decodeFunction && {
-              decodeParams: {
-                ...l.decodeParams,
-                ...(layers &&
-                  layers.includes('confirmedOnly') && {
-                    confirmedOnly: true
-                  }),
-                ...decodeParams,
-                ...timelineParams
+        layers: d.layers.map(l => {
+          const { hasParamsTimeline, hasDecodeTimeline } = l;
+
+          return {
+            ...l,
+            visibility,
+            opacity,
+            active: layers && layers.includes(l.id),
+            ...(!isEmpty(l.params) && {
+              params: {
+                ...l.params,
+                ...params,
+                ...(hasParamsTimeline && {
+                  ...timelineParams
+                })
               }
             }),
-          ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
-            timelineConfig: {
-              ...(l.hasParamsTimeline && {
-                ...l.params
+            ...(!isEmpty(l.sqlParams) && {
+              sqlParams: {
+                ...l.sqlParams,
+                ...sqlParams
+              }
+            }),
+            ...(!isEmpty(l.decodeParams) &&
+              l.decodeFunction && {
+                decodeParams: {
+                  ...l.decodeParams,
+                  ...(layers &&
+                    layers.includes('confirmedOnly') && {
+                      confirmedOnly: true
+                    }),
+                  ...decodeParams,
+                  ...(hasDecodeTimeline && {
+                    ...timelineParams
+                  })
+                }
               }),
-              ...(l.hasDecodeTimeline && {
-                ...l.decodeParams
-              }),
-              ...timelineParams
-            }
-          })
-        }))
+            ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
+              timelineConfig: {
+                ...(l.hasParamsTimeline && {
+                  ...l.params
+                }),
+                ...(l.hasDecodeTimeline && {
+                  ...l.decodeParams
+                }),
+                ...timelineParams
+              }
+            })
+          };
+        })
       };
     });
   }
