@@ -13,12 +13,20 @@ const actions = {
   ...ownActions
 };
 
-const mapStateToProps = ({ location, datasets, geostore, latest }) => ({
+const mapStateToProps = ({
+  location,
+  datasets,
+  geostore,
+  latest,
+  countryData
+}) => ({
   ...getMapProps({
-    ...location,
-    ...datasets,
-    ...geostore,
-    latest: latest.data
+    geostore: geostore.geostore,
+    query: location.query,
+    datasets: datasets.datasets,
+    latest: latest.data,
+    loading: datasets.loading || latest.loading || geostore.loading,
+    countries: countryData.countries
   })
 });
 

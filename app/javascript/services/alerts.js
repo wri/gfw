@@ -2,6 +2,7 @@ import request from 'utils/request';
 import { getIndicator } from 'utils/strings';
 
 const REQUEST_URL = process.env.GFW_API;
+const CARTO_API = process.env.CARTO_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
 const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
@@ -15,7 +16,8 @@ const QUERIES = {
   firesIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   terraAlerts:
-    'SELECT count(*) as alerts FROM data GROUP BY day, year ORDER BY year, day',
+    'SELECT day, year FROM data ORDER BY year DESC, day DESC LIMIT 1',
+  sadAlerts: 'SELECT max(date) as date FROM imazon_sad',
   viirsAlerts: '{location}?group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs'
@@ -112,4 +114,9 @@ export const fetchTerraLatest = () => {
     QUERIES.terraAlerts
   }`;
   return request.get(url, 3600, 'terraRequest');
+};
+
+export const fetchSADLatest = () => {
+  const url = `${CARTO_API}/sql?q=${QUERIES.sadAlerts}`;
+  return request.get(url, 3600, 'sadRequest');
 };

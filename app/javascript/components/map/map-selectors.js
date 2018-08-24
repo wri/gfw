@@ -28,7 +28,8 @@ const reduceParams = (params, latestDate) => {
     let paramValue = param.default;
     const isDate = deburrUpper(param.key).includes('DATE');
     if (isDate && !paramValue) {
-      const date = latestDate || formatDate(new Date());
+      let date = latestDate || formatDate(new Date());
+      if (key === 'recentDate') date = moment(date).subtract(1, 'month');
       paramValue = moment(date).format(format || 'YYYY-MM-DD');
     }
 
@@ -115,7 +116,8 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
 export const getParsedDatasets = createSelector(
   [getDatasets, getLatest, getCountries],
   (datasets, latest, countries) => {
-    if (isEmpty(datasets)) return null;
+    if (isEmpty(datasets) || isEmpty(latest) || isEmpty(countries)) return null;
+
     return datasets.filter(d => d.env === 'production').map(d => {
       const { layer, metadata } = d;
       const appMeta = metadata.find(m => m.application === 'gfw') || {};
@@ -204,7 +206,7 @@ export const getParsedDatasets = createSelector(
                 const params =
                   params_config && reduceParams(params_config, latestDate);
                 const decodeParams =
-                  decode_config && reduceParams(decode_config);
+                  decode_config && reduceParams(decode_config, latestDate);
 
                 return {
                   ...l,
@@ -227,9 +229,6 @@ export const getParsedDatasets = createSelector(
                         minDate: params && params.startDate,
                         maxDate: params && params.endDate,
                         trimEndDate: params && params.endDate
-                      }),
-                      ...(latestDate && {
-                        endDate: latestDate
                       })
                     }
                   }),
@@ -270,9 +269,6 @@ export const getParsedDatasets = createSelector(
                         maxDate: decodeParams && decodeParams.endDate,
                         trimEndDate: decodeParams && decodeParams.endDate,
                         canPlay: true
-                      }),
-                      ...(latestDate && {
-                        endDate: latestDate
                       })
                     }
                   }),
@@ -418,9 +414,7 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return [];
-  return flatten(layerGroups.map(d => d.layers)).filter(
-    l => l.active && !l.confirmedOnly
-  );
+  return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
 });
 
 export const getMapProps = createStructuredSelector({

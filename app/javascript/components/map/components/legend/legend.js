@@ -13,12 +13,13 @@ const actions = {
   ...modalActions
 };
 
-const mapStateToProps = ({ location, datasets, countryData }) => ({
+const mapStateToProps = ({ location, datasets, countryData, latest }) => ({
   layers: getLayers({ ...location }),
   layerGroups: getLegendLayerGroups({
     ...datasets,
     ...location,
-    ...countryData
+    ...countryData,
+    latest: latest.data
   }),
   ...datasets
 });
