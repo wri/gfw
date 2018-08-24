@@ -8,8 +8,8 @@ import ChoseAnalysis from 'pages/map/data-analysis-menu/components/chose-analysi
 import PolygonAnalysis from 'pages/map/data-analysis-menu/components/polygon-analysis';
 import LocationAnalysis from 'pages/map/data-analysis-menu/components/location-analysis';
 
-import landTreeIcon from 'assets/icons/land-tree.svg';
-import truckIcon from 'assets/icons/truck.svg';
+import layersIcon from 'assets/icons/layers.svg';
+import analysisIcon from 'assets/icons/analysis.svg';
 import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
@@ -24,13 +24,13 @@ class DataAnalysisMenu extends PureComponent {
     const links = [
       {
         label: 'DATA',
-        icon: landTreeIcon,
+        icon: layersIcon,
         path: `/v2/map/data${search ? `?${search}` : ''}`,
         active: activeTab === 'data'
       },
       {
         label: 'ANALYSIS',
-        icon: truckIcon,
+        icon: analysisIcon,
         path: `/v2/map/analysis${search ? `?${search}` : ''}`,
         active: activeTab === 'analysis'
       }

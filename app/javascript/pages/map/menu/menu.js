@@ -25,11 +25,12 @@ const mapStateToProps = ({
   latest
 }) => ({
   ...getMenuProps({
-    ...datasets,
-    ...location,
-    ...mapMenu,
-    ...countryData,
-    latest: latest.data
+    query: location.query,
+    datasets: datasets.datasets,
+    latest: latest.data,
+    loading: datasets.loading || latest.loading,
+    countries: countryData.countries,
+    ...mapMenu
   })
 });
 

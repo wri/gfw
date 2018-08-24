@@ -16,12 +16,12 @@ const actions = {
 const mapStateToProps = ({ location, datasets, countryData, latest }) => ({
   layers: getLayers({ ...location }),
   layerGroups: getLegendLayerGroups({
-    ...datasets,
-    ...location,
-    ...countryData,
-    latest: latest.data
+    query: location.query,
+    datasets: datasets.datasets,
+    latest: latest.data,
+    countries: countryData.countries
   }),
-  ...datasets
+  loading: datasets.loading || countryData.loading
 });
 
 class Legend extends PureComponent {
