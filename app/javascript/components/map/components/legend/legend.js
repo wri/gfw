@@ -21,7 +21,7 @@ const mapStateToProps = ({ location, datasets, countryData, latest }) => ({
     latest: latest.data,
     countries: countryData.countries
   }),
-  loading: datasets.loading || countryData.loading
+  loading: datasets.loading || countryData.loading || latest.loading
 });
 
 class Legend extends PureComponent {

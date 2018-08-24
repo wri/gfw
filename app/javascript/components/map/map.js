@@ -25,8 +25,8 @@ const mapStateToProps = ({
     query: location.query,
     datasets: datasets.datasets,
     latest: latest.data,
-    loading: datasets.loading || latest.loading || geostore.loading,
-    countries: countryData.countries
+    countries: countryData.countries,
+    loading: datasets.loading || countryData.loading || latest.loading
   })
 });
 
