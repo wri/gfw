@@ -13,30 +13,39 @@ const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getWhitelist, getColors, getCurrentLocation],
-  (data, settings, whitelist, colors, currentLabel) => {
+  [getData, getWhitelist, getColors, getCurrentLocation, getIndicator],
+  (data, whitelist, colors, currentLabel, indicator) => {
     if (isEmpty(data)) return null;
-    const { totalArea, cover, plantations } = data;
-    const { indicator } = settings;
+    const { totalArea, totalCover, cover, plantations } = data;
+    const otherCover = indicator ? totalCover - cover : 0;
     const hasPlantations =
       (currentLabel !== 'global' && isEmpty(whitelist)) ||
       whitelist.indexOf('plantations') > -1;
     const plantationsCover = hasPlantations ? plantations : 0;
     const parsedData = [
       {
-        label: hasPlantations && !indicator ? 'Natural Forest' : 'Tree cover',
+        label: hasPlantations ? 'Natural Forest' : 'Tree Cover',
         value: cover - plantationsCover,
         color: colors.naturalForest,
         percentage: (cover - plantationsCover) / totalArea * 100
       },
       {
         label: 'Non-Forest',
-        value: totalArea - cover,
+        value: totalArea - cover - otherCover,
         color: colors.nonForest,
-        percentage: (totalArea - cover) / totalArea * 100
+        percentage: (totalArea - cover - otherCover) / totalArea * 100
       }
     ];
-    if (!indicator && hasPlantations) {
+    if (indicator) {
+      parsedData.splice(1, 0, {
+        label: hasPlantations
+          ? `Forest outside of ${indicator.label}`
+          : `Tree Cover outside of ${indicator.label}`,
+        value: otherCover,
+        color: colors.otherCover,
+        percentage: otherCover / totalArea * 100
+      });
+    } else if (!indicator && hasPlantations) {
       parsedData.splice(1, 0, {
         label: 'Plantations',
         value: plantations,
