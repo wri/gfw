@@ -15,7 +15,10 @@ import actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getLayers } from './selectors';
 
-const mapStateToProps = ({ map, countryData, widgets }, { widgetKey }) => {
+const mapStateToProps = (
+  { map, countryData, widgets, geostore },
+  { widgetKey }
+) => {
   const widget = widgets[widgetKey];
   const widgetSettings = widget && widget.settings;
   const activeLayers = widgetSettings && widgetSettings.layers;
@@ -26,7 +29,8 @@ const mapStateToProps = ({ map, countryData, widgets }, { widgetKey }) => {
     loading: map.loading || countryData.isGeostoreLoading,
     settings: { ...map.settings, ...widgetSettings },
     layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
-    layersKeys: activeLayers
+    layersKeys: activeLayers,
+    ...geostore.geostore
   };
 };
 
