@@ -8,14 +8,14 @@ import Carousel from 'components/ui/carousel';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
+import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
 
 import WEEKS from 'data/weeks.json';
+import BANDS from 'data/bands.json';
 import draggerIcon from 'assets/icons/dragger.svg';
 import closeIcon from 'assets/icons/close.svg';
 import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
-
-import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
 class RecentImagerySettings extends PureComponent {
   constructor(props) {
@@ -35,7 +35,8 @@ class RecentImagerySettings extends PureComponent {
         selectedTileSource,
         date,
         weeks,
-        clouds
+        clouds,
+        bands
       },
       isDragging,
       connectDragSource,
@@ -116,55 +117,67 @@ class RecentImagerySettings extends PureComponent {
           />
         </div>
         <div className="c-recent-imagery-settings__thumbnails">
-          {tiles.length >= 1 && (
-            <div>
+          {tiles.length >= 1 && [
+            <div
+              key="thumbnails-header"
+              className="c-recent-imagery-settings__thumbnails__header"
+            >
               <div className="c-recent-imagery-settings__thumbnails__description">
                 {this.state.thumbnailsDescription ||
                   (selectedTile && selectedTile.description)}
               </div>
-              <Carousel
-                settings={{
-                  slidesToShow: thumbsToShow,
-                  infinite: false,
-                  centerMode: false,
-                  centerPadding: '20px',
-                  dots: false,
-                  arrows: tiles.length > thumbsToShow,
-                  responsive: [
-                    {
-                      breakpoint: 620,
-                      settings: {
-                        slidesToShow: thumbsToShow - 2
-                      }
+              <Dropdown
+                theme="theme-dropdown-button"
+                value={bands}
+                options={BANDS}
+                onChange={option =>
+                  setRecentImagerySettings({ bands: option.value })
+                }
+              />
+            </div>,
+            <Carousel
+              key="thumbnails-carousel"
+              settings={{
+                slidesToShow: thumbsToShow,
+                infinite: false,
+                centerMode: false,
+                centerPadding: '20px',
+                dots: false,
+                arrows: tiles.length > thumbsToShow,
+                responsive: [
+                  {
+                    breakpoint: 620,
+                    settings: {
+                      slidesToShow: thumbsToShow - 2
                     }
-                  ]
-                }}
-              >
-                {tiles.map((tile, i) => (
-                  <div key={`recent-imagery-thumb-${tile.id}`}>
-                    <RecentImageryThumbnail
-                      id={i}
-                      tile={tile}
-                      selected={selectedTileSource === tile.id}
-                      handleClick={() => {
-                        setRecentImagerySettings({
-                          selectedTileSource: tile.id
-                        });
-                      }}
-                      handleMouseEnter={() => {
-                        this.setState({
-                          thumbnailsDescription: tile.description
-                        });
-                      }}
-                      handleMouseLeave={() => {
-                        this.setState({ thumbnailsDescription: null });
-                      }}
-                    />
-                  </div>
-                ))}
-              </Carousel>
-            </div>
-          )}
+                  }
+                ]
+              }}
+            >
+              {tiles.map((tile, i) => (
+                <div key={`recent-imagery-thumb-${tile.id}`}>
+                  <RecentImageryThumbnail
+                    id={i}
+                    tile={tile}
+                    selected={selectedTileSource === tile.id}
+                    handleClick={() => {
+                      setRecentImagerySettings({
+                        selectedTileSource: tile.id
+                      });
+                    }}
+                    handleMouseEnter={() => {
+                      this.setState({
+                        thumbnailsDescription: tile.description
+                      });
+                    }}
+                    handleMouseLeave={() => {
+                      this.setState({ thumbnailsDescription: null });
+                    }}
+                  />
+                </div>
+              ))}
+            </Carousel>
+          ]}
           {tiles.length < 1 && (
             <NoContent
               className="c-recent-imagery-settings__empty-thumbnails"

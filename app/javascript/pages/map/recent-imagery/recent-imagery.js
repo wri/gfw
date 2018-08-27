@@ -100,13 +100,15 @@ class RecentImageryContainer extends PureComponent {
     if (
       (active && active !== this.props.active) ||
       !isEqual(settings.date, this.props.settings.date) ||
-      !isEqual(settings.weeks, this.props.settings.weeks)
+      !isEqual(settings.weeks, this.props.settings.weeks) ||
+      !isEqual(settings.bands, this.props.settings.bands)
     ) {
       getData({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
         start: dates.start,
-        end: dates.end
+        end: dates.end,
+        bands: settings.bands
       });
     }
     if (!active && active !== this.props.active) {
@@ -134,7 +136,7 @@ class RecentImageryContainer extends PureComponent {
         dataStatus.requestFails !== this.props.dataStatus.requestFails ||
         isNewTile)
     ) {
-      getMoreTiles({ sources, dataStatus });
+      getMoreTiles({ sources, dataStatus, bands: settings.bands });
     }
   }
 
@@ -142,7 +144,7 @@ class RecentImageryContainer extends PureComponent {
     const { map } = this.middleView;
 
     this.mapIdleEvent = map.addListener('idle', () => {
-      const { visible, dates, getData } = this.props;
+      const { visible, dates, settings, getData } = this.props;
       if (visible) {
         const needNewTile = !google.maps.geometry.poly.containsLocation(
           map.getCenter(),
@@ -153,7 +155,8 @@ class RecentImageryContainer extends PureComponent {
             latitude: map.getCenter().lng(),
             longitude: map.getCenter().lat(),
             start: dates.start,
-            end: dates.end
+            end: dates.end,
+            bands: settings.bands
           });
         }
       }
@@ -234,25 +237,25 @@ class RecentImageryContainer extends PureComponent {
 
   addBoundsPolygonEvents() {
     const { setRecentImageryShowSettings } = this.props;
-    const { map } = this.middleView;
+    // const { map } = this.middleView;
     let clickTimeout = null;
-
+    // tooltip disabled for now due to Gmaps bug with info windows.
     google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
       this.boundsPolygon.setOptions({
         strokeColor: '#000000',
         strokeOpacity: 0.5,
         strokeWeight: 1
       });
-      this.boundsPolygonInfowindow.open(map);
+      // this.boundsPolygonInfowindow.open(map);
     });
     google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
       this.boundsPolygon.setOptions({
         strokeWeight: 0
       });
-      this.boundsPolygonInfowindow.close();
+      // this.boundsPolygonInfowindow.close();
     });
     google.maps.event.addListener(this.boundsPolygon, 'mousemove', e => {
-      this.boundsPolygonInfowindow.setPosition(e.latLng);
+      // this.boundsPolygonInfowindow.setPosition(e.latLng);
     });
     google.maps.event.addListener(this.boundsPolygon, 'click', () => {
       clickTimeout = setTimeout(() => {

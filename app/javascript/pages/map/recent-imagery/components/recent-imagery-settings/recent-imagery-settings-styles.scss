@@ -106,9 +106,21 @@
     border-top: 1px solid rgba(#9e9e9e, 0.3);
     z-index: 1;
 
-    &__description {
-      padding-left: rem(22px);
+    &__header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 rem(22px);
       margin-bottom: rem(18px);
+      z-index: 2;
+
+      .theme-dropdown-button .container {
+        max-width: rem(140px);
+      }
+    }
+
+    &__description {
       font-size: 12px;
       font-weight: 500;
       line-height: 13px;
@@ -116,7 +128,9 @@
     }
 
     .c-carousel {
+      position: relative;
       margin: 0;
+      z-index: 1;
 
       .slick-slide {
         padding: 0 rem(5.5px);

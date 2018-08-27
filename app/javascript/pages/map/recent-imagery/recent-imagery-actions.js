@@ -58,12 +58,12 @@ const getMoreTiles = createThunkAction(
       this.getMoreTilesSource.cancel();
     }
     this.getMoreTilesSource = CancelToken.source();
-    const { sources, dataStatus } = params;
+    const { sources, dataStatus, bands } = params;
 
     axios
       .all([
-        getTiles({ sources, token: this.getMoreTilesSource.token }),
-        getThumbs({ sources, token: this.getMoreTilesSource.token })
+        getTiles({ sources, token: this.getMoreTilesSource.token, bands }),
+        getThumbs({ sources, token: this.getMoreTilesSource.token, bands })
       ])
       .then(
         axios.spread((getTilesResponse, getThumbsResponse) => {
