@@ -17,13 +17,13 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   render() {
-    const { analysis } = this.props;
+    const { analysis, mapSettings: { hidePanels } } = this.props;
 
     return (
       <div className="l-map">
         <Map />
         <MapMenu />
-        <DataAnalysisMenu className="data-analysis-menu" />
+        {!hidePanels && <DataAnalysisMenu className="data-analysis-menu" />}
         <Share />
         <ModalMeta />
         <CountryDataProvider location={analysis.location} />
@@ -37,7 +37,8 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  analysis: PropTypes.object
+  analysis: PropTypes.object,
+  mapSettings: PropTypes.object
 };
 
 export default Page;

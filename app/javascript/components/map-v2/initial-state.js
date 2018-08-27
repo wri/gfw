@@ -1,6 +1,7 @@
 import basemaps, { labels } from './components/basemaps/basemaps-schema';
 
 export default {
+  hidePanels: false,
   center: {
     lat: 27,
     lng: 12
