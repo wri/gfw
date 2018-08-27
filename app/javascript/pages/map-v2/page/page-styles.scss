@@ -6,4 +6,10 @@
     left: rem(90px);
     top: rem(15px);
   }
+
+  .map {
+    width: calc(100% - 76px);
+    position: absolute;
+    right: 0;
+  }
 }

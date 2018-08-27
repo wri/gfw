@@ -21,8 +21,10 @@ class Page extends PureComponent {
 
     return (
       <div className="l-map">
-        <Map />
         <MapMenu />
+        <div className="map">
+          <Map />
+        </div>
         {!hidePanels && <DataAnalysisMenu className="data-analysis-menu" />}
         <Share />
         <ModalMeta />

@@ -15,10 +15,22 @@
   }
 }
 
+.icon-crosshair {
+  position: absolute;
+  top: calc(50% - 5px);
+  left: calc(50% - 5px);
+  stroke: $white;
+  transform: rotate(45deg);
+  stroke-width: 3px;
+  width: rem(10px);
+  height: rem(10px);
+  pointer-events: none;
+}
+
 .map-attributions {
   position: absolute;
   bottom: rem(15px);
-  right: rem(220px);
+  right: rem(310px);
 }
 
 .map-loader {
@@ -33,7 +45,7 @@
   .leaflet-bottom {
     right: rem(220px);
     left: auto;
-    bottom: 9px;
+    bottom: 15px;
   }
 
   .leaflet-control-scale-line {

@@ -44,7 +44,10 @@ class MapLegend extends Component {
       <div className="c-legend">
         <Icons />
         {loading && <Loader className="datasets-loader" />}
-        {!loading && !layerGroups && <NoContent message="No layers selected" />}
+        {!loading &&
+          (!layerGroups || !layerGroups.length) && (
+            <NoContent message="No layers selected" />
+          )}
         {!loading &&
           layerGroups &&
           !!layerGroups.length && (
