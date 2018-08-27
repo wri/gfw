@@ -22,6 +22,7 @@ class LayerStatement extends PureComponent {
         html={<Tip text={tooltipDesc} />}
         position="top"
         followCursor
+        animateFill={false}
       >
         <div className={`c-layer-statement ${className || ''}`}>
           {statementPlain} <span>{statementHighlight}</span>

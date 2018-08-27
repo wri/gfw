@@ -14,12 +14,14 @@ import Legend, {
 import Icons from 'wri-api-components/dist/icons';
 
 import Loader from 'components/ui/loader';
+import NoContent from 'components/ui/no-content';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
-import ThresholdSelector from './components/threshold-selector';
 import LayerSelectorMenu from './components/layer-selector-menu';
+import LayerSelector from './components/layer-selector';
 import LayerStatement from './components/layer-statement';
+import LayerMoreInfo from './components/layer-more-info';
 
 import './legend-styles.scss';
 
@@ -32,6 +34,7 @@ class MapLegend extends Component {
       onChangeThreshold,
       onToggleLayer,
       onChangeLayer,
+      onChangeParam,
       onChangeInfo,
       loading,
       ...rest
@@ -41,6 +44,7 @@ class MapLegend extends Component {
       <div className="c-legend">
         <Icons />
         {loading && <Loader className="datasets-loader" />}
+        {!loading && !layerGroups && <NoContent message="No layers selected" />}
         {!loading &&
           layerGroups &&
           !!layerGroups.length && (
@@ -64,8 +68,15 @@ class MapLegend extends Component {
                   lg || {};
 
                 const activeLayer =
-                  (layers && layers.find(l => l.active)) || {};
-                const { legendConfig, params, timelineConfig } = activeLayer;
+                  (layers && layers.find(l => l.active)) || [];
+                const {
+                  legendConfig,
+                  params,
+                  timelineConfig,
+                  moreInfo,
+                  paramsSelectorConfig
+                } =
+                  activeLayer || {};
 
                 return (
                   <LegendListItem
@@ -112,14 +123,25 @@ class MapLegend extends Component {
                   >
                     <LegendItemTypes />
                     {activeLayer &&
+                      paramsSelectorConfig &&
                       params &&
-                      (params.thresh || params.threshold) && (
-                        <ThresholdSelector
-                          className="threshold"
-                          threshold={params.thresh || params.threshold}
-                          onChange={onChangeThreshold}
-                          layerData={activeLayer}
-                        />
+                      paramsSelectorConfig.map(
+                        paramConfig =>
+                          (paramConfig.options ? (
+                            <LayerSelector
+                              key={`${activeLayer.name}-${paramConfig.key}`}
+                              className="param-selector"
+                              {...paramConfig}
+                              value={
+                                params[paramConfig.key] || paramConfig.default
+                              }
+                              onChange={e =>
+                                onChangeParam(activeLayer, {
+                                  [paramConfig.key]: e
+                                })
+                              }
+                            />
+                          ) : null)
                       )}
                     {(isSelectorLayer || isMultiSelectorLayer) &&
                       selectorLayerConfig && (
@@ -159,6 +181,9 @@ class MapLegend extends Component {
                         onInfoClick={onChangeInfo}
                       />
                     )}
+                    {moreInfo && (
+                      <LayerMoreInfo className="more-info" {...moreInfo} />
+                    )}
                   </LegendListItem>
                 );
               })}
@@ -182,6 +207,7 @@ MapLegend.propTypes = {
   onChangeTimeline: PropTypes.func,
   onChangeThreshold: PropTypes.func,
   onToggleLayer: PropTypes.func,
+  onChangeParam: PropTypes.func,
   onChangeLayer: PropTypes.func,
   onChangeInfo: PropTypes.func,
   layers: PropTypes.array

@@ -2,8 +2,14 @@ import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
+import moment from 'moment';
 
-import { addToDate, dateDiffInDays, formatDate } from 'utils/dates';
+import {
+  addToDate,
+  dateDiffInDays,
+  formatDatePretty,
+  formatDate
+} from 'utils/dates';
 
 import TimelineComponent from './component';
 import { getTicks } from './selectors';
@@ -26,6 +32,15 @@ const mapStateToProps = (
 };
 
 class TimelineContainer extends PureComponent {
+  static defaultProps = {
+    dateFormat: 'YYYY-MM-DD',
+    interval: 'years',
+    intervalStep: 1,
+    speed: 200,
+    count: 2,
+    pushable: true
+  };
+
   constructor(props) {
     super(props);
     const { minDate, maxDate, startDate, endDate, trimEndDate } = props;
@@ -59,20 +74,19 @@ class TimelineContainer extends PureComponent {
   incrementTimeline = nextState => {
     const { speed, minDate, intervalStep, interval } = this.props;
     const { start, end, trim } = nextState;
-
     this.interval = setTimeout(() => {
-      const currentEndDate = formatDate(addToDate(minDate, end));
-      let newEndDate = dateDiffInDays(
-        formatDate(addToDate(currentEndDate, intervalStep, interval)),
-        minDate
-      );
+      const currentEndDate = moment(minDate).add(end, 'days');
+      const newEndDate = moment(currentEndDate).add(intervalStep, interval);
+      let newEndDays = moment(newEndDate).diff(minDate, 'days');
+
       if (end === trim) {
-        newEndDate = start;
-      } else if (newEndDate >= trim) {
-        newEndDate = trim;
+        newEndDays = start;
+      } else if (newEndDays >= trim) {
+        newEndDays = trim;
       }
-      this.handleOnChange([start, newEndDate, trim]);
-      this.handleOnAfterChange([start, newEndDate, trim]);
+
+      this.handleOnChange([start, newEndDays, trim]);
+      this.handleOnAfterChange([start, newEndDays, trim]);
     }, speed);
   };
 
@@ -90,18 +104,27 @@ class TimelineContainer extends PureComponent {
   };
 
   handleOnChange = range => {
-    this.setState({ start: range[0], end: range[1], trim: range[2] });
+    this.setState({
+      start: range[0],
+      end: range[1],
+      trim: range[2]
+    });
   };
 
   handleOnAfterChange = range => {
     const { handleChange } = this.props;
-    const newRange = this.formatRange(range);
+    const newRange = this.formatRange([range[0], range[1], range[2]]);
     handleChange(newRange);
   };
 
   formatRange = range => {
     const { minDate } = this.props;
     return range.map(r => formatDate(addToDate(minDate, r)));
+  };
+
+  formatDateString = value => {
+    const { minDate, dateFormat } = this.props;
+    return formatDatePretty(addToDate(minDate, value), dateFormat);
   };
 
   render() {
@@ -113,7 +136,7 @@ class TimelineContainer extends PureComponent {
       handleTogglePlay: this.handleTogglePlay,
       handleOnChange: this.handleOnChange,
       handleOnAfterChange: this.handleOnAfterChange,
-      formatDate: this.formatDate
+      formatDateString: this.formatDateString
     });
   }
 }
@@ -127,7 +150,8 @@ TimelineContainer.propTypes = {
   handleChange: PropTypes.func,
   intervalStep: PropTypes.number,
   interval: PropTypes.string,
-  speed: PropTypes.number
+  speed: PropTypes.number,
+  dateFormat: PropTypes.string
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);

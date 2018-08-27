@@ -30,7 +30,7 @@ export const getTicks = createSelector(getDates, dates => {
   );
   const marks = {};
   ticks.forEach(r => {
-    marks[r] = moment(minDate)
+    marks[Math.floor(r)] = moment(minDate)
       .add(r, 'days')
       .format('YYYY');
   });

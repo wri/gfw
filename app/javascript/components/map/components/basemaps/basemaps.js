@@ -13,16 +13,23 @@ import {
 } from 'components/map/map-selectors';
 import BasemapsComponent from './basemaps-component';
 
-function mapStateToProps(state) {
+function mapStateToProps({ datasets, location, latest, countryData }) {
   return {
-    layers: getLayers(state.location),
-    mapZoom: getMapZoom(state.location),
-    activeLabels: getLabels(state.location),
-    activeBasemap: getBasemap(state.location),
-    boundaries: getBoundaryDatasets(state.datasets),
+    layers: getLayers(location),
+    mapZoom: getMapZoom(location),
+    activeLabels: getLabels(location),
+    activeBasemap: getBasemap(location),
+    boundaries: getBoundaryDatasets({
+      query: location.query,
+      datasets: datasets.datasets,
+      latest: latest.data,
+      countries: countryData.countries
+    }),
     activeBoundaries: getActiveBoundaries({
-      ...state.datasets,
-      ...state.location
+      query: location.query,
+      datasets: datasets.datasets,
+      latest: latest.data,
+      countries: countryData.countries
     })
   };
 }

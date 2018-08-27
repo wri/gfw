@@ -13,7 +13,7 @@ const mapStateToProps = (
   { value, options, noSelectedValue }
 ) => {
   const activeValue =
-    typeof value === 'string' || typeof value === 'number'
+    options && (typeof value === 'string' || typeof value === 'number')
       ? options.find(o => o.value === value)
       : value;
   const activeLabel = (activeValue && activeValue.label) || noSelectedValue;

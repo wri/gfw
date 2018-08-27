@@ -6666,7 +6666,7 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoist-non-react-statics@^2.1.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4, hoist-non-react-statics@^2.5.5:
+hoist-non-react-statics@^2.1.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
@@ -7764,17 +7764,17 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.18.tgz#14051b616ecb30932a4a5c436703bdb45f639022"
+layer-manager@^1.0.4:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.19.tgz#c3a57183ab90984639c16ec885da4ff64e6ff86d"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^1.0.4:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.0.19.tgz#c3a57183ab90984639c16ec885da4ff64e6ff86d"
+layer-manager@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.0.tgz#605682edad189b10c96409f9e6646dd3021877c6"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"
@@ -8199,7 +8199,7 @@ lodash.without@~4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.without/-/lodash.without-4.4.0.tgz#3cd4574a00b67bae373a94b748772640507b7aac"
 
-lodash@*, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.1.1, lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.10, lodash@~4.17.4:
+lodash@*, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.1.1, lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~4.17.10, lodash@~4.17.4:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -9425,10 +9425,6 @@ object-keys@~0.4.0:
 object-path@^0.9.2:
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/object-path/-/object-path-0.9.2.tgz#0fd9a74fc5fad1ae3968b586bda5c632bd6c05a5"
-
-object-unfreeze@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/object-unfreeze/-/object-unfreeze-1.1.0.tgz#69628bea1f3c9d29f4eb0ba63b38002d70ea3ce9"
 
 object-visit@^1.0.0:
   version "1.0.1"
@@ -11217,14 +11213,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
   dependencies:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
-
-react-css-modules@^4.7.6:
-  version "4.7.6"
-  resolved "https://registry.yarnpkg.com/react-css-modules/-/react-css-modules-4.7.6.tgz#747064e553894fd8957a9bfeacc26e7b8a8e1070"
-  dependencies:
-    hoist-non-react-statics "^2.5.5"
-    lodash "^4.16.6"
-    object-unfreeze "^1.1.0"
 
 react-dates@^16.3.6:
   version "16.7.0"

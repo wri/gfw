@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Dropdown from 'components/ui/dropdown';
+import LayerSelector from '../layer-selector';
 
 import './styles.scss';
 
@@ -14,7 +14,8 @@ class LayerSelectorMenu extends PureComponent {
       options,
       groups,
       onChange,
-      className
+      className,
+      sentence
     } = this.props;
     const optionName = selected.group || name;
 
@@ -23,28 +24,24 @@ class LayerSelectorMenu extends PureComponent {
         {groups &&
           !!groups.length && (
             <div className="menu-wrapper -group">
-              <span>{`Displaying ${name.toLowerCase()} for`}</span>
-              <Dropdown
-                className="layer-selector"
-                theme="theme-dropdown-native-button"
-                value={selected}
+              <LayerSelector
                 options={groups}
-                onChange={e => onChange(layerGroup, e.target.value)}
-                native
+                value={selected}
+                onChange={e => onChange(layerGroup, e)}
+                name={optionName}
+                sentence={sentence}
               />
             </div>
           )}
         {options &&
           !!options.length && (
             <div className="menu-wrapper">
-              <span>{`Displaying ${optionName.toLowerCase()} for`}</span>
-              <Dropdown
-                className="layer-selector"
-                theme="theme-dropdown-native-button"
-                value={selected}
+              <LayerSelector
                 options={options}
-                onChange={e => onChange(layerGroup, e.target.value)}
-                native
+                value={selected}
+                onChange={e => onChange(layerGroup, e)}
+                name={optionName}
+                sentence={sentence}
               />
             </div>
           )}
@@ -60,7 +57,8 @@ LayerSelectorMenu.propTypes = {
   groups: PropTypes.array,
   layerGroup: PropTypes.object,
   onChange: PropTypes.func,
-  selected: PropTypes.object
+  selected: PropTypes.object,
+  sentence: PropTypes.string
 };
 
 export default LayerSelectorMenu;

@@ -1,13 +1,12 @@
 @import '~styles/settings';
 
-.c-threshold-selector {
+.c-layer-selector {
   display: inline-block;
   color: $slate;
   font-size: rem(12px);
   line-height: 1.6;
 
-  .thresh-dropdown {
-    padding: 0 rem(5px);
+  .layer-dropdown {
     display: inline-block;
   }
 }

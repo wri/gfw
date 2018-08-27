@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import chroma from 'chroma-js';
 
-import { addToDate, formatDatePretty } from 'utils/dates';
-
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider';
 
@@ -13,11 +11,6 @@ import PauseIcon from 'assets/icons/pause.svg';
 import './styles.scss';
 
 class Timeline extends Component {
-  formatDate = value => {
-    const { minDate, dateFormat } = this.props;
-    return formatDatePretty(addToDate(minDate, value), dateFormat);
-  };
-
   render() {
     const {
       className,
@@ -30,36 +23,35 @@ class Timeline extends Component {
       trim,
       handleOnChange,
       handleOnAfterChange,
-      startDate,
-      endDate,
-      trimEndDate,
-      color,
       marks,
       customColor,
-      trackStyle,
-      ...props
+      formatDateString,
+      intervalStep,
+      canPlay
     } = this.props;
 
     return (
-      <div className={`c-timeline ${className}`}>
-        <button className="control-btn" onClick={handleTogglePlay}>
-          <Icon
-            className={isPlaying ? 'pause' : 'play'}
-            icon={isPlaying ? PauseIcon : PlayIcon}
-          />
-        </button>
+      <div className={`c-timeline ${className || ''}`}>
+        {canPlay && (
+          <button className="control-btn" onClick={handleTogglePlay}>
+            <Icon
+              className={isPlaying ? 'pause' : 'play'}
+              icon={isPlaying ? PauseIcon : PlayIcon}
+            />
+          </button>
+        )}
         <Slider
-          className="range"
+          className={`range ${canPlay ? 'can-play' : ''}`}
           marks={marks}
           disabled={isPlaying}
           min={min}
           max={max}
-          value={[start, end, trim]}
+          value={canPlay ? [start, end, trim] : [start, end]}
           trackColors={[customColor, chroma(customColor).darken(1.3)]}
-          {...props}
+          step={intervalStep}
           onChange={handleOnChange}
           onAfterChange={handleOnAfterChange}
-          formatValue={this.formatDate}
+          formatValue={formatDateString}
           showTooltip={index => isPlaying && index === 1}
           range
         />
@@ -67,15 +59,6 @@ class Timeline extends Component {
     );
   }
 }
-
-Timeline.defaultProps = {
-  dateFormat: 'YYYY-MM-DD',
-  interval: 'years',
-  intervalStep: 1,
-  speed: 200,
-  count: 2,
-  pushable: true
-};
 
 Timeline.propTypes = {
   className: PropTypes.string,
@@ -88,19 +71,11 @@ Timeline.propTypes = {
   trim: PropTypes.number,
   handleOnChange: PropTypes.func,
   handleOnAfterChange: PropTypes.func,
-  startDate: PropTypes.string,
-  endDate: PropTypes.string,
-  trimEndDate: PropTypes.string,
-  color: PropTypes.string,
-  formatDate: PropTypes.string,
   marks: PropTypes.object,
-  value: PropTypes.number,
-  minDate: PropTypes.string,
-  dragging: PropTypes.bool,
-  dateFormat: PropTypes.string,
-  index: PropTypes.number,
+  formatDateString: PropTypes.func,
   customColor: PropTypes.string,
-  trackStyle: PropTypes.array
+  intervalStep: PropTypes.number,
+  canPlay: PropTypes.bool
 };
 
 export default Timeline;

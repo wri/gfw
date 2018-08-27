@@ -106,7 +106,6 @@ export default [
   {
     slug: 'search',
     name: 'SEARCH',
-    icon: searchIcon,
-    Component: Datasets
+    icon: searchIcon
   }
 ];

@@ -2,8 +2,12 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import moment from 'moment';
 
 import { formatDate } from 'utils/dates';
+import { deburrUpper } from 'utils/data';
+
+import thresholdOptions from 'data/thresholds.json';
 
 import initialState from './map-initial-state';
 import decodeLayersConfig from './map-decode-config';
@@ -17,15 +21,21 @@ const getGeostore = state => state.geostore || null;
 const getLatest = state => state.latest || null;
 const getCountries = state => state.countries || null;
 
-const reduceParams = params => {
+const reduceParams = (params, latestDate) => {
   if (!params) return null;
   return params.reduce((obj, param) => {
+    const { format, key, interval, count } = param;
+    let paramValue = param.default;
+    const isDate = deburrUpper(param.key).includes('DATE');
+    if (isDate && !paramValue) {
+      let date = latestDate || formatDate(new Date());
+      if (interval && count) date = moment(date).subtract(count, interval);
+      paramValue = moment(date).format(format || 'YYYY-MM-DD');
+    }
+
     const newObj = {
       ...obj,
-      [param.key]:
-        param.key === 'endDate' && !param.default
-          ? formatDate(new Date())
-          : param.default
+      [key]: paramValue
     };
     return newObj;
   }, {});
@@ -106,7 +116,8 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
 export const getParsedDatasets = createSelector(
   [getDatasets, getLatest, getCountries],
   (datasets, latest, countries) => {
-    if (isEmpty(datasets)) return null;
+    if (isEmpty(datasets) || isEmpty(latest) || isEmpty(countries)) return null;
+
     return datasets.filter(d => d.env === 'production').map(d => {
       const { layer, metadata } = d;
       const appMeta = metadata.find(m => m.application === 'gfw') || {};
@@ -126,8 +137,9 @@ export const getParsedDatasets = createSelector(
 
       const { isSelectorLayer, isMultiSelectorLayer, isLossLayer } = info || {};
       const { id, iso, applicationConfig } = defaultLayer || {};
-      const { global } = applicationConfig || {};
+      const { global, selectorConfig } = applicationConfig || {};
 
+      // build statement config
       let statementConfig = null;
       if (isLossLayer) {
         statementConfig = {
@@ -148,20 +160,24 @@ export const getParsedDatasets = createSelector(
       return {
         ...d,
         dataset: d.id,
+        ...applicationConfig,
         ...info,
+        layer: id,
+        iso,
+        tags: flatten(d.vocabulary.map(v => v.tags)),
+        // dropdown selector config
         ...((isSelectorLayer || isMultiSelectorLayer) && {
           selectorLayerConfig: {
             options: layer.map(l => ({
               ...l.applicationConfig.selectorConfig,
               value: l.id
-            }))
+            })),
+            ...selectorConfig
           }
         }),
-        ...applicationConfig,
-        tags: flatten(d.vocabulary.map(v => v.tags)),
-        layer: id,
-        iso,
+        // disclaimer statement config
         statementConfig,
+        // layers config
         layers:
           layer &&
           sortBy(
@@ -181,36 +197,82 @@ export const getParsedDatasets = createSelector(
                 const decodeFunction = decodeLayersConfig[l.id];
                 const latestDate = latest && latest[l.id];
 
+                // check for timeline params
+                const hasParamsTimeline =
+                  params_config &&
+                  params_config.map(p => p.key).includes('startDate');
+                const hasDecodeTimeline =
+                  decode_config &&
+                  decode_config.map(p => p.key).includes('startDate');
+                const params =
+                  params_config && reduceParams(params_config, latestDate);
+                const decodeParams =
+                  decode_config && reduceParams(decode_config, latestDate);
+                const sqlParams = sql_config && reduceSqlParams(sql_config);
+
                 return {
                   ...l,
                   ...l.applicationConfig,
+                  // sorting position
                   position: l.applicationConfig.default
                     ? 0
                     : position ||
                       (multiConfig && multiConfig.position) ||
                       i + 1,
-
-                  ...(!isEmpty(params_config) && {
+                  // check if needs timeline
+                  hasParamsTimeline,
+                  hasDecodeTimeline,
+                  // params for tile url
+                  ...(params && {
                     params: {
                       url: body.url || url,
-                      ...reduceParams(params_config)
-                    }
-                  }),
-                  ...(!isEmpty(sql_config) && {
-                    sqlParams: {
-                      ...reduceSqlParams(sql_config)
-                    }
-                  }),
-                  ...decodeFunction,
-                  ...(!isEmpty(decode_config) && {
-                    decodeParams: {
-                      ...(decodeFunction && decodeFunction.decodeParams),
-                      ...reduceParams(decode_config),
-                      ...(latestDate && {
-                        endDate: latestDate
+                      ...params,
+                      ...(hasParamsTimeline && {
+                        minDate: params && params.startDate,
+                        maxDate: params && params.endDate,
+                        trimEndDate: params && params.endDate
                       })
                     }
                   }),
+                  // params selector config
+                  ...(params_config && {
+                    paramsSelectorConfig: params_config.map(p => ({
+                      ...p,
+                      ...(p.key.includes('thresh') && {
+                        sentence:
+                          'Displaying {name} with {selector} canopy density',
+                        options: thresholdOptions
+                      }),
+                      ...(p.min &&
+                        p.max && {
+                          options: Array.from(
+                            Array(p.max - p.min + 1).keys()
+                          ).map(o => ({
+                            label: o + p.min,
+                            value: o + p.min
+                          }))
+                        })
+                    }))
+                  }),
+                  // params for sql query
+                  ...(sqlParams && {
+                    sqlParams
+                  }),
+                  // decode func and params for canvas layers
+                  ...decodeFunction,
+                  ...(decodeParams && {
+                    decodeParams: {
+                      ...(decodeFunction && decodeFunction.decodeParams),
+                      ...decodeParams,
+                      ...(hasDecodeTimeline && {
+                        minDate: decodeParams && decodeParams.startDate,
+                        maxDate: decodeParams && decodeParams.endDate,
+                        trimEndDate: decodeParams && decodeParams.endDate,
+                        canPlay: true
+                      })
+                    }
+                  }),
+                  // special key for GLAD alerts
                   ...(confirmedOnly && {
                     id: 'confirmedOnly'
                   })
@@ -239,7 +301,7 @@ export const getLayersDatasets = createSelector(
 export const getActiveDatasets = createSelector(
   [getLayersDatasets],
   datasets => {
-    if (!datasets) return null;
+    if (isEmpty(datasets)) return null;
     return datasets.filter(d => d.env === 'production');
   }
 );
@@ -247,7 +309,7 @@ export const getActiveDatasets = createSelector(
 export const getBoundaryDatasets = createSelector(
   [getParsedDatasets],
   datasets => {
-    if (!datasets) return null;
+    if (isEmpty(datasets)) return null;
     return datasets.filter(d => d.env === 'production' && d.isBoundary);
   }
 );
@@ -255,6 +317,7 @@ export const getBoundaryDatasets = createSelector(
 export const getActiveBoundaries = createSelector(
   [getBoundaryDatasets, getLayers],
   (datasets, layers) => {
+    if (isEmpty(datasets)) return null;
     const layerIds = layers.map(layer => layer.dataset);
     return datasets.find(d => layerIds.includes(d.dataset));
   }
@@ -267,7 +330,15 @@ export const getDatasetsWithConfig = createSelector(
 
     return datasets.map(d => {
       const layerConfig = allLayers.find(l => l.dataset === d.id) || {};
-      const { params, sqlParams, decodeParams, layers, visibility, opacity } =
+      const {
+        params,
+        sqlParams,
+        decodeParams,
+        timelineParams,
+        layers,
+        visibility,
+        opacity
+      } =
         layerConfig || {};
 
       return {
@@ -281,49 +352,56 @@ export const getDatasetsWithConfig = createSelector(
             )
           }
         }),
-        layers: d.layers.map(l => ({
-          ...l,
+        layers: d.layers.map(l => {
+          const { hasParamsTimeline, hasDecodeTimeline } = l;
 
-          visibility,
-          opacity,
-          active: layers && layers.includes(l.id),
-          ...(!isEmpty(params) && {
-            params: {
-              ...l.params,
-              ...params
-            }
-          }),
-          ...(!isEmpty(sqlParams) && {
-            sqlParams: {
-              ...l.sqlParams,
-              ...sqlParams
-            }
-          }),
-          ...(!isEmpty(l.decodeParams) &&
-            l.decodeFunction && {
-              decodeParams: {
-                ...l.decodeParams,
-                minDate: l.decodeParams && l.decodeParams.startDate,
-                maxDate: l.decodeParams && l.decodeParams.endDate,
-                trimEndDate: l.decodeParams && l.decodeParams.endDate,
-                ...(layers &&
-                  layers.includes('confirmedOnly') && {
-                    confirmedOnly: true
-                  }),
-                ...decodeParams
+          return {
+            ...l,
+            visibility,
+            opacity,
+            active: layers && layers.includes(l.id),
+            ...(!isEmpty(l.params) && {
+              params: {
+                ...l.params,
+                ...params,
+                ...(hasParamsTimeline && {
+                  ...timelineParams
+                })
               }
             }),
-          ...(l.decodeParams &&
-            l.decodeParams.startDate && {
+            ...(!isEmpty(l.sqlParams) && {
+              sqlParams: {
+                ...l.sqlParams,
+                ...sqlParams
+              }
+            }),
+            ...(!isEmpty(l.decodeParams) &&
+              l.decodeFunction && {
+                decodeParams: {
+                  ...l.decodeParams,
+                  ...(layers &&
+                    layers.includes('confirmedOnly') && {
+                      confirmedOnly: true
+                    }),
+                  ...decodeParams,
+                  ...(hasDecodeTimeline && {
+                    ...timelineParams
+                  })
+                }
+              }),
+            ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
               timelineConfig: {
-                ...l.decodeParams,
-                minDate: l.decodeParams && l.decodeParams.startDate,
-                maxDate: l.decodeParams && l.decodeParams.endDate,
-                trimEndDate: l.decodeParams && l.decodeParams.endDate,
-                ...decodeParams
+                ...(l.hasParamsTimeline && {
+                  ...l.params
+                }),
+                ...(l.hasDecodeTimeline && {
+                  ...l.decodeParams
+                }),
+                ...timelineParams
               }
             })
-        }))
+          };
+        })
       };
     });
   }
@@ -344,9 +422,7 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return [];
-  return flatten(layerGroups.map(d => d.layers)).filter(
-    l => l.active && !l.confirmedOnly
-  );
+  return flatten(layerGroups.map(d => d.layers)).filter(l => l.active);
 });
 
 export const getMapProps = createStructuredSelector({

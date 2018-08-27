@@ -13,14 +13,15 @@ const actions = {
   ...modalActions
 };
 
-const mapStateToProps = ({ location, datasets, countryData }) => ({
+const mapStateToProps = ({ location, datasets, countryData, latest }) => ({
   layers: getLayers({ ...location }),
   layerGroups: getLegendLayerGroups({
-    ...datasets,
-    ...location,
-    ...countryData
+    query: location.query,
+    datasets: datasets.datasets,
+    latest: latest.data,
+    countries: countryData.countries
   }),
-  ...datasets
+  loading: datasets.loading || countryData.loading || latest.loading
 });
 
 class Legend extends PureComponent {
@@ -113,28 +114,28 @@ class Legend extends PureComponent {
       layers: layers.map(l => {
         const layer = { ...l };
         if (l.layers.indexOf(currentLayer.id) > -1) {
-          layer.decodeParams = {
-            ...layer.decodeParams
+          layer.timelineParams = {
+            ...layer.timelineParams
           };
-          layer.decodeParams.startDate = range[0];
-          layer.decodeParams.endDate = range[1];
-          layer.decodeParams.trimEndDate = range[2];
+          layer.timelineParams.startDate = range[0];
+          layer.timelineParams.endDate = range[1];
+          layer.timelineParams.trimEndDate = range[2];
         }
         return layer;
       })
     });
   };
 
-  onChangeThreshold = (currentLayer, thresh) => {
+  onChangeParam = (currentLayer, newParam) => {
     const { setMapSettings, layers } = this.props;
     setMapSettings({
       layers: layers.map(l => {
         const layer = { ...l };
-        if (l.layers.indexOf(currentLayer.id) > -1) {
+        if (l.layers.includes(currentLayer.id)) {
           layer.params = {
-            ...layer.params
+            ...layer.params,
+            ...newParam
           };
-          layer.params.thresh = thresh;
         }
         return layer;
       })
@@ -166,7 +167,7 @@ class Legend extends PureComponent {
       onRemoveLayer: this.onRemoveLayer,
       onChangeInfo: this.onChangeInfo,
       onChangeTimeline: this.onChangeTimeline,
-      onChangeThreshold: this.onChangeThreshold,
+      onChangeParam: this.onChangeParam,
       setConfirmed: this.setConfirmed
     });
   }

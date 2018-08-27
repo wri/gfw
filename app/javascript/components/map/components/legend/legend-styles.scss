@@ -5,6 +5,7 @@
   font-family: $font-family-1;
   width: 100%;
   background: $white;
+  min-height: rem(200px);
 
   > div {
     border: 0;
@@ -15,8 +16,8 @@
     min-height: rem(200px);
   }
 
-  .threshold {
-    margin-bottom: rem(10px);
+  .param-selector {
+    margin-bottom: rem(15px);
   }
 
   .timeline {
@@ -33,6 +34,10 @@
   }
 
   .layer-statement {
+    margin-bottom: rem(15px);
+  }
+
+  .layer-selector {
     margin-bottom: rem(15px);
   }
 }

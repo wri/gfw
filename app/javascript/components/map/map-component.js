@@ -39,6 +39,7 @@ class MapComponent extends PureComponent {
       recentImagery,
       setInteraction
     } = this.props;
+
     return (
       <Fragment>
         <Map
@@ -62,33 +63,41 @@ class MapComponent extends PureComponent {
           {map => (
             <Fragment>
               <LayerManager map={map} plugin={PluginLeaflet}>
-                {activeLayers.map(l => {
-                  const { interactionConfig } = l;
-                  const { output, article } = interactionConfig || {};
-                  const layer = {
-                    ...l,
-                    ...(!isEmpty(output) && {
-                      interactivity: output.map(i => i.column),
-                      events: {
-                        click: e => {
-                          setInteraction({
-                            ...e,
-                            label: l.name,
-                            article,
-                            id: l.id,
-                            value: l.id,
-                            config: output
-                          });
+                {layerManager =>
+                  activeLayers.map(l => {
+                    const { interactionConfig } = l;
+                    const { output, article } = interactionConfig || {};
+                    const layer = {
+                      ...l,
+                      ...(!isEmpty(output) && {
+                        interactivity: output.map(i => i.column),
+                        events: {
+                          click: e => {
+                            setInteraction({
+                              ...e,
+                              label: l.name,
+                              article,
+                              id: l.id,
+                              value: l.id,
+                              config: output
+                            });
+                          }
                         }
-                      }
-                    })
-                  };
+                      })
+                    };
 
-                  return <Layer key={l.id} {...layer} />;
-                })}
+                    return (
+                      <Layer
+                        key={l.id}
+                        {...layer}
+                        layerManager={layerManager}
+                      />
+                    );
+                  })
+                }
               </LayerManager>
               <Popup map={map} />
-              <MapControlButtons className="map-controls" map={map} share />
+              <MapControlButtons className="map-controls" map={map} />
               {recentImagery && (
                 <DragDropContextProvider backend={HTML5Backend}>
                   <RecentImagery map={map} />
