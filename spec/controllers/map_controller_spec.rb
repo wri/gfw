@@ -6,7 +6,7 @@ require Rails.root.join(
   'spec', 'controllers', 'shared_examples', 'assigns_title.rb'
 )
 
-describe MapLegacyController, type: :controller do
+describe MapController, type: :controller do
   describe 'GET index' do
     subject { get :index, params: {basemap: :grayscale, baselayer: :loss} }
     it_behaves_like 'renders index'
