@@ -1,0 +1,63 @@
+@import '~styles/settings';
+
+.theme-slider-green {
+  .rc-slider-rail {
+    background-color: transparent;
+  }
+
+  .rc-slider-track {
+    background-color: $green-gfw;
+    z-index: 2;
+  }
+
+  .rc-slider-dot {
+    bottom: rem(1px);
+    width: rem(2px);
+    height: rem(2px);
+    margin-left: 0;
+    background-color: #c4c4c4;
+    border: none;
+    border-radius: 0;
+    z-index: 1;
+  }
+
+  .rc-slider-handle {
+    box-shadow: 0 1px 3px 0 rgba($black, 0.29);
+    border: none;
+    border-radius: 2px;
+    z-index: 3;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: rem(4px);
+      height: rem(4px);
+      margin: auto;
+      background-color: $black;
+      border-radius: 100%;
+    }
+  }
+
+  .rc-slider-mark {
+    font-size: 10px;
+
+    .rc-slider-mark-text,
+    .rc-slider-mark-text-active {
+      color: $green-gfw;
+    }
+  }
+
+  &.-marks-on-top {
+    .rc-slider {
+      padding-top: rem(20px);
+    }
+
+    .rc-slider-mark {
+      top: 0;
+    }
+  }
+}

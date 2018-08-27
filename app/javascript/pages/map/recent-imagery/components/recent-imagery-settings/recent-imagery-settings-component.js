@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Icon from 'components/ui/icon';
-import Slider from 'components/ui/slider';
+import Slider from 'components/ui/slider-old';
 import Carousel from 'components/ui/carousel';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
