@@ -94,6 +94,7 @@ class Header extends PureComponent {
                           className="sub-menu"
                           languages={languages}
                           handleLangSelect={handleLangSelect}
+                          setShowLangSelector={setShowLangSelector}
                         />
                       )}
                     </li>
@@ -114,7 +115,12 @@ class Header extends PureComponent {
                           <Icon icon={myGfwIcon} />
                         </button>
                       )}
-                      {showMyGfw && <MyGFW className="sub-menu" />}
+                      {showMyGfw && (
+                        <MyGFW
+                          className="sub-menu"
+                          setShowMyGfw={setShowMyGfw}
+                        />
+                      )}
                     </li>
                   )}
                   <li>

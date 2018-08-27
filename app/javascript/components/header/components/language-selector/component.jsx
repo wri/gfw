@@ -1,9 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import onClickOutside from 'react-onclickoutside';
 
 import './styles.scss';
 
 class LangSelector extends PureComponent {
+  handleClickOutside = () => {
+    const { setShowLangSelector } = this.props;
+    setShowLangSelector(false);
+  };
+
   render() {
     const { className, languages, handleLangSelect } = this.props;
 
@@ -22,7 +28,8 @@ class LangSelector extends PureComponent {
 LangSelector.propTypes = {
   className: PropTypes.string,
   languages: PropTypes.array,
-  handleLangSelect: PropTypes.func
+  handleLangSelect: PropTypes.func,
+  setShowLangSelector: PropTypes.func
 };
 
-export default LangSelector;
+export default onClickOutside(LangSelector);
