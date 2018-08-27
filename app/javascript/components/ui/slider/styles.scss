@@ -1,21 +1,5 @@
 @import '~styles/settings.scss';
 
-.c-slider {
-  &:not(.can-play) {
-    .rc-slider {
-      pointer-events: none;
-
-      .rc-slider-handle {
-        pointer-events: auto;
-
-        &.rc-slider-handle-2 {
-          pointer-events: none;
-        }
-      }
-    }
-  }
-}
-
 .rc-slider-handle {
   &::after {
     content: '';

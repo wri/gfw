@@ -46,7 +46,7 @@ class Timeline extends Component {
           disabled={isPlaying}
           min={min}
           max={max}
-          value={[start, end, trim]}
+          value={canPlay ? [start, end, trim] : [start, end]}
           trackColors={[customColor, chroma(customColor).darken(1.3)]}
           step={intervalStep}
           onChange={handleOnChange}
