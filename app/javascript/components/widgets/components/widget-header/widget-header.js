@@ -5,7 +5,7 @@ import { SCREEN_L } from 'utils/constants';
 
 import shareActions from 'components/modals/share/share-actions';
 import modalMetaActions from 'components/modals/meta/meta-actions';
-import mapActions from 'components/map/map-actions';
+import mapActions from 'components/map/actions';
 import WidgetHeaderComponent from './widget-header-component';
 
 const actions = {

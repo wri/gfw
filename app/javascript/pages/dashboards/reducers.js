@@ -13,7 +13,7 @@ import * as HeaderComponent from 'pages/dashboards/header';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as WidgetsComponent from 'components/widgets';
-import * as MapComponent from 'components/map-old';
+import * as MapComponent from 'components/map';
 
 // Providers
 import * as countryDataProviderComponent from 'providers/country-data-provider';

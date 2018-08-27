@@ -1,11 +1,12 @@
 import { connectRoutes } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
-import queryString from 'query-string';
 import { handlePageTrack } from 'utils/analytics';
+import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 
 const history = createHistory();
 
 export const MAP = 'location/MAP';
+export const COUNTRY = 'location/COUNTRY';
 
 const routeChangeThunk = (dispatch, getState) => {
   // track page with GA
@@ -14,12 +15,14 @@ const routeChangeThunk = (dispatch, getState) => {
 
 export const routes = {
   [MAP]: {
-    path:
-      '/map/:zoom?/:latitude?/:longitude?/:iso?/:basemap?/:layers?/:sublayers?'
+    path: '/v2/map/:tab?/:country?/:region?/:subRegion?'
   }
 };
 
 export default connectRoutes(history, routes, {
-  querySerializer: queryString,
+  querySerializer: {
+    parse: decodeUrlForState,
+    stringify: encodeStateForUrl
+  },
   onAfterChange: routeChangeThunk
 });
