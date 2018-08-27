@@ -13,6 +13,7 @@ $dd-button-height: rem(20px);
 
       .value {
         top: calc(50% - #{rem(9px)});
+        right: rem(10px);
       }
 
       input,

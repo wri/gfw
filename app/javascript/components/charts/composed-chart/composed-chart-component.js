@@ -59,7 +59,10 @@ class CustomComposedChart extends PureComponent {
     const maxYValue = this.findMaxValue(data, config);
 
     return (
-      <div className={`c-composed-chart ${className}`} style={{ height }}>
+      <div
+        className={`c-composed-chart ${className}`}
+        style={{ height: height || 250 }}
+      >
         <ResponsiveContainer width="99%">
           <ComposedChart
             data={data}

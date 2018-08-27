@@ -1,0 +1,43 @@
+@import '~styles/settings.scss';
+@import './themes/wri-api-styles.scss';
+
+.c-legend {
+  font-family: $font-family-1;
+  width: 100%;
+  background: $white;
+  min-height: rem(200px);
+
+  > div {
+    border: 0;
+  }
+
+  .datasets-loader {
+    position: relative;
+    min-height: rem(200px);
+  }
+
+  .param-selector {
+    margin-bottom: rem(15px);
+  }
+
+  .timeline {
+    margin-left: -23px;
+    padding: 0 rem(5px) 0 0;
+    width: calc(100% + 23px);
+    margin-bottom: rem(40px);
+  }
+
+  .sub-layer-menu {
+    border-top: solid 1px $border;
+    padding-top: rem(15px);
+    margin-bottom: rem(10px);
+  }
+
+  .layer-statement {
+    margin-bottom: rem(15px);
+  }
+
+  .layer-selector {
+    margin-bottom: rem(15px);
+  }
+}

@@ -4,7 +4,7 @@ import replace from 'lodash/replace';
 import CATEGORIES from 'data/categories.json';
 
 import { filterWidgets } from 'components/widgets/selectors';
-import mapActions from 'components/map/map-actions';
+import mapActions from 'components/map/actions';
 
 import * as ownActions from './page-actions';
 import reducers, { initialState } from './page-reducers';

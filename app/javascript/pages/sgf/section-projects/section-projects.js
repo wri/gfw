@@ -37,7 +37,7 @@ const mapStateToProps = ({ projects }) => {
     loading:
       !projects ||
       projects.loading ||
-      !projects.data.projects.length ||
+      (projects.data.projects && !projects.data.projects.length) ||
       !projects.data.images,
     customFilter: projects.customFilter
   };
