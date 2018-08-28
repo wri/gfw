@@ -4,8 +4,12 @@
   background-color: $white;
   padding: rem(40px) 0;
 
+  &:focus {
+    outline: none;
+  }
+
   &.-full-screen {
-    height: calc(100vh - 176px);
+    min-height: calc(100vh - 76px);
   }
 
   .menu-search {

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import onClickOutside from 'react-onclickoutside';
 
 import './styles.scss';
 
@@ -22,11 +21,6 @@ const socialButtons = [
 ];
 
 class MyGFW extends PureComponent {
-  handleClickOutside = () => {
-    const { setShowMyGfw } = this.props;
-    setShowMyGfw(false);
-  };
-
   render() {
     const { className } = this.props;
 
@@ -51,8 +45,7 @@ class MyGFW extends PureComponent {
 }
 
 MyGFW.propTypes = {
-  className: PropTypes.string,
-  setShowMyGfw: PropTypes.func
+  className: PropTypes.string
 };
 
-export default onClickOutside(MyGFW);
+export default MyGFW;

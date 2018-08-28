@@ -24,10 +24,10 @@ class Page extends PureComponent {
       <div className="l-map">
         <Header
           className="map-header"
-          showPanel
-          fullScreen
           showHeader={showHeader}
           toggleMenu={handleShowMenu}
+          showPanel
+          fullScreen
         />
         <Map />
         <MapMenu toggleMenu={handleShowMenu} />

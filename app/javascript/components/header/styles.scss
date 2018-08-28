@@ -9,12 +9,16 @@ $full-screen-height: rem(76px);
 
   .nav-menu {
     border-bottom: solid 1px $border;
+    position: relative;
+
+    > div {
+      position: relative;
+    }
   }
 
   .logo {
     position: absolute;
     top: 0;
-    left: 0;
     z-index: 1;
     cursor: pointer;
   }
@@ -80,6 +84,7 @@ $full-screen-height: rem(76px);
       height: 100%;
       justify-content: flex-start;
       padding-left: rem(100px);
+      flex: 1;
 
       > li .ext-link {
         padding: 0 rem(20px);
@@ -93,6 +98,10 @@ $full-screen-height: rem(76px);
       height: 100%;
       border-left: solid 1px $border;
       padding-left: rem(10px);
+
+      &.-mobile {
+        flex: 1;
+      }
 
       > li {
         margin-left: rem(30px);
@@ -148,6 +157,10 @@ $full-screen-height: rem(76px);
     .nav {
       height: $full-screen-height;
       padding-right: rem(15px);
+    }
+
+    .logo {
+      left: 0;
     }
   }
 }

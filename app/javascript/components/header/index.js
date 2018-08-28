@@ -1,5 +1,6 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import config from './config';
 import Component from './component';
@@ -19,8 +20,17 @@ class HeaderContainer extends PureComponent {
       showLangSelector,
       showHeader: false,
       languages,
-      lang: txLang
+      lang: txLang,
+      loggedIn: false
     };
+  }
+
+  componentDidMount() {
+    axios.get(`${process.env.GFW_API}/auth/check-logged`).then(response => {
+      if (response.status < 400) {
+        this.setState({ loggedIn: true });
+      }
+    });
   }
 
   setShowPanel = showPanel => {
