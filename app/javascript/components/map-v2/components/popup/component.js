@@ -13,8 +13,8 @@ import DataTable from './components/data-table';
 
 class Popup extends Component {
   componentDidUpdate(prevProps) {
-    const { layers, clearInteractions } = prevProps;
-    if (!isEqual(layers.length, this.props.layers.length)) {
+    const { activeDatasets, clearInteractions } = prevProps;
+    if (!isEqual(activeDatasets.length, this.props.activeDatasets.length)) {
       clearInteractions();
     }
   }
@@ -82,7 +82,7 @@ Popup.propTypes = {
   interactions: PropTypes.array,
   tableData: PropTypes.array,
   cardData: PropTypes.object,
-  layers: PropTypes.array
+  activeDatasets: PropTypes.array
 };
 
 export default Popup;

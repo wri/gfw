@@ -6,37 +6,33 @@ import { setMapSettings, setLandsatBasemap } from 'components/map-v2/actions';
 import {
   getBasemap,
   getLabels,
-  getLayers,
+  getActiveDatasetsState,
   getMapZoom,
-  getActiveBoundaries,
+  getActiveBoundaryDatasets,
   getBoundaryDatasets
 } from 'components/map-v2/selectors';
 import BasemapsComponent from './basemaps-component';
 
-function mapStateToProps({ datasets, location, latest, countryData }) {
+function mapStateToProps({ datasets, location }) {
   return {
-    layers: getLayers(location),
+    activeDatasets: getActiveDatasetsState(location),
     mapZoom: getMapZoom(location),
     activeLabels: getLabels(location),
     activeBasemap: getBasemap(location),
     boundaries: getBoundaryDatasets({
       query: location.query,
-      datasets: datasets.datasets,
-      latest: latest.data,
-      countries: countryData.countries
+      datasets: datasets.datasets
     }),
-    activeBoundaries: getActiveBoundaries({
+    activeBoundaries: getActiveBoundaryDatasets({
       query: location.query,
-      datasets: datasets.datasets,
-      latest: latest.data,
-      countries: countryData.countries
+      datasets: datasets.datasets
     })
   };
 }
 
 class BasemapsContainer extends React.Component {
   static propTypes = {
-    layers: PropTypes.array,
+    activeDatasets: PropTypes.array,
     activeBoundaries: PropTypes.object,
     setMapSettings: PropTypes.func.isRequired,
     setLandsatBasemap: PropTypes.func.isRequired
@@ -54,12 +50,12 @@ class BasemapsContainer extends React.Component {
   selectLabels = label => this.props.setMapSettings({ label });
 
   selectBoundaries = item => {
-    const { layers, activeBoundaries } = this.props;
+    const { activeDatasets, activeBoundaries } = this.props;
     const filteredLayers = activeBoundaries
-      ? layers.filter(l => l.dataset !== activeBoundaries.dataset)
-      : layers;
+      ? activeDatasets.filter(l => l.dataset !== activeBoundaries.dataset)
+      : activeDatasets;
     if (item.value) {
-      const newLayers = [
+      const newActiveDatasets = [
         {
           ...item.value,
           opacity: 1,
@@ -67,9 +63,9 @@ class BasemapsContainer extends React.Component {
         },
         ...filteredLayers
       ];
-      this.props.setMapSettings({ layers: newLayers });
+      this.props.setMapSettings({ activeDatasets: newActiveDatasets });
     } else {
-      this.props.setMapSettings({ layers: filteredLayers });
+      this.props.setMapSettings({ activeDatasets: filteredLayers });
     }
   };
 

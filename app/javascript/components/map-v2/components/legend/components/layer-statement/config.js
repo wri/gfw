@@ -1,5 +1,5 @@
 export default {
-  loss: {
+  lossLayer: {
     statementPlain: 'Tree cover loss',
     statementHighlight: 'is not always deforestation',
     tooltipDesc:

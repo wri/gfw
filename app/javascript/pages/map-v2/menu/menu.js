@@ -17,41 +17,34 @@ const actions = {
   ...ownActions
 };
 
-const mapStateToProps = ({
-  mapMenu,
-  datasets,
-  location,
-  countryData,
-  latest
-}) => ({
+const mapStateToProps = ({ mapMenu, datasets, location, countryData }) => ({
   ...getMenuProps({
     query: location.query,
     datasets: datasets.datasets,
-    latest: latest.data,
     countries: countryData.countries,
     ...mapMenu,
-    loading: datasets.loading || countryData.loading || latest.loading
+    loading: datasets.loading || countryData.loading
   })
 });
 
 class MenuContainer extends PureComponent {
   onToggleLayer = (data, value) => {
-    const { layers, setMapSettings } = this.props;
+    const { activeDatasets, setMapSettings } = this.props;
     const { dataset, layer } = data;
-    let newLayers = [...layers];
+    let newActiveDatasets = [...activeDatasets];
     if (!value) {
-      newLayers = remove(newLayers, l => l.dataset !== dataset);
+      newActiveDatasets = remove(newActiveDatasets, l => l.dataset !== dataset);
     } else {
-      newLayers = [
+      newActiveDatasets = [
         {
           dataset,
           opacity: 1,
           visibility: true,
           layers: [layer]
         }
-      ].concat([...newLayers]);
+      ].concat([...newActiveDatasets]);
     }
-    setMapSettings({ layers: newLayers || [] });
+    setMapSettings({ activeDatasets: newActiveDatasets || [] });
   };
 
   render() {
@@ -63,7 +56,7 @@ class MenuContainer extends PureComponent {
 }
 
 MenuContainer.propTypes = {
-  layers: PropTypes.array,
+  activeDatasets: PropTypes.array,
   setMapSettings: PropTypes.func
 };
 

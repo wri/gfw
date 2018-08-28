@@ -66,7 +66,8 @@ class MapLegend extends Component {
                   metadata,
                   id,
                   layers,
-                  statementConfig
+                  statementConfig,
+                  name
                 } =
                   lg || {};
 
@@ -133,6 +134,7 @@ class MapLegend extends Component {
                           (paramConfig.options ? (
                             <LayerSelector
                               key={`${activeLayer.name}-${paramConfig.key}`}
+                              name={name}
                               className="param-selector"
                               {...paramConfig}
                               value={
@@ -151,6 +153,7 @@ class MapLegend extends Component {
                         <LayerSelectorMenu
                           className="layer-selector"
                           layerGroup={lg}
+                          name={name}
                           multi={isMultiSelectorLayer}
                           onChange={onChangeLayer}
                           {...selectorLayerConfig}

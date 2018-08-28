@@ -5,7 +5,6 @@ import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
-import LatestProvider from 'providers/latest-provider';
 
 import Map from 'components/map-v2';
 import MapMenu from 'pages/map-v2/menu';
@@ -32,7 +31,6 @@ class Page extends PureComponent {
         <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
-        <LatestProvider />
       </div>
     );
   }
