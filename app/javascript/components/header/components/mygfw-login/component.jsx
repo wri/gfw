@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import './styles.scss';
 
@@ -22,10 +23,10 @@ const socialButtons = [
 
 class MyGFWLogin extends PureComponent {
   render() {
-    const { className } = this.props;
+    const { className, plain } = this.props;
 
     return (
-      <div className={`c-my-gfw ${className || ''}`}>
+      <div className={cx('c-my-gfw', { '-plain': plain }, className)}>
         <p>
           Log in is required so you can view, manage, and delete your
           subscriptions. Questions? <a href="mailto:gfw@wri.org">Contact us</a>
@@ -45,7 +46,8 @@ class MyGFWLogin extends PureComponent {
 }
 
 MyGFWLogin.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  plain: PropTypes.bool
 };
 
 export default MyGFWLogin;

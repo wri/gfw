@@ -28,5 +28,16 @@
         color: darken($slate, 30%);
       }
     }
+
+    &.active {
+      > button,
+      a {
+        color: $green-gfw;
+
+        &:hover {
+          color: darken($green-gfw, 10%);
+        }
+      }
+    }
   }
 }

@@ -8,6 +8,7 @@ import Search from 'components/ui/search';
 import moreIcon from 'assets/icons/more.svg';
 
 import DropdownMenu from '../dropdown-menu';
+import MyGfwLogin from '../mygfw-login';
 
 import './styles.scss';
 
@@ -34,7 +35,14 @@ class Header extends PureComponent {
       fullScreen,
       onClick,
       isMobile,
-      navMain
+      navMain,
+      activeLang,
+      languages,
+      myGfwLinks,
+      setShowPanel,
+      handleLangSelect,
+      toggleMenu,
+      loggedIn
     } = this.props;
 
     return (
@@ -60,6 +68,37 @@ class Header extends PureComponent {
             {isMobile && (
               <div className="menu-section">
                 <DropdownMenu className="sub-menu -plain" options={navMain} />
+              </div>
+            )}
+            {isMobile && (
+              <div className="menu-section">
+                <h4>Select a language</h4>
+                <DropdownMenu
+                  className="sub-menu -plain"
+                  options={languages}
+                  selected={activeLang}
+                  handleSelect={lang => {
+                    handleLangSelect(lang);
+                    if (fullScreen) {
+                      toggleMenu();
+                    } else {
+                      setShowPanel(false);
+                    }
+                  }}
+                />
+              </div>
+            )}
+            {isMobile && (
+              <div className="menu-section">
+                <h4>My GFW</h4>
+                {loggedIn ? (
+                  <DropdownMenu
+                    className="sub-menu -plain"
+                    options={myGfwLinks}
+                  />
+                ) : (
+                  <MyGfwLogin plain />
+                )}
               </div>
             )}
             <div className="menu-section">
@@ -126,7 +165,14 @@ Header.propTypes = {
   fullScreen: PropTypes.bool,
   onClick: PropTypes.func,
   isMobile: PropTypes.bool,
-  navMain: PropTypes.array
+  navMain: PropTypes.array,
+  activeLang: PropTypes.object,
+  languages: PropTypes.array,
+  myGfwLinks: PropTypes.array,
+  setShowPanel: PropTypes.func,
+  handleLangSelect: PropTypes.func,
+  toggleMenu: PropTypes.func,
+  loggedIn: PropTypes.bool
 };
 
 export default Header;

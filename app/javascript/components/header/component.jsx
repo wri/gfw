@@ -50,7 +50,7 @@ class Header extends PureComponent {
     let moreMenuIcon = fullScreen || showPanel ? closeIcon : moreIcon;
     let moreMenuClassName =
       fullScreen || showPanel ? 'icon-close' : 'icon-more';
-    if (isMobile && !fullScreen) {
+    if (isMobile && !fullScreen && !showPanel) {
       moreMenuIcon = menuIcon;
       moreMenuClassName = 'icon-menu';
     }
@@ -95,19 +95,13 @@ class Header extends PureComponent {
                   >
                     {navMain.map(item => (
                       <li key={item.label}>
-                        {item.navLink ? (
-                          <NavLink
-                            to={item.path}
-                            className="nav-link"
-                            activeClassName="-active"
-                          >
-                            {item.label}
-                          </NavLink>
-                        ) : (
-                          <a href={item.path} className="nav-link">
-                            {item.label}
-                          </a>
-                        )}
+                        <NavLink
+                          to={item.path}
+                          className="nav-link"
+                          activeClassName="-active"
+                        >
+                          {item.label}
+                        </NavLink>
                       </li>
                     ))}
                   </ul>
@@ -177,11 +171,18 @@ class Header extends PureComponent {
               moreLinks={moreLinks}
               fullScreen={fullScreen}
               navMain={navMain}
+              languages={languages}
+              activeLang={activeLang}
+              myGfwLinks={myGfwLinks}
               isMobile={isMobile}
+              loggedIn={loggedIn}
+              toggleMenu={toggleMenu}
               onClick={() => {
                 setShowMyGfw(false);
                 setShowLangSelector(false);
               }}
+              setShowPanel={setShowPanel}
+              handleLangSelect={handleLangSelect}
             />
           )}
         </div>

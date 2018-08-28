@@ -6,6 +6,12 @@
   padding: rem(25px) rem(30px) rem(30px);
   border: solid 1px $border;
 
+  &.-plain {
+    border: 0;
+    width: 100%;
+    padding: 0;
+  }
+
   p {
     font-size: rem(14px);
     margin-bottom: rem(20px);
