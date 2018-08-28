@@ -67,7 +67,7 @@ export const getSentence = createSelector(
       globalInitial,
       globalWithIndicator
     } = sentences;
-    const percentCover = 100 * data.cover / data.totalArea;
+    const percentCover = 100 * data.cover / data.totalCover;
     const params = {
       year: settings.extentYear,
       location: currentLabel || 'global',
