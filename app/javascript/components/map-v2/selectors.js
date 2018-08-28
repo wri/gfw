@@ -422,9 +422,13 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 
 export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return [];
-  return flatten(layerGroups.map(d => d.layers)).filter(
-    l => l.active && !l.confirmedOnly
-  );
+  return flatten(layerGroups.map(d => d.layers))
+    .filter(l => l.active && !l.confirmedOnly)
+    .map((l, i) => ({
+      ...l,
+      zIndex:
+        l.interactionConfig && l.interactionConfig.article ? 1000 + i : 1000 - i
+    }));
 });
 
 export const getMapProps = createStructuredSelector({
