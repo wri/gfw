@@ -67,7 +67,7 @@ class MapComponent extends PureComponent {
             <Fragment>
               <LayerManager map={map} plugin={PluginLeaflet}>
                 {layerManager =>
-                  activeLayers.map(l => {
+                  activeLayers.map((l, index) => {
                     const { interactionConfig } = l;
                     const { output, article } = interactionConfig || {};
                     const layer = {
@@ -94,6 +94,7 @@ class MapComponent extends PureComponent {
                         key={l.id}
                         {...layer}
                         layerManager={layerManager}
+                        zIndex={1000 - index}
                       />
                     );
                   })
