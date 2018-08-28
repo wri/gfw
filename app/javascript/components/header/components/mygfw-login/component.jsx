@@ -20,7 +20,7 @@ const socialButtons = [
   }
 ];
 
-class MyGFW extends PureComponent {
+class MyGFWLogin extends PureComponent {
   render() {
     const { className } = this.props;
 
@@ -44,8 +44,8 @@ class MyGFW extends PureComponent {
   }
 }
 
-MyGFW.propTypes = {
+MyGFWLogin.propTypes = {
   className: PropTypes.string
 };
 
-export default MyGFW;
+export default MyGFWLogin;

@@ -11,8 +11,8 @@ import myGfwIcon from 'assets/icons/mygfw.svg';
 import closeIcon from 'assets/icons/close.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 
-import MyGFW from './components/mygfw';
-import LangSelector from './components/language-selector';
+import MyGFWLogin from './components/mygfw-login';
+import DropdownMenu from './components/dropdown-menu';
 import SubmenuPanel from './components/submenu-panel';
 
 import './styles.scss';
@@ -31,6 +31,7 @@ class Header extends PureComponent {
       showHeader,
       toggleMenu,
       languages,
+      myGfwLinks,
       activeLang,
       navMain,
       apps,
@@ -94,35 +95,36 @@ class Header extends PureComponent {
                         className="menu-link"
                         onClick={() => setShowLangSelector(!showLangSelector)}
                       >
-                        {(activeLang && activeLang.name) || 'English'}
+                        {(activeLang && activeLang.label) || 'English'}
                         <Icon className="icon-arrow" icon={arrowIcon} />
                       </button>
                       {showLangSelector && (
-                        <LangSelector
+                        <DropdownMenu
                           className="sub-menu"
-                          languages={languages}
-                          handleLangSelect={handleLangSelect}
+                          options={languages}
+                          handleSelect={handleLangSelect}
                         />
                       )}
                     </li>
                   )}
                   {!isMobile && (
                     <li>
-                      {loggedIn ? (
-                        <a className="ext-link" href="/my_gfw">
-                          My GFW
-                          <Icon icon={moreIcon} />
-                        </a>
-                      ) : (
-                        <button
-                          className="menu-link"
-                          onClick={() => setShowMyGfw(!showMyGfw)}
-                        >
-                          My GFW
-                          <Icon icon={myGfwIcon} />
-                        </button>
-                      )}
-                      {showMyGfw && <MyGFW className="sub-menu" />}
+                      <button
+                        className="menu-link"
+                        onClick={() => setShowMyGfw(!showMyGfw)}
+                      >
+                        My GFW
+                        <Icon icon={myGfwIcon} />
+                      </button>
+                      {showMyGfw &&
+                        loggedIn && (
+                          <DropdownMenu
+                            className="sub-menu"
+                            options={myGfwLinks}
+                          />
+                        )}
+                      {showMyGfw &&
+                        !loggedIn && <MyGFWLogin className="sub-menu" />}
                     </li>
                   )}
                   <li>
@@ -178,6 +180,7 @@ Header.propTypes = {
   handleLangSelect: PropTypes.func,
   languages: PropTypes.array,
   activeLang: PropTypes.object,
+  myGfwLinks: PropTypes.array,
   navMain: PropTypes.array,
   apps: PropTypes.array,
   moreLinks: PropTypes.array,

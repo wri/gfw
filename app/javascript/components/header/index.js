@@ -10,8 +10,11 @@ class HeaderContainer extends PureComponent {
     const { showPanel, showMyGfw, showLangSelector } = props;
 
     const txData = JSON.parse(localStorage.getItem('txlive:languages'));
-    const txLang = JSON.parse(localStorage.getItem('txlive'));
-    const languages = [txData.source].concat(txData.translation);
+    const txLang = JSON.parse(localStorage.getItem('txlive:selectedlang'));
+    const languages = [txData.source].concat(txData.translation).map(l => ({
+      label: l.name,
+      value: l.code
+    }));
 
     this.state = {
       showPanel,
@@ -48,14 +51,14 @@ class HeaderContainer extends PureComponent {
   };
 
   handleLangSelect = lang => {
-    localStorage.setItem('txlive', `"${lang}"`);
+    localStorage.setItem('txlive:selectedlang', `"${lang}"`);
     this.setState({ lang });
     this.setShowLangSelector(false);
   };
 
   render() {
     const { languages, lang } = this.state;
-    const activeLang = languages && languages.find(l => l.code === lang);
+    const activeLang = languages && languages.find(l => l.value === lang);
     return createElement(Component, {
       ...this.state,
       ...this.props,

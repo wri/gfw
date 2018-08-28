@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwCommodities from 'assets/logos/gfw-commodities.png';
@@ -25,6 +27,36 @@ export default {
     {
       label: 'About',
       path: '/map'
+    }
+  ],
+  myGfwLinks: [
+    {
+      label: 'My subscriptions',
+      path: '/my_gfw/subscriptions'
+    },
+    {
+      label: 'My stories',
+      path: '/my_gfw/stories'
+    },
+    {
+      label: 'My profile',
+      path: '/my_gfw'
+    },
+    {
+      label: 'Logout',
+      path: '/auth/logout',
+      onSelect: e => {
+        e.preventDefault();
+        axios
+          .get(`${process.env.GFW_API}/auth/logout`, { withCredentials: true })
+          .then(response => {
+            if (response.status < 400) {
+              window.location.reload();
+            } else {
+              console.warn('Failed to logout');
+            }
+          });
+      }
     }
   ],
   apps: [

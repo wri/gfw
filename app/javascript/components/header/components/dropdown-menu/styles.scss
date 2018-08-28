@@ -7,7 +7,9 @@
   border: solid 1px $border;
 
   > li {
-    > button {
+    > button,
+    a {
+      display: block;
       text-transform: uppercase;
       font-size: rem(14px);
       padding: rem(15px) 0;
