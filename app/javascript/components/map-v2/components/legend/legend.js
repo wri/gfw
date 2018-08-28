@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import difference from 'lodash/difference';
 
 import modalActions from 'components/modals/meta/meta-actions';
 import mapActions from 'components/map-v2/actions';
@@ -53,9 +54,11 @@ class Legend extends PureComponent {
 
   onChangeOrder = layerGroupsIds => {
     const { setMapSettings, layers } = this.props;
-    const newLayers = layerGroupsIds.map(id =>
-      layers.find(d => d.dataset === id)
-    );
+    const layersIds = layers.map(l => l.dataset);
+    const layersDiff = difference(layersIds, layerGroupsIds);
+    const newLayers = layersDiff
+      .concat(layerGroupsIds)
+      .map(id => layers.find(d => d.dataset === id));
     setMapSettings({ layers: newLayers });
   };
 
