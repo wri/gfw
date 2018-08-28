@@ -6,7 +6,14 @@ import gfwCommodities from 'assets/logos/gfw-commodities.png';
 import gfwWater from 'assets/logos/gfw-water.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
 
-import moreIcon from 'assets/icons/more.svg';
+import developer from 'assets/icons/developer.svg';
+import howto from 'assets/icons/howto.svg';
+import sgf from 'assets/icons/sgf.svg';
+import openData from 'assets/icons/open-data.svg';
+import contribute from 'assets/icons/contribute.svg';
+import blog from 'assets/icons/blog.svg';
+import stories from 'assets/icons/stories.svg';
+import forum from 'assets/icons/forum.svg';
 
 export default {
   navMain: [
@@ -91,12 +98,42 @@ export default {
     {
       label: 'Developer Tools',
       path: 'http://developers.globalforestwatch.org',
-      icon: moreIcon
+      icon: developer
     },
     {
       label: 'How to Portal',
       path: 'http://www.globalforestwatch.org/howto',
-      icon: moreIcon
+      icon: howto
+    },
+    {
+      label: 'Small Grants Fund',
+      path: '/small-grants-fund',
+      icon: sgf
+    },
+    {
+      label: 'Open data portal',
+      path: 'http://data.globalforestwatch.org/',
+      icon: openData
+    },
+    {
+      label: 'Contribute data',
+      path: '/contribute-data',
+      icon: contribute
+    },
+    {
+      label: 'Blog',
+      path: 'https://blog.globalforestwatch.org',
+      icon: blog
+    },
+    {
+      label: 'Stories',
+      path: '/stories',
+      icon: stories
+    },
+    {
+      label: 'Discussion Forum',
+      path: 'https://groups.google.com/forum/#!forum/globalforestwatch',
+      icon: forum
     }
   ]
 };
