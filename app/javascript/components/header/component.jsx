@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { SCREEN_L } from 'utils/constants';
 import cx from 'classnames';
 
+import { NavLink } from 'redux-first-router-link';
+
 import Icon from 'components/ui/icon';
 
 import gfwLogo from 'assets/logos/gfw.png';
@@ -81,9 +83,19 @@ class Header extends PureComponent {
                   >
                     {navMain.map(item => (
                       <li key={item.label}>
-                        <a href={item.path} className="ext-link">
-                          {item.label}
-                        </a>
+                        {item.navLink ? (
+                          <NavLink
+                            to={item.path}
+                            className="nav-link"
+                            activeClassName="-active"
+                          >
+                            {item.label}
+                          </NavLink>
+                        ) : (
+                          <a href={item.path} className="nav-link">
+                            {item.label}
+                          </a>
+                        )}
                       </li>
                     ))}
                   </ul>

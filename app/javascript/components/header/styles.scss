@@ -34,7 +34,7 @@ $full-screen-height: rem(76px);
       position: relative;
       font-size: rem(14px);
 
-      .ext-link,
+      .nav-link,
       .menu-link {
         position: relative;
         font-family: $font-family-1;
@@ -50,7 +50,7 @@ $full-screen-height: rem(76px);
         }
       }
 
-      .ext-link {
+      .nav-link {
         &::after {
           content: '';
           height: rem(5px);
@@ -61,7 +61,7 @@ $full-screen-height: rem(76px);
           background-color: transparent;
         }
 
-        .-active,
+        &.-active,
         &:hover {
           &::after {
             background-color: $green-gfw;
@@ -86,7 +86,7 @@ $full-screen-height: rem(76px);
       padding-left: rem(100px);
       flex: 1;
 
-      > li .ext-link {
+      > li .nav-link {
         padding: 0 rem(20px);
       }
     }

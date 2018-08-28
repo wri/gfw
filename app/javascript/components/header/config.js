@@ -12,7 +12,8 @@ export default {
   navMain: [
     {
       label: 'Map',
-      path: '/map'
+      path: '/v2/map',
+      navLink: true
     },
     {
       label: 'Dashboards',
