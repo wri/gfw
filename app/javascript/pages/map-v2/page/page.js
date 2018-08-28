@@ -1,14 +1,16 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 
 import actions from 'components/map-v2/actions';
 
 import PageComponent from './page-component';
 
-const mapStateToProps = ({ location, countryData, dataAnalysis }) => ({
+const mapStateToProps = ({ location, countryData, dataAnalysis, myGfw }) => ({
   ...location,
   ...countryData,
-  ...dataAnalysis
+  ...dataAnalysis,
+  loggedIn: !isEmpty(myGfw.data)
 });
 
 class PageContainer extends PureComponent {

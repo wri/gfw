@@ -6,6 +6,7 @@ import GeostoreProvider from 'providers/geostore-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
+import MyGFW from 'providers/mygfw-provider';
 
 import Header from 'components/header';
 import Map from 'components/map-v2';
@@ -18,7 +19,7 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   render() {
-    const { analysis, handleShowMenu, showHeader } = this.props;
+    const { analysis, handleShowMenu, showHeader, loggedIn } = this.props;
 
     return (
       <div className="l-map">
@@ -26,6 +27,7 @@ class Page extends PureComponent {
           className="map-header"
           showHeader={showHeader}
           toggleMenu={handleShowMenu}
+          loggedIn={loggedIn}
           showPanel
           fullScreen
         />
@@ -39,6 +41,7 @@ class Page extends PureComponent {
         <DatasetsProvider />
         <GeostoreProvider />
         <LatestProvider />
+        <MyGFW />
       </div>
     );
   }
@@ -47,7 +50,8 @@ class Page extends PureComponent {
 Page.propTypes = {
   analysis: PropTypes.object,
   handleShowMenu: PropTypes.func,
-  showHeader: PropTypes.bool
+  showHeader: PropTypes.bool,
+  loggedIn: PropTypes.bool
 };
 
 export default Page;
