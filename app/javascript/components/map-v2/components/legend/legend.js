@@ -28,7 +28,7 @@ class Legend extends PureComponent {
   onChangeOpacity = (currentLayer, opacity) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      activeDatasets: activeDatasets.map(d => {
+      datasets: activeDatasets.map(d => {
         const activeDataset = { ...d };
         if (d.layers.includes(currentLayer.id)) {
           activeDataset.opacity = opacity;
@@ -41,7 +41,7 @@ class Legend extends PureComponent {
   onChangeVisibility = currentLayer => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      activeDatasets: activeDatasets.map(d => {
+      datasets: activeDatasets.map(d => {
         const activeDataset = { ...d };
         if (d.layers.includes(currentLayer.id)) {
           activeDataset.visibility = !activeDataset.visibility;
@@ -58,7 +58,7 @@ class Legend extends PureComponent {
     const newActiveDatasets = datasetsDiff
       .concat(layerGroupsIds)
       .map(id => activeDatasets.find(d => d.dataset === id));
-    setMapSettings({ activeDatasets: newActiveDatasets });
+    setMapSettings({ datasets: newActiveDatasets });
   };
 
   onToggleLayer = (layer, enable) => {
@@ -76,13 +76,13 @@ class Legend extends PureComponent {
       }
       return newDataset;
     });
-    setMapSettings({ activeDatasets: newActiveDatasets });
+    setMapSettings({ datasets: newActiveDatasets });
   };
 
   onChangeLayer = (layerGroup, newLayerKey) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      activeDatasets: activeDatasets.map(l => {
+      datasets: activeDatasets.map(l => {
         const dataset = l;
         if (l.dataset === layerGroup.dataset) {
           dataset.layers = [newLayerKey];
@@ -100,7 +100,7 @@ class Legend extends PureComponent {
         activeDatasets.splice(i, 1);
       }
     });
-    setMapSettings({ activeDatasets });
+    setMapSettings({ datasets: activeDatasets });
   };
 
   onChangeInfo = metadata => {
@@ -113,7 +113,7 @@ class Legend extends PureComponent {
   onChangeTimeline = (currentLayer, range) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      activeDatasets: activeDatasets.map(l => {
+      datasets: activeDatasets.map(l => {
         const dataset = { ...l };
         if (l.layers.indexOf(currentLayer.id) > -1) {
           dataset.timelineParams = {
@@ -131,7 +131,7 @@ class Legend extends PureComponent {
   onChangeParam = (currentLayer, newParam) => {
     const { setMapSettings, activeDatasets } = this.props;
     setMapSettings({
-      activeDatasets: activeDatasets.map(l => {
+      datasets: activeDatasets.map(l => {
         const dataset = { ...l };
         if (l.layers.includes(currentLayer.id)) {
           dataset.params = {
@@ -155,7 +155,7 @@ class Legend extends PureComponent {
       confirmedOnly: true
     };
     newActiveDatasets[datasetIndex] = newDataset;
-    setMapSettings({ activeDatasets: newActiveDatasets || [] });
+    setMapSettings({ datasets: newActiveDatasets || [] });
   };
 
   render() {

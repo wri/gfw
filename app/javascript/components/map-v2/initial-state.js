@@ -13,7 +13,7 @@ export default {
   basemap: basemaps.default,
   label: labels.default,
   attributionControl: false,
-  activeDatasets: [
+  datasets: [
     {
       dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
       layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4'],

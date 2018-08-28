@@ -63,9 +63,9 @@ class BasemapsContainer extends React.Component {
         },
         ...filteredLayers
       ];
-      this.props.setMapSettings({ activeDatasets: newActiveDatasets });
+      this.props.setMapSettings({ datasets: newActiveDatasets });
     } else {
-      this.props.setMapSettings({ activeDatasets: filteredLayers });
+      this.props.setMapSettings({ datasets: filteredLayers });
     }
   };
 

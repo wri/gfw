@@ -68,7 +68,7 @@ class MapComponent extends PureComponent {
               <LayerManager map={map} plugin={PluginLeaflet}>
                 {layerManager =>
                   activeLayers.map(l => {
-                    const { interactionConfig } = l;
+                    const { interactionConfig, isBoundary } = l;
                     const { output, article } = interactionConfig || {};
                     const layer = {
                       ...l,
@@ -80,6 +80,7 @@ class MapComponent extends PureComponent {
                               ...e,
                               label: l.name,
                               article,
+                              isBoundary,
                               id: l.id,
                               value: l.id,
                               config: output
