@@ -9,6 +9,7 @@ import Icon from 'components/ui/icon';
 
 import gfwLogo from 'assets/logos/gfw.png';
 import moreIcon from 'assets/icons/more.svg';
+import menuIcon from 'assets/icons/menu.svg';
 import myGfwIcon from 'assets/icons/mygfw.svg';
 import closeIcon from 'assets/icons/close.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -42,6 +43,17 @@ class Header extends PureComponent {
       loggedIn
     } = this.props;
     const isMobile = window.innerWidth < SCREEN_L;
+    let moreText = fullScreen ? 'close' : 'more';
+    if (!fullScreen && isMobile) {
+      moreText = 'menu';
+    }
+    let moreMenuIcon = fullScreen || showPanel ? closeIcon : moreIcon;
+    let moreMenuClassName =
+      fullScreen || showPanel ? 'icon-close' : 'icon-more';
+    if (isMobile) {
+      moreMenuIcon = menuIcon;
+      moreMenuClassName = 'icon-menu';
+    }
 
     return (
       (!fullScreen || (fullScreen && showHeader)) && (
@@ -151,11 +163,8 @@ class Header extends PureComponent {
                           : () => setShowPanel(!showPanel)
                       }
                     >
-                      {fullScreen ? 'Close' : 'More'}
-                      <Icon
-                        className={showPanel ? 'icon-close' : 'icon-more'}
-                        icon={showPanel ? closeIcon : moreIcon}
-                      />
+                      {moreText}
+                      <Icon className={moreMenuClassName} icon={moreMenuIcon} />
                     </button>
                   </li>
                 </ul>
