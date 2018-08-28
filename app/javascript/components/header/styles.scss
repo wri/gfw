@@ -87,7 +87,8 @@ $full-screen-height: rem(76px);
       flex: 1;
 
       > li .nav-link {
-        padding: 0 rem(20px);
+        padding: 0 rem(10px);
+        margin: 0 rem(5px);
       }
     }
 

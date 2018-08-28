@@ -50,7 +50,7 @@ class Header extends PureComponent {
     let moreMenuIcon = fullScreen || showPanel ? closeIcon : moreIcon;
     let moreMenuClassName =
       fullScreen || showPanel ? 'icon-close' : 'icon-more';
-    if (isMobile) {
+    if (isMobile && !fullScreen) {
       moreMenuIcon = menuIcon;
       moreMenuClassName = 'icon-menu';
     }
