@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 import Search from 'components/ui/search';
 
 import moreIcon from 'assets/icons/more.svg';
+
+import DropdownMenu from '../dropdown-menu';
 
 import './styles.scss';
 
@@ -36,9 +39,12 @@ class Header extends PureComponent {
 
     return (
       <div
-        className={`c-submenu-panel ${
-          fullScreen ? '-full-screen' : ''
-        } ${className || ''}`}
+        className={cx(
+          'c-submenu-panel',
+          { '-full-screen': fullScreen },
+          { '-mobile': isMobile },
+          className
+        )}
         onClick={onClick}
         role="button"
         tabIndex={0}
@@ -53,15 +59,7 @@ class Header extends PureComponent {
             />
             {isMobile && (
               <div className="menu-section">
-                <ul className="nav-main">
-                  {navMain.map(item => (
-                    <li key={item.label}>
-                      <a href={item.path} className="ext-link">
-                        {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                <DropdownMenu className="sub-menu -plain" options={navMain} />
               </div>
             )}
             <div className="menu-section">

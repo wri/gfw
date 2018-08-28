@@ -1,10 +1,16 @@
 @import '~styles/settings.scss';
 
-.c-lang-selector {
+.c-dropdown-menu {
   background-color: $white;
   width: rem(200px);
   padding: rem(15px) rem(20px);
   border: solid 1px $border;
+
+  &.-plain {
+    border: 0;
+    padding: 0;
+    width: 100%;
+  }
 
   > li {
     > button,

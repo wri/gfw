@@ -93,4 +93,10 @@
       }
     }
   }
+
+  &.-mobile {
+    .menu-search {
+      margin-bottom: rem(30px);
+    }
+  }
 }

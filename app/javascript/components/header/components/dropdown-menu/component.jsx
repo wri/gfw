@@ -8,7 +8,7 @@ class DropdownMenu extends PureComponent {
     const { className, options, handleSelect } = this.props;
 
     return (
-      <ul className={`c-lang-selector ${className || ''}`}>
+      <ul className={`c-dropdown-menu ${className || ''}`}>
         {options.map(l => (
           <li key={l.value || l.label}>
             {handleSelect || l.onSelect ? (
