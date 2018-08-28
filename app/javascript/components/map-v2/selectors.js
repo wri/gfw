@@ -186,10 +186,10 @@ export const getDatasetsWithConfig = createSelector(
 
 // map active datasets into correct order based on url state (drag and drop)
 export const getLayerGroups = createSelector(
-  [getDatasetsWithConfig, getActiveDatasets],
-  (datasets, activeDatasets) => {
-    if (isEmpty(datasets) || isEmpty(activeDatasets)) return null;
-    return activeDatasets.map(l => datasets.find(d => d.id === l.dataset));
+  [getDatasetsWithConfig, getActiveDatasetsState],
+  (datasets, activeDatasetsState) => {
+    if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
+    return activeDatasetsState.map(l => datasets.find(d => d.id === l.dataset));
   }
 );
 
