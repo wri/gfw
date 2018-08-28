@@ -20,7 +20,7 @@ export default {
       globalInitial:
         'As of {year}, {percentage} of {location} land cover was tree cover.',
       globalWithIndicator:
-        'As of {year}, {percentage} of {location} land cover within {indicator} was tree cover.',
+        'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
       initial:
         'As of {year}, {percentage} of {location} was natural forest cover.',
       withIndicator:
