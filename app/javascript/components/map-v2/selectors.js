@@ -65,7 +65,7 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
 // select datasets and dataset state
 export const getActiveDatasetsState = createSelector(
   getMapSettings,
-  settings => settings.activeDatasets
+  settings => settings.datasets
 );
 
 export const getActiveDatasetIds = createSelector(

@@ -22,8 +22,8 @@ const mapStateToProps = ({ mapMenu, datasets, location, countryData }) => ({
     query: location.query,
     datasets: datasets.datasets,
     countries: countryData.countries,
-    ...mapMenu,
-    loading: datasets.loading || countryData.loading
+    loading: datasets.loading || countryData.loading,
+    ...mapMenu
   })
 });
 
@@ -44,7 +44,7 @@ class MenuContainer extends PureComponent {
         }
       ].concat([...newActiveDatasets]);
     }
-    setMapSettings({ activeDatasets: newActiveDatasets || [] });
+    setMapSettings({ datasets: newActiveDatasets || [] });
   };
 
   render() {
