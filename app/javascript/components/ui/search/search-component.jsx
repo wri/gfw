@@ -28,6 +28,14 @@ class Search extends Component {
     this.debouncedChange();
   };
 
+  handleKeyUp = e => {
+    e.preventDefault();
+    const { onSubmit } = this.props;
+    if (onSubmit && e.keyCode === 13) {
+      onSubmit(e);
+    }
+  };
+
   debouncedChange = debounce(() => {
     const { onChange } = this.props;
     if (onChange) {
@@ -37,14 +45,7 @@ class Search extends Component {
 
   render() {
     const { search } = this.state;
-    const {
-      input,
-      placeholder,
-      handleKeyUp,
-      disabled,
-      className,
-      theme
-    } = this.props;
+    const { placeholder, onSubmit, disabled, className, theme } = this.props;
     return (
       <div
         className={`c-search ${theme || 'theme-search-light'} ${className ||
@@ -56,10 +57,12 @@ class Search extends Component {
           placeholder={placeholder}
           onChange={e => this.handleChange(e.target.value)}
           value={search}
-          onKeyUp={handleKeyUp}
+          onKeyUp={this.handleKeyUp}
           disabled={disabled}
         />
-        <Icon icon={searchIcon} className="icon-search" />
+        <button onClick={onSubmit}>
+          <Icon icon={searchIcon} className="icon-search" />
+        </button>
         {search && (
           <Button
             className="clear-btn"
@@ -78,7 +81,7 @@ Search.propTypes = {
   input: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  handleKeyUp: PropTypes.func,
+  onSubmit: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
   theme: PropTypes.string

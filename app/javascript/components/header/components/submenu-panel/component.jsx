@@ -9,8 +9,18 @@ import moreIcon from 'assets/icons/more.svg';
 import './styles.scss';
 
 class Header extends PureComponent {
-  handleSubmit = e => {
-    e.preventDefault();
+  state = {
+    search: ''
+  };
+
+  handleSubmit = () => {
+    window.location.href = `${window.location.origin}/search?query=${
+      this.state.search
+    }`;
+  };
+
+  handleSearchChange = search => {
+    this.setState({ search });
   };
 
   render() {
@@ -35,9 +45,12 @@ class Header extends PureComponent {
       >
         <div className="row">
           <div className="column small-12 medium-10 medium-offset-1">
-            <form onSubmit={this.handleSubmit}>
-              <Search className="menu-search" placeholder="Search" />
-            </form>
+            <Search
+              className="menu-search"
+              placeholder="Search"
+              onChange={this.handleSearchChange}
+              onSubmit={this.handleSubmit}
+            />
             {isMobile && (
               <div className="menu-section">
                 <ul className="nav-main">
