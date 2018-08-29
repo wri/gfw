@@ -37,7 +37,7 @@ export const parseData = createSelector(
       }
     ];
     if (indicator) {
-      parsedData.slice(1, 0, {
+      parsedData.splice(1, 0, {
         label: hasPlantations
           ? `Forest outside of ${indicator.label}`
           : `Tree Cover outside of ${indicator.label}`,
@@ -46,7 +46,7 @@ export const parseData = createSelector(
         percentage: otherCover / totalArea * 100
       });
     } else if (!indicator && hasPlantations) {
-      parsedData.slice(1, 0, {
+      parsedData.splice(1, 0, {
         label: 'Plantations',
         value: plantations,
         color: colors.plantedForest,
