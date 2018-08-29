@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
 import actions from 'components/map-v2/actions';
+import { getMapSettings } from 'components/map-v2/selectors';
 
 import PageComponent from './page-component';
 
@@ -10,7 +11,8 @@ const mapStateToProps = ({ location, countryData, dataAnalysis, myGfw }) => ({
   ...location,
   ...countryData,
   ...dataAnalysis,
-  loggedIn: !isEmpty(myGfw.data)
+  loggedIn: !isEmpty(myGfw.data),
+  mapSettings: getMapSettings(location)
 });
 
 class PageContainer extends PureComponent {

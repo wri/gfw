@@ -3,6 +3,12 @@
 .c-map-controls {
   z-index: 10;
 
+  .c-icon {
+    &.-active {
+      fill: $green-gfw;
+    }
+  }
+
   .map-actions {
     display: flex;
     flex-direction: row;
@@ -24,20 +30,13 @@
     }
 
     .satellite-icon {
-      width: rem(23px);
-      height: rem(23px);
+      width: rem(30px);
+      height: rem(30px);
     }
 
     .globe-icon {
       width: rem(20px);
       height: rem(20px);
-    }
-
-    .satellite-icon,
-    .globe-icon {
-      &.-active {
-        fill: $green-gfw;
-      }
     }
   }
 

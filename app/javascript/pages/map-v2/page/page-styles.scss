@@ -14,4 +14,10 @@
     right: 0;
     z-index: 1000;
   }
+
+  .map {
+    width: calc(100% - 76px);
+    position: absolute;
+    right: 0;
+  }
 }

@@ -1,8 +1,9 @@
-import treesIcon from 'assets/icons/trees.svg';
-import landTreeIcon from 'assets/icons/land-tree.svg';
-import truckIcon from 'assets/icons/truck.svg';
-import climateBubblesIcon from 'assets/icons/climate-bubbles.svg';
-import featherIcon from 'assets/icons/feather.svg';
+import forestChange from 'assets/icons/forest-change.svg';
+import landCover from 'assets/icons/land-cover.svg';
+import landUse from 'assets/icons/land-use.svg';
+import climate from 'assets/icons/climate.svg';
+import biodiversity from 'assets/icons/biodiversity.svg';
+import explore from 'assets/icons/explore.svg';
 import searchIcon from 'assets/icons/search.svg';
 
 import Datasets from './components/sections/datasets';
@@ -12,7 +13,7 @@ export default [
   {
     slug: 'forestChange',
     name: 'FOREST CHANGE',
-    icon: treesIcon,
+    icon: forestChange,
     Component: Datasets,
     subCategories: [
       {
@@ -34,7 +35,7 @@ export default [
   {
     slug: 'landCover',
     name: 'LAND COVER',
-    icon: landTreeIcon,
+    icon: landCover,
     Component: Datasets,
     subCategories: [
       {
@@ -46,7 +47,7 @@ export default [
   {
     slug: 'landUse',
     name: 'LAND USE',
-    icon: truckIcon,
+    icon: landUse,
     Component: Datasets,
     subCategories: [
       {
@@ -66,7 +67,7 @@ export default [
   {
     slug: 'climate',
     name: 'CLIMATE',
-    icon: climateBubblesIcon,
+    icon: climate,
     Component: Datasets,
     subCategories: [
       {
@@ -86,7 +87,7 @@ export default [
   {
     slug: 'biodiversity',
     name: 'BIODIVERSITY',
-    icon: featherIcon,
+    icon: biodiversity,
     Component: Datasets,
     subCategories: [
       {
@@ -98,7 +99,7 @@ export default [
   {
     slug: 'explore',
     name: 'EXPLORE',
-    icon: truckIcon,
+    icon: explore,
     Component: Explore,
     large: true,
     section: 'topics'

@@ -11,6 +11,8 @@ import { PluginLeaflet } from 'layer-manager';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
+import Icon from 'components/ui/icon';
+import iconCross from 'assets/icons/close.svg';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
@@ -23,6 +25,7 @@ class MapComponent extends PureComponent {
   componentDidMount() {
     requestAnimationFrame(() => {
       this.map.invalidateSize();
+      L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
     });
   }
 
@@ -106,6 +109,7 @@ class MapComponent extends PureComponent {
             </Fragment>
           )}
         </Map>
+        <Icon className="icon-crosshair" icon={iconCross} />
         <MapAttributions className="map-attributions" />
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
