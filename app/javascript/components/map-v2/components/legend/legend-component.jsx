@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Legend, {
   LegendItemToolbar,
@@ -39,15 +40,13 @@ class MapLegend extends Component {
       loading,
       ...rest
     } = this.props;
+    const noLayers = !layerGroups || !layerGroups.length;
 
     return (
-      <div className="c-legend">
+      <div className={cx('c-legend', { '-empty': noLayers })}>
         <Icons />
         {loading && <Loader className="datasets-loader" />}
-        {!loading &&
-          (!layerGroups || !layerGroups.length) && (
-            <NoContent message="No layers selected" />
-          )}
+        {!loading && noLayers && <NoContent message="No layers selected" />}
         {!loading &&
           layerGroups &&
           !!layerGroups.length && (
