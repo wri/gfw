@@ -16,7 +16,7 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
         let cover = 0;
         let plantations = 0;
         let data = {};
-        if (extent.length) {
+        if (extent && extent.length) {
           totalArea = adminExtent[0].total_area;
           cover = extent[0].value;
           totalCover = adminExtent[0].value;
@@ -34,10 +34,11 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
             plantationsResponse => {
               const plantationsData =
                 plantationsResponse.data && plantationsResponse.data.data;
-              plantations = plantationsData.length
-                ? plantationsData[0].value
-                : 0;
-              if (extent.length) {
+              plantations =
+                plantationsData && plantationsData.length
+                  ? plantationsData[0].value
+                  : 0;
+              if (extent && extent.length) {
                 data = {
                   ...data,
                   plantations
