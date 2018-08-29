@@ -14,7 +14,7 @@ import Icon from 'components/ui/icon';
 import plusIcon from 'assets/icons/plus.svg';
 import minusIcon from 'assets/icons/minus.svg';
 import shareIcon from 'assets/icons/share.svg';
-import fullScreenIcon from 'assets/icons/fit-zoom.svg';
+import fullscreenIcon from 'assets/icons/fit-zoom.svg';
 import printIcon from 'assets/icons/print.svg';
 import globeIcon from 'assets/icons/globe.svg';
 import satelliteIcon from 'assets/icons/satellite.svg';
@@ -49,57 +49,60 @@ class MapControlsButtons extends PureComponent {
       settings,
       map,
       active,
-      toogleRecentImagery
+      toogleRecentImagery,
+      setMapSettings
     } = this.props;
-    const { zoom, minZoom, maxZoom, center } = settings || {};
+    const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
     const { showBasemaps } = this.state;
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
-          <div className="map-actions">
-            <Button
-              className="recent-imagery-btn"
-              theme="theme-button-map-control"
-              active={active}
-              onClick={() => toogleRecentImagery()}
-              tooltip={{ text: 'Recent Imagery' }}
-              disabled
-            >
-              <Icon icon={satelliteIcon} className="satellite-icon" />
-            </Button>
-            <Tooltip
-              theme="light"
-              position="top-end"
-              useContext
-              interactive
-              animateFill={false}
-              open={showBasemaps}
-              onRequestClose={this.onTooltipRequestClose}
-              html={
-                <Basemaps
-                  onClose={this.toggleBasemaps}
-                  ref={this.setBasemapsRef}
-                />
-              }
-            >
+          {!hidePanels && (
+            <div className="map-actions">
               <Button
-                className="basemaps-btn"
+                className="recent-imagery-btn"
                 theme="theme-button-map-control"
-                onClick={this.toggleBasemaps}
-                tooltip={
-                  !showBasemaps
-                    ? { text: 'Basemaps', hideOnClick: false }
-                    : undefined
+                active={active}
+                onClick={() => toogleRecentImagery()}
+                tooltip={{ text: 'Recent Imagery' }}
+                disabled
+              >
+                <Icon icon={satelliteIcon} className="satellite-icon" />
+              </Button>
+              <Tooltip
+                theme="light"
+                position="top-end"
+                useContext
+                interactive
+                animateFill={false}
+                open={showBasemaps}
+                onRequestClose={this.onTooltipRequestClose}
+                html={
+                  <Basemaps
+                    onClose={this.toggleBasemaps}
+                    ref={this.setBasemapsRef}
+                  />
                 }
               >
-                <Icon
-                  icon={globeIcon}
-                  className={cx('globe-icon', { '-active': showBasemaps })}
-                />
-              </Button>
-            </Tooltip>
-          </div>
+                <Button
+                  className="basemaps-btn"
+                  theme="theme-button-map-control"
+                  onClick={this.toggleBasemaps}
+                  tooltip={
+                    !showBasemaps
+                      ? { text: 'Basemaps', hideOnClick: false }
+                      : undefined
+                  }
+                >
+                  <Icon
+                    icon={globeIcon}
+                    className={cx('globe-icon', { '-active': showBasemaps })}
+                  />
+                </Button>
+              </Tooltip>
+            </div>
+          )}
           <div className="controls-wrapper">
             <Button
               theme="theme-button-map-control"
@@ -119,12 +122,13 @@ class MapControlsButtons extends PureComponent {
             </Button>
             <Button
               theme="theme-button-map-control"
-              onClick={() => {
-                console.info('fullscreen time!');
-              }}
-              tooltip={{ text: 'Fullscreen' }}
+              onClick={() => setMapSettings({ hidePanels: !hidePanels })}
+              tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
             >
-              <Icon icon={fullScreenIcon} className="fullscreen-icon" />
+              <Icon
+                icon={fullscreenIcon}
+                className={cx('fullscreen-icon', { '-active': hidePanels })}
+              />
             </Button>
             <Button
               className="theme-button-map-control"
@@ -145,12 +149,10 @@ class MapControlsButtons extends PureComponent {
             </Button>
             <Button
               theme="theme-button-map-control"
-              onClick={() => {
-                console.info('Printing time!');
-              }}
-              tooltip={{ text: 'Print' }}
+              tooltip={{ text: 'Print (not yet available)' }}
+              disabled
             >
-              <Icon icon={printIcon} className="fullscreen-icon" />
+              <Icon icon={printIcon} className="print-icon" />
             </Button>
           </div>
           <div className="map-position">
@@ -173,6 +175,7 @@ MapControlsButtons.propTypes = {
   settings: Proptypes.object,
   map: Proptypes.object,
   active: Proptypes.bool,
+  hidePanels: Proptypes.bool,
   toogleRecentImagery: Proptypes.func
 };
 
