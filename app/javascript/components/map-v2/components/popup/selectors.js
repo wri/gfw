@@ -39,7 +39,9 @@ export const getCardData = createSelector(
     const articleData = config.reduce((obj, param) => {
       const newObj = {
         ...obj,
-        [param.renderKey]: data[param.column]
+        ...(param.renderKey && {
+          [param.renderKey]: data[param.column]
+        })
       };
       return newObj;
     }, {});
