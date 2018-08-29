@@ -5,10 +5,9 @@ import remove from 'lodash/remove';
 
 import modalActions from 'components/modals/meta/meta-actions';
 import mapActions from 'components/map-v2/actions';
+
 import * as ownActions from './menu-actions';
-
 import { getMenuProps } from './menu-selectors';
-
 import MenuComponent from './menu-component';
 
 const actions = {
@@ -17,13 +16,12 @@ const actions = {
   ...ownActions
 };
 
-const mapStateToProps = ({ mapMenu, datasets, location, countryData }) => ({
+const mapStateToProps = ({ datasets, location, countryData }) => ({
   ...getMenuProps({
     query: location.query,
     datasets: datasets.datasets,
     countries: countryData.countries,
-    loading: datasets.loading || countryData.loading,
-    ...mapMenu
+    loading: datasets.loading || countryData.loading
   })
 });
 

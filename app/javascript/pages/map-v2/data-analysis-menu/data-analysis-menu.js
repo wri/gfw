@@ -12,8 +12,11 @@ import Component from './component';
 const mapStateToProps = ({ location, dataAnalysis, datasets }) => ({
   activeTab: location.payload.tab,
   analysis: dataAnalysis.analysis,
-  menuSectionData: getActiveSection({ ...datasets, ...location }),
-  ...location
+  menuSectionData: getActiveSection({
+    datasets: datasets.datasets,
+    query: location.query
+  }),
+  search: location.search
 });
 
 class DataAnalysisMenuContainer extends PureComponent {

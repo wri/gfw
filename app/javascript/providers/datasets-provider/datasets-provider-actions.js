@@ -30,7 +30,6 @@ export const getDatasets = createThunkAction(
     if (state.datasets.datasets.length > 0) {
       return;
     }
-
     dispatch(setDatasetsLoading({ loading: true, error: false }));
 
     axios
