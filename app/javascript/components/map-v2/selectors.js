@@ -86,13 +86,17 @@ export const getActiveDatasets = createSelector(
 
 export const getBoundaryDatasets = createSelector([getDatasets], datasets => {
   if (isEmpty(datasets)) return null;
-  return datasets.filter(d => d.isBoundary);
+  return datasets.filter(d => d.isBoundary).map(d => ({
+    ...d,
+    label: d.name,
+    value: d.layer
+  }));
 });
 
 export const getActiveBoundaryDatasets = createSelector(
   [getBoundaryDatasets, getActiveDatasets],
   (datasets, activeDatasets) => {
-    if (isEmpty(datasets)) return null;
+    if (isEmpty(datasets) || isEmpty(activeDatasets)) return null;
     const datasetIds = activeDatasets.map(d => d.dataset);
     return datasets.find(d => datasetIds.includes(d.dataset));
   }
@@ -207,7 +211,7 @@ export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
     .map((l, i) => ({
       ...l,
       zIndex:
-        l.interactionConfig && l.interactionConfig.article ? 1000 + i : 1000 - i
+        l.interactionConfig && l.interactionConfig.article ? 1100 + i : 1000 - i
     }));
 });
 

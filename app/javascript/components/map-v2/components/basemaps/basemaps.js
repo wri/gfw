@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
+
 import { setMapSettings, setLandsatBasemap } from 'components/map-v2/actions';
 import {
   getBasemap,
@@ -11,6 +13,8 @@ import {
   getActiveBoundaryDatasets,
   getBoundaryDatasets
 } from 'components/map-v2/selectors';
+
+import basemaps, { labels } from './basemaps-schema';
 import BasemapsComponent from './basemaps-component';
 
 function mapStateToProps({ datasets, location }) {
@@ -19,14 +23,22 @@ function mapStateToProps({ datasets, location }) {
     mapZoom: getMapZoom(location),
     activeLabels: getLabels(location),
     activeBasemap: getBasemap(location),
-    boundaries: getBoundaryDatasets({
-      query: location.query,
-      datasets: datasets.datasets
-    }),
+    boundaries: [{ label: 'No boundaries', value: null }].concat(
+      getBoundaryDatasets({
+        query: location.query,
+        datasets: datasets.datasets
+      })
+    ),
     activeBoundaries: getActiveBoundaryDatasets({
       query: location.query,
       datasets: datasets.datasets
-    })
+    }),
+    basemaps,
+    labels,
+    landsatYears: basemaps.landsat.availableYears.map(y => ({
+      label: y,
+      value: y
+    }))
   };
 }
 
@@ -57,7 +69,8 @@ class BasemapsContainer extends React.Component {
     if (item.value) {
       const newActiveDatasets = [
         {
-          ...item.value,
+          layers: [item.layer],
+          dataset: item.dataset,
           opacity: 1,
           visibility: true
         },
