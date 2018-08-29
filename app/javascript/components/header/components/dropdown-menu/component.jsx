@@ -12,26 +12,27 @@ class DropdownMenu extends PureComponent {
 
     return (
       <ul className={`c-dropdown-menu ${className || ''}`}>
-        {options.map(l => (
-          <li
-            key={l.value || l.label}
-            className={cx({ active: selected && selected.value === l.value })}
-          >
-            {handleSelect || l.onSelect ? (
-              <button
-                onClick={e =>
-                  (l.onSelect ? l.onSelect(e) : handleSelect(l.value))
-                }
-              >
-                {l.label}
-              </button>
-            ) : (
-              <NavLink to={l.path} activeClassName="-active">
-                {l.label}
-              </NavLink>
-            )}
-          </li>
-        ))}
+        {options &&
+          options.map(l => (
+            <li
+              key={l.value || l.label}
+              className={cx({ active: selected && selected.value === l.value })}
+            >
+              {handleSelect || l.onSelect ? (
+                <button
+                  onClick={e =>
+                    (l.onSelect ? l.onSelect(e) : handleSelect(l.value))
+                  }
+                >
+                  {l.label}
+                </button>
+              ) : (
+                <NavLink to={l.path} activeClassName="-active">
+                  {l.label}
+                </NavLink>
+              )}
+            </li>
+          ))}
       </ul>
     );
   }

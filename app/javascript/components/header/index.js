@@ -11,10 +11,13 @@ class HeaderContainer extends PureComponent {
 
     const txData = JSON.parse(localStorage.getItem('txlive:languages'));
     const txLang = JSON.parse(localStorage.getItem('txlive:selectedlang'));
-    const languages = [txData.source].concat(txData.translation).map(l => ({
-      label: l.name,
-      value: l.code
-    }));
+    const languages =
+      txData &&
+      txData.source &&
+      [txData.source].concat(txData.translation).map(l => ({
+        label: l.name,
+        value: l.code
+      }));
 
     this.state = {
       showPanel,
