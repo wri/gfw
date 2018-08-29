@@ -4,7 +4,7 @@ export default {
   },
   config: {
     landCategories: ['kba', 'aze', 'tiger_cl', 'wdpa'],
-    categories: ['conservation'],
+    categories: ['biodiversity'],
     selectors: [
       'landCategories',
       'weeks',

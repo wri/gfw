@@ -22,10 +22,11 @@ define(
   ) {
     'use strict';
     var env = window.gfw.config.RAILS_ENV === 'production' ? 'prod' : 'staging';
-    var TILE_URL =
-      'https://wri-tiles.s3.amazonaws.com/glad_' +
-      env +
-      '/tiles{/z}{/x}{/y}.png';
+    var sourceUrl =
+      env === 'staging'
+        ? 'https://d178s5l0vmo3yy.cloudfront.net'
+        : 'https://wri-tiles.s3.amazonaws.com';
+    var TILE_URL = sourceUrl + '/glad_' + env + '/tiles{/z}{/x}{/y}.png';
     var START_DATE = '2015-01-01';
 
     var getConfidence = function(number) {
@@ -132,7 +133,7 @@ define(
             // the green band to that
             var day = imgdata[pixelPos] * 255 + imgdata[pixelPos + 1];
             var band3 = imgdata[pixelPos + 2];
-            var confidence = getConfidence(imgdata[band3]);
+            var confidence = getConfidence(band3);
 
             if (
               confidence >= confidenceValue &&
