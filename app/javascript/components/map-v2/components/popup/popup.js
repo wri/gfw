@@ -8,7 +8,7 @@ import { getPopupProps } from './selectors';
 import './styles.scss';
 
 const mapStateToProps = ({ popup, location }) => ({
-  ...getPopupProps({ ...popup, ...location })
+  ...getPopupProps({ ...popup, query: location.query })
 });
 
 export { actions, reducers, initialState };

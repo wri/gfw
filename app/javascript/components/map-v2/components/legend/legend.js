@@ -15,7 +15,7 @@ const actions = {
 };
 
 const mapStateToProps = ({ location, datasets, countryData }) => ({
-  activeDatasets: getActiveDatasetsState({ ...location }),
+  activeDatasets: getActiveDatasetsState({ query: location.query }),
   layerGroups: getLegendLayerGroups({
     query: location.query,
     datasets: datasets.datasets,
