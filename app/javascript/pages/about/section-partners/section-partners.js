@@ -231,6 +231,11 @@ const partnersCollaborators = [
     title: 'IOI Loders Croklaan'
   },
   {
+    img: '/assets/logos/jjfasthover.png',
+    link: 'http://www.eorc.jaxa.jp/jjfast/',
+    title: 'JICA-JAXA Forest Early Warning System in the Tropics'
+  },
+  {
     img: '/assets/logos/lapighover.png',
     link: 'https://www.lapig.iesa.ufg.br/lapig/',
     title: 'LAPIG'
@@ -319,11 +324,6 @@ const partnersCollaborators = [
     img: '/assets/logos/unileverhover.png',
     link: 'https://www.unilever.com/',
     title: 'Unilever'
-  },
-  {
-    img: '/assets/logos/urthecasthover1.png',
-    link: 'https://www.urthecast.com/',
-    title: 'Urthecast'
   },
   {
     img: '/assets/logos/whrchover.png',
