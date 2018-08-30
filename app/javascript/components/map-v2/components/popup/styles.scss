@@ -3,6 +3,7 @@
 .c-popup {
   font-family: $font-family-1;
   border-radius: 2px;
+  max-width: rem(290px);
 
   .popup-card {
     border: 0;

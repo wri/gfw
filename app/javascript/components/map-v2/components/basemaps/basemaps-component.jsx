@@ -7,13 +7,15 @@ import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
 import infoIcon from 'assets/icons/info.svg';
 
-import basemaps, { labels } from './basemaps-schema';
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
-    boundaries: PropTypes.array.isRequired,
+    boundaries: PropTypes.array,
+    basemaps: PropTypes.object.isRequired,
+    labels: PropTypes.object.isRequired,
+    landsatYears: PropTypes.array.isRequired,
     selectLabels: PropTypes.func.isRequired,
     selectBasemap: PropTypes.func.isRequired,
     activeLabels: PropTypes.object.isRequired,
@@ -23,31 +25,14 @@ class Basemaps extends React.PureComponent {
     getTooltipContentProps: PropTypes.func.isRequired
   };
 
-  static getBoundariesItems(boundaries) {
-    return [
-      { value: null, label: 'No Boundaries' },
-      ...boundaries.map(boundary => ({
-        label: boundary.name,
-        value: { dataset: boundary.dataset, layers: [boundary.layer] }
-      }))
-    ];
-  }
-
-  state = {
-    boundaries: Basemaps.getBoundariesItems(this.props.boundaries),
-    landsatYears: basemaps.landsat.availableYears.map(y => ({
-      label: y,
-      value: y
-    }))
-  };
-
   onLabelsChange = selected => {
     this.props.selectLabels(selected);
   };
 
   onLansatChange = e => {
+    const { basemaps, selectBasemap } = this.props;
     const activeLandsatYear = parseInt(e.currentTarget.value, 10);
-    this.props.selectBasemap(basemaps.landsat, activeLandsatYear);
+    selectBasemap(basemaps.landsat, activeLandsatYear);
   };
 
   renderButtonBasemap(item) {
@@ -69,8 +54,7 @@ class Basemaps extends React.PureComponent {
   }
 
   renderDropdownBasemap(item) {
-    const { selectBasemap, activeBasemap } = this.props;
-    const { landsatYears } = this.state;
+    const { selectBasemap, activeBasemap, landsatYears, basemaps } = this.props;
     const year = activeBasemap.year || landsatYears[0].value;
 
     return (
@@ -93,8 +77,8 @@ class Basemaps extends React.PureComponent {
             className="theme-dropdown-native-inline"
             value={year}
             options={landsatYears}
-            native
             onChange={this.onLansatChange}
+            native
           />
         </span>
       </button>
@@ -108,12 +92,15 @@ class Basemaps extends React.PureComponent {
       activeBasemap,
       getTooltipContentProps,
       activeBoundaries,
-      selectBoundaries
+      selectBoundaries,
+      boundaries,
+      basemaps,
+      labels
     } = this.props;
-    const { boundaries } = this.state;
+
     const selectedBoundaries = activeBoundaries
       ? { label: activeBoundaries.name }
-      : boundaries[0];
+      : boundaries && boundaries[0];
     return (
       <div className="c-basemaps" {...getTooltipContentProps()}>
         <div className="basemaps-top-section">

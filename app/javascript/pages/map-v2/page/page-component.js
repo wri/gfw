@@ -5,7 +5,6 @@ import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
-import LatestProvider from 'providers/latest-provider';
 import MyGFW from 'providers/mygfw-provider';
 
 import Header from 'components/header';
@@ -49,7 +48,6 @@ class Page extends PureComponent {
         <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
-        <LatestProvider />
         <MyGFW />
       </div>
     );
