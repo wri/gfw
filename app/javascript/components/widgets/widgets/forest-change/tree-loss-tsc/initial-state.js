@@ -16,13 +16,13 @@ export default {
     },
     sentences: {
       initial:
-        'In {location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where {driver} ',
+        'In {location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where ',
       globalInitial:
-        '{location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where {driver} ',
+        '{location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where ',
       perm:
-        '(permanant change) is the dominant driver of land cover/land use change.',
+        '{driver} is the dominant driver of permenant land cover/land use change.',
       temp:
-        '(temporary change) is the dominant driver of land cover/land use change.'
+        '{driver} is the dominant driver of temporary land cover/land use change.'
     }
   },
   settings: {
