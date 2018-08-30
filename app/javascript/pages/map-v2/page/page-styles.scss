@@ -7,6 +7,14 @@
     top: rem(15px);
   }
 
+  .map-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
   .map {
     width: calc(100% - 76px);
     position: absolute;

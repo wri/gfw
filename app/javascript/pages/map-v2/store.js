@@ -21,6 +21,7 @@ import * as whitelistsProviderComponent from 'providers/whitelists-provider';
 import * as datasetsProviderComponent from 'providers/datasets-provider';
 import * as layerSpecProviderComponent from 'providers/layerspec-provider';
 import * as latestProviderComponent from 'providers/latest-provider';
+import * as myGFWProviderComponent from 'providers/mygfw-provider';
 
 // Component Reducers
 const componentsReducers = {
@@ -39,7 +40,8 @@ const providersReducers = {
   whitelists: handleActions(whitelistsProviderComponent),
   datasets: handleActions(datasetsProviderComponent),
   layerSpec: handleActions(layerSpecProviderComponent),
-  latest: handleActions(latestProviderComponent)
+  latest: handleActions(latestProviderComponent),
+  myGfw: handleActions(myGFWProviderComponent)
 };
 
 export const reducers = combineReducers({
