@@ -455,14 +455,7 @@ define(
             var subscritionObj = {};
 
             if (!!data.use && this.usenames.indexOf(data.use) === -1) {
-              var provider = {
-                table: data.use,
-                filter: 'cartodb_id = ' + data.useid,
-                user: 'wri-01',
-                type: 'carto'
-              };
-
-              GeostoreService.use(provider).then(
+              GeostoreService.use({ use: data.use, useid: data.useid }).then(
                 function(useGeostoreId) {
                   subscritionObj = {
                     iso: {
