@@ -11,6 +11,14 @@ const getWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
+const isoHasPlantations = createSelector(
+  [getWhitelist, getCurrentLocation],
+  (whitelist, currentLabel) => (
+    (currentLabel !== 'global' && isEmpty(whitelist)) ||
+      whitelist.indexOf('plantations') > -1
+  )
+);
+
 // get lists selected
 export const parseData = createSelector(
   [getData, getWhitelist, getColors, getCurrentLocation, getIndicator],
@@ -18,13 +26,14 @@ export const parseData = createSelector(
     if (isEmpty(data)) return null;
     const { totalArea, totalCover, cover, plantations } = data;
     const otherCover = indicator ? totalCover - cover : 0;
-    const hasPlantations =
-      (currentLabel !== 'global' && isEmpty(whitelist)) ||
-      whitelist.indexOf('plantations') > -1;
+    const hasPlantations = isoHasPlantations;
     const plantationsCover = hasPlantations ? plantations : 0;
+    const label = indicator ? ` in ${indicator.label}` : '';
     const parsedData = [
       {
-        label: hasPlantations ? 'Natural Forest' : 'Tree Cover',
+        label: hasPlantations
+          ? 'Natural Forest'.concat(label)
+          : 'Tree Cover'.concat(label),
         value: cover - plantationsCover,
         color: colors.naturalForest,
         percentage: (cover - plantationsCover) / totalArea * 100
@@ -38,9 +47,7 @@ export const parseData = createSelector(
     ];
     if (indicator) {
       parsedData.splice(1, 0, {
-        label: hasPlantations
-          ? `Forest outside of ${indicator.label}`
-          : `Tree Cover outside of ${indicator.label}`,
+        label: hasPlantations ? 'Other forest cover' : 'Other tree cover',
         value: otherCover,
         color: colors.otherCover,
         percentage: otherCover / totalArea * 100
@@ -63,7 +70,10 @@ export const getSentence = createSelector(
     if (!data || !sentences) return null;
     const {
       initial,
-      withIndicator,
+      hasPlantations,
+      noPlantations,
+      hasPlantationsInd,
+      noPlantationsInd,
       globalInitial,
       globalWithIndicator
     } = sentences;
@@ -81,7 +91,14 @@ export const getSentence = createSelector(
           ? `${format('.3r')(data.cover)}ha`
           : `${format('.3s')(data.cover)}ha`
     };
-    let sentence = indicator ? withIndicator : initial;
+    let sentence = isoHasPlantations
+      ? initial + hasPlantations
+      : initial + noPlantations;
+    if (indicator) {
+      sentence = isoHasPlantations
+        ? initial + hasPlantationsInd
+        : initial + noPlantationsInd;
+    }
     if (currentLabel === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
