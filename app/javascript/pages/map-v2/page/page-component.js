@@ -5,8 +5,9 @@ import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
-import LatestProvider from 'providers/latest-provider';
+import MyGFW from 'providers/mygfw-provider';
 
+import Header from 'components/header';
 import Map from 'components/map-v2';
 import MapMenu from 'pages/map-v2/menu';
 import ModalMeta from 'components/modals/meta';
@@ -17,11 +18,26 @@ import './page-styles.scss';
 
 class Page extends PureComponent {
   render() {
-    const { analysis, mapSettings: { hidePanels } } = this.props;
+    const {
+      analysis,
+      handleShowMenu,
+      showHeader,
+      loggedIn,
+      mapSettings: { hidePanels }
+    } = this.props;
 
     return (
       <div className="l-map">
-        <MapMenu />
+        <Header
+          className="map-header"
+          showHeader={showHeader}
+          toggleMenu={handleShowMenu}
+          loggedIn={loggedIn}
+          showPanel
+          fullScreen
+        />
+        <MapMenu toggleMenu={handleShowMenu} />
+        <DataAnalysisMenu className="data-analysis-menu" />
         <div className="map">
           <Map />
         </div>
@@ -32,7 +48,7 @@ class Page extends PureComponent {
         <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
-        <LatestProvider />
+        <MyGFW />
       </div>
     );
   }
@@ -40,6 +56,9 @@ class Page extends PureComponent {
 
 Page.propTypes = {
   analysis: PropTypes.object,
+  handleShowMenu: PropTypes.func,
+  showHeader: PropTypes.bool,
+  loggedIn: PropTypes.bool,
   mapSettings: PropTypes.object
 };
 

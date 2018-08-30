@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-class LatestProvider extends PureComponent {
-  componentDidMount() {
-    const { getLatest } = this.props;
-    getLatest();
+class MyGFWProvider extends PureComponent {
+  componentWillMount() {
+    const { getMyGFW } = this.props;
+    getMyGFW();
   }
 
   render() {
@@ -16,9 +16,9 @@ class LatestProvider extends PureComponent {
   }
 }
 
-LatestProvider.propTypes = {
-  getLatest: PropTypes.func.isRequired
+MyGFWProvider.propTypes = {
+  getMyGFW: PropTypes.func.isRequired
 };
 
 export { actions, reducers, initialState };
-export default connect(null, actions)(LatestProvider);
+export default connect(null, actions)(MyGFWProvider);

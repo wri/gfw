@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
-import { getLayers } from '../../selectors';
+import { getActiveDatasetsState } from '../../selectors';
 
 const getSelected = state => state.selected;
 const getInteractions = state => state.interactions;
@@ -39,7 +39,9 @@ export const getCardData = createSelector(
     const articleData = config.reduce((obj, param) => {
       const newObj = {
         ...obj,
-        [param.renderKey]: data[param.column]
+        ...(param.renderKey && {
+          [param.renderKey]: data[param.column]
+        })
       };
       return newObj;
     }, {});
@@ -82,5 +84,5 @@ export const getPopupProps = createStructuredSelector({
   tableData: getTableData,
   cardData: getCardData,
   latlng: getLatLng,
-  layers: getLayers
+  activeDatasets: getActiveDatasetsState
 });

@@ -5,7 +5,10 @@
   font-family: $font-family-1;
   width: 100%;
   background: $white;
-  min-height: rem(200px);
+
+  &.-empty {
+    min-height: rem(150px);
+  }
 
   > div {
     border: 0;

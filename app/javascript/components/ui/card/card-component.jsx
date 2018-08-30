@@ -11,6 +11,7 @@ class Card extends PureComponent {
   render() {
     const { className, theme, data } = this.props;
     const { image, imageCredit, title, summary, meta, buttons } = data || {};
+
     return (
       <div className={`c-card ${className || ''} ${theme || ''}`}>
         {image && (

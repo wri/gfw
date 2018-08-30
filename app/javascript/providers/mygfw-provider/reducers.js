@@ -4,18 +4,19 @@ export const initialState = {
   data: {}
 };
 
-const setLatestLoading = (state, { payload }) => ({
+const setMyGFWLoading = (state, { payload }) => ({
   ...state,
-  ...payload
+  ...payload,
+  data: {}
 });
 
-const setLatest = (state, { payload }) => ({
+const setMyGFW = (state, { payload }) => ({
   ...state,
   data: payload,
   loading: false
 });
 
 export default {
-  setLatest,
-  setLatestLoading
+  setMyGFW,
+  setMyGFWLoading
 };

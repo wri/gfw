@@ -7,7 +7,7 @@ import { handleActions } from 'utils/redux';
 import router from './router';
 
 // Components
-import * as recentImageryComponent from 'components/map-v2/components/recent-imagery';
+import * as RecentImageryComponent from 'components/map-v2/components/recent-imagery';
 import * as DataAnalysisMenuComponent from 'pages/map-v2/data-analysis-menu';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
@@ -15,31 +15,29 @@ import * as WidgetsComponent from 'components/widgets';
 import * as PopupComponent from 'components/map-v2/components/popup';
 
 // Providers
-import * as countryDataProviderComponent from 'providers/country-data-provider';
-import * as geostoreProviderComponent from 'providers/geostore-provider';
-import * as whitelistsProviderComponent from 'providers/whitelists-provider';
-import * as datasetsProviderComponent from 'providers/datasets-provider';
-import * as layerSpecProviderComponent from 'providers/layerspec-provider';
-import * as latestProviderComponent from 'providers/latest-provider';
+import * as CountryDataProviderComponent from 'providers/country-data-provider';
+import * as GeostoreProviderComponent from 'providers/geostore-provider';
+import * as WhitelistsProviderComponent from 'providers/whitelists-provider';
+import * as DatasetsProviderComponent from 'providers/datasets-provider';
+import * as MyGFWProviderComponent from 'providers/mygfw-provider';
 
 // Component Reducers
 const componentsReducers = {
   share: handleActions(ShareComponent),
   modalMeta: handleActions(ModalMetaComponent),
   dataAnalysis: handleActions(DataAnalysisMenuComponent),
-  recentImagery: handleActions(recentImageryComponent),
+  recentImagery: handleActions(RecentImageryComponent),
   widgets: handleActions(WidgetsComponent),
   popup: handleActions(PopupComponent)
 };
 
 // Provider Reducers
 const providersReducers = {
-  countryData: handleActions(countryDataProviderComponent),
-  geostore: handleActions(geostoreProviderComponent),
-  whitelists: handleActions(whitelistsProviderComponent),
-  datasets: handleActions(datasetsProviderComponent),
-  layerSpec: handleActions(layerSpecProviderComponent),
-  latest: handleActions(latestProviderComponent)
+  countryData: handleActions(CountryDataProviderComponent),
+  geostore: handleActions(GeostoreProviderComponent),
+  whitelists: handleActions(WhitelistsProviderComponent),
+  datasets: handleActions(DatasetsProviderComponent),
+  myGfw: handleActions(MyGFWProviderComponent)
 };
 
 export const reducers = combineReducers({

@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import flatten from 'lodash/flatten';
 
-import { getLayers, getParsedDatasets } from 'components/map-v2/selectors';
+import { getActiveDatasetsState } from 'components/map-v2/selectors';
 
 import initialState from './menu-initial-state';
 import menuSections from './menu-sections';
@@ -10,6 +10,7 @@ import menuSections from './menu-sections';
 const getMenuUrlState = state => (state.query && state.query.menu) || null;
 const getLoading = state => state.loading || null;
 const getCountries = state => state.countries || null;
+const getDatasets = state => state.datasets || null;
 
 export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
   ...initialState,
@@ -27,7 +28,7 @@ export const getExploreSection = createSelector(
 );
 
 export const getAvailableCountries = createSelector(
-  [getCountries, getParsedDatasets],
+  [getCountries, getDatasets],
   (countries, datasets) => {
     if (isEmpty(countries) || isEmpty(datasets)) return null;
     const validIsos = flatten(datasets.filter(d => !d.global).map(d => d.iso));
@@ -54,7 +55,7 @@ export const getActiveCountries = createSelector(
 );
 
 export const getSections = createSelector(
-  [getParsedDatasets, getActiveCountries],
+  [getDatasets, getActiveCountries],
   (datasets, countries) => {
     if (isEmpty(datasets)) return menuSections;
     return menuSections.map(s => {
@@ -93,10 +94,10 @@ export const getSections = createSelector(
 );
 
 export const getSectionsWithData = createSelector(
-  [getSections, getLayers],
-  (sections, layers) => {
-    if (!layers) return sections;
-    const datasetIds = layers.map(d => d.dataset);
+  [getSections, getActiveDatasetsState],
+  (sections, activeDatasets) => {
+    if (!activeDatasets) return sections;
+    const datasetIds = activeDatasets.map(d => d.dataset);
     return sections.map(s => {
       const { datasets, subCategories } = s;
 
@@ -104,7 +105,8 @@ export const getSectionsWithData = createSelector(
         ...s,
         layerCount:
           datasets &&
-          datasets.filter(d => layers && datasetIds.includes(d.id)).length,
+          datasets.filter(d => activeDatasets && datasetIds.includes(d.id))
+            .length,
         datasets:
           datasets &&
           datasets.map(d => ({
@@ -171,6 +173,6 @@ export const getMenuProps = createStructuredSelector({
   exploreSection: getExploreSection,
   countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
-  layers: getLayers,
+  activeDatasets: getActiveDatasetsState,
   loading: getLoading
 });
