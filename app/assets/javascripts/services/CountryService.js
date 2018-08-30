@@ -131,11 +131,9 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
                   '{simplifyGeom}',
                   parseSimplifyGeom(params.iso)
                 );
-                console.log(sql);
                 var url = new UriTemplate(CARTO_API + sql).fillFromObject(
                   status
                 );
-                console.log(url);
                 this.defineRequest(datasetId, url);
                 var requestConfig = {
                   resourceId: datasetId,
