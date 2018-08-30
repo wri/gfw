@@ -4,14 +4,14 @@ export default {
   },
   config: {
     size: 'small',
-    categories: ['people'],
+    categories: ['land-use'],
     admins: ['country'],
     selectors: ['years'],
     years: [1990, 2000, 2005, 2010],
     type: 'fao',
     metaKey: 'widget_forestry_employment',
     sortOrder: {
-      people: 2
+      landUse: 2
     },
     colors: 'employment',
     sentences: {

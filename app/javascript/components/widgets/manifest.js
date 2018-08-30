@@ -12,7 +12,6 @@ import * as globalLandCover from './widgets/land-cover/global-land-cover';
 // Forest change
 import * as gladAlerts from './widgets/forest-change/glad-alerts';
 import * as gladRanked from './widgets/forest-change/glad-ranked';
-import * as fires from './widgets/forest-change/fires';
 import * as firesAlerts from './widgets/forest-change/fires-alerts';
 import * as treeLossLocated from './widgets/forest-change/tree-loss-located';
 import * as treeCoverGain from './widgets/forest-change/tree-cover-gain';
@@ -25,12 +24,12 @@ import * as treeLossGlobal from './widgets/forest-change/tree-loss-global';
 import * as faoDeforest from './widgets/forest-change/fao-deforest';
 import * as faoReforest from './widgets/forest-change/fao-reforest';
 
-// Conservation
-import * as gladBiodiversity from './widgets/conservation/glad-biodiversity';
+// Biodiversity
+import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
 
-// People
-import * as economicImpact from './widgets/people/economic-impact';
-import * as forestryEmployment from './widgets/people/forestry-employment';
+// Land Use
+import * as economicImpact from './widgets/land-use/economic-impact';
+import * as forestryEmployment from './widgets/land-use/forestry-employment';
 
 // Climate
 import * as emissions from './widgets/climate/emissions';
@@ -50,7 +49,6 @@ export {
   // forest change
   gladAlerts,
   gladRanked,
-  fires,
   firesAlerts,
   treeLossLocated,
   treeCoverGain,
@@ -62,9 +60,9 @@ export {
   treeLossGlobal,
   faoDeforest,
   faoReforest,
-  // conservation
+  // biodiversity
   gladBiodiversity,
-  // people
+  // land-use
   economicImpact,
   forestryEmployment,
   // climate

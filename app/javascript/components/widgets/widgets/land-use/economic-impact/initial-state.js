@@ -4,7 +4,7 @@ export default {
   },
   config: {
     size: 'large',
-    categories: ['people'],
+    categories: ['land-use'],
     admins: ['country'],
     selectors: ['years', 'units'],
     units: ['net_usd', 'net_perc'],
@@ -12,7 +12,7 @@ export default {
     colors: 'employment',
     metaKey: 'widget_economic_impact',
     sortOrder: {
-      people: 1
+      landUse: 1
     },
     locationWhitelist: [
       'AGO',
