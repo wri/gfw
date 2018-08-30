@@ -78,7 +78,7 @@ define(
             } else if (lossCat === 3) {
               rgb = [47, 191, 113]; // forestry
             } else if (lossCat === 4) {
-              rgb = [173, 54, 36]; // fire
+              rgb = [173, 104, 36]; // fire
             } else if (lossCat === 5) {
               rgb = [178, 53, 204]; // urban
             }
