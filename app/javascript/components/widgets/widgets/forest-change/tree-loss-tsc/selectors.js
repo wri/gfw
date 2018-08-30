@@ -101,6 +101,7 @@ export const parseConfig = createSelector(
     );
 
     return {
+      height: 250,
       xKey: 'year',
       yKeys: {
         bars: yKeys
