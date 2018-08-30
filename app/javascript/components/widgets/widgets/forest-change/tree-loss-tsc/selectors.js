@@ -155,7 +155,6 @@ export const getSentence = createSelector(
           : currentLabel,
       startYear,
       endYear,
-      type,
       driver: label.toLowerCase(),
       loss:
         totalLoss < 1
@@ -166,7 +165,7 @@ export const getSentence = createSelector(
       extentYear
     };
 
-    sentence = type === 'permeanent' ? sentence + perm : sentence + temp;
+    sentence = type === 'permanent' ? sentence + perm : sentence + temp;
     return {
       sentence,
       params
