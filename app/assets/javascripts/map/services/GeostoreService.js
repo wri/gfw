@@ -12,6 +12,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     GET_ISO_REQUEST_ID = 'GeostoreService:iso';
 
   var URL = window.gfw.config.GFW_API + '/geostore/{id}';
+  var USE_URL = window.gfw.config.GFW_API + '/geostore/use/{use}/{useid}';
   var COUNTRY_URL =
     window.gfw.config.GFW_API +
     '/geostore/admin/{country}{?/region}{?/subRegion}';
@@ -89,21 +90,18 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
 
     use: function(provider) {
       return new Promise(function(resolve, reject) {
-        var url = new UriTemplate(URL).fillFromObject({});
+        var url = new UriTemplate(USE_URL).fillFromObject(provider);
 
         ds.define(SAVE_REQUEST_ID, {
           cache: false,
           url: url,
-          type: 'POST',
+          type: 'GET',
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         });
 
         var requestConfig = {
           resourceId: SAVE_REQUEST_ID,
-          data: JSON.stringify({
-            provider: provider
-          }),
           success: function(response) {
             resolve(response.data.id);
           },

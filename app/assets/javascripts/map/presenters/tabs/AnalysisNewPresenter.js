@@ -734,27 +734,22 @@ define(
       changeUse: function() {
         var use = this.status.get('use'),
           useid = this.status.get('useid');
+        if (!!use && !!useid && this.usenames.indexOf(use) > -1) {
+          this.status.set('spinner', true);
 
-        if (!!use && !!useid) {
-          if (this.usenames.indexOf(use) !== -1) {
-            this.setAnalysis('use');
-          } else {
-            this.status.set('spinner', true);
-
-            var provider = {
-              table: use,
-              filter: 'cartodb_id = ' + useid,
-              user: 'wri-01',
-              type: 'carto'
-            };
-
-            GeostoreService.use(provider).then(
-              function(useGeostoreId) {
-                this.status.set('useGeostore', useGeostoreId);
+          GeostoreService.use({ use: use, useid: useid })
+            .then(
+              function(geostoreId) {
+                this.status.set('useGeostore', geostoreId);
                 this.setAnalysis('use');
               }.bind(this)
+            )
+            .catch(
+              function(err) {
+                this.status.set('spinner', false);
+                console.error(err);
+              }.bind(this)
             );
-          }
         }
       },
 
@@ -808,7 +803,7 @@ define(
        * - publishRefreshAnalysis
        * - publishNotification
        */
-      publishAnalysis: function() {
+      publishAnalysis: _.debounce(function() {
         // 1. Check if analysis is active
         if (
           this.status.get('active') &&
@@ -826,40 +821,59 @@ define(
           // Open the analysis tab
           mps.publish('Tab/toggle', ['analysis-tab', true]);
 
+          var analysisFetch = function() {
+            return AnalysisService.get(this.status.toJSON())
+              .then(
+                function(response, xhr) {
+                  this.status.set('spinner', false);
+
+                  var statusWithResults = _.extend({}, this.status.toJSON(), {
+                    results: response.data.attributes
+                  });
+                  mps.publish('Analysis/results', [statusWithResults]);
+                }.bind(this)
+              )
+              .catch(
+                function(errors) {
+                  this.status.set('spinner', false);
+
+                  var statusWithErrors = _.extend(
+                    {},
+                    this.status.toJSON(),
+                    errors
+                  );
+                  mps.publish('Analysis/results-error', [statusWithErrors]);
+                }.bind(this)
+              )
+              .finally(
+                function() {
+                  this.status.set('spinner', false);
+                }.bind(this)
+              );
+          }.bind(this);
+
+          var iso = this.status.get('iso');
           // Send request to the Analysis Service
-          AnalysisService.get(this.status.toJSON())
-
-            .then(
-              function(response, xhr) {
-                this.status.set('spinner', false);
-
-                var statusWithResults = _.extend({}, this.status.toJSON(), {
-                  results: response.data.attributes
-                });
-                mps.publish('Analysis/results', [statusWithResults]);
-              }.bind(this)
-            )
-
-            .catch(
-              function(errors) {
-                this.status.set('spinner', false);
-
-                var statusWithErrors = _.extend(
-                  {},
-                  this.status.toJSON(),
-                  errors
-                );
-                mps.publish('Analysis/results-error', [statusWithErrors]);
-              }.bind(this)
-            )
-
-            .finally(
-              function() {
-                this.status.set('spinner', false);
-              }.bind(this)
-            );
+          if (iso && iso.subRegion) {
+            GeostoreService.iso(iso)
+              .then(
+                function(geostoreId) {
+                  this.status.set('useGeostore', geostoreId);
+                  // this.status.set('type', 'country');
+                  return analysisFetch();
+                }.bind(this)
+              )
+              .catch(
+                function(err) {
+                  this.status.set('spinner', false);
+                  console.error(err);
+                }.bind(this)
+              );
+          } else {
+            return analysisFetch();
+          }
         }
-      },
+      }, 500),
 
       publishDeleteAnalysis: function() {
         mps.publish('Analysis/delete');

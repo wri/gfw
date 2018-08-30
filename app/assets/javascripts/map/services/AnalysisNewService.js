@@ -46,10 +46,14 @@ define(
         var initParams = this.buildAnalysisFromStatus(status);
         var params = Object.assign({}, initParams, {
           geostore: status.geostore || status.useGeostore,
+          useGeostore: status.useGeostore,
           host:
-            status.type === 'country' && status.dataset === 'umd-loss-gain'
+            status.type === 'country' &&
+            status.dataset === 'umd-loss-gain' &&
+            !status.iso.subRegion
               ? APIURLV2
-              : APIURL
+              : APIURL,
+          type: !status.iso.subRegion ? 'country' : status.type
         });
         var umdParams = Object.assign({}, params, {
           dataset: 'umd-loss-gain',
@@ -57,7 +61,6 @@ define(
         });
 
         // get host url based on type
-
         return fetch(
           umdParams.host +
             UriTemplate(APIURLS[params.type]).fillFromObject(umdParams)
@@ -68,49 +71,54 @@ define(
           .then(function(umdResponse) {
             return fetch(
               params.host +
-                UriTemplate(APIURLS[params.type]).fillFromObject(params)
+                UriTemplate(
+                  APIURLS[!status.iso.subRegion ? params.type : 'draw']
+                ).fillFromObject(params)
             )
               .then(function(secondResponse) {
                 return secondResponse.json();
               })
               .then(function(extraResponse) {
-                console.log('status', status);
-                console.log('umd', umdResponse.data.attributes);
-                console.log('extra', extraResponse.data.attributes);
-                var umd = umdResponse.data.attributes;
-                var extra = extraResponse.data.attributes;
+                var umd =
+                  (umdResponse.data && umdResponse.data.attributes) || {};
+                var extra =
+                  (extraResponse.data && extraResponse.data.attributes) || {};
 
-                var umdData = {
-                  areaHa: umd.areaHa || (umd.totals && umd.totals.areaHa) || 0,
-                  gain: umd.gain || (umd.totals && umd.totals.gain) || 0,
-                  loss: umd.loss || (umd.totals && umd.totals.loss) || 0,
-                  treeExtent:
-                    umd.treeExtent ||
-                    (umd.totals && umd.totals.extent2000) ||
-                    0,
-                  treeExtent2010:
-                    umd.treeExtent2010 ||
-                    (umd.totals && umd.totals.extent2010) ||
-                    0,
-                  gladAlerts: (umd.totals && umd.totals.gladAlerts) || 0
-                };
-                var extraData = {
-                  alerts:
-                    extra.value || extra.alertCounts || umdData.gladAlerts,
-                  loss:
-                    extra.value ||
-                    extra.alertCounts ||
-                    umdData.gladAlerts ||
-                    umdData.loss,
-                  downloadUrls: extra.downloadUrls
-                };
-                var allData = {
+                var alerts = status.dataset === 'imazon-alerts' ? {} : 0;
+
+                if (status.dataset === 'imazon-alerts') {
+                  if (extra.value[0]) {
+                    alerts[extra.value[0].dataType] = extra.value[0].value || 0;
+                  }
+                  if (extra.value[1]) {
+                    alerts[extra.value[1].dataType] = extra.value[1].value || 0;
+                  }
+                } else {
+                  alerts = extra.value || extra.alertCounts || 0;
+                }
+
+                var data = {
                   data: {
-                    attributes: Object.assign({}, umdData, extraData)
+                    attributes: {
+                      areaHa:
+                        umd.areaHa || (umd.totals && umd.totals.areaHa) || 0,
+                      gain: umd.gain || (umd.totals && umd.totals.gain) || 0,
+                      loss: umd.loss || (umd.totals && umd.totals.loss) || 0,
+                      treeExtent:
+                        umd.treeExtent ||
+                        (umd.totals && umd.totals.extent2000) ||
+                        0,
+                      treeExtent2010:
+                        umd.treeExtent2010 ||
+                        (umd.totals && umd.totals.extent2010) ||
+                        0,
+                      alerts: alerts,
+                      // value: alerts,
+                      downloadUrls: extra.downloadUrls
+                    }
                   }
                 };
-                console.log(umdData, extraData, allData);
-                return allData;
+                return data;
               })
               .catch(function(err) {
                 console.log(err);
@@ -160,16 +168,6 @@ define(
           layerOptions
         );
       }
-
-      /**
-       * Abort the current request if it exists.
-       */
-      // abortRequest: function() {
-      //   if (this.currentRequest) {
-      //     this.currentRequest.abort();
-      //     this.currentRequest = null;
-      //   }
-      // }
     });
 
     return new AnalysisService();

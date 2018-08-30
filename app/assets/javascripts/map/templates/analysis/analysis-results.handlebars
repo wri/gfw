@@ -34,28 +34,28 @@
     {{#if resource.baselayers.loss}}
       <li>
         <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{resource.dates.lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-        <span class="stats-count" style="color: {{resource.baselayers.loss.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: {{resource.baselayers.loss.category_color}};"><strong>{{resource.loss}}</strong> ha</span>
       </li>
     {{/if}}
 
     {{#if resource.baselayers.forestgain}}
       <li>
         <span class="stats-title">Gain 2001-2012</span>
-        <span class="stats-count" style="color: {{resource.baselayers.forestgain.title_color}};"><strong>{{resource.alerts.gainAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forestgain.title_color}};"><strong>{{resource.gain}}</strong> ha</span>
       </li>
     {{/if}}
 
     {{#if resource.baselayers.forest2000}}
     <li>
       <span class="stats-title">Tree cover (2000)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-      <span class="stats-count" style="color: {{resource.baselayers.forest2000.title_color}};"><strong>{{resource.alerts.treeExtent}}</strong> ha</span>
+      <span class="stats-count" style="color: {{resource.baselayers.forest2000.title_color}};"><strong>{{resource.treeExtent}}</strong> ha</span>
     </li>
     {{/if}}
 
     {{#if resource.baselayers.forest2010}}
     <li>
       <span class="stats-title">Tree cover (2010)<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{resource.options.threshold}}% <a href="#" class="btn-analysis-canopy">canopy density</a></span></span>
-      <span class="stats-count" style="color: {{resource.baselayers.forest2010.title_color}};"><strong>{{resource.alerts.treeExtent2010}}</strong> ha</span>
+      <span class="stats-count" style="color: {{resource.baselayers.forest2010.title_color}};"><strong>{{resource.treeExtent2010}}</strong> ha</span>
     </li>
     {{/if}}
 
@@ -63,7 +63,7 @@
     {{#if resource.baselayers.umd_as_it_happens}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens.category_color}};"><strong>{{resource.alerts}}</strong></span>
       </li>
     {{/if}}
 
@@ -72,7 +72,7 @@
     {{#if resource.baselayers.prodes}}
       <li>
         <span class="stats-title">Prodes tree cover loss ({{resource.dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{resource.baselayers.prodes.title_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: {{resource.baselayers.prodes.title_color}};"><strong>{{resource.alerts}}</strong> ha</span>
       </li>
     {{/if}}
 
@@ -80,11 +80,11 @@
     {{#ifCond resource.slug "===" 'imazon-alerts'}}
       <li>
         <span class="stats-title">Deforestation alerts ({{resource.dates.dateRange}})</span>
-        <span class="stats-count" style="color: #F13689;"><strong>{{resource.alerts.deforAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: #F13689;"><strong>{{resource.defor}}</strong> ha</span>
       </li>
       <li>
         <span class="stats-title">Degradation alerts</span>
-        <span class="stats-count" style="color: #FA98B9;"><strong>{{resource.alerts.degradAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: #FA98B9;"><strong>{{resource.degrad}}</strong> ha</span>
       </li>
     {{/ifCond}}
 
@@ -92,7 +92,7 @@
     {{#ifCond resource.slug "===" 'guira-loss'}}
       <li>
         <span class="stats-title">Grand Chaco tree cover loss:</span>
-        <span class="stats-count" style="color: {{resource.baselayers.guyra.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> ha</span>
+        <span class="stats-count" style="color: {{resource.baselayers.guyra.category_color}};"><strong>{{resource.alerts}}</strong> ha</span>
       </li>
     {{/ifCond}}
 
@@ -101,7 +101,7 @@
     {{#ifCond resource.slug "===" 'umd_as_it_happens_per'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_per.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_per.category_color}};"><strong>{{resource.alerts}}</strong></span>
       </li>
     {{/ifCond}}
 
@@ -110,7 +110,7 @@
     {{#ifCond resource.slug "===" 'umd_as_it_happens_cog'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_cog.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_cog.category_color}};"><strong>{{resource.alerts}}</strong></span>
       </li>
     {{/ifCond}}
 
@@ -119,7 +119,7 @@
     {{#ifCond resource.slug "===" 'umd_as_it_happens_idn'}}
       <li>
         <span class="stats-title">GLAD Tree Cover Loss Alerts:</span>
-        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_idn.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong></span>
+        <span class="stats-count" style="color: {{resource.baselayers.umd_as_it_happens_idn.category_color}};"><strong>{{resource.alerts}}</strong></span>
       </li>
     {{/ifCond}}
 
@@ -128,13 +128,13 @@
     {{#ifCond resource.slug "===" 'forma-alerts'}}
       <li>
         <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{resource.baselayers.forma_activity.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> FORMA active clearing alerts</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forma_activity.category_color}};"><strong>{{resource.alerts}}</strong> FORMA active clearing alerts</span>
       </li>
     {{/ifCond}}
     {{#ifCond resource.slug "===" 'forma250GFW'}}
       <li>
         <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{resource.baselayers.forma_month_3.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> FORMA alerts</span>
+        <span class="stats-count" style="color: {{resource.baselayers.forma_month_3.category_color}};"><strong>{{resource.alerts}}</strong> FORMA alerts</span>
       </li>
     {{/ifCond}}
 
@@ -143,7 +143,7 @@
     {{#ifCond resource.slug "===" 'terrai-alerts'}}
       <li>
         <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{resource.baselayers.terrailoss.category_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> Terra-i tree cover loss alerts</span>
+        <span class="stats-count" style="color: {{resource.baselayers.terrailoss.category_color}};"><strong>{{resource.alerts}}</strong> Terra-i tree cover loss alerts</span>
       </li>
     {{/ifCond}}
 
@@ -152,7 +152,7 @@
     {{#ifCond resource.slug "===" 'viirs-active-fires'}}
       <li>
         <span class="stats-title">Total alerts ({{resource.dates.dateRange}})</span>
-        <span class="stats-count" style="color: {{resource.baselayers.viirs_fires_alerts.title_color}};"><strong>{{resource.alerts.totalAlerts}}</strong> VIIRS active fire alerts</span>
+        <span class="stats-count" style="color: {{resource.baselayers.viirs_fires_alerts.title_color}};"><strong>{{resource.alerts}}</strong> VIIRS active fire alerts</span>
       </li>
     {{/ifCond}}
 
@@ -163,7 +163,7 @@
     <li>
       <div class="stats-notice">NOTE: tree cover loss and gain statistics cannot be compared against each other. <a href="#" class="source" data-source="loss-compare-gain">Learn more</a>.</div>
     </li>
-    
+
   </ul>
 </div>
 
