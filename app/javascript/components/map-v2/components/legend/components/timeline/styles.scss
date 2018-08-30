@@ -28,6 +28,11 @@
     svg {
       fill: #4a4a4a;
     }
+
+    .pause {
+      width: rem(10px);
+      height: rem(15px);
+    }
   }
 
   .play-btn:focus {

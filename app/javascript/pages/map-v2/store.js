@@ -19,6 +19,7 @@ import * as CountryDataProviderComponent from 'providers/country-data-provider';
 import * as GeostoreProviderComponent from 'providers/geostore-provider';
 import * as WhitelistsProviderComponent from 'providers/whitelists-provider';
 import * as DatasetsProviderComponent from 'providers/datasets-provider';
+import * as MyGFWProviderComponent from 'providers/mygfw-provider';
 
 // Component Reducers
 const componentsReducers = {
@@ -35,7 +36,8 @@ const providersReducers = {
   countryData: handleActions(CountryDataProviderComponent),
   geostore: handleActions(GeostoreProviderComponent),
   whitelists: handleActions(WhitelistsProviderComponent),
-  datasets: handleActions(DatasetsProviderComponent)
+  datasets: handleActions(DatasetsProviderComponent),
+  myGfw: handleActions(MyGFWProviderComponent)
 };
 
 export const reducers = combineReducers({
