@@ -122,6 +122,28 @@ class TimelineContainer extends PureComponent {
     });
   };
 
+  handleOnDateChange = (date, position) => {
+    const {
+      minDate,
+      startDate,
+      endDate,
+      trimEndDate,
+      handleChange
+    } = this.props;
+    const newRange = [startDate, endDate, trimEndDate];
+    newRange[position] = date.format('YYYY-MM-DD');
+    if (position) {
+      newRange[position - 1] = date.format('YYYY-MM-DD');
+    }
+    handleChange(newRange);
+    const mappedRange = newRange.map(d => moment(d).diff(minDate, 'days'));
+    this.setState({
+      start: mappedRange[0],
+      end: mappedRange[1],
+      trim: mappedRange[2]
+    });
+  };
+
   handleOnAfterChange = range => {
     const { handleChange } = this.props;
     const newRange = this.checkRange(range);
@@ -147,7 +169,8 @@ class TimelineContainer extends PureComponent {
       handleTogglePlay: this.handleTogglePlay,
       handleOnChange: this.handleOnChange,
       handleOnAfterChange: this.handleOnAfterChange,
-      formatDateString: this.formatDateString
+      formatDateString: this.formatDateString,
+      handleOnDateChange: this.handleOnDateChange
     });
   }
 }
