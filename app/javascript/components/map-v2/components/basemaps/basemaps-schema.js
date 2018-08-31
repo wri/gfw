@@ -41,6 +41,13 @@ export default {
       MAPBOX_TOKEN
     }`
   },
+  satellite: {
+    id: 'satellite',
+    label: 'Satellite',
+    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjhqiecof53wv2rl9gw4cehmy/tiles/256/{z}/{x}/{y}@2x?access_token=${
+      MAPBOX_TOKEN
+    }`
+  },
   landsat: {
     id: 'landsat',
     label: 'landsat',
@@ -48,20 +55,5 @@ export default {
     defaultUrl:
       'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     availableYears: [2013, 2014, 2015, 2016, 2017]
-  },
-  openstreet: {
-    id: 'openstreet',
-    label: 'open street maps',
-    url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
-  },
-  positron: {
-    id: 'positron',
-    label: 'positron',
-    url: 'https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
-  },
-  tree_height: {
-    id: 'tree_height',
-    label: 'tree height',
-    url: 'https://s3.amazonaws.com/wri-tiles/tree-height/{z}/{x}/{y}.png'
   }
 };
