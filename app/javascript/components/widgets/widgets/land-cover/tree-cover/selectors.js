@@ -11,22 +11,30 @@ const getWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
-const isoHasPlantations = createSelector(
+export const isoHasPlantations = createSelector(
   [getWhitelist, getCurrentLocation],
-  (whitelist, currentLabel) => (
-    (currentLabel !== 'global' && isEmpty(whitelist)) ||
-      whitelist.indexOf('plantations') > -1
-  )
+  (whitelist, currentLabel) => {
+    const hasPlantations =
+      (currentLabel !== 'global' && isEmpty(whitelist)) ||
+      whitelist.indexOf('plantations') > -1;
+    return hasPlantations;
+  }
 );
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getWhitelist, getColors, getCurrentLocation, getIndicator],
-  (data, whitelist, colors, currentLabel, indicator) => {
+  [
+    getData,
+    getWhitelist,
+    getColors,
+    getCurrentLocation,
+    getIndicator,
+    isoHasPlantations
+  ],
+  (data, whitelist, colors, currentLabel, indicator, hasPlantations) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalCover, cover, plantations } = data;
     const otherCover = indicator ? totalCover - cover : 0;
-    const hasPlantations = isoHasPlantations;
     const plantationsCover = hasPlantations ? plantations : 0;
     const label = indicator ? ` in ${indicator.label}` : '';
     const parsedData = [
@@ -65,8 +73,15 @@ export const parseData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getData, getSettings, getCurrentLocation, getIndicator, getSentences],
-  (data, settings, currentLabel, indicator, sentences) => {
+  [
+    getData,
+    getSettings,
+    getCurrentLocation,
+    getIndicator,
+    getSentences,
+    isoHasPlantations
+  ],
+  (data, settings, currentLabel, indicator, sentences, isoPlantations) => {
     if (!data || !sentences) return null;
     const {
       initial,
@@ -91,11 +106,11 @@ export const getSentence = createSelector(
           ? `${format('.3r')(data.cover)}ha`
           : `${format('.3s')(data.cover)}ha`
     };
-    let sentence = isoHasPlantations
+    let sentence = isoPlantations
       ? initial + hasPlantations
       : initial + noPlantations;
     if (indicator) {
-      sentence = isoHasPlantations
+      sentence = isoPlantations
         ? initial + hasPlantationsInd
         : initial + noPlantationsInd;
     }

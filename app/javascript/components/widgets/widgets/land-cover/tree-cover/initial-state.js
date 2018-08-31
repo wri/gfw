@@ -25,7 +25,7 @@ export default {
       hasPlantations: ' was natural forest cover.',
       noPlantations: ' was tree cover.',
       hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
-      noPlantationsInd: "<b>'s</b> tree was in {indicator}."
+      noPlantationsInd: "<b>'s</b> tree cover was in {indicator}."
     }
   },
   settings: {
