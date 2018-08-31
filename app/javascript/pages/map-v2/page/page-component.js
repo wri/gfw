@@ -36,8 +36,7 @@ class Page extends PureComponent {
           showPanel
           fullScreen
         />
-        <MapMenu toggleMenu={handleShowMenu} />
-        <DataAnalysisMenu className="data-analysis-menu" />
+        <MapMenu toggleMenu={handleShowMenu} hidePanels={hidePanels} />
         <div className="map">
           <Map />
         </div>

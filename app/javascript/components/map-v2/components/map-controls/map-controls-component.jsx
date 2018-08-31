@@ -50,7 +50,8 @@ class MapControlsButtons extends PureComponent {
       map,
       active,
       toogleRecentImagery,
-      setMapSettings
+      setMapSettings,
+      setMenuSettings
     } = this.props;
     const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
     const { showBasemaps } = this.state;
@@ -122,7 +123,10 @@ class MapControlsButtons extends PureComponent {
             </Button>
             <Button
               theme="theme-button-map-control"
-              onClick={() => setMapSettings({ hidePanels: !hidePanels })}
+              onClick={() => {
+                setMapSettings({ hidePanels: !hidePanels });
+                setMenuSettings({ selectedSection: '' });
+              }}
               tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
             >
               <Icon
@@ -176,7 +180,8 @@ MapControlsButtons.propTypes = {
   map: Proptypes.object,
   active: Proptypes.bool,
   hidePanels: Proptypes.bool,
-  toogleRecentImagery: Proptypes.func
+  toogleRecentImagery: Proptypes.func,
+  setMenuSettings: Proptypes.func
 };
 
 export default connect()(MapControlsButtons);
