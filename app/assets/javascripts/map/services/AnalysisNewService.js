@@ -107,7 +107,10 @@ define(
                   data: {
                     attributes: {
                       areaHa:
-                        umd.areaHa || (umd.totals && umd.totals.areaHa) || 0,
+                        umd.areaHa ||
+                        (umd.totals && umd.totals.areaHa) ||
+                        extra.areaHa ||
+                        0,
                       gain: umd.gain || (umd.totals && umd.totals.gain) || 0,
                       loss: umd.loss || (umd.totals && umd.totals.loss) || 0,
                       treeExtent:
@@ -119,7 +122,6 @@ define(
                         (umd.totals && umd.totals.extent2010) ||
                         0,
                       alerts: alerts,
-                      // value: alerts,
                       downloadUrls: extra.downloadUrls
                     }
                   }
