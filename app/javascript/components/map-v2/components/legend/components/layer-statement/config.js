@@ -1,7 +1,7 @@
 export default {
   lossLayer: {
     statementPlain: 'Tree cover loss',
-    statementHighlight: 'is not always deforestation',
+    statementHighlight: 'is not always deforestation.',
     tooltipDesc:
       'Loss of tree cover may occur for many reasons, including deforestation, fire, and logging within the course of sustainable forestry operations. In sustainably managed forests, the “loss” will eventually show up as “gain”, as young trees get large enough to achieve canopy closure.'
   },

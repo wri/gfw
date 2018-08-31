@@ -5,7 +5,7 @@
   padding-top: rem(5px);
 
   span {
-    text-decoration-line: underline;
-    text-decoration-style: dashed;
+    border-bottom: dashed 1px $hot-grey;
+    padding-bottom: 1px;
   }
 }
