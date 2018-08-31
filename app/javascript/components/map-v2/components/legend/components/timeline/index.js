@@ -103,18 +103,29 @@ class TimelineContainer extends PureComponent {
     this.setState({ isPlaying: !isPlaying });
   };
 
+  checkRange = range => {
+    if (
+      (range[2] && range[0] !== this.state.start) ||
+      (range[2] && range[2] !== this.state.trim)
+    ) {
+      return [range[0], range[2], range[2]];
+    }
+    return range;
+  };
+
   handleOnChange = range => {
+    const newRange = this.checkRange(range);
     this.setState({
-      start: range[0],
-      end: range[1],
-      trim: range[2]
+      start: newRange[0],
+      end: newRange[1],
+      trim: newRange[2]
     });
   };
 
   handleOnAfterChange = range => {
     const { handleChange } = this.props;
-    const newRange = this.formatRange([range[0], range[1], range[2]]);
-    handleChange(newRange);
+    const newRange = this.checkRange(range);
+    handleChange(this.formatRange([newRange[0], newRange[1], newRange[2]]));
   };
 
   formatRange = range => {
