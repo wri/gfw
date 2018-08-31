@@ -29,7 +29,9 @@ export default {
   dark: {
     id: 'dark',
     label: 'dark matter',
-    url: 'https://a.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png'
+    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9/tiles/256/{z}/{x}/{y}@2x?access_token=${
+      MAPBOX_TOKEN
+    }`
   },
   landsat: {
     id: 'landsat',
