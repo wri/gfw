@@ -5,7 +5,15 @@ export const labels = {
     id: 'default',
     value: 'default',
     label: 'Dark Labels',
-    url: `https://api.mapbox.com/styles/v1/edbrett/cjknwadi312uf2ro4dtt40eu0/tiles/256/{z}/{x}/{y}@2x?access_token=${
+    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxwcp212u02rpd1o541omv/tiles/256/{z}/{x}/{y}@2x?access_token=${
+      MAPBOX_TOKEN
+    }`
+  },
+  lightLabels: {
+    id: 'light-labels',
+    value: 'light-labels',
+    label: 'Light Labels',
+    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxw8t412tv2rpdt33iuum3/tiles/256/{z}/{x}/{y}@2x?access_token=${
       MAPBOX_TOKEN
     }`
   },
@@ -22,7 +30,7 @@ export default {
     id: 'default',
     value: 'default',
     label: 'default',
-    url: `https://api.mapbox.com/styles/v1/edbrett/cjknvzjev2bl92rmno1rr9ivr/tiles/256/{z}/{x}/{y}@2x?access_token=${
+    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=${
       MAPBOX_TOKEN
     }`
   },

@@ -15,6 +15,12 @@ export default {
   attributionControl: false,
   datasets: [
     {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: ['c5d1e010-383a-4713-9aaa-44f728c0571c'],
+      opacity: 1,
+      visibility: true
+    },
+    {
       dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
       layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4'],
       opacity: 1,
