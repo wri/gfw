@@ -25,198 +25,113 @@ define(
 
     var APIURLS = {
       draw: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
-      country:
-        '/{dataset}/admin{/country}{/region}{/subRegion}{?period,thresh,gladConfirmOnly}',
+
       wdpaid: '/{dataset}/wdpa{/wdpaid}{?period,thresh,gladConfirmOnly}',
+
+      country:
+        '/{dataset}/admin{/country}{/region}{/subRegion}{?period,thresh,gladConfirmOnly,geostore}',
+
+      // same as above
       use: '/{dataset}{?geostore,period,thresh,gladConfirmOnly}',
       'use-geostore': '/{dataset}{?geostore,period,thresh,gladConfirmOnly}'
     };
+
     var AnalysisService = Class.extend({
       get: function(status) {
-        if (
-          (status.baselayers.indexOf('umd_as_it_happens') > -1 ||
-            status.baselayers.indexOf('places_to_watch') > -1 ||
-            status.baselayers.indexOf('terrailoss') > -1 ||
-            status.baselayers.indexOf('forma_month_3') > -1 ||
-            status.baselayers.indexOf('forma_activity') > -1 ||
-            status.baselayers.indexOf('imazon') > -1 ||
-            status.baselayers.indexOf('guyra') > -1 ||
-            status.baselayers.indexOf('viirs_fires_alerts') > -1 ||
-            status.baselayers.indexOf('umd_as_it_happens_per') > -1 ||
-            status.baselayers.indexOf('umd_as_it_happens_cog') > -1 ||
-            status.baselayers.indexOf('umd_as_it_happens_idn') > -1 ||
-            status.baselayers.indexOf('prodes') > -1) &&
-          (status.type === 'draw' ||
-            status.type === 'use-geostore' ||
-            status.type === 'wdpaid' ||
-            status.type === 'use')
-        ) {
-          var umdUrl = UriTemplate(APIURLS[status.type]).fillFromObject({
-            useid: status.useid,
-            dataset: 'umd-loss-gain',
-            geostore: status.geostore || status.useGeostore,
-            wdpaid: status.wdpaid,
-            period: status.period,
-            thresh: status.threshold,
-            gladConfirmOnly: status.gladConfirmOnly
-          });
-          return fetch(APIURL + umdUrl)
-            .then(function(response) {
-              return response.json();
-            })
-            .then(
-              function(umdResponse) {
-                return new Promise(
-                  function(resolve, reject) {
-                    this.analysis = this.buildAnalysisFromStatus(status);
-                    this.apiHost = this.getApiHost(this.analysis.dataset);
-                    this.getUrl().then(
-                      function(data) {
-                        ds.define(GET_REQUEST_ID, {
-                          cache: false,
-                          url: this.apiHost + data.url,
-                          type: 'GET',
-                          dataType: 'json',
-                          decoder: function(data, status, xhr, success, error) {
-                            if (status === 'success') {
-                              success(data, xhr);
-                            } else if (
-                              status === 'fail' ||
-                              status === 'error'
-                            ) {
-                              error(xhr.responseText);
-                            } else if (status !== 'abort') {
-                              error(xhr.responseText);
-                            }
-                          }
-                        });
-                        var requestConfig = {
-                          resourceId: GET_REQUEST_ID,
-                          success: function(response, status) {
-                            var data = {
-                              data: {
-                                attributes: {
-                                  areaHa: umdResponse.data.attributes.areaHa,
-                                  gain: umdResponse.data.attributes.gain,
-                                  loss: umdResponse.data.attributes.loss,
-                                  alerts:
-                                    response.data.attributes.value ||
-                                    response.data.attributes.alertCounts,
-                                  treeExtent:
-                                    umdResponse.data.attributes.treeExtent,
-                                  treeExtent2010:
-                                    umdResponse.data.attributes.treeExtent2010,
-                                  downloadUrls:
-                                    response.data.attributes.downloadUrls
-                                }
-                              }
-                            };
-                            resolve(data, status);
-                          }.bind(this),
-                          error: function(errors) {
-                            reject(errors);
-                          }.bind(this)
-                        };
+        // draw
+        // get v1 umdlossgain
+        // get extra fetch from dataset
 
-                        this.abortRequest();
-                        this.currentRequest = ds.request(requestConfig);
-                      }.bind(this)
-                    );
-                  }.bind(this)
-                );
-              }.bind(this)
-            );
-        } else {
-          return new Promise(
-            function(resolve, reject) {
-              this.analysis = this.buildAnalysisFromStatus(status);
-              this.apiHost = this.getApiHost(this.analysis.dataset);
-              this.getUrl().then(
-                function(data) {
-                  ds.define(GET_REQUEST_ID, {
-                    cache: false,
-                    url: this.apiHost + data.url,
-                    type: 'GET',
-                    dataType: 'json',
-                    decoder: function(data, status, xhr, success, error) {
-                      if (status === 'success') {
-                        success(data, xhr);
-                      } else if (status === 'fail' || status === 'error') {
-                        error(xhr.responseText);
-                      } else if (status !== 'abort') {
-                        error(xhr.responseText);
-                      }
+        // get both sets of params for umd loss fetch
+        var initParams = this.buildAnalysisFromStatus(status);
+        var params = Object.assign({}, initParams, {
+          geostore: status.geostore || status.useGeostore,
+          useGeostore: status.useGeostore,
+          host:
+            status.type === 'country' &&
+            status.dataset === 'umd-loss-gain' &&
+            !status.iso.subRegion
+              ? APIURLV2
+              : APIURL,
+          type:
+            status.iso &&
+            status.iso.country &&
+            status.iso.region &&
+            !status.iso.subRegion
+              ? 'country'
+              : status.type
+        });
+        var umdParams = Object.assign({}, params, {
+          dataset: 'umd-loss-gain',
+          host: status.type === 'country' ? APIURLV2 : APIURL
+        });
+
+        // get host url based on type
+        return fetch(
+          umdParams.host +
+            UriTemplate(APIURLS[params.type]).fillFromObject(umdParams)
+        )
+          .then(function(firstResponse) {
+            return firstResponse.json();
+          })
+          .then(function(umdResponse) {
+            return fetch(
+              params.host +
+                UriTemplate(
+                  APIURLS[!status.iso.subRegion ? params.type : 'draw']
+                ).fillFromObject(params)
+            )
+              .then(function(secondResponse) {
+                return secondResponse.json();
+              })
+              .then(function(extraResponse) {
+                var umd =
+                  (umdResponse.data && umdResponse.data.attributes) || {};
+                var extra =
+                  (extraResponse.data && extraResponse.data.attributes) || {};
+
+                var alerts = status.dataset === 'imazon-alerts' ? {} : 0;
+
+                if (status.dataset === 'imazon-alerts') {
+                  if (extra.value[0]) {
+                    alerts[extra.value[0].dataType] = extra.value[0].value || 0;
+                  }
+                  if (extra.value[1]) {
+                    alerts[extra.value[1].dataType] = extra.value[1].value || 0;
+                  }
+                } else {
+                  alerts = extra.value || extra.alertCounts || 0;
+                }
+
+                var data = {
+                  data: {
+                    attributes: {
+                      areaHa:
+                        umd.areaHa ||
+                        (umd.totals && umd.totals.areaHa) ||
+                        extra.areaHa ||
+                        0,
+                      gain: umd.gain || (umd.totals && umd.totals.gain) || 0,
+                      loss: umd.loss || (umd.totals && umd.totals.loss) || 0,
+                      treeExtent:
+                        umd.treeExtent ||
+                        (umd.totals && umd.totals.extent2000) ||
+                        0,
+                      treeExtent2010:
+                        umd.treeExtent2010 ||
+                        (umd.totals && umd.totals.extent2010) ||
+                        0,
+                      alerts: alerts,
+                      downloadUrls: extra.downloadUrls
                     }
-                  });
-
-                  var requestConfig = {
-                    resourceId: GET_REQUEST_ID,
-                    success: function(response, status) {
-                      var data = {};
-                      if (this.analysis.type === 'country') {
-                        data = {
-                          data: {
-                            attributes: {
-                              areaHa: response.data.attributes.totals.areaHa,
-                              gain: response.data.attributes.totals.gain,
-                              loss: response.data.attributes.totals.loss,
-                              alerts:
-                                response.data.attributes.totals.gladAlerts,
-                              treeExtent:
-                                response.data.attributes.totals.extent2000,
-                              treeExtent2010:
-                                response.data.attributes.totals.extent2010
-                            }
-                          }
-                        };
-                      } else {
-                        data = {
-                          data: {
-                            attributes: {
-                              areaHa: response.data.attributes.areaHa,
-                              gain: response.data.attributes.gain,
-                              loss: response.data.attributes.loss,
-                              alerts: response.data.attributes.value,
-                              treeExtent: response.data.attributes.treeExtent,
-                              treeExtent2010:
-                                response.data.attributes.treeExtent2010,
-                              downloadUrls:
-                                response.data.attributes.downloadUrls
-                            }
-                          }
-                        };
-                      }
-                      resolve(data, status);
-                    }.bind(this),
-                    error: function(errors) {
-                      reject(errors);
-                    }.bind(this)
-                  };
-
-                  this.abortRequest();
-                  this.currentRequest = ds.request(requestConfig);
-                }.bind(this)
-              );
-            }.bind(this)
-          );
-        }
-      },
-
-      getUrl: function() {
-        return new Promise(
-          function(resolve, reject) {
-            resolve({
-              url: UriTemplate(APIURLS[this.analysis.type]).fillFromObject(
-                Object.assign({}, this.analysis, {
-                  dataset:
-                    this.analysis.type === 'country'
-                      ? 'umd-loss-gain'
-                      : this.analysis.dataset
-                })
-              )
-            });
-          }.bind(this)
-        );
+                  }
+                };
+                return data;
+              })
+              .catch(function(err) {
+                console.log(err);
+              });
+          });
       },
 
       buildAnalysisFromStatus: function(status) {
@@ -251,25 +166,15 @@ define(
             period: period,
 
             // If a userGeostore exists we need to set geostore and type manually
-            geostore: status.useGeostore ? status.useGeostore : status.geostore,
-            type: status.useGeostore ? 'use-geostore' : status.type
+            geostore:
+              status.useGeostore || status.isoGeostore || status.geostore,
+            type:
+              status.useGeostore || status.isoGeostore
+                ? 'use-geostore'
+                : status.type
           },
           layerOptions
         );
-      },
-
-      getApiHost: function(dataset) {
-        return this.analysis.type === 'country' ? APIURLV2 : APIURL;
-      },
-
-      /**
-       * Abort the current request if it exists.
-       */
-      abortRequest: function() {
-        if (this.currentRequest) {
-          this.currentRequest.abort();
-          this.currentRequest = null;
-        }
       }
     });
 

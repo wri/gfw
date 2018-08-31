@@ -393,13 +393,14 @@ define(
           'Analysis/geojson': function(geojson) {
             if (geojson) {
               this.status.set('spinner', true);
-              GeostoreService.save(geojson)
-                .then(function(geostoreId) {
+              GeostoreService.save(geojson).then(
+                function(geostoreId) {
                   if (geostoreId === this.status.get('geostore')) {
                     this.status.set('spinner', false);
                   }
                   this.status.set('geostore', geostoreId);
-                }.bind(this));
+                }.bind(this)
+              );
             } else {
               this.status.set('geostore', null);
             }
@@ -413,6 +414,14 @@ define(
               iso: iso,
               isoDisabled: isoDisabled
             });
+            // GeostoreService.iso({ country: iso.country, region: iso.region, subRegion: iso.subRegion })
+            //   .then(function(isoGeostore) {
+            //     this.status.set({
+            //       iso: iso,
+            //       isoGeostore: isoGeostore,
+            //       isoDisabled: isoDisabled
+            //     });
+            //   }.bind(this));
           }
         },
         {
@@ -446,31 +455,25 @@ define(
             var subscritionObj = {};
 
             if (!!data.use && this.usenames.indexOf(data.use) === -1) {
-              var provider = {
-                table: data.use,
-                filter: 'cartodb_id = ' + data.useid,
-                user: 'wri-01',
-                type: 'carto'
-              };
+              GeostoreService.use({ use: data.use, useid: data.useid }).then(
+                function(useGeostoreId) {
+                  subscritionObj = {
+                    iso: {
+                      country: null,
+                      region: null,
+                      subRegion: null
+                    },
+                    geostore: useGeostoreId,
+                    useid: null,
+                    use: null,
+                    wdpaid: null
+                  };
 
-              GeostoreService.use(provider)
-              .then(function(useGeostoreId) {
-                subscritionObj = {
-                  iso: {
-                    country: null,
-                    region: null,
-                    subRegion: null
-                  },
-                  geostore: useGeostoreId,
-                  useid: null,
-                  use: null,
-                  wdpaid: null
-                };
-
-                this.publishSubscribtion(
-                  _.extend({}, this.status.toJSON(), subscritionObj)
-                );
-              }.bind(this));
+                  this.publishSubscribtion(
+                    _.extend({}, this.status.toJSON(), subscritionObj)
+                  );
+                }.bind(this)
+              );
             } else {
               subscritionObj = {
                 iso: {
@@ -500,11 +503,9 @@ define(
         {
           'Timeline/date-change': function(layerSlug, date) {
             var dateFormat = 'YYYY-MM-DD';
-            var date = date.map(
-              function(date) {
-                return moment(date).format(dateFormat);
-              }
-            );
+            var date = date.map(function(date) {
+              return moment(date).format(dateFormat);
+            });
 
             this.status.set({
               begin: date[0],
@@ -515,11 +516,9 @@ define(
         {
           'Torque/date-range-change': function(date) {
             var dateFormat = 'YYYY-MM-DD';
-            var date = date.map(
-              function(date) {
-                return moment(date).format(dateFormat);
-              }
-            );
+            var date = date.map(function(date) {
+              return moment(date).format(dateFormat);
+            });
 
             this.status.set({
               begin: date[0],
@@ -728,26 +727,22 @@ define(
       changeUse: function() {
         var use = this.status.get('use'),
           useid = this.status.get('useid');
+        if (!!use && !!useid && this.usenames.indexOf(use) > -1) {
+          this.status.set('spinner', true);
 
-        if (!!use && !!useid) {
-          if (this.usenames.indexOf(use) !== -1) {
-            this.setAnalysis('use');
-          } else {
-            this.status.set('spinner', true);
-
-            var provider = {
-              table: use,
-              filter: 'cartodb_id = ' + useid,
-              user: 'wri-01',
-              type: 'carto'
-            };
-
-            GeostoreService.use(provider)
-              .then(function(useGeostoreId) {
-                this.status.set('useGeostore', useGeostoreId);
+          GeostoreService.use({ use: use, useid: useid })
+            .then(
+              function(geostoreId) {
+                this.status.set('useGeostore', geostoreId);
                 this.setAnalysis('use');
-              }.bind(this));
-          }
+              }.bind(this)
+            )
+            .catch(
+              function(err) {
+                this.status.set('spinner', false);
+                console.error(err);
+              }.bind(this)
+            );
         }
       },
 
@@ -801,7 +796,7 @@ define(
        * - publishRefreshAnalysis
        * - publishNotification
        */
-      publishAnalysis: function() {
+      publishAnalysis: _.debounce(function() {
         // 1. Check if analysis is active
         if (
           this.status.get('active') &&
@@ -819,34 +814,59 @@ define(
           // Open the analysis tab
           mps.publish('Tab/toggle', ['analysis-tab', true]);
 
-          // Send request to the Analysis Service
-          AnalysisService.get(this.status.toJSON())
+          var analysisFetch = function() {
+            return AnalysisService.get(this.status.toJSON())
+              .then(
+                function(response, xhr) {
+                  this.status.set('spinner', false);
 
-            .then(function(response, xhr) {
-              this.status.set('spinner', false);
+                  var statusWithResults = _.extend({}, this.status.toJSON(), {
+                    results: response.data.attributes
+                  });
+                  mps.publish('Analysis/results', [statusWithResults]);
+                }.bind(this)
+              )
+              .catch(
+                function(errors) {
+                  this.status.set('spinner', false);
 
-              var statusWithResults = _.extend({}, this.status.toJSON(), {
-                results: response.data.attributes
-              });
-              mps.publish('Analysis/results', [statusWithResults]);
-            }.bind(this))
-
-            .catch(function(errors) {
-              this.status.set('spinner', false);
-
-              var statusWithErrors = _.extend(
-                {},
-                this.status.toJSON(),
-                errors
+                  var statusWithErrors = _.extend(
+                    {},
+                    this.status.toJSON(),
+                    errors
+                  );
+                  mps.publish('Analysis/results-error', [statusWithErrors]);
+                }.bind(this)
+              )
+              .finally(
+                function() {
+                  this.status.set('spinner', false);
+                }.bind(this)
               );
-              mps.publish('Analysis/results-error', [statusWithErrors]);
-            }.bind(this))
+          }.bind(this);
 
-            .finally(function() {
-              this.status.set('spinner', false);
-            }.bind(this));
+          var iso = this.status.get('iso');
+          // Send request to the Analysis Service
+          if (iso && iso.subRegion) {
+            GeostoreService.iso(iso)
+              .then(
+                function(geostoreId) {
+                  this.status.set('useGeostore', geostoreId);
+                  // this.status.set('type', 'country');
+                  return analysisFetch();
+                }.bind(this)
+              )
+              .catch(
+                function(err) {
+                  this.status.set('spinner', false);
+                  console.error(err);
+                }.bind(this)
+              );
+          } else {
+            return analysisFetch();
+          }
         }
-      },
+      }, 500),
 
       publishDeleteAnalysis: function() {
         mps.publish('Analysis/delete');
@@ -890,33 +910,38 @@ define(
       deleteAnalysis: function(options) {
         var type = options ? options.type : null;
         var statusFiltered = type
-          ? _.filter(this.types, function(v) { return v.type != type; })
+          ? _.filter(this.types, function(v) {
+              return v.type != type;
+            })
           : this.types;
 
         // If type exists delete all stuff related
         // to other analysis
         // 'iso' and 'isoDisabled' need a different treatment
-        _.each(statusFiltered, function(v) {
-          switch (v.name) {
-            case 'iso':
-              this.status.set(
-                'iso',
-                {
-                  country: null,
-                  region: null,
-                  subRegion: null
-                },
-                options
-              );
-              break;
-            case 'isoDisabled':
-              this.status.set('isoDisabled', true);
-              break;
-            default:
-              this.status.set(v.name, null, options);
-              break;
-          }
-        }.bind(this));
+        _.each(
+          statusFiltered,
+          function(v) {
+            switch (v.name) {
+              case 'iso':
+                this.status.set(
+                  'iso',
+                  {
+                    country: null,
+                    region: null,
+                    subRegion: null
+                  },
+                  options
+                );
+                break;
+              case 'isoDisabled':
+                this.status.set('isoDisabled', true);
+                break;
+              default:
+                this.status.set(v.name, null, options);
+                break;
+            }
+          }.bind(this)
+        );
 
         // If type doesn't exist remove type, active and enabledUpdating
         if (!type) {

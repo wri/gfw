@@ -8,7 +8,7 @@ export default {
     size: 'small',
     categories: ['summary', 'land-cover'],
     admins: ['global', 'country', 'region', 'subRegion'],
-    selectors: ['forestTypes', 'landCategories', 'thresholds', 'extentYears'],
+    selectors: ['landCategories', 'thresholds', 'extentYears'],
     type: 'extent',
     metaKey: 'widget_tree_cover',
     layers: ['forest2000', 'forest2010'],
@@ -20,11 +20,12 @@ export default {
       globalInitial:
         'As of {year}, {percentage} of {location} land cover was tree cover.',
       globalWithIndicator:
-        'As of {year}, {percentage} of {location} land cover within {indicator} was tree cover.',
-      initial:
-        'As of {year}, {percentage} of {location} was natural forest cover.',
-      withIndicator:
-        "As of {year}, {percentage} of {location}<b>'s</b> natural forest was in {indicator}."
+        'As of {year}, {percentage} of {location} tree cover was in {indicator}.',
+      initial: 'As of {year}, {percentage} of {location}',
+      hasPlantations: ' was natural forest cover.',
+      noPlantations: ' was tree cover.',
+      hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
+      noPlantationsInd: "<b>'s</b> tree cover was in {indicator}."
     }
   },
   settings: {
