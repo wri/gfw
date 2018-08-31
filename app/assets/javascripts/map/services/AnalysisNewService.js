@@ -53,7 +53,13 @@ define(
             !status.iso.subRegion
               ? APIURLV2
               : APIURL,
-          type: !status.iso.subRegion ? 'country' : status.type
+          type:
+            status.iso &&
+            status.iso.country &&
+            status.iso.region &&
+            !status.iso.subRegion
+              ? 'country'
+              : status.type
         });
         var umdParams = Object.assign({}, params, {
           dataset: 'umd-loss-gain',
