@@ -34,47 +34,53 @@ class Timeline extends Component {
       maxDate,
       startDate,
       trimEndDate,
-      handleOnDateChange
+      handleOnDateChange,
+      dateFormat,
+      interval
     } = this.props;
 
     return (
       <div className={`c-timeline ${className || ''}`}>
-        <div className="date-pickers">
-          From
-          <Datepicker
-            className="datepicker start-date"
-            theme={'datepicker-small'}
-            date={moment(startDate)}
-            handleOnDateChange={date => handleOnDateChange(date, 0)}
-            settings={{
-              appendToBody: true,
-              displayFormat: 'DD MMM YYYY',
-              numberOfMonths: 1,
-              isOutsideRange: d =>
-                d.isAfter(moment(trimEndDate)) || d.isBefore(moment(minDate)),
-              hideKeyboardShortcutsPanel: true,
-              noBorder: true,
-              readOnly: true
-            }}
-          />
-          to
-          <Datepicker
-            className="datepicker"
-            theme={'datepicker-small'}
-            date={moment(trimEndDate)}
-            handleOnDateChange={date => handleOnDateChange(date, 2)}
-            settings={{
-              appendToBody: true,
-              displayFormat: 'DD MMM YYYY',
-              numberOfMonths: 1,
-              isOutsideRange: d =>
-                d.isAfter(moment(maxDate)) || d.isBefore(moment(startDate)),
-              hideKeyboardShortcutsPanel: true,
-              noBorder: true,
-              readOnly: true
-            }}
-          />
-        </div>
+        {dateFormat === 'YYYY-MM-DD' &&
+          interval !== 'years' && (
+            <div className="date-pickers">
+              From
+              <Datepicker
+                className="datepicker start-date"
+                theme={'datepicker-small'}
+                date={moment(startDate)}
+                handleOnDateChange={date => handleOnDateChange(date, 0)}
+                settings={{
+                  appendToBody: true,
+                  displayFormat: 'DD MMM YYYY',
+                  numberOfMonths: 1,
+                  isOutsideRange: d =>
+                    d.isAfter(moment(trimEndDate)) ||
+                    d.isBefore(moment(minDate)),
+                  hideKeyboardShortcutsPanel: true,
+                  noBorder: true,
+                  readOnly: true
+                }}
+              />
+              to
+              <Datepicker
+                className="datepicker"
+                theme={'datepicker-small'}
+                date={moment(trimEndDate)}
+                handleOnDateChange={date => handleOnDateChange(date, 2)}
+                settings={{
+                  appendToBody: true,
+                  displayFormat: 'DD MMM YYYY',
+                  numberOfMonths: 1,
+                  isOutsideRange: d =>
+                    d.isAfter(moment(maxDate)) || d.isBefore(moment(startDate)),
+                  hideKeyboardShortcutsPanel: true,
+                  noBorder: true,
+                  readOnly: true
+                }}
+              />
+            </div>
+          )}
         <div className="range-slider">
           {canPlay && (
             <button className="control-btn" onClick={handleTogglePlay}>
@@ -125,7 +131,9 @@ Timeline.propTypes = {
   maxDate: PropTypes.string,
   startDate: PropTypes.string,
   trimEndDate: PropTypes.string,
-  handleOnDateChange: PropTypes.func
+  handleOnDateChange: PropTypes.func,
+  dateFormat: PropTypes.string,
+  interval: PropTypes.string
 };
 
 export default Timeline;
