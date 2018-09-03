@@ -9,35 +9,40 @@ class RecentImagery extends PureComponent {
   render() {
     const {
       tile,
-      onClose,
       allTiles,
       settings,
       setRecentImagerySettings,
-      setRecentImageryShowSettings
+      setRecentImageryShowSettings,
+      onClose,
+      getTooltipContentProps,
+      setMapSettings,
+      datasets
     } = this.props;
 
     return (
-      <div className="c-recent-imagery">
-        <RecentImagerySettings
-          selectedTile={tile}
-          tiles={allTiles}
-          settings={settings}
-          setRecentImagerySettings={setRecentImagerySettings}
-          setRecentImageryShowSettings={setRecentImageryShowSettings}
-          onClose={onClose}
-        />
-      </div>
+      <RecentImagerySettings
+        selectedTile={tile}
+        tiles={allTiles}
+        settings={settings}
+        setRecentImagerySettings={setRecentImagerySettings}
+        setRecentImageryShowSettings={setRecentImageryShowSettings}
+        onClose={onClose}
+        getTooltipContentProps={getTooltipContentProps}
+        setMapSettings={setMapSettings}
+        datasets={datasets}
+      />
     );
   }
 }
 
 RecentImagery.propTypes = {
-  showSettings: PropTypes.bool.isRequired,
   tile: PropTypes.object,
   allTiles: PropTypes.array.isRequired,
   settings: PropTypes.object.isRequired,
   setRecentImagerySettings: PropTypes.func.isRequired,
-  setRecentImageryShowSettings: PropTypes.func.isRequired
+  setRecentImageryShowSettings: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  getTooltipContentProps: PropTypes.func.isRequired
 };
 
 export default RecentImagery;

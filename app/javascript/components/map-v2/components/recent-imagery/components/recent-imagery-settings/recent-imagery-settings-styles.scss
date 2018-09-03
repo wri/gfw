@@ -4,120 +4,116 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 100%;
-  padding: rem(25px) 0 rem(22px) 0;
+  width: rem(290px);
   background-color: $white;
 
-  > * {
-    margin: 0 0 rem(15px);
+  .top-section {
+    padding: rem(20px) rem(20px) rem(30px);
 
-    &:last-child {
-      margin: 0;
-    }
-  }
-
-  .close-btn {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: rem(30px);
-    cursor: pointer;
-
-    svg {
-      width: rem(9px);
-      height: rem(10px);
-      fill: $slate;
-    }
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 rem(20px);
-
-    &__title {
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 21px;
-      color: $slate;
-    }
-  }
-
-  &__dates {
-    position: relative;
-    width: 100%;
-    padding: 0 rem(20px);
-    z-index: 4;
-
-    &__title {
-      margin-bottom: rem(10px);
-      text-align: left;
-    }
-
-    &__title,
-    &__before {
-      font-size: 11px;
-      font-weight: 500;
-      color: $warm-grey;
-    }
-
-    &__buttons {
+    .recent-menu {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: rem(15px);
 
-      .c-dropdown {
-        margin: rem(1px) rem(15px) 0 0;
+      .icon-close {
+        width: rem(9px);
+        height: rem(10px);
+        cursor: pointer;
+        fill: $slate;
       }
 
-      .c-datepicker {
-        margin: 0 0 0 rem(15px);
+      .title {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 21px;
+        color: $slate;
+        text-transform: uppercase;
+      }
+    }
+
+    .dates {
+      position: relative;
+      width: 100%;
+      z-index: 4;
+      margin-bottom: rem(20px);
+
+      .title {
+        margin-bottom: rem(10px);
+        text-align: left;
+      }
+
+      .title,
+      .before {
+        font-size: 11px;
+        font-weight: 500;
+        color: $warm-grey;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .c-dropdown {
+          margin: rem(1px) rem(15px) 0 0;
+        }
+
+        .c-datepicker {
+          margin: 0 0 0 rem(15px);
+        }
+      }
+    }
+
+    .clouds {
+      width: 100%;
+
+      .title {
+        text-align: left;
+        font-size: 11px;
+        font-weight: 500;
+        color: $warm-grey;
+        margin-bottom: rem(10px);
+      }
+
+      .c-slider {
+        padding: 0 rem(5px);
       }
     }
   }
 
-  &__clouds {
-    width: 100%;
-    padding: 0 rem(20px);
-
-    &__title {
-      text-align: left;
-      font-size: 11px;
-      font-weight: 500;
-      color: $warm-grey;
-      margin-bottom: rem(10px);
-    }
-
-    .c-slider {
-      padding: 0 rem(5px);
-    }
-  }
-
-  &__thumbnails {
+  .thumbnails {
     position: relative;
     width: 100%;
     min-height: rem(146px);
     padding-top: rem(14px);
     border-top: 1px solid rgba(#9e9e9e, 0.3);
     z-index: 1;
+    padding: rem(20px) 0 rem(30px);
 
-    &__header {
+    .header {
       position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 rem(22px);
-      margin-bottom: rem(18px);
+      margin-bottom: rem(20px);
       z-index: 2;
+      padding: 0 rem(20px);
 
-      .theme-dropdown-button .container {
-        max-width: rem(140px);
+      .description {
+        text-align: left;
+        line-height: 1.6;
+        min-width: 48%;
+        margin-right: 4%;
+      }
+
+      .band-selector {
+        min-width: 48%;
       }
     }
 
-    &__description {
+    .description {
       font-size: 12px;
       font-weight: 500;
       line-height: 13px;
@@ -125,33 +121,24 @@
     }
 
     .c-carousel {
+      height: rem(100px);
       position: relative;
       margin: 0;
       z-index: 1;
 
-      .slick-slide {
-        padding: 0 rem(5.5px);
-      }
-
-      .slick-arrow {
-        top: calc(50% - #{rem(20px)});
-      }
-
       .slick-prev {
         left: rem(20px);
+        top: calc(50% - 20px);
       }
 
       .slick-next {
         right: rem(20px);
-      }
-
-      .slick-track {
-        min-height: rem(100px);
+        top: calc(50% - 20px);
       }
     }
   }
 
-  &__empty-thumbnails {
+  .empty-thumbnails {
     padding-top: rem(11px);
   }
 }

@@ -38,7 +38,7 @@ class Page extends PureComponent {
         />
         <MapMenu toggleMenu={handleShowMenu} hidePanels={hidePanels} />
         <div className="map">
-          <Map />
+          <Map recentImagery />
         </div>
         {!hidePanels && <DataAnalysisMenu className="data-analysis-menu" />}
         <Share />

@@ -42,7 +42,7 @@ class MapComponent extends PureComponent {
       recentImagery,
       setInteraction
     } = this.props;
-
+    console.log(activeLayers);
     return (
       <Fragment>
         <Map
@@ -102,11 +102,6 @@ class MapComponent extends PureComponent {
               </LayerManager>
               <Popup map={map} />
               <MapControlButtons className="map-controls" map={map} />
-              {recentImagery && (
-                <DragDropContextProvider backend={HTML5Backend}>
-                  <RecentImagery map={map} />
-                </DragDropContextProvider>
-              )}
             </Fragment>
           )}
         </Map>

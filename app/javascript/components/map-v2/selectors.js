@@ -200,7 +200,7 @@ export const getLayerGroups = createSelector(
 // filter out any boundary layers that are for the basemaps comp
 export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
   if (!groups) return null;
-  return groups.filter(g => !g.isBoundary);
+  return groups.filter(g => !g.isBoundary && !g.isRecentImagery);
 });
 
 // flatten datasets into layers for the layer manager
