@@ -76,15 +76,17 @@ class SectionProjects extends PureComponent {
                 >
                   <Card
                     className="project-card"
-                    data={d}
-                    buttons={[
-                      {
-                        className: 'read-more',
-                        text: 'READ MORE',
-                        onClick: () =>
-                          setSectionProjectsModal({ isOpen: true, data: d })
-                      }
-                    ]}
+                    data={{
+                      ...d,
+                      buttons: [
+                        {
+                          className: 'read-more',
+                          text: 'READ MORE',
+                          onClick: () =>
+                            setSectionProjectsModal({ isOpen: true, data: d })
+                        }
+                      ]
+                    }}
                   />
                 </div>
               ))}
