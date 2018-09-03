@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
+import uniqBy from 'lodash/uniqBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
@@ -21,16 +22,17 @@ export const parseData = createSelector(
     if (!loss || !totalLoss) return null;
     const { startYear, endYear } = settings;
     const totalLossByYear = groupBy(totalLoss, 'year');
-    return loss
-      .filter(d => d.year >= startYear && d.year <= endYear)
-      .map(d => ({
+    return uniqBy(
+      loss.filter(d => d.year >= startYear && d.year <= endYear).map(d => ({
         ...d,
         outsideAreaLoss: totalLossByYear[d.year][0].area - d.area,
         areaLoss: d.area || 0,
         totalLoss: totalLossByYear[d.year][0].area || 0,
         outsideCo2Loss: totalLossByYear[d.year][0].emissions - d.emissions,
         co2Loss: d.emissions || 0
-      }));
+      })),
+      'year'
+    );
   }
 );
 

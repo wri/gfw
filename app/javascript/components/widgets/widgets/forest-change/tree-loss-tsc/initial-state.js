@@ -7,7 +7,7 @@ export default {
     admins: ['global', 'country'],
     selectors: ['thresholds', 'startYears', 'endYears'],
     layers: ['loss_by_driver'],
-    yearRange: ['2001', '2015'],
+    yearRange: [2001, 2015],
     metaKey: 'tsc_drivers',
     sortOrder: {
       summary: 0,
@@ -26,8 +26,6 @@ export default {
     }
   },
   settings: {
-    threshold: 30,
-    startYear: 2001,
     endYear: 2015,
     layers: ['loss_by_driver']
   },
