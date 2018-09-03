@@ -134,7 +134,9 @@ export const getSentence = createSelector(
     if (!data || !data.length || !currentLocation) return null;
     const { startYear, endYear } = settings;
     const { initial, noLoss, perm, permInd, temp, tempInd } = sentences;
-    const { label, type } = tscLossCategories[settings.tscDriver - 1];
+    const { label, type } = tscLossCategories.find(
+      c => c.value === settings.tscDriver
+    );
     const locationData =
       currentLocation && data.find(l => l.id === currentLocation.value);
 
