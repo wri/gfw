@@ -25,7 +25,7 @@ class Slider extends PureComponent {
         destroyTooltipOnHide
         visible={dragging || showTooltip(index)}
       >
-        <Handle value={value} {...restProps} />
+        <Handle className="drag-handle" value={value} {...restProps} />
       </Tooltip>
     );
   };
@@ -44,8 +44,14 @@ class Slider extends PureComponent {
     const Component = range ? Range : RCSlider;
     const handleNum = value.length;
     const handleStyles = fill(Array(handleNum), {
-      visibility: 'hidden',
-      zIndex: 0
+      zIndex: 0,
+      width: '1px',
+      height: '10px',
+      backgroundColor: '#808080',
+      marginLeft: '-1px',
+      marginTop: '-3px',
+      borderRadius: 0,
+      border: 0
     });
     handleStyles[0] = handleStyle;
     handleStyles[handleNum - 1] = handleStyle;
