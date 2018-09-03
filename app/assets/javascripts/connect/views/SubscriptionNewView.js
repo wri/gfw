@@ -178,14 +178,7 @@ define([
           var defaults = this.subscription.get('defaults').params;
 
           if (!!data.use && this.usenames.indexOf(data.use) === -1) {
-            var provider = {
-              table: data.use,
-              filter: 'cartodb_id = ' + data.useid,
-              user: 'wri-01',
-              type: 'carto'
-            };
-
-            GeostoreService.use(provider).then(function(useGeostoreId) {
+             GeostoreService.use({ use: use, useid: useid }).then(function(useGeostoreId) {
               this.subscription.set({
                 metadata: JSON.stringify(data)
               }, { silent: true });

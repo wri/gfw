@@ -1,0 +1,67 @@
+@import '~styles/settings.scss';
+
+.c-map {
+  min-height: 100vh;
+  position: relative;
+
+  .wri_api__map-container {
+    position: absolute !important;
+  }
+
+  .map-controls {
+    position: absolute;
+    bottom: rem(15px);
+    right: rem(15px);
+  }
+}
+
+.icon-crosshair {
+  position: absolute;
+  top: calc(50% - 5px);
+  left: calc(50% - 5px);
+  stroke: $white;
+  transform: rotate(45deg);
+  stroke-width: 3px;
+  width: rem(10px);
+  height: rem(10px);
+  pointer-events: none;
+}
+
+.map-attributions {
+  position: absolute;
+  bottom: rem(15px);
+  right: rem(310px);
+}
+
+.map-loader {
+  background-color: rgba($slate, 0.2);
+}
+
+.leaflet-container {
+  background-color: $ocean;
+}
+
+.leaflet-control-container {
+  .leaflet-bottom {
+    right: rem(220px);
+    left: auto;
+    bottom: 15px;
+  }
+
+  .leaflet-control-scale-line {
+    border: 1px solid $map-grey;
+    border-top: 0;
+    color: $map-grey;
+    padding: 2px 5px 1px;
+    font-size: 10px;
+    background: transparent;
+  }
+
+  .leaflet-control-scale {
+    > div {
+      &:last-child {
+        display: none;
+      }
+    }
+  }
+}

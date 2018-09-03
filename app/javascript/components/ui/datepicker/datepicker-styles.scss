@@ -2,20 +2,20 @@
 
 $reactDatesInputHeight: rem(50px);
 $reactDatesFangHeight: rem(10px);
-$datepickerInputHeight: rem(28px);
+$datepickerInputHeight: rem(20px);
 $datepickerFangHeight: rem(6px);
 $datepickerPositionAdjust: rem(8px);
 
 .c-datepicker {
-  td {
-    vertical-align: middle;
-  }
-
   .SingleDatePickerInput {
+    .DateInput {
+      width: auto;
+    }
+
     .DateInput_input {
       padding: 0;
       height: $datepickerInputHeight;
-      border: 1px solid $green-gfw;
+      border: 1px solid $border;
       border-radius: rem(25px);
       font-size: 13px;
       font-weight: normal;
@@ -26,29 +26,51 @@ $datepickerPositionAdjust: rem(8px);
     }
 
     .DateInput_fang {
-      height: $datepickerFangHeight;
-      transform: translateY($datepickerInputHeight - $reactDatesInputHeight + ($reactDatesFangHeight - $datepickerFangHeight) - $datepickerPositionAdjust);
-    }
-
-    .DateInput_fangStroke {
-      stroke: rgba($slate, 0.08);
+      display: none;
     }
   }
+}
 
-  .SingleDatePicker_picker {
-    transform: translateY($datepickerInputHeight - $reactDatesInputHeight - $datepickerPositionAdjust);
+.SingleDatePicker_picker {
+  top: 25px !important;
+
+  td {
+    vertical-align: middle;
+
+    &:focus {
+      outline: none;
+    }
   }
 
-  .DayPicker__withBorder {
-    box-shadow: $pop-box-shadow;
-    border-radius: 0;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0 9px;
+    border-bottom: 10px solid #fff;
+    border-left: 10px solid transparent;
+    border-left-color: #fff;
+    border-right: none;
+    transform-origin: 0 0;
+    transform: rotate(-45deg);
+    top: 1px;
+    left: rem(27px);
+    border-bottom-color: #fff;
+    box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
+    z-index: 3;
   }
+}
 
-  .CalendarDay__selected,
-  .CalendarDay__selected:active,
-  .CalendarDay__selected:hover {
-    background: $green-gfw;
-    border: 1px solid $green-gfw;
-    color: $white;
-  }
+.DayPicker__withBorder {
+  box-shadow: $pop-box-shadow;
+  border-radius: 0;
+}
+
+.CalendarDay__selected,
+.CalendarDay__selected:active,
+.CalendarDay__selected:hover {
+  background: $green-gfw;
+  border: 1px solid $green-gfw;
+  color: $white;
 }

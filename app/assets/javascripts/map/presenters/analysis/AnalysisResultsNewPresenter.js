@@ -133,8 +133,7 @@ define(
         /**
          * Define variable that we are going to use later
          */
-        var type = this.status.get('type'),
-          results = this.status.get('results'),
+        var results = this.status.get('results'),
           dateRange = [
             moment(this.status.get('begin')),
             moment(this.status.get('end'))
@@ -145,10 +144,28 @@ define(
 
         // Area
         p.areaHa = this.roundNumber(results.areaHa || 0);
+        p.treeExtent = this.roundNumber(
+          results.extent2000 || results.treeExtent || 0
+        );
+        p.treeExtent2010 = this.roundNumber(
+          results.extent2010 || results.treeExtent2010 || 0
+        );
+
+        // Change
+        p.loss = this.roundNumber(results.loss || 0);
+        p.gain = this.roundNumber(results.gain || 0);
 
         // Alerts
-        p.alerts = {};
-        p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
+        if (p.slug === 'imazon-alerts') {
+          p.degrad = results.alerts.degrad
+            ? Math.round(results.alerts.degrad).toLocaleString()
+            : 0;
+          p.defor = results.alerts.defor
+            ? Math.round(results.alerts.defor).toLocaleString()
+            : 0;
+        } else {
+          p.alerts = this.roundNumber(results.alerts || 0);
+        }
 
         // Options
         p.options = {};
@@ -170,41 +187,11 @@ define(
         /**
          * Exceptions
          */
-        // If glads enpoint; api response schema is different!
-        p.alerts.totalAlerts =
-          p.baselayers && typeof p.baselayers.umd_as_it_happens !== 'undefined'
-            ? this.roundNumber(results.alerts || 0)
-            : this.roundNumber(results.loss || 0);
-
-        p.areaHa = this.roundNumber(results.areaHa || 0);
-        p.alerts.gainAlerts = this.roundNumber(results.gain || 0);
-        p.alerts.treeExtent = this.roundNumber(
-          results.extent2000 || results.treeExtent || 0
-        );
-        p.alerts.treeExtent2010 = this.roundNumber(
-          results.extent2010 || results.treeExtent2010 || 0
-        );
-
         // Dates
         p.dates.lossDateRange = '{0}-{1}'.format(
           dateRange[0].year(),
           dateRange[1].year() - 1
         );
-
-        if (p.slug === 'viirs-active-fires') {
-          p.alerts.totalAlerts = this.roundNumber(results.alerts || 0);
-        }
-
-        if (p.slug === 'imazon-alerts') {
-          p.alerts.degradAlerts =
-            !!results.value.length && results.value[0]
-              ? Math.round(results.value[0].value).toLocaleString()
-              : 0;
-          p.alerts.deforAlerts =
-            !!results.value.length && results.value[1]
-              ? Math.round(results.value[1].value).toLocaleString()
-              : 0;
-        }
 
         if (p.slug === 'prodes-loss') {
           p.dates.dateRange = '{0}-{1}'.format(
@@ -213,9 +200,6 @@ define(
           );
         }
 
-        if (p.slug === 'forma250GFW') {
-          p.alerts.totalAlerts = this.roundNumber(results.loss || 0);
-        }
         return p;
       },
 

@@ -1,0 +1,70 @@
+@import '~styles/settings.scss';
+
+.c-map-controls {
+  z-index: 10;
+
+  .c-icon {
+    &.-active {
+      fill: $green-gfw;
+    }
+  }
+
+  .map-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 2;
+    margin-bottom: rem(10px);
+
+    > div {
+      width: 100%;
+      box-shadow: 0 1px 2px rgba($black, 0.25);
+
+      &:first-child {
+        margin-right: rem(5px);
+      }
+
+      &:last-child {
+        margin-left: rem(5px);
+      }
+    }
+
+    .satellite-icon {
+      width: rem(30px);
+      height: rem(30px);
+    }
+
+    .globe-icon {
+      width: rem(20px);
+      height: rem(20px);
+    }
+  }
+
+  .controls-wrapper {
+    display: flex;
+    box-shadow: 0 1px 2px rgba($black, 0.25);
+    margin-bottom: rem(10px);
+
+    .plus-icon {
+      width: rem(13px);
+      height: rem(13px);
+    }
+
+    .minus-icon {
+      width: rem(13px);
+    }
+  }
+
+  .map-position {
+    background-color: rgba($white, 0.5);
+    padding: rem(5px) rem(8px);
+    font-size: rem(11px);
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.tippy-popper .tippy-tooltip.light-theme {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+}

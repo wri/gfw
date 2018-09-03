@@ -1,5 +1,18 @@
 @import '~styles/settings.scss';
 
+p {
+  font-size: rem(14px);
+  color: $slate;
+
+  a {
+    color: $green-gfw;
+
+    &:hover {
+      color: darken($green-gfw, 10%);
+    }
+  }
+}
+
 .text {
   font-family: $font-family-1;
 
