@@ -88,7 +88,9 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       drivers
         .map(d => {
-          const label = tscLossCategories[d.driver - 1].label;
+          const label = tscLossCategories.find(
+            c => c.value === parseInt(d.driver, 10)
+          ).label;
           return {
             key: `class_${d.driver}`,
             label,
