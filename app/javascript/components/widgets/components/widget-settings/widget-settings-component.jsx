@@ -112,6 +112,7 @@ class WidgetSettings extends PureComponent {
       units,
       forestTypes,
       landCategories,
+      tscDrivers,
       periods,
       thresholds,
       years,
@@ -126,6 +127,7 @@ class WidgetSettings extends PureComponent {
       units ||
       periods ||
       years ||
+      tscDrivers ||
       startYears ||
       endYears ||
       extentYears ||
@@ -232,6 +234,21 @@ class WidgetSettings extends PureComponent {
                 disabled={loading}
                 onChange={option =>
                   onSettingsChange({ value: { dataset: option.value }, widget })
+                }
+              />
+            )}
+            {tscDrivers && (
+              <Dropdown
+                theme="theme-select-light"
+                label="LOSS DRIVER"
+                value={settings.tscDriver}
+                options={tscDrivers}
+                disabled={loading}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { tscDriver: option.value },
+                    widget
+                  })
                 }
               />
             )}
@@ -342,6 +359,7 @@ WidgetSettings.propTypes = {
   landCategories: PropTypes.array,
   datasets: PropTypes.array,
   thresholds: PropTypes.array,
+  tscDrivers: PropTypes.array,
   units: PropTypes.array,
   periods: PropTypes.array,
   years: PropTypes.array,

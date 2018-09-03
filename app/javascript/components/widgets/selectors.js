@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
+import tscDrivers from 'data/tsc-loss-categories.json';
 import thresholds from 'data/thresholds.json';
 import units from 'data/units.json';
 import periods from 'data/periods.json';
@@ -31,6 +32,7 @@ const getSubRegions = state => state.subRegions || null;
 const options = {
   forestTypes,
   landCategories,
+  tscDrivers,
   thresholds,
   units,
   periods,
