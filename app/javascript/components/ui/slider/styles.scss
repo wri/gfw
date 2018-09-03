@@ -1,15 +1,22 @@
 @import '~styles/settings.scss';
 
 .rc-slider-handle {
-  &::after {
-    content: '';
-    width: 4px;
-    height: 4px;
-    background-color: $slate-dark;
-    position: absolute;
-    border-radius: 4px;
-    top: calc(50% - 2px);
-    left: calc(50% - 2px);
+  &:active {
+    box-shadow: none;
+  }
+
+  &.rc-slider-handle-1,
+  &:nth-last-child(2) {
+    &::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background-color: $slate-dark;
+      position: absolute;
+      border-radius: 4px;
+      top: calc(50% - 2px);
+      left: calc(50% - 2px);
+    }
   }
 }
 
