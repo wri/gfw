@@ -17,9 +17,9 @@ export const getMyGFW = createThunkAction(
             dispatch(setMyGFW(response.data.data.attributes));
           }
         })
-        .catch(err => {
+        .catch(() => {
           dispatch(setMyGFWLoading({ loading: false, error: true }));
-          console.info('User not logged in', err);
+          console.info('User not logged in');
         });
     }
   }

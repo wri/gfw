@@ -1,36 +1,26 @@
-/* eslint-disable no-undef */
-
-import { createElement, PureComponent } from 'react';
+import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-
 import { checkLocationInsideBbox } from 'utils/geoms';
 
-import withTooltipEvent from 'components/ui/with-tooltip-evt';
 import * as mapActions from 'components/map-v2/actions';
-
-import Component from './recent-imagery-component';
 import ownActions from './recent-imagery-actions';
+
 import reducers, { initialState } from './recent-imagery-reducers';
-import { getProps } from './recent-imagery-selectors';
+import { getRecentImageryProps } from './recent-imagery-selectors';
 
 const actions = {
   ...ownActions,
   ...mapActions
 };
 
-const mapStateToProps = ({ recentImagery, location, datasets }) =>
-  ({ ...getProps({ ...recentImagery, query: location.query, datasets: datasets.datasets }) });
+const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
   componentDidMount() {
-    const {
-      dates,
-      settings,
-      position,
-      getData
-    } = this.props;
+    const { dates, settings, position, getData } = this.props;
+
     getData({
       ...position,
       ...settings,
@@ -44,44 +34,30 @@ class RecentImageryContainer extends PureComponent {
     const {
       active,
       dataStatus,
-      tile,
+      activeTile,
       bounds,
       sources,
       dates,
       settings,
       getData,
       getMoreTiles,
-      position,
-      datasets,
-      setMapSettings
+      position
     } = this.props;
-    console.log(tile);
+
     const isNewTile =
-      tile && (!prevProps.tile || tile.url !== prevProps.tile.url);
-    const positionInsideTile = bounds ? checkLocationInsideBbox([position.lat, position.lng], bounds) : true;
+      activeTile &&
+      (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
+    const positionInsideTile = bounds
+      ? checkLocationInsideBbox([position.lat, position.lng], bounds)
+      : true;
 
-    const activeDatasets = datasets && !!datasets.length ? datasets.filter(d => !d.isRecentImagery) : [];
-    // if (isNewTile && active && tile && (tile.url !== (prevProps.tile && prevProps.tile.url))) {
-    //   const recentDataset = {
-    //     dataset: '3668bb78-d77e-4215-bc2a-07433e204823',
-    //     layers: ['babd9968-4b55-4bc5-b771-d471ef8fbd8c'],
-    //     visibility: 1,
-    //     opacity: 1,
-    //     isRecentImagery: true,
-    //     params: {
-    //       url: tile.url
-    //     }
-    //   };
-    //   setMapSettings({
-    //     datasets: activeDatasets.concat(recentDataset)
-    //   });
-    // }
+    if (active && isNewTile) {
+      this.setTile();
+    }
 
-    // if (!active) {
-    //   setMapSettings({
-    //     datasets: activeDatasets || []
-    //   });
-    // }
+    if (!active && !isEqual(active, prevProps.active)) {
+      this.removeTile();
+    }
 
     if (
       (active && active !== prevProps.active) ||
@@ -97,20 +73,7 @@ class RecentImageryContainer extends PureComponent {
         bands: settings.bands
       });
     }
-    if (!active && active !== prevProps.active) {
-      this.removeTile();
-      // this.removeBoundsPolygon();
-    }
-    if (isNewTile) {
-      if (this.activatedFromUrl && !prevProps.tile) {
-        this.updateTile(tile.url);
-      } else if (!prevProps.tile) {
-        this.showTile(tile.url);
-      } else {
-        this.updateTile(tile.url);
-      }
-      // this.addBoundsPolygon(bounds, tile);
-    }
+
     if (
       !dataStatus.haveAllData &&
       (dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles ||
@@ -121,23 +84,51 @@ class RecentImageryContainer extends PureComponent {
     }
   }
 
-  showTile() {
-
+  componentWillUnmount() {
+    this.removeTile();
   }
 
-  updateTile() {
-
+  setTile() {
+    const {
+      datasets,
+      activeTile,
+      setMapSettings,
+      recentImageryDataset
+    } = this.props;
+    if (recentImageryDataset) {
+      const activeDatasets =
+        datasets &&
+        !!datasets.length &&
+        datasets.filter(d => !d.isRecentImagery);
+      const recentDataset = {
+        dataset: recentImageryDataset.dataset,
+        layers: [recentImageryDataset.layer],
+        visibility: 1,
+        opacity: 1,
+        isRecentImagery: true,
+        params: {
+          url: activeTile.url
+        }
+      };
+      setMapSettings({
+        datasets: activeDatasets
+          ? activeDatasets.concat(recentDataset)
+          : [recentDataset]
+      });
+    }
   }
 
   removeTile() {
-    const { resetData } = this.props;
-    resetData();
+    const { datasets, setMapSettings } = this.props;
+    const activeDatasets =
+      datasets && !!datasets.length && datasets.filter(d => !d.isRecentImagery);
+    setMapSettings({
+      datasets: activeDatasets || []
+    });
   }
 
   render() {
-    return createElement(Component, {
-      ...this.props
-    });
+    return null;
   }
 }
 
@@ -145,17 +136,17 @@ RecentImageryContainer.propTypes = {
   position: PropTypes.object,
   active: PropTypes.bool,
   dataStatus: PropTypes.object,
-  tile: PropTypes.object,
+  activeTile: PropTypes.object,
   bounds: PropTypes.array,
   sources: PropTypes.array,
   dates: PropTypes.object,
   settings: PropTypes.object,
   getData: PropTypes.func,
   getMoreTiles: PropTypes.func,
-  resetData: PropTypes.func
+  datasets: PropTypes.array,
+  setMapSettings: PropTypes.func,
+  recentImageryDataset: PropTypes.object
 };
 
 export { actions, reducers, initialState };
-export default withTooltipEvent(
-  connect(mapStateToProps, actions)(RecentImageryContainer)
-);
+export default connect(mapStateToProps, actions)(RecentImageryContainer);

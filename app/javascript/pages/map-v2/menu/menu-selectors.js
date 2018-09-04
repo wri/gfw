@@ -7,10 +7,12 @@ import { getActiveDatasetsState } from 'components/map-v2/selectors';
 import initialState from './menu-initial-state';
 import menuSections from './menu-sections';
 
-const getMenuUrlState = state => (state.query && state.query.menu) || null;
-const getLoading = state => state.loading || null;
-const getCountries = state => state.countries || null;
-const getDatasets = state => state.datasets || null;
+const getMenuUrlState = state =>
+  (state.location.query && state.location.query.menu) || null;
+const getLoading = state =>
+  state.datasets.loading || state.countryData.loading || null;
+const getCountries = state => state.countryData.countries || null;
+const getDatasets = state => state.datasets.datasets || null;
 
 export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
   ...initialState,

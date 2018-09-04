@@ -2,9 +2,9 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
+import { checkLocationInsideBbox } from 'utils/geoms';
+
 import Map from 'wri-api-components/dist/map';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DragDropContextProvider } from 'react-dnd';
 
 import { LayerManager, Layer } from 'layer-manager/dist/react';
 import { PluginLeaflet } from 'layer-manager';
@@ -17,7 +17,6 @@ import iconCross from 'assets/icons/close.svg';
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
 import MapAttributions from './components/map-attributions';
-import RecentImagery from './components/recent-imagery';
 
 import './styles.scss';
 
@@ -39,10 +38,11 @@ class MapComponent extends PureComponent {
       label,
       setMapSettings,
       bbox,
-      recentImagery,
-      setInteraction
+      setInteraction,
+      recentTileBounds,
+      setRecentImagerySettings
     } = this.props;
-    console.log(activeLayers);
+
     return (
       <Fragment>
         <Map
@@ -56,7 +56,7 @@ class MapComponent extends PureComponent {
           bounds={bbox}
           events={{
             zoomend: (e, map) => {
-              setMapSettings({ zoom: map.getZoom() });
+              setMapSettings({ zoom: map.getZoom(), center: map.getCenter() });
             },
             dragend: (e, map) => {
               setMapSettings({ center: map.getCenter() });
@@ -68,7 +68,11 @@ class MapComponent extends PureComponent {
               <LayerManager map={map} plugin={PluginLeaflet}>
                 {layerManager =>
                   activeLayers.map(l => {
-                    const { interactionConfig, isBoundary } = l;
+                    const {
+                      interactionConfig,
+                      isBoundary,
+                      isRecentImagery
+                    } = l;
                     const { output, article } = interactionConfig || {};
                     const layer = {
                       ...l,
@@ -85,6 +89,22 @@ class MapComponent extends PureComponent {
                               value: l.id,
                               config: output
                             });
+                          }
+                        }
+                      }),
+                      ...(isRecentImagery && {
+                        interactivity: true,
+                        events: {
+                          click: e => {
+                            const positionInsideTile = recentTileBounds
+                              ? checkLocationInsideBbox(
+                                [e.latlng.lng, e.latlng.lat],
+                                recentTileBounds
+                              )
+                              : false;
+                            if (positionInsideTile) {
+                              setRecentImagerySettings({ visible: true });
+                            }
                           }
                         }
                       })
@@ -129,7 +149,9 @@ MapComponent.propTypes = {
   setMapSettings: PropTypes.func,
   setInteraction: PropTypes.func,
   bbox: PropTypes.object,
-  recentImagery: PropTypes.bool
+  recentImagery: PropTypes.bool,
+  recentTileBounds: PropTypes.array,
+  setRecentImagerySettings: PropTypes.func
 };
 
 export default MapComponent;

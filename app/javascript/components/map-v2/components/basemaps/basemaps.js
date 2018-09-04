@@ -5,42 +5,8 @@ import { connect } from 'react-redux';
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
 import { setMapSettings, setLandsatBasemap } from 'components/map-v2/actions';
-import {
-  getBasemap,
-  getLabels,
-  getActiveDatasetsState,
-  getMapZoom,
-  getActiveBoundaryDatasets,
-  getBoundaryDatasets
-} from 'components/map-v2/selectors';
-
-import basemaps, { labels } from './basemaps-schema';
+import { getBasemapsProps } from './basemaps-selectors';
 import BasemapsComponent from './basemaps-component';
-
-function mapStateToProps({ datasets, location }) {
-  return {
-    activeDatasets: getActiveDatasetsState(location),
-    mapZoom: getMapZoom(location),
-    activeLabels: getLabels(location),
-    activeBasemap: getBasemap(location),
-    boundaries: [{ label: 'No boundaries', value: null }].concat(
-      getBoundaryDatasets({
-        query: location.query,
-        datasets: datasets.datasets
-      })
-    ),
-    activeBoundaries: getActiveBoundaryDatasets({
-      query: location.query,
-      datasets: datasets.datasets
-    }),
-    basemaps,
-    labels,
-    landsatYears: basemaps.landsat.availableYears.map(y => ({
-      label: y,
-      value: y
-    }))
-  };
-}
 
 class BasemapsContainer extends React.Component {
   static propTypes = {
@@ -95,8 +61,7 @@ class BasemapsContainer extends React.Component {
 }
 
 export default withTooltipEvt(
-  connect(mapStateToProps, {
-    setMapSettings,
-    setLandsatBasemap
-  })(BasemapsContainer)
+  connect(getBasemapsProps, { setMapSettings, setLandsatBasemap })(
+    BasemapsContainer
+  )
 );

@@ -7794,7 +7794,7 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.0.4, layer-manager@^1.1.0:
+layer-manager@^1.0.4, layer-manager@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.2.tgz#8a4c4d25ffc95ea80c8d5294095c8b7b14fc18ac"
   dependencies:

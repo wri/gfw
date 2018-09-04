@@ -9,6 +9,7 @@ import { isParent } from 'utils/dom';
 
 import Basemaps from 'components/map-v2/components/basemaps';
 import RecentImagery from 'components/map-v2/components/recent-imagery';
+import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -24,8 +25,7 @@ import './map-controls-styles.scss';
 
 class MapControlsButtons extends PureComponent {
   state = {
-    showBasemaps: false,
-    showRecentImagery: false
+    showBasemaps: false
   };
 
   onBasemapsRequestClose = () => {
@@ -37,27 +37,18 @@ class MapControlsButtons extends PureComponent {
   };
 
   onRecentRequestClose = () => {
-    const isTargetOnTooltip = isParent(this.recentImageryRef, this.recentImageryRef.evt);
+    const isTargetOnTooltip = isParent(
+      this.recentImageryRef,
+      this.recentImageryRef.evt
+    );
     this.recentImageryRef.clearEvt();
-    if (!isTargetOnTooltip && this.state.showRecentImagery) {
-      this.handleToggleRecentTooltip(false);
+    if (!isTargetOnTooltip && this.props.recentSettings.active) {
+      this.toggleRecentimagery(false);
     }
   };
 
   toggleBasemaps = () =>
     this.setState(state => ({ showBasemaps: !state.showBasemaps }));
-
-  handleToggleRecentImagery = () => {
-    const { toogleRecentImagery, recentImageryActive } = this.props;
-    if (!recentImageryActive) {
-      this.handleToggleRecentTooltip(true);
-    }
-    toogleRecentImagery();
-  }
-
-  handleToggleRecentTooltip = show => {
-    this.setState({ showRecentImagery: show });
-  }
 
   setBasemapsRef = ref => {
     this.basemapsRef = ref;
@@ -76,45 +67,53 @@ class MapControlsButtons extends PureComponent {
       map,
       setMapSettings,
       setMenuSettings,
-      recentImageryActive
+      recentSettings,
+      setRecentImagerySettings
     } = this.props;
     const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
-    const { showBasemaps, showRecentImagery } = this.state;
+    const { active, visible } = recentSettings || {};
+    const { showBasemaps } = this.state;
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
           {!hidePanels && (
             <div className="map-actions">
+              {active && <RecentImagery />}
               <Tooltip
                 theme="light"
                 position="top-end"
                 useContext
                 interactive
                 animateFill={false}
-                open={showRecentImagery}
+                open={active && visible}
                 onRequestClose={this.onRecentRequestClose}
-                html={
-                  <RecentImagery
-                    onClose={() => this.handleToggleRecentTooltip(false)}
-                    ref={this.setRecentImageryRef}
-                  />
-                }
+                html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
                 offset={100}
               >
                 <Button
                   className="recent-imagery-btn"
                   theme="theme-button-map-control"
-                  onClick={this.handleToggleRecentImagery}
+                  onClick={() => {
+                    setRecentImagerySettings({ active: !active });
+                    if (!active && zoom < 9) {
+                      map.setZoom(9);
+                    }
+                  }}
                   tooltip={
-                    !showRecentImagery
-                      ? { text: !recentImageryActive ? 'Activate Recent Imagery' : 'Turn off Recent Imagery', hideOnClick: false }
+                    !visible
+                      ? {
+                        text: !active
+                          ? 'Activate Recent Imagery'
+                          : 'Turn off Recent Imagery',
+                        hideOnClick: false
+                      }
                       : undefined
                   }
                 >
                   <Icon
                     icon={satelliteIcon}
-                    className={cx('satellite-icon', { '-active': recentImageryActive })}
+                    className={cx('satellite-icon', { '-active': active })}
                   />
                 </Button>
               </Tooltip>
@@ -229,7 +228,8 @@ MapControlsButtons.propTypes = {
   hidePanels: PropTypes.bool,
   toogleRecentImagery: PropTypes.func,
   setMenuSettings: PropTypes.func,
-  recentImageryActive: PropTypes.bool
+  recentSettings: PropTypes.object,
+  setRecentImagerySettings: PropTypes.func
 };
 
 export default connect()(MapControlsButtons);

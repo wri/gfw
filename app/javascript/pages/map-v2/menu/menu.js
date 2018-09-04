@@ -16,15 +16,6 @@ const actions = {
   ...ownActions
 };
 
-const mapStateToProps = ({ datasets, location, countryData }) => ({
-  ...getMenuProps({
-    query: location.query,
-    datasets: datasets.datasets,
-    countries: countryData.countries,
-    loading: datasets.loading || countryData.loading
-  })
-});
-
 class MenuContainer extends PureComponent {
   onToggleLayer = (data, value) => {
     const { activeDatasets, setMapSettings } = this.props;
@@ -60,4 +51,4 @@ MenuContainer.propTypes = {
 
 export { actions };
 
-export default connect(mapStateToProps, actions)(MenuContainer);
+export default connect(getMenuProps, actions)(MenuContainer);

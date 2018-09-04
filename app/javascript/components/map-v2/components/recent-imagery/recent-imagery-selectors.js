@@ -1,40 +1,72 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import findIndex from 'lodash/findIndex';
 import moment from 'moment';
 
-import { getMapSettings, getActiveDatasetsState } from 'components/map-v2/selectors';
+import mapInitialState from 'components/map-v2/initial-state';
+import { initialState } from './recent-imagery-reducers';
 
-const getData = state => state.data && state.data.tiles || null;
-const getDataStatus = state => state.dataStatus || null;
-const getSettings = state => state.settings || null;
-const getActive = state => state.active || null;
-const getVisibility = state => state.visible || null;
-const getTimelineOpen = state => state.timelineOpen || null;
+const getData = state => state.recentImagery.data || null;
+const getDataStatus = state => state.recentImagery.dataStatus || null;
+const getDatasets = state => state.datasets.datasets || null;
+const getRecentUrlState = state =>
+  (state.location &&
+    state.location.query &&
+    state.location.query.recentImagery) ||
+  null;
+const getMapUrlState = state =>
+  (state.location && state.location.query && state.location.query.map) || null;
 
-const getPosition = createSelector(
-  [getMapSettings],
-  settings => settings.center
+export const getMapSettings = createSelector([getMapUrlState], urlState => ({
+  ...mapInitialState,
+  ...urlState
+}));
+
+export const getRecentImagerySettings = createSelector(
+  [getRecentUrlState],
+  urlState => ({
+    ...initialState.settings,
+    ...urlState
+  })
 );
 
-const getZoom = createSelector(
-  [getMapSettings],
+export const getMapZoom = createSelector(
+  getMapSettings,
   settings => settings.zoom
 );
 
-const getFilteredData = createSelector(
-  [getData, getSettings],
-  (data, settings) => {
-    if (!data || isEmpty(data)) return null;
+export const getPosition = createSelector([getMapSettings], settings => ({
+  lat: settings.center.lng,
+  lng: settings.center.lat
+}));
 
+export const getActiveDatasetsState = createSelector(
+  getMapSettings,
+  settings => settings.datasets
+);
+
+export const getVisibility = createSelector(
+  [getRecentImagerySettings],
+  settings => settings.visible
+);
+
+export const getActive = createSelector(
+  [getRecentImagerySettings],
+  settings => settings.active
+);
+
+export const getFilteredData = createSelector(
+  [getData, getRecentImagerySettings],
+  (data, settings) => {
+    if (isEmpty(data)) return null;
     const { clouds } = settings;
+
     return data
-      .filter(item => Math.round(item.attributes.cloud_score) <= clouds)
-      .map(item => item.attributes);
+      .filter(item => Math.round(item.cloud_score) <= clouds)
+      .map(item => item);
   }
 );
 
-export const getAllTiles = createSelector([getFilteredData], data => {
+export const getTiles = createSelector([getFilteredData], data => {
   if (!data || isEmpty(data)) return [];
 
   return data.map(item => ({
@@ -43,45 +75,25 @@ export const getAllTiles = createSelector([getFilteredData], data => {
     thumbnail: item.thumbnail_url,
     cloudScore: item.cloud_score,
     dateTime: item.date_time,
-    instrument: item.instrument
+    instrument: item.instrument,
+    bbox: item.bbox
   }));
 });
 
-export const getTile = createSelector(
-  [getData, getSettings],
-  (data, settings) => {
-    if (!data || isEmpty(data)) return null;
+export const getActiveTile = createSelector(
+  [getTiles, getRecentImagerySettings],
+  (tiles, settings) => {
+    if (isEmpty(tiles)) return null;
+    const { selected } = settings;
 
-    const { selectedTileSource } = settings;
-    const index = findIndex(
-      data,
-      d => d.attributes.source === selectedTileSource
-    );
-
-    const selectedTile = data[index].attributes;
-    return {
-      url: selectedTile.tile_url,
-      cloudScore: selectedTile.cloud_score,
-      dateTime: selectedTile.date_time,
-      instrument: selectedTile.instrument
-    };
+    return selected ? tiles.find(t => t.id === selected) : tiles[0];
   }
 );
 
-export const getBounds = createSelector(
-  [getData, getSettings],
-  (data, settings) => {
-    if (!data || isEmpty(data)) return null;
-
-    const { selectedTileSource } = settings;
-    const index = findIndex(
-      data,
-      d => d.attributes.source === selectedTileSource
-    );
-
-    return data[index].attributes.bbox.geometry.coordinates;
-  }
-);
+export const getTileBounds = createSelector([getActiveTile], activeTile => {
+  if (!activeTile) return null;
+  return activeTile.bbox.geometry.coordinates;
+});
 
 export const getSources = createSelector(
   [getData, getDataStatus],
@@ -91,11 +103,11 @@ export const getSources = createSelector(
     const { tilesPerRequest, requestedTiles } = dataStatus;
     return data
       .slice(requestedTiles, requestedTiles + tilesPerRequest)
-      .map(item => ({ source: item.attributes.source }));
+      .map(item => ({ source: item.source }));
   }
 );
 
-export const getDates = createSelector([getSettings], settings => {
+export const getDates = createSelector([getRecentImagerySettings], settings => {
   const { date, weeks } = settings;
   const currentDate = date ? moment(date) : moment();
 
@@ -105,19 +117,29 @@ export const getDates = createSelector([getSettings], settings => {
   };
 });
 
-export const getProps = createStructuredSelector({
+export const getRecentImageryDataset = createSelector(
+  [getDatasets],
+  datasets => {
+    if (isEmpty(datasets)) return null;
+    return datasets.find(d => d.isRecentImagery);
+  }
+);
+
+export const getRecentImageryProps = createStructuredSelector({
+  // settings
   active: getActive,
   visible: getVisibility,
-  isTimelineOpen: getTimelineOpen,
-  dataStatus: getDataStatus,
-  allTiles: getAllTiles,
-  tile: getTile,
-  bounds: getBounds,
-  sources: getSources,
   dates: getDates,
-  settings: getSettings,
-  mapSettings: getMapSettings,
+  sources: getSources,
+  settings: getRecentImagerySettings,
   position: getPosition,
-  zoom: getZoom,
-  datasets: getActiveDatasetsState
+  zoom: getMapZoom,
+  // data
+  dataStatus: getDataStatus,
+  tiles: getTiles,
+  activeTile: getActiveTile,
+  bounds: getTileBounds,
+  // url props
+  datasets: getActiveDatasetsState,
+  recentImageryDataset: getRecentImageryDataset
 });

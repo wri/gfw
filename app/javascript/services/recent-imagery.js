@@ -9,17 +9,10 @@ const QUERIES = {
   thumbs: '/recent-tiles/thumbs'
 };
 
-export const getRecentTiles = ({
-  lat,
-  lng,
-  start,
-  end,
-  bands,
-  token
-}) => {
+export const getRecentTiles = ({ lat, lng, start, end, bands, token }) => {
   const url = `${REQUEST_URL}${QUERIES.recentTiles}`
-    .replace('{lat}', lng)
-    .replace('{lng}', lat)
+    .replace('{lat}', lat)
+    .replace('{lng}', lng)
     .replace('{start}', start)
     .replace('{end}', end)
     .replace('{bands}', bands || '');

@@ -28,23 +28,14 @@ class RecentImagerySettings extends PureComponent {
 
   render() {
     const {
-      selectedTile,
+      activeTile,
       tiles,
-      settings: {
-        selectedTileSource,
-        date,
-        weeks,
-        clouds,
-        bands
-      },
+      settings: { date, weeks, clouds, bands },
       setRecentImagerySettings,
-      onClose,
-      getTooltipContentProps,
-      setMapSettings,
-      datasets
+      getTooltipContentProps
     } = this.props;
-    console.log(this.props);
-    const selected = this.state.selected || selectedTile;
+
+    const selected = this.state.selected || activeTile || {};
 
     return (
       <div className="c-recent-imagery-settings" {...getTooltipContentProps()}>
@@ -53,15 +44,13 @@ class RecentImagerySettings extends PureComponent {
             <div className="title">Recent satellite imagery</div>
             <button
               className="close-btn"
-              onClick={() => onClose(false)}
+              onClick={() => setRecentImagerySettings({ visible: false })}
             >
               <Icon icon={closeIcon} className="icon-close" />
             </button>
           </div>
           <div className="dates">
-            <div className="title">
-              ACQUISITION DATE
-            </div>
+            <div className="title">ACQUISITION DATE</div>
             <div className="buttons">
               <Dropdown
                 theme="theme-dropdown-button"
@@ -71,9 +60,7 @@ class RecentImagerySettings extends PureComponent {
                   setRecentImagerySettings({ weeks: option.value })
                 }
               />
-              <div className="before">
-                before
-              </div>
+              <div className="before">before</div>
               <Datepicker
                 date={date ? moment(date) : moment()}
                 handleOnDateChange={d =>
@@ -91,9 +78,7 @@ class RecentImagerySettings extends PureComponent {
             </div>
           </div>
           <div className="clouds">
-            <div className="title">
-              MAXIMUM CLOUD COVER PERCENTAGE
-            </div>
+            <div className="title">MAXIMUM CLOUD COVER PERCENTAGE</div>
             <Slider
               className="theme-slider-green"
               settings={{
@@ -110,65 +95,69 @@ class RecentImagerySettings extends PureComponent {
                 dots: true,
                 tipFormatter: value => `${value}%`
               }}
-              handleOnSliderChange={d => setRecentImagerySettings({ clouds: d })}
+              handleOnSliderChange={d =>
+                setRecentImagerySettings({ clouds: d })
+              }
             />
           </div>
         </div>
         <div className="thumbnails">
-          {!!tiles.length && [
-            <div
-              key="thumbnails-header"
-              className="header"
-            >
-              <div className="description">
-                <p>{moment(selected.dateTime).format('DD MMM YYYY').toUpperCase()}</p>
-                <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
-                <p>{selected.instrument}</p>
-              </div>
-              <Dropdown
-                className="band-selector"
-                theme="theme-dropdown-button"
-                value={bands}
-                options={BANDS}
-                onChange={option =>
-                  setRecentImagerySettings({ bands: option.value })
-                }
-              />
-            </div>,
-            <Carousel
-              key="thumbnails-carousel"
-              settings={{
-                slidesToShow: 1,
-                centerPadding: '75px',
-                dots: false,
-                arrows: tiles.length > 1
-              }}
-            >
-              {tiles.map((tile, i) => (
-                <div key={`recent-imagery-thumb-${tile.id}`}>
-                  <RecentImageryThumbnail
-                    id={i}
-                    tile={tile}
-                    selected={selectedTileSource === tile.id}
-                    handleClick={() => {
-                      setRecentImagerySettings({
-                        selectedTileSource: tile.id
-                      });
-                    }}
-                    handleMouseEnter={() => {
-                      this.setState({
-                        selected: tile
-                      });
-                    }}
-                    handleMouseLeave={() => {
-                      this.setState({ selected: null });
-                    }}
-                  />
+          {tiles &&
+            !!tiles.length && [
+              <div key="thumbnails-header" className="header">
+                <div className="description">
+                  <p>
+                    {moment(selected.dateTime)
+                      .format('DD MMM YYYY')
+                      .toUpperCase()}
+                  </p>
+                  <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
+                  <p>{selected.instrument}</p>
                 </div>
-              ))}
-            </Carousel>
-          ]}
-          {!tiles.length && (
+                <Dropdown
+                  className="band-selector"
+                  theme="theme-dropdown-button"
+                  value={bands}
+                  options={BANDS}
+                  onChange={option =>
+                    setRecentImagerySettings({ bands: option.value })
+                  }
+                />
+              </div>,
+              <Carousel
+                key="thumbnails-carousel"
+                settings={{
+                  slidesToShow: 1,
+                  centerPadding: '75px',
+                  dots: false,
+                  arrows: tiles.length > 1
+                }}
+              >
+                {tiles.map((tile, i) => (
+                  <div key={`recent-imagery-thumb-${tile.id}`}>
+                    <RecentImageryThumbnail
+                      id={i}
+                      tile={tile}
+                      selected={activeTile && activeTile.id === tile.id}
+                      handleClick={() => {
+                        setRecentImagerySettings({
+                          selected: tile.id
+                        });
+                      }}
+                      handleMouseEnter={() => {
+                        this.setState({
+                          selected: tile
+                        });
+                      }}
+                      handleMouseLeave={() => {
+                        this.setState({ selected: null });
+                      }}
+                    />
+                  </div>
+                ))}
+              </Carousel>
+            ]}
+          {(!tiles || !tiles.length) && (
             <NoContent
               className="empty-thumbnails"
               message="We can't find additional images for the selection"
@@ -181,7 +170,7 @@ class RecentImagerySettings extends PureComponent {
 }
 
 RecentImagerySettings.propTypes = {
-  selectedTile: PropTypes.object,
+  activeTile: PropTypes.object,
   tiles: PropTypes.array,
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,

@@ -6,23 +6,13 @@ import difference from 'lodash/difference';
 import modalActions from 'components/modals/meta/meta-actions';
 import mapActions from 'components/map-v2/actions';
 
-import { getActiveDatasetsState, getLegendLayerGroups } from '../../selectors';
 import Component from './legend-component';
+import { getLegendProps } from './legend-selectors';
 
 const actions = {
   ...mapActions,
   ...modalActions
 };
-
-const mapStateToProps = ({ location, datasets, countryData }) => ({
-  activeDatasets: getActiveDatasetsState({ query: location.query }),
-  layerGroups: getLegendLayerGroups({
-    query: location.query,
-    datasets: datasets.datasets,
-    countries: countryData.countries
-  }),
-  loading: datasets.loading || countryData.loading
-});
 
 class Legend extends PureComponent {
   onChangeOpacity = (currentLayer, opacity) => {
@@ -181,4 +171,4 @@ Legend.propTypes = {
   setModalMeta: PropTypes.func
 };
 
-export default connect(mapStateToProps, actions)(Legend);
+export default connect(getLegendProps, actions)(Legend);
