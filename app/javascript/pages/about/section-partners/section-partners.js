@@ -297,7 +297,7 @@ const partnersCollaborators = [
   },
   {
     img: '/assets/logos/rmhover.png',
-    link: 'https://www.reforestamosmexico.org/',
+    link: 'http://www.reforestamosmexico.org/',
     title: 'Refores@amos Mexico'
   },
   {
