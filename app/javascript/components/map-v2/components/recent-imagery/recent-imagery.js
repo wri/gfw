@@ -43,20 +43,16 @@ class RecentImageryContainer extends PureComponent {
       getMoreTiles,
       position
     } = this.props;
-
     const isNewTile =
-      activeTile &&
-      (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
+    activeTile && activeTile.url &&
+    (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
     const positionInsideTile = bounds
       ? checkLocationInsideBbox([position.lat, position.lng], bounds)
       : true;
 
+    console.log(isNewTile, activeTile);
     if (active && isNewTile) {
       this.setTile();
-    }
-
-    if (!active && !isEqual(active, prevProps.active)) {
-      this.removeTile();
     }
 
     if (
@@ -73,11 +69,10 @@ class RecentImageryContainer extends PureComponent {
         bands: settings.bands
       });
     }
-
-    if (
-      !dataStatus.haveAllData &&
-      (dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles ||
-        dataStatus.requestFails !== prevProps.dataStatus.requestFails ||
+    if (!dataStatus.haveAllData &&
+      ((active && active !== prevProps.active) ||
+        (dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles) ||
+        (dataStatus.requestFails !== prevProps.dataStatus.requestFails) ||
         isNewTile)
     ) {
       getMoreTiles({ sources, dataStatus, bands: settings.bands });
@@ -95,7 +90,7 @@ class RecentImageryContainer extends PureComponent {
       setMapSettings,
       recentImageryDataset
     } = this.props;
-    if (recentImageryDataset) {
+    if (recentImageryDataset && activeTile.url) {
       const activeDatasets =
         datasets &&
         !!datasets.length &&
@@ -119,15 +114,19 @@ class RecentImageryContainer extends PureComponent {
   }
 
   removeTile() {
-    const { datasets, setMapSettings } = this.props;
+    const { datasets, setMapSettings, setRecentImagerySettings } = this.props;
     const activeDatasets =
       datasets && !!datasets.length && datasets.filter(d => !d.isRecentImagery);
     setMapSettings({
       datasets: activeDatasets || []
     });
+    setRecentImagerySettings({
+      selected: ''
+    });
   }
 
   render() {
+    console.log('location', this.props.location);
     return null;
   }
 }
@@ -145,7 +144,8 @@ RecentImageryContainer.propTypes = {
   getMoreTiles: PropTypes.func,
   datasets: PropTypes.array,
   setMapSettings: PropTypes.func,
-  recentImageryDataset: PropTypes.object
+  recentImageryDataset: PropTypes.object,
+  resetRecentImagery: PropTypes.func
 };
 
 export { actions, reducers, initialState };

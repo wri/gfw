@@ -1,7 +1,6 @@
 import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 import axios, { CancelToken } from 'axios';
-import findIndex from 'lodash/findIndex';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
@@ -28,13 +27,13 @@ export const setRecentImagerySettings = createThunkAction(
 
 const setRecentImageryData = createAction('setRecentImageryData');
 const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
+const resetRecentImagery = createAction('resetRecentImagery');
 
 const getData = createThunkAction('getData', params => dispatch => {
   if (this.getDataSource) {
     this.getDataSource.cancel();
   }
   this.getDataSource = CancelToken.source();
-
   getRecentTiles({ ...params, token: this.getDataSource.token })
     .then(response => {
       const serializedResponse = serializeReponse(
@@ -81,32 +80,31 @@ const getMoreTiles = createThunkAction(
       ])
       .then(
         axios.spread((tilesResponse, thumbsReponse) => {
-          const serializedTiles = serializeReponse(tilesResponse);
-          const serializedThumbs = serializeReponse(thumbsReponse);
-          if (serializedTiles && serializedThumbs) {
+          const tiles = tilesResponse.data && tilesResponse.data.data && tilesResponse.data.data.attributes;
+          const thumbs = thumbsReponse.data && thumbsReponse.data.data && thumbsReponse.data.data.attributes;
+
+          if (tiles && thumbs) {
             const data = state().recentImagery.data.slice();
             const requestedTiles =
-              dataStatus.requestedTiles + serializedTiles.length;
-            const haveAllData = requestedTiles === data.tiles.length;
-
-            serializedTiles.forEach((item, i) => {
-              if (i > 0) {
-                const index = findIndex(data, d => d.source === item.source_id);
-                if (index !== -1) {
-                  data[index].tile_url = item.tile_url;
+              dataStatus.requestedTiles + tiles.length;
+            const haveAllData = requestedTiles === data.length;
+            const newData = data.map(d => {
+              const tile = tiles.find(t => t.source_id === d.source);
+              const thumb = thumbs.find(t => t.source === d.source);
+              return {
+                ...d,
+                ...tile && {
+                  tile_url: tile.tile_url
+                },
+                ...thumb && {
+                  thumbnail_url: thumb.thumbnail_url
                 }
-              }
-            });
-            serializedThumbs.forEach(item => {
-              const index = findIndex(data, d => d.source === item.source);
-              if (index !== -1) {
-                data[index].thumbnail_url = item.thumbnail_url;
-              }
+              };
             });
 
             dispatch(
               setRecentImageryData({
-                data,
+                data: newData,
                 dataStatus: {
                   haveAllData,
                   requestedTiles
@@ -145,6 +143,7 @@ export default {
   setRecentImageryData,
   setRecentImageryDataStatus,
   setRecentImagerySettings,
+  resetRecentImagery,
   getData,
   getMoreTiles,
   resetData

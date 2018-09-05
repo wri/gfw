@@ -39,7 +39,13 @@ const setRecentImageryDataStatus = (state, { payload }) => ({
   }
 });
 
+const resetRecentImagery = (state) => ({
+  ...state,
+  ...initialState
+});
+
 export default {
   setRecentImageryData,
-  setRecentImageryDataStatus
+  setRecentImageryDataStatus,
+  resetRecentImagery
 };

@@ -37,13 +37,14 @@ class MapControlsButtons extends PureComponent {
   };
 
   onRecentRequestClose = () => {
+    const { setRecentImagerySettings } = this.props;
     const isTargetOnTooltip = isParent(
       this.recentImageryRef,
       this.recentImageryRef.evt
     );
     this.recentImageryRef.clearEvt();
     if (!isTargetOnTooltip && this.props.recentSettings.active) {
-      this.toggleRecentimagery(false);
+      setRecentImagerySettings({ visible: false });
     }
   };
 
@@ -86,7 +87,7 @@ class MapControlsButtons extends PureComponent {
                 useContext
                 interactive
                 animateFill={false}
-                open={active && visible}
+                open={visible}
                 onRequestClose={this.onRecentRequestClose}
                 html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
                 offset={100}
@@ -95,7 +96,7 @@ class MapControlsButtons extends PureComponent {
                   className="recent-imagery-btn"
                   theme="theme-button-map-control"
                   onClick={() => {
-                    setRecentImagerySettings({ active: !active });
+                    setRecentImagerySettings({ active: !active, visible: false });
                     if (!active && zoom < 9) {
                       map.setZoom(9);
                     }

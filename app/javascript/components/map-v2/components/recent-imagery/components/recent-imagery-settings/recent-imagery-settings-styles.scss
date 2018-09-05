@@ -103,9 +103,13 @@
 
       .description {
         text-align: left;
-        line-height: 1.6;
         min-width: 48%;
         margin-right: 4%;
+
+        p {
+          font-size: rem(12px);
+          line-height: 1.6;
+        }
       }
 
       .band-selector {
@@ -113,18 +117,25 @@
       }
     }
 
-    .description {
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 13px;
-      color: $slate;
+    .thumbnail-grid {
+      display: flex;
+      flex-wrap: wrap;
+      height: rem(200px);
+      overflow-y: scroll;
+      padding: 0 rem(20px);
+
+      > * {
+        margin: 0 rem(5px) rem(5px) 0;
+
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+      }
     }
 
     .c-carousel {
       height: rem(100px);
-      position: relative;
-      margin: 0;
-      z-index: 1;
+      // position: relative;
 
       .slick-prev {
         left: rem(20px);

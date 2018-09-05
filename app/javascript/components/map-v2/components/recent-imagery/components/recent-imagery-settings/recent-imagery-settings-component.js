@@ -1,11 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { format } from 'd3-format';
 
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider-old';
-import Carousel from 'components/ui/carousel';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
@@ -35,7 +34,7 @@ class RecentImagerySettings extends PureComponent {
       getTooltipContentProps
     } = this.props;
 
-    const selected = this.state.selected || activeTile || {};
+    const selected = this.state.selected || activeTile;
 
     return (
       <div className="c-recent-imagery-settings" {...getTooltipContentProps()}>
@@ -102,8 +101,8 @@ class RecentImagerySettings extends PureComponent {
           </div>
         </div>
         <div className="thumbnails">
-          {tiles &&
-            !!tiles.length && [
+          {tiles && !!tiles.length &&
+            <Fragment>
               <div key="thumbnails-header" className="header">
                 <div className="description">
                   <p>
@@ -123,19 +122,12 @@ class RecentImagerySettings extends PureComponent {
                     setRecentImagerySettings({ bands: option.value })
                   }
                 />
-              </div>,
-              <Carousel
-                key="thumbnails-carousel"
-                settings={{
-                  slidesToShow: 1,
-                  centerPadding: '75px',
-                  dots: false,
-                  arrows: tiles.length > 1
-                }}
-              >
-                {tiles.map((tile, i) => (
-                  <div key={`recent-imagery-thumb-${tile.id}`}>
+              </div>
+              <div className="thumbnail-grid">
+                {tiles && !!tiles.length && (
+                  tiles.map((tile, i) => (
                     <RecentImageryThumbnail
+                      key={tile.id}
                       id={i}
                       tile={tile}
                       selected={activeTile && activeTile.id === tile.id}
@@ -153,10 +145,11 @@ class RecentImagerySettings extends PureComponent {
                         this.setState({ selected: null });
                       }}
                     />
-                  </div>
-                ))}
-              </Carousel>
-            ]}
+                  )))
+                }
+              </div>
+            </Fragment>
+          }
           {(!tiles || !tiles.length) && (
             <NoContent
               className="empty-thumbnails"

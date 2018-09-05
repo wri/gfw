@@ -6,6 +6,7 @@ import mapInitialState from 'components/map-v2/initial-state';
 import { initialState } from './recent-imagery-reducers';
 
 const getData = state => state.recentImagery.data || null;
+const getLocation = state => state.location && state.location.query || null;
 const getDataStatus = state => state.recentImagery.dataStatus || null;
 const getDatasets = state => state.datasets.datasets || null;
 const getRecentUrlState = state =>
@@ -139,6 +140,7 @@ export const getRecentImageryProps = createStructuredSelector({
   tiles: getTiles,
   activeTile: getActiveTile,
   bounds: getTileBounds,
+  location: getLocation,
   // url props
   datasets: getActiveDatasetsState,
   recentImageryDataset: getRecentImageryDataset
