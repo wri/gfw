@@ -72,6 +72,7 @@ class RecentImagerySettings extends PureComponent {
                   displayFormat: 'D MMM YYYY',
                   numberOfMonths: 1,
                   isOutsideRange: d => d.isAfter(moment()),
+                  block: true,
                   hideKeyboardShortcutsPanel: true,
                   noBorder: true,
                   readOnly: true

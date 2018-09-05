@@ -47,7 +47,7 @@ class Timeline extends Component {
               From
               <Datepicker
                 className="datepicker start-date"
-                theme={'datepicker-small'}
+                theme="datepicker-small"
                 date={moment(startDate)}
                 handleOnDateChange={date => handleOnDateChange(date, 0)}
                 settings={{
@@ -65,7 +65,7 @@ class Timeline extends Component {
               to
               <Datepicker
                 className="datepicker"
-                theme={'datepicker-small'}
+                theme="datepicker-small"
                 date={moment(trimEndDate)}
                 handleOnDateChange={date => handleOnDateChange(date, 2)}
                 settings={{

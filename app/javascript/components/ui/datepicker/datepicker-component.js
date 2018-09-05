@@ -6,6 +6,7 @@ import cx from 'classnames';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import './datepicker-styles.scss';
+import './themes/datepicker-small.scss';
 
 class Datepicker extends PureComponent {
   constructor(props) {
