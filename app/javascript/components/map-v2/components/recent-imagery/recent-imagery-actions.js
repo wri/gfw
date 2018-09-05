@@ -13,6 +13,10 @@ const serializeReponse = response =>
     ...r.attributes
   }));
 
+const setRecentImageryData = createAction('setRecentImageryData');
+const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
+const resetRecentImageryData = createAction('resetRecentImageryData');
+
 export const setRecentImagerySettings = createThunkAction(
   'setRecentImagerySettings',
   change => (dispatch, state) =>
@@ -24,10 +28,6 @@ export const setRecentImagerySettings = createThunkAction(
       })
     )
 );
-
-const setRecentImageryData = createAction('setRecentImageryData');
-const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
-const resetRecentImagery = createAction('resetRecentImagery');
 
 const getData = createThunkAction('getData', params => dispatch => {
   if (this.getDataSource) {
@@ -43,18 +43,19 @@ const getData = createThunkAction('getData', params => dispatch => {
         const { clouds } = initialState.settings;
         const { source } = serializedResponse[0];
         const cloudScore = Math.round(serializedResponse[0].cloud_score);
-
         dispatch(
           setRecentImageryData({
             data: serializedResponse,
             dataStatus: {
               haveAllData: false,
               requestedTiles: 0
-            },
-            settings: {
-              selectedTileSource: source,
-              clouds: cloudScore > clouds ? cloudScore : clouds
             }
+          })
+        );
+        dispatch(
+          setRecentImagerySettings({
+            selected: source,
+            clouds: cloudScore > clouds ? cloudScore : clouds
           })
         );
       }
@@ -80,25 +81,31 @@ const getMoreTiles = createThunkAction(
       ])
       .then(
         axios.spread((tilesResponse, thumbsReponse) => {
-          const tiles = tilesResponse.data && tilesResponse.data.data && tilesResponse.data.data.attributes;
-          const thumbs = thumbsReponse.data && thumbsReponse.data.data && thumbsReponse.data.data.attributes;
+          const tiles =
+            tilesResponse.data &&
+            tilesResponse.data.data &&
+            tilesResponse.data.data.attributes;
+          const thumbs =
+            thumbsReponse.data &&
+            thumbsReponse.data.data &&
+            thumbsReponse.data.data.attributes;
 
           if (tiles && thumbs) {
             const data = state().recentImagery.data.slice();
-            const requestedTiles =
-              dataStatus.requestedTiles + tiles.length;
+            const requestedTiles = dataStatus.requestedTiles + tiles.length;
             const haveAllData = requestedTiles === data.length;
-            const newData = data.map(d => {
+            const newData = data.map((d, i) => {
               const tile = tiles.find(t => t.source_id === d.source);
               const thumb = thumbs.find(t => t.source === d.source);
               return {
                 ...d,
-                ...tile && {
-                  tile_url: tile.tile_url
-                },
-                ...thumb && {
+                ...(tile &&
+                  i > 0 && {
+                    tile_url: tile.tile_url
+                  }),
+                ...(thumb && {
                   thumbnail_url: thumb.thumbnail_url
-                }
+                })
               };
             });
 
@@ -114,7 +121,7 @@ const getMoreTiles = createThunkAction(
           }
         })
       )
-      .catch(error => {
+      .catch(() => {
         dispatch(
           setRecentImageryData({
             dataStatus: {
@@ -122,29 +129,15 @@ const getMoreTiles = createThunkAction(
             }
           })
         );
-        console.info(error);
       });
   }
 );
-
-const resetData = createThunkAction('resetData', () => dispatch => {
-  dispatch(
-    setRecentImageryData({
-      data: {},
-      dataStatus: {
-        haveAllData: false,
-        requestedTiles: 0
-      }
-    })
-  );
-});
 
 export default {
   setRecentImageryData,
   setRecentImageryDataStatus,
   setRecentImagerySettings,
-  resetRecentImagery,
+  resetRecentImageryData,
   getData,
-  getMoreTiles,
-  resetData
+  getMoreTiles
 };

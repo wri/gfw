@@ -9,7 +9,6 @@ export const initialState = {
   settings: {
     active: false,
     visible: false,
-    minZoom: 9,
     selected: null,
     date: null,
     weeks: 13,
@@ -39,13 +38,12 @@ const setRecentImageryDataStatus = (state, { payload }) => ({
   }
 });
 
-const resetRecentImagery = (state) => ({
-  ...state,
+const resetRecentImageryData = () => ({
   ...initialState
 });
 
 export default {
   setRecentImageryData,
   setRecentImageryDataStatus,
-  resetRecentImagery
+  resetRecentImageryData
 };

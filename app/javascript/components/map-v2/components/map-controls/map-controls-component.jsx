@@ -80,7 +80,7 @@ class MapControlsButtons extends PureComponent {
         <Sticky enabled={false} {...stickyOptions}>
           {!hidePanels && (
             <div className="map-actions">
-              {active && <RecentImagery />}
+              <RecentImagery />
               <Tooltip
                 theme="light"
                 position="top-end"
@@ -96,7 +96,10 @@ class MapControlsButtons extends PureComponent {
                   className="recent-imagery-btn"
                   theme="theme-button-map-control"
                   onClick={() => {
-                    setRecentImagerySettings({ active: !active, visible: false });
+                    setRecentImagerySettings({
+                      active: !active,
+                      visible: false
+                    });
                     if (!active && zoom < 9) {
                       map.setZoom(9);
                     }

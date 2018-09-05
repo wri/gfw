@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { format } from 'd3-format';
+import startCase from 'lodash/startCase';
 
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider-old';
@@ -34,7 +35,7 @@ class RecentImagerySettings extends PureComponent {
       getTooltipContentProps
     } = this.props;
 
-    const selected = this.state.selected || activeTile;
+    const selected = this.state.selected || activeTile || {};
 
     return (
       <div className="c-recent-imagery-settings" {...getTooltipContentProps()}>
@@ -101,55 +102,59 @@ class RecentImagerySettings extends PureComponent {
           </div>
         </div>
         <div className="thumbnails">
-          {tiles && !!tiles.length &&
-            <Fragment>
-              <div key="thumbnails-header" className="header">
-                <div className="description">
-                  <p>
-                    {moment(selected.dateTime)
-                      .format('DD MMM YYYY')
-                      .toUpperCase()}
-                  </p>
-                  <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
-                  <p>{selected.instrument}</p>
+          {tiles &&
+            !!tiles.length && (
+              <Fragment>
+                <div key="thumbnails-header" className="header">
+                  <div className="description">
+                    <p>
+                      {moment(selected.dateTime)
+                        .format('DD MMM YYYY')
+                        .toUpperCase()}
+                    </p>
+                    <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
+                    <p>{startCase(selected.instrument)}</p>
+                  </div>
+                  <Dropdown
+                    className="band-selector"
+                    theme="theme-dropdown-button"
+                    value={bands}
+                    options={BANDS}
+                    onChange={option =>
+                      setRecentImagerySettings({
+                        bands: option.value,
+                        selected: null
+                      })
+                    }
+                  />
                 </div>
-                <Dropdown
-                  className="band-selector"
-                  theme="theme-dropdown-button"
-                  value={bands}
-                  options={BANDS}
-                  onChange={option =>
-                    setRecentImagerySettings({ bands: option.value })
-                  }
-                />
-              </div>
-              <div className="thumbnail-grid">
-                {tiles && !!tiles.length && (
-                  tiles.map((tile, i) => (
-                    <RecentImageryThumbnail
-                      key={tile.id}
-                      id={i}
-                      tile={tile}
-                      selected={activeTile && activeTile.id === tile.id}
-                      handleClick={() => {
-                        setRecentImagerySettings({
-                          selected: tile.id
-                        });
-                      }}
-                      handleMouseEnter={() => {
-                        this.setState({
-                          selected: tile
-                        });
-                      }}
-                      handleMouseLeave={() => {
-                        this.setState({ selected: null });
-                      }}
-                    />
-                  )))
-                }
-              </div>
-            </Fragment>
-          }
+                <div className="thumbnail-grid">
+                  {tiles &&
+                    !!tiles.length &&
+                    tiles.map((tile, i) => (
+                      <RecentImageryThumbnail
+                        key={tile.id}
+                        id={i}
+                        tile={tile}
+                        selected={!!activeTile && activeTile.id === tile.id}
+                        handleClick={() => {
+                          setRecentImagerySettings({
+                            selected: tile.id
+                          });
+                        }}
+                        handleMouseEnter={() => {
+                          this.setState({
+                            selected: tile
+                          });
+                        }}
+                        handleMouseLeave={() => {
+                          this.setState({ selected: null });
+                        }}
+                      />
+                    ))}
+                </div>
+              </Fragment>
+            )}
           {(!tiles || !tiles.length) && (
             <NoContent
               className="empty-thumbnails"

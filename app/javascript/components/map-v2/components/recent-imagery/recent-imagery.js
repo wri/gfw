@@ -2,6 +2,7 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import debounce from 'lodash/debounce';
 import { checkLocationInsideBbox } from 'utils/geoms';
 
 import * as mapActions from 'components/map-v2/actions';
@@ -18,18 +19,6 @@ const actions = {
 const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
-  componentDidMount() {
-    const { dates, settings, position, getData } = this.props;
-
-    getData({
-      ...position,
-      ...settings,
-      start: dates.start,
-      end: dates.end,
-      bands: settings.bands
-    });
-  }
-
   componentDidUpdate(prevProps) {
     const {
       active,
@@ -41,26 +30,25 @@ class RecentImageryContainer extends PureComponent {
       settings,
       getData,
       getMoreTiles,
-      position
+      position,
+      resetRecentImageryData
     } = this.props;
     const isNewTile =
-    activeTile && activeTile.url &&
-    (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
+      activeTile &&
+      activeTile.url &&
+      (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
     const positionInsideTile = bounds
       ? checkLocationInsideBbox([position.lat, position.lng], bounds)
       : true;
 
-    console.log(isNewTile, activeTile);
-    if (active && isNewTile) {
-      this.setTile();
-    }
-
+    // get data if activated or new props
     if (
-      (active && active !== prevProps.active) ||
-      !positionInsideTile ||
-      !isEqual(settings.date, prevProps.settings.date) ||
-      !isEqual(settings.weeks, prevProps.settings.weeks) ||
-      !isEqual(settings.bands, prevProps.settings.bands)
+      active &&
+      (active !== prevProps.active ||
+        !positionInsideTile ||
+        !isEqual(settings.date, prevProps.settings.date) ||
+        !isEqual(settings.weeks, prevProps.settings.weeks) ||
+        !isEqual(settings.bands, prevProps.settings.bands))
     ) {
       getData({
         ...position,
@@ -69,21 +57,30 @@ class RecentImageryContainer extends PureComponent {
         bands: settings.bands
       });
     }
-    if (!dataStatus.haveAllData &&
-      ((active && active !== prevProps.active) ||
-        (dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles) ||
-        (dataStatus.requestFails !== prevProps.dataStatus.requestFails) ||
-        isNewTile)
+
+    // get the rest of the tiles
+    if (
+      !dataStatus.haveAllData &&
+      active &&
+      (isNewTile ||
+        dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles ||
+        dataStatus.requestFails !== prevProps.dataStatus.requestFails)
     ) {
       getMoreTiles({ sources, dataStatus, bands: settings.bands });
     }
+
+    // if new tiles update on map
+    if (active && isNewTile) {
+      this.setTile();
+    }
+
+    if (!active && active !== prevProps.active) {
+      this.removeTile();
+      resetRecentImageryData();
+    }
   }
 
-  componentWillUnmount() {
-    this.removeTile();
-  }
-
-  setTile() {
+  setTile = debounce(() => {
     const {
       datasets,
       activeTile,
@@ -111,22 +108,18 @@ class RecentImageryContainer extends PureComponent {
           : [recentDataset]
       });
     }
-  }
+  }, 200);
 
   removeTile() {
-    const { datasets, setMapSettings, setRecentImagerySettings } = this.props;
+    const { datasets, setMapSettings } = this.props;
     const activeDatasets =
       datasets && !!datasets.length && datasets.filter(d => !d.isRecentImagery);
     setMapSettings({
       datasets: activeDatasets || []
     });
-    setRecentImagerySettings({
-      selected: ''
-    });
   }
 
   render() {
-    console.log('location', this.props.location);
     return null;
   }
 }
@@ -145,7 +138,7 @@ RecentImageryContainer.propTypes = {
   datasets: PropTypes.array,
   setMapSettings: PropTypes.func,
   recentImageryDataset: PropTypes.object,
-  resetRecentImagery: PropTypes.func
+  resetRecentImageryData: PropTypes.func
 };
 
 export { actions, reducers, initialState };
