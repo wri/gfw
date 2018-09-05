@@ -28,6 +28,21 @@ class MapControlsButtons extends PureComponent {
     showBasemaps: false
   };
 
+  handleHidePanels = () => {
+    const {
+      setMapSettings,
+      setMenuSettings,
+      setRecentImagerySettings,
+      settings: { hidePanels }
+    } = this.props;
+    setMapSettings({ hidePanels: !hidePanels });
+    setMenuSettings({ selectedSection: '' });
+    setRecentImagerySettings({
+      visible: false
+    });
+    this.setState({ showBasemaps: false });
+  };
+
   onBasemapsRequestClose = () => {
     const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
     this.basemapsRef.clearEvt();
@@ -66,8 +81,6 @@ class MapControlsButtons extends PureComponent {
       setShareModal,
       settings,
       map,
-      setMapSettings,
-      setMenuSettings,
       recentSettings,
       setRecentImagerySettings
     } = this.props;
@@ -173,10 +186,7 @@ class MapControlsButtons extends PureComponent {
             </Button>
             <Button
               theme="theme-button-map-control"
-              onClick={() => {
-                setMapSettings({ hidePanels: !hidePanels });
-                setMenuSettings({ selectedSection: '' });
-              }}
+              onClick={this.handleHidePanels}
               tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
             >
               <Icon
