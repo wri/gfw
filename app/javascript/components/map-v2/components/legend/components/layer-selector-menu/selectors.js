@@ -23,7 +23,7 @@ export const getGroups = createSelector(getParsedOptions, options => {
   if (!options) return null;
   return Object.keys(options).map(g => ({
     label: g,
-    value: options[g][0].id
+    value: options[g][0].value
   }));
 });
 
