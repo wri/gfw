@@ -15,6 +15,7 @@ gem 'typhoeus'
 gem 'useragent'
 gem 'carrierwave'
 gem 'fog'
+gem 'ffi',  '~> 1.9.24'
 gem 'rmagick', :require => false
 gem 'mini_magick'
 gem 'unf'
