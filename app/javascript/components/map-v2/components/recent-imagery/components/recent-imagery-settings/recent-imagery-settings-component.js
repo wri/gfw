@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
 
 import Icon from 'components/ui/icon';
-import Slider from 'components/ui/slider-old';
+import Slider from 'components/ui/slider';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
@@ -19,18 +19,20 @@ import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 import './recent-imagery-settings-styles.scss';
 
 class RecentImagerySettings extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: null
-    };
-  }
+  state = {
+    selected: null,
+    clouds: this.props.settings.clouds
+  };
+
+  handleCloundsChange = clouds => {
+    this.setState({ clouds });
+  };
 
   render() {
     const {
       activeTile,
       tiles,
-      settings: { date, weeks, clouds, bands },
+      settings: { date, weeks, bands },
       setRecentImagerySettings,
       getTooltipContentProps
     } = this.props;
@@ -81,23 +83,19 @@ class RecentImagerySettings extends PureComponent {
             <div className="title">MAXIMUM CLOUD COVER PERCENTAGE</div>
             <Slider
               className="theme-slider-green"
-              settings={{
-                defaultValue: clouds,
-                marks: {
-                  0: '0%',
-                  25: '25%',
-                  50: '50%',
-                  75: '75%',
-                  100: '100%'
-                },
-                marksOnTop: true,
-                step: 5,
-                dots: true,
-                tipFormatter: value => `${value}%`
+              value={this.state.clouds}
+              marks={{
+                0: '0%',
+                25: '25%',
+                50: '50%',
+                75: '75%',
+                100: '100%'
               }}
-              handleOnSliderChange={d =>
-                setRecentImagerySettings({ clouds: d })
-              }
+              marksOnTop
+              step={5}
+              dots
+              onChange={this.handleCloundsChange}
+              onAfterChange={d => setRecentImagerySettings({ clouds: d })}
             />
           </div>
         </div>
