@@ -19,6 +19,18 @@ const actions = {
 const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
+  componentDidMount() {
+    const { active, position, dates, settings, getData } = this.props;
+    if (active) {
+      getData({
+        ...position,
+        start: dates.start,
+        end: dates.end,
+        bands: settings.bands
+      });
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {
       active,

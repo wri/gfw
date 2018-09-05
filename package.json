@@ -129,7 +129,7 @@
     "react-event-listener": "0.5.1",
     "react-ga": "2.4.1",
     "react-helmet": "5.2.0",
-    "react-hot-loader": "^4.3.4",
+    "react-hot-loader": "^4.3.6",
     "react-html-parser": "2.0.2",
     "react-list-scroll-bound": "16.0.1",
     "react-load-script": "0.0.6",
