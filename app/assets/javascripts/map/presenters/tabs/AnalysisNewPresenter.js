@@ -857,7 +857,11 @@ define(
           var iso = this.status.get('iso');
           // Send request to the Analysis Service
           if (iso && iso.subRegion) {
-            GeostoreService.iso(iso)
+            GeostoreService.iso({
+              country: iso.country,
+              region: iso.region,
+              subRegion: iso.subRegion
+            })
               .then(
                 function(geostoreId) {
                   this.status.set('useGeostore', geostoreId);
