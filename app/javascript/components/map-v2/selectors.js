@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 
-import { getTileBounds } from './components/recent-imagery/recent-imagery-selectors';
+import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 
 import initialState from './initial-state';
 
@@ -38,7 +38,7 @@ export const getLabels = createSelector(
 export const getBBox = createSelector(getGeostore, geostore => {
   const { bbox } = geostore;
   if (isEmpty(bbox)) return {};
-  return { bbox, options: { padding: [10, 10] } };
+  return { bbox, options: { padding: [20, 20] } };
 });
 
 export const getMapOptions = createSelector(getMapSettings, settings => {
@@ -228,5 +228,6 @@ export const getMapProps = createStructuredSelector({
   activeLayers: getActiveLayers,
   loading: getLoading,
   bbox: getBBox,
-  recentTileBounds: getTileBounds
+  geostore: getGeostore,
+  tileGeoJSON: getTileGeoJSON
 });

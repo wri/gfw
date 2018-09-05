@@ -2,8 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
-import { checkLocationInsideBbox } from 'utils/geoms';
-
 import Map from 'wri-api-components/dist/map';
 
 import { LayerManager, Layer } from 'layer-manager/dist/react';
@@ -38,8 +36,9 @@ class MapComponent extends PureComponent {
       label,
       setMapSettings,
       bbox,
+      geostore,
       setInteraction,
-      recentTileBounds,
+      tileGeoJSON,
       setRecentImagerySettings
     } = this.props;
 
@@ -66,59 +65,94 @@ class MapComponent extends PureComponent {
           {map => (
             <Fragment>
               <LayerManager map={map} plugin={PluginLeaflet}>
-                {layerManager =>
-                  activeLayers.map(l => {
-                    const {
-                      interactionConfig,
-                      isBoundary,
-                      isRecentImagery
-                    } = l;
-                    const { output, article } = interactionConfig || {};
-                    const layer = {
-                      ...l,
-                      ...(!isEmpty(output) && {
-                        interactivity: output.map(i => i.column),
-                        events: {
-                          click: e => {
-                            setInteraction({
-                              ...e,
-                              label: l.name,
-                              article,
-                              isBoundary,
-                              id: l.id,
-                              value: l.id,
-                              config: output
-                            });
-                          }
-                        }
-                      }),
-                      ...(isRecentImagery && {
-                        interactivity: true,
-                        events: {
-                          click: e => {
-                            const positionInsideTile = recentTileBounds
-                              ? checkLocationInsideBbox(
-                                [e.latlng.lng, e.latlng.lat],
-                                recentTileBounds
-                              )
-                              : false;
-                            if (positionInsideTile) {
-                              setRecentImagerySettings({ visible: true });
+                {layerManager => (
+                  <Fragment>
+                    {geostore &&
+                      geostore.id && (
+                        <Layer
+                          id={geostore.id}
+                          name="Geojson"
+                          provider="leaflet"
+                          layerConfig={{
+                            type: 'geoJSON',
+                            body: geostore.geojson,
+                            options: {
+                              style: {
+                                stroke: true,
+                                color: '#4a4a4a',
+                                weight: 2,
+                                fill: false
+                              }
+                            }
+                          }}
+                          layerManager={layerManager}
+                          // Interaction
+                          interactivity
+                          events={{
+                            mouseover: e => {
+                              console.info(e);
+                            }
+                          }}
+                        />
+                      )}
+                    {tileGeoJSON && (
+                      <Layer
+                        id="recentImagery"
+                        name="Geojson"
+                        provider="leaflet"
+                        layerConfig={{
+                          type: 'geoJSON',
+                          body: tileGeoJSON,
+                          options: {
+                            style: {
+                              stroke: false,
+                              fill: false
                             }
                           }
-                        }
-                      })
-                    };
-
-                    return (
-                      <Layer
-                        key={l.id}
-                        {...layer}
+                        }}
                         layerManager={layerManager}
+                        // Interaction
+                        interactivity
+                        events={{
+                          click: () => {
+                            setRecentImagerySettings({ visible: true });
+                          }
+                        }}
                       />
-                    );
-                  })
-                }
+                    )}
+                    {activeLayers.map(l => {
+                      const { interactionConfig, isBoundary } = l;
+                      const { output, article } = interactionConfig || {};
+                      const layer = {
+                        ...l,
+                        ...(!isEmpty(output) && {
+                          interactivity: output.map(i => i.column),
+                          events: {
+                            click: e => {
+                              setInteraction({
+                                ...e,
+                                label: l.name,
+                                article,
+                                isBoundary,
+                                id: l.id,
+                                value: l.id,
+                                config: output
+                              });
+                            }
+                          }
+                        })
+                      };
+
+                      return (
+                        <Layer
+                          key={l.id}
+                          {...layer}
+                          layerManager={layerManager}
+                        />
+                      );
+                    })}
+                  </Fragment>
+                )}
               </LayerManager>
               <Popup map={map} />
               <MapControlButtons className="map-controls" map={map} />
@@ -151,7 +185,9 @@ MapComponent.propTypes = {
   bbox: PropTypes.object,
   recentImagery: PropTypes.bool,
   recentTileBounds: PropTypes.array,
-  setRecentImagerySettings: PropTypes.func
+  setRecentImagerySettings: PropTypes.func,
+  geostore: PropTypes.object,
+  tileGeoJSON: PropTypes.object
 };
 
 export default MapComponent;

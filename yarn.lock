@@ -7794,9 +7794,17 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.0.4, layer-manager@^1.1.2:
+layer-manager@^1.0.4:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.2.tgz#8a4c4d25ffc95ea80c8d5294095c8b7b14fc18ac"
+  dependencies:
+    bluebird "^3.5.1"
+    lodash "^4.17.10"
+    wri-json-api-serializer "^1.0.1"
+
+layer-manager@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.4.tgz#3439d4ccfa515876d84a96512a5822caefa13b77"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"

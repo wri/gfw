@@ -19,6 +19,7 @@ export const getGeostore = createThunkAction(
           if (data && data.attributes) {
             dispatch(
               setGeostore({
+                id: data.id,
                 ...data.attributes,
                 bounds: getBoxBounds(data.attributes.bbox, country, region)
               })
