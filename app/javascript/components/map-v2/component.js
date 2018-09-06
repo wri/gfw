@@ -54,11 +54,8 @@ class MapComponent extends PureComponent {
           label={label}
           bounds={bbox}
           events={{
-            zoomend: (e, map) => {
+            moveend: (e, map) => {
               setMapSettings({ zoom: map.getZoom(), center: map.getCenter() });
-            },
-            dragend: (e, map) => {
-              setMapSettings({ center: map.getCenter() });
             }
           }}
         >
