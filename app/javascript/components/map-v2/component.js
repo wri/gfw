@@ -70,7 +70,7 @@ class MapComponent extends PureComponent {
     } = this.props;
 
     return (
-      <Fragment>
+      <div style={{ backgroundColor: basemap.color }}>
         <Tooltip
           theme="tip"
           hideOnClick
@@ -219,7 +219,7 @@ class MapComponent extends PureComponent {
           error && (
             <NoContent message="An error occured. Please try again later." />
           )}
-      </Fragment>
+      </div>
     );
   }
 }
