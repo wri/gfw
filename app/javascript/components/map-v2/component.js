@@ -148,9 +148,7 @@ class MapComponent extends PureComponent {
                           // Interaction
                           interactivity
                           events={{
-                            click: e => {
-                              e.originalEvent.preventDefault();
-                              e.originalEvent.stopPropagation();
+                            click: () => {
                               setRecentImagerySettings({ visible: true });
                             },
                             mouseover: e => {
@@ -179,15 +177,17 @@ class MapComponent extends PureComponent {
                             interactivity: output.map(i => i.column),
                             events: {
                               click: e => {
-                                setInteraction({
-                                  ...e,
-                                  label: l.name,
-                                  article,
-                                  isBoundary,
-                                  id: l.id,
-                                  value: l.id,
-                                  config: output
-                                });
+                                if (!this.state.showTooltip) {
+                                  setInteraction({
+                                    ...e,
+                                    label: l.name,
+                                    article,
+                                    isBoundary,
+                                    id: l.id,
+                                    value: l.id,
+                                    config: output
+                                  });
+                                }
                               }
                             }
                           })
