@@ -16,11 +16,11 @@ import Icons from 'wri-api-components/dist/icons';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
+import SentenceSelector from 'components/sentence-selector';
 
 import Timeline from './components/timeline';
 import LayerListMenu from './components/layer-list-menu';
 import LayerSelectorMenu from './components/layer-selector-menu';
-import LayerSelector from './components/layer-selector';
 import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
 
@@ -131,7 +131,7 @@ class MapLegend extends Component {
                       paramsSelectorConfig.map(
                         paramConfig =>
                           (paramConfig.options ? (
-                            <LayerSelector
+                            <SentenceSelector
                               key={`${activeLayer.name}-${paramConfig.key}`}
                               name={name}
                               className="param-selector"

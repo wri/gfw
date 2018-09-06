@@ -4,6 +4,8 @@ import isEqual from 'lodash/isEqual';
 
 import SubnavMenu from 'components/subnav-menu';
 import Card from 'components/ui/card';
+import Loader from 'components/ui/loader';
+import SentenceSelector from 'components/sentence-selector';
 
 import './explore-styles.scss';
 
@@ -15,7 +17,8 @@ class Explore extends PureComponent {
       setMenuSettings,
       setMapSettings,
       description,
-      mapState
+      mapState,
+      loading
     } = this.props;
     const links = [
       {
@@ -25,13 +28,8 @@ class Explore extends PureComponent {
       },
       {
         label: 'Places to watch',
-        active: section === 'places-to-watch',
-        onClick: () => setMenuSettings({ exploreSection: 'places-to-watch' })
-      },
-      {
-        label: 'Stories',
-        active: section === 'stories',
-        onClick: () => setMenuSettings({ exploreSection: 'stories' })
+        active: section === 'placesToWatch',
+        onClick: () => setMenuSettings({ exploreSection: 'placesToWatch' })
       }
     ];
 
@@ -41,9 +39,20 @@ class Explore extends PureComponent {
         <div className="c-explore__content">
           <div className="row">
             <div className="column small-12">
-              <div className="c-explore__description">{description}</div>
+              <div className="c-explore__description">
+                {section === 'placesToWatch' ? (
+                  <SentenceSelector
+                    sentence={description}
+                    options={[{ label: 'June 2017', value: '2017' }]}
+                    value="2017"
+                  />
+                ) : (
+                  description
+                )}
+              </div>
             </div>
-            {data &&
+            {!loading &&
+              data &&
               data.map(item => (
                 <div key={item.slug} className="column small-6">
                   <Card
@@ -69,6 +78,7 @@ class Explore extends PureComponent {
                   />
                 </div>
               ))}
+            {loading && <Loader />}
           </div>
         </div>
       </div>
@@ -82,7 +92,8 @@ Explore.propTypes = {
   setMenuSettings: PropTypes.func,
   setMapSettings: PropTypes.func,
   description: PropTypes.string,
-  mapState: PropTypes.object
+  mapState: PropTypes.object,
+  loading: PropTypes.bool
 };
 
 export default Explore;
