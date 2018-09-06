@@ -35,11 +35,15 @@ class Explore extends PureComponent {
 
     return (
       <div className="c-explore">
-        <SubnavMenu links={links} theme="theme-subnav-small-light" />
-        <div className="c-explore__content">
+        <SubnavMenu
+          links={links}
+          className="explore-menu"
+          theme="theme-subnav-small-light"
+        />
+        <div className="content">
           <div className="row">
             <div className="column small-12">
-              <div className="c-explore__description">
+              <div className="description">
                 {section === 'placesToWatch' ? (
                   <SentenceSelector
                     sentence={description}
@@ -56,6 +60,7 @@ class Explore extends PureComponent {
               data.map(item => (
                 <div key={item.slug} className="column small-6">
                   <Card
+                    className="map-card"
                     theme="theme-card-small"
                     data={{
                       ...item,
