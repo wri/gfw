@@ -39,22 +39,31 @@ export const getDrivers = createSelector(
     const groupedData = groupBy(sortByKey(data, 'area'), 'bound1');
     const filteredData = Object.keys(groupedData)
       .filter(key => permFilters.includes(key))
-      .reduce((obj, key) => ({
-        ...obj,
-        [key]: groupedData[key]
-      }), {});
+      .reduce(
+        (obj, key) => ({
+          ...obj,
+          [key]: groupedData[key]
+        }),
+        {}
+      );
 
     const groupedLoss =
       settings.tscDriverGroup === 'permanent' ? filteredData : groupedData;
 
-    const sortedLoss = sortByKey(
-      Object.keys(groupedLoss).map(k => ({
-        driver: k,
-        area: sumBy(groupedLoss[k], 'area')
-      })),
-      'area',
-      true
-    );
+    const sortedLoss = !isEmpty(groupedLoss)
+      ? sortByKey(
+        Object.keys(groupedLoss).map(k => ({
+          driver: k,
+          area: sumBy(groupedLoss[k], 'area')
+        })),
+        'area',
+        true
+      )
+      : permFilters.map(x => ({
+        driver: x.toString(),
+        area: 0.0
+      }));
+
     return sortBy(
       sortedLoss.map(d => ({
         ...d
@@ -157,7 +166,8 @@ export const getSentence = createSelector(
       perm,
       temp,
       permInitial,
-      permGlobal
+      permGlobal,
+      noLoss
     } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const { driver, area } = drivers[0];
@@ -176,7 +186,6 @@ export const getSentence = createSelector(
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss = (totalLoss && area && area / totalLoss * 100) || 0;
     const permPercent = (permLoss && area && area / totalLoss * 100) || 0;
-
     let sentence = currentLabel === 'global' ? globalInitial : initial;
 
     const params = {
@@ -208,7 +217,14 @@ export const getSentence = createSelector(
     };
 
     sentence = type === 'permanent' ? sentence + perm : sentence + temp;
-    if (settings.tscDriverGroup === 'permanent') { sentence = currentLabel === 'global' ? permGlobal : permInitial; }
+    if (settings.tscDriverGroup === 'permanent') {
+      sentence = currentLabel === 'global' ? permGlobal : permInitial;
+    }
+    if (
+      (permLoss === 0 && settings.tscDriverGroup === 'permanent') ||
+      totalLoss === 0
+    ) { sentence = noLoss; }
+
     return {
       sentence,
       params
