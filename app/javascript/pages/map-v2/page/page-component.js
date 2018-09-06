@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
-import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import MyGFW from 'providers/mygfw-provider';
 
@@ -44,7 +43,6 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         <CountryDataProvider location={analysis.location} />
-        <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
         <MyGFW />

@@ -6,6 +6,8 @@ import mapInitialState from 'components/map-v2/initial-state';
 import { initialState } from './recent-imagery-reducers';
 
 const getData = state => state.recentImagery.data || null;
+export const getRecentImageryLoading = state =>
+  state.recentImagery.loading || null;
 const getLocation = state => (state.location && state.location.query) || null;
 const getDataStatus = state => state.recentImagery.dataStatus || null;
 const getDatasets = state => state.datasets.datasets || null;
@@ -146,6 +148,7 @@ export const getRecentImageryDataset = createSelector(
 
 export const getRecentImageryProps = createStructuredSelector({
   // settings
+  loading: getRecentImageryLoading,
   active: getActive,
   visible: getVisibility,
   dates: getDates,

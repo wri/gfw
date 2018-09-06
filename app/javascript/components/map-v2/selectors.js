@@ -10,7 +10,7 @@ import initialState from './initial-state';
 const getMapUrlState = state =>
   (state.location && state.location.query && state.location.query.map) || null;
 const getDatasets = state => state.datasets.datasets;
-const getLoading = state => state.datasets.loading;
+const getLoading = state => state.datasets.loading || state.geostore.loading;
 const getGeostore = state => state.geostore.geostore || null;
 
 // get all map settings

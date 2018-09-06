@@ -8,7 +8,7 @@
   background-color: $white;
 
   .top-section {
-    padding: rem(20px) rem(20px) rem(30px);
+    padding: rem(15px) rem(20px) rem(30px);
 
     .recent-menu {
       display: flex;
@@ -86,11 +86,10 @@
   .thumbnails {
     position: relative;
     width: 100%;
-    min-height: rem(146px);
-    padding-top: rem(14px);
+    min-height: rem(150px);
     border-top: 1px solid rgba(#9e9e9e, 0.3);
     z-index: 1;
-    padding: rem(20px) 0 rem(30px);
+    padding: rem(20px) 0 rem(25px);
 
     .header {
       position: relative;

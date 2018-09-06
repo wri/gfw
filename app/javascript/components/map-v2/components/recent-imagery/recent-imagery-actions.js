@@ -16,6 +16,7 @@ const serializeReponse = response =>
 const setRecentImageryData = createAction('setRecentImageryData');
 const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
 const resetRecentImageryData = createAction('resetRecentImageryData');
+const setRecentImageryLoading = createAction('setRecentImageryLoading');
 
 export const setRecentImagerySettings = createThunkAction(
   'setRecentImagerySettings',
@@ -34,6 +35,7 @@ const getData = createThunkAction('getData', params => dispatch => {
     this.getDataSource.cancel();
   }
   this.getDataSource = CancelToken.source();
+  dispatch(setRecentImageryLoading(true));
   getRecentTiles({ ...params, token: this.getDataSource.token })
     .then(response => {
       const serializedResponse = serializeReponse(
@@ -58,6 +60,7 @@ const getData = createThunkAction('getData', params => dispatch => {
             clouds: cloudScore > clouds ? cloudScore : clouds
           })
         );
+        dispatch(setRecentImageryLoading(false));
       }
     })
     .catch(error => {
@@ -137,6 +140,7 @@ export default {
   setRecentImageryData,
   setRecentImageryDataStatus,
   setRecentImagerySettings,
+  setRecentImageryLoading,
   resetRecentImageryData,
   getData,
   getMoreTiles

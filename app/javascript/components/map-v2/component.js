@@ -86,13 +86,6 @@ class MapComponent extends PureComponent {
                             }
                           }}
                           layerManager={layerManager}
-                          // Interaction
-                          interactivity
-                          events={{
-                            mouseover: e => {
-                              console.info(e);
-                            }
-                          }}
                         />
                       )}
                     {tileGeoJSON && (
@@ -106,7 +99,7 @@ class MapComponent extends PureComponent {
                           options: {
                             style: {
                               stroke: false,
-                              fill: false
+                              fillOpacity: 0
                             }
                           }
                         }}
@@ -114,7 +107,9 @@ class MapComponent extends PureComponent {
                         // Interaction
                         interactivity
                         events={{
-                          click: () => {
+                          click: e => {
+                            e.originalEvent.preventDefault();
+                            e.originalEvent.stopPropagation();
                             setRecentImagerySettings({ visible: true });
                           }
                         }}

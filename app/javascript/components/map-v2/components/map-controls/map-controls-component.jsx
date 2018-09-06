@@ -12,6 +12,7 @@ import RecentImagery from 'components/map-v2/components/recent-imagery';
 import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
+import Loader from 'components/ui/loader';
 
 import plusIcon from 'assets/icons/plus.svg';
 import minusIcon from 'assets/icons/minus.svg';
@@ -82,6 +83,7 @@ class MapControlsButtons extends PureComponent {
       settings,
       map,
       recentSettings,
+      recentLoading,
       setRecentImagerySettings
     } = this.props;
     const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
@@ -91,9 +93,9 @@ class MapControlsButtons extends PureComponent {
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
+          <RecentImagery />
           {!hidePanels && (
             <div className="map-actions">
-              <RecentImagery />
               <Tooltip
                 theme="light"
                 position="top-end"
@@ -122,12 +124,14 @@ class MapControlsButtons extends PureComponent {
                       ? {
                         text: !active
                           ? 'Activate Recent Imagery'
-                          : 'Turn off Recent Imagery',
+                          : 'Disable Recent Imagery',
                         hideOnClick: false
                       }
                       : undefined
                   }
                 >
+                  {recentLoading &&
+                    active && <Loader className="recent-imagery-loader" />}
                   <Icon
                     icon={satelliteIcon}
                     className={cx('satellite-icon', { '-active': active })}
@@ -243,6 +247,7 @@ MapControlsButtons.propTypes = {
   toogleRecentImagery: PropTypes.func,
   setMenuSettings: PropTypes.func,
   recentSettings: PropTypes.object,
+  recentLoading: PropTypes.bool,
   setRecentImagerySettings: PropTypes.func
 };
 

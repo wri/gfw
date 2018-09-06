@@ -81,7 +81,7 @@ class RecentImageryContainer extends PureComponent {
       getMoreTiles({ sources, dataStatus, bands: settings.bands });
     }
 
-    // if new tiles update on map
+    // if new tile update on map
     if (active && isNewTile) {
       this.setTile();
     }

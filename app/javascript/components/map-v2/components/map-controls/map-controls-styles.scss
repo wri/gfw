@@ -29,6 +29,18 @@
       }
     }
 
+    .recent-imagery-btn {
+      position: relative;
+    }
+
+    .recent-imagery-loader {
+      .spinner {
+        width: rem(25px);
+        height: rem(25px);
+        border-width: rem(2px);
+      }
+    }
+
     .satellite-icon {
       width: rem(30px);
       height: rem(30px);

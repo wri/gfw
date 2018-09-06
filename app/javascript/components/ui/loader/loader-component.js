@@ -9,7 +9,7 @@ class Loader extends PureComponent {
     const { className, theme } = this.props;
     return (
       <div className={`c-loader ${className} ${theme}`}>
-        <div className="c-loader__spinner" />
+        <div className="spinner" />
       </div>
     );
   }

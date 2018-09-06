@@ -32,6 +32,7 @@ class RecentImagerySettings extends PureComponent {
     const {
       activeTile,
       tiles,
+      loading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
       getTooltipContentProps
@@ -154,12 +155,13 @@ class RecentImagerySettings extends PureComponent {
                 </div>
               </Fragment>
             )}
-          {(!tiles || !tiles.length) && (
-            <NoContent
-              className="empty-thumbnails"
-              message="We can't find additional images for the selection"
-            />
-          )}
+          {(!tiles || !tiles.length) &&
+            !loading && (
+              <NoContent
+                className="empty-thumbnails"
+                message="We can't find additional images for the selection"
+              />
+            )}
         </div>
       </div>
     );
@@ -172,6 +174,7 @@ RecentImagerySettings.propTypes = {
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
   onClose: PropTypes.func,
+  loading: PropTypes.bool,
   getTooltipContentProps: PropTypes.func
 };
 

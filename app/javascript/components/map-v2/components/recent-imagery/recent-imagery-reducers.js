@@ -1,4 +1,5 @@
 export const initialState = {
+  loading: true,
   data: [],
   dataStatus: {
     tilesPerRequest: 6,
@@ -42,8 +43,14 @@ const resetRecentImageryData = () => ({
   ...initialState
 });
 
+const setRecentImageryLoading = (state, { payload }) => ({
+  ...state,
+  loading: payload
+});
+
 export default {
   setRecentImageryData,
   setRecentImageryDataStatus,
-  resetRecentImageryData
+  resetRecentImageryData,
+  setRecentImageryLoading
 };
