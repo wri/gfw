@@ -9,7 +9,6 @@
 
   &__content {
     flex: 1;
-    padding-left: rem(6px);
   }
 
   &__header {
@@ -23,6 +22,8 @@
     letter-spacing: -0.3px;
     color: $slate;
     margin-top: -2px;
+    padding-left: rem(6px);
+    cursor: pointer;
   }
 
   &__subtitle {
@@ -32,6 +33,7 @@
     color: $hot-grey;
     margin-top: rem(3px);
     max-width: calc(100% - 20px);
+    padding-left: rem(6px);
   }
 
   .info-button {

@@ -115,9 +115,10 @@ class Datasets extends PureComponent {
               )}
             </MenuBlock>
           ))
-          : datasets.map(d => (
+          : datasets.map((d, i) => (
             <LayerToggle
               key={d.id}
+              tabIndex={i}
               className="dataset-toggle"
               data={{ ...d, dataset: d.id }}
               onToggle={onToggleLayer}

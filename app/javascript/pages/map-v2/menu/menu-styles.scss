@@ -25,6 +25,7 @@ $map-menu-items-size: rem(76px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
 
     &::before {
       content: '';
