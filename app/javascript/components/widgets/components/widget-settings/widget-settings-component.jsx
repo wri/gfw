@@ -117,6 +117,7 @@ class WidgetSettings extends PureComponent {
       years,
       startYears,
       endYears,
+      tscDriverGroups,
       datasets,
       extentYears,
       types,
@@ -128,6 +129,7 @@ class WidgetSettings extends PureComponent {
       years ||
       startYears ||
       endYears ||
+      tscDriverGroups ||
       extentYears ||
       datasets ||
       types ||
@@ -232,6 +234,21 @@ class WidgetSettings extends PureComponent {
                 disabled={loading}
                 onChange={option =>
                   onSettingsChange({ value: { dataset: option.value }, widget })
+                }
+              />
+            )}
+            {tscDriverGroups && (
+              <Dropdown
+                theme="theme-select-light"
+                label="DRIVERS"
+                value={settings.tscDriverGroup}
+                options={tscDriverGroups}
+                disabled={loading}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { tscDriverGroup: option.value },
+                    widget
+                  })
                 }
               />
             )}
@@ -349,6 +366,7 @@ WidgetSettings.propTypes = {
   config: PropTypes.object,
   startYears: PropTypes.array,
   endYears: PropTypes.array,
+  tscDriverGroups: PropTypes.array,
   loading: PropTypes.bool,
   options: PropTypes.object,
   onSettingsChange: PropTypes.func,

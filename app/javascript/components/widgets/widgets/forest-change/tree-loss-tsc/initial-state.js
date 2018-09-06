@@ -1,14 +1,14 @@
 export default {
   title: {
-    withLocation: 'Annual tree cover loss by driver in {location}',
-    global: 'Global annual tree cover loss by driver'
+    withLocation: 'Annual tree cover loss by dominant driver in {location}',
+    global: 'Global annual tree cover loss by dominant driver'
   },
   config: {
     admins: ['global', 'country'],
-    selectors: ['thresholds', 'startYears', 'endYears'],
+    selectors: ['tscDriverGroups', 'thresholds', 'startYears', 'endYears'],
     layers: ['loss_by_driver'],
     yearRange: [2001, 2015],
-    metaKey: 'tsc_drivers',
+    metaKey: 'widget_tsc_drivers',
     sortOrder: {
       summary: 0,
       forestChange: 0,
@@ -16,16 +16,21 @@ export default {
     },
     sentences: {
       initial:
-        'In {location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where ',
+        'In {location} from {startYear} to {endYear}, {loss} of tree cover loss occurred in areas where ',
       globalInitial:
-        '{location} from {startYear} to {endYear}, {percent} of tree cover loss occurred in areas where ',
+        '{location} from {startYear} to {endYear}, {loss} of tree cover loss occurred in areas where ',
+      permInitial:
+        'In {location} from {startYear} to {endYear}, {permLoss} of tree cover loss occurred due to {group} land cover/land use change, equivalent to {permPercent} of all tree cover loss.',
+      permGlobal:
+        '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred due to {group} land cover/land use change, equivalent to {permPercent} of all tree cover loss.',
       perm:
-        '{driver} is the dominant driver of permenant land cover/land use change.',
+        '{driver} is the dominant driver of permenant land cover/land use change, equivalent to {percent} of all tree cover loss.',
       temp:
-        '{driver} is the dominant driver of temporary land cover/land use change.'
+        '{driver} is the dominant driver of temporary land cover/land use change, equivalent to {percent} of all tree cover loss.'
     }
   },
   settings: {
+    tscDriverGroup: 'all',
     endYear: 2015,
     layers: ['loss_by_driver']
   },

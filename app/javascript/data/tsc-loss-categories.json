@@ -14,7 +14,7 @@
   },{
     "label": "Wildfire",
     "value": 4,
-    "type": "permanent"
+    "type": "temporary"
   },{
     "label": "Urbanization",
     "value": 5,

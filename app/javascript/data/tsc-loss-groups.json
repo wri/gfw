@@ -1,0 +1,9 @@
+[
+  {
+    "label": "All Deforestation",
+    "value": "all"
+  },{
+    "label": "Permanent Deforestation",
+    "value": "permanent"
+  }
+]
