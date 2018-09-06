@@ -67,6 +67,35 @@ class MapControlsButtons extends PureComponent {
   toggleBasemaps = () =>
     this.setState(state => ({ showBasemaps: !state.showBasemaps }));
 
+  handleToggleRecentImagery = () => {
+    const {
+      map,
+      setMapSettings,
+      setRecentImagerySettings,
+      recentImageryDataset,
+      recentActive,
+      settings: { datasets, zoom }
+    } = this.props;
+    const newDatasets = recentActive
+      ? datasets.filter(d => !d.isRecentImagery)
+      : datasets.concat({
+        dataset: recentImageryDataset.dataset,
+        layers: [recentImageryDataset.layer],
+        visibility: 1,
+        opacity: 1,
+        isRecentImagery: true
+      });
+    setMapSettings({
+      datasets: newDatasets
+    });
+    setRecentImagerySettings({
+      visible: false
+    });
+    if (!recentActive && zoom < 9) {
+      map.setZoom(9);
+    }
+  };
+
   setBasemapsRef = ref => {
     this.basemapsRef = ref;
   };
@@ -84,10 +113,11 @@ class MapControlsButtons extends PureComponent {
       map,
       recentSettings,
       recentLoading,
-      setRecentImagerySettings
+      recentActive,
+      datasetsLoading
     } = this.props;
     const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
-    const { active, visible } = recentSettings || {};
+    const { visible } = recentSettings || {};
     const { showBasemaps } = this.state;
 
     return (
@@ -110,19 +140,12 @@ class MapControlsButtons extends PureComponent {
                 <Button
                   className="recent-imagery-btn"
                   theme="theme-button-map-control"
-                  onClick={() => {
-                    setRecentImagerySettings({
-                      active: !active,
-                      visible: false
-                    });
-                    if (!active && zoom < 9) {
-                      map.setZoom(9);
-                    }
-                  }}
+                  onClick={this.handleToggleRecentImagery}
+                  disabled={datasetsLoading}
                   tooltip={
                     !visible
                       ? {
-                        text: !active
+                        text: !recentActive
                           ? 'Activate Recent Imagery'
                           : 'Disable Recent Imagery',
                         hideOnClick: false
@@ -131,10 +154,14 @@ class MapControlsButtons extends PureComponent {
                   }
                 >
                   {recentLoading &&
-                    active && <Loader className="recent-imagery-loader" />}
+                    recentActive && (
+                      <Loader className="recent-imagery-loader" />
+                    )}
                   <Icon
                     icon={satelliteIcon}
-                    className={cx('satellite-icon', { '-active': active })}
+                    className={cx('satellite-icon', {
+                      '-active': recentActive
+                    })}
                   />
                 </Button>
               </Tooltip>
@@ -248,7 +275,10 @@ MapControlsButtons.propTypes = {
   setMenuSettings: PropTypes.func,
   recentSettings: PropTypes.object,
   recentLoading: PropTypes.bool,
-  setRecentImagerySettings: PropTypes.func
+  setRecentImagerySettings: PropTypes.func,
+  recentImageryDataset: PropTypes.object,
+  recentActive: PropTypes.bool,
+  datasetsLoading: PropTypes.bool
 };
 
 export default connect()(MapControlsButtons);

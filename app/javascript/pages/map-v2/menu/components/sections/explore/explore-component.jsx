@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 
 import SubnavMenu from 'components/subnav-menu';
 import Card from 'components/ui/card';
@@ -8,7 +9,14 @@ import './explore-styles.scss';
 
 class Explore extends PureComponent {
   render() {
-    const { section, data, setMenuSettings } = this.props;
+    const {
+      section,
+      data,
+      setMenuSettings,
+      setMapSettings,
+      description,
+      mapState
+    } = this.props;
     const links = [
       {
         label: 'Topics',
@@ -26,21 +34,18 @@ class Explore extends PureComponent {
         onClick: () => setMenuSettings({ exploreSection: 'stories' })
       }
     ];
+
     return (
       <div className="c-explore">
         <SubnavMenu links={links} theme="theme-subnav-small-light" />
         <div className="c-explore__content">
           <div className="row">
             <div className="column small-12">
-              <div className="c-explore__description">
-                Topics are curated map presets for exploring the drivers of
-                deforestation and understanding their impacts in ecosystems
-                around the world.
-              </div>
+              <div className="c-explore__description">{description}</div>
             </div>
             {data &&
               data.map(item => (
-                <div key={item.id} className="column small-6">
+                <div key={item.slug} className="column small-6">
                   <Card
                     theme="theme-card-small"
                     data={{
@@ -48,17 +53,19 @@ class Explore extends PureComponent {
                       buttons: [
                         {
                           text: 'READ MORE',
-                          extLink: '#',
+                          extLink: `/topics/${item.slug}`,
                           theme: 'theme-button-light theme-button-small'
                         },
                         {
                           text: 'VIEW ON MAP',
-                          extLink: '#',
-                          onClick: () => {},
+                          onClick: () => {
+                            setMapSettings({ ...item.payload });
+                          },
                           theme: 'theme-button-small'
                         }
                       ]
                     }}
+                    active={isEqual(item.payload, mapState)}
                   />
                 </div>
               ))}
@@ -72,7 +79,10 @@ class Explore extends PureComponent {
 Explore.propTypes = {
   section: PropTypes.string,
   data: PropTypes.array,
-  setMenuSettings: PropTypes.func
+  setMenuSettings: PropTypes.func,
+  setMapSettings: PropTypes.func,
+  description: PropTypes.string,
+  mapState: PropTypes.object
 };
 
 export default Explore;

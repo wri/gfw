@@ -25,7 +25,8 @@ class Menu extends PureComponent {
       setMapSettings,
       toggleMenu,
       selectedCountries,
-      countriesWithoutData
+      countriesWithoutData,
+      exploreSection
     } = this.props;
     const { Component } = activeSection || {};
 
@@ -94,6 +95,7 @@ class Menu extends PureComponent {
                 selectedCountries={selectedCountries}
                 countriesWithoutData={countriesWithoutData}
                 activeDatasets={activeDatasets}
+                exploreSection={exploreSection}
               />
             )}
           {loading && <Loader />}
@@ -117,7 +119,8 @@ Menu.propTypes = {
   toggleMenu: PropTypes.func,
   countriesWithoutData: PropTypes.array,
   activeDatasets: PropTypes.array,
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
+  exploreSection: PropTypes.string
 };
 
 export default Menu;

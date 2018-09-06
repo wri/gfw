@@ -8,7 +8,6 @@ export const initialState = {
     requestFails: 0
   },
   settings: {
-    active: false,
     visible: false,
     selected: null,
     date: null,

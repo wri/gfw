@@ -1,25 +1,44 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
-export const getData = createSelector([], () => [
-  {
-    id: 0,
-    title: 'Climate',
-    summary:
-      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
-    image: 'https://www.globalforestwatch.org/assets/covers/stories-cover.png'
-  },
-  {
-    id: 1,
-    title: 'Climate',
-    summary:
-      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
-    image: 'https://www.globalforestwatch.org/assets/covers/stories-cover.png'
-  },
-  {
-    id: 2,
-    title: 'Climate',
-    summary:
-      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
-    image: 'https://www.globalforestwatch.org/assets/covers/stories-cover.png'
+import {
+  getActiveDatasetsState,
+  getBasemap,
+  getLabels
+} from 'components/map-v2/selectors';
+
+import topics, { descriptions } from './explore-topics';
+
+const selectSection = (state, props) => props.exploreSection;
+const selectedData = state => ({
+  topics: Object.values(topics),
+  ...(state.mapMenu && state.mapMenu.data)
+});
+
+const getCardsData = createSelector(
+  [selectSection, selectedData],
+  (section, data) => {
+    if (!data) return null;
+    return data[section];
   }
-]);
+);
+
+const getDescription = createSelector(
+  [selectSection],
+  section => descriptions[section]
+);
+
+const getCurrentMapPayload = createSelector(
+  [getActiveDatasetsState, getBasemap, getLabels],
+  (datasets, basemap, label) => ({
+    datasets,
+    basemap,
+    label
+  })
+);
+
+export const mapStateToProps = createStructuredSelector({
+  data: getCardsData,
+  section: selectSection,
+  description: getDescription,
+  mapState: getCurrentMapPayload
+});

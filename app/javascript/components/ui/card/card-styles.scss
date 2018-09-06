@@ -10,6 +10,19 @@ $summary-color: #aaa;
   justify-content: flex-start;
   border: solid 1px $border;
 
+  &.active {
+    &::before {
+      border: solid 3px $green-gfw;
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+  }
+
   .image {
     width: 100%;
     height: rem(220px);
