@@ -7802,9 +7802,9 @@ layer-manager@^1.0.4:
     lodash "^4.17.10"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.4.tgz#3439d4ccfa515876d84a96512a5822caefa13b77"
+layer-manager@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.5.tgz#7b12a5ec233b05423cb49ada651a4f07a2a64585"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"

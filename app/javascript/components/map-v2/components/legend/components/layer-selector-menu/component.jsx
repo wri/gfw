@@ -11,11 +11,13 @@ class LayerSelectorMenu extends PureComponent {
       name,
       layerGroup,
       selected,
+      selectedGroup,
       options,
       groups,
       onChange,
       className,
-      sentence
+      sentence,
+      groupSentence
     } = this.props;
     const optionName = selected.group || name;
 
@@ -26,10 +28,10 @@ class LayerSelectorMenu extends PureComponent {
             <div className="menu-wrapper -group">
               <LayerSelector
                 options={groups}
-                value={selected}
+                value={selectedGroup && selectedGroup.value}
                 onChange={e => onChange(layerGroup, e)}
                 name={optionName}
-                sentence={sentence}
+                sentence={groupSentence}
               />
             </div>
           )}
@@ -58,7 +60,9 @@ LayerSelectorMenu.propTypes = {
   layerGroup: PropTypes.object,
   onChange: PropTypes.func,
   selected: PropTypes.object,
-  sentence: PropTypes.string
+  sentence: PropTypes.string,
+  groupSentence: PropTypes.string,
+  selectedGroup: PropTypes.object
 };
 
 export default LayerSelectorMenu;

@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import startCase from 'lodash/startCase';
 import upperFirst from 'lodash/upperFirst';
 import moment from 'moment';
+import { format } from 'd3-format';
 
 import Map from 'wri-api-components/dist/map';
 
@@ -159,7 +160,7 @@ class MapComponent extends PureComponent {
                                 date: moment(dateTime)
                                   .format('DD MMM YYYY, HH:mm')
                                   .toUpperCase(),
-                                cloudCoverage: `${cloudScore}%`
+                                cloudCoverage: `${format('.0f')(cloudScore)}%`
                               });
                             },
                             mouseout: () => {
