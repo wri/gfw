@@ -45,6 +45,7 @@ class MapComponent extends PureComponent {
           {data[key]}
         </p>
       ))}
+      <p className="view-more">Click to view more.</p>
     </div>
   );
 
