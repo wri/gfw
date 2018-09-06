@@ -19,7 +19,7 @@ const actions = {
 class MenuContainer extends PureComponent {
   onToggleLayer = (data, value) => {
     const { activeDatasets, setMapSettings } = this.props;
-    const { dataset, layer } = data;
+    const { dataset, layer, iso } = data;
     let newActiveDatasets = [...activeDatasets];
     if (!value) {
       newActiveDatasets = remove(newActiveDatasets, l => l.dataset !== dataset);
@@ -29,7 +29,11 @@ class MenuContainer extends PureComponent {
           dataset,
           opacity: 1,
           visibility: true,
-          layers: [layer]
+          layers: [layer],
+          ...(iso &&
+            iso.length === 1 && {
+              iso: iso[0]
+            })
         }
       ].concat([...newActiveDatasets]);
     }

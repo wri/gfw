@@ -20,6 +20,7 @@ class LayerToggle extends PureComponent {
       metadata,
       layer,
       dataset,
+      iso,
       active,
       color,
       description
@@ -32,7 +33,7 @@ class LayerToggle extends PureComponent {
         <Toggle
           theme={!small ? 'toggle-large' : ''}
           value={active}
-          onToggle={value => onToggle({ dataset, layer }, value)}
+          onToggle={value => onToggle({ dataset, layer, iso }, value)}
           color={color}
         />
         <div className="c-layer-toggle__content">
