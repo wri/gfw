@@ -16,9 +16,9 @@ export default {
     },
     sentences: {
       initial:
-        'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent</b> deforestation.',
+        'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent deforestation</b>.',
       globalInitial:
-        '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent</b> deforestation.'
+        '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent deforestation</b>.'
     }
   },
   settings: {
