@@ -22,7 +22,7 @@ export default {
       permInitial:
         'In {location} from {startYear} to {endYear}, {permLoss} of tree cover loss occurred due to {group} land cover/land use change, equivalent to {permPercent} of all tree cover loss.',
       permGlobal:
-        '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred due to {group} land cover/land use change, equivalent to {permPercent} of all tree cover loss.',
+        '{location} from {startYear} to {endYear}, {permLoss} of tree cover loss occurred due to {group} land cover/land use change, equivalent to {permPercent} of all tree cover loss.',
       perm:
         '{driver} is the dominant driver of permenant land cover/land use change, equivalent to {percent} of all tree cover loss.',
       temp:

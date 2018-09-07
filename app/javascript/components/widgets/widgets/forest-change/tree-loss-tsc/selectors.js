@@ -13,7 +13,6 @@ import tscLossCategories from 'data/tsc-loss-categories.json';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getCurrentLocation = state => state.currentLabel || null;
 const getIndicator = state => state.indicator || null;
@@ -42,6 +41,15 @@ export const getFilteredData = createSelector(
         ? filteredByGroup
         : filteredByYear;
     return filteredData;
+  }
+);
+
+export const getAllLoss = createSelector(
+  [getLoss, getSettings],
+  (data, settings) => {
+    if (isEmpty(data)) return null;
+    const { startYear, endYear } = settings;
+    return data.filter(d => d.year >= startYear && d.year <= endYear);
   }
 );
 
@@ -167,14 +175,14 @@ export const parseConfig = createSelector(
 export const getSentence = createSelector(
   [
     getFilteredData,
-    getExtent,
+    getAllLoss,
     getSettings,
     getCurrentLocation,
     getIndicator,
     getSentences,
     getDrivers
   ],
-  (data, extent, settings, currentLabel, indicator, sentences, drivers) => {
+  (data, allLoss, settings, currentLabel, indicator, sentences, drivers) => {
     if (isEmpty(data)) return null;
     const {
       initial,
@@ -196,7 +204,8 @@ export const getSentence = createSelector(
 
     const permLoss =
       (filteredLoss && filteredLoss.length && sumBy(filteredLoss, 'area')) || 0;
-    const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
+    const totalLoss =
+      (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss = (totalLoss && area && area / totalLoss * 100) || 0;
