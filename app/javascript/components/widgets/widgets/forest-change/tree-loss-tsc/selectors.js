@@ -184,17 +184,10 @@ export const getSentence = createSelector(
   ],
   (data, allLoss, settings, currentLabel, indicator, sentences, drivers) => {
     if (isEmpty(data)) return null;
-    const {
-      initial,
-      globalInitial,
-      perm,
-      temp,
-      permInitial,
-      permGlobal
-    } = sentences;
+    const { initial, globalInitial } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const { driver, area } = drivers[0];
-    const { label, type } = tscLossCategories[driver - 1];
+    const { label } = tscLossCategories[driver - 1];
 
     const permFilters = tscLossCategories
       .filter(x => x.type === 'permanent')
@@ -210,7 +203,7 @@ export const getSentence = createSelector(
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss = (totalLoss && area && area / totalLoss * 100) || 0;
     const permPercent = (permLoss && area && area / totalLoss * 100) || 0;
-    let sentence = currentLabel === 'global' ? globalInitial : initial;
+    const sentence = currentLabel === 'global' ? globalInitial : initial;
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
@@ -239,11 +232,6 @@ export const getSentence = createSelector(
           : `${format('.3s')(permLoss)}ha`,
       extentYear
     };
-
-    sentence = type === 'permanent' ? sentence + perm : sentence + temp;
-    if (settings.tscDriverGroup === 'permanent') {
-      sentence = currentLabel === 'global' ? permGlobal : permInitial;
-    }
 
     return {
       sentence,
