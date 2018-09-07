@@ -24,8 +24,24 @@ export const getFilteredData = createSelector(
   [getLoss, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
+    const permFilters = tscLossCategories
+      .filter(x => x.type === 'permanent')
+      .map(el => el.value.toString());
     const { startYear, endYear } = settings;
-    return data.filter(d => d.year >= startYear && d.year <= endYear);
+    const filteredByYear = data.filter(
+      d => d.year >= startYear && d.year <= endYear
+    );
+    const filteredByGroup = data.filter(
+      d =>
+        d.year >= startYear &&
+        d.year <= endYear &&
+        permFilters.includes(d.bound1)
+    );
+    const filteredData =
+      settings.tscDriverGroup === 'permanent'
+        ? filteredByGroup
+        : filteredByYear;
+    return filteredData;
   }
 );
 
@@ -121,7 +137,7 @@ export const parseConfig = createSelector(
             label,
             unit: 'ha',
             color: categoryColors[d.driver],
-            unitFormat: value => format('.3s')(value)
+            unitFormat: value => format('.3s')(value || 0)
           };
         })
         .reverse()
@@ -159,15 +175,14 @@ export const getSentence = createSelector(
     getDrivers
   ],
   (data, extent, settings, currentLabel, indicator, sentences, drivers) => {
-    if (!data) return null;
+    if (isEmpty(data)) return null;
     const {
       initial,
       globalInitial,
       perm,
       temp,
       permInitial,
-      permGlobal,
-      noLoss
+      permGlobal
     } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const { driver, area } = drivers[0];
@@ -220,10 +235,6 @@ export const getSentence = createSelector(
     if (settings.tscDriverGroup === 'permanent') {
       sentence = currentLabel === 'global' ? permGlobal : permInitial;
     }
-    if (
-      (permLoss === 0 && settings.tscDriverGroup === 'permanent') ||
-      totalLoss === 0
-    ) { sentence = noLoss; }
 
     return {
       sentence,

@@ -32,7 +32,6 @@ class Widget extends PureComponent {
       parsedData,
       parsedConfig
     } = this.props;
-
     return (
       <div
         className={`c-widget ${config.size || ''}`}
@@ -52,7 +51,7 @@ class Widget extends PureComponent {
         <div className="container">
           {!loading &&
             !error &&
-            isEmpty(data) && (
+            (isEmpty(data) || isEmpty(parsedData)) && (
               <NoContent message={`No data in selection for ${currentLabel}`} />
             )}
           {loading && <Loader />}

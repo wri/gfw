@@ -26,8 +26,7 @@ export default {
       perm:
         '{driver} is the dominant driver of permenant land cover/land use change, equivalent to {percent} of all tree cover loss.',
       temp:
-        '{driver} is the dominant driver of temporary land cover/land use change, equivalent to {percent} of all tree cover loss.',
-      noLoss: 'From {startYear} to {endYear}, there was {loss} of tree cover.'
+        '{driver} is the dominant driver of temporary land cover/land use change, equivalent to {percent} of all tree cover loss.'
     }
   },
   settings: {
