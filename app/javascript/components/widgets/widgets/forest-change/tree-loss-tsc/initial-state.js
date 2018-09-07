@@ -10,15 +10,15 @@ export default {
     yearRange: [2001, 2015],
     metaKey: 'widget_tsc_drivers',
     sortOrder: {
-      summary: 1,
-      forestChange: 1,
-      global: 1
+      summary: 0,
+      forestChange: 0,
+      global: 0
     },
     sentences: {
       initial:
-        'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permenant</b> deforestation.',
+        'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent</b> deforestation.',
       globalInitial:
-        '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permenant</b> deforestation.'
+        '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent</b> deforestation.'
     }
   },
   settings: {
