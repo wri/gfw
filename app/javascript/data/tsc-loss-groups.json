@@ -1,9 +1,9 @@
 [
   {
-    "label": "All Deforestation",
+    "label": "All Drivers",
     "value": "all"
   },{
-    "label": "Permanent Deforestation",
+    "label": "Drivers of Permanent Deforestation",
     "value": "permanent"
   }
 ]

@@ -10,9 +10,9 @@ export default {
     yearRange: [2001, 2015],
     metaKey: 'widget_tsc_drivers',
     sortOrder: {
-      summary: 0,
-      forestChange: 0,
-      global: 0
+      summary: 1,
+      forestChange: 1,
+      global: 1
     },
     sentences: {
       initial:
