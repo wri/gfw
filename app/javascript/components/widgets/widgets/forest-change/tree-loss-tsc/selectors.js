@@ -6,7 +6,6 @@ import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { biomassToCO2 } from 'utils/calculations';
 import { sortByKey } from 'utils/data';
 
 import tscLossCategories from 'data/tsc-loss-categories.json';
@@ -186,7 +185,7 @@ export const getSentence = createSelector(
     if (isEmpty(data)) return null;
     const { initial, globalInitial } = sentences;
     const { startYear, endYear, extentYear } = settings;
-    const { driver, area } = drivers[0];
+    const { driver } = drivers[0];
     const { label } = tscLossCategories[driver - 1];
 
     const permFilters = tscLossCategories
@@ -199,10 +198,7 @@ export const getSentence = createSelector(
       (filteredLoss && filteredLoss.length && sumBy(filteredLoss, 'area')) || 0;
     const totalLoss =
       (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
-    const totalEmissions =
-      (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
-    const percentageLoss = (totalLoss && area && area / totalLoss * 100) || 0;
-    const permPercent = (permLoss && area && area / totalLoss * 100) || 0;
+    const permPercent = (permLoss && permLoss / totalLoss * 100) || 0;
     const sentence = currentLabel === 'global' ? globalInitial : initial;
 
     const params = {
@@ -221,8 +217,6 @@ export const getSentence = createSelector(
         totalLoss < 1
           ? `${format('.3r')(totalLoss)}ha`
           : `${format('.3s')(totalLoss)}ha`,
-      percent: `${format('.2r')(percentageLoss)}%`,
-      emissions: `${format('.3s')(totalEmissions)}t`,
       group: settings.tscDriverGroup,
       permPercent:
         permPercent < 0.1 ? '<0.1%' : `${format('.2r')(permPercent)}%`,
