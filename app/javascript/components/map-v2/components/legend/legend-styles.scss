@@ -1,7 +1,8 @@
 @import '~styles/settings.scss';
 @import './themes/wri-api-styles.scss';
 
-.c-legend {
+.c-legend,
+.c-legend-item {
   font-family: $font-family-1;
   width: 100%;
   background: $white;
