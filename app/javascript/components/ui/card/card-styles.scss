@@ -8,7 +8,6 @@ $summary-color: #aaa;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border: solid 1px $border;
 
   &.active {
     &::before {
@@ -35,6 +34,8 @@ $summary-color: #aaa;
   .body {
     padding: rem(15px);
     background-color: $grey-light;
+    border: solid 1px $border;
+    border-top: 0;
 
     @media screen and (min-width: $screen-m) {
       padding: rem(25px);
