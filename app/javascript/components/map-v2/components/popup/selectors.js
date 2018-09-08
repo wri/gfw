@@ -58,7 +58,6 @@ export const getCardData = createSelector(
         },
         {
           text: 'ANALYZE',
-          extLink: '#',
           theme: 'theme-button-small'
         }
       ]

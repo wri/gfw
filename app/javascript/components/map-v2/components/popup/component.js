@@ -42,7 +42,13 @@ class Popup extends Component {
             <Card
               className="popup-card"
               theme="theme-card-small"
-              data={cardData}
+              data={{
+                ...cardData,
+                buttons: cardData.buttons.map(b => ({
+                  ...b,
+                  onClick: () => handleAnalyze(cardData)
+                }))
+              }}
             />
           ) : (
             <div className="popup-table">

@@ -12,7 +12,7 @@ $summary-color: #aaa;
 
   &.active {
     &::before {
-      border: solid 3px $green-gfw;
+      border: solid 2px $green-gfw;
       content: '';
       position: absolute;
       top: 0;

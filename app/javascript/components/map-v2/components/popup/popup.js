@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch, { query }) => {
   return bindActionCreators(
     {
       handleAnalyze: interaction => {
-        const { data } = interaction;
+        const { data = {} } = interaction;
         let location = {};
         if (data.level && data.gid_0) {
           location = data.level ? parseGadm36Id(data[`gid_${data.level}`]) : {};

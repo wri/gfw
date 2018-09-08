@@ -19,10 +19,6 @@
     min-height: rem(200px);
   }
 
-  .param-selector {
-    margin-bottom: rem(15px);
-  }
-
   .timeline {
     margin-left: -23px;
     padding: 0 rem(5px) 0 0;
@@ -36,11 +32,13 @@
     margin-bottom: rem(10px);
   }
 
-  .layer-statement {
+  .layer-statement,
+  .layer-selector,
+  .param-selector {
     margin-bottom: rem(15px);
   }
 
-  .layer-selector {
-    margin-bottom: rem(15px);
+  .more-info {
+    margin-bottom: rem(10px);
   }
 }
