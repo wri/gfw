@@ -19,7 +19,8 @@ class LayerToggle extends PureComponent {
       onInfoClick,
       onToggle,
       small,
-      tabIndex
+      tabIndex,
+      showSubtitle
     } = this.props;
     const {
       name,
@@ -73,16 +74,17 @@ class LayerToggle extends PureComponent {
                 </Tooltip>
               )}
           </div>
-          {description && (
-            <div
-              className="c-layer-toggle__subtitle"
-              onClick={() => onToggle({ dataset, layer, iso }, !active)}
-              role="button"
-              tabIndex={tabIndex}
-            >
-              {`${description}`}
-            </div>
-          )}
+          {description &&
+            showSubtitle && (
+              <div
+                className="c-layer-toggle__subtitle"
+                onClick={() => onToggle({ dataset, layer, iso }, !active)}
+                role="button"
+                tabIndex={tabIndex}
+              >
+                {`${description}`}
+              </div>
+            )}
         </div>
       </div>
     );
@@ -90,6 +92,7 @@ class LayerToggle extends PureComponent {
 }
 
 LayerToggle.propTypes = {
+  showSubtitle: PropTypes.bool,
   className: PropTypes.string,
   data: PropTypes.object,
   onInfoClick: PropTypes.func,

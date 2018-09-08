@@ -30,7 +30,7 @@ class SentenceSelector extends PureComponent {
       nameRepl,
       '{selector}',
       <Dropdown
-        key={name}
+        key={name || `${value}-${sentence}`}
         className="sentence-dropdown"
         theme="theme-dropdown-native-button"
         value={value}

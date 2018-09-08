@@ -12,6 +12,7 @@ const getMapUrlState = state =>
 const getDatasets = state => state.datasets.datasets;
 const getLoading = state => state.datasets.loading || state.geostore.loading;
 const getGeostore = state => state.geostore.geostore || null;
+const getQuery = state => (state.location && state.location.query) || null;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -35,11 +36,15 @@ export const getLabels = createSelector(
   settings => settings.label
 );
 
-export const getBBox = createSelector(getGeostore, geostore => {
-  const { bbox } = geostore;
-  if (isEmpty(bbox)) return {};
-  return { bbox, options: { padding: [20, 20] } };
-});
+export const getBbox = createSelector(
+  getMapSettings,
+  settings => settings.bbox
+);
+
+export const getCanBound = createSelector(
+  getMapSettings,
+  settings => settings.canBound
+);
 
 export const getMapOptions = createSelector(getMapSettings, settings => {
   if (!settings) return null;
@@ -121,7 +126,8 @@ export const getDatasetsWithConfig = createSelector(
         timelineParams,
         layers,
         visibility,
-        opacity
+        opacity,
+        bbox
       } =
         layerConfig || {};
 
@@ -143,6 +149,7 @@ export const getDatasetsWithConfig = createSelector(
             ...l,
             visibility,
             opacity,
+            bbox,
             active: layers && layers.includes(l.id),
             ...(!isEmpty(l.params) && {
               params: {
@@ -218,6 +225,21 @@ export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
     }));
 });
 
+export const getLayerBbox = createSelector([getActiveLayers], layers => {
+  const layerWithBbox =
+    layers && layers.find(l => l.bbox || (l.layerConfig && l.layerConfig.bbox));
+  const layerBbox =
+    layerWithBbox &&
+    (layerWithBbox.bbox ||
+      (layerWithBbox.layerConfig && layerWithBbox.layerConfig.bbox));
+  return layerBbox;
+});
+
+export const getGeostoreBbox = createSelector(
+  [getGeostore],
+  geostore => geostore && geostore.bbox
+);
+
 export const getMapProps = createStructuredSelector({
   activeDatasets: getActiveDatasets,
   settings: getMapSettings,
@@ -227,7 +249,11 @@ export const getMapProps = createStructuredSelector({
   layerGroups: getLayerGroups,
   activeLayers: getActiveLayers,
   loading: getLoading,
-  bbox: getBBox,
+  layerBbox: getLayerBbox,
+  geostoreBbox: getGeostoreBbox,
+  bbox: getBbox,
+  canBound: getCanBound,
   geostore: getGeostore,
-  tileGeoJSON: getTileGeoJSON
+  tileGeoJSON: getTileGeoJSON,
+  query: getQuery
 });

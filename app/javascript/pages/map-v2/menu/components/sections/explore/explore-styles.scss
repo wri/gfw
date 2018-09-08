@@ -11,6 +11,7 @@ $explore-nav-height: rem(40px);
     height: calc(100vh - #{$explore-nav-height});
     overflow-y: scroll;
     position: relative;
+    padding: 0 rem(10px);
 
     .description {
       font-size: 12px;

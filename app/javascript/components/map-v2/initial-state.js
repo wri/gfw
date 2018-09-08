@@ -13,6 +13,8 @@ export default {
   basemap: basemaps.default,
   label: labels.default,
   attributionControl: false,
+  bbox: null,
+  canBound: true,
   datasets: [
     // admin boundaries
     {

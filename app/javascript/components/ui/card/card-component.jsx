@@ -23,7 +23,7 @@ class Card extends PureComponent {
           {title && <h3 className="title">{title}</h3>}
           {summary && (
             <div className="summary">
-              <Dotdotdot clamp={4}>{summary}</Dotdotdot>
+              <Dotdotdot clamp={3}>{summary}</Dotdotdot>
             </div>
           )}
           {meta && <p className="meta">{meta}</p>}

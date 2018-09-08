@@ -1,13 +1,11 @@
 export const initialState = {
   loading: false,
-  data: {}
+  data: []
 };
 
 const setPTW = (state, { payload }) => ({
   ...state,
-  geostore: {
-    ...payload
-  }
+  data: payload
 });
 
 const setPTWLoading = (state, { payload }) => ({

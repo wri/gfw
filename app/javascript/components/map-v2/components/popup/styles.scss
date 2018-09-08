@@ -25,6 +25,10 @@
 
     .layer-selector {
       margin-bottom: 20px;
+
+      select {
+        font-size: rem(14px);
+      }
     }
 
     .nav-footer {

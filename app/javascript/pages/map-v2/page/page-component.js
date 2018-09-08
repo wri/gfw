@@ -5,7 +5,6 @@ import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import MyGFWProvider from 'providers/mygfw-provider';
-import PTWProvider from 'providers/ptw-provider';
 
 import Header from 'components/header';
 import Map from 'components/map-v2';
@@ -47,7 +46,6 @@ class Page extends PureComponent {
         <DatasetsProvider />
         <GeostoreProvider />
         <MyGFWProvider />
-        <PTWProvider date={new Date()} />
       </div>
     );
   }

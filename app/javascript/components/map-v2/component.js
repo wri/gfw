@@ -7,7 +7,6 @@ import moment from 'moment';
 import { format } from 'd3-format';
 
 import Map from 'wri-api-components/dist/map';
-
 import { LayerManager, Layer } from 'layer-manager/dist/react';
 import { PluginLeaflet } from 'layer-manager';
 
@@ -25,11 +24,6 @@ import MapAttributions from './components/map-attributions';
 import './styles.scss';
 
 class MapComponent extends PureComponent {
-  state = {
-    showTooltip: false,
-    tooltipData: {}
-  };
-
   componentDidMount() {
     requestAnimationFrame(() => {
       this.map.invalidateSize();
@@ -49,10 +43,6 @@ class MapComponent extends PureComponent {
     </div>
   );
 
-  handleShowTooltip = (show, data) => {
-    this.setState({ showTooltip: show, tooltipData: data });
-  };
-
   render() {
     const {
       loading,
@@ -62,11 +52,16 @@ class MapComponent extends PureComponent {
       basemap,
       label,
       setMapSettings,
-      bbox,
       geostore,
       setInteraction,
       tileGeoJSON,
-      setRecentImagerySettings
+      setRecentImagerySettings,
+      query,
+      tooltipData,
+      bbox,
+      showTooltip,
+      handleShowTooltip,
+      setBbox
     } = this.props;
 
     return (
@@ -77,13 +72,13 @@ class MapComponent extends PureComponent {
           html={
             <Tip
               className="map-hover-tooltip"
-              text={this.renderTooltip(this.state.tooltipData)}
+              text={this.renderTooltip(tooltipData)}
             />
           }
           position="top"
           followCursor
           animateFill={false}
-          open={this.state.showTooltip}
+          open={showTooltip}
         >
           <Map
             customClass="c-map"
@@ -93,13 +88,34 @@ class MapComponent extends PureComponent {
             mapOptions={mapOptions}
             basemap={basemap}
             label={label}
-            bounds={bbox}
+            bounds={
+              bbox
+                ? {
+                  bbox,
+                  options: {
+                    padding: [20, 20]
+                  }
+                }
+                : {}
+            }
             events={{
-              moveend: (e, map) => {
+              zoomend: (e, map) => {
                 setMapSettings({
                   zoom: map.getZoom(),
-                  center: map.getCenter()
+                  center: map.getCenter(),
+                  canBound: false,
+                  bbox: null
                 });
+                setBbox(null);
+              },
+              dragend: (e, map) => {
+                setMapSettings({
+                  zoom: map.getZoom(),
+                  center: map.getCenter(),
+                  canBound: false,
+                  bbox: null
+                });
+                setBbox(null);
               }
             }}
           >
@@ -154,7 +170,7 @@ class MapComponent extends PureComponent {
                             mouseover: e => {
                               const data = e.layer.feature.properties;
                               const { cloudScore, instrument, dateTime } = data;
-                              this.handleShowTooltip(true, {
+                              handleShowTooltip(true, {
                                 instrument: startCase(instrument),
                                 date: moment(dateTime)
                                   .format('DD MMM YYYY, HH:mm')
@@ -163,7 +179,7 @@ class MapComponent extends PureComponent {
                               });
                             },
                             mouseout: () => {
-                              this.handleShowTooltip(false, {});
+                              handleShowTooltip(false, {});
                             }
                           }}
                         />
@@ -177,7 +193,7 @@ class MapComponent extends PureComponent {
                             interactivity: output.map(i => i.column),
                             events: {
                               click: e => {
-                                if (!this.state.showTooltip) {
+                                if (!showTooltip) {
                                   setInteraction({
                                     ...e,
                                     label: l.name,
@@ -204,7 +220,7 @@ class MapComponent extends PureComponent {
                     </Fragment>
                   )}
                 </LayerManager>
-                <Popup map={map} />
+                <Popup map={map} query={query} />
                 <MapControlButtons className="map-controls" map={map} />
               </Fragment>
             )}
@@ -233,12 +249,18 @@ MapComponent.propTypes = {
   label: PropTypes.object,
   setMapSettings: PropTypes.func,
   setInteraction: PropTypes.func,
-  bbox: PropTypes.object,
+  bboxs: PropTypes.object,
   recentImagery: PropTypes.bool,
   recentTileBounds: PropTypes.array,
   setRecentImagerySettings: PropTypes.func,
   geostore: PropTypes.object,
-  tileGeoJSON: PropTypes.object
+  tileGeoJSON: PropTypes.object,
+  query: PropTypes.object,
+  tooltipData: PropTypes.object,
+  bbox: PropTypes.array,
+  showTooltip: PropTypes.bool,
+  handleShowTooltip: PropTypes.func,
+  setBbox: PropTypes.func
 };
 
 export default MapComponent;

@@ -27,7 +27,8 @@ class Popup extends Component {
       latlng,
       interactions,
       selected,
-      setInteractionSelected
+      setInteractionSelected,
+      handleAnalyze
     } = this.props;
 
     return (
@@ -63,7 +64,9 @@ class Popup extends Component {
               <DataTable data={tableData} />
               {
                 <div className="nav-footer">
-                  <Button>Analyze</Button>
+                  <Button onClick={() => handleAnalyze(selected)}>
+                    Analyze
+                  </Button>
                 </div>
               }
             </div>
@@ -82,7 +85,8 @@ Popup.propTypes = {
   interactions: PropTypes.array,
   tableData: PropTypes.array,
   cardData: PropTypes.object,
-  activeDatasets: PropTypes.array
+  activeDatasets: PropTypes.array,
+  handleAnalyze: PropTypes.func
 };
 
 export default Popup;

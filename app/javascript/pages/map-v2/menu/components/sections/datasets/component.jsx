@@ -105,6 +105,7 @@ class Datasets extends PureComponent {
                     data={{ ...d, dataset: d.id }}
                     onToggle={onToggleLayer}
                     onInfoClick={onInfoClick}
+                    showSubtitle
                   />
                 ))
               ) : (

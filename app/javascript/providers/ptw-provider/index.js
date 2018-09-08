@@ -1,26 +1,20 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = ({ location }) => ({
-  location: location.payload
+const mapStateToProps = ({ location, ptw }) => ({
+  location: location.payload,
+  data: ptw.data
 });
 
 class PlacesToWatchProvider extends PureComponent {
   componentDidMount() {
-    const { date, getPTW } = this.props;
-
-    if (date) {
-      getPTW(date);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { date, getPTW } = nextProps;
-    if (date !== this.props.date) {
+    const { date, getPTW, data } = this.props;
+    if (date && isEmpty(data)) {
       getPTW(date);
     }
   }
@@ -32,6 +26,7 @@ class PlacesToWatchProvider extends PureComponent {
 
 PlacesToWatchProvider.propTypes = {
   date: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   getPTW: PropTypes.func.isRequired
 };
 
