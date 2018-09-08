@@ -64,8 +64,11 @@ class MapControlsButtons extends PureComponent {
     }
   };
 
-  toggleBasemaps = () =>
+  toggleBasemaps = () => {
+    const { setRecentImagerySettings } = this.props;
     this.setState(state => ({ showBasemaps: !state.showBasemaps }));
+    setRecentImagerySettings({ visible: false });
+  };
 
   handleToggleRecentImagery = () => {
     const {
