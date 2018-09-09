@@ -1,0 +1,46 @@
+@import '~styles/settings.scss';
+
+/* legend component styles */
+.wri_api__c-legend-list {
+  overflow-x: hidden;
+}
+
+.wri_api__c-legend-item {
+  font-family: inherit;
+
+  .wri_api__icon-square {
+    margin-top: 3px;
+    margin-right: 11px;
+    border-radius: rem(6px);
+  }
+
+  .wri_api__legend-item-header > h3 {
+    font-size: rem(14px);
+    font-weight: 400;
+    color: $slate;
+  }
+
+  .wri_api__c-legend-handler {
+    top: 18px;
+  }
+
+  .wri_api__c-legend-handler svg {
+    fill: $warm-grey;
+
+    &:hover {
+      fill: $medium-grey;
+    }
+  }
+}
+
+.wri_api__c-legend-item-toolbar > * {
+  margin-right: 8px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.wri_api__c-legend-item-types {
+  margin-bottom: rem(15px);
+}

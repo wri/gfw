@@ -9,20 +9,13 @@
     <!-- custom -->
     <link rel="canonical" href="<%= request.original_url %>" />
     <script src="https://cdn.optimizely.com/js/7988050790.js"></script>
-    <% if controller_name != 'map_v2' %>
-      <%= render 'shared/gfw_assets' %>
-    <% end %>
     <%= render 'shared/cache_keys' %>
     <%= render 'shared/track' %>
 
-    <!-- render react app pack -->
-    <%= javascript_pack_tag controller_name %>
-    <%= stylesheet_pack_tag controller_name %>
+    <%= javascript_pack_tag 'app' %>
 
   </head>
   <body>
-    <div id="headerGfw"></div>
     <%= yield %>
-    <div id="footerGfw"></div>
   </body>
 </html>

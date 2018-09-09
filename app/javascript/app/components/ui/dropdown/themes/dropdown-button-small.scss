@@ -1,0 +1,57 @@
+@import '~styles/settings.scss';
+
+$dd-button-height: rem(20px);
+
+.theme-dropdown-button-small {
+  text-align: center;
+
+  .container {
+    .c-selector {
+      border-radius: rem(18px);
+      border-color: $border;
+      height: $dd-button-height;
+
+      .value {
+        top: calc(50% - #{rem(9px)});
+        right: rem(10px);
+        padding: 0;
+      }
+
+      input,
+      .value {
+        color: #aaa;
+        font-size: rem(12px);
+      }
+    }
+
+    &.is-open {
+      .menu-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        margin: 0 9px;
+        border-bottom: 7px solid #fff;
+        border-left: 7px solid transparent;
+        border-left-color: #fff;
+        border-right: none;
+        transform-origin: 0 0;
+        transform: rotate(-45deg);
+        top: calc(#{$dd-button-height} + #{rem(6px)});
+        left: calc(50% - 14px);
+        border-bottom-color: #fff;
+        box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
+        z-index: 3;
+      }
+    }
+  }
+
+  .c-selector-menu {
+    top: calc(#{$dd-button-height} + #{rem(6px)});
+    border: 0;
+    box-shadow: $pop-box-shadow;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
