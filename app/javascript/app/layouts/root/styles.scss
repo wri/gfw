@@ -1,0 +1,11 @@
+.l-root {
+  .page {
+    position: relative;
+
+    .page-loader {
+      height: calc(100vh - 56px);
+      z-index: 0;
+    }
+  }
+}
+

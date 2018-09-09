@@ -1,6 +1,6 @@
 import { createStructuredSelector } from 'reselect';
 
-import { getActiveSection } from 'pages/map-v2/menu/menu-selectors';
+import { getActiveSection } from 'pages/map-v2/components/menu/menu-selectors';
 
 const getLocation = state =>
   state.location.payload && state.location.payload.tab;

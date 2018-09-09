@@ -7,7 +7,7 @@ import router from './router';
 
 // Components
 import * as RecentImageryComponent from 'components/map-v2/components/recent-imagery';
-import * as DataAnalysisMenuComponent from 'pages/map-v2/data-analysis-menu';
+import * as DataAnalysisMenuComponent from 'pages/map-v2/components/data-analysis-menu';
 import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as WidgetsComponent from 'components/widgets';

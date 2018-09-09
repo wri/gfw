@@ -1,7 +1,29 @@
-import React from 'react';
+import { createElement, PureComponent } from 'react';
+import { connect } from 'react-redux';
 
-import Page from './page';
+import { getPageProps } from './selectors';
+import PageComponent from './component';
 
-const Map = () => <Page />;
+class PageContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showHeader: false
+    };
+  }
 
-export default Map;
+  handleShowMenu = () => {
+    const { showHeader } = this.state;
+    this.setState({ showHeader: !showHeader });
+  };
+
+  render() {
+    return createElement(PageComponent, {
+      ...this.props,
+      ...this.state,
+      handleShowMenu: this.handleShowMenu
+    });
+  }
+}
+
+export default connect(getPageProps)(PageContainer);

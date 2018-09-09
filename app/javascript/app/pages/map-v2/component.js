@@ -4,37 +4,25 @@ import PropTypes from 'prop-types';
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import DatasetsProvider from 'providers/datasets-provider';
-import MyGFWProvider from 'providers/mygfw-provider';
 
-import Header from 'components/header';
 import Map from 'components/map-v2';
-import MapMenu from 'pages/map-v2/menu';
+import MapMenu from 'pages/map-v2/components/menu';
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
-import DataAnalysisMenu from 'pages/map-v2/data-analysis-menu';
+import DataAnalysisMenu from 'pages/map-v2/components/data-analysis-menu';
 
-import './page-styles.scss';
+import './styles.scss';
 
 class Page extends PureComponent {
   render() {
     const {
       analysis,
       handleShowMenu,
-      showHeader,
-      loggedIn,
       mapSettings: { hidePanels }
     } = this.props;
 
     return (
       <div className="l-map">
-        <Header
-          className="map-header"
-          showHeader={showHeader}
-          toggleMenu={handleShowMenu}
-          loggedIn={loggedIn}
-          showPanel
-          fullScreen
-        />
         <MapMenu toggleMenu={handleShowMenu} hidePanels={hidePanels} />
         <div className="map">
           <Map recentImagery />
@@ -45,7 +33,6 @@ class Page extends PureComponent {
         <CountryDataProvider location={analysis.location} />
         <DatasetsProvider />
         <GeostoreProvider />
-        <MyGFWProvider />
       </div>
     );
   }
@@ -54,8 +41,6 @@ class Page extends PureComponent {
 Page.propTypes = {
   analysis: PropTypes.object,
   handleShowMenu: PropTypes.func,
-  showHeader: PropTypes.bool,
-  loggedIn: PropTypes.bool,
   mapSettings: PropTypes.object
 };
 

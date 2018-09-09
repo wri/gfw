@@ -29,6 +29,10 @@ class HeaderContainer extends PureComponent {
     };
   }
 
+  toggleMenu = () => {
+    this.setState({ showHeader: !this.state.showHeader });
+  };
+
   setShowPanel = showPanel => {
     this.setState({
       showPanel,
@@ -69,6 +73,7 @@ class HeaderContainer extends PureComponent {
       setShowMyGfw: this.setShowMyGfw,
       setShowLangSelector: this.setShowLangSelector,
       handleLangSelect: this.handleLangSelect,
+      toggleMenu: this.toggleMenu,
       activeLang,
       ...config
     });

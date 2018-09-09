@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import NoContent from 'components/ui/no-content';
 
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
-import MenuBlock from 'pages/map-v2/menu/components/menu-block';
+import MenuBlock from 'pages/map-v2/components/menu/components/menu-block';
 import Pill from 'components/ui/pill';
 import Dropdown from 'components/ui/dropdown';
 

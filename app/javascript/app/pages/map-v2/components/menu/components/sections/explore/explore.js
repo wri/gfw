@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { MAP } from 'router';
 
-import * as actions from 'pages/map-v2/menu/menu-actions';
+import * as actions from 'pages/map-v2/components/menu/menu-actions';
 import { mapStateToProps } from './explore-selectors';
 
 import ExploreComponent from './explore-component';

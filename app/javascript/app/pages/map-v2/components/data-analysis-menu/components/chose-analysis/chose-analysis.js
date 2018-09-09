@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import actions from 'pages/map-v2/data-analysis-menu/actions';
+import actions from 'pages/map-v2/components/data-analysis-menu/actions';
 import Component from './chose-analysis-component';
 
 const mapStateToProps = ({ countryData, dataAnalysis }) => ({

@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import MenuFlap from 'pages/map-v2/menu/components/menu-flap';
+import MenuFlap from 'pages/map-v2/components/menu/components/menu-flap';
 
 import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
-
-import gfwLogo from 'assets/logos/gfw.png';
 
 import './menu-styles.scss';
 
@@ -55,7 +53,6 @@ class Menu extends PureComponent {
       countries,
       setMenuSettings,
       setMapSettings,
-      toggleMenu,
       selectedCountries,
       countriesWithoutData,
       exploreSection
@@ -65,9 +62,6 @@ class Menu extends PureComponent {
     return (
       <div>
         <div className="c-map-menu">
-          <button onClick={toggleMenu}>
-            <img className="logo" src={gfwLogo} alt="Global Forest Watch" />
-          </button>
           <div
             className="menu-tabs"
             style={{ display: window.innerHeight >= 608 ? 'flex' : 'block' }}
@@ -114,7 +108,6 @@ Menu.propTypes = {
   loading: PropTypes.bool,
   countries: PropTypes.array,
   selectedCountries: PropTypes.array,
-  toggleMenu: PropTypes.func,
   countriesWithoutData: PropTypes.array,
   activeDatasets: PropTypes.array,
   setMapSettings: PropTypes.func,

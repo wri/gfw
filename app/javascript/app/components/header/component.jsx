@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_L } from 'utils/constants';
 import cx from 'classnames';
@@ -40,7 +40,9 @@ class Header extends PureComponent {
       apps,
       moreLinks,
       fullScreen,
-      loggedIn
+      loggedIn,
+      fixed,
+      toggle
     } = this.props;
     const isMobile = window.innerWidth < SCREEN_L;
     let moreText = fullScreen ? 'close' : 'more';
@@ -56,137 +58,148 @@ class Header extends PureComponent {
     }
 
     return (
-      (!fullScreen || (fullScreen && showHeader)) && (
-        <div
-          className={`c-header ${
-            fullScreen ? '-full-screen' : ''
-          } ${className || ''}`}
-        >
-          <div className="nav-menu">
-            <div className={!fullScreen ? 'row column' : ''}>
-              {fullScreen ? (
-                <button onClick={toggleMenu} className="logo">
-                  <img
-                    src={gfwLogo}
-                    alt="Global Forest Watch"
-                    width="76"
-                    height="76"
-                  />
-                </button>
-              ) : (
-                <a className="logo" href="/">
-                  <img
-                    src={gfwLogo}
-                    alt="Global Forest Watch"
-                    width="76"
-                    height="76"
-                  />
-                </a>
-              )}
-              <div className="nav">
-                {!isMobile && (
-                  <ul
-                    className="nav-main"
-                    onClick={() => {
-                      setShowMyGfw(false);
-                      setShowLangSelector(false);
-                    }}
-                    role="button" // eslint-disable-line
-                  >
-                    {navMain.map(item => (
-                      <li key={item.label}>
-                        <NavLink
-                          to={item.path}
-                          className="nav-link"
-                          activeClassName="-active"
-                        >
-                          {item.label}
-                        </NavLink>
-                      </li>
-                    ))}
-                  </ul>
+      <div
+        className={cx(
+          'c-header',
+          { '-full-screen': fullScreen },
+          { '-fixed': fixed },
+          { '-toggle': toggle },
+          { '-open': showHeader },
+          className
+        )}
+      >
+        {toggle && (
+          <button onClick={toggleMenu} className="logo">
+            <img
+              src={gfwLogo}
+              alt="Global Forest Watch"
+              width="76"
+              height="76"
+            />
+          </button>
+        )}
+        {(!toggle || (toggle && showHeader)) && (
+          <Fragment>
+            <div className="nav-menu">
+              <div className={!fullScreen ? 'row column' : ''}>
+                {!toggle && (
+                  <a className="logo" href="/">
+                    <img
+                      src={gfwLogo}
+                      alt="Global Forest Watch"
+                      width="76"
+                      height="76"
+                    />
+                  </a>
                 )}
-                <ul className={cx('nav-alt', { '-mobile': isMobile })}>
+                <div className="nav">
                   {!isMobile && (
-                    <li>
-                      <button
-                        className="menu-link"
-                        onClick={() => setShowLangSelector(!showLangSelector)}
-                      >
-                        {(activeLang && activeLang.label) || 'English'}
-                        <Icon className="icon-arrow" icon={arrowIcon} />
-                      </button>
-                      {showLangSelector && (
-                        <DropdownMenu
-                          className="sub-menu"
-                          options={languages}
-                          handleSelect={handleLangSelect}
-                        />
-                      )}
-                    </li>
+                    <ul
+                      className="nav-main"
+                      onClick={() => {
+                        setShowMyGfw(false);
+                        setShowLangSelector(false);
+                      }}
+                      role="button" // eslint-disable-line
+                    >
+                      {navMain.map(item => (
+                        <li key={item.label}>
+                          <NavLink
+                            to={item.path}
+                            className="nav-link"
+                            activeClassName="-active"
+                          >
+                            {item.label}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
                   )}
-                  {!isMobile && (
-                    <li>
-                      <button
-                        className="menu-link"
-                        onClick={() => setShowMyGfw(!showMyGfw)}
-                      >
-                        My GFW
-                        <Icon icon={myGfwIcon} />
-                      </button>
-                      {showMyGfw &&
-                        loggedIn && (
+                  <ul className={cx('nav-alt', { '-mobile': isMobile })}>
+                    {!isMobile && (
+                      <li>
+                        <button
+                          className="menu-link"
+                          onClick={() => setShowLangSelector(!showLangSelector)}
+                        >
+                          {(activeLang && activeLang.label) || 'English'}
+                          <Icon className="icon-arrow" icon={arrowIcon} />
+                        </button>
+                        {showLangSelector && (
                           <DropdownMenu
                             className="sub-menu"
-                            options={myGfwLinks}
+                            options={languages}
+                            handleSelect={handleLangSelect}
                           />
                         )}
-                      {showMyGfw &&
-                        !loggedIn && <MyGFWLogin className="sub-menu" />}
+                      </li>
+                    )}
+                    {!isMobile && (
+                      <li>
+                        <button
+                          className="menu-link"
+                          onClick={() => setShowMyGfw(!showMyGfw)}
+                        >
+                          My GFW
+                          <Icon icon={myGfwIcon} />
+                        </button>
+                        {showMyGfw &&
+                          loggedIn && (
+                            <DropdownMenu
+                              className="sub-menu"
+                              options={myGfwLinks}
+                            />
+                          )}
+                        {showMyGfw &&
+                          !loggedIn && <MyGFWLogin className="sub-menu" />}
+                      </li>
+                    )}
+                    <li>
+                      <button
+                        className="menu-link"
+                        onClick={
+                          fullScreen
+                            ? () => {
+                              toggleMenu();
+                              setShowPanel(false);
+                            }
+                            : () => setShowPanel(!showPanel)
+                        }
+                      >
+                        {moreText}
+                        <Icon
+                          className={moreMenuClassName}
+                          icon={moreMenuIcon}
+                        />
+                      </button>
                     </li>
-                  )}
-                  <li>
-                    <button
-                      className="menu-link"
-                      onClick={
-                        fullScreen
-                          ? () => {
-                            toggleMenu();
-                            setShowPanel(false);
-                          }
-                          : () => setShowPanel(!showPanel)
-                      }
-                    >
-                      {moreText}
-                      <Icon className={moreMenuClassName} icon={moreMenuIcon} />
-                    </button>
-                  </li>
-                </ul>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          {showPanel && (
-            <SubmenuPanel
-              apps={apps}
-              moreLinks={moreLinks}
-              fullScreen={fullScreen}
-              navMain={navMain}
-              languages={languages}
-              activeLang={activeLang}
-              myGfwLinks={myGfwLinks}
-              isMobile={isMobile}
-              loggedIn={loggedIn}
-              toggleMenu={toggleMenu}
-              onClick={() => {
-                setShowMyGfw(false);
-                setShowLangSelector(false);
-              }}
-              setShowPanel={setShowPanel}
-              handleLangSelect={handleLangSelect}
-            />
-          )}
-        </div>
-      )
+            {showPanel && (
+              <SubmenuPanel
+                apps={apps}
+                moreLinks={moreLinks}
+                fullScreen={fullScreen}
+                navMain={navMain}
+                languages={languages}
+                activeLang={activeLang}
+                myGfwLinks={myGfwLinks}
+                isMobile={isMobile}
+                loggedIn={loggedIn}
+                toggleMenu={toggleMenu}
+                onClick={() => {
+                  setShowMyGfw(false);
+                  setShowLangSelector(false);
+                }}
+                setShowPanel={setShowPanel}
+                handleLangSelect={handleLangSelect}
+              />
+            )}
+          </Fragment>
+        )}
+      </div>
     );
   }
 }
@@ -209,7 +222,9 @@ Header.propTypes = {
   fullScreen: PropTypes.bool,
   showHeader: PropTypes.bool,
   toggleMenu: PropTypes.func,
-  loggedIn: PropTypes.bool
+  loggedIn: PropTypes.bool,
+  fixed: PropTypes.bool,
+  toggle: PropTypes.bool
 };
 
 export default Header;

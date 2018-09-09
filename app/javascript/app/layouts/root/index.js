@@ -2,8 +2,6 @@ import { connect } from 'react-redux';
 
 import Component from './component';
 
-const mapStateToProps = ({ location }) => ({
-  route: location.routesMap[location.type]
-});
+import { getPageProps } from './selectors';
 
-export default connect(mapStateToProps, null)(Component);
+export default connect(getPageProps)(Component);

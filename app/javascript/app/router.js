@@ -16,7 +16,13 @@ const routeChangeThunk = (dispatch, getState) => {
 export const routes = {
   [MAP]: {
     path: '/v2/map/:tab?/:country?/:region?/:subRegion?',
-    component: 'pages/map-v2'
+    component: 'pages/map-v2',
+    headerOptions: {
+      fullScreen: true,
+      showPanel: true,
+      fixed: true,
+      toggle: true
+    }
   },
   [DASHBOARDS]: {
     path: '/dashboards/:type?/:country?/:region?/:subRegion?',

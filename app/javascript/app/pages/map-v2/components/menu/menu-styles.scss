@@ -10,15 +10,8 @@ $map-menu-items-size: rem(76px);
   z-index: 13;
   background-color: $white-tree;
 
-  .logo {
-    position: relative;
-    width: $map-menu-items-size;
-    height: $map-menu-items-size;
-    z-index: 2;
-    cursor: pointer;
-  }
-
   .menu-tabs {
+    margin-top: rem(76px);
     height: calc(100% - #{$map-menu-items-size});
     overflow-y: scroll;
     z-index: 2;
