@@ -15,7 +15,6 @@ import './styles.scss';
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
-
   render() {
     const { sections, setModalVideoData } = this.props;
     return (

@@ -15,19 +15,24 @@ import {
 
 const actions = { ...sectionActions, ...modalActions };
 
-const mapStateToProps = ({ projects }) => {
+const mapStateToProps = ({ aboutProjects }) => {
   const projectData = {
-    data: projects.data,
-    categorySelected: projects.categorySelected
+    data: aboutProjects.data,
+    categorySelected: aboutProjects.categorySelected
   };
 
   return {
     projects: getProjectsSelected(projectData),
     categories: getCategoriesList(projectData),
-    categorySelected: projects.categorySelected
+    categorySelected: aboutProjects.categorySelected
   };
 };
 class SectionProjectsContainer extends PureComponent {
+  componentDidMount() {
+    const { fetchProjects } = this.props;
+    fetchProjects();
+  }
+
   handleGlobeClick = d => {
     const { setSectionProjectsModal } = this.props;
     setSectionProjectsModal({
@@ -45,7 +50,8 @@ class SectionProjectsContainer extends PureComponent {
 }
 
 SectionProjectsContainer.propTypes = {
-  setSectionProjectsModal: PropTypes.func
+  setSectionProjectsModal: PropTypes.func,
+  fetchProjects: PropTypes.func
 };
 
 export { actions, reducers, initialState };

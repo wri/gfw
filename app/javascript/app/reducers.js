@@ -16,7 +16,8 @@ import * as PopupComponent from 'components/map-v2/components/popup';
 import * as HeaderComponent from 'pages/dashboards/header';
 import * as MapComponent from 'components/map';
 import * as impacts from 'pages/about/section-impacts';
-import * as projects from 'pages/about/section-projects';
+import * as aboutProjects from 'pages/about/section-projects';
+import * as sgfProjects from 'pages/sgf/section-projects';
 import * as contact from 'pages/about/section-contact';
 import * as projectsModal from 'pages/about/section-projects/section-projects-modal';
 import * as modalVideo from 'components/modals/video';
@@ -44,7 +45,8 @@ const componentsReducers = {
   header: handleActions(HeaderComponent),
   map: handleActions(MapComponent),
   impacts: handleActions(impacts),
-  projects: handleActions(projects),
+  aboutProjects: handleActions(aboutProjects),
+  sgfProjects: handleActions(sgfProjects),
   contact: handleActions(contact),
   projectsModal: handleActions(projectsModal),
   modalVideo: handleActions(modalVideo)

@@ -9,12 +9,14 @@ import Partners from 'pages/about/section-partners';
 import How from 'pages/about/section-how';
 import Contact from 'pages/about/section-contact';
 
-import { fetchImpactProjects } from 'pages/about/section-impacts/section-impacts-actions';
-import { fetchProjects } from 'pages/about/section-projects/section-projects-actions';
+import Projects from 'pages/sgf/section-projects';
+import About from 'pages/sgf/section-about';
+import Apply from 'pages/sgf/section-apply';
 
 const history = createHistory();
 
 export const ABOUT = 'location/ABOUT';
+export const SGF = 'location/SGF';
 export const MAP = 'location/MAP';
 export const DASHBOARDS = 'location/DASHBOARDS';
 export const WIDGET_EMBED = 'location/WIDGET_EMBED';
@@ -24,15 +26,9 @@ const routeChangeThunk = (dispatch, getState) => {
   handlePageTrack(getState().location);
 };
 
-const fetchData = dispatch => {
-  dispatch(fetchProjects());
-  dispatch(fetchImpactProjects());
-};
-
 export const routes = {
   [ABOUT]: {
     path: '/about',
-    thunk: fetchData,
     component: 'pages/about',
     sections: [
       {
@@ -61,6 +57,32 @@ export const routes = {
         component: Partners
       }
     ]
+  },
+  [SGF]: {
+    path: '/small-grants-fund/:tab?',
+    component: 'pages/sgf',
+    label: 'Projects',
+    submenu: true,
+    sections: {
+      projects: {
+        label: 'Projects',
+        submenu: true,
+        component: Projects,
+        path: '/small-grants-fund'
+      },
+      about: {
+        label: 'About',
+        submenu: true,
+        component: About,
+        path: '/small-grants-fund/about'
+      },
+      apply: {
+        label: 'Apply',
+        submenu: true,
+        component: Apply,
+        path: '/small-grants-fund/apply'
+      }
+    }
   },
   [MAP]: {
     path: '/v2/map/:tab?/:country?/:region?/:subRegion?',

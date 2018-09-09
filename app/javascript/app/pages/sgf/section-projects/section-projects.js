@@ -16,14 +16,14 @@ import {
 
 const actions = { ...sectionActions, ...modalActions };
 
-const mapStateToProps = ({ projects }) => {
-  const filters = projects.customFilter;
+const mapStateToProps = ({ sgfProjects }) => {
+  const filters = sgfProjects.customFilter;
   const projectData = {
-    data: projects.data && projects.data.projects,
-    latLngs: projects.data.latLngs,
-    images: projects.data.images,
-    search: projects.search,
-    categorySelected: projects.categorySelected,
+    data: sgfProjects.data && sgfProjects.data.projects,
+    latLngs: sgfProjects.data.latLngs,
+    images: sgfProjects.data.images,
+    search: sgfProjects.search,
+    categorySelected: sgfProjects.categorySelected,
     customFilter: filters
   };
 
@@ -32,18 +32,24 @@ const mapStateToProps = ({ projects }) => {
     globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
     categorySelected:
-      filters && filters.length ? '' : projects.categorySelected,
-    search: projects.search,
+      filters && filters.length ? '' : sgfProjects.categorySelected,
+    search: sgfProjects.search,
     loading:
-      !projects ||
-      projects.loading ||
-      (projects.data.projects && !projects.data.projects.length) ||
-      !projects.data.images,
-    customFilter: projects.customFilter
+      !sgfProjects ||
+      sgfProjects.loading ||
+      (sgfProjects.data.projects && !sgfProjects.data.projects.length) ||
+      !sgfProjects.data.images,
+    customFilter: sgfProjects.customFilter
   };
 };
 
 class SectionProjectsContainer extends PureComponent {
+  componentDidMount() {
+    const { fetchProjects, fetchProjectsImages } = this.props;
+    fetchProjects();
+    fetchProjectsImages();
+  }
+
   handleCardClick = d => {
     this.props.setSectionProjectsModal({
       isOpen: true,
@@ -80,7 +86,9 @@ class SectionProjectsContainer extends PureComponent {
 
 SectionProjectsContainer.propTypes = {
   setSectionProjectsModal: PropTypes.func,
-  setCustomFilter: PropTypes.func
+  setCustomFilter: PropTypes.func,
+  fetchProjects: PropTypes.func,
+  fetchProjectsImages: PropTypes.func
 };
 
 export { actions, reducers, initialState };

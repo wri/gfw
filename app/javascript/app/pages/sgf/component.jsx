@@ -5,11 +5,10 @@ import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 
 import bgImage from './header-bg';
-import './page-styles.scss';
+import './styles.scss';
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
-
   render() {
     const SectionComponent = this.props.section;
     return (

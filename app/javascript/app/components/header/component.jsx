@@ -230,7 +230,8 @@ Header.propTypes = {
   toggleMenu: PropTypes.func,
   loggedIn: PropTypes.bool,
   fixed: PropTypes.bool,
-  toggle: PropTypes.bool
+  toggle: PropTypes.bool,
+  useNavLinks: PropTypes.bool
 };
 
 export default Header;
