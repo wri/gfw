@@ -1,6 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { SCREEN_L } from 'utils/constants';
 import cx from 'classnames';
 
 import { NavLink } from 'redux-first-router-link';
@@ -42,9 +41,10 @@ class Header extends PureComponent {
       fullScreen,
       loggedIn,
       fixed,
-      toggle
+      toggle,
+      useNavLinks
     } = this.props;
-    const isMobile = window.innerWidth < SCREEN_L;
+    const isMobile = window.innerWidth < 830;
     let moreText = fullScreen ? 'close' : 'more';
     if (!fullScreen && isMobile) {
       moreText = 'menu';
@@ -104,13 +104,19 @@ class Header extends PureComponent {
                     >
                       {navMain.map(item => (
                         <li key={item.label}>
-                          <NavLink
-                            to={item.path}
-                            className="nav-link"
-                            activeClassName="-active"
-                          >
-                            {item.label}
-                          </NavLink>
+                          {useNavLinks ? (
+                            <NavLink
+                              to={item.path}
+                              className="nav-link"
+                              activeClassName="-active"
+                            >
+                              {item.label}
+                            </NavLink>
+                          ) : (
+                            <a href={item.path} className="nav-link">
+                              {item.label}
+                            </a>
+                          )}
                         </li>
                       ))}
                     </ul>

@@ -11,7 +11,7 @@ import ModalVideo from 'components/modals/video';
 
 import playIcon from 'assets/icons/play.svg';
 import bgImage from './header-bg';
-import './page-styles.scss';
+import './styles.scss';
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function

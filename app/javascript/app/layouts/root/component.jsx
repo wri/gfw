@@ -11,7 +11,7 @@ import './styles.scss';
 
 const universalOptions = {
   loading: <Loader className="page-loader" />,
-  minDelay: 200
+  minDelay: 0
 };
 
 const PageComponent = universal(
@@ -25,9 +25,11 @@ class App extends PureComponent {
     const { route, loggedIn } = this.props;
     return (
       <div className="l-root">
-        <Header loggedIn={loggedIn} {...route.headerOptions} />
+        {route.headerOptions && (
+          <Header loggedIn={loggedIn} {...route.headerOptions} />
+        )}
         <div className="page">
-          <PageComponent path={route.component} />
+          <PageComponent path={route.component} sections={route.sections} />
         </div>
         <MyGFWProvider />
       </div>

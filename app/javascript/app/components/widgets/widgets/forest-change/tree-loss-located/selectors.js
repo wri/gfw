@@ -72,7 +72,7 @@ export const getSentence = createSelector(
     getSentences
   ],
   (data, sortedData, settings, options, indicator, currentLabel, sentences) => {
-    if (!data || !options || !currentLabel) return '';
+    if (!data || !options || !currentLabel || !sortedData) return '';
     const {
       initial,
       withIndicator,

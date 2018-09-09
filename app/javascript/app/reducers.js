@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
 import { combineReducers } from 'redux';
 import { handleActions } from 'utils/redux';
+import { reducer as formReducer } from 'redux-form';
 
 // Routes
 import router from './router';
@@ -12,9 +13,13 @@ import * as ShareComponent from 'components/modals/share';
 import * as ModalMetaComponent from 'components/modals/meta';
 import * as WidgetsComponent from 'components/widgets';
 import * as PopupComponent from 'components/map-v2/components/popup';
-
 import * as HeaderComponent from 'pages/dashboards/header';
 import * as MapComponent from 'components/map';
+import * as impacts from 'pages/about/section-impacts';
+import * as projects from 'pages/about/section-projects';
+import * as contact from 'pages/about/section-contact';
+import * as projectsModal from 'pages/about/section-projects/section-projects-modal';
+import * as modalVideo from 'components/modals/video';
 
 // Providers
 import * as CountryDataProviderComponent from 'providers/country-data-provider';
@@ -37,7 +42,12 @@ const componentsReducers = {
   widgets: handleActions(WidgetsComponent),
   popup: handleActions(PopupComponent),
   header: handleActions(HeaderComponent),
-  map: handleActions(MapComponent)
+  map: handleActions(MapComponent),
+  impacts: handleActions(impacts),
+  projects: handleActions(projects),
+  contact: handleActions(contact),
+  projectsModal: handleActions(projectsModal),
+  modalVideo: handleActions(modalVideo)
 };
 
 // Provider Reducers
@@ -60,5 +70,6 @@ export default combineReducers({
   ...providersReducers,
   ...componentsReducers,
   ...pageReducers,
+  form: formReducer,
   location: router.reducer
 });

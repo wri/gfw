@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { NavLink } from 'redux-first-router-link';
-
 import './styles.scss';
 
 class DropdownMenu extends PureComponent {
@@ -27,9 +25,7 @@ class DropdownMenu extends PureComponent {
                   {l.label}
                 </button>
               ) : (
-                <NavLink to={l.path} activeClassName="-active">
-                  {l.label}
-                </NavLink>
+                <a href={l.path}>{l.label}</a>
               )}
             </li>
           ))}

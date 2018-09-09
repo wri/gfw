@@ -9,17 +9,13 @@
     <!-- custom -->
     <link rel="canonical" href="<%= request.original_url %>" />
     <script src="https://cdn.optimizely.com/js/7988050790.js"></script>
-    <%= render 'shared/gfw_assets' %>
     <%= render 'shared/cache_keys' %>
     <%= render 'shared/track' %>
 
-    <%= render 'shared/leaflet' %>
     <%= javascript_pack_tag 'app' %>
 
   </head>
   <body>
-    <div id="headerGfw"></div>
-      <%= yield %>
-    <div id="footerGfw"></div>
+    <%= yield %>
   </body>
 </html>
