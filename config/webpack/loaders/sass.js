@@ -27,7 +27,6 @@ const devConfig = [{ loader: 'style-loader' }, ...sassConfig];
 const prodConfig = [{ loader: MiniCssExtractPlugin.loader }, ...sassConfig];
 
 module.exports = {
-  test: /\.(scss|sass)$/i,
-  use: env.NODE_ENV === 'production' ? prodConfig : devConfig,
-  exclude: /node_modules/
+  test: /\.(scss|sass|css)$/i,
+  use: env.NODE_ENV === 'production' ? prodConfig : devConfig
 };

@@ -11,7 +11,7 @@ $map-menu-items-size: rem(76px);
   background-color: $white-tree;
 
   .menu-tabs {
-    margin-top: rem(76px);
+    margin-top: rem(75px);
     height: calc(100% - #{$map-menu-items-size});
     overflow-y: scroll;
     z-index: 2;
