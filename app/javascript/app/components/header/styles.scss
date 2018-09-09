@@ -6,6 +6,7 @@ $full-screen-height: rem(75px);
 .c-header {
   height: $header-height;
   z-index: 1;
+  position: relative;
 
   &.-fixed {
     position: absolute;

@@ -23,7 +23,7 @@ import ScrollTo from 'components/scroll-to';
 import Header from 'pages/dashboards/header';
 
 import closeIcon from 'assets/icons/close.svg';
-import './page-styles.scss';
+import './styles.scss';
 
 class Page extends PureComponent {
   render() {

@@ -2,7 +2,7 @@ import shareActions from 'components/modals/share/share-actions';
 import modalActions from 'components/modals/meta/meta-actions';
 import buttonActions from 'components/ui/button/button-actions';
 import widgetActions from 'components/widgets/actions';
-import { COUNTRY } from 'router';
+import { DASHBOARDS } from 'router';
 
 const allActions = {
   ...shareActions,
@@ -27,7 +27,7 @@ export const ANALYTICS_EVENTS = [
     condition: payload => payload.title === 'Share this Dashboard'
   },
   {
-    name: COUNTRY,
+    name: DASHBOARDS,
     category: 'Country Page',
     action: 'View',
     label: payload => payload && payload.query && payload.query.category

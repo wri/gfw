@@ -7,6 +7,7 @@ const history = createHistory();
 
 export const MAP = 'location/MAP';
 export const DASHBOARDS = 'location/DASHBOARDS';
+export const WIDGET_EMBED = 'location/WIDGET_EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
   // track page with GA
@@ -27,6 +28,10 @@ export const routes = {
   [DASHBOARDS]: {
     path: '/dashboards/:type?/:country?/:region?/:subRegion?',
     component: 'pages/dashboards'
+  },
+  [WIDGET_EMBED]: {
+    path: '/embed/dashboards/:type?/:country?/:region?/:subRegion?',
+    component: 'pages/dashboards/embed'
   },
   [NOT_FOUND]: {
     path: '/404',

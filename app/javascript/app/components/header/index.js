@@ -44,7 +44,6 @@ class HeaderContainer extends PureComponent {
   setShowMyGfw = showMyGfw => {
     this.setState({
       showMyGfw,
-      showPanel: false,
       showLangSelector: false
     });
   };
@@ -52,7 +51,6 @@ class HeaderContainer extends PureComponent {
   setShowLangSelector = showLangSelector => {
     this.setState({
       showLangSelector,
-      showPanel: false,
       showMyGfw: false
     });
   };

@@ -99,10 +99,6 @@ Gfw::Application.routes.draw do
   get '/embed/map' => 'map#embed'
   get '/embed/map/*path' => 'map#embed'
 
-  # dashboards
-  get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
-  get '/embed/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#embed'
-
   # about
   get '/about' => 'about#index'
   get '/about(/:section)' => 'about#index'
@@ -154,5 +150,9 @@ Gfw::Application.routes.draw do
   ########### /ACTIVE ROUTES #############
 
   get '/*all' => 'react#index'
+
+  # dashboards
+  get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
+  get '/embed/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#embed'
 
 end

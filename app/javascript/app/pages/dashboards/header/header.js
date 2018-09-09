@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import upperFirst from 'lodash/upperFirst';
 
-import { COUNTRY } from 'router';
+import { DASHBOARDS } from 'router';
 import { deburrUpper } from 'utils/data';
 
 import shareActions from 'components/modals/share/share-actions';
@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators(
     {
       handleCountryChange: country => ({
-        type: COUNTRY,
+        type: DASHBOARDS,
         payload: {
           type: country ? 'country' : 'global',
           country: country && country.value,
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         query: newQuery
       }),
       handleRegionChange: (country, region) => ({
-        type: COUNTRY,
+        type: DASHBOARDS,
         payload: {
           type: 'country',
           country: country.value,
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         query: newQuery
       }),
       handleSubRegionChange: (country, region, subRegion) => ({
-        type: COUNTRY,
+        type: DASHBOARDS,
         payload: {
           type: 'country',
           country: country.value,

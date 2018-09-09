@@ -9,7 +9,7 @@ import {
   setComponentStateToUrl
 } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/forest-data';
-import { COUNTRY, EMBED } from 'router';
+import { DASHBOARDS, WIDGET_EMBED } from 'router';
 import * as WIDGETS from './manifest';
 
 // export const setWidgetSettings = createAction('setWidgetSettings');
@@ -66,7 +66,7 @@ export const setWidgetSettingsUrl = createThunkAction(
       };
     }
     dispatch({
-      type: location.type === 'location/EMBED' ? EMBED : COUNTRY,
+      type: location.type === 'location/EMBED' ? WIDGET_EMBED : DASHBOARDS,
       payload: location.payload,
       query: {
         ...location.query,
