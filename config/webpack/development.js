@@ -6,12 +6,18 @@ const merge = require('webpack-merge');
 const sharedConfig = require('./shared.js');
 const { settings, output } = require('./configuration.js');
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
+
 module.exports = merge(sharedConfig, {
   devtool: '#eval-source-map',
   mode: 'development',
   stats: { errorDetails: true },
   output: { pathinfo: true },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new BundleAnalyzerPlugin()
+  ],
   devServer: {
     clientLogLevel: 'none',
     https: settings.dev_server.https,

@@ -262,13 +262,10 @@ class MapControlsButtons extends PureComponent {
 MapControlsButtons.propTypes = {
   className: PropTypes.string,
   setMapSettings: PropTypes.func,
-  stickyOptions: PropTypes.object,
   setShareModal: PropTypes.func,
   settings: PropTypes.object,
   map: PropTypes.object,
   active: PropTypes.bool,
-  hidePanels: PropTypes.bool,
-  toogleRecentImagery: PropTypes.func,
   setMenuSettings: PropTypes.func,
   recentSettings: PropTypes.object,
   recentLoading: PropTypes.bool,

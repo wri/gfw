@@ -91,7 +91,7 @@ export const routes = {
   // },
   [MAPV2]: {
     path: '/v2/map/:tab?/:country?/:region?/:subRegion?',
-    component: 'pages/map-v2',
+    component: 'map-v2',
     headerOptions: {
       fullScreen: true,
       showPanel: true,

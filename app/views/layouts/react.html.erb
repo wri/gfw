@@ -12,10 +12,10 @@
     <%= render 'shared/cache_keys' %>
     <%= render 'shared/track' %>
 
-    <%= javascript_pack_tag 'app' %>
 
   </head>
-  <body>
+    <body>
     <%= yield %>
+    <%= javascript_entrypoint_pack_tag 'app' %>
   </body>
 </html>

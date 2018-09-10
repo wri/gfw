@@ -15,7 +15,8 @@ const universalOptions = {
 };
 
 const PageComponent = universal(
-  ({ path } /* webpackChunkName: "[request]" */) => import(`../../${path}`),
+  ({ path } /* webpackChunkName: "[request]" */) =>
+    import(`../../pages/${path}/index.js`),
   universalOptions
 );
 

@@ -6,10 +6,9 @@
 const webpack = require('webpack');
 const { basename, dirname, join, relative, resolve } = require('path');
 const { sync } = require('glob');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const ManifestPlugin = require('webpack-manifest-plugin');
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 const extname = require('path-complete-extname');
 const { env, settings, output, loadersDir } = require('./configuration.js');
@@ -26,7 +25,7 @@ const entry = packPaths.reduce((map, entryParam) => {
   ] = resolve(entryParam);
   return localMap;
 }, {});
-console.log(entry);
+
 module.exports = {
   entry,
   output: {
@@ -40,13 +39,11 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
-    new MiniCssExtractPlugin({
-      filename:
-        env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css',
-      chunkFilename:
-        env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'
-    }),
-    new ManifestPlugin({ publicPath: output.publicPath, writeToFileEmit: true })
+    new WebpackAssetsManifest({
+      entrypoints: true,
+      writeToDisk: true,
+      publicPath: true
+    })
   ],
   resolve: {
     extensions: settings.extensions,
@@ -67,9 +64,30 @@ module.exports = {
       services: 'app/services',
       styles: 'app/styles',
       router: 'router',
-      utils: 'app/utils'
+      utils: 'app/utils',
+      'lodash-es': 'lodash'
     }
   },
   resolveLoader: { modules: ['node_modules'] },
-  node: { fs: 'empty', net: 'empty' }
+  node: { fs: 'empty', net: 'empty' },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+            )[1];
+
+            return `npm.${packageName.replace('@', '')}`;
+          }
+        }
+      }
+    }
+  }
 };
