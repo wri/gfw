@@ -1,8 +1,6 @@
 @import '~styles/settings.scss';
 
 .c-map-controls {
-  z-index: 10;
-
   .c-icon {
     &.-active {
       fill: $green-gfw;

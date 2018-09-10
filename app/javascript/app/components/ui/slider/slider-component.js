@@ -45,7 +45,6 @@ class Slider extends PureComponent {
     const Component = range ? Range : RCSlider;
     const handleNum = Array.isArray(value) ? value.length : 1;
     const handleStyles = fill(Array(handleNum), {
-      zIndex: 0,
       width: '1px',
       height: '10px',
       backgroundColor: '#808080',
@@ -86,8 +85,7 @@ Slider.defaultProps = {
     backgroundColor: 'white',
     borderRadius: '2px',
     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
-    border: '0px',
-    zIndex: 1
+    border: '0px'
   },
   railStyle: { backgroundColor: '#d6d6d9' },
   dotStyle: { visibility: 'hidden', border: '0px' },
