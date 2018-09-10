@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import groupBy from 'lodash/groupBy';
@@ -15,6 +14,7 @@ import * as WIDGETS from './manifest';
 // export const setWidgetSettings = createAction('setWidgetSettings');
 export const setWidgetLoading = createAction('setWidgetLoading');
 export const setWidgetData = createAction('setWidgetData');
+export const setWidgetActive = createAction('setWidgetActive');
 export const settingsItemSelected = createAction('settingsItemSelected');
 export const setGlobalData = createAction('setGlobalData');
 
@@ -117,15 +117,3 @@ export const getGlobalData = createThunkAction(
     });
   }
 );
-
-export default {
-  setWidgetSettingsUrl,
-  setWidgetSettingsStore,
-  settingsItemSelected,
-  setWidgetData,
-  getWidgetData,
-  getGlobalData,
-  setWidgetLoading,
-  setWidgetSettings,
-  setGlobalData
-};

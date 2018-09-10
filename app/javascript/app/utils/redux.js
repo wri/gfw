@@ -15,6 +15,7 @@ export const bindActionsToReducers = (actions, reducerList) =>
         return reducer[k](r, action);
       }, state);
 
+    console.log(c);
     return { ...result, ...c };
   }, {});
 

@@ -1,3 +1,5 @@
+import * as actions from './recent-imagery-actions';
+
 export const initialState = {
   active: false,
   visible: false,
@@ -77,11 +79,11 @@ const setRecentImageryShowSettings = (state, { payload }) => ({
 });
 
 export default {
-  toogleRecentImagery,
-  setVisible,
-  setTimelineFlag,
-  setRecentImageryData,
-  setRecentImageryDataStatus,
-  setRecentImagerySettings,
-  setRecentImageryShowSettings
+  [actions.toogleRecentImagery]: toogleRecentImagery,
+  [actions.setVisible]: setVisible,
+  [actions.setTimelineFlag]: setTimelineFlag,
+  [actions.setRecentImageryData]: setRecentImageryData,
+  [actions.setRecentImageryDataStatus]: setRecentImageryDataStatus,
+  [actions.setRecentImagerySettings]: setRecentImagerySettings,
+  [actions.setRecentImageryShowSettings]: setRecentImageryShowSettings
 };

@@ -7,7 +7,7 @@ import { getMapProps } from './selectors';
 
 import { setInteraction } from './components/popup/actions';
 import { setRecentImagerySettings } from './components/recent-imagery/recent-imagery-actions';
-import ownActions from './actions';
+import * as ownActions from './actions';
 
 const actions = {
   setInteraction,
@@ -85,7 +85,5 @@ MapContainer.propTypes = {
   setMapSettings: PropTypes.func,
   layerBbox: PropTypes.array
 };
-
-export { actions };
 
 export default connect(state => getMapProps(state), actions)(MapContainer);

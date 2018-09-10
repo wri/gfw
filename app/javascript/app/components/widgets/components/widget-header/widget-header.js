@@ -3,9 +3,9 @@ import moment from 'moment';
 import { isTouch } from 'utils/browser';
 import { SCREEN_L } from 'utils/constants';
 
-import shareActions from 'components/modals/share/share-actions';
-import modalMetaActions from 'components/modals/meta/meta-actions';
-import mapActions from 'components/map/actions';
+import * as shareActions from 'components/modals/share/share-actions';
+import * as modalMetaActions from 'components/modals/meta/meta-actions';
+import * as mapActions from 'components/map/actions';
 import WidgetHeaderComponent from './widget-header-component';
 
 const actions = {

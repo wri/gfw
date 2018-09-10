@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import { getExtent, getLoss } from 'services/forest-data';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';

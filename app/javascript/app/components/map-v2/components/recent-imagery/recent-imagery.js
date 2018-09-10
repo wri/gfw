@@ -7,7 +7,7 @@ import { checkLocationInsideBbox } from 'utils/geoms';
 import { CancelToken } from 'axios';
 
 import * as mapActions from 'components/map-v2/actions';
-import ownActions from './recent-imagery-actions';
+import * as ownActions from './recent-imagery-actions';
 
 import reducers, { initialState } from './recent-imagery-reducers';
 import { getRecentImageryProps } from './recent-imagery-selectors';
@@ -172,5 +172,6 @@ RecentImageryContainer.propTypes = {
   resetRecentImageryData: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
+
 export default connect(mapStateToProps, actions)(RecentImageryContainer);

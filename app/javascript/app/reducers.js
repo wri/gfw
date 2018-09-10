@@ -1,71 +1,75 @@
 /* eslint-disable import/first */
 import { combineReducers } from 'redux';
-import { handleActions } from 'utils/redux';
+import { handleModule } from 'redux-tools';
 import { reducer as formReducer } from 'redux-form';
 
 // Routes
 import router from './router';
 
 // Components
-import * as RecentImageryComponent from 'components/map-v2/components/recent-imagery';
-import * as DataAnalysisMenuComponent from 'pages/map-v2/components/data-analysis-menu';
-import * as ShareComponent from 'components/modals/share';
-import * as ModalMetaComponent from 'components/modals/meta';
-import * as WidgetsComponent from 'components/widgets';
-import * as PopupComponent from 'components/map-v2/components/popup';
-import * as HeaderComponent from 'pages/dashboards/header';
-import * as MapComponent from 'components/map';
-import * as impacts from 'pages/about/section-impacts';
-import * as aboutProjects from 'pages/about/section-projects';
-import * as sgfProjects from 'pages/sgf/section-projects';
-import * as contact from 'pages/about/section-contact';
-import * as projectsModal from 'pages/about/section-projects/section-projects-modal';
-import * as modalVideo from 'components/modals/video';
+import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
+import { reduxModule as RecentImageryOld } from 'pages/map/recent-imagery';
+import { reduxModule as DataAnalysisMenu } from 'pages/map-v2/components/data-analysis-menu';
+import { reduxModule as Share } from 'components/modals/share';
+import { reduxModule as ModalMeta } from 'components/modals/meta';
+import { reduxModule as Widgets } from 'components/widgets';
+import { reduxModule as Popup } from 'components/map-v2/components/popup';
+import { reduxModule as Header } from 'pages/dashboards/header';
+import { reduxModule as MapComponent } from 'components/map';
+import { reduxModule as impacts } from 'pages/about/section-impacts';
+import { reduxModule as aboutProjects } from 'pages/about/section-projects';
+import { reduxModule as sgfProjects } from 'pages/sgf/section-projects';
+import { reduxModule as contact } from 'pages/about/section-contact';
+import { reduxModule as projectsModal } from 'pages/about/section-projects/section-projects-modal';
+import { reduxModule as modalVideo } from 'components/modals/video';
 
 // Providers
-import * as CountryDataProviderComponent from 'providers/country-data-provider';
-import * as GeostoreProviderComponent from 'providers/geostore-provider';
-import * as WhitelistsProviderComponent from 'providers/whitelists-provider';
-import * as DatasetsProviderComponent from 'providers/datasets-provider';
-import * as MyGFWProviderComponent from 'providers/mygfw-provider';
-import * as PTWProviderComponent from 'providers/ptw-provider';
-import * as LayerSpecProviderComponent from 'providers/layerspec-provider';
+import { reduxModule as CountryDataProvider } from 'providers/country-data-provider';
+import { reduxModule as GeostoreProvider } from 'providers/geostore-provider';
+import { reduxModule as WhitelistsProvider } from 'providers/whitelists-provider';
+import { reduxModule as DatasetsProvider } from 'providers/datasets-provider';
+import { reduxModule as MyGFWProvider } from 'providers/mygfw-provider';
+import { reduxModule as PTWProvider } from 'providers/ptw-provider';
+import { reduxModule as LayerSpecProvider } from 'providers/layerspec-provider';
 
 // pages
-import * as DashboardsPageComponent from 'pages/dashboards';
+import { reduxModule as DashboardsPage } from 'pages/dashboards';
+import { reduxModule as MapPage } from 'pages/map';
 
 // Component Reducers
 const componentsReducers = {
-  share: handleActions(ShareComponent),
-  modalMeta: handleActions(ModalMetaComponent),
-  dataAnalysis: handleActions(DataAnalysisMenuComponent),
-  recentImagery: handleActions(RecentImageryComponent),
-  widgets: handleActions(WidgetsComponent),
-  popup: handleActions(PopupComponent),
-  header: handleActions(HeaderComponent),
-  map: handleActions(MapComponent),
-  impacts: handleActions(impacts),
-  aboutProjects: handleActions(aboutProjects),
-  sgfProjects: handleActions(sgfProjects),
-  contact: handleActions(contact),
-  projectsModal: handleActions(projectsModal),
-  modalVideo: handleActions(modalVideo)
+  share: handleModule(Share),
+  modalMeta: handleModule(ModalMeta),
+  dataAnalysis: handleModule(DataAnalysisMenu),
+  recentImagery: handleModule(RecentImagery),
+  recentImageryOld: handleModule(RecentImageryOld),
+  widgets: handleModule(Widgets),
+  popup: handleModule(Popup),
+  header: handleModule(Header),
+  map: handleModule(MapComponent),
+  impacts: handleModule(impacts),
+  aboutProjects: handleModule(aboutProjects),
+  sgfProjects: handleModule(sgfProjects),
+  contact: handleModule(contact),
+  projectsModal: handleModule(projectsModal),
+  modalVideo: handleModule(modalVideo)
 };
 
 // Provider Reducers
 const providersReducers = {
-  countryData: handleActions(CountryDataProviderComponent),
-  geostore: handleActions(GeostoreProviderComponent),
-  whitelists: handleActions(WhitelistsProviderComponent),
-  datasets: handleActions(DatasetsProviderComponent),
-  myGfw: handleActions(MyGFWProviderComponent),
-  ptw: handleActions(PTWProviderComponent),
-  layerSpec: handleActions(LayerSpecProviderComponent)
+  countryData: handleModule(CountryDataProvider),
+  geostore: handleModule(GeostoreProvider),
+  whitelists: handleModule(WhitelistsProvider),
+  datasets: handleModule(DatasetsProvider),
+  myGfw: handleModule(MyGFWProvider),
+  ptw: handleModule(PTWProvider),
+  layerSpec: handleModule(LayerSpecProvider)
 };
 
 // Page Reducers
 const pageReducers = {
-  dashboards: handleActions(DashboardsPageComponent)
+  dashboards: handleModule(DashboardsPage),
+  mapPage: handleModule(MapPage)
 };
 
 export default combineReducers({

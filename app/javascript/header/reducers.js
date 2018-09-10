@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import { combineReducers } from 'redux';
-import { handleActions } from 'utils/redux';
+import { handleActions } from 'redux-tools';
 
 import * as MyGFWProviderComponent from 'providers/mygfw-provider';
 

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import difference from 'lodash/difference';
 
-import modalActions from 'components/modals/meta/meta-actions';
-import mapActions from 'components/map-v2/actions';
+import * as modalActions from 'components/modals/meta/meta-actions';
+import * as mapActions from 'components/map-v2/actions';
 
 import Component from './legend-component';
 import { getLegendProps } from './legend-selectors';

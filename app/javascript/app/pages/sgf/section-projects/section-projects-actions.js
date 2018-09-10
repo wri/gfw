@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import groupBy from 'lodash/groupBy';
 
 import { fetchSGFProjects } from 'services/projects';

@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { actions as modalActions } from 'pages/about/section-projects/section-projects-modal';
-import * as sectionActions from './section-projects-actions';
+import * as modalActions from 'pages/about/section-projects/section-projects-modal/section-projects-modal-actions';
 
+import * as sectionActions from './section-projects-actions';
 import reducers, { initialState } from './section-projects-reducers';
 import SectionProjectsComponent from './section-projects-component';
 
@@ -54,6 +54,6 @@ SectionProjectsContainer.propTypes = {
   fetchProjects: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(SectionProjectsContainer);

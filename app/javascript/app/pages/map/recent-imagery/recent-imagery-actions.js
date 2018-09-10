@@ -1,28 +1,26 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
-import axios, { CancelToken } from 'axios';
+import { createAction, createThunkAction } from 'redux-tools';
+import axios from 'axios';
 import findIndex from 'lodash/findIndex';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
 import { initialState } from './recent-imagery-reducers';
 
-const toogleRecentImagery = createAction('toogleRecentImagery');
-const setVisible = createAction('setVisible');
-const setTimelineFlag = createAction('setTimelineFlag');
-const setRecentImageryData = createAction('setRecentImageryData');
-const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
-const setRecentImagerySettings = createAction('setRecentImagerySettings');
-const setRecentImageryShowSettings = createAction(
+export const toogleRecentImagery = createAction('toogleRecentImagery');
+export const setVisible = createAction('setVisible');
+export const setTimelineFlag = createAction('setTimelineFlag');
+export const setRecentImageryData = createAction('setRecentImageryData');
+export const setRecentImageryDataStatus = createAction(
+  'setRecentImageryDataStatus'
+);
+export const setRecentImagerySettings = createAction(
+  'setRecentImagerySettings'
+);
+export const setRecentImageryShowSettings = createAction(
   'setRecentImageryShowSettings'
 );
 
-const getData = createThunkAction('getData', params => dispatch => {
-  if (this.getDataSource) {
-    this.getDataSource.cancel();
-  }
-  this.getDataSource = CancelToken.source();
-
-  getRecentTiles({ ...params, token: this.getDataSource.token })
+export const getData = createThunkAction('getData', params => dispatch => {
+  getRecentTiles({ ...params })
     .then(response => {
       if (response.data.data.tiles) {
         const { clouds } = initialState.settings;
@@ -51,19 +49,15 @@ const getData = createThunkAction('getData', params => dispatch => {
     });
 });
 
-const getMoreTiles = createThunkAction(
+export const getMoreTiles = createThunkAction(
   'getMoreTiles',
   params => (dispatch, state) => {
-    if (this.getMoreTilesSource) {
-      this.getMoreTilesSource.cancel();
-    }
-    this.getMoreTilesSource = CancelToken.source();
-    const { sources, dataStatus, bands } = params;
+    const { sources, dataStatus, bands, token } = params;
 
     axios
       .all([
-        getTiles({ sources, token: this.getMoreTilesSource.token, bands }),
-        getThumbs({ sources, token: this.getMoreTilesSource.token, bands })
+        getTiles({ sources, token, bands }),
+        getThumbs({ sources, token, bands })
       ])
       .then(
         axios.spread((getTilesResponse, getThumbsResponse) => {
@@ -126,7 +120,7 @@ const getMoreTiles = createThunkAction(
   }
 );
 
-const resetData = createThunkAction('resetData', () => dispatch => {
+export const resetData = createThunkAction('resetData', () => dispatch => {
   dispatch(setRecentImageryShowSettings(false));
   dispatch(
     setRecentImageryData({
@@ -138,16 +132,3 @@ const resetData = createThunkAction('resetData', () => dispatch => {
     })
   );
 });
-
-export default {
-  toogleRecentImagery,
-  setVisible,
-  setTimelineFlag,
-  setRecentImageryData,
-  setRecentImageryDataStatus,
-  setRecentImagerySettings,
-  setRecentImageryShowSettings,
-  getData,
-  getMoreTiles,
-  resetData
-};

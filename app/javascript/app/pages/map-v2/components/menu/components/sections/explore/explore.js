@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { MAP } from 'router';
+import { MAPV2 } from 'router';
 
 import * as actions from 'pages/map-v2/components/menu/menu-actions';
 import { mapStateToProps } from './explore-selectors';
@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch =>
       handleViewOnMap: payload => {
         const { map, route, query } = payload;
         return {
-          type: MAP,
+          type: MAPV2,
           payload: {
             ...route
           },

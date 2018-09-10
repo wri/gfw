@@ -1,3 +1,5 @@
+import * as actions from './section-impacts-actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -16,6 +18,6 @@ const setImpactsProjectsData = (state, { payload }) => ({
 });
 
 export default {
-  setImpactsProjectsLoading,
-  setImpactsProjectsData
+  [actions.setImpactsProjectsLoading]: setImpactsProjectsLoading,
+  [actions.setImpactsProjectsData]: setImpactsProjectsData
 };

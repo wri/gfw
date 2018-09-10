@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions';
+import { createAction } from 'redux-tools';
 
 const buttonClicked = createAction('buttonClicked');
 

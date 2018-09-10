@@ -5,7 +5,7 @@ import { DragDropContextProvider } from 'react-dnd';
 
 import RecentImagery from 'pages/map/recent-imagery';
 
-import './root-styles.scss';
+import './styles.scss';
 
 class Root extends PureComponent {
   render() {

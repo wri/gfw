@@ -1,3 +1,5 @@
+import * as actions from './whitelists-provider-actions';
+
 export const initialState = {
   countryWhitelistLoading: false,
   regionWhitelistLoading: false,
@@ -28,8 +30,8 @@ const setRegionWhitelist = (state, { payload }) => ({
 });
 
 export default {
-  setCountryWhitelistLoading,
-  setRegionWhitelistLoading,
-  setCountryWhitelist,
-  setRegionWhitelist
+  [actions.setCountryWhitelistLoading]: setCountryWhitelistLoading,
+  [actions.setRegionWhitelistLoading]: setRegionWhitelistLoading,
+  [actions.setCountryWhitelist]: setCountryWhitelist,
+  [actions.setRegionWhitelist]: setRegionWhitelist
 };

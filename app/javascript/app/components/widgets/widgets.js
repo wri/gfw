@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import colors from 'data/colors.json';
 
 import Component from './component';
-import actions from './actions';
+import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import {
   getAdminSelected,
@@ -80,6 +80,6 @@ WidgetsContainer.propTypes = {
   getGlobalData: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(WidgetsContainer);

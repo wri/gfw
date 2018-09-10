@@ -26,7 +26,7 @@ const entry = packPaths.reduce((map, entryParam) => {
   ] = resolve(entryParam);
   return localMap;
 }, {});
-
+console.log(entry);
 module.exports = {
   entry,
   output: {

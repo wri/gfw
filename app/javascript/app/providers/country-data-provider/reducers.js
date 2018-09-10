@@ -1,5 +1,7 @@
 import { sortByKey } from 'utils/data';
 
+import * as actions from './actions';
+
 export const initialState = {
   isCountriesLoading: true,
   isRegionsLoading: false,
@@ -74,13 +76,13 @@ const setCountryLinks = (state, { payload }) => ({
 });
 
 export default {
-  setCountriesLoading,
-  setRegionsLoading,
-  setSubRegionsLoading,
-  setCountries,
-  setFAOCountries,
-  setGadmCountries,
-  setRegions,
-  setSubRegions,
-  setCountryLinks
+  [actions.setCountriesLoading]: setCountriesLoading,
+  [actions.setRegionsLoading]: setRegionsLoading,
+  [actions.setSubRegionsLoading]: setSubRegionsLoading,
+  [actions.setCountries]: setCountries,
+  [actions.setFAOCountries]: setFAOCountries,
+  [actions.setGadmCountries]: setGadmCountries,
+  [actions.setRegions]: setRegions,
+  [actions.setSubRegions]: setSubRegions,
+  [actions.setCountryLinks]: setCountryLinks
 };

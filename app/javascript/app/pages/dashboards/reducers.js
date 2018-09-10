@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   showMapMobile: false
 };
@@ -8,5 +10,5 @@ const setShowMapMobile = (state, { payload }) => ({
 });
 
 export default {
-  setShowMapMobile
+  [actions.setShowMapMobile]: setShowMapMobile
 };

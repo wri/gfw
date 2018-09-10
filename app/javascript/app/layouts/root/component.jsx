@@ -11,12 +11,11 @@ import './styles.scss';
 
 const universalOptions = {
   loading: <Loader className="page-loader" />,
-  minDelay: 0
+  minDelay: 200
 };
 
 const PageComponent = universal(
-  ({ path } /* webpackChunkName: "[request]" */) =>
-    import(`../../${path}/index.js`),
+  ({ path } /* webpackChunkName: "[request]" */) => import(`../../${path}`),
   universalOptions
 );
 

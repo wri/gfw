@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   loading: false,
   geostore: {}
@@ -16,6 +18,6 @@ const setGeostoreLoading = (state, { payload }) => ({
 });
 
 export default {
-  setGeostore,
-  setGeostoreLoading
+  [actions.setGeostore]: setGeostore,
+  [actions.setGeostoreLoading]: setGeostoreLoading
 };

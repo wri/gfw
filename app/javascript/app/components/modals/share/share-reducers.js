@@ -1,3 +1,5 @@
+import * as actions from './share-actions';
+
 export const initialState = {
   loading: false,
   open: false,
@@ -55,10 +57,10 @@ const setShareOpen = (state, { payload }) => ({
 });
 
 export default {
-  setShareData,
-  setShareSelected,
-  setShareOpen,
-  setShareUrl,
-  setShareCopied,
-  setShareLoading
+  [actions.setShareData]: setShareData,
+  [actions.setShareSelected]: setShareSelected,
+  [actions.setShareOpen]: setShareOpen,
+  [actions.setShareUrl]: setShareUrl,
+  [actions.setShareCopied]: setShareCopied,
+  [actions.setShareLoading]: setShareLoading
 };

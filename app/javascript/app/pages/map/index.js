@@ -2,12 +2,12 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import actions from './root-actions';
-import reducers, { initialState } from './root-reducers';
-import RootComponent from './root-component';
+import * as actions from './actions';
+import reducers, { initialState } from './reducers';
+import RootComponent from './component';
 
-const mapStateToProps = ({ root }) => {
-  const { loading } = root;
+const mapStateToProps = ({ mapPage }) => {
+  const { loading } = mapPage;
   return {
     loading
   };
@@ -32,6 +32,6 @@ RootContainer.propTypes = {
   setRootLoading: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(RootContainer);

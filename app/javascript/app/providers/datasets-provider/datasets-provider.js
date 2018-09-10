@@ -20,5 +20,5 @@ DatasetsProvider.propTypes = {
   getDatasets: PropTypes.func.isRequired
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 export default connect(null, actions)(DatasetsProvider);

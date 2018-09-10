@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import actions from './share-actions';
+import * as actions from './share-actions';
 import reducers, { initialState } from './share-reducers';
 import ShareComponent from './share-component';
 
@@ -42,6 +42,6 @@ ShareContainer.propTypes = {
   setShareCopied: PropTypes.func.isRequired
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(ShareContainer);

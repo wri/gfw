@@ -1,9 +1,4 @@
-import { createAction } from 'redux-actions';
+import { createAction } from 'redux-tools';
 
-const setModalVideoData = createAction('setModalVideoData');
-const setModalVideoClosed = createAction('setModalVideoClosed');
-
-export default {
-  setModalVideoData,
-  setModalVideoClosed
-};
+export const setModalVideoData = createAction('setModalVideoData');
+export const setModalVideoClosed = createAction('setModalVideoClosed');

@@ -8,7 +8,7 @@ import upperFirst from 'lodash/upperFirst';
 import { DASHBOARDS } from 'router';
 import { deburrUpper } from 'utils/data';
 
-import shareActions from 'components/modals/share/share-actions';
+import * as shareActions from 'components/modals/share/share-actions';
 import { getAdminsSelected, getSentence } from './header-selectors';
 import * as ownActions from './header-actions';
 import reducers, { initialState } from './header-reducers';
@@ -152,6 +152,6 @@ HeaderContainer.propTypes = {
   settings: PropTypes.object.isRequired
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

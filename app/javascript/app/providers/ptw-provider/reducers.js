@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   loading: false,
   data: []
@@ -14,6 +16,6 @@ const setPTWLoading = (state, { payload }) => ({
 });
 
 export default {
-  setPTW,
-  setPTWLoading
+  [actions.setPTW]: setPTW,
+  [actions.setPTWLoading]: setPTWLoading
 };

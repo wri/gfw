@@ -4,7 +4,7 @@ import replace from 'lodash/replace';
 import CATEGORIES from 'data/categories.json';
 
 import { filterWidgets } from 'components/widgets/selectors';
-import mapActions from 'components/map/actions';
+import * as mapActions from 'components/map/actions';
 
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
@@ -45,6 +45,6 @@ const mapStateToProps = ({ dashboards, countryData, whitelists, location }) => {
   };
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(Component);

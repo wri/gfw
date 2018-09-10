@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   loading: true
 };
@@ -8,5 +10,5 @@ const setRootLoading = (state, { payload }) => ({
 });
 
 export default {
-  setRootLoading
+  [actions.setRootLoading]: setRootLoading
 };

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { MAP } from 'router';
+import { MAPV2 } from 'router';
 import { parseGadm36Id } from 'utils/format';
 
 import Component from './component';
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch, { query }) => {
           location = data.level ? parseGadm36Id(data[`gid_${data.level}`]) : {};
         }
         return {
-          type: MAP,
+          type: MAPV2,
           payload: {
             tab: 'data',
             country: !!location.adm0 && location.adm0,
@@ -48,6 +48,6 @@ const mapDispatchToProps = (dispatch, { query }) => {
   );
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(getPopupProps, mapDispatchToProps)(Component);

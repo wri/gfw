@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
@@ -13,10 +12,12 @@ const serializeReponse = response =>
     ...r.attributes
   }));
 
-const setRecentImageryData = createAction('setRecentImageryData');
-const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
-const resetRecentImageryData = createAction('resetRecentImageryData');
-const setRecentImageryLoading = createAction('setRecentImageryLoading');
+export const setRecentImageryData = createAction('setRecentImageryData');
+export const setRecentImageryDataStatus = createAction(
+  'setRecentImageryDataStatus'
+);
+export const resetRecentImageryData = createAction('resetRecentImageryData');
+export const setRecentImageryLoading = createAction('setRecentImageryLoading');
 
 export const setRecentImagerySettings = createThunkAction(
   'setRecentImagerySettings',
@@ -30,7 +31,7 @@ export const setRecentImagerySettings = createThunkAction(
     )
 );
 
-const getData = createThunkAction('getData', params => dispatch => {
+export const getData = createThunkAction('getData', params => dispatch => {
   dispatch(setRecentImageryLoading(true));
   getRecentTiles({ ...params })
     .then(response => {
@@ -64,7 +65,7 @@ const getData = createThunkAction('getData', params => dispatch => {
     });
 });
 
-const getMoreTiles = createThunkAction(
+export const getMoreTiles = createThunkAction(
   'getMoreTiles',
   params => (dispatch, state) => {
     const { sources, dataStatus, bands, token } = params;
@@ -126,13 +127,3 @@ const getMoreTiles = createThunkAction(
       });
   }
 );
-
-export default {
-  setRecentImageryData,
-  setRecentImageryDataStatus,
-  setRecentImagerySettings,
-  setRecentImageryLoading,
-  resetRecentImageryData,
-  getData,
-  getMoreTiles
-};

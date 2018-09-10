@@ -13,7 +13,7 @@ import DataAnalysisMenu from 'pages/map-v2/components/data-analysis-menu';
 
 import './styles.scss';
 
-class Page extends PureComponent {
+class MapPage extends PureComponent {
   render() {
     const {
       analysis,
@@ -38,10 +38,10 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
+MapPage.propTypes = {
   analysis: PropTypes.object,
   handleShowMenu: PropTypes.func,
   mapSettings: PropTypes.object
 };
 
-export default Page;
+export default MapPage;

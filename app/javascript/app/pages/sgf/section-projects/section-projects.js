@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { scroller } from 'react-scroll';
 
-import { actions as modalActions } from 'pages/sgf/section-projects/section-projects-modal';
+import * as modalActions from 'pages/sgf/section-projects/section-projects-modal/section-projects-modal-actions';
 import * as sectionActions from './section-projects-actions';
 
 import reducers, { initialState } from './section-projects-reducers';
@@ -91,6 +91,6 @@ SectionProjectsContainer.propTypes = {
   fetchProjectsImages: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(SectionProjectsContainer);

@@ -1,3 +1,5 @@
+import * as actions from './section-projects-modal-actions';
+
 export const initialState = {
   isOpen: false,
   data: {}
@@ -10,5 +12,5 @@ const setSectionProjectsModal = (state, { payload }) => ({
 });
 
 export default {
-  setSectionProjectsModal
+  [actions.setSectionProjectsModal]: setSectionProjectsModal
 };

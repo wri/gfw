@@ -1,4 +1,4 @@
-import { createThunkAction } from 'utils/redux';
+import { createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 export const setMenuSettings = createThunkAction(

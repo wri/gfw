@@ -1,3 +1,4 @@
+import * as actions from './actions';
 import * as Widgets from './manifest';
 
 const widgets = {};
@@ -68,9 +69,9 @@ const setWidgetData = (state, { payload }) => ({
 });
 
 export default {
-  setWidgetSettings,
-  setWidgetLoading,
-  setWidgetData,
-  setWidgetActive,
-  setGlobalData
+  [actions.setWidgetSettings]: setWidgetSettings,
+  [actions.setWidgetLoading]: setWidgetLoading,
+  [actions.setWidgetData]: setWidgetData,
+  [actions.setWidgetActive]: setWidgetActive,
+  [actions.setGlobalData]: setGlobalData
 };

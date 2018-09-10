@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import wriAPISerializer from 'wri-json-api-serializer';
 import axios from 'axios';
 import moment from 'moment';
@@ -44,7 +43,6 @@ export const getDatasets = createThunkAction(
             const serializedDatasets = wriAPISerializer(
               allDatasets.data
             ).filter(d => d.layer.length);
-
             // get dataset specific depdancies (latest dates for datasets)
             const gladsLatest = glads.data.data[0].attributes.date;
             const formaLatest = forma.data.date;

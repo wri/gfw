@@ -4,8 +4,9 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import { CancelToken } from 'axios';
 
-import actions from './recent-imagery-actions';
+import * as actions from './recent-imagery-actions';
 import reducers, { initialState } from './recent-imagery-reducers';
 import {
   getAllTiles,
@@ -17,7 +18,7 @@ import {
 import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
-const mapStateToProps = ({ recentImagery }) => {
+const mapStateToProps = ({ recentImageryOld }) => {
   const {
     active,
     visible,
@@ -26,7 +27,7 @@ const mapStateToProps = ({ recentImagery }) => {
     data,
     dataStatus,
     settings
-  } = recentImagery;
+  } = recentImageryOld;
   const selectorData = {
     data: data.tiles,
     dataStatus,
@@ -103,12 +104,17 @@ class RecentImageryContainer extends PureComponent {
       !isEqual(settings.weeks, this.props.settings.weeks) ||
       !isEqual(settings.bands, this.props.settings.bands)
     ) {
+      if (this.getDataSource) {
+        this.getDataSource.cancel();
+      }
+      this.getDataSource = CancelToken.source();
       getData({
         latitude: map.getCenter().lng(),
         longitude: map.getCenter().lat(),
         start: dates.start,
         end: dates.end,
-        bands: settings.bands
+        bands: settings.bands,
+        token: this.getDataSource.token
       });
     }
     if (!active && active !== this.props.active) {
@@ -136,7 +142,16 @@ class RecentImageryContainer extends PureComponent {
         dataStatus.requestFails !== this.props.dataStatus.requestFails ||
         isNewTile)
     ) {
-      getMoreTiles({ sources, dataStatus, bands: settings.bands });
+      if (this.getMoreTilesSource) {
+        this.getMoreTilesSource.cancel();
+      }
+      this.getMoreTilesSource = CancelToken.source();
+      getMoreTiles({
+        sources,
+        dataStatus,
+        bands: settings.bands,
+        token: this.getMoreTilesSource.token
+      });
     }
   }
 
@@ -151,12 +166,17 @@ class RecentImageryContainer extends PureComponent {
           this.boundsPolygon
         );
         if (needNewTile) {
+          if (this.getDataSource) {
+            this.getDataSource.cancel();
+          }
+          this.getDataSource = CancelToken.source();
           getData({
             latitude: map.getCenter().lng(),
             longitude: map.getCenter().lat(),
             start: dates.start,
             end: dates.end,
-            bands: settings.bands
+            bands: settings.bands,
+            token: this.getDataSource.token
           });
         }
       }
@@ -297,7 +317,7 @@ RecentImageryContainer.propTypes = {
   resetData: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(
   RecentImageryDrag(RecentImageryContainer)
 );

@@ -9,7 +9,8 @@ import Legend, {
   LegendItemButtonInfo,
   LegendItemButtonRemove,
   LegendItemTypes,
-  LegendListItem
+  LegendListItem,
+  LegendItemButtonLayers
 } from 'wri-api-components/dist/legend';
 
 import Icons from 'wri-api-components/dist/icons';
@@ -103,6 +104,7 @@ class MapLegend extends Component {
                         }}
                         onChangeInfo={() => onChangeInfo(metadata)}
                       >
+                        <LegendItemButtonLayers />
                         <LegendItemButtonOpacity
                           className="-plain"
                           handleStyle={[

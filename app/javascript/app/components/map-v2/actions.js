@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createThunkAction } from 'utils/redux';
+import { createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getMapZoom, getBasemap } from 'components/map-v2/selectors';
 import { addToDate } from 'utils/dates';
@@ -64,8 +64,3 @@ export const setLandsatBasemap = createThunkAction(
     }
   }
 );
-
-export default {
-  setMapSettings,
-  setLandsatBasemap
-};

@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   analysis: {
     loading: false,
@@ -23,5 +25,5 @@ const setAnalysisData = (state, { payload }) => ({
 });
 
 export default {
-  setAnalysisData
+  [actions.setAnalysisData]: setAnalysisData
 };
