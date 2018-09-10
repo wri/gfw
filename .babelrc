@@ -27,7 +27,6 @@
     "stage-3"
   ],
   "plugins": [
-    "universal-import",
     "syntax-dynamic-import",
     "transform-decorators-legacy",
     [
@@ -35,6 +34,7 @@
       {
         "spec": true
       }
-    ]
+    ],
+    "universal-import"
   ]
 }

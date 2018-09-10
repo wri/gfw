@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import union from '@turf/union';
+import union from 'turf-union';
 import { getGeostoreKey } from 'services/geostore';
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
