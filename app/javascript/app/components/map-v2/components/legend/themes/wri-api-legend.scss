@@ -6,7 +6,7 @@
 }
 
 .wri_api__c-legend-item {
-  font-family: inherit;
+  font-family: inherit !important;
 
   .wri_api__icon-square {
     margin-top: 3px;
@@ -16,7 +16,7 @@
 
   .wri_api__legend-item-header > h3 {
     font-size: rem(14px);
-    font-weight: 400;
+    font-weight: 400 !important;
     color: $slate;
   }
 

@@ -50,7 +50,10 @@ class RecentImagerySettings extends PureComponent {
     }
 
     return connectDragSource(
-      <div className="c-recent-imagery-settings" style={{ ...styles, opacity }}>
+      <div
+        className="c-recent-imagery-settings-old"
+        style={{ ...styles, opacity }}
+      >
         <Icon icon={draggerIcon} className="dragger-icon" />
         <button
           className="close-btn"

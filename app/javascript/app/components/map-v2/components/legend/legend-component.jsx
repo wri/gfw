@@ -25,6 +25,7 @@ import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
 
 import './legend-styles.scss';
+import './themes/wri-api-legend.scss';
 
 class MapLegend extends Component {
   render() {

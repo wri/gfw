@@ -26,7 +26,7 @@ class RecentImagery extends PureComponent {
 
     return connectDropTarget(
       <div
-        className={`c-recent-imagery ${
+        className={`c-recent-imagery-old ${
           canDrop ? 'c-recent-imagery--dragging' : ''
         }`}
       >
