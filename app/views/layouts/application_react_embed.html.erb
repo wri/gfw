@@ -5,8 +5,7 @@
     <%= render 'shared/favicons' %>
 
     <!-- render react app pack -->
-    <%= javascript_pack_tag controller_name %>
-    <%= stylesheet_pack_tag controller_name %>
+    <%= javascript_pack_tag 'app' %>
 
     <%= yield :head %>
   </head>

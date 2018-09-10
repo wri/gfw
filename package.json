@@ -158,6 +158,7 @@
     "redux-first-router-link": "1.4.2",
     "redux-form": "^7.4.2",
     "redux-thunk": "2.2.0",
+    "redux-tools": "github:vizzuality/redux-tools#v3.3.1",
     "reselect": "3.0.1",
     "stylelint": "8.3.1",
     "three": "0.87.1",
@@ -165,7 +166,7 @@
     "turf-inside": "^3.0.12",
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
-    "wri-api-components": "^2.1.8",
+    "wri-api-components": "^2.1.10",
     "wri-json-api-serializer": "^1.0.1"
   }
 }

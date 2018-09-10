@@ -5,8 +5,7 @@
 <% content_for :head do %>
   <%= render 'shared/google_carto' %>
   <!-- render react app pack -->
-  <%= javascript_pack_tag controller_name %>
-  <%= stylesheet_pack_tag controller_name %>
+  <%= javascript_pack_tag 'app' %>
 <% end %>
 
 <% content_for :header do %>
@@ -27,7 +26,7 @@
 <%= render 'shared/modal' %>
 <%= render 'shared/notifications' %>
 
-<div class="react-map"></div>
+<div id="app-root"></div>
 
 <%= render 'shared/icons/svg_icons_map' %>
 <%= render 'shared/icons/svg_icons_applications' %>

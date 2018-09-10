@@ -1,5 +1,6 @@
-<%= content_for :head do %>
+<% content_for :head do %>
   <%= render 'shared/leaflet' %>
+  <%= javascript_pack_tag 'app' %>
 <% end %>
 
-<div id="map-page"></div>
+<div id="app-root"></div>

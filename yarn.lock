@@ -8485,15 +8485,7 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.0.4:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.2.tgz#8a4c4d25ffc95ea80c8d5294095c8b7b14fc18ac"
-  dependencies:
-    bluebird "^3.5.1"
-    lodash "^4.17.10"
-    wri-json-api-serializer "^1.0.1"
-
-layer-manager@^1.1.5:
+layer-manager@^1.0.4, layer-manager@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.1.5.tgz#7b12a5ec233b05423cb49ada651a4f07a2a64585"
   dependencies:
@@ -12666,7 +12658,7 @@ reduce-function-call@^1.0.1, reduce-function-call@^1.0.2:
   dependencies:
     balanced-match "^0.4.2"
 
-reduce-reducers@^0.1.0:
+reduce-reducers@^0.1.0, reduce-reducers@^0.1.2:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.5.tgz#ff77ca8068ff41007319b8b4b91533c7e0e54576"
 
@@ -12709,6 +12701,14 @@ redux-form@^7.4.2:
 redux-thunk@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
+
+"redux-tools@github:vizzuality/redux-tools#v3.3.1":
+  version "3.3.0"
+  resolved "https://codeload.github.com/vizzuality/redux-tools/tar.gz/41ff29da358ab49a9e30205dc5d16a254a627602"
+  dependencies:
+    ms "^2.0.0"
+    reduce-reducers "^0.1.2"
+    uuid "^3.2.1"
 
 redux@^3.7.1:
   version "3.7.2"
@@ -15527,9 +15527,9 @@ wrappy@1, wrappy@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
-wri-api-components@^2.1.8:
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.1.8.tgz#153dc4e1067cac249cd36fa1978c13ce4ede53f3"
+wri-api-components@^2.1.10:
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.1.10.tgz#fc7747b5a88a815ac9f20489db74dc1fccb66133"
   dependencies:
     classnames "^2.2.6"
     layer-manager "^1.0.4"
