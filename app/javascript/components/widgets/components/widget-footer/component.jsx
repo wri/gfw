@@ -11,7 +11,7 @@ class WidgetFooter extends PureComponent {
     return statement ? (
       <div className="c-widget-footer">
         {statement}
-        {config.statementConfig && <p className="driver-separator">|</p>}
+        {config.statementConfig && <span className="driver-separator">|</span>}
         {config.statementConfig && (
           <Statement
             className="loss-driver-statement"

@@ -7,9 +7,11 @@
 
   .loss-driver-statement {
     display: inline-block;
+    color: rgba($slate, 0.5);
   }
 
   .driver-separator {
+    color: rgba($slate, 0.5);
     display: inline-block;
     padding: 0 rem(3px);
   }
