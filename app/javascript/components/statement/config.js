@@ -13,6 +13,6 @@ export default {
     statementPlain: '',
     statementHighlight: 'permanent drivers',
     tooltipDesc:
-      'The permanent drivers of deforestation are Urbanisation and Commodity Driven Deforestation.'
+      'The permanent drivers of deforestation are Urbanization and Commodity Driven Deforestation.'
   }
 };
