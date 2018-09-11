@@ -122,7 +122,7 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    ffi (1.9.23)
+    ffi (1.9.25)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     fog (2.0.0)
@@ -496,6 +496,7 @@ DEPENDENCIES
   dotenv-rails
   erubis
   factory_bot_rails
+  ffi (~> 1.9.24)
   fog
   foreman
   httparty

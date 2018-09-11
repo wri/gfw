@@ -13,9 +13,12 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
 
   var URL = window.gfw.config.GFW_API + '/geostore/{id}';
   var USE_URL = window.gfw.config.GFW_API + '/geostore/use/{use}/{useid}';
-  var COUNTRY_URL =
+  var COUNTRY_URL = window.gfw.config.GFW_API + '/v2/geostore/admin/{country}';
+  var REGION_URL =
+    window.gfw.config.GFW_API + '/v2/geostore/admin/{country}/{region}';
+  var SUBREGION_URL =
     window.gfw.config.GFW_API +
-    '/geostore/admin/{country}{?/region}{?/subRegion}';
+    '/v2/geostore/admin/{country}/{region}/{subRegion}';
 
   var GeostoreService = Class.extend({
     get: function(id) {
@@ -65,11 +68,23 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
 
     iso: function(iso) {
       return new Promise(function(resolve, reject) {
-        var url = new UriTemplate(COUNTRY_URL).fillFromObject({
-          country: iso.country,
-          region: iso.region,
-          subRegion: iso.subRegion
-        });
+        var url = '';
+        if (iso.country && iso.region && iso.subRegion) {
+          url = new UriTemplate(SUBREGION_URL).fillFromObject({
+            country: iso.country,
+            region: iso.region,
+            subRegion: iso.subRegion
+          });
+        } else if (iso.country && iso.region && !iso.subRegion) {
+          url = new UriTemplate(REGION_URL).fillFromObject({
+            country: iso.country,
+            region: iso.region
+          });
+        } else if (iso.country && !iso.region && !iso.subRegion) {
+          url = new UriTemplate(COUNTRY_URL).fillFromObject({
+            country: iso.country
+          });
+        }
 
         ds.define(GET_ISO_REQUEST_ID, {
           cache: false,
