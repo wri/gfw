@@ -4,4 +4,13 @@
   margin-top: rem(10px);
   font-size: 12px;
   color: rgba($slate, 0.5);
+
+  .loss-driver-statement {
+    display: inline-block;
+  }
+
+  .driver-separator {
+    display: inline-block;
+    padding: 0 rem(3px);
+  }
 }

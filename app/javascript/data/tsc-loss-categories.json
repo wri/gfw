@@ -2,22 +2,23 @@
   {
     "label": "Commodity Driven Deforestation",
     "value": 1,
-    "type": "permanent"
-  },{
+    "permanent": true
+  },
+  {
     "label": "Shifting Agriculture",
-    "value": 2,
-    "type": "temporary"
-  },{
+    "value": 2
+  },
+  {
     "label": "Forestry",
-    "value": 3,
-    "type": "temporary"
-  },{
+    "value": 3
+  },
+  {
     "label": "Wildfire",
-    "value": 4,
-    "type": "temporary"
-  },{
+    "value": 4
+  },
+  {
     "label": "Urbanization",
     "value": 5,
-    "type": "permanent"
+    "permanent": true
   }
 ]

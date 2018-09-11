@@ -18,33 +18,40 @@ const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
-export const getFilteredData = createSelector(
-  [getLoss, getSettings],
-  (data, settings) => {
+export const getPermCats = createSelector([], () =>
+  tscLossCategories.filter(x => x.permanent).map(el => el.value.toString())
+);
+
+export const mergeDataWithCetagories = createSelector(
+  [getLoss, getPermCats],
+  (data, permCats) => {
     if (isEmpty(data)) return null;
-    const permFilters = tscLossCategories
-      .filter(x => x.type === 'permanent')
-      .map(el => el.value.toString());
+    return data.map(d => ({
+      ...d,
+      permanent: permCats.includes(d.bound1)
+    }));
+  }
+);
+
+export const getFilteredData = createSelector(
+  [mergeDataWithCetagories, getSettings, getPermCats],
+  (data, settings, permCats) => {
+    if (isEmpty(data)) return null;
     const { startYear, endYear } = settings;
     const filteredByYear = data.filter(
       d => d.year >= startYear && d.year <= endYear
     );
-    const filteredByGroup = data.filter(
-      d =>
-        d.year >= startYear &&
-        d.year <= endYear &&
-        permFilters.includes(d.bound1)
+    const permanentData = filteredByYear.filter(d =>
+      permCats.includes(d.bound1)
     );
-    const filteredData =
-      settings.tscDriverGroup === 'permanent'
-        ? filteredByGroup
-        : filteredByYear;
-    return filteredData;
+    return settings.tscDriverGroup === 'permanent'
+      ? permanentData
+      : filteredByYear;
   }
 );
 
 export const getAllLoss = createSelector(
-  [getLoss, getSettings],
+  [mergeDataWithCetagories, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
     const { startYear, endYear } = settings;
@@ -53,15 +60,12 @@ export const getAllLoss = createSelector(
 );
 
 export const getDrivers = createSelector(
-  [getFilteredData, getSettings],
-  (data, settings) => {
+  [getFilteredData, getSettings, getPermCats],
+  (data, settings, permCats) => {
     if (isEmpty(data)) return null;
-    const permFilters = tscLossCategories
-      .filter(x => x.type === 'permanent')
-      .map(el => el.value.toString());
     const groupedData = groupBy(sortByKey(data, 'area'), 'bound1');
     const filteredData = Object.keys(groupedData)
-      .filter(key => permFilters.includes(key))
+      .filter(key => permCats.includes(key))
       .reduce(
         (obj, key) => ({
           ...obj,
@@ -72,17 +76,17 @@ export const getDrivers = createSelector(
 
     const groupedLoss =
       settings.tscDriverGroup === 'permanent' ? filteredData : groupedData;
-
     const sortedLoss = !isEmpty(groupedLoss)
       ? sortByKey(
         Object.keys(groupedLoss).map(k => ({
           driver: k,
-          area: sumBy(groupedLoss[k], 'area')
+          area: sumBy(groupedLoss[k], 'area'),
+          permanent: permCats.includes(k)
         })),
         'area',
         true
       )
-      : permFilters.map(x => ({
+      : permCats.map(x => ({
         driver: x.toString(),
         area: 0.0
       }));
@@ -117,15 +121,17 @@ export const parseData = createSelector([getFilteredData], data => {
 });
 
 export const parseConfig = createSelector(
-  [getColors, getFilteredData, getDrivers],
-  (colors, data, drivers) => {
+  [getColors, getFilteredData, getDrivers, getSettings],
+  (colors, data, drivers, settings) => {
     if (isEmpty(data)) return null;
+    const { highlighted } = settings || {};
     const yKeys = {};
     const categoryColors = colors.lossDrivers;
     drivers.forEach(k => {
       yKeys[`class_${k.driver}`] = {
         fill: categoryColors[k.driver],
-        stackId: 1
+        stackId: 1,
+        opacity: !highlighted || (highlighted && k.permanent) ? 1 : 0.5
       };
     });
     let tooltip = [
@@ -179,20 +185,26 @@ export const getSentence = createSelector(
     getCurrentLocation,
     getIndicator,
     getSentences,
-    getDrivers
+    getDrivers,
+    getPermCats
   ],
-  (data, allLoss, settings, currentLabel, indicator, sentences, drivers) => {
+  (
+    data,
+    allLoss,
+    settings,
+    currentLabel,
+    indicator,
+    sentences,
+    drivers,
+    permCats
+  ) => {
     if (isEmpty(data)) return null;
     const { initial, globalInitial } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const { driver } = drivers[0];
     const { label } = tscLossCategories[driver - 1];
 
-    const permFilters = tscLossCategories
-      .filter(x => x.type === 'permanent')
-      .map(el => el.value.toString());
-    const filteredLoss =
-      data && data.filter(x => permFilters.includes(x.bound1));
+    const filteredLoss = data && data.filter(x => permCats.includes(x.bound1));
 
     const permLoss =
       (filteredLoss && filteredLoss.length && sumBy(filteredLoss, 'area')) || 0;

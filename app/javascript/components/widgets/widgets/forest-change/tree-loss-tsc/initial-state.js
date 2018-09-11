@@ -19,12 +19,16 @@ export default {
         'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent deforestation</b>.',
       globalInitial:
         '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in <b>permanent deforestation</b>.'
+    },
+    statementConfig: {
+      type: 'lossByDriver'
     }
   },
   settings: {
     tscDriverGroup: 'all',
     endYear: 2015,
-    layers: ['loss_by_driver']
+    layers: ['loss_by_driver'],
+    highlighted: false
   },
   enabled: true
 };

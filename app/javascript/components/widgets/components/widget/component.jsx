@@ -29,9 +29,11 @@ class Widget extends PureComponent {
       Component,
       sentence,
       setWidgetSettingsUrl,
+      handleDataHighlight,
       parsedData,
       parsedConfig
     } = this.props;
+
     return (
       <div
         className={`c-widget ${config.size || ''}`}
@@ -78,7 +80,7 @@ class Widget extends PureComponent {
               />
             )}
         </div>
-        <WidgetFooter {...this.props} />
+        <WidgetFooter {...this.props} onHover={handleDataHighlight} />
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
@@ -111,6 +113,7 @@ Widget.propTypes = {
   colors: PropTypes.object,
   whitelist: PropTypes.array,
   Component: PropTypes.any,
+  handleDataHighlight: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   parsedData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

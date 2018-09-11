@@ -73,15 +73,27 @@ class WidgetsContainer extends PureComponent {
     getGlobalData();
   }
 
+  handleDataHighlight = (highlighted, widget) => {
+    const { setWidgetSettingsUrl } = this.props;
+    setWidgetSettingsUrl({
+      value: {
+        highlighted
+      },
+      widget
+    });
+  };
+
   render() {
     return createElement(Component, {
-      ...this.props
+      ...this.props,
+      handleDataHighlight: this.handleDataHighlight
     });
   }
 }
 
 WidgetsContainer.propTypes = {
-  getGlobalData: PropTypes.func
+  getGlobalData: PropTypes.func,
+  setWidgetSettingsUrl: PropTypes.func
 };
 
 export { actions, reducers, initialState };
