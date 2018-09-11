@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga';
-import { ANALYTICS_EVENTS } from 'pages/dashboards/analytics';
+import { ANALYTICS_EVENTS } from 'app/analytics';
 
 const { ANALYTICS_PROPERTY_ID } = process.env;
 let gaInitialized = false;
