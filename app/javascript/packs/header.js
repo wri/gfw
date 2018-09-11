@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => render(Header));
 
 if (module.hot) {
   /* eslint-disable global-require */
-  module.hot.accept('../app/components/header', () => {
-    render(require('../app/components/header').default);
+  module.hot.accept('../components/header', () => {
+    render(require('../components/header').default);
   });
 }
