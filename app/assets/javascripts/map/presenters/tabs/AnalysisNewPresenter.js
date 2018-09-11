@@ -207,6 +207,14 @@ define(
         mps.publish('Place/register', [this]);
       },
 
+      getUsename: function(name) {
+        var newName = name;
+        if (name === 'gfw_logging') {
+          newName = 'logging';
+        }
+        return newName;
+      },
+
       listeners: function() {
         // dev
         this.status.on('change', function() {
@@ -453,9 +461,9 @@ define(
         {
           'Subscribe/shape': function(data) {
             var subscritionObj = {};
-
-            if (!!data.use && this.usenames.indexOf(data.use) === -1) {
-              GeostoreService.use({ use: data.use, useid: data.useid }).then(
+            var use = this.getUsename(data.use && data.use);
+            if (!!use) {
+              GeostoreService.use({ use: use, useid: data.useid }).then(
                 function(useGeostoreId) {
                   subscritionObj = {
                     iso: {
@@ -725,9 +733,10 @@ define(
       },
 
       changeUse: function() {
-        var use = this.status.get('use'),
+        var use = this.getUsename(this.status.get('use')),
           useid = this.status.get('useid');
-        if (!!use && !!useid && this.usenames.indexOf(use) > -1) {
+
+        if (!!use && !!useid) {
           this.status.set('spinner', true);
 
           GeostoreService.use({ use: use, useid: useid })
@@ -848,7 +857,11 @@ define(
           var iso = this.status.get('iso');
           // Send request to the Analysis Service
           if (iso && iso.subRegion) {
-            GeostoreService.iso(iso)
+            GeostoreService.iso({
+              country: iso.country,
+              region: iso.region,
+              subRegion: iso.subRegion
+            })
               .then(
                 function(geostoreId) {
                   this.status.set('useGeostore', geostoreId);
