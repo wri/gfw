@@ -6,21 +6,30 @@ import { reducer as formReducer } from 'redux-form';
 // Routes
 import router from './router';
 
-// Components
+// COMPONENTS
+
+// Map & Dashboards
 import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
 import { reduxModule as DataAnalysisMenu } from 'pages/map-v2/components/data-analysis-menu';
-import { reduxModule as Share } from 'components/modals/share';
-import { reduxModule as ModalMeta } from 'components/modals/meta';
 import { reduxModule as Widgets } from 'components/widgets';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
 import { reduxModule as Header } from 'pages/dashboards/header';
-import { reduxModule as MapComponent } from 'components/map';
-import { reduxModule as impacts } from 'pages/about/section-impacts';
-import { reduxModule as aboutProjects } from 'pages/about/section-projects';
-import { reduxModule as sgfProjects } from 'pages/sgf/section-projects';
-import { reduxModule as contact } from 'pages/about/section-contact';
-import { reduxModule as projectsModal } from 'pages/about/section-projects/section-projects-modal';
-import { reduxModule as modalVideo } from 'components/modals/video';
+import { reduxModule as MapOld } from 'components/map';
+
+// Projects (About and SGF)
+import { reduxModule as Impacts } from 'pages/about/section-impacts';
+import { reduxModule as AboutProjects } from 'pages/about/section-projects';
+import { reduxModule as SGFProjects } from 'pages/sgf/section-projects';
+
+// Modals
+import { reduxModule as ModalMeta } from 'components/modals/meta';
+import { reduxModule as Share } from 'components/modals/share';
+import { reduxModule as ModalVideo } from 'components/modals/video';
+import { reduxModule as AboutModal } from 'pages/about/section-projects/section-projects-modal';
+import { reduxModule as SGFModal } from 'pages/sgf/section-projects/section-projects-modal';
+
+// Forms
+import { reduxModule as Contact } from 'pages/about/section-contact';
 
 // Providers
 import { reduxModule as CountryDataProvider } from 'providers/country-data-provider';
@@ -36,20 +45,25 @@ import { reduxModule as DashboardsPage } from 'pages/dashboards';
 
 // Component Reducers
 const componentsReducers = {
-  share: handleModule(Share),
-  modalMeta: handleModule(ModalMeta),
+  // map & dashboards
   dataAnalysis: handleModule(DataAnalysisMenu),
   recentImagery: handleModule(RecentImagery),
   widgets: handleModule(Widgets),
   popup: handleModule(Popup),
   header: handleModule(Header),
-  map: handleModule(MapComponent),
-  impacts: handleModule(impacts),
-  aboutProjects: handleModule(aboutProjects),
-  sgfProjects: handleModule(sgfProjects),
-  contact: handleModule(contact),
-  projectsModal: handleModule(projectsModal),
-  modalVideo: handleModule(modalVideo)
+  share: handleModule(Share),
+  map: handleModule(MapOld),
+  // modals
+  modalVideo: handleModule(ModalVideo),
+  modalMeta: handleModule(ModalMeta),
+  modalAbout: handleModule(AboutModal),
+  modalSGF: handleModule(SGFModal),
+  // projects
+  impacts: handleModule(Impacts),
+  aboutProjects: handleModule(AboutProjects),
+  sgfProjects: handleModule(SGFProjects),
+  // forms
+  contact: handleModule(Contact)
 };
 
 // Provider Reducers

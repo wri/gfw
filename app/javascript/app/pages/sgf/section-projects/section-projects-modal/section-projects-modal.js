@@ -6,8 +6,8 @@ import reducers, { initialState } from './section-projects-modal-reducers';
 import SectionProjectsModalComponent from './section-projects-modal-component';
 
 const mapStateToProps = state => ({
-  isOpen: state.projectsModal.isOpen,
-  data: state.projectsModal.data
+  isOpen: state.modalSGF.isOpen,
+  data: state.modalSGF.data
 });
 
 export const reduxModule = { actions, reducers, initialState };
