@@ -131,7 +131,7 @@ export const parseConfig = createSelector(
       yKeys[`class_${k.driver}`] = {
         fill: categoryColors[k.driver],
         stackId: 1,
-        opacity: !highlighted || (highlighted && k.permanent) ? 1 : 0.5
+        opacity: !highlighted || (highlighted && k.permanent) ? 1 : 0.3
       };
     });
     let tooltip = [

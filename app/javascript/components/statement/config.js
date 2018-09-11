@@ -11,7 +11,8 @@ export default {
   },
   lossByDriver: {
     statementPlain: '',
-    statementHighlight: 'permanent deforestation',
-    tooltipDesc: 'highllighting drivers'
+    statementHighlight: 'permanent drivers',
+    tooltipDesc:
+      'The permanent drivers of deforestation are Urbanisation and Commodity Driven Deforestation.'
   }
 };
