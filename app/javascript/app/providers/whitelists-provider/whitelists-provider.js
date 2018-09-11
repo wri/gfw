@@ -18,7 +18,7 @@ class WhitelistProvider extends PureComponent {
     } = this.props;
     getCountryWhitelist(country);
     if (region) {
-      getRegionWhitelist(country, region, subRegion);
+      getRegionWhitelist({ country, region, subRegion });
     }
   }
 
@@ -34,7 +34,7 @@ class WhitelistProvider extends PureComponent {
     }
 
     if (hasRegionChanged || hasSubRegionChanged) {
-      getRegionWhitelist(country, region, subRegion);
+      getRegionWhitelist({ country, region, subRegion });
     }
   }
 

@@ -8,7 +8,7 @@ export const setGeostore = createAction('setGeostore');
 
 export const getGeostore = createThunkAction(
   'getGeostore',
-  (country, region, subRegion) => (dispatch, state) => {
+  ({ country, region, subRegion }) => (dispatch, state) => {
     if (!state().geostore.loading) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
       getGeostoreProvider(country, region, subRegion)

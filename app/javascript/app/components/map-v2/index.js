@@ -41,7 +41,10 @@ class MapContainer extends PureComponent {
 
     // update landsat basemap when changing zoom
     if (basemap.id === 'landsat' && zoom !== prevProps.zoom) {
-      this.props.setLandsatBasemap(basemap.year, basemap.defaultUrl);
+      this.props.setLandsatBasemap({
+        year: basemap.year,
+        defaultUrl: basemap.defaultUrl
+      });
     }
 
     // only set bounding box if action allows it

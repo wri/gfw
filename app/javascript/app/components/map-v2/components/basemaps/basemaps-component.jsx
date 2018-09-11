@@ -28,10 +28,9 @@ class Basemaps extends React.PureComponent {
     this.props.selectLabels(selected);
   };
 
-  onLansatChange = e => {
+  onLansatChange = year => {
     const { basemaps, selectBasemap } = this.props;
-    const activeLandsatYear = parseInt(e.currentTarget.value, 10);
-    selectBasemap(basemaps.landsat, activeLandsatYear);
+    selectBasemap(basemaps.landsat, year);
   };
 
   renderButtonBasemap(item) {
@@ -76,7 +75,7 @@ class Basemaps extends React.PureComponent {
             className="theme-dropdown-native-inline"
             value={year}
             options={landsatYears}
-            onChange={this.onLansatChange}
+            onChange={e => this.onLansatChange(parseInt(e.target.value, 10))}
             native
           />
         </span>

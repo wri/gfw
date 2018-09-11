@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
-import { setMapSettings, setLandsatBasemap } from 'components/map-v2/actions';
+import * as actions from 'components/map-v2/actions';
 import { getBasemapsProps } from './basemaps-selectors';
 import BasemapsComponent from './basemaps-component';
 
@@ -19,7 +19,10 @@ class BasemapsContainer extends React.Component {
   selectBasemap = (basemap, year) => {
     if (basemap.dynamic) {
       if (basemap.id === 'landsat') {
-        return this.props.setLandsatBasemap(year, basemap.defaultUrl);
+        return this.props.setLandsatBasemap({
+          year,
+          defaultUrl: basemap.defaultUrl
+        });
       }
     }
     return this.props.setMapSettings({ basemap });
@@ -61,7 +64,5 @@ class BasemapsContainer extends React.Component {
 }
 
 export default withTooltipEvt(
-  connect(getBasemapsProps, { setMapSettings, setLandsatBasemap })(
-    BasemapsContainer
-  )
+  connect(getBasemapsProps, actions)(BasemapsContainer)
 );
