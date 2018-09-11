@@ -23,7 +23,8 @@ export const getGroups = createSelector(getParsedOptions, options => {
   if (!options) return null;
   return Object.keys(options).map(g => ({
     label: g,
-    value: options[g][0].value
+    value: options[g][0].value,
+    group: g
   }));
 });
 
@@ -35,7 +36,16 @@ export const getSecondaryOptions = createSelector(
   }
 );
 
+export const getSelectedGroupOption = createSelector(
+  [getGroups, getSelectedGroup],
+  (groups, group) => {
+    if (!groups || !group) return null;
+    return groups.find(g => g.group === group);
+  }
+);
+
 export const getSelectorProps = createStructuredSelector({
   groups: getGroups,
-  options: getSecondaryOptions
+  options: getSecondaryOptions,
+  selectedGroup: getSelectedGroupOption
 });

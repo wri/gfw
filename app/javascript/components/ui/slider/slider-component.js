@@ -12,7 +12,8 @@ class Slider extends PureComponent {
   renderHandle = props => {
     const { formatValue, showTooltip } = this.props;
     const { value, dragging, index, ...restProps } = props;
-    const formattedValue = formatValue(value);
+    const formattedValue = formatValue ? formatValue(value) : value;
+    const tooltipVisible = showTooltip ? showTooltip(index) : false;
 
     return (
       <Tooltip
@@ -23,7 +24,7 @@ class Slider extends PureComponent {
         placement="top"
         mouseLeaveDelay={0}
         destroyTooltipOnHide
-        visible={dragging || showTooltip(index)}
+        visible={dragging || tooltipVisible}
       >
         <Handle className="drag-handle" value={value} {...restProps} />
       </Tooltip>
@@ -42,7 +43,7 @@ class Slider extends PureComponent {
     } = this.props;
 
     const Component = range ? Range : RCSlider;
-    const handleNum = value.length;
+    const handleNum = Array.isArray(value) ? value.length : 1;
     const handleStyles = fill(Array(handleNum), {
       zIndex: 0,
       width: '1px',
@@ -56,15 +57,18 @@ class Slider extends PureComponent {
     handleStyles[0] = handleStyle;
     handleStyles[handleNum - 1] = handleStyle;
 
-    const trackStyles = fill(Array(handleNum - 1), trackStyle).map((t, i) => ({
-      ...t,
-      backgroundColor: trackColors[i] || ''
-    }));
+    const trackStyles = fill(Array(handleNum - 1 || 1), trackStyle).map(
+      (t, i) => ({
+        ...t,
+        backgroundColor: trackColors[i] || '#97be32'
+      })
+    );
 
     return (
       <div className={`c-slider ${className || ''}`}>
         <Component
           handle={this.renderHandle}
+          onChange={this.handleLocalChange}
           {...rest}
           handleStyle={handleStyles}
           trackStyle={trackStyles}
@@ -77,6 +81,7 @@ class Slider extends PureComponent {
 
 Slider.defaultProps = {
   trackStyle: { backgroundColor: '#d6d6d9', borderRadius: '0px' },
+  trackColors: ['#97be32'],
   handleStyle: {
     backgroundColor: 'white',
     borderRadius: '2px',
@@ -92,7 +97,7 @@ Slider.defaultProps = {
 Slider.propTypes = {
   className: PropTypes.string,
   settings: PropTypes.object,
-  value: PropTypes.array,
+  value: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
   dragging: PropTypes.bool,
   index: PropTypes.number,
   range: PropTypes.bool,

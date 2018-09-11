@@ -2,13 +2,16 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 
+import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
+
 import initialState from './initial-state';
 
 // get list data
-const getMapUrlState = state => (state.query && state.query.map) || null;
-const getDatasets = state => state.datasets;
-const getLoading = state => state.loading;
-const getGeostore = state => state.geostore || null;
+const getMapUrlState = state =>
+  (state.location && state.location.query && state.location.query.map) || null;
+const getDatasets = state => state.datasets.datasets;
+const getLoading = state => state.datasets.loading || state.geostore.loading;
+const getGeostore = state => state.geostore.geostore || null;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -35,7 +38,7 @@ export const getLabels = createSelector(
 export const getBBox = createSelector(getGeostore, geostore => {
   const { bbox } = geostore;
   if (isEmpty(bbox)) return {};
-  return { bbox, options: { padding: [10, 10] } };
+  return { bbox, options: { padding: [20, 20] } };
 });
 
 export const getMapOptions = createSelector(getMapSettings, settings => {
@@ -200,7 +203,7 @@ export const getLayerGroups = createSelector(
 // filter out any boundary layers that are for the basemaps comp
 export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
   if (!groups) return null;
-  return groups.filter(g => !g.isBoundary);
+  return groups.filter(g => !g.isBoundary && !g.isRecentImagery);
 });
 
 // flatten datasets into layers for the layer manager
@@ -224,5 +227,7 @@ export const getMapProps = createStructuredSelector({
   layerGroups: getLayerGroups,
   activeLayers: getActiveLayers,
   loading: getLoading,
-  bbox: getBBox
+  bbox: getBBox,
+  geostore: getGeostore,
+  tileGeoJSON: getTileGeoJSON
 });

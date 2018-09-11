@@ -13,11 +13,17 @@ import './styles.scss';
 
 class Datasets extends PureComponent {
   handleRemoveCountry = iso => {
-    const { selectedCountries, setMenuSettings } = this.props;
+    const {
+      selectedCountries,
+      setMenuSettings,
+      setMapSettings,
+      activeDatasets
+    } = this.props;
     const newCountries = selectedCountries.filter(c => c.value !== iso);
     setMenuSettings({
       selectedCountries: newCountries ? newCountries.map(nc => nc.value) : []
     });
+    setMapSettings({ datasets: activeDatasets.filter(d => d.iso !== iso) });
   };
 
   handleAddCountry = country => {
@@ -132,7 +138,9 @@ Datasets.propTypes = {
   selectedCountries: PropTypes.array,
   countries: PropTypes.array,
   setMenuSettings: PropTypes.func,
-  countriesWithoutData: PropTypes.array
+  countriesWithoutData: PropTypes.array,
+  setMapSettings: PropTypes.func,
+  activeDatasets: PropTypes.array
 };
 
 export default Datasets;

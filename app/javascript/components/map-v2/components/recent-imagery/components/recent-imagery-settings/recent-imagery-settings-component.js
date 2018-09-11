@@ -1,190 +1,167 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { format } from 'd3-format';
+import startCase from 'lodash/startCase';
 
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider';
-import Carousel from 'components/ui/carousel';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
-import draggerIcon from 'assets/icons/dragger.svg';
 import closeIcon from 'assets/icons/close.svg';
 
-import RecentImageryThumbnail from '../../components/recent-imagery-thumbnail';
-import RecentImageryDrag from './recent-imagery-settings-drag';
+import RecentImageryThumbnail from '../recent-imagery-thumbnail';
+
 import './recent-imagery-settings-styles.scss';
 
 class RecentImagerySettings extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      thumbnailsDescription: null
-    };
-  }
+  state = {
+    selected: null,
+    clouds: this.props.settings.clouds
+  };
+
+  handleCloundsChange = clouds => {
+    this.setState({ clouds });
+  };
 
   render() {
     const {
-      selectedTile,
+      activeTile,
       tiles,
-      settings: {
-        styles,
-        thumbsToShow,
-        selectedTileSource,
-        date,
-        weeks,
-        clouds,
-        bands
-      },
-      isDragging,
-      connectDragSource,
+      loading,
+      settings: { date, weeks, bands },
       setRecentImagerySettings,
-      setRecentImageryShowSettings
+      getTooltipContentProps
     } = this.props;
-    let opacity = 1;
 
-    if (isDragging) {
-      opacity = 0;
-    }
+    const selected = this.state.selected || activeTile || {};
 
-    return connectDragSource(
-      <div className="c-recent-imagery-settings" style={{ ...styles, opacity }}>
-        <Icon icon={draggerIcon} className="dragger-icon" />
-        <button
-          className="close-btn"
-          onClick={() => setRecentImageryShowSettings(false)}
-        >
-          <Icon icon={closeIcon} className="close-icon" />
-        </button>
-        <div className="c-recent-imagery-settings__title">
-          RECENT HI-RES SATELLITE IMAGERY
-        </div>
-        <div className="c-recent-imagery-settings__dates">
-          <div className="c-recent-imagery-settings__dates__title">
-            ACQUISITION DATE
+    return (
+      <div className="c-recent-imagery-settings" {...getTooltipContentProps()}>
+        <div className="top-section">
+          <div className="recent-menu">
+            <div className="title">Recent satellite imagery</div>
+            <button
+              className="close-btn"
+              onClick={() => setRecentImagerySettings({ visible: false })}
+            >
+              <Icon icon={closeIcon} className="icon-close" />
+            </button>
           </div>
-          <div className="c-recent-imagery-settings__dates__buttons">
-            <Dropdown
-              theme="theme-dropdown-button"
-              value={weeks}
-              options={WEEKS}
-              onChange={option =>
-                setRecentImagerySettings({ weeks: option.value })
-              }
-            />
-            <div className="c-recent-imagery-settings__dates__before">
-              before
+          <div className="dates">
+            <div className="title">ACQUISITION DATE</div>
+            <div className="buttons">
+              <Dropdown
+                theme="theme-dropdown-button"
+                value={weeks}
+                options={WEEKS}
+                onChange={option =>
+                  setRecentImagerySettings({ weeks: option.value })
+                }
+              />
+              <div className="before">before</div>
+              <Datepicker
+                date={date ? moment(date) : moment()}
+                handleOnDateChange={d =>
+                  setRecentImagerySettings({ date: d.format('YYYY-MM-DD') })
+                }
+                settings={{
+                  displayFormat: 'D MMM YYYY',
+                  numberOfMonths: 1,
+                  isOutsideRange: d => d.isAfter(moment()),
+                  block: true,
+                  hideKeyboardShortcutsPanel: true,
+                  noBorder: true,
+                  readOnly: true
+                }}
+              />
             </div>
-            <Datepicker
-              date={date ? moment(date) : moment()}
-              handleOnDateChange={d =>
-                setRecentImagerySettings({ date: d.format('YYYY-MM-DD') })
-              }
-              settings={{
-                displayFormat: 'D MMM YYYY',
-                numberOfMonths: 1,
-                isOutsideRange: d => d.isAfter(moment()),
-                hideKeyboardShortcutsPanel: true,
-                noBorder: true,
-                readOnly: true
-              }}
-            />
           </div>
-        </div>
-        <div className="c-recent-imagery-settings__clouds">
-          <div className="c-recent-imagery-settings__clouds__title">
-            MAXIMUM CLOUD COVER PERCENTAGE
-          </div>
-          <Slider
-            className="theme-slider-green"
-            settings={{
-              defaultValue: clouds,
-              marks: {
+          <div className="clouds">
+            <div className="title">MAXIMUM CLOUD COVER PERCENTAGE</div>
+            <Slider
+              className="theme-slider-green"
+              value={this.state.clouds}
+              marks={{
                 0: '0%',
                 25: '25%',
                 50: '50%',
                 75: '75%',
                 100: '100%'
-              },
-              marksOnTop: true,
-              step: 5,
-              dots: true,
-              tipFormatter: value => `${value}%`
-            }}
-            handleOnSliderChange={d => setRecentImagerySettings({ clouds: d })}
-          />
-        </div>
-        <div className="c-recent-imagery-settings__thumbnails">
-          {tiles.length >= 1 && [
-            <div
-              key="thumbnails-header"
-              className="c-recent-imagery-settings__thumbnails__header"
-            >
-              <div className="c-recent-imagery-settings__thumbnails__description">
-                {this.state.thumbnailsDescription ||
-                  (selectedTile && selectedTile.description)}
-              </div>
-              <Dropdown
-                theme="theme-dropdown-button"
-                value={bands}
-                options={BANDS}
-                onChange={option =>
-                  setRecentImagerySettings({ bands: option.value })
-                }
-              />
-            </div>,
-            <Carousel
-              key="thumbnails-carousel"
-              settings={{
-                slidesToShow: thumbsToShow,
-                infinite: false,
-                centerMode: false,
-                centerPadding: '20px',
-                dots: false,
-                arrows: tiles.length > thumbsToShow,
-                responsive: [
-                  {
-                    breakpoint: 620,
-                    settings: {
-                      slidesToShow: thumbsToShow - 2
-                    }
-                  }
-                ]
               }}
-            >
-              {tiles.map((tile, i) => (
-                <div key={`recent-imagery-thumb-${tile.id}`}>
-                  <RecentImageryThumbnail
-                    id={i}
-                    tile={tile}
-                    selected={selectedTileSource === tile.id}
-                    handleClick={() => {
+              marksOnTop
+              step={5}
+              dots
+              onChange={this.handleCloundsChange}
+              onAfterChange={d => setRecentImagerySettings({ clouds: d })}
+            />
+          </div>
+        </div>
+        <div className="thumbnails">
+          {tiles &&
+            !!tiles.length && (
+              <Fragment>
+                <div key="thumbnails-header" className="header">
+                  <div className="description">
+                    <p>
+                      {moment(selected.dateTime)
+                        .format('DD MMM YYYY')
+                        .toUpperCase()}
+                    </p>
+                    <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
+                    <p>{startCase(selected.instrument)}</p>
+                  </div>
+                  <Dropdown
+                    className="band-selector"
+                    theme="theme-dropdown-button"
+                    value={bands}
+                    options={BANDS}
+                    onChange={option =>
                       setRecentImagerySettings({
-                        selectedTileSource: tile.id
-                      });
-                    }}
-                    handleMouseEnter={() => {
-                      this.setState({
-                        thumbnailsDescription: tile.description
-                      });
-                    }}
-                    handleMouseLeave={() => {
-                      this.setState({ thumbnailsDescription: null });
-                    }}
+                        bands: option.value,
+                        selected: null
+                      })
+                    }
                   />
                 </div>
-              ))}
-            </Carousel>
-          ]}
-          {tiles.length < 1 && (
-            <NoContent
-              className="c-recent-imagery-settings__empty-thumbnails"
-              message="We can't find additional images for the selection"
-            />
-          )}
+                <div className="thumbnail-grid">
+                  {tiles &&
+                    !!tiles.length &&
+                    tiles.map((tile, i) => (
+                      <RecentImageryThumbnail
+                        key={tile.id}
+                        id={i}
+                        tile={tile}
+                        selected={!!activeTile && activeTile.id === tile.id}
+                        handleClick={() => {
+                          setRecentImagerySettings({
+                            selected: tile.id
+                          });
+                        }}
+                        handleMouseEnter={() => {
+                          this.setState({
+                            selected: tile
+                          });
+                        }}
+                        handleMouseLeave={() => {
+                          this.setState({ selected: null });
+                        }}
+                      />
+                    ))}
+                </div>
+              </Fragment>
+            )}
+          {(!tiles || !tiles.length) &&
+            !loading && (
+              <NoContent
+                className="empty-thumbnails"
+                message="We can't find additional images for the selection"
+              />
+            )}
         </div>
       </div>
     );
@@ -192,13 +169,13 @@ class RecentImagerySettings extends PureComponent {
 }
 
 RecentImagerySettings.propTypes = {
-  selectedTile: PropTypes.object,
-  tiles: PropTypes.array.isRequired,
-  settings: PropTypes.object.isRequired,
-  isDragging: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  setRecentImagerySettings: PropTypes.func.isRequired,
-  setRecentImageryShowSettings: PropTypes.func.isRequired
+  activeTile: PropTypes.object,
+  tiles: PropTypes.array,
+  settings: PropTypes.object,
+  setRecentImagerySettings: PropTypes.func,
+  onClose: PropTypes.func,
+  loading: PropTypes.bool,
+  getTooltipContentProps: PropTypes.func
 };
 
-export default RecentImageryDrag(RecentImagerySettings);
+export default RecentImagerySettings;

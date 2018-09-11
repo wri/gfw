@@ -21,9 +21,8 @@ export const setMapSettings = createThunkAction(
 export const setLandsatBasemap = createThunkAction(
   'setLandsatBasemap',
   (year, defaultUrl) => (dispatch, getState) => {
-    const { location } = getState();
-    const mapZoom = getMapZoom(location);
-    const currentBasemap = getBasemap(location);
+    const mapZoom = getMapZoom(getState());
+    const currentBasemap = getBasemap(getState());
     const landsat = {
       key: `GFW__GEE_LANDSAT_BASEMAP_URL_${year}`,
       get geeUrl() {

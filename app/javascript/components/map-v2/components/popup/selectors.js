@@ -3,9 +3,9 @@ import isEmpty from 'lodash/isEmpty';
 
 import { getActiveDatasetsState } from '../../selectors';
 
-const getSelected = state => state.selected;
-const getInteractions = state => state.interactions;
-const getLatLng = state => state.latlng;
+const getSelected = state => state.popup.selected;
+const getInteractions = state => state.popup.interactions;
+const getLatLng = state => state.popup.latlng;
 
 export const filterInteractions = createSelector(
   [getInteractions],

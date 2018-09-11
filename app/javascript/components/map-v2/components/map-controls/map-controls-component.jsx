@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
@@ -8,8 +8,11 @@ import cx from 'classnames';
 import { isParent } from 'utils/dom';
 
 import Basemaps from 'components/map-v2/components/basemaps';
+import RecentImagery from 'components/map-v2/components/recent-imagery';
+import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
+import Loader from 'components/ui/loader';
 
 import plusIcon from 'assets/icons/plus.svg';
 import minusIcon from 'assets/icons/minus.svg';
@@ -26,11 +29,38 @@ class MapControlsButtons extends PureComponent {
     showBasemaps: false
   };
 
-  onTooltipRequestClose = () => {
+  handleHidePanels = () => {
+    const {
+      setMapSettings,
+      setMenuSettings,
+      setRecentImagerySettings,
+      settings: { hidePanels }
+    } = this.props;
+    setMapSettings({ hidePanels: !hidePanels });
+    setMenuSettings({ selectedSection: '' });
+    setRecentImagerySettings({
+      visible: false
+    });
+    this.setState({ showBasemaps: false });
+  };
+
+  onBasemapsRequestClose = () => {
     const isTargetOnTooltip = isParent(this.basemapsRef, this.basemapsRef.evt);
     this.basemapsRef.clearEvt();
     if (!isTargetOnTooltip && this.state.showBasemaps) {
       this.toggleBasemaps();
+    }
+  };
+
+  onRecentRequestClose = () => {
+    const { setRecentImagerySettings } = this.props;
+    const isTargetOnTooltip = isParent(
+      this.recentImageryRef,
+      this.recentImageryRef.evt
+    );
+    this.recentImageryRef.clearEvt();
+    if (!isTargetOnTooltip && this.props.recentSettings.active) {
+      setRecentImagerySettings({ visible: false });
     }
   };
 
@@ -41,6 +71,10 @@ class MapControlsButtons extends PureComponent {
     this.basemapsRef = ref;
   };
 
+  setRecentImageryRef = ref => {
+    this.recentImageryRef = ref;
+  };
+
   render() {
     const {
       className,
@@ -48,29 +82,62 @@ class MapControlsButtons extends PureComponent {
       setShareModal,
       settings,
       map,
-      active,
-      toogleRecentImagery,
-      setMapSettings,
-      setMenuSettings
+      recentSettings,
+      recentLoading,
+      setRecentImagerySettings
     } = this.props;
     const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
+    const { active, visible } = recentSettings || {};
     const { showBasemaps } = this.state;
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
+          <RecentImagery />
           {!hidePanels && (
             <div className="map-actions">
-              <Button
-                className="recent-imagery-btn"
-                theme="theme-button-map-control"
-                active={active}
-                onClick={() => toogleRecentImagery()}
-                tooltip={{ text: 'Recent Imagery' }}
-                disabled
+              <Tooltip
+                theme="light"
+                position="top-end"
+                useContext
+                interactive
+                animateFill={false}
+                open={visible}
+                onRequestClose={this.onRecentRequestClose}
+                html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
+                offset={100}
               >
-                <Icon icon={satelliteIcon} className="satellite-icon" />
-              </Button>
+                <Button
+                  className="recent-imagery-btn"
+                  theme="theme-button-map-control"
+                  onClick={() => {
+                    setRecentImagerySettings({
+                      active: !active,
+                      visible: false
+                    });
+                    if (!active && zoom < 9) {
+                      map.setZoom(9);
+                    }
+                  }}
+                  tooltip={
+                    !visible
+                      ? {
+                        text: !active
+                          ? 'Activate Recent Imagery'
+                          : 'Disable Recent Imagery',
+                        hideOnClick: false
+                      }
+                      : undefined
+                  }
+                >
+                  {recentLoading &&
+                    active && <Loader className="recent-imagery-loader" />}
+                  <Icon
+                    icon={satelliteIcon}
+                    className={cx('satellite-icon', { '-active': active })}
+                  />
+                </Button>
+              </Tooltip>
               <Tooltip
                 theme="light"
                 position="top-end"
@@ -78,7 +145,7 @@ class MapControlsButtons extends PureComponent {
                 interactive
                 animateFill={false}
                 open={showBasemaps}
-                onRequestClose={this.onTooltipRequestClose}
+                onRequestClose={this.onBasemapsRequestClose}
                 html={
                   <Basemaps
                     onClose={this.toggleBasemaps}
@@ -123,10 +190,7 @@ class MapControlsButtons extends PureComponent {
             </Button>
             <Button
               theme="theme-button-map-control"
-              onClick={() => {
-                setMapSettings({ hidePanels: !hidePanels });
-                setMenuSettings({ selectedSection: '' });
-              }}
+              onClick={this.handleHidePanels}
               tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
             >
               <Icon
@@ -172,16 +236,19 @@ class MapControlsButtons extends PureComponent {
 }
 
 MapControlsButtons.propTypes = {
-  className: Proptypes.string,
-  setMapSettings: Proptypes.func,
-  stickyOptions: Proptypes.object,
-  setShareModal: Proptypes.func,
-  settings: Proptypes.object,
-  map: Proptypes.object,
-  active: Proptypes.bool,
-  hidePanels: Proptypes.bool,
-  toogleRecentImagery: Proptypes.func,
-  setMenuSettings: Proptypes.func
+  className: PropTypes.string,
+  setMapSettings: PropTypes.func,
+  stickyOptions: PropTypes.object,
+  setShareModal: PropTypes.func,
+  settings: PropTypes.object,
+  map: PropTypes.object,
+  active: PropTypes.bool,
+  hidePanels: PropTypes.bool,
+  toogleRecentImagery: PropTypes.func,
+  setMenuSettings: PropTypes.func,
+  recentSettings: PropTypes.object,
+  recentLoading: PropTypes.bool,
+  setRecentImagerySettings: PropTypes.func
 };
 
 export default connect()(MapControlsButtons);

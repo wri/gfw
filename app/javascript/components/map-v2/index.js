@@ -6,21 +6,14 @@ import MapComponent from './component';
 import { getMapProps } from './selectors';
 
 import { setInteraction } from './components/popup/actions';
+import { setRecentImagerySettings } from './components/recent-imagery/recent-imagery-actions';
 import ownActions from './actions';
 
 const actions = {
   setInteraction,
+  setRecentImagerySettings,
   ...ownActions
 };
-
-const mapStateToProps = ({ location, datasets, geostore }) => ({
-  ...getMapProps({
-    geostore: geostore.geostore,
-    query: location.query,
-    datasets: datasets.datasets,
-    loading: datasets.loading
-  })
-});
 
 class MapContainer extends PureComponent {
   static propTypes = {
@@ -45,4 +38,4 @@ class MapContainer extends PureComponent {
 
 export { actions };
 
-export default connect(mapStateToProps, actions)(MapContainer);
+export default connect(state => getMapProps(state), actions)(MapContainer);

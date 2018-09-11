@@ -18,9 +18,11 @@ class Menu extends PureComponent {
       selectedSection,
       onToggleLayer,
       setModalMeta,
+      activeDatasets,
       loading,
       countries,
       setMenuSettings,
+      setMapSettings,
       toggleMenu,
       selectedCountries,
       countriesWithoutData
@@ -88,8 +90,10 @@ class Menu extends PureComponent {
                 onInfoClick={setModalMeta}
                 countries={countries}
                 setMenuSettings={setMenuSettings}
+                setMapSettings={setMapSettings}
                 selectedCountries={selectedCountries}
                 countriesWithoutData={countriesWithoutData}
+                activeDatasets={activeDatasets}
               />
             )}
           {loading && <Loader />}
@@ -111,7 +115,9 @@ Menu.propTypes = {
   countries: PropTypes.array,
   selectedCountries: PropTypes.array,
   toggleMenu: PropTypes.func,
-  countriesWithoutData: PropTypes.array
+  countriesWithoutData: PropTypes.array,
+  activeDatasets: PropTypes.array,
+  setMapSettings: PropTypes.func
 };
 
 export default Menu;

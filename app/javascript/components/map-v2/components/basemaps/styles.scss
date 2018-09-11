@@ -11,7 +11,7 @@ $top-section-height: 125px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 15px;
+    margin: 0 0 rem(15px);
   }
 
   .basemaps-action-button {
@@ -50,8 +50,10 @@ $top-section-height: 125px;
   }
 
   .basemaps-options-wrapper {
+    z-index: 5;
+
     &:first-child {
-      margin: 0 15px 0 0;
+      margin: 0 rem(15px) 0 0;
     }
   }
 
@@ -73,7 +75,7 @@ $top-section-height: 125px;
   .basemaps-list-item {
     display: inline-block;
     width: $item-size;
-    margin: 0 35px 15px 0;
+    margin: 0 rem(35px) rem(15px) 0;
 
     &:nth-child(3n) {
       margin: 0;
@@ -106,6 +108,6 @@ $top-section-height: 125px;
     font-size: rem(10px);
     text-transform: uppercase;
     color: $slate-light;
-    margin: 6px 0 0;
+    margin: rem(6px) 0 0;
   }
 }

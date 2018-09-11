@@ -1,303 +1,157 @@
-/* eslint-disable no-undef */
-
-import { createElement, PureComponent } from 'react';
+import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import debounce from 'lodash/debounce';
+import { checkLocationInsideBbox } from 'utils/geoms';
 
-import actions from './recent-imagery-actions';
+import * as mapActions from 'components/map-v2/actions';
+import ownActions from './recent-imagery-actions';
+
 import reducers, { initialState } from './recent-imagery-reducers';
-import {
-  getAllTiles,
-  getTile,
-  getBounds,
-  getSources,
-  getDates
-} from './recent-imagery-selectors';
-import RecentImageryDrag from './recent-imagery-drag';
-import RecentImageryComponent from './recent-imagery-component';
+import { getRecentImageryProps } from './recent-imagery-selectors';
 
-const mapStateToProps = ({ recentImagery }) => {
-  const {
-    active,
-    visible,
-    showSettings,
-    isTimelineOpen,
-    data,
-    dataStatus,
-    settings
-  } = recentImagery;
-  const selectorData = {
-    data: data.tiles,
-    dataStatus,
-    settings
-  };
-  return {
-    active,
-    visible,
-    showSettings,
-    isTimelineOpen,
-    dataStatus,
-    allTiles: getAllTiles(selectorData),
-    tile: getTile(selectorData),
-    bounds: getBounds(selectorData),
-    sources: getSources(selectorData),
-    dates: getDates(selectorData),
-    settings
-  };
+const actions = {
+  ...ownActions,
+  ...mapActions
 };
+
+const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
   componentDidMount() {
-    // this.middleView = window.App.Views.ReactMapMiddleView;
-    this.boundsPolygon = null;
-    this.boundsPolygonInfowindow = null;
-    this.activatedFromUrl = false;
-    this.removedFromUrl = false;
-    window.addEventListener('isRecentImageryActivated', () => {
-      const { active, toogleRecentImagery } = this.props;
-      if (!active) {
-        this.activatedFromUrl = true;
-        toogleRecentImagery();
-      }
-    });
-    window.addEventListener('removeLayer', e => {
-      const { active, toogleRecentImagery } = this.props;
-      if (e.detail === 'sentinel_tiles' && active) {
-        this.removedFromUrl = true;
-        toogleRecentImagery();
-      }
-    });
-    window.addEventListener('timelineToogle', e => {
-      const { setTimelineFlag } = this.props;
-      setTimelineFlag(e.detail);
-    });
-    window.addEventListener('toogleLayerVisibility', e => {
-      const { settings: { layerSlug }, setVisible } = this.props;
-      if (e.detail.slug === layerSlug) {
-        setVisible(e.detail.visibility);
-      }
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      active,
-      showSettings,
-      dataStatus,
-      tile,
-      bounds,
-      sources,
-      dates,
-      settings,
-      getData,
-      getMoreTiles
-    } = nextProps;
-    const { map } = this.middleView;
-    const isNewTile =
-      tile && (!this.props.tile || tile.url !== this.props.tile.url);
-
-    if (
-      (active && active !== this.props.active) ||
-      !isEqual(settings.date, this.props.settings.date) ||
-      !isEqual(settings.weeks, this.props.settings.weeks) ||
-      !isEqual(settings.bands, this.props.settings.bands)
-    ) {
+    const { active, position, dates, settings, getData } = this.props;
+    if (active) {
       getData({
-        latitude: map.getCenter().lng(),
-        longitude: map.getCenter().lat(),
+        ...position,
         start: dates.start,
         end: dates.end,
         bands: settings.bands
       });
     }
-    if (!active && active !== this.props.active) {
-      this.removeLayer();
-      this.removeEvents();
-      this.removeBoundsPolygon();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      active,
+      dataStatus,
+      activeTile,
+      bounds,
+      sources,
+      dates,
+      settings,
+      getData,
+      getMoreTiles,
+      position,
+      resetRecentImageryData
+    } = this.props;
+    const isNewTile =
+      activeTile &&
+      activeTile.url &&
+      (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
+    const positionInsideTile = bounds
+      ? checkLocationInsideBbox([position.lat, position.lng], bounds)
+      : true;
+
+    // get data if activated or new props
+    if (
+      active &&
+      (active !== prevProps.active ||
+        !positionInsideTile ||
+        !isEqual(settings.date, prevProps.settings.date) ||
+        !isEqual(settings.weeks, prevProps.settings.weeks) ||
+        !isEqual(settings.bands, prevProps.settings.bands))
+    ) {
+      getData({
+        ...position,
+        start: dates.start,
+        end: dates.end,
+        bands: settings.bands
+      });
     }
-    if (isNewTile) {
-      if (this.activatedFromUrl && !this.props.tile) {
-        this.updateLayer(tile.url);
-        this.setEvents();
-      } else if (!this.props.tile) {
-        this.showLayer(tile.url);
-        this.setEvents();
-      } else {
-        this.updateLayer(tile.url);
-      }
-      this.addBoundsPolygon(bounds, tile);
-    }
+
+    // get the rest of the tiles
     if (
       !dataStatus.haveAllData &&
-      showSettings &&
-      (showSettings !== this.props.showSettings ||
-        dataStatus.requestedTiles !== this.props.dataStatus.requestedTiles ||
-        dataStatus.requestFails !== this.props.dataStatus.requestFails ||
-        isNewTile)
+      active &&
+      (isNewTile ||
+        dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles ||
+        dataStatus.requestFails !== prevProps.dataStatus.requestFails)
     ) {
       getMoreTiles({ sources, dataStatus, bands: settings.bands });
     }
+
+    // if new tile update on map
+    if (active && isNewTile) {
+      this.setTile();
+    }
+
+    if (!active && active !== prevProps.active) {
+      this.removeTile();
+      resetRecentImageryData();
+    }
   }
 
-  setEvents() {
-    const { map } = this.middleView;
-
-    this.mapIdleEvent = map.addListener('idle', () => {
-      const { visible, dates, settings, getData } = this.props;
-      if (visible) {
-        const needNewTile = !google.maps.geometry.poly.containsLocation(
-          map.getCenter(),
-          this.boundsPolygon
-        );
-        if (needNewTile) {
-          getData({
-            latitude: map.getCenter().lng(),
-            longitude: map.getCenter().lat(),
-            start: dates.start,
-            end: dates.end,
-            bands: settings.bands
-          });
+  setTile = debounce(() => {
+    const {
+      datasets,
+      activeTile,
+      setMapSettings,
+      recentImageryDataset
+    } = this.props;
+    if (recentImageryDataset && activeTile.url) {
+      const activeDatasets =
+        datasets &&
+        !!datasets.length &&
+        datasets.filter(d => !d.isRecentImagery);
+      const recentDataset = {
+        dataset: recentImageryDataset.dataset,
+        layers: [recentImageryDataset.layer],
+        visibility: 1,
+        opacity: 1,
+        isRecentImagery: true,
+        params: {
+          url: activeTile.url
         }
-      }
-    });
-  }
-
-  removeEvents() {
-    google.maps.event.removeListener(this.mapIdleEvent);
-  }
-
-  showLayer(url) {
-    const { map } = this.middleView;
-    const { settings: { layerSlug, minZoom } } = this.props;
-    const zoom = map.getZoom();
-
-    this.middleView.toggleLayer(layerSlug, {
-      urlTemplate: url
-    });
-    if (zoom < minZoom) {
-      map.setZoom(minZoom);
-      this.middleView.showZoomAlert('notification-zoom-go-back', zoom);
-    }
-  }
-
-  removeLayer() {
-    const { settings: { layerSlug }, resetData } = this.props;
-    if (!this.removedFromUrl) {
-      this.middleView.toggleLayer(layerSlug);
-    }
-    this.activatedFromUrl = false;
-    this.removedFromUrl = false;
-    resetData();
-  }
-
-  updateLayer(url) {
-    const { settings: { layerSlug } } = this.props;
-    this.middleView.updateLayer(layerSlug, {
-      urlTemplate: url
-    });
-  }
-
-  addBoundsPolygon(bounds, tile) {
-    const { map } = this.middleView;
-    const { description } = tile;
-
-    if (this.boundsPolygon !== null) {
-      this.removeBoundsPolygon();
-    }
-    const coords = [];
-    bounds.forEach(item => {
-      coords.push({
-        lat: item[1],
-        lng: item[0]
+      };
+      setMapSettings({
+        datasets: activeDatasets
+          ? activeDatasets.concat(recentDataset)
+          : [recentDataset]
       });
-    });
-
-    this.boundsPolygon = new google.maps.Polygon({
-      paths: coords,
-      fillColor: 'transparent',
-      strokeWeight: 0
-    });
-
-    this.addBoundsPolygonEvents();
-    this.boundsPolygon.setMap(map);
-
-    if (this.boundsPolygonInfowindow !== null) {
-      this.boundsPolygonInfowindow.close();
     }
-    this.boundsPolygonInfowindow = new google.maps.InfoWindow({
-      content: `
-        <div class="recent-imagery-infowindow">
-          ${description}
-          <div class="recent-imagery-infowindow__hook">Click to refine image</div>
-        </div>
-      `
-    });
-  }
+  }, 200);
 
-  addBoundsPolygonEvents() {
-    const { setRecentImageryShowSettings } = this.props;
-    // const { map } = this.middleView;
-    let clickTimeout = null;
-    // tooltip disabled for now due to Gmaps bug with info windows.
-    google.maps.event.addListener(this.boundsPolygon, 'mouseover', () => {
-      this.boundsPolygon.setOptions({
-        strokeColor: '#000000',
-        strokeOpacity: 0.5,
-        strokeWeight: 1
-      });
-      // this.boundsPolygonInfowindow.open(map);
+  removeTile() {
+    const { datasets, setMapSettings } = this.props;
+    const activeDatasets =
+      datasets && !!datasets.length && datasets.filter(d => !d.isRecentImagery);
+    setMapSettings({
+      datasets: activeDatasets || []
     });
-    google.maps.event.addListener(this.boundsPolygon, 'mouseout', () => {
-      this.boundsPolygon.setOptions({
-        strokeWeight: 0
-      });
-      // this.boundsPolygonInfowindow.close();
-    });
-    google.maps.event.addListener(this.boundsPolygon, 'mousemove', e => {
-      // this.boundsPolygonInfowindow.setPosition(e.latLng);
-    });
-    google.maps.event.addListener(this.boundsPolygon, 'click', () => {
-      clickTimeout = setTimeout(() => {
-        setRecentImageryShowSettings(true);
-      }, 200);
-    });
-    google.maps.event.addListener(this.boundsPolygon, 'dblclick', () => {
-      clearTimeout(clickTimeout);
-    });
-  }
-
-  removeBoundsPolygon() {
-    this.boundsPolygon.setMap(null);
   }
 
   render() {
-    return createElement(RecentImageryComponent, {
-      ...this.props
-    });
+    return null;
   }
 }
 
 RecentImageryContainer.propTypes = {
+  position: PropTypes.object,
   active: PropTypes.bool,
-  visible: PropTypes.bool,
-  showSettings: PropTypes.bool,
   dataStatus: PropTypes.object,
-  tile: PropTypes.object,
+  activeTile: PropTypes.object,
   bounds: PropTypes.array,
   sources: PropTypes.array,
   dates: PropTypes.object,
   settings: PropTypes.object,
-  toogleRecentImagery: PropTypes.func,
-  setVisible: PropTypes.func,
-  setTimelineFlag: PropTypes.func,
-  setRecentImageryShowSettings: PropTypes.func,
   getData: PropTypes.func,
   getMoreTiles: PropTypes.func,
-  resetData: PropTypes.func
+  datasets: PropTypes.array,
+  setMapSettings: PropTypes.func,
+  recentImageryDataset: PropTypes.object,
+  resetRecentImageryData: PropTypes.func
 };
 
 export { actions, reducers, initialState };
-export default connect(mapStateToProps, actions)(
-  RecentImageryDrag(RecentImageryContainer)
-);
+export default connect(mapStateToProps, actions)(RecentImageryContainer);

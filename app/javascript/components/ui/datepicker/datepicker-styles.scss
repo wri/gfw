@@ -1,38 +1,7 @@
 @import '~styles/settings.scss';
 
-$reactDatesInputHeight: rem(50px);
-$reactDatesFangHeight: rem(10px);
-$datepickerInputHeight: rem(20px);
-$datepickerFangHeight: rem(6px);
-$datepickerPositionAdjust: rem(8px);
-
-.c-datepicker {
-  .SingleDatePickerInput {
-    .DateInput {
-      width: auto;
-    }
-
-    .DateInput_input {
-      padding: 0;
-      height: $datepickerInputHeight;
-      border: 1px solid $border;
-      border-radius: rem(25px);
-      font-size: 13px;
-      font-weight: normal;
-      text-align: center;
-      text-transform: uppercase;
-      color: $slate;
-      cursor: pointer;
-    }
-
-    .DateInput_fang {
-      display: none;
-    }
-  }
-}
-
 .SingleDatePicker_picker {
-  top: 25px !important;
+  top: rem(30px) !important;
 
   td {
     vertical-align: middle;
@@ -42,23 +11,8 @@ $datepickerPositionAdjust: rem(8px);
     }
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    margin: 0 9px;
-    border-bottom: 10px solid #fff;
-    border-left: 10px solid transparent;
-    border-left-color: #fff;
-    border-right: none;
-    transform-origin: 0 0;
-    transform: rotate(-45deg);
-    top: 1px;
-    left: rem(27px);
-    border-bottom-color: #fff;
-    box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
-    z-index: 3;
+  strong {
+    font-weight: 400;
   }
 }
 
@@ -67,10 +21,43 @@ $datepickerPositionAdjust: rem(8px);
   border-radius: 0;
 }
 
+.DayPickerNavigation_button__horizontalDefault {
+  border-radius: 2px;
+}
+
 .CalendarDay__selected,
 .CalendarDay__selected:active,
 .CalendarDay__selected:hover {
   background: $green-gfw;
   border: 1px solid $green-gfw;
   color: $white;
+}
+
+.c-datepicker {
+  .SingleDatePicker_picker {
+    top: rem(38px) !important;
+  }
+
+  .DateInput_fang {
+    top: rem(28px) !important;
+  }
+
+  .SingleDatePickerInput {
+    .DateInput {
+      width: auto;
+    }
+
+    .DateInput_input {
+      padding: 0;
+      height: rem(28px);
+      border: 1px solid $green-gfw;
+      border-radius: rem(25px);
+      font-size: 13px;
+      font-weight: normal;
+      text-align: center;
+      text-transform: uppercase;
+      color: $slate;
+      cursor: pointer;
+    }
+  }
 }

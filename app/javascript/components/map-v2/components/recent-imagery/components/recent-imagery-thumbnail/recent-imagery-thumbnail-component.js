@@ -39,7 +39,7 @@ class RecentImageryThumbnail extends PureComponent {
 RecentImageryThumbnail.propTypes = {
   id: PropTypes.number.isRequired,
   tile: PropTypes.object.isRequired,
-  selected: PropTypes.bool.isRequired,
+  selected: PropTypes.bool,
   handleClick: PropTypes.func.isRequired,
   handleMouseEnter: PropTypes.func,
   handleMouseLeave: PropTypes.func

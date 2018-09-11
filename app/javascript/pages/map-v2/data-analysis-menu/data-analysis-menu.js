@@ -3,21 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 
-import { getActiveSection } from 'pages/map-v2/menu/menu-selectors';
 import actions from './actions';
 import reducers, { initialState } from './reducers';
 
 import Component from './component';
-
-const mapStateToProps = ({ location, dataAnalysis, datasets }) => ({
-  activeTab: location.payload.tab,
-  analysis: dataAnalysis.analysis,
-  menuSectionData: getActiveSection({
-    datasets: datasets.datasets,
-    query: location.query
-  }),
-  search: location.search
-});
+import { getAnalysisProps } from './selectors';
 
 class DataAnalysisMenuContainer extends PureComponent {
   componentWillReceiveProps(nextProps) {
@@ -49,4 +39,4 @@ DataAnalysisMenuContainer.propTypes = {
 };
 
 export { actions, reducers, initialState };
-export default connect(mapStateToProps, actions)(DataAnalysisMenuContainer);
+export default connect(getAnalysisProps, actions)(DataAnalysisMenuContainer);

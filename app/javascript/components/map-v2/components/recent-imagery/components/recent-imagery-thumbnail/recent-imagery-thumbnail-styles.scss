@@ -2,12 +2,12 @@
 
 .c-recent-imagery-thumbnail {
   position: relative;
-  width: 100%;
-  height: rem(100px);
-  background-color: $border;
+  width: rem(80px);
+  height: rem(80px);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  background-color: $warm-grey;
   cursor: pointer;
   outline: none;
 

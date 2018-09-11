@@ -12,7 +12,7 @@
   background: rgba($white, 0.5);
   z-index: 1;
 
-  &__spinner {
+  .spinner {
     height: rem(38px);
     width: rem(38px);
     animation: rotate 1s infinite cubic-bezier(0.645, 0.045, 0.355, 1);

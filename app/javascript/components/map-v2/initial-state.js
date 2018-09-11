@@ -9,7 +9,7 @@ export default {
   zoom: 3,
   zoomControl: false,
   maxZoom: 19,
-  minZoom: 2,
+  minZoom: 3,
   basemap: basemaps.default,
   label: labels.default,
   attributionControl: false,

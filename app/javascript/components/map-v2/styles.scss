@@ -37,6 +37,22 @@
   background-color: rgba($slate, 0.2);
 }
 
+.map-hover-tooltip {
+  text-align: left;
+  font-size: rem(12px);
+  padding: rem(10px) rem(15px);
+  font-weight: 300;
+
+  strong {
+    font-weight: 400;
+  }
+
+  .view-more {
+    margin-top: rem(5px);
+    font-size: rem(10px);
+  }
+}
+
 .leaflet-container {
   background-color: $ocean;
 }
