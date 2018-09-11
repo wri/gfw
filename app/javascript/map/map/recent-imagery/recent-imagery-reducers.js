@@ -28,7 +28,7 @@ export const initialState = {
   }
 };
 
-const toogleRecentImagery = state => ({
+const toggleRecentImagery = state => ({
   ...state,
   active: !state.active,
   visible: !state.active
@@ -79,7 +79,7 @@ const setRecentImageryShowSettings = (state, { payload }) => ({
 });
 
 export default {
-  [actions.toogleRecentImagery]: toogleRecentImagery,
+  [actions.toggleRecentImagery]: toggleRecentImagery,
   [actions.setVisible]: setVisible,
   [actions.setTimelineFlag]: setTimelineFlag,
   [actions.setRecentImageryData]: setRecentImageryData,

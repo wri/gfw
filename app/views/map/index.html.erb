@@ -1,7 +1,8 @@
 <% content_for :head do %>
   <%= render 'shared/google_carto' %>
   <!-- render react app pack -->
-  <%= javascript_pack_tag 'app' %>
+  <%= render 'shared/leaflet' %>
+  <%= javascript_entrypoint_pack_tag 'map' %>
 <% end %>
 
 <% content_for :header do %>

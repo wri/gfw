@@ -8,7 +8,6 @@ import router from './router';
 
 // Components
 import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
-import { reduxModule as RecentImageryOld } from 'pages/map/recent-imagery';
 import { reduxModule as DataAnalysisMenu } from 'pages/map-v2/components/data-analysis-menu';
 import { reduxModule as Share } from 'components/modals/share';
 import { reduxModule as ModalMeta } from 'components/modals/meta';
@@ -34,7 +33,6 @@ import { reduxModule as LayerSpecProvider } from 'providers/layerspec-provider';
 
 // pages
 import { reduxModule as DashboardsPage } from 'pages/dashboards';
-import { reduxModule as MapPage } from 'pages/map';
 
 // Component Reducers
 const componentsReducers = {
@@ -42,7 +40,6 @@ const componentsReducers = {
   modalMeta: handleModule(ModalMeta),
   dataAnalysis: handleModule(DataAnalysisMenu),
   recentImagery: handleModule(RecentImagery),
-  recentImageryOld: handleModule(RecentImageryOld),
   widgets: handleModule(Widgets),
   popup: handleModule(Popup),
   header: handleModule(Header),
@@ -68,8 +65,7 @@ const providersReducers = {
 
 // Page Reducers
 const pageReducers = {
-  dashboards: handleModule(DashboardsPage),
-  mapPage: handleModule(MapPage)
+  dashboards: handleModule(DashboardsPage)
 };
 
 export default combineReducers({

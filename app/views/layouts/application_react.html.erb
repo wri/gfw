@@ -12,8 +12,8 @@
     <%= render 'shared/gfw_assets' %>
     <%= render 'shared/cache_keys' %>
     <%= render 'shared/track' %>
-
-    <%= javascript_pack_tag 'app' %>
+    <%= render 'shared/leaflet' %>
+    <%= javascript_entrypoint_pack_tag 'app' %>
 
   </head>
   <body>

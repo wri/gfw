@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { MAPV2 } from 'router';
+import { MAP } from 'router';
 import { parseGadm36Id } from 'utils/format';
 
 import Component from './component';
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch, { query }) => {
           location = data.level ? parseGadm36Id(data[`gid_${data.level}`]) : {};
         }
         return {
-          type: MAPV2,
+          type: MAP,
           payload: {
             tab: 'data',
             country: !!location.adm0 && location.adm0,

@@ -5,7 +5,7 @@ import findIndex from 'lodash/findIndex';
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
 import { initialState } from './recent-imagery-reducers';
 
-export const toogleRecentImagery = createAction('toogleRecentImagery');
+export const toggleRecentImagery = createAction('toggleRecentImagery');
 export const setVisible = createAction('setVisible');
 export const setTimelineFlag = createAction('setTimelineFlag');
 export const setRecentImageryData = createAction('setRecentImageryData');

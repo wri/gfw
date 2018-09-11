@@ -8,12 +8,13 @@ import Carousel from 'components/ui/carousel';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
-import RecentImageryThumbnail from 'pages/map/recent-imagery/components/recent-imagery-thumbnail';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
 import draggerIcon from 'assets/icons/dragger.svg';
 import closeIcon from 'assets/icons/close.svg';
+
+import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 import RecentImageryDrag from './recent-imagery-settings-drag';
 import './recent-imagery-settings-styles.scss';
 

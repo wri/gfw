@@ -18,7 +18,7 @@ import {
 import RecentImageryDrag from './recent-imagery-drag';
 import RecentImageryComponent from './recent-imagery-component';
 
-const mapStateToProps = ({ recentImageryOld }) => {
+const mapStateToProps = ({ recentImagery }) => {
   const {
     active,
     visible,
@@ -27,7 +27,7 @@ const mapStateToProps = ({ recentImageryOld }) => {
     data,
     dataStatus,
     settings
-  } = recentImageryOld;
+  } = recentImagery;
   const selectorData = {
     data: data.tiles,
     dataStatus,

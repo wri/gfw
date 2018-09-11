@@ -9,9 +9,23 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalVideo from 'components/modals/video';
 
+import HistorySection from 'pages/about/section-history';
+import Impacts from 'pages/about/section-impacts';
+import Partners from 'pages/about/section-partners';
+import How from 'pages/about/section-how';
+import Contact from 'pages/about/section-contact';
+
 import playIcon from 'assets/icons/play.svg';
 import bgImage from './header-bg';
 import './styles.scss';
+
+const sectionComponents = {
+  history: HistorySection,
+  impacts: Impacts,
+  partners: Partners,
+  how: How,
+  contact: Contact
+};
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -45,11 +59,14 @@ class Page extends PureComponent {
         </Cover>
         <SubnavMenu className="about-links" links={sections} />
         <Projects />
-        {sections.map(s => (
-          <div id={s.anchor} className={s.anchor} key={s.anchor}>
-            {s.component && <s.component />}
-          </div>
-        ))}
+        {sections.map(s => {
+          const PageComponent = sectionComponents[s.component];
+          return PageComponent ? (
+            <div id={s.anchor} className={s.anchor} key={s.anchor}>
+              <PageComponent />
+            </div>
+          ) : null;
+        })}
         <Join />
         <ModalVideo />
       </div>

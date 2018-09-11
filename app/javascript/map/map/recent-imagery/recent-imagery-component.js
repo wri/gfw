@@ -19,14 +19,14 @@ class RecentImagery extends PureComponent {
       settings,
       canDrop,
       connectDropTarget,
-      toogleRecentImagery,
+      toggleRecentImagery,
       setRecentImagerySettings,
       setRecentImageryShowSettings
     } = this.props;
 
     return connectDropTarget(
       <div
-        className={`c-recent-imagery-old ${
+        className={`c-recent-imagery ${
           canDrop ? 'c-recent-imagery--dragging' : ''
         }`}
       >
@@ -36,7 +36,7 @@ class RecentImagery extends PureComponent {
           }`}
           theme="theme-button-map-control"
           active={active}
-          onClick={() => toogleRecentImagery()}
+          onClick={() => toggleRecentImagery()}
         >
           <Icon icon={satelliteIcon} className="satellite-icon" />
           <span>
@@ -66,7 +66,7 @@ RecentImagery.propTypes = {
   settings: PropTypes.object.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   canDrop: PropTypes.bool.isRequired,
-  toogleRecentImagery: PropTypes.func.isRequired,
+  toggleRecentImagery: PropTypes.func.isRequired,
   setRecentImagerySettings: PropTypes.func.isRequired,
   setRecentImageryShowSettings: PropTypes.func.isRequired
 };

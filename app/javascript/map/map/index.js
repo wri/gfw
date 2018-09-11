@@ -6,8 +6,8 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import RootComponent from './component';
 
-const mapStateToProps = ({ mapPage }) => {
-  const { loading } = mapPage;
+const mapStateToProps = ({ root }) => {
+  const { loading } = root;
   return {
     loading
   };
