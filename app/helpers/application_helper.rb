@@ -8,28 +8,14 @@ module ApplicationHelper
     action.include?(params[:action])
   end
 
-  # assets/stylesheets/countries.css
-  def controller_stylesheet_link_tag
-    stylesheet = "#{params[:controller]}.css"
-
-    unless Rails.application.assets.find_asset(stylesheet).nil?
-      stylesheet_link_tag stylesheet
-    end
-  end
-
-  # assets/stylesheets/countries.js
-  def controller_javascript_include_tag
-    javascript = "#{params[:controller]}.js"
-
-    unless Rails.application.assets.find_asset(javascript).nil?
-      javascript_include_tag javascript
-    end
-  end
-
+  # webpacker by default will only append your entry point .js to the head
+  # in order to leverage code splitting of different entry points we need to parse the manifest
+  # this helper gets all entry points from the manifest and adds to the dom (includes codesplit npm modules)
   def javascript_entrypoint_pack_tag(*names, **options)
     javascript_include_tag(*sources_from_pack_manifest_entrypoints(names, type: :javascript), **options)
   end
 
+  # we also need only for production css files
   def stylesheet_entrypoint_pack_tag(*names, **options)
     unless Webpacker.dev_server.running? && Webpacker.dev_server.hot_module_replacing?
       stylesheet_link_tag(*sources_from_pack_manifest_entrypoints(names, type: :stylesheet), **options)

@@ -39,6 +39,7 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
+    // entry points are required to work with webpacker (rails)
     new WebpackAssetsManifest({
       entrypoints: true,
       writeToDisk: true,
@@ -70,6 +71,7 @@ module.exports = {
   },
   resolveLoader: { modules: ['node_modules'] },
   node: { fs: 'empty', net: 'empty' },
+  // parse active node modules and split individually for better caching
   optimization: {
     runtimeChunk: 'single',
     splitChunks: {
@@ -79,6 +81,7 @@ module.exports = {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
+          // create a splitChunk for each node vendor
           name(module) {
             const packageName = module.context.match(
               /[\\/]node_modules[\\/](.*?)([\\/]|$)/

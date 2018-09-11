@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     @cache_keys = $redis.keys('*')
   end
 
+  def index
+    @is_production = Rails.env.production?
+  end
+
   private
 
     def check_browser

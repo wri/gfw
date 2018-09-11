@@ -7,6 +7,9 @@
     <!-- render react app pack -->
     <%= render 'shared/leaflet' %>
     <%= javascript_entrypoint_pack_tag 'app' %>
+    <% if @is_production %>
+      <%= stylesheet_entrypoint_pack_tag 'app' %>
+    <% end %>
 
     <%= yield :head %>
   </head>
