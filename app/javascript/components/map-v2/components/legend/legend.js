@@ -66,7 +66,10 @@ class Legend extends PureComponent {
       }
       return newDataset;
     });
-    setMapSettings({ datasets: newActiveDatasets });
+    setMapSettings({
+      datasets: newActiveDatasets,
+      ...(enable && { canBound: true })
+    });
   };
 
   onChangeLayer = (layerGroup, newLayerKey) => {

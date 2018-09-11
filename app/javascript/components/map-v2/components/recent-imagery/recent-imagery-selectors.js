@@ -52,10 +52,10 @@ export const getVisibility = createSelector(
   settings => settings.visible
 );
 
-export const getActive = createSelector(
-  [getRecentImagerySettings],
-  settings => settings.active
-);
+export const getActive = createSelector([getActiveDatasetsState], datasets => {
+  if (isEmpty(datasets)) return null;
+  return !!datasets.find(d => d.isRecentImagery);
+});
 
 export const getFilteredData = createSelector(
   [getData, getRecentImagerySettings],

@@ -1,6 +1,11 @@
 @import '~styles/settings';
 
 .c-layer-more-info {
+  p,
+  a {
+    font-size: rem(12px);
+  }
+
   a {
     color: $green-gfw;
 

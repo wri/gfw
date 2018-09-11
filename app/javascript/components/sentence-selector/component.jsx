@@ -5,7 +5,7 @@ import Dropdown from 'components/ui/dropdown';
 
 import './styles.scss';
 
-class LayerSelector extends PureComponent {
+class SentenceSelector extends PureComponent {
   static defaultProps = {
     sentence: 'Displaying {name} for {selector}'
   };
@@ -30,8 +30,8 @@ class LayerSelector extends PureComponent {
       nameRepl,
       '{selector}',
       <Dropdown
-        key={name}
-        className="layer-dropdown"
+        key={name || `${value}-${sentence}`}
+        className="sentence-dropdown"
         theme="theme-dropdown-native-button"
         value={value}
         options={options}
@@ -41,14 +41,14 @@ class LayerSelector extends PureComponent {
     );
 
     return (
-      <div className={`c-layer-selector ${className || ''}`}>
+      <div className={`c-sentence-selector ${className || ''}`}>
         {selectorRepl}
       </div>
     );
   }
 }
 
-LayerSelector.propTypes = {
+SentenceSelector.propTypes = {
   className: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.number,
@@ -61,4 +61,4 @@ LayerSelector.propTypes = {
   name: PropTypes.string
 };
 
-export default LayerSelector;
+export default SentenceSelector;

@@ -1,10 +1,6 @@
 export const initialState = {
   loading: false,
-  geostore: {
-    hash: '',
-    areaHa: 0,
-    bbox: []
-  }
+  geostore: {}
 };
 
 const setGeostore = (state, { payload }) => ({
@@ -16,7 +12,7 @@ const setGeostore = (state, { payload }) => ({
 
 const setGeostoreLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  ...payload
 });
 
 export default {

@@ -1,23 +1,25 @@
 @import '~styles/settings.scss';
 
 $explore-nav-height: rem(40px);
-$explore-content-margin: rem(30px);
 
 .c-explore {
-  &__description {
-    font-size: 12px;
-    line-height: 1.33;
-    letter-spacing: -0.2px;
-    margin-bottom: rem(30px);
+  .explore-menu {
+    border-bottom: solid 1px $border;
   }
 
-  &__content {
-    height: calc(100vh - #{$explore-nav-height + $explore-content-margin});
-    margin-top: rem(30px);
-    padding: 0 rem(5px);
-    overflow: auto;
+  .content {
+    height: calc(100vh - #{$explore-nav-height});
+    overflow-y: scroll;
+    position: relative;
+    padding: 0 rem(10px);
 
-    .c-card {
+    .description {
+      font-size: 12px;
+      line-height: 1.6;
+      margin: rem(30px) 0;
+    }
+
+    .map-card {
       margin-bottom: rem(30px);
     }
   }

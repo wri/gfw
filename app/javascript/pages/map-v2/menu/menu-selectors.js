@@ -5,7 +5,7 @@ import flatten from 'lodash/flatten';
 import { getActiveDatasetsState } from 'components/map-v2/selectors';
 
 import initialState from './menu-initial-state';
-import menuSections from './menu-sections';
+import menuSections, { bottomSections } from './menu-sections';
 
 const getMenuUrlState = state =>
   (state.location.query && state.location.query.menu) || null;
@@ -135,7 +135,9 @@ export const getActiveSection = createSelector(
   [getSectionsWithData, getSelectedSection],
   (sections, selectedSection) => {
     if (!sections || !selectedSection) return null;
-    return sections.find(s => s.slug === selectedSection);
+    return sections
+      .concat(bottomSections)
+      .find(s => s.slug === selectedSection);
   }
 );
 
@@ -169,6 +171,7 @@ export const getZeroDataCountries = createSelector(
 
 export const getMenuProps = createStructuredSelector({
   sections: getSectionsWithData,
+  bottomSections: () => bottomSections,
   activeSection: getActiveSectionWithData,
   selectedSection: getSelectedSection,
   countriesWithoutData: getZeroDataCountries,

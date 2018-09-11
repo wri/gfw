@@ -20,6 +20,7 @@ import * as GeostoreProviderComponent from 'providers/geostore-provider';
 import * as WhitelistsProviderComponent from 'providers/whitelists-provider';
 import * as DatasetsProviderComponent from 'providers/datasets-provider';
 import * as MyGFWProviderComponent from 'providers/mygfw-provider';
+import * as PTWProviderComponent from 'providers/ptw-provider';
 
 // Component Reducers
 const componentsReducers = {
@@ -37,7 +38,8 @@ const providersReducers = {
   geostore: handleActions(GeostoreProviderComponent),
   whitelists: handleActions(WhitelistsProviderComponent),
   datasets: handleActions(DatasetsProviderComponent),
-  myGfw: handleActions(MyGFWProviderComponent)
+  myGfw: handleActions(MyGFWProviderComponent),
+  ptw: handleActions(PTWProviderComponent)
 };
 
 export const reducers = combineReducers({

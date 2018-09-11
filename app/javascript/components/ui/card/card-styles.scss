@@ -8,7 +8,19 @@ $summary-color: #aaa;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border: solid 1px $border;
+
+  &.active {
+    &::before {
+      border: solid 2px $green-gfw;
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+  }
 
   .image {
     width: 100%;
@@ -22,6 +34,8 @@ $summary-color: #aaa;
   .body {
     padding: rem(15px);
     background-color: $grey-light;
+    border: solid 1px $border;
+    border-top: 0;
 
     @media screen and (min-width: $screen-m) {
       padding: rem(25px);
@@ -46,6 +60,7 @@ $summary-color: #aaa;
       font-size: rem(16px);
       margin-bottom: rem(20px);
       line-height: 1.9;
+      height: rem(80px);
     }
 
     .meta {

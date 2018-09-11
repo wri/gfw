@@ -6,6 +6,7 @@ import startCase from 'lodash/startCase';
 
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider';
+import Loader from 'components/ui/loader';
 import Dropdown from 'components/ui/dropdown';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
@@ -158,10 +159,11 @@ class RecentImagerySettings extends PureComponent {
           {(!tiles || !tiles.length) &&
             !loading && (
               <NoContent
-                className="empty-thumbnails"
+                className="placeholder"
                 message="We can't find additional images for the selection"
               />
             )}
+          {loading && <Loader className="placeholder" />}
         </div>
       </div>
     );

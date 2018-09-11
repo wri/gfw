@@ -56,7 +56,8 @@ export const setLandsatBasemap = createThunkAction(
             year,
             defaultUrl,
             id: 'landsat',
-            url: landsat.url
+            url: landsat.url,
+            color: '#0C0045'
           }
         })
       );

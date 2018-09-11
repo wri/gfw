@@ -1,12 +1,12 @@
 @import '~styles/settings';
 
-.c-layer-selector {
+.c-sentence-selector {
   display: inline-block;
   color: $slate;
   font-size: rem(12px);
   line-height: 1.6;
 
-  .layer-dropdown {
+  .sentence-dropdown {
     display: inline-block;
   }
 }

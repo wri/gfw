@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { getActiveDatasetsState } from '../../selectors';
 
 const getSelected = state => state.popup.selected;
+const getSearch = state => state.location && state.location.search;
 const getInteractions = state => state.popup.interactions;
 const getLatLng = state => state.popup.latlng;
 
@@ -57,7 +58,6 @@ export const getCardData = createSelector(
         },
         {
           text: 'ANALYZE',
-          extLink: '#',
           theme: 'theme-button-small'
         }
       ]
@@ -84,5 +84,6 @@ export const getPopupProps = createStructuredSelector({
   tableData: getTableData,
   cardData: getCardData,
   latlng: getLatLng,
-  activeDatasets: getActiveDatasetsState
+  activeDatasets: getActiveDatasetsState,
+  search: getSearch
 });

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import LayerSelector from '../layer-selector';
+import SentenceSelector from 'components/sentence-selector';
 
 import './styles.scss';
 
@@ -26,7 +26,7 @@ class LayerSelectorMenu extends PureComponent {
         {groups &&
           !!groups.length && (
             <div className="menu-wrapper -group">
-              <LayerSelector
+              <SentenceSelector
                 options={groups}
                 value={selectedGroup && selectedGroup.value}
                 onChange={e => onChange(layerGroup, e)}
@@ -38,7 +38,7 @@ class LayerSelectorMenu extends PureComponent {
         {options &&
           !!options.length && (
             <div className="menu-wrapper">
-              <LayerSelector
+              <SentenceSelector
                 options={options}
                 value={selected}
                 onChange={e => onChange(layerGroup, e)}

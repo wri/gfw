@@ -2,8 +2,7 @@ import { createAction } from 'redux-actions';
 import { createThunkAction } from 'utils/redux';
 
 import { getGeostoreProvider } from 'services/geostore';
-
-import BOUNDS from 'data/bounds.json';
+import { getBoxBounds } from 'utils/geoms';
 
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
@@ -12,7 +11,7 @@ export const getGeostore = createThunkAction(
   'getGeostore',
   (country, region, subRegion) => (dispatch, state) => {
     if (!state().geostore.loading) {
-      dispatch(setGeostoreLoading(true));
+      dispatch(setGeostoreLoading({ loading: true, error: false }));
       getGeostoreProvider(country, region, subRegion)
         .then(response => {
           const { data } = response.data;
@@ -25,25 +24,12 @@ export const getGeostore = createThunkAction(
               })
             );
           }
-          dispatch(setGeostoreLoading(false));
+          dispatch(setGeostoreLoading({ loading: false, error: false }));
         })
         .catch(error => {
-          dispatch(setGeostoreLoading(false));
+          dispatch(setGeostoreLoading({ loading: false, error: true }));
           console.info(error);
         });
     }
   }
 );
-
-const getBoxBounds = (cornerBounds, country, region) => {
-  if (!region && Object.keys(BOUNDS).includes(country)) {
-    return BOUNDS[country];
-  }
-  return [
-    [cornerBounds[0], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[3]],
-    [cornerBounds[2], cornerBounds[1]],
-    [cornerBounds[0], cornerBounds[1]]
-  ];
-};

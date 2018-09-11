@@ -8,24 +8,24 @@ $map-menu-items-size: rem(76px);
   left: 0;
   height: 100vh;
   z-index: 13;
+  background-color: $white-tree;
 
-  &__logo {
+  .logo {
     position: relative;
     width: $map-menu-items-size;
     height: $map-menu-items-size;
-    background-color: $white;
     z-index: 2;
     cursor: pointer;
   }
 
-  &__buttons-group {
-    position: relative;
+  .menu-tabs {
+    height: calc(100% - #{$map-menu-items-size});
+    overflow-y: scroll;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    width: $map-menu-items-size;
-    height: calc(100% - #{$map-menu-items-size});
-    background-color: $white;
-    z-index: 2;
+    justify-content: space-between;
+    position: relative;
 
     &::before {
       content: '';
@@ -37,20 +37,23 @@ $map-menu-items-size: rem(76px);
       background-color: $white-calcium;
       z-index: 2;
     }
-
-    &.--has-selection {
-      background-color: $white-tree;
-    }
   }
 
-  &__item {
+  .buttons-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: $map-menu-items-size;
+  }
+
+  .item {
     position: relative;
     width: 100%;
-    height: 12.5%;
     max-height: $map-menu-items-size;
     z-index: 1;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
+    height: rem(76px);
 
     &.--selected {
       background-color: $white;
@@ -58,27 +61,9 @@ $map-menu-items-size: rem(76px);
       border-bottom-color: $white-calcium;
       z-index: 3;
     }
-
-    &:first-child {
-      border-top-color: transparent;
-    }
-
-    &:last-child {
-      border-bottom-color: transparent;
-    }
-
-    &:nth-child(6) {
-      position: absolute;
-      bottom: $map-menu-items-size;
-    }
-
-    &:nth-child(7) {
-      position: absolute;
-      bottom: 0;
-    }
   }
 
-  &__item-button {
+  .item-button {
     position: relative;
     display: flex;
     justify-content: center;
@@ -100,7 +85,7 @@ $map-menu-items-size: rem(76px);
     }
   }
 
-  &__item-badge {
+  .item-badge {
     position: absolute;
     top: rem(13px);
     right: rem(21px);

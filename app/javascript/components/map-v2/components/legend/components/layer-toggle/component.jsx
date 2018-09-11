@@ -13,10 +13,17 @@ import './styles.scss';
 
 class LayerToggle extends PureComponent {
   render() {
-    const { className, data, onInfoClick, onToggle, small } = this.props;
+    const {
+      className,
+      data,
+      onInfoClick,
+      onToggle,
+      small,
+      tabIndex,
+      showSubtitle
+    } = this.props;
     const {
       name,
-      subtitle,
       metadata,
       layer,
       dataset,
@@ -38,7 +45,14 @@ class LayerToggle extends PureComponent {
         />
         <div className="c-layer-toggle__content">
           <div className="c-layer-toggle__header">
-            <div className="c-layer-toggle__name">{name}</div>
+            <div
+              className="c-layer-toggle__name"
+              onClick={() => onToggle({ dataset, layer, iso }, !active)}
+              role="button"
+              tabIndex={tabIndex}
+            >
+              {name}
+            </div>
             {((!metadata && description) ||
               (metadata && typeof metadata === 'string')) && (
                 <Tooltip
@@ -60,9 +74,17 @@ class LayerToggle extends PureComponent {
                 </Tooltip>
               )}
           </div>
-          {subtitle && (
-            <div className="c-layer-toggle__subtitle">{`${subtitle}`}</div>
-          )}
+          {description &&
+            showSubtitle && (
+              <div
+                className="c-layer-toggle__subtitle"
+                onClick={() => onToggle({ dataset, layer, iso }, !active)}
+                role="button"
+                tabIndex={tabIndex}
+              >
+                {`${description}`}
+              </div>
+            )}
         </div>
       </div>
     );
@@ -70,11 +92,13 @@ class LayerToggle extends PureComponent {
 }
 
 LayerToggle.propTypes = {
+  showSubtitle: PropTypes.bool,
   className: PropTypes.string,
   data: PropTypes.object,
   onInfoClick: PropTypes.func,
   onToggle: PropTypes.func,
-  small: PropTypes.bool
+  small: PropTypes.bool,
+  tabIndex: PropTypes.number
 };
 
 export default LayerToggle;

@@ -9,6 +9,22 @@ import searchIcon from 'assets/icons/search.svg';
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 
+export const bottomSections = [
+  {
+    slug: 'explore',
+    name: 'EXPLORE',
+    icon: explore,
+    Component: Explore,
+    large: true,
+    section: 'topics'
+  },
+  {
+    slug: 'search',
+    name: 'SEARCH',
+    icon: searchIcon
+  }
+];
+
 export default [
   {
     slug: 'forestChange',
@@ -95,18 +111,5 @@ export default [
         title: 'Conservation'
       }
     ]
-  },
-  {
-    slug: 'explore',
-    name: 'EXPLORE',
-    icon: explore,
-    Component: Explore,
-    large: true,
-    section: 'topics'
-  },
-  {
-    slug: 'search',
-    name: 'SEARCH',
-    icon: searchIcon
   }
 ];

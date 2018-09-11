@@ -37,7 +37,10 @@ class MenuContainer extends PureComponent {
         }
       ].concat([...newActiveDatasets]);
     }
-    setMapSettings({ datasets: newActiveDatasets || [] });
+    setMapSettings({
+      datasets: newActiveDatasets || [],
+      ...(value && { canBound: true })
+    });
   };
 
   render() {

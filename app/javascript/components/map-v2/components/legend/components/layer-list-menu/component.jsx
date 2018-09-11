@@ -13,10 +13,11 @@ class LayerListMenu extends PureComponent {
     return (
       <div className={`c-layer-list-menu ${className || ''}`}>
         {layers.map(
-          l =>
+          (l, i) =>
             (!l.default ? (
               <div className="layer-toggle" key={l.id}>
                 <LayerToggle
+                  tabIndex={i}
                   data={{ ...l, layer: l.id }}
                   onToggle={onToggle}
                   onInfoClick={onInfoClick}

@@ -5,7 +5,6 @@ import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
-import infoIcon from 'assets/icons/info.svg';
 
 import './styles.scss';
 
@@ -107,11 +106,6 @@ class Basemaps extends React.PureComponent {
           <div className="basemaps-header">
             <h2 className="basemaps-title">Basemap Options</h2>
             <div className="basemaps-actions">
-              {false && (
-                <button className="basemaps-action-button">
-                  <Icon icon={infoIcon} />
-                </button>
-              )}
               <button className="basemaps-action-button" onClick={onClose}>
                 <Icon icon={closeIcon} />
               </button>
