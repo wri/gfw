@@ -27,6 +27,14 @@
     align-items: flex-start;
     margin-right: rem(20px);
   }
+  
+  .break-label {
+    font-size: rem(14px);
+    font-style: italic;
+    flex-direction: row;
+    padding-top: rem(5px);
+    padding-bottom: rem(5px);
+  }
 
   .data-color {
     width: rem(12px);

@@ -7,7 +7,6 @@ class WidgetChartTooltip extends PureComponent {
   render() {
     const { payload, settings, hideZeros } = this.props;
     const values = payload && payload.length > 0 && payload[0].payload;
-
     return (
       <div>
         {settings &&
@@ -28,7 +27,11 @@ class WidgetChartTooltip extends PureComponent {
                               style={{ backgroundColor: d.color }}
                             />
                           )}
-                          {<span>{d.label || values[d.labelKey]}</span>}
+                          {d.key === 'break' ? (
+                            <span className="break-label">{d.label}</span>
+                          ) : (
+                            <span>{d.label || values[d.labelKey]}</span>
+                          )}
                         </div>
                       )}
                       {d.unit && d.unitFormat

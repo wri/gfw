@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import entries from 'lodash/entries';
 import groupBy from 'lodash/groupBy';
+import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { sortByKey } from 'utils/data';
@@ -150,7 +151,11 @@ export const parseConfig = createSelector(
         })
         .reverse()
     );
-
+    const insertIndex = findIndex(tooltip, { key: 'class_5' });
+    tooltip.splice(insertIndex, 0, {
+      key: 'break',
+      label: 'Drivers of permanent deforestation'
+    });
     return {
       height: 250,
       xKey: 'year',
