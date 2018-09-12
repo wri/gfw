@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import entries from 'lodash/entries';
 import groupBy from 'lodash/groupBy';
-import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { sortByKey } from 'utils/data';
@@ -80,6 +79,8 @@ export const getDrivers = createSelector(
       ? sortByKey(
         Object.keys(groupedLoss).map(k => ({
           driver: k,
+          position: tscLossCategories.find(c => c.value.toString() === k)
+            .position,
           area: sumBy(groupedLoss[k], 'area'),
           permanent: permCats.includes(k)
         })),
@@ -90,13 +91,7 @@ export const getDrivers = createSelector(
         driver: x.toString(),
         area: 0.0
       }));
-
-    return sortBy(
-      sortedLoss.map(d => ({
-        ...d
-      })),
-      'area'
-    ).reverse();
+    return sortedLoss;
   }
 );
 
@@ -104,7 +99,7 @@ export const getDrivers = createSelector(
 export const parseData = createSelector([getFilteredData], data => {
   if (isEmpty(data)) return null;
   const groupedData = groupBy(data, 'year');
-  return Object.keys(groupedData).map(y => {
+  const x = Object.keys(groupedData).map(y => {
     const groupedByBound = groupBy(groupedData[y], 'bound1');
     const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
       const areaSum = sumBy(value, 'area');
@@ -118,6 +113,7 @@ export const parseData = createSelector([getFilteredData], data => {
       ...datakeys
     };
   });
+  return x;
 });
 
 export const parseConfig = createSelector(
@@ -127,7 +123,7 @@ export const parseConfig = createSelector(
     const { highlighted } = settings || {};
     const yKeys = {};
     const categoryColors = colors.lossDrivers;
-    drivers.forEach(k => {
+    sortByKey(drivers, 'position').forEach(k => {
       yKeys[`class_${k.driver}`] = {
         fill: categoryColors[k.driver],
         stackId: 1,
