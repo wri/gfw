@@ -63,7 +63,7 @@ define(['underscore'], (_) => {
       title: 'Tree cover loss data',
       long_title: 'annual tree cover loss data',
       sub_title: 'annual, 30m, global, Hansen/UMD/Google/USGS/NASA',
-      layerSlug: ['loss', 'gain'],
+      layerSlug: ['loss_by_driver', 'loss', 'gain'],
       slug: 'umd-loss-gain',
       slug_source: 'tree_cover_loss',
       analysisSlug: 'umd-loss-gain',

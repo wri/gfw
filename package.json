@@ -4,7 +4,7 @@
   "description": "Global Forest Watch",
   "main": "Gruntfile.js",
   "engines": {
-    "node": "8.10.0"
+    "node": ">= 8.11.2"
   },
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",
@@ -101,7 +101,7 @@
     "history": "4.7.2",
     "install": "0.10.1",
     "js-yaml": "3.9.1",
-    "lodash": "4.17.4",
+    "lodash": "4.17.5",
     "lodash-math": "0.0.7",
     "moment": "2.19.3",
     "path-complete-extname": "0.1.0",
