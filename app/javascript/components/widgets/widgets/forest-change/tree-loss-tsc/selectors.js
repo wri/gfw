@@ -120,7 +120,6 @@ export const parseConfig = createSelector(
   [getColors, getFilteredData, getDrivers, getSettings],
   (colors, data, drivers, settings) => {
     if (isEmpty(data)) return null;
-    // console.log(data)
     const { highlighted } = settings || {};
     const yKeys = {};
     const categoryColors = colors.lossDrivers;
