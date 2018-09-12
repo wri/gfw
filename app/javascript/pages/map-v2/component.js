@@ -6,7 +6,6 @@ import GeostoreProvider from 'providers/geostore-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 
 import Map from 'components/map-v2';
-import MapMenu from 'pages/map-v2/components/menu';
 import ModalMeta from 'components/modals/meta';
 import Share from 'components/modals/share';
 import DataAnalysisMenu from 'pages/map-v2/components/data-analysis-menu';
@@ -15,15 +14,10 @@ import './styles.scss';
 
 class MapPage extends PureComponent {
   render() {
-    const {
-      analysis,
-      handleShowMenu,
-      mapSettings: { hidePanels }
-    } = this.props;
+    const { analysis, mapSettings: { hidePanels } } = this.props;
 
     return (
       <div className="l-map">
-        <MapMenu toggleMenu={handleShowMenu} hidePanels={hidePanels} />
         <div className="map">
           <Map recentImagery />
         </div>
@@ -40,7 +34,6 @@ class MapPage extends PureComponent {
 
 MapPage.propTypes = {
   analysis: PropTypes.object,
-  handleShowMenu: PropTypes.func,
   mapSettings: PropTypes.object
 };
 

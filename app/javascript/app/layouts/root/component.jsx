@@ -4,6 +4,7 @@ import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
 
 import Header from 'components/header';
+import MapMenu from 'pages/map-v2/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
 
 import 'styles/styles.scss';
@@ -28,6 +29,7 @@ class App extends PureComponent {
         {route.headerOptions && (
           <Header loggedIn={loggedIn} {...route.headerOptions} />
         )}
+        {route.component === 'map-v2' && <MapMenu />}
         <div className="page">
           <PageComponent path={route.component} sections={route.sections} />
         </div>
