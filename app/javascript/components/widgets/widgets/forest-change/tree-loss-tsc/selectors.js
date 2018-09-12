@@ -13,7 +13,6 @@ import tscLossCategories from 'data/tsc-loss-categories.json';
 const getLoss = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
 const getCurrentLocation = state => state.currentLabel || null;
-const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -179,26 +178,13 @@ export const getSentence = createSelector(
     getAllLoss,
     getSettings,
     getCurrentLocation,
-    getIndicator,
     getSentences,
-    getDrivers,
     getPermCats
   ],
-  (
-    data,
-    allLoss,
-    settings,
-    currentLabel,
-    indicator,
-    sentences,
-    drivers,
-    permCats
-  ) => {
+  (data, allLoss, settings, currentLabel, sentences, permCats) => {
     if (isEmpty(data)) return null;
-    const { initial, globalInitial } = sentences;
-    const { startYear, endYear, extentYear } = settings;
-    const { driver } = drivers[0];
-    const { label } = tscLossCategories[driver - 1];
+    const { initial, globalInitial, noLoss } = sentences;
+    const { startYear, endYear } = settings;
 
     const filteredLoss = data && data.filter(x => permCats.includes(x.bound1));
 
@@ -207,32 +193,18 @@ export const getSentence = createSelector(
     const totalLoss =
       (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
     const permPercent = (permLoss && permLoss / totalLoss * 100) || 0;
-    const sentence = currentLabel === 'global' ? globalInitial : initial;
+
+    let sentence = currentLabel === 'global' ? globalInitial : initial;
+    if (!permLoss) sentence = noLoss;
 
     const params = {
-      indicator: indicator && indicator.label.toLowerCase(),
-      location:
-        currentLabel === 'global'
-          ? {
-            value: 'Globally',
-            tooltip: 'this dataset is available in certain countries'
-          }
-          : currentLabel,
+      location: currentLabel === 'global' ? 'Globally' : currentLabel,
       startYear,
       endYear,
-      driver: label.toLowerCase(),
-      loss:
-        totalLoss < 1
-          ? `${format('.3r')(totalLoss)}ha`
-          : `${format('.3s')(totalLoss)}ha`,
-      group: settings.tscDriverGroup,
       permPercent:
-        permPercent < 0.1 ? '<0.1%' : `${format('.2r')(permPercent)}%`,
-      permLoss:
-        permLoss < 1
-          ? `${format('.3r')(permLoss)}ha`
-          : `${format('.3s')(permLoss)}ha`,
-      extentYear,
+        permPercent && permPercent < 0.1
+          ? '< 0.1%'
+          : `${format('.2r')(permPercent)}%`,
       component: {
         key: 'permanent deforestation',
         tooltip:

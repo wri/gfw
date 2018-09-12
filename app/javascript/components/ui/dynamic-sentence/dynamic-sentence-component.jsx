@@ -21,7 +21,7 @@ class WidgetDynamicSentence extends PureComponent {
     if (params) {
       Object.keys(params).forEach(p => {
         const param = params[p];
-        if (param && p !== 'components') {
+        if (param && p !== 'component') {
           if (typeof param === 'object') {
             if (param.color) {
               formattedSentence = formattedSentence.replace(
@@ -40,7 +40,6 @@ class WidgetDynamicSentence extends PureComponent {
     }
 
     formattedSentence = [formattedSentence];
-
     if (component) {
       const mappedComponent = {
         ...component,

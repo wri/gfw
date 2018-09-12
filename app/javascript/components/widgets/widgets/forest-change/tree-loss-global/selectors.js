@@ -161,13 +161,7 @@ export const getSentence = createSelector(
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location:
-        currentLabel === 'global'
-          ? {
-            value: 'globally',
-            tooltip: 'this dataset is available in certain countries'
-          }
-          : currentLabel,
+      location: currentLabel === 'global' ? 'globally' : currentLabel,
       startYear,
       endYear,
       loss:
