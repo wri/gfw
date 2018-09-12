@@ -236,7 +236,12 @@ export const getSentence = createSelector(
         permLoss < 1
           ? `${format('.3r')(permLoss)}ha`
           : `${format('.3s')(permLoss)}ha`,
-      extentYear
+      extentYear,
+      component: {
+        key: 'permanent deforestation',
+        tooltip:
+          'The permanent drivers of deforestation are Urbanization and Commodity Driven Deforestation.'
+      }
     };
 
     return {
