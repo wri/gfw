@@ -69,6 +69,9 @@ class Widget extends PureComponent {
                   config.interactive ? 'interactive' : ''
                 }`}
                 sentence={sentence}
+                onHover={handleDataHighlight}
+                handleMouseOver={() => handleDataHighlight(true, widget)}
+                handleMouseOut={() => handleDataHighlight(false, widget)}
               />
             )}
           {!error &&
@@ -80,7 +83,7 @@ class Widget extends PureComponent {
               />
             )}
         </div>
-        <WidgetFooter {...this.props} onHover={handleDataHighlight} />
+        <WidgetFooter {...this.props} />
         {embed &&
           (!query || (query && !query.hideGfw)) && (
             <div className="embed-footer">
