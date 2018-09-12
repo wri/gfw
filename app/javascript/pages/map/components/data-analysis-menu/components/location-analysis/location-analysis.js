@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from 'pages/map-v2/components/data-analysis-menu/actions';
+import * as actions from 'pages/map/components/data-analysis-menu/actions';
 import { filterWidgetByAnalysis } from 'components/widgets/selectors';
 
 import Component from './location-analysis-component';

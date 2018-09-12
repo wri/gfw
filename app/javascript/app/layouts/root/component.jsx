@@ -2,9 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
+import cx from 'classnames';
 
 import Header from 'components/header';
-import MapMenu from 'pages/map-v2/components/menu';
+import MapMenu from 'pages/map/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
 
 import 'styles/styles.scss';
@@ -12,7 +13,7 @@ import './styles.scss';
 
 const universalOptions = {
   loading: <Loader className="page-loader" />,
-  minDelay: 200
+  minDelay: 2000000000000
 };
 
 const PageComponent = universal(
@@ -24,12 +25,13 @@ const PageComponent = universal(
 class App extends PureComponent {
   render() {
     const { route, loggedIn } = this.props;
+    const isMapPage = route.component === 'map';
     return (
-      <div className="l-root">
+      <div className={cx('l-root', { '-map': isMapPage })}>
         {route.headerOptions && (
           <Header loggedIn={loggedIn} {...route.headerOptions} />
         )}
-        {route.component === 'map-v2' && <MapMenu />}
+        {isMapPage && <MapMenu />}
         <div className="page">
           <PageComponent path={route.component} sections={route.sections} />
         </div>

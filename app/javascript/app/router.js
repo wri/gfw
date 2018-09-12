@@ -74,7 +74,7 @@ export const routes = {
   },
   [MAP]: {
     path: '/v2/map/:tab?/:country?/:region?/:subRegion?',
-    component: 'map-v2',
+    component: 'map',
     headerOptions: {
       fullScreen: true,
       showPanel: true,

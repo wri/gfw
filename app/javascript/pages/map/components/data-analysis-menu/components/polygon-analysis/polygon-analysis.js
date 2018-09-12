@@ -2,7 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import * as modalMetaActions from 'components/modals/meta/meta-actions';
-import * as dataAnalysisActions from 'pages/map-v2/components/data-analysis-menu/actions';
+import * as dataAnalysisActions from 'pages/map/components/data-analysis-menu/actions';
 
 import Component from './polygon-analysis-component';
 

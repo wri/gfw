@@ -10,7 +10,7 @@ import router from './router';
 
 // Map & Dashboards
 import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
-import { reduxModule as DataAnalysisMenu } from 'pages/map-v2/components/data-analysis-menu';
+import { reduxModule as DataAnalysisMenu } from 'pages/map/components/data-analysis-menu';
 import { reduxModule as Widgets } from 'components/widgets';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
 import { reduxModule as Header } from 'pages/dashboards/header';

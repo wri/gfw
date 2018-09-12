@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import MenuFlap from 'pages/map-v2/components/menu/components/menu-flap';
+import MenuFlap from 'pages/map/components/menu/components/menu-flap';
 
 import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';

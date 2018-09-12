@@ -10,5 +10,14 @@
       z-index: 0;
     }
   }
+
+  &.-map {
+    .page {
+      min-height: 100vh;
+      width: calc(100% - 76px);
+      position: absolute;
+      right: 0;
+    }
+  }
 }
 
