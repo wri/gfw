@@ -154,7 +154,7 @@ export const parseConfig = createSelector(
     const insertIndex = findIndex(tooltip, { key: 'class_5' });
     tooltip.splice(insertIndex, 0, {
       key: 'break',
-      label: 'Drivers of permanent deforestation'
+      label: 'Drivers of permanent deforestation:'
     });
     return {
       height: 250,
