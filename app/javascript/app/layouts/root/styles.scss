@@ -17,6 +17,15 @@
       width: calc(100% - 76px);
       position: absolute;
       right: 0;
+      background-color: $ocean;
+    }
+
+    .page-loader {
+      background-color: rgba($slate, 0.2);
+
+      .spinner {
+        border-top-color: $white;
+      }
     }
   }
 }
