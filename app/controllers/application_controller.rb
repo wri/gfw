@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :check_browser, if: proc { Rails.env.production? }
-  before_action :cache_keys
+  before_action :check_production
+  before_action :cache_keys, if: proc { Rails.env.production? }
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
     @cache_keys = $redis.keys('*')
   end
 
-  def index
+  def check_production
     @is_production = Rails.env.production?
   end
 
