@@ -7,16 +7,16 @@
     margin-bottom: 0;
   }
 
-  &__content {
+  .content {
     flex: 1;
   }
 
-  &__header {
+  .header {
     display: flex;
     justify-content: space-between;
   }
 
-  &__name {
+  .name {
     font-size: 14px;
     line-height: 1.4;
     letter-spacing: -0.3px;
@@ -26,7 +26,7 @@
     cursor: pointer;
   }
 
-  &__subtitle {
+  .subtitle {
     font-size: 12px;
     line-height: normal;
     letter-spacing: -0.3px;
@@ -46,11 +46,11 @@
 
   /* small theme */
   &.-small {
-    .c-layer-toggle__content {
+    .content {
       margin-top: rem(-1px);
     }
 
-    .c-layer-toggle__name {
+    .name {
       font-size: rem(12px);
       margin-top: -2px;
     }

@@ -38,6 +38,11 @@
     margin-bottom: rem(15px);
   }
 
+  .layer-selector {
+    display: flex;
+    flex-direction: column;
+  }
+
   .more-info {
     margin-bottom: rem(10px);
   }
