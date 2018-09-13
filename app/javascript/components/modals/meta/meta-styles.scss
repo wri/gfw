@@ -88,7 +88,7 @@ $desktop-padding: rem(50px);
       padding: 0 $mobile-padding rem(15px) $mobile-padding;
 
       @media screen and (min-width: $screen-m) {
-        padding: rem(13px) $desktop-padding;
+        padding: rem(13px) $desktop-padding rem(3px);
       }
 
       p {
@@ -103,6 +103,7 @@ $desktop-padding: rem(50px);
     h4 {
       font-size: rem(16px);
       font-weight: 500;
+      margin-bottom: rem(10px);
     }
 
     .body {

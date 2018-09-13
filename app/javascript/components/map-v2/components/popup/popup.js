@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { MAP } from 'pages/map-v2/router';
+import { MAP } from 'router';
 import { parseGadm36Id } from 'utils/format';
 
 import Component from './component';
@@ -48,6 +48,6 @@ const mapDispatchToProps = (dispatch, { query }) => {
   );
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(getPopupProps, mapDispatchToProps)(Component);

@@ -6,9 +6,10 @@
 const webpack = require('webpack');
 const { basename, dirname, join, relative, resolve } = require('path');
 const { sync } = require('glob');
+
 const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
+
 const extname = require('path-complete-extname');
 const { env, settings, output, loadersDir } = require('./configuration.js');
 
@@ -16,56 +17,80 @@ const extensionGlob = `**/*{${settings.extensions.join(',')}}*`;
 const entryPath = join(settings.source_path, settings.source_entry_path);
 const packPaths = sync(join(entryPath, extensionGlob));
 
+const entry = packPaths.reduce((map, entryParam) => {
+  const localMap = map;
+  const namespace = relative(join(entryPath), dirname(entryParam));
+  localMap[
+    join(namespace, basename(entryParam, extname(entryParam)))
+  ] = resolve(entryParam);
+  return localMap;
+}, {});
+
 module.exports = {
-  entry: packPaths.reduce((map, entry) => {
-    const localMap = map;
-    const namespace = relative(join(entryPath), dirname(entry));
-    localMap[join(namespace, basename(entry, extname(entry)))] = resolve(entry);
-    return localMap;
-  }, {}),
-
+  entry,
   output: {
-    filename: '[name].js',
     path: output.path,
-    publicPath: output.publicPath
+    publicPath: output.publicPath,
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].js'
   },
-
   module: {
     rules: sync(join(loadersDir, '*.js')).map(loader => require(loader))
   },
-
   plugins: [
     new webpack.EnvironmentPlugin(JSON.parse(JSON.stringify(env))),
-    new ExtractTextPlugin(
-      env.NODE_ENV === 'production' ? '[name]-[hash].css' : '[name].css'
-    ),
-    new ManifestPlugin({
-      publicPath: output.publicPath,
-      writeToFileEmit: true
+    // entry points are required to work with webpacker (rails)
+    new WebpackAssetsManifest({
+      entrypoints: true,
+      writeToDisk: true,
+      publicPath: true
     })
   ],
-
   resolve: {
     extensions: settings.extensions,
-    modules: [resolve(settings.source_path), 'node_modules'],
+    modules: [
+      resolve(settings.source_path),
+      resolve(settings.source_path, 'app'),
+      'node_modules'
+    ],
     plugins: [new DirectoryNamedWebpackPlugin(true)],
     alias: {
-      utils: 'utils',
+      app: 'app',
       assets: 'assets',
-      styles: 'styles',
+      components: 'components',
+      data: 'data',
+      layouts: 'app/layouts',
       pages: 'pages',
-      sgf: 'pages/sgf',
-      about: 'pages/about',
-      components: 'components'
+      providers: 'providers',
+      services: 'services',
+      styles: 'styles',
+      router: 'router',
+      utils: 'utils',
+      'lodash-es': 'lodash'
     }
   },
+  resolveLoader: { modules: ['node_modules'] },
+  node: { fs: 'empty', net: 'empty' },
+  // parse active node modules and split individually for better caching
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          // create a splitChunk for each node vendor
+          name(module) {
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+            )[1];
 
-  resolveLoader: {
-    modules: ['node_modules']
-  },
-
-  node: {
-    fs: 'empty',
-    net: 'empty'
+            return `npm.${packageName.replace('@', '')}`;
+          }
+        }
+      }
+    }
   }
 };

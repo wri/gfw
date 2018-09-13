@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import upperFirst from 'lodash/upperFirst';
 
-import { COUNTRY } from 'pages/dashboards/router';
+import { DASHBOARDS } from 'router';
 import { deburrUpper } from 'utils/data';
 
-import shareActions from 'components/modals/share/share-actions';
+import * as shareActions from 'components/modals/share/share-actions';
 import { getAdminsSelected, getSentence } from './header-selectors';
 import * as ownActions from './header-actions';
 import reducers, { initialState } from './header-reducers';
@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators(
     {
       handleCountryChange: country => ({
-        type: COUNTRY,
+        type: DASHBOARDS,
         payload: {
           type: country ? 'country' : 'global',
           country: country && country.value,
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         query: newQuery
       }),
       handleRegionChange: (country, region) => ({
-        type: COUNTRY,
+        type: DASHBOARDS,
         payload: {
           type: 'country',
           country: country.value,
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         query: newQuery
       }),
       handleSubRegionChange: (country, region, subRegion) => ({
-        type: COUNTRY,
+        type: DASHBOARDS,
         payload: {
           type: 'country',
           country: country.value,
@@ -152,6 +152,6 @@ HeaderContainer.propTypes = {
   settings: PropTypes.object.isRequired
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

@@ -8,17 +8,22 @@ $summary-color: #aaa;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: $grey-light;
+
+  &::after {
+    border: solid 1px $border;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
 
   &.active {
     &::before {
       border: solid 2px $green-gfw;
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 1;
     }
   }
 
@@ -29,13 +34,13 @@ $summary-color: #aaa;
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
+    z-index: 2;
   }
 
   .body {
     padding: rem(15px);
-    background-color: $grey-light;
-    border: solid 1px $border;
     border-top: 0;
+    z-index: 2;
 
     @media screen and (min-width: $screen-m) {
       padding: rem(25px);

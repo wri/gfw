@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import { parseGadm36Id } from 'utils/format';
 import axios from 'axios';
 import uniqBy from 'lodash/uniqBy';
@@ -72,7 +71,7 @@ export const getRegions = createThunkAction(
 
 export const getSubRegions = createThunkAction(
   'getSubRegions',
-  (country, region) => (dispatch, state) => {
+  ({ country, region }) => (dispatch, state) => {
     if (!state().countryData.isSubRegionsLoading) {
       dispatch(setSubRegionsLoading(true));
       getSubRegionsProvider(country, region)

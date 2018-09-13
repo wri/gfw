@@ -7,7 +7,7 @@ import { getMapProps } from './selectors';
 
 import { setInteraction } from './components/popup/actions';
 import { setRecentImagerySettings } from './components/recent-imagery/recent-imagery-actions';
-import ownActions from './actions';
+import * as ownActions from './actions';
 
 const actions = {
   setInteraction,
@@ -41,7 +41,10 @@ class MapContainer extends PureComponent {
 
     // update landsat basemap when changing zoom
     if (basemap.id === 'landsat' && zoom !== prevProps.zoom) {
-      this.props.setLandsatBasemap(basemap.year, basemap.defaultUrl);
+      this.props.setLandsatBasemap({
+        year: basemap.year,
+        defaultUrl: basemap.defaultUrl
+      });
     }
 
     // only set bounding box if action allows it
@@ -85,7 +88,5 @@ MapContainer.propTypes = {
   setMapSettings: PropTypes.func,
   layerBbox: PropTypes.array
 };
-
-export { actions };
 
 export default connect(state => getMapProps(state), actions)(MapContainer);

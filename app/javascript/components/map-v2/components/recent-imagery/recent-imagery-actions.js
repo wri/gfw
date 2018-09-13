@@ -1,6 +1,5 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
-import axios, { CancelToken } from 'axios';
+import { createAction, createThunkAction } from 'redux-tools';
+import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
@@ -13,10 +12,12 @@ const serializeReponse = response =>
     ...r.attributes
   }));
 
-const setRecentImageryData = createAction('setRecentImageryData');
-const setRecentImageryDataStatus = createAction('setRecentImageryDataStatus');
-const resetRecentImageryData = createAction('resetRecentImageryData');
-const setRecentImageryLoading = createAction('setRecentImageryLoading');
+export const setRecentImageryData = createAction('setRecentImageryData');
+export const setRecentImageryDataStatus = createAction(
+  'setRecentImageryDataStatus'
+);
+export const resetRecentImageryData = createAction('resetRecentImageryData');
+export const setRecentImageryLoading = createAction('setRecentImageryLoading');
 
 export const setRecentImagerySettings = createThunkAction(
   'setRecentImagerySettings',
@@ -30,13 +31,9 @@ export const setRecentImagerySettings = createThunkAction(
     )
 );
 
-const getData = createThunkAction('getData', params => dispatch => {
-  if (this.getDataSource) {
-    this.getDataSource.cancel();
-  }
-  this.getDataSource = CancelToken.source();
+export const getData = createThunkAction('getData', params => dispatch => {
   dispatch(setRecentImageryLoading(true));
-  getRecentTiles({ ...params, token: this.getDataSource.token })
+  getRecentTiles({ ...params })
     .then(response => {
       const serializedResponse = serializeReponse(
         response.data && response.data.data && response.data.data.tiles
@@ -68,19 +65,14 @@ const getData = createThunkAction('getData', params => dispatch => {
     });
 });
 
-const getMoreTiles = createThunkAction(
+export const getMoreTiles = createThunkAction(
   'getMoreTiles',
   params => (dispatch, state) => {
-    if (this.getMoreTilesSource) {
-      this.getMoreTilesSource.cancel();
-    }
-    this.getMoreTilesSource = CancelToken.source();
-    const { sources, dataStatus, bands } = params;
-
+    const { sources, dataStatus, bands, token } = params;
     axios
       .all([
-        getTiles({ sources, token: this.getMoreTilesSource.token, bands }),
-        getThumbs({ sources, token: this.getMoreTilesSource.token, bands })
+        getTiles({ sources, token, bands }),
+        getThumbs({ sources, token, bands })
       ])
       .then(
         axios.spread((tilesResponse, thumbsReponse) => {
@@ -135,13 +127,3 @@ const getMoreTiles = createThunkAction(
       });
   }
 );
-
-export default {
-  setRecentImageryData,
-  setRecentImageryDataStatus,
-  setRecentImagerySettings,
-  setRecentImageryLoading,
-  resetRecentImageryData,
-  getData,
-  getMoreTiles
-};

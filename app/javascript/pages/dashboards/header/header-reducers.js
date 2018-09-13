@@ -1,3 +1,5 @@
+import * as actions from './header-actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -36,6 +38,6 @@ const setHeaderData = (state, { payload }) => ({
 });
 
 export default {
-  setHeaderLoading,
-  setHeaderData
+  [actions.setHeaderLoading]: setHeaderLoading,
+  [actions.setHeaderData]: setHeaderData
 };

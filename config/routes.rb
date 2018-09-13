@@ -155,4 +155,7 @@ Gfw::Application.routes.draw do
 
   ########### /ACTIVE ROUTES #############
 
+  get '/*all' => 'react#index'
+
+
 end

@@ -8,6 +8,7 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
 import infoIcon from 'assets/icons/info.svg';
+import helpIcon from 'assets/icons/help.svg';
 
 import './styles.scss';
 
@@ -30,6 +31,7 @@ class LayerToggle extends PureComponent {
       iso,
       active,
       color,
+      citation,
       description
     } = data;
 
@@ -43,10 +45,10 @@ class LayerToggle extends PureComponent {
           onToggle={value => onToggle({ dataset, layer, iso }, value)}
           color={color}
         />
-        <div className="c-layer-toggle__content">
-          <div className="c-layer-toggle__header">
+        <div className="content">
+          <div className="header">
             <div
-              className="c-layer-toggle__name"
+              className="name"
               onClick={() => onToggle({ dataset, layer, iso }, !active)}
               role="button"
               tabIndex={tabIndex}
@@ -69,20 +71,20 @@ class LayerToggle extends PureComponent {
                     } square info-button ${!metadata ? '-help' : ''}`}
                     onClick={metadata && (() => onInfoClick(metadata))}
                   >
-                    <Icon icon={infoIcon} className="info-icon" />
+                    <Icon icon={metadata ? infoIcon : helpIcon} />
                   </Button>
                 </Tooltip>
               )}
           </div>
-          {description &&
+          {citation &&
             showSubtitle && (
               <div
-                className="c-layer-toggle__subtitle"
+                className="subtitle"
                 onClick={() => onToggle({ dataset, layer, iso }, !active)}
                 role="button"
                 tabIndex={tabIndex}
               >
-                {`${description}`}
+                {`${citation}`}
               </div>
             )}
         </div>

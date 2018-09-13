@@ -1,3 +1,5 @@
+import * as actions from './recent-imagery-actions';
+
 export const initialState = {
   loading: true,
   data: [],
@@ -48,8 +50,8 @@ const setRecentImageryLoading = (state, { payload }) => ({
 });
 
 export default {
-  setRecentImageryData,
-  setRecentImageryDataStatus,
-  resetRecentImageryData,
-  setRecentImageryLoading
+  [actions.setRecentImageryData]: setRecentImageryData,
+  [actions.setRecentImageryDataStatus]: setRecentImageryDataStatus,
+  [actions.resetRecentImageryData]: resetRecentImageryData,
+  [actions.setRecentImageryLoading]: setRecentImageryLoading
 };

@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga';
-import { ANALYTICS_EVENTS } from 'pages/dashboards/analytics';
+import { ANALYTICS_EVENTS } from 'app/analytics';
 
 const { ANALYTICS_PROPERTY_ID } = process.env;
 let gaInitialized = false;
@@ -51,7 +51,7 @@ export const handleActionTrack = state => nextDispatch => action => {
     // process event if available
     if (event) {
       const evalProp = prop =>
-        typeof prop === 'string' ? prop : prop(payload);
+        (typeof prop === 'string' ? prop : prop(payload));
       const eventPayload = {
         ...['category', 'action', 'label'].reduce(
           (val, prop) => ({ ...val, [prop]: evalProp(event[prop]) }),

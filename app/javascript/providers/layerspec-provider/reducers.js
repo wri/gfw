@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -16,6 +18,6 @@ const setLayers = (state, { payload }) => ({
 });
 
 export default {
-  setLayers,
-  setLayerSpecLoading
+  [actions.setLayers]: setLayers,
+  [actions.setLayerSpecLoading]: setLayerSpecLoading
 };

@@ -31,7 +31,7 @@ class Header extends PureComponent {
     } = this.props;
 
     return (
-      <div className={`${className} c-header`}>
+      <div className={`${className} c-header-menu`}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="share-buttons">
           <Button

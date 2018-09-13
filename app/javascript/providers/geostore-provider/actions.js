@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 
 import { getGeostoreProvider } from 'services/geostore';
 import { getBoxBounds } from 'utils/geoms';
@@ -9,7 +8,7 @@ export const setGeostore = createAction('setGeostore');
 
 export const getGeostore = createThunkAction(
   'getGeostore',
-  (country, region, subRegion) => (dispatch, state) => {
+  ({ country, region, subRegion }) => (dispatch, state) => {
     if (!state().geostore.loading) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
       getGeostoreProvider(country, region, subRegion)

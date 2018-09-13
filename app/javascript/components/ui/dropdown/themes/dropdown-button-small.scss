@@ -14,16 +14,13 @@ $dd-button-height: rem(20px);
       .value {
         top: calc(50% - #{rem(9px)});
         right: rem(10px);
+        padding: 0;
       }
 
       input,
       .value {
         color: #aaa;
         font-size: rem(12px);
-      }
-
-      .value {
-        padding: 0;
       }
     }
 

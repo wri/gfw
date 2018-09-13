@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -17,6 +19,6 @@ const setMyGFW = (state, { payload }) => ({
 });
 
 export default {
-  setMyGFW,
-  setMyGFWLoading
+  [actions.setMyGFW]: setMyGFW,
+  [actions.setMyGFWLoading]: setMyGFWLoading
 };

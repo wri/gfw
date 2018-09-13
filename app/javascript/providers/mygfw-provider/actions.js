@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 
 export const setMyGFWLoading = createAction('setMyGFWLoading');
 export const setMyGFW = createAction('setMyGFW');

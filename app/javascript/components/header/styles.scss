@@ -1,15 +1,33 @@
 @import '~styles/settings.scss';
 
 $header-height: rem(55px);
-$full-screen-height: rem(76px);
+$full-screen-height: rem(75px);
 
 .c-header {
-  background: $white;
   height: $header-height;
+  z-index: 5;
+  position: relative;
+
+  &.-fixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  &.-toggle {
+    width: rem(76px);
+
+    &.-open {
+      width: 100%;
+    }
+  }
 
   .nav-menu {
     border-bottom: solid 1px $border;
     position: relative;
+    background: $white;
 
     > div {
       position: relative;
@@ -47,6 +65,10 @@ $full-screen-height: rem(76px);
 
         &:hover {
           color: darken($slate, 30%);
+        }
+
+        &:focus {
+          outline: none;
         }
       }
 

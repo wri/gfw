@@ -1,0 +1,32 @@
+@import '~styles/settings.scss';
+
+.l-root {
+  .page {
+    position: relative;
+    z-index: 0;
+    min-height: calc(100vh - 56px);
+
+    .page-loader {
+      z-index: 0;
+    }
+  }
+
+  &.-map {
+    .page {
+      min-height: 100vh;
+      width: calc(100% - 76px);
+      position: absolute;
+      right: 0;
+      background-color: $ocean;
+    }
+
+    .page-loader {
+      background-color: rgba($slate, 0.2);
+
+      .spinner {
+        border-top-color: $white;
+      }
+    }
+  }
+}
+

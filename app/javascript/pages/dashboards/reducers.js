@@ -1,53 +1,14 @@
-/* eslint-disable import/first */
-import { combineReducers } from 'redux';
-import { handleActions } from 'utils/redux';
+import * as actions from './actions';
 
-// Routes
-import router from './router';
-
-// Page
-import * as PageComponent from 'pages/dashboards/page';
-
-// Components
-import * as HeaderComponent from 'pages/dashboards/header';
-import * as ShareComponent from 'components/modals/share';
-import * as ModalMetaComponent from 'components/modals/meta';
-import * as WidgetsComponent from 'components/widgets';
-import * as MapComponent from 'components/map';
-
-// Providers
-import * as countryDataProviderComponent from 'providers/country-data-provider';
-import * as whitelistsProviderComponent from 'providers/whitelists-provider';
-import * as layerSpecProviderComponent from 'providers/layerspec-provider';
-import * as datasetsProviderComponent from 'providers/datasets-provider';
-import * as geostoreProviderComponent from 'providers/geostore-provider';
-
-// Page Reducers
-const pageReducers = {
-  page: handleActions(PageComponent)
+export const initialState = {
+  showMapMobile: false
 };
 
-// Component Reducers
-const componentsReducers = {
-  share: handleActions(ShareComponent),
-  modalMeta: handleActions(ModalMetaComponent),
-  header: handleActions(HeaderComponent),
-  widgets: handleActions(WidgetsComponent),
-  map: handleActions(MapComponent)
-};
-
-// Provider Reducers
-const providersReducers = {
-  countryData: handleActions(countryDataProviderComponent),
-  whitelists: handleActions(whitelistsProviderComponent),
-  layerSpec: handleActions(layerSpecProviderComponent),
-  datasets: handleActions(datasetsProviderComponent),
-  geostore: handleActions(geostoreProviderComponent)
-};
-
-export default combineReducers({
-  ...pageReducers,
-  ...providersReducers,
-  ...componentsReducers,
-  location: router.reducer
+const setShowMapMobile = (state, { payload }) => ({
+  ...state,
+  showMapMobile: payload
 });
+
+export default {
+  [actions.setShowMapMobile]: setShowMapMobile
+};

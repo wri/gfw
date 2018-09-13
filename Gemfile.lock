@@ -316,7 +316,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (4.8.0.341)
     nio4r (2.3.0)
-    nokogiri (1.8.2)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     public_suffix (3.0.2)
     puma (3.11.3)
@@ -326,7 +326,7 @@ GEM
     rack-reverse-proxy (0.11.0)
       rack (>= 1.0.0)
       rack-proxy (~> 0.5, >= 0.5.14)
-    rack-test (0.8.3)
+    rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.1.5)
       actioncable (= 5.1.5)
@@ -468,7 +468,7 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-    webpacker (3.3.1)
+    webpacker (3.5.5)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
@@ -529,7 +529,7 @@ DEPENDENCIES
   useragent
   vcr
   web-console (~> 2.0)
-  webpacker (~> 3.0)
+  webpacker (~> 3.5.5)
 
 RUBY VERSION
    ruby 2.4.0p0

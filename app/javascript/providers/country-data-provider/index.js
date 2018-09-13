@@ -25,7 +25,7 @@ class CountryDataProvider extends PureComponent {
       getRegions(country);
     }
     if (region) {
-      getSubRegions(country, region);
+      getSubRegions({ country, region });
     }
   }
 
@@ -40,13 +40,13 @@ class CountryDataProvider extends PureComponent {
       getCountryLinks();
       getRegions(country);
       if (region) {
-        getSubRegions(country, region);
+        getSubRegions({ country, region });
       }
     }
 
     if (hasRegionChanged) {
       if (region) {
-        getSubRegions(country, region);
+        getSubRegions({ country, region });
       }
     }
   }
@@ -64,5 +64,5 @@ CountryDataProvider.propTypes = {
   getCountryLinks: PropTypes.func.isRequired
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(CountryDataProvider);

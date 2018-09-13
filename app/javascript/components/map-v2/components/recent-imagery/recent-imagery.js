@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 import { checkLocationInsideBbox } from 'utils/geoms';
+import { CancelToken } from 'axios';
 
 import * as mapActions from 'components/map-v2/actions';
-import ownActions from './recent-imagery-actions';
+import * as ownActions from './recent-imagery-actions';
 
 import reducers, { initialState } from './recent-imagery-reducers';
 import { getRecentImageryProps } from './recent-imagery-selectors';
@@ -19,19 +20,24 @@ const actions = {
 const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
-  componentDidMount() {
+  componentDidMount = () => {
     const { active, position, dates, settings, getData } = this.props;
+    if (this.getDataSource) {
+      this.getDataSource.cancel();
+    }
+    this.getDataSource = CancelToken.source();
     if (active) {
       getData({
         ...position,
         start: dates.start,
         end: dates.end,
-        bands: settings.bands
+        bands: settings.bands,
+        token: this.getDataSource.token
       });
     }
-  }
+  };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate = prevProps => {
     const {
       active,
       dataStatus,
@@ -62,6 +68,10 @@ class RecentImageryContainer extends PureComponent {
         !isEqual(settings.weeks, prevProps.settings.weeks) ||
         !isEqual(settings.bands, prevProps.settings.bands))
     ) {
+      if (this.getDataSource) {
+        this.getDataSource.cancel();
+      }
+      this.getDataSource = CancelToken.source();
       getData({
         ...position,
         start: dates.start,
@@ -78,7 +88,16 @@ class RecentImageryContainer extends PureComponent {
         dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles ||
         dataStatus.requestFails !== prevProps.dataStatus.requestFails)
     ) {
-      getMoreTiles({ sources, dataStatus, bands: settings.bands });
+      if (this.getMoreTilesSource) {
+        this.getMoreTilesSource.cancel();
+      }
+      this.getMoreTilesSource = CancelToken.source();
+      getMoreTiles({
+        sources,
+        dataStatus,
+        bands: settings.bands,
+        token: this.getMoreTilesSource.token
+      });
     }
 
     // if new tile update on map
@@ -90,7 +109,7 @@ class RecentImageryContainer extends PureComponent {
       this.removeTile();
       resetRecentImageryData();
     }
-  }
+  };
 
   setTile = debounce(() => {
     const {
@@ -153,5 +172,6 @@ RecentImageryContainer.propTypes = {
   resetRecentImageryData: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
+
 export default connect(mapStateToProps, actions)(RecentImageryContainer);

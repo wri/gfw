@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   latlng: {},
   interactions: {},
@@ -32,7 +34,7 @@ const clearInteractions = state => ({
 });
 
 export default {
-  setInteraction,
-  setInteractionSelected,
-  clearInteractions
+  [actions.setInteraction]: setInteraction,
+  [actions.setInteractionSelected]: setInteractionSelected,
+  [actions.clearInteractions]: clearInteractions
 };

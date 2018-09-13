@@ -1,3 +1,5 @@
+import * as actions from './datasets-provider-actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -16,6 +18,6 @@ const setDatasets = (state, { payload }) => ({
 });
 
 export default {
-  setDatasets,
-  setDatasetsLoading
+  [actions.setDatasets]: setDatasets,
+  [actions.setDatasetsLoading]: setDatasetsLoading
 };

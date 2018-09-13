@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import isEmpty from 'lodash/isEmpty';
-import { COUNTRY } from 'pages/dashboards/router';
+import { DASHBOARDS } from 'router';
 import { isParent } from 'utils/dom';
 
 import Button from 'components/ui/button';
@@ -62,7 +62,7 @@ class WidgetHeader extends PureComponent {
                   size === 'small' || isDeviceTouch ? 'square' : ''
                 }`}
                 link={{
-                  type: COUNTRY,
+                  type: DASHBOARDS,
                   payload: { ...location },
                   query: {
                     ...query,

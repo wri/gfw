@@ -1,3 +1,5 @@
+import * as actions from './meta-actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -23,7 +25,7 @@ const setModalMetaClosing = (state, { payload }) => ({
 });
 
 export default {
-  setModalMetaData,
-  setModalMetaClosing,
-  setModalMetaLoading
+  [actions.setModalMetaData]: setModalMetaData,
+  [actions.setModalMetaClosing]: setModalMetaClosing,
+  [actions.setModalMetaLoading]: setModalMetaLoading
 };

@@ -6,7 +6,7 @@ import awards2 from 'pages/about/section-impacts/images/awards2.png';
 import awards3 from 'pages/about/section-impacts/images/awards3.png';
 
 import Component from './section-impacts-component';
-import actions from './section-impacts-actions';
+import * as actions from './section-impacts-actions';
 import reducers, { initialState } from './section-impacts-reducers';
 
 const awards = [
@@ -39,6 +39,5 @@ const mapStateToProps = ({ impacts }) => ({
   awards
 });
 
-export { actions, reducers, initialState };
-
+export const reduxModule = { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(Component);

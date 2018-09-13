@@ -1,41 +1,33 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 
 import { getShortenUrl } from 'services/bitly';
 
-const setShareData = createAction('setShareData');
-const setShareUrl = createAction('setShareUrl');
-const setShareSelected = createAction('setShareSelected');
-const setShareOpen = createAction('setShareOpen');
-const setShareCopied = createAction('setShareCopied');
-const setShareLoading = createAction('setShareLoading');
+export const setShareData = createAction('setShareData');
+export const setShareUrl = createAction('setShareUrl');
+export const setShareSelected = createAction('setShareSelected');
+export const setShareOpen = createAction('setShareOpen');
+export const setShareCopied = createAction('setShareCopied');
+export const setShareLoading = createAction('setShareLoading');
 
-const setShareModal = createThunkAction('setShareModal', params => dispatch => {
-  const { shareUrl } = params;
+export const setShareModal = createThunkAction(
+  'setShareModal',
+  params => dispatch => {
+    const { shareUrl } = params;
 
-  dispatch(
-    setShareData({
-      ...params
-    })
-  );
+    dispatch(
+      setShareData({
+        ...params
+      })
+    );
 
-  getShortenUrl(shareUrl).then(response => {
-    let shortShareUrl = '';
-    if (response.data.status_code === 200) {
-      shortShareUrl = response.data.data.url;
-      dispatch(setShareUrl(shortShareUrl));
-    } else {
-      dispatch(setShareLoading(false));
-    }
-  });
-});
-
-export default {
-  setShareModal,
-  setShareData,
-  setShareSelected,
-  setShareOpen,
-  setShareUrl,
-  setShareCopied,
-  setShareLoading
-};
+    getShortenUrl(shareUrl).then(response => {
+      let shortShareUrl = '';
+      if (response.data.status_code === 200) {
+        shortShareUrl = response.data.data.url;
+        dispatch(setShareUrl(shortShareUrl));
+      } else {
+        dispatch(setShareLoading(false));
+      }
+    });
+  }
+);

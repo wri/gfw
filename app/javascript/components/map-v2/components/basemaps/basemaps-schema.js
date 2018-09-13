@@ -47,9 +47,7 @@ export default {
     id: 'satellite',
     label: 'Satellite',
     color: '#131620',
-    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjhqiecof53wv2rl9gw4cehmy/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MAPBOX_TOKEN
-    }`
+    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
   },
   landsat: {
     id: 'landsat',

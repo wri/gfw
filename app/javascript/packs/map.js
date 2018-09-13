@@ -1,15 +1,22 @@
-/* eslint no-console:0 */
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
-//
-// To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
-// layout file, like app/views/layouts/application.html.erb
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Map from 'pages/map';
+import Map from 'map';
+import { AppContainer } from 'react-hot-loader';
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<Map />, document.getElementById('react-map'));
-});
+const render = Component => {
+  ReactDOM.render(
+    <AppContainer>
+      <Component />
+    </AppContainer>,
+    document.getElementById('react-map')
+  );
+};
+
+document.addEventListener('DOMContentLoaded', () => render(Map));
+
+if (module.hot) {
+  /* eslint-disable global-require */
+  module.hot.accept('../map', () => {
+    render(require('../map').default);
+  });
+}

@@ -83,7 +83,8 @@ class Contact extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { data, handleSubmit, submitting } = this.props;
-    const activeTopic = data && topics.find(t => t.key === data.values.topic);
+    const activeTopic =
+      data && topics.find(t => t.key === data.values && data.values.topic);
     return (
       <form className="c-form" onSubmit={handleSubmit}>
         <Field

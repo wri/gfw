@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import groupBy from 'lodash/groupBy';
@@ -9,12 +8,13 @@ import {
   setComponentStateToUrl
 } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/forest-data';
-import { COUNTRY, EMBED } from 'pages/dashboards/router';
+import { DASHBOARDS, WIDGET_EMBED } from 'router';
 import * as WIDGETS from './manifest';
 
 // export const setWidgetSettings = createAction('setWidgetSettings');
 export const setWidgetLoading = createAction('setWidgetLoading');
 export const setWidgetData = createAction('setWidgetData');
+export const setWidgetActive = createAction('setWidgetActive');
 export const settingsItemSelected = createAction('settingsItemSelected');
 export const setGlobalData = createAction('setGlobalData');
 
@@ -66,7 +66,7 @@ export const setWidgetSettingsUrl = createThunkAction(
       };
     }
     dispatch({
-      type: location.type === 'location/EMBED' ? EMBED : COUNTRY,
+      type: location.type === 'location/EMBED' ? WIDGET_EMBED : DASHBOARDS,
       payload: location.payload,
       query: {
         ...location.query,
@@ -117,15 +117,3 @@ export const getGlobalData = createThunkAction(
     });
   }
 );
-
-export default {
-  setWidgetSettingsUrl,
-  setWidgetSettingsStore,
-  settingsItemSelected,
-  setWidgetData,
-  getWidgetData,
-  getGlobalData,
-  setWidgetLoading,
-  setWidgetSettings,
-  setGlobalData
-};

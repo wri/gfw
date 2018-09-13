@@ -17,7 +17,7 @@ class GeostoreProvider extends PureComponent {
     } = this.props;
 
     if (country) {
-      getGeostore(country, region, subRegion);
+      getGeostore({ country, region, subRegion });
     }
   }
 
@@ -34,15 +34,15 @@ class GeostoreProvider extends PureComponent {
     }
 
     if (hasCountryChanged) {
-      getGeostore(country, region, subRegion);
+      getGeostore({ country, region, subRegion });
     }
 
     if (hasRegionChanged) {
-      getGeostore(country, region, subRegion);
+      getGeostore({ country, region, subRegion });
     }
 
     if (hasSubRegionChanged) {
-      getGeostore(country, region, subRegion);
+      getGeostore({ country, region, subRegion });
     }
   }
 
@@ -57,5 +57,5 @@ GeostoreProvider.propTypes = {
   setGeostore: PropTypes.func.isRequired
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(GeostoreProvider);

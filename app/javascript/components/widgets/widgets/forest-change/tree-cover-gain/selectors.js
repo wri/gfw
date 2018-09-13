@@ -65,7 +65,9 @@ export const parseData = createSelector(
       !data ||
       !data.length ||
       (currentLabel !== 'global' && !haveData(data, currentLocation))
-    ) { return null; }
+    ) {
+      return null;
+    }
 
     let dataTrimmed = [];
     data.forEach(d => {
@@ -135,7 +137,9 @@ export const getSentence = createSelector(
       !data ||
       !data.length ||
       (currentLabel !== 'global' && !haveData(data, currentLocation))
-    ) { return null; }
+    ) {
+      return null;
+    }
     const {
       initial,
       withIndicator,

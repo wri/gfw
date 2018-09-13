@@ -1,3 +1,5 @@
+import * as actions from './section-contact-actions';
+
 export const initialState = {
   showConfirm: false,
   submitting: false,
@@ -17,6 +19,6 @@ const setFormSubmitting = (state, { payload }) => ({
 });
 
 export default {
-  setShowConfirm,
-  setFormSubmitting
+  [actions.setShowConfirm]: setShowConfirm,
+  [actions.setFormSubmitting]: setFormSubmitting
 };

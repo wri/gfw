@@ -1,32 +1,29 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import { handleActionTrack } from 'utils/analytics';
+import { createElement, PureComponent } from 'react';
+import { connect } from 'react-redux';
 
-import 'react-tippy/dist/tippy.css';
-import 'styles/styles.scss';
+import { getPageProps } from './selectors';
+import PageComponent from './component';
 
-import reducers from './reducers';
-import router from './router';
+class PageContainer extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showHeader: false
+    };
+  }
 
-import Root from './root';
+  handleShowMenu = () => {
+    const { showHeader } = this.state;
+    this.setState({ showHeader: !showHeader });
+  };
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = applyMiddleware(
-  thunk,
-  router.middleware,
-  handleActionTrack
-);
-const store = createStore(
-  reducers,
-  composeEnhancers(router.enhancer, middlewares)
-);
+  render() {
+    return createElement(PageComponent, {
+      ...this.props,
+      ...this.state,
+      handleShowMenu: this.handleShowMenu
+    });
+  }
+}
 
-const Map = () => (
-  <Provider store={store}>
-    <Root />
-  </Provider>
-);
-
-export default Map;
+export default connect(getPageProps)(PageContainer);

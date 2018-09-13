@@ -24,5 +24,5 @@ LayerSpecProvider.propTypes = {
   getLayerSpec: PropTypes.func.isRequired
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(LayerSpecProvider);

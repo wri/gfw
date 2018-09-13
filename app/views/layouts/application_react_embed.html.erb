@@ -5,8 +5,11 @@
     <%= render 'shared/favicons' %>
 
     <!-- render react app pack -->
-    <%= javascript_pack_tag controller_name %>
-    <%= stylesheet_pack_tag controller_name %>
+    <%= render 'shared/leaflet' %>
+    <%= javascript_entrypoint_pack_tag 'app' %>
+    <% if @is_production %>
+      <%= stylesheet_entrypoint_pack_tag 'app' %>
+    <% end %>
 
     <%= yield :head %>
   </head>

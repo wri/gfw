@@ -29,7 +29,7 @@ class SectionProjects extends PureComponent {
     const hasCategories = categories && !!categories.length;
     return (
       <div>
-        <div className="l-section-projects">
+        <div className="l-section-projects-sgf">
           <div className="row">
             <div className="column small-12 large-7 project-globe">
               <Globe

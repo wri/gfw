@@ -1,5 +1,4 @@
 @import '~styles/settings.scss';
-@import './themes/wri-api-styles.scss';
 
 .c-legend,
 .c-legend-item {
@@ -37,6 +36,11 @@
   .layer-selector,
   .param-selector {
     margin-bottom: rem(15px);
+  }
+
+  .layer-selector {
+    display: flex;
+    flex-direction: column;
   }
 
   .more-info {

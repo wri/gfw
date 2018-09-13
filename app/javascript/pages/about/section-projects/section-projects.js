@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { actions as modalActions } from 'pages/about/section-projects/section-projects-modal';
-import * as sectionActions from './section-projects-actions';
+import * as modalActions from 'pages/about/section-projects/section-projects-modal/section-projects-modal-actions';
 
+import * as sectionActions from './section-projects-actions';
 import reducers, { initialState } from './section-projects-reducers';
 import SectionProjectsComponent from './section-projects-component';
 
@@ -15,19 +15,24 @@ import {
 
 const actions = { ...sectionActions, ...modalActions };
 
-const mapStateToProps = ({ projects }) => {
+const mapStateToProps = ({ aboutProjects }) => {
   const projectData = {
-    data: projects.data,
-    categorySelected: projects.categorySelected
+    data: aboutProjects.data,
+    categorySelected: aboutProjects.categorySelected
   };
 
   return {
     projects: getProjectsSelected(projectData),
     categories: getCategoriesList(projectData),
-    categorySelected: projects.categorySelected
+    categorySelected: aboutProjects.categorySelected
   };
 };
 class SectionProjectsContainer extends PureComponent {
+  componentDidMount() {
+    const { fetchProjects } = this.props;
+    fetchProjects();
+  }
+
   handleGlobeClick = d => {
     const { setSectionProjectsModal } = this.props;
     setSectionProjectsModal({
@@ -45,9 +50,10 @@ class SectionProjectsContainer extends PureComponent {
 }
 
 SectionProjectsContainer.propTypes = {
-  setSectionProjectsModal: PropTypes.func
+  setSectionProjectsModal: PropTypes.func,
+  fetchProjects: PropTypes.func
 };
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(SectionProjectsContainer);

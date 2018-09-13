@@ -1,3 +1,5 @@
+import * as actions from './actions';
+
 export const initialState = {
   loading: true,
   error: false,
@@ -64,9 +66,9 @@ const setMapZoom = (state, { payload }) => {
 };
 
 export default {
-  setLayerSpecLoading,
-  setLayerSpec,
-  setMapOptions,
-  setMapZoom,
-  setShowMapMobile
+  [actions.setLayerSpecLoading]: setLayerSpecLoading,
+  [actions.setLayerSpec]: setLayerSpec,
+  [actions.setMapOptions]: setMapOptions,
+  [actions.setMapZoom]: setMapZoom,
+  [actions.setShowMapMobile]: setShowMapMobile
 };

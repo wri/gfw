@@ -11,7 +11,7 @@ import GFWdefault from './assets/maptypes/GFWdefault';
 import GFWLabels from './assets/maptypes/GFWLabels';
 
 import MapComponent from './component';
-import actions from './actions';
+import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getLayers } from './selectors';
 
@@ -190,6 +190,6 @@ MapContainer.propTypes = {
   geojson: PropTypes.object
 };
 
-export { reducers, initialState, actions };
+export const reduxModule = { reducers, initialState, actions };
 
 export default connect(mapStateToProps, actions)(MapContainer);
