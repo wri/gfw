@@ -34,13 +34,11 @@ export default [
     subCategories: [
       {
         slug: 'deforestationAlerts',
-        title: 'Deforestation Alerts',
-        subTitle: 'near real time'
+        title: 'Deforestation Alerts'
       },
       {
         slug: 'fireAlerts',
-        title: 'Fire Alerts',
-        subTitle: 'near real time'
+        title: 'Fire Alerts'
       },
       {
         slug: 'treeCoverChange',
@@ -68,7 +66,7 @@ export default [
     subCategories: [
       {
         slug: 'concessions',
-        title: 'Concessions'
+        title: 'Commodities'
       },
       {
         slug: 'infrastructure',
