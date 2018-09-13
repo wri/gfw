@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch, { query }) => {
         return {
           type: MAP,
           payload: {
-            tab: 'data',
+            type: 'country',
             country: !!location.adm0 && location.adm0,
             region: !!location.adm1 && location.adm1,
             subRegion: !!location.adm2 && location.adm2
