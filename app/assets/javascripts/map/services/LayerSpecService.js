@@ -17,7 +17,7 @@ define(
         forbidCombined: {
           forest_clearing: {
             except: [
-              ['loss', 'forestgain', 'forest2000', 'forest2010'],
+              ['loss', 'loss_by_driver', 'forestgain', 'forest2000', 'forest2010'],
               ['imazon', 'forest2000', 'forest2010'],
               ['prodes', 'forest2000', 'forest2010'],
               ['terrailoss', 'forest2000', 'forest2010'],

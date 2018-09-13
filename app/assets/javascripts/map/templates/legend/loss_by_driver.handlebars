@@ -1,0 +1,25 @@
+{{#if threshold}}
+  <div class="layer-details layer-details-loss">
+    <p class="canopy" title="Click the gear icon to change the tree cover canopy density">Displaying loss with <span class="canopy-button js-toggle-threshold"> > {{threshold}} %</span> canopy density.</p>
+  </div>
+{{/if}}
+<div class="layer-details layer-details-select">
+  <span class="container-select-option">
+    Display:
+    <div class="select-container">
+      <select class="select-option js-loss-type">
+        <option value="loss">Tree Cover Loss</option>
+        <option value="loss_by_driver" selected>Loss by Driver</option>
+      </select>
+    </div>
+  </span>
+  <ul class="layer-colors">
+      <li><i class="circle" style='background:#F41D36;'></i>Commodity Driven Deforestation</li>
+      <li><i class="circle" style='background:#2FBF71;'></i>Forestry</li>
+      <li><i class="circle" style='background:#efd31a;'></i>Shifting Agriculture</li>
+      <li><i class="circle" style='background:#B235CC;'></i>Urbanization</li>
+      <li><i class="circle" style='background:#ad6824;'></i>Wildfire</li>
+    </ul>
+    <p class="canopy" style="padding-top: 12px; padding-right: 6px">This layer is intended to be viewed at a global or regional scale. To view the full resolution of the data, change to the Tree Cover Loss option.</p>
+    <p class="canopy" style="padding-top: 12px; padding-right: 6px">Color intensity scaled by magnitude of loss.</p>
+</div>

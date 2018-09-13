@@ -16,6 +16,7 @@ define(
     'helpers/datasetsHelper',
     'text!map/templates/legend/legend.handlebars',
     'text!map/templates/legend/loss.handlebars',
+    'text!map/templates/legend/loss_by_driver.handlebars',
     'text!map/templates/legend/imazon.handlebars',
     'text!map/templates/legend/fires.handlebars',
     'text!map/templates/legend/forest2000.handlebars',
@@ -81,7 +82,6 @@ define(
     'text!map/templates/legend/biodiversity_completeness.handlebars',
     'text!map/templates/legend/rspo.handlebars',
     'text!map/templates/legend/idn_land_cover.handlebars'
-
   ],
   function(
     mps,
@@ -92,6 +92,7 @@ define(
     datasetsHelper,
     tpl,
     lossTpl,
+    lossByDriverTpl,
     imazonTpl,
     firesTpl,
     forest2000Tpl,
@@ -176,6 +177,7 @@ define(
        */
       detailsTemplates: {
         loss: Handlebars.compile(lossTpl),
+        loss_by_driver: Handlebars.compile(lossByDriverTpl),
         imazon: Handlebars.compile(imazonTpl),
         forest2000: Handlebars.compile(forest2000Tpl),
         forest2010: Handlebars.compile(forest2010Tpl),
@@ -258,7 +260,9 @@ define(
         bol_user_fire_frequency: Handlebars.compile(bol_user_fire_frequencyTpl),
         sentinel_tiles: Handlebars.compile(sentinel_tilesTpl),
         biodiversity_intactness: Handlebars.compile(biodiversity_intactnessTpl),
-        biodiversity_completeness: Handlebars.compile(biodiversity_completenessTpl),
+        biodiversity_completeness: Handlebars.compile(
+          biodiversity_completenessTpl
+        ),
         rspo_oil_palm: Handlebars.compile(rspoTpl),
         idn_land_cover: Handlebars.compile(idn_land_coverTpl)
       },
@@ -278,6 +282,7 @@ define(
         'click .js-toggle-threshold': 'toggleThreshold',
         'change .js-biodiversity-layer': 'toggleBiodiversityLayer',
         'change .js-tree-cover-year': 'toggleTreeCoverYear',
+        'change .js-loss-type': 'toggleLossType',
         'change .js-tree-plantation': 'togglePlantation',
         'change .js-tree-plantation-country': 'togglePlantationCountry',
         'change .js-toggle-concessions': 'toggleConcessions',
@@ -713,6 +718,14 @@ define(
         var layerSlugRemove = '';
         this.presenter.toggleLayer('forest2000');
         this.presenter.toggleLayer('forest2010');
+      },
+
+      // tree loss type
+      toggleLossType: function(e) {
+        var layerSlug = $(e.currentTarget).val();
+        var layerSlugRemove = '';
+        this.presenter.toggleLayer('loss');
+        this.presenter.toggleLayer('loss_by_driver');
       },
 
       toggleBiodiversityLayer: function(e) {

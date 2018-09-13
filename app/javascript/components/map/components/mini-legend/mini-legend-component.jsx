@@ -21,7 +21,13 @@ class MiniLegend extends PureComponent {
         <ul>
           {layers.map(l => (
             <li key={l.slug}>
-              <span style={{ backgroundColor: l.title_color }} />
+              <span
+                style={
+                  l.slug === 'loss_by_driver'
+                    ? { marginLeft: '-1rem' }
+                    : { backgroundColor: l.title_color }
+                }
+              />
               {l.title}
             </li>
           ))}

@@ -6,7 +6,6 @@ import './styles.scss';
 class WidgetFooter extends PureComponent {
   render() {
     const { statement } = this.props;
-
     return statement ? (
       <div className="c-widget-footer">{statement}</div>
     ) : null;

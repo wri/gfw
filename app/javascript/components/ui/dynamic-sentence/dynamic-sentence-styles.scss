@@ -12,4 +12,10 @@
   span {
     font-weight: 500;
   }
+
+  .hover-text {
+    border-bottom: dashed 1px $warm-grey;
+    padding-bottom: 1px;
+    cursor: help;
+  }
 }
