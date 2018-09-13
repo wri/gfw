@@ -14,6 +14,7 @@ import { initialState } from './reducers';
 const selectAnalysisUrlState = state =>
   (state.location.query && state.location.query.analysis) || null;
 const selectLoading = state => state.analysis.loading || state.datasets.loading;
+const selectLocation = state => state.location && state.location.payload;
 
 export const getAnalysisSettings = createSelector(
   [selectAnalysisUrlState],
@@ -56,5 +57,6 @@ export const getAnalysisProps = createStructuredSelector({
   loading: selectLoading,
   links: getMenuLinks,
   boundaries: getAllBoundaries,
-  activeBoundary: getActiveBoundaryDatasets
+  activeBoundary: getActiveBoundaryDatasets,
+  location: selectLocation
 });

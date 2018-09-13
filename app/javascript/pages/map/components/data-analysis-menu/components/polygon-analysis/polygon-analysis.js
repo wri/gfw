@@ -11,8 +11,8 @@ const actions = {
   ...dataAnalysisActions
 };
 
-const mapStateToProps = ({ dataAnalysis }) => ({
-  analysis: dataAnalysis.analysis
+const mapStateToProps = ({ analysis }) => ({
+  data: analysis.data
 });
 
 class PolygonAnalysisContainer extends PureComponent {

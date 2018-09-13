@@ -21,7 +21,7 @@ class PolygonAnalysis extends PureComponent {
   );
 
   render() {
-    const { analysis: { data }, setAnalysisData } = this.props;
+    const { data, setAnalysisData } = this.props;
     return (
       <div className="c-polygon-analysis">
         <div
@@ -41,30 +41,35 @@ class PolygonAnalysis extends PureComponent {
           FOREST CHANGE ANALYSIS
         </div>
         <ul className="c-polygon-analysis__stats">
-          {data.areaHa &&
-            this.renderStatItem('Total selected area', data.areaHa)}
-          {data.loss &&
+          {data &&
+            data.areaHa &&
+            this.renderStatItem('Total selected area', data && data.areaHa)}
+          {data &&
+            data.loss &&
             this.renderStatItem(
               'Loss 2001-2017 <small>with &gt;30% canopy density</small>',
-              data.loss,
+              data && data.loss,
               'c-polygon-analysis__stat--loss'
             )}
-          {data.gain &&
+          {data &&
+            data.gain &&
             this.renderStatItem(
               'Gain 2001-2012',
-              data.gain,
+              data && data.gain,
               'c-polygon-analysis__stat--gain'
             )}
-          {data.treeExtent &&
+          {data &&
+            data.treeExtent &&
             this.renderStatItem(
               'Tree cover (2000) <small>with &gt;30% canopy density</small>',
-              data.treeExtent,
+              data && data.treeExtent,
               'c-polygon-analysis__stat--extent'
             )}
-          {data.treeExtent2010 &&
+          {data &&
+            data.treeExtent2010 &&
             this.renderStatItem(
               'Tree cover (2010) <small>with &gt;30% canopy density</small>',
-              data.treeExtent2010,
+              data && data.treeExtent2010,
               'c-polygon-analysis__stat--extent'
             )}
         </ul>
@@ -74,7 +79,7 @@ class PolygonAnalysis extends PureComponent {
 }
 
 PolygonAnalysis.propTypes = {
-  analysis: PropTypes.object,
+  data: PropTypes.object,
   setAnalysisData: PropTypes.func
 };
 

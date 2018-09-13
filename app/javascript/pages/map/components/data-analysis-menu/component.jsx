@@ -6,7 +6,7 @@ import MapLegend from 'components/map-v2/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'pages/map/components/data-analysis-menu/components/chose-analysis';
-// import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/polygon-analysis';
+import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/polygon-analysis';
 // import LocationAnalysis from 'pages/map/components/data-analysis-menu/components/location-analysis';
 
 import './styles.scss';
@@ -20,7 +20,8 @@ class DataAnalysisMenu extends PureComponent {
       links,
       setAnalysisSettings,
       clearAnalysisError,
-      loading
+      loading,
+      location
     } = this.props;
 
     return (
@@ -51,7 +52,11 @@ class DataAnalysisMenu extends PureComponent {
         ) : (
           <div className="analysis">
             {loading && <Loader />}
-            <ChoseAnalysis />
+            {location.type && location.country ? (
+              <PolygonAnalysis />
+            ) : (
+              <ChoseAnalysis />
+            )}
             {/* {option === 'location' &&
               showResults && <LocationAnalysis />}
             {option === 'polygon' &&
@@ -73,6 +78,7 @@ DataAnalysisMenu.propTypes = {
   menuSection: PropTypes.object,
   links: PropTypes.array,
   loading: PropTypes.bool,
+  location: PropTypes.object,
   setAnalysisSettings: PropTypes.func,
   clearAnalysisError: PropTypes.func
 };
