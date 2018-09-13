@@ -19,6 +19,7 @@ class DataAnalysisMenu extends PureComponent {
       menuSection,
       links,
       setAnalysisSettings,
+      clearAnalysisError,
       loading
     } = this.props;
 
@@ -36,7 +37,10 @@ class DataAnalysisMenu extends PureComponent {
           theme="theme-subnav-plain"
           links={links.map(l => ({
             ...l,
-            onClick: () => setAnalysisSettings({ showAnalysis: l.showAnalysis })
+            onClick: () => {
+              setAnalysisSettings({ showAnalysis: l.showAnalysis });
+              clearAnalysisError();
+            }
           }))}
           checkActive
         />
@@ -47,7 +51,7 @@ class DataAnalysisMenu extends PureComponent {
         ) : (
           <div className="analysis">
             {loading && <Loader />}
-            {!loading && <ChoseAnalysis />}
+            <ChoseAnalysis />
             {/* {option === 'location' &&
               showResults && <LocationAnalysis />}
             {option === 'polygon' &&
@@ -69,7 +73,8 @@ DataAnalysisMenu.propTypes = {
   menuSection: PropTypes.object,
   links: PropTypes.array,
   loading: PropTypes.bool,
-  setAnalysisSettings: PropTypes.func
+  setAnalysisSettings: PropTypes.func,
+  clearAnalysisError: PropTypes.func
 };
 
 export default DataAnalysisMenu;

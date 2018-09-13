@@ -3,14 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as ownActions from 'pages/map/components/data-analysis-menu/actions';
+import * as modalActions from 'components/modals/sources/actions';
 import * as mapActions from 'components/map-v2/actions';
 import * as menuActions from 'pages/map/components/menu/menu-actions';
 
 import Component from './component';
 import { getChooseAnalysisProps } from './selectors';
+import uploadConfig from '../../upload-config.json';
 
 const actions = {
   ...mapActions,
+  ...modalActions,
   ...menuActions,
   ...ownActions
 };
@@ -18,9 +21,12 @@ const actions = {
 class ChoseAnalysisContainer extends PureComponent {
   static propTypes = {
     setMapSettings: PropTypes.func,
+    uploadShape: PropTypes.func,
     activeDatasets: PropTypes.array,
     activeBoundary: PropTypes.object,
-    boundaries: PropTypes.array
+    boundaries: PropTypes.array,
+    query: PropTypes.object,
+    setAnalysisLoading: PropTypes.func
   };
 
   selectBoundaries = boundaryId => {
@@ -50,10 +56,30 @@ class ChoseAnalysisContainer extends PureComponent {
     }
   };
 
+  onDrop = files => {
+    const { uploadShape, query, setAnalysisLoading } = this.props;
+    if (files && files.length) {
+      const file = files[0];
+      if (file.size > uploadConfig.sizeLimit) {
+        setAnalysisLoading({
+          error: `File larger than ${uploadConfig.sizeLimit / 1000000}MB`,
+          errorMessage: ''
+        });
+      } else {
+        uploadShape({ shape: file, query });
+      }
+    } else {
+      setAnalysisLoading({ error: 'Invalid file type', errorMessage: '' });
+    }
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
-      selectBoundaries: this.selectBoundaries
+      selectBoundaries: this.selectBoundaries,
+      uploadShape: this.uploadShape,
+      onDrop: this.onDrop,
+      uploadConfig
     });
   }
 }

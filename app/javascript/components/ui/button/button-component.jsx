@@ -34,9 +34,9 @@ const Button = props => {
     disabled ? 'disabled' : ''
   } ${active ? '--active' : ''}`;
   const isDeviceTouch = isTouch();
-  const handleClick = () => {
+  const handleClick = e => {
     if (onClick) {
-      onClick();
+      onClick(e);
     }
     if (trackingData) {
       buttonClicked(trackingData);

@@ -67,7 +67,7 @@
     }
   }
 
-  .layer {
+  .layer-menu {
     padding-top: rem(33px);
     font-size: 12px;
     line-height: 1.4;
@@ -99,13 +99,13 @@
     }
   }
 
-  .polygon {
-    padding-top: rem(20px);
+  .draw-menu {
+    padding-top: rem(30px);
 
     &-title {
-      font-size: 21px;
+      font-size: 16px;
       text-align: center;
-      margin-bottom: rem(10px);
+      margin-bottom: rem(20px);
     }
 
     &-input {
@@ -118,11 +118,40 @@
       border-radius: 40px;
       font-size: 13px;
       cursor: pointer;
+
+      p {
+        text-align: center;
+        width: 90%;
+        text-transform: uppercase;
+      }
+
+      &.error {
+        border-color: $error;
+
+        .info-button {
+          background-color: $error;
+
+          &:hover {
+            background-color: darken($error, 10%);
+          }
+        }
+      }
+
+      &.error-message {
+        cursor: help;
+      }
     }
 
     &-separator {
       padding: rem(10px) 0;
       text-align: center;
+      font-size: rem(16px);
+    }
+
+    .terms {
+      text-align: center;
+      font-size: rem(10px);
+      margin-top: rem(15px);
     }
   }
 }

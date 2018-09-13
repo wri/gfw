@@ -12,17 +12,17 @@ const mapStateToProps = ({ location }) => ({
 class GeostoreProvider extends PureComponent {
   componentDidMount() {
     const {
-      location: { country, region, subRegion },
+      location: { type, country, region, subRegion },
       getGeostore
     } = this.props;
 
     if (country) {
-      getGeostore({ country, region, subRegion });
+      getGeostore({ type, country, region, subRegion });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { location: { country, region, subRegion } } = nextProps;
+    const { location: { country, region, subRegion, type } } = nextProps;
     const { getGeostore, setGeostore } = this.props;
     const hasCountryChanged =
       country !== this.props.location.country && country;
@@ -34,15 +34,15 @@ class GeostoreProvider extends PureComponent {
     }
 
     if (hasCountryChanged) {
-      getGeostore({ country, region, subRegion });
+      getGeostore({ type, country, region, subRegion });
     }
 
     if (hasRegionChanged) {
-      getGeostore({ country, region, subRegion });
+      getGeostore({ type, country, region, subRegion });
     }
 
     if (hasSubRegionChanged) {
-      getGeostore({ country, region, subRegion });
+      getGeostore({ type, country, region, subRegion });
     }
   }
 

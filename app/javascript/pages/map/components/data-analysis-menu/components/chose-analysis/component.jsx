@@ -6,11 +6,13 @@ import cx from 'classnames';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Dropdown from 'components/ui/dropdown';
+import { Tooltip } from 'react-tippy';
+import Tip from 'components/ui/tip';
 
 import infoIcon from 'assets/icons/info.svg';
 import squarePointIcon from 'assets/icons/square-point.svg';
 import polygonIcon from 'assets/icons/polygon.svg';
-import config from './upload-file-config.json';
+
 import './styles.scss';
 
 class ChoseAnalysis extends PureComponent {
@@ -22,8 +24,9 @@ class ChoseAnalysis extends PureComponent {
       setMenuSettings
     } = this.props;
     const selectedBoundaries = activeBoundary || (boundaries && boundaries[0]);
+
     return (
-      <div className="layer">
+      <div className="layer-menu">
         <div className="layer-title">One click analysis on:</div>
         <Dropdown
           className="boundary-selector"
@@ -52,8 +55,8 @@ class ChoseAnalysis extends PureComponent {
   };
 
   renderPolygonOption = () => (
-    <div className="polygon">
-      <div className="polygon-title">
+    <div className="draw-menu">
+      <div className="draw-menu-title">
         Draw in the map the area you want to analyze or subscribe to
       </div>
       <Button
@@ -77,35 +80,61 @@ class ChoseAnalysis extends PureComponent {
       >
         START DRAWING
       </Button>
-      <div className="polygon-separator">or</div>
-      <Dropzone onDrop={this.onDrop} className="polygon-input">
-        <p>Click to pick a file or drop one here</p>
-        <Button className="theme-button-tiny square info-button">
-          <Icon icon={infoIcon} className="info-icon" />
-        </Button>
-      </Dropzone>
+      <div className="draw-menu-separator">or</div>
+      <Tooltip
+        theme="tip"
+        hideOnClick
+        html={<Tip text={this.props.errorMessage} />}
+        position="top"
+        followCursor
+        animateFill={false}
+        disabled={!this.props.error || !this.props.errorMessage}
+      >
+        <Dropzone
+          className={cx(
+            'draw-menu-input',
+            { error: this.props.error },
+            { 'error-message': this.props.errorMessage }
+          )}
+          onDrop={this.props.onDrop}
+          accept={this.props.uploadConfig.types}
+          multiple={false}
+        >
+          <p>{this.props.error || 'Pick a file or drop one here'}</p>
+          <Button
+            className="info-button"
+            theme="theme-button-tiny square"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              this.props.setModalSources({ open: true, source: 'uploads' });
+            }}
+          >
+            <Icon icon={infoIcon} className="info-icon" />
+          </Button>
+        </Dropzone>
+      </Tooltip>
+      <p className="terms">
+        By uploading data you agree to the{' '}
+        <a href="/terms" target="_blank" rel="noopenner nofollower">
+          GFW Terms of Service
+        </a>
+      </p>
     </div>
   );
 
-  onDrop = files => {
-    const { uploadShape } = this.props;
-    const file = files[0];
-    if (file.size > config.sizeLimit && !window.confirm(config.sizeMessage)) {
-      return;
-    }
-
-    uploadShape(file);
-  };
-
   render() {
-    const { showDraw, setAnalysisSettings } = this.props;
+    const { showDraw, setAnalysisSettings, clearAnalysisError } = this.props;
     return (
       <div className="c-chose-analysis">
         <div className="title">ANALYZE AND TRACK FOREST CHANGE</div>
         <div className="options">
           <button
             className={cx({ selected: !showDraw })}
-            onClick={() => setAnalysisSettings({ showDraw: false })}
+            onClick={() => {
+              setAnalysisSettings({ showDraw: false });
+              clearAnalysisError();
+            }}
           >
             <Icon icon={squarePointIcon} className="icon-square-point" />
             <div className="label">CLICK A LAYER ON THE MAP</div>
@@ -127,12 +156,17 @@ class ChoseAnalysis extends PureComponent {
 ChoseAnalysis.propTypes = {
   showDraw: PropTypes.bool,
   setAnalysisSettings: PropTypes.func,
-  uploadShape: PropTypes.func,
+  onDrop: PropTypes.func,
   setAnalysisData: PropTypes.func,
+  clearAnalysisError: PropTypes.func,
   boundaries: PropTypes.array,
   activeBoundary: PropTypes.object,
   selectBoundaries: PropTypes.func,
-  setMenuSettings: PropTypes.func
+  setMenuSettings: PropTypes.func,
+  setModalSources: PropTypes.func,
+  error: PropTypes.string,
+  errorMessage: PropTypes.string,
+  uploadConfig: PropTypes.object
 };
 
 export default ChoseAnalysis;

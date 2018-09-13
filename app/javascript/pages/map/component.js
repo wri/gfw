@@ -7,6 +7,7 @@ import DatasetsProvider from 'providers/datasets-provider';
 
 import Map from 'components/map-v2';
 import ModalMeta from 'components/modals/meta';
+import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import DataAnalysisMenu from 'pages/map/components/data-analysis-menu';
 
@@ -24,6 +25,7 @@ class MapPage extends PureComponent {
         {!hidePanels && <DataAnalysisMenu className="data-analysis-menu" />}
         <Share />
         <ModalMeta />
+        <ModalSource />
         <CountryDataProvider />
         <DatasetsProvider />
         <GeostoreProvider />
