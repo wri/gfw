@@ -131,4 +131,10 @@ $desktop-padding: rem(50px);
       color: darken($green-gfw, 10%);
     }
   }
+
+  ul,
+  ol {
+    list-style: disc;
+    margin-left: rem(15px);
+  }
 }

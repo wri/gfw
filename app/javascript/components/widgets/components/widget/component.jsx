@@ -29,6 +29,7 @@ class Widget extends PureComponent {
       Component,
       sentence,
       setWidgetSettingsUrl,
+      handleDataHighlight,
       parsedData,
       parsedConfig
     } = this.props;
@@ -52,7 +53,7 @@ class Widget extends PureComponent {
         <div className="container">
           {!loading &&
             !error &&
-            isEmpty(data) && (
+            (isEmpty(data) || isEmpty(parsedData)) && (
               <NoContent message={`No data in selection for ${currentLabel}`} />
             )}
           {loading && <Loader />}
@@ -68,6 +69,9 @@ class Widget extends PureComponent {
                   config.interactive ? 'interactive' : ''
                 }`}
                 sentence={sentence}
+                onHover={handleDataHighlight}
+                handleMouseOver={() => handleDataHighlight(true, widget)}
+                handleMouseOut={() => handleDataHighlight(false, widget)}
               />
             )}
           {!error &&
@@ -112,6 +116,7 @@ Widget.propTypes = {
   colors: PropTypes.object,
   whitelist: PropTypes.array,
   Component: PropTypes.any,
+  handleDataHighlight: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   parsedData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
