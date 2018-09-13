@@ -95,11 +95,20 @@ export const getActiveDatasets = createSelector(
 export const getBoundaryDatasets = createSelector([getDatasets], datasets => {
   if (isEmpty(datasets)) return null;
   return datasets.filter(d => d.isBoundary).map(d => ({
-    ...d,
+    name: d.name,
+    dataset: d.id,
+    layer: d.layer,
+    id: d.id,
     label: d.name,
     value: d.layer
   }));
 });
+
+export const getAllBoundaries = createSelector(
+  [getBoundaryDatasets],
+  boundaries =>
+    [{ label: 'No boundaries', value: 'no-boundaries' }].concat(boundaries)
+);
 
 export const getActiveBoundaryDatasets = createSelector(
   [getBoundaryDatasets, getActiveDatasets],

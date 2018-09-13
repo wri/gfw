@@ -14,7 +14,7 @@ import './styles.scss';
 
 class MapPage extends PureComponent {
   render() {
-    const { analysis, mapSettings: { hidePanels } } = this.props;
+    const { mapSettings: { hidePanels } } = this.props;
 
     return (
       <div className="l-map">
@@ -24,7 +24,7 @@ class MapPage extends PureComponent {
         {!hidePanels && <DataAnalysisMenu className="data-analysis-menu" />}
         <Share />
         <ModalMeta />
-        <CountryDataProvider location={analysis.location} />
+        <CountryDataProvider />
         <DatasetsProvider />
         <GeostoreProvider />
       </div>
@@ -33,7 +33,6 @@ class MapPage extends PureComponent {
 }
 
 MapPage.propTypes = {
-  analysis: PropTypes.object,
   mapSettings: PropTypes.object
 };
 

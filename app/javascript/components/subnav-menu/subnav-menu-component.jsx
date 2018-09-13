@@ -44,6 +44,7 @@ class SubNavMenu extends PureComponent {
                       link.onClick();
                     }}
                   >
+                    {link.icon && <Icon icon={link.icon} />}
                     {link.label}
                   </button>
                 );

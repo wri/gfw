@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = (state, { location }) => ({
-  location
+const mapStateToProps = ({ location }) => ({
+  location: location.payload
 });
 
 class CountryDataProvider extends PureComponent {

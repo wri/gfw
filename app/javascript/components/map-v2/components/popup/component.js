@@ -59,7 +59,7 @@ class Popup extends Component {
                     theme="theme-dropdown-native-plain"
                     value={selected}
                     options={interactions}
-                    onChange={e => setInteractionSelected(e.target.value)}
+                    onChange={setInteractionSelected}
                     native
                   />
                 )}

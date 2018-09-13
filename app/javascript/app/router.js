@@ -73,7 +73,7 @@ export const routes = {
     }
   },
   [MAP]: {
-    path: '/v2/map/:tab?/:country?/:region?/:subRegion?',
+    path: '/v2/map/:type?/:country?/:region?/:subRegion?',
     component: 'map',
     headerOptions: {
       fullScreen: true,

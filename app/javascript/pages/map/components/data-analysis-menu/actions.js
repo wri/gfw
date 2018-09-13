@@ -1,36 +1,28 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import union from 'turf-union';
-import { getGeostoreKey } from 'services/geostore';
+
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import uploadFileConfig from './components/chose-analysis/upload-file-config.json';
 
-export const setAnalysisData = createAction('setAnalysisData');
-
-export const getGeostore = createThunkAction(
-  'getGeostore',
-  geoJSON => dispatch => {
+// url action
+export const setAnalysisSettings = createThunkAction(
+  'setAnalysisSettings',
+  change => (dispatch, state) => {
     dispatch(
-      setAnalysisData({
-        loading: true
+      setComponentStateToUrl({
+        key: 'analysis',
+        change,
+        state
       })
     );
-    getGeostoreKey(geoJSON)
-      .then(response => {
-        if (response.data) {
-          dispatch(
-            setAnalysisData({
-              geostore: response.data.data.id
-            })
-          );
-        }
-      })
-      .catch(error => {
-        console.info(error);
-      });
   }
 );
+
+// store actions
+export const setAnalysisData = createAction('setAnalysisData');
 
 export const getAnalysis = createThunkAction(
   'getAnalysis',

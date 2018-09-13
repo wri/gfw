@@ -1,15 +1,60 @@
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
 import { getActiveSection } from 'pages/map/components/menu/menu-selectors';
+import {
+  getAllBoundaries,
+  getActiveBoundaryDatasets
+} from 'components/map-v2/selectors';
 
-const getLocation = state =>
-  state.location.payload && state.location.payload.tab;
-const getSearch = state => state.location.search;
-const getAnalysis = state => state.dataAnalysis.analysis;
+import layersIcon from 'assets/icons/layers.svg';
+import analysisIcon from 'assets/icons/analysis.svg';
+
+import { initialState } from './reducers';
+
+const selectAnalysisUrlState = state =>
+  (state.location.query && state.location.query.analysis) || null;
+const selectLoading = state => state.analysis.loading || state.datasets.loading;
+
+export const getAnalysisSettings = createSelector(
+  [selectAnalysisUrlState],
+  urlState => ({
+    ...initialState.settings,
+    ...urlState
+  })
+);
+
+export const getShowAnalysis = createSelector(
+  getAnalysisSettings,
+  settings => settings.showAnalysis
+);
+
+export const getShowDraw = createSelector(
+  getAnalysisSettings,
+  settings => settings.showDraw
+);
+
+export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
+  {
+    label: 'DATA',
+    icon: layersIcon,
+    active: !showAnalysis,
+    showAnalysis: false
+  },
+  {
+    label: 'ANALYSIS',
+    icon: analysisIcon,
+    active: showAnalysis,
+    showAnalysis: true
+  }
+]);
 
 export const getAnalysisProps = createStructuredSelector({
-  activeTab: getLocation,
-  analysis: getAnalysis,
-  menuSectionData: getActiveSection,
-  search: getSearch
+  settings: getAnalysisSettings,
+  showAnalysis: getShowAnalysis,
+  showDraw: getShowDraw,
+  menuSection: getActiveSection,
+  loading: selectLoading,
+  links: getMenuLinks,
+  boundaries: getAllBoundaries,
+  activeBoundary: getActiveBoundaryDatasets
 });

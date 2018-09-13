@@ -46,7 +46,7 @@ import { reduxModule as DashboardsPage } from 'pages/dashboards';
 // Component Reducers
 const componentsReducers = {
   // map & dashboards
-  dataAnalysis: handleModule(DataAnalysisMenu),
+  analysis: handleModule(DataAnalysisMenu),
   recentImagery: handleModule(RecentImagery),
   widgets: handleModule(Widgets),
   popup: handleModule(Popup),

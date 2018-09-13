@@ -1,69 +1,57 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import MapLegend from 'components/map-v2/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'pages/map/components/data-analysis-menu/components/chose-analysis';
-import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/polygon-analysis';
-import LocationAnalysis from 'pages/map/components/data-analysis-menu/components/location-analysis';
+// import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/polygon-analysis';
+// import LocationAnalysis from 'pages/map/components/data-analysis-menu/components/location-analysis';
 
-import layersIcon from 'assets/icons/layers.svg';
-import analysisIcon from 'assets/icons/analysis.svg';
 import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
   render() {
     const {
       className,
-      activeTab = 'data',
-      analysis,
-      menuSectionData,
-      search
+      showAnalysis,
+      menuSection,
+      links,
+      setAnalysisSettings,
+      loading
     } = this.props;
-    const links = [
-      {
-        label: 'DATA',
-        icon: layersIcon,
-        path: `/v2/map/data${search ? `?${search}` : ''}`,
-        active: activeTab === 'data'
-      },
-      {
-        label: 'ANALYSIS',
-        icon: analysisIcon,
-        path: `/v2/map/data${search ? `?${search}` : ''}`,
-        active: activeTab === 'analysis'
-      }
-    ];
-    const relocateClass = menuSectionData
-      ? `-relocate${menuSectionData.large ? '-big' : ''}`
-      : '';
 
     return (
       <div
-        className={`c-data-analysis-menu ${className || ''} ${relocateClass}`}
+        className={cx(
+          'c-data-analysis-menu',
+          className,
+          { '-relocate': !!menuSection },
+          { '-big': menuSection && menuSection.large }
+        )}
       >
         <SubNavMenu
           className="nav"
           theme="theme-subnav-plain"
-          links={links}
+          links={links.map(l => ({
+            ...l,
+            onClick: () => setAnalysisSettings({ showAnalysis: l.showAnalysis })
+          }))}
           checkActive
         />
-        {activeTab === 'data' ? (
+        {!showAnalysis ? (
           <div className="legend">
-            <MapLegend collapsable={false} maxHeight={500} maxWidth={290} />
+            <MapLegend />
           </div>
         ) : (
           <div className="analysis">
-            {analysis.loading && <Loader />}
-            {!analysis.loading &&
-              !analysis.showResults && (
-                <ChoseAnalysis selected={analysis.option} />
-              )}
-            {analysis.option === 'location' &&
-              analysis.showResults && <LocationAnalysis />}
-            {analysis.option === 'polygon' &&
-              analysis.showResults && <PolygonAnalysis />}
+            {loading && <Loader />}
+            {!loading && <ChoseAnalysis />}
+            {/* {option === 'location' &&
+              showResults && <LocationAnalysis />}
+            {option === 'polygon' &&
+              showResults && <PolygonAnalysis />} */}
           </div>
         )}
       </div>
@@ -71,12 +59,17 @@ class DataAnalysisMenu extends PureComponent {
   }
 }
 
+DataAnalysisMenu.defaultProps = {
+  tab: 'data'
+};
+
 DataAnalysisMenu.propTypes = {
-  activeTab: PropTypes.string,
+  showAnalysis: PropTypes.bool,
   className: PropTypes.string,
-  analysis: PropTypes.object,
-  menuSectionData: PropTypes.object,
-  search: PropTypes.string
+  menuSection: PropTypes.object,
+  links: PropTypes.array,
+  loading: PropTypes.bool,
+  setAnalysisSettings: PropTypes.func
 };
 
 export default DataAnalysisMenu;
