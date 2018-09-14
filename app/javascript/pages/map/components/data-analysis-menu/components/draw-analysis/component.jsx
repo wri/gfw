@@ -49,7 +49,7 @@ class DrawAnalysis extends PureComponent {
       query,
       data,
       loading,
-      locationName,
+      fullLocationName,
       goToDashboard,
       location
     } = this.props;
@@ -61,7 +61,7 @@ class DrawAnalysis extends PureComponent {
             <button onClick={() => clearAnalysis(query)}>
               <Icon icon={arrowDownIcon} className="icon-arrow" />
             </button>
-            <p>{locationName}</p>
+            <p>{fullLocationName}</p>
           </div>
           <div className="title-controls">
             <button
@@ -112,7 +112,7 @@ DrawAnalysis.propTypes = {
   query: PropTypes.object,
   loading: PropTypes.bool,
   location: PropTypes.object,
-  locationName: PropTypes.string,
+  fullLocationName: PropTypes.string,
   goToDashboard: PropTypes.func
 };
 

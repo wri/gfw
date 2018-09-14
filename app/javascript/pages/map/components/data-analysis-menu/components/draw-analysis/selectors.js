@@ -1,5 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
+import { buildLocationName, buildFullLocationName } from 'utils/format';
+
 import { getActiveLayers } from 'components/map-v2/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
@@ -15,20 +17,21 @@ export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
   (location, adms, adm1s, adm2s) => {
     if (location.type === 'draw') return 'custom area analysis';
-    const { type, country, region, subRegion } = location;
-    let activeLocation = { label: '' };
-    if (type === 'country') {
-      if (subRegion) {
-        activeLocation =
-          adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
-      } else if (region) {
-        activeLocation =
-          adm1s && adm1s.find(a => a.value === parseInt(region, 10));
-      } else if (country) {
-        activeLocation = adms && adms.find(a => a.value === country);
-      }
+    if (location.type === 'country') {
+      return buildLocationName(location, { adms, adm1s, adm2s });
     }
-    return activeLocation && activeLocation.label;
+    return '';
+  }
+);
+
+export const getFullLocationName = createSelector(
+  [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
+  (location, adms, adm1s, adm2s) => {
+    if (location.type === 'draw') return 'custom area analysis';
+    if (location.type === 'country') {
+      return buildFullLocationName(location, { adms, adm1s, adm2s });
+    }
+    return 'area analysis';
   }
 );
 
@@ -63,5 +66,6 @@ export const getDrawAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
   loading: selectLoading,
   locationName: getLocationName,
+  fullLocationName: getFullLocationName,
   layers: getActiveLayers
 });

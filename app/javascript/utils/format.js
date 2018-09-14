@@ -44,3 +44,39 @@ export const getLocationFromData = data => {
     subRegion: !!newLocation.adm2 && newLocation.adm2
   };
 };
+
+export const buildFullLocationName = (
+  { country, region, subRegion },
+  { adms, adm1s, adm2s }
+) => {
+  let location = '';
+  if (country) {
+    const adm = adms && adms.find(a => a.value === country);
+    location = adm ? adm.label : '';
+  }
+  if (region) {
+    const adm1 = adm1s && adm1s.find(a => a.value === parseInt(region, 10));
+    location = adm1 ? `${adm1.label}, ${location}` : location;
+  }
+  if (subRegion) {
+    const adm2 = adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
+    location = adm2 ? `${adm2.label}, ${location}` : location;
+  }
+  return location;
+};
+
+export const buildLocationName = (
+  { country, region, subRegion },
+  { adms, adm1s, adm2s }
+) => {
+  let activeLocation = { label: '' };
+  if (subRegion) {
+    activeLocation =
+      adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
+  } else if (region) {
+    activeLocation = adm1s && adm1s.find(a => a.value === parseInt(region, 10));
+  } else if (country) {
+    activeLocation = adms && adms.find(a => a.value === country);
+  }
+  return activeLocation && activeLocation.label;
+};
