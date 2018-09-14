@@ -10,7 +10,7 @@
     "postinstall": "./node_modules/bower/bin/bower install",
     "build": "./bin/webpack",
     "start": "./bin/server",
-    "start:prod": "yarn build --colors --progress && bundle exec rails s",
+    "start:prod": "yarn build --colors --progress && yarn prod-server",
     "redis": "redis-server /usr/local/etc/redis.conf",
     "prod-server": "bundle exec foreman start -f Procfile",
     "ci": "start-server-and-test prod-server http://localhost:5000 test-ci",

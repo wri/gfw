@@ -12,8 +12,8 @@ const sharedConfig = require('./shared.js');
 
 module.exports = merge(sharedConfig, {
   output: {
-    filename: '[name]-[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].js'
+    filename: '[name]-[hash].js',
+    chunkFilename: '[name].[hash].js'
   },
   stats: 'normal',
   mode: 'production',

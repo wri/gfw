@@ -83,11 +83,14 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           // create a splitChunk for each node vendor
           name(module) {
-            const packageName = module.context.match(
+            const npmPackage = module.context.match(
               /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-            )[1];
-
-            return `npm.${packageName.replace('@', '')}`;
+            );
+            const packageName = npmPackage && npmPackage[1];
+            if (packageName) {
+              return `npm.${packageName.replace('@', '')}`;
+            }
+            return false;
           }
         }
       }
