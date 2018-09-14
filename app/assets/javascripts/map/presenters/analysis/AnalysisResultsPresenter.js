@@ -41,6 +41,7 @@ define(
 
       datasets: {
         loss: 'umd-loss-gain',
+        loss_by_driver: 'umd-loss-gain',
         forestgain: 'umd-loss-gain',
         forma: 'forma-alerts',
         forma_month_3: 'forma250GFW',
@@ -342,6 +343,7 @@ define(
          */
         if (
           layer.slug === 'loss' ||
+          layer.slug === 'loss_by_driver' ||
           layer.slug === 'forestgain' ||
           layer.slug === 'forestgain' ||
           layer.slug === 'forest2000' ||

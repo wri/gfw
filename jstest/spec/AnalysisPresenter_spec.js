@@ -15,6 +15,7 @@ define([
           status: this.status,
           datasets: {
             'loss': 'umd-loss-gain',
+            'loss_by_driver': 'umd-loss-gain',
             'forestgain': 'umd-loss-gain',
             'forest2000': 'umd-loss-gain',
             'viirs_fires_alerts': 'viirs-active-fires',

@@ -130,6 +130,11 @@ define(
           subscription: true
         },
         {
+          name: 'loss_by_driver',
+          slug: 'umd-loss-gain',
+          subscription: true
+        },
+        {
           name: 'forestgain',
           slug: 'umd-loss-gain'
         },

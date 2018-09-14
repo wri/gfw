@@ -12,7 +12,14 @@
   "loss": {
     "main": "#fe6598",
     "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
-    "noLoss": "#e7e5a4"
+    "noLoss": "#e7e5a4",
+    "lossDrivers": {
+      "1": "#F41D36",
+      "2": "#efd31a",
+      "3": "#2FBF71",
+      "4": "#ad6824",
+      "5": "#B235CC"
+    }
   },
   "gain": {
     "main": "#6d6de5",
