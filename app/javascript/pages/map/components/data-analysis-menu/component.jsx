@@ -58,20 +58,21 @@ class DataAnalysisMenu extends PureComponent {
         ) : (
           <div className="analysis">
             {loading && <Loader />}
-            {fetchingAnalysis && (
-              <div className="cancel-analysis">
-                <Button
-                  className="cancel-analysis-btn"
-                  onClick={() => {
-                    clearAnalysis(query);
-                    analysisFetch.cancel();
-                    setAnalysisLoading({ loading: false });
-                  }}
-                >
+            {(fetchingAnalysis ||
+              (loading && location.type && location.country)) && (
+                <div className="cancel-analysis">
+                  <Button
+                    className="cancel-analysis-btn"
+                    onClick={() => {
+                      clearAnalysis(query);
+                      analysisFetch.cancel();
+                      setAnalysisLoading({ loading: false });
+                    }}
+                  >
                   CANCEL ANALYSIS
-                </Button>
-              </div>
-            )}
+                  </Button>
+                </div>
+              )}
             {location.type && location.country ? (
               <PolygonAnalysis />
             ) : (

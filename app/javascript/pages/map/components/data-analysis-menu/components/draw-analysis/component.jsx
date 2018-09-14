@@ -1,8 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import ReactHtmlParser from 'react-html-parser';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
+import moment from 'moment';
 
 import Button from 'components/ui/button/button-component';
 import Icon from 'components/ui/icon';
@@ -13,10 +13,30 @@ import shareIcon from 'assets/icons/share.svg';
 import './styles.scss';
 
 class DrawAnalysis extends PureComponent {
-  renderStatItem = (title, value, className) => (
-    <li className={`draw-stat ${className || ''}`}>
-      <div className="title">{ReactHtmlParser(title)}</div>
-      <div className="value">
+  renderStatItem = ({
+    color,
+    value,
+    label,
+    startDate,
+    endDate,
+    dateFormat,
+    threshold,
+    thresh
+  }) => (
+    <li className="draw-stat" key={label}>
+      <div className="title">
+        {label}
+        <span>
+          {startDate &&
+            endDate &&
+            ` (${moment(startDate).format(dateFormat)} to ${moment(
+              endDate
+            ).format(dateFormat)})`}
+          {(thresh || threshold) &&
+            ` with >${threshold || thresh}% canopy density`}
+        </span>
+      </div>
+      <div className="value" style={{ color }}>
         <strong>{formatNumber({ num: value, unit: 'ha' })}</strong>
       </div>
     </li>
@@ -33,7 +53,6 @@ class DrawAnalysis extends PureComponent {
       goToDashboard,
       location
     } = this.props;
-    const { areaHa, loss, gain, treeExtent, treeExtent2010 } = data;
 
     return (
       <div className="c-draw-analysis">
@@ -69,27 +88,7 @@ class DrawAnalysis extends PureComponent {
             !isEmpty(data) && (
               <Fragment>
                 <ul className="draw-stats">
-                  {areaHa &&
-                    this.renderStatItem('selected area', areaHa, 'area')}
-                  {loss &&
-                    this.renderStatItem(
-                      'Loss 2001-2017 <small>with &gt;30% canopy density</small>',
-                      loss,
-                      'loss'
-                    )}
-                  {gain && this.renderStatItem('Gain 2001-2012', gain, 'gain')}
-                  {treeExtent &&
-                    this.renderStatItem(
-                      'Tree cover (2000) <small>with &gt;30% canopy density</small>',
-                      treeExtent,
-                      'extent'
-                    )}
-                  {treeExtent2010 &&
-                    this.renderStatItem(
-                      'Tree cover (2010) <small>with &gt;30% canopy density</small>',
-                      treeExtent2010,
-                      'extent'
-                    )}
+                  {data.map(d => this.renderStatItem(d))}
                 </ul>
                 {location.type === 'country' && (
                   <div className="analysis-actions">
@@ -107,7 +106,7 @@ class DrawAnalysis extends PureComponent {
 }
 
 DrawAnalysis.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
   query: PropTypes.object,

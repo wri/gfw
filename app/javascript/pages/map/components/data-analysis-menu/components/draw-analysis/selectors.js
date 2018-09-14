@@ -1,5 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
+import { getActiveLayers } from 'components/map-v2/selectors';
+
 const selectLocation = state => state.location && state.location.payload;
 const selectLoading = state =>
   state.analysis.loading || state.datasets.loading || state.geostore.loading;
@@ -31,10 +33,36 @@ export const getLocationName = createSelector(
   }
 );
 
+export const getDataFromLayers = createSelector(
+  [getActiveLayers, selectData, getLocationName, selectLocation],
+  (layers, data, locationName, location) => {
+    if (!layers || !layers.length || !data) return null;
+
+    return [
+      {
+        label:
+          location.type !== 'draw'
+            ? `${locationName} total area`
+            : 'selected area',
+        value: data.areaHa
+      }
+    ].concat(
+      layers.filter(l => !l.isBoundary).map(l => ({
+        label: l.name,
+        value: data[l.analysisKey],
+        color: l.color,
+        ...l.params,
+        ...l.decodeParams
+      }))
+    );
+  }
+);
+
 export const getDrawAnalysisProps = createStructuredSelector({
   location: selectLocation,
   query: selectQuery,
-  data: selectData,
+  data: getDataFromLayers,
   loading: selectLoading,
-  locationName: getLocationName
+  locationName: getLocationName,
+  layers: getActiveLayers
 });

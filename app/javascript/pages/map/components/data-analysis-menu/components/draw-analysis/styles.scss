@@ -53,12 +53,26 @@
       font-weight: 500;
       text-transform: uppercase;
       color: $slate;
+      display: inline-block;
+      line-height: 1.2;
 
-      small {
+      span {
         font-size: 9px;
         font-weight: normal;
         text-transform: lowercase;
+        margin-left: rem(2px);
       }
+    }
+
+    .dates {
+      font-size: rem(10px);
+      display: inline-block;
+      margin-right: rem(3px);
+    }
+
+    .threshold {
+      font-size: rem(10px);
+      display: inline-block;
     }
 
     .value {
@@ -68,22 +82,10 @@
       letter-spacing: 0.5px;
     }
 
-    &.area {
+    &:first-child {
       border-bottom: solid 1px $border;
       padding-bottom: rem(15px);
       margin-bottom: rem(20px);
-    }
-
-    &.loss .value {
-      color: $loss;
-    }
-
-    &.gain .value {
-      color: $gain;
-    }
-
-    &.extent .value {
-      color: $extent;
     }
   }
 

@@ -161,6 +161,7 @@ export const getDatasets = createThunkAction(
 
                           return {
                             ...l,
+                            ...info,
                             ...l.applicationConfig,
                             // sorting position
                             position: l.applicationConfig.default
