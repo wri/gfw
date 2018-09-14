@@ -89,6 +89,11 @@ class DrawAnalysis extends PureComponent {
               <Fragment>
                 <ul className="draw-stats">
                   {data.map(d => this.renderStatItem(d))}
+                  {data.length === 1 && (
+                    <li className="no-layers">
+                      <NoContent message="No data layers activated. Please select one from the menu." />
+                    </li>
+                  )}
                 </ul>
                 {location.type === 'country' && (
                   <div className="analysis-actions">

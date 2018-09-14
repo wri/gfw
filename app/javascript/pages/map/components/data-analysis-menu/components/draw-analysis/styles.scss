@@ -3,6 +3,7 @@
 .c-draw-analysis {
   width: 100%;
   padding: rem(20px);
+  min-height: rem(260px);
 
   .draw-title {
     font-size: 14px;
@@ -44,6 +45,16 @@
   .results {
     position: relative;
     height: calc(100% - 41px);
+
+    .no-layers {
+      min-height: rem(100px);
+      position: relative;
+      margin-top: rem(-10px);
+    }
+  }
+
+  .draw-stats {
+    margin-bottom: rem(10px);
   }
 
   .draw-stat {
