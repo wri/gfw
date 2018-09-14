@@ -6,6 +6,7 @@
 
     <!-- render react app pack -->
     <%= render 'shared/leaflet' %>
+    <%= render 'shared/google_carto' %>
     <%= javascript_entrypoint_pack_tag 'app' %>
     <% if @is_production %>
       <%= stylesheet_entrypoint_pack_tag 'app' %>

@@ -16,7 +16,7 @@ class WidgetDynamicSentence extends PureComponent {
   render() {
     const { className, handleMouseOver, handleMouseOut } = this.props;
     const { sentence, params } = this.props.sentence;
-    const { component } = params;
+    const { component } = params || {};
     let formattedSentence = sentence;
     if (params) {
       Object.keys(params).forEach(p => {

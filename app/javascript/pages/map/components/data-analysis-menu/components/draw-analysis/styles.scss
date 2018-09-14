@@ -16,7 +16,7 @@
     button {
       cursor: pointer;
       height: fit-content;
-      margin-top: rem(3px);
+      margin-top: rem(4px);
     }
 
     .title-nav {
@@ -85,5 +85,11 @@
     &.extent .value {
       color: $extent;
     }
+  }
+
+  .analysis-actions {
+    padding: rem(15px) rem(20px);
+    border-top: solid 1px $border;
+    margin: 0 rem(-20px) rem(-20px);
   }
 }

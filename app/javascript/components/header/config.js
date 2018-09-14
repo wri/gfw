@@ -34,7 +34,7 @@ export default {
     },
     {
       label: 'About',
-      path: '/map'
+      path: '/about'
     }
   ],
   myGfwLinks: [

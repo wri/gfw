@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { MAP } from 'router';
+import { MAP, DASHBOARDS } from 'router';
 
 import * as modalMetaActions from 'components/modals/meta/meta-actions';
 import * as modalShareActions from 'components/modals/share/share-actions';
@@ -21,6 +21,11 @@ const mapDispatchToProps = dispatch =>
     {
       clearAnalysis: query => ({
         type: MAP,
+        query
+      }),
+      goToDashboard: (location, query) => ({
+        type: DASHBOARDS,
+        payload: location,
         query
       }),
       ...actions
