@@ -33,4 +33,22 @@
     max-height: calc(100vh - 70px);
     z-index: 1;
   }
+
+  .cancel-analysis {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cancel-analysis-btn {
+    z-index: 1000;
+    background-color: $error;
+    width: rem(160px);
+    margin-top: rem(110px);
+  }
 }

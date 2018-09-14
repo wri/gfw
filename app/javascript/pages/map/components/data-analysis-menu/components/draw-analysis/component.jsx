@@ -103,7 +103,7 @@ DrawAnalysis.propTypes = {
   clearAnalysis: PropTypes.func,
   query: PropTypes.object,
   loading: PropTypes.bool,
-  locationName: PropTypes.bool
+  locationName: PropTypes.string
 };
 
 export default DrawAnalysis;

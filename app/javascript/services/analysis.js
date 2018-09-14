@@ -12,18 +12,23 @@ const QUERIES = {
 const getLocationUrl = ({ country, region, subRegion }) =>
   `${country}${region ? `/${region}` : ''}${subRegion ? `/${subRegion}` : ''}`;
 
-export const fetchUmdLossGainGeostore = ({ country }) => {
+export const fetchUmdLossGainGeostore = ({ country, token }) => {
   const url = `${REQUEST_URL}${QUERIES.umdGeostore}`.replace(
     '{geostoreId}',
     country
   );
-  return request.get(url);
+  return request.get(url, { cancelToken: token });
 };
 
-export const fetchUmdLossGainAdmin = location => {
+export const fetchUmdLossGainAdmin = ({
+  country,
+  region,
+  subRegion,
+  token
+}) => {
   const url = `${REQUEST_URL}${QUERIES.umdAdmin}`.replace(
     '{location}',
-    getLocationUrl(location)
+    getLocationUrl({ country, region, subRegion })
   );
-  return request.get(url);
+  return request.get(url, { cancelToken: token });
 };

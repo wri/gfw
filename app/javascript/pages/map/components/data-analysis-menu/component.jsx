@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import Button from 'components/ui/button/button-component';
 import MapLegend from 'components/map-v2/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
@@ -21,7 +22,12 @@ class DataAnalysisMenu extends PureComponent {
       setAnalysisSettings,
       clearAnalysisError,
       loading,
-      location
+      location,
+      fetchingAnalysis,
+      clearAnalysis,
+      analysisFetch,
+      query,
+      setAnalysisLoading
     } = this.props;
 
     return (
@@ -52,6 +58,20 @@ class DataAnalysisMenu extends PureComponent {
         ) : (
           <div className="analysis">
             {loading && <Loader />}
+            {fetchingAnalysis && (
+              <div className="cancel-analysis">
+                <Button
+                  className="cancel-analysis-btn"
+                  onClick={() => {
+                    clearAnalysis(query);
+                    analysisFetch.cancel();
+                    setAnalysisLoading({ loading: false });
+                  }}
+                >
+                  CANCEL ANALYSIS
+                </Button>
+              </div>
+            )}
             {location.type && location.country ? (
               <PolygonAnalysis />
             ) : (
@@ -74,13 +94,18 @@ DataAnalysisMenu.defaultProps = {
 
 DataAnalysisMenu.propTypes = {
   showAnalysis: PropTypes.bool,
+  clearAnalysis: PropTypes.func,
   className: PropTypes.string,
   menuSection: PropTypes.object,
   links: PropTypes.array,
   loading: PropTypes.bool,
+  fetchingAnalysis: PropTypes.bool,
   location: PropTypes.object,
   setAnalysisSettings: PropTypes.func,
-  clearAnalysisError: PropTypes.func
+  clearAnalysisError: PropTypes.func,
+  setAnalysisLoading: PropTypes.func,
+  analysisFetch: PropTypes.object,
+  query: PropTypes.object
 };
 
 export default DataAnalysisMenu;

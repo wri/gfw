@@ -15,7 +15,9 @@ const selectAnalysisUrlState = state =>
   (state.location.query && state.location.query.analysis) || null;
 const selectLoading = state =>
   state.analysis.loading || state.datasets.loading || state.geostore.loading;
+const selectLoadingAnalysis = state => state.analysis.loading;
 const selectLocation = state => state.location && state.location.payload;
+const selectQuery = state => state.location && state.location.query;
 
 export const getAnalysisSettings = createSelector(
   [selectAnalysisUrlState],
@@ -56,8 +58,10 @@ export const getAnalysisProps = createStructuredSelector({
   showDraw: getShowDraw,
   menuSection: getActiveSection,
   loading: selectLoading,
+  fetchingAnalysis: selectLoadingAnalysis,
   links: getMenuLinks,
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
-  location: selectLocation
+  location: selectLocation,
+  query: selectQuery
 });
