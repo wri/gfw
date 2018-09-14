@@ -1,19 +1,48 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import { format } from 'd3-format';
+import startCase from 'lodash/startCase';
+import { bindActionCreators } from 'redux';
+import { MAP } from 'router';
+import { getLocationFromData } from 'utils/format';
 
 import MapComponent from './component';
 import { getMapProps } from './selectors';
 
-import { setInteraction } from './components/popup/actions';
+import * as popupActions from './components/popup/actions';
 import { setRecentImagerySettings } from './components/recent-imagery/recent-imagery-actions';
 import * as ownActions from './actions';
 
 const actions = {
-  setInteraction,
   setRecentImagerySettings,
+  ...popupActions,
   ...ownActions
 };
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      oneClickAnalysis: (payload, query) => ({
+        type: MAP,
+        payload,
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map && query.map),
+            canBound: true
+          },
+          analysis: {
+            ...(query && query.analysis && query.analysis),
+            showAnalysis: true
+          }
+        }
+      }),
+      ...actions
+    },
+    dispatch
+  );
 
 class MapContainer extends PureComponent {
   static propTypes = {
@@ -71,11 +100,69 @@ class MapContainer extends PureComponent {
     this.setState({ bbox });
   };
 
+  handleMapMove = (e, map) => {
+    const { setMapSettings } = this.props;
+    setMapSettings({
+      zoom: map.getZoom(),
+      center: map.getCenter(),
+      canBound: false,
+      bbox: null
+    });
+    this.setBbox(null);
+  };
+
+  handleRecentImageryTooltip = e => {
+    const data = e.layer.feature.properties;
+    const { cloudScore, instrument, dateTime } = data;
+    this.handleShowTooltip(true, {
+      instrument: startCase(instrument),
+      date: moment(dateTime)
+        .format('DD MMM YYYY, HH:mm')
+        .toUpperCase(),
+      cloudCoverage: `${format('.0f')(cloudScore)}%`
+    });
+  };
+
+  handleClickMap = ({ e, article, output, layer }) => {
+    const {
+      analysisActive,
+      oneClickAnalysis,
+      query,
+      setInteraction
+    } = this.props;
+    const { showTooltip } = this.state;
+    const { data = {} } = e;
+    const newLocation = data && getLocationFromData(data);
+    if (!showTooltip) {
+      setInteraction({
+        ...e,
+        label: layer.name,
+        article,
+        isBoundary: layer.isBoundary,
+        id: layer.id,
+        value: layer.id,
+        config: output
+      });
+    }
+    if (analysisActive && newLocation && newLocation.country) {
+      oneClickAnalysis(
+        {
+          type: 'country',
+          ...newLocation
+        },
+        query
+      );
+    }
+  };
+
   render() {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
+      handleRecentImageryTooltip: this.handleRecentImageryTooltip,
+      handleMapMove: this.handleMapMove,
+      handleClickMap: this.handleClickMap,
       setBbox: this.setBbox
     });
   }
@@ -86,7 +173,11 @@ MapContainer.propTypes = {
   bbox: PropTypes.array,
   geostoreBbox: PropTypes.array,
   setMapSettings: PropTypes.func,
-  layerBbox: PropTypes.array
+  layerBbox: PropTypes.array,
+  analysisActive: PropTypes.bool,
+  oneClickAnalysis: PropTypes.func,
+  setInteraction: PropTypes.func,
+  query: PropTypes.object
 };
 
-export default connect(state => getMapProps(state), actions)(MapContainer);
+export default connect(getMapProps, mapDispatchToProps)(MapContainer);

@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
-import { getActiveDatasetsState } from '../../selectors';
+import { getActiveDatasetsState, getShowAnalysis } from '../../selectors';
 
 const getSelected = state => state.popup.selected;
 const getSearch = state => state.location && state.location.search;
@@ -85,5 +85,6 @@ export const getPopupProps = createStructuredSelector({
   cardData: getCardData,
   latlng: getLatLng,
   activeDatasets: getActiveDatasetsState,
-  search: getSearch
+  search: getSearch,
+  analysisActive: getShowAnalysis
 });

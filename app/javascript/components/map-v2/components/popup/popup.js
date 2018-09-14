@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { MAP } from 'router';
-import { parseGadm36Id } from 'utils/format';
+import { getLocationFromData } from 'utils/format';
 
 import Component from './component';
 import * as actions from './actions';
@@ -27,17 +27,12 @@ const mapDispatchToProps = (dispatch, { query }) => {
     {
       handleAnalyze: interaction => {
         const { data = {} } = interaction;
-        let location = {};
-        if (data.level && data.gid_0) {
-          location = data.level ? parseGadm36Id(data[`gid_${data.level}`]) : {};
-        }
+        const newLocation = data && getLocationFromData(data);
         return {
           type: MAP,
           payload: {
             type: 'country',
-            country: !!location.adm0 && location.adm0,
-            region: !!location.adm1 && location.adm1,
-            subRegion: !!location.adm2 && location.adm2
+            ...newLocation
           },
           query: newQuery
         };

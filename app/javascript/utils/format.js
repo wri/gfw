@@ -31,3 +31,16 @@ export const parseGadm36Id = gid => {
   const adm2 = ids[2] && ids[2].split('_')[0];
   return { adm0, adm1: parseInt(adm1, 10), adm2: parseInt(adm2, 10) };
 };
+
+export const getLocationFromData = data => {
+  let newLocation = {};
+  if (data && data.level && data.gid_0) {
+    newLocation = data.level ? parseGadm36Id(data[`gid_${data.level}`]) : {};
+  }
+  return {
+    type: 'country',
+    country: !!newLocation.adm0 && newLocation.adm0,
+    region: !!newLocation.adm1 && newLocation.adm1,
+    subRegion: !!newLocation.adm2 && newLocation.adm2
+  };
+};

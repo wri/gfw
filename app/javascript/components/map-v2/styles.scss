@@ -14,6 +14,45 @@
     right: rem(15px);
     z-index: 11;
   }
+
+  .leaflet-container {
+    background-color: transparent;
+  }
+
+  .leaflet-popup-tip-container {
+    left: 0;
+  }
+
+  .leaflet-control-container {
+    .leaflet-bottom {
+      right: rem(220px);
+      left: auto;
+      bottom: 15px;
+    }
+
+    .leaflet-control-scale-line {
+      border: 1px solid $map-grey;
+      border-top: 0;
+      color: $map-grey;
+      padding: 2px 5px 1px;
+      font-size: 10px;
+      background: transparent;
+    }
+
+    .leaflet-control-scale {
+      > div {
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &.analysis {
+    .leaflet-container {
+      cursor: pointer;
+    }
+  }
 }
 
 .icon-crosshair {
@@ -51,34 +90,5 @@
   .view-more {
     margin-top: rem(5px);
     font-size: rem(10px);
-  }
-}
-
-.leaflet-container {
-  background-color: transparent;
-}
-
-.leaflet-control-container {
-  .leaflet-bottom {
-    right: rem(220px);
-    left: auto;
-    bottom: 15px;
-  }
-
-  .leaflet-control-scale-line {
-    border: 1px solid $map-grey;
-    border-top: 0;
-    color: $map-grey;
-    padding: 2px 5px 1px;
-    font-size: 10px;
-    background: transparent;
-  }
-
-  .leaflet-control-scale {
-    > div {
-      &:last-child {
-        display: none;
-      }
-    }
   }
 }

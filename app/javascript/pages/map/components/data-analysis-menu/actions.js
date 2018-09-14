@@ -46,7 +46,9 @@ export const getAnalysis = createThunkAction(
           if (response.data) {
             const data =
               location.type === 'country'
-                ? response.data.data.attributes.totals
+                ? (response.data.data.attributes &&
+                    response.data.data.attributes.totals) ||
+                  {}
                 : response.data.data.attributes;
             dispatch(setAnalysisData(data));
           }

@@ -25,8 +25,7 @@ export const getLocationName = createSelector(
         activeLocation =
           adm1s && adm1s.find(a => a.value === parseInt(region, 10));
       } else if (country) {
-        activeLocation =
-          adms && adms.find(a => a.value === parseInt(country, 10));
+        activeLocation = adms && adms.find(a => a.value === country);
       }
     }
     return activeLocation && activeLocation.label;

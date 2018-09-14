@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import startCase from 'lodash/startCase';
 import upperFirst from 'lodash/upperFirst';
-import moment from 'moment';
-import { format } from 'd3-format';
+import cx from 'classnames';
 
 import Map from 'wri-api-components/dist/map';
 import { LayerManager, Layer } from 'layer-manager/dist/react';
@@ -51,9 +50,8 @@ class MapComponent extends PureComponent {
       mapOptions,
       basemap,
       label,
-      setMapSettings,
+      handleMapMove,
       geostore,
-      setInteraction,
       tileGeoJSON,
       setRecentImagerySettings,
       query,
@@ -61,7 +59,9 @@ class MapComponent extends PureComponent {
       bbox,
       showTooltip,
       handleShowTooltip,
-      setBbox
+      handleRecentImageryTooltip,
+      analysisActive,
+      handleClickMap
     } = this.props;
 
     return (
@@ -81,7 +81,7 @@ class MapComponent extends PureComponent {
           open={showTooltip}
         >
           <Map
-            customClass="c-map"
+            customClass={cx('c-map', { analysis: analysisActive })}
             onReady={map => {
               this.map = map;
             }}
@@ -99,24 +99,8 @@ class MapComponent extends PureComponent {
                 : {}
             }
             events={{
-              zoomend: (e, map) => {
-                setMapSettings({
-                  zoom: map.getZoom(),
-                  center: map.getCenter(),
-                  canBound: false,
-                  bbox: null
-                });
-                setBbox(null);
-              },
-              dragend: (e, map) => {
-                setMapSettings({
-                  zoom: map.getZoom(),
-                  center: map.getCenter(),
-                  canBound: false,
-                  bbox: null
-                });
-                setBbox(null);
-              }
+              zoomend: handleMapMove,
+              dragend: handleMapMove
             }}
           >
             {map => (
@@ -167,44 +151,26 @@ class MapComponent extends PureComponent {
                             click: () => {
                               setRecentImagerySettings({ visible: true });
                             },
-                            mouseover: e => {
-                              const data = e.layer.feature.properties;
-                              const { cloudScore, instrument, dateTime } = data;
-                              handleShowTooltip(true, {
-                                instrument: startCase(instrument),
-                                date: moment(dateTime)
-                                  .format('DD MMM YYYY, HH:mm')
-                                  .toUpperCase(),
-                                cloudCoverage: `${format('.0f')(cloudScore)}%`
-                              });
-                            },
-                            mouseout: () => {
-                              handleShowTooltip(false, {});
-                            }
+                            mouseover: handleRecentImageryTooltip,
+                            mouseout: () => handleShowTooltip(false, {})
                           }}
                         />
                       )}
                       {activeLayers.map(l => {
-                        const { interactionConfig, isBoundary } = l;
+                        const { interactionConfig } = l;
                         const { output, article } = interactionConfig || {};
                         const layer = {
                           ...l,
                           ...(!isEmpty(output) && {
                             interactivity: output.map(i => i.column),
                             events: {
-                              click: e => {
-                                if (!showTooltip) {
-                                  setInteraction({
-                                    ...e,
-                                    label: l.name,
-                                    article,
-                                    isBoundary,
-                                    id: l.id,
-                                    value: l.id,
-                                    config: output
-                                  });
-                                }
-                              }
+                              click: e =>
+                                handleClickMap({
+                                  e,
+                                  layer: l,
+                                  article,
+                                  output
+                                })
                             }
                           })
                         };
@@ -247,8 +213,7 @@ MapComponent.propTypes = {
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
-  setMapSettings: PropTypes.func,
-  setInteraction: PropTypes.func,
+  handleMapMove: PropTypes.func,
   bboxs: PropTypes.object,
   recentImagery: PropTypes.bool,
   recentTileBounds: PropTypes.array,
@@ -260,7 +225,9 @@ MapComponent.propTypes = {
   bbox: PropTypes.array,
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
-  setBbox: PropTypes.func
+  handleRecentImageryTooltip: PropTypes.func,
+  handleClickMap: PropTypes.func,
+  analysisActive: PropTypes.bool
 };
 
 export default MapComponent;
