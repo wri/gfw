@@ -49,7 +49,7 @@ export const getDataFromLayers = createSelector(
         value: data.areaHa
       }
     ].concat(
-      layers.filter(l => !l.isBoundary).map(l => ({
+      layers.filter(l => !l.isBoundary && !l.isRecentImagery).map(l => ({
         label: l.name,
         value: data[l.analysisKey],
         color: l.color,
