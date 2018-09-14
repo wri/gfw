@@ -23,7 +23,14 @@ class DrawAnalysis extends PureComponent {
   );
 
   render() {
-    const { setShareModal, clearAnalysis, query, data, loading } = this.props;
+    const {
+      setShareModal,
+      clearAnalysis,
+      query,
+      data,
+      loading,
+      locationName
+    } = this.props;
     const { areaHa, loss, gain, treeExtent, treeExtent2010 } = data;
 
     return (
@@ -33,7 +40,7 @@ class DrawAnalysis extends PureComponent {
             <button onClick={() => clearAnalysis(query)}>
               <Icon icon={arrowDownIcon} className="icon-arrow" />
             </button>
-            <p>CUSTOM AREA ANALYSIS</p>
+            <p>{locationName}</p>
           </div>
           <div className="title-controls">
             <button
@@ -57,32 +64,33 @@ class DrawAnalysis extends PureComponent {
           </div>
         </div>
         <div className="results">
-          {!loading && isEmpty(data) ? (
-            <NoContent message="No analysis data available" />
-          ) : (
-            <ul className="draw-stats">
-              {areaHa && this.renderStatItem('selected area', areaHa, 'area')}
-              {loss &&
-                this.renderStatItem(
-                  'Loss 2001-2017 <small>with &gt;30% canopy density</small>',
-                  loss,
-                  'loss'
-                )}
-              {gain && this.renderStatItem('Gain 2001-2012', gain, 'gain')}
-              {treeExtent &&
-                this.renderStatItem(
-                  'Tree cover (2000) <small>with &gt;30% canopy density</small>',
-                  treeExtent,
-                  'extent'
-                )}
-              {treeExtent2010 &&
-                this.renderStatItem(
-                  'Tree cover (2010) <small>with &gt;30% canopy density</small>',
-                  treeExtent2010,
-                  'extent'
-                )}
-            </ul>
-          )}
+          {!loading &&
+            isEmpty(data) && <NoContent message="No analysis data available" />}
+          {!loading &&
+            !isEmpty(data) && (
+              <ul className="draw-stats">
+                {areaHa && this.renderStatItem('selected area', areaHa, 'area')}
+                {loss &&
+                  this.renderStatItem(
+                    'Loss 2001-2017 <small>with &gt;30% canopy density</small>',
+                    loss,
+                    'loss'
+                  )}
+                {gain && this.renderStatItem('Gain 2001-2012', gain, 'gain')}
+                {treeExtent &&
+                  this.renderStatItem(
+                    'Tree cover (2000) <small>with &gt;30% canopy density</small>',
+                    treeExtent,
+                    'extent'
+                  )}
+                {treeExtent2010 &&
+                  this.renderStatItem(
+                    'Tree cover (2010) <small>with &gt;30% canopy density</small>',
+                    treeExtent2010,
+                    'extent'
+                  )}
+              </ul>
+            )}
         </div>
       </div>
     );
@@ -94,7 +102,8 @@ DrawAnalysis.propTypes = {
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
   query: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  locationName: PropTypes.bool
 };
 
 export default DrawAnalysis;

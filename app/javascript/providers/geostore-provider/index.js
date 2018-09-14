@@ -26,8 +26,9 @@ class GeostoreProvider extends PureComponent {
     const { getGeostore, setGeostore } = this.props;
     const hasCountryChanged =
       country !== this.props.location.country && country;
-    const hasRegionChanged = region !== this.props.location.region;
-    const hasSubRegionChanged = subRegion !== this.props.location.subRegion;
+    const hasRegionChanged = region !== this.props.location.region && region;
+    const hasSubRegionChanged =
+      subRegion !== this.props.location.subRegion && subRegion;
 
     if (!country && country !== this.props.location.country) {
       setGeostore({});
