@@ -152,7 +152,6 @@ export const getSentence = createSelector(
     if (!data) return null;
     const { initial, withInd } = sentences;
     const { startYear, endYear, extentYear } = settings;
-
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
@@ -163,13 +162,7 @@ export const getSentence = createSelector(
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location:
-        currentLabel === 'global'
-          ? {
-            value: 'globally',
-            tooltip: 'this dataset is available in certain countries'
-          }
-          : currentLabel,
+      location: currentLabel === 'global' ? 'globally' : currentLabel,
       startYear,
       endYear,
       loss:

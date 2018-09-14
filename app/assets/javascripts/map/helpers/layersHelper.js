@@ -8,6 +8,7 @@ define(
   [
     // Layer views
     'map/views/layers/LossLayer',
+    'map/views/layers/LossByDriverLayer',
     'map/views/layers/ForestGainLayer',
     'map/views/layers/FormaMonth3Layer',
     'map/views/layers/FormaActivityLayer',
@@ -198,6 +199,7 @@ define(
   function(
     // Layer Views
     LossLayer,
+    LossByDriverLayer,
     ForestGainLayer,
     FormaMonth3Layer,
     FormaActivityLayer,
@@ -388,6 +390,10 @@ define(
     var layersHelper = {
       loss: {
         view: LossLayer,
+        timelineView: LossTimeline
+      },
+      loss_by_driver: {
+        view: LossByDriverLayer,
         timelineView: LossTimeline
       },
       forestgain: {

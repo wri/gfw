@@ -11,7 +11,7 @@
 
 
   {{!-- LOSS --}}
-  {{#ifCond slug "===" 'loss'}}
+  {{#ifCond slug "===" 'loss_by_driver' || slug "===" 'loss'}}
     <li>
       <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% <a href="#" class="canopy-button">canopy density</a></span></span>
       <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{lossAlerts}}</strong> ha</span>

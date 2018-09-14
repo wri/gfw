@@ -48,10 +48,20 @@
           </div>
           <div id="umd-group" class="layer-group">
             <span class="group-name" data-color="#f69">Tree cover change</span>
-            <li class="layer" data-layer="loss">
-              <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">Tree cover loss<a href='#' data-source='tree_cover_loss' class='source '><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(annual, 30m, global, Hansen/UMD/Google/USGS/NASA)</span>
+              <li class="wrapped-layer" data-color="#f69">
+                <span class="onoffswitch"><span></span></span>
+                <span class="layer-title">Tree cover loss<a href='#' data-source='tree_cover_loss' class='source '><svg><use xlink:href="#shape-info"></use></svg></a></span>
+                <span class="layer-info">(annual, 30m, global, Hansen/UMD/Google/USGS/NASA)</span>
+                <span class="layer-info -hidden">
+                <label data-layer="loss" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Tree Cover Loss
+                </label>
+                <label data-layer="loss_by_driver" class="layer wrapped">
+                  <span></span>
+                  <input type="radio" />Loss by Driver
+                </label>
+              </span>
             </li>
             <li class="layer" data-layer="forestgain">
               <span class="onoffswitch"><span></span></span>

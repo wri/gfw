@@ -1,0 +1,9 @@
+[
+  {
+    "label": "All Drivers",
+    "value": "all"
+  },{
+    "label": "Drivers of Permanent Deforestation",
+    "value": "permanent"
+  }
+]

@@ -162,4 +162,10 @@ $desktop-padding: rem(50px);
       }
     }
   }
+
+  ul,
+  ol {
+    list-style: disc;
+    margin-left: rem(15px);
+  }
 }

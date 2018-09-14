@@ -24,4 +24,10 @@
       color: $greyish-brown;
     }
   }
+
+  .hover-text {
+    border-bottom: dashed 1px $warm-grey;
+    padding-bottom: 1px;
+    cursor: help;
+  }
 }
