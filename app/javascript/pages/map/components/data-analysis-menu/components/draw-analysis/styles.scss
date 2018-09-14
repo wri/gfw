@@ -39,6 +39,11 @@
     }
   }
 
+  .results {
+    position: relative;
+    height: calc(100% - 41px);
+  }
+
   .draw-stat {
     padding-bottom: rem(15px);
 

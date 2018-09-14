@@ -1,7 +1,10 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import union from 'turf-union';
 
-import { fetchUmdLossGain } from 'services/analysis';
+import {
+  fetchUmdLossGainGeostore,
+  fetchUmdLossGainAdmin
+} from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
 import { getGeostoreKey } from 'services/geostore';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
@@ -31,21 +34,31 @@ export const clearAnalysisError = createAction('clearAnalysisError');
 
 export const getAnalysis = createThunkAction(
   'getAnalysis',
-  ({ geostoreId }) => dispatch => {
-    dispatch(setAnalysisLoading({ loading: true, error: '' }));
-    fetchUmdLossGain(geostoreId)
-      .then(response => {
-        if (response.data) {
-          dispatch(setAnalysisData(response.data.data.attributes));
-        }
-      })
-      .catch(error => {
-        setAnalysisLoading({
-          loading: false,
-          error: 'data unavailable'
+  location => (dispatch, getState) => {
+    if (!getState().analysis.loading) {
+      dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
+      const fetchAnalysis =
+        location.type === 'country'
+          ? fetchUmdLossGainAdmin
+          : fetchUmdLossGainGeostore;
+      fetchAnalysis(location)
+        .then(response => {
+          if (response.data) {
+            const data =
+              location.type === 'country'
+                ? response.data.data.attributes.totals
+                : response.data.data.attributes;
+            dispatch(setAnalysisData(data));
+          }
+        })
+        .catch(error => {
+          setAnalysisLoading({
+            loading: false,
+            error: 'data unavailable'
+          });
+          console.info(error);
         });
-        console.info(error);
-      });
+    }
   }
 );
 

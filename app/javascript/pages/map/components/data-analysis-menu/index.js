@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -17,7 +18,18 @@ class DataAnalysisMenuContainer extends PureComponent {
   componentDidMount() {
     const { location, getAnalysis } = this.props;
     if (location.type && location.country) {
-      getAnalysis({ geostoreId: location.country });
+      getAnalysis({ ...location });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location, getAnalysis } = this.props;
+    if (
+      location.type &&
+      location.country &&
+      !isEqual(location, prevProps.location)
+    ) {
+      getAnalysis({ ...location });
     }
   }
 

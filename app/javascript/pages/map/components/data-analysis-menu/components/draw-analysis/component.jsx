@@ -2,8 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import { formatNumber } from 'utils/format';
+import isEmpty from 'lodash/isEmpty';
 
 import Icon from 'components/ui/icon';
+import NoContent from 'components/ui/no-content';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
@@ -21,12 +23,8 @@ class DrawAnalysis extends PureComponent {
   );
 
   render() {
-    const {
-      setShareModal,
-      clearAnalysis,
-      query,
-      data: { areaHa, loss, gain, treeExtent, treeExtent2010 }
-    } = this.props;
+    const { setShareModal, clearAnalysis, query, data, loading } = this.props;
+    const { areaHa, loss, gain, treeExtent, treeExtent2010 } = data;
 
     return (
       <div className="c-draw-analysis">
@@ -58,28 +56,34 @@ class DrawAnalysis extends PureComponent {
             </button>
           </div>
         </div>
-        <ul className="draw-stats">
-          {areaHa && this.renderStatItem('selected area', areaHa, 'area')}
-          {loss &&
-            this.renderStatItem(
-              'Loss 2001-2017 <small>with &gt;30% canopy density</small>',
-              loss,
-              'loss'
-            )}
-          {gain && this.renderStatItem('Gain 2001-2012', gain, 'gain')}
-          {treeExtent &&
-            this.renderStatItem(
-              'Tree cover (2000) <small>with &gt;30% canopy density</small>',
-              treeExtent,
-              'extent'
-            )}
-          {treeExtent2010 &&
-            this.renderStatItem(
-              'Tree cover (2010) <small>with &gt;30% canopy density</small>',
-              treeExtent2010,
-              'extent'
-            )}
-        </ul>
+        <div className="results">
+          {!loading && isEmpty(data) ? (
+            <NoContent message="No analysis data available" />
+          ) : (
+            <ul className="draw-stats">
+              {areaHa && this.renderStatItem('selected area', areaHa, 'area')}
+              {loss &&
+                this.renderStatItem(
+                  'Loss 2001-2017 <small>with &gt;30% canopy density</small>',
+                  loss,
+                  'loss'
+                )}
+              {gain && this.renderStatItem('Gain 2001-2012', gain, 'gain')}
+              {treeExtent &&
+                this.renderStatItem(
+                  'Tree cover (2000) <small>with &gt;30% canopy density</small>',
+                  treeExtent,
+                  'extent'
+                )}
+              {treeExtent2010 &&
+                this.renderStatItem(
+                  'Tree cover (2010) <small>with &gt;30% canopy density</small>',
+                  treeExtent2010,
+                  'extent'
+                )}
+            </ul>
+          )}
+        </div>
       </div>
     );
   }
@@ -89,7 +93,8 @@ DrawAnalysis.propTypes = {
   data: PropTypes.object,
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
-  query: PropTypes.object
+  query: PropTypes.object,
+  loading: PropTypes.bool
 };
 
 export default DrawAnalysis;

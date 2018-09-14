@@ -13,7 +13,8 @@ import { initialState } from './reducers';
 
 const selectAnalysisUrlState = state =>
   (state.location.query && state.location.query.analysis) || null;
-const selectLoading = state => state.analysis.loading || state.datasets.loading;
+const selectLoading = state =>
+  state.analysis.loading || state.datasets.loading || state.geostore.loading;
 const selectLocation = state => state.location && state.location.payload;
 
 export const getAnalysisSettings = createSelector(
