@@ -6,7 +6,7 @@ import MapLegend from 'components/map-v2/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'pages/map/components/data-analysis-menu/components/chose-analysis';
-import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/polygon-analysis';
+import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/draw-analysis';
 // import LocationAnalysis from 'pages/map/components/data-analysis-menu/components/location-analysis';
 
 import './styles.scss';

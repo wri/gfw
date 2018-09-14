@@ -31,20 +31,19 @@ export const clearAnalysisError = createAction('clearAnalysisError');
 
 export const getAnalysis = createThunkAction(
   'getAnalysis',
-  geostore => dispatch => {
-    fetchUmdLossGain(geostore)
+  ({ geostoreId }) => dispatch => {
+    dispatch(setAnalysisLoading({ loading: true, error: '' }));
+    fetchUmdLossGain(geostoreId)
       .then(response => {
         if (response.data) {
-          dispatch(
-            setAnalysisData({
-              data: response.data.data.attributes,
-              loading: false,
-              showResults: true
-            })
-          );
+          dispatch(setAnalysisData(response.data.data.attributes));
         }
       })
       .catch(error => {
+        setAnalysisLoading({
+          loading: false,
+          error: 'data unavailable'
+        });
         console.info(error);
       });
   }

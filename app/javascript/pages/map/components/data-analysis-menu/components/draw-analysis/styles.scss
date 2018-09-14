@@ -1,0 +1,83 @@
+@import '~styles/settings';
+
+.c-draw-analysis {
+  width: 100%;
+  padding: rem(20px);
+
+  .draw-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: $slate;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: rem(15px);
+
+    button {
+      cursor: pointer;
+      height: fit-content;
+      margin-top: rem(3px);
+    }
+
+    .title-nav {
+      display: flex;
+
+      .icon-arrow {
+        position: relative;
+        width: rem(12px);
+        height: rem(12px);
+        margin-right: rem(7px);
+        transform: rotateZ(90deg);
+      }
+    }
+
+    .title-controls {
+      display: flex;
+
+      > * {
+        margin-left: rem(5px);
+      }
+    }
+  }
+
+  .draw-stat {
+    padding-bottom: rem(15px);
+
+    .title {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: $slate;
+
+      small {
+        font-size: 9px;
+        font-weight: normal;
+        text-transform: lowercase;
+      }
+    }
+
+    .value {
+      font-size: 18px;
+      font-weight: 500;
+      color: $slate;
+      letter-spacing: 0.5px;
+    }
+
+    &.area {
+      border-bottom: solid 1px $border;
+      padding-bottom: rem(15px);
+      margin-bottom: rem(20px);
+    }
+
+    &.loss .value {
+      color: $loss;
+    }
+
+    &.gain .value {
+      color: $gain;
+    }
+
+    &.extent .value {
+      color: $extent;
+    }
+  }
+}

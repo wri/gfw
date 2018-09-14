@@ -13,10 +13,8 @@ export const initialState = {
 
 const setAnalysisData = (state, { payload }) => ({
   ...state,
-  data: {
-    ...state.data,
-    ...payload
-  }
+  data: payload,
+  loading: false
 });
 
 const setAnalysisLoading = (state, { payload }) => ({
