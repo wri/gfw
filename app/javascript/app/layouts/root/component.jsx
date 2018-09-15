@@ -31,7 +31,7 @@ class App extends PureComponent {
     const { component, embed } = route;
     const isMapPage = component === 'map';
     return (
-      <div className={cx('l-root', { '-map': isMapPage && !embed })}>
+      <div className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}>
         {!embed &&
           route.headerOptions && (
             <Header loggedIn={loggedIn} {...route.headerOptions} />

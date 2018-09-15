@@ -10,7 +10,7 @@ export const SGF = 'location/SGF';
 export const MAP = 'location/MAP';
 export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
-export const WIDGET_EMBED = 'location/WIDGET_EMBED';
+export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
   // track page with GA
@@ -97,10 +97,11 @@ export const routes = {
     path: '/dashboards/:type?/:country?/:region?/:subRegion?',
     component: 'dashboards'
   },
-  [WIDGET_EMBED]: {
+  [DASHBOARDS_EMBED]: {
     controller: 'dashboards',
     path: '/embed/dashboards/:type?/:country?/:region?/:subRegion?',
-    component: 'dashboards/embed'
+    component: 'dashboards/embed',
+    embed: true
   },
   [NOT_FOUND]: {
     path: '/404',

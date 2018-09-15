@@ -7,6 +7,7 @@
     top: 0;
     left: 0;
     z-index: 1010;
+    display: none;
   }
 
   .page {
@@ -35,6 +36,24 @@
         border-top-color: $white;
       }
     }
+
+    .logo {
+      display: block;
+    }
+  }
+
+  &.-embed {
+    .page {
+      position: relative;
+      width: 100%;
+      min-height: rem(400px);
+    }
+
+    &.-map {
+      .page {
+        min-height: calc(100vh - 60px);
+      }
+    }
   }
 
   .embed-footer {
@@ -42,20 +61,18 @@
     justify-content: flex-end;
     align-items: center;
     height: rem(60px);
-    background: $green-gfw;
+    background: $white;
+    border-top: solid 1px $border;
 
     p {
       opacity: 0.7;
-      color: $white;
     }
   }
 
   .embed-btn {
     width: rem(160px);
     margin-left: rem(10px);
-    background-color: $white;
-    color: $green-gfw;
-    margin-right: rem(15px);
+    margin-right: rem(10px);
   }
 }
 
