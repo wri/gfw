@@ -66,7 +66,7 @@ export const getAnalysis = createThunkAction(
 
 export const uploadShape = createThunkAction(
   'uploadShape',
-  ({ shape, query }) => dispatch => {
+  shape => (dispatch, getState) => {
     dispatch(setAnalysisLoading({ loading: true, error: '' }));
     uploadShapeFile(shape)
       .then(response => {
@@ -80,6 +80,7 @@ export const uploadShape = createThunkAction(
               .then(geostore => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
+                  const { query } = getState().location;
                   dispatch({
                     type: MAP,
                     payload: {

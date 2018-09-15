@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { bindActionCreators } from 'redux';
-import { MAP } from 'router';
+import { MAP, DASHBOARDS } from 'router';
 import { CancelToken } from 'axios';
 
 import * as actions from './actions';
@@ -15,10 +15,39 @@ import { getAnalysisProps } from './selectors';
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      clearAnalysis: query => ({
-        type: MAP,
-        query
-      }),
+      clearAnalysis: () => (_, getState) =>
+        dispatch({
+          type: MAP,
+          ...(getState().location.query && {
+            query: getState().location.query
+          })
+        }),
+      goToDashboard: () => (_, getState) =>
+        dispatch({
+          type: DASHBOARDS,
+          payload: getState().location.payload,
+          ...(getState().location.query && {
+            query: getState().location.query
+          })
+        }),
+      setDrawnAnalysis: geostoreId => (_, getState) => {
+        const query = getState().location.query || {};
+        dispatch({
+          type: MAP,
+          payload: {
+            type: 'draw',
+            country: geostoreId
+          },
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map && query.map),
+              canBound: true,
+              draw: false
+            }
+          }
+        });
+      },
       ...actions
     },
     dispatch
@@ -27,7 +56,10 @@ const mapDispatchToProps = dispatch =>
 class DataAnalysisMenuContainer extends PureComponent {
   static propTypes = {
     location: PropTypes.object,
-    getAnalysis: PropTypes.func
+    getAnalysis: PropTypes.func,
+    drawnGeostoreId: PropTypes.string,
+    setDrawnAnalysis: PropTypes.func,
+    query: PropTypes.object
   };
 
   componentDidMount() {
@@ -40,8 +72,15 @@ class DataAnalysisMenuContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, getAnalysis } = this.props;
+    const {
+      location,
+      getAnalysis,
+      drawnGeostoreId,
+      setDrawnAnalysis,
+      query
+    } = this.props;
 
+    // get analysis if location changes
     if (
       location.type &&
       location.country &&
@@ -49,6 +88,14 @@ class DataAnalysisMenuContainer extends PureComponent {
     ) {
       this.analysisFetch = CancelToken.source();
       getAnalysis({ ...location, token: this.analysisFetch.token });
+    }
+
+    // if user draws shape get analysis
+    if (
+      drawnGeostoreId &&
+      !isEqual(drawnGeostoreId, prevProps.drawnGeostoreId)
+    ) {
+      setDrawnAnalysis(drawnGeostoreId, query);
     }
   }
 

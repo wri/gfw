@@ -25,7 +25,6 @@ class ChoseAnalysisContainer extends PureComponent {
     activeDatasets: PropTypes.array,
     activeBoundary: PropTypes.object,
     boundaries: PropTypes.array,
-    query: PropTypes.object,
     setAnalysisLoading: PropTypes.func
   };
 
@@ -57,7 +56,7 @@ class ChoseAnalysisContainer extends PureComponent {
   };
 
   onDrop = files => {
-    const { uploadShape, query, setAnalysisLoading } = this.props;
+    const { uploadShape, setAnalysisLoading } = this.props;
     if (files && files.length) {
       const file = files[0];
       if (file.size > uploadConfig.sizeLimit) {
@@ -66,7 +65,7 @@ class ChoseAnalysisContainer extends PureComponent {
           errorMessage: ''
         });
       } else {
-        uploadShape({ shape: file, query });
+        uploadShape(file);
       }
     } else {
       setAnalysisLoading({ error: 'Invalid file type', errorMessage: '' });

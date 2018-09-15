@@ -151,10 +151,16 @@ class MapComponent extends PureComponent {
                           interactivity
                           events={{
                             click: () => {
-                              setRecentImagerySettings({ visible: true });
+                              if (!draw) {
+                                setRecentImagerySettings({ visible: true });
+                              }
                             },
-                            mouseover: handleRecentImageryTooltip,
-                            mouseout: () => handleShowTooltip(false, {})
+                            mouseover: e => {
+                              if (!draw) handleRecentImageryTooltip(e);
+                            },
+                            mouseout: () => {
+                              if (!draw) handleShowTooltip(false, {});
+                            }
                           }}
                         />
                       )}
@@ -166,13 +172,16 @@ class MapComponent extends PureComponent {
                           ...(!isEmpty(output) && {
                             interactivity: output.map(i => i.column),
                             events: {
-                              click: e =>
-                                handleClickMap({
-                                  e,
-                                  layer: l,
-                                  article,
-                                  output
-                                })
+                              click: e => {
+                                if (!draw) {
+                                  handleClickMap({
+                                    e,
+                                    layer: l,
+                                    article,
+                                    output
+                                  });
+                                }
+                              }
                             }
                           })
                         };

@@ -8,7 +8,6 @@ import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'pages/map/components/data-analysis-menu/components/chose-analysis';
 import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/draw-analysis';
-// import LocationAnalysis from 'pages/map/components/data-analysis-menu/components/location-analysis';
 
 import './styles.scss';
 
@@ -26,7 +25,7 @@ class DataAnalysisMenu extends PureComponent {
       fetchingAnalysis,
       clearAnalysis,
       analysisFetch,
-      query,
+      goToDashboard,
       setAnalysisLoading
     } = this.props;
 
@@ -64,7 +63,7 @@ class DataAnalysisMenu extends PureComponent {
                   <Button
                     className="cancel-analysis-btn"
                     onClick={() => {
-                      clearAnalysis(query);
+                      clearAnalysis();
                       analysisFetch.cancel();
                       setAnalysisLoading({ loading: false });
                     }}
@@ -74,14 +73,13 @@ class DataAnalysisMenu extends PureComponent {
                 </div>
               )}
             {location.type && location.country ? (
-              <PolygonAnalysis />
+              <PolygonAnalysis
+                clearAnalysis={clearAnalysis}
+                goToDashboard={goToDashboard}
+              />
             ) : (
               <ChoseAnalysis />
             )}
-            {/* {option === 'location' &&
-              showResults && <LocationAnalysis />}
-            {option === 'polygon' &&
-              showResults && <PolygonAnalysis />} */}
           </div>
         )}
       </div>
@@ -106,7 +104,7 @@ DataAnalysisMenu.propTypes = {
   clearAnalysisError: PropTypes.func,
   setAnalysisLoading: PropTypes.func,
   analysisFetch: PropTypes.object,
-  query: PropTypes.object
+  goToDashboard: PropTypes.func
 };
 
 export default DataAnalysisMenu;

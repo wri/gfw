@@ -7,7 +7,6 @@ import { getActiveLayers } from 'components/map-v2/selectors';
 const selectLocation = state => state.location && state.location.payload;
 const selectLoading = state =>
   state.analysis.loading || state.datasets.loading || state.geostore.loading;
-const selectQuery = state => state.location && state.location.query;
 const selectData = state => state.analysis.data;
 const selectAdmins = state => state.countryData.countries;
 const selectAdmin1s = state => state.countryData.regions;
@@ -62,7 +61,6 @@ export const getDataFromLayers = createSelector(
 
 export const getDrawAnalysisProps = createStructuredSelector({
   location: selectLocation,
-  query: selectQuery,
   data: getDataFromLayers,
   loading: selectLoading,
   locationName: getLocationName,

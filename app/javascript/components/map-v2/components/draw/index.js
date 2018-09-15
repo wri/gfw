@@ -1,31 +1,36 @@
 import { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import 'leaflet-draw/dist/leaflet.draw';
+import './styles.scss';
 
-// import Component from './component';
+import * as actions from './actions';
+import reducers, { initialState } from './reducers';
+import polygonConfig from './config';
 
 class MapDraw extends PureComponent {
   componentDidMount() {
-    const { map } = this.props;
-    const drawnItems = new L.FeatureGroup();
-    map.addLayer(drawnItems);
-    this.drawControl = new L.Control.Draw({
-      edit: {
-        featureGroup: drawnItems
-      }
-    });
-    map.addControl(this.drawControl);
+    const { map, getGeostoreId } = this.props;
 
-    new L.Draw.Feature(map, {
-      edit: {
-        featureGroup: drawnItems
-      }
-    }).enable();
+    this.layers = new L.FeatureGroup(); // eslint-disable-line
+    map.addLayer(this.layers);
+
+    map.on('draw:created', e => {
+      const layer = e.layer;
+
+      this.layers.addLayer(layer);
+      getGeostoreId(layer.toGeoJSON());
+    });
+
+    this.polygon = new L.Draw.Polygon(map, polygonConfig); // eslint-disable-line
+    this.polygon.enable();
   }
 
   componentWillUnmount() {
-    this.props.map.removeControl(this.drawControl);
+    const { map } = this.props;
+    this.polygon.disable();
+    map.removeLayer(this.layers);
   }
 
   render() {
@@ -34,7 +39,10 @@ class MapDraw extends PureComponent {
 }
 
 MapDraw.propTypes = {
-  map: PropTypes.object
+  map: PropTypes.object,
+  getGeostoreId: PropTypes.func
 };
 
-export default MapDraw;
+export const reduxModule = { actions, reducers, initialState };
+
+export default connect(null, actions)(MapDraw);

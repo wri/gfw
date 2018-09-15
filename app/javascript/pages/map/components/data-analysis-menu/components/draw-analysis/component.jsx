@@ -46,7 +46,6 @@ class DrawAnalysis extends PureComponent {
     const {
       setShareModal,
       clearAnalysis,
-      query,
       data,
       loading,
       fullLocationName,
@@ -58,7 +57,7 @@ class DrawAnalysis extends PureComponent {
       <div className="c-draw-analysis">
         <div className="draw-title">
           <div className="title-nav">
-            <button onClick={() => clearAnalysis(query)}>
+            <button onClick={clearAnalysis}>
               <Icon icon={arrowDownIcon} className="icon-arrow" />
             </button>
             <p>{fullLocationName}</p>
@@ -97,9 +96,7 @@ class DrawAnalysis extends PureComponent {
                 </ul>
                 {location.type === 'country' && (
                   <div className="analysis-actions">
-                    <Button onClick={() => goToDashboard(location, query)}>
-                      OPEN DASHBOARD
-                    </Button>
+                    <Button onClick={goToDashboard}>OPEN DASHBOARD</Button>
                   </div>
                 )}
               </Fragment>
@@ -114,7 +111,6 @@ DrawAnalysis.propTypes = {
   data: PropTypes.array,
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
-  query: PropTypes.object,
   loading: PropTypes.bool,
   location: PropTypes.object,
   fullLocationName: PropTypes.string,

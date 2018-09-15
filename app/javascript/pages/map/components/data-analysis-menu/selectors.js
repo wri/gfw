@@ -14,10 +14,14 @@ import { initialState } from './reducers';
 const selectAnalysisUrlState = state =>
   (state.location.query && state.location.query.analysis) || null;
 const selectLoading = state =>
-  state.analysis.loading || state.datasets.loading || state.geostore.loading;
+  state.analysis.loading ||
+  state.datasets.loading ||
+  state.geostore.loading ||
+  state.draw.loading;
 const selectLoadingAnalysis = state => state.analysis.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectQuery = state => state.location && state.location.query;
+export const selectDrawPolygon = state => state.draw.geostoreId;
 
 export const getAnalysisSettings = createSelector(
   [selectAnalysisUrlState],
@@ -63,5 +67,6 @@ export const getAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   location: selectLocation,
-  query: selectQuery
+  query: selectQuery,
+  drawnGeostoreId: selectDrawPolygon
 });

@@ -13,6 +13,7 @@ import { reduxModule as RecentImagery } from 'components/map-v2/components/recen
 import { reduxModule as DataAnalysisMenu } from 'pages/map/components/data-analysis-menu';
 import { reduxModule as Widgets } from 'components/widgets';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
+import { reduxModule as Draw } from 'components/map-v2/components/draw';
 import { reduxModule as Header } from 'pages/dashboards/header';
 import { reduxModule as MapOld } from 'components/map';
 
@@ -51,6 +52,7 @@ const componentsReducers = {
   recentImagery: handleModule(RecentImagery),
   widgets: handleModule(Widgets),
   popup: handleModule(Popup),
+  draw: handleModule(Draw),
   header: handleModule(Header),
   share: handleModule(Share),
   map: handleModule(MapOld),

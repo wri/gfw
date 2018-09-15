@@ -1,12 +1,12 @@
 import request from 'utils/request';
 
-const REQUEST_URL = `${process.env.GFW_API}/v3`;
+const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
   umdGeostore:
     '/umd-loss-gain?geostore={geostoreId}&period=2001-01-01%2C2017-12-31&thresh=30',
   umdAdmin:
-    '/umd-loss-gain/admin/{location}?period=2001-01-01%2C2017-12-31&thresh=30'
+    '/v3/umd-loss-gain/admin/{location}?period=2001-01-01%2C2017-12-31&thresh=30'
 };
 
 const getLocationUrl = ({ country, region, subRegion }) =>
