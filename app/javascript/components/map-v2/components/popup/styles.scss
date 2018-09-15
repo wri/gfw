@@ -45,6 +45,10 @@
   }
 }
 
+.leaflet-popup {
+  bottom: -26px !important;
+}
+
 .leaflet-popup-content {
   margin: 0;
 }

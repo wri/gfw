@@ -47,8 +47,9 @@ class ChoseAnalysis extends PureComponent {
           <button
             onClick={() => setMenuSettings({ selectedSection: 'biodiversity' })}
           >
-            Biodiversity tabs
-          </button>.
+            Biodiversity
+          </button>{' '}
+          tabs.
         </div>
       </div>
     );
