@@ -76,7 +76,7 @@ class WidgetDynamicSentence extends PureComponent {
 
 WidgetDynamicSentence.propTypes = {
   className: PropTypes.string,
-  sentence: PropTypes.object,
+  sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   handleMouseOver: PropTypes.func,
   handleMouseOut: PropTypes.func
 };

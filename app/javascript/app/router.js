@@ -18,6 +18,7 @@ const routeChangeThunk = (dispatch, getState) => {
 
 export const routes = {
   [ABOUT]: {
+    controller: 'about',
     path: '/about',
     component: 'about',
     sections: [
@@ -49,6 +50,7 @@ export const routes = {
     ]
   },
   [SGF]: {
+    controller: 'small_grants_fund',
     path: '/small-grants-fund/:tab?',
     component: 'sgf',
     sections: {
@@ -73,6 +75,7 @@ export const routes = {
     }
   },
   [MAP]: {
+    controller: 'map_v2',
     path: '/v2/map/:type?/:country?/:region?/:subRegion?',
     component: 'map',
     headerOptions: {
@@ -83,10 +86,12 @@ export const routes = {
     }
   },
   [DASHBOARDS]: {
+    controller: 'dashboards',
     path: '/dashboards/:type?/:country?/:region?/:subRegion?',
     component: 'dashboards'
   },
   [WIDGET_EMBED]: {
+    controller: 'dashboards',
     path: '/embed/dashboards/:type?/:country?/:region?/:subRegion?',
     component: 'dashboards/embed'
   },

@@ -4,6 +4,7 @@ import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
 import cx from 'classnames';
 
+import Meta from 'components/meta';
 import Header from 'components/header';
 import MapMenu from 'pages/map/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
@@ -13,7 +14,7 @@ import './styles.scss';
 
 const universalOptions = {
   loading: <Loader className="page-loader" />,
-  minDelay: 2000000000000
+  minDelay: 200
 };
 
 const PageComponent = universal(
@@ -24,7 +25,7 @@ const PageComponent = universal(
 
 class App extends PureComponent {
   render() {
-    const { route, loggedIn } = this.props;
+    const { route, loggedIn, metadata } = this.props;
     const isMapPage = route.component === 'map';
     return (
       <div className={cx('l-root', { '-map': isMapPage })}>
@@ -36,6 +37,7 @@ class App extends PureComponent {
           <PageComponent path={route.component} sections={route.sections} />
         </div>
         <MyGFWProvider />
+        <Meta {...metadata} />
       </div>
     );
   }
@@ -43,7 +45,8 @@ class App extends PureComponent {
 
 App.propTypes = {
   route: PropTypes.object.isRequired,
-  loggedIn: PropTypes.bool
+  loggedIn: PropTypes.bool,
+  metadata: PropTypes.object
 };
 
 export default App;

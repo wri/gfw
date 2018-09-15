@@ -8,7 +8,7 @@ import * as mapActions from 'components/map/actions';
 
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
-import { getLinks, getTitle } from './selectors';
+import { getLinks } from './selectors';
 import Component from './component';
 
 const actions = { ...mapActions, ...ownActions };
@@ -39,7 +39,6 @@ const mapStateToProps = ({ dashboards, countryData, whitelists, location }) => {
     widgets,
     activeWidget: activeWidget || (widgets && widgets[0] && widgets[0].name),
     widgetAnchor,
-    title: getTitle({ ...countryData, ...location }),
     ...location,
     ...countryData
   };

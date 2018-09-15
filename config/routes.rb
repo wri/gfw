@@ -98,10 +98,11 @@ Gfw::Application.routes.draw do
   get '/map/*path' => 'map#index'
   get '/embed/map' => 'map#embed'
   get '/embed/map/*path' => 'map#embed'
-  get '/v2/map' => 'map_v2#index'
-  get '/v2/map/*path' => 'map_v2#index'
+  get '/v2/map(/:type)(/:iso)(/:region)(/:sub_region)' => 'map_v2#index'
+  get '/embed/v2/map(/:type)(/:iso)(/:region)(/:sub_region)' => 'map_v2#embed'
 
   # dashboards
+  get '/dashboards' => redirect('/dashboards/global')
   get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
   get '/embed/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#embed'
 

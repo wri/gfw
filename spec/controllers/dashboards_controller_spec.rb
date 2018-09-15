@@ -10,6 +10,6 @@ describe DashboardsController, type: :controller do
   describe 'GET dashboards/global' do
     subject { get :index, params: { type: 'global' } }
     # it_behaves_like 'renders index'
-    it_behaves_like 'assigns title', 'Global Dashboard'
+    it_behaves_like 'assigns title', 'Global | Dashboards'
   end
 end
