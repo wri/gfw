@@ -18,6 +18,7 @@ import iconCross from 'assets/icons/close.svg';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
+import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
 
 import './styles.scss';
@@ -61,7 +62,8 @@ class MapComponent extends PureComponent {
       handleShowTooltip,
       handleRecentImageryTooltip,
       analysisActive,
-      handleClickMap
+      handleClickMap,
+      draw
     } = this.props;
 
     return (
@@ -188,6 +190,7 @@ class MapComponent extends PureComponent {
                 </LayerManager>
                 <Popup map={map} query={query} />
                 <MapControlButtons className="map-controls" map={map} />
+                {draw && <MapDraw map={map} />}
               </Fragment>
             )}
           </Map>
@@ -227,7 +230,8 @@ MapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
   handleRecentImageryTooltip: PropTypes.func,
   handleClickMap: PropTypes.func,
-  analysisActive: PropTypes.bool
+  analysisActive: PropTypes.bool,
+  draw: PropTypes.bool
 };
 
 export default MapComponent;

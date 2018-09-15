@@ -54,74 +54,70 @@ class ChoseAnalysis extends PureComponent {
     );
   };
 
-  renderPolygonOption = () => (
-    <div className="draw-menu">
-      <div className="draw-menu-title">
-        Draw in the map the area you want to analyze or subscribe to
-      </div>
-      <Button
-        onClick={() => {
-          const { setAnalysisData } = this.props;
-          setAnalysisData({
-            polygon: {
-              type: 'Polygon',
-              coordinates: [
-                [
-                  [-7.8772, 40.2166],
-                  [-7.2565, 40.1579],
-                  [-7.2784, 39.8845],
-                  [-7.6135, 39.8507],
-                  [-7.8772, 40.2166]
-                ]
-              ]
-            }
-          });
-        }}
-      >
-        START DRAWING
-      </Button>
-      <div className="draw-menu-separator">or</div>
-      <Tooltip
-        theme="tip"
-        hideOnClick
-        html={<Tip text={this.props.errorMessage} />}
-        position="top"
-        followCursor
-        animateFill={false}
-        disabled={!this.props.error || !this.props.errorMessage}
-      >
-        <Dropzone
-          className={cx(
-            'draw-menu-input',
-            { error: this.props.error },
-            { 'error-message': this.props.errorMessage }
-          )}
-          onDrop={this.props.onDrop}
-          accept={this.props.uploadConfig.types}
-          multiple={false}
+  renderPolygonOption = () => {
+    const {
+      draw,
+      setMapSettings,
+      setModalSources,
+      errorMessage,
+      error,
+      onDrop,
+      uploadConfig
+    } = this.props;
+    return (
+      <div className="draw-menu">
+        <div className="draw-menu-title">
+          Draw in the map the area you want to analyze or subscribe to
+        </div>
+        <Button
+          theme={draw ? 'theme-button-light' : ''}
+          onClick={() => setMapSettings({ draw: !draw })}
         >
-          <p>{this.props.error || 'Pick a file or drop one here'}</p>
-          <Button
-            className="info-button"
-            theme="theme-button-tiny square"
-            onClick={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              this.props.setModalSources({ open: true, source: 'uploads' });
-            }}
+          {draw ? 'CANCEL' : 'START DRAWING'}
+        </Button>
+        <div className="draw-menu-separator">or</div>
+        <Tooltip
+          theme="tip"
+          hideOnClick
+          html={<Tip text={errorMessage} />}
+          position="top"
+          followCursor
+          animateFill={false}
+          disabled={!error || !errorMessage}
+        >
+          <Dropzone
+            className={cx(
+              'draw-menu-input',
+              { error },
+              { 'error-message': errorMessage }
+            )}
+            onDrop={onDrop}
+            accept={uploadConfig.types}
+            multiple={false}
           >
-            <Icon icon={infoIcon} className="info-icon" />
-          </Button>
-        </Dropzone>
-      </Tooltip>
-      <p className="terms">
-        By uploading data you agree to the{' '}
-        <a href="/terms" target="_blank" rel="noopenner nofollower">
-          GFW Terms of Service
-        </a>
-      </p>
-    </div>
-  );
+            <p>{error || 'Pick a file or drop one here'}</p>
+            <Button
+              className="info-button"
+              theme="theme-button-tiny square"
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                setModalSources({ open: true, source: 'uploads' });
+              }}
+            >
+              <Icon icon={infoIcon} className="info-icon" />
+            </Button>
+          </Dropzone>
+        </Tooltip>
+        <p className="terms">
+          By uploading data you agree to the{' '}
+          <a href="/terms" target="_blank" rel="noopenner nofollower">
+            GFW Terms of Service
+          </a>
+        </p>
+      </div>
+    );
+  };
 
   render() {
     const { showDraw, setAnalysisSettings, clearAnalysisError } = this.props;
@@ -157,7 +153,6 @@ ChoseAnalysis.propTypes = {
   showDraw: PropTypes.bool,
   setAnalysisSettings: PropTypes.func,
   onDrop: PropTypes.func,
-  setAnalysisData: PropTypes.func,
   clearAnalysisError: PropTypes.func,
   boundaries: PropTypes.array,
   activeBoundary: PropTypes.object,
@@ -166,7 +161,9 @@ ChoseAnalysis.propTypes = {
   setModalSources: PropTypes.func,
   error: PropTypes.string,
   errorMessage: PropTypes.string,
-  uploadConfig: PropTypes.object
+  uploadConfig: PropTypes.object,
+  draw: PropTypes.bool,
+  setMapSettings: PropTypes.func
 };
 
 export default ChoseAnalysis;

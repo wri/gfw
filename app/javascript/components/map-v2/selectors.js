@@ -43,6 +43,11 @@ export const getLabels = createSelector(
   settings => settings.label
 );
 
+export const getDraw = createSelector(
+  getMapSettings,
+  settings => settings.draw
+);
+
 export const getBbox = createSelector(
   getMapSettings,
   settings => settings.bbox
@@ -275,5 +280,6 @@ export const getMapProps = createStructuredSelector({
   tileGeoJSON: getTileGeoJSON,
   query: getQuery,
   location: getLocation,
+  draw: getDraw,
   analysisActive: getShowAnalysis
 });

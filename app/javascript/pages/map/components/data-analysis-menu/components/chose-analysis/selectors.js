@@ -3,7 +3,8 @@ import { createStructuredSelector } from 'reselect';
 import {
   getAllBoundaries,
   getActiveBoundaryDatasets,
-  getActiveDatasetsState
+  getActiveDatasetsState,
+  getDraw
 } from 'components/map-v2/selectors';
 import { getShowDraw } from 'pages/map/components/data-analysis-menu/selectors';
 
@@ -18,5 +19,6 @@ export const getChooseAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   activeDatasets: getActiveDatasetsState,
-  query: selectQuery
+  query: selectQuery,
+  draw: getDraw
 });
