@@ -24,21 +24,20 @@ const actions = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      oneClickAnalysis: (payload, query) => ({
-        type: MAP,
-        payload,
-        query: {
-          ...query,
-          map: {
-            ...(query && query.map && query.map),
-            canBound: true
-          },
-          analysis: {
-            ...(query && query.analysis && query.analysis),
-            showAnalysis: true
+      oneClickAnalysis: payload => (_, getState) => {
+        const query = getState().location.query || {};
+        dispatch({
+          type: MAP,
+          payload,
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map && query.map),
+              canBound: true
+            }
           }
-        }
-      }),
+        });
+      },
       ...actions
     },
     dispatch
@@ -127,8 +126,8 @@ class MapContainer extends PureComponent {
     const {
       analysisActive,
       oneClickAnalysis,
-      query,
-      setInteraction
+      setInteraction,
+      draw
     } = this.props;
     const { showTooltip } = this.state;
     const { data = {} } = e;
@@ -144,14 +143,11 @@ class MapContainer extends PureComponent {
         config: output
       });
     }
-    if (analysisActive && newLocation && newLocation.country) {
-      oneClickAnalysis(
-        {
-          type: 'country',
-          ...newLocation
-        },
-        query
-      );
+    if (!draw && analysisActive && newLocation && newLocation.country) {
+      oneClickAnalysis({
+        type: 'country',
+        ...newLocation
+      });
     }
   };
 
@@ -177,7 +173,7 @@ MapContainer.propTypes = {
   analysisActive: PropTypes.bool,
   oneClickAnalysis: PropTypes.func,
   setInteraction: PropTypes.func,
-  query: PropTypes.object
+  draw: PropTypes.bool
 };
 
 export default connect(getMapProps, mapDispatchToProps)(MapContainer);

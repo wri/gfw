@@ -11,37 +11,36 @@ import { getPopupProps } from './selectors';
 
 import './styles.scss';
 
-const mapDispatchToProps = (dispatch, { query }) => {
-  let newQuery = {};
-  if (query) {
-    newQuery = {
-      ...query,
-      map: {
-        ...(query.map && query.map),
-        canBound: true
-      }
-    };
-  }
-
-  return bindActionCreators(
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
     {
-      handleAnalyze: interaction => {
+      handleAnalyze: interaction => (_, getState) => {
         const { data = {} } = interaction;
         const newLocation = data && getLocationFromData(data);
-        return {
+        const query = getState().location.query || {};
+        dispatch({
           type: MAP,
           payload: {
             type: 'country',
             ...newLocation
           },
-          query: newQuery
-        };
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map && query.map),
+              canBound: true
+            },
+            analysis: {
+              ...(query && query.analysis && query.analysis),
+              showAnalysis: true
+            }
+          }
+        });
       },
       ...actions
     },
     dispatch
   );
-};
 
 export const reduxModule = { actions, reducers, initialState };
 
