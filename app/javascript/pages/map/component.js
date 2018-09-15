@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -15,14 +16,16 @@ import './styles.scss';
 
 class MapPage extends PureComponent {
   render() {
-    const { mapSettings: { hidePanels } } = this.props;
+    const { mapSettings: { hidePanels }, embed } = this.props;
 
     return (
       <div className="l-map">
         <div className="map">
-          <Map recentImagery />
+          <Map recentImagery embed={embed} />
         </div>
-        {!hidePanels && <DataAnalysisMenu className="data-analysis-menu" />}
+        {!hidePanels && (
+          <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
+        )}
         <Share />
         <ModalMeta />
         <ModalSource />
@@ -35,7 +38,8 @@ class MapPage extends PureComponent {
 }
 
 MapPage.propTypes = {
-  mapSettings: PropTypes.object
+  mapSettings: PropTypes.object,
+  embed: PropTypes.bool
 };
 
 export default MapPage;

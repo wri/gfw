@@ -6,8 +6,10 @@ import cx from 'classnames';
 
 import Meta from 'components/meta';
 import Header from 'components/header';
+import Button from 'components/ui/button';
 import MapMenu from 'pages/map/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
+import gfwLogo from 'assets/logos/gfw.png';
 
 import 'styles/styles.scss';
 import './styles.scss';
@@ -26,17 +28,39 @@ const PageComponent = universal(
 class App extends PureComponent {
   render() {
     const { route, loggedIn, metadata } = this.props;
-    const isMapPage = route.component === 'map';
+    const { component, embed } = route;
+    const isMapPage = component === 'map';
     return (
-      <div className={cx('l-root', { '-map': isMapPage })}>
-        {route.headerOptions && (
-          <Header loggedIn={loggedIn} {...route.headerOptions} />
+      <div className={cx('l-root', { '-map': isMapPage && !embed })}>
+        {!embed &&
+          route.headerOptions && (
+            <Header loggedIn={loggedIn} {...route.headerOptions} />
+          )}
+        {embed && (
+          <a className="logo" href="/" target="_blank">
+            <img src={gfwLogo} alt="Global Forest Watch" />
+          </a>
         )}
-        {isMapPage && <MapMenu />}
+        {!embed && isMapPage && <MapMenu />}
         <div className="page">
-          <PageComponent path={route.component} sections={route.sections} />
+          <PageComponent
+            embed={embed}
+            path={route.component}
+            sections={route.sections}
+          />
         </div>
-        <MyGFWProvider />
+        {!embed && <MyGFWProvider />}
+        {embed && (
+          <div className="embed-footer">
+            <p>For more info</p>
+            <Button
+              className="embed-btn"
+              extLink={window.location.href.replace('/embed', '')}
+            >
+              EXPLORE ON GFW
+            </Button>
+          </div>
+        )}
         <Meta {...metadata} />
       </div>
     );

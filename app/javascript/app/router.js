@@ -8,6 +8,7 @@ const history = createHistory();
 export const ABOUT = 'location/ABOUT';
 export const SGF = 'location/SGF';
 export const MAP = 'location/MAP';
+export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
 export const WIDGET_EMBED = 'location/WIDGET_EMBED';
 
@@ -84,6 +85,12 @@ export const routes = {
       fixed: true,
       toggle: true
     }
+  },
+  [MAP_EMBED]: {
+    controller: 'map_v2',
+    path: '/embed/v2/map/:type?/:country?/:region?/:subRegion?',
+    component: 'map',
+    embed: true
   },
   [DASHBOARDS]: {
     controller: 'dashboards',

@@ -63,7 +63,8 @@ class MapComponent extends PureComponent {
       handleRecentImageryTooltip,
       analysisActive,
       handleClickMap,
-      draw
+      draw,
+      embed
     } = this.props;
 
     return (
@@ -83,7 +84,7 @@ class MapComponent extends PureComponent {
           open={showTooltip}
         >
           <Map
-            customClass={cx('c-map', { analysis: analysisActive })}
+            customClass={cx('c-map', { analysis: analysisActive }, { embed })}
             onReady={map => {
               this.map = map;
             }}
@@ -198,7 +199,11 @@ class MapComponent extends PureComponent {
                   )}
                 </LayerManager>
                 <Popup map={map} query={query} />
-                <MapControlButtons className="map-controls" map={map} />
+                <MapControlButtons
+                  className="map-controls"
+                  map={map}
+                  embed={embed}
+                />
                 {draw && <MapDraw map={map} />}
               </Fragment>
             )}
@@ -240,7 +245,8 @@ MapComponent.propTypes = {
   handleRecentImageryTooltip: PropTypes.func,
   handleClickMap: PropTypes.func,
   analysisActive: PropTypes.bool,
-  draw: PropTypes.bool
+  draw: PropTypes.bool,
+  embed: PropTypes.bool
 };
 
 export default MapComponent;

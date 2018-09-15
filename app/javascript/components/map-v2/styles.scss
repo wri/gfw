@@ -4,6 +4,10 @@
   min-height: 100vh;
   position: relative;
 
+  &.embed {
+    min-height: calc(100vh - 60px);
+  }
+
   .wri_api__map-container {
     position: absolute !important;
   }
