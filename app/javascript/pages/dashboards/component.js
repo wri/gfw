@@ -10,7 +10,7 @@ import DatasetsProvider from 'providers/datasets-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 
 import Meta from 'components/meta';
-import Widgets from 'components/widgets';
+import Widgets from 'components/widgets-v2';
 import Share from 'components/modals/share';
 import Map from 'components/map';
 import MapControls from 'components/map/components/map-controls';
@@ -65,15 +65,9 @@ class Page extends PureComponent {
             links={links}
             checkActive
           />
-          <Widgets
-            widgets={widgets}
-            activeWidget={activeWidget}
-            setShowMapMobile={setShowMapMobile}
-            location={payload}
-            query={query}
-          />
+          <Widgets />
         </div>
-        <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
+        {/* <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Sticky
             enabled={window.innerWidth > SCREEN_M}
             bottomBoundary=".l-country"
@@ -93,15 +87,15 @@ class Page extends PureComponent {
             handleZoomIn={() => setMapZoom({ sum: 1 })}
             handleZoomOut={() => setMapZoom({ sum: -1 })}
           />
-        )}
+        )} */}
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        <CountryDataProvider location={payload} />
-        <WhitelistsProvider />
-        <LayerSpecProvider />
-        <DatasetsProvider />
-        <GeostoreProvider />
+        {/* <CountryDataProvider location={payload} /> */}
+        {/* <WhitelistsProvider /> */}
+        {/* <LayerSpecProvider /> */}
+        {/* <DatasetsProvider /> */}
+        {/* <GeostoreProvider /> */}
         <Meta
           title={title}
           description="Data about forest change, tenure, forest related employment and land use in"

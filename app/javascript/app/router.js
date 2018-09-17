@@ -83,11 +83,11 @@ export const routes = {
     }
   },
   [DASHBOARDS]: {
-    path: '/dashboards/:type?/:country?/:region?/:subRegion?',
+    path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards'
   },
   [WIDGET_EMBED]: {
-    path: '/embed/dashboards/:type?/:country?/:region?/:subRegion?',
+    path: '/embed/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards/embed'
   },
   [NOT_FOUND]: {

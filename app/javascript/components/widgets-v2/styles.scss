@@ -1,0 +1,10 @@
+@import '~styles/settings.scss';
+
+.c-widgets {
+  position: relative;
+  min-height: rem(400px);
+}
+
+.tippy-popper .tippy-tooltip.widget-tooltip-theme {
+  box-shadow: 1px 1px 10px 0 rgba($slate, 0.25);
+}
