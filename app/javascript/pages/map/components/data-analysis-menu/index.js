@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch =>
         dispatch({
           type: MAP,
           payload: {
-            type: 'draw',
+            type: 'geostore',
             country: geostoreId
           },
           query: {

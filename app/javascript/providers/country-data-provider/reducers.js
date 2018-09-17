@@ -3,7 +3,7 @@ import { sortByKey } from 'utils/data';
 import * as actions from './actions';
 
 export const initialState = {
-  isCountriesLoading: true,
+  isCountriesLoading: false,
   isRegionsLoading: false,
   isSubRegionsLoading: false,
   isCountryLinksLoading: false,
