@@ -114,10 +114,11 @@ class MapComponent extends PureComponent {
                       {geostore &&
                         geostore.id && (
                           <Layer
-                            id={geostore.id}
+                            id="geostore"
                             name="Geojson"
                             provider="leaflet"
                             layerConfig={{
+                              id: geostore.id,
                               type: 'geoJSON',
                               body: geostore.geojson,
                               options: {
