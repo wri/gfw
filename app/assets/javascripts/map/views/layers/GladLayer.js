@@ -21,7 +21,8 @@ define(
     Presenter
   ) {
     'use strict';
-    var env = window.gfw.config.RAILS_ENV === 'production' ? 'prod' : 'staging';
+    var env =
+      window.gfw.config.FEATURE_ENV === 'production' ? 'prod' : 'staging';
     var sourceUrl =
       env === 'staging'
         ? 'https://d178s5l0vmo3yy.cloudfront.net'

@@ -1,7 +1,7 @@
 class MapV2Controller < ApplicationController
 
-  layout 'react'
   before_action :check_location, only: [:index, :embed]
+  layout 'application_react_spa'
 
   def index
     @title = @location_title ? "#{@location_title} | #{@title }" : @title
