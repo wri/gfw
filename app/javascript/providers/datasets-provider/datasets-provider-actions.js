@@ -26,7 +26,7 @@ export const getDatasets = createThunkAction(
   'getDatasets',
   () => (dispatch, getState) => {
     const state = getState();
-    if (!state.datasets.datasets.length) {
+    if (!state.datasets.loading) {
       dispatch(setDatasetsLoading({ loading: true, error: false }));
       axios
         .all([
@@ -161,6 +161,7 @@ export const getDatasets = createThunkAction(
 
                           return {
                             ...l,
+                            ...(d.tableName && { tableName: d.tableName }),
                             ...info,
                             ...l.applicationConfig,
                             // sorting position

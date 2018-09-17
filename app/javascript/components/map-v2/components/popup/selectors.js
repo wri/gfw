@@ -71,7 +71,7 @@ export const getTableData = createSelector(
     if (isEmpty(interaction) || interaction.article) return null;
     const { config, data } = interaction;
 
-    return config.map(c => ({
+    return config.filter(c => !c.hidden).map(c => ({
       label: c.property,
       value: data[c.column]
     }));

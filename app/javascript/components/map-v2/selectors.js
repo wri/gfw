@@ -172,7 +172,6 @@ export const getDatasetsWithConfig = createSelector(
             opacity,
             bbox,
             color: d.color,
-            analysisKey: 'loss',
             active: layers && layers.includes(l.id),
             ...(!isEmpty(l.params) && {
               params: {

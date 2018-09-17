@@ -15,7 +15,7 @@ const selectAdmin2s = state => state.countryData.subRegions;
 export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
   (location, adms, adm1s, adm2s) => {
-    if (location.type === 'draw') return 'custom area analysis';
+    if (location.type === 'geostore') return 'custom area analysis';
     if (location.type === 'country') {
       return buildLocationName(location, { adms, adm1s, adm2s });
     }
@@ -26,7 +26,7 @@ export const getLocationName = createSelector(
 export const getFullLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
   (location, adms, adm1s, adm2s) => {
-    if (location.type === 'draw') return 'custom area analysis';
+    if (location.type === 'geostore') return 'custom area analysis';
     if (location.type === 'country') {
       return buildFullLocationName(location, { adms, adm1s, adm2s });
     }
@@ -38,23 +38,35 @@ export const getDataFromLayers = createSelector(
   [getActiveLayers, selectData, getLocationName, selectLocation],
   (layers, data, locationName, location) => {
     if (!layers || !layers.length || !data) return null;
+    const { type } = location;
+    const routeType = type === 'country' ? 'admin' : type;
 
     return [
       {
         label:
-          location.type !== 'draw'
+          location.type !== 'geostore'
             ? `${locationName} total area`
             : 'selected area',
         value: data.areaHa
       }
     ].concat(
-      layers.filter(l => !l.isBoundary && !l.isRecentImagery).map(l => ({
-        label: l.name,
-        value: data[l.analysisKey],
-        color: l.color,
-        ...l.params,
-        ...l.decodeParams
-      }))
+      layers
+        .filter(l => !l.isBoundary && !l.isRecentImagery && l.analysisConfig)
+        .map(l => {
+          const analysisConfig = l.analysisConfig.find(
+            a => a.type === routeType
+          );
+          const { subKey, key } = analysisConfig || {};
+          const value = subKey ? data[subKey] : data[key];
+
+          return {
+            label: l.name,
+            value: value || 0,
+            color: l.color,
+            ...l.params,
+            ...l.decodeParams
+          };
+        })
     );
   }
 );

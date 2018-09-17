@@ -6,7 +6,6 @@ export const initialState = {
   isCountriesLoading: true,
   isRegionsLoading: false,
   isSubRegionsLoading: false,
-  isGeostoreLoading: false,
   isCountryLinksLoading: false,
   countries: [],
   gadmCountries: [],

@@ -84,7 +84,7 @@ export const uploadShape = createThunkAction(
                   dispatch({
                     type: MAP,
                     payload: {
-                      type: 'draw',
+                      type: 'geostore',
                       country: id
                     },
                     ...(query && {
