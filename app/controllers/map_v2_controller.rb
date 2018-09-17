@@ -1,6 +1,6 @@
 class MapV2Controller < ApplicationController
 
-  layout 'react'
+  layout 'application_react_spa'
 
   def index
     @title = 'Interactive Map'

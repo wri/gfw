@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_production
-    @is_production = Rails.env.production?
+    @is_production = Rails.env.production? || Rails.env.production_local?
   end
 
   private
