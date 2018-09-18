@@ -11251,9 +11251,9 @@ react-helmet@5.2.0:
     prop-types "^15.5.4"
     react-side-effect "^1.1.0"
 
-react-hot-loader@^4.3.6:
-  version "4.3.6"
-  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.3.6.tgz#26e1491f08daf2bad99d141b1927c9faadef2fb4"
+react-hot-loader@^4.3.8:
+  version "4.3.8"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.3.8.tgz#81f174a9b70fb5a4d4f2e9134d73659ddcd779cf"
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"
@@ -11398,9 +11398,9 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react-universal-component@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-universal-component/-/react-universal-component-3.0.1.tgz#48ecc3391f4e735a5b3cf8a6fa860409e25086b7"
+react-universal-component@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-universal-component/-/react-universal-component-3.0.2.tgz#58484165f4f9c8bb4a4aa93ccd83f1f34a8935d2"
   dependencies:
     hoist-non-react-statics "^2.2.1"
     prop-types "^15.5.10"
