@@ -64,7 +64,9 @@ class DataAnalysisMenu extends PureComponent {
                     className="cancel-analysis-btn"
                     onClick={() => {
                       clearAnalysis();
-                      analysisFetch.cancel();
+                      if (analysisFetch) {
+                        analysisFetch.cancel();
+                      }
                       setAnalysisLoading({ loading: false });
                     }}
                   >

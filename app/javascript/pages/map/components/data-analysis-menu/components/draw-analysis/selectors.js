@@ -47,7 +47,7 @@ export const getDataFromLayers = createSelector(
           location.type !== 'geostore'
             ? `${locationName} total area`
             : 'selected area',
-        value: data.areaHa
+        value: data.areaHa || 0
       }
     ].concat(
       layers
