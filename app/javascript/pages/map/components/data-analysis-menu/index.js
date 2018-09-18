@@ -86,6 +86,9 @@ class DataAnalysisMenuContainer extends PureComponent {
       location.country &&
       !isEqual(location, prevProps.location)
     ) {
+      if (this.analysisFetch) {
+        this.analysisFetch.cancel();
+      }
       this.analysisFetch = CancelToken.source();
       getAnalysis({ ...location, token: this.analysisFetch.token });
     }
@@ -96,6 +99,12 @@ class DataAnalysisMenuContainer extends PureComponent {
       !isEqual(drawnGeostoreId, prevProps.drawnGeostoreId)
     ) {
       setDrawnAnalysis(drawnGeostoreId, query);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.analysisFetch) {
+      this.analysisFetch.cancel();
     }
   }
 
