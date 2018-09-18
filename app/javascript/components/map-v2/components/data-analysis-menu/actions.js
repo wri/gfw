@@ -35,20 +35,11 @@ export const getAnalysis = createThunkAction(
     if (!getState().analysis.loading) {
       dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
       fetchUmdLossGain(location)
-        .then(response => {
-          if (response.data) {
-            const data =
-              location.type === 'country'
-                ? (response.data.data.attributes &&
-                    response.data.data.attributes.totals) ||
-                  {}
-                : response.data.data.attributes;
-            dispatch(setAnalysisData(data));
-          }
-        })
+        .then(responses => dispatch(setAnalysisData(responses)))
         .catch(error => {
-          const errors = error.response.data.errors[0];
-          const { status, detail } = errors;
+          const { response } = error;
+          const errors = response && response.data && response.data.errors[0];
+          const { status, detail } = errors || {};
           dispatch(
             setAnalysisLoading({
               data: {},

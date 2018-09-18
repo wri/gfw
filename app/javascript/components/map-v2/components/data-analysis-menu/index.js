@@ -60,28 +60,28 @@ class DataAnalysisMenuContainer extends PureComponent {
     drawnGeostoreId: PropTypes.string,
     setDrawnAnalysis: PropTypes.func,
     query: PropTypes.object,
+    endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
     setAnalysisLoading: PropTypes.func
   };
 
-  componentDidMount() {
-    const { location } = this.props;
-
-    if (location.type && location.country) {
-      this.handleFetchAnalysis(location);
-    }
-  }
-
   componentDidUpdate(prevProps) {
-    const { location, drawnGeostoreId, setDrawnAnalysis, query } = this.props;
+    const {
+      location,
+      drawnGeostoreId,
+      setDrawnAnalysis,
+      query,
+      endpoints
+    } = this.props;
 
     // get analysis if location changes
     if (
       location.type &&
       location.country &&
-      !isEqual(location, prevProps.location)
+      endpoints &&
+      !isEqual(endpoints, prevProps.endpoints)
     ) {
-      this.handleFetchAnalysis(location);
+      this.handleFetchAnalysis(location, endpoints);
     }
 
     // if user draws shape get analysis
@@ -99,12 +99,16 @@ class DataAnalysisMenuContainer extends PureComponent {
     }
   }
 
-  handleFetchAnalysis = location => {
+  handleFetchAnalysis = (location, endpoints) => {
     if (this.analysisFetch) {
       this.analysisFetch.cancel();
     }
     this.analysisFetch = CancelToken.source();
-    this.props.getAnalysis({ ...location, token: this.analysisFetch.token });
+    this.props.getAnalysis({
+      endpoints,
+      ...location,
+      token: this.analysisFetch.token
+    });
   };
 
   handleCancelAnalysis = () => {

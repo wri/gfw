@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import isEmpty from 'lodash/isEmpty';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
@@ -42,17 +43,17 @@ export const getFullLocationName = createSelector(
 export const getDataFromLayers = createSelector(
   [getActiveLayers, selectData, getLocationName, selectLocation],
   (layers, data, locationName, location) => {
-    if (!layers || !layers.length || !data || !data.areaHa) return null;
+    if (!layers || !layers.length || isEmpty(data)) return null;
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
-
+    const area = data['umd-loss-gain'].areaHa;
     return [
       {
         label:
           location.type !== 'geostore'
             ? `${locationName} total area`
             : 'selected area',
-        value: data.areaHa || 0
+        value: area || 0
       }
     ].concat(
       layers
@@ -61,9 +62,13 @@ export const getDataFromLayers = createSelector(
           const analysisConfig = l.analysisConfig.find(
             a => a.type === routeType || a.type === 'geostore'
           );
-          const { subKey, subkey, key } = analysisConfig || {};
-          const value = subKey || subkey ? data[subKey || subkey] : data[key];
-          // console.log(data, value, analysisConfig);
+          const { subKey, subkey, key, service } = analysisConfig || {};
+          const dataByService = data[service] || {};
+          const value =
+            subKey || subkey
+              ? dataByService[subKey || subkey]
+              : dataByService[key];
+
           return {
             label: l.name,
             value: value || 0,

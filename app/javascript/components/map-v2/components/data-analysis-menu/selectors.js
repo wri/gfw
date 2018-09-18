@@ -1,9 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import compact from 'lodash/compact';
+import uniq from 'lodash/uniq';
 
 import { getActiveSection } from 'pages/map/components/menu/menu-selectors';
 import {
   getAllBoundaries,
-  getActiveBoundaryDatasets
+  getActiveBoundaryDatasets,
+  getActiveLayers
 } from 'components/map-v2/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
@@ -42,6 +45,25 @@ export const getShowDraw = createSelector(
   settings => settings.showDraw
 );
 
+export const getLayerEndpoints = createSelector(
+  [getActiveLayers, selectLocation],
+  (layers, location) => {
+    if (!layers || !layers.length) return null;
+    const { type } = location;
+    const routeType = type === 'country' ? 'admin' : type;
+    return uniq(
+      compact(
+        layers.filter(l => l.analysisConfig).map(l => {
+          const analysisConfig = l.analysisConfig.find(
+            a => a.type === routeType || a.type === 'geostore'
+          );
+          return analysisConfig.service;
+        })
+      )
+    );
+  }
+);
+
 export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
   {
     label: 'DATA',
@@ -62,6 +84,7 @@ export const getAnalysisProps = createStructuredSelector({
   showAnalysis: getShowAnalysis,
   showDraw: getShowDraw,
   menuSection: getActiveSection,
+  endpoints: getLayerEndpoints,
   loading: selectLoading,
   error: selectError,
   fetchingAnalysis: selectLoadingAnalysis,
