@@ -32,7 +32,7 @@ const buildAnalysisUrl = ({
     .replace('{location}', location)
     .replace('{startDate}', startDate)
     .replace('{endDate}', endDate)
-    .replace('{threshold}', threshold || thresh);
+    .replace('{threshold}', threshold || thresh || 30);
 };
 
 const useSlugs = {
@@ -85,7 +85,9 @@ export const fetchUmdLossGain = ({
           const fetchKey = fetchType === 'umd' ? 'umd-loss-gain' : fetchType;
           return {
             ...obj,
-            [fetchKey]: response.data.data.attributes
+            [fetchKey]:
+              response.data.data.attributes.totals ||
+              response.data.data.attributes
           };
         }, {})
       )
