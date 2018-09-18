@@ -4,22 +4,35 @@ const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
   umdAdmin:
-    '/v3/umd-loss-gain/admin/{location}?period=2001-01-01%2C2017-12-31&thresh=30',
+    '/v3/umd-loss-gain/admin/{location}?period={startDate}%2C{endDate}&thresh={threshold}',
   umdByType:
-    '/{slug}/{type}/{location}?period=2001-01-01%2C2017-12-31&thresh=30',
+    '/{slug}/{type}/{location}?period={startDate}%2C{endDate}&thresh={threshold}',
   umdGeostore:
-    '/{slug}?geostore={geostoreId}&period=2001-01-01%2C2017-12-31&thresh=30'
+    '/{slug}?geostore={geostoreId}&period={startDate}%2C{endDate}&thresh={threshold}'
 };
 
 const getLocationUrl = ({ adm0, adm1, adm2 }) =>
   `${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`;
 
-const buildAnalysisUrl = ({ urlTemplate, slug, type, adm0, adm1, adm2 }) => {
+const buildAnalysisUrl = ({
+  urlTemplate,
+  slug,
+  type,
+  adm0,
+  adm1,
+  adm2,
+  params
+}) => {
   const location = getLocationUrl({ adm0, adm1, adm2 });
+  const { startDate, endDate, threshold, thresh } = params;
+
   return urlTemplate
     .replace('{slug}', slug)
     .replace('{type}', type)
-    .replace('{location}', location);
+    .replace('{location}', location)
+    .replace('{startDate}', startDate)
+    .replace('{endDate}', endDate)
+    .replace('{threshold}', threshold || thresh);
 };
 
 const useSlugs = {
@@ -38,8 +51,10 @@ export const fetchUmdLossGain = ({
   token
 }) => {
   const allEndpoints =
-    endpoints && !!endpoints.length ? endpoints : ['umd-loss-gain'];
-  const endpointUrls = allEndpoints.map(slug => {
+    endpoints && !!endpoints.length
+      ? endpoints
+      : [{ slug: 'umd-loss-gain', params: {} }];
+  const endpointUrls = allEndpoints.map(endpoint => {
     let urlTemplate = QUERIES.umdGeostore;
     if (type === 'country') urlTemplate = QUERIES.umdAdmin;
     if (type === 'use') urlTemplate = QUERIES.umdByType;
@@ -47,7 +62,7 @@ export const fetchUmdLossGain = ({
     return axios.get(
       `${REQUEST_URL}${buildAnalysisUrl({
         urlTemplate,
-        slug,
+        ...endpoint,
         type,
         adm0: Object.keys(useSlugs).includes(country)
           ? useSlugs[country]

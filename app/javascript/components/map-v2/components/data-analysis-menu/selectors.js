@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import compact from 'lodash/compact';
-import uniq from 'lodash/uniq';
+import uniqBy from 'lodash/uniqBy';
 
 import { getActiveSection } from 'pages/map/components/menu/menu-selectors';
 import {
@@ -51,15 +51,27 @@ export const getLayerEndpoints = createSelector(
     if (!layers || !layers.length) return null;
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
-    return uniq(
+    const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
+
+    return uniqBy(
       compact(
         layers.filter(l => l.analysisConfig).map(l => {
           const analysisConfig = l.analysisConfig.find(
             a => a.type === routeType || a.type === 'geostore'
           );
-          return analysisConfig.service;
+          return {
+            slug: analysisConfig.service,
+            params: {
+              ...(analysisConfig.service === 'umd-loss-gain' && {
+                ...lossLayer.decodeParams
+              }),
+              ...l.params,
+              ...l.decodeParams
+            }
+          };
         })
-      )
+      ),
+      'slug'
     );
   }
 );
