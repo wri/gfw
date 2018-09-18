@@ -1,10 +1,7 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import union from 'turf-union';
 
-import {
-  fetchUmdLossGainGeostore,
-  fetchUmdLossGainAdmin
-} from 'services/analysis';
+import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
 import { getGeostoreKey } from 'services/geostore';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
@@ -37,11 +34,7 @@ export const getAnalysis = createThunkAction(
   location => (dispatch, getState) => {
     if (!getState().analysis.loading) {
       dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
-      const fetchAnalysis =
-        location.type === 'country'
-          ? fetchUmdLossGainAdmin
-          : fetchUmdLossGainGeostore;
-      fetchAnalysis(location)
+      fetchUmdLossGain(location)
         .then(response => {
           if (response.data) {
             const data =
@@ -54,10 +47,19 @@ export const getAnalysis = createThunkAction(
           }
         })
         .catch(error => {
-          setAnalysisLoading({
-            loading: false,
-            error: 'data unavailable'
-          });
+          const errors = error.response.data.errors[0];
+          const { status, detail } = errors;
+          dispatch(
+            setAnalysisLoading({
+              data: {},
+              loading: false,
+              error:
+                detail ||
+                (status >= 500
+                  ? 'Service temporarily unavailable. Please refresh.'
+                  : 'No data available')
+            })
+          );
           console.info(error);
         });
     }

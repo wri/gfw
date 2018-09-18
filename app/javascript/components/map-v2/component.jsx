@@ -62,7 +62,7 @@ class MapComponent extends PureComponent {
       handleShowTooltip,
       handleRecentImageryTooltip,
       analysisActive,
-      handleClickMap,
+      handleMapInteraction,
       draw,
       embed
     } = this.props;
@@ -176,7 +176,7 @@ class MapComponent extends PureComponent {
                             events: {
                               click: e => {
                                 if (!draw) {
-                                  handleClickMap({
+                                  handleMapInteraction({
                                     e,
                                     layer: l,
                                     article,
@@ -244,7 +244,7 @@ MapComponent.propTypes = {
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
   handleRecentImageryTooltip: PropTypes.func,
-  handleClickMap: PropTypes.func,
+  handleMapInteraction: PropTypes.func,
   analysisActive: PropTypes.bool,
   draw: PropTypes.bool,
   embed: PropTypes.bool

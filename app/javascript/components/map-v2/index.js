@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
-import { bindActionCreators } from 'redux';
-import { MAP } from 'router';
-import { getLocationFromData } from 'utils/format';
 
 import MapComponent from './component';
 import { getMapProps } from './selectors';
@@ -20,28 +17,6 @@ const actions = {
   ...popupActions,
   ...ownActions
 };
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      oneClickAnalysis: payload => (_, getState) => {
-        const query = getState().location.query || {};
-        dispatch({
-          type: MAP,
-          payload,
-          query: {
-            ...query,
-            map: {
-              ...(query && query.map && query.map),
-              canBound: true
-            }
-          }
-        });
-      },
-      ...actions
-    },
-    dispatch
-  );
 
 class MapContainer extends PureComponent {
   static propTypes = {
@@ -122,16 +97,20 @@ class MapContainer extends PureComponent {
     });
   };
 
-  handleClickMap = ({ e, article, output, layer }) => {
+  handleMapInteraction = ({ e, article, output, layer }) => {
     const {
-      analysisActive,
-      oneClickAnalysis,
+      setAnalysisView,
       setInteraction,
+      analysisActive,
       draw
     } = this.props;
     const { showTooltip } = this.state;
-    const { data = {} } = e;
-    const newLocation = data && getLocationFromData(data);
+    const { data } = e || {};
+
+    if (data && layer && !draw && analysisActive) {
+      setAnalysisView({ data, layer });
+    }
+
     if (!showTooltip) {
       setInteraction({
         ...e,
@@ -143,12 +122,6 @@ class MapContainer extends PureComponent {
         config: output
       });
     }
-    if (!draw && analysisActive && newLocation && newLocation.country) {
-      oneClickAnalysis({
-        type: 'country',
-        ...newLocation
-      });
-    }
   };
 
   render() {
@@ -157,8 +130,8 @@ class MapContainer extends PureComponent {
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
       handleRecentImageryTooltip: this.handleRecentImageryTooltip,
+      handleMapInteraction: this.handleMapInteraction,
       handleMapMove: this.handleMapMove,
-      handleClickMap: this.handleClickMap,
       setBbox: this.setBbox
     });
   }
@@ -171,9 +144,9 @@ MapContainer.propTypes = {
   setMapSettings: PropTypes.func,
   layerBbox: PropTypes.array,
   analysisActive: PropTypes.bool,
-  oneClickAnalysis: PropTypes.func,
+  setAnalysisView: PropTypes.func,
   setInteraction: PropTypes.func,
   draw: PropTypes.bool
 };
 
-export default connect(getMapProps, mapDispatchToProps)(MapContainer);
+export default connect(getMapProps, actions)(MapContainer);

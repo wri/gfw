@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -6,8 +6,8 @@ import Button from 'components/ui/button/button-component';
 import MapLegend from 'components/map-v2/components/legend';
 import SubNavMenu from 'components/subnav-menu';
 import Loader from 'components/ui/loader';
-import ChoseAnalysis from 'pages/map/components/data-analysis-menu/components/chose-analysis';
-import PolygonAnalysis from 'pages/map/components/data-analysis-menu/components/draw-analysis';
+import ChoseAnalysis from 'components/map-v2/components/data-analysis-menu/components/chose-analysis';
+import PolygonAnalysis from 'components/map-v2/components/data-analysis-menu/components/draw-analysis';
 
 import './styles.scss';
 
@@ -24,9 +24,10 @@ class DataAnalysisMenu extends PureComponent {
       location,
       fetchingAnalysis,
       clearAnalysis,
-      analysisFetch,
       goToDashboard,
-      setAnalysisLoading
+      error,
+      handleCancelAnalysis,
+      handleFetchAnalysis
     } = this.props;
 
     return (
@@ -56,22 +57,32 @@ class DataAnalysisMenu extends PureComponent {
           </div>
         ) : (
           <div className="analysis">
-            {loading && <Loader />}
+            {loading && (
+              <Loader
+                className={cx('analysis-loader', { fetching: loading })}
+              />
+            )}
             {(fetchingAnalysis ||
-              (loading && location.type && location.country)) && (
-                <div className="cancel-analysis">
+              (loading && location.type && location.country) ||
+              (!loading && error)) && (
+                <div className={cx('cancel-analysis', { fetching: loading })}>
                   <Button
                     className="cancel-analysis-btn"
-                    onClick={() => {
-                      clearAnalysis();
-                      if (analysisFetch) {
-                        analysisFetch.cancel();
-                      }
-                      setAnalysisLoading({ loading: false });
-                    }}
+                    onClick={handleCancelAnalysis}
                   >
                   CANCEL ANALYSIS
                   </Button>
+                  {(!loading && error) && (
+                    <Fragment>
+                      <Button
+                        className="refresh-analysis-btn"
+                        onClick={() => handleFetchAnalysis(location)}
+                      >
+                        REFRESH ANALYSIS
+                      </Button>
+                      <p className="error-message">{error}</p>
+                    </Fragment>
+                  )}
                 </div>
               )}
             {location.type && location.country ? (
@@ -104,9 +115,10 @@ DataAnalysisMenu.propTypes = {
   location: PropTypes.object,
   setAnalysisSettings: PropTypes.func,
   clearAnalysisError: PropTypes.func,
-  setAnalysisLoading: PropTypes.func,
-  analysisFetch: PropTypes.object,
-  goToDashboard: PropTypes.func
+  goToDashboard: PropTypes.func,
+  error: PropTypes.string,
+  handleCancelAnalysis: PropTypes.func,
+  handleFetchAnalysis: PropTypes.func
 };
 
 export default DataAnalysisMenu;

@@ -7,18 +7,23 @@ const QUERIES = {
   admin: '/v2/geostore/admin'
 };
 
-export const getAdminGeostoreProvider = (country, region, subRegion) => {
-  const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
-  const baseThresh = bigCountries.includes(country) ? 0.05 : 0.005;
-  const url = `${REQUEST_URL}${QUERIES.admin}/${country}${
-    region ? `/${region}` : `?simplify=${baseThresh}`
-  }${subRegion ? `/${subRegion}` : `?simplify=${baseThresh / 10}`}`;
+const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
+  let slug = type !== 'geostore' ? type : '';
+  if (type === 'country') slug = 'admin';
 
-  return request.get(url);
+  return `${REQUEST_URL}/v2/geostore${slug ? `/${slug}` : ''}/${adm0}${
+    adm1 ? `/${adm1}` : ''
+  }${adm2 ? `/${adm2}` : ''}${`?simplify=${thresh / 10}`}`;
 };
 
-export const getGeostoreProvider = id => {
-  const url = `${REQUEST_URL}${QUERIES.geostore}/${id}`;
+export const getGeostoreProvider = ({ type, adm0, adm1, adm2 }) => {
+  let thresh = 0.005;
+  if (type === 'country') {
+    const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
+    thresh = bigCountries.includes(adm0) ? 0.05 : 0.005;
+  }
+  const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });
+
   return request.get(url);
 };
 
@@ -32,8 +37,4 @@ export const getGeostoreKey = geojson => {
     },
     url
   });
-};
-
-export default {
-  getGeostoreProvider
 };

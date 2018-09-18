@@ -59,26 +59,21 @@ class DataAnalysisMenuContainer extends PureComponent {
     getAnalysis: PropTypes.func,
     drawnGeostoreId: PropTypes.string,
     setDrawnAnalysis: PropTypes.func,
-    query: PropTypes.object
+    query: PropTypes.object,
+    clearAnalysis: PropTypes.func,
+    setAnalysisLoading: PropTypes.func
   };
 
   componentDidMount() {
-    const { location, getAnalysis } = this.props;
+    const { location } = this.props;
 
     if (location.type && location.country) {
-      this.analysisFetch = CancelToken.source();
-      getAnalysis({ ...location, token: this.analysisFetch.token });
+      this.handleFetchAnalysis(location);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      location,
-      getAnalysis,
-      drawnGeostoreId,
-      setDrawnAnalysis,
-      query
-    } = this.props;
+    const { location, drawnGeostoreId, setDrawnAnalysis, query } = this.props;
 
     // get analysis if location changes
     if (
@@ -86,11 +81,7 @@ class DataAnalysisMenuContainer extends PureComponent {
       location.country &&
       !isEqual(location, prevProps.location)
     ) {
-      if (this.analysisFetch) {
-        this.analysisFetch.cancel();
-      }
-      this.analysisFetch = CancelToken.source();
-      getAnalysis({ ...location, token: this.analysisFetch.token });
+      this.handleFetchAnalysis(location);
     }
 
     // if user draws shape get analysis
@@ -108,10 +99,28 @@ class DataAnalysisMenuContainer extends PureComponent {
     }
   }
 
+  handleFetchAnalysis = location => {
+    if (this.analysisFetch) {
+      this.analysisFetch.cancel();
+    }
+    this.analysisFetch = CancelToken.source();
+    this.props.getAnalysis({ ...location, token: this.analysisFetch.token });
+  };
+
+  handleCancelAnalysis = () => {
+    const { clearAnalysis, setAnalysisLoading } = this.props;
+    clearAnalysis();
+    if (this.analysisFetch) {
+      this.analysisFetch.cancel();
+    }
+    setAnalysisLoading({ loading: false, error: '', errorMessage: '' });
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
-      analysisFetch: this.analysisFetch
+      handleFetchAnalysis: this.handleFetchAnalysis,
+      handleCancelAnalysis: this.handleCancelAnalysis
     });
   }
 }

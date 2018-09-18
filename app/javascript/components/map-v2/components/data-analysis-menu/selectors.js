@@ -21,6 +21,7 @@ const selectLoading = state =>
 const selectLoadingAnalysis = state => state.analysis.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectQuery = state => state.location && state.location.query;
+const selectError = state => state.analysis.error;
 export const selectDrawPolygon = state => state.draw.geostoreId;
 
 export const getAnalysisSettings = createSelector(
@@ -62,6 +63,7 @@ export const getAnalysisProps = createStructuredSelector({
   showDraw: getShowDraw,
   menuSection: getActiveSection,
   loading: selectLoading,
+  error: selectError,
   fetchingAnalysis: selectLoadingAnalysis,
   links: getMenuLinks,
   boundaries: getAllBoundaries,

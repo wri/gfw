@@ -3,6 +3,8 @@ import { createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getMapZoom, getBasemap } from 'components/map-v2/selectors';
 import { addToDate } from 'utils/dates';
+import { getLocationFromData } from 'utils/format';
+import { MAP } from 'router';
 
 const { GFW_API } = process.env;
 
@@ -61,6 +63,51 @@ export const setLandsatBasemap = createThunkAction(
           }
         })
       );
+    }
+  }
+);
+
+export const setAnalysisView = createThunkAction(
+  'setAnalysisView',
+  ({ data, layer }) => (dispatch, getState) => {
+    const { cartodb_id } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+    const query = getState().location.query || {};
+
+    // get location payload based on layer type
+    let payload = {};
+    if (data) {
+      if (analysisEndpoint === 'admin') {
+        payload = {
+          type: 'country',
+          ...getLocationFromData(data)
+        };
+      } else if (analysisEndpoint === 'wdpa' && cartodb_id) {
+        payload = {
+          type: analysisEndpoint,
+          country: cartodb_id
+        };
+      } else if (cartodb_id && tableName) {
+        payload = {
+          type: 'use',
+          country: tableName,
+          region: cartodb_id
+        };
+      }
+    }
+
+    if (payload && payload.country) {
+      dispatch({
+        type: MAP,
+        payload,
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map && query.map),
+            canBound: true
+          }
+        }
+      });
     }
   }
 );

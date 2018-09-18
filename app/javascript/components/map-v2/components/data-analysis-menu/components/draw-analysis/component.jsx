@@ -50,7 +50,8 @@ class DrawAnalysis extends PureComponent {
       loading,
       fullLocationName,
       goToDashboard,
-      location
+      location,
+      error
     } = this.props;
 
     return (
@@ -82,6 +83,7 @@ class DrawAnalysis extends PureComponent {
         </div>
         <div className="results">
           {!loading &&
+            !error &&
             isEmpty(data) && <NoContent message="No analysis data available" />}
           {!loading &&
             !isEmpty(data) && (
@@ -112,6 +114,7 @@ DrawAnalysis.propTypes = {
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
   loading: PropTypes.bool,
+  error: PropTypes.string,
   location: PropTypes.object,
   fullLocationName: PropTypes.string,
   goToDashboard: PropTypes.func

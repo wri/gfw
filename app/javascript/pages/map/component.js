@@ -10,7 +10,7 @@ import Map from 'components/map-v2';
 import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
-import DataAnalysisMenu from 'pages/map/components/data-analysis-menu';
+import DataAnalysisMenu from 'components/map-v2/components/data-analysis-menu';
 
 import './styles.scss';
 

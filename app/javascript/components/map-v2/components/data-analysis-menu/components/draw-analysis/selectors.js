@@ -8,6 +8,7 @@ const selectLocation = state => state.location && state.location.payload;
 const selectLoading = state =>
   state.analysis.loading || state.datasets.loading || state.geostore.loading;
 const selectData = state => state.analysis.data;
+const selectError = state => state.analysis.error;
 const selectAdmins = state => state.countryData.countries;
 const selectAdmin1s = state => state.countryData.regions;
 const selectAdmin2s = state => state.countryData.subRegions;
@@ -24,8 +25,12 @@ export const getLocationName = createSelector(
 );
 
 export const getFullLocationName = createSelector(
-  [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
-  (location, adms, adm1s, adm2s) => {
+  [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s, getActiveLayers],
+  (location, adms, adm1s, adm2s, layers) => {
+    if (location.type === 'use') {
+      const analysisLayer = layers.find(l => l.tableName === location.country);
+      return (analysisLayer && analysisLayer.name) || 'Area analysis';
+    }
     if (location.type === 'geostore') return 'custom area analysis';
     if (location.type === 'country') {
       return buildFullLocationName(location, { adms, adm1s, adm2s });
@@ -37,7 +42,7 @@ export const getFullLocationName = createSelector(
 export const getDataFromLayers = createSelector(
   [getActiveLayers, selectData, getLocationName, selectLocation],
   (layers, data, locationName, location) => {
-    if (!layers || !layers.length || !data) return null;
+    if (!layers || !layers.length || !data || !data.areaHa) return null;
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
 
@@ -54,11 +59,11 @@ export const getDataFromLayers = createSelector(
         .filter(l => !l.isBoundary && !l.isRecentImagery && l.analysisConfig)
         .map(l => {
           const analysisConfig = l.analysisConfig.find(
-            a => a.type === routeType
+            a => a.type === routeType || a.type === 'geostore'
           );
-          const { subKey, key } = analysisConfig || {};
-          const value = subKey ? data[subKey] : data[key];
-
+          const { subKey, subkey, key } = analysisConfig || {};
+          const value = subKey || subkey ? data[subKey || subkey] : data[key];
+          // console.log(data, value, analysisConfig);
           return {
             label: l.name,
             value: value || 0,
@@ -77,5 +82,6 @@ export const getDrawAnalysisProps = createStructuredSelector({
   loading: selectLoading,
   locationName: getLocationName,
   fullLocationName: getFullLocationName,
-  layers: getActiveLayers
+  layers: getActiveLayers,
+  error: selectError
 });
