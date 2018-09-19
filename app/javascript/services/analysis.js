@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'query-string';
+import moment from 'moment';
 
 const REQUEST_URL = `${process.env.GFW_API}`;
 
@@ -22,9 +23,15 @@ const buildAnalysisUrl = ({
   params
 }) => {
   const location = getLocationUrl({ adm0, adm1, adm2 });
-  const { startDate, endDate, threshold, query } = params;
+  const { startDate, endDate, threshold, query, number_of_days } = params;
 
-  const period = startDate && endDate ? `${startDate},${endDate}` : '';
+  let period = startDate && endDate ? `${startDate},${endDate}` : '';
+  if (number_of_days) {
+    period = `${moment().format('YYYY-MM-DD')},${moment()
+      .subtract(number_of_days, 'days')
+      .format('YYYY-MM-DD')}}`;
+  }
+
   const thresh = params.thresh || threshold ? params.thresh || threshold : '';
   const geostore = type === 'geostore' ? adm0 : '';
   const hasParams = period || thresh || geostore || hasParams;
@@ -77,28 +84,26 @@ export const fetchUmdLossGain = ({
   subRegion,
   token
 }) => {
-  const allEndpoints =
-    endpoints && !!endpoints.length
-      ? endpoints
-      : [{ slug: 'umd-loss-gain', params: {} }];
-  const endpointUrls = allEndpoints.map(endpoint => {
-    let urlTemplate = QUERIES.umdGeostore;
-    if (type === 'country') urlTemplate = QUERIES.umdAdmin;
-    if (type === 'use') urlTemplate = QUERIES.umdByType;
+  const endpointUrls =
+    endpoints &&
+    endpoints.map(endpoint => {
+      let urlTemplate = QUERIES.umdGeostore;
+      if (type === 'country') urlTemplate = QUERIES.umdAdmin;
+      if (type === 'use') urlTemplate = QUERIES.umdByType;
 
-    return axios.get(
-      `${REQUEST_URL}${buildAnalysisUrl({
-        urlTemplate,
-        ...endpoint,
-        type,
-        adm0: Object.keys(useSlugs).includes(country)
-          ? useSlugs[country]
-          : country,
-        adm1: region,
-        adm2: subRegion
-      })}`
-    );
-  });
+      return axios.get(
+        `${REQUEST_URL}${buildAnalysisUrl({
+          urlTemplate,
+          ...endpoint,
+          type,
+          adm0: Object.keys(useSlugs).includes(country)
+            ? useSlugs[country]
+            : country,
+          adm1: region,
+          adm2: subRegion
+        })}`
+      );
+    });
 
   return axios
     .all(endpointUrls, {

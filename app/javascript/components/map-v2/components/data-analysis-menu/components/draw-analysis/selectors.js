@@ -46,14 +46,15 @@ export const getDataFromLayers = createSelector(
     if (!layers || !layers.length || isEmpty(data)) return null;
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
-    const area = data['umd-loss-gain'].areaHa;
+    const area = data[Object.keys(data)[0]].areaHa;
     return [
       {
         label:
           location.type !== 'geostore'
             ? `${locationName} total area`
             : 'selected area',
-        value: area || 0
+        value: area || 0,
+        unit: 'ha'
       }
     ].concat(
       layers
