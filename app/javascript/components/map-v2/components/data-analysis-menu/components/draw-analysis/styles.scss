@@ -92,6 +92,17 @@
       font-weight: 500;
       color: $slate;
       letter-spacing: 0.5px;
+      display: flex;
+      flex-direction: column;
+
+      span {
+        color: $slate;
+        font-size: rem(10px);
+        font-weight: normal;
+        text-transform: lowercase;
+        margin-left: rem(2px);
+        letter-spacing: normal;
+      }
     }
 
     &:first-child {

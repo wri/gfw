@@ -38,12 +38,24 @@ class DrawAnalysis extends PureComponent {
         </span>
       </div>
       <div className="value" style={{ color }}>
-        <strong>
-          {formatNumber({
-            num: value,
-            unit: unit === 'counts' ? '' : unit || 'ha'
-          })}
-        </strong>
+        {Array.isArray(value) ? (
+          value.map(v => (
+            <strong key={v.label}>
+              {formatNumber({
+                num: v.value,
+                unit
+              })}
+              <span>{v.label}</span>
+            </strong>
+          ))
+        ) : (
+          <strong>
+            {formatNumber({
+              num: value,
+              unit
+            })}
+          </strong>
+        )}
       </div>
     </li>
   );

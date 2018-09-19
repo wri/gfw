@@ -7,7 +7,8 @@ export const formatUSD = (value, minimize = true) =>
     .replace('K', minimize ? 'K' : ' thousand');
 
 export const formatNumber = ({ num, unit }) => {
-  const numFormat = unit === '%' ? '.2r' : '.3s';
+  let numFormat = unit === '%' ? '.2r' : '.3s';
+  if (unit === 'counts') numFormat = ',.0f';
   const thres = unit === '%' ? 0.1 : 1;
   let formattedNum =
     num < thres && num > 0 ? `<${thres}` : format(numFormat)(num);
@@ -16,7 +17,7 @@ export const formatNumber = ({ num, unit }) => {
   } else if (num > 0 && num < 0.01 && unit !== '%') {
     formattedNum = '<0.01';
   }
-  return `${formattedNum}${unit || ''}`;
+  return `${formattedNum}${unit && unit !== 'counts' ? unit : ''}`;
 };
 
 export const buildGadm36Id = (country, region, subRegion) =>

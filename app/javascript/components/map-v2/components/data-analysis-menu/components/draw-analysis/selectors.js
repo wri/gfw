@@ -60,12 +60,21 @@ export const getDataFromLayers = createSelector(
         .filter(l => !l.isBoundary && !l.isRecentImagery && l.analysisConfig)
         .map(l => {
           let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
-          if (!analysisConfig) { analysisConfig = analysisConfig.find(a => a.type === 'geostore'); }
+          if (!analysisConfig) {
+            analysisConfig = analysisConfig.find(a => a.type === 'geostore');
+          }
 
           const { subKey, key, service, unit } = analysisConfig || {};
           const dataByService = data[service] || {};
-          const value = subKey ? dataByService[subKey] : dataByService[key];
+          let value = subKey ? dataByService[subKey] : dataByService[key];
           const { params, decodeParams } = l;
+
+          if (Array.isArray(value)) {
+            value = value.map(v => ({
+              label: analysisConfig[v[analysisConfig.subKey]],
+              value: v[key]
+            }));
+          }
 
           return {
             label: l.name,

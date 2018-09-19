@@ -38,7 +38,11 @@ export const getAnalysis = createThunkAction(
         .then(responses => dispatch(setAnalysisData(responses)))
         .catch(error => {
           const { response } = error;
-          const errors = response && response.data && response.data.errors[0];
+          const errors =
+            response &&
+            response.data &&
+            response.data.errors &&
+            response.data.errors[0];
           const { status, detail } = errors || {};
           dispatch(
             setAnalysisLoading({

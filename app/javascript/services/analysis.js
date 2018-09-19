@@ -63,6 +63,12 @@ const useSlugs = {
   gfw_logging: 'logging'
 };
 
+const endpointSlugs = {
+  umd: 'umd-loss-gain',
+  forma250gfw: 'forma250GFW',
+  'viirs-fires': 'viirs-active-fires'
+};
+
 export const fetchUmdLossGain = ({
   endpoints,
   type,
@@ -103,7 +109,7 @@ export const fetchUmdLossGain = ({
       axios.spread((...responses) =>
         responses.reduce((obj, response) => {
           const fetchType = response.data.data.type;
-          const fetchKey = fetchType === 'umd' ? 'umd-loss-gain' : fetchType;
+          const fetchKey = endpointSlugs[fetchType] || fetchType;
           return {
             ...obj,
             [fetchKey]:
