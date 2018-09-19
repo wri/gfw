@@ -79,7 +79,8 @@ class DataAnalysisMenuContainer extends PureComponent {
       location.type &&
       location.country &&
       endpoints &&
-      !isEqual(endpoints, prevProps.endpoints)
+      (!isEqual(endpoints, prevProps.endpoints) ||
+        !isEqual(location, prevProps.location))
     ) {
       this.handleFetchAnalysis(location, endpoints);
     }

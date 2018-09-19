@@ -13,13 +13,11 @@ const getDatasets = state => state.datasets.datasets;
 const getLoading = state => state.datasets.loading || state.geostore.loading;
 const getGeostore = state => state.geostore.geostore || null;
 const getQuery = state => (state.location && state.location.query) || null;
-const getLocation = state => (state.location && state.location.payload) || null;
-
-// analysis
-export const getShowAnalysis = createSelector(
-  getQuery,
-  query => query && query.analysis && query.analysis.showAnalysis
-);
+const selectLocation = state =>
+  (state.location && state.location.payload) || null;
+// analysis selects
+const selectAnalysisSettings = state =>
+  state.location && state.location.query && state.location.query.analysis;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -262,6 +260,18 @@ export const getGeostoreBbox = createSelector(
   geostore => geostore && geostore.bbox
 );
 
+// analysis
+export const getShowAnalysis = createSelector(
+  getQuery,
+  query => query && query.analysis && query.analysis.showAnalysis
+);
+
+export const getOneClickAnalysisActive = createSelector(
+  [selectAnalysisSettings, selectLocation, getDraw],
+  (settings, location, draw) =>
+    !draw && settings.showAnalysis && !settings.showDraw && !location.country
+);
+
 export const getMapProps = createStructuredSelector({
   activeDatasets: getActiveDatasets,
   settings: getMapSettings,
@@ -278,7 +288,8 @@ export const getMapProps = createStructuredSelector({
   geostore: getGeostore,
   tileGeoJSON: getTileGeoJSON,
   query: getQuery,
-  location: getLocation,
+  location: selectLocation,
   draw: getDraw,
-  analysisActive: getShowAnalysis
+  analysisActive: getShowAnalysis,
+  oneClickAnalysisActive: getOneClickAnalysisActive
 });

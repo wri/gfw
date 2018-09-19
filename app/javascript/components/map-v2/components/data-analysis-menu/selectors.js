@@ -59,14 +59,16 @@ export const getLayerEndpoints = createSelector(
           const analysisConfig = l.analysisConfig.find(
             a => a.type === routeType || a.type === 'geostore'
           );
+          const { params, decodeParams } = l;
           return {
             slug: analysisConfig.service,
             params: {
-              ...(analysisConfig.service === 'umd-loss-gain' && {
-                ...lossLayer.decodeParams
-              }),
-              ...l.params,
-              ...l.decodeParams
+              ...(analysisConfig.service === 'umd-loss-gain' &&
+                lossLayer && {
+                  ...lossLayer.decodeParams
+                }),
+              ...params,
+              ...decodeParams
             }
           };
         })

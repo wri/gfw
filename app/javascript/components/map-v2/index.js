@@ -101,17 +101,13 @@ class MapContainer extends PureComponent {
     const {
       setAnalysisView,
       setInteraction,
-      analysisActive,
-      draw
+      oneClickAnalysisActive
     } = this.props;
-    const { showTooltip } = this.state;
     const { data } = e || {};
 
-    if (data && layer && !draw && analysisActive) {
+    if (data && layer && oneClickAnalysisActive) {
       setAnalysisView({ data, layer });
-    }
-
-    if (!showTooltip) {
+    } else {
       setInteraction({
         ...e,
         label: layer.name,
@@ -143,10 +139,9 @@ MapContainer.propTypes = {
   geostoreBbox: PropTypes.array,
   setMapSettings: PropTypes.func,
   layerBbox: PropTypes.array,
-  analysisActive: PropTypes.bool,
+  oneClickAnalysisActive: PropTypes.bool,
   setAnalysisView: PropTypes.func,
-  setInteraction: PropTypes.func,
-  draw: PropTypes.bool
+  setInteraction: PropTypes.func
 };
 
 export default connect(getMapProps, actions)(MapContainer);

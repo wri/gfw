@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
-import { getActiveDatasetsState, getShowAnalysis } from '../../selectors';
+import { getActiveDatasetsState, getActiveLayers } from '../../selectors';
 
 const getSelected = state => state.popup.selected;
 const getSearch = state => state.location && state.location.search;
@@ -21,13 +21,15 @@ export const filterInteractions = createSelector(
 );
 
 export const getSelectedInteraction = createSelector(
-  [filterInteractions, getSelected],
-  (options, selected) => {
+  [filterInteractions, getSelected, getActiveLayers],
+  (options, selected, layers) => {
     if (isEmpty(options)) return null;
-    const article = options.find(o => o.article);
-    if (article) return article;
-    if (!selected || options.length === 1) return options[0];
-    return options.find(o => o.value === selected);
+    let selectedData = options.find(o => o.article);
+    if (!selectedData && options.length === 1) selectedData = options[0];
+    if (!selectedData) selectedData = options.find(o => o.value === selected);
+    const layer = layers.find(l => l.id === selectedData.id);
+
+    return { ...selectedData, layer };
   }
 );
 
@@ -85,6 +87,5 @@ export const getPopupProps = createStructuredSelector({
   cardData: getCardData,
   latlng: getLatLng,
   activeDatasets: getActiveDatasetsState,
-  search: getSearch,
-  analysisActive: getShowAnalysis
+  search: getSearch
 });

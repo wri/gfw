@@ -28,8 +28,7 @@ class Popup extends Component {
       interactions,
       selected,
       setInteractionSelected,
-      handleAnalyze,
-      analysisActive
+      setAnalysisView
     } = this.props;
 
     return (
@@ -47,7 +46,7 @@ class Popup extends Component {
                 ...cardData,
                 buttons: cardData.buttons.map(b => ({
                   ...b,
-                  onClick: () => handleAnalyze(cardData)
+                  onClick: () => setAnalysisView(cardData)
                 }))
               }}
             />
@@ -57,7 +56,7 @@ class Popup extends Component {
                 interactions.length > 1 && (
                   <Dropdown
                     className="layer-selector"
-                    theme="theme-dropdown-native-plain"
+                    theme="theme-dropdown-native"
                     value={selected}
                     options={interactions}
                     onChange={setInteractionSelected}
@@ -69,13 +68,11 @@ class Popup extends Component {
                   <div className="popup-title">{selected.label}</div>
                 )}
               <DataTable data={tableData} />
-              {!analysisActive && (
-                <div className="nav-footer">
-                  <Button onClick={() => handleAnalyze(selected)}>
-                    Analyze
-                  </Button>
-                </div>
-              )}
+              <div className="nav-footer">
+                <Button onClick={() => setAnalysisView(selected)}>
+                  Analyze
+                </Button>
+              </div>
             </div>
           )}
         </div>
@@ -93,8 +90,7 @@ Popup.propTypes = {
   tableData: PropTypes.array,
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
-  analysisActive: PropTypes.bool,
-  handleAnalyze: PropTypes.func
+  setAnalysisView: PropTypes.func
 };
 
 export default Popup;

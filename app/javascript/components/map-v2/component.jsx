@@ -31,7 +31,7 @@ class MapComponent extends PureComponent {
     });
   }
 
-  renderTooltip = data => (
+  renderDataTooltip = data => (
     <div>
       {Object.keys(data).map(key => (
         <p key={key}>
@@ -40,6 +40,12 @@ class MapComponent extends PureComponent {
         </p>
       ))}
       <p className="view-more">Click to view more.</p>
+    </div>
+  );
+
+  renderInfoTooltip = string => (
+    <div>
+      <p className="tooltip-info">{string}</p>
     </div>
   );
 
@@ -63,19 +69,32 @@ class MapComponent extends PureComponent {
       handleRecentImageryTooltip,
       analysisActive,
       handleMapInteraction,
+      oneClickAnalysisActive,
       draw,
       embed
     } = this.props;
 
     return (
-      <div style={{ backgroundColor: basemap.color }}>
+      <div
+        className={cx()}
+        style={{ backgroundColor: basemap.color }}
+        onMouseOver={() =>
+          oneClickAnalysisActive &&
+          handleShowTooltip(true, 'Click here to analyze.')
+        }
+        onMouseOut={() => handleShowTooltip(false, '')}
+      >
         <Tooltip
           theme="tip"
           hideOnClick
           html={
             <Tip
               className="map-hover-tooltip"
-              text={this.renderTooltip(tooltipData)}
+              text={
+                typeof tooltipData === 'string'
+                  ? this.renderInfoTooltip(tooltipData)
+                  : this.renderDataTooltip(tooltipData)
+              }
             />
           }
           position="top"
@@ -239,13 +258,14 @@ MapComponent.propTypes = {
   geostore: PropTypes.object,
   tileGeoJSON: PropTypes.object,
   query: PropTypes.object,
-  tooltipData: PropTypes.object,
+  tooltipData: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bbox: PropTypes.array,
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
   handleRecentImageryTooltip: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   analysisActive: PropTypes.bool,
+  oneClickAnalysisActive: PropTypes.bool,
   draw: PropTypes.bool,
   embed: PropTypes.bool
 };

@@ -30,6 +30,7 @@ const buildAnalysisUrl = ({
     .replace('{slug}', slug)
     .replace('{type}', type)
     .replace('{location}', location)
+    .replace('{geostoreId}', adm0)
     .replace('{startDate}', startDate)
     .replace('{endDate}', endDate)
     .replace('{threshold}', threshold || thresh || 30);

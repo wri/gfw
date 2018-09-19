@@ -62,19 +62,17 @@ export const getDataFromLayers = createSelector(
           const analysisConfig = l.analysisConfig.find(
             a => a.type === routeType || a.type === 'geostore'
           );
-          const { subKey, subkey, key, service } = analysisConfig || {};
+          const { subKey, key, service } = analysisConfig || {};
           const dataByService = data[service] || {};
-          const value =
-            subKey || subkey
-              ? dataByService[subKey || subkey]
-              : dataByService[key];
+          const value = subKey ? dataByService[subKey] : dataByService[key];
+          const { params, decodeParams } = l;
 
           return {
             label: l.name,
             value: value || 0,
             color: l.color,
-            ...l.params,
-            ...l.decodeParams
+            ...params,
+            ...decodeParams
           };
         })
     );

@@ -105,6 +105,10 @@ export const setAnalysisView = createThunkAction(
           map: {
             ...(query && query.map && query.map),
             canBound: true
+          },
+          analysis: {
+            ...(query && query.analysis && query.analysis),
+            showAnalysis: true
           }
         }
       });
