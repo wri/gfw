@@ -101,13 +101,14 @@ class MapContainer extends PureComponent {
     const {
       setAnalysisView,
       setInteraction,
-      oneClickAnalysisActive
+      oneClickAnalysisActive,
+      draw
     } = this.props;
     const { data } = e || {};
 
     if (data && layer && oneClickAnalysisActive) {
       setAnalysisView({ data, layer });
-    } else {
+    } else if (!draw) {
       setInteraction({
         ...e,
         label: layer.name,
@@ -140,6 +141,7 @@ MapContainer.propTypes = {
   setMapSettings: PropTypes.func,
   layerBbox: PropTypes.array,
   oneClickAnalysisActive: PropTypes.bool,
+  draw: PropTypes.bool,
   setAnalysisView: PropTypes.func,
   setInteraction: PropTypes.func
 };
