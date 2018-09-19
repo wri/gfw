@@ -17,6 +17,7 @@ class DrawAnalysis extends PureComponent {
     color,
     value,
     label,
+    unit,
     startDate,
     endDate,
     dateFormat,
@@ -29,15 +30,20 @@ class DrawAnalysis extends PureComponent {
         <span>
           {startDate &&
             endDate &&
-            ` (${moment(startDate).format(dateFormat)} to ${moment(
-              endDate
-            ).format(dateFormat)})`}
+            ` (${moment(startDate).format(
+              dateFormat || 'YYYY-MM-DD'
+            )} to ${moment(endDate).format(dateFormat || 'YYYY-MM-DD')})`}
           {(thresh || threshold) &&
             ` with >${threshold || thresh}% canopy density`}
         </span>
       </div>
       <div className="value" style={{ color }}>
-        <strong>{formatNumber({ num: value, unit: 'ha' })}</strong>
+        <strong>
+          {formatNumber({
+            num: value,
+            unit: unit === 'counts' ? '' : unit || 'ha'
+          })}
+        </strong>
       </div>
     </li>
   );

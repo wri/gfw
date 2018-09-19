@@ -59,10 +59,10 @@ export const getDataFromLayers = createSelector(
       layers
         .filter(l => !l.isBoundary && !l.isRecentImagery && l.analysisConfig)
         .map(l => {
-          const analysisConfig = l.analysisConfig.find(
-            a => a.type === routeType || a.type === 'geostore'
-          );
-          const { subKey, key, service } = analysisConfig || {};
+          let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
+          if (!analysisConfig) { analysisConfig = analysisConfig.find(a => a.type === 'geostore'); }
+
+          const { subKey, key, service, unit } = analysisConfig || {};
           const dataByService = data[service] || {};
           const value = subKey ? dataByService[subKey] : dataByService[key];
           const { params, decodeParams } = l;
@@ -70,6 +70,7 @@ export const getDataFromLayers = createSelector(
           return {
             label: l.name,
             value: value || 0,
+            unit,
             color: l.color,
             ...params,
             ...decodeParams

@@ -234,15 +234,21 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 });
 
 // flatten datasets into layers for the layer manager
-export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
-  if (isEmpty(layerGroups)) return [];
+export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
+  if (isEmpty(layerGroups)) return null;
   return flatten(layerGroups.map(d => d.layers))
-    .filter(l => l.active && !l.confirmedOnly)
+    .filter(l => l.active)
     .map((l, i) => ({
       ...l,
       zIndex:
         l.interactionConfig && l.interactionConfig.article ? 1100 + i : 1000 - i
     }));
+});
+
+// flatten datasets into layers for the layer manager
+export const getActiveLayers = createSelector(getAllLayers, layers => {
+  if (isEmpty(layers)) return [];
+  return layers.filter(l => !l.confirmedOnly);
 });
 
 export const getLayerBbox = createSelector([getActiveLayers], layers => {
@@ -269,7 +275,11 @@ export const getShowAnalysis = createSelector(
 export const getOneClickAnalysisActive = createSelector(
   [selectAnalysisSettings, selectLocation, getDraw],
   (settings, location, draw) =>
-    !draw && settings.showAnalysis && !settings.showDraw && !location.country
+    settings &&
+    !draw &&
+    settings.showAnalysis &&
+    !settings.showDraw &&
+    !location.country
 );
 
 export const getMapProps = createStructuredSelector({

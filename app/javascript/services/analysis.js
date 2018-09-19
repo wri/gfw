@@ -1,14 +1,12 @@
 import axios from 'axios';
+import qs from 'query-string';
 
 const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
-  umdAdmin:
-    '/v3/umd-loss-gain/admin/{location}?period={startDate}%2C{endDate}&thresh={threshold}',
-  umdByType:
-    '/{slug}/{type}/{location}?period={startDate}%2C{endDate}&thresh={threshold}',
-  umdGeostore:
-    '/{slug}?geostore={geostoreId}&period={startDate}%2C{endDate}&thresh={threshold}'
+  umdAdmin: '/{slug}/admin/{location}{params}',
+  umdByType: '/{slug}/{type}/{location}{params}',
+  umdGeostore: '/{slug}{params}'
 };
 
 const getLocationUrl = ({ adm0, adm1, adm2 }) =>
@@ -24,16 +22,38 @@ const buildAnalysisUrl = ({
   params
 }) => {
   const location = getLocationUrl({ adm0, adm1, adm2 });
-  const { startDate, endDate, threshold, thresh } = params;
+  const { startDate, endDate, threshold, query } = params;
+
+  const period = startDate && endDate ? `${startDate},${endDate}` : '';
+  const thresh = params.thresh || threshold ? params.thresh || threshold : '';
+  const geostore = type === 'geostore' ? adm0 : '';
+  const hasParams = period || thresh || geostore || hasParams;
+
+  const queryParams = hasParams
+    ? qs.stringify({
+      ...(period && {
+        period
+      }),
+      ...(thresh && {
+        thresh
+      }),
+      ...(geostore && {
+        geostore
+      }),
+      ...(query && {
+        [query.param]: query.value
+      })
+    })
+    : '';
 
   return urlTemplate
-    .replace('{slug}', slug)
+    .replace(
+      '{slug}',
+      slug === 'umd-loss-gain' && type === 'country' ? `v3/${slug}` : slug
+    )
     .replace('{type}', type)
     .replace('{location}', location)
-    .replace('{geostoreId}', adm0)
-    .replace('{startDate}', startDate)
-    .replace('{endDate}', endDate)
-    .replace('{threshold}', threshold || thresh || 30);
+    .replace('{params}', `?${queryParams}`);
 };
 
 const useSlugs = {

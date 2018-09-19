@@ -24,10 +24,17 @@ export const getSelectedInteraction = createSelector(
   [filterInteractions, getSelected, getActiveLayers],
   (options, selected, layers) => {
     if (isEmpty(options)) return null;
+    const layersWithoutBoundaries = layers.filter(l => !l.isBoundary);
+    // if there is an article (icon layer) then choose that
     let selectedData = options.find(o => o.article);
+    // if there is nothing selected get the top layer
+    if (!selected && layers) { options.find(o => o.value === layersWithoutBoundaries[0].id); }
+    // if only one layer then get that
     if (!selectedData && options.length === 1) selectedData = options[0];
+    // otherwise get based on selected
     if (!selectedData) selectedData = options.find(o => o.value === selected);
-    const layer = layers.find(l => l.id === selectedData.id);
+    const layer =
+      selectedData && layers && layers.find(l => l.id === selectedData.id);
 
     return { ...selectedData, layer };
   }
@@ -73,10 +80,13 @@ export const getTableData = createSelector(
     if (isEmpty(interaction) || interaction.article) return null;
     const { config, data } = interaction;
 
-    return config.filter(c => !c.hidden).map(c => ({
-      label: c.property,
-      value: data[c.column]
-    }));
+    return (
+      config &&
+      config.filter(c => !c.hidden).map(c => ({
+        label: c.property,
+        value: data[c.column]
+      }))
+    );
   }
 );
 

@@ -1,12 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import compact from 'lodash/compact';
-import uniqBy from 'lodash/uniqBy';
+import groupBy from 'lodash/groupBy';
 
 import { getActiveSection } from 'pages/map/components/menu/menu-selectors';
 import {
   getAllBoundaries,
   getActiveBoundaryDatasets,
-  getActiveLayers
+  getAllLayers
 } from 'components/map-v2/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
@@ -46,35 +46,50 @@ export const getShowDraw = createSelector(
 );
 
 export const getLayerEndpoints = createSelector(
-  [getActiveLayers, selectLocation],
+  [getAllLayers, selectLocation],
   (layers, location) => {
     if (!layers || !layers.length) return null;
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
 
-    return uniqBy(
-      compact(
-        layers.filter(l => l.analysisConfig).map(l => {
-          const analysisConfig = l.analysisConfig.find(
-            a => a.type === routeType || a.type === 'geostore'
-          );
-          const { params, decodeParams } = l;
-          return {
-            slug: analysisConfig.service,
-            params: {
-              ...(analysisConfig.service === 'umd-loss-gain' &&
-                lossLayer && {
-                  ...lossLayer.decodeParams
-                }),
-              ...params,
-              ...decodeParams
-            }
-          };
-        })
-      ),
-      'slug'
+    const endpoints = compact(
+      layers.filter(l => l.analysisConfig).map(l => {
+        const analysisConfig = l.analysisConfig.find(
+          a => a.type === routeType || a.type === 'geostore'
+        );
+        const { params, decodeParams } = l;
+
+        return {
+          slug: analysisConfig.service,
+          params: {
+            ...(analysisConfig.service === 'umd-loss-gain' &&
+              lossLayer && {
+                ...lossLayer.decodeParams
+              }),
+            ...decodeParams,
+            ...params,
+            query: analysisConfig.query
+          }
+        };
+      })
     );
+
+    const groupedEndpoints = groupBy(endpoints, 'slug');
+    return Object.keys(groupedEndpoints).map(slug => {
+      let params = {};
+      groupedEndpoints[slug].forEach(e => {
+        params = {
+          ...params,
+          ...e.params
+        };
+      });
+
+      return {
+        slug,
+        params
+      };
+    });
   }
 );
 
