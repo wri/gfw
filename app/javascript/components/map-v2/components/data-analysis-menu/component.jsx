@@ -27,7 +27,8 @@ class DataAnalysisMenu extends PureComponent {
       goToDashboard,
       error,
       handleCancelAnalysis,
-      handleFetchAnalysis
+      handleFetchAnalysis,
+      endpoints
     } = this.props;
 
     return (
@@ -72,17 +73,18 @@ class DataAnalysisMenu extends PureComponent {
                   >
                   CANCEL ANALYSIS
                   </Button>
-                  {(!loading && error) && (
-                    <Fragment>
-                      <Button
-                        className="refresh-analysis-btn"
-                        onClick={() => handleFetchAnalysis(location)}
-                      >
+                  {!loading &&
+                  error && (
+                  <Fragment>
+                        <Button
+                      className="refresh-analysis-btn"
+                      onClick={() => handleFetchAnalysis(location, endpoints)}
+                    >
                         REFRESH ANALYSIS
-                      </Button>
-                      <p className="error-message">{error}</p>
-                    </Fragment>
-                  )}
+                        </Button>
+                        <p className="error-message">{error}</p>
+                      </Fragment>
+                    )}
                 </div>
               )}
             {location.type && location.country ? (
@@ -109,6 +111,7 @@ DataAnalysisMenu.propTypes = {
   clearAnalysis: PropTypes.func,
   className: PropTypes.string,
   menuSection: PropTypes.object,
+  endpoints: PropTypes.array,
   links: PropTypes.array,
   loading: PropTypes.bool,
   fetchingAnalysis: PropTypes.bool,

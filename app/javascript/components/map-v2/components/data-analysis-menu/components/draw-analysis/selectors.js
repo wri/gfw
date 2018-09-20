@@ -62,7 +62,7 @@ export const getDataFromLayers = createSelector(
         .map(l => {
           let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
           if (!analysisConfig) {
-            analysisConfig = analysisConfig.find(a => a.type === 'geostore');
+            analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
           }
 
           const { subKey, key, service, unit } = analysisConfig || {};
@@ -70,12 +70,10 @@ export const getDataFromLayers = createSelector(
           let value = dataByService[key] || dataByService[subKey];
           const { params, decodeParams } = l;
 
-          if (Array.isArray(value)) {
-            value = value.map(v => ({
-              label: analysisConfig[v[analysisConfig.subKey]],
-              value: v[key]
-            }));
-          }
+          value = Array.isArray(value) && !!value.length ? value.map(v => ({
+            label: analysisConfig[v[analysisConfig.subKey]],
+            value: v[key]
+          })) : null;
 
           return {
             label: l.name,
