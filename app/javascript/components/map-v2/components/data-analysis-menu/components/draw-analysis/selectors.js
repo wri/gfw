@@ -27,14 +27,14 @@ export const getLocationName = createSelector(
 
 export const getFullLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s, getActiveLayers],
-  (location, adms, adm1s, adm2s, layers) => {
+  (location, adm0s, adm1s, adm2s, layers) => {
     if (location.type === 'use') {
       const analysisLayer = layers.find(l => l.tableName === location.country);
       return (analysisLayer && analysisLayer.name) || 'Area analysis';
     }
     if (location.type === 'geostore') return 'custom area analysis';
     if (location.type === 'country') {
-      return buildFullLocationName(location, { adms, adm1s, adm2s });
+      return buildFullLocationName(location, { adm0s, adm1s, adm2s });
     }
     return 'area analysis';
   }
@@ -70,13 +70,14 @@ export const getDataFromLayers = createSelector(
           let value = dataByService[key] || dataByService[subKey];
           const { params, decodeParams } = l;
 
-          value =
-            Array.isArray(value) && !!value.length
+          if (Array.isArray(value)) {
+            value = value.length
               ? value.map(v => ({
                 label: analysisConfig[v[analysisConfig.subKey]],
                 value: v[key]
               }))
-              : value;
+              : 0;
+          }
 
           return {
             label: l.name,

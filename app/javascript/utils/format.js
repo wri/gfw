@@ -1,4 +1,5 @@
 import { format } from 'd3-format';
+import isEmpty from 'lodash/isEmpty';
 
 export const formatUSD = (value, minimize = true) =>
   format('.2s')(value)
@@ -48,20 +49,29 @@ export const getLocationFromData = data => {
 
 export const buildFullLocationName = (
   { country, region, subRegion },
-  { adms, adm1s, adm2s }
+  { adm0s, adm1s, adm2s }
 ) => {
   let location = '';
+  if (
+    (country && isEmpty(adm0s)) ||
+    (region && isEmpty(adm1s)) ||
+    (subRegion && isEmpty(adm2s))
+  ) { return ''; }
   if (country) {
-    const adm = adms && adms.find(a => a.value === country);
+    const adm = adm0s && adm0s.find(a => a.value === country);
     location = adm ? adm.label : '';
   }
   if (region) {
     const adm1 = adm1s && adm1s.find(a => a.value === parseInt(region, 10));
-    location = adm1 ? `${adm1.label}, ${location}` : location;
+    location = adm1
+      ? `${adm1.label || 'unnamed region'}, ${location}`
+      : location;
   }
   if (subRegion) {
     const adm2 = adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
-    location = adm2 ? `${adm2.label}, ${location}` : location;
+    location = adm2
+      ? `${adm2.label || 'unnamed region'}, ${location}`
+      : location;
   }
   return location;
 };

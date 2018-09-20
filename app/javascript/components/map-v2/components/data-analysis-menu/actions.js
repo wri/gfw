@@ -31,40 +31,38 @@ export const clearAnalysisError = createAction('clearAnalysisError');
 
 export const getAnalysis = createThunkAction(
   'getAnalysis',
-  location => (dispatch, getState) => {
-    if (!getState().analysis.loading) {
-      dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
-      fetchUmdLossGain(location)
-        .then(responses => dispatch(setAnalysisData(responses)))
-        .catch(error => {
-          const { response } = error;
-          const errors =
-            response &&
-            response.data &&
-            response.data.errors &&
-            response.data.errors[0];
-          const { status, detail } = errors || {};
-          dispatch(
-            setAnalysisLoading({
-              data: {},
-              loading: false,
-              error:
-                detail ||
-                (status >= 500
-                  ? 'Service temporarily unavailable. Please refresh.'
-                  : 'No data available')
-            })
-          );
-          console.info(error);
-        });
-    }
+  location => dispatch => {
+    dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
+    fetchUmdLossGain(location)
+      .then(responses => dispatch(setAnalysisData(responses)))
+      .catch(error => {
+        const { response } = error;
+        const errors =
+          response &&
+          response.data &&
+          response.data.errors &&
+          response.data.errors[0];
+        const { status, detail } = errors || {};
+        dispatch(
+          setAnalysisLoading({
+            data: {},
+            loading: false,
+            error:
+              detail ||
+              (status >= 500
+                ? 'Service temporarily unavailable. Please refresh.'
+                : 'No data available')
+          })
+        );
+        console.info(error);
+      });
   }
 );
 
 export const uploadShape = createThunkAction(
   'uploadShape',
   shape => (dispatch, getState) => {
-    dispatch(setAnalysisLoading({ loading: true, error: '' }));
+    dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
     uploadShapeFile(shape)
       .then(response => {
         if (response && response.data && response.data.data) {

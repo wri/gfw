@@ -21,14 +21,14 @@ export const getMetadata = createSelector(
     selectedRegions,
     selectedSubRegion
   ],
-  (route, location, adms, adm1s, adm2s) => {
+  (route, location, adm0s, adm1s, adm2s) => {
     const { type, country, region, subRegion } = location;
     const metadata = window.metadata[route && route.controller];
     const metadataTypes = window.metadata.types;
 
     if (!type) return metadata;
     if (
-      (country && !adms.length) ||
+      (country && !adm0s.length) ||
       (region && !adm1s.length) ||
       (subRegion && !adm2s.length)
     ) {
@@ -38,7 +38,7 @@ export const getMetadata = createSelector(
       metadata.title
     }`;
     if (location.type && location.type === 'country') {
-      title = `${buildFullLocationName(location, { adms, adm1s, adm2s })} | ${
+      title = `${buildFullLocationName(location, { adm0s, adm1s, adm2s })} | ${
         title
       }`;
     }
