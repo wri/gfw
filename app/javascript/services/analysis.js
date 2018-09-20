@@ -27,9 +27,9 @@ const buildAnalysisUrl = ({
 
   let period = startDate && endDate ? `${startDate},${endDate}` : '';
   if (number_of_days) {
-    period = `${moment().format('YYYY-MM-DD')},${moment()
+    period = `${moment()
       .subtract(number_of_days, 'days')
-      .format('YYYY-MM-DD')}}`;
+      .format('YYYY-MM-DD')},${moment().format('YYYY-MM-DD')}`;
   }
 
   const thresh = params.thresh || threshold ? params.thresh || threshold : '';
