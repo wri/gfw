@@ -24,11 +24,17 @@ export const getSelectedInteraction = createSelector(
   [filterInteractions, getSelected, getActiveLayers],
   (options, selected, layers) => {
     if (isEmpty(options)) return null;
-    const layersWithoutBoundaries = layers.filter(l => !l.isBoundary);
+    const layersWithoutBoundaries = layers.filter(
+      l => !l.isBoundary && !isEmpty(l.interactionConfig)
+    );
     // if there is an article (icon layer) then choose that
     let selectedData = options.find(o => o.article);
     // if there is nothing selected get the top layer
-    if (!selected && layers) { options.find(o => o.value === layersWithoutBoundaries[0].id); }
+    if (!selected && layers) {
+      selectedData = options.find(
+        o => o.value === layersWithoutBoundaries[0].id
+      );
+    }
     // if only one layer then get that
     if (!selectedData && options.length === 1) selectedData = options[0];
     // otherwise get based on selected
