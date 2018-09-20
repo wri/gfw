@@ -22,7 +22,6 @@ class DataAnalysisMenu extends PureComponent {
       clearAnalysisError,
       loading,
       location,
-      fetchingAnalysis,
       clearAnalysis,
       goToDashboard,
       error,
@@ -63,24 +62,26 @@ class DataAnalysisMenu extends PureComponent {
                 className={cx('analysis-loader', { fetching: loading })}
               />
             )}
-            {(fetchingAnalysis ||
-              (loading && location.type && location.country) ||
-              (!loading && error)) && (
+            {location.type &&
+              location.country &&
+              (loading || (!loading && error)) && (
                 <div className={cx('cancel-analysis', { fetching: loading })}>
                   <Button
                     className="cancel-analysis-btn"
                     onClick={handleCancelAnalysis}
                   >
-                  CANCEL ANALYSIS
+                    CANCEL ANALYSIS
                   </Button>
                   {!loading &&
-                  error && (
-                  <Fragment>
+                    error && (
+                      <Fragment>
                         <Button
-                      className="refresh-analysis-btn"
-                      onClick={() => handleFetchAnalysis(location, endpoints)}
-                    >
-                        REFRESH ANALYSIS
+                          className="refresh-analysis-btn"
+                          onClick={() =>
+                            handleFetchAnalysis(location, endpoints)
+                          }
+                        >
+                          REFRESH ANALYSIS
                         </Button>
                         <p className="error-message">{error}</p>
                       </Fragment>
@@ -114,7 +115,6 @@ DataAnalysisMenu.propTypes = {
   endpoints: PropTypes.array,
   links: PropTypes.array,
   loading: PropTypes.bool,
-  fetchingAnalysis: PropTypes.bool,
   location: PropTypes.object,
   setAnalysisSettings: PropTypes.func,
   clearAnalysisError: PropTypes.func,

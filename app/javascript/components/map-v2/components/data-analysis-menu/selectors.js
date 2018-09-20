@@ -21,7 +21,6 @@ const selectLoading = state =>
   state.datasets.loading ||
   state.geostore.loading ||
   state.draw.loading;
-const selectLoadingAnalysis = state => state.analysis.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectQuery = state => state.location && state.location.query;
 const selectError = state => state.analysis.error;
@@ -116,7 +115,6 @@ export const getAnalysisProps = createStructuredSelector({
   endpoints: getLayerEndpoints,
   loading: selectLoading,
   error: selectError,
-  fetchingAnalysis: selectLoadingAnalysis,
   links: getMenuLinks,
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
