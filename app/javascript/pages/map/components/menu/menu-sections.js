@@ -75,6 +75,10 @@ export default [
       {
         slug: 'people',
         title: 'People'
+      },
+      {
+        slug: 'conservation',
+        title: 'Conservation'
       }
     ]
   },
