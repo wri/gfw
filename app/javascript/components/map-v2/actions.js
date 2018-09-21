@@ -70,7 +70,7 @@ export const setLandsatBasemap = createThunkAction(
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
   ({ data, layer }) => (dispatch, getState) => {
-    const { cartodb_id } = data || {};
+    const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
     const query = getState().location.query || {};
 
@@ -82,10 +82,10 @@ export const setAnalysisView = createThunkAction(
           type: 'country',
           ...getLocationFromData(data)
         };
-      } else if (analysisEndpoint === 'wdpa' && cartodb_id) {
+      } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
         payload = {
           type: analysisEndpoint,
-          country: cartodb_id
+          country: wdpaid || cartodb_id
         };
       } else if (cartodb_id && tableName) {
         payload = {

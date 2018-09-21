@@ -33,6 +33,7 @@ export const getFullLocationName = createSelector(
       return (analysisLayer && analysisLayer.name) || 'Area analysis';
     }
     if (location.type === 'geostore') return 'custom area analysis';
+    if (location.type === 'wdpa') return 'protected area analysis';
     if (location.type === 'country') {
       return buildFullLocationName(location, { adm0s, adm1s, adm2s });
     }

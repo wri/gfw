@@ -89,7 +89,7 @@ export const fetchUmdLossGain = ({
     endpoints.map(endpoint => {
       let urlTemplate = QUERIES.umdGeostore;
       if (type === 'country') urlTemplate = QUERIES.umdAdmin;
-      if (type === 'use') urlTemplate = QUERIES.umdByType;
+      if (type === 'use' || type === 'wdpa') urlTemplate = QUERIES.umdByType;
 
       return axios.get(
         `${REQUEST_URL}${buildAnalysisUrl({
