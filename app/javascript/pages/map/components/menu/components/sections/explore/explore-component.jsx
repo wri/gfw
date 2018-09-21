@@ -5,7 +5,6 @@ import isEqual from 'lodash/isEqual';
 import SubnavMenu from 'components/subnav-menu';
 import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
-import SentenceSelector from 'components/sentence-selector';
 import PTWProvider from 'providers/ptw-provider';
 
 import './explore-styles.scss';
@@ -48,11 +47,7 @@ class Explore extends PureComponent {
               <div className="description">
                 {section === 'placesToWatch' ? (
                   <Fragment>
-                    <SentenceSelector
-                      sentence={description}
-                      options={[{ label: 'June 2017', value: '2017' }]}
-                      value="2017"
-                    />
+                    {description}
                     <PTWProvider date={new Date()} />
                   </Fragment>
                 ) : (

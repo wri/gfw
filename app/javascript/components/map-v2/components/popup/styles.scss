@@ -57,6 +57,7 @@
 .leaflet-container a.leaflet-popup-close-button {
   top: 5px;
   right: 5px;
+  z-index: 2;
 }
 
 .leaflet-container a {

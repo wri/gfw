@@ -11,7 +11,7 @@ export const descriptions = {
   topics:
     'Topics are curated map presets for exploring the drivers of deforestation and understanding their impacts in ecosystems around the world.',
   placesToWatch:
-    'A GFW service that identifies areas of high-priority GLAD alerts on a monthly basis. Showing information from {selector}',
+    'A GFW service that identifies areas of high-priority GLAD alerts on a monthly basis.',
   stories: ''
 };
 
