@@ -166,7 +166,7 @@ export const goToDashboard = createThunkAction(
 export const setDrawnAnalysis = createThunkAction(
   'setDrawnAnalysis',
   geostoreId => (dispatch, getState) => {
-    const { query } = getState().location.query;
+    const { query } = getState().location;
     dispatch({
       type: MAP,
       payload: {
