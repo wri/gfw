@@ -2,8 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { bindActionCreators } from 'redux';
-import { MAP, DASHBOARDS } from 'router';
 import { CancelToken } from 'axios';
 
 import * as actions from './actions';
@@ -11,47 +9,6 @@ import reducers, { initialState } from './reducers';
 
 import Component from './component';
 import { getAnalysisProps } from './selectors';
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      clearAnalysis: () => (_, getState) =>
-        dispatch({
-          type: MAP,
-          ...(getState().location.query && {
-            query: getState().location.query
-          })
-        }),
-      goToDashboard: () => (_, getState) =>
-        dispatch({
-          type: DASHBOARDS,
-          payload: getState().location.payload,
-          ...(getState().location.query && {
-            query: getState().location.query
-          })
-        }),
-      setDrawnAnalysis: geostoreId => (_, getState) => {
-        const query = getState().location.query || {};
-        dispatch({
-          type: MAP,
-          payload: {
-            type: 'geostore',
-            country: geostoreId
-          },
-          query: {
-            ...query,
-            map: {
-              ...(query && query.map && query.map),
-              canBound: true,
-              draw: false
-            }
-          }
-        });
-      },
-      ...actions
-    },
-    dispatch
-  );
 
 class DataAnalysisMenuContainer extends PureComponent {
   static propTypes = {
@@ -131,6 +88,4 @@ class DataAnalysisMenuContainer extends PureComponent {
 }
 
 export const reduxModule = { actions, reducers, initialState };
-export default connect(getAnalysisProps, mapDispatchToProps)(
-  DataAnalysisMenuContainer
-);
+export default connect(getAnalysisProps, actions)(DataAnalysisMenuContainer);

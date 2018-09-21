@@ -69,7 +69,6 @@ class DrawAnalysis extends PureComponent {
       data,
       loading,
       fullLocationName,
-      goToDashboard,
       location,
       error,
       setModalSources,
@@ -146,7 +145,15 @@ class DrawAnalysis extends PureComponent {
                 </div>
                 {location.type === 'country' && (
                   <div className="analysis-actions">
-                    <Button onClick={goToDashboard}>OPEN DASHBOARD</Button>
+                    <Button
+                      extLink={window.location.href.replace(
+                        'v2/map',
+                        'dashboards'
+                      )}
+                      target="_blank"
+                    >
+                      OPEN DASHBOARD
+                    </Button>
                   </div>
                 )}
               </Fragment>
@@ -171,7 +178,6 @@ DrawAnalysis.propTypes = {
   error: PropTypes.string,
   location: PropTypes.object,
   fullLocationName: PropTypes.string,
-  goToDashboard: PropTypes.func,
   setModalSources: PropTypes.func,
   handleShowDownloads: PropTypes.func,
   showDownloads: PropTypes.bool,

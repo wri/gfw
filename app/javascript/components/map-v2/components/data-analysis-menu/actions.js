@@ -1,12 +1,11 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import union from 'turf-union';
+import { MAP, DASHBOARDS } from 'router';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
 import { getGeostoreKey } from 'services/geostore';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-
-import { MAP } from 'router';
 
 import uploadFileConfig from './upload-config.json';
 
@@ -134,5 +133,54 @@ export const uploadShape = createThunkAction(
         );
         console.info(error);
       });
+  }
+);
+
+export const clearAnalysis = createThunkAction(
+  'clearAnalysis',
+  () => (dispatch, getState) => {
+    const { query } = getState().location;
+    dispatch({
+      type: MAP,
+      ...(query && {
+        query
+      })
+    });
+  }
+);
+
+export const goToDashboard = createThunkAction(
+  'goToDashboard',
+  () => (dispatch, getState) => {
+    const { payload, query } = getState().location.query;
+    dispatch({
+      type: DASHBOARDS,
+      payload,
+      ...(query && {
+        query
+      })
+    });
+  }
+);
+
+export const setDrawnAnalysis = createThunkAction(
+  'setDrawnAnalysis',
+  geostoreId => (dispatch, getState) => {
+    const { query } = getState().location.query;
+    dispatch({
+      type: MAP,
+      payload: {
+        type: 'geostore',
+        country: geostoreId
+      },
+      query: {
+        ...query,
+        map: {
+          ...(query && query.map && query.map),
+          canBound: true,
+          draw: false
+        }
+      }
+    });
   }
 );
