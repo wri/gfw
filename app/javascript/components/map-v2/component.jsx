@@ -80,7 +80,7 @@ class MapComponent extends PureComponent {
         style={{ backgroundColor: basemap.color }}
         onMouseOver={() =>
           oneClickAnalysisActive &&
-          handleShowTooltip(true, 'Click here to analyze.')
+          handleShowTooltip(true, 'Click shape to analyze.')
         }
         onMouseOut={() => handleShowTooltip(false, '')}
       >

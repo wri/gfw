@@ -114,6 +114,8 @@ class DrawAnalysis extends PureComponent {
                     </li>
                   )}
                 </ul>
+                {/* <p>This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</p>
+                <p>NOTE: tree cover loss and gain statistics cannot be compared against each other. Learn more.</p> */}
                 {location.type === 'country' && (
                   <div className="analysis-actions">
                     <Button onClick={goToDashboard}>OPEN DASHBOARD</Button>

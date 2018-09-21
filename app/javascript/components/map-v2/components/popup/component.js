@@ -10,6 +10,7 @@ import Dropdown from 'components/ui/dropdown/dropdown-component';
 import Card from 'components/ui/card';
 
 import DataTable from './components/data-table';
+import BoundarySentence from './components/boundary-sentence';
 
 class Popup extends Component {
   componentDidUpdate(prevProps) {
@@ -28,7 +29,8 @@ class Popup extends Component {
       interactions,
       selected,
       setInteractionSelected,
-      setAnalysisView
+      setAnalysisView,
+      isBoundary
     } = this.props;
 
     return (
@@ -67,10 +69,18 @@ class Popup extends Component {
                 interactions.length === 1 && (
                   <div className="popup-title">{selected.label}</div>
                 )}
-              <DataTable data={tableData} />
+              {isBoundary ? (
+                <BoundarySentence
+                  selected={selected}
+                  data={tableData}
+                  setAnalysisView={setAnalysisView}
+                />
+              ) : (
+                <DataTable data={tableData} />
+              )}
               <div className="nav-footer">
                 <Button onClick={() => setAnalysisView(selected)}>
-                  Analyze
+                  ANALYZE
                 </Button>
               </div>
             </div>
@@ -87,7 +97,8 @@ Popup.propTypes = {
   latlng: PropTypes.object,
   selected: PropTypes.object,
   interactions: PropTypes.array,
-  tableData: PropTypes.array,
+  tableData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  isBoundary: PropTypes.bool,
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
   setAnalysisView: PropTypes.func

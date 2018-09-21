@@ -1,0 +1,15 @@
+@import '~styles/settings.scss';
+
+.c-boundary-sentence {
+  font-size: rem(13px);
+
+  b,
+  button {
+    color: $green-gfw;
+    font-weight: 500;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}

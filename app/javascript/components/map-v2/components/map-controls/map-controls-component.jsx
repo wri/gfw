@@ -199,19 +199,19 @@ class MapControlsButtons extends PureComponent {
         <div className="controls-wrapper">
           <Button
             theme="theme-button-map-control"
-            onClick={() => map.setZoom(zoom + 1)}
-            tooltip={{ text: 'Zoom in' }}
-            disabled={zoom === maxZoom}
-          >
-            <Icon icon={plusIcon} className="plus-icon" />
-          </Button>
-          <Button
-            theme="theme-button-map-control"
             onClick={() => map.setZoom(zoom - 1)}
             tooltip={{ text: 'Zoom out' }}
             disabled={zoom === minZoom}
           >
             <Icon icon={minusIcon} className="minus-icon" />
+          </Button>
+          <Button
+            theme="theme-button-map-control"
+            onClick={() => map.setZoom(zoom + 1)}
+            tooltip={{ text: 'Zoom in' }}
+            disabled={zoom === maxZoom}
+          >
+            <Icon icon={plusIcon} className="plus-icon" />
           </Button>
           <Button
             theme="theme-button-map-control"

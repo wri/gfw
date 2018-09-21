@@ -36,8 +36,8 @@ export const parseGadm36Id = gid => {
 
 export const getLocationFromData = data => {
   let newLocation = {};
-  if (data && data.level && data.gid_0) {
-    newLocation = data.level ? parseGadm36Id(data[`gid_${data.level}`]) : {};
+  if (data && data.gid_0) {
+    newLocation = parseGadm36Id(data[`gid_${data.level}`]);
   }
   return {
     type: 'country',
@@ -56,7 +56,9 @@ export const buildFullLocationName = (
     (country && isEmpty(adm0s)) ||
     (region && isEmpty(adm1s)) ||
     (subRegion && isEmpty(adm2s))
-  ) { return ''; }
+  ) {
+    return '';
+  }
   if (country) {
     const adm = adm0s && adm0s.find(a => a.value === country);
     location = adm ? adm.label : '';
