@@ -7,6 +7,7 @@
 
   .popup-card {
     border: 0;
+    max-width: rem(240px);
 
     .body {
       background-color: $white;
