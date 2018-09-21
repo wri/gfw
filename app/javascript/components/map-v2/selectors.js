@@ -230,7 +230,15 @@ export const getLayerGroups = createSelector(
   [getDatasetsWithConfig, getActiveDatasetsState],
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
-    return activeDatasetsState.map(l => datasets.find(d => d.id === l.dataset));
+    return activeDatasetsState
+      .map(l => datasets.find(d => d.id === l.dataset))
+      .map(d => {
+        const { metadata } = d.layers.find(l => l.active);
+        return {
+          ...d,
+          metadata: metadata || d.metadata
+        };
+      });
   }
 );
 
