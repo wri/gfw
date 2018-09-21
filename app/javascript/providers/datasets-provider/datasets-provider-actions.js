@@ -160,9 +160,9 @@ export const getDatasets = createThunkAction(
                             sql_config && reduceSqlParams(sql_config);
 
                           return {
+                            ...info,
                             ...l,
                             ...(d.tableName && { tableName: d.tableName }),
-                            ...info,
                             ...l.applicationConfig,
                             // sorting position
                             position: l.applicationConfig.default
