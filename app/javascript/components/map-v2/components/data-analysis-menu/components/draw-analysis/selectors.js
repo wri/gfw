@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
@@ -93,6 +94,40 @@ export const getDataFromLayers = createSelector(
   }
 );
 
+export const getDownloadLinks = createSelector([selectData], data =>
+  [
+    {
+      label: 'umd-loss-gain',
+      urls: [
+        {
+          label: 'website',
+          url:
+            'https://earthenginepartners.appspot.com/science-2013-global-forest'
+        }
+      ]
+    }
+  ].concat(
+    sortBy(
+      Object.keys(data)
+        .filter(d => data[d].downloadUrls)
+        .map(d => {
+          const { downloadUrls } = data[d];
+          return {
+            label: d,
+            urls: Object.keys(downloadUrls).map(key => ({
+              url:
+                downloadUrls[key][0] === '/'
+                  ? `${process.env.GFW_API}${downloadUrls[key]}`
+                  : downloadUrls[key],
+              label: key
+            }))
+          };
+        }),
+      'label'
+    )
+  )
+);
+
 export const getDrawAnalysisProps = createStructuredSelector({
   location: selectLocation,
   data: getDataFromLayers,
@@ -100,5 +135,6 @@ export const getDrawAnalysisProps = createStructuredSelector({
   locationName: getLocationName,
   fullLocationName: getFullLocationName,
   layers: getActiveLayers,
+  downloadUrls: getDownloadLinks,
   error: selectError
 });

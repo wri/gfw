@@ -36,6 +36,10 @@
     .title-controls {
       display: flex;
 
+      svg {
+        fill: $slate;
+      }
+
       > * {
         margin-left: rem(8px);
       }
@@ -53,6 +57,9 @@
     }
 
     .disclaimers {
+      padding-top: rem(20px);
+      border-top: solid 1px $border;
+
       p {
         font-size: rem(12px);
         margin-bottom: rem(15px);

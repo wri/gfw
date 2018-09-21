@@ -17,9 +17,19 @@ const actions = {
 };
 
 class PolygonAnalysisContainer extends PureComponent {
+  state = {
+    showDownloads: false
+  };
+
+  handleShowDownloads = show => {
+    this.setState({ showDownloads: show });
+  };
+
   render() {
     return createElement(Component, {
-      ...this.props
+      ...this.props,
+      ...this.state,
+      handleShowDownloads: this.handleShowDownloads
     });
   }
 }

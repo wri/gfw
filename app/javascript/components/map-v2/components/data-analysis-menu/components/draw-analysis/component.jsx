@@ -7,9 +7,11 @@ import moment from 'moment';
 import Button from 'components/ui/button/button-component';
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
+import DownloadData from 'components/map-v2/components/data-analysis-menu/components/download-data';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
+import downloadIcon from 'assets/icons/download.svg';
 import './styles.scss';
 
 class DrawAnalysis extends PureComponent {
@@ -70,7 +72,10 @@ class DrawAnalysis extends PureComponent {
       goToDashboard,
       location,
       error,
-      setModalSources
+      setModalSources,
+      handleShowDownloads,
+      showDownloads,
+      downloadUrls
     } = this.props;
 
     return (
@@ -97,6 +102,9 @@ class DrawAnalysis extends PureComponent {
               }
             >
               <Icon icon={shareIcon} className="icon-share" />
+            </button>
+            <button onClick={() => handleShowDownloads(true)}>
+              <Icon icon={downloadIcon} className="icon-download" />
             </button>
           </div>
         </div>
@@ -144,6 +152,12 @@ class DrawAnalysis extends PureComponent {
               </Fragment>
             )}
         </div>
+        {showDownloads && (
+          <DownloadData
+            downloadUrls={downloadUrls}
+            onClose={() => handleShowDownloads(false)}
+          />
+        )}
       </div>
     );
   }
@@ -158,7 +172,10 @@ DrawAnalysis.propTypes = {
   location: PropTypes.object,
   fullLocationName: PropTypes.string,
   goToDashboard: PropTypes.func,
-  setModalSources: PropTypes.func
+  setModalSources: PropTypes.func,
+  handleShowDownloads: PropTypes.func,
+  showDownloads: PropTypes.bool,
+  downloadUrls: PropTypes.array
 };
 
 export default DrawAnalysis;
