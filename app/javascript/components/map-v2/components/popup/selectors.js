@@ -103,6 +103,7 @@ export const getTableData = createSelector(
     return (
       config &&
       config.filter(c => !c.hidden).map(c => ({
+        ...c,
         label: c.property,
         value: data[c.column]
       }))
