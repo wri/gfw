@@ -22,7 +22,7 @@ $summary-color: #aaa;
   }
 
   &.active {
-    &::before {
+    &::after {
       border: solid 2px $green-gfw;
     }
   }
