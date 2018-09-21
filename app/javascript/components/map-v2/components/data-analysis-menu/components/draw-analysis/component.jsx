@@ -69,7 +69,8 @@ class DrawAnalysis extends PureComponent {
       fullLocationName,
       goToDashboard,
       location,
-      error
+      error,
+      setModalSources
     } = this.props;
 
     return (
@@ -114,8 +115,27 @@ class DrawAnalysis extends PureComponent {
                     </li>
                   )}
                 </ul>
-                {/* <p>This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</p>
-                <p>NOTE: tree cover loss and gain statistics cannot be compared against each other. Learn more.</p> */}
+                <div className="disclaimers">
+                  <p>
+                    This algorithm approximates the results by sampling the
+                    selected area. Results are more accurate at closer zoom
+                    levels.
+                  </p>
+                  <p>
+                    <b>NOTE:</b> tree cover loss and gain statistics cannot be
+                    compared against each other.{' '}
+                    <button
+                      onClick={() =>
+                        setModalSources({
+                          open: true,
+                          source: 'lossDisclaimer'
+                        })
+                      }
+                    >
+                      Learn more.
+                    </button>
+                  </p>
+                </div>
                 {location.type === 'country' && (
                   <div className="analysis-actions">
                     <Button onClick={goToDashboard}>OPEN DASHBOARD</Button>
@@ -137,7 +157,8 @@ DrawAnalysis.propTypes = {
   error: PropTypes.string,
   location: PropTypes.object,
   fullLocationName: PropTypes.string,
-  goToDashboard: PropTypes.func
+  goToDashboard: PropTypes.func,
+  setModalSources: PropTypes.func
 };
 
 export default DrawAnalysis;

@@ -51,6 +51,18 @@
       position: relative;
       margin-top: rem(-10px);
     }
+
+    .disclaimers {
+      p {
+        font-size: rem(12px);
+        margin-bottom: rem(15px);
+      }
+
+      button {
+        color: $green-gfw;
+        cursor: pointer;
+      }
+    }
   }
 
   .draw-stats {
