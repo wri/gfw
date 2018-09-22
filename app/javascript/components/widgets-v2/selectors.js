@@ -7,6 +7,8 @@ import allOptions from './options';
 import allWidgets from './manifest';
 
 export const selectLocation = state => state.location && state.location.payload;
+export const selectLocationType = state =>
+  state.location && state.location.payload && state.location.payload.type;
 export const selectQuery = state => state.location && state.location.query;
 export const selectGeostore = state => state.geostore.geostore;
 export const selectWidgetsFilter = (state, ownProps) => ownProps.widgets;
@@ -18,13 +20,13 @@ export const selectLoading = state =>
   state.whitelists.countriesLoading ||
   state.whitelists.regionsLoading;
 export const selectWhitelists = state => ({
-  countries: state.whitelists.countries,
-  regions: state.whitelists.regions
+  adm0: state.whitelists.countries,
+  adm1: state.whitelists.regions
 });
 export const setectCountryData = state => ({
-  countries: state.countryData.countries,
-  regions: state.countryData.regions,
-  subRegions: state.countryData.subRegions
+  adm0: state.countryData.countries,
+  adm1: state.countryData.regions,
+  adm2: state.countryData.subRegions
 });
 
 export const getOptions = () => {
@@ -38,23 +40,46 @@ export const getOptions = () => {
 
 export const getActiveWhitelist = createSelector(
   [selectWhitelists, selectLocation],
-  (whitelists, location) => whitelists[location.adm1 ? 'regions' : 'countries']
+  (whitelists, location) => whitelists[location.adm1 ? 'adm1' : 'adm0']
+);
+
+export const getLocationData = createSelector(
+  [selectLocationType, setectCountryData],
+  (type, countryData) => {
+    if (type === 'country' || type === 'global') return countryData;
+    return {};
+  }
 );
 
 export const getActiveLocationData = createSelector(
-  [setectCountryData, selectLocation],
-  (countryData, location) => {
-    if (location.adm2) return countryData.subRegions;
-    return countryData[location.adm1 ? 'regions' : 'countries'];
+  [getLocationData, selectLocation],
+  (locationData, location) => {
+    if (location.adm2) return locationData.adm2;
+    return locationData[location.adm1 ? 'adm1' : 'adm0'];
   }
 );
 
 export const getChildLocationData = createSelector(
-  [setectCountryData, selectLocation],
-  (countryData, location) => {
+  [getLocationData, selectLocation],
+  (locationData, location) => {
     if (location.adm2) return null;
-    return countryData[location.adm1 ? 'subRegions' : 'regions'];
+    return locationData[location.adm1 ? 'adm2' : 'adm1'];
   }
+);
+
+export const getLocationObject = createSelector(
+  [getActiveLocationData, selectLocation],
+  (adms, location) => {
+    if (!adms) return null;
+    const { adm0, adm1, adm2 } = location;
+
+    return adms.find(a => a.value === (adm2 || adm1 || adm0));
+  }
+);
+
+export const getLocationName = createSelector(
+  [getLocationObject],
+  location => location && location.label
 );
 
 export const getActiveWidget = createSelector(
@@ -73,13 +98,13 @@ export const parseWidgets = createSelector([getAllWidgets], widgets => {
   if (!widgets) return null;
 
   return widgets.map(w => ({
-    widget: w.initialState.config.widget,
+    widget: w.config.widget,
     Component: w.Component,
     getData: w.getData,
     getProps: w.getProps,
-    config: w.initialState.config,
-    settings: w.initialState.settings,
-    colors: colors[w.initialState.config.type]
+    config: w.config,
+    settings: w.settings,
+    colors: colors[w.config.type]
   }));
 });
 
@@ -143,7 +168,7 @@ export const parseWidgetsWithData = createSelector(
         ...w.settings,
         ...widgetUrlState
       };
-      console.log(widgetsState);
+
       return {
         ...w,
         loading: widgetState.loading || false,
@@ -188,6 +213,8 @@ export const getWidgetsProps = createStructuredSelector({
   category: getCategory,
   location: selectLocation,
   locationData: getActiveLocationData,
+  locationObject: getLocationObject,
+  locationName: getLocationName,
   childLocationData: getChildLocationData,
   widgets: parseWidgetsWithData
 });

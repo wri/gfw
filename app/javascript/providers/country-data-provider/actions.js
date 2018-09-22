@@ -31,10 +31,10 @@ export const getCountries = createThunkAction(
       axios
         .all([getCountriesProvider(), getFAOCountriesProvider()])
         .then(
-          axios.spread((gadm28Countries, faoCountries) => {
-            dispatch(setGadmCountries(gadm28Countries.data.rows));
+          axios.spread((gadm36Countries, faoCountries) => {
+            dispatch(setGadmCountries(gadm36Countries.data.rows));
             dispatch(setFAOCountries(faoCountries.data.rows));
-            dispatch(setCountries(gadm28Countries.data.rows));
+            dispatch(setCountries(gadm36Countries.data.rows));
             dispatch(setCountriesLoading(false));
           })
         )

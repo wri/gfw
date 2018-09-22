@@ -10,21 +10,20 @@ import {
   getStdDevData,
   getDatesData,
   getChartConfig
-} from 'components/widgets/components/widget-alerts/selectors-utils';
+} from 'components/widgets-v2/utils/data';
 
 const MIN_YEAR = 2015;
 
 // get list data
-const getAlerts = state =>
-  console.log('state', state) || (state.data && state.data.alerts) || null;
-const getLatestDates = state => (state.data && state.data.latest) || null;
-const getColors = state => state.colors || null;
-const getActiveData = state => state.settings.activeData || null;
-const getWeeks = state => (state.settings && state.settings.weeks) || null;
-const getSentences = state => state.config.sentences || null;
+const selectAlerts = state => (state.data && state.data.alerts) || null;
+const selectLatestDates = state => (state.data && state.data.latest) || null;
+const selectColors = state => state.colors || null;
+const selectActiveData = state => state.settings.activeData || null;
+const selectWeeks = state => (state.settings && state.settings.weeks) || null;
+const selectSentence = state => state.config.sentence || null;
 
 export const getData = createSelector(
-  [getAlerts, getLatestDates],
+  [selectAlerts, selectLatestDates],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
@@ -61,7 +60,7 @@ export const getData = createSelector(
 );
 
 export const getMeans = createSelector(
-  [getData, getLatestDates],
+  [getData, selectLatestDates],
   (data, latest) => {
     if (!data) return null;
     return getMeansData(data, latest);
@@ -81,13 +80,16 @@ export const getDates = createSelector([getStdDev], data => {
   return getDatesData(data);
 });
 
-export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
-  if (!data) return null;
-  return data.slice(-weeks);
-});
+export const parseData = createSelector(
+  [getDates, selectWeeks],
+  (data, weeks) => {
+    if (!data) return null;
+    return data.slice(-weeks);
+  }
+);
 
 export const parseConfig = createSelector(
-  [getColors, getLatestDates],
+  [selectColors, selectLatestDates],
   (colors, latest) => {
     if (!latest) return null;
 
@@ -96,14 +98,14 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences],
-  (data, colors, activeData, sentences) => {
+  [parseData, selectColors, selectActiveData, selectSentence],
+  (data, colors, activeData, sentence) => {
     if (!data) return null;
+
     let lastDate = data[data.length - 1];
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
-    const { initial } = sentences;
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
     let status = 'unusually low';
@@ -142,7 +144,7 @@ export const parseSentence = createSelector(
         color: statusColor
       }
     };
-    return { sentence: initial, params };
+    return { sentence, params };
   }
 );
 

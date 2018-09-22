@@ -1,21 +1,11 @@
 import * as actions from './actions';
-import allWidgets from './manifest';
 
 export const initialState = {
   loading: false,
   error: false,
   data: {},
   settings: {},
-  widgets: {
-    // ...Object.keys(allWidgets).reduce((obj, key) => ({
-    //   ...obj,
-    //   [key]: {
-    //     loading: false,
-    //     error: false,
-    //     data: {}
-    //   }
-    // }), {})
-  }
+  widgets: {}
 };
 
 // reducers for all widgets parent wrapper component

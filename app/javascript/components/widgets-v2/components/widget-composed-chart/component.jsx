@@ -31,19 +31,19 @@ class WidgetAlerts extends Component {
         };
       }
     }
-    setWidgetSettings({ widget, settings: { activeData } });
+    setWidgetSettings({ widget, value: { activeData } });
   }, 100);
 
   handleMouseLeave = debounce(() => {
     const { setWidgetSettings, widget } = this.props;
-    setWidgetSettings({ widget, settings: { activeData: {} } });
+    setWidgetSettings({ widget, value: { activeData: {} } });
   }, 100);
 
   render() {
     const { data, config, active } = this.props;
 
     return (
-      <div className="c-widget-glad-alerts">
+      <div className="c-widget-composed-chart">
         <ComposedChart
           className="loss-chart"
           data={data}

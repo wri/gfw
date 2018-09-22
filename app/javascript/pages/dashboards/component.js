@@ -9,7 +9,6 @@ import LayerSpecProvider from 'providers/layerspec-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 
-import Widgets from 'components/widgets';
 import Widgets from 'components/widgets-v2';
 import Share from 'components/modals/share';
 import Map from 'components/map';
@@ -52,7 +51,7 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header
+          {/* <Header
             className="header"
             widgets={widgets}
             location={payload}
@@ -63,7 +62,7 @@ class Page extends PureComponent {
             theme="theme-subnav-dark"
             links={links}
             checkActive
-          />
+          /> */}
           <Widgets />
         </div>
         {/* <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
@@ -90,7 +89,7 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        {/* <CountryDataProvider location={payload} /> */}
+        <CountryDataProvider />
         {/* <WhitelistsProvider /> */}
         {/* <LayerSpecProvider /> */}
         {/* <DatasetsProvider /> */}

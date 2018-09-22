@@ -22,21 +22,21 @@ export const getMetadata = createSelector(
     selectedSubRegion
   ],
   (route, location, adm0s, adm1s, adm2s) => {
-    const { type, country, region, subRegion } = location;
+    const { type, adm0, adm1, adm2 } = location;
     const metadata = window.metadata[route && route.controller];
     const metadataTypes = window.metadata.types;
 
     if (!type) return metadata;
     if (
-      (country && !adm0s.length) ||
-      (region && !adm1s.length) ||
-      (subRegion && !adm2s.length)
+      (adm0 && !adm0s.length) ||
+      (adm1 && !adm1s.length) ||
+      (adm2 && !adm2s.length)
     ) {
       return null;
     }
-    let title = `${upperFirst(metadataTypes[type] || type)} | ${
-      metadata.title
-    }`;
+    let title = `${upperFirst(
+      (metadataTypes && metadataTypes[type]) || type
+    )} | ${metadata && metadata.title}`;
     if (location.type && location.type === 'country') {
       title = `${buildFullLocationName(location, { adm0s, adm1s, adm2s })} | ${
         title

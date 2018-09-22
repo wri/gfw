@@ -9,11 +9,13 @@ export const selectLocation = state => state.location && state.location.payload;
 export const selectQuery = state => state.location && state.location.query;
 export const selectConfig = (state, { config }) => config;
 export const selectWidget = (state, { widget }) => widget;
-export const selectActiveWhitelist = (state, { activeWhitelist }) => activeWhitelist;
+export const selectActiveWhitelist = (state, { activeWhitelist }) =>
+  activeWhitelist;
 export const selectLocationName = (state, { locationName }) => locationName;
 export const selectWidgetMetaKey = (state, { config, id, activeWhitelist }) =>
   (id === 'treeCover' &&
-  activeWhitelist && activeWhitelist.contains('plantations')
+  activeWhitelist &&
+  activeWhitelist.contains('plantations')
     ? 'widget_natural_vs_planted'
     : config.metaKey);
 
@@ -22,10 +24,11 @@ export const getParsedTitle = createSelector(
   (config, location, whitelist, locationName) => {
     const { title } = config;
     const { type } = location;
+    if (typeof title === 'string') { return title.replace('{location}', locationName || ''); }
     let selectTitle = title.withLocation;
     if (type === 'global') selectTitle = title.global;
-    if (whitelist && whitelist.includes('plantations')) selectTitle = title.withPlantations;
-    return selectTitle && selectTitle.replace('{location}', locationName);
+    if (whitelist && whitelist.includes('plantations')) { selectTitle = title.withPlantations; }
+    return selectTitle && selectTitle.replace('{location}', locationName || '');
   }
 );
 
@@ -34,13 +37,12 @@ export const getShareData = createSelector(
   (title, config, query, location, widget) => {
     const { category } = query || {};
     const { type, country, region, subRegion } = location;
-    const locationUrl = `dashboards/${type}/${country || ''}${region ? `/${region}` : ''}${
-      subRegion ? `/${subRegion}` : ''
-    }`;
+    const locationUrl = `dashboards/${type}/${country || ''}${
+      region ? `/${region}` : ''
+    }${subRegion ? `/${subRegion}` : ''}`;
     const widgetQuery = `widget=${widget}`;
-    const widgetState = query && query[widget] ?
-      `&${widget}=${query[widget]}`
-      : '';
+    const widgetState =
+      query && query[widget] ? `&${widget}=${query[widget]}` : '';
     const categoryQuery = category ? `&category=${category}` : '';
 
     const shareUrl = `${window.location.origin}/${locationUrl}?${widgetQuery}${
@@ -65,11 +67,13 @@ export const getShareData = createSelector(
 
 export const getCitation = createSelector(
   [getParsedTitle],
-  (title) => (title ? `Global Forest Watch. “${
-    title
-  }”. Accessed on ${moment().format(
-    'MMMM Do YYYY'
-  )} from www.globalforestwatch.org.` : null));
+  title =>
+    (title
+      ? `Global Forest Watch. “${title}”. Accessed on ${moment().format(
+        'MMMM Do YYYY'
+      )} from www.globalforestwatch.org.`
+      : null)
+);
 
 export const getWidgetHeaderProps = createStructuredSelector({
   modalOpen: selectModalOpen,

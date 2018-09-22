@@ -1,11 +1,7 @@
-import Component from 'components/widgets/components/widget-alerts';
-import { getData } from './actions';
+import Component from 'components/widgets-v2/components/widget-composed-chart';
+import getData from './actions';
 import getProps from './selectors';
-import initialState from './initial-state';
+import config from './config';
+import settings from './settings';
 
-export {
-  getData,
-  getProps,
-  Component,
-  initialState
-};
+export { getData, getProps, Component, config, settings };
