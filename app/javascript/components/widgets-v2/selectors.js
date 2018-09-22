@@ -157,8 +157,8 @@ export const parseWidgetsWithOptions = createSelector(
 
 // now lets pass them their data and settings
 export const parseWidgetsWithData = createSelector(
-  [parseWidgetsWithOptions, selectWidgets, selectQuery],
-  (widgets, widgetsState, query) => {
+  [parseWidgetsWithOptions, selectWidgets, selectQuery, selectLocationType],
+  (widgets, widgetsState, query, type) => {
     if (!widgets) return null;
     return widgets.map(w => {
       const widgetUrlState = (query && query[w.widget]) || {};
@@ -176,7 +176,8 @@ export const parseWidgetsWithData = createSelector(
         ...w.getProps({
           ...w,
           settings,
-          data: widgetState.data
+          data: widgetState.data,
+          type
         }),
         ...(settings && {
           settings
@@ -216,5 +217,6 @@ export const getWidgetsProps = createStructuredSelector({
   locationObject: getLocationObject,
   locationName: getLocationName,
   childLocationData: getChildLocationData,
-  widgets: parseWidgetsWithData
+  widgets: parseWidgetsWithData,
+  locationType: selectLocationType
 });

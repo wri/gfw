@@ -66,7 +66,8 @@ class Widget extends PureComponent {
       embed,
       settings,
       options,
-      locationName
+      locationName,
+      title
     } = this.props;
 
     return (
@@ -86,6 +87,7 @@ class Widget extends PureComponent {
           settings={settings}
           options={options}
           locationName={locationName}
+          title={title}
         />
         {this.renderWidgetBody()}
         <WidgetFooter config={config} settings={settings} />
@@ -96,6 +98,7 @@ class Widget extends PureComponent {
 
 Widget.propTypes = {
   settings: PropTypes.object,
+  title: PropTypes.string,
   widget: PropTypes.string,
   color: PropTypes.string,
   options: PropTypes.object,

@@ -8,19 +8,22 @@ export const selectModalClosing = state => state.modalMeta.closing;
 export const selectLocation = state => state.location && state.location.payload;
 export const selectQuery = state => state.location && state.location.query;
 export const selectConfig = (state, { config }) => config;
+export const selectTitle = (state, { config, title }) => title || config.title;
 export const selectWidget = (state, { widget }) => widget;
 export const selectLocationName = (state, { locationName }) => locationName;
 export const selectWidgetMetaKey = (state, { config, id, activeWhitelist }) =>
   (id === 'treeCover' &&
   activeWhitelist &&
   activeWhitelist.contains('plantations')
-    ? 'widget_natural_vs_planted'
+    ? 'widget_natural_vs _planted'
     : config.metaKey);
 
 export const getParsedTitle = createSelector(
-  [selectConfig, selectLocationName],
-  (config, locationName) =>
-    config.title.replace('{location}', locationName || '')
+  [selectTitle, selectLocationName],
+  (title, locationName) => {
+    const titleString = typeof title === 'string' ? title : title.default;
+    return titleString.replace('{location}', locationName || '');
+  }
 );
 
 export const getShareData = createSelector(
