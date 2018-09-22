@@ -10,7 +10,7 @@ import { getWidgetsProps } from './selectors';
 class WidgetsContainer extends PureComponent {
   componentDidMount() {
     const { getWidgetsData } = this.props;
-    // getWidgetsData();
+    getWidgetsData();
   }
 
   render() {

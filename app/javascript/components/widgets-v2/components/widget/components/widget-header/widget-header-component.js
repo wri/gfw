@@ -37,9 +37,9 @@ class WidgetHeader extends PureComponent {
           title: 'map-button',
           widget: `${title} in ${locationName || ''}`
         }}
-        tooltip={isSmall && {
+        tooltip={isSmall ? {
           text: active ? 'Currently displayed' : 'Show on map'
-        }}
+        } : {}}
       >
         {(isSmall || isDeviceTouch) ?
           <Icon icon={mapIcon} className="map-icon" />
@@ -174,7 +174,7 @@ class WidgetHeader extends PureComponent {
       embed,
       config
     } = this.props;
-    console.log(options);
+
     return (
       <div className="c-widget-header">
         <div className="title">{title}</div>

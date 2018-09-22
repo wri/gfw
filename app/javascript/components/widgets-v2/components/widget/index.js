@@ -10,14 +10,9 @@ import Component from './component';
 
 class WidgetContainer extends PureComponent {
   componentDidMount() {
-    const { getData, getWidgetData, id, location, settings } = this.props;
-    // const params = { ...location, ...settings, geostore };
-    const loc = {
-      country: location.adm0,
-      region: location.adm1,
-      subRegion: location.adm2
-    };
-    getWidgetData({ widget: id, getData, params: { ...loc, ...settings } });
+    const { getData, getWidgetData, widget, location, settings } = this.props;
+    const params = { ...location, ...settings };
+    getWidgetData({ widget, getData, params });
   }
 
   componentDidUpdate(prevProps) {

@@ -18,7 +18,7 @@ class Widgets extends PureComponent {
       <div className="c-widgets">
         {loading && <Loader />}
         {!loading && widgets.map(w => console.log(w) || (
-          <Widget key={w} {...w} {...rest} />
+          <Widget key={w.widget} {...w} {...rest} />
         ))}
       </div>
     );

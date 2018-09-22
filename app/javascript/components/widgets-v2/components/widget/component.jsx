@@ -49,7 +49,7 @@ class Widget extends PureComponent {
 
   render() {
     const {
-      id,
+      widget,
       color,
       active,
       config,
@@ -59,12 +59,12 @@ class Widget extends PureComponent {
     } = this.props;
     return (
       <div
-        id={id}
+        id={widget}
         className={cx('c-widget', { large: config.large }, { embed })}
         style={{ ...active && { borderColor: color, boxShadow: `0 0px 0px 1px ${color}` } }}
       >
         <WidgetHeader
-          widget={id}
+          widget={widget}
           config={config}
           settings={settings}
           options={options}

@@ -16,20 +16,26 @@ export const setWidgetLoading = createAction('setWidgetLoading');
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
   () => (dispatch, getState) => {
-    if (!getState().widgetsv2.loading) {
-      getNonGlobalDatasets().then(response => {
-        const { data } = response.data;
-        const groupedData = groupBy(data, 'polyname');
-        const nonGlobalDatasets = {};
-        Object.keys(groupedData).forEach(d => {
-          nonGlobalDatasets[d] = groupedData[d].length;
+    if (!getState().widgetsV2.loading) {
+      dispatch(setWidgetsLoading({ loading: true, error: false }));
+      getNonGlobalDatasets()
+        .then(response => {
+          const { data } = response.data;
+          const groupedData = groupBy(data, 'polyname');
+          const nonGlobalDatasets = {};
+          Object.keys(groupedData).forEach(d => {
+            nonGlobalDatasets[d] = groupedData[d].length;
+          });
+          dispatch(
+            setWidgetsData({
+              nonGlobalDatasets
+            })
+          );
+        })
+        .catch(error => {
+          dispatch(setWidgetsLoading({ error: true, loading: false }));
+          console.info(error);
         });
-        dispatch(
-          getWidgetsData({
-            nonGlobalDatasets
-          })
-        );
-      });
     }
   }
 );

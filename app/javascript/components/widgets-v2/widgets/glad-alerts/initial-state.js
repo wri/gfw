@@ -1,7 +1,7 @@
 export default {
   config: {
     // meta
-    id: 'gladAlerts',
+    widget: 'gladAlerts',
     title: {
       withLocation: 'Deforestation Alerts in {location}'
     },

@@ -24,7 +24,8 @@ const setWidgetsData = (state, { payload }) => ({
   data: {
     ...state.data,
     ...payload
-  }
+  },
+  loading: false
 });
 
 const setWidgetsSettings = (state, { payload }) => ({

@@ -75,8 +75,7 @@ export const parseWidgets = createSelector(
     if (!widgets) return null;
 
     return widgets.map(w => ({
-      id: w.initialState.config.id,
-      widget: w.initialState.config.id,
+      widget: w.initialState.config.widget,
       Component: w.Component,
       getData: w.getData,
       getProps: w.getProps,
@@ -139,27 +138,25 @@ export const parseWidgetsWithData = createSelector(
   (widgets, widgetsState, query) => {
     if (!widgets) return null;
     return widgets.map(w => {
-      const widgetUrlState = query && query[w.id] || {};
-      const widgetState = widgetsState && widgetsState[w.id] || {};
+      const widgetUrlState = query && query[w.widget] || {};
+      const widgetState = widgetsState && widgetsState[w.widget] || {};
       const { options, config } = w;
       const settings = {
         ...w.settings,
         ...widgetUrlState
       };
-
+      console.log(widgetsState);
       return {
         ...w,
         loading: widgetState.loading || false,
         error: widgetState.error || false,
         ...w.getProps({
           ...w,
-          settings
+          settings,
+          data: widgetState.data
         }),
-        ...widgetUrlState && {
-          settings: {
-            ...w.settings,
-            ...widgetUrlState
-          }
+        ...settings && {
+          settings
         },
         ...options && {
           optionsSelected: Object.keys(config.options).reduce((obj, optionKey) => ({
