@@ -19,7 +19,7 @@ class Share extends PureComponent {
       loading,
       copied,
       data,
-      data: { title, subtitle, shareUrl, embedUrl, embedSettings, socialText },
+      data: { title, subtitle, shareUrl, embedUrl, embedSettings },
       handleFocus,
       setShareSelected,
       handleCopyToClipboard
@@ -99,7 +99,7 @@ class Share extends PureComponent {
           </Button>
           <Button
             extLink={`https://twitter.com/intent/tweet?text=${
-              socialText
+              title
             }&via=globalforests&url=${shareUrl}`}
             className="social-button -twitter"
             trackingData={{
