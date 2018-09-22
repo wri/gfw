@@ -6,7 +6,8 @@ import { format } from 'd3-format';
 const getData = state => state.data;
 const getSettings = state => state.settings;
 const getIndicator = state => state.indicator || null;
-const getWhitelist = state => state.countryWhitelist;
+const getWhitelist = state =>
+  state.activeWhitelists && state.activeWhitelists.adm0;
 const getColors = state => state.colors;
 const getSentence = state => state.config.sentence;
 const getTitle = state => state.config.title;

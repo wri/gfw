@@ -311,14 +311,32 @@ export const getWidgetsWithIndicator = createSelector(
 );
 
 export const getWidgetsWithProps = createSelector(
-  [getWidgetsWithIndicator, selectLocationType],
-  (widgets, type) => {
+  [
+    getWidgetsWithIndicator,
+    selectLocationType,
+    selectWhitelists,
+    getActiveWhitelist,
+    getLocationName,
+    getLocationObject
+  ],
+  (
+    widgets,
+    type,
+    whitelists,
+    activeWhitelist,
+    locationName,
+    locationObject
+  ) => {
     if (!widgets) return null;
     return widgets.map(w => ({
       ...w,
       ...w.getProps({
         ...w,
-        type
+        type,
+        activeWhitelist,
+        whitelists,
+        locationName,
+        locationObject
       })
     }));
   }

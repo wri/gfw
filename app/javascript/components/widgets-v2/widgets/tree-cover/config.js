@@ -3,7 +3,7 @@ export default {
   widget: 'treeCover',
   // title for header
   title: {
-    default: 'Tree cover in {location}',
+    initial: 'Tree cover in {location}',
     global: 'Global tree cover',
     withPlantations: 'Forest cover in {location}'
   },

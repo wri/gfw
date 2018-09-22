@@ -114,7 +114,7 @@ Widget.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   active: PropTypes.bool,
-  indicator: PropTypes.string,
+  indicator: PropTypes.object,
   Component: PropTypes.any,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])

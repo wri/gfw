@@ -25,7 +25,7 @@ export const getParsedTitle = createSelector(
   [selectTitle, selectLocationName],
   (title, locationName) => {
     const titleString = typeof title === 'string' ? title : title.default;
-    return titleString.replace('{location}', locationName || '');
+    return titleString && titleString.replace('{location}', locationName || '');
   }
 );
 
