@@ -19,7 +19,7 @@
   &.highlighted {
     background: #fefedc;
 
-    .c-loader {
+    .widget-loader {
       background-color: rgba(#fefedc, 0.5);
     }
   }
@@ -65,21 +65,5 @@
   .embed-btn {
     width: rem(160px);
     margin-left: rem(10px);
-  }
-
-  .c-widgets.minimalist & {
-    padding: rem(20px);
-    min-height: rem(120px);
-    border: 0;
-
-    .container .sentence {
-      margin-bottom: rem(20px);
-    }
-
-    .c-button.theme-button-small {
-      width: rem(16px);
-      min-width: rem(16px);
-      height: rem(16px);
-    }
   }
 }

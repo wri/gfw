@@ -15,7 +15,7 @@ import mapIcon from 'assets/icons/map-button.svg';
 
 import WidgetSettings from './components/widget-settings';
 
-import './widget-header-styles.scss';
+import './styles.scss';
 
 class WidgetHeader extends PureComponent {
   state = {
@@ -197,7 +197,14 @@ WidgetHeader.propTypes = {
   setModalMeta: PropTypes.func.isRequired,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,
-  citation: PropTypes.string
+  citation: PropTypes.string,
+  config: PropTypes.object,
+  locationName: PropTypes.string,
+  isDeviceTouch: PropTypes.bool,
+  embed: PropTypes.bool,
+  loading: PropTypes.bool,
+  setWidgetSettings: PropTypes.func,
+  metakey: PropTypes.string
 };
 
 export default WidgetHeader;

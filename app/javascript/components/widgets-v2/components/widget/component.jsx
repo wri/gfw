@@ -29,7 +29,7 @@ class Widget extends PureComponent {
 
     return (
       <div className="container">
-        {loading && <Loader />}
+        {loading && <Loader className="widget-loader" />}
         {!loading &&
           !error &&
           !hasData && (

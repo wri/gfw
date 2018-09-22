@@ -9,8 +9,6 @@ export const selectLocation = state => state.location && state.location.payload;
 export const selectQuery = state => state.location && state.location.query;
 export const selectConfig = (state, { config }) => config;
 export const selectWidget = (state, { widget }) => widget;
-export const selectActiveWhitelist = (state, { activeWhitelist }) =>
-  activeWhitelist;
 export const selectLocationName = (state, { locationName }) => locationName;
 export const selectWidgetMetaKey = (state, { config, id, activeWhitelist }) =>
   (id === 'treeCover' &&
@@ -20,16 +18,9 @@ export const selectWidgetMetaKey = (state, { config, id, activeWhitelist }) =>
     : config.metaKey);
 
 export const getParsedTitle = createSelector(
-  [selectConfig, selectLocation, selectActiveWhitelist, selectLocationName],
-  (config, location, whitelist, locationName) => {
-    const { title } = config;
-    const { type } = location;
-    if (typeof title === 'string') { return title.replace('{location}', locationName || ''); }
-    let selectTitle = title.withLocation;
-    if (type === 'global') selectTitle = title.global;
-    if (whitelist && whitelist.includes('plantations')) { selectTitle = title.withPlantations; }
-    return selectTitle && selectTitle.replace('{location}', locationName || '');
-  }
+  [selectConfig, selectLocationName],
+  (config, locationName) =>
+    config.title.replace('{location}', locationName || '')
 );
 
 export const getShareData = createSelector(
