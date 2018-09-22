@@ -93,15 +93,12 @@ export const routes = {
     embed: true
   },
   [DASHBOARDS]: {
-    controller: 'dashboards',
-    path: '/dashboards/:type?/:country?/:region?/:subRegion?',
+    path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards'
   },
   [DASHBOARDS_EMBED]: {
-    controller: 'dashboards',
-    path: '/embed/dashboards/:type?/:country?/:region?/:subRegion?',
-    component: 'dashboards/embed',
-    embed: true
+    path: '/embed/dashboards/:type?/:adm0?/:adm1?/:adm2?',
+    component: 'dashboards/embed'
   },
   [NOT_FOUND]: {
     path: '/404',
