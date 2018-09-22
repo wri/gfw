@@ -11,8 +11,11 @@ export const selectConfig = (state, { config }) => config;
 export const selectTitle = (state, { config, title }) => title || config.title;
 export const selectWidget = (state, { widget }) => widget;
 export const selectLocationName = (state, { locationName }) => locationName;
-export const selectWidgetMetaKey = (state, { config, id, activeWhitelist }) =>
-  (id === 'treeCover' &&
+export const selectWidgetMetaKey = (
+  state,
+  { config, widget, activeWhitelist }
+) =>
+  (widget === 'treeCover' &&
   activeWhitelist &&
   activeWhitelist.contains('plantations')
     ? 'widget_natural_vs _planted'
@@ -30,10 +33,10 @@ export const getShareData = createSelector(
   [getParsedTitle, selectConfig, selectQuery, selectLocation, selectWidget],
   (title, config, query, location, widget) => {
     const { category } = query || {};
-    const { type, country, region, subRegion } = location;
-    const locationUrl = `dashboards/${type}/${country || ''}${
-      region ? `/${region}` : ''
-    }${subRegion ? `/${subRegion}` : ''}`;
+    const { type, adm0, adm1, adm2 } = location;
+    const locationUrl = `dashboards/${type}/${adm0 || ''}${
+      adm1 ? `/${adm1}` : ''
+    }${adm2 ? `/${adm2}` : ''}`;
     const widgetQuery = `widget=${widget}`;
     const widgetState =
       query && query[widget] ? `&${widget}=${query[widget]}` : '';

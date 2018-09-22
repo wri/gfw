@@ -6,7 +6,6 @@ import cx from 'classnames';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import Tip from 'components/ui/tip';
 
 import settingsIcon from 'assets/icons/settings.svg';
 import shareIcon from 'assets/icons/share.svg';
@@ -37,13 +36,7 @@ class WidgetHeader extends PureComponent {
           title: 'map-button',
           widget: `${title} in ${locationName || ''}`
         }}
-        tooltip={
-          isSmall
-            ? {
-              text: active ? 'Currently displayed' : 'Show on map'
-            }
-            : {}
-        }
+        tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
       >
         {isSmall || isDeviceTouch ? (
           <Icon icon={mapIcon} className="map-icon" />
@@ -124,7 +117,7 @@ class WidgetHeader extends PureComponent {
   };
 
   renderMetadataButton = () => {
-    const { metakey, citation, setModalMeta, isDeviceTouch } = this.props;
+    const { metakey, citation, setModalMeta } = this.props;
     return (
       <Button
         className="theme-button-small square"
@@ -136,13 +129,7 @@ class WidgetHeader extends PureComponent {
             citation
           )
         }
-        tooltip={{
-          theme: 'tip',
-          position: 'top',
-          arrow: true,
-          disabled: isDeviceTouch,
-          html: <Tip text="Learn more about the data" />
-        }}
+        tooltip={{ text: 'Learn more about the data' }}
       >
         <Icon icon={infoIcon} />
       </Button>
@@ -150,18 +137,12 @@ class WidgetHeader extends PureComponent {
   };
 
   renderShareButton = () => {
-    const { shareData, setShareModal, isDeviceTouch } = this.props;
+    const { shareData, setShareModal } = this.props;
     return (
       <Button
         className="theme-button-small square"
         onClick={() => setShareModal(shareData)}
-        tooltip={{
-          theme: 'tip',
-          position: 'top',
-          arrow: true,
-          disabled: isDeviceTouch,
-          html: <Tip text="Share or embed this widget" />
-        }}
+        tooltip={{ text: 'Share or embed this widget' }}
       >
         <Icon icon={shareIcon} />
       </Button>

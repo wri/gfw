@@ -67,7 +67,8 @@ class Widget extends PureComponent {
       settings,
       options,
       locationName,
-      title
+      title,
+      indicator
     } = this.props;
 
     return (
@@ -90,7 +91,11 @@ class Widget extends PureComponent {
           title={title}
         />
         {this.renderWidgetBody()}
-        <WidgetFooter config={config} settings={settings} />
+        <WidgetFooter
+          config={config}
+          settings={settings}
+          indicator={indicator}
+        />
       </div>
     );
   }
@@ -109,6 +114,7 @@ Widget.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   active: PropTypes.bool,
+  indicator: PropTypes.string,
   Component: PropTypes.any,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])

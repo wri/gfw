@@ -24,13 +24,17 @@ export default {
   // full width or not
   large: true,
   // internal category for colors and filters
-  type: 'extent',
+  colors: 'extent',
+  // data source for filtering
+  source: 'gadm',
+  // data source for filtering
+  dataType: 'extent',
   // categories to show widget on
   categories: ['summary', 'land-cover'],
   // types widget is available for
   types: ['global', 'country'],
   // levels of that type you can see the widget
-  admins: ['adm0', 'adm1', 'adm2'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   // layers to show on map
   layers: ['forest2000', 'forest2010'],
   // position

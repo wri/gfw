@@ -5,20 +5,19 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getCurrentLocation = state => state.currentLabel;
 const getIndicator = state => state.indicator || null;
 const getWhitelist = state => state.countryWhitelist;
 const getColors = state => state.colors;
-const getSentences = state => state.config && state.config.sentences;
+const getSentence = state => state.config.sentence;
 const getTitle = state => state.config.title;
 const getLocationType = state => state.type;
 
 export const isoHasPlantations = createSelector(
-  [getWhitelist, getCurrentLocation],
-  (whitelist, currentLabel) => {
+  [getWhitelist, getLocationType],
+  (whitelist, type) => {
     const hasPlantations =
-      (currentLabel !== 'global' && isEmpty(whitelist)) ||
-      whitelist.indexOf('plantations') > -1;
+      (type !== 'global' && isEmpty(whitelist)) ||
+      (whitelist && whitelist.includes('plantations'));
     return hasPlantations;
   }
 );
@@ -84,12 +83,12 @@ export const parseSentence = createSelector(
   [
     getData,
     getSettings,
-    getCurrentLocation,
+    getLocationType,
     getIndicator,
-    getSentences,
+    getSentence,
     isoHasPlantations
   ],
-  (data, settings, currentLabel, indicator, sentences, isoPlantations) => {
+  (data, settings, type, indicator, sentences, isoPlantations) => {
     if (!data || !sentences) return null;
     const {
       initial,
@@ -105,7 +104,7 @@ export const parseSentence = createSelector(
       : 100 * data.cover / data.totalArea;
     const params = {
       year: settings.extentYear,
-      location: currentLabel || 'global',
+      location: type || 'global',
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%',
@@ -122,7 +121,7 @@ export const parseSentence = createSelector(
         ? initial + hasPlantationsInd
         : initial + noPlantationsInd;
     }
-    if (currentLabel === 'global') {
+    if (type === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
     return { sentence, params };

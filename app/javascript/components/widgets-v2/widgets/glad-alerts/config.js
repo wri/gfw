@@ -11,7 +11,11 @@ export default {
   // full width or not
   large: true,
   // internal category for colors and filters
-  type: 'loss',
+  colors: 'loss',
+  // data source for filtering
+  source: 'gadm',
+  // data source for filtering
+  dataType: 'loss',
   // categories to show widget on
   categories: ['summary', 'forest-change'],
   // types widget is available for
@@ -31,7 +35,7 @@ export default {
   },
   // custom whitelists for locations
   whitelists: {
-    adm0s: [
+    adm0: [
       'BRA',
       'COL',
       'ECU',

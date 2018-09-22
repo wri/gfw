@@ -1,14 +1,15 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import compact from 'lodash/compact';
 
 // get list data
-const getSettings = state => state.settings || null;
-const getType = state => state.config.type || null;
-const getNonGlobalDatasets = state => state.nonGlobalDatasets || null;
-const getIndicator = state => state.indicator || null;
-const getForestType = state => state.forestType || null;
-const getLandCategory = state => state.landCategory || null;
-const getLocation = state => state.location || null;
+const getSettings = (state, { settings }) => settings || null;
+const getType = (state, { config }) => config.dataType || null;
+const getNonGlobalDatasets = state =>
+  state.widgetsV2.data.nonGlobalDatasets || null;
+const getIndicator = (state, { indicator }) => indicator || null;
+const getForestType = (state, { settings }) => settings.forestType || null;
+const getLandCategory = (state, { settings }) => settings.landCategory || null;
+const getLocation = state => (state.location && state.location.payload) || null;
 
 export const getNonGlobalIndicator = createSelector(
   [
@@ -53,3 +54,7 @@ export const getStatement = createSelector(
     return statements.join(' | ');
   }
 );
+
+export const getWidgetFooterProps = createStructuredSelector({
+  statement: getStatement
+});
