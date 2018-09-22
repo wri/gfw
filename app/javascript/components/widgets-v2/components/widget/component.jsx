@@ -15,37 +15,48 @@ import './styles.scss';
 
 class Widget extends PureComponent {
   renderWidgetBody = () => {
-    const { loading, error, locationName, data, dataConfig, settings, sentence, Component } = this.props;
+    const {
+      loading,
+      error,
+      locationName,
+      data,
+      dataConfig,
+      settings,
+      sentence,
+      Component
+    } = this.props;
     const hasData = !isEmpty(data);
 
     return (
       <div className="container">
         {loading && <Loader />}
-        {!loading && !error && !hasData &&
-          <NoContent message={`No data in selection for ${locationName}`} />
-        }
-        {!loading && error &&
-          <NoContent message="An error occured while fetching data. Please try again later." />
-        }
-        {!error && sentence && hasData &&
-          <DynamicSentence
-            className="sentence"
-            sentence={sentence}
-            // onHover={handleDataHighlight}
-            // handleMouseOver={() => handleDataHighlight(true, widget)}
-            // handleMouseOut={() => handleDataHighlight(false, widget)}
-          />
-        }
-        {!error && hasData &&
-          <Component
-            data={data}
-            config={dataConfig}
-            settings={settings}
-          />
-        }
+        {!loading &&
+          !error &&
+          !hasData && (
+            <NoContent message={`No data in selection for ${locationName}`} />
+          )}
+        {!loading &&
+          error && (
+            <NoContent message="An error occured while fetching data. Please try again later." />
+          )}
+        {!error &&
+          sentence &&
+          hasData && (
+            <DynamicSentence
+              className="sentence"
+              sentence={sentence}
+              // onHover={handleDataHighlight}
+              // handleMouseOver={() => handleDataHighlight(true, widget)}
+              // handleMouseOut={() => handleDataHighlight(false, widget)}
+            />
+          )}
+        {!error &&
+          hasData && (
+            <Component data={data} config={dataConfig} settings={settings} />
+          )}
       </div>
     );
-  }
+  };
 
   render() {
     const {
@@ -61,7 +72,12 @@ class Widget extends PureComponent {
       <div
         id={widget}
         className={cx('c-widget', { large: config.large }, { embed })}
-        style={{ ...active && { borderColor: color, boxShadow: `0 0px 0px 1px ${color}` } }}
+        style={{
+          ...(active && {
+            borderColor: color,
+            boxShadow: `0 0px 0px 1px ${color}`
+          })
+        }}
       >
         <WidgetHeader
           widget={widget}
@@ -70,10 +86,7 @@ class Widget extends PureComponent {
           options={options}
         />
         {this.renderWidgetBody()}
-        <WidgetFooter
-          config={config}
-          settings={settings}
-        />
+        <WidgetFooter config={config} settings={settings} />
       </div>
     );
   }

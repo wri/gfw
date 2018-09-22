@@ -81,10 +81,7 @@ export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
   const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${
     QUERIES.viirsAlerts
   }`
-    .replace(
-      '{location}',
-      !adm2 ? getLocationQuery(adm0, adm1, adm2) : ''
-    )
+    .replace('{location}', !adm2 ? getLocationQuery(adm0, adm1, adm2) : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
 };

@@ -27,7 +27,8 @@ class WhitelistProvider extends PureComponent {
     const { getCountryWhitelist, getRegionWhitelist } = this.props;
     const hasCountryChanged = adm0 && adm0 !== this.props.location.adm0;
     const hasRegionChanged = adm0 && adm1 !== this.props.location.adm1;
-    const hasSubRegionChanged = adm0 && adm1 && adm2 !== this.props.location.adm2;
+    const hasSubRegionChanged =
+      adm0 && adm1 && adm2 !== this.props.location.adm2;
 
     if (hasCountryChanged) {
       getCountryWhitelist(adm0);

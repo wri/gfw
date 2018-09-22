@@ -20,7 +20,7 @@ import './widget-header-styles.scss';
 class WidgetHeader extends PureComponent {
   state = {
     tooltipOpen: false
-  }
+  };
 
   renderMapButton = () => {
     const { active, config, title, locationName, isDeviceTouch } = this.props;
@@ -37,18 +37,22 @@ class WidgetHeader extends PureComponent {
           title: 'map-button',
           widget: `${title} in ${locationName || ''}`
         }}
-        tooltip={isSmall ? {
-          text: active ? 'Currently displayed' : 'Show on map'
-        } : {}}
-      >
-        {(isSmall || isDeviceTouch) ?
-          <Icon icon={mapIcon} className="map-icon" />
-          :
-          'SHOW ON MAP'
+        tooltip={
+          isSmall
+            ? {
+              text: active ? 'Currently displayed' : 'Show on map'
+            }
+            : {}
         }
+      >
+        {isSmall || isDeviceTouch ? (
+          <Icon icon={mapIcon} className="map-icon" />
+        ) : (
+          'SHOW ON MAP'
+        )}
       </Button>
     );
-  }
+  };
 
   renderSettingsButton = () => {
     const {
@@ -66,7 +70,6 @@ class WidgetHeader extends PureComponent {
     const { tooltipOpen } = this.state;
     return (
       <Fragment>
-
         <Tooltip
           className="widget-tooltip-theme"
           theme="light"
@@ -119,7 +122,7 @@ class WidgetHeader extends PureComponent {
         <div className="separator" />
       </Fragment>
     );
-  }
+  };
 
   renderMetadataButton = () => {
     const { metakey, citation, setModalMeta, isDeviceTouch } = this.props;
@@ -145,7 +148,7 @@ class WidgetHeader extends PureComponent {
         <Icon icon={infoIcon} />
       </Button>
     );
-  }
+  };
 
   renderShareButton = () => {
     const { shareData, setShareModal, isDeviceTouch } = this.props;
@@ -164,27 +167,17 @@ class WidgetHeader extends PureComponent {
         <Icon icon={shareIcon} />
       </Button>
     );
-  }
+  };
 
   render() {
-    const {
-      title,
-      settings,
-      options,
-      embed,
-      config
-    } = this.props;
+    const { title, settings, options, embed, config } = this.props;
 
     return (
       <div className="c-widget-header">
         <div className="title">{title}</div>
         <div className="options">
-          {!embed && config.layers &&
-            this.renderMapButton()
-          }
-          {!embed && settings && options &&
-            this.renderSettingsButton()
-          }
+          {!embed && config.layers && this.renderMapButton()}
+          {!embed && settings && options && this.renderSettingsButton()}
           <div className="small-options">
             {this.renderMetadataButton()}
             {this.renderShareButton()}

@@ -15,7 +15,8 @@ import {
 const MIN_YEAR = 2015;
 
 // get list data
-const getAlerts = state => console.log('state', state) || (state.data && state.data.alerts) || null;
+const getAlerts = state =>
+  console.log('state', state) || (state.data && state.data.alerts) || null;
 const getLatestDates = state => (state.data && state.data.latest) || null;
 const getColors = state => state.colors || null;
 const getActiveData = state => state.settings.activeData || null;

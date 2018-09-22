@@ -24,10 +24,11 @@ class WidgetContainer extends PureComponent {
       widget,
       params
     } = this.props;
-    const hasSettingsChanged = settings &&
+    const hasSettingsChanged =
+      settings &&
       prevProps.settings &&
       (!isEqual(settings, this.props.settings) ||
-      !isEqual(location, this.props.location));
+        !isEqual(location, this.props.location));
 
     // if (hasSettingsChanged) getWidgetData({ widget, getData, params });
   }

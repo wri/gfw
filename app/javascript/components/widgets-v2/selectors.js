@@ -12,11 +12,11 @@ export const selectGeostore = state => state.geostore.geostore;
 export const selectWidgetsFilter = (state, ownProps) => ownProps.widgets;
 export const selectWidgets = state => state.widgetsV2.widgets;
 export const selectLoading = state =>
-  (state.countryData.countriesLoading ||
+  state.countryData.countriesLoading ||
   state.countryData.regionsLoading ||
   state.countryData.subRegionsLoading ||
   state.whitelists.countriesLoading ||
-  state.whitelists.regionsLoading);
+  state.whitelists.regionsLoading;
 export const selectWhitelists = state => ({
   countries: state.whitelists.countries,
   regions: state.whitelists.regions
@@ -59,32 +59,29 @@ export const getChildLocationData = createSelector(
 
 export const getActiveWidget = createSelector(
   [selectQuery],
-  (query) => query && query.widget
+  query => query && query.widget
 );
 
 export const getCategory = createSelector(
   [selectQuery],
-  (query) => query && query.category
+  query => query && query.category
 );
 
 export const getAllWidgets = () => Object.values(allWidgets);
 
-export const parseWidgets = createSelector(
-  [getAllWidgets],
-  (widgets) => {
-    if (!widgets) return null;
+export const parseWidgets = createSelector([getAllWidgets], widgets => {
+  if (!widgets) return null;
 
-    return widgets.map(w => ({
-      widget: w.initialState.config.widget,
-      Component: w.Component,
-      getData: w.getData,
-      getProps: w.getProps,
-      config: w.initialState.config,
-      settings: w.initialState.settings,
-      colors: colors[w.initialState.config.type]
-    }));
-  }
-);
+  return widgets.map(w => ({
+    widget: w.initialState.config.widget,
+    Component: w.Component,
+    getData: w.getData,
+    getProps: w.getProps,
+    config: w.initialState.config,
+    settings: w.initialState.settings,
+    colors: colors[w.initialState.config.type]
+  }));
+});
 
 export const filterWidgetFromProps = createSelector(
   [parseWidgets, selectWidgetsFilter],
@@ -104,29 +101,30 @@ export const parseWidgetsWithOptions = createSelector(
       const optionKeys = optionsConfig && Object.keys(optionsConfig);
       return {
         ...w,
-        ...optionsConfig && {
+        ...(optionsConfig && {
           options: optionKeys.reduce((obj, optionKey) => {
             const polynamesOptions = ['forestTypes', 'landCategories'];
             const configWhitelist = optionsConfig[optionKey];
             let filteredOptions = options[optionKey];
             if (Array.isArray(configWhitelist)) {
-              filteredOptions = filteredOptions ?
-                filteredOptions.filter(o => configWhitelist.includes(o.value))
-                :
-                optionsConfig[optionKey].map(o => ({
+              filteredOptions = filteredOptions
+                ? filteredOptions.filter(o => configWhitelist.includes(o.value))
+                : optionsConfig[optionKey].map(o => ({
                   label: o,
                   value: o
                 }));
             }
             if (polynamesOptions.includes(optionKey)) {
-              filteredOptions = filteredOptions.filter(o => polynameWhitelist.includes(o.value));
+              filteredOptions = filteredOptions.filter(o =>
+                polynameWhitelist.includes(o.value)
+              );
             }
             return {
               ...obj,
               [optionKey]: filteredOptions
             };
           }, {})
-        }
+        })
       };
     });
   }
@@ -138,8 +136,8 @@ export const parseWidgetsWithData = createSelector(
   (widgets, widgetsState, query) => {
     if (!widgets) return null;
     return widgets.map(w => {
-      const widgetUrlState = query && query[w.widget] || {};
-      const widgetState = widgetsState && widgetsState[w.widget] || {};
+      const widgetUrlState = (query && query[w.widget]) || {};
+      const widgetState = (widgetsState && widgetsState[w.widget]) || {};
       const { options, config } = w;
       const settings = {
         ...w.settings,
@@ -155,19 +153,27 @@ export const parseWidgetsWithData = createSelector(
           settings,
           data: widgetState.data
         }),
-        ...settings && {
+        ...(settings && {
           settings
-        },
-        ...options && {
-          optionsSelected: Object.keys(config.options).reduce((obj, optionKey) => ({
-            ...obj,
-            [optionKey]: options[pluralise(optionKey)] && options[pluralise(optionKey)].find(o => o.value === settings[optionKey])
-          }), {})
-        },
-        ...config.options.startYear && config.options.endYear && {
-          startYears: options.years.filter(y => y.value <= settings.endYear),
-          endYears: options.years.filter(y => y.value >= settings.startYear)
-        }
+        }),
+        ...(options && {
+          optionsSelected: Object.keys(config.options).reduce(
+            (obj, optionKey) => ({
+              ...obj,
+              [optionKey]:
+                options[pluralise(optionKey)] &&
+                options[pluralise(optionKey)].find(
+                  o => o.value === settings[optionKey]
+                )
+            }),
+            {}
+          )
+        }),
+        ...(config.options.startYear &&
+          config.options.endYear && {
+            startYears: options.years.filter(y => y.value <= settings.endYear),
+            endYears: options.years.filter(y => y.value >= settings.startYear)
+          })
       };
     });
   }

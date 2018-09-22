@@ -8,18 +8,15 @@ import './styles.scss';
 
 class Widgets extends PureComponent {
   render() {
-    const {
-      loading,
-      widgets,
-      ...rest
-    } = this.props;
+    const { loading, widgets, ...rest } = this.props;
 
     return (
       <div className="c-widgets">
         {loading && <Loader />}
-        {!loading && widgets.map(w => console.log(w) || (
-          <Widget key={w.widget} {...w} {...rest} />
-        ))}
+        {!loading &&
+          widgets.map(
+            w => console.log(w) || <Widget key={w.widget} {...w} {...rest} />
+          )}
       </div>
     );
   }

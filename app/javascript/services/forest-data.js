@@ -49,9 +49,9 @@ const getExtentYear = year =>
   (year === 2000 ? 'area_extent_2000' : 'area_extent');
 
 const getLocationQuery = (adm0, adm1, adm2) =>
-  `${adm0 ? `iso = '${adm0}'` : '1 = 1'}${
-    adm1 ? ` AND adm1 = ${adm1}` : ''
-  }${adm2 ? ` AND adm2 = ${adm2}` : ''}`;
+  `${adm0 ? `iso = '${adm0}'` : '1 = 1'}${adm1 ? ` AND adm1 = ${adm1}` : ''}${
+    adm2 ? ` AND adm2 = ${adm2}` : ''
+  }`;
 
 const getIndicatorsFromData = (types, categories) => {
   let indicators = '';
@@ -79,9 +79,7 @@ export const getLocations = ({
     .replace('{location}', adm1 ? 'adm2' : 'adm1')
     .replace(
       '{extentYear}',
-      `${!adm1 ? 'sum(' : ''}${getExtentYear(extentYear)}${
-        !adm1 ? ')' : ''
-      }`
+      `${!adm1 ? 'sum(' : ''}${getExtentYear(extentYear)}${!adm1 ? ')' : ''}`
     )
     .replace('{extent}', adm1 ? 'area_admin' : 'sum(area_admin)')
     .replace('{iso}', adm0)
@@ -190,13 +188,7 @@ export const getMultiRegionExtent = ({
   return request.get(url);
 };
 
-export const getGain = ({
-  adm0,
-  adm1,
-  adm2,
-  forestType,
-  landCategory
-}) => {
+export const getGain = ({ adm0, adm1, adm2, forestType, landCategory }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gain}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{calc}', adm1 ? 'area_gain' : 'SUM(area_gain)')
@@ -204,12 +196,7 @@ export const getGain = ({
   return request.get(url);
 };
 
-export const getGainLocations = ({
-  adm0,
-  adm1,
-  forestType,
-  landCategory
-}) => {
+export const getGainLocations = ({ adm0, adm1, forestType, landCategory }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gainLocations}`
     .replace('{location}', getLocationQuery(adm0, adm1))
     .replace('{admin}', adm1 ? 'adm2' : 'adm1')
