@@ -15,6 +15,18 @@ const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
 const getMinimalist = state => state.minimalist || false;
 
+export const parsePayload = payload => {
+  const year = payload && payload[0].payload.year;
+  return {
+    startDate: moment(year)
+      .startOf('year')
+      .format('YYYY-MM-DD'),
+    endDate: moment(year)
+      .endOf('year')
+      .format('YYYY-MM-DD')
+  };
+};
+
 // get lists selected
 export const parseData = createSelector(
   [getLoss, getExtent, getSettings],

@@ -3,7 +3,7 @@ export default {
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
   types: ['country'],
-  admins: ['country', 'region', 'subRegion'],
+  admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   options: {
     forestTypes: ['ifl', 'primary_forest', 'mangrove_2010_gmw'],
@@ -17,6 +17,9 @@ export default {
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss',
   layers: ['loss'],
+  activeDataKeys: {
+    type: 'date'
+  },
   sortOrder: {
     summary: 0,
     forestChange: 0

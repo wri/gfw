@@ -11,11 +11,23 @@ import { sortByKey, getColorPalette } from 'utils/data';
 const getLoss = state => (state.data && state.data.loss) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocationName = state => state.locationName || null;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
-const getCountries = state => state.config && state.countries;
+const getCountries = state => state.locationData;
+
+export const parsePayload = payload => {
+  const year = payload[0].payload.year;
+  return {
+    startDate: moment(year)
+      .startOf('year')
+      .format('YYYY-MM-DD'),
+    endDate: moment(year)
+      .endOf('year')
+      .format('YYYY-MM-DD')
+  };
+};
 
 const groupData = data => {
   const groupByYear = groupBy(data, 'year');
@@ -144,11 +156,11 @@ export const parseSentence = createSelector(
     getFilteredData,
     getExtent,
     getSettings,
-    getCurrentLocation,
+    getLocationName,
     getIndicator,
     getSentences
   ],
-  (data, extent, settings, currentLabel, indicator, sentences) => {
+  (data, extent, settings, locationName, indicator, sentences) => {
     if (!data) return null;
     const { initial, withInd } = sentences;
     const { startYear, endYear, extentYear } = settings;
@@ -162,7 +174,7 @@ export const parseSentence = createSelector(
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location: currentLabel === 'global' ? 'globally' : currentLabel,
+      location: locationName === 'global' ? 'globally' : locationName,
       startYear,
       endYear,
       loss:

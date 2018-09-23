@@ -23,7 +23,8 @@ class Widget extends PureComponent {
       dataConfig,
       settings,
       sentence,
-      Component
+      Component,
+      parsePayload
     } = this.props;
     const hasData = !isEmpty(data);
 
@@ -51,6 +52,7 @@ class Widget extends PureComponent {
               data={data}
               config={dataConfig}
               settings={settings}
+              parsePayload={parsePayload}
             />
           )}
       </div>
@@ -94,6 +96,7 @@ Widget.propTypes = {
   active: PropTypes.bool,
   indicator: PropTypes.object,
   Component: PropTypes.any,
+  parsePayload: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };

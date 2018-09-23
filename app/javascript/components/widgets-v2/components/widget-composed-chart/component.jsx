@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import debounce from 'lodash/debounce';
 
 import ComposedChart from 'components/charts/composed-chart';
@@ -12,26 +11,12 @@ class WidgetAlerts extends Component {
     nextProps.settings.dataset !== this.props.settings.dataset;
 
   handleMouseMove = debounce(data => {
-    const { setWidgetSettings, widget } = this.props;
-    let activeData = {};
-    if (data) {
+    const { parsePayload, setWidgetSettings, widget } = this.props;
+    if (parsePayload) {
       const { activePayload } = data && data;
-      const payload =
-        activePayload && activePayload.find(d => d.name === 'count').payload;
-      const startDate =
-        payload &&
-        moment()
-          .year(payload.year)
-          .week(payload.week);
-      if (payload) {
-        activeData = {
-          ...payload,
-          startDate,
-          endDate: startDate && startDate.add(7, 'days')
-        };
-      }
+      const activeData = parsePayload(activePayload);
+      setWidgetSettings({ widget, value: { activeData } });
     }
-    setWidgetSettings({ widget, value: { activeData } });
   }, 100);
 
   handleMouseLeave = debounce(() => {
@@ -62,6 +47,7 @@ WidgetAlerts.propTypes = {
   config: PropTypes.object,
   settings: PropTypes.object,
   setWidgetSettings: PropTypes.func,
+  parsePayload: PropTypes.func,
   widget: PropTypes.string,
   active: PropTypes.bool
 };

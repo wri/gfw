@@ -112,12 +112,8 @@ export const parseWidgets = createSelector([getAllWidgets], widgets => {
   if (!widgets) return null;
 
   return widgets.map(w => ({
+    ...w,
     widget: w.config.widget,
-    Component: w.Component,
-    getData: w.getData,
-    getProps: w.getProps,
-    config: w.config,
-    settings: w.settings,
     colors: colors[w.config.colors]
   }));
 });
@@ -209,6 +205,7 @@ export const parseWidgetsWithOptions = createSelector(
                   value: o
                 }));
             }
+
             if (
               polynameWhitelist &&
               polynameWhitelist.length &&

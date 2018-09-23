@@ -11,6 +11,8 @@ export default {
   admins: ['global'],
   options: {
     forestTypes: ['ifl'],
-    landCategories: ['wdpa']
+    landCategories: ['wdpa'],
+    extentYears: true,
+    thresholds: true
   }
 };
