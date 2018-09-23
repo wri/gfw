@@ -80,21 +80,26 @@ export const handleLocationChange = createThunkAction(
     if (query) {
       Object.keys(query).forEach(key => {
         const queryObj = query[key] || {};
-        const { forestType, landCategory, page } = queryObj;
-        newQuery[key] = {
-          ...queryObj,
-          ...(forestType && {
-            forestType: ''
-          }),
-          ...(landCategory && {
-            landCategory: ''
-          }),
-          ...(page && {
-            page: 0
-          })
-        };
+        if (typeof queryObj === 'object') {
+          const { forestType, landCategory, page } = queryObj;
+          newQuery[key] = {
+            ...queryObj,
+            ...(forestType && {
+              forestType: ''
+            }),
+            ...(landCategory && {
+              landCategory: ''
+            }),
+            ...(page && {
+              page: 0
+            })
+          };
+        } else {
+          newQuery[key] = queryObj;
+        }
       });
     }
+
     dispatch({
       type: DASHBOARDS,
       payload: {

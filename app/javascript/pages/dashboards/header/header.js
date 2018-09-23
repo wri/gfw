@@ -17,9 +17,9 @@ class HeaderContainer extends PureComponent {
     getHeaderData({ ...location, ...settings });
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { location, settings, getHeaderData } = nextProps;
-    if (!isEqual(location, this.props.location)) {
+  componentDidUpdate(prevProps) {
+    const { location, settings, getHeaderData } = this.props;
+    if (!isEqual(location, prevProps.location)) {
       getHeaderData({ ...location, ...settings });
     }
   }

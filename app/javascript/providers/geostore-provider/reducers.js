@@ -2,6 +2,7 @@ import * as actions from './actions';
 
 export const initialState = {
   loading: false,
+  error: false,
   geostore: {}
 };
 

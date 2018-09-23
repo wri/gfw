@@ -11,38 +11,34 @@ const mapStateToProps = ({ location }) => ({
 
 class GeostoreProvider extends PureComponent {
   componentDidMount() {
-    const {
-      location: { type, country, region, subRegion },
-      getGeostore
-    } = this.props;
+    const { location: { type, adm0, adm1, adm2 }, getGeostore } = this.props;
 
-    if (country) {
-      getGeostore({ type, country, region, subRegion });
+    if (adm0) {
+      getGeostore({ type, adm0, adm1, adm2 });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { location: { country, region, subRegion, type } } = this.props;
+    const { location: { adm0, adm1, adm2, type } } = this.props;
     const { getGeostore, setGeostore } = prevProps;
-    const hasCountryChanged = country && country !== prevProps.location.country;
-    const hasRegionChanged = country && region !== prevProps.location.region;
-    const hasSubRegionChanged =
-      country && region && subRegion !== prevProps.location.subRegion;
+    const hasAdm0Changed = adm0 && adm0 !== prevProps.location.adm0;
+    const hasAdm1Changed = adm0 && adm1 !== prevProps.location.adm1;
+    const hasAdm2Changed = adm0 && adm1 && adm2 !== prevProps.location.adm2;
 
-    if (!country && country !== prevProps.location.country) {
+    if (!adm0 && adm0 !== prevProps.location.adm0) {
       setGeostore({});
     }
 
-    if (hasCountryChanged) {
-      getGeostore({ type, country, region, subRegion });
+    if (hasAdm0Changed) {
+      getGeostore({ type, adm0, adm1, adm2 });
     }
 
-    if (hasRegionChanged) {
-      getGeostore({ type, country, region, subRegion });
+    if (hasAdm1Changed) {
+      getGeostore({ type, adm0, adm1, adm2 });
     }
 
-    if (hasSubRegionChanged) {
-      getGeostore({ type, country, region, subRegion });
+    if (hasAdm2Changed) {
+      getGeostore({ type, adm0, adm1, adm2 });
     }
   }
 
