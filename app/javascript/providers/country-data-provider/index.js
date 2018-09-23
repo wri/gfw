@@ -33,7 +33,7 @@ class CountryDataProvider extends PureComponent {
     const { location: { adm0, adm1 } } = this.props;
     const { getRegions, getSubRegions, getCountryLinks } = prevProps;
     const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
-    const hasRegionChanged = adm1 !== prevProps.location.adm1;
+    const hasRegionChanged = adm0 && adm1 && adm1 !== prevProps.location.adm1;
 
     if (hasCountryChanged) {
       getCountryLinks();
@@ -44,9 +44,7 @@ class CountryDataProvider extends PureComponent {
     }
 
     if (hasRegionChanged) {
-      if (adm1) {
-        getSubRegions({ adm0, adm1 });
-      }
+      getSubRegions({ adm0, adm1 });
     }
   }
 

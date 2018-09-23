@@ -6,6 +6,7 @@ import sumBy from 'lodash/sumBy';
 import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 import axios from 'axios';
+import { DASHBOARDS } from 'router';
 
 export const setHeaderLoading = createAction('setHeaderLoading');
 export const setHeaderData = createAction('setHeaderData');
@@ -67,5 +68,40 @@ export const getHeaderData = createThunkAction(
         dispatch(setHeaderLoading({ loading: false, error: true }));
         console.info(error);
       });
+  }
+);
+
+export const handleLocationChange = createThunkAction(
+  'handleLocationChange',
+  location => (dispatch, getState) => {
+    const { query } = getState().location;
+    const newQuery = {};
+
+    if (query) {
+      Object.keys(query).forEach(key => {
+        const queryObj = query[key] || {};
+        const { forestType, landCategory, page } = queryObj;
+        newQuery[key] = {
+          ...queryObj,
+          ...(forestType && {
+            forestType: ''
+          }),
+          ...(landCategory && {
+            landCategory: ''
+          }),
+          ...(page && {
+            page: 0
+          })
+        };
+      });
+    }
+    dispatch({
+      type: DASHBOARDS,
+      payload: {
+        type: location.adm0 ? 'country' : 'global',
+        ...location
+      },
+      query: newQuery
+    });
   }
 );

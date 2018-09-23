@@ -73,10 +73,10 @@ export const getRegions = createThunkAction(
 
 export const getSubRegions = createThunkAction(
   'getSubRegions',
-  ({ country, region }) => (dispatch, state) => {
+  ({ adm0, adm1 }) => (dispatch, state) => {
     if (!state().countryData.isSubRegionsLoading) {
       dispatch(setSubRegionsLoading(true));
-      getSubRegionsProvider(country, region)
+      getSubRegionsProvider(adm0, adm1)
         .then(subRegions => {
           const { rows } = subRegions.data;
           const parsedResponse = [];

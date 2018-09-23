@@ -155,16 +155,15 @@ export const filterWidgetsByLocationType = createSelector(
 );
 
 export const filterWidgetsByLocationWhitelist = createSelector(
-  [filterWidgetsByLocation, getAdminLevel, selectLocation],
-  (widgets, adminLevel, location) => {
+  [filterWidgetsByLocation, selectLocation],
+  (widgets, location) => {
     if (!widgets) return null;
     return widgets.filter(w => {
       const { whitelists } = w.config;
       if (!whitelists) return true;
-      const whitelist = whitelists[adminLevel];
+      const whitelist = whitelists.adm0;
       if (!whitelist) return true;
-
-      return whitelist.includes(location[adminLevel]);
+      return whitelist.includes(location.adm0);
     });
   }
 );
@@ -249,6 +248,14 @@ export const parseWidgetsWithOptions = createSelector(
   }
 );
 
+export const filterWidgetsByCategory = createSelector(
+  [parseWidgetsWithOptions, getCategory],
+  (widgets, category) => {
+    if (!widgets) return null;
+    return widgets.filter(w => w.config.categories.includes(category));
+  }
+);
+
 export const getWidgetsProps = createStructuredSelector({
   loading: selectLoading,
   whitelists: selectWhitelists,
@@ -261,5 +268,5 @@ export const getWidgetsProps = createStructuredSelector({
   locationObject: getLocationObject,
   locationName: getLocationName,
   childLocationData: getChildLocationData,
-  widgets: parseWidgetsWithOptions
+  widgets: filterWidgetsByCategory
 });
