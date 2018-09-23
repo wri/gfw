@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
+import lowerCase from 'lodash/lowerCase';
 
 import colors from 'data/colors.json';
 import allOptions from './options';
@@ -183,8 +184,13 @@ export const filterWidgetsByIndicatorWhitelist = createSelector(
 
 // once we know which widgets we can render, lets pass them all static props
 export const parseWidgetsWithOptions = createSelector(
-  [filterWidgetsByIndicatorWhitelist, getOptions, getActiveWhitelist],
-  (widgets, options, polynameWhitelist) => {
+  [
+    filterWidgetsByIndicatorWhitelist,
+    getOptions,
+    getActiveWhitelist,
+    selectLocation
+  ],
+  (widgets, options, polynameWhitelist, location) => {
     if (!widgets) return null;
 
     return widgets.map(w => {
@@ -206,15 +212,29 @@ export const parseWidgetsWithOptions = createSelector(
                 }));
             }
 
-            if (
-              polynameWhitelist &&
-              polynameWhitelist.length &&
-              polynamesOptions.includes(optionKey)
-            ) {
-              filteredOptions = filteredOptions.filter(o =>
-                polynameWhitelist.includes(o.value)
-              );
+            if (polynamesOptions.includes(optionKey)) {
+              // some horrible an inexcusable filters for forest types and land categories
+              filteredOptions =
+                location.type === 'global'
+                  ? filteredOptions.filter(o => o.global)
+                  : filteredOptions;
+              filteredOptions =
+                polynameWhitelist && polynameWhitelist.length
+                  ? filteredOptions.filter(o =>
+                    polynameWhitelist.includes(o.value)
+                  )
+                  : filteredOptions;
+              filteredOptions = filteredOptions.map(i => ({
+                ...i,
+                metaKey:
+                  i.metaKey === 'primary_forest'
+                    ? `${lowerCase(location.adm0)}_${i.metaKey}${
+                      location.adm0 === 'IDN' ? 's' : ''
+                    }`
+                    : i.metaKey
+              }));
             }
+
             return {
               ...obj,
               [optionKey]: filteredOptions
