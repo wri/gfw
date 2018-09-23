@@ -22,7 +22,7 @@ export default {
   // meta key for info button
   metaKey: 'widget_tree_cover',
   // full width or not
-  large: true,
+  large: false,
   // internal category for colors and filters
   colors: 'extent',
   // data source for filtering

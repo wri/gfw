@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import replace from 'lodash/replace';
+import upperFirst from 'lodash/upperFirst';
 
 import CATEGORIES from 'data/categories.json';
 
@@ -23,9 +24,15 @@ export const getWidgetAnchor = () => {
   return document.getElementById(widgetHash);
 };
 
+export const getNoWidgetsMessage = createSelector(
+  [selectCategory],
+  category => `${upperFirst(category)} data for {location} coming soon`
+);
+
 export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
   category: selectCategory,
   links: getLinks,
-  widgetAnchor: getWidgetAnchor
+  widgetAnchor: getWidgetAnchor,
+  noWidgetsMessage: getNoWidgetsMessage
 });

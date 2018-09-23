@@ -13,7 +13,9 @@ export const selectLocationType = state =>
   state.location && state.location.payload && state.location.payload.type;
 export const selectQuery = state => state.location && state.location.query;
 export const selectGeostore = state => state.geostore.geostore;
-export const selectWidgetsFilter = (state, ownProps) => ownProps.widgets;
+export const selectWidgetsFilter = (state, { widgets }) => widgets;
+export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
+  noWidgetsMessage;
 export const selectWidgets = state => state.widgetsV2.widgets;
 export const selectLoading = state =>
   state.countryData.countriesLoading ||
@@ -102,6 +104,12 @@ export const getFAOLocationData = createSelector(
 export const getCategory = createSelector(
   [selectQuery],
   query => (query && query.category) || 'summary'
+);
+
+export const getNoWidgetsMessage = createSelector(
+  [getLocationName, selecteNoWidgetsMessage],
+  (locationName, message) =>
+    message && locationName && message.replace('{location}', locationName)
 );
 
 export const getAllWidgets = () => Object.values(allWidgets);
@@ -272,5 +280,6 @@ export const getWidgetsProps = createStructuredSelector({
   locationObject: getLocationObject,
   locationName: getLocationName,
   childLocationData: getChildLocationData,
-  widgets: filterWidgetsByCategory
+  widgets: filterWidgetsByCategory,
+  noWidgetsMessage: getNoWidgetsMessage
 });

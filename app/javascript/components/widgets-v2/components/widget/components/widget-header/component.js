@@ -39,7 +39,7 @@ class WidgetHeader extends PureComponent {
         theme={cx(
           'theme-button-small',
           { small: isSmall },
-          { square: isDeviceTouch }
+          { square: isDeviceTouch || isSmall }
         )}
         trackingData={{
           title: 'map-button',

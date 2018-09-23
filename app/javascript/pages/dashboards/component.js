@@ -31,7 +31,8 @@ class Page extends PureComponent {
       links,
       widgetAnchor,
       setMapZoom,
-      handleCategoryChange
+      handleCategoryChange,
+      noWidgetsMessage
     } = this.props;
 
     return (
@@ -56,7 +57,7 @@ class Page extends PureComponent {
             }))}
             checkActive
           />
-          <Widgets />
+          <Widgets noWidgetsMessage={noWidgetsMessage} />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Sticky
@@ -95,6 +96,7 @@ Page.propTypes = {
   links: PropTypes.array.isRequired,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   setMapZoom: PropTypes.func,
+  noWidgetsMessage: PropTypes.string,
   handleCategoryChange: PropTypes.func
 };
 

@@ -57,7 +57,7 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
   .map-controls {
     display: none;
     position: absolute;
-    top: rem(73px);
+    top: rem(15px);
     right: rem(15px);
     z-index: 999;
 
