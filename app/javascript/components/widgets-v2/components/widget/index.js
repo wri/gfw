@@ -30,7 +30,8 @@ class WidgetContainer extends PureComponent {
       'startYear',
       'endYear',
       'activeData',
-      'weeks'
+      'weeks',
+      'page'
     ];
     let changedSetting = '';
     if (settings && prevProps.settings) {

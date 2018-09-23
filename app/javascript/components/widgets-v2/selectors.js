@@ -82,8 +82,10 @@ export const getLocationObject = createSelector(
   [getActiveLocationData, selectLocation],
   (adms, location) => {
     if (!adms) return null;
-    const { adm0, adm1, adm2 } = location;
-    return adms.find(a => a.value === (adm2 || adm1 || adm0));
+    const { type, adm0, adm1, adm2 } = location;
+    return adm0
+      ? adms.find(a => a.value === (adm2 || adm1 || adm0))
+      : { label: type, value: type };
   }
 );
 
