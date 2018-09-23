@@ -98,7 +98,8 @@ export const routes = {
   },
   [DASHBOARDS_EMBED]: {
     path: '/embed/dashboards/:type?/:adm0?/:adm1?/:adm2?',
-    component: 'dashboards/embed'
+    component: 'dashboards/embed',
+    embed: true
   },
   [NOT_FOUND]: {
     path: '/404',

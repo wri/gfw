@@ -24,6 +24,11 @@
     }
   }
 
+  &.embed {
+    border: 0;
+    padding: 0;
+  }
+
   .container {
     position: relative;
     height: 100%;
@@ -47,23 +52,5 @@
         }
       }
     }
-  }
-
-  .embed-footer {
-    border-top: solid 1px $border;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-top: rem(20px);
-    margin-top: rem(20px);
-
-    p {
-      opacity: 0.7;
-    }
-  }
-
-  .embed-btn {
-    width: rem(160px);
-    margin-left: rem(10px);
   }
 }

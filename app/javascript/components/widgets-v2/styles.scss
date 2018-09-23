@@ -6,7 +6,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   height: 100%;
-  padding: rem(20px) $mobile-gutter rem(40px) $mobile-gutter;
+  padding: rem(20px) $mobile-gutter rem(20px) $mobile-gutter;
   min-width: 100%;
 
   @supports not (display: grid) {
@@ -46,7 +46,7 @@
   }
 
   @media screen and (min-width: $screen-l) {
-    padding-top: rem(50px);
+    padding-top: rem(30px);
     padding-right: rem(30px);
   }
 

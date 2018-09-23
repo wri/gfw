@@ -12,8 +12,10 @@ export const selectLocation = state => state.location && state.location.payload;
 export const selectLocationType = state =>
   state.location && state.location.payload && state.location.payload.type;
 export const selectQuery = state => state.location && state.location.query;
+export const selectWidgetFromQuery = state =>
+  state.location && state.location.query && state.location.query.widget;
+export const selectEmbed = (state, { embed }) => embed;
 export const selectGeostore = state => state.geostore.geostore;
-export const selectWidgetsFilter = (state, { widgets }) => widgets;
 export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
   noWidgetsMessage;
 export const selectWidgets = state => state.widgetsV2.widgets;
@@ -114,26 +116,24 @@ export const getNoWidgetsMessage = createSelector(
 
 export const getAllWidgets = () => Object.values(allWidgets);
 
-export const parseWidgets = createSelector([getAllWidgets], widgets => {
-  if (!widgets) return null;
+export const parseWidgets = createSelector(
+  [getAllWidgets, selectWidgetFromQuery, selectEmbed],
+  (widgets, widgetQuery, embed) => {
+    if (!widgets) return null;
+    const filteredWidgets = embed
+      ? widgets.filter(w => w.config.widget === widgetQuery)
+      : widgets;
 
-  return widgets.map(w => ({
-    ...w,
-    widget: w.config.widget,
-    colors: colors[w.config.colors]
-  }));
-});
-
-export const filterWidgetFromProps = createSelector(
-  [parseWidgets, selectWidgetsFilter],
-  (widgets, filter) => {
-    if (!filter) return widgets;
-    return widgets.filter(w => filter.includes(w.config.slug));
+    return filteredWidgets.map(w => ({
+      ...w,
+      widget: w.config.widget,
+      colors: colors[w.config.colors]
+    }));
   }
 );
 
 export const filterWidgetsByLocation = createSelector(
-  [filterWidgetFromProps, selectLocationType, getAdminLevel],
+  [parseWidgets, selectLocationType, getAdminLevel],
   (widgets, type, adminLevel) => {
     if (!widgets) return null;
     return widgets.filter(w => {
@@ -144,7 +144,7 @@ export const filterWidgetsByLocation = createSelector(
 );
 
 export const filterWidgetsByLocationType = createSelector(
-  [filterWidgetFromProps, selectLocation, getFAOLocationData],
+  [filterWidgetsByLocation, selectLocation, getFAOLocationData],
   (widgets, location, faoCountries) => {
     if (!widgets) return null;
     if (location.type !== 'country') return widgets;

@@ -69,10 +69,11 @@ class Widget extends PureComponent {
         id={widget}
         className={cx('c-widget', { large: config.large }, { embed })}
         style={{
-          ...(active && {
-            borderColor: colors.main,
-            boxShadow: `0 0px 0px 1px ${colors.main}`
-          })
+          ...(active &&
+            !embed && {
+              borderColor: colors.main,
+              boxShadow: `0 0px 0px 1px ${colors.main}`
+            })
         }}
       >
         <WidgetHeader {...this.props} />
