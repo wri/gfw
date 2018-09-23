@@ -6,7 +6,6 @@ import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import LayerSpecProvider from 'providers/layerspec-provider';
-import DatasetsProvider from 'providers/datasets-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 
 import Widgets from 'components/widgets-v2';
@@ -30,13 +29,8 @@ class Page extends PureComponent {
       showMapMobile,
       setShowMapMobile,
       links,
-      isGeostoreLoading,
       widgetAnchor,
-      activeWidget,
-      setMapZoom,
-      widgets,
-      payload,
-      query
+      setMapZoom
     } = this.props;
 
     return (
@@ -60,36 +54,32 @@ class Page extends PureComponent {
           />
           <Widgets />
         </div>
-        {/* <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
+        <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Sticky
             enabled={window.innerWidth > SCREEN_M}
             bottomBoundary=".l-country"
           >
             <div className="map-container">
-              <Map widgetKey={activeWidget} miniLegend />
+              <Map miniLegend />
             </div>
           </Sticky>
         </div>
-        {!isGeostoreLoading && (
-          <MapControls
-            className="map-controls"
-            stickyOptions={{
-              enabled: true,
-              top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
-            }}
-            handleZoomIn={() => setMapZoom({ sum: 1 })}
-            handleZoomOut={() => setMapZoom({ sum: -1 })}
-          />
-        )} */}
+        <MapControls
+          className="map-controls"
+          stickyOptions={{
+            enabled: true,
+            top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
+          }}
+          handleZoomIn={() => setMapZoom({ sum: 1 })}
+          handleZoomOut={() => setMapZoom({ sum: -1 })}
+        />
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />
-        {/* <LayerSpecProvider /> */}
-        {/* <DatasetsProvider /> */}
-        {/* <GeostoreProvider /> */}
-        {widgetAnchor && <ScrollTo target={widgetAnchor} />}
+        <LayerSpecProvider />
+        <GeostoreProvider />
       </div>
     );
   }
@@ -99,12 +89,7 @@ Page.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
-  isGeostoreLoading: PropTypes.bool,
-  widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  activeWidget: PropTypes.string,
-  payload: PropTypes.object,
-  query: PropTypes.object,
   setMapZoom: PropTypes.func
 };
 

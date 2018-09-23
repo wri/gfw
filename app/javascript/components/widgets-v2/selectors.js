@@ -106,7 +106,7 @@ export const getActiveWidget = createSelector(
 
 export const getCategory = createSelector(
   [selectQuery],
-  query => query && query.category
+  query => (query && query.category) || 'summary'
 );
 
 export const getAllWidgets = () => Object.values(allWidgets);
@@ -252,6 +252,7 @@ export const filterWidgetsByCategory = createSelector(
   [parseWidgetsWithOptions, getCategory],
   (widgets, category) => {
     if (!widgets) return null;
+    if (!category) return widgets;
     return widgets.filter(w => w.config.categories.includes(category));
   }
 );

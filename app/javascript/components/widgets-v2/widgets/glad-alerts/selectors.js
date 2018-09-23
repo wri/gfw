@@ -23,17 +23,20 @@ const selectWeeks = state => (state.settings && state.settings.weeks) || null;
 const selectSentence = state => state.config.sentence || null;
 
 export const parsePayload = payload => {
-  const payloadData = payload.find(p => p.name === 'count');
+  const payloadData = payload && payload.find(p => p.name === 'count');
   const payloadValues = payloadData && payloadData.payload;
-  const startDate = moment()
-    .year(payloadValues.year)
-    .week(payloadValues.week);
+  if (payloadValues) {
+    const startDate = moment()
+      .year(payloadValues.year)
+      .week(payloadValues.week);
 
-  return {
-    startDate: startDate.format('YYYY-MM-DD'),
-    endDate: startDate.add(7, 'days'),
-    ...payloadValues
-  };
+    return {
+      startDate: startDate.format('YYYY-MM-DD'),
+      endDate: startDate.add(7, 'days'),
+      ...payloadValues
+    };
+  }
+  return {};
 };
 
 export const getData = createSelector(
