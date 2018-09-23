@@ -43,9 +43,9 @@ export const getOptions = () => {
 
 export const getAdminLevel = createSelector([selectLocation], location => {
   const { type, adm0, adm1, adm2 } = location;
-  if (adm2) return 'adm0';
+  if (adm2) return 'adm2';
   if (adm1) return 'adm1';
-  if (adm0) return 'adm2';
+  if (adm0) return 'adm0';
   return type || 'global';
 });
 
@@ -163,6 +163,7 @@ export const filterWidgetsByLocationWhitelist = createSelector(
       if (!whitelists) return true;
       const whitelist = whitelists[adminLevel];
       if (!whitelist) return true;
+
       return whitelist.includes(location[adminLevel]);
     });
   }
