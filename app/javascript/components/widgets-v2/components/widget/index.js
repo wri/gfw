@@ -50,10 +50,6 @@ class WidgetContainer extends PureComponent {
     if (hasSettingsChanged) getWidgetData({ widget, getData, params });
   }
 
-  componentWillUnmount() {
-    this.props.removeWidget(this.props.widget);
-  }
-
   render() {
     return createElement(Component, {
       ...this.props
@@ -67,8 +63,7 @@ WidgetContainer.propTypes = {
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
-  widget: PropTypes.string,
-  removeWidget: PropTypes.func
+  widget: PropTypes.string
 };
 
 export default connect(getWidgetProps, actions)(WidgetContainer);

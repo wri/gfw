@@ -11,7 +11,8 @@ export const handleCategoryChange = createThunkAction(
       payload,
       query: {
         ...query,
-        category
+        category,
+        widget: undefined
       }
     });
   }

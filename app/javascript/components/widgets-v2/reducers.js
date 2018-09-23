@@ -57,15 +57,6 @@ const setWidgetLoading = (state, { payload }) => ({
   }
 });
 
-const removeWidget = (state, { payload }) => {
-  const widgets = state.widgets;
-  delete widgets[payload];
-  return {
-    ...state,
-    widgets
-  };
-};
-
 export default {
   // widgets
   [actions.setWidgetsData]: setWidgetsData,
@@ -73,6 +64,5 @@ export default {
   [actions.setWidgetsLoading]: setWidgetsLoading,
   // widget
   [actions.setWidgetData]: setWidgetData,
-  [actions.setWidgetLoading]: setWidgetLoading,
-  [actions.removeWidget]: removeWidget
+  [actions.setWidgetLoading]: setWidgetLoading
 };
