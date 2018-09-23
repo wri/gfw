@@ -8,7 +8,6 @@ import {
   setComponentStateToUrl
 } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/forest-data';
-import { DASHBOARDS, DASHBOARDS_EMBED } from 'router';
 import * as WIDGETS from './manifest';
 
 // export const setWidgetSettings = createAction('setWidgetSettings');
@@ -50,14 +49,14 @@ export const setWidgetSettings = createThunkAction(
 
 export const setWidgetSettingsUrl = createThunkAction(
   'setWidgetSettingsUrl',
-  ({ value, widget }) => (dispatch, state) => {
+  ({ value, widget }) => (dispatch, getState) => {
     dispatch(
       settingsItemSelected({
         value,
         widget
       })
     );
-    const { location } = state();
+    const { type, payload } = getState().location;
     let params = value;
     if (location.query && location.query[widget]) {
       params = {
@@ -66,8 +65,8 @@ export const setWidgetSettingsUrl = createThunkAction(
       };
     }
     dispatch({
-      type: location.type === 'location/EMBED' ? DASHBOARDS_EMBED : DASHBOARDS,
-      payload: location.payload,
+      type,
+      payload,
       query: {
         ...location.query,
         [widget]: encodeStateForUrl(params)

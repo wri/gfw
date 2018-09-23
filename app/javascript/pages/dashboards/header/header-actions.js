@@ -6,7 +6,6 @@ import sumBy from 'lodash/sumBy';
 import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 import axios from 'axios';
-import { DASHBOARDS } from 'router';
 
 export const setHeaderLoading = createAction('setHeaderLoading');
 export const setHeaderData = createAction('setHeaderData');
@@ -74,7 +73,7 @@ export const getHeaderData = createThunkAction(
 export const handleLocationChange = createThunkAction(
   'handleLocationChange',
   location => (dispatch, getState) => {
-    const { query } = getState().location;
+    const { query, type } = getState().location;
     const newQuery = {};
 
     if (query) {
@@ -101,7 +100,7 @@ export const handleLocationChange = createThunkAction(
     }
 
     dispatch({
-      type: DASHBOARDS,
+      type,
       payload: {
         type: location.adm0 ? 'country' : 'global',
         ...location

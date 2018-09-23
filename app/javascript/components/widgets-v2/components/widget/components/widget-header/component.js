@@ -22,8 +22,17 @@ class WidgetHeader extends PureComponent {
   };
 
   renderMapButton = () => {
-    const { active, config, title, locationName, isDeviceTouch } = this.props;
+    const {
+      widget,
+      active,
+      config,
+      title,
+      locationName,
+      isDeviceTouch,
+      setActiveWidget
+    } = this.props;
     const isSmall = !config.large;
+
     return (
       <Button
         className={cx('map-button', { '-active': active })}
@@ -37,6 +46,7 @@ class WidgetHeader extends PureComponent {
           widget: `${title} in ${locationName || ''}`
         }}
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
+        onClick={() => setActiveWidget(widget)}
       >
         {isSmall || isDeviceTouch ? (
           <Icon icon={mapIcon} className="map-icon" />
@@ -185,6 +195,7 @@ WidgetHeader.propTypes = {
   embed: PropTypes.bool,
   loading: PropTypes.bool,
   setWidgetSettings: PropTypes.func,
+  setActiveWidget: PropTypes.func,
   metakey: PropTypes.string
 };
 

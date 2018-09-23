@@ -1,14 +1,13 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import { DASHBOARDS } from 'router';
 
 export const setShowMapMobile = createAction('setShowMapMobile');
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
   category => (dispatch, getState) => {
-    const { query, payload } = getState().location;
+    const { query, type, payload } = getState().location;
     dispatch({
-      type: DASHBOARDS,
+      type,
       payload,
       query: {
         ...query,

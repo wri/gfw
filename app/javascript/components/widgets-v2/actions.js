@@ -74,15 +74,16 @@ export const setWidgetSettings = createThunkAction(
 );
 
 export const setActiveWidget = createThunkAction(
-  'setWidgetSettings',
-  ({ value, widget }) => (dispatch, state) => {
-    dispatch(
-      setComponentStateToUrl({
-        key: 'widget',
-        subKey: widget,
-        change: value,
-        state
-      })
-    );
+  'setActiveWidget',
+  widget => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
+    dispatch({
+      type,
+      payload,
+      query: {
+        ...query,
+        widget
+      }
+    });
   }
 );
