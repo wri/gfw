@@ -105,7 +105,10 @@ export const handleLocationChange = createThunkAction(
         type: location.adm0 ? 'country' : 'global',
         ...location
       },
-      query: newQuery
+      query: {
+        ...newQuery,
+        widget: undefined
+      }
     });
   }
 );
