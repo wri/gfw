@@ -58,18 +58,7 @@ class Widget extends PureComponent {
   };
 
   render() {
-    const {
-      widget,
-      color,
-      active,
-      config,
-      embed,
-      settings,
-      options,
-      locationName,
-      title,
-      indicator
-    } = this.props;
+    const { widget, color, active, config, embed } = this.props;
 
     return (
       <div
@@ -82,20 +71,9 @@ class Widget extends PureComponent {
           })
         }}
       >
-        <WidgetHeader
-          widget={widget}
-          config={config}
-          settings={settings}
-          options={options}
-          locationName={locationName}
-          title={title}
-        />
+        <WidgetHeader {...this.props} />
         {this.renderWidgetBody()}
-        <WidgetFooter
-          config={config}
-          settings={settings}
-          indicator={indicator}
-        />
+        <WidgetFooter {...this.props} />
       </div>
     );
   }

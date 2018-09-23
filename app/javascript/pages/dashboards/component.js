@@ -85,7 +85,7 @@ class Page extends PureComponent {
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
-        {/* <WhitelistsProvider /> */}
+        <WhitelistsProvider />
         {/* <LayerSpecProvider /> */}
         {/* <DatasetsProvider /> */}
         {/* <GeostoreProvider /> */}

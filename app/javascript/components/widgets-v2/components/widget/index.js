@@ -6,6 +6,7 @@ import isEqual from 'lodash/isEqual';
 
 import * as actions from 'components/widgets-v2/actions';
 import Component from './component';
+import { getWidgetProps } from './selectors';
 
 class WidgetContainer extends PureComponent {
   componentDidMount() {
@@ -25,11 +26,25 @@ class WidgetContainer extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const { location, settings, getData, getWidgetData, widget } = this.props;
+    const settingsUpdateBlackList = [
+      'startYear',
+      'endYear',
+      'activeData',
+      'weeks'
+    ];
+    let changedSetting = '';
+    if (settings && prevProps.settings) {
+      Object.keys(settings).forEach(s => {
+        if (!isEqual(settings[s], prevProps.settings[s])) {
+          changedSetting = s;
+        }
+      });
+    }
     const hasSettingsChanged =
       settings &&
       prevProps.settings &&
-      (!isEqual(settings, prevProps.settings) ||
-        !isEqual(location, prevProps.location));
+      changedSetting &&
+      !settingsUpdateBlackList.includes(changedSetting);
     const params = { ...location, ...settings };
     if (hasSettingsChanged) getWidgetData({ widget, getData, params });
   }
@@ -50,4 +65,4 @@ WidgetContainer.propTypes = {
   widget: PropTypes.string
 };
 
-export default connect(null, actions)(WidgetContainer);
+export default connect(getWidgetProps, actions)(WidgetContainer);

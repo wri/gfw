@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
-import { pluralise } from 'utils/strings';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
 
@@ -41,29 +40,16 @@ export const getOptions = () => {
   return optionsMeta;
 };
 
-export const getIndicator = (forestType, landCategory) => {
-  if (!forestType && !landCategory) return null;
-  let label = '';
-  let value = '';
-  if (forestType && landCategory) {
-    label = `${forestType.label} in ${landCategory.label}`;
-    value = `${forestType.value}__${landCategory.value}`;
-  } else if (landCategory) {
-    label = landCategory.label;
-    value = landCategory.value;
-  } else {
-    label = forestType.label;
-    value = forestType.value;
-  }
-
-  return {
-    label,
-    value
-  };
-};
+export const getAdminLevel = createSelector([selectLocation], location => {
+  const { type, adm0, adm1, adm2 } = location;
+  if (adm2) return 'adm0';
+  if (adm1) return 'adm1';
+  if (adm0) return 'adm2';
+  return type || 'global';
+});
 
 export const getActiveWhitelist = createSelector(
-  [selectWhitelists, selectLocation],
+  [selectWhitelists, getAdminLevel],
   (whitelists, location) => whitelists[location.adm1 ? 'adm1' : 'adm0']
 );
 
@@ -96,7 +82,6 @@ export const getLocationObject = createSelector(
   (adms, location) => {
     if (!adms) return null;
     const { adm0, adm1, adm2 } = location;
-
     return adms.find(a => a.value === (adm2 || adm1 || adm0));
   }
 );
@@ -120,14 +105,6 @@ export const getCategory = createSelector(
   [selectQuery],
   query => query && query.category
 );
-
-export const getAdminLevel = createSelector([selectLocation], location => {
-  const { type, adm0, adm1, adm2 } = location;
-  if (adm2) return 'adm0';
-  if (adm1) return 'adm1';
-  if (adm0) return 'adm2';
-  return type || 'global';
-});
 
 export const getAllWidgets = () => Object.values(allWidgets);
 
@@ -252,107 +229,17 @@ export const parseWidgetsWithOptions = createSelector(
   }
 );
 
-// now lets pass them their data and settings
-export const parseWidgetsWithData = createSelector(
-  [parseWidgetsWithOptions, selectWidgets, selectQuery],
-  (widgets, widgetsState, query) => {
-    if (!widgets) return null;
-    return widgets.map(w => {
-      const widgetUrlState = (query && query[w.widget]) || {};
-      const widgetState = (widgetsState && widgetsState[w.widget]) || {};
-      const { options, config } = w;
-      const settings = {
-        ...w.settings,
-        ...widgetUrlState
-      };
-
-      return {
-        ...w,
-        ...widgetState,
-        settings,
-        ...(options && {
-          optionsSelected: Object.keys(settings).reduce((obj, settingsKey) => {
-            const optionsKey = pluralise(settingsKey);
-            const hasOptions = options[optionsKey];
-            return {
-              ...obj,
-              ...(hasOptions && {
-                [settingsKey]: hasOptions.find(
-                  o => o.value === settings[settingsKey]
-                )
-              })
-            };
-          }, {})
-        }),
-        ...(config.options.startYear &&
-          config.options.endYear && {
-            startYears: options.years.filter(y => y.value <= settings.endYear),
-            endYears: options.years.filter(y => y.value >= settings.startYear)
-          })
-      };
-    });
-  }
-);
-
-export const getWidgetsWithIndicator = createSelector(
-  [parseWidgetsWithData],
-  widgets => {
-    if (!widgets) return null;
-    return widgets.map(w => {
-      const { forestType, landCategory } = w.optionsSelected || {};
-      return {
-        ...w,
-        ...((forestType || landCategory) && {
-          indicator: getIndicator(forestType, landCategory)
-        })
-      };
-    });
-  }
-);
-
-export const getWidgetsWithProps = createSelector(
-  [
-    getWidgetsWithIndicator,
-    selectLocationType,
-    selectWhitelists,
-    getActiveWhitelist,
-    getLocationName,
-    getLocationObject
-  ],
-  (
-    widgets,
-    type,
-    whitelists,
-    activeWhitelist,
-    locationName,
-    locationObject
-  ) => {
-    if (!widgets) return null;
-    return widgets.map(w => ({
-      ...w,
-      ...w.getProps({
-        ...w,
-        type,
-        activeWhitelist,
-        whitelists,
-        locationName,
-        locationObject
-      })
-    }));
-  }
-);
-
 export const getWidgetsProps = createStructuredSelector({
   loading: selectLoading,
   whitelists: selectWhitelists,
-  activeWhitelist: getActiveWhitelist,
+  whitelist: getActiveWhitelist,
   activeWidget: getActiveWidget,
   category: getCategory,
   location: selectLocation,
+  locationType: selectLocationType,
   locationData: getActiveLocationData,
   locationObject: getLocationObject,
   locationName: getLocationName,
   childLocationData: getChildLocationData,
-  widgets: getWidgetsWithProps,
-  locationType: selectLocationType
+  widgets: parseWidgetsWithOptions
 });

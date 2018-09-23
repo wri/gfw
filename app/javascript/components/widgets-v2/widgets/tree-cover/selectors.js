@@ -6,12 +6,12 @@ import { format } from 'd3-format';
 const getData = state => state.data;
 const getSettings = state => state.settings;
 const getIndicator = state => state.indicator || null;
-const getWhitelist = state =>
-  state.activeWhitelists && state.activeWhitelists.adm0;
+const getWhitelist = state => state.whitelists && state.whitelists.adm0;
 const getColors = state => state.colors;
 const getSentence = state => state.config.sentence;
 const getTitle = state => state.config.title;
 const getLocationType = state => state.type;
+const getLocationName = state => state.locationName;
 
 export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationType],
@@ -73,7 +73,11 @@ export const parseTitle = createSelector(
     let selectedTitle = title.default;
     if (type === 'global') {
       selectedTitle = title.global;
-    } else if (whitelist && whitelist.includes('plantations')) {
+    } else if (
+      whitelist &&
+      whitelist.length &&
+      whitelist.includes('plantations')
+    ) {
       selectedTitle = title.withPlantations;
     }
     return selectedTitle;
@@ -84,12 +88,12 @@ export const parseSentence = createSelector(
   [
     getData,
     getSettings,
-    getLocationType,
+    getLocationName,
     getIndicator,
     getSentence,
     isoHasPlantations
   ],
-  (data, settings, type, indicator, sentences, isoPlantations) => {
+  (data, settings, locationName, indicator, sentences, isoPlantations) => {
     if (!data || !sentences) return null;
     const {
       initial,
@@ -105,7 +109,7 @@ export const parseSentence = createSelector(
       : 100 * data.cover / data.totalArea;
     const params = {
       year: settings.extentYear,
-      location: type || 'global',
+      location: locationName || 'global',
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%',
@@ -122,7 +126,7 @@ export const parseSentence = createSelector(
         ? initial + hasPlantationsInd
         : initial + noPlantationsInd;
     }
-    if (type === 'global') {
+    if (locationName === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
     return { sentence, params };

@@ -11,13 +11,10 @@ export const selectConfig = (state, { config }) => config;
 export const selectTitle = (state, { config, title }) => title || config.title;
 export const selectWidget = (state, { widget }) => widget;
 export const selectLocationName = (state, { locationName }) => locationName;
-export const selectWidgetMetaKey = (
-  state,
-  { config, widget, activeWhitelist }
-) =>
+export const selectWidgetMetaKey = (state, { config, widget, whitelist }) =>
   (widget === 'treeCover' &&
-  activeWhitelist &&
-  activeWhitelist.contains('plantations')
+  whitelist.length &&
+  whitelist.includes('plantations')
     ? 'widget_natural_vs _planted'
     : config.metaKey);
 
