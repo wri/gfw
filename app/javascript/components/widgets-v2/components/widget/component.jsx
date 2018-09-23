@@ -62,7 +62,7 @@ class Widget extends PureComponent {
   };
 
   render() {
-    const { widget, color, active, config, embed } = this.props;
+    const { widget, colors, active, config, embed } = this.props;
 
     return (
       <div
@@ -70,8 +70,8 @@ class Widget extends PureComponent {
         className={cx('c-widget', { large: config.large }, { embed })}
         style={{
           ...(active && {
-            borderColor: color,
-            boxShadow: `0 0px 0px 1px ${color}`
+            borderColor: colors.main,
+            boxShadow: `0 0px 0px 1px ${colors.main}`
           })
         }}
       >
@@ -87,7 +87,7 @@ Widget.propTypes = {
   settings: PropTypes.object,
   title: PropTypes.string,
   widget: PropTypes.string,
-  color: PropTypes.string,
+  colors: PropTypes.object,
   options: PropTypes.object,
   config: PropTypes.object,
   locationName: PropTypes.string,

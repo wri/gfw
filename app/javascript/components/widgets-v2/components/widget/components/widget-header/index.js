@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 
-import { setWidgetSettings } from 'components/widgets-v2/actions';
+import {
+  setWidgetSettings,
+  setActiveWidget
+} from 'components/widgets-v2/actions';
 import { setShareModal } from 'components/modals/share/share-actions';
 import { setModalMeta } from 'components/modals/meta/meta-actions';
 import { setMapSettings } from 'components/map-v2/actions';
@@ -11,7 +14,8 @@ const actions = {
   setModalMeta,
   setShareModal,
   setMapSettings,
-  setWidgetSettings
+  setWidgetSettings,
+  setActiveWidget
 };
 
 export default connect(getWidgetHeaderProps, actions)(WidgetHeaderComponent);

@@ -12,6 +12,7 @@ export const setWidgetsLoading = createAction('setWidgetsLoading');
 // widget
 export const setWidgetData = createAction('setWidgetData');
 export const setWidgetLoading = createAction('setWidgetLoading');
+export const removeWidget = createAction('removeWidget');
 
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
@@ -59,6 +60,20 @@ export const getWidgetData = createThunkAction(
 );
 
 export const setWidgetSettings = createThunkAction(
+  'setWidgetSettings',
+  ({ value, widget }) => (dispatch, state) => {
+    dispatch(
+      setComponentStateToUrl({
+        key: 'widget',
+        subKey: widget,
+        change: value,
+        state
+      })
+    );
+  }
+);
+
+export const setActiveWidget = createThunkAction(
   'setWidgetSettings',
   ({ value, widget }) => (dispatch, state) => {
     dispatch(

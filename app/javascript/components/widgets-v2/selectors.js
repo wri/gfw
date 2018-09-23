@@ -99,11 +99,6 @@ export const getFAOLocationData = createSelector(
   countryData => countryData.faoCountries
 );
 
-export const getActiveWidget = createSelector(
-  [selectQuery],
-  query => query && query.widget
-);
-
 export const getCategory = createSelector(
   [selectQuery],
   query => (query && query.category) || 'summary'
@@ -254,6 +249,14 @@ export const filterWidgetsByCategory = createSelector(
     if (!widgets) return null;
     if (!category) return widgets;
     return widgets.filter(w => w.config.categories.includes(category));
+  }
+);
+
+export const getActiveWidget = createSelector(
+  [filterWidgetsByCategory, selectQuery],
+  (widgets, query) => {
+    if (query && query.widget) return query.widget;
+    return widgets && widgets.length && widgets[0].widget;
   }
 );
 

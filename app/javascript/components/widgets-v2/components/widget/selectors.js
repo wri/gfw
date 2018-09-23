@@ -13,6 +13,8 @@ export const selectWidgetUrlState = (state, { widget }) =>
   state.location && state.location.query && state.location.query[widget];
 export const selectWidgetFromState = (state, { widget }) =>
   state.widgetsV2.widgets[widget];
+export const selectWidgetActive = (state, { activeWidget, widget }) =>
+  activeWidget === widget;
 
 export const getWidgetStateData = createSelector(
   [selectWidgetFromState],
@@ -174,5 +176,6 @@ export const getWidgetProps = createStructuredSelector({
   forestTypes: getForestType,
   landCategory: getLandCategory,
   indicator: getIndicator,
-  options: getOptionsWithYears
+  options: getOptionsWithYears,
+  active: selectWidgetActive
 });
