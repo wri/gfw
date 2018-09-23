@@ -30,7 +30,8 @@ class Page extends PureComponent {
       setShowMapMobile,
       links,
       widgetAnchor,
-      setMapZoom
+      setMapZoom,
+      handleCategoryChange
     } = this.props;
 
     return (
@@ -49,7 +50,10 @@ class Page extends PureComponent {
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
-            links={links}
+            links={links.map(l => ({
+              ...l,
+              onClick: () => handleCategoryChange(l.category)
+            }))}
             checkActive
           />
           <Widgets />
@@ -90,7 +94,8 @@ Page.propTypes = {
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  setMapZoom: PropTypes.func
+  setMapZoom: PropTypes.func,
+  handleCategoryChange: PropTypes.func
 };
 
 export default Page;

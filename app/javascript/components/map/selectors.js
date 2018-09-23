@@ -9,6 +9,7 @@ import {
 // get list data
 const selectLoading = state => state.map.loading || state.geostore.loading;
 const selectError = state => state.map.error;
+const selectQuery = state => state.location && state.location.query;
 const selectMapOptions = state => state.map.options;
 const selectSettings = state => state.map.settings;
 const selectLayerSlugs = state => state.map.layerSpec || null;
@@ -18,14 +19,16 @@ const selectBounds = state =>
   (state.geostore.geostore && state.geostore.geostore.bounds) || null;
 
 export const getMapSettings = createSelector(
-  [selectSettings, filterWidgetsByCategory, getActiveWidget],
-  (settings, widgets, widget) => {
+  [selectSettings, filterWidgetsByCategory, getActiveWidget, selectQuery],
+  (settings, widgets, widget, query) => {
+    const widgetUrlState = query && query[widget];
     const activeWidget = widgets.find(w => w.widget === widget);
     const widgetSettings = activeWidget && activeWidget.settings;
 
     return {
       ...settings,
-      ...widgetSettings
+      ...widgetSettings,
+      ...widgetUrlState
     };
   }
 );
