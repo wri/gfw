@@ -13,6 +13,8 @@ export default {
     forestTypes: ['ifl'],
     landCategories: ['wdpa'],
     extentYears: true,
-    thresholds: true
+    thresholds: true,
+    startYears: true,
+    endYears: true
   }
 };
