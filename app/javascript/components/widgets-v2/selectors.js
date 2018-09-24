@@ -181,7 +181,7 @@ export const filterWidgetsByIndicatorWhitelist = createSelector(
     if (!widgets) return null;
     if (!indicatorWhitelist.length) return widgets;
     return widgets.filter(w => {
-      const { indicators } = w.config.whitelits || {};
+      const { indicators } = w.config.whitelists || {};
       if (!indicators) return true;
       const totalIndicators = concat(indicators, indicatorWhitelist).length;
       const reducedIndicators = uniq(concat(indicators, indicatorWhitelist))
