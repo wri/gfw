@@ -73,7 +73,7 @@ export const getWidgetDataConfig = createSelector(
 export const getRangeYears = createSelector(
   [getWidgetStateData, selectWidgetConfig],
   (data, config) => {
-    const { options: { startYears, endYears, yearsRange } } = config;
+    const { startYears, endYears, yearsRange } = config.options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
     const flatData = flattenObj(data);
     let years = [];
