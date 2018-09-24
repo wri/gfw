@@ -3,6 +3,7 @@ import sortBy from 'lodash/sortBy';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
 import lowerCase from 'lodash/lowerCase';
+import camelCase from 'lodash/camelCase';
 
 import colors from 'data/colors.json';
 import allOptions from './options';
@@ -256,7 +257,10 @@ export const filterWidgetsByCategory = createSelector(
   (widgets, category) => {
     if (!widgets) return null;
     if (!category) return widgets;
-    return widgets.filter(w => w.config.categories.includes(category));
+    return sortBy(
+      widgets.filter(w => w.config.categories.includes(category)),
+      `config.sortOrder[${camelCase(category)}]`
+    );
   }
 );
 
