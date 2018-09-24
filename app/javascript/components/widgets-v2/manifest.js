@@ -9,6 +9,9 @@ import * as firesAlerts from './widgets/forest-change/fires-alerts';
 import * as gladRanked from './widgets/forest-change/glad-ranked';
 import * as treeCoverGain from './widgets/forest-change/tree-cover-gain';
 import * as treeGainLocated from './widgets/forest-change/tree-gain-located';
+import * as treeLossLocated from './widgets/forest-change/tree-loss-located';
+import * as treeLossPlantations from './widgets/forest-change/tree-loss-plantations';
+import * as treeLossTsc from './widgets/forest-change/tree-loss-tsc';
 
 // land cover
 import * as treeCover from './widgets/land-cover/tree-cover';
@@ -33,6 +36,9 @@ export default {
   gladRanked,
   treeCoverGain,
   treeGainLocated,
+  treeLossLocated,
+  treeLossPlantations,
+  treeLossTsc,
   // land cover
   treeCover,
   treeCoverRanked,

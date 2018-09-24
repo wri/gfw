@@ -31,7 +31,8 @@ class WidgetContainer extends PureComponent {
       'endYear',
       'activeData',
       'weeks',
-      'page'
+      'page',
+      'highlighted'
     ];
     let changedSetting = '';
     if (settings && prevProps.settings) {
@@ -50,9 +51,20 @@ class WidgetContainer extends PureComponent {
     if (hasSettingsChanged) getWidgetData({ widget, getData, params });
   }
 
+  handleDataHighlight = (highlighted, widget) => {
+    const { setWidgetSettings } = this.props;
+    setWidgetSettings({
+      value: {
+        highlighted
+      },
+      widget
+    });
+  };
+
   render() {
     return createElement(Component, {
-      ...this.props
+      ...this.props,
+      handleDataHighlight: this.handleDataHighlight
     });
   }
 }
@@ -63,6 +75,7 @@ WidgetContainer.propTypes = {
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
+  setWidgetSettings: PropTypes.func,
   widget: PropTypes.string
 };
 

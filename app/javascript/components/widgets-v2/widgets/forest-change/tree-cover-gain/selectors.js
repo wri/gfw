@@ -23,7 +23,7 @@ const getAdminLevel = state => state.adminLevel || null;
 const getParentLocation = state => state[state.parentLevel] || null;
 
 const haveData = (data, locationObject) =>
-  data.filter(item => item.id === locationObject.value).length;
+  data && data.filter(item => item.id === locationObject.value).length;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -64,7 +64,9 @@ export const parseData = createSelector(
     if (
       !data ||
       !data.length ||
-      (currentLabel !== 'global' && !haveData(data, locationObject))
+      (currentLabel !== 'global' &&
+        locationObject &&
+        !haveData(data, locationObject))
     ) {
       return null;
     }

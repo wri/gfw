@@ -20,6 +20,7 @@ class Widget extends PureComponent {
       error,
       locationName,
       setWidgetSettings,
+      handleDataHighlight,
       data,
       dataConfig,
       settings,
@@ -44,7 +45,12 @@ class Widget extends PureComponent {
         {!error &&
           sentence &&
           hasData && (
-            <DynamicSentence className="sentence" sentence={sentence} />
+            <DynamicSentence
+              className="sentence"
+              sentence={sentence}
+              handleMouseOver={() => handleDataHighlight(true, widget)}
+              handleMouseOut={() => handleDataHighlight(false, widget)}
+            />
           )}
         {!error &&
           hasData && (
@@ -101,6 +107,7 @@ Widget.propTypes = {
   Component: PropTypes.any,
   parsePayload: PropTypes.func,
   setWidgetSettings: PropTypes.func,
+  handleDataHighlight: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
