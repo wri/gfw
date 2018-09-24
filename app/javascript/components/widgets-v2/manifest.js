@@ -3,6 +3,9 @@ import * as gladAlerts from './widgets/glad-alerts';
 import * as treeLoss from './widgets/tree-loss';
 import * as treeLossGlobal from './widgets/tree-loss-global';
 import * as treeLossRanked from './widgets/tree-loss-ranked';
+import * as faoDeforest from './widgets/forest-change/fao-deforest';
+import * as faoReforest from './widgets/forest-change/fao-reforest';
+import * as firesAlerts from './widgets/forest-change/fires-alerts';
 
 // land cover
 import * as treeCover from './widgets/land-cover/tree-cover';
@@ -21,6 +24,9 @@ export default {
   treeLoss,
   treeLossGlobal,
   treeLossRanked,
+  firesAlerts,
+  faoDeforest,
+  faoReforest,
   // land cover
   treeCover,
   treeCoverRanked,

@@ -5,10 +5,10 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data || null;
 const getLocationName = state => state.locationName || null;
-const getLocationType = state => state.locationType || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
+const getLocationType = state => state.locationType || null;
 
 // get lists selected
 export const parseData = createSelector(
