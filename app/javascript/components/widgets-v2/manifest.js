@@ -28,6 +28,9 @@ import * as treeCoverLocated from './widgets/land-cover/tree-cover-located';
 import * as emissions from './widgets/climate/emissions';
 import * as emissionsDeforestation from './widgets/climate/emissions-deforestation';
 
+// Biodiversity
+import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
+
 export default {
   // forest change
   gladAlerts,
@@ -55,5 +58,7 @@ export default {
   treeCoverLocated,
   // climate
   emissions,
-  emissionsDeforestation
+  emissionsDeforestation,
+  // biodiversity
+  gladBiodiversity
 };
