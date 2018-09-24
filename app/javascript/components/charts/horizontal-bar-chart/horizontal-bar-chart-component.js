@@ -20,9 +20,10 @@ class HorizontalBarChart extends PureComponent {
     const { data, className, handlePageChange, settings } = this.props;
     const { tooltip, colors, yKeys, yAxisDotFill } = this.props.config;
     const { page, pageSize } = settings;
-    const pageData = pageSize
-      ? data.slice(page * pageSize, (page + 1) * pageSize)
-      : data;
+    const pageData =
+      pageSize && data && !!data.length
+        ? data.slice(page * pageSize, (page + 1) * pageSize)
+        : data;
 
     return (
       <div className={`c-horizontal-bar-chart ${className}`}>
@@ -59,22 +60,25 @@ class HorizontalBarChart extends PureComponent {
                 />
               }
             />
-            {Object.keys(pageData[0]).map(
-              (key, index) =>
-                (yKeys.indexOf(key) === -1 ? null : (
-                  <Bar
-                    key={key}
-                    dataKey={key}
-                    stackId={1}
-                    barSize={10}
-                    fill={colors[key]}
-                    background={!index ? { fill: '#e9e9ea' } : false}
-                  />
-                ))
-            )}
+            {pageData &&
+              pageData.length &&
+              Object.keys(pageData[0]).map(
+                (key, index) =>
+                  (yKeys.indexOf(key) === -1 ? null : (
+                    <Bar
+                      key={key}
+                      dataKey={key}
+                      stackId={1}
+                      barSize={10}
+                      fill={colors[key]}
+                      background={!index ? { fill: '#e9e9ea' } : false}
+                    />
+                  ))
+              )}
           </BarChart>
         </ResponsiveContainer>
         {handlePageChange &&
+          data &&
           data.length > settings.pageSize && (
             <Paginate
               className="horizontal-pagintation"

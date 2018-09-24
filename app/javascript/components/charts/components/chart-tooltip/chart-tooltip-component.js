@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './chart-tooltip-styles.scss';
 
-class WidgetChartTooltip extends PureComponent {
+class ChartTooltip extends PureComponent {
   render() {
     const { payload, settings, hideZeros } = this.props;
     const values = payload && payload.length > 0 && payload[0].payload;
@@ -14,7 +14,7 @@ class WidgetChartTooltip extends PureComponent {
             <div className="c-chart-tooltip">
               {settings.map(
                 d =>
-                  (hideZeros && !values[d.key] ? null : (
+                  (hideZeros && (!values || !values[d.key]) ? null : (
                     <div
                       key={d.key}
                       className={`data-line ${d.position || ''}`}
@@ -47,10 +47,10 @@ class WidgetChartTooltip extends PureComponent {
   }
 }
 
-WidgetChartTooltip.propTypes = {
+ChartTooltip.propTypes = {
   payload: PropTypes.array,
   settings: PropTypes.array,
   hideZeros: PropTypes.bool
 };
 
-export default WidgetChartTooltip;
+export default ChartTooltip;

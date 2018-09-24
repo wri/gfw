@@ -4,6 +4,7 @@ import * as treeLoss from './widgets/tree-loss';
 import * as treeLossGlobal from './widgets/tree-loss-global';
 import * as treeLossRanked from './widgets/tree-loss-ranked';
 import * as treeCoverRanked from './widgets/tree-cover-ranked';
+import * as rankedPlantations from './widgets/ranked-plantations';
 
 export default {
   gladAlerts,
@@ -11,5 +12,6 @@ export default {
   treeCoverRanked,
   treeLoss,
   treeLossGlobal,
-  treeLossRanked
+  treeLossRanked,
+  rankedPlantations
 };

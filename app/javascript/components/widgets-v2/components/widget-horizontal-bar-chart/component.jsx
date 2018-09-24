@@ -5,18 +5,12 @@ import HorizontalBarChart from 'components/charts/horizontal-bar-chart';
 
 class WidgetHorizontalBarChart extends PureComponent {
   render() {
-    const {
-      parsedData,
-      settings,
-      config,
-      setWidgetSettings,
-      widget
-    } = this.props;
+    const { data, settings, config, setWidgetSettings, widget } = this.props;
 
     return (
       <HorizontalBarChart
         className="ranked-plantations-chart"
-        data={parsedData}
+        data={data}
         config={config}
         settings={settings}
         handlePageChange={change =>
@@ -31,7 +25,7 @@ class WidgetHorizontalBarChart extends PureComponent {
 }
 
 WidgetHorizontalBarChart.propTypes = {
-  parsedData: PropTypes.array,
+  data: PropTypes.array,
   settings: PropTypes.object.isRequired,
   setWidgetSettings: PropTypes.func.isRequired,
   config: PropTypes.object,

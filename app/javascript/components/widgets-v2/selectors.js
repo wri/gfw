@@ -10,6 +10,7 @@ import allOptions from './options';
 import allWidgets from './manifest';
 
 export const selectLocation = state => state.location && state.location.payload;
+export const selectAllLocation = state => state.location;
 export const selectLocationType = state =>
   state.location && state.location.payload && state.location.payload.type;
 export const selectQuery = state => state.location && state.location.query;
@@ -280,6 +281,7 @@ export const getWidgetsProps = createStructuredSelector({
   whitelist: getActiveWhitelist,
   activeWidget: getActiveWidget,
   category: getCategory,
+  allLocation: selectAllLocation,
   location: selectLocation,
   locationType: selectLocationType,
   locationData: getActiveLocationData,
