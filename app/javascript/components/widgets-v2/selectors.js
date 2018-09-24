@@ -139,7 +139,9 @@ export const filterWidgetsByLocation = createSelector(
     if (!widgets) return null;
     return widgets.filter(w => {
       const { types, admins } = w.config || {};
-      return types.includes(type) && admins.includes(adminLevel);
+      return (
+        types && types.includes(type) && admins && admins.includes(adminLevel)
+      );
     });
   }
 );

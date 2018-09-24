@@ -3,10 +3,12 @@ import * as treeCover from './widgets/tree-cover';
 import * as treeLoss from './widgets/tree-loss';
 import * as treeLossGlobal from './widgets/tree-loss-global';
 import * as treeLossRanked from './widgets/tree-loss-ranked';
+import * as treeCoverRanked from './widgets/tree-cover-ranked';
 
 export default {
   gladAlerts,
   treeCover,
+  treeCoverRanked,
   treeLoss,
   treeLossGlobal,
   treeLossRanked
