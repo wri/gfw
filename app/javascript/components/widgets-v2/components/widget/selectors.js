@@ -7,7 +7,6 @@ import sortBy from 'lodash/sortBy';
 
 export const selectAllPropsAndState = (state, ownProps) => ownProps;
 export const selectWidgetSettings = (state, { settings }) => settings;
-export const selectWidgetConfig = (state, { config }) => config;
 export const selectWidgetOptions = (state, { options }) => options;
 export const selectWidgetUrlState = (state, { widget }) =>
   state.location && state.location.query && state.location.query[widget];
@@ -37,6 +36,14 @@ export const getWidgetPropsFromState = createSelector(
       ...widgetProps,
       settings
     })
+  })
+);
+
+export const getWidgetOptions = createSelector(
+  [selectWidgetOptions, getWidgetPropsFromState],
+  (options, dataProps) => ({
+    ...options,
+    ...dataProps.options
   })
 );
 
@@ -71,9 +78,9 @@ export const getWidgetDataConfig = createSelector(
 );
 
 export const getRangeYears = createSelector(
-  [getWidgetStateData, selectWidgetConfig],
-  (data, config) => {
-    const { startYears, endYears, yearsRange } = config.options || {};
+  [getWidgetStateData, getWidgetOptions],
+  (data, options) => {
+    const { startYears, endYears, yearsRange } = options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
     const flatData = flattenObj(data);
     let years = [];
@@ -97,7 +104,7 @@ export const getRangeYears = createSelector(
 );
 
 export const getOptionsWithYears = createSelector(
-  [selectWidgetOptions, getRangeYears, getWidgetSettings],
+  [getWidgetOptions, getRangeYears, getWidgetSettings],
   (options, years, settings) => {
     if (!years) return options;
     const { startYear, endYear } = settings;
@@ -110,7 +117,7 @@ export const getOptionsWithYears = createSelector(
 );
 
 export const getOptionsSelected = createSelector(
-  [getWidgetSettings, selectWidgetOptions],
+  [getWidgetSettings, getWidgetOptions],
   (settings, options) => {
     if (!options || !settings) return null;
     return {

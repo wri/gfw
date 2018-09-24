@@ -49,6 +49,9 @@ export const getWidgetData = createThunkAction(
       getData({ params })
         .then(data => {
           dispatch(setWidgetData({ widget, data }));
+          if (data.settings) {
+            dispatch(setWidgetSettings({ widget, value: data.settings }));
+          }
         })
         .catch(error => {
           dispatch(setWidgetLoading({ widget, error: true, loading: false }));

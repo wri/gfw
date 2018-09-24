@@ -1,0 +1,41 @@
+@import '~styles/settings.scss';
+
+.c-widget-economic-impact {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: rem(30px);
+  padding: 0 rem(15px);
+
+  .locations-list {
+    width: 100%;
+    margin: auto 0;
+
+    @media screen and (min-width: $screen-m) {
+      width: 50%;
+    }
+
+    @media screen and (min-width: $screen-l) {
+      width: 40%;
+    }
+  }
+
+  .economic-impact-chart {
+    display: none;
+    width: 50%;
+    min-width: 50%;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (min-width: $screen-m) {
+      display: flex;
+      padding-right: rem(40px);
+    }
+
+    @media screen and (min-width: $screen-l) {
+      width: 60%;
+      min-width: 60%;
+    }
+  }
+}
