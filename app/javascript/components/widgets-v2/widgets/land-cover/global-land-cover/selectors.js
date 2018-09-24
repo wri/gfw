@@ -53,9 +53,8 @@ export const parseData = createSelector(
 
 export const parseSentence = createSelector(
   [parseData, getSettings, getLocationName, getSentences],
-  (data, settings, locationName, sentences) => {
-    if (isEmpty(data) || !sentences) return null;
-    const { initial } = sentences;
+  (data, settings, locationName, sentence) => {
+    if (isEmpty(data) || !sentence) return null;
     const { year } = settings;
     const { label, value } = data[0];
     const params = {
@@ -65,7 +64,7 @@ export const parseSentence = createSelector(
       extent: `${format('.3s')(value)}ha`
     };
     return {
-      sentence: initial,
+      sentence,
       params
     };
   }

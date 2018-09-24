@@ -11,6 +11,9 @@ import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantatio
 import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
 import * as faoCover from './widgets/land-cover/fao-cover';
 import * as globalLandCover from './widgets/land-cover/global-land-cover';
+import * as intactTreeCover from './widgets/land-cover/intact-tree-cover';
+import * as primaryForest from './widgets/land-cover/primary-forest';
+import * as treeCoverLocated from './widgets/land-cover/tree-cover-located';
 
 export default {
   // forest change
@@ -24,5 +27,8 @@ export default {
   rankedPlantations,
   treeCoverPlantations,
   faoCover,
-  globalLandCover
+  globalLandCover,
+  intactTreeCover,
+  primaryForest,
+  treeCoverLocated
 };

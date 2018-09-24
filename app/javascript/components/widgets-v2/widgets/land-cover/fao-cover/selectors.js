@@ -94,7 +94,7 @@ export const parseSentence = createSelector(
 export const parseTitle = createSelector(
   [getTitle, getLocationType],
   (title, type) => {
-    let selectedTitle = title.default;
+    let selectedTitle = title.initial;
     if (type === 'global') {
       selectedTitle = title.global;
     }

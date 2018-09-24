@@ -1,7 +1,7 @@
 export default {
   widget: 'faoCover',
   title: {
-    default: 'FAO forest cover in {location}',
+    initial: 'FAO forest cover in {location}',
     global: 'Global FAO forest cover'
   },
   categories: ['land-cover'],
