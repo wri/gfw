@@ -23,7 +23,9 @@ const getAdminLevel = state => state.adminLevel || null;
 const getParentLocation = state => state[state.parentLevel] || null;
 
 const haveData = (data, locationObject) =>
-  data && data.filter(item => item.id === locationObject.value).length;
+  locationObject &&
+  data &&
+  data.filter(item => item.id === locationObject.value).length;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -111,11 +113,12 @@ export const parseData = createSelector(
         type,
         payload: {
           type: 'country',
+          ...payload,
           ...(!payload.adm1 && {
             adm0: d.id
           }),
           ...(payload.adm1 && {
-            adm1: d.id
+            adm1: payload.adm2 ? payload.adm1 : d.id
           }),
           ...(payload.adm2 && {
             adm2: d.id
