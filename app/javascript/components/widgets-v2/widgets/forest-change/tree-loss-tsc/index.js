@@ -1,10 +1,10 @@
 import * as ParentWidget from '../tree-loss';
+import getData from './actions';
 import getProps from './selectors';
 import childConfig from './config';
 import childSettings from './settings';
 
 const Component = ParentWidget.Component;
-const getData = ParentWidget.getData;
 const parentConfig = ParentWidget.config;
 const parentSettings = ParentWidget.settings;
 
