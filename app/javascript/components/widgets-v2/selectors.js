@@ -57,7 +57,8 @@ export const getAdminLevel = createSelector([selectLocation], location => {
 
 export const getActiveWhitelist = createSelector(
   [selectWhitelists, getAdminLevel],
-  (whitelists, location) => whitelists[location.adm1 ? 'adm1' : 'adm0']
+  (whitelists, adminLevel) =>
+    whitelists[adminLevel === 'adm0' ? 'adm0' : 'adm1']
 );
 
 export const getLocationData = createSelector(
