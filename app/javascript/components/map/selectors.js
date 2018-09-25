@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
 import {
-  filterWidgetsByCategory,
+  filterWidgetsByCategoryAndLayers,
   getActiveWidget
 } from 'components/widgets-v2/selectors';
 
@@ -19,7 +19,12 @@ const selectBounds = state =>
   (state.geostore.geostore && state.geostore.geostore.bounds) || null;
 
 export const getMapSettings = createSelector(
-  [selectSettings, filterWidgetsByCategory, getActiveWidget, selectQuery],
+  [
+    selectSettings,
+    filterWidgetsByCategoryAndLayers,
+    getActiveWidget,
+    selectQuery
+  ],
   (settings, widgets, widget, query) => {
     const widgetUrlState = query && query[widget];
     const activeWidget = widgets.find(w => w.widget === widget);

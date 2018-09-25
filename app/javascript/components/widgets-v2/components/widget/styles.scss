@@ -53,4 +53,33 @@
       }
     }
   }
+
+  &.simple {
+    border: 0;
+    min-height: rem(200px);
+    padding: 0;
+    border-bottom: solid 1px $border;
+    border-radius: 0;
+    padding-bottom: rem(15px);
+
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .container {
+      .sentence {
+        font-size: rem(13px);
+        margin-bottom: rem(15px);
+      }
+    }
+
+    .widget-loader {
+      .spinner {
+        width: rem(30px);
+        height: rem(30px);
+        border-width: rem(3px);
+      }
+    }
+  }
 }

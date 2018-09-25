@@ -85,18 +85,18 @@ export const setAnalysisView = createThunkAction(
       } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
         payload = {
           type: analysisEndpoint,
-          country: wdpaid || cartodb_id
+          adm0: wdpaid || cartodb_id
         };
       } else if (cartodb_id && tableName) {
         payload = {
           type: 'use',
-          country: tableName,
-          region: cartodb_id
+          adm0: tableName,
+          adm1: cartodb_id
         };
       }
     }
 
-    if (payload && payload.country) {
+    if (payload && payload.adm0) {
       dispatch({
         type: MAP,
         payload,

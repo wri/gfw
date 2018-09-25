@@ -4,6 +4,9 @@ import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
 import lowerCase from 'lodash/lowerCase';
 import camelCase from 'lodash/camelCase';
+import intersection from 'lodash/intersection';
+
+import { getAllLayers } from 'components/map-v2/selectors';
 
 import colors from 'data/colors.json';
 import allOptions from './options';
@@ -46,6 +49,10 @@ export const getOptions = () => {
   });
   return optionsMeta;
 };
+
+export const getAllLayerIds = createSelector([getAllLayers], layers =>
+  layers.map(l => l.id)
+);
 
 export const getAdminLevel = createSelector([selectLocation], location => {
   const { type, adm0, adm1, adm2 } = location;
@@ -108,7 +115,7 @@ export const getFAOLocationData = createSelector(
 
 export const getCategory = createSelector(
   [selectQuery],
-  query => (query && query.category) || 'summary'
+  query => query && query.category
 );
 
 export const getNoWidgetsMessage = createSelector(
@@ -256,20 +263,24 @@ export const parseWidgetsWithOptions = createSelector(
   }
 );
 
-export const filterWidgetsByCategory = createSelector(
-  [parseWidgetsWithOptions, getCategory],
-  (widgets, category) => {
+export const filterWidgetsByCategoryAndLayers = createSelector(
+  [parseWidgetsWithOptions, getCategory, getAllLayerIds],
+  (widgets, category, layers) => {
     if (!widgets) return null;
-    if (!category) return widgets;
-    return sortBy(
-      widgets.filter(w => w.config.categories.includes(category)),
+    const widgetsByLayers = sortBy(
+      widgets.filter(w => {
+        const layerIntersection = intersection(w.config.layers, layers);
+        return layerIntersection && layerIntersection.length;
+      }),
       `config.sortOrder[${camelCase(category)}]`
     );
+    if (!category) return widgetsByLayers;
+    return widgetsByLayers.filter(w => w.config.categories.includes(category));
   }
 );
 
 export const getActiveWidget = createSelector(
-  [filterWidgetsByCategory, selectQuery],
+  [filterWidgetsByCategoryAndLayers, selectQuery],
   (widgets, query) => {
     if (query && query.widget) return query.widget;
     return widgets && widgets.length && widgets[0].widget;
@@ -289,6 +300,6 @@ export const getWidgetsProps = createStructuredSelector({
   locationObject: getLocationObject,
   locationName: getLocationName,
   childLocationData: getChildLocationData,
-  widgets: filterWidgetsByCategory,
+  widgets: filterWidgetsByCategoryAndLayers,
   noWidgetsMessage: getNoWidgetsMessage
 });

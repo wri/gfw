@@ -26,7 +26,8 @@ class Widget extends PureComponent {
       settings,
       sentence,
       Component,
-      parsePayload
+      parsePayload,
+      simple
     } = this.props;
     const hasData = !isEmpty(data);
 
@@ -61,6 +62,7 @@ class Widget extends PureComponent {
               settings={settings}
               setWidgetSettings={setWidgetSettings}
               parsePayload={parsePayload}
+              simple={simple}
             />
           )}
       </div>
@@ -68,23 +70,28 @@ class Widget extends PureComponent {
   };
 
   render() {
-    const { widget, colors, active, config, embed } = this.props;
+    const { widget, colors, active, config, embed, simple } = this.props;
 
     return (
       <div
         id={widget}
-        className={cx('c-widget', { large: config.large }, { embed })}
+        className={cx(
+          'c-widget',
+          { large: config.large },
+          { embed },
+          { simple }
+        )}
         style={{
           ...(active &&
+            !simple &&
             !embed && {
-              borderColor: colors.main,
-              boxShadow: `0 0px 0px 1px ${colors.main}`
+              borderColor: colors.main
             })
         }}
       >
         <WidgetHeader {...this.props} />
         {this.renderWidgetBody()}
-        <WidgetFooter {...this.props} />
+        {!simple && <WidgetFooter {...this.props} />}
       </div>
     );
   }
@@ -92,6 +99,7 @@ class Widget extends PureComponent {
 
 Widget.propTypes = {
   settings: PropTypes.object,
+  simple: PropTypes.bool,
   title: PropTypes.string,
   widget: PropTypes.string,
   colors: PropTypes.object,

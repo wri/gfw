@@ -4,6 +4,7 @@
   width: 100%;
   padding: rem(20px);
   min-height: rem(260px);
+  height: 100%;
 
   .draw-title {
     font-size: 14px;
@@ -123,7 +124,7 @@
     &:first-child {
       border-bottom: solid 1px $border;
       padding-bottom: rem(15px);
-      margin-bottom: rem(20px);
+      margin-bottom: rem(15px);
     }
   }
 
@@ -131,5 +132,10 @@
     padding: rem(15px) rem(20px);
     border-top: solid 1px $border;
     margin: 0 rem(-20px) rem(-20px);
+  }
+
+  .analysis-widgets {
+    border-top: solid 1px $border;
+    padding-top: rem(20px);
   }
 }

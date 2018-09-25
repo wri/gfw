@@ -30,7 +30,7 @@ export const getFullLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s, getActiveLayers],
   (location, adm0s, adm1s, adm2s, layers) => {
     if (location.type === 'use') {
-      const analysisLayer = layers.find(l => l.tableName === location.country);
+      const analysisLayer = layers.find(l => l.tableName === location.adm0);
       return (analysisLayer && analysisLayer.name) || 'Area analysis';
     }
     if (location.type === 'geostore') return 'custom area analysis';

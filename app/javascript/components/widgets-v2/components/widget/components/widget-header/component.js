@@ -127,10 +127,12 @@ class WidgetHeader extends PureComponent {
   };
 
   renderMetadataButton = () => {
-    const { metakey, citation, setModalMeta } = this.props;
+    const { metakey, citation, setModalMeta, simple } = this.props;
     return (
       <Button
-        className="theme-button-small square"
+        theme={cx('theme-button-small square', {
+          'theme-button-grey-filled theme-button-xsmall': simple
+        })}
         onClick={() =>
           setModalMeta(
             metakey,
@@ -160,17 +162,21 @@ class WidgetHeader extends PureComponent {
   };
 
   render() {
-    const { title, settings, options, embed, config } = this.props;
+    const { title, settings, options, embed, config, simple } = this.props;
 
     return (
       <div className="c-widget-header">
         <div className="title">{title}</div>
         <div className="options">
-          {!embed && config.layers && this.renderMapButton()}
-          {!embed && settings && options && this.renderSettingsButton()}
+          {!embed && !simple && config.layers && this.renderMapButton()}
+          {!embed &&
+            !simple &&
+            settings &&
+            options &&
+            this.renderSettingsButton()}
           <div className="small-options">
             {this.renderMetadataButton()}
-            {this.renderShareButton()}
+            {!simple && this.renderShareButton()}
           </div>
         </div>
       </div>
@@ -194,6 +200,7 @@ WidgetHeader.propTypes = {
   isDeviceTouch: PropTypes.bool,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
+  simple: PropTypes.bool,
   setWidgetSettings: PropTypes.func,
   setActiveWidget: PropTypes.func,
   metakey: PropTypes.string

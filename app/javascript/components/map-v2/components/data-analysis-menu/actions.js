@@ -79,7 +79,7 @@ export const uploadShape = createThunkAction(
                     type,
                     payload: {
                       type: 'geostore',
-                      country: id
+                      adm0: id
                     },
                     ...(query && {
                       query: {
@@ -171,7 +171,7 @@ export const setDrawnAnalysis = createThunkAction(
       type,
       payload: {
         type: 'geostore',
-        country: geostoreId
+        adm0: geostoreId
       },
       query: {
         ...query,

@@ -9,6 +9,7 @@ import Tip from 'components/ui/tip';
 import './button-styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line
 import './themes/button-small.scss'; // eslint-disable-line
+import './themes/button-xsmall.scss'; // eslint-disable-line
 import './themes/button-medium.scss'; // eslint-disable-line
 import './themes/button-tiny.scss'; // eslint-disable-line
 import './themes/button-grey.scss'; // eslint-disable-line

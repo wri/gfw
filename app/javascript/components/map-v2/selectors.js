@@ -294,7 +294,7 @@ export const getOneClickAnalysisActive = createSelector(
     !draw &&
     settings.showAnalysis &&
     !settings.showDraw &&
-    !location.country
+    !location.adm0
 );
 
 export const getMapProps = createStructuredSelector({

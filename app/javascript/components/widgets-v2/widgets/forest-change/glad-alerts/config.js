@@ -23,7 +23,7 @@ export default {
   // levels of that type you can see the widget
   admins: ['adm0', 'adm1', 'adm2'],
   // layers to show on map
-  layers: ['umd_as_it_happens'],
+  layers: ['umd_as_it_happens', 'dd5df87f-39c2-4aeb-a462-3ef969b20b66'],
   // position
   sortOrder: {
     summary: 6,

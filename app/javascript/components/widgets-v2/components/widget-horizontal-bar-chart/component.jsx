@@ -5,7 +5,14 @@ import HorizontalBarChart from 'components/charts/horizontal-bar-chart';
 
 class WidgetHorizontalBarChart extends PureComponent {
   render() {
-    const { data, settings, config, setWidgetSettings, widget } = this.props;
+    const {
+      data,
+      settings,
+      config,
+      setWidgetSettings,
+      widget,
+      simple
+    } = this.props;
 
     return (
       <HorizontalBarChart
@@ -19,6 +26,7 @@ class WidgetHorizontalBarChart extends PureComponent {
             widget
           })
         }
+        simple={simple}
       />
     );
   }
@@ -29,7 +37,8 @@ WidgetHorizontalBarChart.propTypes = {
   settings: PropTypes.object.isRequired,
   setWidgetSettings: PropTypes.func.isRequired,
   config: PropTypes.object,
-  widget: PropTypes.string
+  widget: PropTypes.string,
+  simple: PropTypes.bool
 };
 
 export default WidgetHorizontalBarChart;

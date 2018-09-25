@@ -50,10 +50,6 @@
     padding-right: rem(30px);
   }
 
-  @media screen and (min-width: $screen-xl) {
-    padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
-  }
-
   .no-widgets-message {
     border: solid 1px rgba($medium-grey, 0.2);
     border-radius: 4px;
@@ -64,5 +60,14 @@
   .widgets-loader {
     position: relative;
     min-height: rem(460px);
+  }
+
+  &.simple {
+    grid-template-columns: 1fr;
+    padding: 0;
+
+    .large {
+      grid-column-end: span 1;
+    }
   }
 }

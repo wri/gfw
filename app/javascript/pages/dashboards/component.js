@@ -57,7 +57,10 @@ class Page extends PureComponent {
             }))}
             checkActive
           />
-          <Widgets noWidgetsMessage={noWidgetsMessage} />
+          <Widgets
+            className="dashboard-widgets"
+            noWidgetsMessage={noWidgetsMessage}
+          />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
           <Sticky

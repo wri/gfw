@@ -13,7 +13,7 @@ const getLocationName = state => state.locationName || null;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
-const getMinimalist = state => state.minimalist || false;
+const getSimple = state => state.simple || false;
 
 export const parsePayload = payload => {
   const year = payload && payload[0].payload.year;
@@ -46,66 +46,44 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = createSelector(
-  [getColors, getMinimalist],
-  (colors, minimalist) => {
-    let config = {
-      height: 250,
-      xKey: 'year',
-      yKeys: {
-        bars: {
-          area: {
-            fill: colors.main,
-            background: false
-          }
+  [getColors, getSimple],
+  (colors, simple) => ({
+    height: 250,
+    xKey: 'year',
+    yKeys: {
+      bars: {
+        area: {
+          fill: colors.main,
+          background: false
         }
+      }
+    },
+    xAxis: {
+      tickFormatter: tick => {
+        const year = moment(tick, 'YYYY');
+        if (!simple && [2001, 2017].includes(tick)) {
+          return year.format('YYYY');
+        }
+        return year.format('YY');
+      }
+    },
+    unit: 'ha',
+    tooltip: [
+      {
+        key: 'year'
       },
-      xAxis: {
-        tickFormatter: tick => {
-          const year = moment(tick, 'YYYY');
-          if ([2001, 2017].includes(tick)) {
-            return year.format('YYYY');
-          }
-          return year.format('YY');
-        }
+      {
+        key: 'area',
+        unit: 'ha',
+        unitFormat: value => format('.3s')(value)
       },
-      unit: 'ha',
-      tooltip: [
-        {
-          key: 'year'
-        },
-        {
-          key: 'area',
-          unit: 'ha',
-          unitFormat: value => format('.3s')(value)
-        },
-        {
-          key: 'percentage',
-          unit: '%',
-          unitFormat: value => format('.2r')(value)
-        }
-      ]
-    };
-    if (minimalist) {
-      config = {
-        ...config,
-        yTicksHide: true,
-        gridHide: true,
-        height: 50,
-        margin: {
-          top: 0,
-          right: 0,
-          left: 0,
-          bottom: 0
-        },
-        xAxis: {
-          tickFormatter: tick => moment(tick, 'YYYY').format('YY'),
-          tick: { fontSize: '10px', fill: '#aaaaaa' }
-        }
-      };
-    }
-
-    return config;
-  }
+      {
+        key: 'percentage',
+        unit: '%',
+        unitFormat: value => format('.2r')(value)
+      }
+    ]
+  })
 );
 
 export const parseSentence = createSelector(

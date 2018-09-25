@@ -1,0 +1,22 @@
+@import '~styles/settings';
+
+.theme-button-xsmall {
+  max-width: rem(90px);
+  height: rem(14px);
+  border-radius: rem(7px);
+  padding: 0 rem(5px);
+  font-size: rem(10px);
+  line-height: 0.8em;
+  white-space: nowrap;
+
+  &.square {
+    width: rem(14px);
+    min-width: rem(14px);
+    padding: 0;
+  }
+
+  svg {
+    width: rem(8px);
+    height: rem(8px);
+  }
+}

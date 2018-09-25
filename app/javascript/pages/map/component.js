@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
+import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 
 import Map from 'components/map-v2';
@@ -30,6 +31,7 @@ class MapPage extends PureComponent {
         <ModalMeta />
         <ModalSource />
         <CountryDataProvider />
+        <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
       </div>

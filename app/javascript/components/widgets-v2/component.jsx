@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -10,10 +11,18 @@ import './styles.scss';
 
 class Widgets extends PureComponent {
   render() {
-    const { noWidgetsMessage, loading, widgets, ...rest } = this.props;
+    const {
+      className,
+      noWidgetsMessage,
+      loading,
+      widgets,
+      ...rest
+    } = this.props;
 
     return (
-      <div className="c-widgets">
+      <div
+        className={cx('c-widgets', className, { simple: this.props.simple })}
+      >
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
@@ -32,9 +41,11 @@ class Widgets extends PureComponent {
 }
 
 Widgets.propTypes = {
+  className: PropTypes.string,
   loading: PropTypes.bool,
   noWidgetsMessage: PropTypes.string,
-  widgets: PropTypes.array
+  widgets: PropTypes.array,
+  simple: PropTypes.bool
 };
 
 export default Widgets;

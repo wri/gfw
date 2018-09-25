@@ -77,7 +77,7 @@ export const routes = {
   },
   [MAP]: {
     controller: 'map_v2',
-    path: '/v2/map/:type?/:country?/:region?/:subRegion?',
+    path: '/v2/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     headerOptions: {
       fullScreen: true,
@@ -88,7 +88,7 @@ export const routes = {
   },
   [MAP_EMBED]: {
     controller: 'map_v2',
-    path: '/embed/v2/map/:type?/:country?/:region?/:subRegion?',
+    path: '/embed/v2/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     embed: true
   },

@@ -7,6 +7,7 @@ import moment from 'moment';
 import Button from 'components/ui/button/button-component';
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
+import Widgets from 'components/widgets-v2';
 import DownloadData from 'components/map-v2/components/data-analysis-menu/components/download-data';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
@@ -122,6 +123,9 @@ class DrawAnalysis extends PureComponent {
                     </li>
                   )}
                 </ul>
+                {location.type === 'country' && (
+                  <Widgets className="analysis-widgets" simple filterByLayers />
+                )}
                 <div className="disclaimers">
                   <p>
                     This algorithm approximates the results by sampling the
