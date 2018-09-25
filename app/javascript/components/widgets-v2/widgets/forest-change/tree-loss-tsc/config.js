@@ -6,6 +6,7 @@ export default {
   },
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
+  analysis: true,
   options: {
     tscDriverGroups: true,
     thresholds: true,
@@ -13,7 +14,7 @@ export default {
     endYears: true,
     yearsRange: [2001, 2015]
   },
-  layers: ['loss_by_driver'],
+  layers: ['loss_by_driver', 'dcb082a9-6fd7-4564-9110-ddf5d3d6681e'],
   metaKey: 'widget_tsc_drivers',
   sortOrder: {
     summary: 1,

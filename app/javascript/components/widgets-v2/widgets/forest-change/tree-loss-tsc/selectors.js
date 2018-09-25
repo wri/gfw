@@ -240,6 +240,24 @@ export const parseTitle = createSelector(
   }
 );
 
+export const parsePayload = payload => {
+  const year = payload && payload[0].payload.year;
+  return {
+    startDate:
+      year &&
+      moment()
+        .year(year)
+        .startOf('year')
+        .format('YYYY-MM-DD'),
+    endDate:
+      year &&
+      moment()
+        .year(year)
+        .endOf('year')
+        .format('YYYY-MM-DD')
+  };
+};
+
 export default createStructuredSelector({
   data: parseData,
   dataConfig: parseConfig,

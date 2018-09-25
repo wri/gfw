@@ -5,6 +5,7 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
+  analysis: true,
   options: {
     forestTypes: ['ifl', 'primary_forest', 'mangrove_2010_gmw'],
     landCategories: true,

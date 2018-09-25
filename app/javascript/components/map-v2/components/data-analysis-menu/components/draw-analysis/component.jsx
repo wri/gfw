@@ -123,9 +123,7 @@ class DrawAnalysis extends PureComponent {
                     </li>
                   )}
                 </ul>
-                {location.type === 'country' && (
-                  <Widgets className="analysis-widgets" simple filterByLayers />
-                )}
+                {location.type === 'country' && <Widgets simple analysis />}
                 <div className="disclaimers">
                   <p>
                     This algorithm approximates the results by sampling the

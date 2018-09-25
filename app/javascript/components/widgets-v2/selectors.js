@@ -13,6 +13,7 @@ import allOptions from './options';
 import allWidgets from './manifest';
 
 export const selectLocation = state => state.location && state.location.payload;
+export const selectAnalysis = (state, { analysis }) => analysis;
 export const selectAllLocation = state => state.location;
 export const selectLocationType = state =>
   state.location && state.location.payload && state.location.payload.type;
@@ -115,7 +116,7 @@ export const getFAOLocationData = createSelector(
 
 export const getCategory = createSelector(
   [selectQuery],
-  query => query && query.category
+  query => (query && query.category) || 'summary'
 );
 
 export const getNoWidgetsMessage = createSelector(
@@ -264,18 +265,23 @@ export const parseWidgetsWithOptions = createSelector(
 );
 
 export const filterWidgetsByCategoryAndLayers = createSelector(
-  [parseWidgetsWithOptions, getCategory, getAllLayerIds],
-  (widgets, category, layers) => {
+  [parseWidgetsWithOptions, getCategory, getAllLayerIds, selectAnalysis],
+  (widgets, category, layers, analysis) => {
     if (!widgets) return null;
-    const widgetsByLayers = sortBy(
-      widgets.filter(w => {
+    let filteredWidgets = widgets;
+    if (analysis) {
+      filteredWidgets = widgets.filter(w => {
         const layerIntersection = intersection(w.config.layers, layers);
-        return layerIntersection && layerIntersection.length;
-      }),
-      `config.sortOrder[${camelCase(category)}]`
-    );
-    if (!category) return widgetsByLayers;
-    return widgetsByLayers.filter(w => w.config.categories.includes(category));
+        return (
+          w.config.analysis && layerIntersection && layerIntersection.length
+        );
+      });
+    } else {
+      filteredWidgets = widgets.filter(w =>
+        w.config.categories.includes(category)
+      );
+    }
+    return sortBy(filteredWidgets, `config.sortOrder[${camelCase(category)}]`);
   }
 );
 

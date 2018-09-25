@@ -32,7 +32,7 @@ export const parsePayload = payload => {
 
     return {
       startDate: startDate.format('YYYY-MM-DD'),
-      endDate: startDate.add(7, 'days'),
+      endDate: startDate.add(7, 'days').format('YYYY-MM-DD'),
       ...payloadValues
     };
   }

@@ -11,17 +11,17 @@ class WidgetAlerts extends Component {
     nextProps.settings.dataset !== this.props.settings.dataset;
 
   handleMouseMove = debounce(data => {
-    const { parsePayload, setWidgetSettings, widget } = this.props;
+    const { parsePayload, setWidgetsSettings, widget, layers } = this.props;
     if (parsePayload) {
       const { activePayload } = data && data;
       const activeData = parsePayload(activePayload);
-      setWidgetSettings({ widget, value: { activeData } });
+      setWidgetsSettings({ widget, data: { ...activeData, layers } });
     }
   }, 100);
 
   handleMouseLeave = debounce(() => {
-    const { setWidgetSettings, widget } = this.props;
-    setWidgetSettings({ widget, value: { activeData: {} } });
+    const { setWidgetsSettings, widget } = this.props;
+    setWidgetsSettings({ widget, data: {} });
   }, 100);
 
   render() {
@@ -47,11 +47,12 @@ WidgetAlerts.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   settings: PropTypes.object,
-  setWidgetSettings: PropTypes.func,
+  setWidgetsSettings: PropTypes.func,
   parsePayload: PropTypes.func,
   widget: PropTypes.string,
   active: PropTypes.bool,
-  simple: PropTypes.bool
+  simple: PropTypes.bool,
+  layers: PropTypes.array
 };
 
 export default WidgetAlerts;

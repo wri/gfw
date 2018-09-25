@@ -18,12 +18,18 @@ const getSimple = state => state.simple || false;
 export const parsePayload = payload => {
   const year = payload && payload[0].payload.year;
   return {
-    startDate: moment(year)
-      .startOf('year')
-      .format('YYYY-MM-DD'),
-    endDate: moment(year)
-      .endOf('year')
-      .format('YYYY-MM-DD')
+    startDate:
+      year &&
+      moment()
+        .year(year)
+        .startOf('year')
+        .format('YYYY-MM-DD'),
+    endDate:
+      year &&
+      moment()
+        .year(year)
+        .endOf('year')
+        .format('YYYY-MM-DD')
   };
 };
 

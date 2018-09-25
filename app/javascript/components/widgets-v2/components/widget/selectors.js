@@ -14,6 +14,8 @@ export const selectWidgetFromState = (state, { widget }) =>
   state.widgetsV2.widgets[widget];
 export const selectWidgetActive = (state, { activeWidget, widget }) =>
   activeWidget === widget;
+export const selectWidgetActiveData = (state, { widget }) =>
+  state.widgetsV2.settings[widget];
 
 export const getWidgetStateData = createSelector(
   [selectWidgetFromState],
@@ -21,10 +23,13 @@ export const getWidgetStateData = createSelector(
 );
 
 export const getWidgetSettings = createSelector(
-  [selectWidgetUrlState, selectWidgetSettings],
-  (urlState, settings) => ({
+  [selectWidgetUrlState, selectWidgetSettings, selectWidgetActiveData],
+  (urlState, settings, activeData) => ({
     ...settings,
-    ...urlState
+    ...urlState,
+    activeData: {
+      ...activeData
+    }
   })
 );
 

@@ -22,7 +22,7 @@ const setWidgetsSettings = (state, { payload }) => ({
   ...state,
   settings: {
     ...state.settings,
-    ...payload
+    [payload.widget]: payload.data
   }
 });
 

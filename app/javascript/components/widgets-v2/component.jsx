@@ -21,13 +21,24 @@ class Widgets extends PureComponent {
 
     return (
       <div
-        className={cx('c-widgets', className, { simple: this.props.simple })}
+        className={cx(
+          'c-widgets',
+          className,
+          { simple: this.props.simple },
+          {
+            'no-widgets':
+              !loading &&
+              !noWidgetsMessage &&
+              (!widgets || widgets.length === 0)
+          }
+        )}
       >
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
           widgets.map(w => <Widget key={w.widget} {...w} {...rest} />)}
         {!loading &&
+          noWidgetsMessage &&
           (!widgets || widgets.length === 0) && (
             <NoContent
               className="no-widgets-message large"

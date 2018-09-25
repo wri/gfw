@@ -114,13 +114,17 @@ export const getDownloadLinks = createSelector([selectData], data =>
           const { downloadUrls } = data[d];
           return {
             label: d,
-            urls: Object.keys(downloadUrls).map(key => ({
-              url:
-                downloadUrls[key][0] === '/'
-                  ? `${process.env.GFW_API}${downloadUrls[key]}`
-                  : downloadUrls[key],
-              label: key
-            }))
+            urls: Object.keys(downloadUrls).map(key => {
+              const downloadUrlsFirstKey =
+                downloadUrls && downloadUrls[key] && downloadUrls[key][0];
+              return {
+                url:
+                  downloadUrlsFirstKey === '/'
+                    ? `${process.env.GFW_API}${downloadUrls[key]}`
+                    : downloadUrls[key],
+                label: key
+              };
+            })
           };
         }),
       'label'

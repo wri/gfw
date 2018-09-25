@@ -10,6 +10,8 @@ export default {
   metaKey: 'widget_deforestation_graph',
   // full width or not
   large: true,
+  // can show on map analysis
+  analysis: true,
   // internal category for colors and filters
   colors: 'loss',
   // data source for filtering

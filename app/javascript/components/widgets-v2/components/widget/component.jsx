@@ -19,7 +19,7 @@ class Widget extends PureComponent {
       loading,
       error,
       locationName,
-      setWidgetSettings,
+      setWidgetsSettings,
       handleDataHighlight,
       data,
       dataConfig,
@@ -27,7 +27,8 @@ class Widget extends PureComponent {
       sentence,
       Component,
       parsePayload,
-      simple
+      simple,
+      config
     } = this.props;
     const hasData = !isEmpty(data);
 
@@ -60,9 +61,10 @@ class Widget extends PureComponent {
               data={data}
               config={dataConfig}
               settings={settings}
-              setWidgetSettings={setWidgetSettings}
+              setWidgetsSettings={setWidgetsSettings}
               parsePayload={parsePayload}
               simple={simple}
+              layers={config.layers}
             />
           )}
       </div>
@@ -114,7 +116,7 @@ Widget.propTypes = {
   indicator: PropTypes.object,
   Component: PropTypes.any,
   parsePayload: PropTypes.func,
-  setWidgetSettings: PropTypes.func,
+  setWidgetsSettings: PropTypes.func,
   handleDataHighlight: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])

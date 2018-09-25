@@ -19,6 +19,7 @@ const selectLocation = state =>
 // analysis selects
 const selectAnalysisSettings = state =>
   state.location && state.location.query && state.location.query.analysis;
+const selectWidgetActiveSettings = state => state.widgetsV2.settings;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -260,11 +261,43 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
     }));
 });
 
-// flatten datasets into layers for the layer manager
+// all layers for importing by other components
 export const getActiveLayers = createSelector(getAllLayers, layers => {
   if (isEmpty(layers)) return [];
   return layers.filter(l => !l.confirmedOnly);
 });
+
+// flatten datasets into layers for the layer manager
+export const getActiveLayersWithWidgetSettings = createSelector(
+  [getAllLayers, selectWidgetActiveSettings],
+  (layers, widgetSettings) => {
+    if (isEmpty(layers)) return [];
+    if (isEmpty(widgetSettings)) return layers;
+    return layers.map(l => {
+      const layerWidgetState =
+        widgetSettings &&
+        Object.values(widgetSettings).find(
+          w => w.layers && w.layers.includes(l.id)
+        );
+
+      return {
+        ...l,
+        ...(l.decodeParams && {
+          decodeParams: {
+            ...l.decodeParams,
+            ...layerWidgetState
+          }
+        }),
+        ...(l.params && {
+          params: {
+            ...l.params,
+            ...layerWidgetState
+          }
+        })
+      };
+    });
+  }
+);
 
 export const getLayerBbox = createSelector([getActiveLayers], layers => {
   const layerWithBbox =
@@ -304,7 +337,7 @@ export const getMapProps = createStructuredSelector({
   basemap: getBasemap,
   label: getLabels,
   layerGroups: getLayerGroups,
-  activeLayers: getActiveLayers,
+  activeLayers: getActiveLayersWithWidgetSettings,
   loading: getLoading,
   layerBbox: getLayerBbox,
   geostoreBbox: getGeostoreBbox,
