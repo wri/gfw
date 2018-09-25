@@ -20,6 +20,7 @@ class Widget extends PureComponent {
       error,
       locationName,
       setWidgetsSettings,
+      setWidgetSettings,
       handleDataHighlight,
       data,
       dataConfig,
@@ -62,6 +63,7 @@ class Widget extends PureComponent {
               config={dataConfig}
               settings={settings}
               setWidgetsSettings={setWidgetsSettings}
+              setWidgetSettings={setWidgetSettings}
               parsePayload={parsePayload}
               simple={simple}
               layers={config.layers}
@@ -118,6 +120,7 @@ Widget.propTypes = {
   parsePayload: PropTypes.func,
   setWidgetsSettings: PropTypes.func,
   handleDataHighlight: PropTypes.func,
+  setWidgetSettings: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };

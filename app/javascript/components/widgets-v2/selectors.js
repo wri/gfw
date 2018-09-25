@@ -51,8 +51,9 @@ export const getOptions = () => {
   return optionsMeta;
 };
 
-export const getAllLayerIds = createSelector([getAllLayers], layers =>
-  layers.map(l => l.id)
+export const getAllLayerIds = createSelector(
+  [getAllLayers],
+  layers => layers && layers.map(l => l.id)
 );
 
 export const getAdminLevel = createSelector([selectLocation], location => {
@@ -134,12 +135,15 @@ export const parseWidgets = createSelector(
     const filteredWidgets = embed
       ? widgets.filter(w => w.config.widget === widgetQuery)
       : widgets;
-
-    return filteredWidgets.map(w => ({
-      ...w,
-      widget: w.config.widget,
-      colors: colors[w.config.colors]
-    }));
+    return (
+      filteredWidgets &&
+      filteredWidgets.length &&
+      filteredWidgets.map(w => ({
+        ...w,
+        widget: w.config && w.config.widget,
+        colors: colors[w.config && w.config.colors]
+      }))
+    );
   }
 );
 

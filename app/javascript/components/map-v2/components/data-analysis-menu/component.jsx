@@ -99,6 +99,7 @@ class DataAnalysisMenu extends PureComponent {
           </div>
         )}
         {!loading &&
+          showAnalysis &&
           !error &&
           location.type === 'country' &&
           location.adm0 && (

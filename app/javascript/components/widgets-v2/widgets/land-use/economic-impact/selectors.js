@@ -99,7 +99,7 @@ export const chartData = createSelector(
 export const rankData = createSelector(
   [getSortedData, getSettings, getLocationsMeta, getLocationObject, getColors],
   (data, settings, meta, locationObject, colors) => {
-    if (!data || !data.length) return null;
+    if (!data || !data.length || !locationObject) return null;
 
     const locationIndex = findIndex(data, d => d.iso === locationObject.value);
     let trimStart = locationIndex - 2;

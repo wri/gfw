@@ -23,6 +23,6 @@ class WidgetForestryEmployment extends PureComponent {
 }
 
 WidgetForestryEmployment.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 export default WidgetForestryEmployment;
