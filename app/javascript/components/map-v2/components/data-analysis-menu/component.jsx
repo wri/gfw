@@ -98,6 +98,19 @@ class DataAnalysisMenu extends PureComponent {
             )}
           </div>
         )}
+        {!loading &&
+          !error &&
+          location.type === 'country' &&
+          location.adm0 && (
+            <div className="analysis-actions">
+              <Button
+                extLink={window.location.href.replace('v2/map', 'dashboards')}
+                target="_blank"
+              >
+                OPEN DASHBOARD
+              </Button>
+            </div>
+          )}
       </div>
     );
   }

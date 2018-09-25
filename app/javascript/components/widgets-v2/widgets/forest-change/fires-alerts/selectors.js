@@ -98,42 +98,55 @@ export const parseSentence = createSelector(
   [parseData, getColors, getActiveData, getSentences, getDataset],
   (data, colors, activeData, sentence, dataset) => {
     if (!data) return null;
-    let lastDate = data[data.length - 1];
+    let lastDate = data[data.length - 1] || {};
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
-    let status = 'unusually low';
+    const {
+      count,
+      twoPlusStdDev,
+      plusStdDev,
+      minusStdDev,
+      twoMinusStdDev,
+      date
+    } =
+      lastDate || {};
 
-    if (lastDate.count > lastDate.twoPlusStdDev[1]) {
+    let status = 'unusually low';
+    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
       status = 'unusually high';
       statusColor = colorRange[0];
     } else if (
-      lastDate.count <= lastDate.twoPlusStdDev[1] &&
-      lastDate.count > lastDate.twoPlusStdDev[0]
+      twoPlusStdDev &&
+      count <= twoPlusStdDev[1] &&
+      count > twoPlusStdDev[0]
     ) {
       status = 'high';
       statusColor = colorRange[1];
     } else if (
-      lastDate.count <= lastDate.plusStdDev[1] &&
-      lastDate.count > lastDate.minusStdDev[0]
+      plusStdDev &&
+      minusStdDev &&
+      count <= plusStdDev[1] &&
+      count > minusStdDev[0]
     ) {
       status = 'average';
       statusColor = colorRange[2];
     } else if (
-      lastDate.count >= lastDate.twoMinusStdDev[0] &&
-      lastDate.count < lastDate.twoMinusStdDev[1]
+      twoMinusStdDev &&
+      count >= twoMinusStdDev[0] &&
+      count < twoMinusStdDev[1]
     ) {
       status = 'low';
       statusColor = colorRange[3];
     }
-    const date = moment(lastDate.date).format('Do of MMMM YYYY');
+    const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
-      date,
+      date: formattedData,
       dataset,
       count: {
-        value: format(',')(lastDate.count),
+        value: format(',')(count),
         color: colors.main
       },
       status: {

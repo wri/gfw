@@ -65,14 +65,7 @@
     margin-left: rem(5px);
   }
 
-  .c-widgets.minimalist & {
-    padding-bottom: rem(13px);
-
-    .title {
-      font-size: 11px;
-      font-weight: 500;
-      line-height: 1.73;
-      color: $ashes-grey;
-    }
+  &.simple {
+    padding-bottom: rem(10px);
   }
 }

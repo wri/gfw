@@ -64,9 +64,8 @@
 
   &.simple {
     grid-template-columns: 1fr;
-    padding: 0;
+    padding: rem(15px) 0;
     border-top: solid 1px #e5e5df;
-    padding-top: 1.25rem;
 
     .large {
       grid-column-end: span 1;
@@ -75,6 +74,6 @@
 
   &.no-widgets {
     border-top: 0;
-    padding-top: 0;
+    padding: 0;
   }
 }

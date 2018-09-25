@@ -128,9 +128,7 @@
     }
   }
 
-  .analysis-actions {
-    padding: rem(15px) rem(20px);
-    border-top: solid 1px $border;
-    margin: 0 rem(-20px) rem(-20px);
+  &.with-footer {
+    padding-bottom: rem(70px);
   }
 }

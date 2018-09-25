@@ -165,7 +165,7 @@ class WidgetHeader extends PureComponent {
     const { title, settings, options, embed, config, simple } = this.props;
 
     return (
-      <div className="c-widget-header">
+      <div className={cx('c-widget-header', { simple })}>
         <div className="title">{title}</div>
         <div className="options">
           {!embed && !simple && config.layers && this.renderMapButton()}

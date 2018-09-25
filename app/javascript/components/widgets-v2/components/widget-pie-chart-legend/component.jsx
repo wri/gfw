@@ -9,7 +9,7 @@ import './styles';
 
 class WidgetTreeCover extends PureComponent {
   render() {
-    const { data, settings } = this.props;
+    const { data, settings, simple } = this.props;
 
     return (
       <div className="c-pie-chart-legend-widget">
@@ -22,6 +22,7 @@ class WidgetTreeCover extends PureComponent {
             key: 'value',
             ...settings
           }}
+          simple={simple}
         />
         <PieChart
           className="cover-pie-chart"
@@ -35,6 +36,7 @@ class WidgetTreeCover extends PureComponent {
               unitFormat: value => format('.1f')(value)
             }
           ]}
+          simple={simple}
         />
       </div>
     );
@@ -43,6 +45,7 @@ class WidgetTreeCover extends PureComponent {
 
 WidgetTreeCover.propTypes = {
   data: PropTypes.array,
+  simple: PropTypes.bool,
   settings: PropTypes.object.isRequired
 };
 

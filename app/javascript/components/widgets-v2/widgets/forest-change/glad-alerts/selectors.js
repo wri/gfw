@@ -33,6 +33,7 @@ export const parsePayload = payload => {
     return {
       startDate: startDate.format('YYYY-MM-DD'),
       endDate: startDate.add(7, 'days').format('YYYY-MM-DD'),
+      updateLayer: true,
       ...payloadValues
     };
   }
@@ -119,7 +120,7 @@ export const parseSentence = createSelector(
   (data, colors, activeData, sentence) => {
     if (!data) return null;
 
-    let lastDate = data[data.length - 1];
+    let lastDate = data[data.length - 1] || {};
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
@@ -127,31 +128,45 @@ export const parseSentence = createSelector(
     let statusColor = colorRange[4];
     let status = 'unusually low';
 
-    if (lastDate.count > lastDate.twoPlusStdDev[1]) {
+    const {
+      count,
+      twoPlusStdDev,
+      plusStdDev,
+      minusStdDev,
+      twoMinusStdDev,
+      date
+    } =
+      lastDate || {};
+
+    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
       status = 'unusually high';
       statusColor = colorRange[0];
     } else if (
-      lastDate.count <= lastDate.twoPlusStdDev[1] &&
-      lastDate.count > lastDate.twoPlusStdDev[0]
+      twoPlusStdDev &&
+      count <= twoPlusStdDev[1] &&
+      count > twoPlusStdDev[0]
     ) {
       status = 'high';
       statusColor = colorRange[1];
     } else if (
-      lastDate.count <= lastDate.plusStdDev[1] &&
-      lastDate.count > lastDate.minusStdDev[0]
+      plusStdDev &&
+      minusStdDev &&
+      count <= plusStdDev[1] &&
+      count > minusStdDev[0]
     ) {
       status = 'normal';
       statusColor = colorRange[2];
     } else if (
-      lastDate.count >= lastDate.twoMinusStdDev[0] &&
-      lastDate.count < lastDate.twoMinusStdDev[1]
+      twoMinusStdDev &&
+      count >= twoMinusStdDev[0] &&
+      count < twoMinusStdDev[1]
     ) {
       status = 'low';
       statusColor = colorRange[3];
     }
-    const date = moment(lastDate.date).format('Do of MMMM YYYY');
+    const formattedDate = moment(date).format('Do of MMMM YYYY');
     const params = {
-      date,
+      date: formattedDate,
       count: {
         value: format(',')(lastDate.count),
         color: colors.main

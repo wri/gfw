@@ -279,21 +279,23 @@ export const getActiveLayersWithWidgetSettings = createSelector(
         Object.values(widgetSettings).find(
           w => w.layers && w.layers.includes(l.id)
         );
-
+      const { updateLayer } = layerWidgetState || {};
       return {
         ...l,
-        ...(l.decodeParams && {
-          decodeParams: {
-            ...l.decodeParams,
-            ...layerWidgetState
-          }
-        }),
-        ...(l.params && {
-          params: {
-            ...l.params,
-            ...layerWidgetState
-          }
-        })
+        ...(l.decodeParams &&
+          updateLayer && {
+            decodeParams: {
+              ...l.decodeParams,
+              ...layerWidgetState
+            }
+          }),
+        ...(l.params &&
+          updateLayer && {
+            params: {
+              ...l.params,
+              ...layerWidgetState
+            }
+          })
       };
     });
   }
