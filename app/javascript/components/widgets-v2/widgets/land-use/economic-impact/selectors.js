@@ -74,7 +74,7 @@ export const getSortedData = createSelector(
 export const chartData = createSelector(
   [getFilteredData, getLocationObject, getColors],
   (filteredData, locationObject, colors) => {
-    if (!filteredData || !filteredData.length) return null;
+    if (!filteredData || !filteredData.length || !locationObject) return null;
 
     const data = filteredData.filter(item => item.iso === locationObject.value);
     if (!data.length) return null;

@@ -19,7 +19,7 @@ class WidgetContainer extends PureComponent {
       data
     } = this.props;
     const params = { ...location, ...settings };
-    if (!data) {
+    if (!data || data.noContent) {
       getWidgetData({ widget, getData, params });
     }
   }
@@ -49,7 +49,9 @@ class WidgetContainer extends PureComponent {
       !settingsUpdateBlackList.includes(changedSetting);
     const hasLocationChanged = !isEqual(location, prevProps.location);
     const params = { ...location, ...settings };
-    if (hasSettingsChanged || hasLocationChanged) { getWidgetData({ widget, getData, params }); }
+    if (hasSettingsChanged || hasLocationChanged) {
+      getWidgetData({ widget, getData, params });
+    }
   }
 
   handleDataHighlight = (highlighted, widget) => {

@@ -32,13 +32,13 @@ export const getFilteredData = createSelector(
 export const parseData = createSelector(
   [getFilteredData, getSettings, getColors],
   (data, settings, colors) => {
-    if (isEmpty(data)) return [{ noContent: true }];
+    if (isEmpty(data)) return { noContent: true };
 
     const { year } = settings;
     const selectedFAO = data.filter(item => item.year === year);
     const { male, female } =
       selectedFAO && selectedFAO.length && selectedFAO[0];
-    if (!female) return [{ noContent: true }];
+    if (!female) return { noContent: true };
 
     const total = male + female;
     const formatedData = [
