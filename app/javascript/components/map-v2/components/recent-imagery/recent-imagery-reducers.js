@@ -1,7 +1,7 @@
 import * as actions from './recent-imagery-actions';
 
 export const initialState = {
-  loading: true,
+  loading: false,
   data: [],
   dataStatus: {
     tilesPerRequest: 6,
