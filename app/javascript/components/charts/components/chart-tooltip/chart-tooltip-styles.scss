@@ -47,4 +47,16 @@
     margin-right: rem(5px);
     margin-top: rem(5px);
   }
+
+  &.simple {
+    font-size: rem(12px);
+
+    .break-label {
+      font-size: rem(12px);
+    }
+
+    .data-color {
+      font-size: rem(12px);
+    }
+  }
 }

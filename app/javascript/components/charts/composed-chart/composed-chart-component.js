@@ -132,6 +132,7 @@ class CustomComposedChart extends PureComponent {
               <CartesianGrid vertical={false} strokeDasharray="3 4" />
             )}
             <Tooltip
+              simple={simple}
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
