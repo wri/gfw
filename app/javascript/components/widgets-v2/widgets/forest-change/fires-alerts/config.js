@@ -11,6 +11,7 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3'],
+  hideLayers: true,
   dataType: 'fires',
   colors: 'fires',
   metaKey: 'widget_fire_alert_location',
