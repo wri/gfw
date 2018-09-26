@@ -11,7 +11,7 @@ define([
     }
 
   });
-  console.log(GladCoverageLayer)
+  
   return GladCoverageLayer;
 
 });
