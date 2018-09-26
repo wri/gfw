@@ -8,6 +8,9 @@ import { initialState } from './recent-imagery-reducers';
 const getData = state => state.recentImagery.data || null;
 export const getRecentImageryLoading = state =>
   state.recentImagery.loading || null;
+export const getMoreTilesLoading = state =>
+  state.recentImagery.loadingMoreTiles || null;
+const getError = state => state.recentImagery.error;
 const getLocation = state => (state.location && state.location.query) || null;
 const getDataStatus = state => state.recentImagery.dataStatus || null;
 const getDatasets = state => state.datasets.datasets || null;
@@ -149,6 +152,8 @@ export const getRecentImageryDataset = createSelector(
 export const getRecentImageryProps = createStructuredSelector({
   // settings
   loading: getRecentImageryLoading,
+  moreTilesLoading: getMoreTilesLoading,
+  error: getError,
   active: getActive,
   visible: getVisibility,
   dates: getDates,

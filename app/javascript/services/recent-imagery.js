@@ -19,16 +19,14 @@ export const getRecentTiles = ({ lat, lng, start, end, bands, token }) => {
   return axios.get(url, { cancelToken: token });
 };
 
-export const getTiles = ({ sources, token, bands }) =>
+export const getTiles = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.tiles}`, {
     source_data: sources,
-    cancelToken: token,
     bands
   });
 
-export const getThumbs = ({ sources, token, bands }) =>
+export const getThumbs = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.thumbs}`, {
     source_data: sources,
-    cancelToken: token,
     bands
   });
