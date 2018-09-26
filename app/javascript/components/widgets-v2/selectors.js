@@ -5,6 +5,7 @@ import concat from 'lodash/concat';
 import lowerCase from 'lodash/lowerCase';
 import camelCase from 'lodash/camelCase';
 import intersection from 'lodash/intersection';
+import moment from 'moment';
 
 import { getAllLayers } from 'components/map-v2/selectors';
 
@@ -50,11 +51,6 @@ export const getOptions = () => {
   });
   return optionsMeta;
 };
-
-export const getAllLayerIds = createSelector(
-  [getAllLayers],
-  layers => layers && layers.map(l => l.id)
-);
 
 export const getAdminLevel = createSelector([selectLocation], location => {
   const { type, adm0, adm1, adm2 } = location;
@@ -269,16 +265,46 @@ export const parseWidgetsWithOptions = createSelector(
 );
 
 export const filterWidgetsByCategoryAndLayers = createSelector(
-  [parseWidgetsWithOptions, getCategory, getAllLayerIds, selectAnalysis],
+  [parseWidgetsWithOptions, getCategory, getAllLayers, selectAnalysis],
   (widgets, category, layers, analysis) => {
     if (!widgets) return null;
     let filteredWidgets = widgets;
     if (analysis) {
+      const layerIds = layers && layers.map(l => l.id);
       filteredWidgets = widgets.filter(w => {
-        const layerIntersection = intersection(w.config.layers, layers);
+        const layerIntersection = intersection(w.config.layers, layerIds);
         return (
           w.config.analysis && layerIntersection && layerIntersection.length
         );
+      });
+      filteredWidgets = filteredWidgets.map(w => {
+        const widgetLayer =
+          layers &&
+          layers.find(l => w.config && w.config.layers.includes(l.id));
+        const { params, decodeParams } = widgetLayer || {};
+        const startDate =
+          (params && params.startDate) ||
+          (decodeParams && decodeParams.startDate);
+        const startYear =
+          startDate && parseInt(moment(startDate).format('YYYY'), 10);
+        const endDate =
+          (params && params.endDate) || (decodeParams && decodeParams.endDate);
+        const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
+
+        return {
+          ...w,
+          settings: {
+            ...w.settings,
+            ...params,
+            ...decodeParams,
+            ...(startYear && {
+              startYear
+            }),
+            ...(endYear && {
+              endYear
+            })
+          }
+        };
       });
     } else {
       filteredWidgets = widgets.filter(w =>

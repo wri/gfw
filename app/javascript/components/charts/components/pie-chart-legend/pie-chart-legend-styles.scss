@@ -61,6 +61,10 @@
   }
 
   &.simple {
-
+    &.small {
+      .legend-value {
+        font-size: rem(18px);
+      }
+    }
   }
 }

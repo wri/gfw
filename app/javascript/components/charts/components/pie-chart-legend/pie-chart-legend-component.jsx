@@ -16,7 +16,9 @@ class PieChartLegend extends PureComponent {
     }
 
     return (
-      <ul className={cx('c-pie-chart-legend', className, sizeClass)}>
+      <ul
+        className={cx('c-pie-chart-legend', className, sizeClass, { simple })}
+      >
         {data.map((item, index) => {
           const value = `${formatNumber({
             num: item[config.key],
