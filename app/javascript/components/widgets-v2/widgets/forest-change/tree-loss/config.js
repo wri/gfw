@@ -18,9 +18,6 @@ export default {
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss',
   layers: ['loss', 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6'],
-  activeDataKeys: {
-    type: 'date'
-  },
   sortOrder: {
     summary: 0,
     forestChange: 0

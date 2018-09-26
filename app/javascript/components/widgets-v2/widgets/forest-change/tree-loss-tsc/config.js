@@ -6,7 +6,6 @@ export default {
   },
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
-  analysis: true,
   options: {
     tscDriverGroups: true,
     thresholds: true,

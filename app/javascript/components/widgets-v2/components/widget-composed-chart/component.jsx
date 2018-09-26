@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
 import ComposedChart from 'components/charts/composed-chart';
 
 class WidgetAlerts extends Component {
   shouldComponentUpdate = nextProps =>
-    nextProps.settings.weeks !== this.props.settings.weeks ||
-    nextProps.data !== this.props.data ||
-    nextProps.settings.dataset !== this.props.settings.dataset;
+    !isEqual(nextProps.settings.weeks, this.props.settings.weeks) ||
+    !isEqual(nextProps.data, this.props.data) ||
+    !isEqual(nextProps.settings.dataset, this.props.settings.dataset);
 
   handleMouseMove = debounce(data => {
     const { parsePayload, setWidgetsSettings, widget, layers } = this.props;
