@@ -93,10 +93,12 @@ export const routes = {
     embed: true
   },
   [DASHBOARDS]: {
+    controller: 'dashboards',
     path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards'
   },
   [DASHBOARDS_EMBED]: {
+    controller: 'dashboards',
     path: '/embed/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards/embed',
     embed: true
