@@ -67,12 +67,12 @@ Gfw::Application.routes.draw do
 
   # country
   get '/country', to: redirect('/dashboards/global')
-  get '/country/embed/:widget/:iso', to: redirect { |params, req|
-    "/embed/dashboards/country/#{params[:iso]}?widget=#{params[:widget]}&#{req.query_string}" }
-  get '/country/embed/:widget/:iso/:region', to: redirect { |params, req|
-    "/embed/dashboards/country/#{params[:iso]}/#{params[:region]}?widget=#{params[:widget]}&#{req.query_string}" }
-  get '/country/embed/:widget/:iso/:region/:sub_region', to: redirect { |params, req|
-    "/embed/dashboards/country/#{params[:iso]}/#{params[:region]}/#{params[:sub_region]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/embed/:widget/:adm0', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:adm0]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/embed/:widget/:adm0/:adm1', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/country/embed/:widget/:adm0/:adm1/:adm2', to: redirect { |params, req|
+    "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?widget=#{params[:widget]}&#{req.query_string}" }
   get '/country/*all', to: redirect { |params, req| "/dashboards#{req.fullpath}" }
 
   # countries
@@ -98,13 +98,13 @@ Gfw::Application.routes.draw do
   get '/map/*path' => 'map#index'
   get '/embed/map' => 'map#embed'
   get '/embed/map/*path' => 'map#embed'
-  get '/v2/map(/:type)(/:iso)(/:region)(/:sub_region)' => 'map_v2#index'
-  get '/embed/v2/map(/:type)(/:iso)(/:region)(/:sub_region)' => 'map_v2#index'
+  get '/v2/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map_v2#index'
+  get '/embed/v2/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map_v2#index'
 
   # dashboards
   get '/dashboards' => redirect('/dashboards/global')
-  get '/dashboards(/:type)(/:iso)(/:region)(/:sub_region)' => 'dashboards#index'
-  get '/embed/dashboards/:type(/:iso)(/:region)(/:sub_region)' => 'dashboards#embed'
+  get '/dashboards(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#index'
+  get '/embed/dashboards/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
 
   # about
   get '/about' => 'about#index'
