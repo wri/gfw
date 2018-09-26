@@ -7,11 +7,11 @@ define([
   var GladCoverageLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
+      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM glad_coverage_1'
     }
 
   });
-
+  console.log(GladCoverageLayer)
   return GladCoverageLayer;
 
 });
