@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { biomassToCO2 } from 'utils/calculations';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
+import tropicalIsos from 'data/tropical-isos.json';
 
 // get list data
 const getLocation = state => state.location || null;
@@ -52,7 +53,9 @@ export const getSentence = createSelector(
       withLoss,
       withPlantationLoss,
       globalInitial,
-      indoInitial
+      indoInitial,
+      co2Emissions,
+      end
     } = sentences;
     const extent =
       data.extent < 1 ? format('.3r')(data.extent) : format('.3s')(data.extent);
@@ -90,12 +93,14 @@ export const getSentence = createSelector(
       treeCoverLoss: loss,
       primaryLoss
     };
-
     let sentence = initial;
     if (data.extent > 0 && data.totalLoss.area) {
       sentence =
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
     }
+    sentence = tropicalIsos.includes(locationNames.value)
+      ? sentence + co2Emissions
+      : sentence + end;
     if (!location) sentence = globalInitial;
     else if (location === 'Indonesia') sentence = indoInitial;
 
