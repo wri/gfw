@@ -4,12 +4,13 @@ import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { biomassToCO2 } from 'utils/calculations';
+import tropicalIsos from 'data/tropical-isos.json';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getCurrentLocation = state => state.currentLocation || null;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -78,23 +79,34 @@ export const getSentence = createSelector(
     getIndicator,
     getSentences
   ],
-  (data, extent, settings, currentLabel, indicator, sentences) => {
+  (data, extent, settings, currentLocation, indicator, sentences) => {
     if (!data) return null;
-    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const {
+      initial,
+      withIndicator,
+      noLoss,
+      noLossWithIndicator,
+      co2Emissions,
+      end
+    } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
+    const iso = currentLocation && currentLocation.value || null;
     let sentence = indicator ? withIndicator : initial;
+    sentence = tropicalIsos.includes(iso)
+      ? sentence + co2Emissions
+      : sentence + end;
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
     }
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location: currentLabel,
+      location: currentLocation && currentLocation.label,
       startYear,
       endYear,
       loss:
