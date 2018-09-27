@@ -35,7 +35,7 @@ class BasemapsContainer extends React.Component {
     const filteredLayers = activeBoundaries
       ? activeDatasets.filter(l => l.dataset !== activeBoundaries.dataset)
       : activeDatasets;
-    if (item.value) {
+    if (item.value !== 'no-boundaries') {
       const newActiveDatasets = [
         {
           layers: [item.layer],

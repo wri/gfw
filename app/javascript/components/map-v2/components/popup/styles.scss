@@ -7,6 +7,7 @@
 
   .popup-card {
     border: 0;
+    max-width: rem(240px);
 
     .body {
       background-color: $white;
@@ -17,7 +18,7 @@
     padding: rem(25px);
 
     .popup-title {
-      font-size: rem(18px);
+      font-size: rem(16px);
       margin-bottom: rem(15px);
       color: $slate;
       font-weight: 400;

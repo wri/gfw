@@ -6,5 +6,13 @@
     left: rem(15px);
     top: rem(15px);
     z-index: 10;
+
+    &.embed {
+      top: rem(90px);
+
+      .legend {
+        max-height: calc(100vh - 255px);
+      }
+    }
   }
 }

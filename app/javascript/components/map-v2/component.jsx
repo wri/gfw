@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import startCase from 'lodash/startCase';
 import upperFirst from 'lodash/upperFirst';
-import moment from 'moment';
-import { format } from 'd3-format';
+import cx from 'classnames';
 
 import Map from 'wri-api-components/dist/map';
 import { LayerManager, Layer } from 'layer-manager/dist/react';
@@ -19,6 +18,7 @@ import iconCross from 'assets/icons/close.svg';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
+import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
 
 import './styles.scss';
@@ -31,7 +31,7 @@ class MapComponent extends PureComponent {
     });
   }
 
-  renderTooltip = data => (
+  renderDataTooltip = data => (
     <div>
       {Object.keys(data).map(key => (
         <p key={key}>
@@ -43,6 +43,12 @@ class MapComponent extends PureComponent {
     </div>
   );
 
+  renderInfoTooltip = string => (
+    <div>
+      <p className="tooltip-info">{string}</p>
+    </div>
+  );
+
   render() {
     const {
       loading,
@@ -51,9 +57,8 @@ class MapComponent extends PureComponent {
       mapOptions,
       basemap,
       label,
-      setMapSettings,
+      handleMapMove,
       geostore,
-      setInteraction,
       tileGeoJSON,
       setRecentImagerySettings,
       query,
@@ -61,18 +66,35 @@ class MapComponent extends PureComponent {
       bbox,
       showTooltip,
       handleShowTooltip,
-      setBbox
+      handleRecentImageryTooltip,
+      analysisActive,
+      handleMapInteraction,
+      oneClickAnalysisActive,
+      draw,
+      embed
     } = this.props;
 
     return (
-      <div style={{ backgroundColor: basemap.color }}>
+      <div
+        className={cx()}
+        style={{ backgroundColor: basemap.color }}
+        onMouseOver={() =>
+          oneClickAnalysisActive &&
+          handleShowTooltip(true, 'Click shape to analyze.')
+        }
+        onMouseOut={() => handleShowTooltip(false, '')}
+      >
         <Tooltip
           theme="tip"
           hideOnClick
           html={
             <Tip
               className="map-hover-tooltip"
-              text={this.renderTooltip(tooltipData)}
+              text={
+                typeof tooltipData === 'string'
+                  ? this.renderInfoTooltip(tooltipData)
+                  : this.renderDataTooltip(tooltipData)
+              }
             />
           }
           position="top"
@@ -81,7 +103,7 @@ class MapComponent extends PureComponent {
           open={showTooltip}
         >
           <Map
-            customClass="c-map"
+            customClass={cx('c-map', { analysis: analysisActive }, { embed })}
             onReady={map => {
               this.map = map;
             }}
@@ -99,24 +121,8 @@ class MapComponent extends PureComponent {
                 : {}
             }
             events={{
-              zoomend: (e, map) => {
-                setMapSettings({
-                  zoom: map.getZoom(),
-                  center: map.getCenter(),
-                  canBound: false,
-                  bbox: null
-                });
-                setBbox(null);
-              },
-              dragend: (e, map) => {
-                setMapSettings({
-                  zoom: map.getZoom(),
-                  center: map.getCenter(),
-                  canBound: false,
-                  bbox: null
-                });
-                setBbox(null);
-              }
+              zoomend: handleMapMove,
+              dragend: handleMapMove
             }}
           >
             {map => (
@@ -127,10 +133,11 @@ class MapComponent extends PureComponent {
                       {geostore &&
                         geostore.id && (
                           <Layer
-                            id={geostore.id}
+                            id="geostore"
                             name="Geojson"
                             provider="leaflet"
                             layerConfig={{
+                              id: geostore.id,
                               type: 'geoJSON',
                               body: geostore.geojson,
                               options: {
@@ -165,27 +172,21 @@ class MapComponent extends PureComponent {
                           interactivity
                           events={{
                             click: () => {
-                              setRecentImagerySettings({ visible: true });
+                              if (!draw) {
+                                setRecentImagerySettings({ visible: true });
+                              }
                             },
                             mouseover: e => {
-                              const data = e.layer.feature.properties;
-                              const { cloudScore, instrument, dateTime } = data;
-                              handleShowTooltip(true, {
-                                instrument: startCase(instrument),
-                                date: moment(dateTime)
-                                  .format('DD MMM YYYY, HH:mm')
-                                  .toUpperCase(),
-                                cloudCoverage: `${format('.0f')(cloudScore)}%`
-                              });
+                              if (!draw) handleRecentImageryTooltip(e);
                             },
                             mouseout: () => {
-                              handleShowTooltip(false, {});
+                              if (!draw) handleShowTooltip(false, {});
                             }
                           }}
                         />
                       )}
                       {activeLayers.map(l => {
-                        const { interactionConfig, isBoundary } = l;
+                        const { interactionConfig } = l;
                         const { output, article } = interactionConfig || {};
                         const layer = {
                           ...l,
@@ -193,15 +194,12 @@ class MapComponent extends PureComponent {
                             interactivity: output.map(i => i.column),
                             events: {
                               click: e => {
-                                if (!showTooltip) {
-                                  setInteraction({
-                                    ...e,
-                                    label: l.name,
+                                if (!draw) {
+                                  handleMapInteraction({
+                                    e,
+                                    layer: l,
                                     article,
-                                    isBoundary,
-                                    id: l.id,
-                                    value: l.id,
-                                    config: output
+                                    output
                                   });
                                 }
                               }
@@ -221,7 +219,12 @@ class MapComponent extends PureComponent {
                   )}
                 </LayerManager>
                 <Popup map={map} query={query} />
-                <MapControlButtons className="map-controls" map={map} />
+                <MapControlButtons
+                  className="map-controls"
+                  map={map}
+                  embed={embed}
+                />
+                {draw && <MapDraw map={map} />}
               </Fragment>
             )}
           </Map>
@@ -247,8 +250,7 @@ MapComponent.propTypes = {
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
-  setMapSettings: PropTypes.func,
-  setInteraction: PropTypes.func,
+  handleMapMove: PropTypes.func,
   bboxs: PropTypes.object,
   recentImagery: PropTypes.bool,
   recentTileBounds: PropTypes.array,
@@ -256,11 +258,16 @@ MapComponent.propTypes = {
   geostore: PropTypes.object,
   tileGeoJSON: PropTypes.object,
   query: PropTypes.object,
-  tooltipData: PropTypes.object,
+  tooltipData: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bbox: PropTypes.array,
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
-  setBbox: PropTypes.func
+  handleRecentImageryTooltip: PropTypes.func,
+  handleMapInteraction: PropTypes.func,
+  analysisActive: PropTypes.bool,
+  oneClickAnalysisActive: PropTypes.bool,
+  draw: PropTypes.bool,
+  embed: PropTypes.bool
 };
 
 export default MapComponent;

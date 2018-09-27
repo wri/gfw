@@ -1,4 +1,4 @@
-class Dashboards
+class Application
   class << self
     def find_all_countries
       url = "#{ENV['CARTO_API']}/sql?q=SELECT%20DISTINCT%20iso,%20name_engli%20as%20name%20FROM%20gadm36_countries%20WHERE%20iso%20!=%20'XCA'%20AND%20iso%20!=%20'TWN'"

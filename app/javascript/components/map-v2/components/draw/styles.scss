@@ -1,0 +1,15 @@
+@import '~styles/settings.scss';
+
+.leaflet-draw-tooltip {
+  background-color: rgba($slate, 0.8);
+  padding: rem(10px) rem(15px);
+  width: 200px;
+  color: $white;
+  font-family: $font-family-1;
+  margin-top: rem(-60px);
+  margin-left: rem(30px);
+}
+
+.draw-icon {
+  border-radius: rem(10px);
+}

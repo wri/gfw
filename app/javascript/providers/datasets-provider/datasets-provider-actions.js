@@ -26,7 +26,7 @@ export const getDatasets = createThunkAction(
   'getDatasets',
   () => (dispatch, getState) => {
     const state = getState();
-    if (!state.datasets.datasets.length) {
+    if (!state.datasets.loading) {
       dispatch(setDatasetsLoading({ loading: true, error: false }));
       axios
         .all([
@@ -160,7 +160,9 @@ export const getDatasets = createThunkAction(
                             sql_config && reduceSqlParams(sql_config);
 
                           return {
+                            ...info,
                             ...l,
+                            ...(d.tableName && { tableName: d.tableName }),
                             ...l.applicationConfig,
                             // sorting position
                             position: l.applicationConfig.default

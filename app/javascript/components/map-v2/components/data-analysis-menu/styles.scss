@@ -1,0 +1,90 @@
+@import '~styles/settings.scss';
+
+.c-data-analysis-menu {
+  width: rem(290px);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+  background: $white;
+  transition: transform 0.3s linear;
+  position: relative;
+  z-index: 1;
+
+  &.-relocate {
+    transform: translateX(292px);
+  }
+
+  &.-big {
+    transform: translateX(552px);
+  }
+
+  .nav {
+    border-bottom: solid 1px $border;
+    position: relative;
+    z-index: 2;
+    height: auto;
+  }
+
+  .legend,
+  .analysis {
+    position: relative;
+    overflow-y: scroll;
+    display: flex;
+    flex: 1;
+    max-height: calc(100vh - 70px);
+    z-index: 1;
+  }
+
+  .analysis-loader {
+    z-index: 10;
+
+    &.fetching {
+      .spinner {
+        margin-top: rem(-30px);
+      }
+    }
+  }
+
+  .cancel-analysis {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba($white, 0.5);
+    z-index: 1000;
+
+    .cancel-analysis-btn {
+      z-index: 1000;
+      background-color: $error;
+      width: rem(180px);
+      margin-bottom: rem(10px);
+      margin-top: rem(50px);
+    }
+
+    .refresh-analysis-btn {
+      z-index: 1000;
+      background-color: $green-gfw;
+      width: rem(180px);
+      margin-bottom: rem(10px);
+    }
+
+    .error-message {
+      // margin-bottom: rem(20px);
+      width: rem(200px);
+      text-align: center;
+      word-break: break-word;
+    }
+
+    &.fetching {
+      justify-content: flex-start;
+      background-color: transparent;
+
+      .cancel-analysis-btn {
+        margin-top: rem(150px);
+      }
+    }
+  }
+}

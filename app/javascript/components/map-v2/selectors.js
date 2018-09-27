@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
+import flatMap from 'lodash/flatMap';
 
 import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 
@@ -13,6 +14,11 @@ const getDatasets = state => state.datasets.datasets;
 const getLoading = state => state.datasets.loading || state.geostore.loading;
 const getGeostore = state => state.geostore.geostore || null;
 const getQuery = state => (state.location && state.location.query) || null;
+const selectLocation = state =>
+  (state.location && state.location.payload) || null;
+// analysis selects
+const selectAnalysisSettings = state =>
+  state.location && state.location.query && state.location.query.analysis;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -34,6 +40,11 @@ export const getMapZoom = createSelector(
 export const getLabels = createSelector(
   getMapSettings,
   settings => settings.label
+);
+
+export const getDraw = createSelector(
+  getMapSettings,
+  settings => settings.draw
 );
 
 export const getBbox = createSelector(
@@ -94,12 +105,27 @@ export const getActiveDatasets = createSelector(
 
 export const getBoundaryDatasets = createSelector([getDatasets], datasets => {
   if (isEmpty(datasets)) return null;
-  return datasets.filter(d => d.isBoundary).map(d => ({
-    ...d,
-    label: d.name,
-    value: d.layer
+  const boundaries = datasets.filter(d => d.isBoundary);
+  const boundaryLayers = flatMap(
+    boundaries.map(
+      b => b.layers && b.layers.map(l => ({ ...l, dataset: b.id }))
+    )
+  );
+  return boundaryLayers.map(l => ({
+    name: l.name,
+    dataset: l.dataset,
+    layer: l.id,
+    id: l.dataset,
+    label: l.name,
+    value: l.id
   }));
 });
+
+export const getAllBoundaries = createSelector(
+  [getBoundaryDatasets],
+  boundaries =>
+    [{ label: 'No boundaries', value: 'no-boundaries' }].concat(boundaries)
+);
 
 export const getActiveBoundaryDatasets = createSelector(
   [getBoundaryDatasets, getActiveDatasets],
@@ -150,6 +176,7 @@ export const getDatasetsWithConfig = createSelector(
             visibility,
             opacity,
             bbox,
+            color: d.color,
             active: layers && layers.includes(l.id),
             ...(!isEmpty(l.params) && {
               params: {
@@ -203,7 +230,15 @@ export const getLayerGroups = createSelector(
   [getDatasetsWithConfig, getActiveDatasetsState],
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
-    return activeDatasetsState.map(l => datasets.find(d => d.id === l.dataset));
+    return activeDatasetsState
+      .map(l => datasets.find(d => d.id === l.dataset))
+      .map(d => {
+        const { metadata } = d.layers.find(l => l.active);
+        return {
+          ...d,
+          metadata: metadata || d.metadata
+        };
+      });
   }
 );
 
@@ -214,15 +249,21 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 });
 
 // flatten datasets into layers for the layer manager
-export const getActiveLayers = createSelector(getLayerGroups, layerGroups => {
-  if (isEmpty(layerGroups)) return [];
+export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
+  if (isEmpty(layerGroups)) return null;
   return flatten(layerGroups.map(d => d.layers))
-    .filter(l => l.active && !l.confirmedOnly)
+    .filter(l => l.active)
     .map((l, i) => ({
       ...l,
       zIndex:
         l.interactionConfig && l.interactionConfig.article ? 1100 + i : 1000 - i
     }));
+});
+
+// flatten datasets into layers for the layer manager
+export const getActiveLayers = createSelector(getAllLayers, layers => {
+  if (isEmpty(layers)) return [];
+  return layers.filter(l => !l.confirmedOnly);
 });
 
 export const getLayerBbox = createSelector([getActiveLayers], layers => {
@@ -240,6 +281,22 @@ export const getGeostoreBbox = createSelector(
   geostore => geostore && geostore.bbox
 );
 
+// analysis
+export const getShowAnalysis = createSelector(
+  getQuery,
+  query => query && query.analysis && query.analysis.showAnalysis
+);
+
+export const getOneClickAnalysisActive = createSelector(
+  [selectAnalysisSettings, selectLocation, getDraw],
+  (settings, location, draw) =>
+    settings &&
+    !draw &&
+    settings.showAnalysis &&
+    !settings.showDraw &&
+    !location.country
+);
+
 export const getMapProps = createStructuredSelector({
   activeDatasets: getActiveDatasets,
   settings: getMapSettings,
@@ -255,5 +312,9 @@ export const getMapProps = createStructuredSelector({
   canBound: getCanBound,
   geostore: getGeostore,
   tileGeoJSON: getTileGeoJSON,
-  query: getQuery
+  query: getQuery,
+  location: selectLocation,
+  draw: getDraw,
+  analysisActive: getShowAnalysis,
+  oneClickAnalysisActive: getOneClickAnalysisActive
 });

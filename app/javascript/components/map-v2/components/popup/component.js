@@ -10,6 +10,7 @@ import Dropdown from 'components/ui/dropdown/dropdown-component';
 import Card from 'components/ui/card';
 
 import DataTable from './components/data-table';
+import BoundarySentence from './components/boundary-sentence';
 
 class Popup extends Component {
   componentDidUpdate(prevProps) {
@@ -28,7 +29,8 @@ class Popup extends Component {
       interactions,
       selected,
       setInteractionSelected,
-      handleAnalyze
+      setAnalysisView,
+      isBoundary
     } = this.props;
 
     return (
@@ -46,7 +48,7 @@ class Popup extends Component {
                 ...cardData,
                 buttons: cardData.buttons.map(b => ({
                   ...b,
-                  onClick: () => handleAnalyze(cardData)
+                  onClick: () => setAnalysisView(cardData)
                 }))
               }}
             />
@@ -56,10 +58,10 @@ class Popup extends Component {
                 interactions.length > 1 && (
                   <Dropdown
                     className="layer-selector"
-                    theme="theme-dropdown-native-plain"
+                    theme="theme-dropdown-native"
                     value={selected}
                     options={interactions}
-                    onChange={e => setInteractionSelected(e.target.value)}
+                    onChange={setInteractionSelected}
                     native
                   />
                 )}
@@ -67,14 +69,20 @@ class Popup extends Component {
                 interactions.length === 1 && (
                   <div className="popup-title">{selected.label}</div>
                 )}
-              <DataTable data={tableData} />
-              {
-                <div className="nav-footer">
-                  <Button onClick={() => handleAnalyze(selected)}>
-                    Analyze
-                  </Button>
-                </div>
-              }
+              {isBoundary ? (
+                <BoundarySentence
+                  selected={selected}
+                  data={tableData}
+                  setAnalysisView={setAnalysisView}
+                />
+              ) : (
+                <DataTable data={tableData} />
+              )}
+              <div className="nav-footer">
+                <Button onClick={() => setAnalysisView(selected)}>
+                  ANALYZE
+                </Button>
+              </div>
             </div>
           )}
         </div>
@@ -89,10 +97,11 @@ Popup.propTypes = {
   latlng: PropTypes.object,
   selected: PropTypes.object,
   interactions: PropTypes.array,
-  tableData: PropTypes.array,
+  tableData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  isBoundary: PropTypes.bool,
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
-  handleAnalyze: PropTypes.func
+  setAnalysisView: PropTypes.func
 };
 
 export default Popup;

@@ -22,7 +22,7 @@ $summary-color: #aaa;
   }
 
   &.active {
-    &::before {
+    &::after {
       border: solid 2px $green-gfw;
     }
   }
@@ -66,6 +66,7 @@ $summary-color: #aaa;
       margin-bottom: rem(20px);
       line-height: 1.9;
       height: rem(80px);
+      overflow: hidden;
     }
 
     .meta {

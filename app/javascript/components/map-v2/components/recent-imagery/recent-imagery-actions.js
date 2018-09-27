@@ -31,39 +31,44 @@ export const setRecentImagerySettings = createThunkAction(
     )
 );
 
-export const getData = createThunkAction('getData', params => dispatch => {
-  dispatch(setRecentImageryLoading(true));
-  getRecentTiles({ ...params })
-    .then(response => {
-      const serializedResponse = serializeReponse(
-        response.data && response.data.data && response.data.data.tiles
-      );
-      if (serializedResponse && !!serializedResponse.length) {
-        const { clouds } = initialState.settings;
-        const { source } = serializedResponse[0];
-        const cloudScore = Math.round(serializedResponse[0].cloud_score);
-        dispatch(
-          setRecentImageryData({
-            data: serializedResponse,
-            dataStatus: {
-              haveAllData: false,
-              requestedTiles: 0
-            }
-          })
-        );
-        dispatch(
-          setRecentImagerySettings({
-            selected: source,
-            clouds: cloudScore > clouds ? cloudScore : clouds
-          })
-        );
-        dispatch(setRecentImageryLoading(false));
-      }
-    })
-    .catch(error => {
-      console.info(error);
-    });
-});
+export const getData = createThunkAction(
+  'getData',
+  params => (dispatch, getState) => {
+    if (!getState().recentImagery.loading) {
+      dispatch(setRecentImageryLoading(true));
+      getRecentTiles({ ...params })
+        .then(response => {
+          const serializedResponse = serializeReponse(
+            response.data && response.data.data && response.data.data.tiles
+          );
+          if (serializedResponse && !!serializedResponse.length) {
+            const { clouds } = initialState.settings;
+            const { source } = serializedResponse[0];
+            const cloudScore = Math.round(serializedResponse[0].cloud_score);
+            dispatch(
+              setRecentImageryData({
+                data: serializedResponse,
+                dataStatus: {
+                  haveAllData: false,
+                  requestedTiles: 0
+                }
+              })
+            );
+            dispatch(
+              setRecentImagerySettings({
+                selected: source,
+                clouds: cloudScore > clouds ? cloudScore : clouds
+              })
+            );
+            dispatch(setRecentImageryLoading(false));
+          }
+        })
+        .catch(error => {
+          console.info(error);
+        });
+    }
+  }
+);
 
 export const getMoreTiles = createThunkAction(
   'getMoreTiles',

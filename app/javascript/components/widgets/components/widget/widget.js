@@ -62,7 +62,7 @@ const mapStateToProps = ({ widgets }, ownProps) => {
   }${categoryQuery}#${widget}`;
   const embedUrl = `${window.location.origin}/embed/${locationPath}?${
     widgetQuery
-  }${widgetState}`;
+  }${widgetState}#${widget}`;
 
   return {
     ...Widgets[widget],

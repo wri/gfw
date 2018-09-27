@@ -66,7 +66,7 @@ define([
       var parseDownloads = {};
 
       _.each(downloads, function(link, key) {
-        if ((key === 'csv' || key === 'json') && link.indexOf('/download/') !== -1) {
+        if ((key === 'csv' || key === 'json') && link && link.indexOf('/download/') !== -1) {
           parseDownloads[key] = window.gfw.config.GFW_API + link;
         } else {
           parseDownloads[key] = link;
