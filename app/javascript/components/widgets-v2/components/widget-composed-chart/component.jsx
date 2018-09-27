@@ -7,9 +7,10 @@ import ComposedChart from 'components/charts/composed-chart';
 
 class WidgetAlerts extends Component {
   shouldComponentUpdate = nextProps =>
-    !isEqual(nextProps.settings.weeks, this.props.settings.weeks) ||
+    (!isEqual(nextProps.settings, this.props.settings) &&
+      isEqual(nextProps.settings.activeData, this.props.settings.activeData)) ||
     !isEqual(nextProps.data, this.props.data) ||
-    !isEqual(nextProps.settings.dataset, this.props.settings.dataset);
+    !isEqual(nextProps.config, this.props.config);
 
   handleMouseMove = debounce(data => {
     const { parsePayload, setWidgetsSettings, widget, layers } = this.props;

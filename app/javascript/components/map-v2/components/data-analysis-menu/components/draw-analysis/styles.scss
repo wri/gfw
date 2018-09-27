@@ -50,6 +50,7 @@
   .results {
     position: relative;
     height: calc(100% - 41px);
+    min-height: rem(200px);
 
     .no-layers {
       min-height: rem(100px);

@@ -153,7 +153,7 @@
     "react-tippy": "1.2.2",
     "react-toggle": "^4.0.2",
     "react-universal-component": "5.0.0-alpha.0",
-    "recharts": "^1.1.0",
+    "recharts": "^1.2.0",
     "redux": "^4.0.0",
     "redux-first-router": "0.0.16-next",
     "redux-first-router-link": "1.4.2",

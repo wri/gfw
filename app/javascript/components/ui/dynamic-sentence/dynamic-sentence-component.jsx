@@ -59,6 +59,7 @@ class WidgetDynamicSentence extends PureComponent {
           animateFill={false}
           onShown={handleMouseOver}
           onHidden={handleMouseOut}
+          duration={0}
         >
           <span className="hover-text">{mappedComponent.key}</span>
         </Tooltip>
