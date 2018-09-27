@@ -43,9 +43,6 @@ import { reduxModule as MyGFWProvider } from 'providers/mygfw-provider';
 import { reduxModule as PTWProvider } from 'providers/ptw-provider';
 import { reduxModule as LayerSpecProvider } from 'providers/layerspec-provider';
 
-// pages
-import { reduxModule as DashboardsPage } from 'pages/dashboards';
-
 // Component Reducers
 const componentsReducers = {
   // map & dashboards
@@ -83,15 +80,9 @@ const providersReducers = {
   layerSpec: handleModule(LayerSpecProvider)
 };
 
-// Page Reducers
-const pageReducers = {
-  dashboards: handleModule(DashboardsPage)
-};
-
 export default combineReducers({
   ...providersReducers,
   ...componentsReducers,
-  ...pageReducers,
   form: formReducer,
   location: router.reducer
 });

@@ -1,6 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
-
-export const setShowMapMobile = createAction('setShowMapMobile');
+import { createThunkAction } from 'redux-tools';
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',

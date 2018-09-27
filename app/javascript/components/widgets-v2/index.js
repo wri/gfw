@@ -2,10 +2,16 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Component from './component';
-import * as actions from './actions';
+import { setShowMapMobile } from 'components/map/actions';
+import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
+import Component from './component';
 import { getWidgetsProps } from './selectors';
+
+const actions = {
+  setShowMapMobile,
+  ...ownActions
+};
 
 class WidgetsContainer extends PureComponent {
   componentDidMount() {
@@ -24,6 +30,6 @@ WidgetsContainer.propTypes = {
   getWidgetsData: PropTypes.func
 };
 
-export const reduxModule = { actions, reducers, initialState };
+export const reduxModule = { actions: ownActions, reducers, initialState };
 
 export default connect(getWidgetsProps, actions)(WidgetsContainer);

@@ -5,7 +5,7 @@ import upperFirst from 'lodash/upperFirst';
 import CATEGORIES from 'data/categories.json';
 
 // get list data
-const selectShowMap = state => state.dashboards.showMapMobile;
+const selectShowMap = state => state.map.showMapMobile;
 const selectCategory = state =>
   (state.location && state.location.query && state.location.query.category) ||
   'summary';
