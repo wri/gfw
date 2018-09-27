@@ -95,7 +95,7 @@ export const getSentence = createSelector(
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
-    const iso = currentLocation.value || null;
+    const iso = currentLocation && currentLocation.value || null;
     let sentence = indicator ? withIndicator : initial;
     sentence = tropicalIsos.includes(iso)
       ? sentence + co2Emissions
