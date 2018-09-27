@@ -41,16 +41,15 @@ export const getAnalysis = createThunkAction(
           response.data &&
           response.data.errors &&
           response.data.errors[0];
-        const { status, detail } = errors || {};
+        const { status } = errors || {};
         dispatch(
           setAnalysisLoading({
             data: {},
             loading: false,
             error:
-              detail ||
-              (status >= 500
+              status >= 500
                 ? 'Service temporarily unavailable. Please refresh.'
-                : 'No data available')
+                : 'No data available'
           })
         );
         console.info(error);
