@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 
 export const selectAllPropsAndState = (state, ownProps) => ownProps;
 export const selectWidgetSettings = (state, { settings }) => settings;
+export const selectWidgetConfig = (state, { config }) => config;
 export const selectWidgetOptions = (state, { options }) => options;
 export const selectWidgetUrlState = (state, { widget }) =>
   state.location && state.location.query && state.location.query[widget];
@@ -83,9 +84,9 @@ export const getWidgetDataConfig = createSelector(
 );
 
 export const getRangeYears = createSelector(
-  [getWidgetStateData, getWidgetOptions],
-  (data, options) => {
-    const { startYears, endYears, yearsRange } = options || {};
+  [getWidgetStateData, selectWidgetConfig],
+  (data, config) => {
+    const { startYears, endYears, yearsRange } = config.options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
     const flatData = flattenObj(data);
     let years = [];
@@ -98,6 +99,7 @@ export const getRangeYears = createSelector(
     years = yearsRange
       ? years.filter(y => y >= yearsRange[0] && y <= yearsRange[1])
       : years;
+
     return sortBy(
       years.map(y => ({
         label: y,
@@ -111,7 +113,7 @@ export const getRangeYears = createSelector(
 export const getOptionsWithYears = createSelector(
   [getWidgetOptions, getRangeYears, getWidgetSettings],
   (options, years, settings) => {
-    if (!years) return options;
+    if (!years || !years.length) return options;
     const { startYear, endYear } = settings;
     return {
       ...options,
@@ -122,7 +124,7 @@ export const getOptionsWithYears = createSelector(
 );
 
 export const getOptionsSelected = createSelector(
-  [getWidgetSettings, getWidgetOptions],
+  [getWidgetSettings, getOptionsWithYears],
   (settings, options) => {
     if (!options || !settings) return null;
     return {
@@ -176,18 +178,19 @@ export const getIndicator = createSelector(
   }
 );
 
-export const getWidgetProps = createStructuredSelector({
-  loading: getWidgetLoading,
-  error: getWidgetError,
-  title: getWidgetTitle,
-  sentence: getWidgetSentence,
-  data: getWidgetData,
-  dataConfig: getWidgetDataConfig,
-  settings: getWidgetSettings,
-  optionsSelected: getOptionsSelected,
-  forestTypes: getForestType,
-  landCategory: getLandCategory,
-  indicator: getIndicator,
-  options: getOptionsWithYears,
-  active: selectWidgetActive
-});
+export const getWidgetProps = () =>
+  createStructuredSelector({
+    loading: getWidgetLoading,
+    error: getWidgetError,
+    title: getWidgetTitle,
+    sentence: getWidgetSentence,
+    data: getWidgetData,
+    dataConfig: getWidgetDataConfig,
+    settings: getWidgetSettings,
+    optionsSelected: getOptionsSelected,
+    forestTypes: getForestType,
+    landCategory: getLandCategory,
+    indicator: getIndicator,
+    options: getOptionsWithYears,
+    active: selectWidgetActive
+  });

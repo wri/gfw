@@ -1,14 +1,22 @@
-import { createElement, PureComponent } from 'react';
+import { createElement, Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import isEqual from 'lodash/isEqual';
 
 import * as actions from 'components/widgets-v2/actions';
-import Component from './component';
+import WidgetComponent from './component';
 import { getWidgetProps } from './selectors';
 
-class WidgetContainer extends PureComponent {
+const makeMapStateToProps = () => {
+  const getWidgetPropsObject = getWidgetProps();
+  const mapStateToProps = (state, props) => ({
+    ...getWidgetPropsObject(state, props)
+  });
+  return mapStateToProps;
+};
+
+class WidgetContainer extends Component {
   componentDidMount() {
     const {
       getData,
@@ -65,7 +73,7 @@ class WidgetContainer extends PureComponent {
   };
 
   render() {
-    return createElement(Component, {
+    return createElement(WidgetComponent, {
       ...this.props,
       handleDataHighlight: this.handleDataHighlight
     });
@@ -82,4 +90,4 @@ WidgetContainer.propTypes = {
   widget: PropTypes.string
 };
 
-export default connect(getWidgetProps, actions)(WidgetContainer);
+export default connect(makeMapStateToProps, actions)(WidgetContainer);
