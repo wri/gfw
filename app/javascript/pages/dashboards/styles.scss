@@ -74,7 +74,7 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
 
   .close-map-button {
     position: fixed;
-    top: rem(15px);
+    top: rem(75px);
     right: rem(15px);
     width: rem(60px);
     height: rem(60px);

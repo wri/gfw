@@ -211,7 +211,7 @@ WidgetHeader.propTypes = {
   isDeviceTouch: PropTypes.bool,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
-  setShowMapMobile: PropTypes.bool,
+  setShowMapMobile: PropTypes.func,
   simple: PropTypes.bool,
   setWidgetSettings: PropTypes.func,
   setActiveWidget: PropTypes.func,
