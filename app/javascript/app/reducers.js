@@ -12,6 +12,7 @@ import router from './router';
 import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
 import { reduxModule as DataAnalysisMenu } from 'components/map-v2/components/data-analysis-menu';
 import { reduxModule as Widgets } from 'components/widgets';
+import { reduxModule as WidgetsV2 } from 'components/widgets-v2';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
 import { reduxModule as Draw } from 'components/map-v2/components/draw';
 import { reduxModule as Header } from 'pages/dashboards/header';
@@ -42,15 +43,13 @@ import { reduxModule as MyGFWProvider } from 'providers/mygfw-provider';
 import { reduxModule as PTWProvider } from 'providers/ptw-provider';
 import { reduxModule as LayerSpecProvider } from 'providers/layerspec-provider';
 
-// pages
-import { reduxModule as DashboardsPage } from 'pages/dashboards';
-
 // Component Reducers
 const componentsReducers = {
   // map & dashboards
   analysis: handleModule(DataAnalysisMenu),
   recentImagery: handleModule(RecentImagery),
   widgets: handleModule(Widgets),
+  widgetsV2: handleModule(WidgetsV2),
   popup: handleModule(Popup),
   draw: handleModule(Draw),
   header: handleModule(Header),
@@ -81,15 +80,9 @@ const providersReducers = {
   layerSpec: handleModule(LayerSpecProvider)
 };
 
-// Page Reducers
-const pageReducers = {
-  dashboards: handleModule(DashboardsPage)
-};
-
 export default combineReducers({
   ...providersReducers,
   ...componentsReducers,
-  ...pageReducers,
   form: formReducer,
   location: router.reducer
 });

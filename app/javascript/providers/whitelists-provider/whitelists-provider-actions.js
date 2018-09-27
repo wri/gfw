@@ -17,10 +17,10 @@ export const setRegionWhitelist = createAction('setRegionWhitelist');
 
 export const getCountryWhitelist = createThunkAction(
   'getCountryWhitelist',
-  country => (dispatch, state) => {
-    if (!state().whitelists.countryWhitelistLoading) {
+  adm0 => (dispatch, state) => {
+    if (!state().whitelists.countriesLoading) {
       dispatch(setCountryWhitelistLoading(true));
-      getCountryWhitelistProvider(country)
+      getCountryWhitelistProvider(adm0)
         .then(response => {
           const data =
             response.data.data && response.data.data.map(d => d.polyname);
@@ -36,10 +36,10 @@ export const getCountryWhitelist = createThunkAction(
 
 export const getRegionWhitelist = createThunkAction(
   'getRegionWhitelist',
-  ({ country, region, subRegion }) => (dispatch, state) => {
-    if (!state().whitelists.regionWhitelistLoading) {
+  ({ adm0, adm1, adm2 }) => (dispatch, state) => {
+    if (!state().whitelists.regionsLoading) {
       dispatch(setRegionWhitelistLoading(true));
-      getRegionWhitelistProvider(country, region, subRegion)
+      getRegionWhitelistProvider(adm0, adm1, adm2)
         .then(response => {
           const data =
             response.data.data && response.data.data.map(d => d.polyname);

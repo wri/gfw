@@ -31,7 +31,11 @@ export const parseGadm36Id = gid => {
   const adm0 = ids[0] || null;
   const adm1 = ids[1] && ids[1].split('_')[0];
   const adm2 = ids[2] && ids[2].split('_')[0];
-  return { adm0, adm1: parseInt(adm1, 10), adm2: parseInt(adm2, 10) };
+  return {
+    adm0,
+    adm1: adm1 ? parseInt(adm1, 10) : undefined,
+    adm2: adm2 ? parseInt(adm2, 10) : undefined
+  };
 };
 
 export const getLocationFromData = data => {
@@ -41,38 +45,36 @@ export const getLocationFromData = data => {
   }
   return {
     type: 'country',
-    country: !!newLocation.adm0 && newLocation.adm0,
-    region: !!newLocation.adm1 && newLocation.adm1,
-    subRegion: !!newLocation.adm2 && newLocation.adm2
+    ...newLocation
   };
 };
 
 export const buildFullLocationName = (
-  { country, region, subRegion },
+  { adm0, adm1, adm2 },
   { adm0s, adm1s, adm2s }
 ) => {
   let location = '';
   if (
-    (country && isEmpty(adm0s)) ||
-    (region && isEmpty(adm1s)) ||
-    (subRegion && isEmpty(adm2s))
+    (adm0 && isEmpty(adm0s)) ||
+    (adm1 && isEmpty(adm1s)) ||
+    (adm2 && isEmpty(adm2s))
   ) {
     return '';
   }
-  if (country) {
-    const adm = adm0s && adm0s.find(a => a.value === country);
-    location = adm ? adm.label : '';
+  if (adm0) {
+    const adm0Obj = adm0s && adm0s.find(a => a.value === adm0);
+    location = adm0Obj ? adm0Obj.label : '';
   }
-  if (region) {
-    const adm1 = adm1s && adm1s.find(a => a.value === parseInt(region, 10));
-    location = adm1
-      ? `${adm1.label || 'unnamed region'}, ${location}`
+  if (adm1) {
+    const adm1Obj = adm1s && adm1s.find(a => a.value === parseInt(adm1, 10));
+    location = adm1Obj
+      ? `${adm1Obj.label || 'unnamed region'}, ${location}`
       : location;
   }
-  if (subRegion) {
-    const adm2 = adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
-    location = adm2
-      ? `${adm2.label || 'unnamed region'}, ${location}`
+  if (adm2) {
+    const adm2Obj = adm2s && adm2s.find(a => a.value === parseInt(adm2, 10));
+    location = adm2Obj
+      ? `${adm2Obj.label || 'unnamed region'}, ${location}`
       : location;
   }
   return location;

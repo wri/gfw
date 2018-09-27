@@ -49,11 +49,12 @@ class RecentImageryContainer extends PureComponent {
       getData,
       getMoreTiles,
       position,
+      loadingMoreTiles,
       resetRecentImageryData
     } = this.props;
     const isNewTile =
       activeTile &&
-      activeTile.url &&
+      !!activeTile.url &&
       (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
     const positionInsideTile = bounds
       ? checkLocationInsideBbox([position.lat, position.lng], bounds)
@@ -79,24 +80,12 @@ class RecentImageryContainer extends PureComponent {
         bands: settings.bands
       });
     }
-
     // get the rest of the tiles
-    if (
-      !dataStatus.haveAllData &&
-      active &&
-      (isNewTile ||
-        dataStatus.requestedTiles !== prevProps.dataStatus.requestedTiles ||
-        dataStatus.requestFails !== prevProps.dataStatus.requestFails)
-    ) {
-      if (this.getMoreTilesSource) {
-        this.getMoreTilesSource.cancel();
-      }
-      this.getMoreTilesSource = CancelToken.source();
+    if (!dataStatus.haveAllData && !loadingMoreTiles && active) {
       getMoreTiles({
         sources,
         dataStatus,
-        bands: settings.bands,
-        token: this.getMoreTilesSource.token
+        bands: settings.bands
       });
     }
 
@@ -157,6 +146,7 @@ class RecentImageryContainer extends PureComponent {
 
 RecentImageryContainer.propTypes = {
   position: PropTypes.object,
+  loadingMoreTiles: PropTypes.bool,
   active: PropTypes.bool,
   dataStatus: PropTypes.object,
   activeTile: PropTypes.object,
@@ -172,6 +162,6 @@ RecentImageryContainer.propTypes = {
   resetRecentImageryData: PropTypes.func
 };
 
-export const reduxModule = { actions, reducers, initialState };
+export const reduxModule = { actions: ownActions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(RecentImageryContainer);

@@ -30,7 +30,7 @@ export const getFullLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s, getActiveLayers],
   (location, adm0s, adm1s, adm2s, layers) => {
     if (location.type === 'use') {
-      const analysisLayer = layers.find(l => l.tableName === location.country);
+      const analysisLayer = layers.find(l => l.tableName === location.adm0);
       return (analysisLayer && analysisLayer.name) || 'Area analysis';
     }
     if (location.type === 'geostore') return 'custom area analysis';
@@ -114,13 +114,17 @@ export const getDownloadLinks = createSelector([selectData], data =>
           const { downloadUrls } = data[d];
           return {
             label: d,
-            urls: Object.keys(downloadUrls).map(key => ({
-              url:
-                downloadUrls[key][0] === '/'
-                  ? `${process.env.GFW_API}${downloadUrls[key]}`
-                  : downloadUrls[key],
-              label: key
-            }))
+            urls: Object.keys(downloadUrls).map(key => {
+              const downloadUrlsFirstKey =
+                downloadUrls && downloadUrls[key] && downloadUrls[key][0];
+              return {
+                url:
+                  downloadUrlsFirstKey === '/'
+                    ? `${process.env.GFW_API}${downloadUrls[key]}`
+                    : downloadUrls[key],
+                label: key
+              };
+            })
           };
         }),
       'label'

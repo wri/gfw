@@ -63,7 +63,7 @@ class DataAnalysisMenu extends PureComponent {
               />
             )}
             {location.type &&
-              location.country &&
+              location.adm0 &&
               (loading || (!loading && error)) && (
                 <div className={cx('cancel-analysis', { fetching: loading })}>
                   <Button
@@ -88,7 +88,7 @@ class DataAnalysisMenu extends PureComponent {
                     )}
                 </div>
               )}
-            {location.type && location.country ? (
+            {location.type && location.adm0 ? (
               <PolygonAnalysis
                 clearAnalysis={clearAnalysis}
                 goToDashboard={goToDashboard}
@@ -98,6 +98,20 @@ class DataAnalysisMenu extends PureComponent {
             )}
           </div>
         )}
+        {!loading &&
+          showAnalysis &&
+          !error &&
+          location.type === 'country' &&
+          location.adm0 && (
+            <div className="analysis-actions">
+              <Button
+                extLink={window.location.href.replace('v2/map', 'dashboards')}
+                target="_blank"
+              >
+                OPEN DASHBOARD
+              </Button>
+            </div>
+          )}
       </div>
     );
   }

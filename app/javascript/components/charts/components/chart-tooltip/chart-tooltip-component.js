@@ -1,20 +1,21 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import './chart-tooltip-styles.scss';
 
-class WidgetChartTooltip extends PureComponent {
+class ChartTooltip extends PureComponent {
   render() {
-    const { payload, settings, hideZeros } = this.props;
+    const { payload, settings, hideZeros, simple } = this.props;
     const values = payload && payload.length > 0 && payload[0].payload;
     return (
       <div>
         {settings &&
           settings.length && (
-            <div className="c-chart-tooltip">
+            <div className={cx('c-chart-tooltip', { simple })}>
               {settings.map(
                 d =>
-                  (hideZeros && !values[d.key] ? null : (
+                  (hideZeros && (!values || !values[d.key]) ? null : (
                     <div
                       key={d.key}
                       className={`data-line ${d.position || ''}`}
@@ -47,10 +48,11 @@ class WidgetChartTooltip extends PureComponent {
   }
 }
 
-WidgetChartTooltip.propTypes = {
+ChartTooltip.propTypes = {
   payload: PropTypes.array,
   settings: PropTypes.array,
-  hideZeros: PropTypes.bool
+  hideZeros: PropTypes.bool,
+  simple: PropTypes.bool
 };
 
-export default WidgetChartTooltip;
+export default ChartTooltip;

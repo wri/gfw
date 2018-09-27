@@ -15,18 +15,17 @@ class Header extends PureComponent {
   render() {
     const {
       className,
-      locationOptions,
+      adm0s,
+      adm1s,
+      adm2s,
       locationNames,
-      handleCountryChange,
-      handleRegionChange,
-      handleSubRegionChange,
+      handleLocationChange,
       loading,
       setShareModal,
       shareData,
       location,
       forestAtlasLink,
       sentence,
-      query,
       downloadLink
     } = this.props;
 
@@ -43,9 +42,7 @@ class Header extends PureComponent {
             }}
             tooltip={{
               text: `Download the data${
-                locationNames.country
-                  ? ` for ${locationNames.country.label}`
-                  : ''
+                locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
               }`,
               position: 'bottom'
             }}
@@ -66,16 +63,18 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 large-6">
             <div className="select-container">
-              {!location.country && <h3>{location.type || 'Global'}</h3>}
-              {locationOptions.countries && (
+              {!location.adm0 && <h3>{location.type || 'Global'}</h3>}
+              {adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
                   placeholder="Select a country"
                   noItemsFound="No country found"
                   noSelectedValue="Select a country"
-                  value={locationNames.country}
-                  options={locationOptions.countries}
-                  onChange={country => handleCountryChange(country, query)}
+                  value={locationNames.adm0}
+                  options={adm0s}
+                  onChange={adm0 =>
+                    handleLocationChange({ adm0: adm0 && adm0.value })
+                  }
                   searchable
                   disabled={loading}
                   tooltip={{
@@ -86,19 +85,22 @@ class Header extends PureComponent {
                   clearable
                 />
               )}
-              {location.country &&
-                locationOptions.countries &&
-                locationOptions.regions &&
-                locationOptions.regions.length > 1 && (
+              {location.adm0 &&
+                adm0s &&
+                adm1s &&
+                adm1s.length > 1 && (
                   <Dropdown
                     theme="theme-dropdown-dark"
                     placeholder="Select a region"
                     noItemsFound="No region found"
                     noSelectedValue="Select a region"
-                    value={locationNames.region}
-                    options={locationOptions.regions}
-                    onChange={region =>
-                      handleRegionChange(locationNames.country, region, query)
+                    value={locationNames.adm1}
+                    options={adm1s}
+                    onChange={adm1 =>
+                      handleLocationChange({
+                        adm0: location.adm0,
+                        adm1: adm1 && adm1.value
+                      })
                     }
                     searchable
                     disabled={loading}
@@ -110,26 +112,23 @@ class Header extends PureComponent {
                     clearable
                   />
                 )}
-              {location.region &&
-                locationOptions.regions &&
-                locationNames.region &&
-                locationNames.region.value &&
-                locationOptions.subRegions &&
-                locationOptions.subRegions.length > 1 && (
+              {location.adm1 &&
+                adm1s &&
+                adm2s &&
+                adm2s.length > 1 && (
                   <Dropdown
                     theme="theme-dropdown-dark"
                     placeholder="Select a region"
                     noItemsFound="No region found"
                     noSelectedValue="Select a region"
-                    value={locationNames.subRegion}
-                    options={locationOptions.subRegions}
-                    onChange={subRegion =>
-                      handleSubRegionChange(
-                        locationNames.country,
-                        locationNames.region,
-                        subRegion,
-                        query
-                      )
+                    value={locationNames.adm2}
+                    options={adm2s}
+                    onChange={adm2 =>
+                      handleLocationChange({
+                        adm0: location.adm0,
+                        adm1: location.adm1,
+                        adm2: adm2 && adm2.value
+                      })
                     }
                     searchable
                     disabled={loading}
@@ -170,16 +169,15 @@ Header.propTypes = {
   className: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   locationNames: PropTypes.object.isRequired,
-  locationOptions: PropTypes.object.isRequired,
-  handleCountryChange: PropTypes.func.isRequired,
-  handleRegionChange: PropTypes.func.isRequired,
-  handleSubRegionChange: PropTypes.func.isRequired,
+  adm0s: PropTypes.array,
+  adm1s: PropTypes.array,
+  adm2s: PropTypes.array,
+  handleLocationChange: PropTypes.func.isRequired,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   forestAtlasLink: PropTypes.object,
   sentence: PropTypes.object,
-  query: PropTypes.object,
   downloadLink: PropTypes.string
 };
 

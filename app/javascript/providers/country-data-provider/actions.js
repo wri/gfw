@@ -31,10 +31,10 @@ export const getCountries = createThunkAction(
       axios
         .all([getCountriesProvider(), getFAOCountriesProvider()])
         .then(
-          axios.spread((gadm28Countries, faoCountries) => {
-            dispatch(setGadmCountries(gadm28Countries.data.rows));
+          axios.spread((gadm36Countries, faoCountries) => {
+            dispatch(setGadmCountries(gadm36Countries.data.rows));
             dispatch(setFAOCountries(faoCountries.data.rows));
-            dispatch(setCountries(gadm28Countries.data.rows));
+            dispatch(setCountries(gadm36Countries.data.rows));
             dispatch(setCountriesLoading(false));
           })
         )
@@ -73,10 +73,10 @@ export const getRegions = createThunkAction(
 
 export const getSubRegions = createThunkAction(
   'getSubRegions',
-  ({ country, region }) => (dispatch, state) => {
+  ({ adm0, adm1 }) => (dispatch, state) => {
     if (!state().countryData.isSubRegionsLoading) {
       dispatch(setSubRegionsLoading(true));
-      getSubRegionsProvider(country, region)
+      getSubRegionsProvider(adm0, adm1)
         .then(subRegions => {
           const { rows } = subRegions.data;
           const parsedResponse = [];

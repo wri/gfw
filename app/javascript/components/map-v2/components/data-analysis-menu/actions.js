@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import union from 'turf-union';
-import { MAP, DASHBOARDS } from 'router';
+import { DASHBOARDS } from 'router';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
@@ -41,16 +41,15 @@ export const getAnalysis = createThunkAction(
           response.data &&
           response.data.errors &&
           response.data.errors[0];
-        const { status, detail } = errors || {};
+        const { status } = errors || {};
         dispatch(
           setAnalysisLoading({
             data: {},
             loading: false,
             error:
-              detail ||
-              (status >= 500
+              status >= 500
                 ? 'Service temporarily unavailable. Please refresh.'
-                : 'No data available')
+                : 'No data available'
           })
         );
         console.info(error);
@@ -74,12 +73,12 @@ export const uploadShape = createThunkAction(
               .then(geostore => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
-                  const { query } = getState().location;
+                  const { query, type } = getState().location;
                   dispatch({
-                    type: MAP,
+                    type,
                     payload: {
                       type: 'geostore',
-                      country: id
+                      adm0: id
                     },
                     ...(query && {
                       query: {
@@ -139,9 +138,9 @@ export const uploadShape = createThunkAction(
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
   () => (dispatch, getState) => {
-    const { query } = getState().location;
+    const { query, type } = getState().location;
     dispatch({
-      type: MAP,
+      type,
       ...(query && {
         query
       })
@@ -166,12 +165,12 @@ export const goToDashboard = createThunkAction(
 export const setDrawnAnalysis = createThunkAction(
   'setDrawnAnalysis',
   geostoreId => (dispatch, getState) => {
-    const { query } = getState().location;
+    const { query, type } = getState().location;
     dispatch({
-      type: MAP,
+      type,
       payload: {
         type: 'geostore',
-        country: geostoreId
+        adm0: geostoreId
       },
       query: {
         ...query,

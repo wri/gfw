@@ -24,76 +24,73 @@ const QUERIES = {
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs'
 };
 
-const getLocationQuery = (country, region, subRegion) =>
-  `${country}${region ? `/${region}` : ''}${subRegion ? `/${subRegion}` : ''}`;
+const getLocationQuery = (adm0, adm1, adm2) =>
+  `${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`;
 
-const getLocation = (country, region, subRegion) =>
-  `iso = '${country}'${region ? ` AND adm1 = ${region}` : ''}${
-    subRegion ? ` AND adm2 = ${subRegion}` : ''
+const getLocation = (adm0, adm1, adm2) =>
+  `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
+    adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
 
-export const fetchGladAlerts = ({ country, region, subRegion }) => {
+export const fetchGladAlerts = ({ adm0, adm1, adm2 }) => {
   let glad_summary_table = GLAD_ISO_DATASET;
-  if (subRegion) {
+  if (adm2) {
     glad_summary_table = GLAD_ADM2_DATASET;
-  } else if (region) {
+  } else if (adm1) {
     glad_summary_table = GLAD_ADM1_DATASET;
   }
   const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
     QUERIES.gladIntersectionAlerts
   }`
-    .replace('{location}', getLocation(country, region, subRegion))
+    .replace('{location}', getLocation(adm0, adm1, adm2))
     .replace('{polyname}', 'admin');
   return request.get(url, 3600, 'gladRequest');
 };
 
 export const fetchGladIntersectionAlerts = ({
-  country,
-  region,
+  adm0,
+  adm1,
   forestType,
   landCategory
 }) => {
   const url = `${REQUEST_URL}/query/${
-    region ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
+    adm1 ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
-    .replace('{location}', getLocation(country, region))
+    .replace('{location}', getLocation(adm0, adm1))
     .replace('{polyname}', getIndicator(forestType, landCategory));
   return request.get(url, 3600, 'gladRequest');
 };
 
-export const fetchFiresAlerts = ({ country, region, subRegion, dataset }) => {
+export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
   let fires_summary_table = FIRES_ISO_DATASET;
-  if (subRegion) {
+  if (adm2) {
     fires_summary_table = FIRES_ADM2_DATASET;
-  } else if (region) {
+  } else if (adm1) {
     fires_summary_table = FIRES_ADM1_DATASET;
   }
   const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
     QUERIES.firesIntersectionAlerts
   }`
-    .replace('{location}', getLocation(country, region, subRegion))
+    .replace('{location}', getLocation(adm0, adm1, adm2))
     .replace('{polyname}', 'admin')
     .replace('{dataset}', dataset);
   return request.get(url, 3600, 'firesRequest');
 };
 
-export const fetchViirsAlerts = ({ country, region, subRegion, dates }) => {
-  const url = `${REQUEST_URL}/viirs-active-fires/${!subRegion ? 'admin/' : ''}${
+export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
+  const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${
     QUERIES.viirsAlerts
   }`
-    .replace(
-      '{location}',
-      !subRegion ? getLocationQuery(country, region, subRegion) : ''
-    )
+    .replace('{location}', !adm2 ? getLocationQuery(adm0, adm1, adm2) : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
 };
 
-export const fetchFiresStats = ({ country, region, subRegion, dates }) => {
+export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {
   const url = `${REQUEST_URL}/fire-alerts/summary-stats/admin/${
     QUERIES.firesStats
   }`
-    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
 };

@@ -4,6 +4,7 @@
   width: 100%;
   padding: rem(20px);
   min-height: rem(260px);
+  height: 100%;
 
   .draw-title {
     font-size: 14px;
@@ -49,6 +50,7 @@
   .results {
     position: relative;
     height: calc(100% - 41px);
+    min-height: rem(200px);
 
     .no-layers {
       min-height: rem(100px);
@@ -123,13 +125,11 @@
     &:first-child {
       border-bottom: solid 1px $border;
       padding-bottom: rem(15px);
-      margin-bottom: rem(20px);
+      margin-bottom: rem(15px);
     }
   }
 
-  .analysis-actions {
-    padding: rem(15px) rem(20px);
-    border-top: solid 1px $border;
-    margin: 0 rem(-20px) rem(-20px);
+  &.with-footer {
+    padding-bottom: rem(70px);
   }
 }

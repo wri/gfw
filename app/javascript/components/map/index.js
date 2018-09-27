@@ -13,26 +13,7 @@ import GFWLabels from './assets/maptypes/GFWLabels';
 import MapComponent from './component';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
-import { getLayers } from './selectors';
-
-const mapStateToProps = (
-  { map, countryData, widgets, geostore },
-  { widgetKey }
-) => {
-  const widget = widgets[widgetKey];
-  const widgetSettings = widget && widget.settings;
-  const activeLayers = widgetSettings && widgetSettings.layers;
-
-  return {
-    ...map,
-    ...countryData.geostore,
-    loading: map.loading || countryData.isGeostoreLoading,
-    settings: { ...map.settings, ...widgetSettings },
-    layers: getLayers({ layers: activeLayers, layerSpec: map.layerSpec }),
-    layersKeys: activeLayers,
-    ...geostore.geostore
-  };
-};
+import { getMapProps } from './selectors';
 
 class MapContainer extends PureComponent {
   constructor(props) {
@@ -47,29 +28,29 @@ class MapContainer extends PureComponent {
     this.setLayers(layersKeys);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { bounds, layersKeys, settings, options, geojson } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { bounds, geojson, layersKeys, settings, options } = this.props;
     const { zoom } = options;
     // sync geostore with map
-    if (!isEmpty(bounds) && !isEqual(bounds, this.props.bounds)) {
+    if (!isEmpty(bounds) && !isEqual(bounds, prevProps.bounds)) {
       this.boundMap(bounds);
       this.setAreaHighlight(geojson);
-    } else if (!bounds && !isEqual(bounds, this.props.bounds)) {
+    } else if (!bounds && !isEqual(bounds, prevProps.bounds)) {
       this.resetMap();
     }
 
     // sync layers with map
     if (
-      !isEqual(layersKeys, this.props.layersKeys) ||
-      !isEqual(settings, this.props.settings)
+      !isEqual(layersKeys, prevProps.layersKeys) ||
+      !isEqual(settings, prevProps.settings)
     ) {
-      this.updateLayers(layersKeys, this.props.layersKeys, settings);
+      this.updateLayers(layersKeys, prevProps.layersKeys, settings);
     }
 
     // sync zoom with map
     if (
       zoom &&
-      this.props.options.zoom !== zoom &&
+      prevProps.options.zoom !== zoom &&
       this.map.getZoom() !== zoom
     ) {
       this.map.setZoom(zoom);
@@ -192,4 +173,4 @@ MapContainer.propTypes = {
 
 export const reduxModule = { reducers, initialState, actions };
 
-export default connect(mapStateToProps, actions)(MapContainer);
+export default connect(getMapProps, actions)(MapContainer);

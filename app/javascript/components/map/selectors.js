@@ -1,18 +1,68 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
-// get list data
-const getLayerSlugs = state => state.layers || null;
-const getLayerSpec = state => state.layerSpec || null;
+import {
+  filterWidgetsByCategoryAndLayers,
+  getActiveWidget
+} from 'components/widgets-v2/selectors';
 
-// get lists selected
+// get list data
+const selectLoading = state => state.map.loading || state.geostore.loading;
+const selectError = state => state.map.error;
+const selectQuery = state => state.location && state.location.query;
+const selectMapOptions = state => state.map.options;
+const selectSettings = state => state.map.settings;
+const selectLayerSlugs = state => state.map.layerSpec || null;
+const selectGeojson = state =>
+  (state.geostore.geostore && state.geostore.geostore.geojson) || null;
+const selectBounds = state =>
+  (state.geostore.geostore && state.geostore.geostore.bounds) || null;
+
+export const getMapSettings = createSelector(
+  [
+    selectSettings,
+    filterWidgetsByCategoryAndLayers,
+    getActiveWidget,
+    selectQuery
+  ],
+  (settings, widgets, widget, query) => {
+    const widgetUrlState = query && query[widget];
+    const activeWidget = widgets.find(w => w.widget === widget);
+    const widgetSettings = activeWidget && activeWidget.settings;
+
+    return {
+      ...settings,
+      ...widgetSettings,
+      ...widgetUrlState
+    };
+  }
+);
+
+export const getMapLayers = createSelector(
+  [getMapSettings],
+  settings => settings && settings.layers
+);
+
 export const getLayers = createSelector(
-  [getLayerSlugs, getLayerSpec],
+  [getMapLayers, selectLayerSlugs],
   (layers, layerSpec) => {
-    if (!layers || isEmpty(layers)) return null;
+    if (isEmpty(layers)) return null;
+
     return layers.map(l => ({
       slug: l,
       ...layerSpec[l]
     }));
   }
 );
+
+export const getMapProps = createStructuredSelector({
+  layers: getLayers,
+  loading: selectLoading,
+  error: selectError,
+  bounds: selectBounds,
+  geojson: selectGeojson,
+  options: selectMapOptions,
+  settings: getMapSettings,
+  layersKeys: getMapLayers,
+  layerSpec: selectLayerSlugs
+});

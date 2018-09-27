@@ -1,5 +1,7 @@
-export const pluralise = str =>
-  (str.substr(-1) === 'y' ? `${str.substr(0, str.length - 1)}ies` : `${str}s`);
+export const pluralise = str => {
+  if (str.substr(-1) === 's') return str;
+  return str.substr(-1) === 'y' && str.substr(-1) !== 's' ? `${str.substr(0, str.length - 1)}ies` : `${str}s`;
+};
 
 export const getIndicator = (forestType, landCategory) => {
   if (landCategory && !forestType) {

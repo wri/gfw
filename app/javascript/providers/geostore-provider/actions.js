@@ -8,15 +8,10 @@ export const setGeostore = createAction('setGeostore');
 
 export const getGeostore = createThunkAction(
   'getGeostore',
-  ({ type, country, region, subRegion }) => (dispatch, state) => {
+  ({ type, adm0, adm1, adm2 }) => (dispatch, state) => {
     if (!state().geostore.loading) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
-      getGeostoreProvider({
-        type,
-        adm0: country,
-        adm1: region,
-        adm2: subRegion
-      })
+      getGeostoreProvider({ type, adm0, adm1, adm2 })
         .then(response => {
           const { data } = response.data;
           if (data && data.attributes) {
@@ -24,7 +19,7 @@ export const getGeostore = createThunkAction(
               setGeostore({
                 id: data.id,
                 ...data.attributes,
-                bounds: getBoxBounds(data.attributes.bbox, country, region)
+                bounds: getBoxBounds(data.attributes.bbox, adm0, adm1)
               })
             );
           }

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
+import cx from 'classnames';
 
-import Button from 'components/ui/button/button-component';
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
+import Widgets from 'components/widgets-v2';
 import DownloadData from 'components/map-v2/components/data-analysis-menu/components/download-data';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
@@ -76,9 +77,10 @@ class DrawAnalysis extends PureComponent {
       showDownloads,
       downloadUrls
     } = this.props;
+    const hasFooter = location.type === 'country';
 
     return (
-      <div className="c-draw-analysis">
+      <div className={cx('c-draw-analysis', { 'with-footer': hasFooter })}>
         <div className="draw-title">
           <div className="title-nav">
             <button onClick={clearAnalysis}>
@@ -122,6 +124,7 @@ class DrawAnalysis extends PureComponent {
                     </li>
                   )}
                 </ul>
+                {hasFooter && <Widgets simple analysis />}
                 <div className="disclaimers">
                   <p>
                     This algorithm approximates the results by sampling the
@@ -143,19 +146,6 @@ class DrawAnalysis extends PureComponent {
                     </button>
                   </p>
                 </div>
-                {location.type === 'country' && (
-                  <div className="analysis-actions">
-                    <Button
-                      extLink={window.location.href.replace(
-                        'v2/map',
-                        'dashboards'
-                      )}
-                      target="_blank"
-                    >
-                      OPEN DASHBOARD
-                    </Button>
-                  </div>
-                )}
               </Fragment>
             )}
         </div>

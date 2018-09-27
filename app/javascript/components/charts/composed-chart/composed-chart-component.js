@@ -43,14 +43,13 @@ class CustomComposedChart extends PureComponent {
       unit,
       unitFormat,
       height,
-      yTicksHide,
-      gridHide,
       margin
     } = this.props.config;
     const {
       className,
       data,
       config,
+      simple,
       handleMouseMove,
       handleMouseLeave
     } = this.props;
@@ -61,16 +60,16 @@ class CustomComposedChart extends PureComponent {
     return (
       <div
         className={`c-composed-chart ${className}`}
-        style={{ height: height || 250 }}
+        style={{ height: simple ? 100 : height || 250 }}
       >
         <ResponsiveContainer width="99%">
           <ComposedChart
             data={data}
             margin={
               margin || {
-                top: 15,
+                top: !simple ? 15 : 0,
                 right: 0,
-                left: 42,
+                left: !simple ? 42 : 0,
                 bottom: 0
               }
             }
@@ -99,10 +98,15 @@ class CustomComposedChart extends PureComponent {
               dataKey={xKey || ''}
               axisLine={false}
               tickLine={false}
-              tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
+              tick={{
+                dy: 8,
+                fontSize: simple ? '10px' : '12px',
+                fill: '#555555'
+              }}
+              interval={0}
               {...xAxis}
             />
-            {!yTicksHide && (
+            {!simple && (
               <YAxis
                 axisLine={false}
                 strokeDasharray="3 4"
@@ -124,10 +128,11 @@ class CustomComposedChart extends PureComponent {
                 {...yAxis}
               />
             )}
-            {!gridHide && (
+            {!simple && (
               <CartesianGrid vertical={false} strokeDasharray="3 4" />
             )}
             <Tooltip
+              simple={simple}
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
@@ -169,6 +174,7 @@ CustomComposedChart.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   className: PropTypes.string,
+  simple: PropTypes.bool,
   handleMouseMove: PropTypes.func,
   handleMouseLeave: PropTypes.func,
   backgroundColor: PropTypes.string

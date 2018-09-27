@@ -6,7 +6,7 @@ export const initialState = {
   data: {},
   config: {
     sentences: {
-      initial:
+      default:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
       withLoss:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',

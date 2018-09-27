@@ -79,9 +79,9 @@ const endpointSlugs = {
 export const fetchUmdLossGain = ({
   endpoints,
   type,
-  country,
-  region,
-  subRegion,
+  adm0,
+  adm1,
+  adm2,
   token
 }) => {
   const endpointUrls =
@@ -96,11 +96,9 @@ export const fetchUmdLossGain = ({
           urlTemplate,
           ...endpoint,
           type,
-          adm0: Object.keys(useSlugs).includes(country)
-            ? useSlugs[country]
-            : country,
-          adm1: region,
-          adm2: subRegion
+          adm0: Object.keys(useSlugs).includes(adm0) ? useSlugs[adm0] : adm0,
+          adm1,
+          adm2
         })}`
       );
     });

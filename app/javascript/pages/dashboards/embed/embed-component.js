@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
-import Widgets from 'components/widgets';
+import Widgets from 'components/widgets-v2';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import Share from 'components/modals/share';
@@ -11,24 +10,18 @@ import './embed-styles.scss';
 
 class Embed extends PureComponent {
   render() {
-    const { payload, query } = this.props;
     return (
       <div className="c-embed">
         <div className="widget-wrapper">
-          <Widgets location={payload} query={query} embed />
+          <Widgets embed />
         </div>
         <Share />
         <ModalMeta />
-        <CountryDataProvider location={payload} />
+        <CountryDataProvider />
         <WhitelistsProvider />
       </div>
     );
   }
 }
-
-Embed.propTypes = {
-  payload: PropTypes.object,
-  query: PropTypes.object
-};
 
 export default Embed;

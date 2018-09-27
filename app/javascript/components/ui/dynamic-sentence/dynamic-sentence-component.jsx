@@ -24,16 +24,17 @@ class WidgetDynamicSentence extends PureComponent {
         if (param && p !== 'component') {
           if (typeof param === 'object') {
             if (param.color) {
-              formattedSentence = formattedSentence.replace(
-                `{${p}}`,
-                `<b style="color: ${param.color};">${param.value}</b>`
-              );
+              formattedSentence =
+                formattedSentence &&
+                formattedSentence.replace(
+                  `{${p}}`,
+                  `<b style="color: ${param.color};">${param.value}</b>`
+                );
             }
           } else {
-            formattedSentence = formattedSentence.replace(
-              `{${p}}`,
-              `<b>${param}</b>`
-            );
+            formattedSentence =
+              formattedSentence &&
+              formattedSentence.replace(`{${p}}`, `<b>${param}</b>`);
           }
         }
       });
@@ -58,6 +59,7 @@ class WidgetDynamicSentence extends PureComponent {
           animateFill={false}
           onShown={handleMouseOver}
           onHidden={handleMouseOut}
+          duration={0}
         >
           <span className="hover-text">{mappedComponent.key}</span>
         </Tooltip>

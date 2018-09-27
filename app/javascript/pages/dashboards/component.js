@@ -6,10 +6,9 @@ import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import LayerSpecProvider from 'providers/layerspec-provider';
-import DatasetsProvider from 'providers/datasets-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 
-import Widgets from 'components/widgets';
+import Widgets from 'components/widgets-v2';
 import Share from 'components/modals/share';
 import Map from 'components/map';
 import MapControls from 'components/map/components/map-controls';
@@ -30,13 +29,10 @@ class Page extends PureComponent {
       showMapMobile,
       setShowMapMobile,
       links,
-      isGeostoreLoading,
       widgetAnchor,
-      activeWidget,
       setMapZoom,
-      widgets,
-      payload,
-      query
+      handleCategoryChange,
+      noWidgetsMessage
     } = this.props;
 
     return (
@@ -51,24 +47,19 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header
-            className="header"
-            widgets={widgets}
-            location={payload}
-            query={query}
-          />
+          <Header className="header" />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
-            links={links}
+            links={links.map(l => ({
+              ...l,
+              onClick: () => handleCategoryChange(l.category)
+            }))}
             checkActive
           />
           <Widgets
-            widgets={widgets}
-            activeWidget={activeWidget}
-            setShowMapMobile={setShowMapMobile}
-            location={payload}
-            query={query}
+            className="dashboard-widgets"
+            noWidgetsMessage={noWidgetsMessage}
           />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
@@ -77,30 +68,26 @@ class Page extends PureComponent {
             bottomBoundary=".l-country"
           >
             <div className="map-container">
-              <Map widgetKey={activeWidget} miniLegend />
+              <Map miniLegend />
             </div>
           </Sticky>
         </div>
-        {!isGeostoreLoading && (
-          <MapControls
-            className="map-controls"
-            stickyOptions={{
-              enabled: true,
-              top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
-            }}
-            handleZoomIn={() => setMapZoom({ sum: 1 })}
-            handleZoomOut={() => setMapZoom({ sum: -1 })}
-          />
-        )}
+        <MapControls
+          className="map-controls"
+          stickyOptions={{
+            enabled: true,
+            top: window.innerWidth >= SCREEN_MOBILE ? 15 : 73
+          }}
+          handleZoomIn={() => setMapZoom({ sum: 1 })}
+          handleZoomOut={() => setMapZoom({ sum: -1 })}
+        />
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />
         <LayerSpecProvider />
-        <DatasetsProvider />
         <GeostoreProvider />
-        {widgetAnchor && <ScrollTo target={widgetAnchor} />}
       </div>
     );
   }
@@ -110,13 +97,10 @@ Page.propTypes = {
   showMapMobile: PropTypes.bool.isRequired,
   setShowMapMobile: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
-  isGeostoreLoading: PropTypes.bool,
-  widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  activeWidget: PropTypes.string,
-  payload: PropTypes.object,
-  query: PropTypes.object,
-  setMapZoom: PropTypes.func
+  setMapZoom: PropTypes.func,
+  noWidgetsMessage: PropTypes.string,
+  handleCategoryChange: PropTypes.func
 };
 
 export default Page;

@@ -69,3 +69,46 @@ export const getHeaderData = createThunkAction(
       });
   }
 );
+
+export const handleLocationChange = createThunkAction(
+  'handleLocationChange',
+  location => (dispatch, getState) => {
+    const { query, type } = getState().location;
+    const newQuery = {};
+
+    if (query) {
+      Object.keys(query).forEach(key => {
+        const queryObj = query[key] || {};
+        if (typeof queryObj === 'object') {
+          const { forestType, landCategory, page } = queryObj;
+          newQuery[key] = {
+            ...queryObj,
+            ...(forestType && {
+              forestType: ''
+            }),
+            ...(landCategory && {
+              landCategory: ''
+            }),
+            ...(page && {
+              page: 0
+            })
+          };
+        } else {
+          newQuery[key] = queryObj;
+        }
+      });
+    }
+
+    dispatch({
+      type,
+      payload: {
+        type: location.adm0 ? 'country' : 'global',
+        ...location
+      },
+      query: {
+        ...newQuery,
+        widget: undefined
+      }
+    });
+  }
+);

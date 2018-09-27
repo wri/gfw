@@ -1,7 +1,9 @@
 import * as actions from './recent-imagery-actions';
 
 export const initialState = {
-  loading: true,
+  loading: false,
+  error: false,
+  loadingMoreTiles: false,
   data: [],
   dataStatus: {
     tilesPerRequest: 6,
@@ -49,9 +51,15 @@ const setRecentImageryLoading = (state, { payload }) => ({
   loading: payload
 });
 
+const setRecentImageryLoadingMoreTiles = (state, { payload }) => ({
+  ...state,
+  ...payload
+});
+
 export default {
   [actions.setRecentImageryData]: setRecentImageryData,
   [actions.setRecentImageryDataStatus]: setRecentImageryDataStatus,
   [actions.resetRecentImageryData]: resetRecentImageryData,
-  [actions.setRecentImageryLoading]: setRecentImageryLoading
+  [actions.setRecentImageryLoading]: setRecentImageryLoading,
+  [actions.setRecentImageryLoadingMoreTiles]: setRecentImageryLoadingMoreTiles
 };

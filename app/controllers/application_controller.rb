@@ -60,15 +60,15 @@ class ApplicationController < ActionController::Base
   end
 
   def check_location
-    if !params[:iso] && params[:type] && params[:type] != 'global'
+    if !params[:adm0] && params[:type] && params[:type] != 'global'
       redirect_to action: "index"
-    elsif params[:iso]
-      if params[:sub_region]
-        @location = Application.find_adm2_by_iso_id(params[:iso], params[:region], params[:sub_region])
-      elsif params[:region]
-        @location = Application.find_adm1_by_iso_id(params[:iso], params[:region])
+    elsif params[:adm0]
+      if params[:adm2]
+        @location = Application.find_adm2_by_adm0_id(params[:adm0], params[:adm1], params[:adm2])
+      elsif params[:adm1]
+        @location = Application.find_adm1_by_adm0_id(params[:adm0], params[:adm1])
       else
-        @location = Application.find_country_by_iso(params[:iso])
+        @location = Application.find_adm0_by_adm0_id(params[:adm0])
       end
     end
     set_title
@@ -79,12 +79,12 @@ class ApplicationController < ActionController::Base
     if !@location
       @location_title = params[:type] ? (@typeKey || params[:type].capitalize) : nil
     else
-      if params[:sub_region]
-        @location_title = "#{@location['adm2']}, #{@location['adm1']}, #{@location['name']}"
-      elsif params[:region]
-        @location_title = "#{@location['adm1']}, #{@location['name']}"
-      elsif params[:iso]
-        @location_title = "#{@location['name']}"
+      if params[:adm2]
+        @location_title = "#{@location['adm2']}, #{@location['adm1']}, #{@location['name']} | #{params[:type].capitalize}"
+      elsif params[:adm1]
+        @location_title = "#{@location['adm1']}, #{@location['name']} | #{params[:type].capitalize}"
+      elsif params[:adm0]
+        @location_title = "#{@location['name']} | #{params[:type].capitalize}"
       else
         @location_title = params[:type] ? (@typeKey || params[:type].capitalize) : nil
       end

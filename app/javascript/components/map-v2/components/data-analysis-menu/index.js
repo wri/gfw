@@ -34,7 +34,7 @@ class DataAnalysisMenuContainer extends PureComponent {
     // get analysis if location changes
     if (
       location.type &&
-      location.country &&
+      location.adm0 &&
       endpoints &&
       (!isEqual(endpoints, prevProps.endpoints) ||
         !isEqual(location, prevProps.location))

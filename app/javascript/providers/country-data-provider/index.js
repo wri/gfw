@@ -12,7 +12,7 @@ const mapStateToProps = ({ location }) => ({
 class CountryDataProvider extends PureComponent {
   componentDidMount() {
     const {
-      location: { country, region },
+      location: { adm0, adm1 },
       getCountries,
       getRegions,
       getSubRegions,
@@ -20,33 +20,31 @@ class CountryDataProvider extends PureComponent {
     } = this.props;
     getCountries();
 
-    if (country) {
+    if (adm0) {
       getCountryLinks();
-      getRegions(country);
+      getRegions(adm0);
     }
-    if (region) {
-      getSubRegions({ country, region });
+    if (adm1) {
+      getSubRegions({ adm0, adm1 });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { location: { country, region } } = this.props;
+    const { location: { adm0, adm1 } } = this.props;
     const { getRegions, getSubRegions, getCountryLinks } = prevProps;
-    const hasCountryChanged = country !== prevProps.location.country && country;
-    const hasRegionChanged = region !== prevProps.location.region;
+    const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
+    const hasRegionChanged = adm0 && adm1 && adm1 !== prevProps.location.adm1;
 
     if (hasCountryChanged) {
       getCountryLinks();
-      getRegions(country);
-      if (region) {
-        getSubRegions({ country, region });
+      getRegions(adm0);
+      if (adm1) {
+        getSubRegions({ adm0, adm1 });
       }
     }
 
     if (hasRegionChanged) {
-      if (region) {
-        getSubRegions({ country, region });
-      }
+      getSubRegions({ adm0, adm1 });
     }
   }
 
