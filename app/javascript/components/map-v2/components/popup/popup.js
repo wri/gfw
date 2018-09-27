@@ -14,6 +14,6 @@ const actions = {
   ...ownActions
 };
 
-export const reduxModule = { actions, reducers, initialState };
+export const reduxModule = { actions: ownActions, reducers, initialState };
 
 export default connect(getPopupProps, actions)(Component);

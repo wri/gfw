@@ -37,6 +37,6 @@ HeaderContainer.propTypes = {
   settings: PropTypes.object.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+export const reduxModule = { actions: ownActions, reducers, initialState };
 
 export default connect(getHeaderProps, actions)(HeaderContainer);
