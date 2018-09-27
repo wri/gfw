@@ -8,7 +8,7 @@ export default {
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
   options: {
-    preiods: true
+    periods: true
   },
   dataType: 'fao',
   colors: 'loss',

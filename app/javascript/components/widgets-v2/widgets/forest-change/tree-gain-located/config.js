@@ -5,7 +5,6 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1'],
   options: {
-    units: ['ha'],
     forestTypes: true,
     landCategories: true
   },

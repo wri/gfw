@@ -11,6 +11,8 @@ export default {
   layers: ['c09767f5-0ff0-419b-a21b-1b0b06f4745f'],
   colors: 'plantations',
   metaKey: 'widget_land_cover_esa',
+  hideSettings: true,
+  hideLayers: true,
   sortOrder: {
     landCover: 100
   },

@@ -13,6 +13,7 @@ export default {
   sortOrder: {
     landCover: 5
   },
+  hideSettings: true,
   sentences: {
     globalInitial:
       'FAO data from 2015 shows that there are {extent} of forest {location}, with primary forest occupying {primaryPercent} of the world.',

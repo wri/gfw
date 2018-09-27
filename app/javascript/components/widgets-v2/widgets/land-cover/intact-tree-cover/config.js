@@ -8,8 +8,8 @@ export default {
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   options: {
-    forestTypes: true,
-    landCategories: true
+    landCategories: true,
+    thresholds: true
   },
   colors: 'extent',
   metaKey: 'widget_ifl',

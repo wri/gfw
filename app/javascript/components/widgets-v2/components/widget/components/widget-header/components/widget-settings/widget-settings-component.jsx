@@ -10,6 +10,7 @@ import './widget-settings-styles.scss';
 
 class WidgetSettings extends PureComponent {
   getUnit = (units, widget, settings, onSettingsChange) => {
+    if (units.length <= 1) return null;
     if (units.length === 2) {
       return (
         <Switch

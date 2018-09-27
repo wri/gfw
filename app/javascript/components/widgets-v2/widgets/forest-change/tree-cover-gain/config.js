@@ -8,7 +8,6 @@ export default {
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   options: {
-    units: ['ha'],
     forestTypes: ['ifl'],
     landCategories: true
   },
