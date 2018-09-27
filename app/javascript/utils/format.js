@@ -1,4 +1,5 @@
 import { format } from 'd3-format';
+import isEmpty from 'lodash/isEmpty';
 
 export const formatUSD = (value, minimize = true) =>
   format('.2s')(value)
@@ -7,7 +8,8 @@ export const formatUSD = (value, minimize = true) =>
     .replace('K', minimize ? 'K' : ' thousand');
 
 export const formatNumber = ({ num, unit }) => {
-  const numFormat = unit === '%' ? '.2r' : '.3s';
+  let numFormat = unit === '%' ? '.2r' : '.3s';
+  if (unit === 'counts') numFormat = ',.0f';
   const thres = unit === '%' ? 0.1 : 1;
   let formattedNum =
     num < thres && num > 0 ? `<${thres}` : format(numFormat)(num);
@@ -16,7 +18,7 @@ export const formatNumber = ({ num, unit }) => {
   } else if (num > 0 && num < 0.01 && unit !== '%') {
     formattedNum = '<0.01';
   }
-  return `${formattedNum}${unit || ''}`;
+  return `${formattedNum}${unit && unit !== 'counts' ? unit : ''}`;
 };
 
 export const buildGadm36Id = (country, region, subRegion) =>
@@ -30,4 +32,64 @@ export const parseGadm36Id = gid => {
   const adm1 = ids[1] && ids[1].split('_')[0];
   const adm2 = ids[2] && ids[2].split('_')[0];
   return { adm0, adm1: parseInt(adm1, 10), adm2: parseInt(adm2, 10) };
+};
+
+export const getLocationFromData = data => {
+  let newLocation = {};
+  if (data && data.gid_0) {
+    newLocation = parseGadm36Id(data[`gid_${data.level}`]);
+  }
+  return {
+    type: 'country',
+    country: !!newLocation.adm0 && newLocation.adm0,
+    region: !!newLocation.adm1 && newLocation.adm1,
+    subRegion: !!newLocation.adm2 && newLocation.adm2
+  };
+};
+
+export const buildFullLocationName = (
+  { country, region, subRegion },
+  { adm0s, adm1s, adm2s }
+) => {
+  let location = '';
+  if (
+    (country && isEmpty(adm0s)) ||
+    (region && isEmpty(adm1s)) ||
+    (subRegion && isEmpty(adm2s))
+  ) {
+    return '';
+  }
+  if (country) {
+    const adm = adm0s && adm0s.find(a => a.value === country);
+    location = adm ? adm.label : '';
+  }
+  if (region) {
+    const adm1 = adm1s && adm1s.find(a => a.value === parseInt(region, 10));
+    location = adm1
+      ? `${adm1.label || 'unnamed region'}, ${location}`
+      : location;
+  }
+  if (subRegion) {
+    const adm2 = adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
+    location = adm2
+      ? `${adm2.label || 'unnamed region'}, ${location}`
+      : location;
+  }
+  return location;
+};
+
+export const buildLocationName = (
+  { country, region, subRegion },
+  { adms, adm1s, adm2s }
+) => {
+  let activeLocation = { label: '' };
+  if (subRegion) {
+    activeLocation =
+      adm2s && adm2s.find(a => a.value === parseInt(subRegion, 10));
+  } else if (region) {
+    activeLocation = adm1s && adm1s.find(a => a.value === parseInt(region, 10));
+  } else if (country) {
+    activeLocation = adms && adms.find(a => a.value === country);
+  }
+  return activeLocation && activeLocation.label;
 };

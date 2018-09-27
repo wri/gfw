@@ -26,7 +26,7 @@ export const getTicks = createSelector(getDates, dates => {
   const ticks = range(
     0,
     maxDays + 1,
-    maxDays / (numOfYears > 5 ? 5 : numOfYears)
+    maxDays / (numOfYears > 6 ? 6 : numOfYears)
   );
   const marks = {};
   ticks.forEach(r => {

@@ -16,9 +16,7 @@ const configureStore = () => {
   if (process.env.NODE_ENV !== 'production') {
     if (module.hot) {
       module.hot.accept('./reducers', () => {
-        /* eslint-disable global-require */
-        const nextRootReducer = require('./reducers');
-        store.replaceReducer(nextRootReducer);
+        store.replaceReducer(reducers);
       });
     }
   }

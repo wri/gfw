@@ -31,7 +31,7 @@ class SubNavMenu extends PureComponent {
                     duration={500}
                   >
                     {link.icon && <Icon icon={link.icon} />}
-                    {link.label}
+                    <span>{link.label}</span>
                   </AnchorLink>
                 );
               } else if (link.onClick) {
@@ -44,7 +44,8 @@ class SubNavMenu extends PureComponent {
                       link.onClick();
                     }}
                   >
-                    {link.label}
+                    {link.icon && <Icon icon={link.icon} />}
+                    <span>{link.label}</span>
                   </button>
                 );
               } else {
@@ -57,7 +58,7 @@ class SubNavMenu extends PureComponent {
                     isActive={checkActive ? () => link.active : null}
                   >
                     {link.icon && <Icon icon={link.icon} />}
-                    {link.label}
+                    <span>{link.label}</span>
                   </NavLink>
                 );
               }

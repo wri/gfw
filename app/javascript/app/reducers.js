@@ -10,9 +10,10 @@ import router from './router';
 
 // Map & Dashboards
 import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
-import { reduxModule as DataAnalysisMenu } from 'pages/map/components/data-analysis-menu';
+import { reduxModule as DataAnalysisMenu } from 'components/map-v2/components/data-analysis-menu';
 import { reduxModule as Widgets } from 'components/widgets';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
+import { reduxModule as Draw } from 'components/map-v2/components/draw';
 import { reduxModule as Header } from 'pages/dashboards/header';
 import { reduxModule as MapOld } from 'components/map';
 
@@ -27,6 +28,7 @@ import { reduxModule as Share } from 'components/modals/share';
 import { reduxModule as ModalVideo } from 'components/modals/video';
 import { reduxModule as AboutModal } from 'pages/about/section-projects/section-projects-modal';
 import { reduxModule as SGFModal } from 'pages/sgf/section-projects/section-projects-modal';
+import { reduxModule as SourcesModal } from 'components/modals/sources';
 
 // Forms
 import { reduxModule as Contact } from 'pages/about/section-contact';
@@ -46,10 +48,11 @@ import { reduxModule as DashboardsPage } from 'pages/dashboards';
 // Component Reducers
 const componentsReducers = {
   // map & dashboards
-  dataAnalysis: handleModule(DataAnalysisMenu),
+  analysis: handleModule(DataAnalysisMenu),
   recentImagery: handleModule(RecentImagery),
   widgets: handleModule(Widgets),
   popup: handleModule(Popup),
+  draw: handleModule(Draw),
   header: handleModule(Header),
   share: handleModule(Share),
   map: handleModule(MapOld),
@@ -58,6 +61,7 @@ const componentsReducers = {
   modalMeta: handleModule(ModalMeta),
   modalAbout: handleModule(AboutModal),
   modalSGF: handleModule(SGFModal),
+  modalSources: handleModule(SourcesModal),
   // projects
   impacts: handleModule(Impacts),
   aboutProjects: handleModule(AboutProjects),

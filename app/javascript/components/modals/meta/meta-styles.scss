@@ -3,7 +3,7 @@ $mobile-padding: rem(30px);
 $desktop-padding: rem(50px);
 
 .c-modal-meta {
-  padding: $mobile-padding $mobile-padding;
+  padding: $mobile-padding;
   min-width: rem(320px);
   min-height: rem(320px);
   width: 100%;
@@ -12,7 +12,7 @@ $desktop-padding: rem(50px);
   word-break: break-word;
 
   @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding $desktop-padding;
+    padding: $desktop-padding;
     padding-top: rem(40px);
   }
 

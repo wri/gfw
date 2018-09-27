@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
-import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from '../widget-header';
@@ -17,14 +16,12 @@ class Widget extends PureComponent {
     const {
       widget,
       currentLabel,
-      shareUrl,
       config,
       embed,
       minimalist,
       loading,
       error,
       data,
-      query,
       onMap,
       highlightColor,
       Component,
@@ -85,15 +82,6 @@ class Widget extends PureComponent {
             )}
         </div>
         {!minimalist && <WidgetFooter {...this.props} />}
-        {embed &&
-          (!query || (query && !query.hideGfw)) && (
-            <div className="embed-footer">
-              <p>For more info</p>
-              <Button className="embed-btn" extLink={shareUrl}>
-                EXPLORE ON GFW
-              </Button>
-            </div>
-          )}
       </div>
     );
   }

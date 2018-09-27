@@ -8,8 +8,9 @@ const history = createHistory();
 export const ABOUT = 'location/ABOUT';
 export const SGF = 'location/SGF';
 export const MAP = 'location/MAP';
+export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
-export const WIDGET_EMBED = 'location/WIDGET_EMBED';
+export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
   // track page with GA
@@ -18,6 +19,7 @@ const routeChangeThunk = (dispatch, getState) => {
 
 export const routes = {
   [ABOUT]: {
+    controller: 'about',
     path: '/about',
     component: 'about',
     sections: [
@@ -49,6 +51,7 @@ export const routes = {
     ]
   },
   [SGF]: {
+    controller: 'small_grants_fund',
     path: '/small-grants-fund/:tab?',
     component: 'sgf',
     sections: {
@@ -73,7 +76,8 @@ export const routes = {
     }
   },
   [MAP]: {
-    path: '/v2/map/:tab?/:country?/:region?/:subRegion?',
+    controller: 'map_v2',
+    path: '/v2/map/:type?/:country?/:region?/:subRegion?',
     component: 'map',
     headerOptions: {
       fullScreen: true,
@@ -82,13 +86,22 @@ export const routes = {
       toggle: true
     }
   },
+  [MAP_EMBED]: {
+    controller: 'map_v2',
+    path: '/embed/v2/map/:type?/:country?/:region?/:subRegion?',
+    component: 'map',
+    embed: true
+  },
   [DASHBOARDS]: {
+    controller: 'dashboards',
     path: '/dashboards/:type?/:country?/:region?/:subRegion?',
     component: 'dashboards'
   },
-  [WIDGET_EMBED]: {
+  [DASHBOARDS_EMBED]: {
+    controller: 'dashboards',
     path: '/embed/dashboards/:type?/:country?/:region?/:subRegion?',
-    component: 'dashboards/embed'
+    component: 'dashboards/embed',
+    embed: true
   },
   [NOT_FOUND]: {
     path: '/404',

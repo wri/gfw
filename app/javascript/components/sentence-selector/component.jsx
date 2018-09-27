@@ -35,7 +35,7 @@ class SentenceSelector extends PureComponent {
         theme="theme-dropdown-native-button"
         value={value}
         options={options}
-        onChange={e => onChange(e.target.value)}
+        onChange={onChange}
         native
       />
     );

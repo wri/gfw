@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = (state, { location }) => ({
-  location
+const mapStateToProps = ({ location }) => ({
+  location: location.payload
 });
 
 class CountryDataProvider extends PureComponent {
@@ -29,12 +29,11 @@ class CountryDataProvider extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { location: { country, region } } = nextProps;
-    const { getRegions, getSubRegions, getCountryLinks } = this.props;
-    const hasCountryChanged =
-      country !== this.props.location.country && country;
-    const hasRegionChanged = region !== this.props.location.region;
+  componentDidUpdate(prevProps) {
+    const { location: { country, region } } = this.props;
+    const { getRegions, getSubRegions, getCountryLinks } = prevProps;
+    const hasCountryChanged = country !== prevProps.location.country && country;
+    const hasRegionChanged = region !== prevProps.location.region;
 
     if (hasCountryChanged) {
       getCountryLinks();

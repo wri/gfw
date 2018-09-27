@@ -1,0 +1,14 @@
+{
+  "sizeLimit": 1000000,
+  "sizeMessage": "The selected file is quite large and uploading it might result in browser instability. Do you want to continue?",
+  "featureLimit": 1000,
+  "types": [
+    "application/vnd.geo+json",
+    "application/json",
+    "application/vnd.google-earth.kml+xml",
+    "application/vnd.google-earth.kmz",
+    "application/zip",
+    "text/csv",
+    "application/vnd.ms-excel"
+  ]
+}

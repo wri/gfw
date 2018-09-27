@@ -9,7 +9,6 @@ import LayerSpecProvider from 'providers/layerspec-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 
-import Meta from 'components/meta';
 import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
 import Map from 'components/map';
@@ -36,7 +35,6 @@ class Page extends PureComponent {
       activeWidget,
       setMapZoom,
       widgets,
-      title,
       payload,
       query
     } = this.props;
@@ -97,15 +95,11 @@ class Page extends PureComponent {
         <Share />
         <ModalMeta />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        <CountryDataProvider location={payload} />
+        <CountryDataProvider />
         <WhitelistsProvider />
         <LayerSpecProvider />
         <DatasetsProvider />
         <GeostoreProvider />
-        <Meta
-          title={title}
-          description="Data about forest change, tenure, forest related employment and land use in"
-        />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
       </div>
     );
@@ -120,7 +114,6 @@ Page.propTypes = {
   widgets: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeWidget: PropTypes.string,
-  title: PropTypes.string,
   payload: PropTypes.object,
   query: PropTypes.object,
   setMapZoom: PropTypes.func

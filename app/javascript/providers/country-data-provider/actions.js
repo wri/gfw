@@ -25,22 +25,24 @@ export const setCountryLinks = createAction('setCountryLinks');
 
 export const getCountries = createThunkAction(
   'getCountries',
-  () => dispatch => {
-    dispatch(setCountriesLoading(true));
-    axios
-      .all([getCountriesProvider(), getFAOCountriesProvider()])
-      .then(
-        axios.spread((gadm28Countries, faoCountries) => {
-          dispatch(setGadmCountries(gadm28Countries.data.rows));
-          dispatch(setFAOCountries(faoCountries.data.rows));
-          dispatch(setCountries(gadm28Countries.data.rows));
+  () => (dispatch, getState) => {
+    if (!getState().countryData.isCountriesLoading) {
+      dispatch(setCountriesLoading(true));
+      axios
+        .all([getCountriesProvider(), getFAOCountriesProvider()])
+        .then(
+          axios.spread((gadm28Countries, faoCountries) => {
+            dispatch(setGadmCountries(gadm28Countries.data.rows));
+            dispatch(setFAOCountries(faoCountries.data.rows));
+            dispatch(setCountries(gadm28Countries.data.rows));
+            dispatch(setCountriesLoading(false));
+          })
+        )
+        .catch(error => {
           dispatch(setCountriesLoading(false));
-        })
-      )
-      .catch(error => {
-        dispatch(setCountriesLoading(false));
-        console.info(error);
-      });
+          console.info(error);
+        });
+    }
   }
 );
 

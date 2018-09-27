@@ -15,6 +15,7 @@ export default {
   attributionControl: false,
   bbox: null,
   canBound: true,
+  draw: false,
   datasets: [
     // admin boundaries
     {

@@ -1,4 +1,4 @@
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 
 import {
   getBasemap,
@@ -6,15 +6,10 @@ import {
   getActiveDatasetsState,
   getMapZoom,
   getActiveBoundaryDatasets,
-  getBoundaryDatasets
+  getAllBoundaries
 } from 'components/map-v2/selectors';
 
 import basemaps, { labels } from './basemaps-schema';
-
-export const getAllBoundaries = createSelector(
-  [getBoundaryDatasets],
-  boundaries => [{ label: 'No boundaries', value: null }].concat(boundaries)
-);
 
 export const getBasemapsProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsState,

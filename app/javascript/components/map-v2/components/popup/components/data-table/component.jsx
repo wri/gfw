@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { formatNumber } from 'utils/format';
 
 import './styles.scss';
 
@@ -12,7 +13,11 @@ class DataTable extends Component {
         {data.map(d => (
           <div key={d.label} className="wrapper">
             <div className="label">{d.label}:</div>
-            <div className="value">{d.value || 'n/a'}</div>
+            <div className="value">
+              {d.type === 'number'
+                ? formatNumber({ num: d.value, unit: d.suffix })
+                : d.value || 'n/a'}
+            </div>
           </div>
         ))}
       </div>
