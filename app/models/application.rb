@@ -1,8 +1,13 @@
 class Application
   class << self
     def find_all_countries
-      url = "#{ENV['CARTO_API']}/sql?q=SELECT%20DISTINCT%20iso,%20name_engli%20as%20name%20FROM%20gadm36_countries%20WHERE%20iso%20!=%20'XCA'%20AND%20iso%20!=%20'TWN'"
-      response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
+      url = "#{ENV['CARTO_API']}/sql?q="
+      url += <<-SQL
+        SELECT DISTINCT iso, name_engli as name
+        FROM gadm36_countries
+        WHERE iso != 'XCA' AND iso != 'TWN'
+      SQL
+      response = Typhoeus.get(URI.encode(url), headers: {"Accept" => "application/json"})
       if response.success? and (response.body.length > 0)
         JSON.parse(response.body)["rows"]
       else
@@ -12,8 +17,13 @@ class Application
 
     def find_adm0_by_adm0_id(adm0)
       return nil unless adm0
-      url = "#{ENV['CARTO_API']}/sql?q=SELECT%20iso%2C%20name_engli%20as%20name%20FROM%20gadm36_countries%20WHERE%20iso%20%3D%20%27#{adm0}%27%20AND%20iso%20!%3D%20%27XCA%27%20AND%20iso%20!%3D%20%27TWN%27"
-      response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
+      url = "#{ENV['CARTO_API']}/sql?q="
+      url += <<-SQL
+        SELECT iso, name_engli as name
+        FROM gadm36_countries
+        WHERE iso = '#{adm0}' AND iso != 'XCA' AND iso != 'TWN'
+      SQL
+      response = Typhoeus.get(URI.encode(url), headers: {"Accept" => "application/json"})
       if response.success? and (response.body.length > 0)
         JSON.parse(response.body)["rows"][0]
       else
@@ -23,8 +33,13 @@ class Application
 
     def find_adm1_by_adm0_id(adm0, adm1)
       return nil unless adm1
-      url = "#{ENV['CARTO_API']}/sql?q=SELECT%20iso%2C%20gid_1%20as%20id%2C%20name_0%20as%20name%2C%20name_1%20as%20adm1%20FROM%20gadm36_adm1%20WHERE%20gid_1%20%3D%20'#{adm0}.#{adm1}_1'%20AND%20iso%20!%3D%20%27XCA%27%20AND%20iso%20!%3D%20%27TWN%27"
-      response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
+      url = "#{ENV['CARTO_API']}/sql?q="
+      url += <<-SQL
+        SELECT iso, gid_1 as id, name_0 as name, name_1 as adm1
+        FROM gadm36_adm1
+        WHERE gid_1 = '#{adm0}.#{adm1}_1' AND iso != 'XCA' AND iso != 'TWN'
+      SQL
+      response = Typhoeus.get(URI.encode(url), headers: {"Accept" => "application/json"})
       if response.success? and (response.body.length > 0)
         JSON.parse(response.body)["rows"][0]
       else
@@ -34,8 +49,13 @@ class Application
 
     def find_adm2_by_adm0_id(adm0, adm1, adm2)
       return nil unless adm2
-      url = "#{ENV['CARTO_API']}/sql?q=SELECT%20gid_2%2C%20name_0%20as%20name%2C%20name_1%20as%20adm1%2C%20name_2%20as%20adm2%20FROM%20gadm36_adm2%20WHERE%20gid_2%20%3D%20'#{adm0}.#{adm1}.#{adm2}_1'%20AND%20iso%20!%3D%20%27XCA%27%20AND%20iso%20!%3D%20%27TWN%27%20AND%20type_2%20NOT%20IN%20('Waterbody')"
-      response = Typhoeus.get(url, headers: {"Accept" => "application/json"})
+      url = "#{ENV['CARTO_API']}/sql?q="
+      url += <<-SQL
+        SELECT gid_2, name_0 as name, name_1 as adm1, name_2 as adm2
+        FROM gadm36_adm2
+        WHERE gid_2 = '#{adm0}.#{adm1}.#{adm2}_1' AND iso != 'XCA' AND iso != 'TWN' AND type_2 NOT IN ('Waterbody')
+      SQL
+      response = Typhoeus.get(URI.encode(url), headers: {"Accept" => "application/json"})
       if response.success? and (response.body.length > 0)
         JSON.parse(response.body)["rows"][0]
       else
