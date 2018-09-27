@@ -86,6 +86,7 @@ export const getChildLocationData = createSelector(
   [getLocationData, selectLocation],
   (locationData, location) => {
     if (location.adm2) return null;
+    if (!location.adm0) return locationData.adm0;
     return locationData[location.adm1 ? 'adm2' : 'adm1'];
   }
 );
