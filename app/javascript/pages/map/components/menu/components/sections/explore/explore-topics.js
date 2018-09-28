@@ -189,8 +189,8 @@ export default {
         datasets: [
           // admin boundaries
           {
-            dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-            layers: ['c5d1e010-383a-4713-9aaa-44f728c0571c'],
+            dataset: '63295b05-55a1-456c-a56c-c9ccb3a711ec',
+            layers: ['d590f83c-9b54-4542-8d27-f61b8b19df46'],
             opacity: 1,
             visibility: true
           },
