@@ -3,8 +3,6 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 
-import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
-
 import initialState from './initial-state';
 
 // get list data
@@ -333,22 +331,14 @@ export const getOneClickAnalysisActive = createSelector(
 );
 
 export const getMapProps = createStructuredSelector({
-  activeDatasets: getActiveDatasets,
-  settings: getMapSettings,
   mapOptions: getMapOptions,
   basemap: getBasemap,
   label: getLabels,
-  layerGroups: getLayerGroups,
-  activeLayers: getActiveLayersWithWidgetSettings,
   loading: getLoading,
   layerBbox: getLayerBbox,
   geostoreBbox: getGeostoreBbox,
   bbox: getBbox,
   canBound: getCanBound,
-  geostore: getGeostore,
-  tileGeoJSON: getTileGeoJSON,
-  query: getQuery,
-  location: selectLocation,
   draw: getDraw,
   analysisActive: getShowAnalysis,
   oneClickAnalysisActive: getOneClickAnalysisActive

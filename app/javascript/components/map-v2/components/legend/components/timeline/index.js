@@ -54,16 +54,16 @@ class TimelineContainer extends PureComponent {
     };
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    const { isPlaying, end } = nextState;
-    if (isPlaying && isPlaying !== this.state.isPlaying) {
+  componentDidUpdate(prevProps, prevState) {
+    const { isPlaying, end } = this.state;
+    if (isPlaying && isPlaying !== prevState.isPlaying) {
       this.startTimeline();
     }
-    if (!isPlaying && isPlaying !== this.state.isPlaying) {
+    if (!isPlaying && isPlaying !== prevState.isPlaying) {
       this.stopTimeline();
     }
-    if (isPlaying && !isEqual(end, this.state.end)) {
-      this.incrementTimeline(nextState);
+    if (isPlaying && !isEqual(end, prevState.end)) {
+      this.incrementTimeline(this.state);
     }
   }
 

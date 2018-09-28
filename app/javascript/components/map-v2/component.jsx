@@ -1,13 +1,10 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 import startCase from 'lodash/startCase';
 import upperFirst from 'lodash/upperFirst';
 import cx from 'classnames';
 
 import Map from 'wri-api-components/dist/map';
-import { LayerManager, Layer } from 'layer-manager/lib/react';
-import { PluginLeaflet } from 'layer-manager/lib';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -20,6 +17,7 @@ import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
 import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
+import LayerManagerComponent from './components/layer-manager';
 
 import './styles.scss';
 
@@ -53,15 +51,10 @@ class MapComponent extends PureComponent {
     const {
       loading,
       error,
-      activeLayers,
       mapOptions,
       basemap,
       label,
       handleMapMove,
-      geostore,
-      tileGeoJSON,
-      setRecentImagerySettings,
-      query,
       tooltipData,
       bbox,
       showTooltip,
@@ -73,7 +66,6 @@ class MapComponent extends PureComponent {
       draw,
       embed
     } = this.props;
-
     return (
       <div
         className={cx()}
@@ -127,98 +119,13 @@ class MapComponent extends PureComponent {
           >
             {map => (
               <Fragment>
-                <LayerManager map={map} plugin={PluginLeaflet}>
-                  {layerManager => (
-                    <Fragment>
-                      {geostore &&
-                        geostore.id && (
-                          <Layer
-                            id="geostore"
-                            name="Geojson"
-                            provider="leaflet"
-                            layerConfig={{
-                              id: geostore.id,
-                              type: 'geoJSON',
-                              body: geostore.geojson,
-                              options: {
-                                style: {
-                                  stroke: true,
-                                  color: '#4a4a4a',
-                                  weight: 2,
-                                  fill: false
-                                }
-                              }
-                            }}
-                            layerManager={layerManager}
-                          />
-                        )}
-                      {tileGeoJSON && (
-                        <Layer
-                          id="recentImagery"
-                          name="Geojson"
-                          provider="leaflet"
-                          layerConfig={{
-                            type: 'geoJSON',
-                            body: tileGeoJSON,
-                            options: {
-                              style: {
-                                stroke: false,
-                                fillOpacity: 0
-                              }
-                            }
-                          }}
-                          layerManager={layerManager}
-                          // Interaction
-                          interactivity
-                          events={{
-                            click: () => {
-                              if (!draw) {
-                                setRecentImagerySettings({ visible: true });
-                              }
-                            },
-                            mouseover: e => {
-                              if (!draw) handleRecentImageryTooltip(e);
-                            },
-                            mouseout: () => {
-                              if (!draw) handleShowTooltip(false, {});
-                            }
-                          }}
-                        />
-                      )}
-                      {activeLayers.map(l => {
-                        const { interactionConfig } = l;
-                        const { output, article } = interactionConfig || {};
-                        const layer = {
-                          ...l,
-                          ...(!isEmpty(output) && {
-                            interactivity: output.map(i => i.column),
-                            events: {
-                              click: e => {
-                                if (!draw) {
-                                  handleMapInteraction({
-                                    e,
-                                    layer: l,
-                                    article,
-                                    output
-                                  });
-                                }
-                              }
-                            }
-                          })
-                        };
-
-                        return (
-                          <Layer
-                            key={l.id}
-                            {...layer}
-                            layerManager={layerManager}
-                          />
-                        );
-                      })}
-                    </Fragment>
-                  )}
-                </LayerManager>
-                <Popup map={map} query={query} />
+                <LayerManagerComponent
+                  map={map}
+                  handleMapInteraction={handleMapInteraction}
+                  handleRecentImageryTooltip={handleRecentImageryTooltip}
+                  handleShowTooltip={handleShowTooltip}
+                />
+                <Popup map={map} />
                 <MapControlButtons
                   className="map-controls"
                   map={map}
@@ -245,19 +152,11 @@ class MapComponent extends PureComponent {
 
 MapComponent.propTypes = {
   loading: PropTypes.bool,
-  activeLayers: PropTypes.array,
   error: PropTypes.bool,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
   handleMapMove: PropTypes.func,
-  bboxs: PropTypes.object,
-  recentImagery: PropTypes.bool,
-  recentTileBounds: PropTypes.array,
-  setRecentImagerySettings: PropTypes.func,
-  geostore: PropTypes.object,
-  tileGeoJSON: PropTypes.object,
-  query: PropTypes.object,
   tooltipData: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bbox: PropTypes.array,
   showTooltip: PropTypes.bool,
