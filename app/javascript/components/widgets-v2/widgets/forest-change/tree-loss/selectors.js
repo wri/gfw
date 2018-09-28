@@ -14,6 +14,7 @@ const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
 const getSimple = state => state.simple || false;
+const getIsTropical = state => state.isTropical || false;
 
 export const parsePayload = payload => {
   const year = payload && payload[0].payload.year;
@@ -99,11 +100,18 @@ export const parseSentence = createSelector(
     getSettings,
     getLocationName,
     getIndicator,
-    getSentences
+    getSentences,
+    getIsTropical
   ],
-  (data, extent, settings, locationName, indicator, sentences) => {
+  (data, extent, settings, locationName, indicator, sentences, isTropical) => {
     if (!data) return null;
-    const { initial, withIndicator, noLoss, noLossWithIndicator } = sentences;
+    const {
+      initial,
+      withIndicator,
+      noLoss,
+      noLossWithIndicator,
+      co2Emissions
+    } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
@@ -114,6 +122,10 @@ export const parseSentence = createSelector(
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
     }
+    if (isTropical && totalLoss > 0) {
+      sentence = `${sentence}, ${co2Emissions}`;
+    }
+    sentence = `${sentence}.`;
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
