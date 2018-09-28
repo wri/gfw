@@ -6,8 +6,8 @@ import upperFirst from 'lodash/upperFirst';
 import cx from 'classnames';
 
 import Map from 'wri-api-components/dist/map';
-import { LayerManager, Layer } from 'layer-manager/dist/react';
-import { PluginLeaflet } from 'layer-manager';
+import { LayerManager, Layer } from 'layer-manager/lib/react';
+import { PluginLeaflet } from 'layer-manager/lib';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';

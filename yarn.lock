@@ -1850,6 +1850,10 @@ bluebird@3.5.1, bluebird@^3.5.0, bluebird@^3.5.1, bluebird@~3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
+bluebird@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.2.tgz#1be0908e054a751754549c270489c1505d4ab15a"
+
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
@@ -7497,6 +7501,15 @@ layer-manager@^1.1.5:
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"
+    wri-json-api-serializer "^1.0.1"
+
+layer-manager@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.10.0.tgz#53b566c0c23eb63076ec09ca9af08723e2683316"
+  dependencies:
+    bluebird "^3.5.2"
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
     wri-json-api-serializer "^1.0.1"
 
 lazy-ass@1.6.0:

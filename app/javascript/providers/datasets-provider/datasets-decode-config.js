@@ -90,12 +90,13 @@ const decodes = {
           const pixelPos = (j * w + i) * components;
           const intensity = imgData[pixelPos];
           const yearLoss = 2000 + imgData[pixelPos + 2];
+          const scaleIntensity = myScale(intensity);
 
           if (yearLoss >= yearStart && yearLoss <= yearEnd) {
             imgData[pixelPos] = 220;
-            imgData[pixelPos + 1] = 72 - z + 102 - 3 * myScale(intensity) / z;
+            imgData[pixelPos + 1] = 72 - z + 102 - 3 * scaleIntensity / z;
             imgData[pixelPos + 2] = 33 - z + 153 - intensity / z;
-            imgData[pixelPos + 3] = z < 13 ? myScale(intensity) : intensity;
+            imgData[pixelPos + 3] = z < 13 ? scaleIntensity : intensity;
           } else {
             imgData[pixelPos + 3] = 0;
           }
