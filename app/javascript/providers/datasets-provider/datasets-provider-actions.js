@@ -144,12 +144,18 @@ export const getDatasets = createThunkAction(
                           const decodeFunction = decodeLayersConfig[l.id];
                           const latestDate = latest && latest[l.id];
 
+                          // check if has a timeline
                           const hasParamsTimeline =
                             params_config &&
                             params_config.map(p => p.key).includes('startDate');
                           const hasDecodeTimeline =
                             decode_config &&
                             decode_config.map(p => p.key).includes('startDate');
+                          const timelineConfig = timeline_config && {
+                            ...timeline_config
+                          };
+
+                          // get params
                           const params =
                             params_config &&
                             reduceParams(params_config, latestDate);
@@ -158,9 +164,6 @@ export const getDatasets = createThunkAction(
                             reduceParams(decode_config, latestDate);
                           const sqlParams =
                             sql_config && reduceSqlParams(sql_config);
-                          const timelineConfig = timeline_config && {
-                            ...timeline_config
-                          };
 
                           return {
                             ...info,

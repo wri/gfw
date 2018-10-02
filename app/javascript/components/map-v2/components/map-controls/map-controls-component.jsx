@@ -177,6 +177,7 @@ class MapControlsButtons extends PureComponent {
                   ref={this.setBasemapsRef}
                 />
               }
+              offset={-10}
             >
               <Button
                 className="basemaps-btn"
