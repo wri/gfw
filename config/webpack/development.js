@@ -2,10 +2,10 @@
 
 // eslint-disable-next-line
 const webpack = require('webpack');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const merge = require('webpack-merge');
 const sharedConfig = require('./shared.js');
 const { settings, output } = require('./configuration.js');
-
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 //   .BundleAnalyzerPlugin;
 
@@ -15,7 +15,8 @@ module.exports = merge(sharedConfig, {
   stats: { errorDetails: true },
   output: { pathinfo: true },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new DashboardPlugin()
     // new BundleAnalyzerPlugin()
   ],
   devServer: {

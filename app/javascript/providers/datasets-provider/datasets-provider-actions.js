@@ -137,13 +137,13 @@ export const getDatasets = createThunkAction(
                             params_config,
                             decode_config,
                             sql_config,
+                            timeline_config,
                             body,
                             url
                           } = layerConfig;
                           const decodeFunction = decodeLayersConfig[l.id];
                           const latestDate = latest && latest[l.id];
 
-                          // check for timeline params
                           const hasParamsTimeline =
                             params_config &&
                             params_config.map(p => p.key).includes('startDate');
@@ -158,6 +158,9 @@ export const getDatasets = createThunkAction(
                             reduceParams(decode_config, latestDate);
                           const sqlParams =
                             sql_config && reduceSqlParams(sql_config);
+                          const timelineConfig = timeline_config && {
+                            ...timeline_config
+                          };
 
                           return {
                             ...info,
@@ -171,6 +174,7 @@ export const getDatasets = createThunkAction(
                                 (multiConfig && multiConfig.position) ||
                                 i + 1,
                             // check if needs timeline
+                            timelineConfig,
                             hasParamsTimeline,
                             hasDecodeTimeline,
                             // params for tile url
@@ -210,11 +214,10 @@ export const getDatasets = createThunkAction(
                               sqlParams
                             }),
                             // decode func and params for canvas layers
-                            ...decodeFunction,
-                            ...(decodeParams && {
+                            decodeFunction,
+                            ...(decodeFunction && {
                               decodeParams: {
-                                ...(decodeFunction &&
-                                  decodeFunction.decodeParams),
+                                // timeline config
                                 ...decodeParams,
                                 ...(hasDecodeTimeline && {
                                   minDate:
