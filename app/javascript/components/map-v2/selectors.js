@@ -42,8 +42,8 @@ export const getLabels = createSelector(
 );
 
 export const getDraw = createSelector(
-  getMapSettings,
-  settings => settings.draw
+  [getMapSettings, selectAnalysisSettings],
+  (settings, analysisSettings) => settings.draw && analysisSettings.showDraw
 );
 
 export const getBbox = createSelector(
