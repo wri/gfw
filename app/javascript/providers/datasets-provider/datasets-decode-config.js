@@ -108,26 +108,23 @@ const decodes = {
     const yearStart = getYear(startDate);
     const yearEnd = getYear(endDate);
 
+    const lossColors = {
+      0: [255, 255, 255],
+      1: [244, 29, 54],
+      2: [239, 211, 26],
+      3: [47, 191, 113],
+      4: [173, 54, 36],
+      5: [178, 53, 204]
+    };
+
     for (let i = 0; i < w; ++i) {
       for (let j = 0; j < h; ++j) {
         const pixelPos = (j * w + i) * components;
         const yearLoss = 2000 + imgData[pixelPos + 2];
-        const lossCat = imgData[pixelPos + 1];
-        let rgb = [255, 255, 255];
-
-        if (lossCat === 1) {
-          rgb = [244, 29, 54]; // commodities
-        } else if (lossCat === 2) {
-          rgb = [239, 211, 26]; // agri
-        } else if (lossCat === 3) {
-          rgb = [47, 191, 113]; // forestry
-        } else if (lossCat === 4) {
-          rgb = [173, 54, 36]; // fire
-        } else if (lossCat === 5) {
-          rgb = [178, 53, 204]; // urban
-        }
 
         if (yearLoss >= yearStart && yearLoss < yearEnd) {
+          const lossCat = imgData[pixelPos + 1];
+          const rgb = lossColors[lossCat || 0];
           const intensity = imgData[pixelPos];
           const scale = myScale(intensity);
           imgData[pixelPos] = rgb[0];
@@ -222,13 +219,11 @@ const decodes = {
     for (let i = 0; i < w; ++i) {
       for (let j = 0; j < h; ++j) {
         const pixelPos = (j * w + i) * components;
-        // exit if year = 0 to reduce memory use
-        if (imgData[pixelPos] === 0) {
-          imgData[pixelPos + 3] = 0; // alpha channel 0-255
-        } else {
+        imgData[pixelPos + 3] = 0;
+
+        if (imgData[pixelPos] !== 0) {
           // get values from data
           const intensity = myScale(imgData[pixelPos + 1]);
-          imgData[pixelPos + 3] = 0;
           // filter range from dashboard
           if (intensity >= 0 && intensity <= 255) {
             const yearLoss = 2000 + imgData[pixelPos];
@@ -241,7 +236,6 @@ const decodes = {
             }
           }
         }
-
         continue; // eslint-disable-line
       }
     }
@@ -256,11 +250,10 @@ const decodes = {
       for (let j = 0; j < h; ++j) {
         const pixelPos = (j * w + i) * components;
         const intensity = imgData[pixelPos + 2];
-        imgData[pixelPos + 3] = 0;
-
         imgData[pixelPos] = 255 - intensity;
         imgData[pixelPos + 1] = 128;
         imgData[pixelPos + 2] = 0;
+        imgData[pixelPos + 3] = 0;
         if (intensity > 0) {
           imgData[pixelPos + 3] = intensity;
         }
@@ -283,13 +276,12 @@ const decodes = {
         const g = imgData[pixelPos + 1];
         const b = imgData[pixelPos + 2];
         const day = 255 * g + b;
-        let intensity = 0;
 
         if (day >= startDay && day <= endDay) {
           const band3_str = padNumber(imgData[pixelPos].toString());
           const intensity_raw = parseInt(band3_str.slice(1, 3), 10);
           // Scale the intensity to make it visible
-          intensity = intensity_raw * 55;
+          let intensity = intensity_raw * 55;
           // Set intensity to 255 if it's > than that value
           if (intensity > 255) {
             intensity = 255;
@@ -356,13 +348,6 @@ const decodes = {
             imgData[pixelPos + 1] = 102;
             imgData[pixelPos + 2] = 153;
             imgData[pixelPos + 3] = intensity;
-
-            if (day > this.top_date) {
-              imgData[pixelPos] = 233;
-              imgData[pixelPos + 1] = 189;
-              imgData[pixelPos + 2] = 21;
-              imgData[pixelPos + 3] = intensity;
-            }
           }
 
           continue; // eslint-disable-line

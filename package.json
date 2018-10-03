@@ -119,7 +119,7 @@
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",
-    "layer-manager": "1.10.0",
+    "layer-manager": "^1.12.0",
     "leaflet-draw": "^1.0.3",
     "lodash": "^4.17.10",
     "lodash-math": "0.0.7",

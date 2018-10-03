@@ -8797,7 +8797,7 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@1.10.0, layer-manager@^1.10.0:
+layer-manager@^1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.10.0.tgz#53b566c0c23eb63076ec09ca9af08723e2683316"
   integrity sha512-V+SJEaXWPgkgy7Q328au5XoF3EepCBZukidjxrwntJi9wbmZ2yrRv8GT0lZ4aS3LowZuSqUGRkAWj5X0aYLH4A==
@@ -8805,6 +8805,17 @@ layer-manager@1.10.0, layer-manager@^1.10.0:
     bluebird "^3.5.2"
     lodash "^4.17.10"
     prop-types "^15.6.2"
+    wri-json-api-serializer "^1.0.1"
+
+layer-manager@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.12.0.tgz#bb4f6d549c7af20fcc517f0c9456e6052b3b8594"
+  integrity sha512-lEdQ2gEQ/H3liukxAaLL8LQq71WlqDpxoW//hT4hN8ZXuzAwZuCilNK3BiI9ABOsjliKSUDtu0F1QzleGs+Tow==
+  dependencies:
+    bluebird "^3.5.2"
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
+    reselect "^3.0.1"
     wri-json-api-serializer "^1.0.1"
 
 lazy-ass@1.6.0:
@@ -14175,7 +14186,7 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
-reselect@3.0.1:
+reselect@3.0.1, reselect@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
   integrity sha1-79qpjqdFEyTQkrKyFjpqHXqaIUc=

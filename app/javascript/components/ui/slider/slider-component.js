@@ -51,7 +51,8 @@ class Slider extends PureComponent {
       marginLeft: '-1px',
       marginTop: '-3px',
       borderRadius: 0,
-      border: 0
+      border: 0,
+      zIndex: 1
     });
     handleStyles[0] = handleStyle;
     handleStyles[handleNum - 1] = handleStyle;
@@ -85,7 +86,8 @@ Slider.defaultProps = {
     backgroundColor: 'white',
     borderRadius: '2px',
     boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
-    border: '0px'
+    border: '0px',
+    zIndex: 2
   },
   railStyle: { backgroundColor: '#d6d6d9' },
   dotStyle: { visibility: 'hidden', border: '0px' },
