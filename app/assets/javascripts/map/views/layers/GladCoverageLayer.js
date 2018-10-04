@@ -1,6 +1,6 @@
 define([
-  'abstract/layer/CartoDBLayerClass'
-], (CartoDBLayerClass) => {
+  'abstract/layer/CartoDBLayerClass',
+], function(CartoDBLayerClass) {
 
   'use strict';
 
