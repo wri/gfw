@@ -66,6 +66,7 @@ class MapComponent extends PureComponent {
       draw,
       embed
     } = this.props;
+
     return (
       <div
         className={cx()}

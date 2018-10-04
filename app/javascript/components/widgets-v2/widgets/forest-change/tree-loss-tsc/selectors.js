@@ -243,6 +243,7 @@ export const parseTitle = createSelector(
 export const parsePayload = payload => {
   const year = payload && payload[0].payload.year;
   return {
+    updateLayer: true,
     startDate:
       year &&
       moment()

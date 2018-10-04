@@ -35,7 +35,7 @@ class TimelineContainer extends PureComponent {
   static defaultProps = {
     dateFormat: 'YYYY-MM-DD',
     interval: 'years',
-    intervalStep: 1,
+    step: 1,
     speed: 200,
     count: 2,
     pushable: true
@@ -72,11 +72,11 @@ class TimelineContainer extends PureComponent {
   }
 
   incrementTimeline = nextState => {
-    const { speed, minDate, intervalStep, interval } = this.props;
+    const { speed, minDate, step, interval } = this.props;
     const { start, end, trim } = nextState;
     this.interval = setTimeout(() => {
       const currentEndDate = moment(minDate).add(end, 'days');
-      const newEndDate = moment(currentEndDate).add(intervalStep, interval);
+      const newEndDate = moment(currentEndDate).add(step, interval);
       let newEndDays = moment(newEndDate).diff(minDate, 'days');
 
       if (end === trim) {
@@ -182,7 +182,7 @@ TimelineContainer.propTypes = {
   endDate: PropTypes.string,
   trimEndDate: PropTypes.string,
   handleChange: PropTypes.func,
-  intervalStep: PropTypes.number,
+  step: PropTypes.number,
   interval: PropTypes.string,
   speed: PropTypes.number,
   dateFormat: PropTypes.string

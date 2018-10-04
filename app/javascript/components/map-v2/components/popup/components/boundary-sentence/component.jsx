@@ -31,7 +31,7 @@ class BoundarySentence extends Component {
         ) : null}
         {data.level > 0 && ', '}
         {'with a total area of '}
-        <b>{formatNumber({ num: area / 10000, unit: 'ha' })}</b>
+        <b>{formatNumber({ num: area, unit: 'ha' })}</b>
         {'.'}
       </div>
     ) : null;

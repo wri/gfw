@@ -28,7 +28,7 @@ class Timeline extends Component {
       marks,
       customColor,
       formatDateString,
-      intervalStep,
+      step,
       canPlay,
       minDate,
       maxDate,
@@ -98,7 +98,7 @@ class Timeline extends Component {
             max={max}
             value={canPlay ? [start, end, trim] : [start, end]}
             trackColors={[customColor, chroma(customColor).darken(1.3)]}
-            step={intervalStep}
+            step={step}
             onChange={handleOnChange}
             onAfterChange={handleOnAfterChange}
             formatValue={formatDateString}
@@ -125,7 +125,7 @@ Timeline.propTypes = {
   marks: PropTypes.object,
   formatDateString: PropTypes.func,
   customColor: PropTypes.string,
-  intervalStep: PropTypes.number,
+  step: PropTypes.number,
   canPlay: PropTypes.bool,
   minDate: PropTypes.string,
   maxDate: PropTypes.string,

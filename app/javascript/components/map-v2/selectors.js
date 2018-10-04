@@ -42,8 +42,8 @@ export const getLabels = createSelector(
 );
 
 export const getDraw = createSelector(
-  getMapSettings,
-  settings => settings.draw
+  [getMapSettings, selectAnalysisSettings],
+  (settings, analysisSettings) => settings.draw && analysisSettings.showDraw
 );
 
 export const getBbox = createSelector(
@@ -168,7 +168,7 @@ export const getDatasetsWithConfig = createSelector(
           }
         }),
         layers: d.layers.map(l => {
-          const { hasParamsTimeline, hasDecodeTimeline } = l;
+          const { hasParamsTimeline, hasDecodeTimeline, timelineConfig } = l;
 
           return {
             ...l,
@@ -208,6 +208,7 @@ export const getDatasetsWithConfig = createSelector(
               }),
             ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
               timelineConfig: {
+                ...timelineConfig,
                 ...(l.hasParamsTimeline && {
                   ...l.params
                 }),

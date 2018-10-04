@@ -94,6 +94,7 @@
     "webpack-assets-manifest": "^3.0.2",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
+    "webpack-dashboard": "^2.0.0",
     "webpack-dev-server": "^3.1.8",
     "webpack-merge": "^4.1.4"
   },
@@ -118,7 +119,7 @@
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",
-    "layer-manager": "^1.10.0",
+    "layer-manager": "^1.12.0",
     "leaflet-draw": "^1.0.3",
     "lodash": "^4.17.10",
     "lodash-math": "0.0.7",
@@ -168,7 +169,7 @@
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
-    "wri-api-components": "^2.2.0",
+    "wri-api-components": "^2.2.8",
     "wri-json-api-serializer": "^1.0.1"
   }
 }
