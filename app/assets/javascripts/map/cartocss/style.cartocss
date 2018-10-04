@@ -58,7 +58,7 @@
   }
 
   [layer='gfw_landsat_alerts_extent'],
-  [layer='glad_coverage'], [layer='glad_coverage_copy'],
+  [layer='glad_coverage_1'], [layer='glad_coverage'],
   [layer='geographic_coverage_pantropical'],[layer='forma_coverage'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
