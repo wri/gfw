@@ -229,11 +229,12 @@ class MapControlsButtons extends PureComponent {
             onClick={() =>
               setShareModal({
                 title: 'Share this view',
-                shareUrl: window.location.href,
-                embedUrl: window.location.href.replace(
-                  '/v2/map',
-                  '/embed/v2/map'
-                ),
+                shareUrl: window.location.href.includes('embed')
+                  ? window.location.href.replace('/embed', '')
+                  : window.location.href,
+                embedUrl: window.location.href.includes('embed')
+                  ? window.location.href
+                  : window.location.href.replace('/v2/map', '/embed/v2/map'),
                 embedSettings: {
                   width: 670,
                   height: 490
