@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setAnalysisView } from 'components/map-v2/actions';
+import { setAnalysisView, setMapSettings } from 'components/map-v2/actions';
 
 import * as ownActions from './actions';
 import Component from './component';
@@ -11,6 +11,7 @@ import './styles.scss';
 
 const actions = {
   setAnalysisView,
+  setMapSettings,
   ...ownActions
 };
 

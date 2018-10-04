@@ -30,6 +30,7 @@ class Popup extends Component {
       selected,
       setInteractionSelected,
       setAnalysisView,
+      setMapSettings,
       isBoundary
     } = this.props;
 
@@ -48,7 +49,11 @@ class Popup extends Component {
                 ...cardData,
                 buttons: cardData.buttons.map(b => ({
                   ...b,
-                  onClick: () => setAnalysisView(cardData)
+                  onClick: () =>
+                    setMapSettings({
+                      canBound: true,
+                      bbox: cardData.bbox
+                    })
                 }))
               }}
             />
@@ -101,7 +106,8 @@ Popup.propTypes = {
   isBoundary: PropTypes.bool,
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
-  setAnalysisView: PropTypes.func
+  setAnalysisView: PropTypes.func,
+  setMapSettings: PropTypes.func
 };
 
 export default Popup;

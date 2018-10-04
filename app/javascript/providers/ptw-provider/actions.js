@@ -1,6 +1,7 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import uniqBy from 'lodash/uniqBy';
 import moment from 'moment';
+import { reverseLatLng } from 'utils/geoms';
 
 import { getPTWProvider } from 'services/places-to-watch';
 
@@ -14,7 +15,11 @@ export const getPTW = createThunkAction('getPTW', date => (dispatch, state) => {
       .then(response => {
         const { rows } = response.data;
         if (rows && !!rows.length) {
-          dispatch(setPTW(uniqBy(rows, 'cartodb_id')));
+          const ptw = uniqBy(rows, 'cartodb_id').map(p => ({
+            ...p,
+            bbox: reverseLatLng(JSON.parse(p.bbox).coordinates[0])
+          }));
+          dispatch(setPTW(uniqBy(ptw, 'cartodb_id')));
         }
         dispatch(setPTWLoading(false));
       })
