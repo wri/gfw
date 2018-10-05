@@ -5,9 +5,9 @@ import moment from 'moment';
 const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
-  umdAdmin: '/{slug}/admin/{location}{params}',
-  umdByType: '/{slug}/{type}/{location}{params}',
-  umdGeostore: '/{slug}{params}'
+  umdAdmin: '/{version}/{slug}/admin/{location}{params}',
+  umdByType: '/{version}/{slug}/{type}/{location}{params}',
+  umdGeostore: '/{version}/{slug}{params}'
 };
 
 const getLocationUrl = ({ adm0, adm1, adm2 }) =>
@@ -16,6 +16,7 @@ const getLocationUrl = ({ adm0, adm1, adm2 }) =>
 const buildAnalysisUrl = ({
   urlTemplate,
   slug,
+  version,
   type,
   adm0,
   adm1,
@@ -54,6 +55,7 @@ const buildAnalysisUrl = ({
     : '';
 
   return urlTemplate
+    .replace('{version}', version || 'v1')
     .replace('{slug}', slug)
     .replace('{type}', type)
     .replace('{location}', location)

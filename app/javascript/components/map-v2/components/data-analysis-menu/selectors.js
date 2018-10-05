@@ -58,8 +58,8 @@ export const getLayerEndpoints = createSelector(
           a => a.type === routeType || a.type === 'geostore'
         );
         const { params, decodeParams } = l;
-
         return {
+          version: analysisConfig.version || 'v1',
           slug: analysisConfig.service,
           params: {
             ...(analysisConfig.service === 'umd-loss-gain' &&
@@ -86,7 +86,8 @@ export const getLayerEndpoints = createSelector(
 
       return {
         slug,
-        params
+        params,
+        version: groupedEndpoints[slug][0].version
       };
     });
   }
