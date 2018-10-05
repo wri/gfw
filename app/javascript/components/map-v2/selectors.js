@@ -3,6 +3,7 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 
+import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 import initialState from './initial-state';
 
 // get list data
@@ -340,6 +341,7 @@ export const getMapProps = createStructuredSelector({
   geostoreBbox: getGeostoreBbox,
   bbox: getBbox,
   canBound: getCanBound,
+  tileGeoJSON: getTileGeoJSON,
   draw: getDraw,
   analysisActive: getShowAnalysis,
   oneClickAnalysisActive: getOneClickAnalysisActive
