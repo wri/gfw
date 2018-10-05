@@ -103,14 +103,17 @@ export const fetchUmdLossGain = ({
     .then(
       axios.spread((...responses) =>
         responses.reduce((obj, response) => {
-          const fetchType = response.data.data.type;
-          const fetchKey = endpointSlugs[fetchType] || fetchType;
-          return {
-            ...obj,
-            [fetchKey]:
-              response.data.data.attributes.totals ||
-              response.data.data.attributes
-          };
+          const { data } = response.data;
+          const { attributes } = data || {};
+          if (attributes) {
+            const fetchType = data && data.type;
+            const fetchKey = endpointSlugs[fetchType] || fetchType;
+            return {
+              ...obj,
+              [fetchKey]: (attributes && attributes.totals) || attributes
+            };
+          }
+          return obj;
         }, {})
       )
     );

@@ -32,7 +32,9 @@ class DownloadData extends PureComponent {
         <button onClick={onClose}>
           <Icon className="icon-close" icon={closeIcon} />
         </button>
-        {downloadUrls && downloadUrls.map(d => this.renderDownloadLinks(d))}
+        {downloadUrls &&
+          !!downloadUrls.length &&
+          downloadUrls.map(d => this.renderDownloadLinks(d))}
         <p className="terms">
           By downloading data you agree to the{' '}
           <a href="/terms" target="_blank">

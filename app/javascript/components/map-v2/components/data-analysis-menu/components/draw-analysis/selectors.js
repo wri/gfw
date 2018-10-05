@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import sortBy from 'lodash/sortBy';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
@@ -84,6 +83,7 @@ export const getDataFromLayers = createSelector(
           return {
             label: l.name,
             value: value || 0,
+            downloadUrls: dataByService && dataByService.downloadUrls,
             unit,
             color: l.color,
             ...params,
@@ -94,42 +94,69 @@ export const getDataFromLayers = createSelector(
   }
 );
 
-export const getDownloadLinks = createSelector([selectData], data =>
-  [
-    {
-      label: 'umd-loss-gain',
-      urls: [
-        {
-          label: 'website',
-          url:
-            'https://earthenginepartners.appspot.com/science-2013-global-forest'
-        }
-      ]
-    }
-  ].concat(
-    sortBy(
-      Object.keys(data)
-        .filter(d => data[d].downloadUrls)
-        .map(d => {
-          const { downloadUrls } = data[d];
-          return {
-            label: d,
-            urls: Object.keys(downloadUrls).map(key => {
-              const downloadUrlsFirstKey =
-                downloadUrls && downloadUrls[key] && downloadUrls[key][0];
-              return {
-                url:
-                  downloadUrlsFirstKey === '/'
-                    ? `${process.env.GFW_API}${downloadUrls[key]}`
-                    : downloadUrls[key],
-                label: key
-              };
-            })
-          };
-        }),
-      'label'
-    )
-  )
+export const getDownloadLinks = createSelector(
+  [getDataFromLayers],
+  data =>
+    data &&
+    data.filter(d => d.downloadUrls && d.value).map(d => {
+      const { downloadUrls } = d || {};
+      let downloads = [];
+      if (downloadUrls) {
+        Object.keys(downloadUrls).forEach(key => {
+          const downloadUrlsFirstKey =
+            downloadUrls && downloadUrls[key] && downloadUrls[key][0];
+          if (downloadUrls[key]) {
+            downloads = downloads.concat({
+              url:
+                downloadUrlsFirstKey === '/'
+                  ? `${process.env.GFW_API}${downloadUrls[key]}`
+                  : downloadUrls[key],
+              label: key
+            });
+          }
+        });
+      }
+
+      return {
+        label: d.label,
+        urls: downloads
+      };
+    })
+  // [
+  //   {
+  //     label: 'umd-loss-gain',
+  //     urls: [
+  //       {
+  //         label: 'website',
+  //         url:
+  //           'https://earthenginepartners.appspot.com/science-2013-global-forest'
+  //       }
+  //     ]
+  //   }
+  // ].concat(
+  //   sortBy(
+  //     Object.keys(data)
+  //       .filter(d => data[d].downloadUrls)
+  //       .map(d => {
+  //         const { downloadUrls } = data[d];
+  //         return {
+  //           label: d,
+  //           urls: Object.keys(downloadUrls).map(key => {
+  //             const downloadUrlsFirstKey =
+  //               downloadUrls && downloadUrls[key] && downloadUrls[key][0];
+  //             return {
+  //               url:
+  //                 downloadUrlsFirstKey === '/'
+  //                   ? `${process.env.GFW_API}${downloadUrls[key]}`
+  //                   : downloadUrls[key],
+  //               label: key
+  //             };
+  //           })
+  //         };
+  //       }),
+  //     'label'
+  //   )
+  // )
 );
 
 export const getDrawAnalysisProps = createStructuredSelector({
