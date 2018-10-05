@@ -54,20 +54,10 @@ const buildAnalysisUrl = ({
     : '';
 
   return urlTemplate
-    .replace(
-      '{slug}',
-      slug === 'umd-loss-gain' && type === 'country' ? `v3/${slug}` : slug
-    )
+    .replace('{slug}', slug)
     .replace('{type}', type)
     .replace('{location}', location)
     .replace('{params}', `?${queryParams}`);
-};
-
-const useSlugs = {
-  gfw_oil_palm: 'oilpalm',
-  gfw_mining: 'mining',
-  gfw_wood_fiber: 'fiber',
-  gfw_logging: 'logging'
 };
 
 const endpointSlugs = {
@@ -96,7 +86,7 @@ export const fetchUmdLossGain = ({
           urlTemplate,
           ...endpoint,
           type,
-          adm0: Object.keys(useSlugs).includes(adm0) ? useSlugs[adm0] : adm0,
+          adm0,
           adm1,
           adm2
         })}`
