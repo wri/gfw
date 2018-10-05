@@ -34,8 +34,8 @@ export const setRecentImagerySettings = createThunkAction(
     )
 );
 
-export const getData = createThunkAction(
-  'getData',
+export const getRecentImageryData = createThunkAction(
+  'getRecentImageryData',
   params => (dispatch, getState) => {
     if (!getState().recentImagery.loading) {
       dispatch(setRecentImageryLoading(true));
