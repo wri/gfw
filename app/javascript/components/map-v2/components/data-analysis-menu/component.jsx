@@ -27,7 +27,8 @@ class DataAnalysisMenu extends PureComponent {
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
-      endpoints
+      endpoints,
+      hidden
     } = this.props;
 
     return (
@@ -45,60 +46,67 @@ class DataAnalysisMenu extends PureComponent {
           links={links.map(l => ({
             ...l,
             onClick: () => {
-              setAnalysisSettings({ showAnalysis: l.showAnalysis });
+              setAnalysisSettings({
+                showAnalysis: l.showAnalysis,
+                hidden: (showAnalysis && !hidden) || (!showAnalysis && !hidden)
+              });
               clearAnalysisError();
             }
           }))}
           checkActive
         />
-        {!showAnalysis ? (
-          <div className="legend">
-            <MapLegend />
-          </div>
-        ) : (
-          <div className="analysis">
-            {loading && (
-              <Loader
-                className={cx('analysis-loader', { fetching: loading })}
-              />
-            )}
-            {location.type &&
-              location.adm0 &&
-              (loading || (!loading && error)) && (
-                <div className={cx('cancel-analysis', { fetching: loading })}>
-                  <Button
-                    className="cancel-analysis-btn"
-                    onClick={handleCancelAnalysis}
-                  >
-                    CANCEL ANALYSIS
-                  </Button>
-                  {!loading &&
-                    error && (
-                      <Fragment>
-                        <Button
-                          className="refresh-analysis-btn"
-                          onClick={() =>
-                            handleFetchAnalysis(location, endpoints)
-                          }
-                        >
-                          REFRESH ANALYSIS
-                        </Button>
-                        <p className="error-message">{error}</p>
-                      </Fragment>
-                    )}
-                </div>
+        {!hidden &&
+          !showAnalysis && (
+            <div className="legend">
+              <MapLegend />
+            </div>
+          )}
+        {!hidden &&
+          showAnalysis && (
+            <div className="analysis">
+              {loading && (
+                <Loader
+                  className={cx('analysis-loader', { fetching: loading })}
+                />
               )}
-            {location.type && location.adm0 ? (
-              <PolygonAnalysis
-                clearAnalysis={clearAnalysis}
-                goToDashboard={goToDashboard}
-              />
-            ) : (
-              <ChoseAnalysis />
-            )}
-          </div>
-        )}
-        {!loading &&
+              {location.type &&
+                location.adm0 &&
+                (loading || (!loading && error)) && (
+                  <div className={cx('cancel-analysis', { fetching: loading })}>
+                    <Button
+                      className="cancel-analysis-btn"
+                      onClick={handleCancelAnalysis}
+                    >
+                      CANCEL ANALYSIS
+                    </Button>
+                    {!loading &&
+                      error && (
+                        <Fragment>
+                          <Button
+                            className="refresh-analysis-btn"
+                            onClick={() =>
+                              handleFetchAnalysis(location, endpoints)
+                            }
+                          >
+                            REFRESH ANALYSIS
+                          </Button>
+                          <p className="error-message">{error}</p>
+                        </Fragment>
+                      )}
+                  </div>
+                )}
+              {location.type && location.adm0 ? (
+                <PolygonAnalysis
+                  clearAnalysis={clearAnalysis}
+                  goToDashboard={goToDashboard}
+                />
+              ) : (
+                <ChoseAnalysis />
+              )}
+            </div>
+          )}
+        {!hidden &&
+          !loading &&
           showAnalysis &&
           !error &&
           location.type === 'country' &&
@@ -123,6 +131,7 @@ DataAnalysisMenu.defaultProps = {
 
 DataAnalysisMenu.propTypes = {
   showAnalysis: PropTypes.bool,
+  hidden: PropTypes.bool,
   clearAnalysis: PropTypes.func,
   className: PropTypes.string,
   menuSection: PropTypes.object,

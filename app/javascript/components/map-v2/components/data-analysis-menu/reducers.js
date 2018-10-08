@@ -7,7 +7,8 @@ export const initialState = {
   data: {},
   settings: {
     showAnalysis: false,
-    showDraw: false
+    showDraw: false,
+    hidden: false
   }
 };
 
