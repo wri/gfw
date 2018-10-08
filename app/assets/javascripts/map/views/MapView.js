@@ -327,7 +327,7 @@ define(
 
       updateLayer: function(layerSlug) {
         var options = {};
-        var layer = this.layerInst[layerSlug];
+        var layer = this.layerInst[layerSlug] || {};
         options.currentDate = layer.currentDate ? layer.currentDate : null;
         options.threshold = layer.threshold ? layer.threshold : null;
         options.year = layer.year ? layer.year : null;

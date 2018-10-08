@@ -5,8 +5,8 @@
  */
 define(
   ['abstract/layer/CartoDBLayerClass', 'text!map/cartocss/rspo.cartocss'],
-  (CartoDBLayerClass, rspoCartoCSS) => {
-    const RSPOLayer = CartoDBLayerClass.extend({
+  function(CartoDBLayerClass, rspoCartoCSS) {
+    var RSPOLayer = CartoDBLayerClass.extend({
       options: {
         sql:
           "SELECT cartodb_id, the_geom_webmercator, '{tableName}' as tablename, _group as group, company, membership, rspo_cert, plantation, '{tableName}' AS layer, {analysis} AS analysis FROM {tableName}",
