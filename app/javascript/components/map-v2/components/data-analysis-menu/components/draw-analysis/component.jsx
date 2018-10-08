@@ -46,7 +46,7 @@ class DrawAnalysis extends PureComponent {
             <strong key={v.label}>
               {formatNumber({
                 num: v.value,
-                unit
+                unit: v.unit || unit
               })}
               <span>{v.label}</span>
             </strong>

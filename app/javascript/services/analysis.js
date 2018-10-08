@@ -110,7 +110,7 @@ export const fetchUmdLossGain = ({
             const fetchKey = endpointSlugs[fetchType] || fetchType;
             return {
               ...obj,
-              [fetchKey]: (attributes && attributes.totals) || attributes
+              [fetchKey]: attributes
             };
           }
           return obj;

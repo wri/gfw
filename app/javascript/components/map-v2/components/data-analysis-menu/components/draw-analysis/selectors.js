@@ -68,17 +68,10 @@ export const getDataFromLayers = createSelector(
 
           const { subKey, key, service, unit } = analysisConfig || {};
           const dataByService = data[service] || {};
-          let value = dataByService[key] || dataByService[subKey];
+          const value = subKey
+            ? dataByService[key] && dataByService[key][subKey]
+            : dataByService[key];
           const { params, decodeParams } = l;
-
-          if (Array.isArray(value)) {
-            value = value.length
-              ? value.map(v => ({
-                label: analysisConfig[v[analysisConfig.subKey]],
-                value: v[key]
-              }))
-              : 0;
-          }
 
           return {
             label: l.name,
