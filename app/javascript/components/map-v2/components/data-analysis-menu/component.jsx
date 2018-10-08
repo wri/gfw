@@ -48,7 +48,9 @@ class DataAnalysisMenu extends PureComponent {
             onClick: () => {
               setAnalysisSettings({
                 showAnalysis: l.showAnalysis,
-                hidden: (showAnalysis && !hidden) || (!showAnalysis && !hidden)
+                hidden:
+                  (showAnalysis && l.active && !hidden) ||
+                  (!showAnalysis && l.active && !hidden)
               });
               clearAnalysisError();
             }
