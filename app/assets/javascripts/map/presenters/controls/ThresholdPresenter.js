@@ -5,15 +5,15 @@
  */
 define(
   ['underscore', 'backbone', 'mps', 'map/presenters/PresenterClass'],
-  (_, Backbone, mps, PresenterClass) => {
-    const StatusModel = Backbone.Model.extend({
+  function (_, Backbone, mps, PresenterClass) {
+    var StatusModel = Backbone.Model.extend({
       defaults: {
         layers: [],
         threshold: 30
       }
     });
 
-    const ThresholdPresenter = PresenterClass.extend({
+    var ThresholdPresenter = PresenterClass.extend({
       /*
      * Supported threshold layers.
      */
@@ -26,11 +26,11 @@ define(
       ],
 
       /**
-       * Constructs new ThresholdPresenter.
+       * varructs new ThresholdPresenter.
        *
        * @param  {Object} view Instance of ThresholdView
        */
-      init(view) {
+      init: function(view) {
         this.view = view;
         this.status = new StatusModel();
         this._statusEvents();
@@ -41,7 +41,7 @@ define(
       /**
        * Subscribe to status model events.
        */
-      _statusEvents() {
+      _statusEvents: function() {
         this.status.on('change:layers', this._setVisibility, this);
       },
 
@@ -75,7 +75,7 @@ define(
        * @param {Object} layers Layers object
        * @param {Object} params Place.params
        */
-      _setLayers(layers) {
+      _setLayers: function(layers) {
         layers = _.compact(
           _.map(
             layers,
@@ -93,7 +93,7 @@ define(
       /**
        * Toggle threshold widget if any supported layer is active.
        */
-      _setVisibility() {
+      _setVisibility: function() {
         if (this.status.get('layers').length > 0) {
           this.view.toggleVisibility(false);
         } else {
@@ -106,7 +106,7 @@ define(
        *
        * @param  {Object} params Place.params
        */
-      _initThreshold(params) {
+      _initThreshold: function(params) {
         if (params.threshold) {
           this.status.set('threshold', params.threshold);
         } else {
@@ -121,9 +121,9 @@ define(
        *
        * @param {Integer} value Threshold
        */
-      setThreshold(value) {
+      setThreshold: function(value) {
         this.status.set('threshold', value);
-        ga('send', 'event', 'Map', 'Settings', `Threshold: ${value}`);
+        ga('send', 'event', 'Map', 'Settings', 'Threshold: ' + value);
         this._publishThreshold();
       },
 
@@ -131,7 +131,7 @@ define(
        * Publish 'Threshold/update' event with the current threshold
        * and call 'Place/update' to update the url.
        */
-      _publishThreshold() {
+      _publishThreshold: function() {
         mps.publish('Threshold/update', [this.status.get('threshold')]);
         mps.publish('Place/update', [{ go: false }]);
       },
@@ -141,8 +141,8 @@ define(
        *
        * @return {Object} threshold
        */
-      getPlaceParams() {
-        const p = {};
+      getPlaceParams: function() {
+        var p = {};
 
         if (this.status.get('layers').length > 0) {
           p.threshold = this.status.get('threshold');
@@ -153,7 +153,7 @@ define(
         return p;
       },
 
-      initExperiment(id) {
+      initExperiment: function(id) {
         mps.publish('Experiment/choose', [id]);
       }
     });
