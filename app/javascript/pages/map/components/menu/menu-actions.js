@@ -40,8 +40,7 @@ export const getLocationFromSearch = createThunkAction(
       )
       .then(response => {
         if (response.data.rows && response.data.rows.length) {
-          const locations = response.data.rows.slice(0, 10);
-          dispatch(setLocationsData(locations));
+          dispatch(setLocationsData(response.data.rows));
         } else {
           dispatch(setLocationsData([]));
         }

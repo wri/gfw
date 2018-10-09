@@ -59,7 +59,7 @@ class MapMenuSearch extends PureComponent {
               ) : (
                 <NoContent
                   className="empty-search"
-                  message={`No datasets found for '${search}'`}
+                  message="No datasets found"
                 />
               )}
             </div>
@@ -80,7 +80,7 @@ class MapMenuSearch extends PureComponent {
               ) : (
                 <NoContent
                   className="empty-search"
-                  message={`No locations found for '${search}'`}
+                  message="No locations found"
                 />
               )}
             </div>

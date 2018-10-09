@@ -35,7 +35,7 @@ class MenuContainer extends PureComponent {
 
   handleGetLocations = debounce(
     search => this.props.getLocationFromSearch(search),
-    500
+    300
   );
 
   onToggleLayer = (data, value) => {
