@@ -36,7 +36,7 @@ export const getLocationFromSearch = createThunkAction(
           search
         }%25' OR LOWER(CONCAT(name_2, ', ', name_1, ', ', name_0)) LIKE '%25${
           search
-        }%25' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body')`
+        }%25' AND iso != 'TWN' AND iso != 'XCA' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body')`
       )
       .then(response => {
         if (response.data.rows && response.data.rows.length) {
