@@ -1,0 +1,30 @@
+@import '~styles/settings.scss';
+
+$map-menu-items-size: rem(76px);
+
+.c-map-menu-search {
+  padding: rem(30px) rem(20px);
+
+  h3 {
+    text-transform: uppercase;
+    color: $slate;
+    font-size: rem(14px);
+    font-weight: 500;
+    margin-bottom: rem(20px);
+  }
+
+  .side-menu-search {
+    margin-bottom: rem(30px);
+  }
+
+  .datasets-search {
+    > div {
+      margin-bottom: rem(15px);
+    }
+  }
+
+  .empty-search {
+    position: relative;
+    min-height: rem(300px);
+  }
+}
