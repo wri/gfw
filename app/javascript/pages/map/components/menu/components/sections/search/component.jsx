@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Search from 'components/ui/search';
 import NoContent from 'components/ui/no-content';
@@ -68,7 +69,7 @@ class MapMenuSearch extends PureComponent {
               {!loading && locations && !!locations.length ? (
                 locations.map(loc => (
                   <button
-                    className="location"
+                    className={cx('location', { active: loc.active })}
                     key={loc.label}
                     onClick={() => handleClickLocation(loc)}
                   >

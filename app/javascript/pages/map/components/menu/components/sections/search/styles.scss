@@ -41,7 +41,15 @@ $map-menu-items-size: rem(76px);
       line-height: 1.4;
 
       &:hover {
-        color: $green-gfw;
+        p {
+          color: darken($slate, 20%);
+        }
+      }
+
+      &.active {
+        p {
+          color: $green-gfw;
+        }
       }
     }
 
