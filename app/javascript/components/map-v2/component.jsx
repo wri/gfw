@@ -107,7 +107,8 @@ class MapComponent extends PureComponent {
                 ? {
                   bbox,
                   options: {
-                    padding: [200, 10]
+                    paddingTopLeft: [100, 100],
+                    paddingBottomRight: [50, 50]
                   }
                 }
                 : {}

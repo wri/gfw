@@ -22,6 +22,14 @@ import decodeLayersConfig from './datasets-decode-config';
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
 
+const layersBySlug = {
+  'glad-alerts': 'dd5df87f-39c2-4aeb-a462-3ef969b20b66',
+  'forma-latest': '66203fea-2e58-4a55-b222-1dae075cf95d',
+  'terra-latest': '790b46ce-715a-4173-8f2c-53980073acb6',
+  'imazon-latest': '3ec29734-4627-45b1-b320-680e4b4b939e',
+  'guira-latest': 'c8829d15-e68a-4cb5-98a8-d0acff438a56'
+};
+
 export const getDatasets = createThunkAction(
   'getDatasets',
   () => (dispatch, getState) => {
@@ -32,36 +40,29 @@ export const getDatasets = createThunkAction(
         .all([
           getDatasetsProvider(),
           fetchGLADLatest(),
-          fetchFormaLatest(),
-          fetchTerraLatest(),
           fetchSADLatest(),
-          fetchGranChacoLatest()
+          fetchGranChacoLatest(),
+          // fetchFormaLatest(),
+          fetchTerraLatest()
         ])
         .then(
-          axios.spread((allDatasets, glads, forma, terra, sad, granChaco) => {
+          axios.spread((allDatasets, ...latestDatesResponses) => {
             // serialize datasets
             const serializedDatasets = wriAPISerializer(
               allDatasets.data
             ).filter(d => d.layer.length);
-            // get dataset specific depdancies (latest dates for datasets)
-            const gladsLatest = glads.data.data[0].attributes.date;
-            const formaLatest = forma.data.date;
-            const terraData = moment(`${terra.data.data[0].year}-01-01`)
-              .add(terra.data.data[0].day, 'days')
-              .format('YYYY-MM-DD');
-            const sadLatest = moment(sad.data.rows[0].date).format(
-              'YYYY-MM-DD'
-            );
-            const granChacoLatest = moment(granChaco.data.rows[0].date).format(
-              'YYYY-MM-DD'
-            );
-            const latest = {
-              'dd5df87f-39c2-4aeb-a462-3ef969b20b66': gladsLatest,
-              '66203fea-2e58-4a55-b222-1dae075cf95d': formaLatest,
-              '790b46ce-715a-4173-8f2c-53980073acb6': terraData,
-              '3ec29734-4627-45b1-b320-680e4b4b939e': sadLatest,
-              'c8829d15-e68a-4cb5-98a8-d0acff438a56': granChacoLatest
-            };
+
+            // parse latest dates from layers
+            const latestDates = latestDatesResponses.reduce((obj, latest) => {
+              const layerId = layersBySlug[latest.data.data[0].type];
+              return {
+                ...obj,
+                [layerId]: moment(
+                  latest.data.data[0].attributes.date ||
+                    latest.data.data[0].attributes.latest
+                ).format('YYYY-MM-DD')
+              };
+            }, {});
 
             const parsedDatasets = serializedDatasets
               .filter(d => d.env === 'production')
@@ -142,7 +143,7 @@ export const getDatasets = createThunkAction(
                             url
                           } = layerConfig;
                           const decodeFunction = decodeLayersConfig[l.id];
-                          const latestDate = latest && latest[l.id];
+                          const latestDate = latestDates && latestDates[l.id];
 
                           // check if has a timeline
                           const hasParamsTimeline =

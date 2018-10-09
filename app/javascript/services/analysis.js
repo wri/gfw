@@ -62,12 +62,6 @@ const buildAnalysisUrl = ({
     .replace('{params}', `?${queryParams}`);
 };
 
-const endpointSlugs = {
-  umd: 'umd-loss-gain',
-  forma250gfw: 'forma250GFW',
-  'viirs-fires': 'viirs-active-fires'
-};
-
 export const fetchUmdLossGain = ({
   endpoints,
   type,
@@ -107,7 +101,8 @@ export const fetchUmdLossGain = ({
           const { attributes } = data || {};
           if (attributes) {
             const fetchType = data && data.type;
-            const fetchKey = endpointSlugs[fetchType] || fetchType;
+            const fetchKey =
+              fetchType === 'umd' ? 'umd-loss-gain' : fetchType.toLowerCase();
             return {
               ...obj,
               [fetchKey]: attributes
