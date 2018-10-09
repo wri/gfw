@@ -10,6 +10,8 @@ const selectSearch = state =>
   state.location.query.menu &&
   state.location.query.menu.search;
 const selectDatasets = state => state.datasets.datasets || null;
+const selectLocations = state => state.mapMenu.locations || null;
+const selectLoading = state => state.mapMenu.loading || null;
 
 const getDatasetWithUrlState = createSelector(
   [getActiveDatasetsState, selectDatasets],
@@ -33,11 +35,17 @@ const getFilteredDatasets = createSelector(
   [getDatasetWithUrlState, selectSearch],
   (datasets, search) =>
     (search && datasets
-      ? datasets.filter(d => deburrUpper(d.name).includes(deburrUpper(search)))
+      ? datasets.filter(
+        d =>
+          deburrUpper(d.name).includes(deburrUpper(search)) ||
+            deburrUpper(d.description).includes(deburrUpper(search))
+      )
       : null)
 );
 
 export const mapStateToProps = createStructuredSelector({
   datasets: getFilteredDatasets,
-  search: selectSearch
+  search: selectSearch,
+  locations: selectLocations,
+  loading: selectLoading
 });

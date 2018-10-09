@@ -4,4 +4,4 @@ import Component from './component';
 
 import { mapStateToProps } from './selectors';
 
-export default connect(mapStateToProps)(Component);
+export default connect(mapStateToProps, null)(Component);

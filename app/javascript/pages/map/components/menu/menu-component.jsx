@@ -55,6 +55,8 @@ class Menu extends PureComponent {
       setMapSettings,
       selectedCountries,
       countriesWithoutData,
+      getLocationFromSearch,
+      handleClickLocation,
       exploreSection
     } = this.props;
     const { Component } = activeSection || {};
@@ -83,6 +85,8 @@ class Menu extends PureComponent {
                 onInfoClick={setModalMeta}
                 countries={countries}
                 setMenuSettings={setMenuSettings}
+                getLocationFromSearch={getLocationFromSearch}
+                handleClickLocation={handleClickLocation}
                 setMapSettings={setMapSettings}
                 selectedCountries={selectedCountries}
                 countriesWithoutData={countriesWithoutData}
@@ -111,6 +115,8 @@ Menu.propTypes = {
   countriesWithoutData: PropTypes.array,
   activeDatasets: PropTypes.array,
   setMapSettings: PropTypes.func,
+  handleClickLocation: PropTypes.func,
+  getLocationFromSearch: PropTypes.func,
   exploreSection: PropTypes.string,
   bottomSections: PropTypes.array
 };

@@ -95,3 +95,6 @@ export const buildLocationName = (
   }
   return activeLocation && activeLocation.label;
 };
+
+export const buildLocationFromNames = (name_0, name_1, name_2) =>
+  `${name_2 ? `${name_2}, ` : ''}${name_1 ? `${name_1}, ` : ''}${name_0}`;

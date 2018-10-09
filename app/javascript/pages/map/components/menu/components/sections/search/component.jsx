@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 
 import Search from 'components/ui/search';
 import NoContent from 'components/ui/no-content';
+import Loader from 'components/ui/loader';
+import Icon from 'components/ui/icon';
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
 
+import locationIcon from 'assets/icons/location.svg';
 import './styles.scss';
 
 class MapMenuSearch extends PureComponent {
@@ -13,10 +16,13 @@ class MapMenuSearch extends PureComponent {
   render() {
     const {
       datasets,
+      locations,
       onToggleLayer,
       onInfoClick,
       search,
-      setMenuSettings
+      setMenuSettings,
+      handleClickLocation,
+      loading
     } = this.props;
 
     return (
@@ -36,9 +42,10 @@ class MapMenuSearch extends PureComponent {
         )}
         {search && (
           <Fragment>
-            {datasets && !!datasets.length ? (
-              <div className="datasets-search">
-                {datasets.map(d => (
+            <div className="datasets-search">
+              <h5>Datasets</h5>
+              {datasets && !!datasets.length ? (
+                datasets.map(d => (
                   <LayerToggle
                     key={d.id}
                     className="dataset-toggle"
@@ -47,14 +54,35 @@ class MapMenuSearch extends PureComponent {
                     onInfoClick={onInfoClick}
                     showSubtitle
                   />
-                ))}
-              </div>
-            ) : (
-              <NoContent
-                className="empty-search"
-                message={`No datasets found for '${search}'`}
-              />
-            )}
+                ))
+              ) : (
+                <NoContent
+                  className="empty-search"
+                  message={`No datasets found for '${search}'`}
+                />
+              )}
+            </div>
+            <div className="locations-search">
+              <h5>Locations</h5>
+              {loading && <Loader />}
+              {!loading && locations && !!locations.length ? (
+                locations.map(loc => (
+                  <button
+                    className="location"
+                    key={loc.label}
+                    onClick={() => handleClickLocation(loc)}
+                  >
+                    <Icon icon={locationIcon} className="location-icon" />
+                    <p>{loc.label}</p>
+                  </button>
+                ))
+              ) : (
+                <NoContent
+                  className="empty-search"
+                  message={`No locations found for '${search}'`}
+                />
+              )}
+            </div>
           </Fragment>
         )}
       </div>
@@ -64,10 +92,13 @@ class MapMenuSearch extends PureComponent {
 
 MapMenuSearch.propTypes = {
   datasets: PropTypes.array,
+  locations: PropTypes.array,
   onToggleLayer: PropTypes.func,
   onInfoClick: PropTypes.func,
   search: PropTypes.string,
-  setMenuSettings: PropTypes.func
+  setMenuSettings: PropTypes.func,
+  handleClickLocation: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default MapMenuSearch;
