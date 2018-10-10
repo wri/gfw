@@ -53,10 +53,12 @@ const getLocations = createSelector(
     const { adm0, adm1, adm2 } = location;
     const gadmId = buildGadm36Id(adm0, adm1, adm2);
 
-    return locations.map(l => ({
-      ...l,
-      active: Object.values(l).includes(gadmId)
-    }));
+    return locations
+      .map(l => ({
+        ...l,
+        active: Object.values(l).includes(gadmId)
+      }))
+      .slice(0, 15);
   }
 );
 

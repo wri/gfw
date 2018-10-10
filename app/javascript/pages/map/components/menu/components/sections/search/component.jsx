@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -41,51 +41,43 @@ class MapMenuSearch extends PureComponent {
             message="Enter a search to find datasets or locations..."
           />
         )}
-        {search && (
-          <Fragment>
+        {loading && <Loader />}
+        {!loading &&
+          search &&
+          datasets &&
+          !!datasets.length && (
             <div className="datasets-search">
               <h5>Datasets</h5>
-              {datasets && !!datasets.length ? (
-                datasets.map(d => (
-                  <LayerToggle
-                    key={d.id}
-                    className="dataset-toggle"
-                    data={{ ...d, dataset: d.id }}
-                    onToggle={onToggleLayer}
-                    onInfoClick={onInfoClick}
-                    showSubtitle
-                  />
-                ))
-              ) : (
-                <NoContent
-                  className="empty-search"
-                  message="No datasets found"
+              {datasets.map(d => (
+                <LayerToggle
+                  key={d.id}
+                  className="dataset-toggle"
+                  data={{ ...d, dataset: d.id }}
+                  onToggle={onToggleLayer}
+                  onInfoClick={onInfoClick}
+                  showSubtitle
                 />
-              )}
+              ))}
             </div>
+          )}
+        {!loading &&
+          search &&
+          locations &&
+          !!locations.length && (
             <div className="locations-search">
               <h5>Locations</h5>
-              {loading && <Loader />}
-              {!loading && locations && !!locations.length ? (
-                locations.map(loc => (
-                  <button
-                    className={cx('location', { active: loc.active })}
-                    key={loc.label}
-                    onClick={() => handleClickLocation(loc)}
-                  >
-                    <Icon icon={locationIcon} className="location-icon" />
-                    <p>{loc.label}</p>
-                  </button>
-                ))
-              ) : (
-                <NoContent
-                  className="empty-search"
-                  message="No locations found"
-                />
-              )}
+              {locations.map(loc => (
+                <button
+                  className={cx('location', { active: loc.active })}
+                  key={loc.label}
+                  onClick={() => handleClickLocation(loc)}
+                >
+                  <Icon icon={locationIcon} className="location-icon" />
+                  <p>{loc.label}</p>
+                </button>
+              ))}
             </div>
-          </Fragment>
-        )}
+          )}
       </div>
     );
   }

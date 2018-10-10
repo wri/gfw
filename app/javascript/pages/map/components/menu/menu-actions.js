@@ -28,7 +28,7 @@ export const getLocationFromSearch = createThunkAction(
       .get(
         `${
           process.env.CARTO_API
-        }/sql?q=SELECT iso, gid_1, gid_2, name_0, name_1, name_2, CONCAT(name_2, ', ', name_1, ', ', name_0) as label FROM gadm36_adm2 WHERE LOWER(name_0) LIKE '%25${
+        }/sql?q=SELECT gid_0, gid_1, gid_2, name_0, name_1, name_2, CONCAT(name_2, ', ', name_1, ', ', name_0) as label FROM gadm36_political_boundaries WHERE LOWER(name_0) LIKE '%25${
           search
         }%25' OR LOWER(name_1) LIKE '%25${
           search
@@ -36,7 +36,7 @@ export const getLocationFromSearch = createThunkAction(
           search
         }%25' OR LOWER(CONCAT(name_2, ', ', name_1, ', ', name_0)) LIKE '%25${
           search
-        }%25' AND iso != 'TWN' AND iso != 'XCA' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body')`
+        }%25' AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`
       )
       .then(response => {
         if (response.data.rows && response.data.rows.length) {
