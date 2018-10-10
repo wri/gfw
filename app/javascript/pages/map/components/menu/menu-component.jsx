@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import MenuFlap from 'pages/map/components/menu/components/menu-flap';
@@ -54,7 +54,7 @@ class Menu extends PureComponent {
     const { Component } = activeSection || {};
 
     return (
-      <div>
+      <Fragment>
         <div className="c-map-menu">
           <div
             className="menu-tabs"
@@ -80,7 +80,7 @@ class Menu extends PureComponent {
             )}
           {loading && <Loader />}
         </MenuFlap>
-      </div>
+      </Fragment>
     );
   }
 }
