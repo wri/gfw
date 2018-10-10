@@ -42,7 +42,7 @@ export const getDatasets = createThunkAction(
           fetchGLADLatest(),
           fetchSADLatest(),
           fetchGranChacoLatest(),
-          // fetchFormaLatest(),
+          fetchFormaLatest(),
           fetchTerraLatest()
         ])
         .then(
