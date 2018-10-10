@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Dropdown from 'components/ui/dropdown';
 
 import DatasetsLocationsSearch from './components/datasets-locations';
+import Coords from './components/coords';
 import DecimalDegreeSearch from './components/decimal-degrees';
 import UTMCoords from './components/utm-coords';
 
@@ -29,7 +30,7 @@ class MapMenuSearch extends PureComponent {
               },
               {
                 label: 'coordinates',
-                value: 'coordinates'
+                value: 'coords'
               },
               {
                 label: 'decimal degress',
@@ -46,6 +47,7 @@ class MapMenuSearch extends PureComponent {
         {searchType === 'dataset' && (
           <DatasetsLocationsSearch {...this.props} />
         )}
+        {searchType === 'coords' && <Coords {...this.props} />}
         {searchType === 'decimals' && <DecimalDegreeSearch {...this.props} />}
         {searchType === 'utm' && <UTMCoords {...this.props} />}
       </div>
