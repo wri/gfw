@@ -17,5 +17,9 @@ $map-menu-items-size: rem(76px);
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: rem(10px);
+
+    input {
+      text-align: right;
+    }
   }
 }

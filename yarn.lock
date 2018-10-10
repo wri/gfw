@@ -8828,18 +8828,7 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.10.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.12.0.tgz#bb4f6d549c7af20fcc517f0c9456e6052b3b8594"
-  integrity sha512-lEdQ2gEQ/H3liukxAaLL8LQq71WlqDpxoW//hT4hN8ZXuzAwZuCilNK3BiI9ABOsjliKSUDtu0F1QzleGs+Tow==
-  dependencies:
-    bluebird "^3.5.2"
-    lodash "^4.17.10"
-    prop-types "^15.6.2"
-    reselect "^3.0.1"
-    wri-json-api-serializer "^1.0.1"
-
-layer-manager@^1.12.1:
+layer-manager@^1.10.0, layer-manager@^1.12.1:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.12.1.tgz#daadbf1ccdfb79735b8e5ebda619e17b45fbb087"
   integrity sha512-JpyX9awx7ETKrEdOAPdYfmg363QNbae9ElOKk59iAVSV91tE6HwlmuvKz0ls/K5s97tf8tx2QMDZqOGeBwI0AA==
@@ -17008,7 +16997,7 @@ wrappy@1, wrappy@~1.0.2:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
-wri-api-components@^2.2.8:
+wri-api-components@^2.2.9:
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.2.9.tgz#524284f9d48d4e8d927e33e834e3b08aed274095"
   integrity sha512-Smn4v4rOKd8TuZGlp62Ol5naw3OFaCUQhpVPAYBr/nt2jKEKZXUiPt2MrMfIUu+vPDMRZLivu6iKGmOGFM9RPw==

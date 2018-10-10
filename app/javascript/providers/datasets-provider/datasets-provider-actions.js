@@ -30,226 +30,216 @@ const layersBySlug = {
   'guira-latest': 'c8829d15-e68a-4cb5-98a8-d0acff438a56'
 };
 
-export const getDatasets = createThunkAction(
-  'getDatasets',
-  () => (dispatch, getState) => {
-    const state = getState();
-    if (!state.datasets.loading) {
-      dispatch(setDatasetsLoading({ loading: true, error: false }));
-      axios
-        .all([
-          getDatasetsProvider(),
-          fetchGLADLatest(),
-          fetchSADLatest(),
-          fetchGranChacoLatest(),
-          // fetchFormaLatest(),
-          fetchTerraLatest()
-        ])
-        .then(
-          axios.spread((allDatasets, ...latestDatesResponses) => {
-            // serialize datasets
-            const serializedDatasets = wriAPISerializer(
-              allDatasets.data
-            ).filter(d => d.layer.length);
+export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
+  axios
+    .all([
+      getDatasetsProvider(),
+      fetchGLADLatest(),
+      fetchSADLatest(),
+      fetchGranChacoLatest(),
+      // fetchFormaLatest(),
+      fetchTerraLatest()
+    ])
+    .then(
+      axios.spread((allDatasets, ...latestDatesResponses) => {
+        // serialize datasets
+        const serializedDatasets = wriAPISerializer(allDatasets.data).filter(
+          d => d.layer.length
+        );
 
-            // parse latest dates from layers
-            const latestDates = latestDatesResponses.reduce((obj, latest) => {
-              const layerId = layersBySlug[latest.data.data[0].type];
-              return {
-                ...obj,
-                [layerId]: moment(
-                  latest.data.data[0].attributes.date ||
-                    latest.data.data[0].attributes.latest
-                ).format('YYYY-MM-DD')
+        // parse latest dates from layers
+        const latestDates = latestDatesResponses.reduce((obj, latest) => {
+          const layerId = layersBySlug[latest.data.data[0].type];
+          return {
+            ...obj,
+            [layerId]: moment(
+              latest.data.data[0].attributes.date ||
+                latest.data.data[0].attributes.latest
+            ).format('YYYY-MM-DD')
+          };
+        }, {});
+
+        const parsedDatasets = serializedDatasets
+          .filter(d => d.env === 'production')
+          .map(d => {
+            const { layer, metadata } = d;
+            const appMeta =
+              (metadata && metadata.find(m => m.application === 'gfw')) || {};
+            const { info } = appMeta || {};
+            const defaultLayer =
+              (layer &&
+                layer.find(
+                  l =>
+                    l.env === 'production' &&
+                    l.applicationConfig &&
+                    l.applicationConfig.default
+                )) ||
+              layer[0];
+
+            // we need a default layer so we can set it when toggled onto the map
+            if (!defaultLayer) return null;
+
+            const { isSelectorLayer, isMultiSelectorLayer, isLossLayer } =
+              info || {};
+            const { id, iso, applicationConfig } = defaultLayer || {};
+            const { global, selectorConfig } = applicationConfig || {};
+
+            // build statement config
+            let statementConfig = null;
+            if (isLossLayer) {
+              statementConfig = {
+                type: 'lossLayer'
               };
-            }, {});
+            } else if (global && !!iso.length && iso[0]) {
+              statementConfig = {
+                type: 'isoLayer',
+                isos: iso
+              };
+            }
 
-            const parsedDatasets = serializedDatasets
-              .filter(d => d.env === 'production')
-              .map(d => {
-                const { layer, metadata } = d;
-                const appMeta =
-                  (metadata && metadata.find(m => m.application === 'gfw')) ||
-                  {};
-                const { info } = appMeta || {};
-                const defaultLayer =
-                  (layer &&
-                    layer.find(
-                      l =>
-                        l.env === 'production' &&
-                        l.applicationConfig &&
-                        l.applicationConfig.default
-                    )) ||
-                  layer[0];
-
-                // we need a default layer so we can set it when toggled onto the map
-                if (!defaultLayer) return null;
-
-                const { isSelectorLayer, isMultiSelectorLayer, isLossLayer } =
-                  info || {};
-                const { id, iso, applicationConfig } = defaultLayer || {};
-                const { global, selectorConfig } = applicationConfig || {};
-
-                // build statement config
-                let statementConfig = null;
-                if (isLossLayer) {
-                  statementConfig = {
-                    type: 'lossLayer'
-                  };
-                } else if (global && !!iso.length && iso[0]) {
-                  statementConfig = {
-                    type: 'isoLayer',
-                    isos: iso
-                  };
+            return {
+              id: d.id,
+              dataset: d.id,
+              name: d.name,
+              layer: id,
+              ...applicationConfig,
+              ...info,
+              iso,
+              tags: flatten(d.vocabulary.map(v => v.tags)),
+              // dropdown selector config
+              ...((isSelectorLayer || isMultiSelectorLayer) && {
+                selectorLayerConfig: {
+                  options: layer.map(l => ({
+                    ...l.applicationConfig.selectorConfig,
+                    value: l.id
+                  })),
+                  ...selectorConfig
                 }
+              }),
+              // disclaimer statement config
+              statementConfig,
+              // layers config
+              layers:
+                layer &&
+                sortBy(
+                  layer
+                    .filter(l => l.env === 'production' && l.published)
+                    .map((l, i) => {
+                      const { layerConfig } = l;
+                      const { position, confirmedOnly, multiConfig } =
+                        l.applicationConfig || {};
+                      const {
+                        params_config,
+                        decode_config,
+                        sql_config,
+                        timeline_config,
+                        body,
+                        url
+                      } = layerConfig;
+                      const decodeFunction = decodeLayersConfig[l.id];
+                      const latestDate = latestDates && latestDates[l.id];
 
-                return {
-                  id: d.id,
-                  dataset: d.id,
-                  name: d.name,
-                  layer: id,
-                  ...applicationConfig,
-                  ...info,
-                  iso,
-                  tags: flatten(d.vocabulary.map(v => v.tags)),
-                  // dropdown selector config
-                  ...((isSelectorLayer || isMultiSelectorLayer) && {
-                    selectorLayerConfig: {
-                      options: layer.map(l => ({
-                        ...l.applicationConfig.selectorConfig,
-                        value: l.id
-                      })),
-                      ...selectorConfig
-                    }
-                  }),
-                  // disclaimer statement config
-                  statementConfig,
-                  // layers config
-                  layers:
-                    layer &&
-                    sortBy(
-                      layer
-                        .filter(l => l.env === 'production' && l.published)
-                        .map((l, i) => {
-                          const { layerConfig } = l;
-                          const { position, confirmedOnly, multiConfig } =
-                            l.applicationConfig || {};
-                          const {
-                            params_config,
-                            decode_config,
-                            sql_config,
-                            timeline_config,
-                            body,
-                            url
-                          } = layerConfig;
-                          const decodeFunction = decodeLayersConfig[l.id];
-                          const latestDate = latestDates && latestDates[l.id];
+                      // check if has a timeline
+                      const hasParamsTimeline =
+                        params_config &&
+                        params_config.map(p => p.key).includes('startDate');
+                      const hasDecodeTimeline =
+                        decode_config &&
+                        decode_config.map(p => p.key).includes('startDate');
+                      const timelineConfig = timeline_config && {
+                        ...timeline_config
+                      };
 
-                          // check if has a timeline
-                          const hasParamsTimeline =
-                            params_config &&
-                            params_config.map(p => p.key).includes('startDate');
-                          const hasDecodeTimeline =
-                            decode_config &&
-                            decode_config.map(p => p.key).includes('startDate');
-                          const timelineConfig = timeline_config && {
-                            ...timeline_config
-                          };
+                      // get params
+                      const params =
+                        params_config &&
+                        reduceParams(params_config, latestDate);
+                      const decodeParams =
+                        decode_config &&
+                        reduceParams(decode_config, latestDate);
+                      const sqlParams =
+                        sql_config && reduceSqlParams(sql_config);
 
-                          // get params
-                          const params =
-                            params_config &&
-                            reduceParams(params_config, latestDate);
-                          const decodeParams =
-                            decode_config &&
-                            reduceParams(decode_config, latestDate);
-                          const sqlParams =
-                            sql_config && reduceSqlParams(sql_config);
-
-                          return {
-                            ...info,
-                            ...l,
-                            ...(d.tableName && { tableName: d.tableName }),
-                            ...l.applicationConfig,
-                            // sorting position
-                            position: l.applicationConfig.default
-                              ? 0
-                              : position ||
-                                (multiConfig && multiConfig.position) ||
-                                i + 1,
-                            // check if needs timeline
-                            timelineConfig,
-                            hasParamsTimeline,
-                            hasDecodeTimeline,
-                            // params for tile url
-                            ...(params && {
-                              params: {
-                                url: body.url || url,
-                                ...params,
-                                ...(hasParamsTimeline && {
-                                  minDate: params && params.startDate,
-                                  maxDate: params && params.endDate,
-                                  trimEndDate: params && params.endDate
-                                })
-                              }
-                            }),
-                            // params selector config
-                            ...(params_config && {
-                              paramsSelectorConfig: params_config.map(p => ({
-                                ...p,
-                                ...(p.key.includes('thresh') && {
-                                  sentence:
-                                    'Displaying {name} with {selector} canopy density',
-                                  options: thresholdOptions
-                                }),
-                                ...(p.min &&
-                                  p.max && {
-                                    options: Array.from(
-                                      Array(p.max - p.min + 1).keys()
-                                    ).map(o => ({
-                                      label: o + p.min,
-                                      value: o + p.min
-                                    }))
-                                  })
-                              }))
-                            }),
-                            // params for sql query
-                            ...(sqlParams && {
-                              sqlParams
-                            }),
-                            // decode func and params for canvas layers
-                            decodeFunction,
-                            ...(decodeFunction && {
-                              decodeParams: {
-                                // timeline config
-                                ...decodeParams,
-                                ...(hasDecodeTimeline && {
-                                  minDate:
-                                    decodeParams && decodeParams.startDate,
-                                  maxDate: decodeParams && decodeParams.endDate,
-                                  trimEndDate:
-                                    decodeParams && decodeParams.endDate,
-                                  canPlay: true
-                                })
-                              }
-                            }),
-                            // special key for GLAD alerts
-                            ...(confirmedOnly && {
-                              id: 'confirmedOnly'
+                      return {
+                        ...info,
+                        ...l,
+                        ...(d.tableName && { tableName: d.tableName }),
+                        ...l.applicationConfig,
+                        // sorting position
+                        position: l.applicationConfig.default
+                          ? 0
+                          : position ||
+                            (multiConfig && multiConfig.position) ||
+                            i + 1,
+                        // check if needs timeline
+                        timelineConfig,
+                        hasParamsTimeline,
+                        hasDecodeTimeline,
+                        // params for tile url
+                        ...(params && {
+                          params: {
+                            url: body.url || url,
+                            ...params,
+                            ...(hasParamsTimeline && {
+                              minDate: params && params.startDate,
+                              maxDate: params && params.endDate,
+                              trimEndDate: params && params.endDate
                             })
-                          };
+                          }
                         }),
-                      'position'
-                    )
-                };
-              });
-            dispatch(setDatasets(parsedDatasets));
-          })
-        )
-        .catch(err => {
-          dispatch(setDatasetsLoading({ loading: false, error: true }));
-          console.warn(err);
-        });
-    }
-  }
-);
+                        // params selector config
+                        ...(params_config && {
+                          paramsSelectorConfig: params_config.map(p => ({
+                            ...p,
+                            ...(p.key.includes('thresh') && {
+                              sentence:
+                                'Displaying {name} with {selector} canopy density',
+                              options: thresholdOptions
+                            }),
+                            ...(p.min &&
+                              p.max && {
+                                options: Array.from(
+                                  Array(p.max - p.min + 1).keys()
+                                ).map(o => ({
+                                  label: o + p.min,
+                                  value: o + p.min
+                                }))
+                              })
+                          }))
+                        }),
+                        // params for sql query
+                        ...(sqlParams && {
+                          sqlParams
+                        }),
+                        // decode func and params for canvas layers
+                        decodeFunction,
+                        ...(decodeFunction && {
+                          decodeParams: {
+                            // timeline config
+                            ...decodeParams,
+                            ...(hasDecodeTimeline && {
+                              minDate: decodeParams && decodeParams.startDate,
+                              maxDate: decodeParams && decodeParams.endDate,
+                              trimEndDate: decodeParams && decodeParams.endDate,
+                              canPlay: true
+                            })
+                          }
+                        }),
+                        // special key for GLAD alerts
+                        ...(confirmedOnly && {
+                          id: 'confirmedOnly'
+                        })
+                      };
+                    }),
+                  'position'
+                )
+            };
+          });
+        dispatch(setDatasets(parsedDatasets));
+      })
+    )
+    .catch(err => {
+      dispatch(setDatasetsLoading({ loading: false, error: true }));
+      console.warn(err);
+    });
+});

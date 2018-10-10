@@ -40,9 +40,18 @@ class UTMCoords extends PureComponent {
       lngCard
     } = this.state;
     const { setMapSettings } = this.props;
-    const lat = this.convertDMSToDD(latDeg, latMin, latSec, latCard);
-    const lng = this.convertDMSToDD(lngDeg, lngMin, lngSec, lngCard);
-
+    const lat = this.convertDMSToDD(
+      parseInt(latDeg, 10),
+      parseInt(latMin, 10),
+      parseInt(latSec, 10),
+      latCard
+    );
+    const lng = this.convertDMSToDD(
+      parseInt(lngDeg, 10),
+      parseInt(lngMin, 10),
+      parseInt(lngSec, 10),
+      lngCard
+    );
     if (validateLatLng(lat, lng)) {
       setMapSettings({ center: { lat, lng } });
     } else {
