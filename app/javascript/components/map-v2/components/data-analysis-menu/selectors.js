@@ -39,6 +39,11 @@ export const getShowAnalysis = createSelector(
   settings => settings.showAnalysis
 );
 
+export const getHidden = createSelector(
+  getAnalysisSettings,
+  settings => settings.hidden
+);
+
 export const getShowDraw = createSelector(
   getAnalysisSettings,
   settings => settings.showDraw
@@ -129,5 +134,6 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   location: selectLocation,
   query: selectQuery,
+  hidden: getHidden,
   drawnGeostoreId: selectDrawPolygon
 });
