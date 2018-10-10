@@ -36,28 +36,33 @@ const getSearchSQL = string => {
 
 export const getLocationFromSearch = createThunkAction(
   'getLocationFromSearch',
-  search => dispatch => {
+  ({ search, token }) => dispatch => {
     dispatch(setMenuLoading(true));
-    axios
-      .get(
-        `${
-          process.env.CARTO_API
-        }/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', name_0) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', name_0) WHEN gid_0 is not null THEN name_0 END AS label FROM gadm36_political_boundaries WHERE ${getSearchSQL(
-          search
-        )} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`
-      )
-      .then(response => {
-        if (response.data.rows && response.data.rows.length) {
-          dispatch(setLocationsData(response.data.rows));
-        } else {
-          dispatch(setLocationsData([]));
-        }
-        dispatch(setMenuLoading(false));
-      })
-      .catch(error => {
-        console.info(error);
-        dispatch(setMenuLoading(false));
-      });
+    if (search) {
+      axios
+        .get(
+          `${
+            process.env.CARTO_API
+          }/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', name_0) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', name_0) WHEN gid_0 is not null THEN name_0 END AS label FROM gadm36_political_boundaries WHERE ${getSearchSQL(
+            search
+          )} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`,
+          {
+            cancelToken: token
+          }
+        )
+        .then(response => {
+          if (response.data.rows && response.data.rows.length) {
+            dispatch(setLocationsData(response.data.rows));
+          } else {
+            dispatch(setLocationsData([]));
+          }
+          dispatch(setMenuLoading(false));
+        })
+        .catch(error => {
+          console.info(error);
+          dispatch(setMenuLoading(false));
+        });
+    }
   }
 );
 

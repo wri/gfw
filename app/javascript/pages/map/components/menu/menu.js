@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import remove from 'lodash/remove';
 import debounce from 'lodash/debounce';
+import { CancelToken } from 'axios';
 
 import * as modalActions from 'components/modals/meta/meta-actions';
 import * as mapActions from 'components/map-v2/actions';
@@ -26,17 +27,22 @@ class MenuContainer extends PureComponent {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const { search } = this.props;
-    if (search && search !== prevProps.search) {
-      this.handleGetLocations(search);
+  handleGetLocations = debounce(search => {
+    if (this.searchFetch) {
+      this.searchFetch.cancel();
     }
-  }
+    this.searchFetch = CancelToken.source();
+    this.props.getLocationFromSearch({ search, token: this.searchFetch.token });
+  }, 300);
 
-  handleGetLocations = debounce(
-    search => this.props.getLocationFromSearch(search),
-    300
-  );
+  handleSearchChange = value => {
+    const { setMenuSettings, setMenuLoading } = this.props;
+    setMenuSettings({ search: value });
+    if (value) {
+      setMenuLoading(true);
+      this.handleGetLocations(value);
+    }
+  };
 
   onToggleLayer = (data, value) => {
     const { activeDatasets, setMapSettings } = this.props;
@@ -67,7 +73,8 @@ class MenuContainer extends PureComponent {
   render() {
     return createElement(MenuComponent, {
       ...this.props,
-      onToggleLayer: this.onToggleLayer
+      onToggleLayer: this.onToggleLayer,
+      handleSearchChange: this.handleSearchChange
     });
   }
 }
@@ -76,6 +83,8 @@ MenuContainer.propTypes = {
   activeDatasets: PropTypes.array,
   setMapSettings: PropTypes.func,
   getLocationFromSearch: PropTypes.func,
+  setMenuSettings: PropTypes.func,
+  setMenuLoading: PropTypes.func,
   search: PropTypes.string
 };
 

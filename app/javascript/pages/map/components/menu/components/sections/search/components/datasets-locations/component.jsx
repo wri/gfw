@@ -15,11 +15,10 @@ class DatasetsLocationsSearch extends PureComponent {
   render() {
     const {
       search,
-      setMenuSettings,
-      setMenuLoading,
       loading,
       onToggleLayer,
       handleClickLocation,
+      handleSearchChange,
       onInfoClick,
       datasets,
       locations
@@ -31,17 +30,24 @@ class DatasetsLocationsSearch extends PureComponent {
           className="side-menu-search"
           placeholder="Search"
           input={search}
-          onChange={value => {
-            setMenuLoading(true);
-            setMenuSettings({ search: value });
-          }}
+          onChange={value => handleSearchChange(value)}
         />
-        {!search && (
-          <NoContent
-            className="empty-search"
-            message="Enter a search to find datasets or locations..."
-          />
-        )}
+        {!loading &&
+          !search && (
+            <NoContent
+              className="empty-search"
+              message="Enter a search and hit enter to find datasets or locations..."
+            />
+          )}
+        {!loading &&
+          search &&
+          (!datasets || !datasets.length) &&
+          (!locations || !locations.length) && (
+            <NoContent
+              className="empty-search"
+              message="No datasets or locations found"
+            />
+          )}
         <div className="search-results">
           {loading && <Loader />}
           {!loading &&
@@ -96,8 +102,7 @@ DatasetsLocationsSearch.propTypes = {
   onToggleLayer: PropTypes.func,
   onInfoClick: PropTypes.func,
   search: PropTypes.string,
-  setMenuSettings: PropTypes.func,
-  setMenuLoading: PropTypes.func,
+  handleSearchChange: PropTypes.func,
   handleClickLocation: PropTypes.func,
   loading: PropTypes.bool
 };
