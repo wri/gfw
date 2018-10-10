@@ -41,10 +41,10 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
       "/sql?q=SELECT gid_2 as id, name_2 as name, ST_AsGeoJSON(the_geom) AS geojson FROM gadm36_adm2 WHERE iso = '{iso}' AND iso != 'XCA' AND iso != 'TWN' AND gid_1 = '{region}' AND gid_2 = '{subRegion}' ORDER BY name"
   };
 
-  var parseSimplifyGeom = country => {
+  var parseSimplifyGeom = function(country) {
     const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
     const baseThresh = bigCountries.includes(country) ? 0.01 : 0.001;
-    const simplifyString = `ST_Simplify(the_geom,${baseThresh})`;
+    const simplifyString = 'ST_Simplify(the_geom,' + baseThresh + ')';
     return simplifyString;
   };
 
@@ -53,13 +53,12 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
     const adm0 = ids[0] || null;
     const adm1 = ids[1] && ids[1].split('_')[0];
     const adm2 = ids[2] && ids[2].split('_')[0];
-    return { adm0, adm1: parseInt(adm1, 10), adm2: parseInt(adm2, 10) };
+    return { adm0: adm0, adm1: parseInt(adm1, 10), adm2: parseInt(adm2, 10) };
   };
 
-  var buildGadm36Id = (country, region, subRegion) =>
-    `${country}${region ? `.${region}` : ''}${
-      subRegion ? `.${subRegion}_1` : '_1'
-    }`;
+  var buildGadm36Id = function(country, region, subRegion) {
+    return country + (region ? '.' + region : '') + (subRegion ? '.' + subRegion + '_1' : '_1');
+  }
 
   var CountriesService = Class.extend({
     init: function() {
@@ -174,7 +173,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: GET_REQUEST_REGIONS_LIST_ID,
             success: function(res, status) {
-              var data = res.rows.map(d => {
+              var data = res.rows.map(function(d) {
                 var ids = parseGadm36Id(d.id_1);
                 return {
                   iso: d.iso,
@@ -242,7 +241,7 @@ define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
           var requestConfig = {
             resourceId: GET_REQUEST_SUBREGIONS_LIST_ID,
             success: function(res, status) {
-              var data = res.rows.map(d => {
+              var data = res.rows.map(function(d) {
                 var ids = parseGadm36Id(d.id);
                 return {
                   name: d.name,

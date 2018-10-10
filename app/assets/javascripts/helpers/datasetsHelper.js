@@ -1,9 +1,9 @@
-define(['underscore'], (_) => {
+define(['underscore'], function(_) {
   /**
    * List of the datasets of the platform
    */
 
-  const datasetList = {
+  var datasetList = {
     'glad-alerts': {
       title: 'GLAD tree cover loss alerts',
       long_title: 'weekly GLAD tree cover loss alerts',
@@ -120,7 +120,7 @@ define(['underscore'], (_) => {
    * List of the datasets that allows subscriptions
    */
 
-  const subscriptionsAllowed = [
+  var subscriptionsAllowed = [
     'loss',
     'imazon',
     'terrailoss',
@@ -135,12 +135,12 @@ define(['underscore'], (_) => {
     'forma_month_3'
   ];
 
-  const datasetHelper = {
+  var datasetHelper = {
     /**
      * Returns the list of key datasets
      * @returns {Object} key languages list
      */
-    getList() {
+    getList: function() {
       return datasetList;
     },
 
@@ -149,8 +149,8 @@ define(['underscore'], (_) => {
      * @param {Object} datasets slugs
      * @returns {Object} key languages list
      */
-    getFilteredList(datasets, selected) {
-      const layersSelected = selected || [];
+    getFilteredList: function(datasets, selected) {
+      var layersSelected = selected || [];
       let filteredDatasets = [];
 
       // Global layers
@@ -159,8 +159,8 @@ define(['underscore'], (_) => {
       filteredDatasets.push(_.extend({}, datasetList.story));
 
       if (datasets) {
-        for (const dataset in datasetList) {
-          const currentDataset = _.extend({}, datasetList[dataset]);
+        for (var dataset in datasetList) {
+          var currentDataset = _.extend({}, datasetList[dataset]);
 
           if (datasets.indexOf(currentDataset.analysisSlug) !== -1) {
             filteredDatasets.push(currentDataset);
@@ -168,7 +168,7 @@ define(['underscore'], (_) => {
         }
       }
 
-      filteredDatasets = _.map(filteredDatasets, (dataset) => {
+      filteredDatasets = _.map(filteredDatasets, function(dataset) {
         if (
           layersSelected.indexOf(dataset.slug) !== -1 ||
           layersSelected.indexOf(dataset.layerSlug[0]) !== -1 ||
@@ -179,7 +179,7 @@ define(['underscore'], (_) => {
         return dataset;
       });
 
-      filteredDatasets = _.sortBy(filteredDatasets, (data) => data.order);
+      filteredDatasets = _.sortBy(filteredDatasets, function(data) { return data.order });
 
       return filteredDatasets;
     },
@@ -190,9 +190,9 @@ define(['underscore'], (_) => {
      * @param {string} selected language
      * @returns {Array} list of languages with selection
      */
-    getListSelected(selectedDatasets) {
-      const selectedList = {};
-      for (const dataset in datasetList) {
+    getListSelected: function(selectedDatasets) {
+      var selectedList = {};
+      for (var dataset in datasetList) {
         selectedList[dataset] = _.extend({}, datasetList[dataset]);
 
         if (
@@ -211,7 +211,7 @@ define(['underscore'], (_) => {
      * that allow subscriptions
      * @returns {Array} list of the datasets
      */
-    getListSubscriptionsAllowed() {
+    getListSubscriptionsAllowed: function() {
       return subscriptionsAllowed;
     }
   };
