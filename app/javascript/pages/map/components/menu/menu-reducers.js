@@ -15,12 +15,12 @@ const setLocationsData = (state, { payload }) => ({
   locations: payload
 });
 
-const setLocationsLoading = (state, { payload }) => ({
+const setMenuLoading = (state, { payload }) => ({
   ...state,
   loading: payload
 });
 
 export default {
   [actions.setLocationsData]: setLocationsData,
-  [actions.setLocationsLoading]: setLocationsLoading
+  [actions.setMenuLoading]: setMenuLoading
 };

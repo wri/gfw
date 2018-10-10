@@ -17,6 +17,7 @@ class MapMenuSearch extends PureComponent {
     const {
       search,
       setMenuSettings,
+      setMenuLoading,
       loading,
       onToggleLayer,
       handleClickLocation,
@@ -30,7 +31,10 @@ class MapMenuSearch extends PureComponent {
           className="side-menu-search"
           placeholder="Search"
           input={search}
-          onChange={value => setMenuSettings({ search: value })}
+          onChange={value => {
+            setMenuLoading(true);
+            setMenuSettings({ search: value });
+          }}
         />
         {!search && (
           <NoContent
@@ -38,47 +42,49 @@ class MapMenuSearch extends PureComponent {
             message="Enter a search to find datasets or locations..."
           />
         )}
-        {loading && <Loader />}
-        {!loading &&
-          search &&
-          datasets &&
-          !!datasets.length && (
-            <div
-              className={cx('datasets-search', {
-                'show-border': locations && locations.length
-              })}
-            >
-              <h5>Datasets</h5>
-              {datasets.map(d => (
-                <LayerToggle
-                  key={d.id}
-                  className="dataset-toggle"
-                  data={{ ...d, dataset: d.id }}
-                  onToggle={onToggleLayer}
-                  onInfoClick={onInfoClick}
-                  showSubtitle
-                />
-              ))}
-            </div>
-          )}
-        {!loading &&
-          search &&
-          locations &&
-          !!locations.length && (
-            <div className="locations-search">
-              <h5>Locations</h5>
-              {locations.map(loc => (
-                <button
-                  className={cx('location', { active: loc.active })}
-                  key={loc.label}
-                  onClick={() => handleClickLocation(loc)}
-                >
-                  <Icon icon={locationIcon} className="location-icon" />
-                  <p>{loc.label}</p>
-                </button>
-              ))}
-            </div>
-          )}
+        <div className="search-results">
+          {loading && <Loader />}
+          {!loading &&
+            search &&
+            datasets &&
+            !!datasets.length && (
+              <div
+                className={cx('datasets-search', {
+                  'show-border': locations && locations.length
+                })}
+              >
+                <h5>Datasets</h5>
+                {datasets.map(d => (
+                  <LayerToggle
+                    key={d.id}
+                    className="dataset-toggle"
+                    data={{ ...d, dataset: d.id }}
+                    onToggle={onToggleLayer}
+                    onInfoClick={onInfoClick}
+                    showSubtitle
+                  />
+                ))}
+              </div>
+            )}
+          {!loading &&
+            search &&
+            locations &&
+            !!locations.length && (
+              <div className="locations-search">
+                <h5>Locations</h5>
+                {locations.map(loc => (
+                  <button
+                    className={cx('location', { active: loc.active })}
+                    key={loc.label}
+                    onClick={() => handleClickLocation(loc)}
+                  >
+                    <Icon icon={locationIcon} className="location-icon" />
+                    <p>{loc.label}</p>
+                  </button>
+                ))}
+              </div>
+            )}
+        </div>
       </Fragment>
     );
   };
@@ -130,6 +136,7 @@ MapMenuSearch.propTypes = {
   search: PropTypes.string,
   searchType: PropTypes.string,
   setMenuSettings: PropTypes.func,
+  setMenuLoading: PropTypes.func,
   handleClickLocation: PropTypes.func,
   loading: PropTypes.bool
 };

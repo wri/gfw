@@ -28,6 +28,11 @@ $map-menu-items-size: rem(76px);
     margin-left: rem(5px);
   }
 
+  .search-results {
+    position: relative;
+    min-height: rem(300px);
+  }
+
   .datasets-search {
     margin-bottom: rem(20px);
 

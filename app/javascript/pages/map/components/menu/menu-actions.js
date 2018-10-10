@@ -6,7 +6,7 @@ import { parseGadm36Id } from 'utils/format';
 import { MAP } from 'router';
 
 export const setLocationsData = createAction('setLocationsData');
-export const setLocationsLoading = createAction('setLocationsLoading');
+export const setMenuLoading = createAction('setMenuLoading');
 
 export const setMenuSettings = createThunkAction(
   'setMenuSettings',
@@ -37,7 +37,7 @@ const getSearchSQL = string => {
 export const getLocationFromSearch = createThunkAction(
   'getLocationFromSearch',
   search => dispatch => {
-    dispatch(setLocationsLoading(true));
+    dispatch(setMenuLoading(true));
     axios
       .get(
         `${
@@ -52,11 +52,11 @@ export const getLocationFromSearch = createThunkAction(
         } else {
           dispatch(setLocationsData([]));
         }
-        dispatch(setLocationsLoading(false));
+        dispatch(setMenuLoading(false));
       })
       .catch(error => {
         console.info(error);
-        dispatch(setLocationsLoading(false));
+        dispatch(setMenuLoading(false));
       });
   }
 );
