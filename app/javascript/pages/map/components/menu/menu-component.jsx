@@ -74,6 +74,7 @@ class Menu extends PureComponent {
               <Component
                 {...activeSection}
                 setMenuSettings={setMenuSettings}
+                onInfoClick={setModalMeta}
                 {...rest}
               />
             )}
