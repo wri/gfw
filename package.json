@@ -128,6 +128,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-smart-import": "0.7.5",
     "precss": "2.0.0",
+    "proj4": "^2.5.0",
     "query-string": "5.0.1",
     "rails-erb-loader": "^5.5.0",
     "rc-slider": "^8.6.1",
