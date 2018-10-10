@@ -94,4 +94,33 @@ $map-menu-items-size: rem(76px);
     position: relative;
     min-height: rem(120px);
   }
+
+  .decimal-search {
+    span {
+      font-size: rem(12px);
+      width: rem(40px);
+      margin-right: rem(5px);
+    }
+
+    input {
+      border: 0;
+      border-bottom: solid 1px $border;
+      width: calc(100% - 40px);
+      margin-bottom: rem(10px);
+
+      &.error {
+        color: $error;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .error-message {
+      text-align: center;
+      font-size: rem(11px);
+      margin-top: rem(5px);
+    }
+  }
 }

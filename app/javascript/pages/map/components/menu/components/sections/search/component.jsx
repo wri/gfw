@@ -5,6 +5,7 @@ import cx from 'classnames';
 import Search from 'components/ui/search';
 import NoContent from 'components/ui/no-content';
 import Dropdown from 'components/ui/dropdown';
+import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
@@ -13,6 +14,12 @@ import locationIcon from 'assets/icons/location.svg';
 import './styles.scss';
 
 class MapMenuSearch extends PureComponent {
+  state = {
+    error: false,
+    lat: '',
+    lng: ''
+  };
+
   renderDatasetSearch = () => {
     const {
       search,
@@ -89,6 +96,63 @@ class MapMenuSearch extends PureComponent {
     );
   };
 
+  renderDecimalDegrees = () => {
+    const { lat, lng, error } = this.state;
+
+    return (
+      <div className="decimal-search">
+        <span>Lat:</span>
+        <input
+          value={lat}
+          onChange={e => this.handleSetLatLng(e.target.value, lng)}
+          className={cx({ error: lat && !this.validateLat(lat) })}
+        />
+        <span>Lng:</span>
+        <input
+          value={lng}
+          onChange={e => this.handleSetLatLng(lat, e.target.value)}
+          className={cx({ error: lng && !this.validateLng(lng) })}
+          onKeyDown={this.handleKeyPress}
+        />
+        <Button onClick={this.handleSubmit} disabled={error || !lat || !lng}>
+          GO TO POSITION
+        </Button>
+        {error && <p className="error-message">Invalid lat lng</p>}
+      </div>
+    );
+  };
+
+  handleKeyPress = e => {
+    if (e.keyCode === 13 && !this.state.error) {
+      this.handleSubmit();
+    }
+  };
+
+  handleSubmit = () => {
+    const { lat, lng } = this.state;
+    const { setMapSettings } = this.props;
+    setMapSettings({ center: { lat, lng } });
+  };
+
+  validateLat = lat => lat <= 90 && lat >= -90;
+
+  validateLng = lng => lng <= 180 && lng >= -180;
+
+  handleSetLocationState = stateObj => {
+    if (!this.state.error) {
+      this.setState(stateObj);
+    }
+  };
+
+  handleSetLatLng = (lat, lng) => {
+    this.setState({ lat, lng });
+    if (lat <= 90 && lat >= -90 && lng <= 180 && lng >= -180) {
+      this.setState({ error: false });
+    } else {
+      this.setState({ error: true });
+    }
+  };
+
   render() {
     const { searchType, setMenuSettings } = this.props;
 
@@ -123,6 +187,7 @@ class MapMenuSearch extends PureComponent {
           />
         </div>
         {searchType === 'dataset' && this.renderDatasetSearch()}
+        {searchType === 'decimals' && this.renderDecimalDegrees()}
       </div>
     );
   }
@@ -138,6 +203,7 @@ MapMenuSearch.propTypes = {
   setMenuSettings: PropTypes.func,
   setMenuLoading: PropTypes.func,
   handleClickLocation: PropTypes.func,
+  setMapSettings: PropTypes.func,
   loading: PropTypes.bool
 };
 
