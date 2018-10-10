@@ -10,20 +10,34 @@ $map-menu-items-size: rem(76px);
     color: $slate;
     font-size: rem(14px);
     font-weight: 500;
-    margin-bottom: rem(20px);
   }
 
   .side-menu-search {
     margin-bottom: rem(30px);
   }
 
-  .datasets-search {
-    border-bottom: solid 1px $border;
+  .search-type {
+    display: inline-block;
+    font-size: rem(12px);
     margin-bottom: rem(20px);
-    padding-bottom: rem(20px);
+  }
+
+  .search-type-select {
+    width: rem(130px);
+    display: inline-block;
+    margin-left: rem(5px);
+  }
+
+  .datasets-search {
+    margin-bottom: rem(20px);
 
     > div {
       margin-bottom: rem(15px);
+    }
+
+    &.show-border {
+      padding-bottom: rem(20px);
+      border-bottom: solid 1px $border;
     }
   }
 

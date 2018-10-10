@@ -29,6 +29,11 @@ export const getSearch = createSelector(
   settings => settings.search
 );
 
+export const getSearchType = createSelector(
+  [getMenuSettings],
+  settings => settings.searchType
+);
+
 export const getExploreSection = createSelector(
   [getMenuSettings],
   settings => settings.exploreSection
@@ -185,5 +190,6 @@ export const getMenuProps = createStructuredSelector({
   selectedCountries: getActiveCountries,
   activeDatasets: getActiveDatasetsState,
   loading: getLoading,
-  search: getSearch
+  search: getSearch,
+  searchType: getSearchType
 });

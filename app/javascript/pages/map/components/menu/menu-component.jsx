@@ -46,18 +46,10 @@ class Menu extends PureComponent {
       bottomSections,
       activeSection,
       selectedSection,
-      onToggleLayer,
-      setModalMeta,
-      activeDatasets,
-      loading,
-      countries,
       setMenuSettings,
-      setMapSettings,
-      selectedCountries,
-      countriesWithoutData,
-      getLocationFromSearch,
-      handleClickLocation,
-      exploreSection
+      loading,
+      setModalMeta,
+      ...rest
     } = this.props;
     const { Component } = activeSection || {};
 
@@ -81,17 +73,8 @@ class Menu extends PureComponent {
             !loading && (
               <Component
                 {...activeSection}
-                onToggleLayer={onToggleLayer}
-                onInfoClick={setModalMeta}
-                countries={countries}
                 setMenuSettings={setMenuSettings}
-                getLocationFromSearch={getLocationFromSearch}
-                handleClickLocation={handleClickLocation}
-                setMapSettings={setMapSettings}
-                selectedCountries={selectedCountries}
-                countriesWithoutData={countriesWithoutData}
-                activeDatasets={activeDatasets}
-                exploreSection={exploreSection}
+                {...rest}
               />
             )}
           {loading && <Loader />}

@@ -4,6 +4,7 @@ export const initialState = {
   selectedCountries: [],
   selectedSection: '',
   exploreSection: 'topics',
+  searchType: 'dataset',
   search: '',
   locations: [],
   loading: false

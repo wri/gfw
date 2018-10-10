@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import Search from 'components/ui/search';
 import NoContent from 'components/ui/no-content';
+import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
@@ -12,23 +13,19 @@ import locationIcon from 'assets/icons/location.svg';
 import './styles.scss';
 
 class MapMenuSearch extends PureComponent {
-  handleSearchChange = () => {};
-
-  render() {
+  renderDatasetSearch = () => {
     const {
-      datasets,
-      locations,
-      onToggleLayer,
-      onInfoClick,
       search,
       setMenuSettings,
+      loading,
+      onToggleLayer,
       handleClickLocation,
-      loading
+      onInfoClick,
+      datasets,
+      locations
     } = this.props;
-
     return (
-      <div className="c-map-menu-search">
-        <h3>Search</h3>
+      <Fragment>
         <Search
           className="side-menu-search"
           placeholder="Search"
@@ -46,7 +43,11 @@ class MapMenuSearch extends PureComponent {
           search &&
           datasets &&
           !!datasets.length && (
-            <div className="datasets-search">
+            <div
+              className={cx('datasets-search', {
+                'show-border': locations && locations.length
+              })}
+            >
               <h5>Datasets</h5>
               {datasets.map(d => (
                 <LayerToggle
@@ -78,6 +79,44 @@ class MapMenuSearch extends PureComponent {
               ))}
             </div>
           )}
+      </Fragment>
+    );
+  };
+
+  render() {
+    const { searchType, setMenuSettings } = this.props;
+
+    return (
+      <div className="c-map-menu-search">
+        <h3>Search</h3>
+        <div className="search-type">
+          Search for a
+          <Dropdown
+            className="search-type-select"
+            theme="theme-dropdown-button-small"
+            value={searchType}
+            options={[
+              {
+                label: 'dataset or location',
+                value: 'dataset'
+              },
+              {
+                label: 'coordinates',
+                value: 'coordinates'
+              },
+              {
+                label: 'decimal degress',
+                value: 'decimals'
+              },
+              {
+                label: 'UTM coordinates',
+                value: 'utm'
+              }
+            ]}
+            onChange={value => setMenuSettings({ searchType: value.value })}
+          />
+        </div>
+        {searchType === 'dataset' && this.renderDatasetSearch()}
       </div>
     );
   }
@@ -89,6 +128,7 @@ MapMenuSearch.propTypes = {
   onToggleLayer: PropTypes.func,
   onInfoClick: PropTypes.func,
   search: PropTypes.string,
+  searchType: PropTypes.string,
   setMenuSettings: PropTypes.func,
   handleClickLocation: PropTypes.func,
   loading: PropTypes.bool

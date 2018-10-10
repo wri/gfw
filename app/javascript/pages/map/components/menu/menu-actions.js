@@ -1,6 +1,7 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import axios from 'axios';
+import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
 import { MAP } from 'router';
 
@@ -20,6 +21,19 @@ export const setMenuSettings = createThunkAction(
   }
 );
 
+const getSearchSQL = string => {
+  const words = string.split(/,| |, /);
+  const mappedWords = compact(words.map(w => (w ? `%25${w}%25` : '')));
+  const whereQueries = mappedWords.map(
+    w =>
+      `LOWER(name_0) LIKE '${w}' OR LOWER(name_1) LIKE '${
+        w
+      }' OR LOWER(name_2) LIKE '${w}'`
+  );
+
+  return whereQueries.join(' OR ');
+};
+
 export const getLocationFromSearch = createThunkAction(
   'getLocationFromSearch',
   search => dispatch => {
@@ -28,15 +42,9 @@ export const getLocationFromSearch = createThunkAction(
       .get(
         `${
           process.env.CARTO_API
-        }/sql?q=SELECT gid_0, gid_1, gid_2, name_0, name_1, name_2, CONCAT(name_2, ', ', name_1, ', ', name_0) as label FROM gadm36_political_boundaries WHERE LOWER(name_0) LIKE '%25${
+        }/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', name_0) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', name_0) WHEN gid_0 is not null THEN name_0 END AS label FROM gadm36_political_boundaries WHERE ${getSearchSQL(
           search
-        }%25' OR LOWER(name_1) LIKE '%25${
-          search
-        }%25' OR LOWER(name_2) LIKE '%25${
-          search
-        }%25' OR LOWER(CONCAT(name_2, ', ', name_1, ', ', name_0)) LIKE '%25${
-          search
-        }%25' AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`
+        )} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`
       )
       .then(response => {
         if (response.data.rows && response.data.rows.length) {
