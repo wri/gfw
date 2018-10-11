@@ -16997,10 +16997,10 @@ wrappy@1, wrappy@~1.0.2:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
-wri-api-components@^2.2.9:
-  version "2.2.9"
-  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.2.9.tgz#524284f9d48d4e8d927e33e834e3b08aed274095"
-  integrity sha512-Smn4v4rOKd8TuZGlp62Ol5naw3OFaCUQhpVPAYBr/nt2jKEKZXUiPt2MrMfIUu+vPDMRZLivu6iKGmOGFM9RPw==
+wri-api-components@^2.2.10:
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/wri-api-components/-/wri-api-components-2.2.10.tgz#26c77532a048c4b3d9a7b7d677a4735077a722e6"
+  integrity sha512-JrqId3qn6Lu7KIR05U5nrd23JQmlHWuFGiQUPKs3qD/8qjxqp1Uv/qGs7/4oyfrNVEvoLNdAT+swCLwPwvx6CQ==
   dependencies:
     classnames "^2.2.6"
     layer-manager "^1.10.0"

@@ -170,7 +170,7 @@
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
-    "wri-api-components": "^2.2.9",
+    "wri-api-components": "^2.2.10",
     "wri-json-api-serializer": "^1.0.1"
   }
 }
