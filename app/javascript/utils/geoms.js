@@ -5,6 +5,7 @@ import min from 'lodash/min';
 import max from 'lodash/max';
 
 import BOUNDS from 'data/bounds.json';
+import BOUNDS_LEAFLET from 'data/bounds-leaflet.json';
 
 export const checkLocationInsideBbox = (latLng, bbox) => {
   const pt = point(latLng);
@@ -23,6 +24,13 @@ export const getBoxBounds = (cornerBounds, country, region) => {
     [cornerBounds[2], cornerBounds[1]],
     [cornerBounds[0], cornerBounds[1]]
   ];
+};
+
+export const getLeafletBbox = (bbox, country, region) => {
+  if (!region && Object.keys(BOUNDS_LEAFLET).includes(country)) {
+    return BOUNDS_LEAFLET[country];
+  }
+  return bbox;
 };
 
 export const getCornersFromBounds = bounds => {
