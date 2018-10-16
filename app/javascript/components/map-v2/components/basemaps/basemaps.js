@@ -38,7 +38,7 @@ class BasemapsContainer extends React.Component {
     if (item.value !== 'no-boundaries') {
       const newActiveDatasets = [
         {
-          layers: [item.layer],
+          layers: item.layers,
           dataset: item.dataset,
           opacity: 1,
           visibility: true

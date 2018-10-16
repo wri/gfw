@@ -1,7 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
-import flatMap from 'lodash/flatMap';
 
 import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 import initialState from './initial-state';
@@ -115,19 +114,13 @@ export const getActiveDatasets = createSelector(
 
 export const getBoundaryDatasets = createSelector([getDatasets], datasets => {
   if (isEmpty(datasets)) return null;
-  const boundaries = datasets.filter(d => d.isBoundary);
-  const boundaryLayers = flatMap(
-    boundaries.map(
-      b => b.layers && b.layers.map(l => ({ ...l, dataset: b.id }))
-    )
-  );
-  return boundaryLayers.map(l => ({
-    name: l.name,
-    dataset: l.dataset,
-    layer: l.id,
-    id: l.dataset,
-    label: l.name,
-    value: l.id
+  return datasets.filter(d => d.isBoundary).map(d => ({
+    name: d.name,
+    dataset: d.id,
+    layers: d.layers.map(l => l.id),
+    id: d.id,
+    label: d.name,
+    value: d.layer
   }));
 });
 
