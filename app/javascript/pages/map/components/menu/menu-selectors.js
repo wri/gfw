@@ -5,7 +5,11 @@ import flatten from 'lodash/flatten';
 import { getActiveDatasetsState } from 'components/map-v2/selectors';
 
 import { initialState } from './menu-reducers';
-import menuSections, { bottomSections } from './menu-sections';
+import {
+  datasetsSections,
+  searchSections,
+  mobileSections
+} from './menu-sections';
 
 const getMenuUrlState = state =>
   (state.location.query && state.location.query.menu) || null;
@@ -14,14 +18,25 @@ const getLoading = state =>
 const getCountries = state => state.countryData.countries || null;
 const getDatasets = state => state.datasets.datasets || null;
 
+// setting from state
 export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
   ...initialState,
   ...urlState
 }));
 
-export const getSelectedSection = createSelector(
+export const getMenuSection = createSelector(
   [getMenuSettings],
-  settings => settings.selectedSection
+  settings => settings.menuSection
+);
+
+export const getSelectedCountries = createSelector(
+  [getMenuSettings],
+  settings => settings.menuSection
+);
+
+export const getDatasetCategory = createSelector(
+  [getMenuSettings],
+  settings => settings.datasetCategory
 );
 
 export const getSearch = createSelector(
@@ -36,9 +51,10 @@ export const getSearchType = createSelector(
 
 export const getExploreSection = createSelector(
   [getMenuSettings],
-  settings => settings.exploreSection
+  settings => settings.exploreType
 );
 
+// get countries by datasets
 export const getAvailableCountries = createSelector(
   [getCountries, getDatasets],
   (countries, datasets) => {
@@ -49,28 +65,27 @@ export const getAvailableCountries = createSelector(
 );
 
 export const getUnselectedCountries = createSelector(
-  [getAvailableCountries, getMenuSettings],
-  (countries, settings) => {
+  [getAvailableCountries, getSelectedCountries],
+  (countries, selectedCountries) => {
     if (!countries) return null;
-    const { selectedCountries } = settings;
     return countries.filter(c => !selectedCountries.includes(c.value));
   }
 );
 
 export const getActiveCountries = createSelector(
-  [getCountries, getMenuSettings],
-  (countries, settings) => {
+  [getCountries, getSelectedCountries],
+  (countries, selectedCountries) => {
     if (!countries) return null;
-    const { selectedCountries } = settings;
     return countries.filter(c => selectedCountries.includes(c.value));
   }
 );
 
-export const getSections = createSelector(
+// build datasets with available countries data
+export const getDatasetSections = createSelector(
   [getDatasets, getActiveCountries],
   (datasets, countries) => {
-    if (isEmpty(datasets)) return menuSections;
-    return menuSections.map(s => {
+    if (isEmpty(datasets)) return datasetsSections;
+    return datasetsSections.map(s => {
       const { slug, subCategories } = s;
       const sectionDatasets =
         datasets && datasets.filter(d => d.tags.includes(slug));
@@ -105,9 +120,9 @@ export const getSections = createSelector(
   }
 );
 
-export const getSectionsWithData = createSelector(
-  [getSections, getActiveDatasetsState],
-  (sections, activeDatasets) => {
+export const getDatasetSectionsWithData = createSelector(
+  [getDatasetSections, getActiveDatasetsState, getDatasetCategory],
+  (sections, activeDatasets, datasetCategory) => {
     if (!activeDatasets) return sections;
     const datasetIds = activeDatasets.map(d => d.dataset);
     return sections.map(s => {
@@ -115,6 +130,7 @@ export const getSectionsWithData = createSelector(
 
       return {
         ...s,
+        active: datasetCategory === s.category,
         layerCount:
           datasets &&
           datasets.filter(d => activeDatasets && datasetIds.includes(d.id))
@@ -141,13 +157,21 @@ export const getSectionsWithData = createSelector(
   }
 );
 
+export const getAllSections = createSelector(
+  [getDatasetSectionsWithData],
+  datasetSections => {
+    if (!datasetSections) return null;
+    return datasetSections.concat(searchSections).concat(mobileSections);
+  }
+);
+
 export const getActiveSection = createSelector(
-  [getSectionsWithData, getSelectedSection],
-  (sections, selectedSection) => {
-    if (!sections || !selectedSection) return null;
-    return sections
-      .concat(bottomSections)
-      .find(s => s.slug === selectedSection);
+  [getAllSections, getMenuSection, getDatasetCategory],
+  (sections, menuSection, datasetCategory) => {
+    if (!sections || !menuSection) return null;
+    return sections.find(
+      s => s.category === datasetCategory || s.slug === menuSection
+    );
   }
 );
 
@@ -179,11 +203,26 @@ export const getZeroDataCountries = createSelector(
   }
 );
 
+export const getSearchSections = createSelector([getMenuSection], menuSection =>
+  searchSections.map(s => ({
+    ...s,
+    active: menuSection === s.slug
+  }))
+);
+
+export const getMobileSections = createSelector([getMenuSection], menuSection =>
+  mobileSections.map(s => ({
+    ...s,
+    active: menuSection === s.slug
+  }))
+);
+
 export const getMenuProps = createStructuredSelector({
-  sections: getSectionsWithData,
-  bottomSections: () => bottomSections,
+  sections: getDatasetSectionsWithData,
+  searchSections: getSearchSections,
+  mobileSections: getMobileSections,
   activeSection: getActiveSectionWithData,
-  selectedSection: getSelectedSection,
+  menuSection: getMenuSection,
   countriesWithoutData: getZeroDataCountries,
   exploreSection: getExploreSection,
   countries: getUnselectedCountries,

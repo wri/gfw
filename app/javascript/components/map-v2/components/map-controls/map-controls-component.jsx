@@ -36,7 +36,7 @@ class MapControlsButtons extends PureComponent {
       settings: { hidePanels }
     } = this.props;
     setMapSettings({ hidePanels: !hidePanels });
-    setMenuSettings({ selectedSection: '' });
+    setMenuSettings({ menuSection: '' });
     setRecentImagerySettings({
       visible: false
     });

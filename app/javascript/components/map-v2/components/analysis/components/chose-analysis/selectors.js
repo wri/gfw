@@ -6,7 +6,7 @@ import {
   getActiveDatasetsState,
   getDraw
 } from 'components/map-v2/selectors';
-import { getShowDraw } from 'components/map-v2/components/data-analysis-menu/selectors';
+import { getShowDraw } from 'components/map-v2/components/analysis/selectors';
 
 export const selectError = state => state.analysis.error;
 export const selectErrorMessage = state => state.analysis.errorMessage;

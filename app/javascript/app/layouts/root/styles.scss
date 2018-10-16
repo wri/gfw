@@ -21,12 +21,25 @@
   }
 
   &.-map {
-    .page {
-      min-height: 100vh;
-      width: calc(100% - 76px);
+    .map-menu {
       position: absolute;
+      bottom: 0;
+      left: 0;
       right: 0;
+    }
+
+    .page {
+      height: calc(100% - 50px);
+      position: absolute;
+      width: 100%;
       background-color: $ocean;
+      top: 0;
+
+      @media screen and (min-width: $screen-m) {
+        width: calc(100% - 76px);
+        right: 0;
+        min-height: 100vh;
+      }
     }
 
     .page-loader {
@@ -51,7 +64,7 @@
 
     &.-map {
       .page {
-        min-height: calc(100vh - 60px);
+        min-height: calc(100% - 60px);
       }
     }
   }

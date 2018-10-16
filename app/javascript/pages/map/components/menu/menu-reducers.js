@@ -2,8 +2,9 @@ import * as actions from './menu-actions';
 
 export const initialState = {
   selectedCountries: [],
-  selectedSection: '',
-  exploreSection: 'topics',
+  menuSection: '',
+  datasetCategory: '',
+  exploreType: 'topics',
   searchType: 'dataset',
   search: '',
   locations: [],

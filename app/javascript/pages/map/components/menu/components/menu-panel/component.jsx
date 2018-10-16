@@ -1,23 +1,20 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
 
-import './menu-flap-styles.scss';
+import './styles.scss';
 
 class MenuFlap extends PureComponent {
   render() {
-    const { section, isBig, onClickClose, children } = this.props;
+    const { className, isBig, onClose, children } = this.props;
 
     return (
-      <div
-        className={`c-menu-flap ${section ? '--showed' : ''} ${
-          isBig ? '--big' : ''
-        }`}
-      >
-        <button className="c-menu-flap__close" onClick={onClickClose}>
-          <Icon icon={closeIcon} />
+      <div className={cx('c-menu-panel', { big: isBig }, className)}>
+        <button className="close-menu" onClick={onClose}>
+          <Icon icon={closeIcon} className="icon-close-panel" />
           {name}
         </button>
         {children}
@@ -28,9 +25,9 @@ class MenuFlap extends PureComponent {
 
 MenuFlap.propTypes = {
   children: PropTypes.node,
-  section: PropTypes.string,
   isBig: PropTypes.bool,
-  onClickClose: PropTypes.func
+  className: PropTypes.string,
+  onClose: PropTypes.func
 };
 
 export default MenuFlap;

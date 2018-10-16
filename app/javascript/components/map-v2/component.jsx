@@ -10,7 +10,7 @@ import Tip from 'components/ui/tip';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Icon from 'components/ui/icon';
-import iconCross from 'assets/icons/close.svg';
+import iconCrosshair from 'assets/icons/crosshair.svg';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
@@ -70,7 +70,7 @@ class MapComponent extends PureComponent {
 
     return (
       <div
-        className={cx()}
+        className="c-map"
         style={{ backgroundColor: basemap.color }}
         onMouseOver={() =>
           oneClickAnalysisActive &&
@@ -79,6 +79,7 @@ class MapComponent extends PureComponent {
         onMouseOut={() => handleShowTooltip(false, '')}
       >
         <Tooltip
+          className="map-tooltip"
           theme="tip"
           hideOnClick
           html={
@@ -97,7 +98,11 @@ class MapComponent extends PureComponent {
           open={showTooltip}
         >
           <Map
-            customClass={cx('c-map', { analysis: analysisActive }, { embed })}
+            customClass={cx(
+              'map-wrapper',
+              { analysis: analysisActive },
+              { embed }
+            )}
             onReady={map => {
               this.map = map;
             }}
@@ -122,7 +127,7 @@ class MapComponent extends PureComponent {
           >
             {map => (
               <Fragment>
-                <LayerManagerComponent
+                {/* <LayerManagerComponent
                   map={map}
                   handleMapInteraction={handleMapInteraction}
                   handleRecentImageryTooltip={handleRecentImageryTooltip}
@@ -130,15 +135,15 @@ class MapComponent extends PureComponent {
                 />
                 <Popup map={map} />
                 <MapControlButtons className="map-controls" embed={embed} />
-                {draw && <MapDraw map={map} />}
+                {draw && <MapDraw map={map} />} */}
               </Fragment>
             )}
           </Map>
         </Tooltip>
-        {!hidePanels && (
+        {/* {!hidePanels && (
           <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
         )}
-        <Icon className="icon-crosshair" icon={iconCross} />
+        <Icon className="icon-crosshair" icon={iconCrosshair} />
         <MapAttributions className="map-attributions" />
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
@@ -146,7 +151,7 @@ class MapComponent extends PureComponent {
         {!loading &&
           error && (
             <NoContent message="An error occured. Please try again later." />
-          )}
+          )} */}
       </div>
     );
   }

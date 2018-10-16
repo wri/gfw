@@ -1,0 +1,50 @@
+@import '~styles/settings';
+
+$map-menu-items-size: rem(76px);
+$map-menu-panel-width: rem(290px);
+$map-menu-panel-width-big: rem(550px);
+
+.c-menu-panel {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 100%;
+  background-color: $white;
+  z-index: 12;
+  box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
+
+  @media screen and (min-width: $screen-m) {
+    height: 100%;
+    width: $map-menu-panel-width;
+    transform: translateX(#{$map-menu-items-size - $map-menu-panel-width-big});
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+
+    &.big {
+      width: $map-menu-panel-width-big;
+    }
+
+    &.active {
+      transform: translateX($map-menu-items-size);
+    }
+  }
+
+  .close-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: rem(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    cursor: pointer;
+    z-index: 1;
+
+    .icon-close-panel {
+      width: rem(12px);
+      height: rem(12px);
+      fill: $warm-grey;
+    }
+  }
+}

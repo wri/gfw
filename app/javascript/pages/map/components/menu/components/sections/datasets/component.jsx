@@ -5,9 +5,9 @@ import isEmpty from 'lodash/isEmpty';
 import NoContent from 'components/ui/no-content';
 
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
-import MenuBlock from 'pages/map/components/menu/components/menu-block';
 import Pill from 'components/ui/pill';
 import Dropdown from 'components/ui/dropdown';
+import DatasetSection from './dataset-section';
 
 import './styles.scss';
 
@@ -36,13 +36,13 @@ class Datasets extends PureComponent {
   render() {
     const {
       name,
+      countries,
+      selectedCountries,
+      countriesWithoutData,
       datasets,
       subCategories,
       onToggleLayer,
-      onInfoClick,
-      countries,
-      selectedCountries,
-      countriesWithoutData
+      onInfoClick
     } = this.props;
 
     return (
@@ -95,7 +95,7 @@ class Datasets extends PureComponent {
           )}
         {subCategories
           ? subCategories.map(subCat => (
-            <MenuBlock key={subCat.slug} {...subCat}>
+            <DatasetSection key={subCat.slug} {...subCat}>
               {!isEmpty(subCat.datasets) ? (
                 subCat.datasets.map(d => (
                   <LayerToggle
@@ -113,7 +113,7 @@ class Datasets extends PureComponent {
                   message="No datasets available"
                 />
               )}
-            </MenuBlock>
+            </DatasetSection>
           ))
           : datasets.map((d, i) => (
             <LayerToggle

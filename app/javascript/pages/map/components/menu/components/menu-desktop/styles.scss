@@ -1,0 +1,29 @@
+@import '~styles/settings.scss';
+
+$map-menu-items-size: rem(76px);
+
+.c-menu-desktop {
+  height: 100%;
+  overflow-y: scroll;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  width: $map-menu-items-size;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: rem(1px);
+    height: 100%;
+    background-color: $white-calcium;
+    z-index: 2;
+  }
+
+  @media screen and (min-width: $screen-m) {
+    height: calc(100% - #{$map-menu-items-size});
+  }
+}

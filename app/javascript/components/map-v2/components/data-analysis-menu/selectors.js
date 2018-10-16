@@ -1,110 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import compact from 'lodash/compact';
-import groupBy from 'lodash/groupBy';
 
 import { getActiveSection } from 'pages/map/components/menu/menu-selectors';
 import {
-  getAllBoundaries,
-  getActiveBoundaryDatasets,
-  getAllLayers
-} from 'components/map-v2/selectors';
+  getShowAnalysis,
+  getHidden
+} from 'components/map-v2/components/analysis/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
-
-import { initialState } from './reducers';
-
-const selectAnalysisUrlState = state =>
-  (state.location.query && state.location.query.analysis) || null;
-const selectLoading = state =>
-  state.analysis.loading ||
-  state.datasets.loading ||
-  state.geostore.loading ||
-  state.draw.loading;
-const selectLocation = state => state.location && state.location.payload;
-const selectQuery = state => state.location && state.location.query;
-const selectError = state => state.analysis.error;
-export const selectDrawPolygon = state => state.draw.geostoreId;
-
-export const getAnalysisSettings = createSelector(
-  [selectAnalysisUrlState],
-  urlState => ({
-    ...initialState.settings,
-    ...urlState
-  })
-);
-
-export const getShowAnalysis = createSelector(
-  getAnalysisSettings,
-  settings => settings.showAnalysis
-);
-
-export const getHidden = createSelector(
-  getAnalysisSettings,
-  settings => settings.hidden
-);
-
-export const getShowDraw = createSelector(
-  getAnalysisSettings,
-  settings => settings.showDraw
-);
-
-export const getLayerEndpoints = createSelector(
-  [getAllLayers, selectLocation],
-  (layers, location) => {
-    if (!layers || !layers.length) return null;
-    const { type, adm2 } = location;
-    const routeType = type === 'country' ? 'admin' : type;
-    const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
-
-    const endpoints = compact(
-      layers.filter(l => l.analysisConfig).map(l => {
-        const analysisConfig =
-          l.analysisConfig.find(
-            a =>
-              a.type === routeType ||
-              (routeType === 'use' && a.type === 'geostore')
-          ) || {};
-        const { params, decodeParams } = l;
-
-        return {
-          version: analysisConfig.version || 'v1',
-          slug: analysisConfig.service,
-          params: {
-            ...(analysisConfig.service === 'umd-loss-gain' &&
-              lossLayer && {
-                ...lossLayer.decodeParams
-              }),
-            ...decodeParams,
-            ...params,
-            query: analysisConfig.query
-          }
-        };
-      })
-    );
-
-    const groupedEndpoints = groupBy(endpoints, 'slug');
-    const parsedEndpoints = Object.keys(groupedEndpoints).map(slug => {
-      let params = {};
-      groupedEndpoints[slug].forEach(e => {
-        params = {
-          ...params,
-          ...e.params
-        };
-      });
-
-      return {
-        slug,
-        params,
-        version: groupedEndpoints[slug][0].version
-      };
-    });
-
-    return adm2
-      ? parsedEndpoints.filter(e => !e.slug.includes('forma'))
-      : parsedEndpoints;
-  }
-);
 
 export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
   {
@@ -121,19 +24,9 @@ export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
   }
 ]);
 
-export const getAnalysisProps = createStructuredSelector({
-  settings: getAnalysisSettings,
+export const getDataAnalysisMenuProps = createStructuredSelector({
   showAnalysis: getShowAnalysis,
-  showDraw: getShowDraw,
   menuSection: getActiveSection,
-  endpoints: getLayerEndpoints,
-  loading: selectLoading,
-  error: selectError,
   links: getMenuLinks,
-  boundaries: getAllBoundaries,
-  activeBoundary: getActiveBoundaryDatasets,
-  location: selectLocation,
-  query: selectQuery,
-  hidden: getHidden,
-  drawnGeostoreId: selectDrawPolygon
+  hidden: getHidden
 });

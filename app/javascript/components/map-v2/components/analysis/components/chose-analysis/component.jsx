@@ -38,14 +38,12 @@ class ChoseAnalysis extends PureComponent {
         <div className="layer-description">
           One-click analysis is also available by default for most data layers
           under the{' '}
-          <button
-            onClick={() => setMenuSettings({ selectedSection: 'landUse' })}
-          >
+          <button onClick={() => setMenuSettings({ menuSection: 'landUse' })}>
             Land Use
           </button>{' '}
           and{' '}
           <button
-            onClick={() => setMenuSettings({ selectedSection: 'biodiversity' })}
+            onClick={() => setMenuSettings({ menuSection: 'biodiversity' })}
           >
             Biodiversity
           </button>{' '}

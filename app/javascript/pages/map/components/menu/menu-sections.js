@@ -4,13 +4,45 @@ import landUse from 'assets/icons/land-use.svg';
 import climate from 'assets/icons/climate.svg';
 import biodiversity from 'assets/icons/biodiversity.svg';
 import explore from 'assets/icons/explore.svg';
+import layers from 'assets/icons/layers.svg';
+import data from 'assets/icons/globe.svg';
+import analysis from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
+import Analysis from 'components/map-v2/components/analysis';
+import Legend from 'components/map-v2/components/legend';
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 import Search from './components/sections/search';
 
-export const bottomSections = [
+export const mobileSections = [
+  {
+    slug: 'datasets',
+    name: 'LAYERS',
+    icon: data,
+    Component: Datasets
+  },
+  {
+    slug: 'data',
+    name: 'DATA',
+    icon: layers,
+    Component: Legend
+  },
+  {
+    slug: 'analysis',
+    name: 'ANALYSIS',
+    icon: analysis,
+    Component: Analysis
+  },
+  {
+    slug: 'search',
+    name: 'SEARCH',
+    icon: searchIcon,
+    Component: Search
+  }
+];
+
+export const searchSections = [
   {
     slug: 'explore',
     name: 'EXPLORE',
@@ -27,9 +59,10 @@ export const bottomSections = [
   }
 ];
 
-export default [
+export const datasetsSections = [
   {
-    slug: 'forestChange',
+    slug: 'datasets',
+    category: 'forestChange',
     name: 'FOREST CHANGE',
     icon: forestChange,
     Component: Datasets,
@@ -49,7 +82,8 @@ export default [
     ]
   },
   {
-    slug: 'landCover',
+    slug: 'datasets',
+    category: 'landCover',
     name: 'LAND COVER',
     icon: landCover,
     Component: Datasets,
@@ -61,7 +95,8 @@ export default [
     ]
   },
   {
-    slug: 'landUse',
+    slug: 'datasets',
+    category: 'landUse',
     name: 'LAND USE',
     icon: landUse,
     Component: Datasets,
@@ -85,7 +120,8 @@ export default [
     ]
   },
   {
-    slug: 'climate',
+    slug: 'datasets',
+    category: 'climate',
     name: 'CLIMATE',
     icon: climate,
     Component: Datasets,
@@ -105,7 +141,8 @@ export default [
     ]
   },
   {
-    slug: 'biodiversity',
+    slug: 'datasets',
+    category: 'biodiversity',
     name: 'BIODIVERSITY',
     icon: biodiversity,
     Component: Datasets,
