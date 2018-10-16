@@ -27,6 +27,7 @@ export const buildGadm36Id = (country, region, subRegion) =>
   }`;
 
 export const parseGadm36Id = gid => {
+  if (!gid) return null;
   const ids = gid.split('.');
   const adm0 = ids[0] || null;
   const adm1 = ids[1] && ids[1].split('_')[0];
