@@ -24,10 +24,10 @@ $button-height: rem(40px);
 
   &.disabled {
     cursor: not-allowed;
-    background-color: $grey-light;
+    background-color: $grey-dark;
 
     &:hover {
-      background-color: $grey-light;
+      background-color: $grey-dark;
     }
   }
 

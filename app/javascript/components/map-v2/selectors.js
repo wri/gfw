@@ -13,6 +13,11 @@ const getDatasets = state => state.datasets.datasets;
 const getLoading = state => state.datasets.loading || state.geostore.loading;
 const getGeostore = state => state.geostore.geostore || null;
 const getQuery = state => (state.location && state.location.query) || null;
+const selectEmbed = state =>
+  (state.location &&
+    state.location.pathname &&
+    state.location.pathname.includes('embed')) ||
+  null;
 const selectLocation = state =>
   (state.location && state.location.payload) || null;
 // analysis selects
@@ -50,6 +55,11 @@ export const getDraw = createSelector(
 export const getBbox = createSelector(
   getMapSettings,
   settings => settings.bbox
+);
+
+export const getHidePanels = createSelector(
+  getMapSettings,
+  settings => settings.hidePanels
 );
 
 export const getCanBound = createSelector(
@@ -344,5 +354,7 @@ export const getMapProps = createStructuredSelector({
   tileGeoJSON: getTileGeoJSON,
   draw: getDraw,
   analysisActive: getShowAnalysis,
-  oneClickAnalysisActive: getOneClickAnalysisActive
+  oneClickAnalysisActive: getOneClickAnalysisActive,
+  embed: selectEmbed,
+  hidePanels: getHidePanels
 });

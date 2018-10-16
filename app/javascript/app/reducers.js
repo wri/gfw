@@ -17,6 +17,7 @@ import { reduxModule as Popup } from 'components/map-v2/components/popup';
 import { reduxModule as Draw } from 'components/map-v2/components/draw';
 import { reduxModule as Header } from 'pages/dashboards/header';
 import { reduxModule as MapOld } from 'components/map';
+import { reduxModule as MapMenu } from 'pages/map/components/menu';
 
 // Projects (About and SGF)
 import { reduxModule as Impacts } from 'pages/about/section-impacts';
@@ -55,6 +56,7 @@ const componentsReducers = {
   header: handleModule(Header),
   share: handleModule(Share),
   map: handleModule(MapOld),
+  mapMenu: handleModule(MapMenu),
   // modals
   modalVideo: handleModule(ModalVideo),
   modalMeta: handleModule(ModalMeta),

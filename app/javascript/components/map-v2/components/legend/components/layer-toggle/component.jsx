@@ -66,9 +66,9 @@ class LayerToggle extends PureComponent {
                   html={<Tip text={description} />}
                 >
                   <Button
-                    className={`theme-button-tiny ${
-                      small ? 'theme-button-grey-filled' : ''
-                    } square info-button ${!metadata ? '-help' : ''}`}
+                    className={`theme-button-tiny theme-button-grey-filled square info-button ${
+                      !metadata ? '-help' : ''
+                    }`}
                     onClick={metadata && (() => onInfoClick(metadata))}
                   >
                     <Icon icon={metadata ? infoIcon : helpIcon} />

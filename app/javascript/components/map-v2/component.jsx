@@ -17,6 +17,7 @@ import MapControlButtons from './components/map-controls';
 import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
 import LayerManagerComponent from './components/layer-manager';
+import DataAnalysisMenu from './components/data-analysis-menu';
 
 import './styles.scss';
 
@@ -63,7 +64,8 @@ class MapComponent extends PureComponent {
       handleMapInteraction,
       oneClickAnalysisActive,
       draw,
-      embed
+      embed,
+      hidePanels
     } = this.props;
 
     return (
@@ -127,16 +129,15 @@ class MapComponent extends PureComponent {
                   handleShowTooltip={handleShowTooltip}
                 />
                 <Popup map={map} />
-                <MapControlButtons
-                  className="map-controls"
-                  map={map}
-                  embed={embed}
-                />
+                <MapControlButtons className="map-controls" embed={embed} />
                 {draw && <MapDraw map={map} />}
               </Fragment>
             )}
           </Map>
         </Tooltip>
+        {!hidePanels && (
+          <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
+        )}
         <Icon className="icon-crosshair" icon={iconCross} />
         <MapAttributions className="map-attributions" />
         {loading && (
@@ -167,7 +168,8 @@ MapComponent.propTypes = {
   analysisActive: PropTypes.bool,
   oneClickAnalysisActive: PropTypes.bool,
   draw: PropTypes.bool,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
+  hidePanels: PropTypes.bool
 };
 
 export default MapComponent;

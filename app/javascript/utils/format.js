@@ -27,6 +27,7 @@ export const buildGadm36Id = (country, region, subRegion) =>
   }`;
 
 export const parseGadm36Id = gid => {
+  if (!gid) return null;
   const ids = gid.split('.');
   const adm0 = ids[0] || null;
   const adm1 = ids[1] && ids[1].split('_')[0];
@@ -95,3 +96,6 @@ export const buildLocationName = (
   }
   return activeLocation && activeLocation.label;
 };
+
+export const buildLocationFromNames = (name_0, name_1, name_2) =>
+  `${name_2 ? `${name_2}, ` : ''}${name_1 ? `${name_1}, ` : ''}${name_0}`;

@@ -71,7 +71,6 @@ class Datasets extends PureComponent {
                   noSelectedValue="+ Add country"
                   options={countries}
                   onChange={this.handleAddCountry}
-                  searchable
                 />
               )}
           </div>

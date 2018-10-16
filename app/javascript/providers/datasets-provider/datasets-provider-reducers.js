@@ -1,7 +1,7 @@
 import * as actions from './datasets-provider-actions';
 
 export const initialState = {
-  loading: false,
+  loading: true,
   error: false,
   datasets: []
 };

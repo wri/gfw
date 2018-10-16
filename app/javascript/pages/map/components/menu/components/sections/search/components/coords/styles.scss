@@ -1,0 +1,25 @@
+@import '~styles/settings.scss';
+
+$map-menu-items-size: rem(76px);
+
+.c-coords {
+  .hemisphere-select {
+    width: 50px;
+    min-width: 50px;
+    display: inline-block;
+    margin-bottom: rem(20px);
+    margin-left: rem(5px);
+    margin-top: rem(5px);
+  }
+
+  .input-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: rem(10px);
+
+    input {
+      text-align: right;
+    }
+  }
+}

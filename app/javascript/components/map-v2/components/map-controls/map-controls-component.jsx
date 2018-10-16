@@ -71,7 +71,6 @@ class MapControlsButtons extends PureComponent {
 
   handleToggleRecentImagery = () => {
     const {
-      map,
       setMapSettings,
       setRecentImagerySettings,
       recentImageryDataset,
@@ -88,14 +87,12 @@ class MapControlsButtons extends PureComponent {
         isRecentImagery: true
       });
     setMapSettings({
-      datasets: newDatasets
+      datasets: newDatasets,
+      zoom: !recentActive && zoom < 9 ? 9 : zoom
     });
     setRecentImagerySettings({
       visible: false
     });
-    if (!recentActive && zoom < 9) {
-      map.setZoom(9);
-    }
   };
 
   setBasemapsRef = ref => {
@@ -111,11 +108,11 @@ class MapControlsButtons extends PureComponent {
       className,
       setShareModal,
       settings,
-      map,
       recentSettings,
       recentLoading,
       recentActive,
-      datasetsLoading
+      datasetsLoading,
+      setMapSettings
     } = this.props;
     const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
     const { visible } = recentSettings || {};
@@ -200,7 +197,7 @@ class MapControlsButtons extends PureComponent {
         <div className="controls-wrapper">
           <Button
             theme="theme-button-map-control"
-            onClick={() => map.setZoom(zoom - 1)}
+            onClick={() => setMapSettings({ zoom: zoom - 1 })}
             tooltip={{ text: 'Zoom out' }}
             disabled={zoom === minZoom}
           >
@@ -208,7 +205,7 @@ class MapControlsButtons extends PureComponent {
           </Button>
           <Button
             theme="theme-button-map-control"
-            onClick={() => map.setZoom(zoom + 1)}
+            onClick={() => setMapSettings({ zoom: zoom + 1 })}
             tooltip={{ text: 'Zoom in' }}
             disabled={zoom === maxZoom}
           >
@@ -270,7 +267,6 @@ MapControlsButtons.propTypes = {
   setMapSettings: PropTypes.func,
   setShareModal: PropTypes.func,
   settings: PropTypes.object,
-  map: PropTypes.object,
   active: PropTypes.bool,
   setMenuSettings: PropTypes.func,
   recentSettings: PropTypes.object,

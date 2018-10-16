@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import MenuFlap from 'pages/map/components/menu/components/menu-flap';
@@ -46,21 +46,15 @@ class Menu extends PureComponent {
       bottomSections,
       activeSection,
       selectedSection,
-      onToggleLayer,
-      setModalMeta,
-      activeDatasets,
-      loading,
-      countries,
       setMenuSettings,
-      setMapSettings,
-      selectedCountries,
-      countriesWithoutData,
-      exploreSection
+      loading,
+      setModalMeta,
+      ...rest
     } = this.props;
     const { Component } = activeSection || {};
 
     return (
-      <div>
+      <Fragment>
         <div className="c-map-menu">
           <div
             className="menu-tabs"
@@ -79,20 +73,14 @@ class Menu extends PureComponent {
             !loading && (
               <Component
                 {...activeSection}
-                onToggleLayer={onToggleLayer}
-                onInfoClick={setModalMeta}
-                countries={countries}
                 setMenuSettings={setMenuSettings}
-                setMapSettings={setMapSettings}
-                selectedCountries={selectedCountries}
-                countriesWithoutData={countriesWithoutData}
-                activeDatasets={activeDatasets}
-                exploreSection={exploreSection}
+                onInfoClick={setModalMeta}
+                {...rest}
               />
             )}
           {loading && <Loader />}
         </MenuFlap>
-      </div>
+      </Fragment>
     );
   }
 }
@@ -111,6 +99,8 @@ Menu.propTypes = {
   countriesWithoutData: PropTypes.array,
   activeDatasets: PropTypes.array,
   setMapSettings: PropTypes.func,
+  handleClickLocation: PropTypes.func,
+  getLocationFromSearch: PropTypes.func,
   exploreSection: PropTypes.string,
   bottomSections: PropTypes.array
 };

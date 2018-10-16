@@ -4,7 +4,7 @@ import flatten from 'lodash/flatten';
 
 import { getActiveDatasetsState } from 'components/map-v2/selectors';
 
-import initialState from './menu-initial-state';
+import { initialState } from './menu-reducers';
 import menuSections, { bottomSections } from './menu-sections';
 
 const getMenuUrlState = state =>
@@ -22,6 +22,16 @@ export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
 export const getSelectedSection = createSelector(
   [getMenuSettings],
   settings => settings.selectedSection
+);
+
+export const getSearch = createSelector(
+  [getMenuSettings],
+  settings => settings.search
+);
+
+export const getSearchType = createSelector(
+  [getMenuSettings],
+  settings => settings.searchType
 );
 
 export const getExploreSection = createSelector(
@@ -179,5 +189,7 @@ export const getMenuProps = createStructuredSelector({
   countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
   activeDatasets: getActiveDatasetsState,
-  loading: getLoading
+  loading: getLoading,
+  search: getSearch,
+  searchType: getSearchType
 });

@@ -55,13 +55,13 @@
     flex-direction: column;
     background-color: rgba($white, 0.5);
     z-index: 1000;
+    padding-top: rem(30px);
 
     .cancel-analysis-btn {
       z-index: 1000;
       background-color: $error;
       width: rem(180px);
       margin-bottom: rem(10px);
-      margin-top: rem(50px);
     }
 
     .refresh-analysis-btn {
@@ -72,19 +72,15 @@
     }
 
     .error-message {
-      // margin-bottom: rem(20px);
       width: rem(200px);
       text-align: center;
       word-break: break-word;
     }
 
     &.fetching {
-      justify-content: flex-start;
+      justify-content: center;
+      padding-top: rem(80px);
       background-color: transparent;
-
-      .cancel-analysis-btn {
-        margin-top: rem(180px);
-      }
     }
   }
 

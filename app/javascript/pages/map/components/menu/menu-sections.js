@@ -8,6 +8,7 @@ import searchIcon from 'assets/icons/search.svg';
 
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
+import Search from './components/sections/search';
 
 export const bottomSections = [
   {
@@ -21,7 +22,8 @@ export const bottomSections = [
   {
     slug: 'search',
     name: 'SEARCH',
-    icon: searchIcon
+    icon: searchIcon,
+    Component: Search
   }
 ];
 
