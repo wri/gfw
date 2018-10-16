@@ -36,8 +36,8 @@ $map-menu-flap-width-big: rem(550px);
     border-radius: 2px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    box-shadow: -1px 0 3px -3px rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    z-index: 1;
 
     .c-icon {
       width: rem(12px);

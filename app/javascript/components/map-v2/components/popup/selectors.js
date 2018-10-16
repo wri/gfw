@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import { reverseLatLng } from 'utils/geoms';
 
 import { getActiveDatasetsState, getActiveLayers } from '../../selectors';
 
@@ -70,6 +71,7 @@ export const getCardData = createSelector(
 
     return {
       ...articleData,
+      bbox: reverseLatLng(JSON.parse(data.bbox).coordinates[0]),
       buttons: [
         {
           text: 'READ MORE',
@@ -77,7 +79,7 @@ export const getCardData = createSelector(
           theme: 'theme-button-light theme-button-small'
         },
         {
-          text: 'ANALYZE',
+          text: 'ZOOM',
           theme: 'theme-button-small'
         }
       ]

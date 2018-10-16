@@ -5,7 +5,6 @@ import upperFirst from 'lodash/upperFirst';
 import cx from 'classnames';
 
 import Map from 'wri-api-components/dist/map';
-
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Loader from 'components/ui/loader';
@@ -108,7 +107,8 @@ class MapComponent extends PureComponent {
                 ? {
                   bbox,
                   options: {
-                    padding: [200, 10]
+                    paddingTopLeft: [100, 100],
+                    paddingBottomRight: [50, 50]
                   }
                 }
                 : {}

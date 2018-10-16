@@ -119,7 +119,7 @@
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",
-    "layer-manager": "^1.12.0",
+    "layer-manager": "^1.12.1",
     "leaflet-draw": "^1.0.3",
     "lodash": "^4.17.10",
     "lodash-math": "0.0.7",
@@ -169,7 +169,7 @@
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
-    "wri-api-components": "^2.2.8",
+    "wri-api-components": "^2.2.10",
     "wri-json-api-serializer": "^1.0.1"
   }
 }

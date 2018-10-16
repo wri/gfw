@@ -69,16 +69,16 @@ export default [
         title: 'Commodities'
       },
       {
+        slug: 'conservation',
+        title: 'Conservation'
+      },
+      {
         slug: 'infrastructure',
         title: 'Infrastructure'
       },
       {
         slug: 'people',
         title: 'People'
-      },
-      {
-        slug: 'conservation',
-        title: 'Conservation'
       }
     ]
   },

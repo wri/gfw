@@ -21,13 +21,19 @@ const mapStateToProps = getRecentImageryProps;
 
 class RecentImageryContainer extends PureComponent {
   componentDidMount = () => {
-    const { active, position, dates, settings, getData } = this.props;
+    const {
+      active,
+      position,
+      dates,
+      settings,
+      getRecentImageryData
+    } = this.props;
     if (this.getDataSource) {
       this.getDataSource.cancel();
     }
     this.getDataSource = CancelToken.source();
     if (active) {
-      getData({
+      getRecentImageryData({
         ...position,
         start: dates.start,
         end: dates.end,
@@ -46,12 +52,13 @@ class RecentImageryContainer extends PureComponent {
       sources,
       dates,
       settings,
-      getData,
+      getRecentImageryData,
       getMoreTiles,
       position,
       loadingMoreTiles,
       resetRecentImageryData
     } = this.props;
+
     const isNewTile =
       activeTile &&
       !!activeTile.url &&
@@ -73,7 +80,7 @@ class RecentImageryContainer extends PureComponent {
         this.getDataSource.cancel();
       }
       this.getDataSource = CancelToken.source();
-      getData({
+      getRecentImageryData({
         ...position,
         start: dates.start,
         end: dates.end,
@@ -154,7 +161,7 @@ RecentImageryContainer.propTypes = {
   sources: PropTypes.array,
   dates: PropTypes.object,
   settings: PropTypes.object,
-  getData: PropTypes.func,
+  getRecentImageryData: PropTypes.func,
   getMoreTiles: PropTypes.func,
   datasets: PropTypes.array,
   setMapSettings: PropTypes.func,

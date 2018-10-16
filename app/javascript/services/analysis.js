@@ -5,9 +5,9 @@ import moment from 'moment';
 const REQUEST_URL = `${process.env.GFW_API}`;
 
 const QUERIES = {
-  umdAdmin: '/{slug}/admin/{location}{params}',
-  umdByType: '/{slug}/{type}/{location}{params}',
-  umdGeostore: '/{slug}{params}'
+  umdAdmin: '/{version}/{slug}/admin/{location}{params}',
+  umdByType: '/{version}/{slug}/{type}/{location}{params}',
+  umdGeostore: '/{version}/{slug}{params}'
 };
 
 const getLocationUrl = ({ adm0, adm1, adm2 }) =>
@@ -16,6 +16,7 @@ const getLocationUrl = ({ adm0, adm1, adm2 }) =>
 const buildAnalysisUrl = ({
   urlTemplate,
   slug,
+  version,
   type,
   adm0,
   adm1,
@@ -54,26 +55,11 @@ const buildAnalysisUrl = ({
     : '';
 
   return urlTemplate
-    .replace(
-      '{slug}',
-      slug === 'umd-loss-gain' && type === 'country' ? `v3/${slug}` : slug
-    )
+    .replace('{version}', version || 'v1')
+    .replace('{slug}', slug)
     .replace('{type}', type)
     .replace('{location}', location)
     .replace('{params}', `?${queryParams}`);
-};
-
-const useSlugs = {
-  gfw_oil_palm: 'oilpalm',
-  gfw_mining: 'mining',
-  gfw_wood_fiber: 'fiber',
-  gfw_logging: 'logging'
-};
-
-const endpointSlugs = {
-  umd: 'umd-loss-gain',
-  forma250gfw: 'forma250GFW',
-  'viirs-fires': 'viirs-active-fires'
 };
 
 export const fetchUmdLossGain = ({
@@ -96,7 +82,7 @@ export const fetchUmdLossGain = ({
           urlTemplate,
           ...endpoint,
           type,
-          adm0: Object.keys(useSlugs).includes(adm0) ? useSlugs[adm0] : adm0,
+          adm0,
           adm1,
           adm2
         })}`
@@ -111,14 +97,18 @@ export const fetchUmdLossGain = ({
     .then(
       axios.spread((...responses) =>
         responses.reduce((obj, response) => {
-          const fetchType = response.data.data.type;
-          const fetchKey = endpointSlugs[fetchType] || fetchType;
-          return {
-            ...obj,
-            [fetchKey]:
-              response.data.data.attributes.totals ||
-              response.data.data.attributes
-          };
+          const { data } = response.data;
+          const { attributes } = data || {};
+          if (attributes) {
+            const fetchType = data && data.type;
+            const fetchKey =
+              fetchType === 'umd' ? 'umd-loss-gain' : fetchType.toLowerCase();
+            return {
+              ...obj,
+              [fetchKey]: attributes
+            };
+          }
+          return obj;
         }, {})
       )
     );

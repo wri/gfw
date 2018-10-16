@@ -2,7 +2,6 @@ import request from 'utils/request';
 import { getIndicator } from 'utils/strings';
 
 const REQUEST_URL = process.env.GFW_API;
-const CARTO_API = process.env.CARTO_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
 const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
@@ -103,23 +102,21 @@ export const fetchGLADLatest = () => {
 };
 
 export const fetchFormaLatest = () => {
-  const url = 'https://api-dot-forma-250.appspot.com/tiles/latest';
+  const url = `${REQUEST_URL}/forma-alerts/latest`;
   return request.get(url, 3600, 'formaRequest');
 };
 
 export const fetchTerraLatest = () => {
-  const url = `https://production-api.globalforestwatch.org/query/bb80312e-b514-48ad-9252-336408603591/?sql=${
-    QUERIES.terraAlerts
-  }`;
+  const url = `${REQUEST_URL}/terrai-alerts/latest`;
   return request.get(url, 3600, 'terraRequest');
 };
 
 export const fetchSADLatest = () => {
-  const url = `${CARTO_API}/sql?q=${QUERIES.sadAlerts}`;
+  const url = `${REQUEST_URL}/v2/imazon-alerts/latest`;
   return request.get(url, 3600, 'sadRequest');
 };
 
 export const fetchGranChacoLatest = () => {
-  const url = `${CARTO_API}/sql?q=${QUERIES.granChaco}`;
+  const url = `${REQUEST_URL}/v2/guira-loss/latest`;
   return request.get(url, 3600, 'granChacoRequest');
 };

@@ -53,18 +53,22 @@ export const getLayerEndpoints = createSelector(
   [getAllLayers, selectLocation],
   (layers, location) => {
     if (!layers || !layers.length) return null;
-    const { type } = location;
+    const { type, adm2 } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
 
     const endpoints = compact(
       layers.filter(l => l.analysisConfig).map(l => {
-        const analysisConfig = l.analysisConfig.find(
-          a => a.type === routeType || a.type === 'geostore'
-        );
+        const analysisConfig =
+          l.analysisConfig.find(
+            a =>
+              a.type === routeType ||
+              (routeType === 'use' && a.type === 'geostore')
+          ) || {};
         const { params, decodeParams } = l;
 
         return {
+          version: analysisConfig.version || 'v1',
           slug: analysisConfig.service,
           params: {
             ...(analysisConfig.service === 'umd-loss-gain' &&
@@ -80,7 +84,7 @@ export const getLayerEndpoints = createSelector(
     );
 
     const groupedEndpoints = groupBy(endpoints, 'slug');
-    return Object.keys(groupedEndpoints).map(slug => {
+    const parsedEndpoints = Object.keys(groupedEndpoints).map(slug => {
       let params = {};
       groupedEndpoints[slug].forEach(e => {
         params = {
@@ -91,9 +95,14 @@ export const getLayerEndpoints = createSelector(
 
       return {
         slug,
-        params
+        params,
+        version: groupedEndpoints[slug][0].version
       };
     });
+
+    return adm2
+      ? parsedEndpoints.filter(e => !e.slug.includes('forma'))
+      : parsedEndpoints;
   }
 );
 
