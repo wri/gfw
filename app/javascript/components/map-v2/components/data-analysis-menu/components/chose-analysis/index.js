@@ -42,7 +42,7 @@ class ChoseAnalysisContainer extends PureComponent {
     if (boundaryId !== 'no-boundaries') {
       const newActiveDatasets = [
         {
-          layers: [boundaryItem.layer],
+          layers: boundaryItem.layers,
           dataset: boundaryItem.dataset,
           opacity: 1,
           visibility: true
