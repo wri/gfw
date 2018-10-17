@@ -101,8 +101,7 @@ export const fetchUmdLossGain = ({
           const { attributes } = data || {};
           if (attributes) {
             const fetchType = data && data.type;
-            const fetchKey =
-              fetchType === 'umd' ? 'umd-loss-gain' : fetchType.toLowerCase();
+            const fetchKey = fetchType.toLowerCase();
             return {
               ...obj,
               [fetchKey]: attributes

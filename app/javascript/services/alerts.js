@@ -102,7 +102,7 @@ export const fetchGLADLatest = () => {
 };
 
 export const fetchFormaLatest = () => {
-  const url = `${REQUEST_URL}/forma-alerts/latest`;
+  const url = `${REQUEST_URL}/forma250gfw/latest`;
   return request.get(url, 3600, 'formaRequest');
 };
 
