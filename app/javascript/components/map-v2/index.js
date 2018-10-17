@@ -8,8 +8,8 @@ import startCase from 'lodash/startCase';
 import MapComponent from './component';
 import { getMapProps } from './selectors';
 
-import * as popupActions from './components/popup/actions';
 import { setRecentImagerySettings } from './components/recent-imagery/recent-imagery-actions';
+import * as popupActions from './components/popup/actions';
 import * as ownActions from './actions';
 
 const actions = {
