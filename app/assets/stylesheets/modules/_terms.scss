@@ -19,7 +19,7 @@
     header {
       text-align: center;
       margin: 30px 0;
-        
+
       h2,h3 {
         span {
           display: block;
@@ -38,17 +38,29 @@
       }
     }
 
+    h2 {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    h3 {
+      margin: 30px 0 10px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
 
     // TEXT
     p {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
 
     // LISTS
     ol,ul {
       list-style-position: outside;
       margin-left: 25px;
-      
+      margin-bottom: 30px;
+
       &.-alphabetically {
         list-style-type: lower-alpha;
       }
@@ -60,21 +72,19 @@
       &.-decimal {
         list-style-type: decimal;
         > li {
-          padding-top: 20px;
-          
           h3 {
             font-weight: 500;
             margin-bottom: 10px;
           }
-        }      
+        }
       }
 
       &.-romanic {
         list-style-type: lower-roman;
       }
-    
-      li { 
-        margin-bottom: 10px; 
+
+      li {
+        margin-bottom: 10px;
       }
     }
 
