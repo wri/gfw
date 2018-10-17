@@ -71,6 +71,8 @@ class MapContainer extends PureComponent {
     // set analysis view if interaction changes
     if (
       oneClickAnalysisActive &&
+      selectedInteraction &&
+      selectedInteraction.data &&
       !isEqual(selectedInteraction, prevProps.selectedInteraction)
     ) {
       setAnalysisView(selectedInteraction);
