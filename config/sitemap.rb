@@ -19,6 +19,7 @@ SitemapGenerator::Sitemap.create do
   add '/contribute-data', :changefreq => 'weekly', :priority => 0.4
   add '/sitemap', :changefreq => 'weekly', :priority => 0.4
   add '/terms', :changefreq => 'weekly', :priority => 0.4
+  add '/privacy-policy', :changefreq => 'weekly', :priority => 0.4
 
   # external apps
   add '/howto', :changefreq => 'weekly', :priority => 0.4
