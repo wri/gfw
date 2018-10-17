@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
 
@@ -72,7 +73,7 @@ class MapContainer extends PureComponent {
     if (
       oneClickAnalysisActive &&
       selectedInteraction &&
-      selectedInteraction.data &&
+      !isEmpty(selectedInteraction.data) &&
       !isEqual(selectedInteraction, prevProps.selectedInteraction)
     ) {
       setAnalysisView(selectedInteraction);
