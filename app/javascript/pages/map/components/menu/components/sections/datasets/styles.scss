@@ -41,13 +41,29 @@
     }
   }
 
-  .no-datasets-message {
-    font-size: rem(12px);
-    color: $slate;
-    margin-bottom: rem(25px);
+  .no-datasets-legend {
+    display: flex;
 
-    strong {
-      font-weight: 500;
+    .legend-dot {
+      background-color: #d4d4d4;
+      height: rem(10px);
+      min-height: rem(10px);
+      width: rem(10px);
+      min-width: rem(10px);
+      border-radius: 50%;
+      display: block;
+      margin-right: rem(5px);
+      margin-top: rem(4px);
+    }
+
+    .no-datasets-message {
+      font-size: rem(12px);
+      color: $slate;
+      margin-bottom: rem(25px);
+
+      strong {
+        font-weight: 500;
+      }
     }
   }
 
