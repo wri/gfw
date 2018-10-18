@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import startCase from 'lodash/startCase';
+import { SCREEN_M } from 'utils/constants';
 import upperFirst from 'lodash/upperFirst';
 import cx from 'classnames';
 
@@ -11,6 +12,7 @@ import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Icon from 'components/ui/icon';
 import iconCrosshair from 'assets/icons/crosshair.svg';
+import MediaQuery from 'react-responsive';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
@@ -78,80 +80,90 @@ class MapComponent extends PureComponent {
         }
         onMouseOut={() => handleShowTooltip(false, '')}
       >
-        <Tooltip
-          className="map-tooltip"
-          theme="tip"
-          hideOnClick
-          html={
-            <Tip
-              className="map-hover-tooltip"
-              text={
-                typeof tooltipData === 'string'
-                  ? this.renderInfoTooltip(tooltipData)
-                  : this.renderDataTooltip(tooltipData)
-              }
-            />
-          }
-          position="top"
-          followCursor
-          animateFill={false}
-          open={showTooltip}
-        >
-          <Map
-            customClass={cx(
-              'map-wrapper',
-              { analysis: analysisActive },
-              { embed }
-            )}
-            onReady={map => {
-              this.map = map;
-            }}
-            mapOptions={mapOptions}
-            basemap={basemap}
-            label={label}
-            bounds={
-              bbox
-                ? {
-                  bbox,
-                  options: {
-                    paddingTopLeft: [100, 100],
-                    paddingBottomRight: [50, 50]
-                  }
+        <MediaQuery minDeviceWidth={SCREEN_M}>
+          {isDesktop => (
+            <Fragment>
+              <Tooltip
+                className="map-tooltip"
+                theme="tip"
+                hideOnClick
+                html={
+                  <Tip
+                    className="map-hover-tooltip"
+                    text={
+                      typeof tooltipData === 'string'
+                        ? this.renderInfoTooltip(tooltipData)
+                        : this.renderDataTooltip(tooltipData)
+                    }
+                  />
                 }
-                : {}
-            }
-            events={{
-              zoomend: handleMapMove,
-              dragend: handleMapMove
-            }}
-          >
-            {map => (
-              <Fragment>
-                {/* <LayerManagerComponent
-                  map={map}
-                  handleMapInteraction={handleMapInteraction}
-                  handleRecentImageryTooltip={handleRecentImageryTooltip}
-                  handleShowTooltip={handleShowTooltip}
-                />
-                <Popup map={map} />
-                <MapControlButtons className="map-controls" embed={embed} />
-                {draw && <MapDraw map={map} />} */}
-              </Fragment>
-            )}
-          </Map>
-        </Tooltip>
-        {/* {!hidePanels && (
-          <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
-        )}
-        <Icon className="icon-crosshair" icon={iconCrosshair} />
-        <MapAttributions className="map-attributions" />
-        {loading && (
-          <Loader className="map-loader" theme="theme-loader-light" />
-        )}
-        {!loading &&
-          error && (
-            <NoContent message="An error occured. Please try again later." />
-          )} */}
+                position="top"
+                followCursor
+                animateFill={false}
+                open={showTooltip}
+                disabled={!isDesktop}
+              >
+                <Map
+                  customClass={cx(
+                    'map-wrapper',
+                    { analysis: analysisActive },
+                    { embed }
+                  )}
+                  onReady={map => {
+                    this.map = map;
+                  }}
+                  mapOptions={mapOptions}
+                  basemap={basemap}
+                  label={label}
+                  bounds={
+                    bbox
+                      ? {
+                        bbox,
+                        options: {
+                          paddingTopLeft: [100, 100],
+                          paddingBottomRight: [50, 50]
+                        }
+                      }
+                      : {}
+                  }
+                  events={{
+                    zoomend: handleMapMove,
+                    dragend: handleMapMove
+                  }}
+                >
+                  {map => (
+                    <Fragment>
+                      <LayerManagerComponent
+                        map={map}
+                        handleMapInteraction={handleMapInteraction}
+                        handleRecentImageryTooltip={handleRecentImageryTooltip}
+                        handleShowTooltip={handleShowTooltip}
+                      />
+                      <Popup map={map} />
+                      <MapControlButtons
+                        className="map-controls"
+                        embed={embed}
+                      />
+                      {draw && <MapDraw map={map} />}
+                    </Fragment>
+                  )}
+                </Map>
+              </Tooltip>
+              {/* {!hidePanels && (
+                <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
+              )} */}
+              <Icon className="icon-crosshair" icon={iconCrosshair} />
+              <MapAttributions className="map-attributions" />
+              {loading && (
+                <Loader className="map-loader" theme="theme-loader-light" />
+              )}
+              {!loading &&
+                error && (
+                  <NoContent message="An error occured. Please try again later." />
+                )}
+            </Fragment>
+          )}
+        </MediaQuery>
       </div>
     );
   }

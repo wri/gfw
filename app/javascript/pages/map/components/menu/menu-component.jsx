@@ -64,6 +64,7 @@ class Menu extends PureComponent {
                     subCategories={activeSection.subCategories}
                     setMenuSettings={setMenuSettings}
                     onInfoClick={setModalMeta}
+                    isDesktop={isDesktop}
                     {...rest}
                   />
                 )}

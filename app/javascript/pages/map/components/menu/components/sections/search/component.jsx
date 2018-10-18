@@ -12,11 +12,11 @@ import './styles.scss';
 
 class MapMenuSearch extends PureComponent {
   render() {
-    const { searchType, setMenuSettings } = this.props;
+    const { searchType, setMenuSettings, isDesktop } = this.props;
 
     return (
       <div className="c-map-menu-search">
-        <h3>Search</h3>
+        {isDesktop && <h3>Search</h3>}
         <div className="search-type">
           Search for a
           <Dropdown
@@ -66,7 +66,8 @@ MapMenuSearch.propTypes = {
   setMenuLoading: PropTypes.func,
   handleClickLocation: PropTypes.func,
   setMapSettings: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  isDesktop: PropTypes.bool
 };
 
 export default MapMenuSearch;

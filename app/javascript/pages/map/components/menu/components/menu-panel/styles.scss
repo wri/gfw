@@ -49,6 +49,7 @@ $map-menu-panel-width-big: rem(550px);
 
   .panel-body {
     max-height: calc(80vh - 90px);
+    min-height: rem(250px);
     width: 100%;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;

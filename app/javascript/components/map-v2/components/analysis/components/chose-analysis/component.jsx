@@ -57,6 +57,7 @@ class ChoseAnalysis extends PureComponent {
     const {
       draw,
       setMapSettings,
+      setMenuSettings,
       setModalSources,
       errorMessage,
       error,
@@ -70,7 +71,12 @@ class ChoseAnalysis extends PureComponent {
         </div>
         <Button
           theme={draw ? 'theme-button-light' : ''}
-          onClick={() => setMapSettings({ draw: !draw })}
+          onClick={() => {
+            setMapSettings({ draw: !draw });
+            if (!draw) {
+              setMenuSettings({ menuSection: '' });
+            }
+          }}
         >
           {draw ? 'CANCEL' : 'START DRAWING'}
         </Button>

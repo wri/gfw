@@ -166,6 +166,7 @@ export const setDrawnAnalysis = createThunkAction(
   'setDrawnAnalysis',
   geostoreId => (dispatch, getState) => {
     const { query, type } = getState().location;
+    const { map } = query || {};
     dispatch({
       type,
       payload: {
@@ -175,7 +176,7 @@ export const setDrawnAnalysis = createThunkAction(
       query: {
         ...query,
         map: {
-          ...(query && query.map && query.map),
+          ...map,
           canBound: true,
           draw: false
         }

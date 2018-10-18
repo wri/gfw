@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .c-analysis {
+  position: relative;
+
   .analysis-loader {
     z-index: 10;
 

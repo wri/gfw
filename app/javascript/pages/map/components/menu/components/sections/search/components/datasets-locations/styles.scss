@@ -9,6 +9,12 @@
     text-transform: uppercase;
   }
 
+  .search-container {
+    position: relative;
+    margin-top: rem(20px);
+    min-height: rem(250px);
+  }
+
   .search-results {
     position: relative;
     min-height: rem(200px);
