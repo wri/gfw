@@ -17,7 +17,7 @@ import Search from './components/sections/search';
 
 export const mobileSections = [
   {
-    slug: 'datasets',
+    slug: 'layers',
     name: 'LAYERS',
     icon: data,
     Component: Datasets

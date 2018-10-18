@@ -31,7 +31,7 @@ export const getMenuSection = createSelector(
 
 export const getSelectedCountries = createSelector(
   [getMenuSettings],
-  settings => settings.menuSection
+  settings => settings.selectedCountries
 );
 
 export const getDatasetCategory = createSelector(
@@ -86,9 +86,9 @@ export const getDatasetSections = createSelector(
   (datasets, countries) => {
     if (isEmpty(datasets)) return datasetsSections;
     return datasetsSections.map(s => {
-      const { slug, subCategories } = s;
+      const { category, subCategories } = s;
       const sectionDatasets =
-        datasets && datasets.filter(d => d.tags.includes(slug));
+        datasets && datasets.filter(d => d.tags.includes(category));
       let subCategoriesWithDatasets = [];
       if (subCategories) {
         subCategoriesWithDatasets = subCategories.map(subCat => ({
@@ -125,9 +125,9 @@ export const getDatasetSectionsWithData = createSelector(
   (sections, activeDatasets, datasetCategory) => {
     if (!activeDatasets) return sections;
     const datasetIds = activeDatasets.map(d => d.dataset);
+
     return sections.map(s => {
       const { datasets, subCategories } = s;
-
       return {
         ...s,
         active: datasetCategory === s.category,
