@@ -58,7 +58,10 @@ class Explore extends PureComponent {
             {!loading &&
               data &&
               data.map(item => (
-                <div key={item.slug || item.id} className="column small-6">
+                <div
+                  key={item.slug || item.id}
+                  className="column small-12 medium-6"
+                >
                   <Card
                     className="map-card"
                     theme="theme-card-small"

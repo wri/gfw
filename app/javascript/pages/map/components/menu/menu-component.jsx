@@ -23,6 +23,7 @@ class Menu extends PureComponent {
       setMenuSettings,
       loading,
       setModalMeta,
+      menuSection,
       ...rest
     } = this.props;
     const { Component } = activeSection || {};
@@ -47,17 +48,20 @@ class Menu extends PureComponent {
               )}
             </div>
             <MenuPanel
-              className="menu-container"
+              active={!!menuSection}
+              className="menu-panel"
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
               }
               isBig={activeSection && activeSection.large}
+              name={activeSection && activeSection.name}
               isDesktop={isDesktop}
             >
               {Component &&
                 !loading && (
                   <Component
-                    {...activeSection}
+                    datasets={activeSection.datasets}
+                    subCategories={activeSection.subCategories}
                     setMenuSettings={setMenuSettings}
                     onInfoClick={setModalMeta}
                     {...rest}
@@ -91,7 +95,8 @@ Menu.propTypes = {
   setMapSettings: PropTypes.func,
   handleClickLocation: PropTypes.func,
   getLocationFromSearch: PropTypes.func,
-  exploreSection: PropTypes.string
+  exploreSection: PropTypes.string,
+  menuSection: PropTypes.string
 };
 
 export default Menu;

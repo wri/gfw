@@ -35,6 +35,12 @@ export const mobileSections = [
     Component: Analysis
   },
   {
+    slug: 'explore',
+    name: 'EXPLORE',
+    icon: explore,
+    Component: Explore
+  },
+  {
     slug: 'search',
     name: 'SEARCH',
     icon: searchIcon,

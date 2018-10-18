@@ -12,6 +12,7 @@ $subnav-height: rem(60px);
     justify-content: space-between;
     height: 100%;
     overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     padding: 0 $mobile-gutter;
     max-width: $max-width;

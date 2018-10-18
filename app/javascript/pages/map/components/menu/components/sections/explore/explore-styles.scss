@@ -10,6 +10,7 @@ $explore-nav-height: rem(40px);
   .content {
     height: calc(100vh - #{$explore-nav-height});
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     position: relative;
     padding: 0 rem(10px);
 

@@ -5,22 +5,14 @@
 
   .menu-tiles {
     z-index: 2;
+    background-color: $white-tree;
 
     @media screen and (min-width: $screen-m) {
-      height: 100vh;
+      height: 100%;
     }
   }
 
-  .menu-container {
-    z-index: 1;
-    max-height: calc(100% - 50px);
-    height: auto;
-    position: absolute;
-    bottom: rem(50px);
-    width: 100%;
-
-    @media screen and (min-width: $screen-m) {
-      height: 100vh;
-    }
+  .menu-panel {
+    padding-bottom: rem(50px);
   }
 }

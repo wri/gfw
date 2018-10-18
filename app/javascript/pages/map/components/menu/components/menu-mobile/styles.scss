@@ -4,14 +4,8 @@
   height: rem(50px);
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
-
-  .menu-tiles {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    width: calc(100% - 50px);
-  }
+  position: relative;
+  width: 100%;
 
   .mobile-tile {
     width: auto;

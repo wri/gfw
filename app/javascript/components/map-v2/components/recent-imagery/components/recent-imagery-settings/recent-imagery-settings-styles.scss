@@ -124,6 +124,7 @@
       flex-wrap: wrap;
       height: rem(180px);
       overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
       padding: 0 rem(20px);
 
       > * {

@@ -27,6 +27,7 @@
   .analysis {
     position: relative;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex: 1;
     max-height: calc(100vh - 70px);

@@ -9,6 +9,7 @@ $dd-font-size: rem(13px);
   z-index: 1;
   max-height: rem(400px);
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   cursor: pointer;
   color: rgba($slate, 0.5);
   font-size: $dd-font-size;

@@ -5,12 +5,15 @@ $map-menu-panel-width: rem(290px);
 $map-menu-panel-width-big: rem(550px);
 
 .c-menu-panel {
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
   width: 100%;
+  max-height: 80%;
   background-color: $white;
-  z-index: 12;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
   box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.25);
+  border-radius: rem(8px) rem(8px) 0 0;
 
   @media screen and (min-width: $screen-m) {
     height: 100%;
@@ -25,6 +28,31 @@ $map-menu-panel-width-big: rem(550px);
     &.active {
       transform: translateX($map-menu-items-size);
     }
+  }
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px $border;
+    height: rem(40px);
+    font-size: rem(12px);
+    font-weight: 500;
+    padding-left: rem(15px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    background-color: $white;
+  }
+
+  .panel-body {
+    max-height: 60vh;
+    width: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    margin-top: rem(40px);
   }
 
   .close-menu {

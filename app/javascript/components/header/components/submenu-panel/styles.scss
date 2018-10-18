@@ -31,6 +31,7 @@
 
     .apps-slider {
       overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
       display: flex;
       margin-left: rem(-15px);
       width: calc(100% + 30px);
