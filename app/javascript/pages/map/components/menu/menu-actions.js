@@ -76,6 +76,7 @@ export const handleClickLocation = createThunkAction(
   ({ gid_0, gid_1, gid_2 }) => (dispatch, getState) => {
     const query = getState().location.query || {};
     const location = parseGadm36Id(gid_2 || gid_1 || gid_0);
+    const { map, menu, analysis } = getState().location.query || {};
     if (location) {
       dispatch({
         type: MAP,
@@ -86,11 +87,15 @@ export const handleClickLocation = createThunkAction(
         query: {
           ...query,
           map: {
-            ...(query && query.map && query.map),
+            ...map,
             canBound: true
           },
+          menu: {
+            ...menu,
+            menuSection: ''
+          },
           analysis: {
-            ...(query && query.analysis && query.analysis),
+            ...analysis,
             showAnalysis: true
           }
         }

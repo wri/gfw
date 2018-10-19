@@ -23,11 +23,23 @@
     height: 100%;
     width: 100%;
     text-transform: uppercase;
+    font-size: rem(12px);
+
+    .category-button {
+      width: rem(60px);
+      height: rem(60px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $green-gfw;
+      border-radius: rem(35px);
+      margin-bottom: rem(10px);
+    }
 
     svg {
-      margin-bottom: rem(10px);
       width: rem(40px);
       height: rem(40px);
+      fill: $white;
     }
 
     &.active {
