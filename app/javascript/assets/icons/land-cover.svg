@@ -3,11 +3,11 @@
         <path id="a" d="M15 20.5V18h-3.47c.056.876.184 1.709.386 2.5H15zm0 2h-2.376A11.412 11.412 0 0 0 15 25.85V22.5zm-7.648-2h2.51c-.175-.8-.287-1.634-.335-2.5H7c0 .867.123 1.706.352 2.5zm.852 2a9.031 9.031 0 0 0 4.585 3.91 13.17 13.17 0 0 1-2.334-3.91H8.204zm8.796-2h3.084c.202-.791.33-1.624.385-2.5H17v2.5zm0 2v3.35a11.412 11.412 0 0 0 2.376-3.35H17zm7.648-2A9.005 9.005 0 0 0 25 18h-2.527c-.048.866-.16 1.7-.334 2.5h2.51zm-.852 2h-2.25a13.17 13.17 0 0 1-2.335 3.91 9.031 9.031 0 0 0 4.585-3.91zM17 16h10v2c0 6.075-4.925 11-11 11S5 24.075 5 18v-2h10v-2.944h-5l2.972-3H10L16 3l6 7.056h-2.972l2.972 3h-5V16z"/>
     </defs>
     <g fill="none" fill-rule="evenodd">
-        <mask id="b">
+        <mask id="b" fill="#fff">
             <use xlink:href="#a"/>
         </mask>
-        <use fill-rule="nonzero" xlink:href="#a"/>
-        <g fill-rule="nonzero" mask="url(#b)">
+        <use fill="#4A4A4A" fill-rule="nonzero" xlink:href="#a"/>
+        <g fill="#4A4A4A" fill-rule="nonzero" mask="url(#b)">
             <path d="M0 0h32v32H0z"/>
         </g>
     </g>
