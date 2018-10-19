@@ -21,8 +21,7 @@ class MenuMobile extends PureComponent {
               {...s}
               onClick={() =>
                 setMenuSettings({
-                  menuSection: s.active ? '' : s.slug,
-                  datasetCategory: s.slug === 'layers' ? 'forestChange' : ''
+                  menuSection: s.active ? '' : s.slug
                 })
               }
             />

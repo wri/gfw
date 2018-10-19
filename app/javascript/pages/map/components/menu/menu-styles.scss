@@ -6,6 +6,7 @@
   .menu-tiles {
     z-index: 2;
     background-color: $white-tree;
+    border-top: solid 1px $border;
 
     @media screen and (min-width: $screen-m) {
       height: 100%;

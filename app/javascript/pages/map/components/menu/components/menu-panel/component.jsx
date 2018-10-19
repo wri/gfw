@@ -29,6 +29,7 @@ class MenuPanel extends PureComponent {
       className,
       isDesktop,
       name,
+      title,
       isBig,
       onClose,
       children
@@ -42,7 +43,7 @@ class MenuPanel extends PureComponent {
             className={cx('c-menu-panel', { big: isBig }, className)}
           >
             <div className="panel-header">
-              {name}
+              {title || name}
               <button className="close-menu" onClick={onClose}>
                 <Icon
                   icon={isDesktop ? closeIcon : arrowIcon}
@@ -65,7 +66,8 @@ MenuPanel.propTypes = {
   onClose: PropTypes.func,
   isDesktop: PropTypes.bool,
   name: PropTypes.string,
-  active: PropTypes.bool
+  active: PropTypes.bool,
+  title: PropTypes.string
 };
 
 export default MenuPanel;

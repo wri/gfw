@@ -1,0 +1,40 @@
+@import '~styles/settings';
+
+.c-categories-menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: rem(10px);
+  background-color: $white;
+  color: $slate;
+  width: 100%;
+  z-index: 5;
+
+  li {
+    width: calc(100% / 3);
+    margin: rem(20px) 0;
+  }
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+    svg {
+      margin-bottom: rem(10px);
+      width: rem(40px);
+      height: rem(40px);
+    }
+
+    &.active {
+      color: $green-gfw;
+
+      svg {
+        fill: $green-gfw;
+      }
+    }
+  }
+}

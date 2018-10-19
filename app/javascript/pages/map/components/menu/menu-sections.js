@@ -67,8 +67,9 @@ export const searchSections = [
 
 export const datasetsSections = [
   {
-    slug: 'datasets',
+    slug: 'layers',
     category: 'forestChange',
+    title: 'LAYERS',
     name: 'FOREST CHANGE',
     icon: forestChange,
     Component: Datasets,
@@ -88,8 +89,9 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'datasets',
+    slug: 'layers',
     category: 'landCover',
+    title: 'LAYERS',
     name: 'LAND COVER',
     icon: landCover,
     Component: Datasets,
@@ -101,8 +103,9 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'datasets',
+    slug: 'layers',
     category: 'landUse',
+    title: 'LAYERS',
     name: 'LAND USE',
     icon: landUse,
     Component: Datasets,
@@ -126,8 +129,9 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'datasets',
+    slug: 'layers',
     category: 'climate',
+    title: 'LAYERS',
     name: 'CLIMATE',
     icon: climate,
     Component: Datasets,
@@ -147,8 +151,9 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'datasets',
+    slug: 'layers',
     category: 'biodiversity',
+    title: 'LAYERS',
     name: 'BIODIVERSITY',
     icon: biodiversity,
     Component: Datasets,

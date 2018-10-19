@@ -170,7 +170,9 @@ export const getActiveSection = createSelector(
   (sections, menuSection, datasetCategory) => {
     if (!sections || !menuSection) return null;
     return sections.find(
-      s => s.category === datasetCategory || s.slug === menuSection
+      s =>
+        (s.category === datasetCategory && s.slug === menuSection) ||
+        s.slug === menuSection
     );
   }
 );
@@ -218,13 +220,14 @@ export const getMobileSections = createSelector([getMenuSection], menuSection =>
 );
 
 export const getMenuProps = createStructuredSelector({
-  sections: getDatasetSectionsWithData,
+  datasetSections: getDatasetSectionsWithData,
   searchSections: getSearchSections,
   mobileSections: getMobileSections,
   activeSection: getActiveSectionWithData,
   menuSection: getMenuSection,
+  datasetCategory: getDatasetCategory,
   countriesWithoutData: getZeroDataCountries,
-  exploreSection: getExploreSection,
+  exploreType: getExploreSection,
   countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
   activeDatasets: getActiveDatasetsState,

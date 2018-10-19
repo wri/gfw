@@ -12,7 +12,7 @@ import basemaps, {
 
 import topics, { descriptions } from './explore-topics';
 
-const selectSection = (state, props) => props.exploreSection;
+const selectSection = (state, props) => props.exploreType;
 const selectQuery = state => state.location && state.location.query;
 const selectPTWLoading = state => state.ptw.loading;
 const selectPTWData = state => {

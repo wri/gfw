@@ -25,12 +25,12 @@ class Explore extends PureComponent {
       {
         label: 'Topics',
         active: section === 'topics',
-        onClick: () => setMenuSettings({ exploreSection: 'topics' })
+        onClick: () => setMenuSettings({ exploreType: 'topics' })
       },
       {
         label: 'Places to watch',
         active: section === 'placesToWatch',
-        onClick: () => setMenuSettings({ exploreSection: 'placesToWatch' })
+        onClick: () => setMenuSettings({ exploreType: 'placesToWatch' })
       }
     ];
 

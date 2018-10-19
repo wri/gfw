@@ -3,21 +3,24 @@
 $explore-nav-height: rem(40px);
 
 .c-explore {
-  .explore-menu {
-    border-bottom: solid 1px $border;
-  }
-
   .content {
     height: calc(100vh - #{$explore-nav-height});
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
     position: relative;
-    padding: 0 rem(10px);
+
+    @media screen and (min-width: $screen-m) {
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 rem(10px);
+    }
 
     .description {
       font-size: 12px;
       line-height: 1.6;
-      margin: rem(30px) 0;
+      margin: rem(20px) 0;
+
+      @media screen and (min-width: $screen-m) {
+        margin: rem(30px) 0;
+      }
     }
 
     .map-card {

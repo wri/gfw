@@ -24,9 +24,10 @@ class Menu extends PureComponent {
       loading,
       setModalMeta,
       menuSection,
+      datasetCategory,
       ...rest
     } = this.props;
-    const { Component } = activeSection || {};
+    const { Component, name, title, large } = activeSection || {};
 
     return (
       <MediaQuery minDeviceWidth={SCREEN_M}>
@@ -53,13 +54,16 @@ class Menu extends PureComponent {
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
               }
-              isBig={activeSection && activeSection.large}
-              name={activeSection && activeSection.name}
+              isBig={large}
+              name={title || name}
               isDesktop={isDesktop}
             >
               {Component &&
                 !loading && (
                   <Component
+                    section={menuSection}
+                    category={datasetCategory}
+                    categories={datasetSections}
                     datasets={activeSection.datasets}
                     subCategories={activeSection.subCategories}
                     setMenuSettings={setMenuSettings}
@@ -97,7 +101,8 @@ Menu.propTypes = {
   handleClickLocation: PropTypes.func,
   getLocationFromSearch: PropTypes.func,
   exploreSection: PropTypes.string,
-  menuSection: PropTypes.string
+  menuSection: PropTypes.string,
+  datasetCategory: PropTypes.string
 };
 
 export default Menu;

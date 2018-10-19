@@ -3,12 +3,17 @@ $subnav-height: rem(40px);
 
 .theme-subnav-small-light {
   height: $subnav-height;
+  border-bottom: 0;
+
+  @media screen and (min-width: $screen-m) {
+    border-bottom: solid 1px $border;
+  }
 
   .buttons {
     padding: 0;
 
     li {
-      width: auto;
+      width: 100%;
       max-width: none;
       border-left: 0 !important;
       border-right: 0 !important;
@@ -20,8 +25,10 @@ $subnav-height: rem(40px);
         border-right: 1px solid transparent;
 
         &.active {
-          border-left: 1px solid rgba($slate, 0.2);
-          border-right: 1px solid rgba($slate, 0.2);
+          @media screen and (min-width: $screen-m) {
+            border-left: 1px solid rgba($slate, 0.2);
+            border-right: 1px solid rgba($slate, 0.2);
+          }
         }
       }
 
