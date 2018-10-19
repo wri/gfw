@@ -98,3 +98,27 @@ export const handleClickLocation = createThunkAction(
     }
   }
 );
+
+export const handleViewOnMap = createThunkAction(
+  'handleViewOnMap',
+  ({ map, menu }) => (dispatch, getState) => {
+    const { payload, query } = getState().location || {};
+    dispatch({
+      type: MAP,
+      payload,
+      query: {
+        ...query,
+        map: {
+          ...(query && query.map),
+          ...map,
+          canBound: true
+        },
+        menu: {
+          ...(query && query.menu),
+          menu,
+          menuSection: ''
+        }
+      }
+    });
+  }
+);

@@ -70,13 +70,15 @@ class Datasets extends PureComponent {
           category && (
             <Fragment>
               {!isDesktop && (
-                <button
-                  className="datasets-header"
-                  onClick={() => setMenuSettings({ datasetCategory: '' })}
-                >
-                  <Icon icon={arrowDownIcon} className="icon-return" />
-                  {category}
-                </button>
+                <div className="datasets-header">
+                  <button
+                    // className="datasets-header"
+                    onClick={() => setMenuSettings({ datasetCategory: '' })}
+                  >
+                    <Icon icon={arrowDownIcon} className="icon-return" />
+                  </button>
+                  <p>{category}</p>
+                </div>
               )}
               <div className="countries-selection">
                 <span className="sub-title">country-specific data</span>
@@ -109,44 +111,47 @@ class Datasets extends PureComponent {
               {countriesWithoutData &&
                 !!countriesWithoutData.length &&
                 !!selectedCountries.length && (
-                  <p className="no-datasets-message">
-                    No datasets available in{' '}
-                    {countriesWithoutData.map((c, i, a) => {
-                      let separator = ', ';
-                      if (i === a.length - 2) separator = ' or ';
-                      if (i === a.length - 1) separator = ' ';
-                      return (
-                        <Fragment key={c}>
-                          <strong>{c}</strong>
-                          {separator}
-                        </Fragment>
-                      );
-                    })}
-                    for {name && name.toLowerCase()}.
-                  </p>
+                  <div className="no-datasets-legend">
+                    <span className="legend-dot" />
+                    <p className="no-datasets-message">
+                      No datasets available in{' '}
+                      {countriesWithoutData.map((c, i, a) => {
+                        let separator = ', ';
+                        if (i === a.length - 2) separator = ' or ';
+                        if (i === a.length - 1) separator = ' ';
+                        return (
+                          <Fragment key={c}>
+                            <strong>{c}</strong>
+                            {separator}
+                          </Fragment>
+                        );
+                      })}
+                      for {name && name.toLowerCase()}.
+                    </p>
+                  </div>
                 )}
               {subCategories
                 ? subCategories.map(subCat => (
-                  <DatasetSection key={subCat.slug} {...subCat}>
-                    {!isEmpty(subCat.datasets) ? (
-                      subCat.datasets.map(d => (
-                        <LayerToggle
-                          key={d.id}
-                          className="dataset-toggle"
-                          data={{ ...d, dataset: d.id }}
-                          onToggle={onToggleLayer}
-                          onInfoClick={onInfoClick}
-                          showSubtitle
+                    <DatasetSection key={subCat.slug} {...subCat}>
+                      {!isEmpty(subCat.datasets) ? (
+                        subCat.datasets.map(d => (
+                          <LayerToggle
+                            key={d.id}
+                            className="dataset-toggle"
+                            data={{ ...d, dataset: d.id }}
+                            onToggle={onToggleLayer}
+                            onInfoClick={onInfoClick}
+                            showSubtitle
+                          />
+                        ))
+                      ) : (
+                        <NoContent
+                          className="no-datasets"
+                          message="No datasets available"
                         />
-                      ))
-                    ) : (
-                      <NoContent
-                        className="no-datasets"
-                        message="No datasets available"
-                      />
-                    )}
-                  </DatasetSection>
-                ))
+                      )}
+                    </DatasetSection>
+                  ))
                 : datasets &&
                   datasets.map((d, i) => (
                     <LayerToggle

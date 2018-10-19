@@ -27,7 +27,7 @@ class ChoseAnalysis extends PureComponent {
 
     return (
       <div className="layer-menu">
-        <div className="layer-title">One click analysis on:</div>
+        <div className="layer-title">One click analysis on shape or:</div>
         <Dropdown
           className="boundary-selector"
           options={boundaries}

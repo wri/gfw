@@ -80,12 +80,12 @@ class MapControlsButtons extends PureComponent {
     const newDatasets = recentActive
       ? datasets.filter(d => !d.isRecentImagery)
       : datasets.concat({
-        dataset: recentImageryDataset.dataset,
-        layers: [recentImageryDataset.layer],
-        visibility: 1,
-        opacity: 1,
-        isRecentImagery: true
-      });
+          dataset: recentImageryDataset.dataset,
+          layers: [recentImageryDataset.layer],
+          visibility: 1,
+          opacity: 1,
+          isRecentImagery: true
+        });
     setMapSettings({
       datasets: newDatasets,
       zoom: !recentActive && zoom < 9 ? 9 : zoom
@@ -132,7 +132,7 @@ class MapControlsButtons extends PureComponent {
               open={visible}
               onRequestClose={this.onRecentRequestClose}
               html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
-              offset={100}
+              offset={90}
             >
               <Button
                 className="recent-imagery-btn"
@@ -142,11 +142,11 @@ class MapControlsButtons extends PureComponent {
                 tooltip={
                   !visible
                     ? {
-                      text: !recentActive
-                        ? 'Activate Recent Imagery'
-                        : 'Disable Recent Imagery',
-                      hideOnClick: false
-                    }
+                        text: !recentActive
+                          ? 'Activate Recent Imagery'
+                          : 'Disable Recent Imagery',
+                        hideOnClick: false
+                      }
                     : undefined
                 }
               >

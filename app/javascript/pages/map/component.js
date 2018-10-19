@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
@@ -13,10 +14,16 @@ import Share from 'components/modals/share';
 import './styles.scss';
 
 class MapPage extends PureComponent {
+  static propTypes = {
+    setMenuSettings: PropTypes.func
+  };
+
   render() {
     return (
       <div className="l-map">
-        <Map />
+        <Map
+          onMapClick={() => this.props.setMenuSettings({ selectedSection: '' })}
+        />
         <Share />
         <ModalMeta />
         <ModalSource />

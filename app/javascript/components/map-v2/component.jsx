@@ -67,7 +67,8 @@ class MapComponent extends PureComponent {
       oneClickAnalysisActive,
       draw,
       embed,
-      hidePanels
+      hidePanels,
+      onMapClick
     } = this.props;
 
     return (
@@ -118,12 +119,12 @@ class MapComponent extends PureComponent {
                   bounds={
                     bbox
                       ? {
-                        bbox,
-                        options: {
-                          paddingTopLeft: [100, 100],
-                          paddingBottomRight: [50, 50]
+                          bbox,
+                          options: {
+                            paddingTopLeft: [100, 100],
+                            paddingBottomRight: [50, 50]
+                          }
                         }
-                      }
                       : {}
                   }
                   events={{
@@ -181,6 +182,7 @@ MapComponent.propTypes = {
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
   handleRecentImageryTooltip: PropTypes.func,
+  onMapClick: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   analysisActive: PropTypes.bool,
   oneClickAnalysisActive: PropTypes.bool,
