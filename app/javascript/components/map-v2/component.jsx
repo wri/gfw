@@ -108,7 +108,7 @@ class MapComponent extends PureComponent {
                   className="map-click-container"
                   onClick={onMapClick}
                   role="button"
-                  tabIndeX={0}
+                  tabIndex={0}
                 >
                   <Map
                     customClass={cx(

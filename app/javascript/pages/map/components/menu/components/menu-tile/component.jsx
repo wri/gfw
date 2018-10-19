@@ -16,7 +16,8 @@ class MenuTile extends PureComponent {
       onClick,
       loading,
       icon,
-      layerCount
+      layerCount,
+      highlight
     } = this.props;
 
     return (
@@ -27,7 +28,9 @@ class MenuTile extends PureComponent {
         <button className="item-button" onClick={onClick} disabled={loading}>
           <Icon icon={icon} className="tile-icon" />
           <span>{label}</span>
-          {!!layerCount && <div className="item-badge">{layerCount}</div>}
+          {(!!layerCount || highlight) && (
+            <div className="item-badge">{layerCount || (highlight && '1')}</div>
+          )}
         </button>
       </li>
     );
@@ -40,6 +43,7 @@ MenuTile.propTypes = {
   loading: PropTypes.bool,
   active: PropTypes.bool,
   small: PropTypes.bool,
+  highlight: PropTypes.bool,
   label: PropTypes.string,
   icon: PropTypes.object,
   layerCount: PropTypes.number

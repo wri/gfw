@@ -16,6 +16,7 @@ const getMenuUrlState = state =>
   (state.location.query && state.location.query.menu) || null;
 const getCountries = state => state.countryData.countries || null;
 const getDatasets = state => state.datasets.datasets || null;
+const getLocation = state => (state.location && state.location.payload) || null;
 
 // setting from state
 export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
@@ -113,6 +114,7 @@ export const getDatasetSections = createSelector(
 
       return {
         ...s,
+        datasets: sectionDatasets,
         subCategories: countriesWithDatasets.concat(subCategoriesWithDatasets)
       };
     });
@@ -215,25 +217,27 @@ export const getSearchSections = createSelector([getMenuSection], menuSection =>
 );
 
 export const getMobileSections = createSelector(
-  [getMenuSection, getActiveDatasetsState],
-  (menuSection, activeDatasets) =>
+  [getMenuSection, getActiveDatasetsState, getLocation],
+  (menuSection, activeDatasets, location) =>
     mobileSections.map(s => ({
       ...s,
       ...(s.slug === 'datasets' && {
         layerCount: activeDatasets && activeDatasets.length
+      }),
+      ...(s.slug === 'analysis' && {
+        highlight: location && !!location.type && !!location.adm0
       }),
       active: menuSection === s.slug
     }))
 );
 
 export const getDatasetCategories = createSelector(
-  [getDatasetSectionsWithData, getMenuSection, getDatasetCategory],
-  (datasets, menuSection, datasetCategory) =>
+  [getDatasetSectionsWithData],
+  datasets =>
     datasets &&
     datasets.map(s => ({
       ...s,
-      label: startCase(s.category),
-      active: menuSection === s.slug && datasetCategory === s.category
+      label: startCase(s.category)
     }))
 );
 

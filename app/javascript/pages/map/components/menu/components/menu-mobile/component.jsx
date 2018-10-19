@@ -19,6 +19,7 @@ class MenuMobile extends PureComponent {
               small
               key={s.slug}
               {...s}
+              hightlight={s.highlight}
               onClick={() =>
                 setMenuSettings({
                   menuSection: s.active ? '' : s.slug
