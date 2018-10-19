@@ -80,6 +80,7 @@ export const routes = {
     path: '/v2/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     headerOptions: {
+      isMap: true,
       fullScreen: true,
       showPanel: true,
       fixed: true,

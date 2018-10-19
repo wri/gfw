@@ -1,6 +1,7 @@
 @import '~styles/settings.scss';
 
 $header-height: rem(55px);
+$header-height-small: rem(50px);
 $full-screen-height: rem(75px);
 
 .c-header {
@@ -184,6 +185,19 @@ $full-screen-height: rem(75px);
 
     .logo {
       left: 0;
+    }
+  }
+
+  &.-small {
+    height: $header-height-small;
+
+    .nav {
+      height: $header-height-small;
+    }
+
+    .logo {
+      height: $header-height-small;
+      width: $header-height-small;
     }
   }
 }

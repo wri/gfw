@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
+import { SCREEN_M } from 'utils/constants';
 import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
 import cx from 'classnames';
@@ -31,38 +33,48 @@ class App extends PureComponent {
     const { component, embed } = route;
     const isMapPage = component === 'map';
     return (
-      <div className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}>
-        {!embed &&
-          route.headerOptions && (
-            <Header loggedIn={loggedIn} {...route.headerOptions} />
-          )}
-        {embed && (
-          <a className="logo" href="/" target="_blank">
-            <img src={gfwLogo} alt="Global Forest Watch" />
-          </a>
-        )}
-        {!embed && isMapPage && <MapMenu className="map-menu" />}
-        <div className="page">
-          <PageComponent
-            embed={embed}
-            path={route.component}
-            sections={route.sections}
-          />
-        </div>
-        {!embed && <MyGFWProvider />}
-        {embed && (
-          <div className="embed-footer">
-            <p>For more info</p>
-            <Button
-              className="embed-btn"
-              extLink={window.location.href.replace('/embed', '')}
-            >
-              EXPLORE ON GFW
-            </Button>
+      <MediaQuery minDeviceWidth={SCREEN_M}>
+        {isDesktop => (
+          <div
+            className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}
+          >
+            {!embed &&
+              route.headerOptions && (
+                <Header
+                  isMobile={!isDesktop}
+                  loggedIn={loggedIn}
+                  {...route.headerOptions}
+                />
+              )}
+            {embed && (
+              <a className="logo" href="/" target="_blank">
+                <img src={gfwLogo} alt="Global Forest Watch" />
+              </a>
+            )}
+            {!embed && isMapPage && <MapMenu className="map-menu" />}
+            <div className="page">
+              <PageComponent
+                embed={embed}
+                path={route.component}
+                sections={route.sections}
+              />
+            </div>
+            {!embed && <MyGFWProvider />}
+            {embed && (
+              <div className="embed-footer">
+                <p>For more info</p>
+                <Button
+                  className="embed-btn"
+                  extLink={window.location.href.replace('/embed', '')}
+                >
+                  EXPLORE ON GFW
+                </Button>
+              </div>
+            )}
+            <Meta {...metadata} />
           </div>
         )}
-        <Meta {...metadata} />
-      </div>
+      </MediaQuery>
     );
   }
 }
