@@ -12,7 +12,11 @@
   .search-container {
     position: relative;
     margin-top: rem(20px);
-    min-height: rem(250px);
+    min-height: calc(80vh - 250px);
+
+    @media screen and (min-width: $screen-m) {
+      min-height: rem(300px);
+    }
   }
 
   .search-results {

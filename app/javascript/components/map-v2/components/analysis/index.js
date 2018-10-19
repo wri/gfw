@@ -19,6 +19,14 @@ class AnalysisContainer extends PureComponent {
     setAnalysisLoading: PropTypes.func
   };
 
+  componentDidMount() {
+    const { endpoints, location } = this.props;
+
+    if (location.type && location.adm0 && endpoints) {
+      this.handleFetchAnalysis(location, endpoints);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { location, endpoints } = this.props;
 
