@@ -9,7 +9,7 @@ class DatasetSection extends PureComponent {
     return (
       <div className="c-dataset-section">
         {(title || subTitle) && (
-          <div className="header">
+          <div className="dataset-header">
             {title && <div className="title">{title}</div>}
             {subTitle && <div className="subtitle">{subTitle}</div>}
           </div>

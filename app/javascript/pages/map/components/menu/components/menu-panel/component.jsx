@@ -28,9 +28,8 @@ class MenuPanel extends PureComponent {
       active,
       className,
       isDesktop,
-      name,
-      title,
-      isBig,
+      label,
+      large,
       onClose,
       children
     } = this.props;
@@ -40,10 +39,10 @@ class MenuPanel extends PureComponent {
         {active && (
           <PanelContainer
             key="menu-container"
-            className={cx('c-menu-panel', { big: isBig }, className)}
+            className={cx('c-menu-panel', { large }, className)}
           >
             <div className="panel-header">
-              {title || name}
+              {label}
               <button className="close-menu" onClick={onClose}>
                 <Icon
                   icon={isDesktop ? closeIcon : arrowIcon}
@@ -61,13 +60,12 @@ class MenuPanel extends PureComponent {
 
 MenuPanel.propTypes = {
   children: PropTypes.node,
-  isBig: PropTypes.bool,
+  large: PropTypes.bool,
   className: PropTypes.string,
   onClose: PropTypes.func,
   isDesktop: PropTypes.bool,
-  name: PropTypes.string,
-  active: PropTypes.bool,
-  title: PropTypes.string
+  label: PropTypes.string,
+  active: PropTypes.bool
 };
 
 export default MenuPanel;

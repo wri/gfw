@@ -1,12 +1,12 @@
-import forestChange from 'assets/icons/forest-change.svg';
-import landCover from 'assets/icons/land-cover.svg';
-import landUse from 'assets/icons/land-use.svg';
-import climate from 'assets/icons/climate.svg';
-import biodiversity from 'assets/icons/biodiversity.svg';
-import explore from 'assets/icons/explore.svg';
-import layers from 'assets/icons/layers.svg';
-import data from 'assets/icons/globe.svg';
-import analysis from 'assets/icons/analysis.svg';
+import forestChangeIcon from 'assets/icons/forest-change.svg';
+import landCoverIcon from 'assets/icons/land-cover.svg';
+import landUseIcon from 'assets/icons/land-use.svg';
+import climateIcon from 'assets/icons/climate.svg';
+import biodiversityIcon from 'assets/icons/biodiversity.svg';
+import exploreIcon from 'assets/icons/explore.svg';
+import layersIcon from 'assets/icons/layers.svg';
+import globeIcon from 'assets/icons/globe.svg';
+import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
 import Analysis from 'components/map-v2/components/analysis';
@@ -17,32 +17,32 @@ import Search from './components/sections/search';
 
 export const mobileSections = [
   {
-    slug: 'layers',
-    name: 'LAYERS',
-    icon: data,
+    label: 'layers',
+    slug: 'datasets',
+    icon: globeIcon,
     Component: Datasets
   },
   {
-    slug: 'data',
-    name: 'DATA',
-    icon: layers,
+    label: 'legend',
+    slug: 'legend',
+    icon: layersIcon,
     Component: Legend
   },
   {
+    label: 'analysis',
     slug: 'analysis',
-    name: 'ANALYSIS',
-    icon: analysis,
+    icon: analysisIcon,
     Component: Analysis
   },
   {
+    label: 'explore',
     slug: 'explore',
-    name: 'EXPLORE',
-    icon: explore,
+    icon: exploreIcon,
     Component: Explore
   },
   {
+    label: 'search',
     slug: 'search',
-    name: 'SEARCH',
     icon: searchIcon,
     Component: Search
   }
@@ -50,16 +50,15 @@ export const mobileSections = [
 
 export const searchSections = [
   {
+    label: 'explore',
     slug: 'explore',
-    name: 'EXPLORE',
-    icon: explore,
+    icon: exploreIcon,
     Component: Explore,
-    large: true,
-    section: 'topics'
+    large: true
   },
   {
+    label: 'search',
     slug: 'search',
-    name: 'SEARCH',
     icon: searchIcon,
     Component: Search
   }
@@ -67,11 +66,10 @@ export const searchSections = [
 
 export const datasetsSections = [
   {
-    slug: 'layers',
+    label: 'layers',
+    slug: 'datasets',
     category: 'forestChange',
-    title: 'LAYERS',
-    name: 'FOREST CHANGE',
-    icon: forestChange,
+    icon: forestChangeIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -89,11 +87,10 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'layers',
+    label: 'layers',
+    slug: 'datasets',
     category: 'landCover',
-    title: 'LAYERS',
-    name: 'LAND COVER',
-    icon: landCover,
+    icon: landCoverIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -103,11 +100,10 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'layers',
+    label: 'layers',
+    slug: 'datasets',
     category: 'landUse',
-    title: 'LAYERS',
-    name: 'LAND USE',
-    icon: landUse,
+    icon: landUseIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -129,11 +125,10 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'layers',
+    label: 'layers',
+    slug: 'datasets',
     category: 'climate',
-    title: 'LAYERS',
-    name: 'CLIMATE',
-    icon: climate,
+    icon: climateIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -151,11 +146,10 @@ export const datasetsSections = [
     ]
   },
   {
-    slug: 'layers',
+    label: 'layers',
+    slug: 'datasets',
     category: 'biodiversity',
-    title: 'LAYERS',
-    name: 'BIODIVERSITY',
-    icon: biodiversity,
+    icon: biodiversityIcon,
     Component: Datasets,
     subCategories: [
       {

@@ -21,9 +21,7 @@ const selectLoading = state =>
   state.geostore.loading ||
   state.draw.loading;
 const selectLocation = state => state.location && state.location.payload;
-const selectQuery = state => state.location && state.location.query;
 const selectError = state => state.analysis.error;
-export const selectDrawPolygon = state => state.draw.geostoreId;
 
 export const getAnalysisSettings = createSelector(
   [selectAnalysisUrlState],
@@ -121,9 +119,7 @@ export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
 ]);
 
 export const getAnalysisProps = createStructuredSelector({
-  settings: getAnalysisSettings,
   showAnalysis: getShowAnalysis,
-  showDraw: getShowDraw,
   endpoints: getLayerEndpoints,
   loading: selectLoading,
   error: selectError,
@@ -131,7 +127,5 @@ export const getAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   location: selectLocation,
-  query: selectQuery,
-  hidden: getHidden,
-  drawnGeostoreId: selectDrawPolygon
+  hidden: getHidden
 });

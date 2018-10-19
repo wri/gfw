@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import startCase from 'lodash/startCase';
 
 import NoContent from 'components/ui/no-content';
 
@@ -12,72 +13,52 @@ import Icon from 'components/ui/icon';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 
 import DatasetSection from './dataset-section';
-import CategoriesMenu from '../categories';
+import CategoriesMenu from './categories-menu';
 
 import './styles.scss';
 
 class Datasets extends PureComponent {
-  handleRemoveCountry = iso => {
-    const {
-      selectedCountries,
-      setMenuSettings,
-      setMapSettings,
-      activeDatasets
-    } = this.props;
-    const newCountries = selectedCountries.filter(c => c.value !== iso);
-    setMenuSettings({
-      selectedCountries: newCountries ? newCountries.map(nc => nc.value) : []
-    });
-    setMapSettings({ datasets: activeDatasets.filter(d => d.iso !== iso) });
-  };
-
-  handleAddCountry = country => {
-    const { selectedCountries, setMenuSettings } = this.props;
-    setMenuSettings({
-      selectedCountries: [...selectedCountries.map(c => c.value), country.value]
-    });
-  };
-
   render() {
     const {
-      name,
+      isDesktop,
+      datasetCategory,
+      datasetCategories,
+      menuSection,
       countries,
       selectedCountries,
       countriesWithoutData,
       datasets,
       subCategories,
       onToggleLayer,
-      onInfoClick,
-      categories,
-      category,
-      section,
+      setModalMeta,
       setMenuSettings,
-      isDesktop
+      handleRemoveCountry,
+      handleAddCountry
     } = this.props;
 
     return (
       <div className="c-datasets">
-        {section &&
-          !category &&
-          categories &&
-          categories.length && (
+        {!isDesktop &&
+          menuSection &&
+          !datasetCategory &&
+          datasetCategories &&
+          datasetCategories.length && (
             <CategoriesMenu
-              categories={categories}
+              categories={datasetCategories}
               onSelectCategory={setMenuSettings}
             />
           )}
-        {section &&
-          category && (
+        {menuSection &&
+          datasetCategory && (
             <Fragment>
               {!isDesktop && (
                 <div className="datasets-header">
                   <button
-                    // className="datasets-header"
                     onClick={() => setMenuSettings({ datasetCategory: '' })}
                   >
                     <Icon icon={arrowDownIcon} className="icon-return" />
                   </button>
-                  <p>{category}</p>
+                  <p>{startCase(datasetCategory)}</p>
                 </div>
               )}
               <div className="countries-selection">
@@ -89,7 +70,7 @@ class Datasets extends PureComponent {
                         key={c.value}
                         active={!countriesWithoutData.includes(c.label)}
                         label={c.label}
-                        onRemove={() => this.handleRemoveCountry(c.value)}
+                        onRemove={() => handleRemoveCountry(c.value)}
                       >
                         {c.label}
                       </Pill>
@@ -103,7 +84,7 @@ class Datasets extends PureComponent {
                         noItemsFound="No country found"
                         noSelectedValue="+ Add country"
                         options={countries}
-                        onChange={this.handleAddCountry}
+                        onChange={handleAddCountry}
                       />
                     )}
                 </div>
@@ -126,32 +107,32 @@ class Datasets extends PureComponent {
                           </Fragment>
                         );
                       })}
-                      for {name && name.toLowerCase()}.
+                      for {datasetCategory && datasetCategory.toLowerCase()}.
                     </p>
                   </div>
                 )}
               {subCategories
                 ? subCategories.map(subCat => (
-                    <DatasetSection key={subCat.slug} {...subCat}>
-                      {!isEmpty(subCat.datasets) ? (
-                        subCat.datasets.map(d => (
-                          <LayerToggle
-                            key={d.id}
-                            className="dataset-toggle"
-                            data={{ ...d, dataset: d.id }}
-                            onToggle={onToggleLayer}
-                            onInfoClick={onInfoClick}
-                            showSubtitle
-                          />
-                        ))
-                      ) : (
-                        <NoContent
-                          className="no-datasets"
-                          message="No datasets available"
+                  <DatasetSection key={subCat.slug} {...subCat}>
+                    {!isEmpty(subCat.datasets) ? (
+                      subCat.datasets.map(d => (
+                        <LayerToggle
+                          key={d.id}
+                          className="dataset-toggle"
+                          data={{ ...d, dataset: d.id }}
+                          onToggle={onToggleLayer}
+                          onInfoClick={setModalMeta}
+                          showSubtitle
                         />
-                      )}
-                    </DatasetSection>
-                  ))
+                      ))
+                    ) : (
+                      <NoContent
+                        className="no-datasets"
+                        message="No datasets available"
+                      />
+                    )}
+                  </DatasetSection>
+                ))
                 : datasets &&
                   datasets.map((d, i) => (
                     <LayerToggle
@@ -160,7 +141,7 @@ class Datasets extends PureComponent {
                       className="dataset-toggle"
                       data={{ ...d, dataset: d.id }}
                       onToggle={onToggleLayer}
-                      onInfoClick={onInfoClick}
+                      onInfoClick={setModalMeta}
                     />
                   ))}
             </Fragment>
@@ -174,7 +155,7 @@ Datasets.propTypes = {
   name: PropTypes.string,
   datasets: PropTypes.array,
   onToggleLayer: PropTypes.func,
-  onInfoClick: PropTypes.func,
+  setModalMeta: PropTypes.func,
   subCategories: PropTypes.array,
   selectedCountries: PropTypes.array,
   countries: PropTypes.array,
@@ -185,7 +166,12 @@ Datasets.propTypes = {
   categories: PropTypes.array,
   category: PropTypes.string,
   section: PropTypes.string,
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  handleRemoveCountry: PropTypes.func,
+  handleAddCountry: PropTypes.func,
+  datasetCategory: PropTypes.string,
+  datasetCategories: PropTypes.array,
+  menuSection: PropTypes.string
 };
 
 export default Datasets;

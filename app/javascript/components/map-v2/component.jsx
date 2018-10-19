@@ -119,12 +119,11 @@ class MapComponent extends PureComponent {
                   bounds={
                     bbox
                       ? {
-                          bbox,
-                          options: {
-                            paddingTopLeft: [100, 100],
-                            paddingBottomRight: [50, 50]
-                          }
+                        bbox,
+                        options: {
+                          padding: [50, 50]
                         }
+                      }
                       : {}
                   }
                   events={{

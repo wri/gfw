@@ -116,41 +116,6 @@ export const getDownloadLinks = createSelector(
         urls: downloads
       };
     })
-  // [
-  //   {
-  //     label: 'umd-loss-gain',
-  //     urls: [
-  //       {
-  //         label: 'website',
-  //         url:
-  //           'https://earthenginepartners.appspot.com/science-2013-global-forest'
-  //       }
-  //     ]
-  //   }
-  // ].concat(
-  //   sortBy(
-  //     Object.keys(data)
-  //       .filter(d => data[d].downloadUrls)
-  //       .map(d => {
-  //         const { downloadUrls } = data[d];
-  //         return {
-  //           label: d,
-  //           urls: Object.keys(downloadUrls).map(key => {
-  //             const downloadUrlsFirstKey =
-  //               downloadUrls && downloadUrls[key] && downloadUrls[key][0];
-  //             return {
-  //               url:
-  //                 downloadUrlsFirstKey === '/'
-  //                   ? `${process.env.GFW_API}${downloadUrls[key]}`
-  //                   : downloadUrls[key],
-  //               label: key
-  //             };
-  //           })
-  //         };
-  //       }),
-  //     'label'
-  //   )
-  // )
 );
 
 export const getDrawAnalysisProps = createStructuredSelector({

@@ -5,7 +5,6 @@ import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
 
 import MenuPanel from 'pages/map/components/menu/components/menu-panel';
-import Loader from 'components/ui/loader';
 
 import MenuDesktop from './components/menu-desktop';
 import MenuMobile from './components/menu-mobile';
@@ -21,13 +20,10 @@ class Menu extends PureComponent {
       mobileSections,
       activeSection,
       setMenuSettings,
-      loading,
-      setModalMeta,
       menuSection,
-      datasetCategory,
-      ...rest
+      ...props
     } = this.props;
-    const { Component, name, title, large } = activeSection || {};
+    const { Component, label, large, icon, ...rest } = activeSection || {};
 
     return (
       <MediaQuery minDeviceWidth={SCREEN_M}>
@@ -36,43 +32,36 @@ class Menu extends PureComponent {
             <div className={cx('menu-tiles', className)}>
               {isDesktop ? (
                 <MenuDesktop
-                  className="desktop-menu"
                   sections={datasetSections}
                   searchSections={searchSections}
+                  setMenuSettings={setMenuSettings}
                 />
               ) : (
                 <MenuMobile
-                  className="mobile-menu"
                   sections={mobileSections}
                   setMenuSettings={setMenuSettings}
                 />
               )}
             </div>
             <MenuPanel
-              active={!!menuSection}
               className="menu-panel"
+              label={label}
+              active={!!menuSection}
+              large={large}
+              isDesktop={isDesktop}
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
               }
-              isBig={large}
-              name={title || name}
-              isDesktop={isDesktop}
             >
-              {Component &&
-                !loading && (
-                  <Component
-                    section={menuSection}
-                    category={datasetCategory}
-                    categories={datasetSections}
-                    datasets={activeSection.datasets}
-                    subCategories={activeSection.subCategories}
-                    setMenuSettings={setMenuSettings}
-                    onInfoClick={setModalMeta}
-                    isDesktop={isDesktop}
-                    {...rest}
-                  />
-                )}
-              {loading && <Loader />}
+              {Component && (
+                <Component
+                  menuSection={menuSection}
+                  isDesktop={isDesktop}
+                  setMenuSettings={setMenuSettings}
+                  {...props}
+                  {...rest}
+                />
+              )}
             </MenuPanel>
           </div>
         )}

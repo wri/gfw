@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import startCase from 'lodash/startCase';
 import flatten from 'lodash/flatten';
 
 import { getActiveDatasetsState } from 'components/map-v2/selectors';
@@ -13,8 +14,6 @@ import {
 
 const getMenuUrlState = state =>
   (state.location.query && state.location.query.menu) || null;
-const getLoading = state =>
-  state.datasets.loading || state.countryData.loading || null;
 const getCountries = state => state.countryData.countries || null;
 const getDatasets = state => state.datasets.datasets || null;
 
@@ -49,7 +48,7 @@ export const getSearchType = createSelector(
   settings => settings.searchType
 );
 
-export const getExploreSection = createSelector(
+export const getExploreType = createSelector(
   [getMenuSettings],
   settings => settings.exploreType
 );
@@ -219,19 +218,29 @@ export const getMobileSections = createSelector([getMenuSection], menuSection =>
   }))
 );
 
+export const getDatasetCategories = createSelector(
+  [getMenuSection, getDatasetCategory],
+  (menuSection, datasetCategory) =>
+    datasetsSections.map(s => ({
+      ...s,
+      label: startCase(s.category),
+      active: menuSection === s.slug && datasetCategory === s.category
+    }))
+);
+
 export const getMenuProps = createStructuredSelector({
   datasetSections: getDatasetSectionsWithData,
   searchSections: getSearchSections,
   mobileSections: getMobileSections,
   activeSection: getActiveSectionWithData,
   menuSection: getMenuSection,
-  datasetCategory: getDatasetCategory,
   countriesWithoutData: getZeroDataCountries,
-  exploreType: getExploreSection,
   countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
   activeDatasets: getActiveDatasetsState,
-  loading: getLoading,
+  datasetCategory: getDatasetCategory,
+  datasetCategories: getDatasetCategories,
+  exploreType: getExploreType,
   search: getSearch,
   searchType: getSearchType
 });

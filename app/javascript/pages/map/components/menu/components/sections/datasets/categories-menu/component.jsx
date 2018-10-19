@@ -19,7 +19,7 @@ class CategoriesMenu extends PureComponent {
               onClick={() => onSelectCategory({ datasetCategory: c.category })}
             >
               <Icon icon={c.icon} />
-              {c.name}
+              {c.label}
             </button>
           </li>
         ))}

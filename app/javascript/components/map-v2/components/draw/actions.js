@@ -27,3 +27,30 @@ export const getGeostoreId = createThunkAction(
     }
   }
 );
+
+export const setDrawnGeostore = createThunkAction(
+  'setDrawnGeostore',
+  geostoreId => (dispatch, getState) => {
+    const { query, type } = getState().location;
+    const { map, menu } = query || {};
+    dispatch({
+      type,
+      payload: {
+        type: 'geostore',
+        adm0: geostoreId
+      },
+      query: {
+        ...query,
+        map: {
+          ...map,
+          canBound: true,
+          draw: false
+        },
+        menu: {
+          ...menu,
+          menuSection: 'analysis'
+        }
+      }
+    });
+  }
+);

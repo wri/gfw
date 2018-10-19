@@ -14,22 +14,13 @@ class AnalysisContainer extends PureComponent {
   static propTypes = {
     location: PropTypes.object,
     getAnalysis: PropTypes.func,
-    drawnGeostoreId: PropTypes.string,
-    setDrawnAnalysis: PropTypes.func,
-    query: PropTypes.object,
     endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
     setAnalysisLoading: PropTypes.func
   };
 
   componentDidUpdate(prevProps) {
-    const {
-      location,
-      drawnGeostoreId,
-      setDrawnAnalysis,
-      query,
-      endpoints
-    } = this.props;
+    const { location, endpoints } = this.props;
 
     // get analysis if location changes
     if (
@@ -40,14 +31,6 @@ class AnalysisContainer extends PureComponent {
         !isEqual(location, prevProps.location))
     ) {
       this.handleFetchAnalysis(location, endpoints);
-    }
-
-    // if user draws shape get analysis
-    if (
-      drawnGeostoreId &&
-      !isEqual(drawnGeostoreId, prevProps.drawnGeostoreId)
-    ) {
-      setDrawnAnalysis(drawnGeostoreId, query);
     }
   }
 

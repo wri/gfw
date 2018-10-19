@@ -21,7 +21,7 @@ $map-menu-panel-width-big: rem(550px);
     transform: translateX(#{$map-menu-items-size - $map-menu-panel-width-big});
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
 
-    &.big {
+    &.large {
       width: $map-menu-panel-width-big;
     }
 
@@ -45,6 +45,7 @@ $map-menu-panel-width-big: rem(550px);
     right: 0;
     z-index: 4;
     background-color: $white;
+    text-transform: uppercase;
   }
 
   .panel-body {
