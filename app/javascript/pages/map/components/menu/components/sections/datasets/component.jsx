@@ -77,21 +77,24 @@ class Datasets extends PureComponent {
         </div>
         {!!countriesWithoutData.length &&
           !!selectedCountries.length && (
-            <p className="no-datasets-message">
-              No datasets available in{' '}
-              {countriesWithoutData.map((c, i, a) => {
-                let separator = ', ';
-                if (i === a.length - 2) separator = ' or ';
-                if (i === a.length - 1) separator = ' ';
-                return (
-                  <Fragment key={c}>
-                    <strong>{c}</strong>
-                    {separator}
-                  </Fragment>
-                );
-              })}
-              for {name && name.toLowerCase()}.
-            </p>
+            <div className="no-datasets-legend">
+              <span className="legend-dot" />
+              <p className="no-datasets-message">
+                No datasets available in{' '}
+                {countriesWithoutData.map((c, i, a) => {
+                  let separator = ', ';
+                  if (i === a.length - 2) separator = ' or ';
+                  if (i === a.length - 1) separator = ' ';
+                  return (
+                    <Fragment key={c}>
+                      <strong>{c}</strong>
+                      {separator}
+                    </Fragment>
+                  );
+                })}
+                for {name && name.toLowerCase()}.
+              </p>
+            </div>
           )}
         {subCategories
           ? subCategories.map(subCat => (

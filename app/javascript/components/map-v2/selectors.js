@@ -23,6 +23,9 @@ const selectLocation = state =>
 const selectAnalysisSettings = state =>
   state.location && state.location.query && state.location.query.analysis;
 const selectWidgetActiveSettings = state => state.widgetsV2.settings;
+// popup interactons
+const getSelectedInteractionId = state => state.popup.selected;
+const getInteractions = state => state.popup.interactions;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -335,6 +338,44 @@ export const getOneClickAnalysisActive = createSelector(
     !location.adm0
 );
 
+export const filterInteractions = createSelector(
+  [getInteractions],
+  interactions => {
+    if (isEmpty(interactions)) return null;
+    return Object.values(interactions)
+      .filter(i => !isEmpty(i.data))
+      .map(i => ({
+        ...i
+      }));
+  }
+);
+
+export const getSelectedInteraction = createSelector(
+  [filterInteractions, getSelectedInteractionId, getActiveLayers],
+  (options, selected, layers) => {
+    if (isEmpty(options)) return null;
+    const layersWithoutBoundaries = layers.filter(
+      l => !l.isBoundary && !isEmpty(l.interactionConfig)
+    );
+    // if there is an article (icon layer) then choose that
+    let selectedData = options.find(o => o.article);
+    // if there is nothing selected get the top layer
+    if (!selected && !!layersWithoutBoundaries.length) {
+      selectedData = options.find(
+        o => o.value === layersWithoutBoundaries[0].id
+      );
+    }
+    // if only one layer then get that
+    if (!selectedData && options.length === 1) selectedData = options[0];
+    // otherwise get based on selected
+    if (!selectedData) selectedData = options.find(o => o.value === selected);
+    const layer =
+      selectedData && layers && layers.find(l => l.id === selectedData.id);
+
+    return { ...selectedData, layer };
+  }
+);
+
 export const getMapProps = createStructuredSelector({
   mapOptions: getMapOptions,
   basemap: getBasemap,
@@ -349,5 +390,6 @@ export const getMapProps = createStructuredSelector({
   analysisActive: getShowAnalysis,
   oneClickAnalysisActive: getOneClickAnalysisActive,
   embed: selectEmbed,
-  hidePanels: getHidePanels
+  hidePanels: getHidePanels,
+  selectedInteraction: getSelectedInteraction
 });

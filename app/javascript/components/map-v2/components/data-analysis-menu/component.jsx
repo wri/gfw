@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -75,6 +75,17 @@ class DataAnalysisMenu extends PureComponent {
                 location.adm0 &&
                 (loading || (!loading && error)) && (
                   <div className={cx('cancel-analysis', { fetching: loading })}>
+                    {!loading &&
+                      error && (
+                        <Button
+                          className="refresh-analysis-btn"
+                          onClick={() =>
+                            handleFetchAnalysis(location, endpoints)
+                          }
+                        >
+                          REFRESH ANALYSIS
+                        </Button>
+                      )}
                     <Button
                       className="cancel-analysis-btn"
                       onClick={handleCancelAnalysis}
@@ -82,19 +93,7 @@ class DataAnalysisMenu extends PureComponent {
                       CANCEL ANALYSIS
                     </Button>
                     {!loading &&
-                      error && (
-                        <Fragment>
-                          <Button
-                            className="refresh-analysis-btn"
-                            onClick={() =>
-                              handleFetchAnalysis(location, endpoints)
-                            }
-                          >
-                            REFRESH ANALYSIS
-                          </Button>
-                          <p className="error-message">{error}</p>
-                        </Fragment>
-                      )}
+                      error && <p className="error-message">{error}</p>}
                   </div>
                 )}
               {location.type && location.adm0 ? (

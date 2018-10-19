@@ -2,14 +2,16 @@ import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
 
 import MapComponent from './component';
 import { getMapProps } from './selectors';
 
-import * as popupActions from './components/popup/actions';
 import { setRecentImagerySettings } from './components/recent-imagery/recent-imagery-actions';
+import * as popupActions from './components/popup/actions';
 import * as ownActions from './actions';
 
 const actions = {
@@ -39,7 +41,10 @@ class MapContainer extends PureComponent {
       bbox,
       geostoreBbox,
       setMapSettings,
-      layerBbox
+      layerBbox,
+      selectedInteraction,
+      setAnalysisView,
+      oneClickAnalysisActive
     } = this.props;
 
     // update landsat basemap when changing zoom
@@ -63,6 +68,15 @@ class MapContainer extends PureComponent {
     // if geostore changes
     if (geostoreBbox && geostoreBbox !== prevProps.geostoreBbox) {
       setMapSettings({ bbox: geostoreBbox });
+    }
+    // set analysis view if interaction changes
+    if (
+      oneClickAnalysisActive &&
+      selectedInteraction &&
+      !isEmpty(selectedInteraction.data) &&
+      !isEqual(selectedInteraction, prevProps.selectedInteraction)
+    ) {
+      setAnalysisView(selectedInteraction);
     }
   }
 
@@ -98,17 +112,9 @@ class MapContainer extends PureComponent {
   };
 
   handleMapInteraction = ({ e, article, output, layer }) => {
-    const {
-      setAnalysisView,
-      setInteraction,
-      oneClickAnalysisActive,
-      draw
-    } = this.props;
-    const { data } = e || {};
+    const { setInteraction, draw } = this.props;
 
-    if (data && layer && oneClickAnalysisActive) {
-      setAnalysisView({ data, layer });
-    } else if (!draw) {
+    if (!draw) {
       setInteraction({
         ...e,
         label: layer.name,
@@ -143,7 +149,8 @@ MapContainer.propTypes = {
   oneClickAnalysisActive: PropTypes.bool,
   draw: PropTypes.bool,
   setAnalysisView: PropTypes.func,
-  setInteraction: PropTypes.func
+  setInteraction: PropTypes.func,
+  selectedInteraction: PropTypes.object
 };
 
 export default connect(getMapProps, actions)(MapContainer);

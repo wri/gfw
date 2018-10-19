@@ -13,7 +13,6 @@ import basemaps, {
 import topics, { descriptions } from './explore-topics';
 
 const selectSection = (state, props) => props.exploreSection;
-const selectQuery = state => state.location && state.location.query;
 const selectPTWLoading = state => state.ptw.loading;
 const selectPTWData = state => {
   const { data } = state.ptw;
@@ -106,6 +105,5 @@ export const mapStateToProps = createStructuredSelector({
   section: selectSection,
   description: getDescription,
   mapState: getCurrentMapPayload,
-  loading: getLoading,
-  query: selectQuery
+  loading: getLoading
 });

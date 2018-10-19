@@ -1,5 +1,4 @@
 import { createAction, createThunkAction } from 'redux-tools';
-
 import { getGeostoreProvider } from 'services/geostore';
 import { getBoxBounds, getLeafletBbox } from 'utils/geoms';
 
@@ -15,12 +14,13 @@ export const getGeostore = createThunkAction(
         .then(response => {
           const { data } = response.data;
           if (data && data.attributes) {
+            const { bbox, ...rest } = data.attributes || {};
             dispatch(
               setGeostore({
                 id: data.id,
-                ...data.attributes,
-                bbox: getLeafletBbox(data.attributes.bbox, adm0, adm1),
-                bounds: getBoxBounds(data.attributes.bbox, adm0, adm1)
+                ...rest,
+                bbox: getLeafletBbox(bbox, adm0, adm1),
+                bounds: getBoxBounds(bbox, adm0, adm1)
               })
             );
           }

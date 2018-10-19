@@ -68,21 +68,22 @@ class Header extends PureComponent {
           className
         )}
       >
-        {toggle && (
-          <button onClick={toggleMenu} className="logo">
-            <img
-              src={gfwLogo}
-              alt="Global Forest Watch"
-              width="76"
-              height="76"
-            />
-          </button>
-        )}
+        {toggle &&
+          !showHeader && (
+            <button onClick={toggleMenu} className="logo">
+              <img
+                src={gfwLogo}
+                alt="Global Forest Watch"
+                width="76"
+                height="76"
+              />
+            </button>
+          )}
         {(!toggle || (toggle && showHeader)) && (
           <Fragment>
             <div className="nav-menu">
               <div className={!fullScreen ? 'row column' : ''}>
-                {!toggle && (
+                {(!toggle || (toggle && showHeader)) && (
                   <a className="logo" href="/">
                     <img
                       src={gfwLogo}
