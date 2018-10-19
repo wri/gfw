@@ -22,7 +22,7 @@ class MapPage extends PureComponent {
     return (
       <div className="l-map">
         <Map
-          onMapClick={() => this.props.setMenuSettings({ selectedSection: '' })}
+          onMapClick={() => this.props.setMenuSettings({ menuSection: '' })}
         />
         <Share />
         <ModalMeta />

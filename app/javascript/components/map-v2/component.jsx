@@ -104,54 +104,66 @@ class MapComponent extends PureComponent {
                 open={showTooltip}
                 disabled={!isDesktop}
               >
-                <Map
-                  customClass={cx(
-                    'map-wrapper',
-                    { analysis: analysisActive },
-                    { embed }
-                  )}
-                  onReady={map => {
-                    this.map = map;
-                  }}
-                  mapOptions={mapOptions}
-                  basemap={basemap}
-                  label={label}
-                  bounds={
-                    bbox
-                      ? {
-                        bbox,
-                        options: {
-                          padding: [50, 50]
-                        }
-                      }
-                      : {}
-                  }
-                  events={{
-                    zoomend: handleMapMove,
-                    dragend: handleMapMove
-                  }}
+                <div
+                  className="map-click-container"
+                  onClick={onMapClick}
+                  role="button"
+                  tabIndeX={0}
                 >
-                  {map => (
-                    <Fragment>
-                      <LayerManagerComponent
-                        map={map}
-                        handleMapInteraction={handleMapInteraction}
-                        handleRecentImageryTooltip={handleRecentImageryTooltip}
-                        handleShowTooltip={handleShowTooltip}
-                      />
-                      <Popup map={map} />
-                      <MapControlButtons
-                        className="map-controls"
-                        embed={embed}
-                      />
-                      {draw && <MapDraw map={map} />}
-                    </Fragment>
-                  )}
-                </Map>
+                  <Map
+                    customClass={cx(
+                      'map-wrapper',
+                      { analysis: analysisActive },
+                      { embed }
+                    )}
+                    onReady={map => {
+                      this.map = map;
+                    }}
+                    mapOptions={mapOptions}
+                    basemap={basemap}
+                    label={label}
+                    bounds={
+                      bbox
+                        ? {
+                          bbox,
+                          options: {
+                            padding: [50, 50]
+                          }
+                        }
+                        : {}
+                    }
+                    events={{
+                      zoomend: handleMapMove,
+                      dragend: handleMapMove
+                    }}
+                  >
+                    {map => (
+                      <Fragment>
+                        <LayerManagerComponent
+                          map={map}
+                          handleMapInteraction={handleMapInteraction}
+                          handleRecentImageryTooltip={
+                            handleRecentImageryTooltip
+                          }
+                          handleShowTooltip={handleShowTooltip}
+                        />
+                        <Popup map={map} />
+                        <MapControlButtons
+                          className="map-controls"
+                          embed={embed}
+                        />
+                        {draw && <MapDraw map={map} />}
+                      </Fragment>
+                    )}
+                  </Map>
+                </div>
               </Tooltip>
-              {/* {!hidePanels && (
-                <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
-              )} */}
+              {isDesktop &&
+                !hidePanels && (
+                  <DataAnalysisMenu
+                    className={cx('data-analysis-menu', { embed })}
+                  />
+                )}
               <Icon className="icon-crosshair" icon={iconCrosshair} />
               <MapAttributions className="map-attributions" />
               {loading && (
