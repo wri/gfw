@@ -19,6 +19,9 @@ class CategoriesMenu extends PureComponent {
               onClick={() => onSelectCategory({ datasetCategory: c.category })}
             >
               <div className="category-button">
+                {!!c.layerCount && (
+                  <span className="btn-layer-count">{c.layerCount}</span>
+                )}
                 <Icon icon={c.icon} />
               </div>
               {c.label}

@@ -84,6 +84,7 @@ export const getDatasetSections = createSelector(
   [getDatasets, getActiveCountries],
   (datasets, countries) => {
     if (isEmpty(datasets)) return datasetsSections;
+
     return datasetsSections.map(s => {
       const { category, subCategories } = s;
       const sectionDatasets =
@@ -112,7 +113,6 @@ export const getDatasetSections = createSelector(
 
       return {
         ...s,
-        datasets: sectionDatasets,
         subCategories: countriesWithDatasets.concat(subCategoriesWithDatasets)
       };
     });
@@ -160,6 +160,7 @@ export const getAllSections = createSelector(
   [getDatasetSectionsWithData],
   datasetSections => {
     if (!datasetSections) return null;
+
     return datasetSections.concat(searchSections).concat(mobileSections);
   }
 );
@@ -168,10 +169,12 @@ export const getActiveSection = createSelector(
   [getAllSections, getMenuSection, getDatasetCategory],
   (sections, menuSection, datasetCategory) => {
     if (!sections || !menuSection) return null;
+
     return sections.find(
       s =>
-        (s.category === datasetCategory && s.slug === menuSection) ||
-        s.slug === menuSection
+        (s.category
+          ? s.category === datasetCategory && s.slug === menuSection
+          : s.slug === menuSection)
     );
   }
 );
@@ -211,17 +214,23 @@ export const getSearchSections = createSelector([getMenuSection], menuSection =>
   }))
 );
 
-export const getMobileSections = createSelector([getMenuSection], menuSection =>
-  mobileSections.map(s => ({
-    ...s,
-    active: menuSection === s.slug
-  }))
+export const getMobileSections = createSelector(
+  [getMenuSection, getActiveDatasetsState],
+  (menuSection, activeDatasets) =>
+    mobileSections.map(s => ({
+      ...s,
+      ...(s.slug === 'datasets' && {
+        layerCount: activeDatasets && activeDatasets.length
+      }),
+      active: menuSection === s.slug
+    }))
 );
 
 export const getDatasetCategories = createSelector(
-  [getMenuSection, getDatasetCategory],
-  (menuSection, datasetCategory) =>
-    datasetsSections.map(s => ({
+  [getDatasetSectionsWithData, getMenuSection, getDatasetCategory],
+  (datasets, menuSection, datasetCategory) =>
+    datasets &&
+    datasets.map(s => ({
       ...s,
       label: startCase(s.category),
       active: menuSection === s.slug && datasetCategory === s.category

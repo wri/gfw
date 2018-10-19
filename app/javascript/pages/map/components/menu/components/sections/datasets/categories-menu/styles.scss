@@ -34,6 +34,24 @@
       background-color: $green-gfw;
       border-radius: rem(35px);
       margin-bottom: rem(10px);
+      position: relative;
+
+      span {
+        position: absolute;
+        top: rem(6px);
+        right: rem(2px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: rem(14px);
+        height: rem(14px);
+        background-color: $slate;
+        border-radius: 100%;
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: -0.3px;
+        color: $white;
+      }
     }
 
     svg {
