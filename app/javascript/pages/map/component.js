@@ -15,7 +15,8 @@ import './styles.scss';
 
 class MapPage extends PureComponent {
   static propTypes = {
-    setMenuSettings: PropTypes.func
+    setMenuSettings: PropTypes.func,
+    isDesktop: PropTypes.bool
   };
 
   render() {
@@ -23,6 +24,7 @@ class MapPage extends PureComponent {
       <div className="l-map">
         <Map
           onMapClick={() => this.props.setMenuSettings({ menuSection: '' })}
+          isDesktop={this.props.isDesktop}
         />
         <Share />
         <ModalMeta />

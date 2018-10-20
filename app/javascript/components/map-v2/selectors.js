@@ -26,6 +26,7 @@ const selectWidgetActiveSettings = state => state.widgetsV2.settings;
 // popup interactons
 const getSelectedInteractionId = state => state.popup.selected;
 const getInteractions = state => state.popup.interactions;
+const getIsDesktop = (state, { isDesktop }) => isDesktop;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -329,11 +330,12 @@ export const getShowAnalysis = createSelector(
 );
 
 export const getOneClickAnalysisActive = createSelector(
-  [selectAnalysisSettings, selectLocation, getDraw],
-  (settings, location, draw) =>
+  [selectAnalysisSettings, selectLocation, getDraw, getIsDesktop],
+  (settings, location, draw, isDesktop) =>
     settings &&
     !draw &&
     settings.showAnalysis &&
+    isDesktop &&
     !settings.showDraw &&
     !location.adm0
 );
