@@ -10,7 +10,7 @@ import posed, { PoseGroup } from 'react-pose';
 
 import './styles.scss';
 
-const PanelContainer = posed.div({
+const PanelMobile = posed.div({
   enter: {
     y: 0,
     opacity: 1,
@@ -18,6 +18,19 @@ const PanelContainer = posed.div({
   },
   exit: {
     y: 50,
+    opacity: 0,
+    transition: { duration: 200 }
+  }
+});
+
+const PanelDesktop = posed.div({
+  enter: {
+    x: 0,
+    opacity: 1,
+    delay: 300
+  },
+  exit: {
+    x: 50,
     opacity: 0,
     transition: { duration: 200 }
   }
@@ -36,34 +49,37 @@ class MenuPanel extends PureComponent {
       children,
       setMenuSettings
     } = this.props;
+    const Panel = isDesktop ? PanelDesktop : PanelMobile;
 
     return (
       <PoseGroup>
         {active && (
-          <PanelContainer
+          <Panel
             key="menu-container"
             className={cx('c-menu-panel', { large }, className)}
           >
-            <div className="panel-header">
-              <div className="header-label">
-                {category && (
-                  <button
-                    onClick={() => setMenuSettings({ datasetCategory: '' })}
-                  >
-                    <Icon icon={arrowIcon} className="icon-return" />
-                  </button>
-                )}
-                {category ? startCase(category) : label}
+            {!isDesktop && (
+              <div className="panel-header">
+                <div className="header-label">
+                  {category && (
+                    <button
+                      onClick={() => setMenuSettings({ datasetCategory: '' })}
+                    >
+                      <Icon icon={arrowIcon} className="icon-return" />
+                    </button>
+                  )}
+                  {category ? startCase(category) : label}
+                </div>
+                <button className="close-menu" onClick={onClose}>
+                  <Icon
+                    icon={isDesktop ? closeIcon : arrowIcon}
+                    className="icon-close-panel"
+                  />
+                </button>
               </div>
-              <button className="close-menu" onClick={onClose}>
-                <Icon
-                  icon={isDesktop ? closeIcon : arrowIcon}
-                  className="icon-close-panel"
-                />
-              </button>
-            </div>
+            )}
             <div className="panel-body">{children}</div>
-          </PanelContainer>
+          </Panel>
         )}
       </PoseGroup>
     );

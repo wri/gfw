@@ -4,16 +4,27 @@
   z-index: 2;
 
   .menu-tiles {
-    z-index: 2;
+    z-index: 4;
     background-color: $white-tree;
     border-top: solid 1px $border;
+    position: relative;
 
     @media screen and (min-width: $screen-m) {
       height: 100%;
+      width: rem(76px);
     }
   }
 
   .menu-panel {
     padding-bottom: rem(50px);
+    z-index: 3;
+
+    @media screen and (min-width: $screen-m) {
+      padding-bottom: 0;
+    }
+  }
+
+  .menu-desktop {
+    margin-top: rem(76px);
   }
 }

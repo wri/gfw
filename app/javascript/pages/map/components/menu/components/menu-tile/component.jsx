@@ -9,7 +9,6 @@ import './styles.scss';
 class MenuTile extends PureComponent {
   render() {
     const {
-      slug,
       label,
       active,
       small,
@@ -21,10 +20,7 @@ class MenuTile extends PureComponent {
     } = this.props;
 
     return (
-      <li
-        className={cx('c-map-menu-tile', { active }, { small })}
-        key={`menu_${slug}`}
-      >
+      <li className={cx('c-map-menu-tile', { active }, { small })}>
         <button className="item-button" onClick={onClick} disabled={loading}>
           <Icon icon={icon} className="tile-icon" />
           <span>{label}</span>
@@ -38,7 +34,6 @@ class MenuTile extends PureComponent {
 }
 
 MenuTile.propTypes = {
-  slug: PropTypes.string,
   onClick: PropTypes.func,
   loading: PropTypes.bool,
   active: PropTypes.bool,

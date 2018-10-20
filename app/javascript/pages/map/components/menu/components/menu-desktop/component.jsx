@@ -16,7 +16,7 @@ class MenuDesktop extends PureComponent {
     } = this.props;
 
     return (
-      <div
+      <ul
         className={cx('c-menu-desktop', className)}
         style={{ display: window.innerHeight >= 608 ? 'flex' : 'block' }}
       >
@@ -24,8 +24,7 @@ class MenuDesktop extends PureComponent {
           datasetSections.map(s => (
             <MenuTile
               className="mobile-tile"
-              small
-              key={s.slug}
+              key={`${s.slug}_${s.category}`}
               {...s}
               onClick={() =>
                 setMenuSettings({
@@ -39,7 +38,6 @@ class MenuDesktop extends PureComponent {
           searchSections.map(s => (
             <MenuTile
               className="mobile-tile"
-              small
               key={s.slug}
               onClick={() =>
                 setMenuSettings({
@@ -50,7 +48,7 @@ class MenuDesktop extends PureComponent {
               {...s}
             />
           ))}
-      </div>
+      </ul>
     );
   }
 }

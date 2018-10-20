@@ -11,7 +11,6 @@
 
   .page {
     position: relative;
-    z-index: 0;
     min-height: calc(100vh - 60px);
 
     .page-loader {
@@ -20,12 +19,12 @@
   }
 
   &.-map {
-    .map-menu {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
+    // .map-menu {
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   right: 0;
+    // }
 
     .page {
       height: calc(100% - 50px);

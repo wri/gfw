@@ -22,6 +22,7 @@
   .map-wrapper {
     position: relative;
     min-height: rem(300px);
+    z-index: 2;
 
     .wri_api__map-container {
       position: absolute !important;

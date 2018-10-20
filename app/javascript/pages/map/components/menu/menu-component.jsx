@@ -56,11 +56,12 @@ class MapMenu extends PureComponent {
     return (
       <MediaQuery minDeviceWidth={SCREEN_M}>
         {isDesktop => (
-          <div className="c-map-menu">
-            <div className={cx('menu-tiles', className)}>
+          <div className={cx('c-map-menu', className)}>
+            <div className="menu-tiles">
               {isDesktop ? (
                 <MenuDesktop
-                  sections={datasetSections}
+                  className="menu-desktop"
+                  datasetSections={datasetSections}
                   searchSections={searchSections}
                   setMenuSettings={setMenuSettings}
                 />
