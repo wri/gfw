@@ -127,3 +127,22 @@ export const handleViewOnMap = createThunkAction(
     });
   }
 );
+
+export const showAnalysis = createThunkAction(
+  'showAnalysis',
+  () => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
+    const { menu } = query || {};
+    dispatch({
+      type,
+      payload,
+      query: {
+        ...query,
+        menu: {
+          ...menu,
+          menuSection: 'analysis'
+        }
+      }
+    });
+  }
+);

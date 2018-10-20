@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
+import isEqual from 'lodash/isEqual';
 
 import MenuPanel from 'pages/map/components/menu/components/menu-panel';
 
@@ -11,7 +12,19 @@ import MenuMobile from './components/menu-mobile';
 
 import './menu-styles.scss';
 
-class Menu extends PureComponent {
+class MapMenu extends PureComponent {
+  componentDidUpdate(prevProps) {
+    const { showAnalysis, location } = this.props;
+    if (
+      location &&
+      location.type &&
+      location.adm0 &&
+      !isEqual(location, prevProps.location)
+    ) {
+      showAnalysis();
+    }
+  }
+
   render() {
     const {
       className,
@@ -70,7 +83,7 @@ class Menu extends PureComponent {
   }
 }
 
-Menu.propTypes = {
+MapMenu.propTypes = {
   sections: PropTypes.array,
   className: PropTypes.string,
   datasetSections: PropTypes.array,
@@ -91,7 +104,9 @@ Menu.propTypes = {
   getLocationFromSearch: PropTypes.func,
   exploreSection: PropTypes.string,
   menuSection: PropTypes.string,
-  datasetCategory: PropTypes.string
+  datasetCategory: PropTypes.string,
+  showAnalysis: PropTypes.bool,
+  location: PropTypes.object
 };
 
-export default Menu;
+export default MapMenu;

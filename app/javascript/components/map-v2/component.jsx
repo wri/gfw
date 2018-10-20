@@ -148,10 +148,12 @@ class MapComponent extends PureComponent {
                           handleShowTooltip={handleShowTooltip}
                         />
                         <Popup map={map} />
-                        <MapControlButtons
-                          className="map-controls"
-                          embed={embed}
-                        />
+                        {isDesktop && (
+                          <MapControlButtons
+                            className="map-controls"
+                            embed={embed}
+                          />
+                        )}
                         {draw && <MapDraw map={map} />}
                       </Fragment>
                     )}

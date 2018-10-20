@@ -16,7 +16,7 @@ const getMenuUrlState = state =>
   (state.location.query && state.location.query.menu) || null;
 const getCountries = state => state.countryData.countries || null;
 const getDatasets = state => state.datasets.datasets || null;
-const getLocation = state => (state.location && state.location.payload) || null;
+const getLocation = state => state.location && state.location.payload;
 
 // setting from state
 export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
@@ -255,5 +255,6 @@ export const getMenuProps = createStructuredSelector({
   datasetCategories: getDatasetCategories,
   exploreType: getExploreType,
   search: getSearch,
-  searchType: getSearchType
+  searchType: getSearchType,
+  location: getLocation
 });

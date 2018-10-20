@@ -69,10 +69,11 @@ export const setLandsatBasemap = createThunkAction(
 
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
-  ({ data, layer, isDesktop }) => (dispatch, getState) => {
+  ({ data, layer }) => (dispatch, getState) => {
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
-    const query = getState().location.query || {};
+    const { query } = getState().location;
+    const { map, analysis } = query || {};
 
     // get location payload based on layer type
     let payload = {};
@@ -103,16 +104,12 @@ export const setAnalysisView = createThunkAction(
         query: {
           ...query,
           map: {
-            ...(query && query.map && query.map),
+            ...map,
             canBound: true
           },
           analysis: {
-            ...(query && query.analysis && query.analysis),
+            ...analysis,
             showAnalysis: true
-          },
-          menu: {
-            ...(query && query.menu && query.menu),
-            menuSection: !isDesktop ? 'analysis' : ''
           }
         }
       });

@@ -27,6 +27,7 @@ export const setAnalysisSettings = createThunkAction(
 export const setAnalysisData = createAction('setAnalysisData');
 export const setAnalysisLoading = createAction('setAnalysisLoading');
 export const clearAnalysisError = createAction('clearAnalysisError');
+export const clearAnalysisData = createAction('clearAnalysisData');
 
 export const getAnalysis = createThunkAction(
   'getAnalysis',
@@ -145,6 +146,7 @@ export const clearAnalysis = createThunkAction(
         query
       })
     });
+    dispatch(clearAnalysisData());
   }
 );
 

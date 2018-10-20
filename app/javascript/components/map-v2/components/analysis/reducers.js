@@ -29,8 +29,14 @@ const clearAnalysisError = state => ({
   errorMessage: ''
 });
 
+const clearAnalysisData = state => ({
+  ...state,
+  data: {}
+});
+
 export default {
   [actions.setAnalysisData]: setAnalysisData,
   [actions.setAnalysisLoading]: setAnalysisLoading,
-  [actions.clearAnalysisError]: clearAnalysisError
+  [actions.clearAnalysisError]: clearAnalysisError,
+  [actions.clearAnalysisData]: clearAnalysisData
 };

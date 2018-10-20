@@ -32,7 +32,7 @@ export const setDrawnGeostore = createThunkAction(
   'setDrawnGeostore',
   geostoreId => (dispatch, getState) => {
     const { query, type } = getState().location;
-    const { map, menu } = query || {};
+    const { map } = query || {};
     dispatch({
       type,
       payload: {
@@ -45,10 +45,6 @@ export const setDrawnGeostore = createThunkAction(
           ...map,
           canBound: true,
           draw: false
-        },
-        menu: {
-          ...menu,
-          menuSection: 'analysis'
         }
       }
     });
