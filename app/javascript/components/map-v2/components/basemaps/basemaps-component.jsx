@@ -10,7 +10,7 @@ import './styles.scss';
 
 class Basemaps extends React.PureComponent {
   static propTypes = {
-    onClose: PropTypes.func.isRequired,
+    onClose: PropTypes.func,
     boundaries: PropTypes.array,
     basemaps: PropTypes.object.isRequired,
     labels: PropTypes.object.isRequired,
@@ -21,6 +21,7 @@ class Basemaps extends React.PureComponent {
     activeBasemap: PropTypes.object.isRequired,
     selectBoundaries: PropTypes.func.isRequired,
     activeBoundaries: PropTypes.object,
+    isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired
   };
 
@@ -93,7 +94,8 @@ class Basemaps extends React.PureComponent {
       selectBoundaries,
       boundaries,
       basemaps,
-      labels
+      labels,
+      isDesktop
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -102,14 +104,16 @@ class Basemaps extends React.PureComponent {
     return (
       <div className="c-basemaps" {...getTooltipContentProps()}>
         <div className="basemaps-top-section">
-          <div className="basemaps-header">
-            <h2 className="basemaps-title">Basemap Options</h2>
-            <div className="basemaps-actions">
-              <button className="basemaps-action-button" onClick={onClose}>
-                <Icon icon={closeIcon} />
-              </button>
+          {isDesktop && (
+            <div className="basemaps-header">
+              <h2 className="basemaps-title">Basemap Options</h2>
+              <div className="basemaps-actions">
+                <button className="basemaps-action-button" onClick={onClose}>
+                  <Icon icon={closeIcon} />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
           <ul className="basemaps-options-container">
             <li className="basemaps-options-wrapper">
               <Dropdown

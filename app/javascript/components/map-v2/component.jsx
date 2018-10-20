@@ -148,7 +148,7 @@ class MapComponent extends PureComponent {
                           handleShowTooltip={handleShowTooltip}
                         />
                         <Popup map={map} />
-                        {isDesktop && (
+                        {!isDesktop && (
                           <MapControlButtons
                             className="map-controls"
                             embed={embed}

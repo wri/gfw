@@ -8,7 +8,7 @@ import { isParent } from 'utils/dom';
 
 import Basemaps from 'components/map-v2/components/basemaps';
 import RecentImagery from 'components/map-v2/components/recent-imagery';
-import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings';
+import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings-tooltip';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Loader from 'components/ui/loader';
@@ -80,12 +80,12 @@ class MapControlsButtons extends PureComponent {
     const newDatasets = recentActive
       ? datasets.filter(d => !d.isRecentImagery)
       : datasets.concat({
-          dataset: recentImageryDataset.dataset,
-          layers: [recentImageryDataset.layer],
-          visibility: 1,
-          opacity: 1,
-          isRecentImagery: true
-        });
+        dataset: recentImageryDataset.dataset,
+        layers: [recentImageryDataset.layer],
+        visibility: 1,
+        opacity: 1,
+        isRecentImagery: true
+      });
     setMapSettings({
       datasets: newDatasets,
       zoom: !recentActive && zoom < 9 ? 9 : zoom
@@ -142,11 +142,11 @@ class MapControlsButtons extends PureComponent {
                 tooltip={
                   !visible
                     ? {
-                        text: !recentActive
-                          ? 'Activate Recent Imagery'
-                          : 'Disable Recent Imagery',
-                        hideOnClick: false
-                      }
+                      text: !recentActive
+                        ? 'Activate Recent Imagery'
+                        : 'Disable Recent Imagery',
+                      hideOnClick: false
+                    }
                     : undefined
                 }
               >

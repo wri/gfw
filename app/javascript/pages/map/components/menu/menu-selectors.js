@@ -219,7 +219,7 @@ export const getSearchSections = createSelector([getMenuSection], menuSection =>
 export const getMobileSections = createSelector(
   [getMenuSection, getActiveDatasetsState, getLocation],
   (menuSection, activeDatasets, location) =>
-    mobileSections.map(s => ({
+    mobileSections.filter(s => !s.hidden).map(s => ({
       ...s,
       ...(s.slug === 'datasets' && {
         layerCount: activeDatasets && activeDatasets.length

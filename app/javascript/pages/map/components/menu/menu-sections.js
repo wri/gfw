@@ -9,6 +9,8 @@ import globeIcon from 'assets/icons/globe.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
+import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings';
+import Basemaps from 'components/map-v2/components/basemaps';
 import Analysis from 'components/map-v2/components/analysis';
 import Legend from 'components/map-v2/components/legend';
 import Datasets from './components/sections/datasets';
@@ -45,6 +47,20 @@ export const mobileSections = [
     slug: 'search',
     icon: searchIcon,
     Component: Search
+  },
+  {
+    label: 'Recent Imagery',
+    slug: 'recent-imagery',
+    icon: searchIcon,
+    Component: RecentImagerySettings,
+    hidden: true
+  },
+  {
+    label: 'Basemap Options',
+    slug: 'basemaps',
+    icon: searchIcon,
+    Component: Basemaps,
+    hidden: true
   }
 ];
 
