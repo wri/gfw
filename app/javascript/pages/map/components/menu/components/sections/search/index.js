@@ -10,8 +10,8 @@ import { mapStateToProps } from './selectors';
 
 class SearchMenu extends PureComponent {
   componentDidMount() {
-    const { search } = this.props;
-    if (search) {
+    const { search, locations } = this.props;
+    if (search && (!locations || !locations.length)) {
       this.handleGetLocations(search);
     }
   }
@@ -45,7 +45,8 @@ SearchMenu.propTypes = {
   getLocationFromSearch: PropTypes.func,
   setMenuSettings: PropTypes.func,
   setMenuLoading: PropTypes.func,
-  search: PropTypes.string
+  search: PropTypes.string,
+  locations: PropTypes.array
 };
 
 export default connect(mapStateToProps, null)(SearchMenu);
