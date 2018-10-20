@@ -22,7 +22,6 @@ const selectLoading = state =>
   state.draw.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectError = state => state.analysis.error;
-const selectData = state => state.analysis.data;
 
 export const getAnalysisSettings = createSelector(
   [selectAnalysisUrlState],
@@ -128,6 +127,5 @@ export const getAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   location: selectLocation,
-  hidden: getHidden,
-  data: selectData
+  hidden: getHidden
 });

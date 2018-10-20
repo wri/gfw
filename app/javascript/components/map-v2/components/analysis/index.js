@@ -2,7 +2,6 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import isEmpty from 'lodash/isEmpty';
 import { CancelToken } from 'axios';
 
 import * as actions from './actions';
@@ -17,14 +16,13 @@ class AnalysisContainer extends PureComponent {
     getAnalysis: PropTypes.func,
     endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
-    setAnalysisLoading: PropTypes.func,
-    data: PropTypes.object
+    setAnalysisLoading: PropTypes.func
   };
 
   componentDidMount() {
-    const { endpoints, location, data } = this.props;
+    const { endpoints, location } = this.props;
 
-    if (location.type && location.adm0 && endpoints && isEmpty(data)) {
+    if (location.type && location.adm0 && endpoints) {
       this.handleFetchAnalysis(location, endpoints);
     }
   }

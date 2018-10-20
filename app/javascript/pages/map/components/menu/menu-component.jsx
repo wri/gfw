@@ -105,7 +105,7 @@ MapMenu.propTypes = {
   exploreSection: PropTypes.string,
   menuSection: PropTypes.string,
   datasetCategory: PropTypes.string,
-  showAnalysis: PropTypes.bool,
+  showAnalysis: PropTypes.func,
   location: PropTypes.object
 };
 
