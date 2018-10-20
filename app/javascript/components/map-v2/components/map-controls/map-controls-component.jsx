@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { format } from 'd3-format';
@@ -103,160 +103,233 @@ class MapControlsButtons extends PureComponent {
     this.recentImageryRef = ref;
   };
 
-  render() {
+  renderRecentImageryBtn = () => {
     const {
-      className,
-      setShareModal,
-      settings,
       recentSettings,
       recentLoading,
       recentActive,
-      datasetsLoading,
-      setMapSettings
+      datasetsLoading
     } = this.props;
-    const { zoom, minZoom, maxZoom, center, hidePanels } = settings || {};
     const { visible } = recentSettings || {};
+
+    return (
+      <Button
+        className="recent-imagery-btn"
+        theme="theme-button-map-control"
+        onClick={this.handleToggleRecentImagery}
+        disabled={datasetsLoading}
+        tooltip={
+          !visible
+            ? {
+              text: !recentActive
+                ? 'Activate Recent Imagery'
+                : 'Disable Recent Imagery',
+              hideOnClick: false
+            }
+            : undefined
+        }
+      >
+        {recentLoading &&
+          recentActive && <Loader className="recent-imagery-loader" />}
+        <Icon
+          icon={satelliteIcon}
+          className={cx('satellite-icon', {
+            '-active': recentActive
+          })}
+        />
+      </Button>
+    );
+  };
+
+  renderBasemapsBtn = () => {
     const { showBasemaps } = this.state;
+
+    return (
+      <Button
+        className="basemaps-btn"
+        theme="theme-button-map-control"
+        onClick={this.toggleBasemaps}
+        tooltip={
+          !showBasemaps ? { text: 'Basemaps', hideOnClick: false } : undefined
+        }
+      >
+        <Icon
+          icon={globeIcon}
+          className={cx('globe-icon', { '-active': showBasemaps })}
+        />
+      </Button>
+    );
+  };
+
+  renderRecentImageryTooltip = () => {
+    const { recentSettings } = this.props;
+    const { visible } = recentSettings || {};
+
+    return (
+      <Tooltip
+        theme="light"
+        position="top-end"
+        useContext
+        interactive
+        animateFill={false}
+        open={visible}
+        onRequestClose={this.onRecentRequestClose}
+        html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
+        offset={90}
+      >
+        {this.renderRecentImageryBtn()}
+      </Tooltip>
+    );
+  };
+
+  renderBasemapsTooltip = () => {
+    const { showBasemaps } = this.state;
+
+    return (
+      <Tooltip
+        theme="light"
+        position="top-end"
+        useContext
+        interactive
+        animateFill={false}
+        open={showBasemaps}
+        onRequestClose={this.onBasemapsRequestClose}
+        html={
+          <Basemaps onClose={this.toggleBasemaps} ref={this.setBasemapsRef} />
+        }
+        offset={-10}
+      >
+        {this.renderBasemapsBtn()}
+      </Tooltip>
+    );
+  };
+
+  renderZoomButtons = () => {
+    const { settings, setMapSettings } = this.props;
+    const { zoom, minZoom, maxZoom } = settings || {};
+
+    return (
+      <Fragment>
+        <Button
+          theme="theme-button-map-control"
+          onClick={() => setMapSettings({ zoom: zoom - 1 })}
+          tooltip={{ text: 'Zoom out' }}
+          disabled={zoom === minZoom}
+        >
+          <Icon icon={minusIcon} className="minus-icon" />
+        </Button>
+        <Button
+          theme="theme-button-map-control"
+          onClick={() => setMapSettings({ zoom: zoom + 1 })}
+          tooltip={{ text: 'Zoom in' }}
+          disabled={zoom === maxZoom}
+        >
+          <Icon icon={plusIcon} className="plus-icon" />
+        </Button>
+      </Fragment>
+    );
+  };
+
+  renderShowPanelsButton = () => {
+    const { settings } = this.props;
+    const { hidePanels } = settings || {};
+
+    return (
+      <Button
+        theme="theme-button-map-control"
+        onClick={this.handleHidePanels}
+        tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
+      >
+        <Icon
+          icon={fullscreenIcon}
+          className={cx('fullscreen-icon', { '-active': hidePanels })}
+        />
+      </Button>
+    );
+  };
+
+  renderShareButton = () => {
+    const { setShareModal } = this.props;
+
+    return (
+      <Button
+        className="theme-button-map-control"
+        onClick={() =>
+          setShareModal({
+            title: 'Share this view',
+            shareUrl: window.location.href.includes('embed')
+              ? window.location.href.replace('/embed', '')
+              : window.location.href,
+            embedUrl: window.location.href.includes('embed')
+              ? window.location.href
+              : window.location.href.replace('/v2/map', '/embed/v2/map'),
+            embedSettings: {
+              width: 670,
+              height: 490
+            }
+          })
+        }
+        tooltip={{ text: 'Share or embed this view' }}
+      >
+        <Icon icon={shareIcon} />
+      </Button>
+    );
+  };
+
+  renderPrintButton = () => (
+    <Button
+      theme="theme-button-map-control"
+      tooltip={{ text: 'Print (not yet available)' }}
+      disabled
+    >
+      <Icon icon={printIcon} className="print-icon" />
+    </Button>
+  );
+
+  renderMapPosition = () => {
+    const { settings } = this.props;
+    const { zoom, center } = settings || {};
+
+    return (
+      <div className="map-position">
+        <span>zoom: {zoom}</span>
+        <span>
+          lat,lon:{' '}
+          {`${format('.5f')(center.lat)}, ${format('.5f')(center.lng)}`}
+        </span>
+      </div>
+    );
+  };
+
+  render() {
+    const { className, settings, isDesktop } = this.props;
+    const { hidePanels } = settings || {};
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
         <RecentImagery />
-        {!hidePanels && (
-          <div className="map-actions">
-            <Tooltip
-              theme="light"
-              position="top-end"
-              useContext
-              interactive
-              animateFill={false}
-              open={visible}
-              onRequestClose={this.onRecentRequestClose}
-              html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
-              offset={90}
-            >
-              <Button
-                className="recent-imagery-btn"
-                theme="theme-button-map-control"
-                onClick={this.handleToggleRecentImagery}
-                disabled={datasetsLoading}
-                tooltip={
-                  !visible
-                    ? {
-                      text: !recentActive
-                        ? 'Activate Recent Imagery'
-                        : 'Disable Recent Imagery',
-                      hideOnClick: false
-                    }
-                    : undefined
-                }
-              >
-                {recentLoading &&
-                  recentActive && <Loader className="recent-imagery-loader" />}
-                <Icon
-                  icon={satelliteIcon}
-                  className={cx('satellite-icon', {
-                    '-active': recentActive
-                  })}
-                />
-              </Button>
-            </Tooltip>
-            <Tooltip
-              theme="light"
-              position="top-end"
-              useContext
-              interactive
-              animateFill={false}
-              open={showBasemaps}
-              onRequestClose={this.onBasemapsRequestClose}
-              html={
-                <Basemaps
-                  onClose={this.toggleBasemaps}
-                  ref={this.setBasemapsRef}
-                />
-              }
-              offset={-10}
-            >
-              <Button
-                className="basemaps-btn"
-                theme="theme-button-map-control"
-                onClick={this.toggleBasemaps}
-                tooltip={
-                  !showBasemaps
-                    ? { text: 'Basemaps', hideOnClick: false }
-                    : undefined
-                }
-              >
-                <Icon
-                  icon={globeIcon}
-                  className={cx('globe-icon', { '-active': showBasemaps })}
-                />
-              </Button>
-            </Tooltip>
+        {isDesktop ? (
+          <Fragment>
+            {!hidePanels && (
+              <div className="map-actions">
+                {this.renderRecentImageryTooltip()}
+                {this.renderBasemapsTooltip()}
+              </div>
+            )}
+            <div className="controls-wrapper">
+              {this.renderZoomButtons()}
+              {this.renderShowPanelsButton()}
+              {this.renderShareButton()}
+              {this.renderPrintButton()}
+            </div>
+            {this.renderMapPosition()}
+          </Fragment>
+        ) : (
+          <div className="mobile-controls-wrapper">
+            {this.renderShareButton()}
+            {this.renderRecentImageryBtn()}
           </div>
         )}
-        <div className="controls-wrapper">
-          <Button
-            theme="theme-button-map-control"
-            onClick={() => setMapSettings({ zoom: zoom - 1 })}
-            tooltip={{ text: 'Zoom out' }}
-            disabled={zoom === minZoom}
-          >
-            <Icon icon={minusIcon} className="minus-icon" />
-          </Button>
-          <Button
-            theme="theme-button-map-control"
-            onClick={() => setMapSettings({ zoom: zoom + 1 })}
-            tooltip={{ text: 'Zoom in' }}
-            disabled={zoom === maxZoom}
-          >
-            <Icon icon={plusIcon} className="plus-icon" />
-          </Button>
-          <Button
-            theme="theme-button-map-control"
-            onClick={this.handleHidePanels}
-            tooltip={{ text: hidePanels ? 'Show panels' : 'Show map only' }}
-          >
-            <Icon
-              icon={fullscreenIcon}
-              className={cx('fullscreen-icon', { '-active': hidePanels })}
-            />
-          </Button>
-          <Button
-            className="theme-button-map-control"
-            onClick={() =>
-              setShareModal({
-                title: 'Share this view',
-                shareUrl: window.location.href.includes('embed')
-                  ? window.location.href.replace('/embed', '')
-                  : window.location.href,
-                embedUrl: window.location.href.includes('embed')
-                  ? window.location.href
-                  : window.location.href.replace('/v2/map', '/embed/v2/map'),
-                embedSettings: {
-                  width: 670,
-                  height: 490
-                }
-              })
-            }
-            tooltip={{ text: 'Share or embed this view' }}
-          >
-            <Icon icon={shareIcon} />
-          </Button>
-          <Button
-            theme="theme-button-map-control"
-            tooltip={{ text: 'Print (not yet available)' }}
-            disabled
-          >
-            <Icon icon={printIcon} className="print-icon" />
-          </Button>
-        </div>
-        <div className="map-position">
-          <span>zoom: {zoom}</span>
-          <span>
-            lat,lon:{' '}
-            {`${format('.5f')(center.lat)}, ${format('.5f')(center.lng)}`}
-          </span>
-        </div>
       </div>
     );
   }
@@ -274,7 +347,8 @@ MapControlsButtons.propTypes = {
   setRecentImagerySettings: PropTypes.func,
   recentImageryDataset: PropTypes.object,
   recentActive: PropTypes.bool,
-  datasetsLoading: PropTypes.bool
+  datasetsLoading: PropTypes.bool,
+  isDesktop: PropTypes.bool
 };
 
 export default connect()(MapControlsButtons);

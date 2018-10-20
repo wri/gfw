@@ -54,13 +54,6 @@ export const mobileSections = [
     icon: searchIcon,
     Component: RecentImagerySettings,
     hidden: true
-  },
-  {
-    label: 'Basemap Options',
-    slug: 'basemaps',
-    icon: searchIcon,
-    Component: Basemaps,
-    hidden: true
   }
 ];
 
@@ -173,5 +166,12 @@ export const datasetsSections = [
         title: 'Conservation'
       }
     ]
+  },
+  {
+    label: 'layers',
+    slug: 'datasets',
+    category: 'basemaps',
+    icon: globeIcon,
+    Component: Basemaps
   }
 ];

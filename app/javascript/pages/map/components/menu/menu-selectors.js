@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten';
 
 import { getActiveDatasetsState } from 'components/map-v2/selectors';
 
+import { getVisibility } from 'components/map-v2/components/recent-imagery/recent-imagery-selectors';
 import { initialState } from './menu-reducers';
 import {
   datasetsSections,
@@ -219,7 +220,7 @@ export const getSearchSections = createSelector([getMenuSection], menuSection =>
 export const getMobileSections = createSelector(
   [getMenuSection, getActiveDatasetsState, getLocation],
   (menuSection, activeDatasets, location) =>
-    mobileSections.filter(s => !s.hidden).map(s => ({
+    mobileSections.map(s => ({
       ...s,
       ...(s.slug === 'datasets' && {
         layerCount: activeDatasets && activeDatasets.length
@@ -256,5 +257,6 @@ export const getMenuProps = createStructuredSelector({
   exploreType: getExploreType,
   search: getSearch,
   searchType: getSearchType,
-  location: getLocation
+  location: getLocation,
+  recentVisible: getVisibility
 });

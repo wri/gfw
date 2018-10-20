@@ -46,6 +46,17 @@ $map-menu-panel-width-big: rem(550px);
     z-index: 4;
     background-color: $white;
     text-transform: uppercase;
+
+    .icon-return {
+      transform: rotate(90deg);
+      width: rem(10px);
+      height: rem(10px);
+      margin-right: rem(5px);
+    }
+
+    .header-label {
+      margin-top: rem(4px);
+    }
   }
 
   .panel-body {

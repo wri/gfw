@@ -12,19 +12,19 @@
     height: 100%;
   }
 
+  .map-controls {
+    position: absolute;
+    bottom: rem(15px);
+    right: rem(15px);
+    z-index: 11;
+  }
+
   .map-wrapper {
     position: relative;
     min-height: rem(300px);
 
     .wri_api__map-container {
       position: absolute !important;
-    }
-
-    .map-controls {
-      position: absolute;
-      bottom: rem(15px);
-      right: rem(15px);
-      z-index: 11;
     }
 
     .leaflet-container {

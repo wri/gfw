@@ -13,7 +13,7 @@ class MenuMobile extends PureComponent {
     return (
       <ul className={cx('c-menu-mobile', className)}>
         {sections &&
-          sections.map(s => (
+          sections.filter(s => !s.hidden).map(s => (
             <MenuTile
               className="mobile-tile"
               small

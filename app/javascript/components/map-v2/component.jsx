@@ -148,12 +148,6 @@ class MapComponent extends PureComponent {
                           handleShowTooltip={handleShowTooltip}
                         />
                         <Popup map={map} />
-                        {!isDesktop && (
-                          <MapControlButtons
-                            className="map-controls"
-                            embed={embed}
-                          />
-                        )}
                         {draw && <MapDraw map={map} />}
                       </Fragment>
                     )}
@@ -166,6 +160,11 @@ class MapComponent extends PureComponent {
                     className={cx('data-analysis-menu', { embed })}
                   />
                 )}
+              <MapControlButtons
+                className="map-controls"
+                embed={embed}
+                isDesktop={isDesktop}
+              />
               <Icon className="icon-crosshair" icon={iconCrosshair} />
               <MapAttributions className="map-attributions" />
               {loading && (

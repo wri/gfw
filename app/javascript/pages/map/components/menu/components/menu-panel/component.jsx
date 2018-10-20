@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import startCase from 'lodash/startCase';
 
 import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
@@ -29,9 +30,11 @@ class MenuPanel extends PureComponent {
       className,
       isDesktop,
       label,
+      category,
       large,
       onClose,
-      children
+      children,
+      setMenuSettings
     } = this.props;
 
     return (
@@ -42,7 +45,16 @@ class MenuPanel extends PureComponent {
             className={cx('c-menu-panel', { large }, className)}
           >
             <div className="panel-header">
-              {label}
+              <div className="header-label">
+                {category && (
+                  <button
+                    onClick={() => setMenuSettings({ datasetCategory: '' })}
+                  >
+                    <Icon icon={arrowIcon} className="icon-return" />
+                  </button>
+                )}
+                {category ? startCase(category) : label}
+              </div>
               <button className="close-menu" onClick={onClose}>
                 <Icon
                   icon={isDesktop ? closeIcon : arrowIcon}
@@ -63,8 +75,10 @@ MenuPanel.propTypes = {
   large: PropTypes.bool,
   className: PropTypes.string,
   onClose: PropTypes.func,
+  setMenuSettings: PropTypes.func,
   isDesktop: PropTypes.bool,
   label: PropTypes.string,
+  category: PropTypes.string,
   active: PropTypes.bool
 };
 

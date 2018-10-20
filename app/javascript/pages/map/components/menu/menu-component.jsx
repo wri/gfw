@@ -14,7 +14,14 @@ import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
   componentDidUpdate(prevProps) {
-    const { showAnalysis, location } = this.props;
+    const {
+      showAnalysis,
+      setMenuSettings,
+      setRecentImagerySettings,
+      location,
+      recentVisible,
+      menuSection
+    } = this.props;
     if (
       location &&
       location.type &&
@@ -22,6 +29,13 @@ class MapMenu extends PureComponent {
       !isEqual(location, prevProps.location)
     ) {
       showAnalysis();
+    }
+    if (recentVisible) {
+      setMenuSettings({ menuSection: 'recent-imagery' });
+    }
+
+    if (!menuSection && !isEqual(menuSection, prevProps.menuSection)) {
+      setRecentImagerySettings({ visible: false });
     }
   }
 
@@ -36,7 +50,8 @@ class MapMenu extends PureComponent {
       menuSection,
       ...props
     } = this.props;
-    const { Component, label, large, icon, ...rest } = activeSection || {};
+    const { Component, label, category, large, icon, ...rest } =
+      activeSection || {};
 
     return (
       <MediaQuery minDeviceWidth={SCREEN_M}>
@@ -59,9 +74,11 @@ class MapMenu extends PureComponent {
             <MenuPanel
               className="menu-panel"
               label={label}
+              category={category}
               active={!!menuSection}
               large={large}
               isDesktop={isDesktop}
+              setMenuSettings={setMenuSettings}
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
               }
@@ -106,7 +123,9 @@ MapMenu.propTypes = {
   menuSection: PropTypes.string,
   datasetCategory: PropTypes.string,
   showAnalysis: PropTypes.func,
-  location: PropTypes.object
+  location: PropTypes.object,
+  setRecentImagerySettings: PropTypes.func,
+  recentVisible: PropTypes.bool
 };
 
 export default MapMenu;

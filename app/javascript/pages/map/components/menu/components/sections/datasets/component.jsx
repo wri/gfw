@@ -1,16 +1,11 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import startCase from 'lodash/startCase';
 
 import NoContent from 'components/ui/no-content';
-
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
 import Pill from 'components/ui/pill';
 import Dropdown from 'components/ui/dropdown';
-import Icon from 'components/ui/icon';
-
-import arrowDownIcon from 'assets/icons/arrow-down.svg';
 
 import DatasetSection from './dataset-section';
 import CategoriesMenu from './categories-menu';
@@ -51,16 +46,6 @@ class Datasets extends PureComponent {
         {menuSection &&
           datasetCategory && (
             <Fragment>
-              {!isDesktop && (
-                <div className="datasets-header">
-                  <button
-                    onClick={() => setMenuSettings({ datasetCategory: '' })}
-                  >
-                    <Icon icon={arrowDownIcon} className="icon-return" />
-                  </button>
-                  <p>{startCase(datasetCategory)}</p>
-                </div>
-              )}
               <div className="countries-selection">
                 <span className="sub-title">country-specific data</span>
                 <div className="pills">
