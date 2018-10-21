@@ -1,11 +1,10 @@
 @import '~styles/settings.scss';
 
 .theme-dropdown-native-inline {
-  display: inline-block;
-
   .select-wrapper {
     border: 0;
     border-radius: 0;
+    width: auto;
 
     select {
       font-size: rem(10px);
@@ -15,12 +14,11 @@
       height: auto;
     }
 
-    svg {
-      position: static;
-    }
-
     .arrow-icon {
       right: 0;
+      top: calc(50% - 4px);
+      width: rem(6px);
+      height: rem(6px);
     }
   }
 }

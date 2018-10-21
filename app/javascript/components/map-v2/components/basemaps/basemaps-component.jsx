@@ -73,7 +73,8 @@ class Basemaps extends React.PureComponent {
         >
           {item.label}
           <Dropdown
-            className="theme-dropdown-native-inline"
+            className="landsat-selector"
+            theme="theme-dropdown-native-inline"
             value={year}
             options={landsatYears}
             onChange={value => this.onLansatChange(parseInt(value, 10))}
