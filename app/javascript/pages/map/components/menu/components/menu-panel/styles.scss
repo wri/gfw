@@ -93,4 +93,8 @@ $map-menu-panel-width-big: rem(560px);
       fill: $warm-grey;
     }
   }
+
+  .map-menu-loader {
+    background-color: $white;
+  }
 }

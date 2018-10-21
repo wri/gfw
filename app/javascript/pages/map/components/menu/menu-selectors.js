@@ -16,6 +16,8 @@ import {
 const getMenuUrlState = state =>
   (state.location.query && state.location.query.menu) || null;
 const getCountries = state => state.countryData.countries || null;
+const getLoading = state =>
+  state.datasets.loading || state.countryData.loading || null;
 const getDatasets = state => state.datasets.datasets || null;
 const getLocation = state => state.location && state.location.payload;
 
@@ -258,5 +260,6 @@ export const getMenuProps = createStructuredSelector({
   search: getSearch,
   searchType: getSearchType,
   location: getLocation,
+  loading: getLoading,
   recentVisible: getVisibility
 });

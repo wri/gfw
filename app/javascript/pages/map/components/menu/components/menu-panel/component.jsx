@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import startCase from 'lodash/startCase';
 
+import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -49,6 +50,7 @@ class MenuPanel extends PureComponent {
       large,
       onClose,
       children,
+      loading,
       setMenuSettings
     } = this.props;
     const Panel = isDesktop ? PanelDesktop : PanelMobile;
@@ -82,6 +84,7 @@ class MenuPanel extends PureComponent {
               </button>
             )}
             <div className="panel-body">{children}</div>
+            {loading && <Loader className="map-menu-loader" />}
           </Panel>
         )}
       </PoseGroup>
@@ -98,7 +101,8 @@ MenuPanel.propTypes = {
   isDesktop: PropTypes.bool,
   label: PropTypes.string,
   category: PropTypes.string,
-  active: PropTypes.bool
+  active: PropTypes.bool,
+  loading: PropTypes.bool
 };
 
 export default MenuPanel;

@@ -54,6 +54,7 @@ class MapMenu extends PureComponent {
       activeSection,
       setMenuSettings,
       menuSection,
+      loading,
       ...props
     } = this.props;
     const { Component, label, category, large, icon, ...rest } =
@@ -89,6 +90,7 @@ class MapMenu extends PureComponent {
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
               }
+              loading={loading}
             >
               {Component && (
                 <Component
