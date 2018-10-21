@@ -14,7 +14,7 @@
 
   .map-controls {
     position: absolute;
-    bottom: rem(10px);
+    bottom: rem(15px);
     right: rem(10px);
     z-index: 5;
 
@@ -39,9 +39,13 @@
 
     .leaflet-control-container {
       .leaflet-bottom {
-        right: rem(220px);
+        right: rem(65px);
         left: auto;
         bottom: 15px;
+
+        @media screen and (min-width: $screen-m) {
+          right: rem(220px);
+        }
       }
 
       .leaflet-control-scale-line {
@@ -73,7 +77,7 @@
     position: absolute;
     left: rem(15px);
     top: rem(15px);
-    z-index: 5;
+    z-index: 6;
 
     &.embed {
       top: rem(90px);
@@ -92,6 +96,7 @@
     width: rem(12px);
     height: rem(12px);
     pointer-events: none;
+    z-index: 5;
   }
 
   .map-attributions {
