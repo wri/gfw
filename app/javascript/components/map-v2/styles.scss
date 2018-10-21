@@ -16,7 +16,7 @@
     position: absolute;
     bottom: rem(10px);
     right: rem(10px);
-    z-index: 11;
+    z-index: 5;
 
     @media screen and (min-width: $screen-m) {
       bottom: rem(15px);
@@ -27,7 +27,7 @@
   .map-wrapper {
     position: relative;
     min-height: rem(300px);
-    z-index: 2;
+    z-index: 1;
 
     .wri_api__map-container {
       position: absolute !important;
@@ -73,7 +73,7 @@
     position: absolute;
     left: rem(15px);
     top: rem(15px);
-    z-index: 11;
+    z-index: 5;
 
     &.embed {
       top: rem(90px);
@@ -98,6 +98,7 @@
     position: absolute;
     bottom: rem(15px);
     right: rem(310px);
+    z-index: 5;
   }
 
   .map-loader {
