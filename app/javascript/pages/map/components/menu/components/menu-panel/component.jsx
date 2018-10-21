@@ -14,23 +14,25 @@ const PanelMobile = posed.div({
   enter: {
     y: 0,
     opacity: 1,
-    delay: 300
+    delay: 200,
+    transition: { duration: 200 }
   },
   exit: {
     y: 50,
     opacity: 0,
+    delay: 200,
     transition: { duration: 200 }
   }
 });
 
 const PanelDesktop = posed.div({
   enter: {
-    x: 0,
+    x: 66,
     opacity: 1,
     delay: 300
   },
   exit: {
-    x: 50,
+    x: 0,
     opacity: 0,
     transition: { duration: 200 }
   }
@@ -58,7 +60,7 @@ class MenuPanel extends PureComponent {
             key="menu-container"
             className={cx('c-menu-panel', { large }, className)}
           >
-            {!isDesktop && (
+            {!isDesktop ? (
               <div className="panel-header">
                 <div className="header-label">
                   {category && (
@@ -71,12 +73,13 @@ class MenuPanel extends PureComponent {
                   {category ? startCase(category) : label}
                 </div>
                 <button className="close-menu" onClick={onClose}>
-                  <Icon
-                    icon={isDesktop ? closeIcon : arrowIcon}
-                    className="icon-close-panel"
-                  />
+                  <Icon icon={arrowIcon} className="icon-close-panel" />
                 </button>
               </div>
+            ) : (
+              <button className="close-menu" onClick={onClose}>
+                <Icon icon={closeIcon} className="icon-close-panel" />
+              </button>
             )}
             <div className="panel-body">{children}</div>
           </Panel>

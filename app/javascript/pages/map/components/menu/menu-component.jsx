@@ -6,7 +6,6 @@ import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 
 import MenuPanel from 'pages/map/components/menu/components/menu-panel';
-
 import MenuDesktop from './components/menu-desktop';
 import MenuMobile from './components/menu-mobile';
 
@@ -20,9 +19,11 @@ class MapMenu extends PureComponent {
       setRecentImagerySettings,
       location,
       recentVisible,
-      menuSection
+      menuSection,
+      isDesktop
     } = this.props;
     if (
+      !isDesktop &&
       location &&
       location.type &&
       location.adm0 &&
@@ -30,11 +31,16 @@ class MapMenu extends PureComponent {
     ) {
       showAnalysis();
     }
-    if (recentVisible) {
+
+    if (!isDesktop && recentVisible) {
       setMenuSettings({ menuSection: 'recent-imagery' });
     }
 
-    if (!menuSection && !isEqual(menuSection, prevProps.menuSection)) {
+    if (
+      !isDesktop &&
+      !menuSection &&
+      !isEqual(menuSection, prevProps.menuSection)
+    ) {
       setRecentImagerySettings({ visible: false });
     }
   }
@@ -126,7 +132,8 @@ MapMenu.propTypes = {
   showAnalysis: PropTypes.func,
   location: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
-  recentVisible: PropTypes.bool
+  recentVisible: PropTypes.bool,
+  isDesktop: PropTypes.bool
 };
 
 export default MapMenu;

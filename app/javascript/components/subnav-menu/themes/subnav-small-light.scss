@@ -18,6 +18,10 @@ $subnav-height: rem(40px);
       border-left: 0 !important;
       border-right: 0 !important;
 
+      @media screen and (min-width: $screen-m) {
+        max-width: rem(180px);
+      }
+
       > * {
         padding: 0 rem(26px);
         border-radius: 0;

@@ -3,14 +3,18 @@
 $map-menu-items-size: rem(76px);
 
 .c-menu-desktop {
-  height: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  z-index: 2;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   position: relative;
   width: $map-menu-items-size;
+  height: calc(100vh - #{$map-menu-items-size});
+
+  &.block {
+    display: block;
+  }
 
   &::before {
     content: '';
@@ -20,10 +24,17 @@ $map-menu-items-size: rem(76px);
     width: rem(1px);
     height: 100%;
     background-color: $white-calcium;
-    z-index: 2;
+    z-index: 1;
   }
 
-  @media screen and (min-width: $screen-m) {
-    height: calc(100% - #{$map-menu-items-size});
+  .datasets-tile,
+  .search-tile {
+    border-top: solid 1px transparent;
+    border-bottom: solid 1px transparent;
+
+    &.active {
+      border-top-color: $border;
+      border-bottom-color: $border;
+    }
   }
 }

@@ -3,10 +3,6 @@
 .c-map-menu-search {
   padding: rem(20px);
 
-  @media screen and (min-width: $screen-m) {
-    padding: rem(30px) rem(20px);
-  }
-
   h3 {
     text-transform: uppercase;
     color: $slate;

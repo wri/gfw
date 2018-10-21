@@ -6,14 +6,11 @@ $map-menu-items-size: rem(76px);
   position: relative;
   width: 100%;
   max-height: $map-menu-items-size;
-  z-index: 1;
   height: rem(76px);
 
   &.active {
     background-color: $white;
-    border-top-color: $white-calcium;
-    border-bottom-color: $white-calcium;
-    z-index: 3;
+    z-index: 1;
   }
 
   .item-button {

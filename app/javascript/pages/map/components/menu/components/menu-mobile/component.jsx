@@ -15,7 +15,6 @@ class MenuMobile extends PureComponent {
         {sections &&
           sections.filter(s => !s.hidden).map(s => (
             <MenuTile
-              className="mobile-tile"
               small
               key={s.slug}
               {...s}

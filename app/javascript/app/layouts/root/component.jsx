@@ -51,7 +51,10 @@ class App extends PureComponent {
                 <img src={gfwLogo} alt="Global Forest Watch" />
               </a>
             )}
-            {!embed && isMapPage && <MapMenu className="map-menu" />}
+            {!embed &&
+              isMapPage && (
+                <MapMenu className="map-menu" isDesktop={isDesktop} />
+              )}
             <div className="page">
               <PageComponent
                 embed={embed}

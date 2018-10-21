@@ -175,7 +175,7 @@ class MapControlsButtons extends PureComponent {
         open={visible}
         onRequestClose={this.onRecentRequestClose}
         html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
-        offset={90}
+        offset={100}
       >
         {this.renderRecentImageryBtn()}
       </Tooltip>
@@ -195,9 +195,12 @@ class MapControlsButtons extends PureComponent {
         open={showBasemaps}
         onRequestClose={this.onBasemapsRequestClose}
         html={
-          <Basemaps onClose={this.toggleBasemaps} ref={this.setBasemapsRef} />
+          <Basemaps
+            onClose={this.toggleBasemaps}
+            ref={this.setBasemapsRef}
+            isDesktop={this.props.isDesktop}
+          />
         }
-        offset={-10}
       >
         {this.renderBasemapsBtn()}
       </Tooltip>

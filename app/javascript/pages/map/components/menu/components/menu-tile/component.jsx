@@ -16,11 +16,12 @@ class MenuTile extends PureComponent {
       loading,
       icon,
       layerCount,
-      highlight
+      highlight,
+      className
     } = this.props;
 
     return (
-      <li className={cx('c-map-menu-tile', { active }, { small })}>
+      <li className={cx('c-map-menu-tile', { active }, { small }, className)}>
         <button className="item-button" onClick={onClick} disabled={loading}>
           <Icon icon={icon} className="tile-icon" />
           <span>{label}</span>
@@ -41,7 +42,8 @@ MenuTile.propTypes = {
   highlight: PropTypes.bool,
   label: PropTypes.string,
   icon: PropTypes.object,
-  layerCount: PropTypes.number
+  layerCount: PropTypes.number,
+  className: PropTypes.string
 };
 
 export default MenuTile;

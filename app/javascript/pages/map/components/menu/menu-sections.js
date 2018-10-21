@@ -172,6 +172,7 @@ export const datasetsSections = [
     slug: 'datasets',
     category: 'basemaps',
     icon: globeIcon,
-    Component: Basemaps
+    Component: Basemaps,
+    hiddenMobile: true
   }
 ];

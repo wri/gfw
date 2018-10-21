@@ -14,9 +14,14 @@
 
   .map-controls {
     position: absolute;
-    bottom: rem(15px);
-    right: rem(15px);
+    bottom: rem(10px);
+    right: rem(10px);
     z-index: 11;
+
+    @media screen and (min-width: $screen-m) {
+      bottom: rem(15px);
+      right: rem(15px);
+    }
   }
 
   .map-wrapper {

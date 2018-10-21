@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import startCase from 'lodash/startCase';
 
 import MenuTile from '../menu-tile';
 
@@ -16,39 +17,47 @@ class MenuDesktop extends PureComponent {
     } = this.props;
 
     return (
-      <ul
-        className={cx('c-menu-desktop', className)}
-        style={{ display: window.innerHeight >= 608 ? 'flex' : 'block' }}
+      <div
+        className={cx(
+          'c-menu-desktop',
+          { block: window.innerHeight < 608 },
+          className
+        )}
       >
-        {datasetSections &&
-          datasetSections.map(s => (
-            <MenuTile
-              className="mobile-tile"
-              key={`${s.slug}_${s.category}`}
-              {...s}
-              onClick={() =>
-                setMenuSettings({
-                  datasetCategory: s.active ? '' : s.category,
-                  menuSection: s.active ? '' : s.slug
-                })
-              }
-            />
-          ))}
-        {searchSections &&
-          searchSections.map(s => (
-            <MenuTile
-              className="mobile-tile"
-              key={s.slug}
-              onClick={() =>
-                setMenuSettings({
-                  menuSection: s.active ? '' : s.slug,
-                  datasetCategory: ''
-                })
-              }
-              {...s}
-            />
-          ))}
-      </ul>
+        <ul className="datasets-menu">
+          {datasetSections &&
+            datasetSections.filter(s => !s.hiddenMobile).map(s => (
+              <MenuTile
+                className="datasets-tile"
+                key={`${s.slug}_${s.category}`}
+                {...s}
+                label={startCase(s.category)}
+                onClick={() =>
+                  setMenuSettings({
+                    datasetCategory: s.active ? '' : s.category,
+                    menuSection: s.active ? '' : s.slug
+                  })
+                }
+              />
+            ))}
+        </ul>
+        <ul className="datasets-menu">
+          {searchSections &&
+            searchSections.map(s => (
+              <MenuTile
+                className="search-tile"
+                key={s.slug}
+                onClick={() =>
+                  setMenuSettings({
+                    menuSection: s.active ? '' : s.slug,
+                    datasetCategory: ''
+                  })
+                }
+                {...s}
+              />
+            ))}
+        </ul>
+      </div>
     );
   }
 }
