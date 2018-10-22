@@ -4,7 +4,7 @@
   .page-logo {
     position: absolute;
     top: 0;
-    left: 0;
+    left: rem(15px);
     z-index: 2;
     display: none;
     width: rem(76px);

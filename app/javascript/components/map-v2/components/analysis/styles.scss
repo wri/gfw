@@ -53,15 +53,15 @@
       background-color: transparent;
     }
   }
+}
 
-  .analysis-actions {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: rem(15px) rem(20px);
-    border-top: solid 1px $border;
-    background-color: $white;
-    z-index: 1;
-  }
+.analysis-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: rem(15px) rem(20px);
+  border-top: solid 1px $border;
+  background-color: $white;
+  z-index: 1;
 }

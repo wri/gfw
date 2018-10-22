@@ -33,4 +33,11 @@
     max-height: calc(100vh - 70px);
     z-index: 1;
   }
+
+  &.embed {
+    .legend,
+    .analysis {
+      max-height: calc(100vh - 130px);
+    }
+  }
 }
