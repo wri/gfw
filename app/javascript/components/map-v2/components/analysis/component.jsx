@@ -20,7 +20,8 @@ class AnalysisComponent extends PureComponent {
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
-      endpoints
+      endpoints,
+      embed
     } = this.props;
 
     return (
@@ -66,7 +67,10 @@ class AnalysisComponent extends PureComponent {
           location.adm0 && (
             <div className="analysis-actions">
               <Button
-                extLink={window.location.href.replace('v2/map', 'dashboards')}
+                extLink={window.location.href.replace(
+                  embed ? 'embed/map' : 'map',
+                  'dashboards'
+                )}
                 target="_blank"
               >
                 OPEN DASHBOARD
@@ -87,7 +91,8 @@ AnalysisComponent.propTypes = {
   goToDashboard: PropTypes.func,
   error: PropTypes.string,
   handleCancelAnalysis: PropTypes.func,
-  handleFetchAnalysis: PropTypes.func
+  handleFetchAnalysis: PropTypes.func,
+  embed: PropTypes.bool
 };
 
 export default AnalysisComponent;
