@@ -47,7 +47,7 @@ class App extends PureComponent {
                 />
               )}
             {embed && (
-              <a className="logo" href="/" target="_blank">
+              <a className="page-logo" href="/" target="_blank">
                 <img src={gfwLogo} alt="Global Forest Watch" />
               </a>
             )}

@@ -13,6 +13,7 @@ import NoContent from 'components/ui/no-content';
 import Icon from 'components/ui/icon';
 import iconCrosshair from 'assets/icons/crosshair.svg';
 import MediaQuery from 'react-responsive';
+import RecentImagery from 'components/map-v2/components/recent-imagery';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
@@ -168,6 +169,7 @@ class MapComponent extends PureComponent {
                   isDesktop={isDesktop}
                 />
               )}
+              <RecentImagery />
               <Icon className="icon-crosshair" icon={iconCrosshair} />
               <MapAttributions className="map-attributions" />
               {loading && (

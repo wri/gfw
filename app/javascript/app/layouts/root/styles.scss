@@ -1,17 +1,18 @@
 @import '~styles/settings.scss';
 
 .l-root {
-  .logo {
+  .page-logo {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 2;
     display: none;
+    width: rem(76px);
   }
 
   .page {
     position: relative;
-    min-height: calc(100% - 60px);
+    min-height: calc(100vh - 60px);
     z-index: 0;
 
     .page-loader {
@@ -42,7 +43,7 @@
       }
     }
 
-    .logo {
+    .page-logo {
       display: block;
     }
   }
@@ -56,7 +57,7 @@
 
     &.-map {
       .page {
-        min-height: calc(100% - 60px);
+        min-height: calc(100vh - 60px);
       }
     }
   }

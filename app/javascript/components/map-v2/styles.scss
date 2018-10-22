@@ -29,6 +29,10 @@
     min-height: rem(300px);
     z-index: 1;
 
+    &.embed {
+      min-height: calc(100vh - 60px);
+    }
+
     .wri_api__map-container {
       position: absolute !important;
     }

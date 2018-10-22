@@ -7,7 +7,6 @@ import cx from 'classnames';
 import { isParent } from 'utils/dom';
 
 import Basemaps from 'components/map-v2/components/basemaps';
-import RecentImagery from 'components/map-v2/components/recent-imagery';
 import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings-tooltip';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -310,7 +309,6 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <div className={`c-map-controls ${className || ''}`}>
-        <RecentImagery />
         {isDesktop ? (
           <Fragment>
             {!hidePanels && (
