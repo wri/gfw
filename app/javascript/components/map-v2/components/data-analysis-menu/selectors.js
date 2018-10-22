@@ -9,9 +9,11 @@ import {
 import layersIcon from 'assets/icons/layers.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
 
+export const selectEmbed = (state, { embed }) => embed;
+
 export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
   {
-    label: 'DATA',
+    label: 'LEGEND',
     icon: layersIcon,
     active: !showAnalysis,
     showAnalysis: false
@@ -24,9 +26,17 @@ export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
   }
 ]);
 
+export const getFilteredMenuLinks = createSelector(
+  [getMenuLinks, selectEmbed],
+  (links, embed) => {
+    if (embed) return links.filter(l => l.active);
+    return links;
+  }
+);
+
 export const getDataAnalysisMenuProps = createStructuredSelector({
   showAnalysis: getShowAnalysis,
   menuSection: getActiveSection,
-  links: getMenuLinks,
+  links: getFilteredMenuLinks,
   hidden: getHidden
 });

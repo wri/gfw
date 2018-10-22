@@ -158,13 +158,16 @@ class MapComponent extends PureComponent {
                 !hidePanels && (
                   <DataAnalysisMenu
                     className={cx('data-analysis-menu', { embed })}
+                    embed={embed}
                   />
                 )}
-              <MapControlButtons
-                className="map-controls"
-                embed={embed}
-                isDesktop={isDesktop}
-              />
+              {!embed && (
+                <MapControlButtons
+                  className="map-controls"
+                  embed={embed}
+                  isDesktop={isDesktop}
+                />
+              )}
               <Icon className="icon-crosshair" icon={iconCrosshair} />
               <MapAttributions className="map-attributions" />
               {loading && (

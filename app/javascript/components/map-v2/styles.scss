@@ -80,7 +80,8 @@
     z-index: 6;
 
     &.embed {
-      top: rem(90px);
+      right: rem(15px);
+      left: unset;
 
       .legend {
         max-height: calc(100vh - 255px);
