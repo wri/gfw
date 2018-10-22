@@ -186,6 +186,12 @@ $full-screen-height: rem(75px);
     .logo {
       left: 0;
     }
+
+    &.-small {
+      .logo {
+        left: rem(15px);
+      }
+    }
   }
 
   &.-small {
