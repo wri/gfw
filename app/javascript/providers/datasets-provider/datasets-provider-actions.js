@@ -9,7 +9,7 @@ import { getDatasetsProvider } from 'services/datasets';
 import {
   fetchGLADLatest,
   fetchFormaLatest,
-  fetchTerraLatest,
+  fetchTerraiLatest,
   fetchSADLatest,
   fetchGranChacoLatest
 } from 'services/alerts';
@@ -25,7 +25,7 @@ export const setDatasets = createAction('setDatasets');
 const layersBySlug = {
   forma250gfw: '66203fea-2e58-4a55-b222-1dae075cf95d',
   'glad-alerts': 'dd5df87f-39c2-4aeb-a462-3ef969b20b66',
-  'terra-latest': '790b46ce-715a-4173-8f2c-53980073acb6',
+  'terrai-alerts': '790b46ce-715a-4173-8f2c-53980073acb6',
   'imazon-latest': '3ec29734-4627-45b1-b320-680e4b4b939e',
   'guira-latest': 'c8829d15-e68a-4cb5-98a8-d0acff438a56'
 };
@@ -38,7 +38,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
       fetchSADLatest(),
       fetchGranChacoLatest(),
       fetchFormaLatest(),
-      fetchTerraLatest()
+      fetchTerraiLatest()
     ])
     .then(
       axios.spread((allDatasets, ...latestDatesResponses) => {

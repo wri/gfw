@@ -298,7 +298,7 @@ const decodes = {
       }
     }
   },
-  terra: (data, w, h, z, params) => {
+  terrai: (data, w, h, z, params) => {
     'use asm';
 
     const imgData = data;
@@ -480,6 +480,6 @@ export default {
   'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
   'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
-  '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terra,
+  '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terrai,
   '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover
 };
