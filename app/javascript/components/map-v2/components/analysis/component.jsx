@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -24,40 +24,42 @@ class AnalysisComponent extends PureComponent {
     } = this.props;
 
     return (
-      <div className={cx('c-analysis', className)}>
-        {loading && (
-          <Loader className={cx('analysis-loader', { fetching: loading })} />
-        )}
-        {location.type &&
-          location.adm0 &&
-          (loading || (!loading && error)) && (
-            <div className={cx('cancel-analysis', { fetching: loading })}>
-              {!loading &&
-                error && (
-                  <Button
-                    className="refresh-analysis-btn"
-                    onClick={() => handleFetchAnalysis(location, endpoints)}
-                  >
-                    REFRESH ANALYSIS
-                  </Button>
-                )}
-              <Button
-                className="cancel-analysis-btn"
-                onClick={handleCancelAnalysis}
-              >
-                CANCEL ANALYSIS
-              </Button>
-              {!loading && error && <p className="error-message">{error}</p>}
-            </div>
+      <Fragment>
+        <div className={cx('c-analysis', className)}>
+          {loading && (
+            <Loader className={cx('analysis-loader', { fetching: loading })} />
           )}
-        {location.type && location.adm0 ? (
-          <PolygonAnalysis
-            clearAnalysis={clearAnalysis}
-            goToDashboard={goToDashboard}
-          />
-        ) : (
-          <ChoseAnalysis />
-        )}
+          {location.type &&
+            location.adm0 &&
+            (loading || (!loading && error)) && (
+              <div className={cx('cancel-analysis', { fetching: loading })}>
+                {!loading &&
+                  error && (
+                    <Button
+                      className="refresh-analysis-btn"
+                      onClick={() => handleFetchAnalysis(location, endpoints)}
+                    >
+                      REFRESH ANALYSIS
+                    </Button>
+                  )}
+                <Button
+                  className="cancel-analysis-btn"
+                  onClick={handleCancelAnalysis}
+                >
+                  CANCEL ANALYSIS
+                </Button>
+                {!loading && error && <p className="error-message">{error}</p>}
+              </div>
+            )}
+          {location.type && location.adm0 ? (
+            <PolygonAnalysis
+              clearAnalysis={clearAnalysis}
+              goToDashboard={goToDashboard}
+            />
+          ) : (
+            <ChoseAnalysis />
+          )}
+        </div>
         {!loading &&
           !error &&
           location.type === 'country' &&
@@ -71,7 +73,7 @@ class AnalysisComponent extends PureComponent {
               </Button>
             </div>
           )}
-      </div>
+      </Fragment>
     );
   }
 }

@@ -17,7 +17,8 @@ class DataAnalysisMenu extends PureComponent {
       links,
       setAnalysisSettings,
       clearAnalysisError,
-      hidden
+      hidden,
+      embed
     } = this.props;
 
     return (
@@ -26,6 +27,7 @@ class DataAnalysisMenu extends PureComponent {
           'c-data-analysis-menu',
           { '-relocate': !!menuSection },
           { '-big': menuSection && menuSection.large },
+          { '-embed': embed },
           className
         )}
       >
@@ -69,7 +71,8 @@ DataAnalysisMenu.propTypes = {
   menuSection: PropTypes.object,
   links: PropTypes.array,
   setAnalysisSettings: PropTypes.func,
-  clearAnalysisError: PropTypes.func
+  clearAnalysisError: PropTypes.func,
+  embed: PropTypes.bool
 };
 
 export default DataAnalysisMenu;

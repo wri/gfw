@@ -17,6 +17,53 @@ const routeChangeThunk = (dispatch, getState) => {
   handlePageTrack(getState().location);
 };
 
+const mapLegacyRedirect = (dispatch, { embed, routeSlugs, query }) => {
+  const zoom = parseInt(routeSlugs[0], 10);
+  const lat = parseInt(routeSlugs[1], 10);
+  const lng = parseInt(routeSlugs[2], 10);
+  const iso = routeSlugs[3];
+  const { tab, geostore, use, useid } = query || {};
+
+  const payload = {};
+  if (iso !== 'ALL') {
+    const isoIds = iso.split('-');
+    payload.type = 'country';
+    payload.adm0 = isoIds[0];
+    payload.adm1 = isoIds[1];
+    payload.adm2 = isoIds[2];
+  }
+
+  if (geostore) {
+    payload.type = 'geostore';
+    payload.adm0 = geostore;
+  }
+
+  if (use && useid) {
+    payload.type = 'use';
+    payload.adm0 = use;
+    payload.adm1 = useid;
+  }
+
+  dispatch(
+    redirect({
+      type: embed ? MAP_EMBED : MAP,
+      payload,
+      query: {
+        map: {
+          center: {
+            lat,
+            lng
+          },
+          zoom
+        },
+        analysis: {
+          showAnalysis: tab === 'analysis-tab'
+        }
+      }
+    })
+  );
+};
+
 export const routes = {
   [ABOUT]: {
     controller: 'about',
@@ -77,7 +124,7 @@ export const routes = {
   },
   [MAP]: {
     controller: 'map_v2',
-    path: '/v2/map/:type?/:adm0?/:adm1?/:adm2?',
+    path: '/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     headerOptions: {
       isMap: true,
@@ -89,7 +136,7 @@ export const routes = {
   },
   [MAP_EMBED]: {
     controller: 'map_v2',
-    path: '/embed/v2/map/:type?/:adm0?/:adm1?/:adm2?',
+    path: '/embed/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     embed: true
   },
@@ -106,7 +153,21 @@ export const routes = {
   },
   [NOT_FOUND]: {
     path: '/404',
-    thunk: dispatch => dispatch(redirect({ type: MAP }))
+    thunk: (dispatch, getState) => {
+      const { location } = getState();
+      const routeSlugs = location.pathname && location.pathname.split('/');
+      const isOldMap = routeSlugs.includes('map');
+      const isEmbed = routeSlugs.includes('embed');
+      if (isOldMap) {
+        mapLegacyRedirect(dispatch, {
+          embed: isEmbed,
+          routeSlugs: routeSlugs.slice(isEmbed ? 3 : 2, -1),
+          query: location.query
+        });
+      } else {
+        dispatch(redirect({ type: MAP }));
+      }
+    }
   }
 };
 
