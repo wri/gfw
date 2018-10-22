@@ -88,8 +88,8 @@ Gfw::Application.routes.draw do
   # old map
   get '/v1/map' => 'map#index'
   get '/v1/map/*all' => 'map#index'
-  get '/v1/embed/map' => 'map#index'
-  get '/v1/embed/map/*all' => 'map#index'
+  get '/v1/embed/map' => 'map#embed'
+  get '/v1/embed/map/*all' => 'map#embed'
 
   ########### /LEGACY #############
 
