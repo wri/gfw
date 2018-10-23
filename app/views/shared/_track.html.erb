@@ -1,7 +1,3 @@
-<%
-  crazyEgg ||= false
-%>
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -12,14 +8,8 @@
   ga('require', 'displayfeatures');
   ga('send', 'pageview');
   ga('push','_trackPageview');
-
-  <% if crazyEgg %>
-    if (location.hostname === "www.globalforestwatch.org") {
-      setTimeout(function(){var a=document.createElement("script");
-        var b=document.getElementsByTagName("script")[0];
-        a.src=document.location.protocol+"//script.crazyegg.com/pages/scripts/0027/6897.js?"+Math.floor(new Date().getTime()/3600000);
-        a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
-    }
-  <% end %>
 </script>
 
+<% if ENV['FEATURE_ENV'] != "staging" %>
+  <script type="text/javascript" src="//script.crazyegg.com/pages/scripts/0027/6897.js" async="async"></script>
+<% end %>
