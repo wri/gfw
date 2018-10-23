@@ -15,15 +15,6 @@ $dd-font-size: rem(13px);
   color: $slate;
   z-index: 0;
 
-  &.align-left {
-    justify-content: flex-start;
-
-    .value {
-      padding-left: rem(18px);
-      padding-right: 0;
-    }
-  }
-
   .value {
     position: absolute;
     top: calc(50% - 10px);
@@ -40,6 +31,15 @@ $dd-font-size: rem(13px);
 
     &.clearable {
       padding-right: rem(28px);
+    }
+  }
+
+  &.align-left {
+    justify-content: flex-start;
+
+    .value {
+      padding-left: rem(18px);
+      padding-right: 0;
     }
   }
 
@@ -69,6 +69,8 @@ $dd-font-size: rem(13px);
     z-index: 3;
     height: 100%;
     cursor: pointer;
+    position: absolute;
+    right: rem(8px);
 
     .arrow {
       max-width: rem(12px);

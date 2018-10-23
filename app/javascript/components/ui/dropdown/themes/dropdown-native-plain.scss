@@ -1,6 +1,5 @@
 @import '~styles/settings.scss';
 
-$dd-height: rem(25px);
 $dd-font-size: rem(16px);
 
 .theme-dropdown-native-plain {
@@ -11,7 +10,7 @@ $dd-font-size: rem(16px);
       padding-left: 0;
       padding-right: 25px;
       font-size: $dd-font-size;
-      height: $dd-height;
+      height: rem(25px);
       font-weight: 400;
     }
   }
