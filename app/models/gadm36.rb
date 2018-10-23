@@ -1,4 +1,4 @@
-class Application
+class Gadm36
   class << self
     def find_all_countries
       url = "#{ENV['CARTO_API']}/sql?q="

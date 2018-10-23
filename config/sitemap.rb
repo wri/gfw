@@ -5,9 +5,12 @@ SitemapGenerator::Sitemap.compress = false
 SitemapGenerator::Sitemap.create do
   add '/map', :changefreq => 'weekly', :priority => 0.8
   add '/dashboards/global', :changefreq => 'weekly', :priority => 0.8
-  add '/dashboards/country', :changefreq => 'weekly', :priority => 0.8
 
-  Dashboards.find_all_countries.each do |country|
+  Gadm36.find_all_countries.each do |country|
+    add "/map/country/#{country['iso']}", :changefreq => 'weekly', :priority => 0.6
+  end
+
+  Gadm36.find_all_countries.each do |country|
     add "/dashboards/country/#{country['iso']}", :changefreq => 'weekly', :priority => 0.6
   end
 
