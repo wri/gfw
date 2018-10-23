@@ -264,7 +264,7 @@ class MapControlsButtons extends PureComponent {
               : window.location.href,
             embedUrl: window.location.href.includes('embed')
               ? window.location.href
-              : window.location.href.replace('/v2/map', '/embed/v2/map'),
+              : window.location.href.replace('/map', '/embed/map'),
             embedSettings: {
               width: 670,
               height: 490

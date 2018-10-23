@@ -39,19 +39,19 @@ const buildAnalysisUrl = ({
 
   const queryParams = hasParams
     ? qs.stringify({
-        ...(period && {
-          period
-        }),
-        ...(thresh && {
-          thresh
-        }),
-        ...(geostore && {
-          geostore
-        }),
-        ...(query && {
-          [query.param]: query.value
-        })
+      ...(period && {
+        period
+      }),
+      ...(thresh && {
+        thresh
+      }),
+      ...(geostore && {
+        geostore
+      }),
+      ...(query && {
+        [query.param]: query.value
       })
+    })
     : '';
 
   return urlTemplate

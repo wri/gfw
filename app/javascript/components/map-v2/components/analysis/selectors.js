@@ -21,6 +21,10 @@ const selectLoading = state =>
   state.geostore.loading ||
   state.draw.loading;
 const selectLocation = state => state.location && state.location.payload;
+const selectEmbed = state =>
+  state.location &&
+  state.location.pathname &&
+  state.location.pathname.includes('/embed');
 const selectError = state => state.analysis.error;
 
 export const getAnalysisSettings = createSelector(
@@ -127,5 +131,6 @@ export const getAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   location: selectLocation,
-  hidden: getHidden
+  hidden: getHidden,
+  embed: selectEmbed
 });
