@@ -316,7 +316,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (4.8.0.341)
     nio4r (2.3.0)
-    nokogiri (1.8.4)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     public_suffix (3.0.2)
     puma (3.11.3)
@@ -503,7 +503,7 @@ DEPENDENCIES
   jquery-rails
   mini_magick
   newrelic_rpm
-  nokogiri (~> 1.8.2)
+  nokogiri (~> 1.8.5)
   puma
   rack-reverse-proxy (~> 0.11.0)
   rails (= 5.1.5)
