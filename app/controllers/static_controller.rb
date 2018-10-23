@@ -10,6 +10,10 @@ class StaticController < ApplicationController
     @title = 'Terms of Service'
   end
 
+  def privacy
+    @title = 'Privacy Policy'
+  end
+
   # TODO: no route?
   def data
     section = params[:section]
