@@ -41,7 +41,7 @@ gem 'responders', '~> 2.0'
 gem 'nokogiri', '~> 1.8.2'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.5.2'
+  gem 'rspec-rails', '~> 3.8.0'
   gem 'show_me_the_cookies'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
