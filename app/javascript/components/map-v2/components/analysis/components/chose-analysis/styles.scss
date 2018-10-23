@@ -120,6 +120,10 @@
       font-size: 13px;
       cursor: pointer;
 
+      &:hover {
+        background-color: $grey-light;
+      }
+
       p {
         text-align: center;
         width: 90%;

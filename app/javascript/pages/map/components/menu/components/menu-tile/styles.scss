@@ -13,6 +13,10 @@ $map-menu-items-size: rem(76px);
     z-index: 1;
   }
 
+  &:hover {
+    background-color: $white;
+  }
+
   .item-button {
     position: relative;
     display: flex;
