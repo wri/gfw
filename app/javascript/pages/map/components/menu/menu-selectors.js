@@ -125,8 +125,13 @@ export const getDatasetSections = createSelector(
 );
 
 export const getDatasetSectionsWithData = createSelector(
-  [getDatasetSections, getActiveDatasetsState, getDatasetCategory],
-  (sections, activeDatasets, datasetCategory) => {
+  [
+    getDatasetSections,
+    getActiveDatasetsState,
+    getDatasetCategory,
+    getMenuSection
+  ],
+  (sections, activeDatasets, datasetCategory, menuSection) => {
     if (!activeDatasets) return sections;
     const datasetIds = activeDatasets.map(d => d.dataset);
 
@@ -134,7 +139,7 @@ export const getDatasetSectionsWithData = createSelector(
       const { datasets, subCategories } = s;
       return {
         ...s,
-        active: datasetCategory === s.category,
+        active: datasetCategory === s.category && menuSection === s.slug,
         layerCount:
           datasets &&
           datasets.filter(d => activeDatasets && datasetIds.includes(d.id))

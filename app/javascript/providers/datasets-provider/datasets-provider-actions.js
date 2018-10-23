@@ -64,7 +64,9 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
         }, {});
 
         const parsedDatasets = serializedDatasets
-          .filter(d => d.env === 'production')
+          .filter(
+            d => d.env === 'production' || d.env === process.env.FEATURE_ENV
+          )
           .map(d => {
             const { layer, metadata } = d;
             const appMeta =
@@ -74,7 +76,8 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
               (layer &&
                 layer.find(
                   l =>
-                    l.env === 'production' &&
+                    (l.env === 'production' ||
+                      l.env === process.env.FEATURE_ENV) &&
                     l.applicationConfig &&
                     l.applicationConfig.default
                 )) ||
@@ -127,7 +130,12 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                 layer &&
                 sortBy(
                   layer
-                    .filter(l => l.env === 'production' && l.published)
+                    .filter(
+                      l =>
+                        (l.env === 'production' ||
+                          l.env === process.env.FEATURE_ENV) &&
+                        l.published
+                    )
                     .map((l, i) => {
                       const { layerConfig } = l;
                       const { position, confirmedOnly, multiConfig } =
