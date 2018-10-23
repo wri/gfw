@@ -10,7 +10,7 @@ import basemaps, {
   labels
 } from 'components/map-v2/components/basemaps/basemaps-schema';
 
-import topics, { descriptions } from './explore-topics';
+import { descriptions, topics, stories } from './explore-sections';
 
 const selectSection = (state, props) => props.exploreType;
 const selectPTWLoading = state => state.ptw.loading;
@@ -67,7 +67,8 @@ const selectPTWData = state => {
 
 const selectedData = createSelector([selectPTWData], ptw => ({
   topics: Object.values(topics),
-  placesToWatch: ptw
+  placesToWatch: ptw,
+  stories: Object.values(stories)
 }));
 
 const getCardsData = createSelector(
