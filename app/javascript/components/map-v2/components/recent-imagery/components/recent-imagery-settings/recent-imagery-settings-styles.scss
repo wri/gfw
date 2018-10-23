@@ -127,11 +127,11 @@
       display: flex;
       flex-wrap: wrap;
       height: auto;
-      -webkit-overflow-scrolling: touch;
       padding: 0 rem(20px);
 
       @media screen and (min-width: $screen-m) {
-        overflow-y: scroll;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         height: rem(180px);
       }
 

@@ -11,7 +11,7 @@ $subnav-height: rem(60px);
     flex-direction: row;
     justify-content: space-between;
     height: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     padding: 0 $mobile-gutter;

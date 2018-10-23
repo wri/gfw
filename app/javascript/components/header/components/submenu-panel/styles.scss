@@ -30,7 +30,7 @@
     border-bottom: solid 1px $border;
 
     .apps-slider {
-      overflow-x: scroll;
+      overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       display: flex;
       margin-left: rem(-15px);

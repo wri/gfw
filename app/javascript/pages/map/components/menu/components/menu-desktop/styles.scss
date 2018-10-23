@@ -3,7 +3,7 @@
 $map-menu-items-size: rem(76px);
 
 .c-menu-desktop {
-  overflow-y: scroll;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
@@ -14,6 +14,7 @@ $map-menu-items-size: rem(76px);
 
   &.block {
     display: block;
+    overflow-y: auto;
   }
 
   &::before {

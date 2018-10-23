@@ -8,7 +8,7 @@ $dd-font-size: rem(13px);
   margin-top: -1px;
   z-index: 1;
   max-height: rem(400px);
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   cursor: pointer;
   color: rgba($slate, 0.5);
@@ -28,6 +28,18 @@ $dd-font-size: rem(13px);
     max-height: rem(16px);
   }
 
+  .group-icon {
+    transform: rotate(-90deg);
+    fill: $slate;
+    position: absolute;
+    right: rem(10px);
+
+    &.selected {
+      transform: rotate(90deg);
+      left: rem(10px);
+    }
+  }
+
   .group-parent {
     .item {
       padding-right: rem(25px);
@@ -43,18 +55,6 @@ $dd-font-size: rem(13px);
 
     .group-icon {
       z-index: 1;
-    }
-  }
-
-  .group-icon {
-    transform: rotate(-90deg);
-    fill: $slate;
-    position: absolute;
-    right: rem(10px);
-
-    &.selected {
-      transform: rotate(90deg);
-      left: rem(10px);
     }
   }
 

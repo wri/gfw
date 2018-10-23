@@ -26,7 +26,7 @@
   .legend,
   .analysis {
     position: relative;
-    overflow-y: scroll;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     display: flex;
     flex: 1;
