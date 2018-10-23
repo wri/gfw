@@ -71,7 +71,7 @@ const Button = props => {
   } else {
     button = (
       <button className={classNames} onClick={handleClick} disabled={disabled}>
-        {children}
+        <div className="button-wrapper">{children}</div>
       </button>
     );
   }

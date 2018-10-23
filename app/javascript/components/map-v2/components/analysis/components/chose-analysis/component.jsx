@@ -137,15 +137,19 @@ class ChoseAnalysis extends PureComponent {
               clearAnalysisError();
             }}
           >
-            <Icon icon={squarePointIcon} className="icon-square-point" />
-            <div className="label">CLICK A LAYER ON THE MAP</div>
+            <div className="button-wrapper">
+              <Icon icon={squarePointIcon} className="icon-square-point" />
+              <div className="label">CLICK A LAYER ON THE MAP</div>
+            </div>
           </button>
           <button
             className={cx({ selected: showDraw })}
             onClick={() => setAnalysisSettings({ showDraw: true })}
           >
-            <Icon icon={polygonIcon} className="icon-polygon" />
-            <div className="label">DRAW OR UPLOAD SHAPE</div>
+            <div className="button-wrapper">
+              <Icon icon={polygonIcon} className="icon-polygon" />
+              <div className="label">DRAW OR UPLOAD SHAPE</div>
+            </div>
           </button>
         </div>
         {showDraw ? this.renderPolygonOption() : this.renderLayerOption()}

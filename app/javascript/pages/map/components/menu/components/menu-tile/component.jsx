@@ -23,11 +23,15 @@ class MenuTile extends PureComponent {
     return (
       <li className={cx('c-map-menu-tile', { active }, { small }, className)}>
         <button className="item-button" onClick={onClick} disabled={loading}>
-          <Icon icon={icon} className="tile-icon" />
-          <span>{label}</span>
-          {(!!layerCount || highlight) && (
-            <div className="item-badge">{layerCount || (highlight && '1')}</div>
-          )}
+          <div className="button-wrapper">
+            <Icon icon={icon} className="tile-icon" />
+            <span>{label}</span>
+            {(!!layerCount || highlight) && (
+              <div className="item-badge">
+                {layerCount || (highlight && '1')}
+              </div>
+            )}
+          </div>
         </button>
       </li>
     );
