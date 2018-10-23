@@ -3,17 +3,16 @@
 $dd-button-height: rem(20px);
 
 .theme-dropdown-button-small {
-  text-align: center;
-
   .container {
     .c-selector {
       border-radius: rem(18px);
       border-color: $border;
       height: $dd-button-height;
+      padding: 0 rem(8px) 0 rem(10px);
 
       .value {
         top: calc(50% - #{rem(9px)});
-        right: rem(10px);
+        right: rem(17px);
         padding: 0;
       }
 
@@ -51,7 +50,11 @@ $dd-button-height: rem(20px);
     box-shadow: $pop-box-shadow;
   }
 
-  .arrow {
-    display: none;
+  .arrow-btn {
+    .arrow {
+      fill: #aaa;
+      width: rem(8px);
+      height: rem(19px);
+    }
   }
 }

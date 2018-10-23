@@ -65,7 +65,8 @@ class MapComponent extends PureComponent {
       oneClickAnalysisActive,
       draw,
       embed,
-      hidePanels
+      hidePanels,
+      onMapClick
     } = this.props;
 
     return (
@@ -96,44 +97,51 @@ class MapComponent extends PureComponent {
           animateFill={false}
           open={showTooltip}
         >
-          <Map
-            customClass={cx('c-map', { analysis: analysisActive }, { embed })}
-            onReady={map => {
-              this.map = map;
-            }}
-            mapOptions={mapOptions}
-            basemap={basemap}
-            label={label}
-            bounds={
-              bbox
-                ? {
-                  bbox,
-                  options: {
-                    paddingTopLeft: [100, 100],
-                    paddingBottomRight: [50, 50]
-                  }
-                }
-                : {}
-            }
-            events={{
-              zoomend: handleMapMove,
-              dragend: handleMapMove
-            }}
+          <div
+            className="map-wrapper"
+            onClick={onMapClick}
+            role="button"
+            tabIndex={0}
           >
-            {map => (
-              <Fragment>
-                <LayerManagerComponent
-                  map={map}
-                  handleMapInteraction={handleMapInteraction}
-                  handleRecentImageryTooltip={handleRecentImageryTooltip}
-                  handleShowTooltip={handleShowTooltip}
-                />
-                <Popup map={map} />
-                <MapControlButtons className="map-controls" embed={embed} />
-                {draw && <MapDraw map={map} />}
-              </Fragment>
-            )}
-          </Map>
+            <Map
+              customClass={cx('c-map', { analysis: analysisActive }, { embed })}
+              onReady={map => {
+                this.map = map;
+              }}
+              mapOptions={mapOptions}
+              basemap={basemap}
+              label={label}
+              bounds={
+                bbox
+                  ? {
+                    bbox,
+                    options: {
+                      paddingTopLeft: [100, 100],
+                      paddingBottomRight: [50, 50]
+                    }
+                  }
+                  : {}
+              }
+              events={{
+                zoomend: handleMapMove,
+                dragend: handleMapMove
+              }}
+            >
+              {map => (
+                <Fragment>
+                  <LayerManagerComponent
+                    map={map}
+                    handleMapInteraction={handleMapInteraction}
+                    handleRecentImageryTooltip={handleRecentImageryTooltip}
+                    handleShowTooltip={handleShowTooltip}
+                  />
+                  <Popup map={map} />
+                  <MapControlButtons className="map-controls" embed={embed} />
+                  {draw && <MapDraw map={map} />}
+                </Fragment>
+              )}
+            </Map>
+          </div>
         </Tooltip>
         {!hidePanels && (
           <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
@@ -164,6 +172,7 @@ MapComponent.propTypes = {
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
   handleRecentImageryTooltip: PropTypes.func,
+  onMapClick: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   analysisActive: PropTypes.bool,
   oneClickAnalysisActive: PropTypes.bool,

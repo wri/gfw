@@ -16,7 +16,6 @@ class Explore extends PureComponent {
       data,
       setMenuSettings,
       handleViewOnMap,
-      query,
       description,
       mapState,
       loading
@@ -69,7 +68,7 @@ class Explore extends PureComponent {
                         {
                           ...item.buttons[1],
                           onClick: () => {
-                            handleViewOnMap({ ...item.payload, query });
+                            handleViewOnMap({ ...item.payload });
                           }
                         }
                       ]
@@ -93,8 +92,7 @@ Explore.propTypes = {
   description: PropTypes.string,
   mapState: PropTypes.object,
   loading: PropTypes.bool,
-  handleViewOnMap: PropTypes.func,
-  query: PropTypes.object
+  handleViewOnMap: PropTypes.func
 };
 
 export default Explore;

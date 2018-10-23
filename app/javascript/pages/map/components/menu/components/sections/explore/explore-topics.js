@@ -34,6 +34,11 @@ export default {
     ],
     payload: {
       map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 3,
         datasets: [
           // admin boundaries
           {
@@ -83,6 +88,11 @@ export default {
     ],
     payload: {
       map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 3,
         datasets: [
           // admin boundaries
           {
@@ -125,6 +135,11 @@ export default {
     ],
     payload: {
       map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 3,
         datasets: [
           // admin boundaries
           {
@@ -195,6 +210,11 @@ export default {
     ],
     payload: {
       map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 3,
         datasets: [
           // admin boundaries
           {
