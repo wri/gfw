@@ -27,6 +27,7 @@ $dd-font-size: rem(12px);
       height: 100%;
       cursor: pointer;
       position: relative;
+      line-height: 100%;
 
       &:focus {
         outline: none;

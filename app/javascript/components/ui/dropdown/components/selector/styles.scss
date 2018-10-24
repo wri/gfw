@@ -4,7 +4,7 @@ $dd-height: rem(34px);
 $dd-font-size: rem(13px);
 
 .c-selector {
-  display: inline-block;
+  display: flex;
   position: relative;
   border: solid 1px $border;
   height: $dd-height;
