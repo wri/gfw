@@ -11,6 +11,10 @@
 
   &:hover {
     background-color: transparent;
+
+    svg {
+      fill: darken($slate, 20%);
+    }
   }
 
   &.disabled {
@@ -22,7 +26,7 @@
     }
 
     svg {
-      fill: $slate;
+      fill: #ddd;
     }
   }
 }

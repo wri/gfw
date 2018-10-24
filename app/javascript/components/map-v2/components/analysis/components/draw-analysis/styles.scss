@@ -13,20 +13,26 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: rem(15px);
+    height: rem(20px);
     text-transform: uppercase;
     align-items: center;
 
     .title-nav {
       display: flex;
 
-      button {
+      .title-btn {
         display: flex;
         align-items: center;
         cursor: pointer;
         font-size: rem(14px);
+        height: rem(20px);
         text-transform: uppercase;
         font-weight: 500;
         color: $slate;
+
+        &.left {
+          padding-left: 0;
+        }
       }
 
       .icon-arrow {
@@ -42,12 +48,9 @@
     .title-controls {
       display: flex;
 
-      svg {
-        fill: $slate;
-      }
-
       > * {
-        padding-left: rem(12px);
+        padding: 0;
+        padding-left: rem(8px);
       }
     }
   }
