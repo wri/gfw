@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import { isTouch } from 'utils/browser';
+import cx from 'classnames';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -31,9 +32,6 @@ const Button = props => {
     trackingData,
     buttonClicked
   } = props;
-  const classNames = `c-button ${theme || ''} ${className || ''} ${
-    disabled ? 'disabled' : ''
-  } ${active ? '--active' : ''}`;
   const isDeviceTouch = isTouch();
   const handleClick = e => {
     if (onClick) {
@@ -47,7 +45,13 @@ const Button = props => {
   if (extLink) {
     button = (
       <a
-        className={classNames}
+        className={cx(
+          'c-button',
+          theme,
+          className,
+          { disabled },
+          { '--active': active }
+        )}
         href={extLink}
         target="_blank"
         rel="noopener"
@@ -60,7 +64,13 @@ const Button = props => {
   } else if (link) {
     button = (
       <Link
-        className={classNames}
+        className={cx(
+          'c-button',
+          theme,
+          className,
+          { disabled },
+          { '--active': active }
+        )}
         to={link}
         disabled={disabled}
         onClick={handleClick}
@@ -70,7 +80,17 @@ const Button = props => {
     );
   } else {
     button = (
-      <button className={classNames} onClick={handleClick} disabled={disabled}>
+      <button
+        className={cx(
+          'c-button',
+          theme,
+          className,
+          { disabled },
+          { '--active': active }
+        )}
+        onClick={handleClick}
+        disabled={disabled}
+      >
         <div className="button-wrapper">{children}</div>
       </button>
     );
