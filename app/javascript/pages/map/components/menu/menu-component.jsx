@@ -55,6 +55,7 @@ class MapMenu extends PureComponent {
       setMenuSettings,
       menuSection,
       loading,
+      analysisLoading,
       ...props
     } = this.props;
     const { Component, label, category, large, icon, ...rest } =
@@ -90,7 +91,9 @@ class MapMenu extends PureComponent {
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
               }
-              loading={loading}
+              loading={
+                loading && menuSection !== 'analysis' && !analysisLoading
+              }
             >
               {Component && (
                 <Component
@@ -121,6 +124,7 @@ MapMenu.propTypes = {
   onToggleLayer: PropTypes.func,
   setModalMeta: PropTypes.func,
   loading: PropTypes.bool,
+  analysisLoading: PropTypes.bool,
   countries: PropTypes.array,
   selectedCountries: PropTypes.array,
   countriesWithoutData: PropTypes.array,

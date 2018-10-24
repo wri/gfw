@@ -14,23 +14,28 @@
     justify-content: space-between;
     margin-bottom: rem(15px);
     text-transform: uppercase;
-
-    button {
-      cursor: pointer;
-      height: fit-content;
-      margin-top: rem(3px);
-    }
+    align-items: center;
 
     .title-nav {
       display: flex;
 
+      button {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: rem(14px);
+        text-transform: uppercase;
+        font-weight: 500;
+        color: $slate;
+      }
+
       .icon-arrow {
         position: relative;
-        width: rem(12px);
-        height: rem(12px);
+        width: rem(10px);
         margin-right: rem(7px);
+        margin-top: -2px;
         transform: rotateZ(90deg);
-        margin-top: rem(1px);
+        fill: $slate;
       }
     }
 
@@ -42,7 +47,7 @@
       }
 
       > * {
-        margin-left: rem(8px);
+        padding-left: rem(12px);
       }
     }
   }

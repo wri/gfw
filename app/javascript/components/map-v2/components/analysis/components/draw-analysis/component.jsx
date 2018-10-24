@@ -85,8 +85,8 @@ class DrawAnalysis extends PureComponent {
           <div className="title-nav">
             <button onClick={clearAnalysis}>
               <Icon icon={arrowDownIcon} className="icon-arrow" />
+              <span>{fullLocationName}</span>
             </button>
-            <p>{fullLocationName}</p>
           </div>
           <div className="title-controls">
             <button
