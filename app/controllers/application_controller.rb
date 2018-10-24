@@ -64,11 +64,11 @@ class ApplicationController < ActionController::Base
       redirect_to action: "index"
     elsif params[:adm0]
       if params[:adm2]
-        @location = Application.find_adm2_by_adm0_id(params[:adm0], params[:adm1], params[:adm2])
+        @location = Gadm36.find_adm2_by_adm0_id(params[:adm0], params[:adm1], params[:adm2])
       elsif params[:adm1]
-        @location = Application.find_adm1_by_adm0_id(params[:adm0], params[:adm1])
+        @location = Gadm36.find_adm1_by_adm0_id(params[:adm0], params[:adm1])
       else
-        @location = Application.find_adm0_by_adm0_id(params[:adm0])
+        @location = Gadm36.find_adm0_by_adm0_id(params[:adm0])
       end
     end
     set_title
