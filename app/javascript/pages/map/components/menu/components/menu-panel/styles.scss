@@ -35,26 +35,46 @@ $map-menu-panel-width-big: rem(560px);
     align-items: center;
     border-bottom: solid 1px $border;
     height: rem(40px);
-    font-size: rem(12px);
-    font-weight: 500;
-    padding-left: rem(15px);
+    padding: 0 rem(15px);
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     z-index: 4;
     background-color: $white;
-    text-transform: uppercase;
+    width: 100%;
 
     .icon-return {
       transform: rotate(90deg);
       width: rem(10px);
-      height: rem(10px);
       margin-right: rem(5px);
+      height: auto;
     }
 
-    .header-label {
-      margin-top: rem(4px);
+    .panel-label {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      span {
+        font-size: rem(13px);
+        text-transform: uppercase;
+        font-weight: 500;
+        color: $slate;
+      }
+
+      button {
+        height: 100%;
+      }
+    }
+
+    .panel-close {
+      height: 100%;
+      width: rem(40px);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      fill: $slate;
     }
   }
 

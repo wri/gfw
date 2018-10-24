@@ -64,17 +64,19 @@ class MenuPanel extends PureComponent {
           >
             {!isDesktop ? (
               <div className="panel-header">
-                <div className="header-label">
-                  {category && (
+                <div className="panel-label">
+                  {category ? (
                     <button
                       onClick={() => setMenuSettings({ datasetCategory: '' })}
                     >
                       <Icon icon={arrowIcon} className="icon-return" />
+                      <span>{startCase(category)}</span>
                     </button>
+                  ) : (
+                    <span>{label}</span>
                   )}
-                  {category ? startCase(category) : label}
                 </div>
-                <button className="close-menu" onClick={onClose}>
+                <button className="panel-close" onClick={onClose}>
                   <Icon icon={arrowIcon} className="icon-close-panel" />
                 </button>
               </div>
