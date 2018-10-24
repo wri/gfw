@@ -14,13 +14,13 @@
 
   .map-controls {
     position: absolute;
-    bottom: rem(15px);
-    right: rem(10px);
+    top: rem(15px);
+    right: rem(15px);
     z-index: 5;
 
     @media screen and (min-width: $screen-m) {
       bottom: rem(15px);
-      right: rem(15px);
+      top: unset;
     }
   }
 
@@ -45,10 +45,12 @@
       .leaflet-bottom {
         right: rem(65px);
         left: auto;
-        bottom: 15px;
+        top: rem(15px);
 
         @media screen and (min-width: $screen-m) {
           right: rem(220px);
+          bottom: rem(15px);
+          top: unset;
         }
       }
 
