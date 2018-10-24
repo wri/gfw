@@ -22,4 +22,10 @@
       fill: $green-gfw;
     }
   }
+
+  &.disabled {
+    &:hover {
+      background-color: $white;
+    }
+  }
 }

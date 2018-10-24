@@ -27,16 +27,25 @@ $button-height: rem(40px);
     line-height: 100%;
   }
 
+  svg {
+    fill: $white;
+    width: rem(15px);
+    height: rem(15px);
+  }
+
   &:hover {
     background-color: darken($green-gfw, 10%);
   }
 
   &.disabled {
     cursor: not-allowed;
-    background-color: $grey-dark;
+
+    svg {
+      fill: #ddd;
+    }
 
     &:hover {
-      background-color: $grey-dark;
+      background-color: $green-gfw;
     }
   }
 
@@ -49,11 +58,5 @@ $button-height: rem(40px);
     min-width: $button-height;
     padding: 0;
     font-size: 0;
-  }
-
-  svg {
-    fill: $white;
-    width: rem(15px);
-    height: rem(15px);
   }
 }

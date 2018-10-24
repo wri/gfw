@@ -5,6 +5,10 @@
   color: $slate;
   border: 0;
 
+  svg {
+    fill: $slate;
+  }
+
   &:hover {
     background-color: transparent;
   }
@@ -20,9 +24,5 @@
     svg {
       fill: $slate;
     }
-  }
-
-  svg {
-    fill: $slate;
   }
 }
