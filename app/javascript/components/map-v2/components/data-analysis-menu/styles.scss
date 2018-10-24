@@ -32,12 +32,20 @@
     flex: 1;
     max-height: calc(100vh - 70px);
     z-index: 1;
+
+    @media screen and (min-width: $screen-m) and (max-width: 1090px) {
+      max-height: calc(100vh - 110px);
+    }
   }
 
   &.embed {
     .legend,
     .analysis {
       max-height: calc(100vh - 130px);
+
+      @media screen and (min-width: $screen-m) and (max-width: 1090px) {
+        max-height: calc(100vh - 170px);
+      }
     }
   }
 }
