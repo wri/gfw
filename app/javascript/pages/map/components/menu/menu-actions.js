@@ -27,9 +27,11 @@ const getSearchSQL = string => {
     const mappedWords = compact(words.map(w => (w ? `%25${w}%25` : '')));
     const whereQueries = mappedWords.map(
       w =>
-        `LOWER(name_0) LIKE '${w}' OR LOWER(name_1) LIKE '${
+        `LOWER(name_0) LIKE '${w}' OR LOWER(simple_name_0) LIKE '${
           w
-        }' OR LOWER(name_2) LIKE '${w}'`
+        }' OR LOWER(name_1) LIKE '${w}' OR LOWER(simple_name_1) LIKE '${
+          w
+        }' OR LOWER(name_2) LIKE '${w}' OR LOWER(simple_name_2) LIKE '${w}'`
     );
     return whereQueries.join(' OR ');
   }
