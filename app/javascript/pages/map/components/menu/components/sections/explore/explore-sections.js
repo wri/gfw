@@ -12,10 +12,126 @@ export const descriptions = {
     'Topics are curated map presets for exploring the drivers of deforestation and understanding their impacts in ecosystems around the world.',
   placesToWatch:
     'A GFW service that identifies areas of high-priority GLAD alerts on a monthly basis.',
-  stories: ''
+  stories: 'Explore stories on the map by adding them in the cards below.'
 };
 
-export default {
+export const stories = {
+  user: {
+    slug: 'user',
+    title: 'User stories',
+    summary: 'Stories submitted by GFW users',
+    image: biodiversity,
+    buttons: [
+      {
+        text: 'READ MORE',
+        theme: 'theme-button-light theme-button-small',
+        extLink: '/stories'
+      },
+      {
+        text: 'VIEW ON MAP',
+        theme: 'theme-button-small'
+      }
+    ],
+    payload: {
+      map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 3,
+        datasets: [
+          // admin boundaries
+          {
+            dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+            layers: [
+              '6f6798e6-39ec-4163-979e-182a74ca65ee',
+              'c5d1e010-383a-4713-9aaa-44f728c0571c'
+            ],
+            opacity: 1,
+            visibility: true
+          }
+        ]
+      }
+    }
+  },
+  monga: {
+    slug: 'monga',
+    title: 'Mongabay stories',
+    summary:
+      'This layer displays stories from Mongabay, a leading environmental science and conservation news website.',
+    image: biodiversity,
+    buttons: [
+      {
+        text: 'READ MORE',
+        theme: 'theme-button-light theme-button-small',
+        extLink: '/stories'
+      },
+      {
+        text: 'VIEW ON MAP',
+        theme: 'theme-button-small'
+      }
+    ],
+    payload: {
+      map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 3,
+        datasets: [
+          // admin boundaries
+          {
+            dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
+            layers: ['e097ebfe-56d9-4564-8e2a-d3328bdaea38'],
+            opacity: 1,
+            visibility: true
+          }
+        ]
+      }
+    }
+  },
+  earthJournalism: {
+    slug: 'earth-journalism',
+    title: 'Earth Journalism Network Stories',
+    summary:
+      'This layer displays stories sourced from the Earth Journalism Network, a project of Internews that empowers and enables journalists from developing countries to cover the environment more effectively.',
+    image: biodiversity,
+    buttons: [
+      {
+        text: 'READ MORE',
+        theme: 'theme-button-light theme-button-small',
+        extLink: '/stories'
+      },
+      {
+        text: 'VIEW ON MAP',
+        theme: 'theme-button-small'
+      }
+    ],
+    payload: {
+      map: {
+        center: {
+          lat: 27,
+          lng: 12
+        },
+        zoom: 3,
+        datasets: [
+          // admin boundaries
+          {
+            dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+            layers: [
+              '6f6798e6-39ec-4163-979e-182a74ca65ee',
+              'c5d1e010-383a-4713-9aaa-44f728c0571c'
+            ],
+            opacity: 1,
+            visibility: true
+          }
+        ]
+      }
+    }
+  }
+};
+
+export const topics = {
   biodiversity: {
     slug: 'biodiversity',
     title: 'Biodiversity',

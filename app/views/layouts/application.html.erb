@@ -7,7 +7,8 @@
     <%= stylesheet_link_tag controller_name, :media => 'all' %>
 
     <%= render 'shared/gfw_assets', page: controller_name %>
-    <%= render 'shared/track' %>
+    <%= render 'shared/google_analytics' %>
+    <%= render 'shared/tracking' %>
     <%= render 'shared/favicons' %>
 
     <%= yield :head %>
