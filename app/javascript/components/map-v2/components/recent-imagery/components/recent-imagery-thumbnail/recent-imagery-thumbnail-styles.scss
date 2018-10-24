@@ -2,7 +2,7 @@
 
 .c-recent-imagery-thumbnail {
   position: relative;
-  width: rem(80px);
+  width: 100%;
   height: rem(80px);
   background-size: cover;
   background-position: center center;
@@ -10,6 +10,10 @@
   background-color: $warm-grey;
   cursor: pointer;
   outline: none;
+
+  @media screen and (min-width: $screen-m) {
+    height: rem(80px);
+  }
 
   &::before {
     content: '';

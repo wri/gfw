@@ -19,7 +19,7 @@ export default {
   navMain: [
     {
       label: 'Map',
-      path: '/v2/map',
+      path: '/map',
       navLink: true
     },
     {

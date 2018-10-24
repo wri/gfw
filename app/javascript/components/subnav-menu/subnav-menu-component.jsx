@@ -44,8 +44,11 @@ class SubNavMenu extends PureComponent {
                       link.onClick();
                     }}
                   >
-                    {link.icon && <Icon icon={link.icon} />}
-                    <span>{link.label}</span>
+                    {/* fix for safari 10 flex issues */}
+                    <div className="button-wrapper">
+                      {link.icon && <Icon icon={link.icon} />}
+                      <span>{link.label}</span>
+                    </div>
                   </button>
                 );
               } else {

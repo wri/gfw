@@ -24,12 +24,12 @@ class Explore extends PureComponent {
       {
         label: 'Topics',
         active: section === 'topics',
-        onClick: () => setMenuSettings({ exploreSection: 'topics' })
+        onClick: () => setMenuSettings({ exploreType: 'topics' })
       },
       {
         label: 'Places to watch',
         active: section === 'placesToWatch',
-        onClick: () => setMenuSettings({ exploreSection: 'placesToWatch' })
+        onClick: () => setMenuSettings({ exploreType: 'placesToWatch' })
       }
     ];
 
@@ -57,7 +57,10 @@ class Explore extends PureComponent {
             {!loading &&
               data &&
               data.map(item => (
-                <div key={item.slug || item.id} className="column small-6">
+                <div
+                  key={item.slug || item.id}
+                  className="column small-12 medium-6"
+                >
                   <Card
                     className="map-card"
                     theme="theme-card-small"

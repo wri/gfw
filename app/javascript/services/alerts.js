@@ -14,10 +14,6 @@ const QUERIES = {
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  terraAlerts:
-    'SELECT day, year FROM data ORDER BY year DESC, day DESC LIMIT 1',
-  sadAlerts: 'SELECT max(date) as date FROM imazon_sad',
-  granChaco: 'SELECT max(date) as date FROM gran_chaco_deforestation',
   viirsAlerts: '{location}?group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs'
@@ -106,7 +102,7 @@ export const fetchFormaLatest = () => {
   return request.get(url, 3600, 'formaRequest');
 };
 
-export const fetchTerraLatest = () => {
+export const fetchTerraiLatest = () => {
   const url = `${REQUEST_URL}/terrai-alerts/latest`;
   return request.get(url, 3600, 'terraRequest');
 };

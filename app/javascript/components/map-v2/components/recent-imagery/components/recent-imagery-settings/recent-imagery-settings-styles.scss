@@ -4,18 +4,22 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: rem(290px);
   background-color: $white;
 
   .top-section {
     padding: rem(15px) rem(20px) rem(30px);
+    width: 100%;
 
     .recent-menu {
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: space-between;
       width: 100%;
       margin-bottom: rem(15px);
+
+      @media screen and (min-width: $screen-m) {
+        display: flex;
+      }
 
       .close-btn {
         cursor: pointer;
@@ -122,31 +126,22 @@
     .thumbnail-grid {
       display: flex;
       flex-wrap: wrap;
-      height: rem(180px);
-      overflow-y: scroll;
+      height: auto;
       padding: 0 rem(20px);
+
+      @media screen and (min-width: $screen-m) {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: rem(180px);
+      }
 
       > * {
         margin: 0 rem(5px) rem(5px) 0;
+        width: calc((100% - 10px) / 3);
 
         &:nth-child(3n) {
           margin-right: 0;
         }
-      }
-    }
-
-    .c-carousel {
-      height: rem(100px);
-      // position: relative;
-
-      .slick-prev {
-        left: rem(20px);
-        top: calc(50% - 20px);
-      }
-
-      .slick-next {
-        right: rem(20px);
-        top: calc(50% - 20px);
       }
     }
   }

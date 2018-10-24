@@ -5,8 +5,6 @@ $dd-font-size: rem(13px);
 
 .c-selector {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: relative;
   border: solid 1px $border;
   height: $dd-height;
@@ -14,15 +12,6 @@ $dd-font-size: rem(13px);
   cursor: pointer;
   color: $slate;
   z-index: 0;
-
-  &.align-left {
-    justify-content: flex-start;
-
-    .value {
-      padding-left: rem(18px);
-      padding-right: 0;
-    }
-  }
 
   .value {
     position: absolute;
@@ -40,6 +29,15 @@ $dd-font-size: rem(13px);
 
     &.clearable {
       padding-right: rem(28px);
+    }
+  }
+
+  &.align-left {
+    justify-content: flex-start;
+
+    .value {
+      padding-left: rem(18px);
+      padding-right: 0;
     }
   }
 
@@ -69,6 +67,8 @@ $dd-font-size: rem(13px);
     z-index: 3;
     height: 100%;
     cursor: pointer;
+    position: absolute;
+    right: rem(8px);
 
     .arrow {
       max-width: rem(12px);

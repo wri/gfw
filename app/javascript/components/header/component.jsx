@@ -42,9 +42,11 @@ class Header extends PureComponent {
       loggedIn,
       fixed,
       toggle,
-      useNavLinks
+      useNavLinks,
+      isMobile,
+      isMap
     } = this.props;
-    const isMobile = window.innerWidth < 830;
+
     let moreText = fullScreen ? 'close' : 'more';
     if (!fullScreen && isMobile) {
       moreText = 'menu';
@@ -65,18 +67,14 @@ class Header extends PureComponent {
           { '-fixed': fixed },
           { '-toggle': toggle },
           { '-open': showHeader },
+          { '-small': isMap && isMobile },
           className
         )}
       >
         {toggle &&
           !showHeader && (
             <button onClick={toggleMenu} className="logo">
-              <img
-                src={gfwLogo}
-                alt="Global Forest Watch"
-                width="76"
-                height="76"
-              />
+              <img src={gfwLogo} alt="Global Forest Watch" />
             </button>
           )}
         {(!toggle || (toggle && showHeader)) && (
@@ -232,7 +230,9 @@ Header.propTypes = {
   loggedIn: PropTypes.bool,
   fixed: PropTypes.bool,
   toggle: PropTypes.bool,
-  useNavLinks: PropTypes.bool
+  useNavLinks: PropTypes.bool,
+  isMobile: PropTypes.bool,
+  isMap: PropTypes.bool
 };
 
 export default Header;

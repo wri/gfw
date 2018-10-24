@@ -18,6 +18,15 @@ $button-height: rem(40px);
   transition: background-color 150ms ease-out;
   text-decoration: none;
 
+  .button-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 100%;
+  }
+
   &:hover {
     background-color: darken($green-gfw, 10%);
   }

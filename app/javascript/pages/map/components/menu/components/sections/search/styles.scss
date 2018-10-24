@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-map-menu-search {
-  padding: rem(30px) rem(20px);
+  padding: rem(20px);
 
   h3 {
     text-transform: uppercase;
@@ -21,7 +21,7 @@
   }
 
   .search-type-select {
-    width: rem(130px);
+    width: rem(135px);
     display: inline-block;
     margin-left: rem(5px);
   }

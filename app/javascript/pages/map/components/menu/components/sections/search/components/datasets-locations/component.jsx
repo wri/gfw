@@ -23,6 +23,8 @@ class DatasetsLocationsSearch extends PureComponent {
       datasets,
       locations
     } = this.props;
+    const hasDatasets = datasets && !!datasets.length;
+    const hasLocations = locations && !!locations.length;
 
     return (
       <div className="c-datasets-locations">
@@ -32,62 +34,62 @@ class DatasetsLocationsSearch extends PureComponent {
           input={search}
           onChange={value => handleSearchChange(value)}
         />
-        {!loading &&
-          !search && (
-            <NoContent
-              className="empty-search"
-              message="Enter a search and hit enter to find datasets or locations..."
-            />
-          )}
-        {!loading &&
-          search &&
-          (!datasets || !datasets.length) &&
-          (!locations || !locations.length) && (
-            <NoContent
-              className="empty-search"
-              message="No datasets or locations found"
-            />
-          )}
-        <div className="search-results">
+        <div className="search-container">
           {loading && <Loader />}
           {!loading &&
-            search &&
-            datasets &&
-            !!datasets.length && (
-              <div
-                className={cx('datasets-search', {
-                  'show-border': locations && locations.length
-                })}
-              >
-                <h5>Datasets</h5>
-                {datasets.map(d => (
-                  <LayerToggle
-                    key={d.id}
-                    className="dataset-toggle"
-                    data={{ ...d, dataset: d.id }}
-                    onToggle={onToggleLayer}
-                    onInfoClick={onInfoClick}
-                    showSubtitle
-                  />
-                ))}
-              </div>
+            !search && (
+              <NoContent
+                className="empty-search"
+                message="Enter a search and hit enter to find datasets or locations..."
+              />
             )}
           {!loading &&
             search &&
-            locations &&
-            !!locations.length && (
-              <div className="locations-search">
-                <h5>Locations</h5>
-                {locations.map(loc => (
-                  <button
-                    className={cx('location', { active: loc.active })}
-                    key={loc.label}
-                    onClick={() => handleClickLocation(loc)}
+            (!datasets || !datasets.length) &&
+            (!locations || !locations.length) && (
+              <NoContent
+                className="empty-search"
+                message="No datasets or locations found"
+              />
+            )}
+          {!loading &&
+            search &&
+            (hasDatasets || hasLocations) && (
+              <div className="search-results">
+                {hasDatasets && (
+                  <div
+                    className={cx('datasets-search', {
+                      'show-border': locations && locations.length
+                    })}
                   >
-                    <Icon icon={locationIcon} className="location-icon" />
-                    <p>{loc.label}</p>
-                  </button>
-                ))}
+                    <h5>Datasets</h5>
+                    {datasets.map(d => (
+                      <LayerToggle
+                        key={d.id}
+                        className="dataset-toggle"
+                        data={{ ...d, dataset: d.id }}
+                        onToggle={onToggleLayer}
+                        onInfoClick={onInfoClick}
+                        showSubtitle
+                      />
+                    ))}
+                  </div>
+                )}
+                {hasLocations && (
+                  <div className="locations-search">
+                    <h5>Locations</h5>
+                    {locations.map(loc => (
+                      <button
+                        className={cx('location', { active: loc.active })}
+                        key={loc.label}
+                        onClick={() => handleClickLocation(loc)}
+                      >
+                        <Icon icon={locationIcon} className="location-icon" />
+                        <p>{loc.label}</p>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
         </div>

@@ -11,6 +11,9 @@ $dd-font-size: rem(12px);
     width: fit-content;
     cursor: pointer;
     z-index: 2;
+    display: flex;
+    align-content: center;
+    height: $dd-height;
 
     select {
       border: 0;
@@ -21,9 +24,10 @@ $dd-font-size: rem(12px);
       appearance: none;
       padding: 0 rem(28px) 0 rem(15px);
       z-index: 2;
-      height: $dd-height;
+      height: 100%;
       cursor: pointer;
       position: relative;
+      line-height: 100%;
 
       &:focus {
         outline: none;
@@ -34,9 +38,8 @@ $dd-font-size: rem(12px);
   .arrow-icon {
     position: absolute;
     right: rem(12px);
-    top: calc(50% - 5px);
+    height: 100%;
     width: 10px;
-    height: 10px;
     z-index: 1;
     fill: $green-gfw;
   }

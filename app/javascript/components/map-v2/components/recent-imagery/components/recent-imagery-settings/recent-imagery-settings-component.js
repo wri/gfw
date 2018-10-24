@@ -35,14 +35,13 @@ class RecentImagerySettings extends PureComponent {
       tiles,
       loading,
       settings: { date, weeks, bands },
-      setRecentImagerySettings,
-      getTooltipContentProps
+      setRecentImagerySettings
     } = this.props;
 
     const selected = this.state.selected || activeTile || {};
 
     return (
-      <div className="c-recent-imagery-settings" {...getTooltipContentProps()}>
+      <div className="c-recent-imagery-settings">
         <div className="top-section">
           <div className="recent-menu">
             <div className="title">Recent satellite imagery</div>
@@ -175,9 +174,7 @@ RecentImagerySettings.propTypes = {
   tiles: PropTypes.array,
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
-  onClose: PropTypes.func,
-  loading: PropTypes.bool,
-  getTooltipContentProps: PropTypes.func
+  loading: PropTypes.bool
 };
 
 export default RecentImagerySettings;

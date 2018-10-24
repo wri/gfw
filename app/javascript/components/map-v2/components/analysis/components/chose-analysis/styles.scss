@@ -1,0 +1,170 @@
+@import '~styles/settings';
+
+.c-chose-analysis {
+  padding: rem(27px) rem(20px);
+
+  .title {
+    font-size: 14px;
+    font-weight: 500;
+    color: $greyish-brown;
+    text-align: center;
+  }
+
+  .options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: rem(18px);
+    padding-bottom: rem(15px);
+
+    button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      width: 49%;
+
+      .button-wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      svg {
+        fill: $ashes-grey;
+
+        &.icon-square-point {
+          width: rem(21px);
+          height: rem(21px);
+          margin-bottom: rem(12px);
+        }
+
+        &.icon-polygon {
+          width: rem(25px);
+          height: rem(25px);
+          margin-bottom: rem(8px);
+        }
+      }
+
+      .label {
+        font-size: 11px;
+        line-height: 1.18;
+        color: $ashes-grey;
+      }
+
+      &.selected {
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: rem(-15px);
+          left: rem(10px);
+          width: calc(100% - #{rem(20px)});
+          height: rem(2px);
+          background-color: $green-gfw;
+        }
+
+        svg {
+          fill: $green-gfw;
+        }
+
+        .label {
+          color: $green-gfw;
+        }
+      }
+    }
+  }
+
+  .layer-menu {
+    padding-top: rem(33px);
+    font-size: 12px;
+    line-height: 1.4;
+
+    .layer-title {
+      color: $slate;
+    }
+
+    .boundary-selector {
+      margin-top: rem(17px);
+
+      .select-wrapper {
+        width: 100%;
+      }
+    }
+
+    .layer-description {
+      margin-top: rem(24px);
+      color: $warm-grey;
+
+      button {
+        color: $green-gfw;
+        cursor: pointer;
+
+        &:hover {
+          color: darken($green-gfw, 10%);
+        }
+      }
+    }
+  }
+
+  .draw-menu {
+    padding-top: rem(30px);
+
+    &-title {
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: rem(20px);
+    }
+
+    &-input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 rem(10px);
+      height: rem(40px);
+      border: 1px dashed $green-gfw;
+      border-radius: 40px;
+      font-size: 13px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $grey-light;
+      }
+
+      p {
+        text-align: center;
+        width: 90%;
+        text-transform: uppercase;
+      }
+
+      &.error {
+        border-color: $error;
+
+        .info-button {
+          background-color: $error;
+
+          &:hover {
+            background-color: darken($error, 10%);
+          }
+        }
+      }
+
+      &.error-message {
+        cursor: help;
+      }
+    }
+
+    &-separator {
+      padding: rem(10px) 0;
+      text-align: center;
+      font-size: rem(16px);
+    }
+
+    .terms {
+      text-align: center;
+      font-size: rem(10px);
+      margin-top: rem(15px);
+    }
+  }
+}

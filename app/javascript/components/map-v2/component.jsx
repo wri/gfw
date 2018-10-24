@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import startCase from 'lodash/startCase';
+import { SCREEN_M } from 'utils/constants';
 import upperFirst from 'lodash/upperFirst';
 import cx from 'classnames';
 
@@ -10,7 +11,9 @@ import Tip from 'components/ui/tip';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Icon from 'components/ui/icon';
-import iconCross from 'assets/icons/close.svg';
+import iconCrosshair from 'assets/icons/crosshair.svg';
+import MediaQuery from 'react-responsive';
+import RecentImagery from 'components/map-v2/components/recent-imagery';
 
 import Popup from './components/popup';
 import MapControlButtons from './components/map-controls';
@@ -71,7 +74,7 @@ class MapComponent extends PureComponent {
 
     return (
       <div
-        className={cx()}
+        className="c-map"
         style={{ backgroundColor: basemap.color }}
         onMouseOver={() =>
           oneClickAnalysisActive &&
@@ -79,82 +82,106 @@ class MapComponent extends PureComponent {
         }
         onMouseOut={() => handleShowTooltip(false, '')}
       >
-        <Tooltip
-          theme="tip"
-          hideOnClick
-          html={
-            <Tip
-              className="map-hover-tooltip"
-              text={
-                typeof tooltipData === 'string'
-                  ? this.renderInfoTooltip(tooltipData)
-                  : this.renderDataTooltip(tooltipData)
-              }
-            />
-          }
-          position="top"
-          followCursor
-          animateFill={false}
-          open={showTooltip}
-        >
-          <div
-            className="map-wrapper"
-            onClick={onMapClick}
-            role="button"
-            tabIndex={0}
-          >
-            <Map
-              customClass={cx('c-map', { analysis: analysisActive }, { embed })}
-              onReady={map => {
-                this.map = map;
-              }}
-              mapOptions={mapOptions}
-              basemap={basemap}
-              label={label}
-              bounds={
-                bbox
-                  ? {
-                    bbox,
-                    options: {
-                      paddingTopLeft: [100, 100],
-                      paddingBottomRight: [50, 50]
+        <MediaQuery minDeviceWidth={SCREEN_M}>
+          {isDesktop => (
+            <Fragment>
+              <Tooltip
+                className="map-tooltip"
+                theme="tip"
+                hideOnClick
+                html={
+                  <Tip
+                    className="map-hover-tooltip"
+                    text={
+                      typeof tooltipData === 'string'
+                        ? this.renderInfoTooltip(tooltipData)
+                        : this.renderDataTooltip(tooltipData)
                     }
-                  }
-                  : {}
-              }
-              events={{
-                zoomend: handleMapMove,
-                dragend: handleMapMove
-              }}
-            >
-              {map => (
-                <Fragment>
-                  <LayerManagerComponent
-                    map={map}
-                    handleMapInteraction={handleMapInteraction}
-                    handleRecentImageryTooltip={handleRecentImageryTooltip}
-                    handleShowTooltip={handleShowTooltip}
                   />
-                  <Popup map={map} />
-                  <MapControlButtons className="map-controls" embed={embed} />
-                  {draw && <MapDraw map={map} />}
-                </Fragment>
+                }
+                position="top"
+                followCursor
+                animateFill={false}
+                open={showTooltip}
+                disabled={!isDesktop}
+              >
+                <div
+                  className="map-click-container"
+                  onClick={onMapClick}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <Map
+                    customClass={cx(
+                      'map-wrapper',
+                      { analysis: analysisActive },
+                      { embed }
+                    )}
+                    onReady={map => {
+                      this.map = map;
+                    }}
+                    mapOptions={mapOptions}
+                    basemap={basemap}
+                    label={label}
+                    bounds={
+                      bbox
+                        ? {
+                          bbox,
+                          options: {
+                            padding: [50, 50]
+                          }
+                        }
+                        : {}
+                    }
+                    events={{
+                      zoomend: handleMapMove,
+                      dragend: handleMapMove
+                    }}
+                  >
+                    {map => (
+                      <Fragment>
+                        <LayerManagerComponent
+                          map={map}
+                          handleMapInteraction={handleMapInteraction}
+                          handleRecentImageryTooltip={
+                            handleRecentImageryTooltip
+                          }
+                          handleShowTooltip={handleShowTooltip}
+                        />
+                        <Popup map={map} />
+                        {draw && <MapDraw map={map} />}
+                      </Fragment>
+                    )}
+                  </Map>
+                </div>
+              </Tooltip>
+              {isDesktop &&
+                !hidePanels && (
+                  <DataAnalysisMenu
+                    className={cx('data-analysis-menu', { embed })}
+                    embed={embed}
+                  />
+                )}
+              {!embed && (
+                <MapControlButtons
+                  className="map-controls"
+                  embed={embed}
+                  isDesktop={isDesktop}
+                />
               )}
-            </Map>
-          </div>
-        </Tooltip>
-        {!hidePanels && (
-          <DataAnalysisMenu className={cx('data-analysis-menu', { embed })} />
-        )}
-        <Icon className="icon-crosshair" icon={iconCross} />
-        <MapAttributions className="map-attributions" />
-        {loading && (
-          <Loader className="map-loader" theme="theme-loader-light" />
-        )}
-        {!loading &&
-          error && (
-            <NoContent message="An error occured. Please try again later." />
+              <RecentImagery />
+              <Icon className="icon-crosshair" icon={iconCrosshair} />
+              <MapAttributions className="map-attributions" />
+              {loading && (
+                <Loader className="map-loader" theme="theme-loader-light" />
+              )}
+              {!loading &&
+                error && (
+                  <NoContent message="An error occured. Please try again later." />
+                )}
+            </Fragment>
           )}
+        </MediaQuery>
       </div>
     );
   }

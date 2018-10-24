@@ -11,7 +11,8 @@ $subnav-height: rem(60px);
     flex-direction: row;
     justify-content: space-between;
     height: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     padding: 0 $mobile-gutter;
     max-width: $max-width;
@@ -24,6 +25,7 @@ $subnav-height: rem(60px);
 
     li {
       width: 100%;
+      height: 100%;
       cursor: pointer;
       border-right: 1px solid rgba($slate, 0.2);
 
@@ -41,6 +43,14 @@ $subnav-height: rem(60px);
         text-align: center;
         cursor: pointer;
         white-space: nowrap;
+
+        .button-wrapper {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
 
         &.active {
           background-color: $white;

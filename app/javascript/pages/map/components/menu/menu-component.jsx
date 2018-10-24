@@ -1,93 +1,120 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
+import { SCREEN_M } from 'utils/constants';
+import cx from 'classnames';
+import isEqual from 'lodash/isEqual';
 
-import MenuFlap from 'pages/map/components/menu/components/menu-flap';
-
-import Icon from 'components/ui/icon';
-import Loader from 'components/ui/loader';
+import MenuPanel from 'pages/map/components/menu/components/menu-panel';
+import MenuDesktop from './components/menu-desktop';
+import MenuMobile from './components/menu-mobile';
 
 import './menu-styles.scss';
 
-class Menu extends PureComponent {
-  renderMenu = sections => {
-    const { selectedSection, setMenuSettings, loading } = this.props;
-    return (
-      <ul className=" buttons-group">
-        {sections.map(section => {
-          const { slug, name, icon, layerCount } = section;
-          return (
-            <li
-              key={`menu_${slug}`}
-              className={`item ${selectedSection === slug ? '--selected' : ''}`}
-            >
-              <button
-                className="item-button"
-                onClick={() =>
-                  setMenuSettings({
-                    selectedSection: slug === selectedSection ? '' : slug
-                  })
-                }
-                disabled={loading}
-              >
-                <Icon icon={icon} className="icon" />
-                {name}
-                {!!layerCount && <div className="item-badge">{layerCount}</div>}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
+class MapMenu extends PureComponent {
+  componentDidUpdate(prevProps) {
+    const {
+      showAnalysis,
+      setMenuSettings,
+      setRecentImagerySettings,
+      location,
+      recentVisible,
+      menuSection,
+      isDesktop
+    } = this.props;
+    if (
+      !isDesktop &&
+      location &&
+      location.type &&
+      location.adm0 &&
+      !isEqual(location, prevProps.location)
+    ) {
+      showAnalysis();
+    }
+
+    if (!isDesktop && recentVisible) {
+      setMenuSettings({ menuSection: 'recent-imagery' });
+    }
+
+    if (
+      !isDesktop &&
+      !menuSection &&
+      !isEqual(menuSection, prevProps.menuSection)
+    ) {
+      setRecentImagerySettings({ visible: false });
+    }
+  }
 
   render() {
     const {
-      sections,
-      bottomSections,
+      className,
+      datasetSections,
+      searchSections,
+      mobileSections,
       activeSection,
-      selectedSection,
       setMenuSettings,
+      menuSection,
       loading,
-      setModalMeta,
-      ...rest
+      ...props
     } = this.props;
-    const { Component } = activeSection || {};
+    const { Component, label, category, large, icon, ...rest } =
+      activeSection || {};
 
     return (
-      <Fragment>
-        <div className="c-map-menu">
-          <div
-            className="menu-tabs"
-            style={{ display: window.innerHeight >= 608 ? 'flex' : 'block' }}
-          >
-            {sections && this.renderMenu(sections)}
-            {bottomSections && this.renderMenu(bottomSections)}
+      <MediaQuery minDeviceWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className={cx('c-map-menu', className)}>
+            <div className="menu-tiles">
+              {isDesktop ? (
+                <MenuDesktop
+                  className="menu-desktop"
+                  datasetSections={datasetSections}
+                  searchSections={searchSections}
+                  setMenuSettings={setMenuSettings}
+                />
+              ) : (
+                <MenuMobile
+                  sections={mobileSections}
+                  setMenuSettings={setMenuSettings}
+                />
+              )}
+            </div>
+            <MenuPanel
+              className="menu-panel"
+              label={label}
+              category={category}
+              active={!!menuSection}
+              large={large}
+              isDesktop={isDesktop}
+              setMenuSettings={setMenuSettings}
+              onClose={() =>
+                setMenuSettings({ menuSection: '', datasetCategory: '' })
+              }
+              loading={loading}
+            >
+              {Component && (
+                <Component
+                  menuSection={menuSection}
+                  isDesktop={isDesktop}
+                  setMenuSettings={setMenuSettings}
+                  {...props}
+                  {...rest}
+                />
+              )}
+            </MenuPanel>
           </div>
-        </div>
-        <MenuFlap
-          section={selectedSection}
-          isBig={activeSection && activeSection.large}
-          onClickClose={() => setMenuSettings({ selectedSection: '' })}
-        >
-          {Component &&
-            !loading && (
-              <Component
-                {...activeSection}
-                setMenuSettings={setMenuSettings}
-                onInfoClick={setModalMeta}
-                {...rest}
-              />
-            )}
-          {loading && <Loader />}
-        </MenuFlap>
-      </Fragment>
+        )}
+      </MediaQuery>
     );
   }
 }
 
-Menu.propTypes = {
+MapMenu.propTypes = {
   sections: PropTypes.array,
-  selectedSection: PropTypes.string,
+  className: PropTypes.string,
+  datasetSections: PropTypes.array,
+  searchSections: PropTypes.array,
+  mobileSections: PropTypes.array,
   activeSection: PropTypes.object,
   setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
@@ -102,7 +129,13 @@ Menu.propTypes = {
   handleClickLocation: PropTypes.func,
   getLocationFromSearch: PropTypes.func,
   exploreSection: PropTypes.string,
-  bottomSections: PropTypes.array
+  menuSection: PropTypes.string,
+  datasetCategory: PropTypes.string,
+  showAnalysis: PropTypes.func,
+  location: PropTypes.object,
+  setRecentImagerySettings: PropTypes.func,
+  recentVisible: PropTypes.bool,
+  isDesktop: PropTypes.bool
 };
 
-export default Menu;
+export default MapMenu;

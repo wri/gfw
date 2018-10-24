@@ -1,37 +1,84 @@
-import forestChange from 'assets/icons/forest-change.svg';
-import landCover from 'assets/icons/land-cover.svg';
-import landUse from 'assets/icons/land-use.svg';
-import climate from 'assets/icons/climate.svg';
-import biodiversity from 'assets/icons/biodiversity.svg';
-import explore from 'assets/icons/explore.svg';
+import forestChangeIcon from 'assets/icons/forest-change.svg';
+import landCoverIcon from 'assets/icons/land-cover.svg';
+import landUseIcon from 'assets/icons/land-use.svg';
+import climateIcon from 'assets/icons/climate.svg';
+import biodiversityIcon from 'assets/icons/biodiversity.svg';
+import exploreIcon from 'assets/icons/explore.svg';
+import layersIcon from 'assets/icons/layers.svg';
+import globeIcon from 'assets/icons/globe.svg';
+import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
+import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings';
+import Basemaps from 'components/map-v2/components/basemaps';
+import Analysis from 'components/map-v2/components/analysis';
+import Legend from 'components/map-v2/components/legend';
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 import Search from './components/sections/search';
 
-export const bottomSections = [
+export const mobileSections = [
   {
-    slug: 'explore',
-    name: 'EXPLORE',
-    icon: explore,
-    Component: Explore,
-    large: true,
-    section: 'topics'
+    label: 'layers',
+    slug: 'datasets',
+    icon: globeIcon,
+    Component: Datasets
   },
   {
+    label: 'legend',
+    slug: 'legend',
+    icon: layersIcon,
+    Component: Legend
+  },
+  {
+    label: 'analysis',
+    slug: 'analysis',
+    icon: analysisIcon,
+    Component: Analysis
+  },
+  {
+    label: 'explore',
+    slug: 'explore',
+    icon: exploreIcon,
+    Component: Explore
+  },
+  {
+    label: 'search',
     slug: 'search',
-    name: 'SEARCH',
+    icon: searchIcon,
+    Component: Search
+  },
+  {
+    label: 'Recent Imagery',
+    slug: 'recent-imagery',
+    icon: searchIcon,
+    Component: RecentImagerySettings,
+    hidden: true
+  }
+];
+
+export const searchSections = [
+  {
+    label: 'explore',
+    slug: 'explore',
+    icon: exploreIcon,
+    Component: Explore,
+    large: true
+  },
+  {
+    label: 'search',
+    slug: 'search',
     icon: searchIcon,
     Component: Search
   }
 ];
 
-export default [
+export const datasetsSections = [
   {
-    slug: 'forestChange',
-    name: 'FOREST CHANGE',
-    icon: forestChange,
+    label: 'layers',
+    slug: 'datasets',
+    category: 'forestChange',
+    icon: forestChangeIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -49,9 +96,10 @@ export default [
     ]
   },
   {
-    slug: 'landCover',
-    name: 'LAND COVER',
-    icon: landCover,
+    label: 'layers',
+    slug: 'datasets',
+    category: 'landCover',
+    icon: landCoverIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -61,9 +109,10 @@ export default [
     ]
   },
   {
-    slug: 'landUse',
-    name: 'LAND USE',
-    icon: landUse,
+    label: 'layers',
+    slug: 'datasets',
+    category: 'landUse',
+    icon: landUseIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -85,9 +134,10 @@ export default [
     ]
   },
   {
-    slug: 'climate',
-    name: 'CLIMATE',
-    icon: climate,
+    label: 'layers',
+    slug: 'datasets',
+    category: 'climate',
+    icon: climateIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -105,9 +155,10 @@ export default [
     ]
   },
   {
-    slug: 'biodiversity',
-    name: 'BIODIVERSITY',
-    icon: biodiversity,
+    label: 'layers',
+    slug: 'datasets',
+    category: 'biodiversity',
+    icon: biodiversityIcon,
     Component: Datasets,
     subCategories: [
       {
@@ -115,5 +166,13 @@ export default [
         title: 'Conservation'
       }
     ]
+  },
+  {
+    label: 'layers',
+    slug: 'datasets',
+    category: 'basemaps',
+    icon: globeIcon,
+    Component: Basemaps,
+    hiddenMobile: true
   }
 ];

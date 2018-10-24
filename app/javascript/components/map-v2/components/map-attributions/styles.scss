@@ -1,9 +1,13 @@
 @import '~styles/settings.scss';
 
 .c-map-attributions {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: flex-end;
+
+  @media screen and (min-width: $screen-l) {
+    display: flex;
+  }
 
   > * {
     margin-left: rem(15px);

@@ -3,7 +3,28 @@
 .c-datasets {
   padding: rem(20px);
   max-height: 100%;
-  overflow: scroll;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .datasets-header {
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(20px);
+    font-size: 14px;
+    font-weight: 500;
+
+    button {
+      height: fit-content;
+    }
+
+    .icon-return {
+      transform: rotate(90deg);
+      width: rem(10px);
+      height: rem(10px);
+      margin-right: rem(10px);
+    }
+  }
 
   .countries-selection {
     display: flex;

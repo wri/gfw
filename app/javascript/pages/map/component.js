@@ -11,6 +11,8 @@ import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 
+import './styles.scss';
+
 class MapPage extends PureComponent {
   static propTypes = {
     setMenuSettings: PropTypes.func
@@ -20,7 +22,7 @@ class MapPage extends PureComponent {
     return (
       <div className="l-map">
         <Map
-          onMapClick={() => this.props.setMenuSettings({ selectedSection: '' })}
+          onMapClick={() => this.props.setMenuSettings({ menuSection: '' })}
         />
         <Share />
         <ModalMeta />

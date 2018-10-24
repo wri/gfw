@@ -3,9 +3,9 @@
 .theme-dropdown-native-button {
   .select-wrapper {
     border: 1px solid $border;
+    height: rem(20px);
 
     select {
-      height: rem(14px);
       padding: 0 rem(18px) 0 rem(8px);
     }
   }
@@ -13,8 +13,6 @@
   .arrow-icon {
     fill: $slate;
     right: rem(8px);
-    top: calc(50% - 4px);
     width: 8px;
-    height: 8px;
   }
 }

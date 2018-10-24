@@ -1,0 +1,67 @@
+@import '~styles/settings.scss';
+
+.c-analysis {
+  position: relative;
+
+  .analysis-loader {
+    z-index: 10;
+
+    &.fetching {
+      .spinner {
+        margin-top: rem(-30px);
+      }
+    }
+  }
+
+  .cancel-analysis {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba($white, 0.5);
+    z-index: 1000;
+    padding-top: rem(30px);
+
+    .cancel-analysis-btn {
+      z-index: 1000;
+      background-color: $error;
+      width: rem(180px);
+      margin-bottom: rem(10px);
+    }
+
+    .refresh-analysis-btn {
+      z-index: 1000;
+      background-color: $green-gfw;
+      width: rem(180px);
+      margin-bottom: rem(10px);
+    }
+
+    .error-message {
+      width: rem(200px);
+      text-align: center;
+      word-break: break-word;
+    }
+
+    &.fetching {
+      justify-content: center;
+      padding-top: rem(80px);
+      background-color: transparent;
+    }
+  }
+}
+
+.analysis-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: rem(15px) rem(20px);
+  border-top: solid 1px $border;
+  background-color: $white;
+  z-index: 1;
+}

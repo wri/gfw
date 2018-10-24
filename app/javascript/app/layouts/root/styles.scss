@@ -1,32 +1,38 @@
 @import '~styles/settings.scss';
 
 .l-root {
-  .logo {
-    width: rem(76px);
+  .page-logo {
     position: absolute;
     top: 0;
-    left: 0;
-    z-index: 1010;
+    left: rem(15px);
+    z-index: 2;
     display: none;
+    width: rem(76px);
   }
 
   .page {
     position: relative;
-    z-index: 0;
     min-height: calc(100vh - 60px);
+    z-index: 0;
 
     .page-loader {
-      z-index: 0;
+      z-index: 1;
     }
   }
 
   &.-map {
     .page {
-      min-height: 100vh;
-      width: calc(100% - 76px);
+      height: calc(100vh - 90px);
       position: absolute;
-      right: 0;
+      width: 100%;
       background-color: $ocean;
+      top: 0;
+
+      @media screen and (min-width: $screen-m) {
+        width: calc(100% - 76px);
+        right: 0;
+        min-height: 100%;
+      }
     }
 
     .page-loader {
@@ -37,7 +43,7 @@
       }
     }
 
-    .logo {
+    .page-logo {
       display: block;
     }
   }
