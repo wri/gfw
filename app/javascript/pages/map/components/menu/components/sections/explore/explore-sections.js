@@ -140,10 +140,6 @@ export const topics = {
     image: biodiversity,
     buttons: [
       {
-        text: 'READ MORE',
-        theme: 'theme-button-light theme-button-small'
-      },
-      {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
       }
@@ -194,10 +190,6 @@ export const topics = {
     image: climate,
     buttons: [
       {
-        text: 'READ MORE',
-        theme: 'theme-button-light theme-button-small'
-      },
-      {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
       }
@@ -240,10 +232,6 @@ export const topics = {
       'To assist in increasing supply-chain transparency, our platform lets users track deforestation and estimate production over time in concession areas.',
     image: commodities,
     buttons: [
-      {
-        text: 'READ MORE',
-        theme: 'theme-button-light theme-button-small'
-      },
       {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
@@ -315,10 +303,6 @@ export const topics = {
       'Healthy forested lands provide critical watershed functions, acting as natural infrastructure by minimizing erosion, purifying water, and reducing the impact of floods and droughts.',
     image: water,
     buttons: [
-      {
-        text: 'READ MORE',
-        theme: 'theme-button-light theme-button-small'
-      },
       {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
