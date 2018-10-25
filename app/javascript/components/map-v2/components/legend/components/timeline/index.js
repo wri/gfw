@@ -50,19 +50,20 @@ class TimelineContainer extends PureComponent {
       max: dateDiffInDays(maxDate, minDate),
       start: dateDiffInDays(startDate, minDate),
       end: dateDiffInDays(endDate, minDate),
-      trim: dateDiffInDays(trimEndDate, minDate)
+      trim: dateDiffInDays(trimEndDate, minDate),
+      loops: 0
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { isPlaying, end } = this.state;
-    if (isPlaying && isPlaying !== prevState.isPlaying) {
+    const { isPlaying, end, loops, trim } = this.state;
+    if (isPlaying && loops > 1 && end >= trim) {
+      this.handleResetTimeline();
+    } else if (isPlaying && isPlaying !== prevState.isPlaying) {
       this.startTimeline();
-    }
-    if (!isPlaying && isPlaying !== prevState.isPlaying) {
+    } else if (!isPlaying && isPlaying !== prevState.isPlaying) {
       this.stopTimeline();
-    }
-    if (isPlaying && !isEqual(end, prevState.end)) {
+    } else if (isPlaying && !isEqual(end, prevState.end)) {
       this.incrementTimeline(this.state);
     }
   }
@@ -81,8 +82,10 @@ class TimelineContainer extends PureComponent {
 
       if (end === trim) {
         newEndDays = start;
+        this.setState({ loops: this.state.loops + 1 });
       } else if (newEndDays >= trim) {
         newEndDays = trim;
+        this.setState({ loops: this.state.loops + 1 });
       }
 
       this.handleOnChange([start, newEndDays, trim]);
@@ -96,6 +99,12 @@ class TimelineContainer extends PureComponent {
 
   stopTimeline = () => {
     clearInterval(this.interval);
+  };
+
+  handleResetTimeline = () => {
+    this.handleTogglePlay();
+    this.stopTimeline();
+    this.setState({ loops: 0 });
   };
 
   handleTogglePlay = () => {
