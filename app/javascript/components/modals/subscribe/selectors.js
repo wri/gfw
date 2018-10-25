@@ -1,13 +1,16 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import { getFullLocationName } from 'components/map-v2/components/analysis/components/draw-analysis/selectors';
-import initialState from './initial-state';
+import { initialState } from './reducers';
 
 const selectSubscribeUrlState = state =>
   state.location && state.location.query && state.location.query.subscribe;
 const selectUserData = state => state.myGfw.data;
 const selectLoading = state => state.datasets.loading || state.myGfw.loading;
 const selectDatasets = state => state.datasets.datasets;
+const selectSaving = state => state.modalSubscribe.saving;
+const selectSaved = state => state.modalSubscribe.saved;
+const selectError = state => state.modalSubscribe.error;
 
 export const getSubscribeSettings = createSelector(
   [selectSubscribeUrlState],
@@ -61,5 +64,8 @@ export const getModalSubscribeProps = createStructuredSelector({
   userData: selectUserData,
   datasets: getSubscriptionDatasets,
   activeDatasets: getActiveDatasets,
-  locationName: getFullLocationName
+  locationName: getFullLocationName,
+  saving: selectSaving,
+  saved: selectSaved,
+  error: selectError
 });

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { getLanguages } from 'utils/lang';
+import cx from 'classnames';
 
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
 import Dropdown from 'components/ui/dropdown';
@@ -37,7 +38,14 @@ class SubscriptionForm extends PureComponent {
   };
 
   render() {
-    const { datasets, setModalMeta } = this.props;
+    const {
+      datasets,
+      setModalMeta,
+      saveSubscription,
+      userData,
+      saving,
+      error
+    } = this.props;
     const { lang, name, email } = this.state;
     return (
       <div className="c-form c-subscription-form">
@@ -83,7 +91,14 @@ class SubscriptionForm extends PureComponent {
         </div>
         <div className="save-subscription">
           <p>You can always change these settings in MyGFW</p>
-          <Button className="submit-btn">SAVE</Button>
+          <Button
+            className={cx('submit-btn', { error }, { saving })}
+            onClick={() =>
+              saveSubscription({ ...this.state, datasets, ...userData })
+            }
+          >
+            {error ? 'error saving' : 'SAVE'}
+          </Button>
         </div>
       </div>
     );
@@ -92,12 +107,16 @@ class SubscriptionForm extends PureComponent {
 
 SubscriptionForm.propTypes = {
   setSubscribeSettings: PropTypes.func,
+  saveSubscription: PropTypes.func,
   datasets: PropTypes.array,
+  userData: PropTypes.object,
   setModalMeta: PropTypes.func,
   activeDatasets: PropTypes.array,
   lang: PropTypes.string,
   locationName: PropTypes.string,
-  email: PropTypes.string
+  email: PropTypes.string,
+  error: PropTypes.bool,
+  saving: PropTypes.bool
 };
 
 export default SubscriptionForm;

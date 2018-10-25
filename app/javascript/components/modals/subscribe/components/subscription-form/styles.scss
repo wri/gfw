@@ -24,6 +24,10 @@ $desktop-padding: rem(50px);
 
     .submit-btn {
       margin-left: rem(15px);
+
+      &.error {
+        background-color: $error;
+      }
     }
   }
 
