@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import cx from 'classnames';
+import { SCREEN_M } from 'utils/constants';
+import MediaQuery from 'react-responsive';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -26,30 +28,50 @@ class ChoseAnalysis extends PureComponent {
     const selectedBoundaries = activeBoundary || (boundaries && boundaries[0]);
 
     return (
-      <div className="layer-menu">
-        <div className="layer-title">One click analysis on shape or:</div>
-        <Dropdown
-          className="boundary-selector"
-          options={boundaries}
-          value={selectedBoundaries && selectedBoundaries.value}
-          onChange={selectBoundaries}
-          native
-        />
-        <div className="layer-description">
-          One-click analysis is also available by default for most data layers
-          under the{' '}
-          <button onClick={() => setMenuSettings({ menuSection: 'landUse' })}>
-            Land Use
-          </button>{' '}
-          and{' '}
-          <button
-            onClick={() => setMenuSettings({ menuSection: 'biodiversity' })}
-          >
-            Biodiversity
-          </button>{' '}
-          tabs.
-        </div>
-      </div>
+      <MediaQuery minDeviceWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className="layer-menu">
+            <div className="layer-title">
+              {isDesktop
+                ? 'One click analysis on shape or:'
+                : 'Analysis on shape or:'}
+            </div>
+            <Dropdown
+              className="boundary-selector"
+              options={boundaries}
+              value={selectedBoundaries && selectedBoundaries.value}
+              onChange={selectBoundaries}
+              native
+            />
+            <div className="layer-description">
+              {isDesktop ? 'One-click analysis ' : 'Analysis '}
+              is also available by default for most data layers under the{' '}
+              <button
+                onClick={() =>
+                  setMenuSettings({
+                    menuSection: 'datasets',
+                    datasetCategory: 'landUse'
+                  })
+                }
+              >
+                land use
+              </button>{' '}
+              and{' '}
+              <button
+                onClick={() =>
+                  setMenuSettings({
+                    menuSection: 'datasets',
+                    datasetCategory: 'biodiversity'
+                  })
+                }
+              >
+                biodiversity
+              </button>{' '}
+              tabs.
+            </div>
+          </div>
+        )}
+      </MediaQuery>
     );
   };
 
