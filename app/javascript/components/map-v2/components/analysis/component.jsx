@@ -20,7 +20,7 @@ class AnalysisComponent extends PureComponent {
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
-      setModalSubscribe,
+      setSubscribeSettings,
       endpoints,
       embed
     } = this.props;
@@ -82,7 +82,7 @@ class AnalysisComponent extends PureComponent {
               )}
               <Button
                 className="analysis-action-btn"
-                onClick={() => setModalSubscribe(true)}
+                onClick={() => setSubscribeSettings({ open: true })}
               >
                 SUBSCRIBE
               </Button>
@@ -104,7 +104,7 @@ AnalysisComponent.propTypes = {
   handleCancelAnalysis: PropTypes.func,
   handleFetchAnalysis: PropTypes.func,
   embed: PropTypes.bool,
-  setModalSubscribe: PropTypes.func
+  setSubscribeSettings: PropTypes.func
 };
 
 export default AnalysisComponent;

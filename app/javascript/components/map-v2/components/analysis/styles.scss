@@ -68,9 +68,16 @@
   justify-content: space-between;
 
   .analysis-action-btn {
-    width: 48%;
     font-size: rem(14px);
     font-weight: 500;
+
+    &:first-child {
+      margin-right: rem(5px);
+    }
+
+    &:last-child {
+      margin-left: rem(5px);
+    }
   }
 
   @media screen and (min-width: $screen-m) {

@@ -1,3 +1,14 @@
-import { createAction } from 'redux-tools';
+import { createThunkAction } from 'redux-tools';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-export const setModalSubscribe = createAction('setModalSubscribe');
+export const setSubscribeSettings = createThunkAction(
+  'setSubscribeSettings',
+  change => (dispatch, state) =>
+    dispatch(
+      setComponentStateToUrl({
+        key: 'subscribe',
+        change,
+        state
+      })
+    )
+);

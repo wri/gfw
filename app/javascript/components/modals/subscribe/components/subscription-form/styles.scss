@@ -1,0 +1,46 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(30px);
+$desktop-padding: rem(50px);
+
+.c-subscription-form {
+  .field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: rem(30px);
+
+    span {
+      margin-bottom: rem(10px);
+    }
+  }
+
+  .save-subscription {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    p {
+      color: $warm-grey;
+    }
+
+    .submit-btn {
+      margin-left: rem(15px);
+    }
+  }
+
+  .datasets {
+    > * {
+      margin-bottom: rem(15px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      > * {
+        width: 48%;
+        margin-bottom: rem(15px);
+      }
+    }
+  }
+}
