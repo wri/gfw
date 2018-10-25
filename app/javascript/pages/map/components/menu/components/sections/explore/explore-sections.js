@@ -226,6 +226,9 @@ export const topics = {
         ],
         basemap: basemaps.dark,
         label: labels.lightLabels
+      },
+      analysis: {
+        showAnalysis: true
       }
     }
   },
