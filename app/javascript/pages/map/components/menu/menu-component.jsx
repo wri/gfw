@@ -70,6 +70,10 @@ class MapMenu extends PureComponent {
     ) {
       setRecentImagerySettings({ visible: false });
     }
+
+    if (!isEqual(isDesktop, prevProps.isDesktop)) {
+      setMenuSettings({ menuSection: '' });
+    }
   }
 
   render() {
