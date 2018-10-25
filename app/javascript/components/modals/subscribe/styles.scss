@@ -1,0 +1,32 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(30px);
+$desktop-padding: rem(50px);
+
+.c-modal-subscribe {
+  padding: $mobile-padding;
+  min-width: rem(320px);
+  min-height: rem(320px);
+  width: 100%;
+  max-width: rem(800px);
+  color: $slate;
+
+  @media screen and (min-width: $screen-m) {
+    padding: $desktop-padding;
+    padding-top: rem(40px);
+  }
+
+  h3 {
+    margin-bottom: rem(30px);
+  }
+
+  .mygfw-subscribe {
+    @media screen and (min-width: $screen-m) {
+      display: flex;
+      justify-content: space-between;
+
+      > * {
+        width: 45%;
+      }
+    }
+  }
+}

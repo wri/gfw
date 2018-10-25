@@ -60,10 +60,18 @@
   bottom: rem(50px);
   left: 0;
   right: 0;
-  padding: rem(15px) rem(20px);
+  padding: rem(15px);
   border-top: solid 1px $border;
   background-color: $white;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
+
+  .analysis-action-btn {
+    width: 48%;
+    font-size: rem(14px);
+    font-weight: 500;
+  }
 
   @media screen and (min-width: $screen-m) {
     bottom: 0;

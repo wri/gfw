@@ -2,9 +2,7 @@
 
 .c-my-gfw {
   background-color: $white;
-  width: rem(320px);
-  padding: rem(25px) rem(30px) rem(30px);
-  border: solid 1px $border;
+  width: 100%;
 
   &.-plain {
     border: 0;
