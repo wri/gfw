@@ -2,6 +2,9 @@ import climate from 'assets/images/climate.jpg';
 import biodiversity from 'assets/images/biodiversity.jpg';
 import water from 'assets/images/water.jpg';
 import commodities from 'assets/images/commodities.jpg';
+import userStories from 'assets/images/user-stories.jpg';
+import mongabay from 'assets/images/mongabay.jpg';
+import earthJournalism from 'assets/images/earth-journalism.jpg';
 
 import basemaps, {
   labels
@@ -12,15 +15,16 @@ export const descriptions = {
     'Topics are curated map presets for exploring the drivers of deforestation and understanding their impacts in ecosystems around the world.',
   placesToWatch:
     'A GFW service that identifies areas of high-priority GLAD alerts on a monthly basis.',
-  stories: 'Explore stories on the map by adding them in the cards below.'
+  stories:
+    'Explore stories ralated to conservation from our users and other journalism sources.'
 };
 
 export const stories = {
   user: {
     slug: 'user',
     title: 'User stories',
-    summary: 'Stories submitted by GFW users',
-    image: biodiversity,
+    summary: 'Stories submitted by GFW users.',
+    image: userStories,
     buttons: [
       {
         text: 'READ MORE',
@@ -59,7 +63,7 @@ export const stories = {
     title: 'Mongabay stories',
     summary:
       'This layer displays stories from Mongabay, a leading environmental science and conservation news website.',
-    image: biodiversity,
+    image: mongabay,
     buttons: [
       {
         text: 'READ MORE',
@@ -95,7 +99,7 @@ export const stories = {
     title: 'Earth Journalism Network Stories',
     summary:
       'This layer displays stories sourced from the Earth Journalism Network, a project of Internews that empowers and enables journalists from developing countries to cover the environment more effectively.',
-    image: biodiversity,
+    image: earthJournalism,
     buttons: [
       {
         text: 'READ MORE',
