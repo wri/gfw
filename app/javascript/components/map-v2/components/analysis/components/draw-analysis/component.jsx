@@ -83,16 +83,14 @@ class DrawAnalysis extends PureComponent {
     return (
       <div className={cx('c-draw-analysis', { 'with-footer': hasFooter })}>
         <div className="draw-title">
-          <div className="title-nav">
-            <Button
-              className="title-btn left"
-              theme="theme-button-clear"
-              onClick={clearAnalysis}
-            >
-              <Icon icon={arrowDownIcon} className="icon-arrow" />
-              <span>{fullLocationName}</span>
-            </Button>
-          </div>
+          <Button
+            className="title-btn left"
+            theme="theme-button-clear"
+            onClick={clearAnalysis}
+          >
+            <Icon icon={arrowDownIcon} className="icon-arrow" />
+            <span>{fullLocationName}</span>
+          </Button>
           <div className="title-controls">
             <Button
               className="title-btn"
