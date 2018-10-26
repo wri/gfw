@@ -54,8 +54,15 @@ $desktop-padding: rem(50px);
         text-align: center;
       }
 
-      .reset-btn {
-        max-width: rem(150px);
+      .success-actions {
+        display: flex;
+        justify-content: space-around;
+
+        .reset-btn,
+        .mygfw-btn {
+          width: auto;
+          margin: 0 rem(10px);
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
@@ -15,10 +16,20 @@ import SubscriptionForm from './components/subscription-form';
 import './styles.scss';
 
 class ModalSubscribe extends PureComponent {
+  componentDidUpdate(prevProps) {
+    const { activeMapDatasets, setSubscribeSettings } = this.props;
+    if (
+      activeMapDatasets &&
+      !isEqual(activeMapDatasets, prevProps.activeMapDatasets)
+    ) {
+      setSubscribeSettings({ datasets: activeMapDatasets });
+    }
+  }
+
   handleCloseModal = () => {
-    const { setSubscribeSettings, setSubscribeSaved } = this.props;
+    const { setSubscribeSettings, resetSubscribe } = this.props;
     setSubscribeSettings({ open: false });
-    setSubscribeSaved(false);
+    resetSubscribe();
   };
 
   renderUserLoginForm = () => <MyGFWLogin className="mygfw-subscribe" />;
@@ -31,9 +42,18 @@ class ModalSubscribe extends PureComponent {
         email and click on the link to confirm your subscription. Visit your
         saved subscriptions to manage them.
       </p>
-      <Button className="reset-btn" onClick={this.handleCloseModal}>
-        RETURN TO MAP
-      </Button>
+      <div className="success-actions">
+        <Button
+          className="mygfw-btn"
+          theme="theme-button-light"
+          extLink="/my_gfw/subscriptions"
+        >
+          VIEW IN MY GFW
+        </Button>
+        <Button className="reset-btn" onClick={this.handleCloseModal}>
+          RETURN TO MAP
+        </Button>
+      </div>
     </div>
   );
 
@@ -67,12 +87,13 @@ ModalSubscribe.propTypes = {
   open: PropTypes.bool,
   loading: PropTypes.bool,
   setSubscribeSettings: PropTypes.func,
-  setSubscribeSaved: PropTypes.func,
+  resetSubscribe: PropTypes.func,
   userData: PropTypes.object,
   datasets: PropTypes.array,
   setModalMeta: PropTypes.func,
   locationName: PropTypes.string,
-  activeDatasets: PropTypes.array
+  activeDatasets: PropTypes.array,
+  activeMapDatasets: PropTypes.array
 };
 
 export default ModalSubscribe;

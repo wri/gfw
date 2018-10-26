@@ -21,13 +21,18 @@ const clearSubscribeError = (state, { payload }) => ({
   error: payload
 });
 
-const setSubscribeSaved = (state, { payload }) => ({
+const resetSubscribe = () => ({
+  ...initialState
+});
+
+const setSubscribeSaved = state => ({
   ...state,
-  saved: payload
+  saved: true
 });
 
 export default {
   [actions.setSubscribeSaving]: setSubscribeSaving,
   [actions.setSubscribeSaved]: setSubscribeSaved,
+  [actions.resetSubscribe]: resetSubscribe,
   [actions.clearSubscribeError]: clearSubscribeError
 };

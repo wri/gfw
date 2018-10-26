@@ -7,6 +7,7 @@ import cx from 'classnames';
 
 import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
 import Dropdown from 'components/ui/dropdown';
+import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 
 import './styles.scss';
@@ -40,13 +41,18 @@ class SubscriptionForm extends PureComponent {
   render() {
     const {
       datasets,
+      activeDatasets,
       setModalMeta,
       saveSubscription,
       userData,
       saving,
-      error
+      error,
+      location
     } = this.props;
     const { lang, name, email } = this.state;
+    const canSubmit =
+      activeDatasets && activeDatasets.length && email && name && lang;
+
     return (
       <div className="c-form c-subscription-form">
         <div className="field">
@@ -67,7 +73,7 @@ class SubscriptionForm extends PureComponent {
                   key={d.id}
                   data={d}
                   onInfoClick={setModalMeta}
-                  onToggle={() => this.onToggleLayer(d.id)}
+                  onToggle={() => this.onToggleLayer(d.subscriptionKey)}
                   showSubtitle
                 />
               ))}
@@ -85,19 +91,31 @@ class SubscriptionForm extends PureComponent {
           <Dropdown
             options={getLanguages()}
             value={lang}
-            onChange={newLang => this.setState({ lang: newLang.value })}
+            onChange={newLang => this.setState({ lang: newLang })}
             native
           />
         </div>
         <div className="save-subscription">
-          <p>You can always change these settings in MyGFW</p>
+          {error ? (
+            <p className="error-message">
+              This service is currently unavailable. Please try again later.
+            </p>
+          ) : (
+            <p>You can always change these settings in MyGFW</p>
+          )}
           <Button
             className={cx('submit-btn', { error }, { saving })}
             onClick={() =>
-              saveSubscription({ ...this.state, datasets, ...userData })
+              saveSubscription({
+                ...this.state,
+                datasets: activeDatasets,
+                userData,
+                ...location
+              })
             }
+            disabled={!canSubmit}
           >
-            {error ? 'error saving' : 'SAVE'}
+            {saving ? <Loader className="saving-btn-loader" /> : 'SAVE'}
           </Button>
         </div>
       </div>
@@ -116,7 +134,8 @@ SubscriptionForm.propTypes = {
   locationName: PropTypes.string,
   email: PropTypes.string,
   error: PropTypes.bool,
-  saving: PropTypes.bool
+  saving: PropTypes.bool,
+  location: PropTypes.object
 };
 
 export default SubscriptionForm;

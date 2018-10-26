@@ -39,13 +39,14 @@ $button-height: rem(40px);
 
   &.disabled {
     cursor: not-allowed;
+    background-color: $grey-dark;
 
     svg {
       fill: #ddd;
     }
 
     &:hover {
-      background-color: $green-gfw;
+      background-color: $grey-dark;
     }
   }
 

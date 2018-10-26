@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import { getFullLocationName } from 'components/map-v2/components/analysis/components/draw-analysis/selectors';
+import { getActiveDatasetIds } from 'components/map-v2/selectors';
 import { initialState } from './reducers';
 
 const selectSubscribeUrlState = state =>
@@ -11,6 +12,7 @@ const selectDatasets = state => state.datasets.datasets;
 const selectSaving = state => state.modalSubscribe.saving;
 const selectSaved = state => state.modalSubscribe.saved;
 const selectError = state => state.modalSubscribe.error;
+const selectLocation = state => state.location && state.location.payload;
 
 export const getSubscribeSettings = createSelector(
   [selectSubscribeUrlState],
@@ -40,19 +42,28 @@ export const getEmail = createSelector(
   settings => settings.email
 );
 
-export const getActiveDatasets = createSelector(
+export const getActiveSubscriptionDatasets = createSelector(
   [getSubscribeSettings],
   settings => settings.datasets
 );
 
 export const getSubscriptionDatasets = createSelector(
-  [selectDatasets, getActiveDatasets],
+  [selectDatasets, getActiveSubscriptionDatasets],
   (datasets, activeDatasets) =>
     datasets &&
     datasets.filter(d => d.subscriptionKey).map(d => ({
       ...d,
-      active: activeDatasets.includes(d.id)
+      active: activeDatasets.includes(d.subscriptionKey)
     }))
+);
+
+export const getActiveMapDatasets = createSelector(
+  [getSubscriptionDatasets, getActiveDatasetIds],
+  (datasets, activeDatasetIds) =>
+    datasets &&
+    datasets
+      .filter(d => activeDatasetIds.includes(d.id))
+      .map(d => d.subscriptionKey)
 );
 
 export const getModalSubscribeProps = createStructuredSelector({
@@ -63,9 +74,11 @@ export const getModalSubscribeProps = createStructuredSelector({
   loading: selectLoading,
   userData: selectUserData,
   datasets: getSubscriptionDatasets,
-  activeDatasets: getActiveDatasets,
+  activeMapDatasets: getActiveMapDatasets,
+  activeDatasets: getActiveSubscriptionDatasets,
   locationName: getFullLocationName,
   saving: selectSaving,
   saved: selectSaved,
-  error: selectError
+  error: selectError,
+  location: selectLocation
 });
