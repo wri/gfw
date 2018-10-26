@@ -89,6 +89,7 @@ class SubscriptionForm extends PureComponent {
         <div className="field">
           <span>Language*</span>
           <Dropdown
+            theme="theme-dropdown-native-form"
             options={getLanguages()}
             value={lang}
             onChange={newLang => this.setState({ lang: newLang })}

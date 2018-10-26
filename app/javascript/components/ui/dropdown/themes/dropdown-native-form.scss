@@ -1,0 +1,23 @@
+@import '~styles/settings.scss';
+
+.theme-dropdown-native-form {
+  .select-wrapper {
+    border: 1px solid $border;
+    border-radius: 4px;
+    height: rem(40px);
+    width: 100%;
+    max-width: rem(315px);
+
+    select {
+      padding: 0 rem(18px) 0 rem(8px);
+      color: $slate;
+      font-size: rem(13px);
+    }
+  }
+
+  .arrow-icon {
+    fill: $slate;
+    right: rem(8px);
+    width: 8px;
+  }
+}
