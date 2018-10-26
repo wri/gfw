@@ -65,8 +65,8 @@ class ModalSubscribe extends PureComponent {
         <div className="c-modal-subscribe">
           <h3>
             {saved
-              ? 'Subscription Saved'
-              : `Subscribe to Forest Change Alerts for ${locationName}`}
+              ? 'Subscription saved'
+              : `Subscribe to forest change alerts for ${locationName}`}
           </h3>
           <div className="subscribe-body">
             {loading && <Loader />}

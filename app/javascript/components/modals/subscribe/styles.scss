@@ -6,8 +6,8 @@ $desktop-padding: rem(50px);
   padding: $mobile-padding;
   min-width: rem(320px);
   min-height: rem(320px);
-  width: 100%;
   max-width: rem(800px);
+  width: 100%;
   color: $slate;
 
   @media screen and (min-width: $screen-m) {
@@ -23,19 +23,13 @@ $desktop-padding: rem(50px);
   }
 
   .mygfw-subscribe {
-    @media screen and (min-width: $screen-m) {
-      display: flex;
-      justify-content: space-between;
-
-      > * {
-        width: 45%;
-      }
-    }
+    max-width: rem(450px);
+    text-align: center;
   }
 
   .subscribe-body {
     position: relative;
-    min-height: rem(250px);
+    min-height: rem(220px);
 
     .saved {
       max-width: rem(400px);

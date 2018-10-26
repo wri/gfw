@@ -6,24 +6,26 @@ export const setMyGFW = createAction('setMyGFW');
 
 export const checkLogged = createThunkAction(
   'checkLogged',
-  token => dispatch => {
-    dispatch(setMyGFWLoading({ loading: true, error: false }));
-    axios
-      .get(`${process.env.GFW_API}/user`, { withCredentials: true })
-      .then(response => {
-        if (response.status < 400) {
-          dispatch(
-            setMyGFW({
-              ...response.data.data.attributes,
-              id: response.data.data.id,
-              token
-            })
-          );
-        }
-      })
-      .catch(() => {
-        dispatch(setMyGFWLoading({ loading: false, error: true }));
-      });
+  token => (dispatch, getState) => {
+    if (!getState().myGfw.loading) {
+      dispatch(setMyGFWLoading({ loading: true, error: false }));
+      axios
+        .get(`${process.env.GFW_API}/user`, { withCredentials: true })
+        .then(response => {
+          if (response.status < 400) {
+            dispatch(
+              setMyGFW({
+                ...response.data.data.attributes,
+                id: response.data.data.id,
+                token
+              })
+            );
+          }
+        })
+        .catch(() => {
+          dispatch(setMyGFWLoading({ loading: false, error: true }));
+        });
+    }
   }
 );
 
