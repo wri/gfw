@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import isEqual from 'lodash/isEqual';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
@@ -16,16 +15,6 @@ import SubscriptionForm from './components/subscription-form';
 import './styles.scss';
 
 class ModalSubscribe extends PureComponent {
-  componentDidUpdate(prevProps) {
-    const { activeMapDatasets, setSubscribeSettings } = this.props;
-    if (
-      activeMapDatasets &&
-      !isEqual(activeMapDatasets, prevProps.activeMapDatasets)
-    ) {
-      setSubscribeSettings({ datasets: activeMapDatasets });
-    }
-  }
-
   handleCloseModal = () => {
     const { setSubscribeSettings, resetSubscribe } = this.props;
     setSubscribeSettings({ open: false });
@@ -92,8 +81,7 @@ ModalSubscribe.propTypes = {
   datasets: PropTypes.array,
   setModalMeta: PropTypes.func,
   locationName: PropTypes.string,
-  activeDatasets: PropTypes.array,
-  activeMapDatasets: PropTypes.array
+  activeDatasets: PropTypes.array
 };
 
 export default ModalSubscribe;

@@ -22,11 +22,28 @@ class SubscriptionForm extends PureComponent {
     };
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (!isEqual(this.state, prevState)) {
-      this.props.setSubscribeSettings({ ...this.state });
+  componentDidMount() {
+    const { activeMapDatasets, setSubscribeSettings } = this.props;
+    if (activeMapDatasets && activeMapDatasets.length) {
+      setSubscribeSettings({ datasets: activeMapDatasets });
     }
-  };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { activeMapDatasets, setSubscribeSettings } = this.props;
+
+    if (!isEqual(this.state, prevState)) {
+      setSubscribeSettings({ ...this.state });
+    }
+
+    if (
+      activeMapDatasets &&
+      activeMapDatasets.length &&
+      !isEqual(activeMapDatasets, prevProps.activeMapDatasets)
+    ) {
+      setSubscribeSettings({ datasets: activeMapDatasets });
+    }
+  }
 
   onToggleLayer = dataset => {
     const { activeDatasets, setSubscribeSettings } = this.props;
@@ -136,7 +153,8 @@ SubscriptionForm.propTypes = {
   email: PropTypes.string,
   error: PropTypes.bool,
   saving: PropTypes.bool,
-  location: PropTypes.object
+  location: PropTypes.object,
+  activeMapDatasets: PropTypes.array
 };
 
 export default SubscriptionForm;
