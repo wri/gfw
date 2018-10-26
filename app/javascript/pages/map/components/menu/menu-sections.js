@@ -28,13 +28,15 @@ export const mobileSections = [
     label: 'legend',
     slug: 'legend',
     icon: layersIcon,
-    Component: Legend
+    Component: Legend,
+    embed: true
   },
   {
     label: 'analysis',
     slug: 'analysis',
     icon: analysisIcon,
-    Component: Analysis
+    Component: Analysis,
+    embed: true
   },
   {
     label: 'explore',

@@ -172,7 +172,7 @@ class MapComponent extends PureComponent {
               )}
               <RecentImagery />
               <Icon className="icon-crosshair" icon={iconCrosshair} />
-              <MapAttributions className="map-attributions" />
+              <MapAttributions className={cx('map-attributions', { embed })} />
               <SubscribeModal />
               {loading && (
                 <Loader className="map-loader" theme="theme-loader-light" />

@@ -16,7 +16,8 @@ import './styles.scss';
 
 class MapPage extends PureComponent {
   static propTypes = {
-    setMenuSettings: PropTypes.func
+    setMenuSettings: PropTypes.func,
+    embed: PropTypes.bool
   };
 
   render() {
@@ -32,7 +33,7 @@ class MapPage extends PureComponent {
         <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
-        <ModalWelcome />
+        {!this.props.embed && <ModalWelcome />}
       </div>
     );
   }
