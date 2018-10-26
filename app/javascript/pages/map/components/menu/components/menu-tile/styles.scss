@@ -33,11 +33,17 @@ $map-menu-items-size: rem(76px);
 
     .button-wrapper {
       height: 100%;
-      width: 100%;
+      width: $map-menu-items-size;
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+
+      @media screen and (min-width: $screen-m) {
+        height: $map-menu-items-size;
+        width: $map-menu-items-size;
+      }
     }
 
     .tile-icon {
@@ -50,7 +56,7 @@ $map-menu-items-size: rem(76px);
 
   .item-badge {
     position: absolute;
-    top: rem(13px);
+    top: 0;
     right: rem(21px);
     display: flex;
     justify-content: center;
@@ -63,6 +69,10 @@ $map-menu-items-size: rem(76px);
     font-weight: 500;
     letter-spacing: -0.3px;
     color: $white;
+
+    @media screen and (min-width: $screen-m) {
+      top: rem(13px);
+    }
   }
 
   &.small {

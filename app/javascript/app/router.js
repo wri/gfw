@@ -54,7 +54,8 @@ const mapLegacyRedirect = (dispatch, { embed, routeSlugs, query }) => {
             lat,
             lng
           },
-          zoom
+          zoom,
+          canBound: false
         },
         analysis: {
           showAnalysis: tab === 'analysis-tab'
