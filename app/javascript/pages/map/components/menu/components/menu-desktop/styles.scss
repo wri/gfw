@@ -10,7 +10,7 @@ $map-menu-items-size: rem(76px);
   justify-content: space-between;
   position: relative;
   width: $map-menu-items-size;
-  height: calc(100vh - #{$map-menu-items-size});
+  height: 100%;
 
   &.block {
     display: block;

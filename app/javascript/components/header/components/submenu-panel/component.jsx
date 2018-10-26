@@ -148,9 +148,17 @@ class Header extends PureComponent {
                 ))}
               </ul>
             </div>
-            <a className="title" href="/sitemap">
-              Sitemap
-            </a>
+            <div className="legal-section">
+              <a className="title" href="/sitemap">
+                Sitemap
+              </a>
+              <a className="title" href="/terms">
+                Terms
+              </a>
+              <a className="title" href="/privacy-policy">
+                Privacy Policy
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -36,6 +36,7 @@ class Basemaps extends React.PureComponent {
 
   renderButtonBasemap(item) {
     const { selectBasemap } = this.props;
+
     return (
       <button
         className="basemaps-list-item-button"
@@ -44,7 +45,7 @@ class Basemaps extends React.PureComponent {
         <div
           className="basemaps-list-item-image"
           style={{
-            backgroundImage: `url(/assets/basemaps/${item.id}.png)`
+            backgroundImage: `url(${item.image})`
           }}
         />
         <p className="basemaps-list-item-name">{item.label}</p>
@@ -64,7 +65,7 @@ class Basemaps extends React.PureComponent {
         <div
           className="basemaps-list-item-image"
           style={{
-            backgroundImage: `url(/assets/basemaps/${item.id}.png)`
+            backgroundImage: `url(${item.image})`
           }}
         />
         <span

@@ -71,15 +71,14 @@ class Explore extends PureComponent {
                     theme="theme-card-small"
                     data={{
                       ...item,
-                      buttons: [
-                        item.buttons[0],
-                        {
-                          ...item.buttons[1],
+                      buttons: item.buttons.map(b => ({
+                        ...b,
+                        ...(b.text === 'VIEW ON MAP' && {
                           onClick: () => {
                             handleViewOnMap({ ...item.payload });
                           }
-                        }
-                      ]
+                        })
+                      }))
                     }}
                     active={isEqual(item.payload.map, mapState)}
                   />

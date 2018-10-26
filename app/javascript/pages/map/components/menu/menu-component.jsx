@@ -4,6 +4,7 @@ import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
+import remove from 'lodash/remove';
 
 import MenuPanel from 'pages/map/components/menu/components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
@@ -12,6 +13,32 @@ import MenuMobile from './components/menu-mobile';
 import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
+  onToggleLayer = (data, value) => {
+    const { activeDatasets } = this.props;
+    const { dataset, layer, iso } = data;
+    let newActiveDatasets = [...activeDatasets];
+    if (!value) {
+      newActiveDatasets = remove(newActiveDatasets, l => l.dataset !== dataset);
+    } else {
+      newActiveDatasets = [
+        {
+          dataset,
+          opacity: 1,
+          visibility: true,
+          layers: [layer],
+          ...(iso &&
+            iso.length === 1 && {
+              iso: iso[0]
+            })
+        }
+      ].concat([...newActiveDatasets]);
+    }
+    this.props.setMapSettings({
+      datasets: newActiveDatasets || [],
+      ...(value && { canBound: true })
+    });
+  };
+
   componentDidUpdate(prevProps) {
     const {
       showAnalysis,
@@ -43,6 +70,10 @@ class MapMenu extends PureComponent {
     ) {
       setRecentImagerySettings({ visible: false });
     }
+
+    if (!isEqual(isDesktop, prevProps.isDesktop)) {
+      setMenuSettings({ menuSection: '' });
+    }
   }
 
   render() {
@@ -55,6 +86,7 @@ class MapMenu extends PureComponent {
       setMenuSettings,
       menuSection,
       loading,
+      analysisLoading,
       ...props
     } = this.props;
     const { Component, label, category, large, icon, ...rest } =
@@ -90,13 +122,16 @@ class MapMenu extends PureComponent {
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
               }
-              loading={loading}
+              loading={
+                loading && menuSection !== 'analysis' && !analysisLoading
+              }
             >
               {Component && (
                 <Component
                   menuSection={menuSection}
                   isDesktop={isDesktop}
                   setMenuSettings={setMenuSettings}
+                  onToggleLayer={this.onToggleLayer}
                   {...props}
                   {...rest}
                 />
@@ -118,9 +153,9 @@ MapMenu.propTypes = {
   activeSection: PropTypes.object,
   setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
-  onToggleLayer: PropTypes.func,
   setModalMeta: PropTypes.func,
   loading: PropTypes.bool,
+  analysisLoading: PropTypes.bool,
   countries: PropTypes.array,
   selectedCountries: PropTypes.array,
   countriesWithoutData: PropTypes.array,

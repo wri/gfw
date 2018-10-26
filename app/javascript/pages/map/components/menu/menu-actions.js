@@ -27,9 +27,11 @@ const getSearchSQL = string => {
     const mappedWords = compact(words.map(w => (w ? `%25${w}%25` : '')));
     const whereQueries = mappedWords.map(
       w =>
-        `LOWER(name_0) LIKE '${w}' OR LOWER(name_1) LIKE '${
+        `LOWER(name_0) LIKE '${w}' OR LOWER(simple_name_0) LIKE '${
           w
-        }' OR LOWER(name_2) LIKE '${w}'`
+        }' OR LOWER(name_1) LIKE '${w}' OR LOWER(simple_name_1) LIKE '${
+          w
+        }' OR LOWER(name_2) LIKE '${w}' OR LOWER(simple_name_2) LIKE '${w}'`
     );
     return whereQueries.join(' OR ');
   }
@@ -41,14 +43,15 @@ export const getLocationFromSearch = createThunkAction(
   ({ search, token }) => dispatch => {
     dispatch(setMenuLoading(true));
     if (search) {
-      const whereStatement = getSearchSQL(search);
+      const searchLower = search && search.toLowerCase();
+      const whereStatement = getSearchSQL(searchLower);
       if (whereStatement) {
         axios
           .get(
             `${
               process.env.CARTO_API
             }/sql?q=SELECT gid_0, gid_1, gid_2, CASE WHEN gid_2 is not null THEN CONCAT(name_2, ', ', name_1, ', ', name_0) WHEN gid_1 is not null THEN CONCAT(name_1, ', ', name_0) WHEN gid_0 is not null THEN name_0 END AS label FROM gadm36_political_boundaries WHERE ${getSearchSQL(
-              search
+              searchLower
             )} AND gid_0 != 'TWN' AND gid_0 != 'XCA' ORDER BY level, label`,
             {
               cancelToken: token
@@ -106,23 +109,31 @@ export const handleClickLocation = createThunkAction(
 
 export const handleViewOnMap = createThunkAction(
   'handleViewOnMap',
-  ({ map, menu }) => (dispatch, getState) => {
+  ({ map, menu, analysis }) => (dispatch, getState) => {
     const { payload, query } = getState().location || {};
     dispatch({
       type: MAP,
       payload,
       query: {
         ...query,
-        map: {
-          ...(query && query.map),
-          ...map,
-          canBound: true
-        },
+        ...(map && {
+          map: {
+            ...(query && query.map),
+            ...map,
+            canBound: true
+          }
+        }),
         menu: {
           ...(query && query.menu),
           menu,
           menuSection: ''
-        }
+        },
+        ...(analysis && {
+          analysis: {
+            ...(query && query.analysis),
+            analysis
+          }
+        })
       }
     });
   }

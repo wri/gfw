@@ -112,9 +112,9 @@ class MapContainer extends PureComponent {
   };
 
   handleMapInteraction = ({ e, article, output, layer }) => {
-    const { setInteraction, draw } = this.props;
+    const { setInteraction, draw, menuSection } = this.props;
 
-    if (!draw) {
+    if (!draw && !menuSection) {
       setInteraction({
         ...e,
         label: layer.name,
@@ -150,7 +150,8 @@ MapContainer.propTypes = {
   draw: PropTypes.bool,
   setAnalysisView: PropTypes.func,
   setInteraction: PropTypes.func,
-  selectedInteraction: PropTypes.object
+  selectedInteraction: PropTypes.object,
+  menuSection: PropTypes.string
 };
 
 export default connect(getMapProps, actions)(MapContainer);

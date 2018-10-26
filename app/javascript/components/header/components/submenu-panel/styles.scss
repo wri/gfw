@@ -95,6 +95,19 @@
     }
   }
 
+  .legal-section {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+
+      > a {
+        margin-right: rem(30px);
+      }
+    }
+  }
+
   &.-mobile {
     .menu-search {
       margin-bottom: rem(30px);

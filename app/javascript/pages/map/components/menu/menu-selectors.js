@@ -18,6 +18,7 @@ const getMenuUrlState = state =>
 const getCountries = state => state.countryData.countries || null;
 const getLoading = state =>
   state.datasets.loading || state.countryData.loading || null;
+const getAnalysisLoading = state => state.analysis.loading;
 const getDatasets = state => state.datasets.datasets || null;
 const getLocation = state => state.location && state.location.payload;
 
@@ -266,5 +267,6 @@ export const getMenuProps = createStructuredSelector({
   searchType: getSearchType,
   location: getLocation,
   loading: getLoading,
+  analysisLoading: getAnalysisLoading,
   recentVisible: getVisibility
 });
