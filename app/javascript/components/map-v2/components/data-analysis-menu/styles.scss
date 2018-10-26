@@ -41,11 +41,7 @@
   &.embed {
     .legend,
     .analysis {
-      max-height: calc(100vh - 130px);
-
-      @media screen and (min-width: $screen-m) and (max-width: 1090px) {
-        max-height: calc(100vh - 170px);
-      }
+      max-height: calc(100vh - 200px);
     }
   }
 }
