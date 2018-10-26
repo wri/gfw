@@ -93,7 +93,7 @@ class DrawAnalysis extends PureComponent {
           </Button>
           <div className="title-controls">
             <Button
-              className="title-btn"
+              className="title-btn title-action"
               theme="theme-button-clear"
               onClick={() =>
                 setShareModal({
@@ -114,7 +114,7 @@ class DrawAnalysis extends PureComponent {
               <Icon icon={shareIcon} className="icon-share" />
             </Button>
             <Button
-              className="title-btn"
+              className="title-btn title-action"
               theme="theme-button-clear"
               disabled={!downloadUrls || !downloadUrls.length}
               onClick={() => handleShowDownloads(true)}
