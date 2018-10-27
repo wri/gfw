@@ -56,9 +56,12 @@
 }
 
 .leaflet-container a.leaflet-popup-close-button {
-  top: 5px;
+  top: 7px;
   right: 5px;
   z-index: 2;
+  width: rem(25px);
+  height: rem(25px);
+  font-size: rem(20px);
 }
 
 .leaflet-container a {

@@ -18,10 +18,6 @@ $subnav-height: rem(40px);
       border-left: 0 !important;
       border-right: 0 !important;
 
-      @media screen and (min-width: $screen-m) {
-        max-width: rem(180px);
-      }
-
       > * {
         padding: 0 rem(26px);
         border-radius: 0;
@@ -29,15 +25,17 @@ $subnav-height: rem(40px);
         border-right: 1px solid transparent;
 
         &.active {
-          @media screen and (min-width: $screen-m) {
-            border-left: 1px solid rgba($slate, 0.2);
-            border-right: 1px solid rgba($slate, 0.2);
-          }
+          border-left: 1px solid rgba($slate, 0.2);
+          border-right: 1px solid rgba($slate, 0.2);
         }
       }
 
       &:first-child > *.active {
         border-left: 1px solid transparent;
+      }
+
+      &:last-child > *.active {
+        border-right: 1px solid transparent;
       }
     }
   }

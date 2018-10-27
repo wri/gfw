@@ -13,36 +13,44 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: rem(15px);
+    height: rem(20px);
     text-transform: uppercase;
 
-    button {
+    .title-btn {
+      display: flex;
       cursor: pointer;
-      height: fit-content;
-      margin-top: rem(3px);
+      font-size: rem(14px);
+      height: rem(20px);
+      text-transform: uppercase;
+      font-weight: 500;
+      color: $slate;
+
+      .button-wrapper {
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      &.left {
+        padding-left: 0;
+      }
     }
 
-    .title-nav {
-      display: flex;
-
-      .icon-arrow {
-        position: relative;
-        width: rem(12px);
-        height: rem(12px);
-        margin-right: rem(7px);
-        transform: rotateZ(90deg);
-        margin-top: rem(1px);
-      }
+    .icon-arrow {
+      position: relative;
+      width: rem(10px);
+      margin-right: rem(7px);
+      margin-top: -1px;
+      transform: rotateZ(90deg);
+      fill: $slate;
     }
 
     .title-controls {
       display: flex;
 
-      svg {
-        fill: $slate;
-      }
-
       > * {
-        margin-left: rem(8px);
+        padding: 0;
+        padding-left: rem(8px);
       }
     }
   }

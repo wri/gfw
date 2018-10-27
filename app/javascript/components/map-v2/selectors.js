@@ -24,9 +24,13 @@ const selectAnalysisSettings = state =>
   state.location && state.location.query && state.location.query.analysis;
 const selectWidgetActiveSettings = state => state.widgetsV2.settings;
 // popup interactons
-const getSelectedInteractionId = state => state.popup.selected;
-const getInteractions = state => state.popup.interactions;
-const getIsDesktop = (state, { isDesktop }) => isDesktop;
+const selectSelectedInteractionId = state => state.popup.selected;
+const selectInteractions = state => state.popup.interactions;
+const selectIsDesktop = (state, { isDesktop }) => isDesktop;
+const selectMenuSection = state =>
+  state.location.query &&
+  state.location.query.menu &&
+  state.location.query.menu.menuSection;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -330,7 +334,7 @@ export const getShowAnalysis = createSelector(
 );
 
 export const getOneClickAnalysisActive = createSelector(
-  [selectAnalysisSettings, selectLocation, getDraw, getIsDesktop],
+  [selectAnalysisSettings, selectLocation, getDraw, selectIsDesktop],
   (settings, location, draw, isDesktop) =>
     settings &&
     !draw &&
@@ -341,7 +345,7 @@ export const getOneClickAnalysisActive = createSelector(
 );
 
 export const filterInteractions = createSelector(
-  [getInteractions],
+  [selectInteractions],
   interactions => {
     if (isEmpty(interactions)) return null;
     return Object.values(interactions)
@@ -353,7 +357,7 @@ export const filterInteractions = createSelector(
 );
 
 export const getSelectedInteraction = createSelector(
-  [filterInteractions, getSelectedInteractionId, getActiveLayers],
+  [filterInteractions, selectSelectedInteractionId, getActiveLayers],
   (options, selected, layers) => {
     if (isEmpty(options)) return null;
     const layersWithoutBoundaries = layers.filter(
@@ -393,5 +397,6 @@ export const getMapProps = createStructuredSelector({
   oneClickAnalysisActive: getOneClickAnalysisActive,
   embed: selectEmbed,
   hidePanels: getHidePanels,
-  selectedInteraction: getSelectedInteraction
+  selectedInteraction: getSelectedInteraction,
+  menuSection: selectMenuSection
 });

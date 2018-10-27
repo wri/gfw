@@ -13,8 +13,8 @@
     right: 0;
 
     @media screen and (min-width: $screen-m) {
-      height: 100%;
       width: rem(76px);
+      top: rem(74px);
     }
   }
 
@@ -25,9 +25,5 @@
     @media screen and (min-width: $screen-m) {
       padding-bottom: 0;
     }
-  }
-
-  .menu-desktop {
-    margin-top: rem(74px);
   }
 }

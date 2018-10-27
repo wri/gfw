@@ -49,7 +49,7 @@
 
         @media screen and (min-width: $screen-m) {
           right: rem(220px);
-          bottom: rem(15px);
+          bottom: rem(50px);
           top: unset;
         }
       }
@@ -61,14 +61,16 @@
         padding: 2px 5px 1px;
         font-size: 10px;
         background: transparent;
+        margin-top: 0;
+
+        &:first-child {
+          border-right: 0;
+        }
       }
 
       .leaflet-control-scale {
-        > div {
-          &:last-child {
-            display: none;
-          }
-        }
+        margin-bottom: 0;
+        display: flex;
       }
     }
 
@@ -109,7 +111,7 @@
   .map-attributions {
     position: absolute;
     bottom: rem(15px);
-    right: rem(310px);
+    right: rem(220px);
     z-index: 5;
   }
 

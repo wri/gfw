@@ -7,6 +7,7 @@ import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
+import Button from 'components/ui/button';
 import Widgets from 'components/widgets-v2';
 import DownloadData from 'components/map-v2/components/analysis/components/download-data';
 
@@ -82,14 +83,18 @@ class DrawAnalysis extends PureComponent {
     return (
       <div className={cx('c-draw-analysis', { 'with-footer': hasFooter })}>
         <div className="draw-title">
-          <div className="title-nav">
-            <button onClick={clearAnalysis}>
-              <Icon icon={arrowDownIcon} className="icon-arrow" />
-            </button>
-            <p>{fullLocationName}</p>
-          </div>
+          <Button
+            className="title-btn left"
+            theme="theme-button-clear"
+            onClick={clearAnalysis}
+          >
+            <Icon icon={arrowDownIcon} className="icon-arrow" />
+            <span>{fullLocationName}</span>
+          </Button>
           <div className="title-controls">
-            <button
+            <Button
+              className="title-btn"
+              theme="theme-button-clear"
               onClick={() =>
                 setShareModal({
                   title: 'Share this view',
@@ -107,10 +112,15 @@ class DrawAnalysis extends PureComponent {
               }
             >
               <Icon icon={shareIcon} className="icon-share" />
-            </button>
-            <button onClick={() => handleShowDownloads(true)}>
+            </Button>
+            <Button
+              className="title-btn"
+              theme="theme-button-clear"
+              disabled={!downloadUrls || !downloadUrls.length}
+              onClick={() => handleShowDownloads(true)}
+            >
               <Icon icon={downloadIcon} className="icon-download" />
-            </button>
+            </Button>
           </div>
         </div>
         <div className="results">

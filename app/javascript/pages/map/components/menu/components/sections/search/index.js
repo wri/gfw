@@ -22,7 +22,7 @@ class SearchMenu extends PureComponent {
     }
     this.searchFetch = CancelToken.source();
     this.props.getLocationFromSearch({ search, token: this.searchFetch.token });
-  }, 300);
+  }, 500);
 
   handleSearchChange = value => {
     const { setMenuSettings, setMenuLoading } = this.props;

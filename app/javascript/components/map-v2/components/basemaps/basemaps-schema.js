@@ -1,3 +1,8 @@
+import defaultImage from './images/default.png';
+import darkImage from './images/dark.png';
+import landsatImage from './images/landsat.png';
+import satelliteImage from './images/satellite.png';
+
 const { MAPBOX_TOKEN } = process.env;
 
 export const labels = {
@@ -31,6 +36,7 @@ export default {
     value: 'default',
     label: 'default',
     color: '#A2DFFF',
+    image: defaultImage,
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=${
       MAPBOX_TOKEN
     }`
@@ -39,6 +45,7 @@ export default {
     id: 'dark',
     label: 'dark matter',
     color: '#31312F',
+    image: darkImage,
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9/tiles/256/{z}/{x}/{y}@2x?access_token=${
       MAPBOX_TOKEN
     }`
@@ -47,6 +54,7 @@ export default {
     id: 'satellite',
     label: 'Satellite',
     color: '#131620',
+    image: satelliteImage,
     url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
   },
   landsat: {
@@ -54,6 +62,7 @@ export default {
     label: 'landsat',
     dynamic: true,
     color: '#0C0045',
+    image: landsatImage,
     defaultUrl:
       'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     availableYears: [2013, 2014, 2015, 2016, 2017]

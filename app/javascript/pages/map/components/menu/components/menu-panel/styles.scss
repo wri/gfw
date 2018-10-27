@@ -115,6 +115,6 @@ $map-menu-panel-width-big: rem(560px);
   }
 
   .map-menu-loader {
-    background-color: $white;
+    z-index: 2;
   }
 }
