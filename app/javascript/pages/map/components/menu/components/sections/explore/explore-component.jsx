@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import { track } from 'utils/analytics';
 
 import SubnavMenu from 'components/subnav-menu';
 import Card from 'components/ui/card';
@@ -24,17 +25,26 @@ class Explore extends PureComponent {
       {
         label: 'Topics',
         active: section === 'topics',
-        onClick: () => setMenuSettings({ exploreType: 'topics' })
+        onClick: () => {
+          setMenuSettings({ exploreType: 'topics' });
+          track('mapMenuExploreCategory', { label: 'topics' });
+        }
       },
       {
         label: 'Places to watch',
         active: section === 'placesToWatch',
-        onClick: () => setMenuSettings({ exploreType: 'placesToWatch' })
+        onClick: () => {
+          setMenuSettings({ exploreType: 'placesToWatch' });
+          track('mapMenuExploreCategory', { label: 'places to watch' });
+        }
       },
       {
         label: 'Stories',
         active: section === 'stories',
-        onClick: () => setMenuSettings({ exploreType: 'stories' })
+        onClick: () => {
+          setMenuSettings({ exploreType: 'stories' });
+          track('mapMenuExploreCategory', { label: 'stories' });
+        }
       }
     ];
 

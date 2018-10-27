@@ -58,10 +58,10 @@ export default {
   },
   mapMenuSection: {
     category: 'map menu',
-    action: 'topics'
+    action: 'select map menu'
   },
-  mapMenuTopicsCategory: {
+  mapMenuExploreCategory: {
     category: 'map menu',
-    action: 'topics'
+    action: 'select explore category'
   }
 };

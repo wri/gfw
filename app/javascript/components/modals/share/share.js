@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { track } from 'utils/analytics';
 
 import * as actions from './share-actions';
 import reducers, { initialState } from './share-reducers';
@@ -13,7 +14,7 @@ const mapStateToProps = ({ share, location }) => ({
 
 class ShareContainer extends PureComponent {
   handleCopyToClipboard = input => {
-    const { setShareCopied } = this.props;
+    const { setShareCopied, selected, data: { shareUrl } } = this.props;
     input.select();
 
     try {
@@ -23,6 +24,10 @@ class ShareContainer extends PureComponent {
     } catch (err) {
       alert('This browser does not support clipboard access'); // eslint-disable-line
     }
+
+    track(selected === 'link' ? 'shareCopyLink' : 'shareCopyEmbed', {
+      label: shareUrl
+    });
   };
 
   handleFocus = event => {
@@ -39,7 +44,9 @@ class ShareContainer extends PureComponent {
 }
 
 ShareContainer.propTypes = {
-  setShareCopied: PropTypes.func.isRequired
+  setShareCopied: PropTypes.func.isRequired,
+  selected: PropTypes.string,
+  data: PropTypes.object
 };
 
 export const reduxModule = { actions, reducers, initialState };

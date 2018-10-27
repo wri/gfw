@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { track } from 'utils/analytics';
 
 import googleplusIcon from 'assets/icons/googleplus.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
@@ -18,7 +19,6 @@ class Share extends PureComponent {
       selected,
       loading,
       copied,
-      data,
       data: { title, subtitle, shareUrl, embedUrl, embedSettings },
       handleFocus,
       setShareSelected,
@@ -90,10 +90,11 @@ class Share extends PureComponent {
           <Button
             extLink={`https://plus.google.com/share?url=${shareUrl}`}
             className="social-button -googleplus"
-            trackingData={{
-              ...data,
-              socialNetwork: 'googleplus'
-            }}
+            onClick={() =>
+              track('shareSocial', {
+                label: shareUrl
+              })
+            }
           >
             <Icon icon={googleplusIcon} className="googleplus-icon" />
           </Button>
@@ -102,20 +103,22 @@ class Share extends PureComponent {
               title
             }&via=globalforests&url=${shareUrl}`}
             className="social-button -twitter"
-            trackingData={{
-              ...data,
-              socialNetwork: 'twitter'
-            }}
+            onClick={() =>
+              track('shareSocial', {
+                label: shareUrl
+              })
+            }
           >
             <Icon icon={twitterIcon} className="twitter-icon" />
           </Button>
           <Button
             extLink={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
             className="social-button -facebook"
-            trackingData={{
-              ...data,
-              socialNetwork: 'facebook'
-            }}
+            onClick={() =>
+              track('shareSocial', {
+                label: shareUrl
+              })
+            }
           >
             <Icon icon={facebookIcon} className="facebook-icon" />
           </Button>

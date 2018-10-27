@@ -51,12 +51,15 @@ class MenuDesktop extends PureComponent {
               <MenuTile
                 className="search-tile"
                 key={s.slug}
-                onClick={() =>
+                onClick={() => {
                   setMenuSettings({
                     menuSection: s.active ? '' : s.slug,
                     datasetCategory: ''
-                  })
-                }
+                  });
+                  if (!s.active) {
+                    track('mapMenuSection', { label: s.slug });
+                  }
+                }}
                 {...s}
               />
             ))}
