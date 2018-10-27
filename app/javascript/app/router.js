@@ -2,6 +2,8 @@ import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
 import { handlePageTrack } from 'utils/analytics';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
+import compact from 'lodash/compact';
+import { getNewMapRedirect } from './utils';
 
 const history = createHistory();
 
@@ -13,56 +15,25 @@ export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
-  // track page with GA
   handlePageTrack(getState().location);
 };
 
-const mapLegacyRedirect = (dispatch, { embed, routeSlugs, query }) => {
-  const zoom = parseInt(routeSlugs[0], 10);
-  const lat = parseInt(routeSlugs[1], 10);
-  const lng = parseInt(routeSlugs[2], 10);
-  const iso = routeSlugs[3];
-  const { tab, geostore, use, useid } = query || {};
-
-  const payload = {};
-  if (iso !== 'ALL') {
-    const isoIds = iso.split('-');
-    payload.type = 'country';
-    payload.adm0 = isoIds[0];
-    payload.adm1 = isoIds[1];
-    payload.adm2 = isoIds[2];
+const redirectThunk = (dispatch, getState) => {
+  const { location } = getState();
+  const routeSlugs = location.pathname && location.pathname.split('/');
+  const isOldMap = routeSlugs.includes('map');
+  if (isOldMap) {
+    dispatch(
+      redirect(
+        getNewMapRedirect({
+          slugs: compact(routeSlugs),
+          query: location.query
+        })
+      )
+    );
+  } else {
+    dispatch(redirect({ type: MAP }));
   }
-
-  if (geostore) {
-    payload.type = 'geostore';
-    payload.adm0 = geostore;
-  }
-
-  if (use && useid) {
-    payload.type = 'use';
-    payload.adm0 = use;
-    payload.adm1 = useid;
-  }
-
-  dispatch(
-    redirect({
-      type: embed ? MAP_EMBED : MAP,
-      payload,
-      query: {
-        map: {
-          center: {
-            lat,
-            lng
-          },
-          zoom,
-          canBound: false
-        },
-        analysis: {
-          showAnalysis: tab === 'analysis-tab'
-        }
-      }
-    })
-  );
 };
 
 export const routes = {
@@ -154,21 +125,7 @@ export const routes = {
   },
   [NOT_FOUND]: {
     path: '/404',
-    thunk: (dispatch, getState) => {
-      const { location } = getState();
-      const routeSlugs = location.pathname && location.pathname.split('/');
-      const isOldMap = routeSlugs.includes('map');
-      const isEmbed = routeSlugs.includes('embed');
-      if (isOldMap) {
-        mapLegacyRedirect(dispatch, {
-          embed: isEmbed,
-          routeSlugs: routeSlugs.slice(isEmbed ? 3 : 2, -1),
-          query: location.query
-        });
-      } else {
-        dispatch(redirect({ type: MAP }));
-      }
-    }
+    thunk: redirectThunk
   }
 };
 
