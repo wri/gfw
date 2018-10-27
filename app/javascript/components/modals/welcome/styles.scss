@@ -1,0 +1,62 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(20px);
+$desktop-padding: rem(40px);
+
+.c-modal-welcome {
+  max-width: rem(450px);
+  padding: $mobile-padding;
+  padding-top: rem(40px);
+  padding-bottom: rem(30px);
+
+  @media screen and (min-width: $screen-m) {
+    padding: $desktop-padding;
+  }
+
+  h3 {
+    font-size: rem(18px);
+    margin-bottom: rem(20px);
+  }
+
+  p {
+    margin-bottom: rem(15px);
+  }
+
+  a {
+    color: $green-gfw;
+  }
+
+  .intro {
+    margin-bottom: rem(20px);
+  }
+
+  .guide-cards {
+    display: flex;
+    justify-content: space-between;
+
+    > * {
+      width: 48%;
+    }
+  }
+
+  .guide-btn {
+    border: $green-gfw 1px dashed;
+    border-radius: rem(5px);
+    padding: rem(15px) rem(10px);
+    cursor: pointer;
+    line-height: 1.2;
+
+    b {
+      font-weight: 500;
+    }
+
+    svg {
+      fill: $green-gfw;
+      width: rem(50px);
+      height: rem(50px);
+    }
+
+    &:hover {
+      background-color: $grey-light;
+    }
+  }
+}

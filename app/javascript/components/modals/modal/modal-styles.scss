@@ -1,6 +1,7 @@
 @import '~styles/settings.scss';
 
 $close-position: 25px;
+$close-position-mobile: 15px;
 
 .ReactModal__Body--open {
   overflow: hidden;
@@ -8,12 +9,17 @@ $close-position: 25px;
 
 .modal-close {
   position: absolute;
-  top: $close-position;
-  right: $close-position;
+  top: 20px;
+  right: $close-position-mobile;
   border: none;
   outline: none;
   cursor: pointer;
   z-index: 10;
+
+  @media screen and (min-width: $screen-m) {
+    top: $close-position;
+    right: $close-position;
+  }
 
   svg {
     width: rem(15px);

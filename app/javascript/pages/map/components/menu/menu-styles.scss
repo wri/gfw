@@ -12,6 +12,14 @@
     left: 0;
     right: 0;
 
+    &.embed {
+      bottom: rem(60px);
+
+      @media screen and (min-width: $screen-m) {
+        display: none;
+      }
+    }
+
     @media screen and (min-width: $screen-m) {
       width: rem(76px);
       top: rem(74px);

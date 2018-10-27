@@ -29,10 +29,6 @@
     min-height: rem(300px);
     z-index: 1;
 
-    &.embed {
-      min-height: calc(100vh - 60px);
-    }
-
     .wri_api__map-container {
       position: absolute !important;
     }
@@ -79,6 +75,16 @@
         cursor: pointer;
       }
     }
+
+    &.embed {
+      min-height: calc(100vh - 60px);
+
+      .leaflet-control-container {
+        .leaflet-bottom {
+          right: rem(15px);
+        }
+      }
+    }
   }
 
   .data-analysis-menu {
@@ -90,10 +96,6 @@
     &.embed {
       right: rem(15px);
       left: unset;
-
-      .legend {
-        max-height: calc(100vh - 255px);
-      }
     }
   }
 
@@ -113,6 +115,10 @@
     bottom: rem(15px);
     right: rem(220px);
     z-index: 5;
+
+    &.embed {
+      right: rem(15px);
+    }
   }
 
   .map-loader {

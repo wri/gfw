@@ -8,6 +8,7 @@ import DatasetsProvider from 'providers/datasets-provider';
 
 import Map from 'components/map-v2';
 import ModalMeta from 'components/modals/meta';
+import ModalWelcome from 'components/modals/welcome';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 
@@ -15,7 +16,8 @@ import './styles.scss';
 
 class MapPage extends PureComponent {
   static propTypes = {
-    setMenuSettings: PropTypes.func
+    setMenuSettings: PropTypes.func,
+    embed: PropTypes.bool
   };
 
   render() {
@@ -31,6 +33,7 @@ class MapPage extends PureComponent {
         <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
+        {!this.props.embed && <ModalWelcome />}
       </div>
     );
   }

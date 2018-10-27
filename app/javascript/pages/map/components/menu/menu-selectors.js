@@ -21,6 +21,7 @@ const getLoading = state =>
 const getAnalysisLoading = state => state.analysis.loading;
 const getDatasets = state => state.datasets.datasets || null;
 const getLocation = state => state.location && state.location.payload;
+const getEmbed = (state, { embed }) => embed;
 
 // setting from state
 export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({
@@ -226,9 +227,9 @@ export const getSearchSections = createSelector([getMenuSection], menuSection =>
 );
 
 export const getMobileSections = createSelector(
-  [getMenuSection, getActiveDatasetsState, getLocation],
-  (menuSection, activeDatasets, location) =>
-    mobileSections.map(s => ({
+  [getMenuSection, getActiveDatasetsState, getLocation, getEmbed],
+  (menuSection, activeDatasets, location, embed) =>
+    mobileSections.filter(s => !embed || s.embed).map(s => ({
       ...s,
       ...(s.slug === 'datasets' && {
         layerCount: activeDatasets && activeDatasets.length

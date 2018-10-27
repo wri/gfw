@@ -87,6 +87,7 @@ class MapMenu extends PureComponent {
       menuSection,
       loading,
       analysisLoading,
+      embed,
       ...props
     } = this.props;
     const { Component, label, category, large, icon, ...rest } =
@@ -96,7 +97,7 @@ class MapMenu extends PureComponent {
       <MediaQuery minDeviceWidth={SCREEN_M}>
         {isDesktop => (
           <div className={cx('c-map-menu', className)}>
-            <div className="menu-tiles">
+            <div className={cx('menu-tiles', { embed })}>
               {isDesktop ? (
                 <MenuDesktop
                   className="menu-desktop"
@@ -170,7 +171,8 @@ MapMenu.propTypes = {
   location: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
   recentVisible: PropTypes.bool,
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  embed: PropTypes.bool
 };
 
 export default MapMenu;
