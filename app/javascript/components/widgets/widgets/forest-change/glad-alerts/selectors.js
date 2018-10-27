@@ -12,8 +12,6 @@ import {
   getChartConfig
 } from 'components/widgets/components/widget-alerts/selectors-utils';
 
-const MIN_YEAR = 2015;
-
 // get list data
 const getAlerts = state => (state.data && state.data.alerts) || null;
 const getLatestDates = state => (state.data && state.data.latest) || null;
@@ -27,13 +25,32 @@ export const getData = createSelector(
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
+
+    const hasAlertsByYears = Object.values(groupedByYear).reduce(
+      (acc, next) => {
+        const { year } = next[0];
+        return {
+          ...acc,
+          [year]: next.some(item => item.alerts > 0)
+        };
+      },
+      {}
+    );
+
+    const dataYears = Object.keys(hasAlertsByYears).filter(
+      key => hasAlertsByYears[key] === true
+    );
+    const minYear = Math.min(...dataYears.map(el => parseInt(el, 10)));
+    const startYear =
+      minYear === moment().year() ? moment().year() - 1 : minYear;
+
     const years = [];
     const latestFullWeek = moment(latest).subtract(1, 'weeks');
     const lastWeek = {
       isoWeek: latestFullWeek.isoWeek(),
       year: latestFullWeek.year()
     };
-    for (let i = MIN_YEAR; i <= lastWeek.year; i += 1) {
+    for (let i = startYear; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
     const yearLengths = {};
