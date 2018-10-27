@@ -5,6 +5,7 @@ import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
+import { track } from 'utils/analytics';
 
 import MenuPanel from 'pages/map/components/menu/components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
@@ -13,11 +14,11 @@ import MenuMobile from './components/menu-mobile';
 import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
-  onToggleLayer = (data, value) => {
+  onToggleLayer = (data, enable) => {
     const { activeDatasets } = this.props;
     const { dataset, layer, iso } = data;
     let newActiveDatasets = [...activeDatasets];
-    if (!value) {
+    if (!enable) {
       newActiveDatasets = remove(newActiveDatasets, l => l.dataset !== dataset);
     } else {
       newActiveDatasets = [
@@ -35,7 +36,10 @@ class MapMenu extends PureComponent {
     }
     this.props.setMapSettings({
       datasets: newActiveDatasets || [],
-      ...(value && { canBound: true })
+      ...(enable && { canBound: true })
+    });
+    track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
+      label: layer
     });
   };
 

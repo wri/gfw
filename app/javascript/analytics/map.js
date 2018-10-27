@@ -63,5 +63,22 @@ export default {
   mapMenuExploreCategory: {
     category: 'map menu',
     action: 'select explore category'
+  },
+  mapMenuAddTopic: {
+    category: 'MapData',
+    action: 'User loads a topic'
+  },
+  // layers
+  mapInitialLayers: {
+    category: 'map data',
+    action: 'Initial layers loaded'
+  },
+  mapRemoveLayer: {
+    category: 'map data',
+    action: 'User turns off a layer'
+  },
+  mapAddLayer: {
+    category: 'map data',
+    action: 'User turns on a layer'
   }
 };

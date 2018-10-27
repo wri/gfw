@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import flatMap from 'lodash/flatMap';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
+import { track } from 'utils/analytics';
 
 import MapComponent from './component';
 import { getMapProps } from './selectors';
@@ -32,6 +34,14 @@ class MapContainer extends PureComponent {
     tooltipData: {},
     bbox: null
   };
+
+  componentDidMount() {
+    const { activeDatasets } = this.props;
+    const layerIds = flatMap(activeDatasets.map(d => d.layers));
+    track('mapInitialLayers', {
+      label: layerIds && layerIds.join(', ')
+    });
+  }
 
   componentDidUpdate(prevProps) {
     const {
@@ -151,7 +161,8 @@ MapContainer.propTypes = {
   setAnalysisView: PropTypes.func,
   setInteraction: PropTypes.func,
   selectedInteraction: PropTypes.object,
-  menuSection: PropTypes.string
+  menuSection: PropTypes.string,
+  activeDatasets: PropTypes.array
 };
 
 export default connect(getMapProps, actions)(MapContainer);

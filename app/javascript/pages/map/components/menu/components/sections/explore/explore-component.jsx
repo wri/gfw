@@ -86,6 +86,7 @@ class Explore extends PureComponent {
                         ...(b.text === 'VIEW ON MAP' && {
                           onClick: () => {
                             handleViewOnMap({ ...item.payload });
+                            track('mapMenuAddTopic', { label: item.title });
                           }
                         })
                       }))
