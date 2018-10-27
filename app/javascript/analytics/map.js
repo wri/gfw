@@ -95,5 +95,16 @@ export default {
     category: 'map legend',
     action: 'User animates data',
     label: 'Play [layer name]'
+  },
+  // analysis
+  analysis: {
+    category: 'map analysis',
+    action: '[location]',
+    label: '[layers]'
+  },
+  analysisDownload: {
+    category: 'map analysis',
+    action: 'Download',
+    label: '[layers]'
   }
 };
