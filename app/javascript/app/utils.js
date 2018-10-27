@@ -34,8 +34,10 @@ export const getNewMapRedirect = ({ slugs, query }) => {
     }),
     {}
   );
+
   const { zoom, lat, lng, iso, layers } = params || {};
-  const { tab, geostore, use, useid } = query || {};
+  const { tab, geostore, use, useid, wdpaid, subscribe, recentImagery } =
+    query || {};
 
   const payload = {};
   if (iso !== 'ALL') {
@@ -57,6 +59,11 @@ export const getNewMapRedirect = ({ slugs, query }) => {
     payload.adm1 = useid;
   }
 
+  if (wdpaid) {
+    payload.type = 'wdpa';
+    payload.adm0 = wdpaid;
+  }
+
   const layerSlugs = layers && layers.split(',');
   const datasets =
     layerSlugs &&
@@ -74,6 +81,22 @@ export const getNewMapRedirect = ({ slugs, query }) => {
       )
     );
 
+  const showAnalysis = tab === 'analysis-tab';
+
+  const newDatasets = [
+    // admin boundaries
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      opacity: 1,
+      visibility: true
+    },
+    ...datasets
+  ];
+
   return {
     type: embed ? MAP_EMBED : MAP,
     payload,
@@ -85,23 +108,28 @@ export const getNewMapRedirect = ({ slugs, query }) => {
         },
         zoom,
         canBound: (lat === '0' && lng === '0') || false,
-        datasets: [
-          // admin boundaries
-          {
-            dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-            layers: [
-              '6f6798e6-39ec-4163-979e-182a74ca65ee',
-              'c5d1e010-383a-4713-9aaa-44f728c0571c'
-            ],
-            opacity: 1,
-            visibility: true
-          },
-          ...datasets
-        ]
+        datasets: recentImagery
+          ? newDatasets.concat([
+            {
+              dataset: '3668bb78-d77e-4215-bc2a-07433e204823',
+              layers: ['babd9968-4b55-4bc5-b771-d471ef8fbd8c'],
+              opacity: 1,
+              visibility: true,
+              isRecentImagery: true
+            }
+          ])
+          : newDatasets
       },
-      analysis: {
-        showAnalysis: tab === 'analysis-tab'
-      }
+      ...(showAnalysis && {
+        analysis: {
+          showAnalysis: tab === 'analysis-tab'
+        }
+      }),
+      ...(subscribe && {
+        subscribe: {
+          open: true
+        }
+      })
     }
   };
 };
