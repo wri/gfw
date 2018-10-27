@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<FeatureInfoResponse xmlns="http://www.esri.com/wms" xmlns:esri_wms="http://www.esri.com/wms"><FIELDS OBJECTID="398" País="Colombia" Categoría="Resguardo Indígena" Nombre="PREDIO PUTUMAYO" Status="Creado" Etnias="WITOTO" NúmeroHabitantes="10335" FechaFuenteNúmeroHabitantes="INCODER/1988" Norma="Res. 030, Res. 057, Acdo. 105" FechaNorma="06/04/1988, 04/09/1989, 29/03/2007" FechaAtualizaciónNorma="2007" ÁreaOficialha="5819505" InstituciónRAISG="FGA" Fuente="INCODER/1988" FechaAtualizaciónDato="2012" Leyenda="Território Indígena Reconocido" codigo_tis="20175" Shape="Polygon" id_arp_ti="Null" nome_ti="Null"/></FeatureInfoResponse>
