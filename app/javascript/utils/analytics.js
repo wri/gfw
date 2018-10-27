@@ -26,41 +26,43 @@ export const handleActionTrack = state => nextDispatch => action => {
   if (gaInitialized) {
     // get all events that match action key
     const GAEvents = ANALYTICS_EVENTS.filter(
-      g => g.name && g.name === action.type
+      g => g.name && g.name === action.key
     );
 
-    // get the payload of the action
-    const payload = {
-      ...state.getState().location.payload,
-      ...action.payload,
-      ...action.query,
-      ...action.meta
-    };
-
-    // use condition to find correct action
-    let event =
-      GAEvents &&
-      GAEvents.length &&
-      (GAEvents.filter(e => !e.condition)[0] || []);
-    GAEvents.forEach(e => {
-      if (e.condition && e.condition(payload)) {
-        event = e;
-      }
-    });
-
-    // process event if available
-    if (event) {
-      const evalProp = prop =>
-        (typeof prop === 'string' ? prop : prop(payload));
-      const eventPayload = {
-        ...['category', 'action', 'label'].reduce(
-          (val, prop) => ({ ...val, [prop]: evalProp(event[prop]) }),
-          {}
-        ),
-        ...(!!event.value && { value: evalProp(event.value) })
+    if (GAEvents && GAEvents.length) {
+      // get the payload of the action
+      const payload = {
+        ...state.getState().location.payload,
+        ...action.payload,
+        ...action.query,
+        ...action.meta
       };
-      if (eventPayload.label) {
-        ReactGA.event(eventPayload);
+
+      // use condition to find correct action
+      let event =
+        GAEvents &&
+        GAEvents.length &&
+        (GAEvents.filter(e => !e.condition)[0] || []);
+      GAEvents.forEach(e => {
+        if (e.condition && e.condition(payload)) {
+          event = e;
+        }
+      });
+
+      // process event if available
+      if (event) {
+        const evalProp = prop =>
+          prop && (typeof prop === 'string' ? prop : prop(payload));
+        const eventPayload = {
+          ...['category', 'action', 'label'].reduce(
+            (val, prop) => ({ ...val, [prop]: evalProp(event[prop]) }),
+            {}
+          ),
+          ...(!!event.value && { value: evalProp(event.value) })
+        };
+        if (eventPayload.label) {
+          ReactGA.event(eventPayload);
+        }
       }
     }
   }

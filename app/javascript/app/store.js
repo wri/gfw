@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { handleActionTrack } from 'utils/analytics';
 
 import reducers from './reducers';
 import router from './router';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = [thunk, router.middleware];
+const middlewares = [thunk, router.middleware, handleActionTrack];
 
 const configureStore = () => {
   const store = createStore(
