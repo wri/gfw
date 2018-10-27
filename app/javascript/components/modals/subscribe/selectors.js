@@ -61,6 +61,7 @@ export const getActiveMapDatasets = createSelector(
   [getSubscriptionDatasets, getActiveDatasetIds],
   (datasets, activeDatasetIds) =>
     datasets &&
+    activeDatasetIds &&
     datasets
       .filter(d => activeDatasetIds.includes(d.id))
       .map(d => d.subscriptionKey)
