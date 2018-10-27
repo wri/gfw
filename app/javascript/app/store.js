@@ -1,28 +1,28 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { handleActionTrack } from 'utils/analytics';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import reducers from './reducers';
 import router from './router';
 
+const persistConfig = {
+  key: 'root',
+  whitelist: ['modalWelcome'],
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = [thunk, router.middleware, handleActionTrack];
 
-const configureStore = () => {
+export default () => {
   const store = createStore(
-    reducers,
+    persistedReducer,
     composeEnhancers(router.enhancer, applyMiddleware(...middlewares))
   );
+  const persistor = persistStore(store);
 
-  if (process.env.NODE_ENV !== 'production') {
-    if (module.hot) {
-      module.hot.accept('./reducers', () => {
-        store.replaceReducer(reducers);
-      });
-    }
-  }
-
-  return store;
+  return { store, persistor };
 };
-
-export default configureStore;
