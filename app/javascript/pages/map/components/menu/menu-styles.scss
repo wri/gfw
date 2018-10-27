@@ -22,7 +22,8 @@
 
     @media screen and (min-width: $screen-m) {
       width: rem(76px);
-      top: rem(74px);
+      top: 0;
+      padding-top: rem(74px);
     }
   }
 
