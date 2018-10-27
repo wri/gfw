@@ -1,0 +1,67 @@
+export default {
+  // recent imagery
+  recentImageryEnable: {
+    category: 'map settings',
+    action: 'recent imagery feature',
+    label: 'user turns on recent imagery'
+  },
+  recentImageryOpen: {
+    category: 'map settings',
+    action: 'recent imagery feature',
+    label: 'User opens the config window'
+  },
+  recentImageryClouds: {
+    category: 'map settings',
+    action: 'recent imagery feature',
+    label: 'User changes cloud-cover value'
+  },
+  recentImageryDateRange: {
+    category: 'map settings',
+    action: 'recent imagery feature',
+    label: 'User changes date range'
+  },
+  recentImageryDate: {
+    category: 'map settings',
+    action: 'recent imagery feature',
+    label: 'User changes start date'
+  },
+  recentImageryImageType: {
+    category: 'map settings',
+    action: 'recent imagery feature',
+    label: 'User changes image type'
+  },
+  // map controls
+  zoomIn: {
+    category: 'map settings',
+    action: 'Other buttons',
+    label: 'zoom in'
+  },
+  zoomOut: {
+    category: 'map settings',
+    action: 'Other buttons',
+    label: 'zoom out'
+  },
+  hidePanels: {
+    category: 'map settings',
+    action: 'Other buttons',
+    label: 'map only'
+  },
+  printMap: {
+    category: 'map settings',
+    action: 'Other buttons',
+    label: 'print map'
+  },
+  // map menu
+  mapMenuSarch: {
+    category: 'map menu',
+    action: 'search'
+  },
+  mapMenuSection: {
+    category: 'map menu',
+    action: 'topics'
+  },
+  mapMenuTopicsCategory: {
+    category: 'map menu',
+    action: 'topics'
+  }
+};

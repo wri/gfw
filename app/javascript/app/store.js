@@ -6,7 +6,7 @@ import reducers from './reducers';
 import router from './router';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = [thunk, router.middleware, handleActionTrack];
+const middlewares = [handleActionTrack, thunk, router.middleware];
 
 const configureStore = () => {
   const store = createStore(

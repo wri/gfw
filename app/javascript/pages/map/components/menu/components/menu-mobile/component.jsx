@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { track } from 'utils/analytics';
 
 import MenuTile from '../menu-tile';
 
@@ -19,11 +20,14 @@ class MenuMobile extends PureComponent {
               key={s.slug}
               {...s}
               hightlight={s.highlight}
-              onClick={() =>
+              onClick={() => {
                 setMenuSettings({
                   menuSection: s.active ? '' : s.slug
-                })
-              }
+                });
+                if (!s.active) {
+                  track('mapMenuSection', { label: s.slug });
+                }
+              }}
             />
           ))}
       </ul>

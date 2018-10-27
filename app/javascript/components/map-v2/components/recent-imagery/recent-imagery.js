@@ -114,7 +114,7 @@ class RecentImageryContainer extends PureComponent {
       setMapSettings,
       recentImageryDataset
     } = this.props;
-    if (recentImageryDataset && activeTile.url) {
+    if (recentImageryDataset && activeTile && activeTile.url) {
       const activeDatasets =
         datasets &&
         !!datasets.length &&

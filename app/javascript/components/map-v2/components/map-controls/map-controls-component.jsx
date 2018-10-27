@@ -5,6 +5,7 @@ import { format } from 'd3-format';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
+import { track } from 'utils/analytics';
 
 import Basemaps from 'components/map-v2/components/basemaps';
 import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings-tooltip';
@@ -40,6 +41,9 @@ class MapControlsButtons extends PureComponent {
       visible: false
     });
     this.setState({ showBasemaps: false });
+    if (!hidePanels) {
+      track('hidePanels');
+    }
   };
 
   onBasemapsRequestClose = () => {
@@ -92,6 +96,9 @@ class MapControlsButtons extends PureComponent {
     setRecentImagerySettings({
       visible: false
     });
+    if (!recentActive) {
+      track('recentImageryEnable');
+    }
   };
 
   setBasemapsRef = ref => {
@@ -214,7 +221,10 @@ class MapControlsButtons extends PureComponent {
       <Fragment>
         <Button
           theme="theme-button-map-control"
-          onClick={() => setMapSettings({ zoom: zoom - 1 })}
+          onClick={() => {
+            setMapSettings({ zoom: zoom - 1 });
+            track('zoomOut');
+          }}
           tooltip={{ text: 'Zoom out' }}
           disabled={zoom === minZoom}
         >
@@ -222,7 +232,10 @@ class MapControlsButtons extends PureComponent {
         </Button>
         <Button
           theme="theme-button-map-control"
-          onClick={() => setMapSettings({ zoom: zoom + 1 })}
+          onClick={() => {
+            setMapSettings({ zoom: zoom + 1 });
+            track('zoomIn');
+          }}
           tooltip={{ text: 'Zoom in' }}
           disabled={zoom === maxZoom}
         >
@@ -282,6 +295,7 @@ class MapControlsButtons extends PureComponent {
     <Button
       theme="theme-button-map-control"
       tooltip={{ text: 'Print (not yet available)' }}
+      onClick={() => track('printMap')}
       disabled
     >
       <Icon icon={printIcon} className="print-icon" />
