@@ -7,8 +7,8 @@ import Search from 'components/ui/search';
 
 import moreIcon from 'assets/icons/more.svg';
 
+import MyGfwLogin from 'components/mygfw-login';
 import DropdownMenu from '../dropdown-menu';
-import MyGfwLogin from '../mygfw-login';
 
 import './styles.scss';
 

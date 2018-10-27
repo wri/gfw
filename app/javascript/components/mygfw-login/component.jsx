@@ -31,15 +31,17 @@ class MyGFWLogin extends PureComponent {
           Log in is required so you can view, manage, and delete your
           subscriptions. Questions? <a href="mailto:gfw@wri.org">Contact us</a>
         </p>
-        {socialButtons.map(s => (
-          <a
-            key={s.value}
-            className={`social-btn -${s.value}`}
-            href={`${AUTH_URL}/${s.value}?applications=gfw`}
-          >
-            Login with {s.label}
-          </a>
-        ))}
+        <div className="social-btns">
+          {socialButtons.map(s => (
+            <a
+              key={s.value}
+              className={`social-btn -${s.value}`}
+              href={`${AUTH_URL}/${s.value}?applications=gfw&token=true`}
+            >
+              Login with {s.label}
+            </a>
+          ))}
+        </div>
       </div>
     );
   }

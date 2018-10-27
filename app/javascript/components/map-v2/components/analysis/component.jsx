@@ -20,6 +20,7 @@ class AnalysisComponent extends PureComponent {
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
+      setSubscribeSettings,
       endpoints,
       embed
     } = this.props;
@@ -63,17 +64,27 @@ class AnalysisComponent extends PureComponent {
         </div>
         {!loading &&
           !error &&
-          location.type === 'country' &&
+          location.type &&
           location.adm0 && (
             <div className="analysis-actions">
+              {location.type === 'country' && (
+                <Button
+                  className="analysis-action-btn"
+                  theme="theme-button-light"
+                  extLink={window.location.href.replace(
+                    embed ? 'embed/map' : 'map',
+                    'dashboards'
+                  )}
+                  target="_blank"
+                >
+                  DASHBOARD
+                </Button>
+              )}
               <Button
-                extLink={window.location.href.replace(
-                  embed ? 'embed/map' : 'map',
-                  'dashboards'
-                )}
-                target="_blank"
+                className="analysis-action-btn"
+                onClick={() => setSubscribeSettings({ open: true })}
               >
-                OPEN DASHBOARD
+                SUBSCRIBE
               </Button>
             </div>
           )}
@@ -92,7 +103,8 @@ AnalysisComponent.propTypes = {
   error: PropTypes.string,
   handleCancelAnalysis: PropTypes.func,
   handleFetchAnalysis: PropTypes.func,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
+  setSubscribeSettings: PropTypes.func
 };
 
 export default AnalysisComponent;

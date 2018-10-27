@@ -1,0 +1,63 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(30px);
+$desktop-padding: rem(50px);
+
+.c-modal-subscribe {
+  padding: $mobile-padding;
+  min-width: rem(320px);
+  min-height: rem(320px);
+  max-width: rem(800px);
+  width: 100%;
+  color: $slate;
+
+  @media screen and (min-width: $screen-m) {
+    padding: $desktop-padding;
+    padding-top: rem(40px);
+  }
+
+  h3 {
+    margin-top: rem(10px);
+    margin-bottom: rem(30px);
+    text-align: center;
+    font-size: rem(20px);
+  }
+
+  .mygfw-subscribe {
+    max-width: rem(450px);
+    text-align: center;
+  }
+
+  .subscribe-body {
+    position: relative;
+    min-height: rem(220px);
+
+    .saved {
+      max-width: rem(400px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .icon-success {
+        width: rem(100px);
+        height: rem(100px);
+        margin-bottom: rem(30px);
+      }
+
+      p {
+        margin-bottom: rem(30px);
+        text-align: center;
+      }
+
+      .success-actions {
+        display: flex;
+        justify-content: space-around;
+
+        .reset-btn,
+        .mygfw-btn {
+          width: auto;
+          margin: 0 rem(10px);
+        }
+      }
+    }
+  }
+}

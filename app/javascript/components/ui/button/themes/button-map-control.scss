@@ -24,6 +24,8 @@
   }
 
   &.disabled {
+    background-color: $white;
+
     &:hover {
       background-color: $white;
     }

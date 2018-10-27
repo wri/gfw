@@ -31,6 +31,7 @@ import { reduxModule as ModalVideo } from 'components/modals/video';
 import { reduxModule as AboutModal } from 'pages/about/section-projects/section-projects-modal';
 import { reduxModule as SGFModal } from 'pages/sgf/section-projects/section-projects-modal';
 import { reduxModule as SourcesModal } from 'components/modals/sources';
+import { reduxModule as SubscribeModal } from 'components/modals/subscribe';
 
 // Forms
 import { reduxModule as Contact } from 'pages/about/section-contact';
@@ -63,6 +64,7 @@ const componentsReducers = {
   modalAbout: handleModule(AboutModal),
   modalSGF: handleModule(SGFModal),
   modalSources: handleModule(SourcesModal),
+  modalSubscribe: handleModule(SubscribeModal),
   // projects
   impacts: handleModule(Impacts),
   aboutProjects: handleModule(AboutProjects),

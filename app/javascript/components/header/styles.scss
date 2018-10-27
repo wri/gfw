@@ -35,6 +35,15 @@ $full-screen-height: rem(75px);
     }
   }
 
+  .mygfw-header {
+    padding: rem(25px) rem(30px) rem(30px);
+    border: solid 1px $border;
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(320px);
+    }
+  }
+
   .logo {
     position: absolute;
     top: 0;

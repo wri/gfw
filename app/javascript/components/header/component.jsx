@@ -13,7 +13,7 @@ import myGfwIcon from 'assets/icons/mygfw.svg';
 import closeIcon from 'assets/icons/close.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 
-import MyGFWLogin from './components/mygfw-login';
+import MyGFWLogin from 'components/mygfw-login';
 import DropdownMenu from './components/dropdown-menu';
 import SubmenuPanel from './components/submenu-panel';
 
@@ -156,7 +156,9 @@ class Header extends PureComponent {
                             />
                           )}
                         {showMyGfw &&
-                          !loggedIn && <MyGFWLogin className="sub-menu" />}
+                          !loggedIn && (
+                            <MyGFWLogin className="mygfw-header sub-menu" />
+                          )}
                       </li>
                     )}
                     <li>

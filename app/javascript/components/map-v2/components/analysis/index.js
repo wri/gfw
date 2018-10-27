@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { CancelToken } from 'axios';
 
+import { setSubscribeSettings } from 'components/modals/subscribe/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
@@ -79,4 +80,6 @@ class AnalysisContainer extends PureComponent {
 }
 
 export const reduxModule = { actions, reducers, initialState };
-export default connect(getAnalysisProps, actions)(AnalysisContainer);
+export default connect(getAnalysisProps, { ...actions, setSubscribeSettings })(
+  AnalysisContainer
+);
