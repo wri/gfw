@@ -1,0 +1,46 @@
+{
+  "loss": {
+    "dataset": "897ecc76-2308-4c51-aeb3-495de0bdca79",
+    "id": "c3075c5a-5567-4b09-bc0d-96ed1673f8b6"
+  },
+  "forestgain": {
+    "dataset": "70e2549c-d722-44a6-a8d7-4a385d78565e",
+    "id": "3b22a574-2507-4b4a-a247-80057c1a1ad4"
+  },
+  "forest2000": {
+    "dataset": "044f4af8-be72-4999-b7dd-13434fc4a394",
+    "id": "c05c32fd-289c-4b20-8d73-dc2458234e04"
+  },
+  "umd_as_it_happens": {
+    "dataset": "e663eb09-04de-4f39-b871-35c6c2ed10b5",
+    "id": "dd5df87f-39c2-4aeb-a462-3ef969b20b66"
+  },
+  "prodes": {
+    "dataset": "5da0c609-c20c-4e99-9d2c-3b1120a2983b",
+    "id": "d1d52ca8-f716-4f85-afcb-ad1a90d6c321"
+  },
+  "guyra": {
+    "dataset": "35395874-406d-4824-ab88-254353276c22",
+    "id": "c8829d15-e68a-4cb5-98a8-d0acff438a56"
+  },
+  "terrailoss": {
+    "dataset": "461e6f3f-c03c-40b2-8a40-47d1354c93bf",
+    "id": "790b46ce-715a-4173-8f2c-53980073acb6"
+  },
+  "imazon": {
+    "dataset": "b3fa1221-db2a-4826-95a1-37ac0973cc4b",
+    "id": "3ec29734-4627-45b1-b320-680e4b4b939e"
+  },
+  "viirs_fires_alerts": {
+    "dataset": "0f0ea013-20ac-4f4b-af56-c57e99f39e08",
+    "id": "5371d0c0-4e5f-45f7-9ff2-fe538914f7a3"
+  },
+  "forma_month_3": {
+    "dataset": "69199c5c-31a3-46e4-9ae2-068160b90d79",
+    "id": "66203fea-2e58-4a55-b222-1dae075cf95d"
+  },
+  "forma_activity": {
+    "dataset": "8e76424f-18a8-415c-affd-45e1158e148f",
+    "id": "defe5c59-c2ea-4bc6-abc9-cda60f4bab96"
+  }
+}
