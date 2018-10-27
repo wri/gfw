@@ -71,17 +71,16 @@ class DrawAnalysis extends PureComponent {
       data,
       loading,
       fullLocationName,
-      location,
       error,
+      showWidgets,
       setModalSources,
       handleShowDownloads,
       showDownloads,
       downloadUrls
     } = this.props;
-    const hasFooter = location.type === 'country';
 
     return (
-      <div className={cx('c-draw-analysis', { 'with-footer': hasFooter })}>
+      <div className={cx('c-draw-analysis')}>
         <div className="draw-title">
           <Button
             className="title-btn left"
@@ -138,7 +137,7 @@ class DrawAnalysis extends PureComponent {
                     </li>
                   )}
                 </ul>
-                {hasFooter && <Widgets simple analysis />}
+                {showWidgets && <Widgets simple analysis />}
                 <div className="disclaimers">
                   <p>
                     This algorithm approximates the results by sampling the
@@ -175,12 +174,12 @@ class DrawAnalysis extends PureComponent {
 }
 
 DrawAnalysis.propTypes = {
+  showWidgets: PropTypes.bool,
   data: PropTypes.array,
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
   loading: PropTypes.bool,
   error: PropTypes.string,
-  location: PropTypes.object,
   fullLocationName: PropTypes.string,
   setModalSources: PropTypes.func,
   handleShowDownloads: PropTypes.func,

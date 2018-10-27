@@ -5,6 +5,7 @@
   padding: rem(20px);
   min-height: rem(260px);
   height: 100%;
+  padding-bottom: rem(60px);
 
   .draw-title {
     font-size: 14px;
@@ -139,9 +140,5 @@
       padding-bottom: rem(15px);
       margin-bottom: rem(15px);
     }
-  }
-
-  &.with-footer {
-    padding-bottom: rem(70px);
   }
 }
