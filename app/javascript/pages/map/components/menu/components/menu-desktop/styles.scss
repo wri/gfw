@@ -4,6 +4,7 @@ $map-menu-items-size: rem(76px);
 
 .c-menu-desktop {
   overflow-x: hidden;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
