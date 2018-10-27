@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { track } from 'utils/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
@@ -25,10 +26,18 @@ class BasemapsContainer extends React.Component {
         });
       }
     }
+    track('basemapChanged', {
+      label: basemap.label
+    });
     return this.props.setMapSettings({ basemap });
   };
 
-  selectLabels = label => this.props.setMapSettings({ label });
+  selectLabels = label => {
+    this.props.setMapSettings({ label });
+    track('labelChanged', {
+      label: label.label
+    });
+  };
 
   selectBoundaries = item => {
     const { activeDatasets, activeBoundaries } = this.props;
@@ -49,6 +58,9 @@ class BasemapsContainer extends React.Component {
     } else {
       this.props.setMapSettings({ datasets: filteredLayers });
     }
+    track('boundaryChanged', {
+      label: item.dataset
+    });
   };
 
   render() {

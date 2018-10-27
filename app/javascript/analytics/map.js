@@ -106,5 +106,26 @@ export default {
     category: 'map analysis',
     action: 'Download',
     label: '[layers]'
+  },
+  // basemaps
+  basemapsInitial: {
+    category: 'map data',
+    action: 'initial basemap loaded',
+    label: '[basemap]'
+  },
+  basemapChanged: {
+    category: 'map data',
+    action: 'basemap changed',
+    label: '[basemap]'
+  },
+  boundaryChanged: {
+    category: 'map data',
+    action: 'boundary changed',
+    label: '[boundary]'
+  },
+  labelChanged: {
+    category: 'map data',
+    action: 'label changed',
+    label: '[boundary]'
   }
 };
