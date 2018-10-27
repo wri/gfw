@@ -65,8 +65,12 @@ export default {
     action: 'select explore category'
   },
   mapMenuAddTopic: {
-    category: 'MapData',
+    category: 'Map data',
     action: 'User loads a topic'
+  },
+  mapMenuAddCountry: {
+    category: 'Map menu',
+    action: 'User adds a country'
   },
   // layers
   mapInitialLayers: {
@@ -80,5 +84,16 @@ export default {
   mapAddLayer: {
     category: 'map data',
     action: 'User turns on a layer'
+  },
+  // legend
+  legendTimelineChange: {
+    category: 'map legend',
+    action: 'User changes date range for [insert layer name]',
+    label: '[start time]:[end time]'
+  },
+  legendTimelinePlay: {
+    category: 'map legend',
+    action: 'User animates data',
+    label: 'Play [layer name]'
   }
 };

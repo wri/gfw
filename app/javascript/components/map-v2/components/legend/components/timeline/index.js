@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
+import { track } from 'utils/analytics';
+import debounce from 'lodash/debounce';
 
 import {
   addToDate,
@@ -95,6 +97,9 @@ class TimelineContainer extends PureComponent {
 
   startTimeline = () => {
     this.incrementTimeline(this.state);
+    track('legendTimelinePlay', {
+      label: `Play ${this.props.dataset}`
+    });
   };
 
   stopTimeline = () => {
@@ -153,11 +158,22 @@ class TimelineContainer extends PureComponent {
     });
   };
 
-  handleOnAfterChange = range => {
-    const { handleChange } = this.props;
+  handleOnAfterChange = debounce(range => {
+    const { handleChange, dataset } = this.props;
     const newRange = this.checkRange(range);
-    handleChange(this.formatRange([newRange[0], newRange[1], newRange[2]]));
-  };
+    const formattedRange = this.formatRange([
+      newRange[0],
+      newRange[1],
+      newRange[2]
+    ]);
+    handleChange(formattedRange);
+    if (!this.state.isPlaying) {
+      track('legendTimelineChange', {
+        action: `User changes date range for ${dataset}`,
+        label: `${formattedRange[0]}:${formattedRange[2]}`
+      });
+    }
+  }, 50);
 
   formatRange = range => {
     const { minDate } = this.props;
@@ -194,7 +210,8 @@ TimelineContainer.propTypes = {
   step: PropTypes.number,
   interval: PropTypes.string,
   speed: PropTypes.number,
-  dateFormat: PropTypes.string
+  dateFormat: PropTypes.string,
+  dataset: PropTypes.string
 };
 
 export default connect(mapStateToProps, null)(TimelineContainer);

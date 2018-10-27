@@ -177,6 +177,7 @@ class MapLegend extends Component {
                           legendConfig.items &&
                           legendConfig.items[0].color
                         }
+                        dataset={id}
                       />
                     )}
                     {isMultiLayer && (
