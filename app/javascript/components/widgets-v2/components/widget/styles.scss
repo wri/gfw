@@ -31,7 +31,9 @@
 
   .container {
     position: relative;
-    height: 100%;
+    height: auto;
+    min-height: rem(300px);
+    margin-bottom: rem(10px);
 
     .sentence {
       margin-bottom: rem(30px);
@@ -58,16 +60,12 @@
     border: 0;
     min-height: rem(200px);
     padding: 0;
-    border-bottom: solid 1px $border;
     border-radius: 0;
-    padding-bottom: rem(15px);
-
-    &:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
 
     .container {
+      min-height: rem(100px);
+      margin-bottom: 0;
+
       .sentence {
         font-size: rem(13px);
         margin-bottom: rem(15px);

@@ -63,12 +63,21 @@
   }
 
   &.simple {
-    grid-template-columns: 1fr;
+    display: flex;
     padding: rem(15px) 0;
     border-top: solid 1px #e5e5df;
 
-    .large {
-      grid-column-end: span 1;
+    > div {
+      width: 100%;
+      padding-bottom: rem(15px);
+      margin-bottom: rem(15px);
+      border-bottom: solid 1px $border;
+
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
     }
   }
 
