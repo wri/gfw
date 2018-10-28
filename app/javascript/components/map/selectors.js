@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import {
   filterWidgetsByCategoryAndLayers,
   getActiveWidget
-} from 'components/widgets-v2/selectors';
+} from 'components/widgets/selectors';
 
 // get list data
 const selectLoading = state => state.map.loading || state.geostore.loading;
