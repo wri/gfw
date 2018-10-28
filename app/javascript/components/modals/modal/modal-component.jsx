@@ -66,6 +66,7 @@ CustomModal.defaultProps = {
       left: 'auto',
       right: 'auto',
       bottom: 'auto',
+      margin: 'auto',
       padding: '0',
       border: 'none',
       borderRadius: 0

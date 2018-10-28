@@ -59,9 +59,8 @@ class RecentImagerySettings extends PureComponent {
                 theme="theme-dropdown-button"
                 value={weeks}
                 options={WEEKS}
-                onChange={option =>
-                  setRecentImagerySettings({ weeks: option.value })
-                }
+                onChange={option => setRecentImagerySettings({ weeks: option })}
+                native
               />
               <div className="before">before</div>
               <Datepicker
@@ -122,10 +121,11 @@ class RecentImagerySettings extends PureComponent {
                     options={BANDS}
                     onChange={option =>
                       setRecentImagerySettings({
-                        bands: option.value,
+                        bands: option,
                         selected: null
                       })
                     }
+                    native
                   />
                 </div>
                 <div className="thumbnail-grid">
