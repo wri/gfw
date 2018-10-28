@@ -1,7 +1,7 @@
 import * as shareActions from 'components/modals/share/share-actions';
 import * as modalActions from 'components/modals/meta/meta-actions';
 import * as buttonActions from 'components/ui/button/button-actions';
-import * as widgetActions from 'components/widgets/actions';
+import * as widgetActions from 'components/widgets-v2/actions';
 import { DASHBOARDS } from 'router';
 
 const allActions = {

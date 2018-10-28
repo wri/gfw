@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import NoContent from 'components/ui/no-content';
-import WidgetPieChartLegend from 'components/widgets/components/widget-pie-chart-legend';
+import WidgetPieChartLegend from 'components/widgets-v2/components/widget-pie-chart-legend';
 
 import './styles';
 
