@@ -11,7 +11,6 @@ import router from './router';
 // Map & Dashboards
 import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
 import { reduxModule as Analysis } from 'components/map-v2/components/analysis';
-import { reduxModule as Widgets } from 'components/widgets';
 import { reduxModule as WidgetsV2 } from 'components/widgets-v2';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
 import { reduxModule as Draw } from 'components/map-v2/components/draw';
@@ -51,7 +50,6 @@ const componentsReducers = {
   // map & dashboards
   analysis: handleModule(Analysis),
   recentImagery: handleModule(RecentImagery),
-  widgets: handleModule(Widgets),
   widgetsV2: handleModule(WidgetsV2),
   popup: handleModule(Popup),
   draw: handleModule(Draw),
