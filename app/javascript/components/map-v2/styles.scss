@@ -20,7 +20,7 @@
 
     @media screen and (min-width: $screen-m) {
       bottom: rem(15px);
-      top: unset;
+      top: auto;
     }
   }
 
@@ -46,7 +46,7 @@
         @media screen and (min-width: $screen-m) {
           right: rem(220px);
           bottom: rem(50px);
-          top: unset;
+          top: auto;
         }
       }
 
@@ -95,7 +95,7 @@
 
     &.embed {
       right: rem(15px);
-      left: unset;
+      left: auto;
     }
   }
 

@@ -4,18 +4,18 @@ $map-menu-items-size: rem(76px);
 
 .c-menu-desktop {
   overflow-x: hidden;
-  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  display: flex;
+  display: block;
+  overflow-y: auto;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
   width: $map-menu-items-size;
   height: 100%;
 
-  &.block {
-    display: block;
-    overflow-y: auto;
+  @media screen and (min-height: 608px) {
+    display: flex;
+    overflow-y: hidden;
   }
 
   &::before {

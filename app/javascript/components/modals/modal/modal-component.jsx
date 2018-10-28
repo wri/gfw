@@ -63,7 +63,6 @@ CustomModal.defaultProps = {
     content: {
       position: 'relative',
       top: 'auto',
-      margin: 'auto',
       left: 'auto',
       right: 'auto',
       bottom: 'auto',
