@@ -6,13 +6,13 @@
   flex-wrap: wrap;
   justify-content: space-between;
   height: 100%;
-  padding: rem(20px) $mobile-gutter rem(40px) $mobile-gutter;
+  padding: rem(20px) $mobile-gutter rem(30px) $mobile-gutter;
   min-width: 100%;
 
   @supports not (display: grid) {
     > div {
       width: 100%;
-      margin-bottom: rem(20px);
+      margin-bottom: rem(30px);
 
       @media screen and (min-width: $screen-l) {
         width: calc(50% - 15px);
@@ -46,12 +46,8 @@
   }
 
   @media screen and (min-width: $screen-l) {
-    padding-top: rem(50px);
+    padding-top: rem(30px);
     padding-right: rem(30px);
-  }
-
-  @media screen and (min-width: $screen-xl) {
-    padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
   }
 
   .no-widgets-message {
@@ -66,12 +62,27 @@
     min-height: rem(460px);
   }
 
-  &.minimalist {
-    padding: 0;
-    grid-gap: 0;
-  }
-}
+  &.simple {
+    display: flex;
+    padding: rem(15px) 0;
+    border-top: solid 1px #e5e5df;
 
-.tippy-popper .tippy-tooltip.widget-tooltip-theme {
-  box-shadow: 1px 1px 10px 0 rgba($slate, 0.25);
+    > div {
+      width: 100%;
+      padding-bottom: rem(15px);
+      margin-bottom: rem(15px);
+      border-bottom: solid 1px $border;
+
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &.no-widgets {
+    border-top: 0;
+    padding: 0;
+  }
 }

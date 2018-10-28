@@ -2,6 +2,7 @@
 
 .c-chose-analysis {
   padding: rem(27px) rem(20px);
+  width: 100%;
 
   .title {
     font-size: 14px;
@@ -21,15 +22,11 @@
       display: flex;
       align-items: center;
       cursor: pointer;
-      width: 49%;
+      width: 48%;
 
       .button-wrapper {
         height: 100%;
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
       }
 
       svg {

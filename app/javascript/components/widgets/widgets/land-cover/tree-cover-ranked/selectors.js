@@ -1,20 +1,20 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import sumBy from 'lodash/sumBy';
-import { getAdminPath } from '../../../utils';
+import { getAdminPath } from 'components/widgets/utils/strings';
 
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
 const getQuery = state => state.query || null;
-const getLocationsMeta = state => state.countries || null;
+const getLocationData = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
-const getCurrentLocation = state => state.currentLocation || null;
+const getLocationObject = state => state.locationObject || null;
 const getSentences = state => state.config.sentences || null;
 const getForestType = state => state.forestType || null;
 const getLandCategory = state => state.landCategory || null;
@@ -39,17 +39,16 @@ export const parseData = createSelector(
     getSortedData,
     getSettings,
     getLocation,
-    getCurrentLocation,
-    getLocationsMeta,
+    getLocationObject,
+    getLocationData,
     getColors,
     getQuery
   ],
-  (data, settings, location, currentLocation, meta, colors, query) => {
-    if (!data || !data.length || !currentLocation || !meta) return null;
+  (data, settings, location, locationObject, meta, colors, query) => {
+    if (!data || !data.length || !locationObject || !meta) return null;
     const locationIndex = findIndex(
       data,
-      d =>
-        d.id === (currentLocation && currentLocation && currentLocation.value)
+      d => d.id === (locationObject && locationObject && locationObject.value)
     );
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
@@ -76,7 +75,7 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     getData,
     parseData,
@@ -84,7 +83,7 @@ export const getSentence = createSelector(
     getIndicator,
     getForestType,
     getLandCategory,
-    getCurrentLocation,
+    getLocationObject,
     getSentences
   ],
   (
@@ -94,19 +93,19 @@ export const getSentence = createSelector(
     indicator,
     forestType,
     landCategory,
-    currentLocation,
+    locationObject,
     sentences
   ) => {
-    if (!data || !data.length || !currentLocation) return null;
+    if (!data || !data.length || !locationObject) return null;
     const { initial, withInd, landCatOnly } = sentences;
     const locationData =
-      currentLocation && data.find(l => l.id === currentLocation.value);
+      locationObject && data.find(l => l.id === locationObject.value);
     const extent = locationData && locationData.extent;
     const landPercent = 100 * extent / locationData.area || 0;
     const globalPercent = 100 * extent / sumBy(rawData, 'extent') || 0;
     const params = {
       extentYear: settings.extentYear,
-      location: currentLocation.label,
+      location: locationObject.label,
       extent:
         extent < 1
           ? `${format('.3r')(extent)}ha`
@@ -127,3 +126,8 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence
+});

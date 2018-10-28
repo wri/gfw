@@ -1,7 +1,7 @@
 import { getLocations, getGainLocations } from 'services/forest-data';
 import axios from 'axios';
 
-export const getData = ({ params, dispatch, setWidgetData, widget }) => {
+export default ({ params }) =>
   axios
     .all([getLocations({ ...params }), getGainLocations({ ...params })])
     .then(
@@ -24,23 +24,9 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
             gain: d.gain || 0
           }));
         }
-        dispatch(
-          setWidgetData({
-            data: {
-              gain: gainMappedData,
-              extent: extentMappedData
-            },
-            widget
-          })
-        );
+        return {
+          gain: gainMappedData,
+          extent: extentMappedData
+        };
       })
-    )
-    .catch(error => {
-      dispatch(setWidgetData({ widget, error: true }));
-      console.info(error);
-    });
-};
-
-export default {
-  getData
-};
+    );

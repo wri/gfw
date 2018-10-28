@@ -1,28 +1,62 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import isEqual from 'lodash/isEqual';
-import pick from 'lodash/pick';
 import groupBy from 'lodash/groupBy';
-import {
-  encodeStateForUrl,
-  decodeUrlForState,
-  setComponentStateToUrl
-} from 'utils/stateToUrl';
-import { getNonGlobalDatasets } from 'services/forest-data';
-import * as WIDGETS from './manifest';
 
-// export const setWidgetSettings = createAction('setWidgetSettings');
-export const setWidgetLoading = createAction('setWidgetLoading');
+import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { getNonGlobalDatasets } from 'services/forest-data';
+
+// widgets
+export const setWidgetsData = createAction('setWidgetsData');
+export const setWidgetsSettings = createAction('setWidgetsSettings');
+export const setWidgetsLoading = createAction('setWidgetsLoading');
+
+// widget
 export const setWidgetData = createAction('setWidgetData');
-export const setWidgetActive = createAction('setWidgetActive');
-export const settingsItemSelected = createAction('settingsItemSelected');
-export const setGlobalData = createAction('setGlobalData');
+export const setWidgetLoading = createAction('setWidgetLoading');
+
+export const getWidgetsData = createThunkAction(
+  'getWidgetsData',
+  () => (dispatch, getState) => {
+    if (!getState().widgets.loading) {
+      dispatch(setWidgetsLoading({ loading: true, error: false }));
+      getNonGlobalDatasets()
+        .then(response => {
+          const { data } = response.data;
+          const groupedData = groupBy(data, 'polyname');
+          const nonGlobalDatasets = {};
+          Object.keys(groupedData).forEach(d => {
+            nonGlobalDatasets[d] = groupedData[d].length;
+          });
+          dispatch(
+            setWidgetsData({
+              nonGlobalDatasets
+            })
+          );
+        })
+        .catch(error => {
+          dispatch(setWidgetsLoading({ error: true, loading: false }));
+          console.info(error);
+        });
+    }
+  }
+);
 
 export const getWidgetData = createThunkAction(
   'getWidgetData',
   ({ getData, widget, params }) => (dispatch, state) => {
-    if (!state().widgets[widget].loading) {
-      dispatch(setWidgetLoading(widget));
-      getData({ params, dispatch, setWidgetData, widget, state });
+    const widgetState = state().widgets.widgets[widget];
+    if (!widgetState || (widgetState && !widgetState.loading)) {
+      dispatch(setWidgetLoading({ widget, loading: true, error: false }));
+      getData({ params })
+        .then(data => {
+          dispatch(setWidgetData({ widget, data }));
+          if (data.settings) {
+            dispatch(setWidgetSettings({ widget, value: data.settings }));
+          }
+        })
+        .catch(error => {
+          dispatch(setWidgetLoading({ widget, error: true, loading: false }));
+          console.info(error);
+        });
     }
   }
 );
@@ -30,12 +64,6 @@ export const getWidgetData = createThunkAction(
 export const setWidgetSettings = createThunkAction(
   'setWidgetSettings',
   ({ value, widget }) => (dispatch, state) => {
-    dispatch(
-      settingsItemSelected({
-        value,
-        widget
-      })
-    );
     dispatch(
       setComponentStateToUrl({
         key: 'widget',
@@ -47,72 +75,17 @@ export const setWidgetSettings = createThunkAction(
   }
 );
 
-export const setWidgetSettingsUrl = createThunkAction(
-  'setWidgetSettingsUrl',
-  ({ value, widget }) => (dispatch, getState) => {
-    dispatch(
-      settingsItemSelected({
-        value,
-        widget
-      })
-    );
-    const { type, payload } = getState().location;
-    let params = value;
-    if (location.query && location.query[widget]) {
-      params = {
-        ...decodeUrlForState(location.query[widget]),
-        ...value
-      };
-    }
+export const setActiveWidget = createThunkAction(
+  'setActiveWidget',
+  widget => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
     dispatch({
       type,
       payload,
       query: {
-        ...location.query,
-        [widget]: encodeStateForUrl(params)
+        ...query,
+        widget
       }
-    });
-  }
-);
-
-function isObjectContained(contained, container) {
-  return isEqual(pick(container, Object.keys(contained)), contained);
-}
-
-export const setWidgetSettingsStore = createThunkAction(
-  'setWidgetSettingsStore',
-  query => (dispatch, getState) => {
-    Object.keys(query).forEach(widgetKey => {
-      if (Object.keys(WIDGETS).indexOf(widgetKey) > -1) {
-        const widgetConfig = decodeUrlForState(query[widgetKey]);
-        const { settings } = getState().widgets[widgetKey];
-        // Check if the state needs and update checking the values of the new config
-        // with the existing in the url to avoid dispatch actions without changes
-        if (!isObjectContained(widgetConfig, settings)) {
-          dispatch(
-            setWidgetSettings({ widget: widgetKey, settings: widgetConfig })
-          );
-        }
-      }
-    });
-  }
-);
-
-export const getGlobalData = createThunkAction(
-  'getGlobalData',
-  () => dispatch => {
-    getNonGlobalDatasets().then(response => {
-      const { data } = response.data;
-      const groupedData = groupBy(data, 'polyname');
-      const nonGlobalDatasets = {};
-      Object.keys(groupedData).forEach(d => {
-        nonGlobalDatasets[d] = groupedData[d].length;
-      });
-      dispatch(
-        setGlobalData({
-          nonGlobalDatasets
-        })
-      );
     });
   }
 );

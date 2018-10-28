@@ -1,17 +1,19 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.locationType || null;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getCurrentLocation, getColors],
-  (data, currentLabel, colors) => {
+  [getData, getColors],
+  (data, colors) => {
     if (isEmpty(data)) return null;
     const {
       area_ha,
@@ -58,9 +60,9 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [getData, getCurrentLocation, getSentences],
-  (data, currentLabel, sentences) => {
+export const parseSentence = createSelector(
+  [getData, getLocationName, getSentences],
+  (data, locationName, sentences) => {
     if (isEmpty(data)) return null;
     const { initial, noPrimary, globalInitial, globalNoPrimary } = sentences;
     const { area_ha, extent, forest_primary } = data;
@@ -70,7 +72,7 @@ export const getSentence = createSelector(
         : extent / area_ha * 100;
 
     const params = {
-      location: currentLabel !== 'global' ? currentLabel : 'globally',
+      location: locationName !== 'global' ? locationName : 'globally',
       extent:
         extent < 1
           ? `${format('.3r')(extent)}ha`
@@ -79,7 +81,7 @@ export const getSentence = createSelector(
         primaryPercent >= 0.1 ? `${format('.2r')(primaryPercent)}%` : '<0.1%'
     };
     let sentence = forest_primary > 0 ? initial : noPrimary;
-    if (currentLabel === 'global') {
+    if (locationName === 'global') {
       sentence = forest_primary > 0 ? globalInitial : globalNoPrimary;
     }
     return {
@@ -88,3 +90,20 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationType],
+  (title, type) => {
+    let selectedTitle = title.initial;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence,
+  title: parseTitle
+});

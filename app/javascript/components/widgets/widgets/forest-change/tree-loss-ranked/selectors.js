@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
@@ -7,18 +7,20 @@ import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
-import { getAdminPath } from '../../../utils';
+import { getAdminPath } from 'components/widgets/utils/strings';
 
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocation = state => state.location || null;
-const getLocationsMeta = state => state.countries || null;
+const getLocationsMeta = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
 const getQuery = state => state.query || null;
-const getCurrentLocation = state => state.currentLocation || null;
-const getSentences = state => state.config && state.config.sentences;
+const getLocationObject = state => state.locationObject || null;
+const getSentences = state => state.config && state.config.sentence;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.type;
 
 export const getSummedByYearsData = createSelector(
   [getData, getSettings],
@@ -68,12 +70,12 @@ export const parseData = createSelector(
     sortData,
     getSettings,
     getLocation,
-    getCurrentLocation,
+    getLocationObject,
     getLocationsMeta,
     getColors,
     getQuery
   ],
-  (data, settings, location, currentLocation, meta, colors, query) => {
+  (data, settings, location, locationObject, meta, colors, query) => {
     if (!data || !data.length) return null;
     let dataTrimmed = [];
     data.forEach(d => {
@@ -92,7 +94,7 @@ export const parseData = createSelector(
     if (location.country) {
       const locationIndex = findIndex(
         dataTrimmed,
-        d => d.id === currentLocation.value
+        d => d.id === locationObject.value
       );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
@@ -120,10 +122,10 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [sortData, getSettings, getIndicator, getCurrentLocation, getSentences],
-  (data, settings, indicator, currentLocation, sentences) => {
-    if (!data || !data.length || !currentLocation) return null;
+export const parseSentence = createSelector(
+  [sortData, getSettings, getIndicator, getLocationObject, getSentences],
+  (data, settings, indicator, locationObject, sentences) => {
+    if (!data || !data.length || !locationObject) return null;
     const { startYear, endYear } = settings;
     const {
       initial,
@@ -133,14 +135,14 @@ export const getSentence = createSelector(
       noLoss
     } = sentences;
     const locationData =
-      currentLocation && data.find(l => l.id === currentLocation.value);
+      locationObject && data.find(l => l.id === locationObject.value);
 
     const loss = locationData && locationData.loss;
     const globalLoss = sumBy(data, 'loss');
     const globalExtent = sumBy(data, 'extent');
-    const lossArea = currentLocation.label === 'global' ? globalLoss : loss;
+    const lossArea = locationObject.label === 'global' ? globalLoss : loss;
     const areaPercent =
-      currentLocation.label === 'global'
+      locationObject.label === 'global'
         ? 100 * globalLoss / globalExtent
         : (locationData && format('.1f')(locationData.percentage)) || 0;
     const lossPercent = loss && locationData ? 100 * loss / globalLoss : 0;
@@ -148,16 +150,16 @@ export const getSentence = createSelector(
       ? 'region-wide'
       : `${indicator.label.toLowerCase()}`;
     let sentence = !indicator ? initial : withIndicator;
-    if (currentLocation.label === 'global') {
+    if (locationObject.label === 'global') {
       sentence = !indicator ? globalInitial : globalWithIndicator;
     }
     if (loss === 0) sentence = noLoss;
     const params = {
       indicator: indicatorName,
       location:
-        currentLocation.label === 'global'
+        locationObject.label === 'global'
           ? 'globally'
-          : currentLocation && currentLocation.label,
+          : locationObject && locationObject.label,
       indicator_alt: indicatorName,
       startYear,
       endYear,
@@ -178,3 +180,20 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationType],
+  (title, type) => {
+    let selectedTitle = title.default;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence,
+  title: parseTitle
+});

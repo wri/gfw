@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import Widgets from 'components/widgets-v2';
+import Widgets from 'components/widgets';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import Share from 'components/modals/share';

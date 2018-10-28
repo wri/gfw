@@ -1,19 +1,20 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data;
-const getSettings = state => state.settings;
-const getCurrentLocation = state => state.currentLabel;
+const getLocationName = state => state.locationName;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.locationType || null;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getColors],
-  (data, settings, colors) => {
+  [getData, getColors],
+  (data, colors) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent } = data;
     const parsedData = [
@@ -40,9 +41,9 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
-  (parsedData, settings, currentLabel, indicator, sentences) => {
+export const parseSentence = createSelector(
+  [parseData, getLocationName, getIndicator, getSentences],
+  (parsedData, locationName, indicator, sentences) => {
     if (!parsedData) return null;
     const {
       initial,
@@ -71,7 +72,7 @@ export const getSentence = createSelector(
         indicatorLabel = 'intact forest';
     }
     const params = {
-      location: currentLabel !== 'global' ? `${currentLabel}'s` : currentLabel,
+      location: locationName !== 'global' ? `${locationName}'s` : locationName,
       indicator: indicatorLabel,
       percentage:
         intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`
@@ -92,3 +93,20 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationType],
+  (title, type) => {
+    let selectedTitle = title.initial;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence,
+  title: parseTitle
+});

@@ -1,12 +1,10 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
-
-import { getAdminPath } from '../../../utils';
 
 // get list data
 const getData = state => (state.data && state.data.alerts) || null;
@@ -15,11 +13,9 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.location || null;
-const getQuery = state => state.query || null;
-const getLocationsMeta = state =>
-  (!state.location.region ? state.regions : state.subRegions) || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocation = state => state.allLocation || null;
+const getLocationsMeta = state => state.childLocationData || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
@@ -30,11 +26,10 @@ export const parseList = createSelector(
     getExtent,
     getSettings,
     getLocation,
-    getQuery,
     getLocationsMeta,
     getColors
   ],
-  (data, latest, extent, settings, location, query, meta, colors) => {
+  (data, latest, extent, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const latestWeek = moment(latest)
       .subtract(1, 'weeks')
@@ -67,6 +62,8 @@ export const parseList = createSelector(
         countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
       const countsPerHa =
         counts && regionExtent ? counts / regionExtent.extent : 0;
+      const { payload, query, type } = location;
+
       return {
         id: k,
         color: colors.main,
@@ -76,7 +73,19 @@ export const parseList = createSelector(
         area: countsArea,
         value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
         label: (region && region.label) || '',
-        path: getAdminPath({ ...location, query, id: k })
+        path: {
+          type,
+          payload: {
+            ...payload,
+            ...(payload.adm1 && {
+              adm2: k
+            }),
+            ...(!payload.adm1 && {
+              adm1: k
+            })
+          },
+          query
+        }
       };
     });
     return sortBy(mappedData, 'area').reverse();
@@ -88,18 +97,18 @@ export const parseData = createSelector([parseList], data => {
   return sortBy(data, 'value').reverse();
 });
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     parseData,
     parseList,
     getSettings,
     getOptions,
     getIndicator,
-    getCurrentLocation,
+    getLocationName,
     getSentences
   ],
-  (data, sortedList, settings, options, indicator, currentLabel, sentences) => {
-    if (!data || !options || !currentLabel) return '';
+  (data, sortedList, settings, options, indicator, locationName, sentences) => {
+    if (!data || !options || !locationName) return '';
     const { initial, withInd } = sentences;
     const totalCount = sumBy(data, 'count');
     let percentileCount = 0;
@@ -124,10 +133,15 @@ export const getSentence = createSelector(
         percentileLength === 1
           ? `${percentileLength} region`
           : `${percentileLength} regions`,
-      location: currentLabel,
+      location: locationName,
       indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
     };
     const sentence = indicator ? withInd : initial;
     return { sentence, params };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence
+});

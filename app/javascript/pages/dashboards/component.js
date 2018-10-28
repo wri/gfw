@@ -8,7 +8,7 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import LayerSpecProvider from 'providers/layerspec-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 
-import Widgets from 'components/widgets-v2';
+import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
 import Map from 'components/map';
 import MapControls from 'components/map/components/map-controls';

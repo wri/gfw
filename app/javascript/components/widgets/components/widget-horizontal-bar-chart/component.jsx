@@ -6,17 +6,18 @@ import HorizontalBarChart from 'components/charts/horizontal-bar-chart';
 class WidgetHorizontalBarChart extends PureComponent {
   render() {
     const {
-      parsedData,
+      data,
       settings,
       config,
       setWidgetSettings,
-      widget
+      widget,
+      simple
     } = this.props;
 
     return (
       <HorizontalBarChart
         className="ranked-plantations-chart"
-        data={parsedData}
+        data={data}
         config={config}
         settings={settings}
         handlePageChange={change =>
@@ -25,17 +26,19 @@ class WidgetHorizontalBarChart extends PureComponent {
             widget
           })
         }
+        simple={simple}
       />
     );
   }
 }
 
 WidgetHorizontalBarChart.propTypes = {
-  parsedData: PropTypes.array,
+  data: PropTypes.array,
   settings: PropTypes.object.isRequired,
   setWidgetSettings: PropTypes.func.isRequired,
   config: PropTypes.object,
-  widget: PropTypes.string
+  widget: PropTypes.string,
+  simple: PropTypes.bool
 };
 
 export default WidgetHorizontalBarChart;

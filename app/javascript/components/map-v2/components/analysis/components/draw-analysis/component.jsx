@@ -9,7 +9,7 @@ import { track } from 'utils/analytics';
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
-import Widgets from 'components/widgets-v2';
+import Widgets from 'components/widgets';
 import DownloadData from 'components/map-v2/components/analysis/components/download-data';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg';

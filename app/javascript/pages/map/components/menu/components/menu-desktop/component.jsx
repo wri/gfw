@@ -18,13 +18,7 @@ class MenuDesktop extends PureComponent {
     } = this.props;
 
     return (
-      <div
-        className={cx(
-          'c-menu-desktop',
-          { block: window.innerHeight < 608 },
-          className
-        )}
-      >
+      <div className={cx('c-menu-desktop', className)}>
         <ul className="datasets-menu">
           {datasetSections &&
             datasetSections.filter(s => !s.hiddenMobile).map(s => (

@@ -1,11 +1,9 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-
-import { getAdminPath } from '../../../utils';
 
 // get list data
 const getGain = state => (state.data && state.data.gain) || null;
@@ -13,25 +11,15 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.location || null;
-const getQuery = state => state.query || null;
-const getLocationsMeta = state =>
-  (state.location.region ? state.subRegions : state.regions) || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocation = state => state.allLocation || null;
+const getLocationsMeta = state => state.childLocationData || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentences || null;
 
 export const getSortedData = createSelector(
-  [
-    getGain,
-    getExtent,
-    getSettings,
-    getLocation,
-    getQuery,
-    getLocationsMeta,
-    getColors
-  ],
-  (data, extent, settings, location, query, meta, colors) => {
+  [getGain, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
+  (data, extent, settings, location, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
@@ -39,12 +27,26 @@ export const getSortedData = createSelector(
       if (region) {
         const locationExtent = extent.filter(l => l.id === d.id);
         const percentage = d.gain / locationExtent[0].extent * 100;
+        const { payload, query, type } = location;
+
         dataMapped.push({
           label: (region && region.label) || '',
           gain: d.gain,
           percentage,
           value: settings.unit === 'ha' ? d.gain : percentage,
-          path: getAdminPath({ ...location, query, id: d.id }),
+          path: {
+            type,
+            payload: {
+              ...payload,
+              ...(payload.adm1 && {
+                adm2: d.id
+              }),
+              ...(!payload.adm1 && {
+                adm1: d.id
+              })
+            },
+            query
+          },
           color: colors.main
         });
       }
@@ -58,28 +60,18 @@ export const parseData = createSelector([getSortedData], data => {
   return sortByKey(uniqBy(data, 'label'), 'value', true);
 });
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     getSortedData,
     parseData,
     getSettings,
     getOptions,
-    getLocation,
     getIndicator,
-    getCurrentLocation,
+    getLocationName,
     getSentences
   ],
-  (
-    data,
-    sortedData,
-    settings,
-    options,
-    location,
-    indicator,
-    currentLabel,
-    sentences
-  ) => {
-    if (!data || !options || !currentLabel) return null;
+  (data, sortedData, settings, options, indicator, locationName, sentences) => {
+    if (!data || !options || !locationName) return null;
     const {
       initial,
       withIndicator,
@@ -113,7 +105,7 @@ export const getSentence = createSelector(
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location: currentLabel,
+      location: locationName,
       topGain: `${format('.2r')(topGain)}%`,
       percentileLength,
       region: percentileLength > 1 ? topRegion.label : 'This region',
@@ -133,3 +125,8 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence
+});

@@ -5,17 +5,11 @@ import NumberedList from 'components/numbered-list';
 
 class WidgetNumberedList extends PureComponent {
   render() {
-    const {
-      parsedData,
-      settings,
-      setWidgetSettings,
-      embed,
-      widget
-    } = this.props;
+    const { data, settings, setWidgetSettings, embed, widget } = this.props;
     return (
       <NumberedList
         className="locations-list"
-        data={parsedData}
+        data={data}
         settings={{
           ...settings,
           format: settings.unit === '%' ? '.2r' : '.3s'
@@ -33,7 +27,7 @@ class WidgetNumberedList extends PureComponent {
 }
 
 WidgetNumberedList.propTypes = {
-  parsedData: PropTypes.array,
+  data: PropTypes.array,
   settings: PropTypes.object.isRequired,
   setWidgetSettings: PropTypes.func.isRequired,
   embed: PropTypes.bool,

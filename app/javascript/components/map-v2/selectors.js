@@ -22,7 +22,7 @@ const selectLocation = state =>
 // analysis selects
 const selectAnalysisSettings = state =>
   state.location && state.location.query && state.location.query.analysis;
-const selectWidgetActiveSettings = state => state.widgetsV2.settings;
+const selectWidgetActiveSettings = state => state.widgets.settings;
 // popup interactons
 const selectSelectedInteractionId = state => state.popup.selected;
 const selectInteractions = state => state.popup.interactions;

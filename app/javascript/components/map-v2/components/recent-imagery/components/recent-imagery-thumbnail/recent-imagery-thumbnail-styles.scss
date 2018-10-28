@@ -11,10 +11,6 @@
   cursor: pointer;
   outline: none;
 
-  @media screen and (min-width: $screen-m) {
-    height: rem(80px);
-  }
-
   &::before {
     content: '';
     position: absolute;
