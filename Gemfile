@@ -33,7 +33,7 @@ gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
 gem 'aws-sdk', '~> 2'
 
 #Webpacker
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.5'
 
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
 gem 'responders', '~> 2.0'
