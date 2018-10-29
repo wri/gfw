@@ -22,8 +22,7 @@ class AnalysisContainer extends PureComponent {
 
   componentDidMount() {
     const { endpoints, location } = this.props;
-
-    if (location.type && location.adm0 && endpoints) {
+    if (location.type && location.adm0 && endpoints && endpoints.length) {
       this.handleFetchAnalysis(location, endpoints);
     }
   }
@@ -36,6 +35,7 @@ class AnalysisContainer extends PureComponent {
       location.type &&
       location.adm0 &&
       endpoints &&
+      endpoints.length &&
       (!isEqual(endpoints, prevProps.endpoints) ||
         !isEqual(location, prevProps.location))
     ) {

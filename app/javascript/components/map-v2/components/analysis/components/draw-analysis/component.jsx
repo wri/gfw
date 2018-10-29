@@ -77,7 +77,8 @@ class DrawAnalysis extends PureComponent {
       setModalSources,
       handleShowDownloads,
       showDownloads,
-      downloadUrls
+      downloadUrls,
+      hasLayers
     } = this.props;
 
     return (
@@ -134,19 +135,20 @@ class DrawAnalysis extends PureComponent {
           </div>
         </div>
         <div className="results">
-          {!loading &&
+          {hasLayers &&
+            !loading &&
             !error &&
             isEmpty(data) && <NoContent message="No analysis data available" />}
-          {!loading &&
+          {!hasLayers &&
+            !loading && (
+              <NoContent message="No data layers activated. Please select one from the menu." />
+            )}
+          {hasLayers &&
+            !loading &&
             !isEmpty(data) && (
               <Fragment>
                 <ul className="draw-stats">
                   {data.map(d => this.renderStatItem(d))}
-                  {data.length === 1 && (
-                    <li className="no-layers">
-                      <NoContent message="No data layers activated. Please select one from the menu." />
-                    </li>
-                  )}
                 </ul>
                 {showWidgets && <Widgets simple analysis />}
                 <div className="disclaimers">
@@ -195,6 +197,7 @@ DrawAnalysis.propTypes = {
   setModalSources: PropTypes.func,
   handleShowDownloads: PropTypes.func,
   showDownloads: PropTypes.bool,
+  hasLayers: PropTypes.bool,
   downloadUrls: PropTypes.array
 };
 

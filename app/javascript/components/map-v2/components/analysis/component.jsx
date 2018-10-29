@@ -24,6 +24,7 @@ class AnalysisComponent extends PureComponent {
       endpoints,
       embed
     } = this.props;
+    const hasLayers = endpoints && !!endpoints.length;
 
     return (
       <Fragment>
@@ -57,6 +58,7 @@ class AnalysisComponent extends PureComponent {
             <PolygonAnalysis
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
+              hasLayers={hasLayers}
             />
           ) : (
             <ChoseAnalysis />

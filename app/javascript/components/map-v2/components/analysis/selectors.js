@@ -70,6 +70,7 @@ export const getLayerEndpoints = createSelector(
         const { params, decodeParams } = l;
 
         return {
+          name: l.name,
           version: analysisConfig.version || 'v1',
           slug: analysisConfig.service,
           params: {
@@ -98,7 +99,8 @@ export const getLayerEndpoints = createSelector(
       return {
         slug,
         params,
-        version: groupedEndpoints[slug][0].version
+        version: groupedEndpoints[slug][0].version,
+        name: groupedEndpoints[slug][0].name
       };
     });
 

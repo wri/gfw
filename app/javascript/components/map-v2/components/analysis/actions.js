@@ -44,6 +44,8 @@ export const getAnalysis = createThunkAction(
     fetchUmdLossGain(location)
       .then(responses => dispatch(setAnalysisData(responses)))
       .catch(error => {
+        const slug = error.config.url.split('/')[4];
+        const layerName = endpoints.find(e => e.slug === slug).name;
         const { response } = error;
         const errors =
           response &&
@@ -51,14 +53,15 @@ export const getAnalysis = createThunkAction(
           response.data.errors &&
           response.data.errors[0];
         const { status } = errors || {};
+        const errorMessage =
+          layerName && status >= 500
+            ? `Shape too large for ${layerName}.`
+            : 'Service temporarily unavailable. Please try again later.';
         dispatch(
           setAnalysisLoading({
             data: {},
             loading: false,
-            error:
-              status >= 500
-                ? 'Service temporarily unavailable. Please refresh.'
-                : 'No data available'
+            error: errorMessage
           })
         );
         console.info(error);
