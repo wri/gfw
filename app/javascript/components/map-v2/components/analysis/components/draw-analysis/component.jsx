@@ -43,7 +43,7 @@ class DrawAnalysis extends PureComponent {
         </span>
       </div>
       <div className="value" style={{ color }}>
-        {Array.isArray(value) ? (
+        {Array.isArray(value) && value.length ? (
           value.map(v => (
             <strong key={v.label}>
               {formatNumber({
@@ -56,8 +56,8 @@ class DrawAnalysis extends PureComponent {
         ) : (
           <strong>
             {formatNumber({
-              num: value,
-              unit
+              num: Array.isArray(value) ? 0 : value,
+              unit: unit || 'ha'
             })}
           </strong>
         )}
