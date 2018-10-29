@@ -8,15 +8,8 @@ import { getMyGfwProps } from './selectors';
 
 class MyGFWProvider extends PureComponent {
   componentWillMount() {
-    const { urlToken, localToken, checkLogged, setToken } = this.props;
-
-    if (urlToken) {
-      setToken(urlToken);
-    }
-
-    if (urlToken || localToken) {
-      checkLogged(urlToken || localToken);
-    }
+    const { checkLogged } = this.props;
+    checkLogged();
   }
 
   render() {
@@ -25,10 +18,7 @@ class MyGFWProvider extends PureComponent {
 }
 
 MyGFWProvider.propTypes = {
-  checkLogged: PropTypes.func.isRequired,
-  setToken: PropTypes.func.isRequired,
-  urlToken: PropTypes.string,
-  localToken: PropTypes.string
+  checkLogged: PropTypes.func.isRequired
 };
 
 export const reduxModule = { actions, reducers, initialState };
