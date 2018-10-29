@@ -245,7 +245,7 @@ export const getLayerGroups = createSelector(
     return activeDatasetsState
       .map(l => datasets.find(d => d.id === l.dataset))
       .map(d => {
-        const { metadata } = d.layers.find(l => l.active);
+        const { metadata } = (d && d.layers.find(l => l.active)) || {};
         return {
           ...d,
           metadata: metadata || d.metadata
