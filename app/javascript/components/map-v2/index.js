@@ -134,6 +134,9 @@ class MapContainer extends PureComponent {
         value: layer.id,
         config: output
       });
+      track('mapInteraction', {
+        label: layer.name
+      });
     }
   };
 

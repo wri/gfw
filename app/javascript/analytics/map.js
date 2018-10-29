@@ -107,6 +107,11 @@ export default {
     action: 'Download',
     label: '[layers]'
   },
+  mapInteraction: {
+    category: 'map analysis',
+    action: 'User opens analysis popup infowindow',
+    label: '[area]'
+  },
   // basemaps
   basemapsInitial: {
     category: 'map data',
