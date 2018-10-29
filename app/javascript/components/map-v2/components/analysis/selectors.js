@@ -64,7 +64,8 @@ export const getLayerEndpoints = createSelector(
           l.analysisConfig.find(
             a =>
               a.type === routeType ||
-              (routeType === 'use' && a.type === 'geostore')
+              ((routeType === 'use' || routeType === 'wdpa') &&
+                a.type === 'geostore')
           ) || {};
         const { params, decodeParams } = l;
 
