@@ -1,4 +1,3 @@
-import compact from 'lodash/compact';
 import layerSpec from 'data/layerspec.json';
 import { MAP, MAP_EMBED } from './router';
 
@@ -23,19 +22,44 @@ const embedParamKeys = [
   'layers',
   'subLayers'
 ];
+const numParams = ['lat', 'lng', 'zoom'];
 
 export const getNewMapRedirect = ({ slugs, query }) => {
   const embed = slugs.includes('embed');
+  const keys = embed ? embedParamKeys : paramKeys;
   const params = slugs.reduce(
     (obj, param, index) => ({
       ...obj,
-      [embed ? embedParamKeys[index] : paramKeys[index]]:
-        parseInt(param, 10) || param
+      [keys[index]]: numParams.includes(keys[index])
+        ? parseInt(param, 10)
+        : param
+    }),
+    {}
+  );
+  const layersBySlug = layerSpec.reduce(
+    (obj, l) => ({
+      ...obj,
+      ...(l.slug && {
+        [l.slug]: {
+          ...l
+        }
+      })
+    }),
+    {}
+  );
+  const layersByCartoId = layerSpec.reduce(
+    (obj, l) => ({
+      ...obj,
+      ...(l.cartodb_id && {
+        [l.cartodb_id]: {
+          ...l
+        }
+      })
     }),
     {}
   );
 
-  const { zoom, lat, lng, iso, layers } = params || {};
+  const { zoom, lat, lng, iso, layers, subLayers } = params || {};
   const { tab, geostore, use, useid, wdpaid, subscribe, recentImagery } =
     query || {};
 
@@ -65,21 +89,36 @@ export const getNewMapRedirect = ({ slugs, query }) => {
   }
 
   const layerSlugs = layers && layers.split(',');
-  const datasets =
-    layerSlugs &&
-    compact(
-      layerSlugs.map(
-        l =>
-          (layerSpec[l]
-            ? {
-              dataset: layerSpec[l].dataset,
-              layers: [layerSpec[l].id],
-              opacity: 1,
-              visibility: true
-            }
-            : null)
-      )
-    );
+  const subLayerIds =
+    typeof subLayers === 'string' ? subLayers.split(',') : [subLayers];
+  const layerIds = layerSlugs.concat(subLayerIds);
+
+  const layerDatasets =
+    layerIds &&
+    layerIds.reduce((arr, id) => {
+      const all = [...arr];
+      const layer = layersBySlug[id] || layersByCartoId[id];
+      const dataset = layer && layer.dataset;
+      const datasetIndex = layer && all.findIndex(o => o.dataset === dataset);
+      if (layer) {
+        if (datasetIndex >= 0 && all && all.length) {
+          all[datasetIndex] = {
+            ...all[datasetIndex],
+            layers: [layer.layer, ...all[datasetIndex].layers]
+          };
+          return all;
+        }
+        return all.concat([
+          {
+            dataset: layer.dataset,
+            layers: [layer.layer],
+            opacity: 1,
+            visibility: true
+          }
+        ]);
+      }
+      return arr;
+    }, []);
 
   const showAnalysis = tab === 'analysis-tab';
 
@@ -94,7 +133,7 @@ export const getNewMapRedirect = ({ slugs, query }) => {
       opacity: 1,
       visibility: true
     },
-    ...datasets
+    ...layerDatasets
   ];
 
   return {
