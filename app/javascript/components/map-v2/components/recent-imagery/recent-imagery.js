@@ -138,11 +138,15 @@ class RecentImageryContainer extends PureComponent {
   }, 200);
 
   removeTile() {
-    const { datasets, setMapSettings } = this.props;
+    const { datasets, setMapSettings, setRecentImagerySettings } = this.props;
     const activeDatasets =
       datasets && !!datasets.length && datasets.filter(d => !d.isRecentImagery);
     setMapSettings({
       datasets: activeDatasets || []
+    });
+    setRecentImagerySettings({
+      selectedIndex: 0,
+      selected: null
     });
   }
 
@@ -166,7 +170,8 @@ RecentImageryContainer.propTypes = {
   datasets: PropTypes.array,
   setMapSettings: PropTypes.func,
   recentImageryDataset: PropTypes.object,
-  resetRecentImageryData: PropTypes.func
+  resetRecentImageryData: PropTypes.func,
+  setRecentImagerySettings: PropTypes.func
 };
 
 export const reduxModule = { actions: ownActions, reducers, initialState };

@@ -14,6 +14,7 @@ export const initialState = {
   settings: {
     visible: false,
     selected: null,
+    selectedIndex: 0,
     date: null,
     weeks: 13,
     clouds: 25,

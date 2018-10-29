@@ -46,7 +46,6 @@ export const getRecentImageryData = createThunkAction(
           );
           if (serializedResponse && !!serializedResponse.length) {
             const { clouds } = initialState.settings;
-            const { source } = serializedResponse[0];
             const cloudScore = Math.round(serializedResponse[0].cloud_score);
             dispatch(
               setRecentImageryData({
@@ -59,7 +58,6 @@ export const getRecentImageryData = createThunkAction(
             );
             dispatch(
               setRecentImagerySettings({
-                selected: source,
                 clouds: cloudScore > clouds ? cloudScore : clouds
               })
             );

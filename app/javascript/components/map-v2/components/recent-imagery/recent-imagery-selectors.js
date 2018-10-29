@@ -11,7 +11,7 @@ export const getRecentImageryLoading = state =>
 export const getMoreTilesLoading = state =>
   state.recentImagery.loadingMoreTiles || null;
 const getError = state => state.recentImagery.error;
-const getLocation = state => (state.location && state.location.query) || null;
+const getLocation = state => state.location && state.location.query;
 const getDataStatus = state => state.recentImagery.dataStatus || null;
 const getDatasets = state => state.datasets.datasets || null;
 const getRecentUrlState = state =>
@@ -90,9 +90,11 @@ export const getActiveTile = createSelector(
   [getTiles, getRecentImagerySettings],
   (tiles, settings) => {
     if (isEmpty(tiles)) return null;
-    const { selected } = settings;
-
-    return selected ? tiles.find(t => t.id === selected) : tiles[0];
+    const { selected, selectedIndex } = settings;
+    const selectedTileById = tiles.find(t => t.id === selected);
+    if (selectedTileById) return selectedTileById;
+    const selectedTileByIndex = selectedIndex && tiles[selectedIndex];
+    return selectedTileByIndex || tiles[0];
   }
 );
 

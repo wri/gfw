@@ -130,7 +130,8 @@ class RecentImagerySettings extends PureComponent {
                     onChange={option => {
                       setRecentImagerySettings({
                         bands: option,
-                        selected: null
+                        selected: null,
+                        selectedIndex: 0
                       });
                       track('recentImageryImageType');
                     }}
@@ -148,7 +149,8 @@ class RecentImagerySettings extends PureComponent {
                         selected={!!activeTile && activeTile.id === tile.id}
                         handleClick={() => {
                           setRecentImagerySettings({
-                            selected: tile.id
+                            selected: tile.id,
+                            selectedIndex: i
                           });
                         }}
                         handleMouseEnter={() => {
