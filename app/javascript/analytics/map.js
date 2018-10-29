@@ -127,5 +127,11 @@ export default {
     category: 'map data',
     action: 'label changed',
     label: '[boundary]'
+  },
+  // welcome modal
+  welcomeModal: {
+    category: 'map landing',
+    action: 'User interacts with popup',
+    label: '[clicked]'
   }
 };

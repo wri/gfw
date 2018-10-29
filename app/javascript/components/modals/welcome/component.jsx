@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { track } from 'utils/analytics';
 
 import Icon from 'components/ui/icon';
 
@@ -30,7 +31,13 @@ class ModalWelcome extends PureComponent {
             </a>.
           </p>
           <div className="guide-cards">
-            <button className="guide-btn" onClick={setExploreView}>
+            <button
+              className="guide-btn"
+              onClick={() => {
+                setExploreView();
+                track('welcomeModal', { label: 'topics' });
+              }}
+            >
               <p>
                 <b>If its your first time:</b>
               </p>
@@ -40,7 +47,13 @@ class ModalWelcome extends PureComponent {
               </p>
               <Icon icon={exploreIcon} />
             </button>
-            <button className="guide-btn" onClick={setAnalysisView}>
+            <button
+              className="guide-btn"
+              onClick={() => {
+                setAnalysisView();
+                track('welcomeModal', { label: 'analysis' });
+              }}
+            >
               <p>
                 <b>If you’re returning:</b>
               </p>
@@ -56,7 +69,13 @@ class ModalWelcome extends PureComponent {
   render() {
     const { open, setModalWelcome } = this.props;
     return (
-      <Modal isOpen={open} onRequestClose={() => setModalWelcome(false)}>
+      <Modal
+        isOpen={open}
+        onRequestClose={() => {
+          setModalWelcome(false);
+          track('welcomeModal', { label: 'close' });
+        }}
+      >
         {this.getContent()}
       </Modal>
     );
