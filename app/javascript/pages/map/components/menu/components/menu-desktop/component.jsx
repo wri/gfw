@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import startCase from 'lodash/startCase';
+import { track } from 'utils/analytics';
 
 import MenuTile from '../menu-tile';
 
@@ -26,12 +27,15 @@ class MenuDesktop extends PureComponent {
                 key={`${s.slug}_${s.category}`}
                 {...s}
                 label={startCase(s.category)}
-                onClick={() =>
+                onClick={() => {
                   setMenuSettings({
                     datasetCategory: s.active ? '' : s.category,
                     menuSection: s.active ? '' : s.slug
-                  })
-                }
+                  });
+                  if (!s.active) {
+                    track('mapMenuSection', { label: s.slug });
+                  }
+                }}
               />
             ))}
         </ul>
@@ -41,12 +45,15 @@ class MenuDesktop extends PureComponent {
               <MenuTile
                 className="search-tile"
                 key={s.slug}
-                onClick={() =>
+                onClick={() => {
                   setMenuSettings({
                     menuSection: s.active ? '' : s.slug,
                     datasetCategory: ''
-                  })
-                }
+                  });
+                  if (!s.active) {
+                    track('mapMenuSection', { label: s.slug });
+                  }
+                }}
                 {...s}
               />
             ))}

@@ -1,16 +1,24 @@
 import ReactGA from 'react-ga';
 import { ANALYTICS_EVENTS } from 'app/analytics';
 
+import mapEvents from 'analytics/map';
+import sharedEvents from 'analytics/shared';
+
 const { ANALYTICS_PROPERTY_ID } = process.env;
 let gaInitialized = false;
 
-const initGA = () => {
+export const initGA = () => {
   if (ANALYTICS_PROPERTY_ID) {
     if (!gaInitialized) {
       ReactGA.initialize(ANALYTICS_PROPERTY_ID);
       gaInitialized = true;
     }
   }
+};
+
+const events = {
+  ...mapEvents,
+  ...sharedEvents
 };
 
 export const handlePageTrack = location => {
@@ -20,6 +28,9 @@ export const handlePageTrack = location => {
     ReactGA.pageview(window.location.href);
   }
 };
+
+export const track = (key, data) =>
+  ReactGA && events[key] && ReactGA.event({ ...events[key], ...data });
 
 export const handleActionTrack = state => nextDispatch => action => {
   initGA();

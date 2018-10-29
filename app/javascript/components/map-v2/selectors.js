@@ -398,5 +398,6 @@ export const getMapProps = createStructuredSelector({
   embed: selectEmbed,
   hidePanels: getHidePanels,
   selectedInteraction: getSelectedInteraction,
-  menuSection: selectMenuSection
+  menuSection: selectMenuSection,
+  activeDatasets: getActiveDatasetsState
 });

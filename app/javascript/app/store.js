@@ -15,7 +15,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = [thunk, router.middleware, handleActionTrack];
+const middlewares = [handleActionTrack, thunk, router.middleware];
 
 export default () => {
   const store = createStore(

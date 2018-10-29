@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import { track } from 'utils/analytics';
 
 import { LayerManager, Layer } from 'layer-manager/lib/react';
 import { PluginLeaflet } from 'layer-manager/lib';
@@ -63,6 +64,7 @@ class LayerManagerComponent extends PureComponent {
               click: () => {
                 if (!draw) {
                   setRecentImagerySettings({ visible: true });
+                  track('recentImageryOpen');
                 }
               },
               mouseover: e => {

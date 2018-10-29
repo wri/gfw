@@ -15,7 +15,11 @@ export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
-  handlePageTrack(getState().location);
+  const currentLocation = getState().location.pathname;
+  const prevLocation = getState().location.prev.pathname;
+  if (currentLocation !== prevLocation) {
+    handlePageTrack(getState().location);
+  }
 };
 
 const redirectThunk = (dispatch, getState) => {

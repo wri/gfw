@@ -4,6 +4,7 @@ import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import cx from 'classnames';
+import { track } from 'utils/analytics';
 
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
@@ -109,6 +110,7 @@ class DrawAnalysis extends PureComponent {
                   }
                 })
               }
+              tooltip={{ text: 'Share analysis' }}
             >
               <Icon icon={shareIcon} className="icon-share" />
             </Button>
@@ -116,7 +118,16 @@ class DrawAnalysis extends PureComponent {
               className="title-btn title-action"
               theme="theme-button-clear"
               disabled={!downloadUrls || !downloadUrls.length}
-              onClick={() => handleShowDownloads(true)}
+              onClick={() => {
+                handleShowDownloads(true);
+                track('analysisDownload', {
+                  label:
+                    downloadUrls &&
+                    downloadUrls.length &&
+                    downloadUrls.map(d => d.label).join(', ')
+                });
+              }}
+              tooltip={{ text: 'Download data' }}
             >
               <Icon icon={downloadIcon} className="icon-download" />
             </Button>

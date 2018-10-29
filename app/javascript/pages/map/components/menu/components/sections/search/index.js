@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { CancelToken } from 'axios';
+import { track } from 'utils/analytics';
 
 import Component from './component';
 
@@ -22,6 +23,9 @@ class SearchMenu extends PureComponent {
     }
     this.searchFetch = CancelToken.source();
     this.props.getLocationFromSearch({ search, token: this.searchFetch.token });
+    track('mapMenuSarch', {
+      label: search
+    });
   }, 500);
 
   handleSearchChange = value => {

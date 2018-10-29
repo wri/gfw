@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
+import { track } from 'utils/analytics';
 
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider';
@@ -59,15 +60,19 @@ class RecentImagerySettings extends PureComponent {
                 theme="theme-dropdown-button"
                 value={weeks}
                 options={WEEKS}
-                onChange={option => setRecentImagerySettings({ weeks: option })}
+                onChange={option => {
+                  setRecentImagerySettings({ weeks: option });
+                  track('recentImageryDateRange');
+                }}
                 native
               />
               <div className="before">before</div>
               <Datepicker
                 date={date ? moment(date) : moment()}
-                handleOnDateChange={d =>
-                  setRecentImagerySettings({ date: d.format('YYYY-MM-DD') })
-                }
+                handleOnDateChange={d => {
+                  setRecentImagerySettings({ date: d.format('YYYY-MM-DD') });
+                  track('recentImageryDate');
+                }}
                 settings={{
                   displayFormat: 'D MMM YYYY',
                   numberOfMonths: 1,
@@ -96,7 +101,10 @@ class RecentImagerySettings extends PureComponent {
               step={5}
               dots
               onChange={this.handleCloundsChange}
-              onAfterChange={d => setRecentImagerySettings({ clouds: d })}
+              onAfterChange={d => {
+                setRecentImagerySettings({ clouds: d });
+                track('recentImageryClouds');
+              }}
             />
           </div>
         </div>
@@ -119,12 +127,13 @@ class RecentImagerySettings extends PureComponent {
                     theme="theme-dropdown-button"
                     value={bands}
                     options={BANDS}
-                    onChange={option =>
+                    onChange={option => {
                       setRecentImagerySettings({
                         bands: option,
                         selected: null
-                      })
-                    }
+                      });
+                      track('recentImageryImageType');
+                    }}
                     native
                   />
                 </div>

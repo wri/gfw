@@ -1,6 +1,8 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import union from 'turf-union';
+import compact from 'lodash/compact';
 import { DASHBOARDS } from 'router';
+import { track } from 'utils/analytics';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';
@@ -32,6 +34,12 @@ export const clearAnalysisData = createAction('clearAnalysisData');
 export const getAnalysis = createThunkAction(
   'getAnalysis',
   location => dispatch => {
+    const { type, adm0, adm1, adm2, endpoints } = location;
+    track('analysis', {
+      action: compact([type, adm0, adm1, adm2]).join(', '),
+      label:
+        endpoints && endpoints.length && endpoints.map(e => e.slug).join(', ')
+    });
     dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
     fetchUmdLossGain(location)
       .then(responses => dispatch(setAnalysisData(responses)))
