@@ -4,6 +4,7 @@ import cx from 'classnames';
 import startCase from 'lodash/startCase';
 
 import Loader from 'components/ui/loader';
+import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -76,9 +77,13 @@ class MenuPanel extends PureComponent {
                     <span>{label}</span>
                   )}
                 </div>
-                <button className="panel-close" onClick={onClose}>
+                <Button
+                  className="panel-close"
+                  theme="theme-button-clear"
+                  onClick={onClose}
+                >
                   <Icon icon={arrowIcon} className="icon-close-panel" />
-                </button>
+                </Button>
               </div>
             ) : (
               <button className="close-menu" onClick={onClose}>

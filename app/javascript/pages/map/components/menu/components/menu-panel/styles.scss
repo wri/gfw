@@ -76,6 +76,11 @@ $map-menu-panel-width-big: rem(560px);
       justify-content: flex-end;
       align-items: center;
       fill: $slate;
+      padding-right: 0;
+
+      .button-wrapper {
+        justify-content: flex-end;
+      }
     }
   }
 

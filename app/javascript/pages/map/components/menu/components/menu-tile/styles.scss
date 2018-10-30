@@ -38,6 +38,7 @@ $map-menu-items-size: rem(76px);
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      margin: auto;
 
       @media screen and (min-width: $screen-m) {
         height: $map-menu-items-size;
