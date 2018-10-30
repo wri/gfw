@@ -53,6 +53,13 @@ export const stories = {
             ],
             opacity: 1,
             visibility: true
+          },
+          // stories
+          {
+            dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
+            layers: ['ecddc53a-f7b9-42a8-9e7a-94a30aeef134'],
+            opacity: 1,
+            visibility: true
           }
         ]
       }
