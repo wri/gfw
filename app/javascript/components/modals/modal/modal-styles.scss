@@ -9,7 +9,7 @@ $close-position-mobile: 15px;
 
 .modal-close {
   position: absolute;
-  top: 20px;
+  top: $close-position-mobile;
   right: $close-position-mobile;
   border: none;
   outline: none;
