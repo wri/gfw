@@ -80,12 +80,12 @@ export const uploadShape = createThunkAction(
             ? response.data.data.attributes.features
             : null;
           if (features && features.length < uploadFileConfig.featureLimit) {
-            const geojson = features.reduce(union);
+            const geojson = features.filter(g => g.geometry).reduce(union);
             getGeostoreKey(geojson.geometry)
               .then(geostore => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
-                  const { query, type } = getState().location;
+                  const { query, type } = getState().location || {};
                   dispatch({
                     type,
                     payload: {
