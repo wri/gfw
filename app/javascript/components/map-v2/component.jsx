@@ -135,8 +135,7 @@ class MapComponent extends PureComponent {
                         : {}
                     }
                     events={{
-                      zoomend: handleMapMove,
-                      dragend: handleMapMove
+                      move: handleMapMove
                     }}
                   >
                     {map => (
