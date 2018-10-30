@@ -26,7 +26,10 @@ class CustomComposedChart extends PureComponent {
     const maxValues = [];
     Object.keys(yKeys).forEach(key => {
       Object.keys(yKeys[key]).forEach(subKey => {
-        maxValues.push(maxBy(data, subKey)[subKey]);
+        const maxValue = maxBy(data, subKey);
+        if (maxValue) {
+          maxValues.push(maxValue[subKey]);
+        }
       });
     });
     return max(maxValues);
