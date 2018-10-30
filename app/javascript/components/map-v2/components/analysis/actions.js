@@ -54,7 +54,7 @@ export const getAnalysis = createThunkAction(
           response.data.errors[0];
         const { status } = errors || {};
         const errorMessage =
-          layerName && status >= 500
+          layerName && (status >= 500 || !response)
             ? `Shape too large or service unavailable for ${layerName}.`
             : 'Service temporarily unavailable. Please try again later.';
         dispatch(
