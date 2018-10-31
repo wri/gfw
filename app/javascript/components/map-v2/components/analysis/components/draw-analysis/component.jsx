@@ -141,7 +141,7 @@ class DrawAnalysis extends PureComponent {
             isEmpty(data) && <NoContent message="No analysis data available" />}
           {!hasLayers &&
             !loading && (
-              <NoContent message="No data layers activated. Please select one from the menu." />
+              <NoContent message="No analysis layers activated. Please select one from the menu." />
             )}
           {hasLayers &&
             !loading &&
