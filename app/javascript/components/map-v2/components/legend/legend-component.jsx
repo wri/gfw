@@ -5,7 +5,6 @@ import cx from 'classnames';
 import Legend, {
   LegendItemToolbar,
   LegendItemButtonOpacity,
-  LegendItemButtonVisibility,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
   LegendItemTypes,
@@ -119,7 +118,6 @@ class MapLegend extends Component {
                             { backgroundColor: '#d6d6d9' }
                           ]}
                         />
-                        <LegendItemButtonVisibility />
                         {metadata && <LegendItemButtonInfo />}
                         <LegendItemButtonRemove />
                       </LegendItemToolbar>

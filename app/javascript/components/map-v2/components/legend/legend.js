@@ -29,19 +29,6 @@ class Legend extends PureComponent {
     });
   };
 
-  onChangeVisibility = currentLayer => {
-    const { setMapSettings, activeDatasets } = this.props;
-    setMapSettings({
-      datasets: activeDatasets.map(d => {
-        const activeDataset = { ...d };
-        if (d.layers.includes(currentLayer.id)) {
-          activeDataset.visibility = !activeDataset.visibility;
-        }
-        return activeDataset;
-      })
-    });
-  };
-
   onChangeOrder = layerGroupsIds => {
     const { setMapSettings, activeDatasets } = this.props;
     const datasetIds = activeDatasets.map(d => d.dataset);
@@ -165,7 +152,6 @@ class Legend extends PureComponent {
     return createElement(Component, {
       ...this.props,
       onChangeOpacity: this.onChangeOpacity,
-      onChangeVisibility: this.onChangeVisibility,
       onChangeOrder: this.onChangeOrder,
       onToggleLayer: this.onToggleLayer,
       onChangeLayer: this.onChangeLayer,
