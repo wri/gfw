@@ -4,12 +4,12 @@ ruby '2.4.0'
 
 gem 'rails', '5.1.5'
 gem 'jquery-rails'
-gem 'autoprefixer-rails', '~> 7.1.2.3'
+gem 'autoprefixer-rails', '~> 9.3.1'
 gem 'sass-rails', '~> 5.0.6'
 gem 'compass-rails', '3.0.2'
 gem 'compass-flexbox'
 gem 'sprockets-rails', '2.3.3'
-gem 'uglifier', '~> 3.1.5'
+gem 'uglifier', '~> 4.1.19'
 gem 'httparty'
 gem 'typhoeus'
 gem 'useragent'
@@ -28,12 +28,12 @@ gem 'redis-rails'
 gem 'erubis'
 gem 'requirejs-rails', '1.0.0'
 
-gem 'rack-reverse-proxy', '~> 0.11.0', :require => 'rack/reverse_proxy'
+gem 'rack-reverse-proxy', '~> 0.12.0', :require => 'rack/reverse_proxy'
 # Amazon Ruby sdk for file upload to S3
 gem 'aws-sdk', '~> 2'
 
 #Webpacker
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 3.5'
 
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
 gem 'responders', '~> 2.0'
