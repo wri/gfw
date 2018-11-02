@@ -18,6 +18,7 @@ import thresholdOptions from 'data/thresholds.json';
 
 import { reduceParams, reduceSqlParams } from './datasets-utils';
 import decodeLayersConfig from './datasets-decode-config';
+import decodeLayersClusters from './datasets-decode-clusters';
 
 export const setDatasetsLoading = createAction('setDatasetsLoading');
 export const setDatasets = createAction('setDatasets');
@@ -149,6 +150,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                         url
                       } = layerConfig;
                       const decodeFunction = decodeLayersConfig[l.id];
+                      const decodeClusters = decodeLayersClusters[l.id];
                       const latestDate = latestDates && latestDates[l.id];
 
                       // check if has a timeline
@@ -225,6 +227,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                         }),
                         // decode func and params for canvas layers
                         decodeFunction,
+                        decodeClusters,
                         ...(decodeFunction && {
                           decodeParams: {
                             // timeline config

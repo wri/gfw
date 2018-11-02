@@ -26,16 +26,20 @@ export const getCardData = createSelector(
       const newObj = {
         ...obj,
         ...(param.renderKey && {
-          [param.renderKey]: data[param.column]
+          [param.renderKey]: data[param.column || param.key]
         })
       };
       return newObj;
     }, {});
     const { readMoreLink } = articleData || {};
+    const { image } = articleData;
 
     return {
       ...articleData,
-      bbox: reverseLatLng(JSON.parse(data.bbox).coordinates[0]),
+      image: typeof image === 'string' ? image : image.find(i => i.url),
+      ...(data.bbox && {
+        bbox: reverseLatLng(JSON.parse(data.bbox).coordinates[0])
+      }),
       buttons: [
         {
           text: 'READ MORE',
