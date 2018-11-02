@@ -56,11 +56,6 @@ $ rvm install 2.4.0
 $ rvm use 2.4.0
 ```
 
-Now let's install redis:
-```bash
-$ brew install redis
-```
-
 Now let's install Ruby on Rails:
 
 ```bash
@@ -83,16 +78,23 @@ $ brew install imagemagick@6 --force && brew link imagemagick@6 --force
 Installing front end dependencies:
 
 ```bash
-$ npm install
+$ yarn install
 ```
 
 Almost there! Final steps are to copy the `.env.sample` to `.env`, and start the server:
 
 ```bash
-$ npm start
+$ yarn start
 ```
 The app should now be accessible on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 
+### REDIS
+We have a local redis server for caching in production. We dont run this locally by default but if you want to test or develop on this feature you will need to install redis and run it:
+
+```bash
+$ brew install redis
+$ yarn redis
+```
 
 ## Deployment
 
@@ -167,7 +169,7 @@ We use [BrowserStack](https://www.browserstack.com) to find and fix cross-browse
 
 # RW API Documentation for GFW
 
-Map layers and relevent datasets are stored in the [RW-API](http://api.resourcewatch.org/) and the `globalforestwatch.org/v2/map` utilises the [layer-manager](https://github.com/Vizzuality/layer-manager) to render them.
+Map layers and relevent datasets are stored in the [RW-API](http://api.resourcewatch.org/) and the `globalforestwatch.org/map` utilises the [layer-manager](https://github.com/Vizzuality/layer-manager) to render them.
 
 The schema used to style these layers, their legends, and define their interactions are specific to the *Global Forest Watch* platform.
 
