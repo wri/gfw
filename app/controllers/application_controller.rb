@@ -39,7 +39,8 @@ class ApplicationController < ActionController::Base
         desc: 'Data about forest change, tenure, forest related employment and land use'
       },
       types: {
-        geostore: 'Custom Area Analysis',
+        use: 'Shape',
+        geostore: 'Custom Area',
         wdpa: 'Protected Area'
       }
     }
