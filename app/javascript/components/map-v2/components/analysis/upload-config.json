@@ -4,6 +4,7 @@
   "featureLimit": 1000,
   "types": [
     "application/vnd.geo+json",
+    ".geojson",
     "application/json",
     "application/vnd.google-earth.kml+xml",
     "application/vnd.google-earth.kmz",
