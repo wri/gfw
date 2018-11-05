@@ -7,6 +7,17 @@ $close-position-mobile: 15px;
   overflow: hidden;
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS */
+  .ReactModal__Overlay {
+    align-items: flex-start !important;
+  }
+
+  .ReactModal__Content {
+    margin: 0 !important;
+  }
+}
+
 .modal-close {
   position: absolute;
   top: $close-position-mobile;
