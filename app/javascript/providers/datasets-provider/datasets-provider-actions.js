@@ -66,7 +66,9 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
 
         const parsedDatasets = serializedDatasets
           .filter(
-            d => d.env === 'production' || d.env === process.env.FEATURE_ENV
+            d =>
+              (d.env === 'production' || d.env === process.env.FEATURE_ENV) &&
+              d.published
           )
           .map(d => {
             const { layer, metadata } = d;
