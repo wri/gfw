@@ -8817,6 +8817,11 @@ junk@~0.3.0:
   resolved "https://registry.yarnpkg.com/junk/-/junk-0.3.0.tgz#6c89c636f6e99898d8efbfc50430db40be71e10c"
   integrity sha1-bInGNvbpmJjY77/FBDDbQL5x4Qw=
 
+kdbush@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/kdbush/-/kdbush-2.0.1.tgz#90c6128e3001ac68c550d7c9e2f222c0269666f1"
+  integrity sha512-9KqSdmWCkBIisFIGclT0FRagKhI7IVbMyUjsxCFG0Ly1Dg6whlxJ7b9lrq8ifk3X/fGeJzok1R75LQfZTfA5zQ==
+
 kew@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/kew/-/kew-0.7.0.tgz#79d93d2d33363d6fdd2970b335d9141ad591d79b"
@@ -8877,7 +8882,7 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@^1.10.0, layer-manager@^1.12.1:
+layer-manager@^1.10.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.12.1.tgz#daadbf1ccdfb79735b8e5ebda619e17b45fbb087"
   integrity sha512-JpyX9awx7ETKrEdOAPdYfmg363QNbae9ElOKk59iAVSV91tE6HwlmuvKz0ls/K5s97tf8tx2QMDZqOGeBwI0AA==
@@ -8886,6 +8891,18 @@ layer-manager@^1.10.0, layer-manager@^1.12.1:
     lodash "^4.17.10"
     prop-types "^15.6.2"
     reselect "^3.0.1"
+    wri-json-api-serializer "^1.0.1"
+
+layer-manager@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.13.1.tgz#e3025ecfe29b173e63c009afc47c8dce7df5164e"
+  integrity sha512-9RByRSAgULVzPYsYFDUZfde9HS7BkZWDAqW+ayi1rfoEhd+2GePGyAexUpUg3U5Kq2Tamcn4vV+vWqKS48Q3GA==
+  dependencies:
+    bluebird "^3.5.2"
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
+    reselect "^3.0.1"
+    supercluster "^4.1.1"
     wri-json-api-serializer "^1.0.1"
 
 lazy-ass@1.6.0:
@@ -15650,6 +15667,13 @@ sugarss@^1.0.0, sugarss@^1.0.1:
   integrity sha512-3qgLZytikQQEVn1/FrhY7B68gPUUGY3R1Q1vTiD5xT+Ti1DP/8iZuwFet9ONs5+bmL8pZoDQ6JrQHVgrNlK6mA==
   dependencies:
     postcss "^6.0.14"
+
+supercluster@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-4.1.1.tgz#cf13c3b28a3fb3db5290bfad7f524e244bd4ce78"
+  integrity sha512-sF0FfUOPFp96DKzwWFLeQOEqqKu2PpcesxAFeFsknA/q7g7igVVn/p3NI2XHEghNSyDAqunKNKqAbqNO8+7NDQ==
+  dependencies:
+    kdbush "^2.0.1"
 
 supports-color@5.1.0:
   version "5.1.0"
