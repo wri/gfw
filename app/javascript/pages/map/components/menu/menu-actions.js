@@ -109,28 +109,28 @@ export const handleClickLocation = createThunkAction(
 
 export const handleViewOnMap = createThunkAction(
   'handleViewOnMap',
-  ({ map, menu, analysis }) => (dispatch, getState) => {
+  ({ analysis, menu, map, mergeQuery }) => (dispatch, getState) => {
     const { payload, query } = getState().location || {};
+
     dispatch({
       type: MAP,
       payload,
       query: {
-        ...query,
         ...(map && {
           map: {
-            ...(query && query.map),
+            ...(mergeQuery && query && query.map),
             ...map,
             canBound: true
           }
         }),
         menu: {
-          ...(query && query.menu),
+          ...(mergeQuery && query && query.menu),
           menu,
           menuSection: ''
         },
         ...(analysis && {
           analysis: {
-            ...(query && query.analysis),
+            ...(mergeQuery && query && query.analysis),
             analysis
           }
         })

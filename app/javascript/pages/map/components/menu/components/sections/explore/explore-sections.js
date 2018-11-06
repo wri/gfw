@@ -52,7 +52,6 @@ export const stories = {
             opacity: 1,
             visibility: true
           },
-          // stories
           {
             dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
             layers: ['ecddc53a-f7b9-42a8-9e7a-94a30aeef134'],
@@ -89,6 +88,15 @@ export const stories = {
         zoom: 3,
         datasets: [
           // admin boundaries
+          {
+            dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+            layers: [
+              '6f6798e6-39ec-4163-979e-182a74ca65ee',
+              'c5d1e010-383a-4713-9aaa-44f728c0571c'
+            ],
+            opacity: 1,
+            visibility: true
+          },
           {
             dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
             layers: ['e097ebfe-56d9-4564-8e2a-d3328bdaea38'],
@@ -131,6 +139,12 @@ export const stories = {
               '6f6798e6-39ec-4163-979e-182a74ca65ee',
               'c5d1e010-383a-4713-9aaa-44f728c0571c'
             ],
+            opacity: 1,
+            visibility: true
+          },
+          {
+            dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
+            layers: ['2f4d9b87-6629-4658-8175-87d7892a5f32'],
             opacity: 1,
             visibility: true
           }
