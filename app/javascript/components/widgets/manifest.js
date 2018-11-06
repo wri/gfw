@@ -30,6 +30,7 @@ import * as emissionsDeforestation from './widgets/climate/emissions-deforestati
 
 // Biodiversity
 import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
+import * as intactness from './widgets/biodiversity/intactness';
 
 // Land Use
 import * as economicImpact from './widgets/land-use/economic-impact';
@@ -65,6 +66,7 @@ export default {
   emissionsDeforestation,
   // biodiversity
   gladBiodiversity,
+  intactness,
   // land use
   economicImpact,
   forestryEmployment
