@@ -11,6 +11,11 @@ $summary-color: #aaa;
   background-color: $grey-light;
   border: solid 1px $border;
 
+  &.active {
+    border-color: $green-gfw;
+    box-shadow: 0 0 0 1px $green-gfw;
+  }
+
   .image {
     height: rem(220px);
     background-size: cover;
@@ -18,18 +23,7 @@ $summary-color: #aaa;
     background-position: center;
     position: relative;
     z-index: 2;
-    width: calc(100% + 2px);
-    margin-left: -1px;
-  }
-
-  &.active {
-    border-color: $green-gfw;
-    box-shadow: 0 0 0 1px $green-gfw;
-
-    .image {
-      margin-left: 0;
-      width: 100%;
-    }
+    width: 100%;
   }
 
   .body {
