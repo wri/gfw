@@ -249,7 +249,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                 )
             };
           });
-        dispatch(setDatasets(parsedDatasets));
+        dispatch(setDatasets(sortBy(parsedDatasets, 'menuPosition')));
       })
     )
     .catch(err => {
