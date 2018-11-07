@@ -1,4 +1,3 @@
-import request from 'utils/request';
 import axios from 'axios';
 
 const REQUEST_URL = `${process.env.GFW_API}`;
@@ -16,7 +15,7 @@ const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
   }${adm2 ? `/${adm2}` : ''}${`?simplify=${thresh / 10}`}`;
 };
 
-export const getGeostoreProvider = ({ type, adm0, adm1, adm2 }) => {
+export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
   let thresh = 0.005;
   if (type === 'country') {
     const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
@@ -24,7 +23,7 @@ export const getGeostoreProvider = ({ type, adm0, adm1, adm2 }) => {
   }
   const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });
 
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 export const getGeostoreKey = geojson => {
