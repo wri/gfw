@@ -6,14 +6,9 @@ export default {
   admins: ['global', 'adm0', 'adm1'],
   large: true,
   analysis: false,
-  /* options: {
-    forestTypes: ['ifl', 'primary_forest', 'mangrove_2010_gmw'],
-    landCategories: true,
-    startYears: true,
-    endYears: true,
-    thresholds: true,
-    extentYears: true
-  }, */
+  options: {
+    bTypes: true
+  },
   colors: 'loss',
   dataType: 'loss',
   // metaKey: 'widget_tree_cover_loss',
@@ -24,6 +19,6 @@ export default {
   },
   sentence: {
     initial:
-      'In {location}, around {percent} of regions have a {percentile} degree of {variable}'
+      'Around {percent} of {location} has a {percentile} degree of biodiversity {variable}.'
   }
 };

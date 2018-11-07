@@ -122,7 +122,8 @@ class WidgetSettings extends PureComponent {
       datasets,
       extentYears,
       types,
-      weeks
+      weeks,
+      bTypes
     } = this.props.options;
     const hasExtraOptions =
       units ||
@@ -135,6 +136,7 @@ class WidgetSettings extends PureComponent {
       datasets ||
       types ||
       weeks ||
+      bTypes ||
       datasets;
 
     return (
@@ -235,6 +237,18 @@ class WidgetSettings extends PureComponent {
                 disabled={loading}
                 onChange={option =>
                   onSettingsChange({ value: { dataset: option.value }, widget })
+                }
+              />
+            )}
+            {bTypes && (
+              <Dropdown
+                theme="theme-select-light"
+                label="BIO DATASET"
+                value={settings.bType}
+                options={bTypes}
+                disabled={loading}
+                onChange={option =>
+                  onSettingsChange({ value: { bType: option.value }, widget })
                 }
               />
             )}
