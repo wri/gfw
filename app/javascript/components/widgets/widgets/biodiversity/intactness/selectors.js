@@ -85,7 +85,7 @@ export const parseData = createSelector(
 
     // eslint-disable-next-line no-console
     // console.log(percentiles);
-    return percentiles;
+    return { percentiles, list: [{ value: 1, label: 'asdf', color: 'red' }] };
   }
 );
 
@@ -104,8 +104,9 @@ export const parseConfig = createSelector([getColors], colors => ({
 
 export const parseSentence = createSelector(
   [parseData, getLocationName, getSentences, getSettings],
-  (percentiles, location, sentence, settings) => {
-    if (!percentiles || isEmpty(percentiles)) return null;
+  (data, location, sentence, settings) => {
+    const { percentiles } = data || {};
+    if (isEmpty(percentiles)) return null;
 
     const highestPercentile = percentiles.reduce(
       (min, next) => (next.count > min.count ? next : min),

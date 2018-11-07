@@ -34,9 +34,5 @@ GROUP BY iso, adm1, adm2`;
 
   return axios
     .get('https://wri-01.carto.com/api/v2/sql', { params: { q: sql } })
-    .then(response => {
-      // eslint-disable-next-line no-console
-      console.log(response);
-      return response.data.rows;
-    });
+    .then(response => response.data.rows);
 };
