@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 
-import mapInitialState from 'components/map-v2/initial-state';
+import { initialState as mapInitialState } from 'components/map-v2/reducers';
 import { initialState } from './recent-imagery-reducers';
 
 const getData = state => state.recentImagery.data || null;
@@ -24,7 +24,7 @@ const getMapUrlState = state =>
   (state.location && state.location.query && state.location.query.map) || null;
 
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
-  ...mapInitialState,
+  ...mapInitialState.settings,
   ...urlState
 }));
 

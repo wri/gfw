@@ -3,13 +3,14 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 
 import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
-import initialState from './initial-state';
+import { initialState } from './reducers';
 
 // get list data
 const getMapUrlState = state =>
   (state.location && state.location.query && state.location.query.map) || null;
 const getDatasets = state => state.datasets.datasets;
-const getLoading = state => state.datasets.loading || state.geostore.loading;
+const getLoading = state =>
+  state.datasets.loading || state.geostore.loading || state.map.loading;
 const getGeostore = state => state.geostore.geostore || null;
 const getQuery = state => (state.location && state.location.query) || null;
 const selectEmbed = state =>
@@ -34,7 +35,7 @@ const selectMenuSection = state =>
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
-  ...initialState,
+  ...initialState.settings,
   ...urlState
 }));
 
