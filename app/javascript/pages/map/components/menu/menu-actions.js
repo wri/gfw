@@ -4,6 +4,7 @@ import axios from 'axios';
 import compact from 'lodash/compact';
 import { parseGadm36Id } from 'utils/format';
 import { MAP } from 'router';
+import uniqBy from 'lodash/uniqBy';
 
 export const setLocationsData = createAction('setLocationsData');
 export const setMenuLoading = createAction('setMenuLoading');
@@ -80,6 +81,7 @@ export const handleClickLocation = createThunkAction(
     const query = getState().location.query || {};
     const location = parseGadm36Id(gid_2 || gid_1 || gid_0);
     const { map, menu, analysis } = getState().location.query || {};
+
     if (location) {
       dispatch({
         type: MAP,
@@ -111,6 +113,7 @@ export const handleViewOnMap = createThunkAction(
   'handleViewOnMap',
   ({ analysis, menu, map, mergeQuery }) => (dispatch, getState) => {
     const { payload, query } = getState().location || {};
+    const { datasets } = map || {};
 
     dispatch({
       type: MAP,
@@ -120,6 +123,15 @@ export const handleViewOnMap = createThunkAction(
           map: {
             ...(mergeQuery && query && query.map),
             ...map,
+            ...(mergeQuery &&
+              query &&
+              query.map &&
+              query.map.datasets && {
+                datasets: uniqBy(
+                  [...datasets, ...query.map.datasets],
+                  'dataset'
+                )
+              }),
             canBound: true
           }
         }),

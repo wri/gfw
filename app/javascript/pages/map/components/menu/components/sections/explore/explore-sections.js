@@ -34,6 +34,7 @@ export const stories = {
       }
     ],
     payload: {
+      mergeQuery: true,
       map: {
         center: {
           lat: 27,
@@ -79,6 +80,7 @@ export const stories = {
       }
     ],
     payload: {
+      mergeQuery: true,
       map: {
         center: {
           lat: 27,
@@ -124,6 +126,7 @@ export const stories = {
       }
     ],
     payload: {
+      mergeQuery: true,
       map: {
         center: {
           lat: 27,
