@@ -29,30 +29,35 @@ const normalizeSig = d => ({
 
 export const parsePayload = () => {};
 
-// get lists selected
-export const parseData = createSelector(
-  [getData, getSettings, getColors, getChildLocationDict],
-  (data, settings, colors, childLocations) => {
-    if (!data || isEmpty(data)) return null;
+const breaks = {
+  int: {
+    // upper boundaries
+    '0th': 0.002343949,
+    '10th': 0.008821356,
+    '25th': 0.03595682,
+    '75th': 0.04679092,
+    '90th': 1
+  },
+  sig: {
+    '0th': -4.980669,
+    '10th': -3.941458,
+    '25th': -2.52913,
+    '75th': -1.997363,
+    '90th': 0
+  }
+};
 
+const parseData = createSelector(
+  [getData, getSettings, getChildLocationDict],
+  (data, settings, childLocations) => {
+    if (
+      !data ||
+      isEmpty(data) ||
+      !childLocations ||
+      childLocations.length === 0
+    ) { return null; }
     const { bType } = settings;
-    const breaks = {
-      int: {
-        // upper boundaries
-        '0th': 0.002343949,
-        '10th': 0.008821356,
-        '25th': 0.03595682,
-        '75th': 0.04679092,
-        '90th': 1
-      },
-      sig: {
-        '0th': -4.980669,
-        '10th': -3.941458,
-        '25th': -2.52913,
-        '75th': -1.997363,
-        '90th': 0
-      }
-    };
+
     const percentiles = [
       { name: 'Very low', data: [], count: 0, percent: 0 },
       { name: 'Low', data: [], count: 0, percent: 0 },
@@ -87,12 +92,21 @@ export const parseData = createSelector(
       p.percent = Math.round(p.count / data.length * 100);
     });
 
-    // eslint-disable-next-line no-console
-    console.log('fdsafdsa', childLocations, percentiles);
+    return percentiles;
+  }
+);
+
+const buildData = createSelector(
+  [parseData, getColors, getSettings],
+  (percentiles, colors, settings) => {
+    if (!percentiles || isEmpty(percentiles)) return null;
+    const { bType } = settings;
+
     const highestPercentile = percentiles.reduce(
       (min, next) => (next.count > min.count ? next : min),
       percentiles[0]
     );
+
     const list = sortBy(highestPercentile.data, [bType]).map(item => ({
       label: item.label,
       color: colors.main
@@ -102,7 +116,7 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector([getColors], colors => ({
+const parseConfig = createSelector([getColors], colors => ({
   height: 250,
   xKey: 'name',
   yKeys: {
@@ -115,18 +129,16 @@ export const parseConfig = createSelector([getColors], colors => ({
   }
 }));
 
-export const parseSentence = createSelector(
+const parseSentence = createSelector(
   [parseData, getLocationName, getSentences, getSettings],
-  (data, location, sentence, settings) => {
-    const { percentiles } = data || {};
-    if (isEmpty(percentiles)) return null;
+  (percentiles, location, sentence, settings) => {
+    // const { percentiles } = data || {};
+    if (!percentiles || isEmpty(percentiles)) return null;
 
     const highestPercentile = percentiles.reduce(
       (min, next) => (next.count > min.count ? next : min),
       percentiles[0]
     );
-    // eslint-disable-next-line no-console
-    // console.log(percentiles);
 
     const { bType } = settings;
     const params = {
@@ -143,7 +155,7 @@ export const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: parseData,
+  data: buildData,
   dataConfig: parseConfig,
   sentence: parseSentence
 });

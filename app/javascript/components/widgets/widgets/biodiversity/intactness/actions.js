@@ -12,7 +12,7 @@ FROM global_biodiversity_table
 GROUP BY iso`;
   } else if (adm0 && !adm1) {
     // console.log('Request for country areas')
-    sql = `SELECT iso, adm1 AS location, sum(area) as area, "
+    sql = `SELECT iso, adm1 AS location, sum(area) as area, 
 sum(significance_total) AS sig, sum(intactness_total) AS int 
 FROM global_biodiversity_table 
 WHERE iso = '${adm0}' 
