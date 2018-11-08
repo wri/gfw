@@ -167,6 +167,7 @@
     "redux-tools": "github:vizzuality/redux-tools#v3.4.1",
     "reselect": "3.0.1",
     "stylelint": "8.3.1",
+    "terser-webpack-plugin": "^1.1.0",
     "three": "0.87.1",
     "three-orbit-controls": "82.1.0",
     "turf-inside": "^3.0.12",
