@@ -28,6 +28,7 @@ class ModalVideo extends PureComponent {
     return (
       <Modal
         isOpen={open}
+        contentLabel="Video"
         onRequestClose={() => setModalVideoClosed()}
         customStyles={{
           overlay: {

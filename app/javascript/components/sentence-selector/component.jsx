@@ -20,11 +20,7 @@ class SentenceSelector extends PureComponent {
 
     const nameRepl =
       sentence.includes('{name}') && name
-        ? this.reduceSentence(
-          sentence,
-          '{name}',
-          name && name.toLowerCase()
-        ).join('')
+        ? this.reduceSentence(sentence, '{name}', name).join('')
         : sentence;
     const selectorRepl = this.reduceSentence(
       nameRepl,

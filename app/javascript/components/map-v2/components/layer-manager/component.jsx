@@ -13,6 +13,7 @@ class LayerManagerComponent extends PureComponent {
       geostore,
       tileGeoJSON,
       setRecentImagerySettings,
+      setMapLoading,
       handleShowTooltip,
       handleRecentImageryTooltip,
       handleMapInteraction,
@@ -21,7 +22,11 @@ class LayerManagerComponent extends PureComponent {
     } = this.props;
 
     return (
-      <LayerManager map={map} plugin={PluginLeaflet}>
+      <LayerManager
+        map={map}
+        plugin={PluginLeaflet}
+        onLayerLoading={loading => setMapLoading(loading)}
+      >
         {geostore &&
           geostore.id && (
             <Layer
@@ -125,6 +130,7 @@ LayerManagerComponent.propTypes = {
   bbox: PropTypes.array,
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
+  setMapLoading: PropTypes.func,
   handleRecentImageryTooltip: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   analysisActive: PropTypes.bool,

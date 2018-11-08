@@ -11,10 +11,9 @@ import basemaps, {
 } from 'components/map-v2/components/basemaps/basemaps-schema';
 
 export const descriptions = {
-  topics:
-    'Topics are curated map presets for exploring the drivers of deforestation and understanding their impacts in ecosystems around the world.',
+  topics: 'Explore data related to the drivers and impacts of forest change.',
   placesToWatch:
-    'A GFW service that identifies areas of high-priority GLAD alerts on a monthly basis.'
+    'Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated quarterly. Sign up <a href="http://connect.wri.org/l/120942/2017-12-07/3mtt5w" target="_blank" rel="noopener nofollower">here</a> to receive an email when new Places to Watch are identified.'
 };
 
 export const stories = {
@@ -158,8 +157,7 @@ export const topics = {
   biodiversity: {
     slug: 'biodiversity',
     title: 'Biodiversity',
-    summary:
-      'Protecting forest habitats is key to maintaining biodiversity. In the last ten years, one in ten trees were lost in protected areas.',
+    summary: 'View the areas most important to terrestrial biodiversity.',
     image: biodiversity,
     buttons: [
       {
@@ -208,8 +206,7 @@ export const topics = {
   climate: {
     slug: 'climate',
     title: 'Climate',
-    summary:
-      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
+    summary: 'View emissions from tree cover loss in the tropics.',
     image: climate,
     buttons: [
       {
@@ -255,7 +252,7 @@ export const topics = {
     slug: 'commodities',
     title: 'Commodities',
     summary:
-      'To assist in increasing supply-chain transparency, our platform lets users track deforestation and estimate production over time in concession areas.',
+      'View tree cover loss within areas allocated for commodity production.',
     image: commodities,
     buttons: [
       {
@@ -325,8 +322,7 @@ export const topics = {
   water: {
     slug: 'water',
     title: 'Water',
-    summary:
-      'Healthy forested lands provide critical watershed functions, acting as natural infrastructure by minimizing erosion, purifying water, and reducing the impact of floods and droughts.',
+    summary: 'Explore forest change in each major river basin.',
     image: water,
     buttons: [
       {

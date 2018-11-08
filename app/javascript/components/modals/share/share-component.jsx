@@ -128,9 +128,13 @@ class Share extends PureComponent {
   }
 
   render() {
-    const { open, setShareOpen } = this.props;
+    const { open, setShareOpen, data } = this.props;
     return (
-      <Modal isOpen={open} onRequestClose={() => setShareOpen(false)}>
+      <Modal
+        isOpen={open}
+        contentLabel={`Share: ${data && data.title}`}
+        onRequestClose={() => setShareOpen(false)}
+      >
         {this.getContent()}
       </Modal>
     );

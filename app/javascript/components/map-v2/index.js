@@ -15,6 +15,7 @@ import { getMapProps } from './selectors';
 import { setRecentImagerySettings } from './components/recent-imagery/recent-imagery-actions';
 import * as popupActions from './components/popup/actions';
 import * as ownActions from './actions';
+import reducers, { initialState } from './reducers';
 
 const actions = {
   setRecentImagerySettings,
@@ -168,4 +169,5 @@ MapContainer.propTypes = {
   activeDatasets: PropTypes.array
 };
 
+export const reduxModule = { actions: ownActions, reducers, initialState };
 export default connect(getMapProps, actions)(MapContainer);

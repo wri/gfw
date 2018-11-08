@@ -13,9 +13,9 @@ const mapStateToProps = ({ location, ptw }) => ({
 
 class PlacesToWatchProvider extends PureComponent {
   componentDidMount() {
-    const { date, getPTW, data } = this.props;
-    if (date && isEmpty(data)) {
-      getPTW(date);
+    const { getPTW, data } = this.props;
+    if (isEmpty(data)) {
+      getPTW();
     }
   }
 
@@ -25,7 +25,6 @@ class PlacesToWatchProvider extends PureComponent {
 }
 
 PlacesToWatchProvider.propTypes = {
-  date: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
   getPTW: PropTypes.func.isRequired
 };

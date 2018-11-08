@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { track } from 'utils/analytics';
 
 import Toggle from 'components/ui/toggle';
 import Button from 'components/ui/button';
@@ -64,6 +65,11 @@ class LayerToggle extends PureComponent {
                   position="top"
                   disabled={!description}
                   html={<Tip text={description} />}
+                  onShow={() =>
+                    track('hoverModalBtn', {
+                      label: `${layer}: ${metadata || description}`
+                    })
+                  }
                 >
                   <Button
                     className={`theme-button-tiny theme-button-grey-filled square info-button ${
