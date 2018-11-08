@@ -27,7 +27,8 @@ const normalizeSig = d => ({
   sig: Math.log10(d.sig / d.area)
 });
 
-export const parsePayload = () => {};
+export const parsePayload = payload =>
+  payload && { percentile: payload.activeLabel };
 
 const breaks = {
   int: {
@@ -50,12 +51,9 @@ const breaks = {
 const parseData = createSelector(
   [getData, getSettings, getChildLocationDict],
   (data, settings, childLocations) => {
-    if (
-      !data ||
-      isEmpty(data) ||
-      !childLocations ||
-      childLocations.length === 0
-    ) { return null; }
+    if (!data || isEmpty(data) || isEmpty(childLocations)) {
+      return null;
+    }
     const { bType } = settings;
 
     const percentiles = [
@@ -76,10 +74,13 @@ const parseData = createSelector(
         // if the datapoint[variable] falls behind the break
         if (datapoint[bType] < breaks[bType][key]) {
           // add it to its percentile and update the count
-          percentiles[i].data.push({
-            ...datapoint,
-            label: childLocations[datapoint.location]
-          });
+          if (childLocations[datapoint.location]) {
+            percentiles[i].data.push({
+              ...datapoint,
+              label: childLocations[datapoint.location]
+            });
+          }
+
           percentiles[i].count += 1;
           // then `break` so it's not also added to next percentiles
           break;
@@ -87,12 +88,10 @@ const parseData = createSelector(
       }
     });
 
-    percentiles.forEach(p => {
-      // eslint-disable-next-line no-param-reassign
-      p.percent = Math.round(p.count / data.length * 100);
-    });
-
-    return percentiles;
+    return percentiles.map(p => ({
+      ...p,
+      percent: Math.round(p.count / data.length * 100)
+    }));
   }
 );
 
@@ -100,14 +99,19 @@ const buildData = createSelector(
   [parseData, getColors, getSettings],
   (percentiles, colors, settings) => {
     if (!percentiles || isEmpty(percentiles)) return null;
-    const { bType } = settings;
+    const { bType, percentile } = settings;
+    let selectedPercentile;
 
-    const highestPercentile = percentiles.reduce(
-      (min, next) => (next.count > min.count ? next : min),
-      percentiles[0]
-    );
+    if (!percentile) {
+      selectedPercentile = percentiles.reduce(
+        (min, next) => (next.count > min.count ? next : min),
+        percentiles[0]
+      );
+    } else {
+      selectedPercentile = percentiles.filter(p => p.name === percentile)[0];
+    }
 
-    const list = sortBy(highestPercentile.data, [bType]).map(item => ({
+    const list = sortBy(selectedPercentile.data, [bType]).map(item => ({
       label: item.label,
       color: colors.main
     }));
@@ -116,14 +120,22 @@ const buildData = createSelector(
   }
 );
 
+const backgroundControl = e => {
+  // TODO: background function true/false
+  // eslint-disable-next-line no-console
+  console.log(e);
+  return true;
+};
+
 const parseConfig = createSelector([getColors], colors => ({
   height: 250,
   xKey: 'name',
+  unit: '%',
   yKeys: {
     bars: {
-      count: {
+      percent: {
         fill: colors.main,
-        background: false
+        backgroundFn: backgroundControl
       }
     }
   }
@@ -134,17 +146,23 @@ const parseSentence = createSelector(
   (percentiles, location, sentence, settings) => {
     // const { percentiles } = data || {};
     if (!percentiles || isEmpty(percentiles)) return null;
+    const { bType, percentile } = settings;
 
-    const highestPercentile = percentiles.reduce(
-      (min, next) => (next.count > min.count ? next : min),
-      percentiles[0]
-    );
+    let selectedPercentile;
 
-    const { bType } = settings;
+    if (!percentile) {
+      selectedPercentile = percentiles.reduce(
+        (min, next) => (next.count > min.count ? next : min),
+        percentiles[0]
+      );
+    } else {
+      selectedPercentile = percentiles.filter(p => p.name === percentile)[0];
+    }
+
     const params = {
-      location,
-      percent: `${highestPercentile.percent}%`,
-      percentile: highestPercentile.name.toLocaleLowerCase(),
+      location: location === 'global' ? 'the world' : location,
+      percent: `${selectedPercentile.percent}%`,
+      percentile: selectedPercentile.name.toLocaleLowerCase(),
       variable: bType === 'int' ? 'intactness' : 'significance'
     };
     return {

@@ -40,7 +40,8 @@ class WidgetContainer extends Component {
       'activeData',
       'weeks',
       'page',
-      'highlighted'
+      'highlighted',
+      'percentile'
     ];
     let changedSetting = '';
     if (settings && prevProps.settings) {

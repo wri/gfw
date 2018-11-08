@@ -6,6 +6,15 @@ import WidgetAlerts from 'components/widgets/components/widget-composed-chart';
 import WidgetNumberedList from 'components/widgets/components/widget-numbered-list';
 
 class WidgetChartAndList extends PureComponent {
+  handleClick = payload => {
+    // console.log(payload);
+    const { setWidgetSettings, widget, parsePayload } = this.props;
+    if (parsePayload) {
+      const settings = parsePayload(payload);
+      if (settings) setWidgetSettings({ value: parsePayload(payload), widget });
+    }
+  };
+
   render() {
     const {
       data,
@@ -27,6 +36,7 @@ class WidgetChartAndList extends PureComponent {
           config={config}
           active={active}
           simple={simple}
+          handleClick={this.handleClick}
           setWidgetsSettings={setWidgetsSettings}
         />
         <WidgetNumberedList
@@ -50,7 +60,8 @@ WidgetChartAndList.propTypes = {
   active: PropTypes.bool,
   simple: PropTypes.bool,
   embed: PropTypes.bool,
-  setWidgetSettings: PropTypes.func
+  setWidgetSettings: PropTypes.func,
+  parsePayload: PropTypes.func
 };
 
 export default WidgetChartAndList;

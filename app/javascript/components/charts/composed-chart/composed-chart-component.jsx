@@ -54,7 +54,8 @@ class CustomComposedChart extends PureComponent {
       config,
       simple,
       handleMouseMove,
-      handleMouseLeave
+      handleMouseLeave,
+      handleClick
     } = this.props;
 
     const { lines, bars, areas } = yKeys;
@@ -79,6 +80,7 @@ class CustomComposedChart extends PureComponent {
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onClick={handleClick}
           >
             <defs>
               {gradients &&
@@ -159,7 +161,17 @@ class CustomComposedChart extends PureComponent {
               ))}
             {bars &&
               Object.keys(bars).map(key => (
-                <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
+                <Bar
+                  key={key}
+                  dataKey={key}
+                  dot={false}
+                  {...bars[key]}
+                  background={e => bars[key].backgroundFn(e)}
+                  //   (i) ? {
+                  //   opacity: 0.5,
+                  //   fill: '#d6d6d9'
+                  // } : false}
+                >
                   {bars[key].itemColor &&
                     data.map(item => (
                       <Cell key={`c_${item.color}`} fill={item.color} />
@@ -180,6 +192,7 @@ CustomComposedChart.propTypes = {
   simple: PropTypes.bool,
   handleMouseMove: PropTypes.func,
   handleMouseLeave: PropTypes.func,
+  handleClick: PropTypes.func,
   backgroundColor: PropTypes.string
 };
 

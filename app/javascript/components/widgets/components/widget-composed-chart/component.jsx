@@ -27,7 +27,7 @@ class WidgetAlerts extends Component {
   }, 100);
 
   render() {
-    const { data, config, active, simple } = this.props;
+    const { data, config, active, simple, handleClick } = this.props;
 
     return (
       <div className="c-widget-composed-chart">
@@ -37,6 +37,7 @@ class WidgetAlerts extends Component {
           config={config}
           handleMouseMove={this.handleMouseMove}
           handleMouseLeave={this.handleMouseLeave}
+          handleClick={handleClick}
           backgroundColor={active ? '#fefedc' : ''}
           simple={simple}
         />
@@ -54,7 +55,8 @@ WidgetAlerts.propTypes = {
   widget: PropTypes.string,
   active: PropTypes.bool,
   simple: PropTypes.bool,
-  layers: PropTypes.array
+  layers: PropTypes.array,
+  handleClick: PropTypes.func
 };
 
 export default WidgetAlerts;
