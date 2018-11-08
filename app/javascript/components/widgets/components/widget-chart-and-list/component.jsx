@@ -18,8 +18,6 @@ class WidgetChartAndList extends PureComponent {
       setWidgetSettings,
       setWidgetsSettings
     } = this.props;
-    // eslint-disable-next-line no-console
-    console.log('asdasdas', data);
     const { percentiles, list } = data;
 
     return (

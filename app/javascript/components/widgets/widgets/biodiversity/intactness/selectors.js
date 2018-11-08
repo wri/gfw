@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
 
 // get list data
 /*
@@ -13,7 +14,7 @@ const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
 const getData = state => state.data && state.data;
 const getLocationName = state => state.locationName || null;
-// const getChildLocationData = state => state.childLocationData || null;
+const getChildLocationDict = state => state.childLocationDict || null;
 const getSettings = state => state.settings || null;
 
 const normalizeInt = d => ({
@@ -30,8 +31,8 @@ export const parsePayload = () => {};
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings],
-  (data, settings) => {
+  [getData, getSettings, getColors, getChildLocationDict],
+  (data, settings, colors, childLocations) => {
     if (!data || isEmpty(data)) return null;
 
     const { bType } = settings;
@@ -70,7 +71,10 @@ export const parseData = createSelector(
         // if the datapoint[variable] falls behind the break
         if (datapoint[bType] < breaks[bType][key]) {
           // add it to its percentile and update the count
-          percentiles[i].data.push(datapoint);
+          percentiles[i].data.push({
+            ...datapoint,
+            label: childLocations[datapoint.location]
+          });
           percentiles[i].count += 1;
           // then `break` so it's not also added to next percentiles
           break;
@@ -84,8 +88,17 @@ export const parseData = createSelector(
     });
 
     // eslint-disable-next-line no-console
-    // console.log(percentiles);
-    return { percentiles, list: [{ value: 1, label: 'asdf', color: 'red' }] };
+    console.log('fdsafdsa', childLocations, percentiles);
+    const highestPercentile = percentiles.reduce(
+      (min, next) => (next.count > min.count ? next : min),
+      percentiles[0]
+    );
+    const list = sortBy(highestPercentile.data, [bType]).map(item => ({
+      label: item.label,
+      color: colors.main
+    }));
+
+    return { percentiles, list };
   }
 );
 
@@ -113,7 +126,7 @@ export const parseSentence = createSelector(
       percentiles[0]
     );
     // eslint-disable-next-line no-console
-    console.log(percentiles);
+    // console.log(percentiles);
 
     const { bType } = settings;
     const params = {
