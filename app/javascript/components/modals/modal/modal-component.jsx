@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import { track } from 'utils/analytics';
 
 import Icon from 'components/ui/icon';
 
@@ -9,7 +10,13 @@ import closeIcon from 'assets/icons/close.svg';
 import './modal-styles.scss';
 
 class CustomModal extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+  componentDidUpdate(prevProps) {
+    const { isOpen, contentLabel } = this.props;
+    if (isOpen && isOpen !== prevProps.isOpen) {
+      track('openModal', { label: contentLabel });
+    }
+  }
+
   render() {
     const {
       isOpen,

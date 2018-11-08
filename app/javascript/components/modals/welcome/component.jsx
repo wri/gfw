@@ -71,6 +71,7 @@ class ModalWelcome extends PureComponent {
     return (
       <Modal
         isOpen={open}
+        contentLabel="Welcome"
         onRequestClose={() => {
           setModalWelcome(false);
           track('welcomeModal', { label: 'close' });
