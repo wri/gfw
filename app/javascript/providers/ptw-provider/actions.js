@@ -1,6 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import uniqBy from 'lodash/uniqBy';
-import moment from 'moment';
 import { reverseLatLng } from 'utils/geoms';
 
 import { getPTWProvider } from 'services/places-to-watch';
@@ -8,10 +7,10 @@ import { getPTWProvider } from 'services/places-to-watch';
 export const setPTWLoading = createAction('setPTWLoading');
 export const setPTW = createAction('setPTW');
 
-export const getPTW = createThunkAction('getPTW', date => (dispatch, state) => {
+export const getPTW = createThunkAction('getPTW', () => (dispatch, state) => {
   if (!state().ptw.loading) {
     dispatch(setPTWLoading(true));
-    getPTWProvider(moment(date).format('YYYY-MM-DD'))
+    getPTWProvider()
       .then(response => {
         const { rows } = response.data;
         if (rows && !!rows.length) {
