@@ -1,4 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
+import { track } from 'utils/analytics';
 
 import { getGeostoreKey } from 'services/geostore';
 
@@ -31,6 +32,7 @@ export const getGeostoreId = createThunkAction(
 export const setDrawnGeostore = createThunkAction(
   'setDrawnGeostore',
   geostoreId => (dispatch, getState) => {
+    track('analysisDrawComplete');
     const { query, type } = getState().location;
     const { map } = query || {};
     dispatch({

@@ -112,6 +112,21 @@ export default {
     action: 'User opens analysis popup infowindow',
     label: '[area]'
   },
+  analysisDrawStart: {
+    category: 'map analysis',
+    action: 'User drawn shape',
+    label: 'start'
+  },
+  analysisDrawComplete: {
+    category: 'map analysis',
+    action: 'User drawn shape',
+    label: 'complete'
+  },
+  analysisDrawCancel: {
+    category: 'map analysis',
+    action: 'User drawn shape',
+    label: 'cancel'
+  },
   // basemaps
   basemapsInitial: {
     category: 'map data',
