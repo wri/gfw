@@ -7,6 +7,7 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 
 import Map from 'components/map-v2';
+import MapTour from 'components/map-v2/components/map-tour';
 import ModalMeta from 'components/modals/meta';
 import ModalWelcome from 'components/modals/welcome';
 import ModalSource from 'components/modals/sources';
@@ -27,6 +28,7 @@ class MapPage extends PureComponent {
           onMapClick={() => this.props.setMenuSettings({ menuSection: '' })}
         />
         <Share />
+        <MapTour />
         <ModalMeta />
         <ModalSource />
         <CountryDataProvider />

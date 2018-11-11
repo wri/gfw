@@ -30,6 +30,7 @@ class DataAnalysisMenu extends PureComponent {
           { '-embed': embed },
           className
         )}
+        data-map-tour="step-two"
       >
         <SubNavMenu
           className="nav"

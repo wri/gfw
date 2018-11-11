@@ -41,6 +41,7 @@ class App extends PureComponent {
             {!embed &&
               route.headerOptions && (
                 <Header
+                  className={cx('map-tour-main-menu')}
                   isMobile={!isDesktop}
                   loggedIn={loggedIn}
                   {...route.headerOptions}
