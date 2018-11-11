@@ -27,7 +27,6 @@ const selectWidgetActiveSettings = state => state.widgets.settings;
 // popup interactons
 const selectSelectedInteractionId = state => state.popup.selected;
 const selectInteractions = state => state.popup.interactions;
-const selectIsDesktop = (state, { isDesktop }) => isDesktop;
 const selectMenuSection = state =>
   state.location.query &&
   state.location.query.menu &&
@@ -335,12 +334,12 @@ export const getShowAnalysis = createSelector(
 );
 
 export const getOneClickAnalysisActive = createSelector(
-  [selectAnalysisSettings, selectLocation, getDraw, selectIsDesktop],
-  (settings, location, draw, isDesktop) =>
+  [selectAnalysisSettings, selectLocation, getDraw, getLoading],
+  (settings, location, draw, loading) =>
     settings &&
     !draw &&
+    !loading &&
     settings.showAnalysis &&
-    isDesktop &&
     !settings.showDraw &&
     !location.adm0
 );
