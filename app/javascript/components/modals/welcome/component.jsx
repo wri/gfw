@@ -4,8 +4,9 @@ import { track } from 'utils/analytics';
 
 import Icon from 'components/ui/icon';
 
-import exploreIcon from 'assets/icons/explore.svg';
-import analysisIcon from 'assets/icons/analysis.svg';
+import exploreGreenIcon from 'assets/icons/explore-green.svg';
+import helpGreenIcon from 'assets/icons/help-green.svg';
+import analysisGreenIcon from 'assets/icons/analysis-green.svg';
 
 import Modal from '../modal';
 
@@ -19,48 +20,50 @@ class ModalWelcome extends PureComponent {
         <h3>Welcome to the brand new Global Forest Watch map!</h3>
         <div className="body">
           <p className="intro">
-            We’ve made some significant changes to the site to make it faster,
-            more powerful and easier to use. Enjoy playing around with the new
-            features, and{' '}
-            <a
-              href="https://in.hotjar.com/s?siteId=1060074&surveyId=119711"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              please tell us what you think
-            </a>.
+            We&#39;ve made exciting changes to the map to make it faster, more
+            powerful, and easier to use.
           </p>
-          <div className="guide-cards">
-            <button
-              className="guide-btn"
-              onClick={() => {
-                setExploreView();
-                track('welcomeModal', { label: 'topics' });
-              }}
-            >
-              <p>
-                <b>If its your first time:</b>
-              </p>
-              <p>
-                Try out the explore tab for an introduction to key forest
-                topics.
-              </p>
-              <Icon icon={exploreIcon} />
-            </button>
-            <button
-              className="guide-btn"
-              onClick={() => {
-                setAnalysisView();
-                track('welcomeModal', { label: 'analysis' });
-              }}
-            >
-              <p>
-                <b>If you’re returning:</b>
-              </p>
-              <p>Try out the new one-click analysis feature.</p>
-              <Icon icon={analysisIcon} />
-            </button>
-          </div>
+          <p className="btn-intro">
+            <b>If its your first time:</b>
+          </p>
+          <button
+            className="guide-btn"
+            onClick={() => {
+              setExploreView();
+              track('welcomeModal', { label: 'topics' });
+            }}
+          >
+            <Icon className="guide-btn-icon" icon={helpGreenIcon} />
+            <p>
+              Check out the highlights and learn what you can do with the map.
+            </p>
+          </button>
+          <p className="btn-intro">
+            <b>If you&#39;re returning:</b>
+          </p>
+          <button
+            className="guide-btn"
+            onClick={() => {
+              setExploreView();
+              track('welcomeModal', { label: 'topics' });
+            }}
+          >
+            <Icon className="guide-btn-icon" icon={exploreGreenIcon} />
+            <p>
+              Try out the Explore tab for an introduction to key forest topics
+              and high priority areas with recent forest loss.
+            </p>
+          </button>
+          <button
+            className="guide-btn"
+            onClick={() => {
+              setAnalysisView();
+              track('welcomeModal', { label: 'analysis' });
+            }}
+          >
+            <Icon className="guide-btn-icon" icon={analysisGreenIcon} />
+            <p>Test out our new and improved analysis features.</p>
+          </button>
         </div>
       </div>
     );
