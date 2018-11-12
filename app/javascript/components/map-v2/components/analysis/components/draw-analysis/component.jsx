@@ -143,6 +143,8 @@ class DrawAnalysis extends PureComponent {
             !loading && (
               <NoContent message="No analysis layers activated. Please select one from the menu." />
             )}
+          {// eslint-disable-next-line no-console
+            console.log(this.props, this.map)}
           {hasLayers &&
             !loading &&
             !isEmpty(data) && (

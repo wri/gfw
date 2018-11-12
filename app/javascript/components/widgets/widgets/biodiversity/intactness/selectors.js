@@ -120,12 +120,14 @@ const buildData = createSelector(
   }
 );
 
+/*
 const backgroundControl = e => {
   // TODO: background function true/false
   // eslint-disable-next-line no-console
   console.log(e);
   return true;
 };
+*/
 
 const parseConfig = createSelector([getColors], colors => ({
   height: 250,
@@ -134,8 +136,8 @@ const parseConfig = createSelector([getColors], colors => ({
   yKeys: {
     bars: {
       percent: {
-        fill: colors.main,
-        backgroundFn: backgroundControl
+        fill: colors.main
+        // backgroundFn: backgroundControl
       }
     }
   }

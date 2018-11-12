@@ -21,6 +21,10 @@ import CustomTick from './custom-tick-component';
 import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
+  state = {
+    active: {}
+  };
+
   findMaxValue = (data, config) => {
     const { yKeys } = config;
     const maxValues = [];
@@ -48,6 +52,7 @@ class CustomComposedChart extends PureComponent {
       height,
       margin
     } = this.props.config;
+
     const {
       className,
       data,
@@ -57,6 +62,8 @@ class CustomComposedChart extends PureComponent {
       handleMouseLeave,
       handleClick
     } = this.props;
+
+    const { active } = this.state;
 
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
@@ -136,6 +143,17 @@ class CustomComposedChart extends PureComponent {
             {!simple && (
               <CartesianGrid vertical={false} strokeDasharray="3 4" />
             )}
+
+            {typeof active.index !== 'undefined' && (
+              <rect
+                x={active.data.x}
+                y={active.data.y}
+                width={active.data.width + 20}
+                height={200}
+                fill={'#000'}
+              />
+            )}
+
             <Tooltip
               simple={simple}
               cursor={{
@@ -167,6 +185,14 @@ class CustomComposedChart extends PureComponent {
                   dot={false}
                   {...bars[key]}
                   background={e => bars[key].backgroundFn(e)}
+                  onClick={(d, index) => {
+                    this.setState({
+                      active: {
+                        data: d,
+                        index
+                      }
+                    });
+                  }}
                   //   (i) ? {
                   //   opacity: 0.5,
                   //   fill: '#d6d6d9'
