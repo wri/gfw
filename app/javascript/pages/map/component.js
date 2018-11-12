@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import CountryDataProvider from 'providers/country-data-provider';
@@ -18,7 +18,8 @@ import './styles.scss';
 class MapPage extends PureComponent {
   static propTypes = {
     setMenuSettings: PropTypes.func,
-    embed: PropTypes.bool
+    embed: PropTypes.bool,
+    isDesktop: PropTypes.bool
   };
 
   render() {
@@ -28,14 +29,19 @@ class MapPage extends PureComponent {
           onMapClick={() => this.props.setMenuSettings({ menuSection: '' })}
         />
         <Share />
-        <MapTour />
         <ModalMeta />
         <ModalSource />
         <CountryDataProvider />
         <WhitelistsProvider />
         <DatasetsProvider />
         <GeostoreProvider />
-        {!this.props.embed && <ModalWelcome />}
+        {!this.props.embed &&
+          this.props.isDesktop && (
+            <Fragment>
+              <MapTour />
+              <ModalWelcome />
+            </Fragment>
+          )}
       </div>
     );
   }
