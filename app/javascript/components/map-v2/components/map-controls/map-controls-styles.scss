@@ -73,6 +73,13 @@
     .minus-icon {
       width: rem(13px);
     }
+
+    .map-tour-icon {
+      fill: $white;
+      background: $slate;
+      border-radius: 15px;
+      padding: 2px;
+    }
   }
 
   .mobile-controls-wrapper {

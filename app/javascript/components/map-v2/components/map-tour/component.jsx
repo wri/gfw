@@ -1,15 +1,20 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Tour from 'reactour';
+import Joyride from 'react-joyride';
+
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
+
+import closeIcon from 'assets/icons/close.svg';
 
 import './styles.scss';
 
 class MapTour extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      forceUpdate: 'none'
-    };
+  componentDidUpdate(prevProps) {
+    const { open } = this.props;
+    if (open && open !== prevProps.open) {
+      this.resetMapLayout();
+    }
   }
 
   getSteps = () => {
@@ -17,127 +22,110 @@ class MapTour extends PureComponent {
 
     return [
       {
+        target: '.map-tour-data-layers',
+        content: 'Explore available data layers',
+        disableBeacon: true,
+        placement: 'right'
+      },
+      {
+        target: '.map-tour-legend',
+        placement: 'right',
+        content: {
+          text:
+            'View and change settings for data layers on the map like date range and opacity. Click the "i" icons to learn more about a dataset.',
+          next: () => {
+            setAnalysisSettings({
+              showAnalysis: true
+            });
+          },
+          prev: () => {
+            setAnalysisSettings({
+              showAnalysis: false
+            });
+          }
+        }
+      },
+      {
+        target: '.map-tour-legend',
+        placement: 'right',
+        content: {
+          text:
+            'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading shape.',
+          next: () => {
+            setMenuSettings({
+              menuSection: 'explore'
+            });
+          },
+          prev: () => {
+            setMenuSettings({
+              menuSection: ''
+            });
+          }
+        }
+      },
+      {
+        target: '.map-tour-menu-panel',
+        placement: 'right',
+        content: {
+          text:
+            'Explore data related to important forest topics, Places to Watch (high priority areas with recent forest loss), and stories about forests.',
+          next: () => {
+            setMenuSettings({
+              menuSection: 'search'
+            });
+          },
+          prev: () => {
+            setMenuSettings({
+              menuSection: 'explore'
+            });
+          }
+        }
+      },
+      {
+        target: '.map-tour-menu-panel',
+        placement: 'right',
+        content: {
+          text: 'Search for a datasets, location or geographic coordinates.',
+          next: () => {
+            setMenuSettings({
+              menuSection: 'search'
+            });
+          },
+          prev: () => {
+            setMenuSettings({
+              menuSection: ''
+            });
+          }
+        }
+      },
+      {
+        target: '.map-tour-basemaps',
+        content: {
+          text:
+            'Customize the basemap, including the boundaries displayed and the color of the labels.',
+          next: () => {},
+          prev: () => {
+            setMenuSettings({
+              menuSection: 'search'
+            });
+          }
+        }
+      },
+      {
+        target: '.map-tour-recent-imagery',
         content:
-          'Welcome to the Global Forest Watch Interactive Map. This quick guide will introduce you to the map’s main features and tools.'
+          'View recent satellite imagery, search by date and cloud cover.'
       },
       {
-        selector: '[data-map-tour="step-one"]',
-        content: 'Explore available data layers'
-      },
-      {
-        selector: '[data-map-tour="step-two"]',
+        target: '.map-tour-map-controls',
         content:
-          'View and change settings for data layers on the map like date range and opacity. Click the "i" icons to learn more about a dataset.',
-        action: node => {
-          node.focus();
-          setAnalysisSettings({
-            showAnalysis: false
-          });
-          this.forceUpdate('data');
-        }
+          'Access basic map tools and information: zoom in/out share, expand, zoom level, lat/long, and coordinates.'
       },
       {
-        selector: '[data-map-tour="step-two"]',
-        content:
-          'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading shape.',
-        action: node => {
-          node.focus();
-          setAnalysisSettings({
-            showAnalysis: true
-          });
-          setMenuSettings({
-            menuSection: ''
-          });
-          this.forceUpdate('analysis');
-        }
-      },
-      {
-        selector: '[data-map-tour="step-four"]',
-        content:
-          'Explore data related to important forest topics, Places to Watch (high priority areas with recent forest loss), and stories about forests.',
-        action: node => {
-          setMenuSettings({
-            menuSection: 'explore'
-          });
-          setTimeout(() => node.focus(), 400);
-          this.forceUpdate('explore');
-        }
-      },
-      {
-        selector: '[data-map-tour="step-four"]',
-        content: 'Search for a datasets, location or geographic coordinates',
-        action: node => {
-          setMenuSettings({
-            menuSection: 'search'
-          });
-          setTimeout(() => node.focus(), 400);
-          this.forceUpdate('search');
-        }
-      },
-      {
-        selector: '.map-tour-basemaps',
-        content:
-          'Customize the basemap, including the boundaries displayed and the color of the labels.',
-        action: node => {
-          node.focus();
-          setAnalysisSettings({
-            showAnalysis: false
-          });
-          setMenuSettings({
-            menuSection: ''
-          });
-          this.forceUpdate('basemaps');
-        }
-      },
-      {
-        selector: '.map-tour-recent-imagery',
-        content:
-          'View recent satellite imagery, search by date and cloud cover.',
-        action: node => {
-          node.focus();
-          setAnalysisSettings({
-            showAnalysis: false
-          });
-          setMenuSettings({
-            menuSection: ''
-          });
-          this.forceUpdate('recent-imagery');
-        }
-      },
-      {
-        selector: '.map-tour-map-controls',
-        content:
-          'Access basic map tools and information: zoom in/out share, expand, zoom level, lat/long, and coordinates.',
-        action: node => {
-          node.focus();
-          setAnalysisSettings({
-            showAnalysis: false
-          });
-          setMenuSettings({
-            menuSection: ''
-          });
-          this.forceUpdate('controls');
-        }
-      },
-      {
-        selector: '.map-tour-main-menu',
-        content: 'Access the main navigation menu.',
-        action: node => {
-          node.focus();
-          setAnalysisSettings({
-            showAnalysis: false
-          });
-          setMenuSettings({
-            menuSection: ''
-          });
-          this.forceUpdate('main-menu');
-        }
+        target: '.map-tour-main-menu',
+        content: 'Access the main navigation menu.'
       }
     ];
-  };
-
-  forceUpdate = step => {
-    this.setState({ forceUpdate: step });
   };
 
   resetMapLayout = () => {
@@ -146,16 +134,78 @@ class MapTour extends PureComponent {
     setMenuSettings({ menuSection: '' });
   };
 
+  renderTooltip = ({
+    closeProps,
+    backProps,
+    content,
+    primaryProps,
+    skipProps,
+    isLastStep,
+    index
+  }) => {
+    let prevOnClick = backProps && backProps.onClick;
+    let nextOnClick = primaryProps && primaryProps.onClick;
+    let html = content;
+    if (typeof content === 'object') {
+      html = content.text;
+      prevOnClick = e => {
+        content.prev();
+        setTimeout(() => backProps.onClick(e), 300);
+      };
+      nextOnClick = e => {
+        content.next();
+        setTimeout(() => primaryProps.onClick(e), 300);
+      };
+    }
+    return (
+      <div className="c-tour-tooltip">
+        <button className="tour-close" {...closeProps}>
+          <Icon icon={closeIcon} />
+        </button>
+        <div className="tour-step">{index + 1}</div>
+        <div className="tour-content">{html}</div>
+        <div className="tour-btns">
+          {index !== 0 && (
+            <Button
+              theme="theme-button-light"
+              {...backProps}
+              onClick={prevOnClick}
+            >
+              Prev
+            </Button>
+          )}
+          {isLastStep ? (
+            <Button {...skipProps}>Finish</Button>
+          ) : (
+            <Button {...primaryProps} onClick={nextOnClick}>
+              Next
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   render() {
     const { open, setMapTourOpen } = this.props;
+
     return (
-      <Tour
-        accentColor="#97be32"
+      <Joyride
         steps={this.getSteps()}
-        isOpen={open}
-        onRequestClose={() => setMapTourOpen(false)}
-        onAfterOpen={this.resetMapLayout}
-        update={this.state.forceUpdate}
+        run={open}
+        continuous
+        callback={data => {
+          if (data.action === 'close' || data.type === 'tour:end') {
+            setMapTourOpen(false);
+          }
+        }}
+        tooltipComponent={this.renderTooltip}
+        styles={{
+          options: {
+            overlayColor: 'rgba(17, 55, 80, 0.4)',
+            zIndex: 1000
+          }
+        }}
       />
     );
   }

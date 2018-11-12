@@ -1,0 +1,82 @@
+@import '~styles/settings.scss';
+
+.c-map-tour {
+  font-size: rem(14px);
+  color: $slate;
+
+  button div {
+    height: rem(40px);
+    border: solid 1px $green-gfw;
+    border-radius: rem(20px);
+    padding: 0 rem(15px);
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .next-btn {
+    background-color: $green-gfw;
+    color: $white;
+  }
+}
+
+.c-map-tour-overlay {
+  rect {
+    fill: rgba(17, 55, 80, 0.4);
+  }
+}
+
+.c-tour-tooltip {
+  font-size: rem(14px);
+  color: $slate;
+  background-color: $white;
+  padding: rem(20px);
+  max-width: rem(290px);
+  position: relative;
+
+  .tour-close {
+    position: absolute;
+    top: rem(20px);
+    right: rem(20px);
+    cursor: pointer;
+
+    svg {
+      fill: $slate;
+    }
+  }
+
+  .tour-step {
+    background-color: $grey-dark;
+    width: rem(30px);
+    height: rem(30px);
+    font-size: rem(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: rem(15px);
+    border-radius: 50%;
+    color: $white;
+  }
+
+  .tour-content {
+    margin-bottom: rem(20px);
+  }
+
+  .tour-btns {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      text-transform: uppercase;
+
+      &:first-child {
+        margin-right: rem(5px);
+      }
+
+      &:last-child {
+        margin-left: rem(5px);
+      }
+    }
+  }
+}

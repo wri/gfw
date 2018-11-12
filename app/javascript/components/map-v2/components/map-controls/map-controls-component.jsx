@@ -18,6 +18,7 @@ import minusIcon from 'assets/icons/minus.svg';
 import shareIcon from 'assets/icons/share.svg';
 import fullscreenIcon from 'assets/icons/fit-zoom.svg';
 import printIcon from 'assets/icons/print.svg';
+import helpIocn from 'assets/icons/help.svg';
 import globeIcon from 'assets/icons/globe.svg';
 import satelliteIcon from 'assets/icons/satellite.svg';
 
@@ -302,6 +303,16 @@ class MapControlsButtons extends PureComponent {
     </Button>
   );
 
+  renderMapTourBtn = () => (
+    <Button
+      theme="theme-button-map-control"
+      tooltip={{ text: 'Take a tour of the map' }}
+      onClick={() => this.props.setMapTourOpen(true)}
+    >
+      <Icon icon={helpIocn} className="map-tour-icon" />
+    </Button>
+  );
+
   renderMapPosition = () => {
     const { settings } = this.props;
     const { zoom, center } = settings || {};
@@ -336,6 +347,7 @@ class MapControlsButtons extends PureComponent {
               {this.renderShowPanelsButton()}
               {this.renderShareButton()}
               {this.renderPrintButton()}
+              {this.renderMapTourBtn()}
             </div>
             {this.renderMapPosition()}
           </Fragment>
@@ -357,6 +369,7 @@ MapControlsButtons.propTypes = {
   settings: PropTypes.object,
   active: PropTypes.bool,
   setMenuSettings: PropTypes.func,
+  setMapTourOpen: PropTypes.func,
   recentSettings: PropTypes.object,
   recentLoading: PropTypes.bool,
   setRecentImagerySettings: PropTypes.func,

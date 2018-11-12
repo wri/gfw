@@ -102,8 +102,7 @@ class MapMenu extends PureComponent {
         {isDesktop => (
           <div className={cx('c-map-menu', className)}>
             <div
-              className={cx('menu-tiles', { embed })}
-              data-map-tour="step-one"
+              className={cx('menu-tiles', 'map-tour-data-layers', { embed })}
             >
               {isDesktop ? (
                 <MenuDesktop

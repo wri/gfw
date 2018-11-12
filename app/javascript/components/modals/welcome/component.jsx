@@ -14,7 +14,12 @@ import './styles.scss';
 
 class ModalWelcome extends PureComponent {
   getContent() {
-    const { setAnalysisView, setExploreView } = this.props;
+    const {
+      setAnalysisView,
+      setExploreView,
+      setMapTourOpen,
+      setModalWelcome
+    } = this.props;
     return (
       <div className="c-modal-welcome">
         <h3>Welcome to the brand new Global Forest Watch map!</h3>
@@ -29,8 +34,9 @@ class ModalWelcome extends PureComponent {
           <button
             className="guide-btn"
             onClick={() => {
-              setExploreView();
-              track('welcomeModal', { label: 'topics' });
+              setModalWelcome(false);
+              setMapTourOpen(true);
+              track('welcomeModal', { label: 'tour' });
             }}
           >
             <Icon className="guide-btn-icon" icon={helpGreenIcon} />
@@ -90,6 +96,7 @@ ModalWelcome.propTypes = {
   open: PropTypes.bool,
   setModalWelcome: PropTypes.func,
   setAnalysisView: PropTypes.func,
+  setMapTourOpen: PropTypes.func,
   setExploreView: PropTypes.func
 };
 

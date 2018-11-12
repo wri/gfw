@@ -1,7 +1,7 @@
 import * as actions from './actions';
 
 export const initialState = {
-  open: true
+  open: false
 };
 
 const setMapTourOpen = (state, { payload }) => ({

@@ -61,39 +61,42 @@ class MenuPanel extends PureComponent {
         {active && (
           <Panel
             key="menu-container"
-            className={cx('c-menu-panel', { large }, className)}
+            className={cx(
+              'c-menu-panel',
+              'map-tour-menu-panel',
+              { large },
+              className
+            )}
           >
-            <div data-map-tour="step-four">
-              {!isDesktop ? (
-                <div className="panel-header">
-                  <div className="panel-label">
-                    {category ? (
-                      <button
-                        onClick={() => setMenuSettings({ datasetCategory: '' })}
-                      >
-                        <Icon icon={arrowIcon} className="icon-return" />
-                        <span>{startCase(category)}</span>
-                      </button>
-                    ) : (
-                      <span>{label}</span>
-                    )}
-                  </div>
-                  <Button
-                    className="panel-close"
-                    theme="theme-button-clear"
-                    onClick={onClose}
-                  >
-                    <Icon icon={arrowIcon} className="icon-close-panel" />
-                  </Button>
+            {!isDesktop ? (
+              <div className="panel-header">
+                <div className="panel-label">
+                  {category ? (
+                    <button
+                      onClick={() => setMenuSettings({ datasetCategory: '' })}
+                    >
+                      <Icon icon={arrowIcon} className="icon-return" />
+                      <span>{startCase(category)}</span>
+                    </button>
+                  ) : (
+                    <span>{label}</span>
+                  )}
                 </div>
-              ) : (
-                <button className="close-menu" onClick={onClose}>
-                  <Icon icon={closeIcon} className="icon-close-panel" />
-                </button>
-              )}
-              <div className="panel-body">{children}</div>
-              {loading && <Loader className="map-menu-loader" />}
-            </div>
+                <Button
+                  className="panel-close"
+                  theme="theme-button-clear"
+                  onClick={onClose}
+                >
+                  <Icon icon={arrowIcon} className="icon-close-panel" />
+                </Button>
+              </div>
+            ) : (
+              <button className="close-menu" onClick={onClose}>
+                <Icon icon={closeIcon} className="icon-close-panel" />
+              </button>
+            )}
+            <div className="panel-body">{children}</div>
+            {loading && <Loader className="map-menu-loader" />}
           </Panel>
         )}
       </PoseGroup>
