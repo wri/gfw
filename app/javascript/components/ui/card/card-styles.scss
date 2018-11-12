@@ -9,32 +9,21 @@ $summary-color: #aaa;
   flex-direction: column;
   justify-content: flex-start;
   background-color: $grey-light;
-
-  &::after {
-    border: solid 1px $border;
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-  }
+  border: solid 1px $border;
 
   &.active {
-    &::after {
-      border: solid 2px $green-gfw;
-    }
+    border-color: $green-gfw;
+    box-shadow: 0 0 0 1px $green-gfw;
   }
 
   .image {
-    width: 100%;
     height: rem(220px);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
     z-index: 2;
+    width: 100%;
   }
 
   .body {
