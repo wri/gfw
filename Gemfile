@@ -30,7 +30,7 @@ gem 'requirejs-rails', '1.0.0'
 
 gem 'rack-reverse-proxy', '~> 0.12.0', :require => 'rack/reverse_proxy'
 # Amazon Ruby sdk for file upload to S3
-gem 'aws-sdk', '~> 2'
+gem 'aws-sdk', '~> 3'
 
 #Webpacker
 gem 'webpacker', '~> 3.5'
