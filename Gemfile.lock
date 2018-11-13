@@ -320,7 +320,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     public_suffix (3.0.2)
     puma (3.11.3)
-    rack (2.0.5)
+    rack (2.0.6)
     rack-proxy (0.6.5)
       rack
     rack-reverse-proxy (0.12.0)
