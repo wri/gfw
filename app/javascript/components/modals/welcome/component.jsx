@@ -22,14 +22,14 @@ class ModalWelcome extends PureComponent {
     } = this.props;
     return (
       <div className="c-modal-welcome">
-        <h3>Welcome to the brand new Global Forest Watch map!</h3>
+        <h3>Welcome to the new Global Forest Watch map!</h3>
         <div className="body">
           <p className="intro">
             We&#39;ve made exciting changes to the map to make it faster, more
             powerful, and easier to use.
           </p>
           <p className="btn-intro">
-            <b>If its your first time:</b>
+            <b>If it&#39;s your first time:</b>
           </p>
           <button
             className="guide-btn"

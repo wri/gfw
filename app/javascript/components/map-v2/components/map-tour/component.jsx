@@ -50,7 +50,7 @@ class MapTour extends PureComponent {
         placement: 'right',
         content: {
           text:
-            'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading shape.',
+            'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
           next: () => {
             setMenuSettings({
               menuSection: 'explore'
@@ -85,7 +85,7 @@ class MapTour extends PureComponent {
         target: '.map-tour-menu-panel',
         placement: 'right',
         content: {
-          text: 'Search for a datasets, location or geographic coordinates.',
+          text: 'Search for a dataset, location or geographic coordinates.',
           next: () => {
             setMenuSettings({
               menuSection: 'search'
@@ -114,12 +114,12 @@ class MapTour extends PureComponent {
       {
         target: '.map-tour-recent-imagery',
         content:
-          'View recent satellite imagery, search by date and cloud cover.'
+          'View recent satellite imagery, searchable by date and cloud cover.'
       },
       {
         target: '.map-tour-map-controls',
         content:
-          'Access basic map tools and information: zoom in/out share, expand, zoom level, lat/long, and coordinates.'
+          'Access basic map tools and information: zoom in/out share, expand, zoom level, lat/long coordinates.'
       },
       {
         target: '.map-tour-main-menu',
