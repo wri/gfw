@@ -300,7 +300,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.0)
       mini_mime (>= 0.1.1)
-    method_source (0.9.0)
+    method_source (0.9.1)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -409,7 +409,7 @@ GEM
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
-    rspec-rails (3.8.0)
+    rspec-rails (3.8.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -515,7 +515,7 @@ DEPENDENCIES
   requirejs-rails (= 1.0.0)
   responders (~> 2.0)
   rmagick
-  rspec-rails (~> 3.8.0)
+  rspec-rails (~> 3.8.1)
   sass-rails (~> 5.0.6)
   shoulda-matchers
   show_me_the_cookies
