@@ -53,7 +53,9 @@ export const getDataFromLayers = createSelector(
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const firstDataObj = data[Object.keys(data)[0]];
-    const area = firstDataObj.areaHa || firstDataObj.totals.areaHa;
+    const area =
+      firstDataObj.areaHa ||
+      (firstDataObj.totals && firstDataObj.totals.areaHa);
 
     return [
       {
