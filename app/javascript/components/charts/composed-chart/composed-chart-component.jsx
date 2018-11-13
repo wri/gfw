@@ -21,10 +21,6 @@ import CustomTick from './custom-tick-component';
 import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
-  state = {
-    active: {}
-  };
-
   findMaxValue = (data, config) => {
     const { yKeys } = config;
     const maxValues = [];
@@ -50,7 +46,8 @@ class CustomComposedChart extends PureComponent {
       unit,
       unitFormat,
       height,
-      margin
+      margin,
+      barBackground
     } = this.props.config;
 
     const {
@@ -63,8 +60,6 @@ class CustomComposedChart extends PureComponent {
       handleClick
     } = this.props;
 
-    const { active } = this.state;
-
     const { lines, bars, areas } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
@@ -73,7 +68,7 @@ class CustomComposedChart extends PureComponent {
         className={`c-composed-chart ${className}`}
         style={{ height: simple ? 100 : height || 250 }}
       >
-        <ResponsiveContainer width="99%">
+        <ResponsiveContainer width="99%" height="100%">
           <ComposedChart
             data={data}
             margin={
@@ -144,13 +139,16 @@ class CustomComposedChart extends PureComponent {
               <CartesianGrid vertical={false} strokeDasharray="3 4" />
             )}
 
-            {typeof active.index !== 'undefined' && (
+            {barBackground && (
               <rect
-                x={active.data.x}
-                y={active.data.y}
-                width={active.data.width + 20}
-                height={200}
-                fill={'#000'}
+                x={100 / data.length * barBackground.activeIndex}
+                y={15}
+                // width={1.2 * active.data.width}
+                width={`${0.6 * (100 / data.length)}%`}
+                height={'82%'}
+                // fill={'rgba(0,0,0,0.2)'}
+                fill="#555555"
+                // log={console.log(bars)}
               />
             )}
 
@@ -184,19 +182,8 @@ class CustomComposedChart extends PureComponent {
                   dataKey={key}
                   dot={false}
                   {...bars[key]}
-                  background={e => bars[key].backgroundFn(e)}
-                  onClick={(d, index) => {
-                    this.setState({
-                      active: {
-                        data: d,
-                        index
-                      }
-                    });
-                  }}
-                  //   (i) ? {
-                  //   opacity: 0.5,
-                  //   fill: '#d6d6d9'
-                  // } : false}
+                  // layout={bars[key].horizontal ? 'horizontal' : 'vertical'}
+                  // onClick={(d, i) => console.log(d, i)}
                 >
                   {bars[key].itemColor &&
                     data.map(item => (

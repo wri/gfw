@@ -3,13 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 
 // get list data
-/*
-const getLoss = state => (state.data && state.data.loss) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
-const getIndicator = state => state.indicator || null;
-const getSimple = state => state.simple || false;
-const getIsTropical = state => state.isTropical || false;
-*/
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
 const getData = state => state.data && state.data;
@@ -120,33 +113,50 @@ const buildData = createSelector(
   }
 );
 
-/*
-const backgroundControl = e => {
-  // TODO: background function true/false
-  // eslint-disable-next-line no-console
-  console.log(e);
-  return true;
-};
-*/
+const getPercentileIndex = createSelector(
+  [parseData, getSettings],
+  (percentiles, settings) => {
+    const { percentile } = settings;
+    if (!percentile || !percentiles || isEmpty(percentiles)) return null;
+    let index = -1;
 
-const parseConfig = createSelector([getColors], colors => ({
-  height: 250,
-  xKey: 'name',
-  unit: '%',
-  yKeys: {
-    bars: {
-      percent: {
-        fill: colors.main
-        // backgroundFn: backgroundControl
+    percentiles.forEach((p, i) => {
+      if (p.name === percentile) {
+        index = i;
       }
-    }
+    });
+
+    return index;
   }
-}));
+);
+
+const parseConfig = createSelector(
+  [getColors, getPercentileIndex],
+  (colors, index) => ({
+    height: 250,
+    xKey: 'name',
+    unit: '%',
+    yKeys: {
+      bars: {
+        percent: {
+          fill: colors.main,
+          clickable: true
+          // horizontal: true
+        }
+      }
+    },
+    yAxis: {
+      domain: [0, 100]
+    },
+    barBackground: {
+      activeIndex: index
+    }
+  })
+);
 
 const parseSentence = createSelector(
   [parseData, getLocationName, getSentences, getSettings],
   (percentiles, location, sentence, settings) => {
-    // const { percentiles } = data || {};
     if (!percentiles || isEmpty(percentiles)) return null;
     const { bType, percentile } = settings;
 
