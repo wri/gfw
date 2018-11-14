@@ -38,15 +38,9 @@ $desktop-padding: rem(40px);
   }
 
   .guide-btn {
-    display: flex;
-    align-items: center;
-    border: $green-gfw 1px dashed;
-    border-radius: rem(5px);
-    padding: rem(15px) rem(25px);
-    cursor: pointer;
-    line-height: 1.4;
     text-align: left;
     margin-bottom: rem(15px);
+    height: auto;
 
     .guide-btn-icon {
       width: rem(40px);
@@ -59,10 +53,6 @@ $desktop-padding: rem(40px);
 
     p {
       font-size: rem(14px);
-    }
-
-    &:hover {
-      background-color: $grey-light;
     }
   }
 }

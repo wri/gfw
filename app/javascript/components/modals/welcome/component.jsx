@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { track } from 'utils/analytics';
 
 import Icon from 'components/ui/icon';
+import Button from 'components/ui/button';
 
 import exploreGreenIcon from 'assets/icons/explore-green.svg';
 import helpGreenIcon from 'assets/icons/help-green.svg';
@@ -14,35 +15,43 @@ import './styles.scss';
 
 class ModalWelcome extends PureComponent {
   getContent() {
-    const { setAnalysisView, setExploreView } = this.props;
+    const {
+      setAnalysisView,
+      setExploreView,
+      setMapTourOpen,
+      setModalWelcome
+    } = this.props;
     return (
       <div className="c-modal-welcome">
-        <h3>Welcome to the brand new Global Forest Watch map!</h3>
+        <h3>Welcome to the new Global Forest Watch map!</h3>
         <div className="body">
           <p className="intro">
             We&#39;ve made exciting changes to the map to make it faster, more
             powerful, and easier to use.
           </p>
           <p className="btn-intro">
-            <b>If its your first time:</b>
+            <b>If it&#39;s your first time:</b>
           </p>
-          <button
+          <Button
             className="guide-btn"
+            theme="theme-button-clear theme-button-dashed"
             onClick={() => {
-              setExploreView();
-              track('welcomeModal', { label: 'topics' });
+              setModalWelcome(false);
+              setMapTourOpen(true);
+              track('welcomeModal', { label: 'tour' });
             }}
           >
             <Icon className="guide-btn-icon" icon={helpGreenIcon} />
             <p>
               Check out the highlights and learn what you can do with the map.
             </p>
-          </button>
+          </Button>
           <p className="btn-intro">
             <b>If you&#39;re returning:</b>
           </p>
-          <button
+          <Button
             className="guide-btn"
+            theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setExploreView();
               track('welcomeModal', { label: 'topics' });
@@ -53,9 +62,10 @@ class ModalWelcome extends PureComponent {
               Try out the Explore tab for an introduction to key forest topics
               and high priority areas with recent forest loss.
             </p>
-          </button>
-          <button
+          </Button>
+          <Button
             className="guide-btn"
+            theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setAnalysisView();
               track('welcomeModal', { label: 'analysis' });
@@ -63,7 +73,7 @@ class ModalWelcome extends PureComponent {
           >
             <Icon className="guide-btn-icon" icon={analysisGreenIcon} />
             <p>Test out our new and improved analysis features.</p>
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -90,6 +100,7 @@ ModalWelcome.propTypes = {
   open: PropTypes.bool,
   setModalWelcome: PropTypes.func,
   setAnalysisView: PropTypes.func,
+  setMapTourOpen: PropTypes.func,
   setExploreView: PropTypes.func
 };
 
