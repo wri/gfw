@@ -1,0 +1,70 @@
+@import '~styles/settings.scss';
+
+$settings-items-margin: rem(25px);
+
+.c-widget-settings {
+  width: rem(290px);
+  background-color: $white;
+  padding: rem(20px) 0 rem(5px);
+
+  > div {
+    margin-bottom: $settings-items-margin;
+    border-bottom: 1px solid $border;
+    padding: 0 $settings-items-margin;
+
+    > div {
+      margin-bottom: rem(20px);
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .title {
+    font-size: rem(14px);
+    color: $slate;
+  }
+
+  .years-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: rem(10px);
+    font-size: 13px;
+
+    .label {
+      margin-right: rem(10px);
+    }
+
+    .select-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .text-date {
+      margin: 0 10px;
+    }
+  }
+
+  .canopy-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .label {
+      margin-bottom: 0;
+    }
+
+    .container {
+      margin-bottom: 0;
+      max-width: rem(90px);
+    }
+
+    .dd__wrapper {
+      max-width: rem(85px);
+    }
+  }
+}

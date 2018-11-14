@@ -23,8 +23,9 @@
   textarea {
     border-radius: 4px;
     background-color: transparent;
-    border: solid 1px #dededd;
+    border: solid 1px $border;
     outline: none;
+    color: $slate;
   }
 
   input,

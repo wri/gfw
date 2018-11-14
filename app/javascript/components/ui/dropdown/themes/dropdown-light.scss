@@ -1,0 +1,17 @@
+@import '~styles/settings.scss';
+
+.theme-dropdown-light {
+  .c-selector {
+    .clear-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .value {
+      top: calc(50% - #{rem(9px)});
+      bottom: 0;
+      left: rem(11px);
+    }
+  }
+}

@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import { submitContactForm } from 'services/forms';
 
 export const setShowConfirm = createAction('setShowConfirm');

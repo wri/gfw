@@ -7,13 +7,14 @@ class Meta extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { title, description } = this.props;
+
     return title ? (
       <Helmet>
         <title>{`${title} | Global Forest Watch`}</title>
-        <meta name="description" content={`${description} ${title}`} />
+        <meta name="description" content={description} />
         <meta name="DC.title" content={`${title} | Global Forest Watch`} />
         <meta property="og:title" content={`${title} | Global Forest Watch`} />
-        <meta property="og:description" content={`${description} ${title}`} />
+        <meta property="og:description" content={description} />
         <meta property="og:url" content={window.location.href} />
       </Helmet>
     ) : null;

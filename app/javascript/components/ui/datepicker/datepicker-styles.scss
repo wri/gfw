@@ -1,20 +1,55 @@
 @import '~styles/settings.scss';
 
-$reactDatesInputHeight: rem(50px);
-$reactDatesFangHeight: rem(10px);
-$datepickerInputHeight: rem(28px);
-$datepickerFangHeight: rem(6px);
-$datepickerPositionAdjust: rem(8px);
+.SingleDatePicker_picker {
+  top: rem(30px) !important;
 
-.c-datepicker {
   td {
     vertical-align: middle;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  strong {
+    font-weight: 400;
+  }
+}
+
+.DayPicker__withBorder {
+  box-shadow: $pop-box-shadow;
+  border-radius: 0;
+}
+
+.DayPickerNavigation_button__horizontalDefault {
+  border-radius: 2px;
+}
+
+.CalendarDay__selected,
+.CalendarDay__selected:active,
+.CalendarDay__selected:hover {
+  background: $green-gfw;
+  border: 1px solid $green-gfw;
+  color: $white;
+}
+
+.c-datepicker {
+  .SingleDatePicker_picker {
+    top: rem(38px) !important;
+  }
+
+  .DateInput_fang {
+    top: rem(28px) !important;
   }
 
   .SingleDatePickerInput {
+    .DateInput {
+      width: auto;
+    }
+
     .DateInput_input {
       padding: 0;
-      height: $datepickerInputHeight;
+      height: rem(28px);
       border: 1px solid $green-gfw;
       border-radius: rem(25px);
       font-size: 13px;
@@ -24,31 +59,5 @@ $datepickerPositionAdjust: rem(8px);
       color: $slate;
       cursor: pointer;
     }
-
-    .DateInput_fang {
-      height: $datepickerFangHeight;
-      transform: translateY($datepickerInputHeight - $reactDatesInputHeight + ($reactDatesFangHeight - $datepickerFangHeight) - $datepickerPositionAdjust);
-    }
-
-    .DateInput_fangStroke {
-      stroke: rgba($slate, 0.08);
-    }
-  }
-
-  .SingleDatePicker_picker {
-    transform: translateY($datepickerInputHeight - $reactDatesInputHeight - $datepickerPositionAdjust);
-  }
-
-  .DayPicker__withBorder {
-    box-shadow: $pop-box-shadow;
-    border-radius: 0;
-  }
-
-  .CalendarDay__selected,
-  .CalendarDay__selected:active,
-  .CalendarDay__selected:hover {
-    background: $green-gfw;
-    border: 1px solid $green-gfw;
-    color: $white;
   }
 }

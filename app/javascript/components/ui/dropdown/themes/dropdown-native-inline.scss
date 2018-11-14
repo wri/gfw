@@ -1,0 +1,22 @@
+@import '~styles/settings.scss';
+
+.theme-dropdown-native-inline {
+  .select-wrapper {
+    border: 0;
+    border-radius: 0;
+    width: auto;
+
+    select {
+      font-size: rem(10px);
+      text-transform: uppercase;
+      font-weight: 400;
+      padding: 0 rem(10px) 0 0;
+      height: auto;
+    }
+
+    .arrow-icon {
+      right: 0;
+      width: rem(6px);
+    }
+  }
+}

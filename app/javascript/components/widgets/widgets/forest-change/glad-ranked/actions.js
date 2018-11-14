@@ -2,7 +2,7 @@ import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
 import { getMultiRegionExtent } from 'services/forest-data';
 import axios from 'axios';
 
-export const getData = ({ params, dispatch, setWidgetData, widget }) => {
+export default ({ params }) =>
   axios
     .all([
       fetchGladIntersectionAlerts({ ...params }),
@@ -14,27 +14,12 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
         const { data } = alerts.data;
         const latestData = latest.data.data;
         const areas = extent.data.data;
-        dispatch(
-          setWidgetData({
-            data:
-              data && extent && latest
-                ? {
-                  alerts: data,
-                  extent: areas,
-                  latest: latestData[0].attributes.date
-                }
-                : {},
-            widget
-          })
-        );
+        return data && extent && latest
+          ? {
+            alerts: data,
+            extent: areas,
+            latest: latestData[0].attributes.date
+          }
+          : {};
       })
-    )
-    .catch(error => {
-      dispatch(setWidgetData({ widget, error: true }));
-      console.info(error);
-    });
-};
-
-export default {
-  getData
-};
+    );

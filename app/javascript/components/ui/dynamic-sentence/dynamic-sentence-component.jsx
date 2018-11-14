@@ -16,7 +16,7 @@ class WidgetDynamicSentence extends PureComponent {
   render() {
     const { className, handleMouseOver, handleMouseOut } = this.props;
     const { sentence, params } = this.props.sentence;
-    const { component } = params;
+    const { component } = params || {};
     let formattedSentence = sentence;
     if (params) {
       Object.keys(params).forEach(p => {
@@ -24,16 +24,17 @@ class WidgetDynamicSentence extends PureComponent {
         if (param && p !== 'component') {
           if (typeof param === 'object') {
             if (param.color) {
-              formattedSentence = formattedSentence.replace(
-                `{${p}}`,
-                `<b style="color: ${param.color};">${param.value}</b>`
-              );
+              formattedSentence =
+                formattedSentence &&
+                formattedSentence.replace(
+                  `{${p}}`,
+                  `<b style="color: ${param.color};">${param.value}</b>`
+                );
             }
           } else {
-            formattedSentence = formattedSentence.replace(
-              `{${p}}`,
-              `<b>${param}</b>`
-            );
+            formattedSentence =
+              formattedSentence &&
+              formattedSentence.replace(`{${p}}`, `<b>${param}</b>`);
           }
         }
       });
@@ -58,6 +59,7 @@ class WidgetDynamicSentence extends PureComponent {
           animateFill={false}
           onShown={handleMouseOver}
           onHidden={handleMouseOut}
+          duration={0}
         >
           <span className="hover-text">{mappedComponent.key}</span>
         </Tooltip>
@@ -76,7 +78,7 @@ class WidgetDynamicSentence extends PureComponent {
 
 WidgetDynamicSentence.propTypes = {
   className: PropTypes.string,
-  sentence: PropTypes.object,
+  sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   handleMouseOver: PropTypes.func,
   handleMouseOut: PropTypes.func
 };

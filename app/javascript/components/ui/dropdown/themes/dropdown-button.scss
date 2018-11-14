@@ -6,15 +6,15 @@ $dd-button-height: rem(28px);
   text-align: center;
 
   .container {
-    max-width: rem(70px);
-
-    .selector {
+    .c-selector {
       border-radius: rem(25px);
       border-color: $green-gfw;
       height: $dd-button-height;
+      padding: 0 rem(10px);
 
       .value {
         padding: 0;
+        right: rem(26px);
       }
     }
 
@@ -30,7 +30,7 @@ $dd-button-height: rem(28px);
         border-right: none;
         transform-origin: 0 0;
         transform: rotate(-45deg);
-        top: calc(#{$dd-button-height} + #{rem(11px)});
+        top: calc(#{$dd-button-height} + #{rem(6px)});
         left: calc(50% - 14px);
         border-bottom-color: #fff;
         box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
@@ -45,7 +45,14 @@ $dd-button-height: rem(28px);
     }
   }
 
-  .arrow {
-    display: none;
+  .arrow-btn .arrow {
+    fill: $green-gfw;
+  }
+
+  .label {
+    color: $warm-grey;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
   }
 }

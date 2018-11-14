@@ -1,21 +1,24 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
+import cx from 'classnames';
 
 import './pie-chart-legend-styles.scss';
 
 class PieChartLegend extends PureComponent {
   render() {
-    const { data, config, className } = this.props;
+    const { data, config, className, simple } = this.props;
     let sizeClass = '';
     if (data.length > 5) {
       sizeClass = 'x-small';
-    } else if (data.length > 3) {
+    } else if (data.length > 3 || simple) {
       sizeClass = 'small';
     }
 
     return (
-      <ul className={`c-pie-chart-legend ${className} ${sizeClass}`}>
+      <ul
+        className={cx('c-pie-chart-legend', className, sizeClass, { simple })}
+      >
         {data.map((item, index) => {
           const value = `${formatNumber({
             num: item[config.key],
@@ -44,6 +47,7 @@ class PieChartLegend extends PureComponent {
 PieChartLegend.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
+  simple: PropTypes.bool,
   className: PropTypes.string
 };
 

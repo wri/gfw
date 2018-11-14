@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
@@ -10,16 +10,14 @@ import {
   getStdDevData,
   getDatesData,
   getChartConfig
-} from 'components/widgets/components/widget-alerts/selectors-utils';
+} from 'components/widgets/utils/data';
 
-// get list data
 const getAlerts = state => state.data || null;
 const getColors = state => state.colors || null;
-const getSettings = state => state.settings || null;
 const getActiveData = state => state.settings.activeData || null;
 const getWeeks = state => state.settings.weeks || null;
 const getDataset = state => state.settings.dataset || null;
-const getSentences = state => state.config.sentences || null;
+const getSentences = state => state.config.sentence || null;
 
 export const getData = createSelector(
   [getAlerts, getDataset],
@@ -96,47 +94,59 @@ export const parseConfig = createSelector([getColors], colors =>
   )
 );
 
-export const getSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences, getSettings, getDataset],
-  (data, colors, activeData, sentences, settings, dataset) => {
+export const parseSentence = createSelector(
+  [parseData, getColors, getActiveData, getSentences, getDataset],
+  (data, colors, activeData, sentence, dataset) => {
     if (!data) return null;
-    let lastDate = data[data.length - 1];
+    let lastDate = data[data.length - 1] || {};
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
-    const { initial } = sentences;
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
-    let status = 'unusually low';
+    const {
+      count,
+      twoPlusStdDev,
+      plusStdDev,
+      minusStdDev,
+      twoMinusStdDev,
+      date
+    } =
+      lastDate || {};
 
-    if (lastDate.count > lastDate.twoPlusStdDev[1]) {
+    let status = 'unusually low';
+    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
       status = 'unusually high';
       statusColor = colorRange[0];
     } else if (
-      lastDate.count <= lastDate.twoPlusStdDev[1] &&
-      lastDate.count > lastDate.twoPlusStdDev[0]
+      twoPlusStdDev &&
+      count <= twoPlusStdDev[1] &&
+      count > twoPlusStdDev[0]
     ) {
       status = 'high';
       statusColor = colorRange[1];
     } else if (
-      lastDate.count <= lastDate.plusStdDev[1] &&
-      lastDate.count > lastDate.minusStdDev[0]
+      plusStdDev &&
+      minusStdDev &&
+      count <= plusStdDev[1] &&
+      count > minusStdDev[0]
     ) {
       status = 'average';
       statusColor = colorRange[2];
     } else if (
-      lastDate.count >= lastDate.twoMinusStdDev[0] &&
-      lastDate.count < lastDate.twoMinusStdDev[1]
+      twoMinusStdDev &&
+      count >= twoMinusStdDev[0] &&
+      count < twoMinusStdDev[1]
     ) {
       status = 'low';
       statusColor = colorRange[3];
     }
-    const date = moment(lastDate.date).format('Do of MMMM YYYY');
+    const formattedData = moment(date).format('Do of MMMM YYYY');
     const params = {
-      date,
+      date: formattedData,
       dataset,
       count: {
-        value: format(',')(lastDate.count),
+        value: format(',')(count),
         color: colors.main
       },
       status: {
@@ -144,6 +154,29 @@ export const getSentence = createSelector(
         color: statusColor
       }
     };
-    return { sentence: initial, params };
+    return { sentence, params };
   }
 );
+
+export const parsePayload = payload => {
+  const payloadData = payload && payload.find(p => p.name === 'count');
+  const payloadValues = payloadData && payloadData.payload;
+  if (payloadValues) {
+    const startDate = moment()
+      .year(payloadValues.year)
+      .week(payloadValues.week);
+
+    return {
+      startDate: startDate.format('YYYY-MM-DD'),
+      endDate: startDate.add(7, 'days'),
+      ...payloadValues
+    };
+  }
+  return {};
+};
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence
+});

@@ -1,0 +1,60 @@
+@import '~styles/settings.scss';
+
+.theme-switch-toggle {
+  .react-toggle {
+    width: rem(22px);
+    height: rem(14px);
+
+    .react-toggle-track {
+      width: 100%;
+      height: 100%;
+      background-color: $light-grey;
+    }
+
+    .react-toggle-thumb {
+      top: rem(2px);
+      left: rem(2px);
+      width: rem(10px);
+      height: rem(10px);
+      border: 0;
+      box-shadow: none !important;
+    }
+
+    &:hover {
+      .react-toggle-track {
+        background-color: $light-grey;
+      }
+    }
+
+    &--checked {
+      .react-toggle-thumb {
+        left: calc(50% - #{rem(1px)});
+      }
+
+      .react-toggle-track,
+      &:hover .react-toggle-track {
+        background-color: $green-gfw;
+      }
+    }
+  }
+
+  &.-small {
+    .react-toggle {
+      width: rem(16px);
+      height: rem(10px);
+
+      .react-toggle-thumb {
+        top: rem(2px);
+        left: rem(2px);
+        width: rem(6px);
+        height: rem(6px);
+      }
+
+      &--checked {
+        .react-toggle-thumb {
+          left: 50%;
+        }
+      }
+    }
+  }
+}

@@ -1,29 +1,31 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
-import { getAdminPath } from '../../../utils';
-
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.payload || null;
-const getQuery = state => state.query || null;
-const getLocationsMeta = state =>
-  state[state.adminKey] || state.countries || null;
+const getLocation = state => state.location || null;
+const getLocationsMeta = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
-const getCurrentLocation = state => state.currentLocation || null;
-const getCurrentLabel = state => state.currentLabel || null;
-const getAdminLevel = state => state.adminLevel || null;
+const getLocationObject = state => state.locationObject || null;
+const getLocationName = state => state.locationName || null;
 const getSentences = state => state.config.sentences || null;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.locationType || null;
+const getAllLocation = state => state.allLocation || null;
+
+const getAdminLevel = state => state.adminLevel || null;
 const getParentLocation = state => state[state.parentLevel] || null;
 
-const haveData = (data, currentLocation) =>
-  data.filter(item => item.id === currentLocation.value).length;
+const haveData = (data, locationObject) =>
+  locationObject &&
+  data &&
+  data.filter(item => item.id === locationObject.value).length;
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -45,9 +47,9 @@ export const parseData = createSelector(
     getSortedData,
     getSettings,
     getLocation,
-    getQuery,
-    getCurrentLocation,
-    getCurrentLabel,
+    getAllLocation,
+    getLocationObject,
+    getLocationName,
     getLocationsMeta,
     getColors
   ],
@@ -55,8 +57,8 @@ export const parseData = createSelector(
     data,
     settings,
     location,
-    query,
-    currentLocation,
+    allLocation,
+    locationObject,
     currentLabel,
     meta,
     colors
@@ -64,8 +66,12 @@ export const parseData = createSelector(
     if (
       !data ||
       !data.length ||
-      (currentLabel !== 'global' && !haveData(data, currentLocation))
-    ) { return null; }
+      (currentLabel !== 'global' &&
+        locationObject &&
+        !haveData(data, locationObject))
+    ) {
+      return null;
+    }
 
     let dataTrimmed = [];
     data.forEach(d => {
@@ -81,10 +87,10 @@ export const parseData = createSelector(
       ...d,
       rank: i + 1
     }));
-    if (location.country) {
+    if (location.adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
-        d => d.id === currentLocation.value
+        d => d.id === locationObject.value
       );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
@@ -98,26 +104,39 @@ export const parseData = createSelector(
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
+    const { payload, query, type } = allLocation;
+
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: getAdminPath({
-        ...location,
-        country: location.region && location.country,
-        query,
-        id: d.id
-      }),
+      path: {
+        type,
+        payload: {
+          type: 'country',
+          ...payload,
+          ...(!payload.adm1 && {
+            adm0: d.id
+          }),
+          ...(payload.adm1 && {
+            adm1: payload.adm2 ? payload.adm1 : d.id
+          }),
+          ...(payload.adm2 && {
+            adm2: d.id
+          })
+        },
+        query
+      },
       value: settings.unit === 'ha' ? d.gain : d.percentage
     }));
   }
 );
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     getSortedData,
     getIndicator,
-    getCurrentLocation,
-    getCurrentLabel,
+    getLocationObject,
+    getLocationName,
     getSentences,
     getParentLocation,
     getAdminLevel
@@ -125,7 +144,7 @@ export const getSentence = createSelector(
   (
     data,
     indicator,
-    currentLocation,
+    locationObject,
     currentLabel,
     sentences,
     parent,
@@ -134,8 +153,10 @@ export const getSentence = createSelector(
     if (
       !data ||
       !data.length ||
-      (currentLabel !== 'global' && !haveData(data, currentLocation))
-    ) { return null; }
+      (currentLabel !== 'global' && !haveData(data, locationObject))
+    ) {
+      return null;
+    }
     const {
       initial,
       withIndicator,
@@ -145,7 +166,7 @@ export const getSentence = createSelector(
       globalWithIndicator
     } = sentences;
     const locationData =
-      currentLocation && data.find(l => l.id === currentLocation.value);
+      locationObject && data.find(l => l.id === locationObject.value);
     const gain = locationData ? locationData.gain : sumBy(data, 'gain');
     const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
@@ -173,3 +194,20 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationType],
+  (title, type) => {
+    let selectedTitle = title.initial;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence,
+  title: parseTitle
+});

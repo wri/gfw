@@ -167,6 +167,8 @@ $aside-width: 270px;
     svg {
       display: block;
       fill: $dark;
+      width: 20px;
+      height: 20px;
       &.-inactive {
         display: none;
       }

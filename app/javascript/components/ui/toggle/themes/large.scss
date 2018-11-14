@@ -1,0 +1,18 @@
+@import '~styles/settings.scss';
+
+.toggle-large {
+  width: rem(22px);
+  height: rem(14px);
+  border-radius: rem(10px);
+
+  &::before {
+    width: rem(10px);
+    height: rem(10px);
+  }
+
+  &.-active {
+    &::before {
+      transform: translateX(8px);
+    }
+  }
+}

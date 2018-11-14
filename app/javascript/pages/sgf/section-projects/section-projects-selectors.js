@@ -76,7 +76,9 @@ export const getProjectsList = createSelector(
   ],
   (allProjects, groupedProjects, category, search, filter) => {
     if (!allProjects || !category) return null;
-    if (filter && filter.length) { return allProjects.filter(p => filter.indexOf(p.id) > -1); }
+    if (filter && filter.length) {
+      return allProjects.filter(p => filter.indexOf(p.id) > -1);
+    }
     const projects =
       category === 'All' ? allProjects : groupedProjects[category];
     if (!search) return projects;

@@ -1,26 +1,11 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import 'styles/styles.scss';
-import 'babel-polyfill';
+import { connect } from 'react-redux';
 
-import reducers from './reducers';
-import router from './router';
+import * as actions from 'components/modals/video/video-actions';
+import { routes } from 'router';
+import PageComponent from './component';
 
-import Page from './page';
+const mapStateToProps = () => ({
+  sections: Object.values(routes)[0].sections
+});
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = applyMiddleware(thunk, router.middleware);
-const store = createStore(
-  reducers,
-  composeEnhancers(router.enhancer, middlewares)
-);
-
-const About = () => (
-  <Provider store={store}>
-    <Page />
-  </Provider>
-);
-
-export default About;
+export default connect(mapStateToProps, actions)(PageComponent);

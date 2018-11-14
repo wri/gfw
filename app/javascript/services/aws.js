@@ -1,4 +1,5 @@
-import AWS from 'aws-sdk';
+import S3 from 'aws-sdk/clients/s3';
+import { config } from 'aws-sdk/lib/core';
 
 const creds = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -7,8 +8,8 @@ const creds = {
 };
 
 export const initS3 = () => {
-  AWS.config.update(creds);
-  return new AWS.S3();
+  config.update(creds);
+  return new S3();
 };
 
 export const getImageUrl = params => {

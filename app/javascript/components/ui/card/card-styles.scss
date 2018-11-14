@@ -1,37 +1,45 @@
 @import '~styles/settings.scss';
 
+$summary-color: #aaa;
+
 .c-card {
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: $grey-light;
   border: solid 1px $border;
 
+  &.active {
+    border-color: $green-gfw;
+    box-shadow: 0 0 0 1px $green-gfw;
+  }
+
   .image {
-    width: 100%;
     height: rem(220px);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
-
-    span {
-      display: block;
-      font-size: 12px;
-      position: absolute;
-      bottom: rem(10px);
-      right: rem(10px);
-      color: rgba(255, 255, 255, 0.8);
-    }
+    z-index: 2;
+    width: 100%;
   }
 
   .body {
     padding: rem(15px);
-    background-color: $grey-light;
+    border-top: 0;
+    z-index: 2;
 
     @media screen and (min-width: $screen-m) {
       padding: rem(25px);
+    }
+
+    span {
+      font-size: 12px;
+      margin-bottom: rem(10px);
+      color: $summary-color;
+      display: block;
     }
 
     .title {
@@ -46,6 +54,8 @@
       font-size: rem(16px);
       margin-bottom: rem(20px);
       line-height: 1.9;
+      height: rem(80px);
+      overflow: hidden;
     }
 
     .meta {
@@ -53,6 +63,11 @@
       font-size: rem(14px);
       opacity: 0.5;
       text-transform: uppercase;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
     }
 
     .read-more {

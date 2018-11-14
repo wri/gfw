@@ -1,6 +1,6 @@
 /* FONTS */
 @import '~styles/utils.scss';
-@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i);
+
 $font-family-1: 'Fira Sans', sans-serif;
 
 /* SCREENS */
@@ -22,16 +22,28 @@ $green-gfw: #97be32;
 $yellow: #fffee2;
 $grey-light: #f7f7f7;
 $grey-dark: #d6d6d9;
+$warm-grey: #999;
+$medium-grey: #676867;
+$map-grey: #808080;
+$hot-grey: #9e9e9e;
+$light-grey: #c8c9c1;
+$ashes-grey: #7f7f7f;
 $slate: #555;
 $slate-dark: #444;
 $slate-light: #333;
-$warm-grey: #999;
-$medium-grey: #676867;
 $googleplus: #da4735;
 $twitter: #598dca;
 $facebook: #3a589b;
 $border: #e5e5df;
 $tip: #fffee2;
+$white-tree: #f2f2f2;
+$white-calcium: #dedede;
+$greyish-brown: #4a4a4a;
+$loss: #f69;
+$gain: #6d6de5;
+$extent: #a5ed80;
+$ocean: #a4dbfd;
+$error: #ed1846;
 
 /* FONT COLORS */
 $font-color-1: $white;

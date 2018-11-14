@@ -4,22 +4,24 @@
     <%= render 'shared/meta' %>
     <%= render 'shared/favicons' %>
 
-    <!-- render react app pack -->
-    <%= javascript_pack_tag controller_name %>
-    <%= stylesheet_pack_tag controller_name %>
+    <%= yield :head %>
 
     <!-- custom -->
     <link rel="canonical" href="<%= request.original_url %>" />
-    <script src="https://cdn.optimizely.com/js/7988050790.js"></script>
     <%= render 'shared/gfw_assets' %>
     <%= render 'shared/cache_keys' %>
-    <%= render 'shared/track' %>
+    <%= render 'shared/tracking' %>
+    <%= render 'shared/leaflet' %>
+    <%= render 'shared/google_carto' %>
+    <%= javascript_entrypoint_pack_tag 'app' %>
+    <% if @is_production %>
+      <%= stylesheet_entrypoint_pack_tag 'app' %>
+    <% end %>
 
-    <%= yield :head %>
   </head>
   <body>
     <div id="headerGfw"></div>
-    <%= yield %>
+      <%= yield %>
     <div id="footerGfw"></div>
   </body>
 </html>

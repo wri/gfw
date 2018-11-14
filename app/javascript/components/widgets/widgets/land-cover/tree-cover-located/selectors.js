@@ -1,10 +1,9 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-import { getAdminPath } from '../../../utils';
 
 // get list data
 const getData = state => state.data || null;
@@ -13,27 +12,41 @@ const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLandCategory = state => state.landCategory || null;
 const getForestType = state => state.forestType || null;
-const getLocation = state => state.payload || null;
-const getQuery = state => state.query || null;
-const getLocationsMeta = state => state[state.childKey] || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocation = state => state.allLocation || null;
+const getLocationsMeta = state => state.childLocationData || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.locationType || null;
 
 export const parseList = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta, getColors, getQuery],
-  (data, settings, location, meta, colors, query) => {
+  [getData, getSettings, getLocation, getLocationsMeta, getColors],
+  (data, settings, location, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
       const regionMeta = meta.find(l => d.id === l.value);
       if (regionMeta) {
+        const { payload, query, type } = location;
         dataMapped.push({
           label: (regionMeta && regionMeta.label) || '',
           extent: d.extent,
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
-          path: getAdminPath({ ...location, query, id: d.id }),
+          path: {
+            type,
+            payload: {
+              ...payload,
+              ...(payload.adm1 && {
+                adm2: d.id
+              }),
+              ...(!payload.adm1 && {
+                adm1: d.id
+              })
+            },
+            query
+          },
           color: colors.main
         });
       }
@@ -47,7 +60,7 @@ export const parseData = createSelector([parseList], data => {
   return sortByKey(uniqBy(data, 'label'), 'value', true);
 });
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     parseList,
     parseData,
@@ -56,7 +69,7 @@ export const getSentence = createSelector(
     getIndicator,
     getForestType,
     getLandCategory,
-    getCurrentLocation,
+    getLocationName,
     getSentences
   ],
   (
@@ -67,10 +80,10 @@ export const getSentence = createSelector(
     indicator,
     forestType,
     landCategory,
-    currentLabel,
+    locationName,
     sentences
   ) => {
-    if (!data || !options || !currentLabel) return null;
+    if (!data || !options || !locationName) return null;
     const {
       initial,
       hasIndicator,
@@ -121,7 +134,7 @@ export const getSentence = createSelector(
         : `${format('.2r')(avgExtentPercentage)}%`;
 
     const params = {
-      location: currentLabel === 'global' ? 'Globally' : currentLabel,
+      location: locationName === 'global' ? 'Globally' : locationName,
       region: topRegion.label,
       indicator: indicator && indicator.label.toLowerCase(),
       percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
@@ -133,23 +146,23 @@ export const getSentence = createSelector(
 
     let sentence = noCover;
     if (params.percentage !== '0%' && settings.unit === '%') {
-      sentence = currentLabel === 'global' ? percGlobalInitial : percInitial;
+      sentence = locationName === 'global' ? percGlobalInitial : percInitial;
       if (landCategory && !forestType) {
         sentence =
-          currentLabel === 'global' ? percGlobalLandCatOnly : percLandCatOnly;
+          locationName === 'global' ? percGlobalLandCatOnly : percLandCatOnly;
       } else if (indicator) {
         sentence =
-          currentLabel === 'global'
+          locationName === 'global'
             ? percGlobalWithIndicator
             : percHasIndicator;
       }
     } else if (params.percentage !== '0%' && settings.unit === 'ha') {
-      sentence = currentLabel === 'global' ? globalInitial : initial;
+      sentence = locationName === 'global' ? globalInitial : initial;
       if (landCategory && !forestType) {
-        sentence = currentLabel === 'global' ? globalLandCatOnly : landCatOnly;
+        sentence = locationName === 'global' ? globalLandCatOnly : landCatOnly;
       } else if (indicator) {
         sentence =
-          currentLabel === 'global' ? globalWithIndicator : hasIndicator;
+          locationName === 'global' ? globalWithIndicator : hasIndicator;
       }
     }
     return {
@@ -158,3 +171,20 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationType],
+  (title, type) => {
+    let selectedTitle = title.initial;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence,
+  title: parseTitle
+});

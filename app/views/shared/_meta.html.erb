@@ -26,3 +26,5 @@
 
 <!-- keys -->
 <%= csrf_meta_tags %>
+
+<script><%= raw "window.metadata = #{@metadata.to_json};" %></script>

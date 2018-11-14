@@ -1,11 +1,20 @@
 import { connect } from 'react-redux';
 import pick from 'lodash/pick';
 
-import actions from './meta-actions';
+import * as actions from './meta-actions';
 import reducers, { initialState } from './meta-reducers';
 import ModalMetaComponent from './meta-component';
 
-const MASTER_META_FIELDS = ['title', 'subtitle', 'citation', 'overview'];
+const MASTER_META_FIELDS = [
+  'title',
+  'subtitle',
+  'citation',
+  'overview',
+  'learn_more',
+  'download_data',
+  'map_service',
+  'amazon_link'
+];
 const MASTER_TABLE_FIELDS = [
   'function',
   'resolution',
@@ -30,6 +39,6 @@ const mapStateToProps = ({ modalMeta }) => ({
   loading: modalMeta.loading
 });
 
-export { actions, reducers, initialState };
+export const reduxModule = { actions, reducers, initialState };
 
 export default connect(mapStateToProps, actions)(ModalMetaComponent);

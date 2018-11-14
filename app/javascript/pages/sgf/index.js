@@ -1,26 +1,12 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import 'styles/styles.scss';
-import 'babel-polyfill';
+import { connect } from 'react-redux';
 
-import reducers from './reducers';
-import router from './router';
+import PageComponent from './component';
 
-import Page from './page';
+const mapStateToProps = ({ location }, { sections }) => ({
+  section: sections[location.payload.tab || 'projects'],
+  links: Object.values(sections)
+    .filter(r => r.submenu)
+    .map(r => ({ label: r.label, path: r.path }))
+});
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = applyMiddleware(thunk, router.middleware);
-const store = createStore(
-  reducers,
-  composeEnhancers(router.enhancer, middlewares)
-);
-
-const SGF = () => (
-  <Provider store={store}>
-    <Page />
-  </Provider>
-);
-
-export default SGF;
+export default connect(mapStateToProps)(PageComponent);

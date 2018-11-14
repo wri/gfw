@@ -1,16 +1,24 @@
 import ReactGA from 'react-ga';
-import { ANALYTICS_EVENTS } from 'pages/dashboards/analytics';
+import { ANALYTICS_EVENTS } from 'app/analytics';
+
+import mapEvents from 'analytics/map';
+import sharedEvents from 'analytics/shared';
 
 const { ANALYTICS_PROPERTY_ID } = process.env;
 let gaInitialized = false;
 
-const initGA = () => {
+export const initGA = () => {
   if (ANALYTICS_PROPERTY_ID) {
     if (!gaInitialized) {
       ReactGA.initialize(ANALYTICS_PROPERTY_ID);
       gaInitialized = true;
     }
   }
+};
+
+const events = {
+  ...mapEvents,
+  ...sharedEvents
 };
 
 export const handlePageTrack = location => {
@@ -21,46 +29,51 @@ export const handlePageTrack = location => {
   }
 };
 
+export const track = (key, data) =>
+  ReactGA && events[key] && ReactGA.event({ ...events[key], ...data });
+
 export const handleActionTrack = state => nextDispatch => action => {
   initGA();
   if (gaInitialized) {
     // get all events that match action key
     const GAEvents = ANALYTICS_EVENTS.filter(
-      g => g.name && g.name === action.type
+      g => g.name && g.name === action.key
     );
 
-    // get the payload of the action
-    const payload = {
-      ...state.getState().location.payload,
-      ...action.payload,
-      ...action.query,
-      ...action.meta
-    };
-
-    // use condition to find correct action
-    let event =
-      GAEvents &&
-      GAEvents.length &&
-      (GAEvents.filter(e => !e.condition)[0] || []);
-    GAEvents.forEach(e => {
-      if (e.condition && e.condition(payload)) {
-        event = e;
-      }
-    });
-
-    // process event if available
-    if (event) {
-      const evalProp = prop =>
-        typeof prop === 'string' ? prop : prop(payload);
-      const eventPayload = {
-        ...['category', 'action', 'label'].reduce(
-          (val, prop) => ({ ...val, [prop]: evalProp(event[prop]) }),
-          {}
-        ),
-        ...(!!event.value && { value: evalProp(event.value) })
+    if (GAEvents && GAEvents.length) {
+      // get the payload of the action
+      const payload = {
+        ...state.getState().location.payload,
+        ...action.payload,
+        ...action.query,
+        ...action.meta
       };
-      if (eventPayload.label) {
-        ReactGA.event(eventPayload);
+
+      // use condition to find correct action
+      let event =
+        GAEvents &&
+        GAEvents.length &&
+        (GAEvents.filter(e => !e.condition)[0] || []);
+      GAEvents.forEach(e => {
+        if (e.condition && e.condition(payload)) {
+          event = e;
+        }
+      });
+
+      // process event if available
+      if (event) {
+        const evalProp = prop =>
+          prop && (typeof prop === 'string' ? prop : prop(payload));
+        const eventPayload = {
+          ...['category', 'action', 'label'].reduce(
+            (val, prop) => ({ ...val, [prop]: evalProp(event[prop]) }),
+            {}
+          ),
+          ...(!!event.value && { value: evalProp(event.value) })
+        };
+        if (eventPayload.label) {
+          ReactGA.event(eventPayload);
+        }
       }
     }
   }

@@ -12,22 +12,19 @@ const SQL_QUERIES = {
     "SELECT area_ha as value FROM gadm36_adm2 WHERE iso = '{adm0}' AND gid_1 = '{adm1}' AND gid_2 = '{adm2}'"
 };
 
-export const getArea = ({ country, region, subRegion }) => {
+export const getArea = ({ adm0, adm1, adm2 }) => {
   let url = '';
-  if (subRegion) {
+  if (adm0) {
     url = `${REQUEST_URL}${SQL_QUERIES.getSubRegionArea}`
-      .replace('{adm0}', country)
-      .replace('{adm1}', buildGadm36Id(country, region))
-      .replace('{adm2}', buildGadm36Id(country, region, subRegion));
-  } else if (region) {
+      .replace('{adm0}', adm0)
+      .replace('{adm1}', buildGadm36Id(adm0, adm1))
+      .replace('{adm2}', buildGadm36Id(adm0, adm1, adm2));
+  } else if (adm1) {
     url = `${REQUEST_URL}${SQL_QUERIES.getRegionArea}`
-      .replace('{adm0}', country)
-      .replace('{adm1}', buildGadm36Id(country, region));
+      .replace('{adm0}', adm0)
+      .replace('{adm1}', buildGadm36Id(adm0, adm1));
   } else {
-    url = `${REQUEST_URL}${SQL_QUERIES.getCountryArea}`.replace(
-      '{adm0}',
-      country
-    );
+    url = `${REQUEST_URL}${SQL_QUERIES.getCountryArea}`.replace('{adm0}', adm0);
   }
   return request.get(url);
 };

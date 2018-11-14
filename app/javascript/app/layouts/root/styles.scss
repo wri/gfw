@@ -1,0 +1,87 @@
+@import '~styles/settings.scss';
+
+.l-root {
+  .page-logo {
+    position: absolute;
+    top: 0;
+    left: rem(15px);
+    z-index: 2;
+    display: none;
+    width: rem(76px);
+  }
+
+  .page {
+    position: relative;
+    min-height: calc(100vh - 60px);
+    z-index: 0;
+
+    .page-loader {
+      z-index: 1;
+    }
+  }
+
+  &.-map {
+    .page {
+      height: calc(100vh - 90px);
+      min-height: calc(100vh - 90px);
+      position: absolute;
+      width: 100%;
+      background-color: $ocean;
+      top: 0;
+
+      @media screen and (min-width: $screen-m) {
+        width: calc(100% - 76px);
+        right: 0;
+        min-height: 100%;
+      }
+    }
+
+    .page-loader {
+      background-color: rgba($slate, 0.2);
+
+      .spinner {
+        border-top-color: $white;
+      }
+    }
+
+    .page-logo {
+      display: block;
+    }
+  }
+
+  &.-embed {
+    .page {
+      position: relative;
+      width: 100%;
+      min-height: rem(400px);
+    }
+
+    &.-map {
+      .page {
+        min-height: calc(100vh - 60px);
+      }
+    }
+  }
+
+  .embed-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: rem(60px);
+    background: $white;
+    border-top: solid 1px $border;
+    z-index: 3;
+    position: relative;
+
+    p {
+      opacity: 0.7;
+    }
+  }
+
+  .embed-btn {
+    width: rem(160px);
+    margin-left: rem(10px);
+    margin-right: rem(10px);
+  }
+}
+

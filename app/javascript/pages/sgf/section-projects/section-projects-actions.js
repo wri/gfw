@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import groupBy from 'lodash/groupBy';
 
 import { fetchSGFProjects } from 'services/projects';
@@ -16,7 +15,7 @@ export const setSearch = createAction('setSearch');
 export const fetchProjects = createThunkAction(
   'fetchProjects',
   () => (dispatch, getState) => {
-    if (!getState().projects.loading) {
+    if (!getState().sgfProjects.loading) {
       dispatch(setProjectsLoading({ loading: true, error: false }));
       axios
         .all([fetchSGFProjects(), getCountriesProvider(), getCountriesLatLng()])

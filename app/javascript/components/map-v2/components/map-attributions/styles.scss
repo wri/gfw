@@ -1,0 +1,25 @@
+@import '~styles/settings.scss';
+
+.c-map-attributions {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+
+  @media screen and (min-width: $screen-m) {
+    display: flex;
+  }
+
+  > * {
+    margin-left: rem(15px);
+  }
+
+  a,
+  span {
+    color: $map-grey;
+    font-size: rem(10px);
+
+    &:hover {
+      color: $map-grey;
+    }
+  }
+}

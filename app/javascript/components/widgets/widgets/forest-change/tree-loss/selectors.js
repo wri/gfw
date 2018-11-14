@@ -1,19 +1,39 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { biomassToCO2 } from 'utils/calculations';
-import tropicalIsos from 'data/tropical-isos.json';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
-const getCurrentLocation = state => state.currentLocation || null;
+const getLocationName = state => state.locationName || null;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentences;
+const getSentences = state => state.config && state.config.sentence;
+const getSimple = state => state.simple || false;
+const getIsTropical = state => state.isTropical || false;
+
+export const parsePayload = payload => {
+  const year = payload && payload[0].payload.year;
+  return {
+    updateLayer: true,
+    startDate:
+      year &&
+      moment()
+        .year(year)
+        .startOf('year')
+        .format('YYYY-MM-DD'),
+    endDate:
+      year &&
+      moment()
+        .year(year)
+        .endOf('year')
+        .format('YYYY-MM-DD')
+  };
+};
 
 // get lists selected
 export const parseData = createSelector(
@@ -33,61 +53,65 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector([getColors], colors => ({
-  xKey: 'year',
-  yKeys: {
-    bars: {
-      area: {
-        fill: colors.main,
-        background: false
+export const parseConfig = createSelector(
+  [getColors, getSimple],
+  (colors, simple) => ({
+    height: 250,
+    xKey: 'year',
+    yKeys: {
+      bars: {
+        area: {
+          fill: colors.main,
+          background: false
+        }
       }
-    }
-  },
-  xAxis: {
-    tickFormatter: tick => {
-      const year = moment(tick, 'YYYY');
-      if ([2001, 2017].includes(tick)) {
-        return year.format('YYYY');
+    },
+    xAxis: {
+      tickFormatter: tick => {
+        const year = moment(tick, 'YYYY');
+        if (!simple && [2001, 2017].includes(tick)) {
+          return year.format('YYYY');
+        }
+        return year.format('YY');
       }
-      return year.format('YY');
-    }
-  },
-  unit: 'ha',
-  tooltip: [
-    {
-      key: 'year'
     },
-    {
-      key: 'area',
-      unit: 'ha',
-      unitFormat: value => format('.3s')(value)
-    },
-    {
-      key: 'percentage',
-      unit: '%',
-      unitFormat: value => format('.2r')(value)
-    }
-  ]
-}));
+    unit: 'ha',
+    tooltip: [
+      {
+        key: 'year'
+      },
+      {
+        key: 'area',
+        unit: 'ha',
+        unitFormat: value => format('.3s')(value)
+      },
+      {
+        key: 'percentage',
+        unit: '%',
+        unitFormat: value => format('.2r')(value)
+      }
+    ]
+  })
+);
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     parseData,
     getExtent,
     getSettings,
-    getCurrentLocation,
+    getLocationName,
     getIndicator,
-    getSentences
+    getSentences,
+    getIsTropical
   ],
-  (data, extent, settings, currentLocation, indicator, sentences) => {
+  (data, extent, settings, locationName, indicator, sentences, isTropical) => {
     if (!data) return null;
     const {
       initial,
       withIndicator,
       noLoss,
       noLossWithIndicator,
-      co2Emissions,
-      end
+      co2Emissions
     } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
@@ -95,18 +119,18 @@ export const getSentence = createSelector(
       (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
-    const iso = currentLocation && currentLocation.value || null;
     let sentence = indicator ? withIndicator : initial;
-    sentence = tropicalIsos.includes(iso)
-      ? sentence + co2Emissions
-      : sentence + end;
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
     }
+    if (isTropical && totalLoss > 0) {
+      sentence = `${sentence}, ${co2Emissions}`;
+    }
+    sentence = `${sentence}.`;
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location: currentLocation && currentLocation.label,
+      location: locationName,
       startYear,
       endYear,
       loss:
@@ -124,3 +148,9 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence
+});

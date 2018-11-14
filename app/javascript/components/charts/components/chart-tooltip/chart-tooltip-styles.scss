@@ -7,6 +7,8 @@
   color: $white;
   border-radius: rem(2px);
   font-size: rem(16px);
+  position: relative;
+  z-index: 100000;
 
   .data-line {
     display: flex;
@@ -44,5 +46,17 @@
     border-radius: 50%;
     margin-right: rem(5px);
     margin-top: rem(5px);
+  }
+
+  &.simple {
+    font-size: rem(12px);
+
+    .break-label {
+      font-size: rem(12px);
+    }
+
+    .data-color {
+      font-size: rem(12px);
+    }
   }
 }

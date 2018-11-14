@@ -1,0 +1,219 @@
+@import '~styles/settings.scss';
+
+$header-height: rem(55px);
+$header-height-small: rem(60px);
+$full-screen-height: rem(75px);
+
+.c-header {
+  height: $header-height;
+  z-index: 5;
+  position: relative;
+
+  &.-fixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  &.-toggle {
+    width: rem(76px);
+
+    &.-open {
+      width: 100%;
+    }
+  }
+
+  .nav-menu {
+    border-bottom: solid 1px $border;
+    position: relative;
+    background: $white;
+
+    > div {
+      position: relative;
+    }
+  }
+
+  .mygfw-header {
+    padding: rem(25px) rem(30px) rem(30px);
+    border: solid 1px $border;
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(320px);
+    }
+  }
+
+  .logo {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    cursor: pointer;
+    width: rem(76px);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    height: $header-height;
+
+    li {
+      height: 100%;
+      position: relative;
+      font-size: rem(14px);
+
+      .nav-link,
+      .menu-link {
+        position: relative;
+        font-family: $font-family-1;
+        color: $slate;
+        height: 100%;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          color: darken($slate, 30%);
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .nav-link {
+        &::after {
+          content: '';
+          height: rem(5px);
+          position: absolute;
+          bottom: -1px;
+          right: 0;
+          left: 0;
+          background-color: transparent;
+        }
+
+        &.-active,
+        &:hover {
+          &::after {
+            background-color: $green-gfw;
+          }
+        }
+      }
+
+      svg {
+        fill: $slate;
+
+        &:hover {
+          color: darken($slate, 30%);
+        }
+      }
+    }
+
+    .nav-main {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-start;
+      padding-left: rem(100px);
+      flex: 1;
+
+      > li .nav-link {
+        padding: 0 rem(10px);
+        margin: 0 rem(5px);
+      }
+    }
+
+    .nav-alt {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100%;
+      border-left: solid 1px $border;
+      padding-left: rem(10px);
+
+      &.-mobile {
+        flex: 1;
+      }
+
+      > li {
+        margin-left: rem(30px);
+        position: relative;
+        font-size: rem(12px);
+
+        svg {
+          margin-top: -1px;
+          margin-left: rem(5px);
+        }
+      }
+
+      .sub-menu {
+        position: absolute;
+        right: -5px;
+        z-index: 1;
+
+        &::before,
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+        }
+
+        &::before {
+          top: -12px;
+          border-color: transparent transparent $border transparent;
+          border-width: 6px;
+          right: 6px;
+        }
+
+        &::after {
+          top: -10px;
+          border-color: transparent transparent $white transparent;
+          border-width: 5px;
+          right: 7px;
+        }
+      }
+
+      .icon-close,
+      .icon-arrow {
+        height: rem(10px);
+      }
+    }
+  }
+
+  &.-full-screen {
+    height: $full-screen-height;
+
+    .nav {
+      height: $full-screen-height;
+      padding-right: rem(15px);
+    }
+
+    .logo {
+      left: 0;
+    }
+
+    &.-small {
+      .logo {
+        left: rem(15px);
+      }
+    }
+  }
+
+  &.-small {
+    height: $header-height-small;
+
+    .nav {
+      height: $header-height-small;
+    }
+
+    .logo {
+      height: $header-height-small;
+      width: $header-height-small;
+    }
+  }
+}

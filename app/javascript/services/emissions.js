@@ -12,11 +12,11 @@ export const getMeta = () => {
   return request.get(url);
 };
 
-export const getGas = ({ country, gas, source }) => {
+export const getGas = ({ adm0, gas, source }) => {
   const url =
     REQUEST_URL +
     QUERIES.gas
-      .replace('{adm0}', country)
+      .replace('{adm0}', adm0)
       .replace('{gas}', gas)
       .replace('{source}', source);
   return request.get(url);

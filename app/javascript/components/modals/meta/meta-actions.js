@@ -1,12 +1,11 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 import { getMeta } from 'services/meta';
 
-const setModalMetaData = createAction('setModalMetaData');
-const setModalMetaLoading = createAction('setModalMetaLoading');
-const setModalMetaClosing = createAction('setModalMetaClosing');
+export const setModalMetaData = createAction('setModalMetaData');
+export const setModalMetaLoading = createAction('setModalMetaLoading');
+export const setModalMetaClosing = createAction('setModalMetaClosing');
 
-const setModalMeta = createThunkAction(
+export const setModalMeta = createThunkAction(
   'setModalMeta',
   (metaKey, metaWhitelist, tableWhitelist, customCitation) => (
     dispatch,
@@ -37,7 +36,7 @@ const setModalMeta = createThunkAction(
   }
 );
 
-const setModalMetaClosed = createThunkAction(
+export const setModalMetaClosed = createThunkAction(
   'setModalMetaClosed',
   () => dispatch => {
     dispatch(
@@ -48,11 +47,3 @@ const setModalMetaClosed = createThunkAction(
     }, 500);
   }
 );
-
-export default {
-  setModalMeta,
-  setModalMetaData,
-  setModalMetaClosed,
-  setModalMetaLoading,
-  setModalMetaClosing
-};

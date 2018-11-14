@@ -1,3 +1,5 @@
+import * as actions from './section-projects-actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -39,9 +41,9 @@ const setSearch = (state, { payload }) => ({
 });
 
 export default {
-  setProjectsLoading,
-  setProjectsData,
-  setCategorySelected,
-  setSearch,
-  setCustomFilter
+  [actions.setProjectsLoading]: setProjectsLoading,
+  [actions.setProjectsData]: setProjectsData,
+  [actions.setCategorySelected]: setCategorySelected,
+  [actions.setSearch]: setSearch,
+  [actions.setCustomFilter]: setCustomFilter
 };

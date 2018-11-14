@@ -8,7 +8,7 @@
     height: 45px;
     border-radius: 100px;
     border: 0;
-    padding: 0 60px 0 20px;
+    padding: 0 65px 0 20px;
     font-size: 14px;
 
     &:focus {
@@ -16,20 +16,22 @@
     }
   }
 
-  .icon {
+  .icon-search {
     position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 40px;
-    height: 40px;
+    right: 15px;
+    top: 13px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
   }
 
   .clear-btn {
     position: absolute;
-    right: rem(35px);
+    right: rem(40px);
     top: rem(13px);
+    cursor: pointer;
 
-    .icon {
+    .icon-close {
       width: rem(10px);
       height: rem(10px);
     }

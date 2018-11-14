@@ -1,4 +1,19 @@
 @import '~styles/settings.scss';
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i);
+
+p {
+  font-size: rem(14px);
+  color: $slate;
+  line-height: 1.4;
+
+  a {
+    color: $green-gfw;
+
+    &:hover {
+      color: darken($green-gfw, 10%);
+    }
+  }
+}
 
 .text {
   font-family: $font-family-1;

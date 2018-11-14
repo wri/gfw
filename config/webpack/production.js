@@ -2,34 +2,40 @@
 
 /* eslint global-require: 0 */
 
-const dotenv = require('dotenv').config(); // eslint-disable-line
+// eslint-disable-next-line
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CompressionPlugin = require('compression-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const sharedConfig = require('./shared.js');
 
 module.exports = merge(sharedConfig, {
-  output: { filename: '[name]-[chunkhash].js' },
+  output: {
+    filename: '[name]-[hash].js',
+    chunkFilename: '[name].[hash].js'
+  },
   stats: 'normal',
-
+  mode: 'production',
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        sourceMap: false
+      })
+    ]
+  },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      sourceMap: false,
-
-      compress: {
-        warnings: false
-      },
-
-      output: {
-        comments: false
-      }
+    new MiniCssExtractPlugin({
+      filename: '[name]-[hash].css',
+      chunkFilename: '[name]-[hash].css'
     }),
-
+    new webpack.EnvironmentPlugin(['GOOGLE_ANALYTICS_ID']),
     new CompressionPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
       test: /\.(js|css|html|json|ico|svg|eot|otf|ttf)$/
-    })
+    }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.HashedModuleIdsPlugin()
   ]
 });

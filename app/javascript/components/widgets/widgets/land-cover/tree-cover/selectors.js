@@ -1,37 +1,32 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getCurrentLocation = state => state.currentLabel;
 const getIndicator = state => state.indicator || null;
-const getWhitelist = state => state.countryWhitelist;
+const getWhitelist = state => state.whitelists && state.whitelists.adm0;
 const getColors = state => state.colors;
-const getSentences = state => state.config && state.config.sentences;
+const getSentence = state => state.config.sentence;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.type;
+const getLocationName = state => state.locationName;
 
 export const isoHasPlantations = createSelector(
-  [getWhitelist, getCurrentLocation],
-  (whitelist, currentLabel) => {
+  [getWhitelist, getLocationType],
+  (whitelist, type) => {
     const hasPlantations =
-      (currentLabel !== 'global' && isEmpty(whitelist)) ||
-      whitelist.indexOf('plantations') > -1;
+      (type !== 'global' && isEmpty(whitelist)) ||
+      (whitelist && whitelist.includes('plantations'));
     return hasPlantations;
   }
 );
 
 // get lists selected
 export const parseData = createSelector(
-  [
-    getData,
-    getWhitelist,
-    getColors,
-    getCurrentLocation,
-    getIndicator,
-    isoHasPlantations
-  ],
-  (data, whitelist, colors, currentLabel, indicator, hasPlantations) => {
+  [getData, getColors, getIndicator, isoHasPlantations],
+  (data, colors, indicator, hasPlantations) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalCover, cover, plantations } = data;
     const otherCover = indicator ? totalCover - cover : 0;
@@ -72,16 +67,33 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
+export const parseTitle = createSelector(
+  [getTitle, getLocationType, getWhitelist],
+  (title, type, whitelist) => {
+    let selectedTitle = title.default;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    } else if (
+      whitelist &&
+      whitelist.length &&
+      whitelist.includes('plantations')
+    ) {
+      selectedTitle = title.withPlantations;
+    }
+    return selectedTitle;
+  }
+);
+
+export const parseSentence = createSelector(
   [
     getData,
     getSettings,
-    getCurrentLocation,
+    getLocationName,
     getIndicator,
-    getSentences,
+    getSentence,
     isoHasPlantations
   ],
-  (data, settings, currentLabel, indicator, sentences, isoPlantations) => {
+  (data, settings, locationName, indicator, sentences, isoPlantations) => {
     if (!data || !sentences) return null;
     const {
       initial,
@@ -97,7 +109,7 @@ export const getSentence = createSelector(
       : 100 * data.cover / data.totalArea;
     const params = {
       year: settings.extentYear,
-      location: currentLabel || 'global',
+      location: locationName || 'global',
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%',
@@ -114,9 +126,15 @@ export const getSentence = createSelector(
         ? initial + hasPlantationsInd
         : initial + noPlantationsInd;
     }
-    if (currentLabel === 'global') {
+    if (locationName === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
     return { sentence, params };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence,
+  title: parseTitle
+});

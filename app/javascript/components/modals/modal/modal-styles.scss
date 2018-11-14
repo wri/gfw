@@ -1,19 +1,36 @@
 @import '~styles/settings.scss';
 
 $close-position: 25px;
+$close-position-mobile: 15px;
 
 .ReactModal__Body--open {
   overflow: hidden;
 }
 
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS */
+  .ReactModal__Overlay {
+    align-items: flex-start !important;
+  }
+
+  .ReactModal__Content {
+    margin: 0 !important;
+  }
+}
+
 .modal-close {
   position: absolute;
-  top: $close-position;
-  right: $close-position;
+  top: $close-position-mobile;
+  right: $close-position-mobile;
   border: none;
   outline: none;
   cursor: pointer;
   z-index: 10;
+
+  @media screen and (min-width: $screen-m) {
+    top: $close-position;
+    right: $close-position;
+  }
 
   svg {
     width: rem(15px);

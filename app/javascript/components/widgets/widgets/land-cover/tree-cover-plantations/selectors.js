@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
@@ -8,14 +8,14 @@ import endsWith from 'lodash/endsWith';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getCurrentLocation = state => state.currentLabel;
+const getLocatonName = state => state.locationName;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getColors],
-  (data, settings, colors) => {
+  [getData, getColors],
+  (data, colors) => {
     if (isEmpty(data)) return null;
     const { plantations } = data;
     const allColors = {
@@ -37,9 +37,9 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [getData, parseData, getSettings, getCurrentLocation, getSentences],
-  (rawData, data, settings, currentLabel, sentences) => {
+export const parseSentence = createSelector(
+  [getData, parseData, getSettings, getLocatonName, getSentences],
+  (rawData, data, settings, locationName, sentences) => {
     if (isEmpty(data) || !sentences) return null;
     const { initialSpecies, singleSpecies, initialTypes } = sentences;
     const top =
@@ -48,7 +48,7 @@ export const getSentence = createSelector(
     const topExtent = sumBy(top, 'value');
     const otherExtent = sumBy(data.slice(2), 'value');
     const params = {
-      location: currentLabel,
+      location: locationName,
       firstSpecies: top[0].label.toLowerCase(),
       secondSpecies: top.length > 1 && top[1].label.toLowerCase(),
       type: settings.type === 'bound2' ? 'species' : 'type',
@@ -75,3 +75,8 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence
+});

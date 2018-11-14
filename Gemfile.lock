@@ -1132,7 +1132,7 @@ DEPENDENCIES
   useragent
   vcr
   web-console (~> 2.0)
-  webpacker (~> 3.5)
+  webpacker (~> 3.5.5)
 
 RUBY VERSION
    ruby 2.4.0p0

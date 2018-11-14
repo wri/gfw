@@ -1,0 +1,70 @@
+@import '~styles/settings.scss';
+
+.c-popup {
+  font-family: $font-family-1;
+  border-radius: 2px;
+  max-width: rem(290px);
+
+  .popup-card {
+    border: 0;
+    max-width: rem(240px);
+
+    .body {
+      background-color: $white;
+    }
+  }
+
+  .popup-table {
+    padding: rem(25px);
+
+    .popup-title {
+      font-size: rem(16px);
+      margin-bottom: rem(15px);
+      color: $slate;
+      font-weight: 400;
+    }
+
+    .layer-selector {
+      margin-bottom: 20px;
+
+      select {
+        font-size: rem(14px);
+      }
+    }
+
+    .nav-footer {
+      margin-top: rem(20px);
+    }
+  }
+
+  .theme-button-small {
+    color: $white;
+  }
+
+  .theme-button-light {
+    color: $slate;
+  }
+}
+
+.leaflet-popup-content {
+  margin: 0;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0;
+  padding: 0;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  top: 7px;
+  right: 5px;
+  z-index: 2;
+  width: rem(25px);
+  height: rem(25px);
+  font-size: rem(20px);
+}
+
+.leaflet-container a {
+  color: inherit;
+  -webkit-tap-highlight-color: unset;
+}

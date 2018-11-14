@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import { isTouch } from 'utils/browser';
+import cx from 'classnames';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -9,9 +10,14 @@ import Tip from 'components/ui/tip';
 import './button-styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line
 import './themes/button-small.scss'; // eslint-disable-line
+import './themes/button-xsmall.scss'; // eslint-disable-line
+import './themes/button-medium.scss'; // eslint-disable-line
+import './themes/button-tiny.scss'; // eslint-disable-line
 import './themes/button-grey.scss'; // eslint-disable-line
+import './themes/button-grey-filled.scss'; // eslint-disable-line
 import './themes/button-clear.scss'; // eslint-disable-line
 import './themes/button-map-control.scss'; // eslint-disable-line
+import './themes/button-dashed.scss'; // eslint-disable-line
 
 const Button = props => {
   const {
@@ -27,13 +33,10 @@ const Button = props => {
     trackingData,
     buttonClicked
   } = props;
-  const classNames = `c-button ${theme || ''} ${className || ''} ${
-    disabled ? 'disabled' : ''
-  } ${active ? '--active' : ''}`;
   const isDeviceTouch = isTouch();
-  const handleClick = () => {
+  const handleClick = e => {
     if (onClick) {
-      onClick();
+      onClick(e);
     }
     if (trackingData) {
       buttonClicked(trackingData);
@@ -43,7 +46,13 @@ const Button = props => {
   if (extLink) {
     button = (
       <a
-        className={classNames}
+        className={cx(
+          'c-button',
+          theme,
+          className,
+          { disabled },
+          { '--active': active }
+        )}
         href={extLink}
         target="_blank"
         rel="noopener"
@@ -56,7 +65,13 @@ const Button = props => {
   } else if (link) {
     button = (
       <Link
-        className={classNames}
+        className={cx(
+          'c-button',
+          theme,
+          className,
+          { disabled },
+          { '--active': active }
+        )}
         to={link}
         disabled={disabled}
         onClick={handleClick}
@@ -66,8 +81,18 @@ const Button = props => {
     );
   } else {
     button = (
-      <button className={classNames} onClick={handleClick} disabled={disabled}>
-        {children}
+      <button
+        className={cx(
+          'c-button',
+          theme,
+          className,
+          { disabled },
+          { '--active': active }
+        )}
+        onClick={handleClick}
+        disabled={disabled}
+      >
+        <div className="button-wrapper">{children}</div>
       </button>
     );
   }

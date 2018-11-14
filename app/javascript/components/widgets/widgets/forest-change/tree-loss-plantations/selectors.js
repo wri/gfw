@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import uniqBy from 'lodash/uniqBy';
@@ -11,9 +11,9 @@ import { biomassToCO2 } from 'utils/calculations';
 const getLoss = state => (state.data && state.data.loss) || null;
 const getTotalLoss = state => (state.data && state.data.totalLoss) || null;
 const getSettings = state => state.settings || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentences;
+const getSentence = state => state.config && state.config.sentence;
 
 // get lists selected
 export const parseData = createSelector(
@@ -39,6 +39,7 @@ export const parseData = createSelector(
 export const parseConfig = createSelector([getColors], colors => {
   const colorRange = getColorPalette(colors.ramp, 2);
   return {
+    height: 250,
     xKey: 'year',
     yKeys: {
       bars: {
@@ -72,11 +73,10 @@ export const parseConfig = createSelector([getColors], colors => {
   };
 });
 
-export const getSentence = createSelector(
-  [parseData, getSettings, getCurrentLocation, getSentences],
-  (data, settings, currentLabel, sentences) => {
+export const parseSentence = createSelector(
+  [parseData, getSettings, getLocationName, getSentence],
+  (data, settings, locationName, sentence) => {
     if (!data) return null;
-    const { initial } = sentences;
     const { startYear, endYear } = settings;
     const plantationsLoss = sumBy(data, 'areaLoss') || 0;
     const totalLoss = sumBy(data, 'totalLoss') || 0;
@@ -90,9 +90,8 @@ export const getSentence = createSelector(
         ? 100 * plantationsLoss / totalLoss
         : 100 * outsideLoss / totalLoss;
 
-    const sentence = initial;
     const params = {
-      location: currentLabel,
+      location: locationName,
       startYear,
       endYear,
       lossPhrase,
@@ -106,3 +105,9 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence
+});

@@ -1,0 +1,100 @@
+@import '~styles/settings.scss';
+
+$dd-height: rem(34px);
+$dd-font-size: rem(13px);
+
+.c-selector {
+  display: flex;
+  position: relative;
+  border: solid 1px $border;
+  height: $dd-height;
+  padding: 0 rem(10px);
+  cursor: pointer;
+  color: $slate;
+  z-index: 0;
+
+  .value {
+    position: absolute;
+    top: calc(50% - 10px);
+    bottom: 0;
+    left: rem(10px);
+    right: rem(10px);
+    padding-right: rem(18px);
+    z-index: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    font-size: $dd-font-size;
+
+    &.clearable {
+      padding-right: rem(28px);
+    }
+  }
+
+  &.align-left {
+    justify-content: flex-start;
+
+    .value {
+      padding-left: rem(18px);
+      padding-right: 0;
+    }
+  }
+
+  input {
+    z-index: 1;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    color: $slate;
+    font-size: $dd-font-size;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: rgba($slate, 0.5);
+    }
+
+    &:read-only {
+      cursor: pointer;
+    }
+  }
+
+  &.clearable {
+    input {
+      padding-right: rem(25px);
+    }
+  }
+
+  .arrow-btn {
+    z-index: 3;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+    right: rem(8px);
+
+    .arrow {
+      max-width: rem(12px);
+      height: 100%;
+      fill: $slate;
+    }
+  }
+
+  .clear-btn {
+    z-index: 3;
+    cursor: pointer;
+    position: absolute;
+    right: rem(22px);
+    top: calc(50% - 8px);
+
+    .clear-icon {
+      max-width: rem(8px);
+      max-height: rem(8px);
+      margin-right: rem(5px);
+      fill: $slate;
+    }
+  }
+}

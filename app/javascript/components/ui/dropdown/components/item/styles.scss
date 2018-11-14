@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.c-selector-item-wrapper {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  height: 0;
+  flex: 0;
+  margin-left: 100%;
+  width: 100%;
+  transition: none;
+  overflow: hidden;
+
+  &.base {
+    margin-left: -100%;
+    transition: margin-right 0.2s ease-in-out;
+  }
+
+  &.show {
+    height: auto;
+    margin-left: 0;
+    flex: 1;
+    overflow: initial;
+    transition: margin-left 0.2s ease-in-out;
+  }
+}
+
+.c-selector-item {
+  width: 100%;
+  padding: rem(8px);
+}

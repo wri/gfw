@@ -12,7 +12,7 @@ class WidgetForestryEmployment extends PureComponent {
 
     return (
       <div className="c-widget-forestry-employment">
-        {data[0].noContent ? (
+        {data.noContent ? (
           <NoContent message="No gender data available" />
         ) : (
           <WidgetPieChartLegend {...this.props} />
@@ -23,6 +23,6 @@ class WidgetForestryEmployment extends PureComponent {
 }
 
 WidgetForestryEmployment.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 export default WidgetForestryEmployment;

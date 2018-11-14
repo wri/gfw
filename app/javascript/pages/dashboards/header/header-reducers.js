@@ -1,10 +1,12 @@
+import * as actions from './header-actions';
+
 export const initialState = {
   loading: false,
   error: false,
   data: {},
   config: {
     sentences: {
-      initial:
+      default:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area.',
       withLoss:
         'In 2010, {location} had {extent} of tree cover, extending over {percentage} of its land area. In {year}, it lost {loss} of tree cover',
@@ -14,7 +16,7 @@ export const initialState = {
         'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest',
       indoInitial:
         'In 2010, {location} had {naturalForest} of natural forest, extending over {percentageNatForest} of its land area. In {year}, it lost {treeCoverLoss} of tree cover, equivalent to {emissionsTreeCover} of CO₂ of emissions. {primaryLoss} of this loss occurred within intact and degraded primary forests and {loss} within natural forest.',
-      co2Emissions: ', equivalent to {emission} of CO₂ of emissions.',
+      co2Emissions: ', equivalent to {emission} of CO\u2082 of emissions.',
       end: '.'
     }
   },
@@ -38,6 +40,6 @@ const setHeaderData = (state, { payload }) => ({
 });
 
 export default {
-  setHeaderLoading,
-  setHeaderData
+  [actions.setHeaderLoading]: setHeaderLoading,
+  [actions.setHeaderData]: setHeaderData
 };

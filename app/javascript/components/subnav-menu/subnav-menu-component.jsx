@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { Link as AnchorLink } from 'react-scroll';
 import { NavLink } from 'redux-first-router-link';
 
+import Icon from 'components/ui/icon';
+
 import './subnav-menu-styles.scss';
 import './themes/subnav-dark.scss'; // eslint-disable-line
+import './themes/subnav-plain.scss'; // eslint-disable-line
+import './themes/subnav-small-light.scss'; // eslint-disable-line
 
 class SubNavMenu extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
   render() {
     const { links, className, theme, checkActive } = this.props;
 
@@ -27,8 +30,26 @@ class SubNavMenu extends PureComponent {
                     smooth
                     duration={500}
                   >
-                    {link.label}
+                    {link.icon && <Icon icon={link.icon} />}
+                    <span>{link.label}</span>
                   </AnchorLink>
+                );
+              } else if (link.onClick) {
+                LinkComponent = (
+                  <button
+                    className={`text -paragraph-5 -color-8 ${
+                      link.active ? 'active' : ''
+                    }`}
+                    onClick={() => {
+                      link.onClick();
+                    }}
+                  >
+                    {/* fix for safari 10 flex issues */}
+                    <div className="button-wrapper">
+                      {link.icon && <Icon icon={link.icon} />}
+                      <span>{link.label}</span>
+                    </div>
+                  </button>
                 );
               } else {
                 LinkComponent = (
@@ -39,7 +60,8 @@ class SubNavMenu extends PureComponent {
                     exact
                     isActive={checkActive ? () => link.active : null}
                   >
-                    {link.label}
+                    {link.icon && <Icon icon={link.icon} />}
+                    <span>{link.label}</span>
                   </NavLink>
                 );
               }

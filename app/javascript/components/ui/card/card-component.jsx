@@ -1,47 +1,40 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/ui/button';
+import Button from 'components/ui/button/button-component';
 import Dotdotdot from 'react-dotdotdot';
+import cx from 'classnames';
 
 import './card-styles.scss';
+import './themes/card-small.scss';
 
 class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { className, data, onClick } = this.props;
+    const { className, theme, data, active } = this.props;
+    const { image, imageCredit, title, summary, meta, buttons } = data || {};
 
     return (
-      <div className={`c-card ${className || ''}`}>
-        {data.image && (
-          <div
-            className="image"
-            style={{ backgroundImage: `url(${data.image})` }}
-          >
-            <span>{data.imageCredit}</span>
-          </div>
+      <div className={cx('c-card', className, theme, { active })}>
+        {image && (
+          <div className="image" style={{ backgroundImage: `url(${image})` }} />
         )}
         <div className="body">
-          {data.title && <h3 className="title">{data.title}</h3>}
-          {data.summary && (
+          {imageCredit && <span>{imageCredit}</span>}
+          {title && <h3 className="title">{title}</h3>}
+          {summary && (
             <div className="summary">
-              <Dotdotdot clamp={4}>{data.summary}</Dotdotdot>
+              <Dotdotdot clamp={3}>{summary}</Dotdotdot>
             </div>
           )}
-          {data.meta && <p className="meta">{data.meta}</p>}
-          {data.extLink && (
-            <Button className="read-more" extLink={data.extLink}>
-              READ MORE
-            </Button>
-          )}
-          {data.link && (
-            <Button className="read-more" extLink={data.link}>
-              READ MORE
-            </Button>
-          )}
-          {onClick && (
-            <Button className="read-more" onClick={onClick}>
-              READ MORE
-            </Button>
+          {meta && <p className="meta">{meta}</p>}
+          {buttons && (
+            <div className="buttons">
+              {buttons.map((button, i) => (
+                <Button key={`card-button-${i}`} {...button}>
+                  {button.text}
+                </Button>
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -52,7 +45,9 @@ class Card extends PureComponent {
 Card.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
-  onClick: PropTypes.func
+  theme: PropTypes.string,
+  onClick: PropTypes.func,
+  active: PropTypes.bool
 };
 
 export default Card;

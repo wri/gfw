@@ -33,7 +33,7 @@ gem 'rack-reverse-proxy', '~> 0.12.0', :require => 'rack/reverse_proxy'
 gem 'aws-sdk', '~> 3'
 
 #Webpacker
-gem 'webpacker', '~> 3.5'
+gem 'webpacker', '~> 3.5.5'
 
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
 gem 'responders', '~> 2.0'
@@ -71,4 +71,4 @@ end
 gem 'newrelic_rpm'
 gem 'puma'
 
-gem 'dotenv-rails', :groups => [:development, :test]
+gem 'dotenv-rails', :groups => [:development, :test, :production_local]

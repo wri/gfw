@@ -1,3 +1,5 @@
+import * as actions from './video-actions';
+
 export const initialState = {
   open: false,
   data: {
@@ -16,6 +18,6 @@ const setModalVideoClosed = state => ({
 });
 
 export default {
-  setModalVideoData,
-  setModalVideoClosed
+  [actions.setModalVideoData]: setModalVideoData,
+  [actions.setModalVideoClosed]: setModalVideoClosed
 };

@@ -8,6 +8,11 @@ import './section-impacts-styles.scss';
 
 class SectionImpacts extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
+  componentDidMount() {
+    const { fetchImpactProjects } = this.props;
+    fetchImpactProjects();
+  }
+
   render() {
     const { data, awards } = this.props;
     return (
@@ -21,7 +26,17 @@ class SectionImpacts extends PureComponent {
           {data &&
             data.map(c => (
               <div key={c.id}>
-                <Card key={c.title} data={c} />
+                <Card
+                  key={c.title}
+                  data={c}
+                  buttons={[
+                    {
+                      className: 'read-more',
+                      text: 'READ MORE',
+                      extLink: c.extLink
+                    }
+                  ]}
+                />
               </div>
             ))}
         </Carousel>
@@ -47,7 +62,8 @@ class SectionImpacts extends PureComponent {
 
 SectionImpacts.propTypes = {
   data: PropTypes.array.isRequired,
-  awards: PropTypes.array.isRequired
+  awards: PropTypes.array.isRequired,
+  fetchImpactProjects: PropTypes.func.isRequired
 };
 
 export default SectionImpacts;

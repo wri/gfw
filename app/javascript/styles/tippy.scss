@@ -31,6 +31,8 @@ body .tippy-popper[x-placement^=bottom] .tippy-tooltip.tip-theme [x-arrow] {
 
 .tippy-popper .tippy-tooltip {
   padding: 0;
+  border-radius: 0;
+  max-width: rem(290px);
 
   &.tip-theme {
     box-shadow: 0 1px 3px 0 rgba($slate, 0.25);
