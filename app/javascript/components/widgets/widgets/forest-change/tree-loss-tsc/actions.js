@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getExtent, getLoss } from 'services/forest-data';
 
-export const getData = ({ params, dispatch, setWidgetData, widget }) => {
+export default ({ params }) =>
   axios
     .all([
       getLoss({ ...params, landCategory: 'tsc' }),
@@ -16,15 +16,6 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
             extent: (loss.data.data && extent.data.data[0].value) || 0
           };
         }
-        dispatch(setWidgetData({ data, widget }));
+        return data;
       })
-    )
-    .catch(error => {
-      dispatch(setWidgetData({ widget, error: true }));
-      console.info(error);
-    });
-};
-
-export default {
-  getData
-};
+    );

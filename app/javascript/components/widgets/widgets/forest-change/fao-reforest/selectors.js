@@ -1,19 +1,18 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import uniqBy from 'lodash/uniqBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
-import { getAdminPath } from '../../../utils';
-
 const getData = state => state.data || null;
-const getLocation = state => state.payload || null;
-const getQuery = state => state.query || null;
+const getLocation = state => state.location || null;
 const getColors = state => state.colors || null;
-const getCurrentLocation = state => state.currentLabel || null;
-const getSettings = state => state.settings || null;
-const getPeriod = state => state.period || null;
+const getLocationName = state => state.locationName || null;
+const getPeriod = state => state.settings.period || null;
 const getSentences = state => state.config && state.config.sentences;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.locationType || null;
+const getAllLocation = state => state.allLocation || null;
 
 export const getSortedData = createSelector([getData], data => {
   if (!data || !data.length) return null;
@@ -24,8 +23,8 @@ export const getSortedData = createSelector([getData], data => {
 });
 
 export const parseData = createSelector(
-  [getSortedData, getLocation, getColors, getQuery],
-  (data, location, colors, query) => {
+  [getSortedData, getAllLocation, getColors],
+  (data, location, colors) => {
     if (!data || !data.length) return null;
     let dataTrimmed = data;
     if (location.country) {
@@ -42,48 +41,52 @@ export const parseData = createSelector(
       }
       dataTrimmed = data.slice(trimStart, trimEnd);
     }
+    const { query, type } = location;
 
     return dataTrimmed.map(d => ({
       ...d,
       label: d.name,
       color: colors.main,
-      path: getAdminPath({ query, id: d.iso }),
+      path: {
+        type,
+        payload: { adm0: d.iso },
+        query
+      },
       value: d.rate
     }));
   }
 );
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     getSortedData,
     parseData,
-    getLocation,
-    getSettings,
     getPeriod,
     getSentences,
-    getCurrentLocation
+    getLocationName,
+    getLocation
   ],
-  (sortedData, data, location, settings, period, sentences, currentLabel) => {
+  (sortedData, data, period, sentences, locationName, location) => {
     if (!data || !data.length) return null;
     const { initial, noReforest, globalInitial } = sentences;
-    const countryData = data.find(d => location.country === d.iso) || null;
+    const countryData = data.find(d => location.adm0 === d.iso) || null;
 
     let globalRate = 0;
     Object.keys(sortedData).forEach(k => {
       globalRate += sortedData[k].rate;
     });
     const rate =
-      currentLabel === 'global' ? globalRate : countryData && countryData.value;
+      locationName === 'global' ? globalRate : countryData && countryData.value;
 
     let sentence = globalInitial;
-    if (currentLabel !== 'global') {
+    if (locationName !== 'global') {
       sentence = countryData && countryData.value > 0 ? initial : noReforest;
     }
     const formatType = rate < 1 ? '.3r' : '.3s';
 
     const params = {
-      location: currentLabel,
-      year: period && period.label,
+      location: locationName,
+      year: period,
       rate: `${format(formatType)(rate)}ha/yr`
     };
 
@@ -93,3 +96,20 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationType],
+  (title, type) => {
+    let selectedTitle = title.initial;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence,
+  title: parseTitle
+});

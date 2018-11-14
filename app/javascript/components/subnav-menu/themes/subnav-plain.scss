@@ -1,0 +1,36 @@
+@import '~styles/settings';
+$plain-menu: #f1f1f1;
+$subnav-height-dark: rem(40px);
+
+.theme-subnav-plain {
+  background-color: $plain-menu;
+  height: $subnav-height-dark;
+
+  .buttons {
+    height: $subnav-height-dark;
+    padding: 0;
+
+    li {
+      border-right: 0;
+      max-width: 100%;
+      width: 100%;
+
+      > a {
+        background-color: $plain-menu;
+        color: #4a4a4a;
+        text-transform: uppercase;
+        font-size: rem(14px);
+        border-radius: 0;
+        padding: 0 rem(15px);
+
+        &.active {
+          background-color: $white;
+        }
+      }
+
+      &:first-child {
+        border-left: 0;
+      }
+    }
+  }
+}

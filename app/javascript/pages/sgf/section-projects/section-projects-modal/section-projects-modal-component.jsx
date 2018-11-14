@@ -35,7 +35,7 @@ class SectionProjectsModal extends PureComponent {
     const { data } = this.props;
     if (!data) return null;
     return (
-      <div className="c-projects-modal">
+      <div className="c-sgf-projects-modal">
         <div className="header">
           {data.title && <h1>{data.title}</h1>}
           <h2>{data.meta}</h2>

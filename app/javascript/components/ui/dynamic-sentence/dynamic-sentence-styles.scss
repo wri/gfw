@@ -13,6 +13,18 @@
     font-weight: 500;
   }
 
+  .c-widgets.minimalist & {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.33;
+    letter-spacing: -0.3px;
+    color: $hot-grey;
+
+    b {
+      color: $greyish-brown;
+    }
+  }
+
   .hover-text {
     border-bottom: dashed 1px $warm-grey;
     padding-bottom: 1px;

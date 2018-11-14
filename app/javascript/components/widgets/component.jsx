@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import upperFirst from 'lodash/upperFirst';
+import cx from 'classnames';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
+
 import Widget from './components/widget';
 
 import './styles.scss';
@@ -11,43 +12,37 @@ import './styles.scss';
 class Widgets extends PureComponent {
   render() {
     const {
+      className,
+      noWidgetsMessage,
       loading,
-      currentLabel,
       widgets,
-      activeWidget,
-      category,
-      colors,
-      widget,
-      embed
+      ...rest
     } = this.props;
 
-    return widget && embed ? (
-      <Widget
-        {...this.props}
-        widget={widget.name}
-        colors={colors[widget.config.colors || widget.config.type] || colors}
-      />
-    ) : (
-      <div className={`c-widgets ${embed ? 'embed' : ''}`}>
+    return (
+      <div
+        className={cx(
+          'c-widgets',
+          className,
+          { simple: this.props.simple },
+          {
+            'no-widgets':
+              !loading &&
+              !noWidgetsMessage &&
+              (!widgets || widgets.length === 0)
+          }
+        )}
+      >
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
-          widgets.length > 0 &&
-          widgets.map(w => (
-            <Widget
-              {...this.props}
-              key={w.name}
-              widget={w.name}
-              active={activeWidget && activeWidget === w.name}
-              colors={colors[w.config.colors || w.config.type] || colors}
-            />
-          ))}
+          widgets.map(w => <Widget key={w.widget} {...w} {...rest} />)}
         {!loading &&
+          noWidgetsMessage &&
           (!widgets || widgets.length === 0) && (
             <NoContent
               className="no-widgets-message large"
-              message={`${upperFirst(category)} data for ${currentLabel ||
-                'global'} coming soon`}
+              message={noWidgetsMessage}
               icon
             />
           )}
@@ -57,15 +52,11 @@ class Widgets extends PureComponent {
 }
 
 Widgets.propTypes = {
+  className: PropTypes.string,
   loading: PropTypes.bool,
-  currentLabel: PropTypes.string,
+  noWidgetsMessage: PropTypes.string,
   widgets: PropTypes.array,
-  widget: PropTypes.object,
-  embed: PropTypes.bool,
-  activeWidget: PropTypes.string,
-  category: PropTypes.string,
-  WidgetsFuncs: PropTypes.object,
-  colors: PropTypes.object
+  simple: PropTypes.bool
 };
 
 export default Widgets;

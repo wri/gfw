@@ -1,0 +1,30 @@
+@import '~styles/settings';
+
+.theme-button-grey-filled {
+  background-color: $warm-grey;
+  color: $warm-grey;
+  border: solid 1px $warm-grey;
+
+  svg {
+    fill: $white;
+  }
+
+  &:hover {
+    border-color: $medium-grey;
+    color: $medium-grey;
+    background-color: $medium-grey;
+  }
+
+  &.disabled {
+    border-color: $grey-light;
+
+    &:hover {
+      background-color: $grey-light;
+      border-color: $grey-light;
+    }
+
+    svg {
+      fill: $white;
+    }
+  }
+}

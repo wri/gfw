@@ -2,7 +2,7 @@ import { getLocations, getLocationsLoss } from 'services/forest-data';
 import groupBy from 'lodash/groupBy';
 import axios from 'axios';
 
-export const getData = ({ params, dispatch, setWidgetData, widget }) => {
+export default ({ params }) =>
   axios
     .all([getLocations({ ...params }), getLocationsLoss({ ...params })])
     .then(
@@ -28,24 +28,9 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
             };
           });
         }
-
-        dispatch(
-          setWidgetData({
-            data: {
-              lossByRegion: lossMappedData,
-              extent: extentMappedData
-            },
-            widget
-          })
-        );
+        return {
+          lossByRegion: lossMappedData,
+          extent: extentMappedData
+        };
       })
-    )
-    .catch(error => {
-      dispatch(setWidgetData({ widget, error: true }));
-      console.info(error);
-    });
-};
-
-export default {
-  getData
-};
+    );

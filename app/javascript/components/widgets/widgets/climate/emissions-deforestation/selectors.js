@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import { biomassToCO2, biomassToC } from 'utils/calculations';
@@ -8,7 +8,7 @@ import { getColorPalette } from 'utils/data';
 const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
 const getIndicator = state => state.indicator || null;
-const getCurrentLabel = state => state.currentLabel || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -35,6 +35,7 @@ export const parseConfig = createSelector(
     const colorRange = getColorPalette(colors.ramp, 2);
     const { unit } = settings;
     return {
+      height: 250,
       xKey: 'year',
       yKeys: {
         areas: {
@@ -61,9 +62,9 @@ export const parseConfig = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [parseData, getSettings, getIndicator, getSentences, getCurrentLabel],
-  (data, settings, indicator, sentences, currentLabel) => {
+export const parseSentence = createSelector(
+  [parseData, getSettings, getIndicator, getSentences, getLocationName],
+  (data, settings, indicator, sentences, locationName) => {
     if (!data || isEmpty(data)) return null;
     const { initial, containsIndicator } = sentences;
     const { startYear, endYear, unit } = settings;
@@ -88,7 +89,7 @@ export const getSentence = createSelector(
         unit === 'biomassCarbon'
           ? `${format('.3r')(totalEmissions)}Tg`
           : `${format('.3r')(totalEmissions)}Mt`,
-      location: currentLabel,
+      location: locationName,
       startYear,
       endYear,
       indicatorText
@@ -97,3 +98,9 @@ export const getSentence = createSelector(
     return { sentence, params };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence
+});

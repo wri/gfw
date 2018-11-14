@@ -1,0 +1,18 @@
+@import '~styles/settings.scss';
+
+.theme-dropdown-native-button {
+  .select-wrapper {
+    border: 1px solid $border;
+    height: rem(20px);
+
+    select {
+      padding: 0 rem(18px) 0 rem(8px);
+    }
+  }
+
+  .arrow-icon {
+    fill: $slate;
+    right: rem(8px);
+    width: 8px;
+  }
+}

@@ -3,7 +3,7 @@ $mobile-padding: rem(30px);
 $desktop-padding: rem(50px);
 
 .c-modal-meta {
-  padding: $mobile-padding $mobile-padding;
+  padding: $mobile-padding;
   min-width: rem(320px);
   min-height: rem(320px);
   width: 100%;
@@ -12,7 +12,7 @@ $desktop-padding: rem(50px);
   word-break: break-word;
 
   @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding $desktop-padding;
+    padding: $desktop-padding;
     padding-top: rem(40px);
   }
 
@@ -88,7 +88,7 @@ $desktop-padding: rem(50px);
       padding: 0 $mobile-padding rem(15px) $mobile-padding;
 
       @media screen and (min-width: $screen-m) {
-        padding: rem(13px) $desktop-padding;
+        padding: rem(13px) $desktop-padding rem(3px);
       }
 
       p {
@@ -103,6 +103,7 @@ $desktop-padding: rem(50px);
     h4 {
       font-size: rem(16px);
       font-weight: 500;
+      margin-bottom: rem(10px);
     }
 
     .body {
@@ -112,9 +113,12 @@ $desktop-padding: rem(50px);
   }
 
   .citation {
+    margin-bottom: rem(30px);
+
     h5 {
       font-size: rem(12px);
       font-weight: 500;
+      margin-bottom: rem(10px);
     }
 
     .body {
@@ -124,11 +128,38 @@ $desktop-padding: rem(50px);
     }
   }
 
-  a {
-    color: $green-gfw;
+  .ext-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-top: solid 1px $border;
+    margin: 0 rem(-30px) rem(-45px);
+    width: auto;
+    padding: rem(20px) rem(30px) rem(10px);
 
-    &:hover {
-      color: darken($green-gfw, 10%);
+    > a {
+      max-width: rem(150px);
+      margin: 0 rem(10px);
+      margin-bottom: rem(10px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      margin: 0 rem(-50px) rem(-45px);
+      padding: rem(20px) rem(50px) rem(10px);
+      flex-direction: row;
+    }
+  }
+
+  p {
+    margin-bottom: rem(10px);
+
+    a {
+      color: $green-gfw;
+
+      &:hover {
+        color: darken($green-gfw, 10%);
+      }
     }
   }
 

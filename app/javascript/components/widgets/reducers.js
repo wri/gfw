@@ -1,76 +1,68 @@
-import * as Widgets from './manifest';
-
-const widgets = {};
-Object.keys(Widgets).forEach(key => {
-  widgets[key] = {
-    name: key,
-    loading: false,
-    error: false,
-    data: {},
-    ...Widgets[key].initialState
-  };
-});
+import * as actions from './actions';
 
 export const initialState = {
-  global: {},
-  ...widgets
+  loading: false,
+  error: false,
+  data: {},
+  settings: {},
+  widgets: {}
 };
 
-const setGlobalData = (state, { payload }) => ({
+// reducers for all widgets parent wrapper component
+const setWidgetsData = (state, { payload }) => ({
   ...state,
-  global: {
-    ...state.global,
+  data: {
+    ...state.data,
     ...payload
+  },
+  loading: false
+});
+
+const setWidgetsSettings = (state, { payload }) => ({
+  ...state,
+  settings: {
+    ...state.settings,
+    [payload.widget]: payload.data
+  }
+});
+
+const setWidgetsLoading = (state, { payload }) => ({
+  ...state,
+  ...payload
+});
+
+// reducers for widget component
+const setWidgetData = (state, { payload }) => ({
+  ...state,
+  widgets: {
+    ...state.widgets,
+    [payload.widget]: {
+      ...state.widgets[payload.widget],
+      data: payload.data,
+      loading: false,
+      error: false
+    }
   }
 });
 
 const setWidgetLoading = (state, { payload }) => ({
   ...state,
-  [payload]: {
-    ...state[payload],
-    loading: true,
-    error: false
-  }
-});
-
-const setWidgetActive = (state, { payload }) => ({
-  ...state,
-  active: payload
-});
-
-const setWidgetSettings = (state, { payload }) => ({
-  ...state,
-  [payload.widget]: {
-    ...state[payload.widget],
-    settings: {
-      ...state[payload.widget].settings,
-      ...payload.settings
+  widgets: {
+    ...state.widgets,
+    [payload.widget]: {
+      ...state.widgets[payload.widget],
+      loading: payload.loading,
+      error: payload.error
     }
   }
 });
 
-const setWidgetData = (state, { payload }) => ({
-  ...state,
-  [payload.widget]: {
-    ...state[payload.widget],
-    data: payload.data,
-    config: {
-      ...state[payload.widget].config,
-      ...payload.config
-    },
-    settings: {
-      ...state[payload.widget].settings,
-      ...payload.settings
-    },
-    loading: false,
-    error: payload.error
-  }
-});
-
 export default {
-  setWidgetSettings,
-  setWidgetLoading,
-  setWidgetData,
-  setWidgetActive,
-  setGlobalData
+  // widgets
+  [actions.setWidgetsData]: setWidgetsData,
+  [actions.setWidgetsSettings]: setWidgetsSettings,
+  [actions.setWidgetsLoading]: setWidgetsLoading,
+  // widget
+  [actions.setWidgetData]: setWidgetData,
+  [actions.setWidgetLoading]: setWidgetLoading
 };

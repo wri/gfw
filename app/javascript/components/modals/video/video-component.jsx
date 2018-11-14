@@ -26,7 +26,34 @@ class ModalVideo extends PureComponent {
   render() {
     const { open, setModalVideoClosed } = this.props;
     return (
-      <Modal isOpen={open} onRequestClose={() => setModalVideoClosed()}>
+      <Modal
+        isOpen={open}
+        contentLabel="Video"
+        onRequestClose={() => setModalVideoClosed()}
+        customStyles={{
+          overlay: {
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 5px 15px 0 rgba(71, 44, 184, 0.1)',
+            backgroundColor: 'rgba(17, 55, 80, 0.4)',
+            overflow: 'auto',
+            padding: 0
+          },
+          content: {
+            position: 'relative',
+            top: 'auto',
+            margin: 'auto',
+            left: 'auto',
+            right: 'auto',
+            bottom: 'auto',
+            padding: '0',
+            border: 'none',
+            borderRadius: 0
+          }
+        }}
+      >
         {this.getContent()}
       </Modal>
     );

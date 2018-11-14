@@ -1,6 +1,6 @@
 @import '~styles/settings.scss';
 
-.c-map-controls {
+.c-map-controls-old {
   width: rem(38px);
 
   button:first-child {
@@ -14,5 +14,9 @@
 
   .minus-icon {
     width: rem(13px);
+  }
+
+  .sticky-inner-wrapper {
+    box-shadow: 0 1px 2px rgba($black, 0.25);
   }
 }

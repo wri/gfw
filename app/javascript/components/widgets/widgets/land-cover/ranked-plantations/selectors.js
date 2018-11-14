@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import maxBy from 'lodash/maxBy';
 import remove from 'lodash/remove';
@@ -11,14 +11,12 @@ import endsWith from 'lodash/endsWith';
 const getPlantations = state => (state.data && state.data.plantations) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.payload || null;
-const getQuery = state => state.search || null;
-const getLocationsMeta = state =>
-  (state.payload.region ? state.subRegions : state.regions) || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocation = state => state.allLocation || null;
+const getLocationsMeta = state => state.childLocationData;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getEmbed = state => state.embed || null;
-const getSentences = state => state.config.sentences || null;
+const getSentences = state => state.config.sentence || null;
 
 const getPlanationKeys = createSelector(
   [getPlantations],
@@ -33,10 +31,9 @@ export const parseData = createSelector(
     getPlanationKeys,
     getLocationsMeta,
     getLocation,
-    getQuery,
     getEmbed
   ],
-  (plantations, extent, plantationKeys, meta, location, query, embed) => {
+  (plantations, extent, plantationKeys, meta, location, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
     const groupedByRegion = groupBy(plantations, 'region');
     const regionData = Object.keys(groupedByRegion).map(r => {
@@ -58,21 +55,29 @@ export const parseData = createSelector(
         yKeys[key] = pPercentage || 0;
         yKeys[`${key} label`] = key;
       });
+      const { payload, query, type } = location;
 
       return {
         region: regionLabel && regionLabel.label,
         ...yKeys,
         total: totalRegionPlantations / totalArea * 100,
-        path: `${
-          embed ? `http://${window.location.host}` : ''
-        }/dashboards/country/${location.country}/${
-          location.region ? `${location.region}/` : ''
-        }${regionId}${query ? `?${query}` : ''}`,
+        path: {
+          type,
+          payload: {
+            ...payload,
+            ...(payload.adm1 && {
+              adm2: regionId
+            }),
+            ...(!payload.adm1 && {
+              adm1: regionId
+            })
+          },
+          query
+        },
         extLink: embed
       };
     });
     const dataParsed = sortByKey(regionData, 'total', true);
-
     return dataParsed;
   }
 );
@@ -100,11 +105,10 @@ export const parseConfig = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [parseData, getSettings, getLocation, getCurrentLocation, getSentences],
-  (data, settings, location, currentLabel, sentences) => {
+export const parseSentence = createSelector(
+  [parseData, getLocationName, getSentences],
+  (data, locationName, sentence) => {
     if (!data || !data.length) return null;
-    const { initial } = sentences;
     const topRegion = data[0] || {};
     const topPlantation = maxBy(
       remove(
@@ -118,17 +122,22 @@ export const getSentence = createSelector(
     );
     const plantationLabel = topPlantation.label.toLowerCase();
     const isPlural = endsWith(plantationLabel, 's');
-
     const params = {
-      location: currentLabel,
+      location: locationName,
       region: topRegion.region,
       topType: `${plantationLabel}${isPlural ? 's' : ''} plantations`,
       percentage: `${format('.2r')(data[0].total)}%`
     };
 
     return {
-      sentence: initial,
+      sentence,
       params
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence
+});

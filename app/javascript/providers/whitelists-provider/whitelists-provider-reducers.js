@@ -1,35 +1,37 @@
+import * as actions from './whitelists-provider-actions';
+
 export const initialState = {
-  countryWhitelistLoading: false,
-  regionWhitelistLoading: false,
-  countryWhitelist: [],
-  regionWhitelist: []
+  countriesLoading: false,
+  regionsLoading: false,
+  countries: [],
+  regions: []
 };
 
 const setCountryWhitelistLoading = (state, { payload }) => ({
   ...state,
-  countryWhitelistLoading: payload
+  countriesLoading: payload
 });
 
 const setRegionWhitelistLoading = (state, { payload }) => ({
   ...state,
-  regionWhitelistLoading: payload
+  regionsLoading: payload
 });
 
 const setCountryWhitelist = (state, { payload }) => ({
   ...state,
-  countryWhitelistLoading: false,
-  countryWhitelist: payload
+  countriesLoading: false,
+  countries: payload
 });
 
 const setRegionWhitelist = (state, { payload }) => ({
   ...state,
-  regionWhitelistLoading: false,
-  regionWhitelist: payload
+  regionsLoading: false,
+  regions: payload
 });
 
 export default {
-  setCountryWhitelistLoading,
-  setRegionWhitelistLoading,
-  setCountryWhitelist,
-  setRegionWhitelist
+  [actions.setCountryWhitelistLoading]: setCountryWhitelistLoading,
+  [actions.setRegionWhitelistLoading]: setRegionWhitelistLoading,
+  [actions.setCountryWhitelist]: setCountryWhitelist,
+  [actions.setRegionWhitelist]: setRegionWhitelist
 };

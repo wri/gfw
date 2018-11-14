@@ -1,5 +1,4 @@
-import { createAction } from 'redux-actions';
-import { createThunkAction } from 'utils/redux';
+import { createAction, createThunkAction } from 'redux-tools';
 
 import { fetchAboutProjects } from 'services/projects';
 
@@ -34,9 +33,3 @@ export const fetchImpactProjects = createThunkAction(
     }
   }
 );
-
-export default {
-  setImpactsProjectsLoading,
-  setImpactsProjectsData,
-  fetchImpactProjects
-};

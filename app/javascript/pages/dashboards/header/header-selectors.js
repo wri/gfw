@@ -1,55 +1,107 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import { biomassToCO2 } from 'utils/calculations';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
+import upperFirst from 'lodash/upperFirst';
+import { deburrUpper } from 'utils/data';
 import tropicalIsos from 'data/tropical-isos.json';
 
 // get list data
-const getLocation = state => state.payload || null;
-const getLocationNames = state => state.locationNames || null;
-const getData = state => state.data || null;
-const getCountries = state => state.countries || null;
-const getRegions = state => state.regions || null;
-const getError = state => state.error || null;
-const getSubRegions = state => state.subRegions || null;
-const getSentences = state => state.config.sentences || null;
+export const selectLocation = state =>
+  (state.location && state.location.payload) || null;
+export const selectLoading = state =>
+  state.header.loading ||
+  state.countryData.isCountriesLoading ||
+  state.countryData.isRegionsLoading ||
+  state.countryData.isSubRegionsLoading;
+export const selectError = state => state.header.error;
+export const setectCountryData = state => ({
+  adm0: state.countryData.countries,
+  adm1: state.countryData.regions,
+  adm2: state.countryData.subRegions,
+  links: state.countryData.countryLinks
+});
+export const selectData = state => state.header.data;
+export const selectSettings = state => state.header.settings;
+export const selectSentences = state => state.header.config.sentences || null;
 
-// get lists selected
+export const getAdm0Data = createSelector(
+  [setectCountryData],
+  data => data.adm0
+);
+
+export const getAdm1Data = createSelector(
+  [setectCountryData],
+  data => data.adm1
+);
+
+export const getAdm2Data = createSelector(
+  [setectCountryData],
+  data => data.adm2
+);
+
+export const getExternalLinks = createSelector(
+  [setectCountryData, selectLocation],
+  (data, location) => data.links[location.adm0]
+);
+
+export const getForestAtlasLink = createSelector(
+  [getExternalLinks],
+  links =>
+    links &&
+    links.find(l => deburrUpper(l.title).indexOf(deburrUpper('forest atlas')))
+);
+
+export const getDownloadLink = createSelector(
+  [selectLocation],
+  location =>
+    `http://gfw2-data.s3.amazonaws.com/country/umd_country_stats${
+      location.adm0 ? '/iso' : ''
+    }/tree_cover_stats_2017${location.adm0 ? `_${location.adm0}` : ''}.xlsx`
+);
+
 export const getAdminsSelected = createSelector(
-  [getCountries, getRegions, getSubRegions, getLocation],
-  (countries, regions, subRegions, location) => {
-    const country =
-      (countries && countries.find(i => i.value === location.country)) || null;
-    const region =
-      (regions && regions.find(i => i.value === location.region)) || null;
-    const subRegion =
-      (subRegions && subRegions.find(i => i.value === location.subRegion)) ||
-      null;
-    let current = country;
-    if (location.subRegion) {
-      current = subRegion;
-    } else if (location.region) {
-      current = region;
+  [getAdm0Data, getAdm1Data, getAdm2Data, selectLocation],
+  (adm0s, adm1s, adm2s, location) => {
+    const adm0 = (adm0s && adm0s.find(i => i.value === location.adm0)) || null;
+    const adm1 = (adm1s && adm1s.find(i => i.value === location.adm1)) || null;
+    const adm2 = (adm2s && adm2s.find(i => i.value === location.adm2)) || null;
+    let current = adm0;
+    if (location.adm2) {
+      current = adm2;
+    } else if (location.adm1) {
+      current = adm1;
     }
 
     return {
       ...current,
-      country,
-      region,
-      subRegion
+      adm0,
+      adm1,
+      adm2
     };
   }
 );
 
+export const getShareData = createSelector(
+  [getAdminsSelected, selectLocation],
+  (adminsSelected, location) => ({
+    title: 'Share this Dashboard',
+    shareUrl: `${window.location.href}`,
+    socialText: `${(adminsSelected &&
+      adminsSelected.adm0 &&
+      `${adminsSelected.adm0.label}'s`) ||
+      upperFirst(location.type)} dashboard`
+  })
+);
+
 export const getSentence = createSelector(
-  [getLocationNames, getData, getSentences, getError],
+  [getAdminsSelected, selectData, selectSentences, selectError],
   (locationNames, data, sentences, error) => {
     if (error) {
       return 'An error occured while fetching data. Please try again later.';
     }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
     const {
-      initial,
       withLoss,
       withPlantationLoss,
       globalInitial,
@@ -93,7 +145,8 @@ export const getSentence = createSelector(
       treeCoverLoss: loss,
       primaryLoss
     };
-    let sentence = initial;
+
+    let sentence = sentences.default;
     if (data.extent > 0 && data.totalLoss.area) {
       sentence =
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
@@ -110,3 +163,18 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const getHeaderProps = createStructuredSelector({
+  loading: selectLoading,
+  error: selectError,
+  location: selectLocation,
+  adm0s: getAdm0Data,
+  adm1s: getAdm1Data,
+  adm2s: getAdm2Data,
+  settings: selectSettings,
+  downloadLink: getDownloadLink,
+  forestAtlasLink: getForestAtlasLink,
+  shareData: getShareData,
+  sentence: getSentence,
+  locationNames: getAdminsSelected
+});

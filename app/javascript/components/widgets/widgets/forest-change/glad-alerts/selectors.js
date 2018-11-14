@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
@@ -10,18 +10,36 @@ import {
   getStdDevData,
   getDatesData,
   getChartConfig
-} from 'components/widgets/components/widget-alerts/selectors-utils';
+} from 'components/widgets/utils/data';
 
 // get list data
-const getAlerts = state => (state.data && state.data.alerts) || null;
-const getLatestDates = state => (state.data && state.data.latest) || null;
-const getColors = state => state.colors || null;
-const getActiveData = state => state.settings.activeData || null;
-const getWeeks = state => (state.settings && state.settings.weeks) || null;
-const getSentences = state => state.config.sentences || null;
+const selectAlerts = state => (state.data && state.data.alerts) || null;
+const selectLatestDates = state => (state.data && state.data.latest) || null;
+const selectColors = state => state.colors || null;
+const selectActiveData = state => state.settings.activeData || null;
+const selectWeeks = state => (state.settings && state.settings.weeks) || null;
+const selectSentence = state => state.config.sentence || null;
+
+export const parsePayload = payload => {
+  const payloadData = payload && payload.find(p => p.name === 'count');
+  const payloadValues = payloadData && payloadData.payload;
+  if (payloadValues) {
+    const startDate = moment()
+      .year(payloadValues.year)
+      .week(payloadValues.week);
+
+    return {
+      startDate: startDate.format('YYYY-MM-DD'),
+      endDate: startDate.add(7, 'days').format('YYYY-MM-DD'),
+      updateLayer: true,
+      ...payloadValues
+    };
+  }
+  return {};
+};
 
 export const getData = createSelector(
-  [getAlerts, getLatestDates],
+  [selectAlerts, selectLatestDates],
   (data, latest) => {
     if (!data || isEmpty(data)) return null;
     const groupedByYear = groupBy(data, 'year');
@@ -36,7 +54,6 @@ export const getData = createSelector(
       },
       {}
     );
-
     const dataYears = Object.keys(hasAlertsByYears).filter(
       key => hasAlertsByYears[key] === true
     );
@@ -50,6 +67,7 @@ export const getData = createSelector(
       isoWeek: latestFullWeek.isoWeek(),
       year: latestFullWeek.year()
     };
+
     for (let i = startYear; i <= lastWeek.year; i += 1) {
       years.push(i);
     }
@@ -77,7 +95,7 @@ export const getData = createSelector(
 );
 
 export const getMeans = createSelector(
-  [getData, getLatestDates],
+  [getData, selectLatestDates],
   (data, latest) => {
     if (!data) return null;
     return getMeansData(data, latest);
@@ -97,13 +115,16 @@ export const getDates = createSelector([getStdDev], data => {
   return getDatesData(data);
 });
 
-export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
-  if (!data) return null;
-  return data.slice(-weeks);
-});
+export const parseData = createSelector(
+  [getDates, selectWeeks],
+  (data, weeks) => {
+    if (!data) return null;
+    return data.slice(-weeks);
+  }
+);
 
 export const parseConfig = createSelector(
-  [getColors, getLatestDates],
+  [selectColors, selectLatestDates],
   (colors, latest) => {
     if (!latest) return null;
 
@@ -111,44 +132,58 @@ export const parseConfig = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences],
-  (data, colors, activeData, sentences) => {
+export const parseSentence = createSelector(
+  [parseData, selectColors, selectActiveData, selectSentence],
+  (data, colors, activeData, sentence) => {
     if (!data) return null;
-    let lastDate = data[data.length - 1];
+
+    let lastDate = data[data.length - 1] || {};
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
-    const { initial } = sentences;
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];
     let status = 'unusually low';
 
-    if (lastDate.count > lastDate.twoPlusStdDev[1]) {
+    const {
+      count,
+      twoPlusStdDev,
+      plusStdDev,
+      minusStdDev,
+      twoMinusStdDev,
+      date
+    } =
+      lastDate || {};
+
+    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
       status = 'unusually high';
       statusColor = colorRange[0];
     } else if (
-      lastDate.count <= lastDate.twoPlusStdDev[1] &&
-      lastDate.count > lastDate.twoPlusStdDev[0]
+      twoPlusStdDev &&
+      count <= twoPlusStdDev[1] &&
+      count > twoPlusStdDev[0]
     ) {
       status = 'high';
       statusColor = colorRange[1];
     } else if (
-      lastDate.count <= lastDate.plusStdDev[1] &&
-      lastDate.count > lastDate.minusStdDev[0]
+      plusStdDev &&
+      minusStdDev &&
+      count <= plusStdDev[1] &&
+      count > minusStdDev[0]
     ) {
       status = 'normal';
       statusColor = colorRange[2];
     } else if (
-      lastDate.count >= lastDate.twoMinusStdDev[0] &&
-      lastDate.count < lastDate.twoMinusStdDev[1]
+      twoMinusStdDev &&
+      count >= twoMinusStdDev[0] &&
+      count < twoMinusStdDev[1]
     ) {
       status = 'low';
       statusColor = colorRange[3];
     }
-    const date = moment(lastDate.date).format('Do of MMMM YYYY');
+    const formattedDate = moment(date).format('Do of MMMM YYYY');
     const params = {
-      date,
+      date: formattedDate,
       count: {
         value: format(',')(lastDate.count),
         color: colors.main
@@ -158,6 +193,12 @@ export const getSentence = createSelector(
         color: statusColor
       }
     };
-    return { sentence: initial, params };
+    return { sentence, params };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence
+});

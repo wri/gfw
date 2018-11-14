@@ -18,7 +18,7 @@ class MapControls extends PureComponent {
       stickyOptions
     } = this.props;
     return (
-      <div className={`c-map-controls ${className || ''}`}>
+      <div className={`c-map-controls-old ${className || ''}`}>
         <Sticky enabled={false} {...stickyOptions}>
           <Button theme="theme-button-map-control" onClick={handleZoomIn}>
             <Icon icon={plusIcon} className="plus-icon" />

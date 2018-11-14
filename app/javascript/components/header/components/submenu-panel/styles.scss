@@ -1,0 +1,116 @@
+@import '~styles/settings.scss';
+
+.c-submenu-panel {
+  background-color: $white;
+  padding: rem(40px) 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.-full-screen {
+    min-height: calc(100vh - 76px);
+  }
+
+  .menu-search {
+    margin-bottom: rem(40px);
+  }
+
+  h4,
+  .title {
+    text-transform: uppercase;
+    color: $slate;
+    font-size: rem(14px);
+    margin-bottom: rem(23px);
+  }
+
+  .menu-section {
+    padding-bottom: rem(30px);
+    margin-bottom: rem(30px);
+    border-bottom: solid 1px $border;
+
+    .apps-slider {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      margin-left: rem(-15px);
+      width: calc(100% + 30px);
+      padding: 0 rem(15px);
+    }
+
+    .app-card {
+      margin-right: rem(15px);
+
+      .app-image {
+        width: rem(90px);
+        height: rem(90px);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      .all-apps {
+        border: solid 1px $border;
+        padding: rem(10px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: rem(12px);
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: 400;
+        color: $slate;
+        width: rem(90px);
+        height: rem(90px);
+
+        .icon-more {
+          width: rem(25px);
+          height: rem(25px);
+          margin-bottom: rem(5px);
+        }
+      }
+    }
+
+    .more-links {
+      > li {
+        margin-bottom: rem(20px);
+
+        a {
+          display: flex;
+          align-items: center;
+          font-size: rem(12px);
+          color: $slate;
+          text-transform: uppercase;
+
+          svg {
+            margin-right: rem(5px);
+          }
+
+          &:hover {
+            color: darken($slate, 30%);
+          }
+        }
+      }
+    }
+  }
+
+  .legal-section {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+
+      > a {
+        margin-right: rem(30px);
+      }
+    }
+  }
+
+  &.-mobile {
+    .menu-search {
+      margin-bottom: rem(30px);
+    }
+  }
+}

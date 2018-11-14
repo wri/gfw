@@ -1,0 +1,34 @@
+@import '~styles/settings';
+$pill-height: rem(20px);
+
+.c-pill {
+  height: $pill-height;
+  border-radius: 15px;
+  color: $white;
+  background-color: #d4d4d4;
+  font-size: rem(12px);
+  padding: 0 rem(8px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.-active {
+    background-color: $greyish-brown;
+  }
+
+  &.-removable {
+    padding-right: 0;
+  }
+
+  button {
+    padding-right: rem(8px);
+    cursor: pointer;
+    margin-left: rem(5px);
+  }
+
+  svg {
+    width: rem(8px);
+    height: rem(8px);
+    fill: $white;
+  }
+}

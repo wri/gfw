@@ -6,6 +6,7 @@ import ReactHtmlParser from 'react-html-parser';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
+import Button from 'components/ui/button';
 import Modal from '../modal';
 
 import './meta-styles.scss';
@@ -13,6 +14,16 @@ import './meta-styles.scss';
 class ModalMeta extends PureComponent {
   getContent() {
     const { metaData, tableData, loading, error } = this.props;
+    const {
+      title,
+      subtitle,
+      overview,
+      citation,
+      map_service,
+      learn_more,
+      download_data,
+      amazon_link
+    } = metaData;
 
     return (
       <div className="c-modal-meta">
@@ -30,10 +41,10 @@ class ModalMeta extends PureComponent {
           !error &&
           !isEmpty(metaData) && (
             <div>
-              <h3 className="title">{metaData.title}</h3>
+              <h3 className="title">{title}</h3>
               <p
                 className="subtitle"
-                dangerouslySetInnerHTML={{ __html: metaData.subtitle }} // eslint-disable-line
+                dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
               />
               <div className="meta-table">
                 {tableData &&
@@ -52,20 +63,38 @@ class ModalMeta extends PureComponent {
                       ) : null)
                   )}
               </div>
-              {metaData.overview && (
+              {overview && (
                 <div className="overview">
                   <h4>Overview</h4>
-                  <div className="body">
-                    {this.parseContent(metaData.overview)}
-                  </div>
+                  <div className="body">{this.parseContent(overview)}</div>
                 </div>
               )}
-              {metaData.citation && (
+              {citation && (
                 <div className="citation">
                   <h5>Citation</h5>
-                  <div className="body">
-                    {this.parseContent(metaData.citation)}
-                  </div>
+                  <div className="body">{this.parseContent(citation)}</div>
+                </div>
+              )}
+              {(learn_more || download_data || map_service || amazon_link) && (
+                <div className="ext-actions">
+                  {learn_more && (
+                    <Button theme="theme-button-medium" extLink={learn_more}>
+                      LEARN MORE
+                    </Button>
+                  )}
+                  {download_data && (
+                    <Button theme="theme-button-medium" extLink={download_data}>
+                      DOWNLOAD DATA
+                    </Button>
+                  )}
+                  {(map_service || amazon_link) && (
+                    <Button
+                      theme="theme-button-medium"
+                      extLink={map_service || amazon_link}
+                    >
+                      OPEN IN ARCGIS
+                    </Button>
+                  )}
                 </div>
               )}
             </div>
@@ -99,9 +128,13 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { open, setModalMetaClosed } = this.props;
+    const { open, setModalMetaClosed, metaData } = this.props;
     return (
-      <Modal isOpen={open} onRequestClose={() => setModalMetaClosed(false)}>
+      <Modal
+        isOpen={open}
+        contentLabel={`Metadata: ${metaData && metaData.title}`}
+        onRequestClose={() => setModalMetaClosed(false)}
+      >
         {this.getContent()}
       </Modal>
     );

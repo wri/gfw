@@ -1,3 +1,10 @@
+// modules styles
+@import '~wri-api-components/dist/legend.css';
+@import '~react-tippy/dist/tippy.css';
+@import '~wri-api-components/dist/map.css';
+@import '~wri-api-components/dist/tooltip.css';
+
+// base styles
 @import './reset.scss';
 @import './foundation-grid.scss';
 @import './settings.scss';
@@ -5,4 +12,5 @@
 @import './utils.scss';
 @import './text.scss';
 @import './tippy.scss';
+@import './rc-tooltip.scss';
 @import './semantic-styles.scss';

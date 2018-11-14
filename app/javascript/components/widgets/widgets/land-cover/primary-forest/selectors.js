@@ -1,19 +1,19 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getCurrentLocation = state => state.currentLabel;
+const getLocationName = state => state.locationName;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getSettings, getColors],
-  (data, settings, colors) => {
+  [getData, getColors],
+  (data, colors) => {
     if (isEmpty(data)) return null;
     const { totalArea, totalExtent, extent } = data;
     const secondaryExtent = totalExtent - extent < 0 ? 0 : totalExtent - extent;
@@ -41,10 +41,10 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [parseData, getSettings, getCurrentLocation, getIndicator, getSentences],
-  (parsedData, settings, currentLabel, indicator, sentences) => {
-    if (!parsedData || !currentLabel) return null;
+export const parseSentence = createSelector(
+  [parseData, getSettings, getLocationName, getIndicator, getSentences],
+  (parsedData, settings, locationName, indicator, sentences) => {
+    if (!parsedData || !locationName) return null;
     const { initial, withIndicator } = sentences;
     const totalExtent = parsedData
       .filter(d => d.label !== 'Non-Forest')
@@ -70,7 +70,7 @@ export const getSentence = createSelector(
     }
 
     const params = {
-      location: `${currentLabel}'s`,
+      location: `${locationName}'s`,
       indicator: indicatorLabel,
       percentage:
         primaryPercentage < 0.1
@@ -90,3 +90,8 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence
+});

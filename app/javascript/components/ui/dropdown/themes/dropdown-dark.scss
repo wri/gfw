@@ -7,17 +7,11 @@ $dd-dark-font-size: rem(40px);
   color: $white;
   font-weight: 300;
 
-  .selector {
+  .c-selector {
     border: 0;
     height: $dd-dark-height;
     padding: 0;
     color: $white;
-
-    &.align-left {
-      .value {
-        padding-left: rem(30px);
-      }
-    }
 
     .value {
       font-size: $dd-dark-font-size;
@@ -42,20 +36,32 @@ $dd-dark-font-size: rem(40px);
       }
     }
 
+    &.align-left {
+      .value,
+      input {
+        padding-left: rem(30px);
+      }
+    }
+
     .arrow-btn {
+      left: 0;
+      width: rem(12px);
+
       .arrow {
         fill: $white;
       }
     }
 
     .clear-btn {
+      right: 0;
+
       .clear-icon {
         fill: $white;
       }
     }
   }
 
-  .menu {
+  .c-selector-menu {
     border: solid 1px $border;
     font-size: rem(18px);
     font-weight: 400;

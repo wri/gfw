@@ -1,0 +1,18 @@
+@import '~styles/settings.scss';
+
+.datepicker-small {
+  .SingleDatePickerInput {
+    .DateInput_input {
+      height: rem(20px);
+      border: 1px solid $border;
+    }
+  }
+
+  .SingleDatePicker_picker {
+    top: rem(30px) !important;
+  }
+
+  .DateInput_fang {
+    top: rem(20px) !important;
+  }
+}

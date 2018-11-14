@@ -12,8 +12,6 @@ const mapStateToProps = ({ contact }) => ({
   error: contact.error
 });
 
-export { actions, reducers, initialState };
-
 class SectionContactContainer extends PureComponent {
   handleSubmit = values => {
     const { sendContactForm } = this.props;
@@ -35,4 +33,5 @@ SectionContactContainer.propTypes = {
   sendContactForm: PropTypes.func.isRequired
 };
 
+export const reduxModule = { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(SectionContactContainer);

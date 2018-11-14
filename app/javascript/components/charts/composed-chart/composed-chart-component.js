@@ -26,7 +26,10 @@ class CustomComposedChart extends PureComponent {
     const maxValues = [];
     Object.keys(yKeys).forEach(key => {
       Object.keys(yKeys[key]).forEach(subKey => {
-        maxValues.push(maxBy(data, subKey)[subKey]);
+        const maxValue = maxBy(data, subKey);
+        if (maxValue) {
+          maxValues.push(maxValue[subKey]);
+        }
       });
     });
     return max(maxValues);
@@ -42,12 +45,14 @@ class CustomComposedChart extends PureComponent {
       tooltip,
       unit,
       unitFormat,
-      height
+      height,
+      margin
     } = this.props.config;
     const {
       className,
       data,
       config,
+      simple,
       handleMouseMove,
       handleMouseLeave
     } = this.props;
@@ -56,11 +61,21 @@ class CustomComposedChart extends PureComponent {
     const maxYValue = this.findMaxValue(data, config);
 
     return (
-      <div className={`c-composed-chart ${className}`} style={{ height }}>
+      <div
+        className={`c-composed-chart ${className}`}
+        style={{ height: simple ? 100 : height || 250 }}
+      >
         <ResponsiveContainer width="99%">
           <ComposedChart
             data={data}
-            margin={{ top: 15, right: 0, left: 42, bottom: 0 }}
+            margin={
+              margin || {
+                top: !simple ? 15 : 0,
+                right: 0,
+                left: !simple ? 42 : 0,
+                bottom: 0
+              }
+            }
             padding={{ left: 50 }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -86,31 +101,41 @@ class CustomComposedChart extends PureComponent {
               dataKey={xKey || ''}
               axisLine={false}
               tickLine={false}
-              tick={{ dy: 8, fontSize: '12px', fill: '#555555' }}
+              tick={{
+                dy: 8,
+                fontSize: simple ? '10px' : '12px',
+                fill: '#555555'
+              }}
+              interval={0}
               {...xAxis}
             />
-            <YAxis
-              axisLine={false}
-              strokeDasharray="3 4"
-              tickSize={-42}
-              mirror
-              tickMargin={0}
-              tick={
-                <CustomTick
-                  dataMax={maxYValue}
-                  unit={unit || ''}
-                  unitFormat={
-                    unitFormat ||
-                    (value =>
-                      (value < 1 ? format('.2r')(value) : format('.2s')(value)))
-                  }
-                  fill="#555555"
-                />
-              }
-              {...yAxis}
-            />
-            <CartesianGrid vertical={false} strokeDasharray="3 4" />
+            {!simple && (
+              <YAxis
+                axisLine={false}
+                strokeDasharray="3 4"
+                tickSize={-42}
+                mirror
+                tickMargin={0}
+                tick={
+                  <CustomTick
+                    dataMax={maxYValue}
+                    unit={unit || ''}
+                    unitFormat={
+                      unitFormat ||
+                      (value =>
+                        (value < 1 ? format('.2r')(value) : format('.2s')(value)))
+                    }
+                    fill="#555555"
+                  />
+                }
+                {...yAxis}
+              />
+            )}
+            {!simple && (
+              <CartesianGrid vertical={false} strokeDasharray="3 4" />
+            )}
             <Tooltip
+              simple={simple}
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
@@ -152,6 +177,7 @@ CustomComposedChart.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   className: PropTypes.string,
+  simple: PropTypes.bool,
   handleMouseMove: PropTypes.func,
   handleMouseLeave: PropTypes.func,
   backgroundColor: PropTypes.string

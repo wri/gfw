@@ -1,0 +1,86 @@
+@import '~styles/settings.scss';
+
+$map-menu-items-size: rem(76px);
+
+.c-map-menu-tile {
+  position: relative;
+  width: 100%;
+  max-height: $map-menu-items-size;
+  height: rem(76px);
+
+  &.active {
+    background-color: $white;
+    z-index: 1;
+  }
+
+  &:hover {
+    background-color: $white;
+  }
+
+  .item-button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 11px;
+    line-height: 0.91;
+    letter-spacing: -0.2px;
+    color: $greyish-brown;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    .button-wrapper {
+      height: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: auto;
+
+      @media screen and (min-width: $screen-m) {
+        height: $map-menu-items-size;
+        width: $map-menu-items-size;
+      }
+    }
+
+    .tile-icon {
+      width: rem(30px);
+      height: rem(30px);
+      fill: $greyish-brown;
+      margin-bottom: rem(6px);
+    }
+  }
+
+  .item-badge {
+    position: absolute;
+    top: 0;
+    right: rem(21px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(14px);
+    height: rem(14px);
+    background-color: $green-gfw;
+    border-radius: 100%;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    color: $white;
+
+    @media screen and (min-width: $screen-m) {
+      top: rem(13px);
+    }
+  }
+
+  &.small {
+    height: rem(50px);
+
+    .tile-icon {
+      width: rem(20px);
+      height: rem(20px);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import entries from 'lodash/entries';
@@ -13,9 +13,11 @@ import tscLossCategories from 'data/tsc-loss-categories.json';
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
+const getTitle = state => state.config.title;
+const getLocationType = state => state.locationType || null;
 
 export const getPermCats = createSelector([], () =>
   tscLossCategories.filter(x => x.permanent).map(el => el.value.toString())
@@ -77,13 +79,15 @@ export const getDrivers = createSelector(
       settings.tscDriverGroup === 'permanent' ? filteredData : groupedData;
     const sortedLoss = !isEmpty(groupedLoss)
       ? sortByKey(
-        Object.keys(groupedLoss).map(k => ({
-          driver: k,
-          position: tscLossCategories.find(c => c.value.toString() === k)
-            .position,
-          area: sumBy(groupedLoss[k], 'area'),
-          permanent: permCats.includes(k)
-        })),
+        Object.keys(groupedLoss).map(k => {
+          const cat = tscLossCategories.find(c => c.value.toString() === k);
+          return {
+            driver: k,
+            position: cat && cat.position,
+            area: sumBy(groupedLoss[k], 'area'),
+            permanent: permCats.includes(k)
+          };
+        }),
         'area',
         true
       )
@@ -138,9 +142,10 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       drivers
         .map(d => {
-          const label = tscLossCategories.find(
+          const tscCat = tscLossCategories.find(
             c => c.value === parseInt(d.driver, 10)
-          ).label;
+          );
+          const label = tscCat && tscCat.label;
           return {
             key: `class_${d.driver}`,
             label,
@@ -177,16 +182,16 @@ export const parseConfig = createSelector(
   }
 );
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     getFilteredData,
     getAllLoss,
     getSettings,
-    getCurrentLocation,
+    getLocationName,
     getSentences,
     getPermCats
   ],
-  (data, allLoss, settings, currentLabel, sentences, permCats) => {
+  (data, allLoss, settings, locationName, sentences, permCats) => {
     if (isEmpty(data)) return null;
     const { initial, globalInitial, noLoss } = sentences;
     const { startYear, endYear } = settings;
@@ -199,11 +204,11 @@ export const getSentence = createSelector(
       (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
     const permPercent = (permLoss && permLoss / totalLoss * 100) || 0;
 
-    let sentence = currentLabel === 'global' ? globalInitial : initial;
+    let sentence = locationName === 'global' ? globalInitial : initial;
     if (!permLoss) sentence = noLoss;
 
     const params = {
-      location: currentLabel === 'global' ? 'Globally' : currentLabel,
+      location: locationName === 'global' ? 'Globally' : locationName,
       startYear,
       endYear,
       permPercent:
@@ -223,3 +228,40 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationType],
+  (title, type) => {
+    let selectedTitle = title.initial;
+    if (type === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
+export const parsePayload = payload => {
+  const year = payload && payload[0].payload.year;
+  return {
+    updateLayer: true,
+    startDate:
+      year &&
+      moment()
+        .year(year)
+        .startOf('year')
+        .format('YYYY-MM-DD'),
+    endDate:
+      year &&
+      moment()
+        .year(year)
+        .endOf('year')
+        .format('YYYY-MM-DD')
+  };
+};
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence,
+  title: parseTitle
+});

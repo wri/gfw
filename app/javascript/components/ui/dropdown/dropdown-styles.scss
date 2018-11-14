@@ -32,182 +32,24 @@ $dd-font-size: rem(13px);
 
   .container {
     position: relative;
-  }
 
-  .selector {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    border: solid 1px $border;
-    height: $dd-height;
-    padding: 0 rem(10px);
-    cursor: pointer;
-    color: $slate;
-    z-index: 0;
-
-    &.align-left {
-      justify-content: flex-start;
-
-      .value {
-        padding-left: rem(18px);
-        padding-right: 0;
-      }
-    }
-
-    .value {
-      position: absolute;
-      top: calc(50% - 10px);
-      bottom: 0;
-      left: rem(10px);
-      right: rem(10px);
-      padding-right: rem(18px);
-      z-index: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: inline-block;
-      font-size: $dd-font-size;
-
-      &.clearable {
-        padding-right: rem(28px);
-      }
-    }
-
-    input {
-      z-index: 1;
-      background-color: transparent;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      color: $slate;
-      font-size: $dd-font-size;
-
-      &:focus {
-        outline: none;
-      }
-
-      &::placeholder {
-        color: rgba($slate, 0.5);
-      }
-
-      &:read-only {
-        cursor: pointer;
-      }
-    }
-
-    .arrow-btn {
-      z-index: 3;
-      height: 100%;
-      cursor: pointer;
-
-      .arrow {
-        max-width: rem(12px);
-        height: 100%;
-        fill: $slate;
-      }
-    }
-
-    .clear-btn {
-      z-index: 3;
-      cursor: pointer;
-
-      .clear-icon {
-        max-width: rem(8px);
-        max-height: rem(8px);
-        margin-right: rem(5px);
-        fill: $slate;
+    &.-tooltip {
+      .menu-arrow {
+        display: none;
       }
     }
   }
 
-  .menu {
-    border: solid 1px $border;
-    margin-top: -1px;
-    z-index: 1;
-    max-height: rem(400px);
-    overflow-y: scroll;
+  .menu-trigger {
     cursor: pointer;
-    color: rgba($slate, 0.5);
-    font-size: $dd-font-size;
     position: absolute;
-    top: $dd-height;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-    background-color: $white;
-    padding: rem(5px) 0;
-
-    .item-wrapper {
-      justify-content: space-between;
-      align-items: center;
-      display: flex;
-      height: 0;
-      flex: 0;
-      margin-left: 100%;
-      width: 100%;
-      transition: none;
-      overflow: hidden;
-
-      &.base {
-        margin-left: -100%;
-        transition: margin-right 0.2s ease-in-out;
-      }
-
-      &.show {
-        height: auto;
-        margin-left: 0;
-        flex: 1;
-        overflow: initial;
-        transition: margin-left 0.2s ease-in-out;
-      }
-    }
-
-    .item {
-      width: 100%;
-      padding: rem(8px) rem(10px);
-    }
-
-    .info-button {
-      margin-right: rem(10px);
-      width: rem(16px);
-      max-width: rem(16px);
-      min-width: rem(16px);
-      height: rem(16px);
-      max-height: rem(16px);
-    }
-
-    .group-parent {
-      .item {
-        padding-right: rem(25px);
-        z-index: 2;
-      }
-
-      &.selected {
-        .item {
-          padding-right: rem(10px);
-          padding-left: rem(30px);
-        }
-      }
-
-      .group-icon {
-        z-index: 1;
-      }
-    }
-
-    .group-icon {
-      transform: rotate(-90deg);
-      fill: $slate;
-      position: absolute;
-      right: rem(10px);
-
-      &.selected {
-        transform: rotate(90deg);
-        left: rem(10px);
-      }
-    }
-
-    .highlight {
-      color: $slate;
-    }
+    height: 100%;
+    z-index: 10;
   }
 
   .is-open {

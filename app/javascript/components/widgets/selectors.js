@@ -1,217 +1,348 @@
-import { createSelector } from 'reselect';
-import { sortByKey } from 'utils/data';
+import { createSelector, createStructuredSelector } from 'reselect';
+import sortBy from 'lodash/sortBy';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
+import lowerCase from 'lodash/lowerCase';
 import camelCase from 'lodash/camelCase';
-import sortBy from 'lodash/sortBy';
+import intersection from 'lodash/intersection';
+import moment from 'moment';
 
-import forestTypes from 'data/forest-types.json';
-import landCategories from 'data/land-categories.json';
-import thresholds from 'data/thresholds.json';
-import units from 'data/units.json';
-import periods from 'data/periods.json';
-import extentYears from 'data/extent-years.json';
-import tscDriverGroups from 'data/tsc-loss-groups.json';
-import types from 'data/types.json';
-import weeks from 'data/weeks.json';
-import datasets from 'data/datasets.json';
+import { getAllLayers } from 'components/map-v2/selectors';
 
-import * as WIDGETS from 'components/widgets/manifest';
+import tropicalIsos from 'data/tropical-isos.json';
+import colors from 'data/colors.json';
+import allOptions from './options';
+import allWidgets from './manifest';
 
-// get list data
-const getCountryData = state => state.countryData || null;
-const getCategory = state => state.category || null;
-const getLocation = state => state.payload || null;
-const getWhitelist = state => state.whitelist || null;
-const getWidgetQuery = state => state.activeWidget || null;
-const getCountries = state => state.countries || null;
-const getRegions = state => state.regions || null;
-const getSubRegions = state => state.subRegions || null;
-
-// get all possible widget settings options
-const options = {
-  forestTypes,
-  landCategories,
-  thresholds,
-  units,
-  periods,
-  extentYears,
-  tscDriverGroups,
-  types,
-  weeks,
-  datasets
-};
+export const selectLocation = state => state.location && state.location.payload;
+export const selectAnalysis = (state, { analysis }) => analysis;
+export const selectAllLocation = state => state.location;
+export const selectLocationType = state =>
+  state.location && state.location.payload && state.location.payload.type;
+export const selectQuery = state => state.location && state.location.query;
+export const selectWidgetFromQuery = state =>
+  state.location && state.location.query && state.location.query.widget;
+export const selectEmbed = (state, { embed }) => embed;
+export const selectGeostore = state => state.geostore.geostore;
+export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
+  noWidgetsMessage;
+export const selectWidgets = state => state.widgets.widgets;
+export const selectLoading = state =>
+  state.countryData.countriesLoading ||
+  state.countryData.regionsLoading ||
+  state.countryData.subRegionsLoading ||
+  state.whitelists.countriesLoading ||
+  state.whitelists.regionsLoading;
+export const selectWhitelists = state => ({
+  adm0: state.whitelists.countries,
+  adm1: state.whitelists.regions
+});
+export const setectCountryData = state => ({
+  adm0: state.countryData.countries,
+  adm1: state.countryData.regions,
+  adm2: state.countryData.subRegions,
+  fao: state.countryData.faoCountries
+});
 
 export const getOptions = () => {
   const optionsMeta = {};
-  Object.keys(options).forEach(oKey => {
+  Object.keys(allOptions).forEach(oKey => {
     optionsMeta[oKey] =
-      oKey === 'weeks' ? options[oKey] : sortByKey(options[oKey], 'label');
+      oKey === 'weeks' ? allOptions[oKey] : sortBy(allOptions[oKey], 'label');
   });
   return optionsMeta;
 };
 
-// get location data for filtering widgets
-export const getAdminLevel = createSelector([getLocation], location => {
-  const { type, country, region, subRegion } = location;
-  if (subRegion) return 'subRegion';
-  if (region) return 'region';
-  if (country) return 'country';
+export const getAdminLevel = createSelector([selectLocation], location => {
+  const { type, adm0, adm1, adm2 } = location;
+  if (adm2) return 'adm2';
+  if (adm1) return 'adm1';
+  if (adm0) return 'adm0';
   return type || 'global';
 });
 
-export const getAdminKey = createSelector([getLocation], location => {
-  const { type, country, region, subRegion } = location;
-  if (subRegion) return 'subRegions';
-  if (region) return 'regions';
-  if (country) return 'countries';
-  return type || 'global';
-});
-
-export const getLocationOptions = createSelector(
-  [getAdminLevel, getCountryData],
-  (admin, countryData) =>
-    countryData[admin === 'country' ? 'regions' : 'subRegions'] ||
-    countryData.countries
+export const getActiveWhitelist = createSelector(
+  [selectWhitelists, getAdminLevel],
+  (whitelists, adminLevel) =>
+    whitelists[adminLevel === 'adm0' ? 'adm0' : 'adm1']
 );
 
-export const getAdminSelected = createSelector(
-  [
-    getCountries,
-    getRegions,
-    getSubRegions,
-    getLocation,
-    getAdminKey,
-    getAdminLevel
-  ],
-  (countries, regions, subRegions, location, adminKey, adminLevel) => {
-    const country =
-      (countries && countries.find(i => i.value === location.country)) || null;
-    const region =
-      (regions && regions.find(i => i.value === location.region)) || null;
-    const subRegion =
-      (subRegions && subRegions.find(i => i.value === location.subRegion)) ||
-      null;
-    const type = {
-      label: location.type || 'global',
-      value: location.type || 'global'
-    };
-
-    let current = type;
-    let parentLevel = null;
-    let parentKey = null;
-    let childLevel = 'country';
-    let childKey = 'countries';
-    if (location.subRegion) {
-      current = subRegion;
-      parentKey = 'regions';
-      parentLevel = 'region';
-    } else if (location.region) {
-      current = region;
-      parentKey = 'countries';
-      parentLevel = 'country';
-      childKey = 'subRegions';
-      childLevel = 'subRegion';
-    } else if (location.country) {
-      current = country;
-      parentKey = 'global';
-      childKey = 'regions';
-      childLevel = 'region';
-    }
-
-    return {
-      type,
-      country,
-      region,
-      subRegion,
-      ...current,
-      adminKey,
-      adminLevel,
-      parentKey,
-      parentLevel,
-      childKey,
-      childLevel
-    };
+export const getLocationData = createSelector(
+  [selectLocationType, setectCountryData],
+  (type, countryData) => {
+    if (type === 'country' || type === 'global') return countryData;
+    return {};
   }
 );
 
-// widget filters
-export const getWidgets = createSelector([], () =>
-  Object.keys(WIDGETS).map(key => ({
-    name: key,
-    ...WIDGETS[key].initialState
-  }))
-);
-
-export const checkWidgetAdminLevel = createSelector(
-  [getWidgets, getAdminLevel],
-  (widgets, adminLevel) =>
-    widgets.filter(w => w.config.admins.indexOf(adminLevel) > -1)
-);
-
-export const checkWidgetNeedsLocations = createSelector(
-  [
-    checkWidgetAdminLevel,
-    getLocationOptions,
-    getCountryData,
-    getLocation,
-    getAdminLevel
-  ],
-  (widgets, locations, countryData, location, adminLevel) => {
-    if (adminLevel === 'global') return widgets;
-    const { faoCountries } = countryData;
-    const isFaoCountry =
-      !!faoCountries.find(c => c.value === location.country) || null;
-
-    return widgets.filter(w => {
-      const { locationCheck, type, locationWhitelist } = w.config;
-      const needsLocations =
-        !locationCheck || (locations && locations.length > 1);
-      const locationWhitelistCheck =
-        !locationWhitelist || locationWhitelist.indexOf(location.country) > -1;
-      const faoLocationCheck = type !== 'fao' || isFaoCountry;
-
-      return needsLocations && locationWhitelistCheck && faoLocationCheck;
-    });
+export const getActiveLocationData = createSelector(
+  [getLocationData, selectLocation],
+  (locationData, location) => {
+    if (location.adm2) return locationData.adm2;
+    return locationData[location.adm1 ? 'adm1' : 'adm0'];
   }
 );
 
-export const filterWidgetByIndicator = createSelector(
-  [checkWidgetNeedsLocations, getWhitelist, getAdminLevel],
-  (widgets, whitelist, admin) => {
+export const getChildLocationData = createSelector(
+  [getLocationData, selectLocation],
+  (locationData, location) => {
+    if (location.adm2) return null;
+    if (!location.adm0) return locationData.adm0;
+    return locationData[location.adm1 ? 'adm2' : 'adm1'];
+  }
+);
+
+export const getLocationObject = createSelector(
+  [getActiveLocationData, selectLocation],
+  (adms, location) => {
+    if (!adms) return null;
+    const { type, adm0, adm1, adm2 } = location;
+    return adm0
+      ? adms.find(a => a.value === (adm2 || adm1 || adm0))
+      : { label: type, value: type };
+  }
+);
+
+export const getLocationName = createSelector(
+  [getLocationObject, selectLocationType],
+  (location, type) => (location && location.label) || type
+);
+
+export const getFAOLocationData = createSelector(
+  [setectCountryData],
+  countryData => countryData.faoCountries
+);
+
+export const isTropicalLocation = createSelector([selectLocation], location =>
+  tropicalIsos.includes(location && location.adm0)
+);
+
+export const getCategory = createSelector(
+  [selectQuery],
+  query => (query && query.category) || 'summary'
+);
+
+export const getNoWidgetsMessage = createSelector(
+  [getLocationName, selecteNoWidgetsMessage],
+  (locationName, message) =>
+    message && locationName && message.replace('{location}', locationName)
+);
+
+export const getAllWidgets = () => Object.values(allWidgets);
+
+export const parseWidgets = createSelector(
+  [getAllWidgets, selectWidgetFromQuery, selectEmbed],
+  (widgets, widgetQuery, embed) => {
     if (!widgets) return null;
-    if (admin === 'global') return widgets;
+    const filteredWidgets = embed
+      ? widgets.filter(w => w.config.widget === widgetQuery)
+      : widgets;
+    return (
+      filteredWidgets &&
+      filteredWidgets.length &&
+      filteredWidgets.map(w => ({
+        ...w,
+        widget: w.config && w.config.widget,
+        colors: colors[w.config && w.config.colors]
+      }))
+    );
+  }
+);
 
-    return widgets.filter(widget => {
-      const { showIndicators } = widget.config;
-      let showByIndicators = true;
-      if (showIndicators && whitelist) {
-        const totalIndicators = concat(showIndicators, whitelist).length;
-        const reducedIndicators = uniq(concat(showIndicators, whitelist))
-          .length;
-        showByIndicators = totalIndicators !== reducedIndicators;
-      }
-      return showByIndicators;
+export const filterWidgetsByLocation = createSelector(
+  [parseWidgets, selectLocationType, getAdminLevel],
+  (widgets, type, adminLevel) => {
+    if (!widgets) return null;
+    return widgets.filter(w => {
+      const { types, admins } = w.config || {};
+      return (
+        types && types.includes(type) && admins && admins.includes(adminLevel)
+      );
     });
   }
 );
 
-export const filterWidgets = createSelector(
-  [filterWidgetByIndicator, getCategory],
-  (widgets, category) =>
-    sortBy(
-      widgets.filter(
-        w => w.enabled && w.config.categories.indexOf(category) > -1
-      ),
-      `config.sortOrder[${camelCase(category)}]`
-    )
+export const filterWidgetsByLocationType = createSelector(
+  [filterWidgetsByLocation, selectLocation, getFAOLocationData],
+  (widgets, location, faoCountries) => {
+    if (!widgets) return null;
+    if (location.type !== 'country') return widgets;
+    const isFAOCountry = faoCountries.find(f => f.value === location.adm0);
+    return widgets.filter(w => {
+      const { source } = w.config || {};
+      if (source !== 'fao') return true;
+      return isFAOCountry;
+    });
+  }
+);
+
+export const filterWidgetsByLocationWhitelist = createSelector(
+  [filterWidgetsByLocation, selectLocation],
+  (widgets, location) => {
+    if (!widgets) return null;
+    return widgets.filter(w => {
+      const { whitelists } = w.config;
+      if (!whitelists) return true;
+      const whitelist = whitelists.adm0;
+      if (!whitelist) return true;
+      return whitelist.includes(location.adm0);
+    });
+  }
+);
+
+export const filterWidgetsByIndicatorWhitelist = createSelector(
+  [filterWidgetsByLocationWhitelist, getActiveWhitelist],
+  (widgets, indicatorWhitelist) => {
+    if (!widgets) return null;
+    if (!indicatorWhitelist.length) return widgets;
+    return widgets.filter(w => {
+      const { indicators } = w.config.whitelists || {};
+      if (!indicators) return true;
+      const totalIndicators = concat(indicators, indicatorWhitelist).length;
+      const reducedIndicators = uniq(concat(indicators, indicatorWhitelist))
+        .length;
+      return totalIndicators !== reducedIndicators;
+    });
+  }
+);
+
+// once we know which widgets we can render, lets pass them all static props
+export const parseWidgetsWithOptions = createSelector(
+  [
+    filterWidgetsByIndicatorWhitelist,
+    getOptions,
+    getActiveWhitelist,
+    selectLocation
+  ],
+  (widgets, options, polynameWhitelist, location) => {
+    if (!widgets) return null;
+
+    return widgets.map(w => {
+      const optionsConfig = w.config.options;
+      const optionKeys = optionsConfig && Object.keys(optionsConfig);
+      return {
+        ...w,
+        ...(optionsConfig && {
+          options: optionKeys.reduce((obj, optionKey) => {
+            const polynamesOptions = ['forestTypes', 'landCategories'];
+            const configWhitelist = optionsConfig[optionKey];
+            let filteredOptions = options[optionKey];
+            if (Array.isArray(configWhitelist)) {
+              filteredOptions = filteredOptions
+                ? filteredOptions.filter(o => configWhitelist.includes(o.value))
+                : optionsConfig[optionKey].map(o => ({
+                  label: o,
+                  value: o
+                }));
+            }
+
+            if (polynamesOptions.includes(optionKey)) {
+              // some horrible an inexcusable filters for forest types and land categories
+              filteredOptions =
+                location.type === 'global'
+                  ? filteredOptions.filter(o => o.global)
+                  : filteredOptions;
+              filteredOptions =
+                polynameWhitelist && polynameWhitelist.length
+                  ? filteredOptions.filter(o =>
+                    polynameWhitelist.includes(o.value)
+                  )
+                  : filteredOptions;
+              filteredOptions = filteredOptions.map(i => ({
+                ...i,
+                metaKey:
+                  i.metaKey === 'primary_forest'
+                    ? `${lowerCase(location.adm0)}_${i.metaKey}${
+                      location.adm0 === 'IDN' ? 's' : ''
+                    }`
+                    : i.metaKey
+              }));
+            }
+
+            return {
+              ...obj,
+              [optionKey]: filteredOptions
+            };
+          }, {})
+        })
+      };
+    });
+  }
+);
+
+export const filterWidgetsByCategoryAndLayers = createSelector(
+  [parseWidgetsWithOptions, getCategory, getAllLayers, selectAnalysis],
+  (widgets, category, layers, analysis) => {
+    if (!widgets) return null;
+    let filteredWidgets = widgets;
+    if (analysis) {
+      const layerIds = layers && layers.map(l => l.id);
+      filteredWidgets = widgets.filter(w => {
+        const layerIntersection = intersection(w.config.layers, layerIds);
+        return (
+          w.config.analysis && layerIntersection && layerIntersection.length
+        );
+      });
+      filteredWidgets = filteredWidgets.map(w => {
+        const widgetLayer =
+          layers &&
+          layers.find(l => w.config && w.config.layers.includes(l.id));
+        const { params, decodeParams } = widgetLayer || {};
+        const startDate =
+          (params && params.startDate) ||
+          (decodeParams && decodeParams.startDate);
+        const startYear =
+          startDate && parseInt(moment(startDate).format('YYYY'), 10);
+        const endDate =
+          (params && params.endDate) || (decodeParams && decodeParams.endDate);
+        const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
+
+        return {
+          ...w,
+          settings: {
+            ...w.settings,
+            ...params,
+            ...decodeParams,
+            ...(startYear && {
+              startYear
+            }),
+            ...(endYear && {
+              endYear
+            })
+          }
+        };
+      });
+    } else {
+      filteredWidgets = widgets.filter(w =>
+        w.config.categories.includes(category)
+      );
+    }
+    return sortBy(filteredWidgets, `config.sortOrder[${camelCase(category)}]`);
+  }
 );
 
 export const getActiveWidget = createSelector(
-  [filterWidgets, getWidgetQuery],
-  (widgets, widgetQuery) => {
-    if (!widgets || !widgets.length || widgetQuery === 'none') return null;
-    if (!widgetQuery) return widgets[0];
-    return widgets.find(w => w.name === widgetQuery);
+  [filterWidgetsByCategoryAndLayers, selectQuery],
+  (widgets, query) => {
+    if (query && query.widget) return query.widget;
+    return widgets && widgets.length && widgets[0].widget;
   }
 );
+
+export const getWidgetsProps = createStructuredSelector({
+  loading: selectLoading,
+  whitelists: selectWhitelists,
+  whitelist: getActiveWhitelist,
+  activeWidget: getActiveWidget,
+  category: getCategory,
+  allLocation: selectAllLocation,
+  location: selectLocation,
+  locationType: selectLocationType,
+  locationData: getActiveLocationData,
+  locationObject: getLocationObject,
+  locationName: getLocationName,
+  childLocationData: getChildLocationData,
+  widgets: filterWidgetsByCategoryAndLayers,
+  noWidgetsMessage: getNoWidgetsMessage,
+  isTropical: isTropicalLocation
+});

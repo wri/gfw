@@ -1,0 +1,64 @@
+@import '~styles/settings.scss';
+
+$dd-height: rem(34px);
+$dd-font-size: rem(13px);
+
+.c-selector-menu {
+  border: solid 1px $border;
+  margin-top: -1px;
+  z-index: 1;
+  max-height: rem(400px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  cursor: pointer;
+  color: rgba($slate, 0.5);
+  font-size: $dd-font-size;
+  position: absolute;
+  top: $dd-height;
+  width: 100%;
+  background-color: $white;
+  padding: rem(5px) 0;
+
+  .info-button {
+    margin-right: rem(10px);
+    width: rem(16px);
+    max-width: rem(16px);
+    min-width: rem(16px);
+    height: rem(16px);
+    max-height: rem(16px);
+  }
+
+  .group-icon {
+    transform: rotate(-90deg);
+    fill: $slate;
+    position: absolute;
+    right: rem(10px);
+
+    &.selected {
+      transform: rotate(90deg);
+      left: rem(10px);
+    }
+  }
+
+  .group-parent {
+    .item {
+      padding-right: rem(25px);
+      z-index: 2;
+    }
+
+    &.selected {
+      .item {
+        padding-right: rem(10px);
+        padding-left: rem(30px);
+      }
+    }
+
+    .group-icon {
+      z-index: 1;
+    }
+  }
+
+  .highlight {
+    color: $slate;
+  }
+}

@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
 import isEmpty from 'lodash/isEmpty';
 import { sortByKey } from 'utils/data';
@@ -9,7 +9,7 @@ import globalLandCoverCategories from 'data/global-land-cover-categories.json';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getCurrentLocation = state => state.currentLabel;
+const getLocationName = state => state.locationName;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -51,22 +51,26 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [parseData, getSettings, getCurrentLocation, getSentences],
-  (data, settings, currentLabel, sentences) => {
-    if (isEmpty(data) || !sentences) return null;
-    const { initial } = sentences;
+export const parseSentence = createSelector(
+  [parseData, getSettings, getLocationName, getSentences],
+  (data, settings, locationName, sentence) => {
+    if (isEmpty(data) || !sentence) return null;
     const { year } = settings;
     const { label, value } = data[0];
     const params = {
-      location: currentLabel,
+      location: locationName,
       year,
       category: label,
       extent: `${format('.3s')(value)}ha`
     };
     return {
-      sentence: initial,
+      sentence,
       params
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence
+});

@@ -29,7 +29,7 @@ class SectionProjects extends PureComponent {
     const hasCategories = categories && !!categories.length;
     return (
       <div>
-        <div className="l-section-projects">
+        <div className="l-section-projects-sgf">
           <div className="row">
             <div className="column small-12 large-7 project-globe">
               <Globe
@@ -76,13 +76,17 @@ class SectionProjects extends PureComponent {
                 >
                   <Card
                     className="project-card"
-                    data={d}
-                    onClick={() =>
-                      setSectionProjectsModal({
-                        isOpen: true,
-                        data: d
-                      })
-                    }
+                    data={{
+                      ...d,
+                      buttons: [
+                        {
+                          className: 'read-more',
+                          text: 'READ MORE',
+                          onClick: () =>
+                            setSectionProjectsModal({ isOpen: true, data: d })
+                        }
+                      ]
+                    }}
                   />
                 </div>
               ))}

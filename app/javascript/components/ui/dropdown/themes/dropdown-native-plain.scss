@@ -1,0 +1,17 @@
+@import '~styles/settings.scss';
+
+$dd-font-size: rem(16px);
+
+.theme-dropdown-native-plain {
+  .select-wrapper {
+    border: 0;
+
+    select {
+      padding-left: 0;
+      padding-right: 25px;
+      font-size: $dd-font-size;
+      height: rem(25px);
+      font-weight: 400;
+    }
+  }
+}

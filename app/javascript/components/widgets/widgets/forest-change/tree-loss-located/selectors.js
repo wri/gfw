@@ -1,11 +1,9 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-
-import { getAdminPath } from '../../../utils';
 
 // get list data
 const getLoss = state => (state.data && state.data.lossByRegion) || null;
@@ -13,17 +11,15 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.payload || null;
-const getQuery = state => state.query || null;
-const getLocationsMeta = state =>
-  (state.payload.region ? state.subRegions : state.regions) || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocation = state => state.allLocation || null;
+const getLocationsMeta = state => state.childLocationData || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const mapData = createSelector(
-  [getLoss, getExtent, getSettings, getLocation, getLocationsMeta, getQuery],
-  (data, extent, settings, location, meta, query) => {
+  [getLoss, getExtent, getSettings, getLocation, getLocationsMeta],
+  (data, extent, settings, location, meta) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
     const mappedData = data.map(d => {
@@ -35,12 +31,26 @@ export const mapData = createSelector(
         ) || 0;
       const locationExtent = extent.filter(l => l.id === d.id);
       const percentage = loss / locationExtent[0].extent * 100 || 0;
+      const { payload, query, type } = location;
+
       return {
         label: (region && region.label) || '',
         loss,
         percentage,
         value: settings.unit === 'ha' ? loss : percentage,
-        path: getAdminPath({ ...location, query, id: d.id })
+        path: {
+          type,
+          payload: {
+            ...payload,
+            ...(payload.adm1 && {
+              adm2: d.id
+            }),
+            ...(!payload.adm1 && {
+              adm1: d.id
+            })
+          },
+          query
+        }
       };
     });
 
@@ -61,18 +71,18 @@ export const parseData = createSelector(
   }
 );
 
-export const getSentence = createSelector(
+export const parseSentence = createSelector(
   [
     mapData,
     parseData,
     getSettings,
     getOptions,
     getIndicator,
-    getCurrentLocation,
+    getLocationName,
     getSentences
   ],
-  (data, sortedData, settings, options, indicator, currentLabel, sentences) => {
-    if (!data || !options || !currentLabel) return '';
+  (data, sortedData, settings, options, indicator, locationName, sentences) => {
+    if (!data || !options || !locationName || !sortedData) return '';
     const {
       initial,
       withIndicator,
@@ -112,7 +122,7 @@ export const getSentence = createSelector(
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location: currentLabel,
+      location: locationName,
       startYear,
       endYear,
       topLoss: `${format('.2r')(topLoss)}%`,
@@ -134,3 +144,8 @@ export const getSentence = createSelector(
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  sentence: parseSentence
+});

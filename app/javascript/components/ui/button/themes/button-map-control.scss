@@ -1,15 +1,12 @@
 @import '~styles/settings';
 
 .theme-button-map-control {
-  width: auto;
   min-width: rem(38px);
   height: rem(38px);
   padding: 0;
   background-color: $white;
   border-radius: 0;
-  box-shadow: 0 1px 2px rgba($black, 0.25);
   font-size: 10px;
-  line-height: 10px;
   color: $slate-light;
 
   svg {
@@ -17,12 +14,20 @@
   }
 
   &:hover {
-    background-color: $grey-light;
+    background-color: darken($white, 10%);
   }
 
   &.--active {
     svg {
       fill: $green-gfw;
+    }
+  }
+
+  &.disabled {
+    background-color: $white;
+
+    &:hover {
+      background-color: $white;
     }
   }
 }

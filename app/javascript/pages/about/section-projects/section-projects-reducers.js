@@ -1,3 +1,5 @@
+import * as actions from './section-projects-actions';
+
 export const initialState = {
   loading: false,
   error: false,
@@ -21,7 +23,7 @@ const setCategorySelected = (state, { payload }) => ({
 });
 
 export default {
-  setProjectsLoading,
-  setProjectsData,
-  setCategorySelected
+  [actions.setProjectsLoading]: setProjectsLoading,
+  [actions.setProjectsData]: setProjectsData,
+  [actions.setCategorySelected]: setCategorySelected
 };

@@ -1,0 +1,9 @@
+@import '~styles/settings.scss';
+
+.c-menu-mobile {
+  height: rem(50px);
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+}

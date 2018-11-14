@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { SingleDatePicker } from 'react-dates';
+import cx from 'classnames';
 
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import './datepicker-styles.scss';
+import './themes/datepicker-small.scss';
 
 class Datepicker extends PureComponent {
   constructor(props) {
@@ -15,13 +17,13 @@ class Datepicker extends PureComponent {
   }
 
   render() {
-    const { className, date, handleOnDateChange, settings } = this.props;
+    const { className, date, handleOnDateChange, settings, theme } = this.props;
     return (
-      <div className={`c-datepicker ${className || ''}`}>
+      <div className={cx('c-datepicker', theme, className)}>
         <SingleDatePicker
           date={date}
           onDateChange={d => {
-            handleOnDateChange(d);
+            handleOnDateChange(d, 0);
           }}
           focused={this.state.focused}
           onFocusChange={({ focused }) => this.setState({ focused })}
@@ -34,6 +36,7 @@ class Datepicker extends PureComponent {
 
 Datepicker.propTypes = {
   className: PropTypes.string,
+  theme: PropTypes.string,
   date: PropTypes.object,
   handleOnDateChange: PropTypes.func.isRequired,
   settings: PropTypes.object

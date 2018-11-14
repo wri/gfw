@@ -13,13 +13,13 @@ const SQL_QUERIES = {
   plantationsExtent:
     "SELECT SUM(area_poly_aoi) AS plantation_extent, {admin} AS region, {bound} AS label FROM data WHERE {location} AND thresh = 0 AND polyname = 'plantations' GROUP BY {type} ORDER BY plantation_extent DESC",
   multiRegionExtent:
-    "SELECT {region} as region, SUM({extentYear}) as extent, SUM(area_admin) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {region} ORDER BY {region}",
+    "SELECT {adm1} as region, SUM({extentYear}) as extent, SUM(area_admin) as total FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}' GROUP BY {adm1} ORDER BY {adm1}",
   rankedExtent:
     "SELECT polyname, SUM({extent_year}) as value, SUM(area_admin) as total_area, FROM data WHERE polyname='{polyname}' AND thresh={threshold} GROUP BY polyname, iso",
   gain:
     "SELECT {calc} as value FROM data WHERE {location} AND polyname = '{indicator}' AND thresh = 0",
   gainRanked:
-    "SELECT {region} as region, SUM(area_gain) AS gain, SUM({extentYear}) as value FROM data WHERE {location} AND polyname = '{polyname}' AND thresh = 0 GROUP BY region",
+    "SELECT {adm1} as region, SUM(area_gain) AS gain, SUM({extentYear}) as value FROM data WHERE {location} AND polyname = '{polyname}' AND thresh = 0 GROUP BY region",
   gainLocations:
     "SELECT {admin} as region, {calc} as gain FROM data WHERE {location} AND thresh = 0 AND polyname = '{indicator}' {grouping} ",
   loss:
@@ -27,7 +27,7 @@ const SQL_QUERIES = {
   locations:
     "SELECT {location} as region, {extentYear} as extent, {extent} as total FROM data WHERE iso = '{iso}' AND thresh = {threshold} AND polyname = '{indicator}' {grouping}",
   locationsLoss:
-    "SELECT {select} AS region, year_data.year as year, SUM(year_data.area_loss) as area_loss, FROM data WHERE polyname = '{indicator}' AND iso = '{iso}' {region} AND thresh= {threshold} GROUP BY {group}, nested(year_data.year) ORDER BY {order}",
+    "SELECT {select} AS region, year_data.year as year, SUM(year_data.area_loss) as area_loss, FROM data WHERE polyname = '{indicator}' AND iso = '{iso}' {adm1} AND thresh= {threshold} GROUP BY {group}, nested(year_data.year) ORDER BY {order}",
   lossRanked:
     "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as loss, SUM({extent_year}) as extent, FROM data WHERE polyname = '{polyname}' AND thresh = {threshold} GROUP BY polyname, iso, nested(year_data.year)",
   fao:
@@ -48,10 +48,10 @@ const SQL_QUERIES = {
 const getExtentYear = year =>
   (year === 2000 ? 'area_extent_2000' : 'area_extent');
 
-const getLocationQuery = (country, region, subRegion) =>
-  `${country ? `iso = '${country}'` : '1 = 1'}${
-    region ? ` AND adm1 = ${region}` : ''
-  }${subRegion ? ` AND adm2 = ${subRegion}` : ''}`;
+const getLocationQuery = (adm0, adm1, adm2) =>
+  `${adm0 ? `iso = '${adm0}'` : '1 = 1'}${adm1 ? ` AND adm1 = ${adm1}` : ''}${
+    adm2 ? ` AND adm2 = ${adm2}` : ''
+  }`;
 
 const getIndicatorsFromData = (types, categories) => {
   let indicators = '';
@@ -68,42 +68,40 @@ const getIndicatorsFromData = (types, categories) => {
 };
 
 export const getLocations = ({
-  country,
-  region,
+  adm0,
+  adm1,
   forestType,
   landCategory,
   threshold,
   extentYear
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locations}`
-    .replace('{location}', region ? 'adm2' : 'adm1')
+    .replace('{location}', adm1 ? 'adm2' : 'adm1')
     .replace(
       '{extentYear}',
-      `${!region ? 'sum(' : ''}${getExtentYear(extentYear)}${
-        !region ? ')' : ''
-      }`
+      `${!adm1 ? 'sum(' : ''}${getExtentYear(extentYear)}${!adm1 ? ')' : ''}`
     )
-    .replace('{extent}', region ? 'area_admin' : 'sum(area_admin)')
-    .replace('{iso}', country)
+    .replace('{extent}', adm1 ? 'area_admin' : 'sum(area_admin)')
+    .replace('{iso}', adm0)
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory))
-    .replace('{grouping}', region ? `AND adm1 = '${region}'` : 'GROUP BY adm1');
+    .replace('{grouping}', adm1 ? `AND adm1 = '${adm1}'` : 'GROUP BY adm1');
   return request.get(url);
 };
 
 export const getLocationsLoss = ({
-  country,
-  region,
+  adm0,
+  adm1,
   forestType,
   landCategory,
   threshold
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locationsLoss}`
-    .replace('{select}', region ? 'adm2' : 'adm1')
-    .replace('{group}', region ? 'adm2' : 'adm1')
-    .replace('{order}', region ? 'adm2' : 'adm1')
-    .replace('{iso}', country)
-    .replace('{region}', region ? `AND adm1 = ${region}` : '')
+    .replace('{select}', adm1 ? 'adm2' : 'adm1')
+    .replace('{group}', adm1 ? 'adm2' : 'adm1')
+    .replace('{order}', adm1 ? 'adm2' : 'adm1')
+    .replace('{iso}', adm0)
+    .replace('{adm1}', adm1 ? `AND adm1 = ${adm1}` : '')
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
@@ -136,16 +134,16 @@ export const fetchExtentRanked = ({
 };
 
 export const getExtent = ({
-  country,
-  region,
-  subRegion,
+  adm0,
+  adm1,
+  adm2,
   forestType,
   landCategory,
   threshold,
   extentYear
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
-    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
@@ -153,91 +151,80 @@ export const getExtent = ({
 };
 
 export const getPlantationsExtent = ({
-  country,
-  region,
-  subRegion,
+  adm0,
+  adm1,
+  adm2,
   threshold,
   type,
   groupByRegion
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
-    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold)
-    .replace('{admin}', region ? 'adm2' : 'adm1')
+    .replace('{admin}', adm1 ? 'adm2' : 'adm1')
     .replace('{bound}', type)
     .replace(
       '{type}',
-      groupByRegion ? `${region ? 'adm2' : 'adm1'}, ${type}` : type
+      groupByRegion ? `${adm1 ? 'adm2' : 'adm1'}, ${type}` : type
     );
   return request.get(url);
 };
 
 export const getMultiRegionExtent = ({
-  country,
-  region,
-  subRegion,
+  adm0,
+  adm1,
+  adm2,
   forestType,
   landCategory,
   threshold,
   extentYear
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.multiRegionExtent}`
-    .replace(/{region}/g, region ? 'adm2' : 'adm1')
-    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace(/{adm1}/g, adm1 ? 'adm2' : 'adm1')
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
   return request.get(url);
 };
 
-export const getGain = ({
-  country,
-  region,
-  subRegion,
-  forestType,
-  landCategory
-}) => {
+export const getGain = ({ adm0, adm1, adm2, forestType, landCategory }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gain}`
-    .replace('{location}', getLocationQuery(country, region, subRegion))
-    .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
+    .replace('{calc}', adm1 ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
 
-export const getGainLocations = ({
-  country,
-  region,
-  forestType,
-  landCategory
-}) => {
+export const getGainLocations = ({ adm0, adm1, forestType, landCategory }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gainLocations}`
-    .replace('{location}', getLocationQuery(country, region))
-    .replace('{admin}', region ? 'adm2' : 'adm1')
-    .replace('{calc}', region ? 'area_gain' : 'SUM(area_gain)')
+    .replace('{location}', getLocationQuery(adm0, adm1))
+    .replace('{admin}', adm1 ? 'adm2' : 'adm1')
+    .replace('{calc}', adm1 ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', getIndicator(forestType, landCategory))
-    .replace('{grouping}', !region ? 'GROUP BY adm1 ORDER BY adm1' : '');
+    .replace('{grouping}', !adm1 ? 'GROUP BY adm1 ORDER BY adm1' : '');
   return request.get(url);
 };
 
 export const getLoss = ({
-  country,
-  region,
-  subRegion,
+  adm0,
+  adm1,
+  adm2,
   forestType,
   landCategory,
   threshold
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.loss}`
-    .replace('{location}', getLocationQuery(country, region, subRegion))
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold)
     .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
 
-export const getFAO = ({ country }) => {
+export const getFAO = ({ adm0 }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.fao}`.replace(
     '{location}',
-    country ? `country = '${country}'` : '1 = 1'
+    adm0 ? `country = '${adm0}'` : '1 = 1'
   );
   return request.get(url);
 };
@@ -250,10 +237,10 @@ export const getFAOExtent = ({ period }) => {
   return request.get(url);
 };
 
-export const getFAODeforest = ({ country }) => {
+export const getFAODeforest = ({ adm0 }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.faoDeforest}`.replace(
     '{location}',
-    country ? `WHERE fao.country = '${country}'` : ''
+    adm0 ? `WHERE fao.country = '${adm0}'` : ''
   );
   return request.get(url);
 };
@@ -271,26 +258,26 @@ export const getFAOEcoLive = () => {
 };
 
 export const getGainRanked = ({
-  country,
-  region,
-  subRegion,
+  adm0,
+  adm1,
+  adm2,
   forestType,
   landCategory,
   extentYear
 }) => {
   let regionValue = 'iso';
-  if (subRegion) {
+  if (adm2) {
     regionValue = 'adm2';
-  } else if (region) {
+  } else if (adm1) {
     regionValue = 'adm1';
   }
 
-  const location = region
-    ? `iso = '${country}' AND ${subRegion ? `adm1 = ${region} AND` : ''}`
+  const location = adm1
+    ? `iso = '${adm0}' AND ${adm2 ? `adm1 = ${adm1} AND` : ''}`
     : '';
 
   const url = `${REQUEST_URL}${SQL_QUERIES.gainRanked}`
-    .replace('{region}', regionValue)
+    .replace('{adm1}', regionValue)
     .replace('{location}', location)
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicator(forestType, landCategory));
@@ -305,10 +292,10 @@ export const getNonGlobalDatasets = () => {
   return request.get(url);
 };
 
-export const getGlobalLandCover = ({ country, region, subRegion }) => {
+export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
   const url = `${CARTO_REQUEST_URL}${SQL_QUERIES.globalLandCover}`.replace(
     '{location}',
-    getLocationQuery(country, region, subRegion)
+    getLocationQuery(adm0, adm1, adm2)
   );
   return request.get(url);
 };

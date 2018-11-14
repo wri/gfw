@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
@@ -6,10 +6,12 @@ import { sortByKey } from 'utils/data';
 import { formatUSD } from 'utils/format';
 
 // get list data
-const getData = state => state.data;
+const getData = state => state.data && state.data.data;
+const getDataOptions = state => state.data && state.data.options;
+const getDataSettings = state => state.data && state.data.settings;
 const getSettings = state => state.settings;
-const getLocationsMeta = state => state.countries || null;
-const getCurrentLocation = state => state.currentLocation;
+const getLocationsMeta = state => state.locationData || null;
+const getLocationObject = state => state.locationObject;
 const getColors = state => state.colors;
 const getSentences = state => state.config.sentence;
 
@@ -18,7 +20,6 @@ export const getFilteredData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
-
     const { year } = settings;
     const gdps = data.filter(
       item =>
@@ -71,13 +72,11 @@ export const getSortedData = createSelector(
 );
 
 export const chartData = createSelector(
-  [getFilteredData, getSettings, getCurrentLocation, getColors],
-  (filteredData, settings, currentLocation, colors) => {
-    if (!filteredData || !filteredData.length) return null;
+  [getFilteredData, getLocationObject, getColors],
+  (filteredData, locationObject, colors) => {
+    if (!filteredData || !filteredData.length || !locationObject) return null;
 
-    const data = filteredData.filter(
-      item => item.iso === currentLocation.value
-    );
+    const data = filteredData.filter(item => item.iso === locationObject.value);
     if (!data.length) return null;
 
     return [
@@ -98,11 +97,11 @@ export const chartData = createSelector(
 );
 
 export const rankData = createSelector(
-  [getSortedData, getSettings, getLocationsMeta, getCurrentLocation, getColors],
-  (data, settings, meta, currentLocation, colors) => {
-    if (!data || !data.length) return null;
+  [getSortedData, getSettings, getLocationsMeta, getLocationObject, getColors],
+  (data, settings, meta, locationObject, colors) => {
+    if (!data || !data.length || !locationObject) return null;
 
-    const locationIndex = findIndex(data, d => d.iso === currentLocation.value);
+    const locationIndex = findIndex(data, d => d.iso === locationObject.value);
     let trimStart = locationIndex - 2;
     let trimEnd = locationIndex + 3;
     if (locationIndex < 2) {
@@ -139,6 +138,7 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = () => ({
+  height: 250,
   yKeys: {
     bars: {
       value: {
@@ -158,25 +158,34 @@ export const parseConfig = () => ({
   unitFormat: value => formatUSD(value)
 });
 
-export const getSentence = createSelector(
-  [getFilteredData, getSettings, getCurrentLocation, getSentences],
-  (data, settings, currentLocation, sentence) => {
+export const parseSentence = createSelector(
+  [getFilteredData, getSettings, getLocationObject, getSentences],
+  (data, settings, locationObject, sentence) => {
     if (!data) return null;
-    const selectedFAO = data.filter(item => item.iso === currentLocation.value);
+    const selectedFAO = data.filter(item => item.iso === locationObject.value);
     if (!selectedFAO.length) return '';
 
     const params = {
-      location: `${currentLocation && currentLocation.label}'s`,
+      location: `${locationObject && locationObject && locationObject.label}'s`,
       value: `${formatUSD(selectedFAO[0].net_usd, false)} USD`,
       percentage:
         selectedFAO[0].net_perc >= 0.1
           ? `${format('2r')(selectedFAO[0].net_perc)}%`
-          : '< 0.1%',
+          : '<0.1%',
       year: settings.year
     };
+
     return {
       sentence,
       params
     };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence,
+  options: getDataOptions,
+  settings: getDataSettings
+});

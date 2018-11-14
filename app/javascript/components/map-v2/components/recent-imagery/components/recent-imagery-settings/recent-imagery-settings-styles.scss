@@ -1,0 +1,164 @@
+@import '~styles/settings.scss';
+
+.c-recent-imagery-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: $white;
+
+  .top-section {
+    padding: rem(15px) rem(20px) rem(30px);
+    width: 100%;
+
+    .recent-menu {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: rem(15px);
+
+      @media screen and (min-width: $screen-m) {
+        display: flex;
+      }
+
+      .close-btn {
+        cursor: pointer;
+
+        svg {
+          height: 11px;
+          width: 11px;
+          fill: $warm-grey;
+        }
+      }
+
+      .title {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 21px;
+        color: $slate;
+        text-transform: uppercase;
+      }
+    }
+
+    .dates {
+      position: relative;
+      width: 100%;
+      z-index: 4;
+      margin-bottom: rem(20px);
+
+      .title {
+        margin-bottom: rem(10px);
+        text-align: left;
+      }
+
+      .title,
+      .before {
+        font-size: 11px;
+        font-weight: 500;
+        color: $warm-grey;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .c-dropdown {
+          max-width: calc(50% - 30px);
+          margin: rem(1px) rem(15px) 0 0;
+        }
+
+        .c-datepicker {
+          max-width: calc(50% - 30px);
+          margin: 0 0 0 rem(15px);
+        }
+      }
+    }
+
+    .clouds {
+      width: 100%;
+
+      .title {
+        text-align: left;
+        font-size: 11px;
+        font-weight: 500;
+        color: $warm-grey;
+        margin-bottom: rem(10px);
+      }
+
+      .c-slider {
+        padding: 0 rem(5px);
+      }
+    }
+  }
+
+  .thumbnails {
+    position: relative;
+    width: 100%;
+    height: rem(300px);
+    border-top: 1px solid rgba(#9e9e9e, 0.3);
+    z-index: 1;
+    padding: rem(20px) rem(20px) rem(20px);
+
+    .header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: rem(20px);
+      z-index: 2;
+
+      .description {
+        text-align: left;
+        min-width: 48%;
+        margin-right: 4%;
+
+        p {
+          font-size: rem(12px);
+          line-height: 1.6;
+        }
+      }
+
+      .band-selector {
+        min-width: 48%;
+      }
+    }
+
+    .thumbnail-grid {
+      display: flex;
+      flex-wrap: wrap;
+      height: auto;
+      width: 100%;
+      min-width: 100%;
+      flex: 1;
+      margin-bottom: rem(20px);
+
+      > * {
+        margin: 0 rem(5px) rem(5px) 0;
+        width: calc((100% - 10px) / 3);
+
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+      }
+
+      @media screen and (min-width: $screen-m) {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: rem(180px);
+        margin-bottom: 0;
+      }
+
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        /* IE10+ CSS styles go here */
+        > * {
+          width: rem(80px);
+        }
+      }
+    }
+  }
+
+  .placeholder {
+    padding-top: rem(11px);
+  }
+}

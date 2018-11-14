@@ -16,7 +16,8 @@ class CustomPieChart extends PureComponent {
       startAngle,
       endAngle,
       className,
-      tooltip
+      tooltip,
+      simple
     } = this.props;
 
     return (
@@ -39,7 +40,9 @@ class CustomPieChart extends PureComponent {
                 />
               ))}
             </Pie>
-            <Tooltip content={<ChartToolTip settings={tooltip} />} />
+            <Tooltip
+              content={<ChartToolTip settings={tooltip} simple={simple} />}
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -56,6 +59,7 @@ CustomPieChart.propTypes = {
   startAngle: PropTypes.number,
   endAngle: PropTypes.number,
   className: PropTypes.string,
+  simple: PropTypes.bool,
   tooltip: PropTypes.array
 };
 

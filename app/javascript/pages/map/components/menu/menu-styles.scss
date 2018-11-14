@@ -1,0 +1,38 @@
+@import '~styles/settings.scss';
+
+.c-map-menu {
+  z-index: 2;
+
+  .menu-tiles {
+    z-index: 4;
+    background-color: $white-tree;
+    border-top: solid 1px $border;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &.embed {
+      bottom: rem(60px);
+
+      @media screen and (min-width: $screen-m) {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(76px);
+      top: 0;
+      padding-top: rem(74px);
+    }
+  }
+
+  .menu-panel {
+    padding-bottom: rem(50px);
+    z-index: 3;
+
+    @media screen and (min-width: $screen-m) {
+      padding-bottom: 0;
+    }
+  }
+}

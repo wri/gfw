@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getLoss } from 'services/forest-data';
 
-export const getData = ({ params, dispatch, setWidgetData, widget }) => {
+export default ({ params }) =>
   axios
     .all([
       getLoss({ ...params, forestType: 'plantations' }),
@@ -18,20 +18,6 @@ export const getData = ({ params, dispatch, setWidgetData, widget }) => {
             totalLoss
           };
         }
-        dispatch(
-          setWidgetData({
-            data,
-            widget
-          })
-        );
+        return data;
       })
-    )
-    .catch(error => {
-      dispatch(setWidgetData({ widget, error: true }));
-      console.info(error);
-    });
-};
-
-export default {
-  getData
-};
+    );

@@ -1,6 +1,6 @@
 @import '~styles/settings.scss';
 
-.c-header {
+.c-header-menu {
   position: relative;
   background-color: $slate-light;
   padding: rem(50px) 0 rem(30px);
@@ -27,9 +27,12 @@
 
   .loader {
     z-index: 10;
+    width: 100%;
+    right: 0;
+    left: auto;
 
     @media screen and (min-width: $screen-xl) {
-      padding-left: calc(100% - (#{$max-width} * 0.7) + #{$desktop-gutter});
+      width: calc((#{$max-width} * 0.7) - #{$desktop-gutter});
     }
   }
 

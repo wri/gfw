@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
@@ -8,7 +8,7 @@ const EMISSIONS_KEYS = ['Total including LUCF', 'Land-Use Change and Forestry'];
 
 // get list data
 const getData = state => state.data || null;
-const getCurrentLocation = state => state.currentLabel || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
@@ -56,6 +56,7 @@ export const parseConfig = createSelector(
 
     const colorRange = getColorPalette(colors.ramp, 2);
     return {
+      height: 250,
       xKey: 'year',
       yKeys: {
         areas: {
@@ -93,9 +94,9 @@ export const parseConfig = createSelector(
   }
 );
 
-export const getSentence = createSelector(
-  [getSortedData, getCurrentLocation, getSentences],
-  (sortedData, currentLabel, sentences) => {
+export const parseSentence = createSelector(
+  [getSortedData, getLocationName, getSentences],
+  (sortedData, locationName, sentences) => {
     if (!sortedData || !sortedData.data.length) return '';
     const { positive, negative } = sentences;
     const { data, total } = sortedData;
@@ -111,8 +112,8 @@ export const getSentence = createSelector(
     const endYear = data[0].emissions[data[0].emissions.length - 1].year;
     const emissionFraction = emissionsCount / totalEmissionsCount * 100;
     const params = {
-      location: currentLabel,
-      location_alt: `${currentLabel}'s`,
+      location: locationName,
+      location_alt: `${locationName}'s`,
       percentage:
         Math.abs(emissionFraction) < 0.1
           ? '<0.1%'
@@ -130,3 +131,9 @@ export const getSentence = createSelector(
     return { sentence, params };
   }
 );
+
+export default createStructuredSelector({
+  data: parseData,
+  dataConfig: parseConfig,
+  sentence: parseSentence
+});

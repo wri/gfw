@@ -15,7 +15,8 @@ $subnav-height-dark: rem(40px);
       max-width: 100%;
       width: auto;
 
-      > a {
+      > a,
+      > button {
         background-color: $black-menu;
         color: #9f9f9f;
         text-transform: uppercase;
@@ -26,6 +27,10 @@ $subnav-height-dark: rem(40px);
         &.active {
           background-color: $white;
         }
+      }
+
+      span {
+        margin-top: 0;
       }
 
       &:first-child {
