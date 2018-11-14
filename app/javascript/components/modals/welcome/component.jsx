@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { track } from 'utils/analytics';
 
 import Icon from 'components/ui/icon';
+import Button from 'components/ui/button';
 
 import exploreGreenIcon from 'assets/icons/explore-green.svg';
 import helpGreenIcon from 'assets/icons/help-green.svg';
@@ -31,8 +32,9 @@ class ModalWelcome extends PureComponent {
           <p className="btn-intro">
             <b>If it&#39;s your first time:</b>
           </p>
-          <button
+          <Button
             className="guide-btn"
+            theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setModalWelcome(false);
               setMapTourOpen(true);
@@ -43,12 +45,13 @@ class ModalWelcome extends PureComponent {
             <p>
               Check out the highlights and learn what you can do with the map.
             </p>
-          </button>
+          </Button>
           <p className="btn-intro">
             <b>If you&#39;re returning:</b>
           </p>
-          <button
+          <Button
             className="guide-btn"
+            theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setExploreView();
               track('welcomeModal', { label: 'topics' });
@@ -59,9 +62,10 @@ class ModalWelcome extends PureComponent {
               Try out the Explore tab for an introduction to key forest topics
               and high priority areas with recent forest loss.
             </p>
-          </button>
-          <button
+          </Button>
+          <Button
             className="guide-btn"
+            theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setAnalysisView();
               track('welcomeModal', { label: 'analysis' });
@@ -69,7 +73,7 @@ class ModalWelcome extends PureComponent {
           >
             <Icon className="guide-btn-icon" icon={analysisGreenIcon} />
             <p>Test out our new and improved analysis features.</p>
-          </button>
+          </Button>
         </div>
       </div>
     );

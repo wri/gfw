@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Joyride from 'react-joyride';
+import { track } from 'utils/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
 import closeIcon from 'assets/icons/close.svg';
+import exploreGreenIcon from 'assets/icons/explore-green.svg';
+import analysisGreenIcon from 'assets/icons/analysis-green.svg';
 
 import './styles.scss';
 
@@ -16,6 +19,41 @@ class MapTour extends PureComponent {
       this.resetMapLayout();
     }
   }
+
+  renderExitOptions = () => (
+    <div className="tour-exit-actions">
+      <p className="intro">
+        Not sure what to do next? Here are some suggestions:
+      </p>
+      <Button
+        className="guide-btn"
+        theme="theme-button-clear theme-button-dashed"
+        onClick={() => {
+          this.props.setExploreView();
+          this.props.setMapTourOpen(false);
+          track('welcomeModal', { label: 'topics' });
+        }}
+      >
+        <Icon className="guide-btn-icon" icon={exploreGreenIcon} />
+        <p>
+          Try out the Explore tab for an introduction to key forest topics and
+          high priority areas with recent forest loss.
+        </p>
+      </Button>
+      <Button
+        className="guide-btn"
+        theme="theme-button-clear theme-button-dashed"
+        onClick={() => {
+          this.props.setAnalysisView();
+          this.props.setMapTourOpen(false);
+          track('welcomeModal', { label: 'analysis' });
+        }}
+      >
+        <Icon className="guide-btn-icon" icon={analysisGreenIcon} />
+        <p>Test out our new and improved analysis features.</p>
+      </Button>
+    </div>
+  );
 
   getSteps = () => {
     const { setAnalysisSettings, setMenuSettings, setMapSettings } = this.props;
@@ -134,6 +172,10 @@ class MapTour extends PureComponent {
       {
         target: '.map-tour-main-menu',
         content: 'Access the main navigation menu.'
+      },
+      {
+        target: 'body',
+        content: this.renderExitOptions
       }
     ];
   };
@@ -170,7 +212,9 @@ class MapTour extends PureComponent {
         <div className="tour-step">
           {index + 1}/{numOfSteps}
         </div>
-        <div className="tour-content">{html}</div>
+        <div className="tour-content">
+          {typeof html === 'function' ? html() : html}
+        </div>
         <div className="tour-btns">
           {index !== 0 && (
             <Button
@@ -207,6 +251,7 @@ class MapTour extends PureComponent {
               setMapTourOpen(false);
             }
           }}
+          spotlightPadding={0}
           tooltipComponent={e => this.renderTooltip(e, steps.length)}
           styles={{
             options: {
@@ -225,7 +270,9 @@ MapTour.propTypes = {
   setAnalysisSettings: PropTypes.func,
   setMapTourOpen: PropTypes.func,
   setMapSettings: PropTypes.func,
-  setMenuSettings: PropTypes.func
+  setMenuSettings: PropTypes.func,
+  setExploreView: PropTypes.func,
+  setAnalysisView: PropTypes.func
 };
 
 export default MapTour;

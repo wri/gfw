@@ -1,0 +1,13 @@
+@import '~styles/settings';
+
+.theme-button-dashed {
+  background-color: transparent;
+  color: $slate;
+  border: $green-gfw 1px dashed;
+  border-radius: 5px;
+  padding: rem(20px);
+
+  &:hover {
+    background-color: $grey-light;
+  }
+}

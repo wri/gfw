@@ -32,7 +32,7 @@
   color: $slate;
   background-color: $white;
   padding: rem(20px);
-  max-width: rem(290px);
+  max-width: rem(320px);
   position: relative;
 
   .tour-close {
@@ -48,8 +48,8 @@
 
   .tour-step {
     background-color: $warm-grey;
-    width: rem(30px);
-    height: rem(30px);
+    width: rem(35px);
+    height: rem(35px);
     font-size: rem(12px);
     display: flex;
     align-items: center;
@@ -76,6 +76,32 @@
 
       &:last-child {
         margin-left: rem(5px);
+      }
+    }
+  }
+
+  .tour-exit-actions {
+    .intro {
+      margin-bottom: rem(15px);
+    }
+
+    .guide-btn {
+      text-align: left;
+      margin-bottom: rem(15px);
+      height: auto;
+      padding: rem(15px);
+
+      .guide-btn-icon {
+        width: rem(40px);
+        min-width: rem(40px);
+        height: rem(40px);
+        min-height: rem(40px);
+        margin-right: rem(15px);
+        fill: $green-gfw;
+      }
+
+      p {
+        font-size: rem(12px);
       }
     }
   }
