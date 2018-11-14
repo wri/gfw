@@ -21,7 +21,7 @@ export const setMapSettings = createThunkAction(
 
 export const setLandsatBasemap = createThunkAction(
   'setLandsatBasemap',
-  ({ year, defaultUrl }) => (dispatch, getState) => {
+  ({ year, defaultUrl, label }) => (dispatch, getState) => {
     const mapZoom = getMapZoom(getState());
     const currentBasemap = getBasemap(getState());
     const landsat = {
@@ -59,7 +59,8 @@ export const setLandsatBasemap = createThunkAction(
             id: 'landsat',
             url: landsat.url,
             color: '#0C0045'
-          }
+          },
+          label
         })
       );
     }

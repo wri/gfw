@@ -26,7 +26,8 @@ class BasemapsContainer extends React.Component {
       if (basemap.id === 'landsat') {
         return this.props.setLandsatBasemap({
           year,
-          defaultUrl: basemap.defaultUrl
+          defaultUrl: basemap.defaultUrl,
+          label
         });
       }
     }
