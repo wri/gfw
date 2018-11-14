@@ -176,9 +176,10 @@ class CustomComposedChart extends PureComponent {
                         key={d.index}
                         width={1.2 * d.width}
                         height={'82%'}
+                        opacity={0.1}
                         fill={
                           d.index === barBackground.activeIndex
-                            ? '#555555'
+                            ? '#4a4a4a'
                             : 'transparent'
                         }
                       />

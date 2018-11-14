@@ -109,26 +109,24 @@ const buildData = createSelector(
       color: colors.main
     }));
 
-    return { percentiles, list };
+    return { percentiles, list, selectedPercentile };
   }
 );
 
-const getPercentileIndex = createSelector(
-  [parseData, getSettings],
-  (percentiles, settings) => {
-    const { percentile } = settings;
-    if (!percentile || !percentiles || isEmpty(percentiles)) return null;
-    let index = -1;
+const getPercentileIndex = createSelector([buildData], data => {
+  if (!data) return null;
+  const { percentiles, selectedPercentile } = data;
+  if (!selectedPercentile || !percentiles || isEmpty(percentiles)) return null;
+  let index = -1;
 
-    percentiles.forEach((p, i) => {
-      if (p.name === percentile) {
-        index = i;
-      }
-    });
+  percentiles.forEach((p, i) => {
+    if (p.name === selectedPercentile.name) {
+      index = i;
+    }
+  });
 
-    return index;
-  }
-);
+  return index;
+});
 
 const parseConfig = createSelector(
   [getColors, getPercentileIndex],
@@ -185,7 +183,7 @@ const parseSentence = createSelector(
 );
 
 export default createStructuredSelector({
-  data: buildData,
   dataConfig: parseConfig,
+  data: buildData,
   sentence: parseSentence
 });
