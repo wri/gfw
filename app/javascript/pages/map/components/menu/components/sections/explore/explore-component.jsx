@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { track } from 'utils/analytics';
+import ReactHtmlParser from 'react-html-parser';
 
 import SubnavMenu from 'components/subnav-menu';
 import Card from 'components/ui/card';
@@ -23,7 +24,7 @@ class Explore extends PureComponent {
     } = this.props;
     const links = [
       {
-        label: 'Topics',
+        label: 'Forest Topics',
         active: section === 'topics',
         onClick: () => {
           setMenuSettings({ exploreType: 'topics' });
@@ -31,7 +32,7 @@ class Explore extends PureComponent {
         }
       },
       {
-        label: 'Places to watch',
+        label: 'Places to Watch',
         active: section === 'placesToWatch',
         onClick: () => {
           setMenuSettings({ exploreType: 'placesToWatch' });
@@ -61,8 +62,8 @@ class Explore extends PureComponent {
               <div className="description">
                 {section === 'placesToWatch' ? (
                   <Fragment>
-                    {description}
-                    <PTWProvider date={new Date()} />
+                    {ReactHtmlParser(description)}
+                    <PTWProvider />
                   </Fragment>
                 ) : (
                   description

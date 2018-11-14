@@ -68,6 +68,7 @@ class DrawAnalysis extends PureComponent {
   render() {
     const {
       setShareModal,
+      setMenuSettings,
       clearAnalysis,
       data,
       loading,
@@ -141,7 +142,20 @@ class DrawAnalysis extends PureComponent {
             isEmpty(data) && <NoContent message="No analysis data available" />}
           {!hasLayers &&
             !loading && (
-              <NoContent message="No analysis layers activated. Please select one from the menu." />
+              <NoContent>
+                Select a{' '}
+                <button
+                  onClick={() =>
+                    setMenuSettings({
+                      menuSection: 'datasets',
+                      datasetCategory: 'forestChange'
+                    })
+                  }
+                >
+                  forest change
+                </button>{' '}
+                data layer to analyze.
+              </NoContent>
             )}
           {hasLayers &&
             !loading &&
@@ -196,6 +210,7 @@ DrawAnalysis.propTypes = {
   fullLocationName: PropTypes.string,
   setModalSources: PropTypes.func,
   handleShowDownloads: PropTypes.func,
+  setMenuSettings: PropTypes.func,
   showDownloads: PropTypes.bool,
   hasLayers: PropTypes.bool,
   downloadUrls: PropTypes.array

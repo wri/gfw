@@ -44,7 +44,7 @@
         top: rem(15px);
 
         @media screen and (min-width: $screen-m) {
-          right: rem(220px);
+          right: rem(260px);
           bottom: rem(50px);
           top: auto;
         }
@@ -116,7 +116,7 @@
   .map-attributions {
     position: absolute;
     bottom: rem(15px);
-    right: rem(220px);
+    right: rem(260px);
     z-index: 5;
 
     &.embed {
@@ -142,6 +142,17 @@
     .view-more {
       margin-top: rem(5px);
       font-size: rem(10px);
+    }
+  }
+
+  .c-cluster-icon {
+    border: 0;
+
+    > div {
+      border-radius: 50%;
+      font-size: rem(14px);
+      font-weight: 500;
+      color: $white;
     }
   }
 }

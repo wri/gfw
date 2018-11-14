@@ -61,7 +61,12 @@ class MenuPanel extends PureComponent {
         {active && (
           <Panel
             key="menu-container"
-            className={cx('c-menu-panel', { large }, className)}
+            className={cx(
+              'c-menu-panel',
+              'map-tour-menu-panel',
+              { large },
+              className
+            )}
           >
             {!isDesktop ? (
               <div className="panel-header">

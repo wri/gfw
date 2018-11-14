@@ -33,6 +33,9 @@ class MapAttributions extends PureComponent {
         <a href="/terms" rel="noopener noreferrer" target="_blank">
           Terms of use
         </a>
+        <a href="/privacy-policy" rel="noopener noreferrer" target="_blank">
+          Privacy policy
+        </a>
       </div>
     );
   }
