@@ -1,4 +1,5 @@
 @import '~styles/settings.scss';
+@import '~styles/utils.scss';
 
 .c-map-controls {
   .c-icon {
@@ -79,6 +80,10 @@
       background: $slate;
       border-radius: 15px;
       padding: 2px;
+    }
+
+    .pulse-tour-btn {
+      animation: pulse 1.5s infinite;
     }
   }
 

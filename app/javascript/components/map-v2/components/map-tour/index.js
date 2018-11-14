@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import { setAnalysisSettings } from 'components/map-v2/components/analysis/actions';
+import { setMapSettings } from 'components/map-v2/actions';
 import { setMenuSettings } from 'pages/map/components/menu/menu-actions';
 import * as actions from './actions';
 import Component from './component';
@@ -12,5 +13,6 @@ export const reduxModule = { actions, reducers, initialState };
 export default connect(getMapTourProps, {
   ...actions,
   setAnalysisSettings,
-  setMenuSettings
+  setMenuSettings,
+  setMapSettings
 })(Component);

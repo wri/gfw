@@ -9,6 +9,7 @@ export const initialState = {
       lat: 27,
       lng: 12
     },
+    showBasemaps: false,
     zoom: 3,
     zoomControl: false,
     maxZoom: 19,

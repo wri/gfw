@@ -18,7 +18,7 @@ class MapTour extends PureComponent {
   }
 
   getSteps = () => {
-    const { setAnalysisSettings, setMenuSettings } = this.props;
+    const { setAnalysisSettings, setMenuSettings, setMapSettings } = this.props;
 
     return [
       {
@@ -76,7 +76,7 @@ class MapTour extends PureComponent {
           },
           prev: () => {
             setMenuSettings({
-              menuSection: 'explore'
+              menuSection: ''
             });
           }
         }
@@ -88,12 +88,15 @@ class MapTour extends PureComponent {
           text: 'Search for a dataset, location or geographic coordinates.',
           next: () => {
             setMenuSettings({
-              menuSection: 'search'
+              menuSection: ''
+            });
+            setMapSettings({
+              showBasemaps: true
             });
           },
           prev: () => {
             setMenuSettings({
-              menuSection: ''
+              menuSection: 'explore'
             });
           }
         }
@@ -103,10 +106,17 @@ class MapTour extends PureComponent {
         content: {
           text:
             'Customize the basemap, including the boundaries displayed and the color of the labels.',
-          next: () => {},
+          next: () => {
+            setMapSettings({
+              showBasemaps: false
+            });
+          },
           prev: () => {
             setMenuSettings({
               menuSection: 'search'
+            });
+            setMapSettings({
+              showBasemaps: false
             });
           }
         }
@@ -134,15 +144,18 @@ class MapTour extends PureComponent {
     setMenuSettings({ menuSection: '' });
   };
 
-  renderTooltip = ({
-    closeProps,
-    backProps,
-    content,
-    primaryProps,
-    skipProps,
-    isLastStep,
-    index
-  }) => {
+  renderTooltip = (
+    {
+      closeProps,
+      backProps,
+      content,
+      primaryProps,
+      skipProps,
+      isLastStep,
+      index
+    },
+    numOfSteps
+  ) => {
     let prevOnClick = backProps && backProps.onClick;
     let nextOnClick = primaryProps && primaryProps.onClick;
     let html = content;
@@ -162,7 +175,9 @@ class MapTour extends PureComponent {
         <button className="tour-close" {...closeProps}>
           <Icon icon={closeIcon} />
         </button>
-        <div className="tour-step">{index + 1}</div>
+        <div className="tour-step">
+          {index + 1}/{numOfSteps}
+        </div>
         <div className="tour-content">{html}</div>
         <div className="tour-btns">
           {index !== 0 && (
@@ -188,10 +203,10 @@ class MapTour extends PureComponent {
 
   render() {
     const { open, setMapTourOpen } = this.props;
-
+    const steps = this.getSteps();
     return (
       <Joyride
-        steps={this.getSteps()}
+        steps={steps}
         run={open}
         continuous
         callback={data => {
@@ -199,7 +214,7 @@ class MapTour extends PureComponent {
             setMapTourOpen(false);
           }
         }}
-        tooltipComponent={this.renderTooltip}
+        tooltipComponent={e => this.renderTooltip(e, steps.length)}
         styles={{
           options: {
             overlayColor: 'rgba(17, 55, 80, 0.4)',
@@ -215,6 +230,7 @@ MapTour.propTypes = {
   open: PropTypes.bool,
   setAnalysisSettings: PropTypes.func,
   setMapTourOpen: PropTypes.func,
+  setMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func
 };
 
