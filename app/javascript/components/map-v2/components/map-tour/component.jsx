@@ -256,7 +256,7 @@ class MapTour extends PureComponent {
           styles={{
             options: {
               overlayColor: 'rgba(17, 55, 80, 0.4)',
-              zIndex: 1000
+              zIndex: 2000
             }
           }}
         />
