@@ -57,6 +57,7 @@ class HeaderContainer extends PureComponent {
 
   handleLangSelect = lang => {
     localStorage.setItem('txlive:selectedlang', `"${lang}"`);
+    window.Transifex.live.translateTo(lang);
     this.setState({ lang });
     this.setShowLangSelector(false);
   };

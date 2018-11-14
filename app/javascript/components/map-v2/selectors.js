@@ -242,8 +242,10 @@ export const getLayerGroups = createSelector(
   [getDatasetsWithConfig, getActiveDatasetsState],
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
+
     return activeDatasetsState
       .map(l => datasets.find(d => d.id === l.dataset))
+      .filter(l => l)
       .map(d => {
         const { metadata } = (d && d.layers.find(l => l.active)) || {};
         return {
@@ -263,6 +265,7 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 // flatten datasets into layers for the layer manager
 export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return null;
+
   return flatten(layerGroups.map(d => d.layers))
     .filter(l => l.active)
     .map((l, i) => ({
