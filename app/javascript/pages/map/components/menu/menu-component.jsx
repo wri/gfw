@@ -104,14 +104,16 @@ class MapMenu extends PureComponent {
             <div
               className={cx('menu-tiles', 'map-tour-data-layers', { embed })}
             >
-              {isDesktop ? (
-                <MenuDesktop
-                  className="menu-desktop"
-                  datasetSections={datasetSections}
-                  searchSections={searchSections}
-                  setMenuSettings={setMenuSettings}
-                />
-              ) : (
+              {isDesktop &&
+                !embed && (
+                  <MenuDesktop
+                    className="menu-desktop"
+                    datasetSections={datasetSections}
+                    searchSections={searchSections}
+                    setMenuSettings={setMenuSettings}
+                  />
+                )}
+              {!isDesktop && (
                 <MenuMobile
                   sections={mobileSections}
                   setMenuSettings={setMenuSettings}
