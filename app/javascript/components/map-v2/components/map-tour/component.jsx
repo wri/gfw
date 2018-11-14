@@ -145,15 +145,7 @@ class MapTour extends PureComponent {
   };
 
   renderTooltip = (
-    {
-      closeProps,
-      backProps,
-      content,
-      primaryProps,
-      skipProps,
-      isLastStep,
-      index
-    },
+    { closeProps, backProps, content, primaryProps, isLastStep, index },
     numOfSteps
   ) => {
     let prevOnClick = backProps && backProps.onClick;
@@ -190,7 +182,7 @@ class MapTour extends PureComponent {
             </Button>
           )}
           {isLastStep ? (
-            <Button {...skipProps}>Finish</Button>
+            <Button {...closeProps}>Finish</Button>
           ) : (
             <Button {...primaryProps} onClick={nextOnClick}>
               Next
@@ -205,23 +197,25 @@ class MapTour extends PureComponent {
     const { open, setMapTourOpen } = this.props;
     const steps = this.getSteps();
     return (
-      <Joyride
-        steps={steps}
-        run={open}
-        continuous
-        callback={data => {
-          if (data.action === 'close' || data.type === 'tour:end') {
-            setMapTourOpen(false);
-          }
-        }}
-        tooltipComponent={e => this.renderTooltip(e, steps.length)}
-        styles={{
-          options: {
-            overlayColor: 'rgba(17, 55, 80, 0.4)',
-            zIndex: 1000
-          }
-        }}
-      />
+      open && (
+        <Joyride
+          steps={steps}
+          run={open}
+          continuous
+          callback={data => {
+            if (data.action === 'close' || data.type === 'tour:end') {
+              setMapTourOpen(false);
+            }
+          }}
+          tooltipComponent={e => this.renderTooltip(e, steps.length)}
+          styles={{
+            options: {
+              overlayColor: 'rgba(17, 55, 80, 0.4)',
+              zIndex: 1000
+            }
+          }}
+        />
+      )
     );
   }
 }
