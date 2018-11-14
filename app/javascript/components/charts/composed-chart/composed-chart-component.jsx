@@ -139,19 +139,6 @@ class CustomComposedChart extends PureComponent {
               <CartesianGrid vertical={false} strokeDasharray="3 4" />
             )}
 
-            {barBackground && (
-              <rect
-                x={100 / data.length * barBackground.activeIndex}
-                y={15}
-                // width={1.2 * active.data.width}
-                width={`${0.6 * (100 / data.length)}%`}
-                height={'82%'}
-                // fill={'rgba(0,0,0,0.2)'}
-                fill="#555555"
-                // log={console.log(bars)}
-              />
-            )}
-
             <Tooltip
               simple={simple}
               cursor={{
@@ -181,9 +168,24 @@ class CustomComposedChart extends PureComponent {
                   key={key}
                   dataKey={key}
                   dot={false}
+                  background={d =>
+                    (barBackground && d.index === barBackground.activeIndex ? (
+                      <rect
+                        x={d.x - 0.1 * d.width}
+                        y={15}
+                        key={d.index}
+                        width={1.2 * d.width}
+                        height={'82%'}
+                        fill={
+                          d.index === barBackground.activeIndex
+                            ? '#555555'
+                            : 'transparent'
+                        }
+                      />
+                    ) : null)
+                  }
                   {...bars[key]}
                   // layout={bars[key].horizontal ? 'horizontal' : 'vertical'}
-                  // onClick={(d, i) => console.log(d, i)}
                 >
                   {bars[key].itemColor &&
                     data.map(item => (
