@@ -197,11 +197,11 @@ class MapTour extends PureComponent {
       html = content.text;
       prevOnClick = e => {
         content.prev();
-        setTimeout(() => backProps.onClick(e), 300);
+        setTimeout(() => backProps.onClick(e), 400);
       };
       nextOnClick = e => {
         content.next();
-        setTimeout(() => primaryProps.onClick(e), 300);
+        setTimeout(() => primaryProps.onClick(e), 400);
       };
     }
     return (
