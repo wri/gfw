@@ -34,6 +34,7 @@ const selectPTWData = state => {
       }
     ],
     payload: {
+      mergeQuery: true,
       map: {
         datasets: [
           // admin boundaries

@@ -15,6 +15,8 @@ import { reduxModule as Widgets } from 'components/widgets';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
 import { reduxModule as Draw } from 'components/map-v2/components/draw';
 import { reduxModule as Header } from 'pages/dashboards/header';
+import { reduxModule as MapNew } from 'components/map-v2';
+import { reduxModule as MapTour } from 'components/map-v2/components/map-tour';
 import { reduxModule as MapOld } from 'components/map';
 import { reduxModule as MapMenu } from 'pages/map/components/menu';
 
@@ -55,8 +57,10 @@ const componentsReducers = {
   draw: handleModule(Draw),
   header: handleModule(Header),
   share: handleModule(Share),
-  map: handleModule(MapOld),
+  map: handleModule(MapNew),
+  mapOld: handleModule(MapOld),
   mapMenu: handleModule(MapMenu),
+  mapTour: handleModule(MapTour),
   // modals
   modalVideo: handleModule(ModalVideo),
   modalMeta: handleModule(ModalMeta),

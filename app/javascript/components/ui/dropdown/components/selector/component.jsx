@@ -29,7 +29,11 @@ const Selector = props => {
       ref={innerRef}
       className={`container ${isOpen ? 'is-open' : ''} ${className || ''}`}
     >
-      <div className={`c-selector ${arrowPosition ? 'align-left' : ''}`}>
+      <div
+        className={`c-selector ${arrowPosition ? 'align-left' : ''} ${
+          clearable && activeValue ? 'clearable' : ''
+        }`}
+      >
         {arrowPosition === 'left' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
             <Icon className="arrow" icon={arrowDownIcon} />

@@ -6,8 +6,8 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CompressionPlugin = require('compression-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const sharedConfig = require('./shared.js');
 
 module.exports = merge(sharedConfig, {
@@ -19,11 +19,7 @@ module.exports = merge(sharedConfig, {
   mode: 'production',
   optimization: {
     minimizer: [
-      new UglifyJSPlugin({
-        uglifyOptions: {
-          compress: { warnings: false },
-          output: { comments: false }
-        },
+      new TerserPlugin({
         sourceMap: false
       })
     ]

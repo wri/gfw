@@ -21,32 +21,41 @@ export const getCardData = createSelector(
   interaction => {
     if (isEmpty(interaction) || !interaction.article) return null;
     const { data, config } = interaction;
-
     const articleData = config.reduce((obj, param) => {
+      const { prefix, renderKey } = param;
+      const value = data[param.column || param.key];
       const newObj = {
         ...obj,
-        ...(param.renderKey && {
-          [param.renderKey]: data[param.column]
-        })
+        ...(renderKey &&
+          value && {
+            [renderKey]: `${prefix || ''}${value}`
+          })
       };
       return newObj;
     }, {});
     const { readMoreLink } = articleData || {};
 
-    return {
-      ...articleData,
-      bbox: reverseLatLng(JSON.parse(data.bbox).coordinates[0]),
-      buttons: [
-        {
-          text: 'READ MORE',
-          extLink: readMoreLink,
-          theme: 'theme-button-light theme-button-small'
-        },
+    const readMoreBtn = {
+      text: 'READ MORE',
+      extLink: readMoreLink,
+      theme: `theme-button-small ${data.bbox ? 'theme-button-light' : ''}`
+    };
+
+    const buttons = data.bbox
+      ? [readMoreBtn].concat([
         {
           text: 'ZOOM',
           theme: 'theme-button-small'
         }
-      ]
+      ])
+      : [readMoreBtn];
+
+    return {
+      ...articleData,
+      ...(data.bbox && {
+        bbox: reverseLatLng(JSON.parse(data.bbox).coordinates[0])
+      }),
+      buttons
     };
   }
 );

@@ -43,10 +43,11 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { open, setModalSources } = this.props;
+    const { open, setModalSources, data } = this.props;
     return (
       <Modal
         isOpen={open}
+        contentLabel={`Sources: ${data && data.title}`}
         onRequestClose={() => setModalSources({ open: false })}
       >
         {this.getContent()}

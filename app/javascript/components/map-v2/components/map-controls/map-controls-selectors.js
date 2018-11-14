@@ -9,6 +9,7 @@ import {
 } from 'components/map-v2/components/recent-imagery/recent-imagery-selectors';
 
 const getDatasetsLoading = state => state.datasets.loading;
+const getMapTourOpen = state => state.mapTour.open;
 
 export const getMapControlsProps = createStructuredSelector({
   recentLoading: getRecentImageryLoading,
@@ -16,5 +17,6 @@ export const getMapControlsProps = createStructuredSelector({
   settings: getMapSettings,
   recentSettings: getRecentImagerySettings,
   recentActive: getActive,
-  recentImageryDataset: getRecentImageryDataset
+  recentImageryDataset: getRecentImageryDataset,
+  mapTourOpen: getMapTourOpen
 });

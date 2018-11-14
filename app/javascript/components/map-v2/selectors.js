@@ -3,13 +3,14 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 
 import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
-import initialState from './initial-state';
+import { initialState } from './reducers';
 
 // get list data
 const getMapUrlState = state =>
   (state.location && state.location.query && state.location.query.map) || null;
 const getDatasets = state => state.datasets.datasets;
-const getLoading = state => state.datasets.loading || state.geostore.loading;
+const getLoading = state =>
+  state.datasets.loading || state.geostore.loading || state.map.loading;
 const getGeostore = state => state.geostore.geostore || null;
 const getQuery = state => (state.location && state.location.query) || null;
 const selectEmbed = state =>
@@ -26,7 +27,6 @@ const selectWidgetActiveSettings = state => state.widgets.settings;
 // popup interactons
 const selectSelectedInteractionId = state => state.popup.selected;
 const selectInteractions = state => state.popup.interactions;
-const selectIsDesktop = (state, { isDesktop }) => isDesktop;
 const selectMenuSection = state =>
   state.location.query &&
   state.location.query.menu &&
@@ -34,7 +34,7 @@ const selectMenuSection = state =>
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
-  ...initialState,
+  ...initialState.settings,
   ...urlState
 }));
 
@@ -242,8 +242,10 @@ export const getLayerGroups = createSelector(
   [getDatasetsWithConfig, getActiveDatasetsState],
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
+
     return activeDatasetsState
       .map(l => datasets.find(d => d.id === l.dataset))
+      .filter(l => l)
       .map(d => {
         const { metadata } = (d && d.layers.find(l => l.active)) || {};
         return {
@@ -263,6 +265,7 @@ export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
 // flatten datasets into layers for the layer manager
 export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return null;
+
   return flatten(layerGroups.map(d => d.layers))
     .filter(l => l.active)
     .map((l, i) => ({
@@ -334,12 +337,12 @@ export const getShowAnalysis = createSelector(
 );
 
 export const getOneClickAnalysisActive = createSelector(
-  [selectAnalysisSettings, selectLocation, getDraw, selectIsDesktop],
-  (settings, location, draw, isDesktop) =>
+  [selectAnalysisSettings, selectLocation, getDraw, getLoading],
+  (settings, location, draw, loading) =>
     settings &&
     !draw &&
+    !loading &&
     settings.showAnalysis &&
-    isDesktop &&
     !settings.showDraw &&
     !location.adm0
 );

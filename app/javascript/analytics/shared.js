@@ -13,5 +13,16 @@ export default {
   shareSocial: {
     category: 'Share',
     action: 'Share social'
+  },
+  // modals
+  openModal: {
+    category: 'Open modal',
+    action: 'click to open',
+    label: '[modalTypes]'
+  },
+  hoverModalBtn: {
+    category: 'Open modal',
+    action: 'hover modal button',
+    label: '[modalTypes]'
   }
 };

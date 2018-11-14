@@ -1,8 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 
-import mapInitialState from 'components/map-v2/initial-state';
+import { initialState as mapInitialState } from 'components/map-v2/reducers';
 import { initialState } from './recent-imagery-reducers';
 
 const getData = state => state.recentImagery.data || null;
@@ -23,7 +24,7 @@ const getMapUrlState = state =>
   (state.location && state.location.query && state.location.query.map) || null;
 
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
-  ...mapInitialState,
+  ...mapInitialState.settings,
   ...urlState
 }));
 
@@ -75,15 +76,18 @@ export const getFilteredData = createSelector(
 export const getTiles = createSelector([getFilteredData], data => {
   if (!data || isEmpty(data)) return [];
 
-  return data.map(item => ({
-    id: item.source,
-    url: item.tile_url,
-    thumbnail: item.thumbnail_url,
-    cloudScore: item.cloud_score,
-    dateTime: item.date_time,
-    instrument: item.instrument,
-    bbox: item.bbox
-  }));
+  return sortBy(
+    data.map(item => ({
+      id: item.source,
+      url: item.tile_url,
+      thumbnail: item.thumbnail_url,
+      cloudScore: item.cloud_score,
+      dateTime: item.date_time,
+      instrument: item.instrument,
+      bbox: item.bbox
+    })),
+    d => new Date(d.dateTime)
+  ).reverse();
 });
 
 export const getActiveTile = createSelector(

@@ -69,6 +69,6 @@ export default {
     image: landsatImage,
     defaultUrl:
       'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
-    availableYears: [2013, 2014, 2015, 2016, 2017]
+    availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };

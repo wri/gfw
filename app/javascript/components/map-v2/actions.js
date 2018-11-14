@@ -1,11 +1,13 @@
+import { createThunkAction, createAction } from 'redux-tools';
 import axios from 'axios';
-import { createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getMapZoom, getBasemap } from 'components/map-v2/selectors';
 import { addToDate } from 'utils/dates';
 import { getLocationFromData } from 'utils/format';
 
 const { GFW_API } = process.env;
+
+export const setMapLoading = createAction('setMapLoading');
 
 export const setMapSettings = createThunkAction(
   'setMapSettings',

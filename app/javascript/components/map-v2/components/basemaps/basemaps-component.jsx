@@ -104,7 +104,10 @@ class Basemaps extends React.PureComponent {
       ? { label: activeBoundaries.name }
       : boundaries && boundaries[0];
     return (
-      <div className="c-basemaps" {...getTooltipContentProps()}>
+      <div
+        className={cx('c-basemaps', 'map-tour-basemaps')}
+        {...getTooltipContentProps()}
+      >
         <div className="basemaps-top-section">
           {isDesktop && (
             <div className="basemaps-header">

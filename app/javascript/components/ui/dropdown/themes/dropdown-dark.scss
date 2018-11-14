@@ -53,6 +53,8 @@ $dd-dark-font-size: rem(40px);
     }
 
     .clear-btn {
+      right: 0;
+
       .clear-icon {
         fill: $white;
       }

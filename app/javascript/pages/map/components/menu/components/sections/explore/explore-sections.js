@@ -11,10 +11,9 @@ import basemaps, {
 } from 'components/map-v2/components/basemaps/basemaps-schema';
 
 export const descriptions = {
-  topics:
-    'Topics are curated map presets for exploring the drivers of deforestation and understanding their impacts in ecosystems around the world.',
+  topics: 'Explore data related to the drivers and impacts of forest change.',
   placesToWatch:
-    'A GFW service that identifies areas of high-priority GLAD alerts on a monthly basis.'
+    'Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated quarterly. Sign up <a href="http://connect.wri.org/l/120942/2017-12-07/3mtt5w" target="_blank" rel="noopener nofollower">here</a> to receive an email when new Places to Watch are identified.'
 };
 
 export const stories = {
@@ -35,6 +34,7 @@ export const stories = {
       }
     ],
     payload: {
+      mergeQuery: true,
       map: {
         center: {
           lat: 27,
@@ -52,7 +52,6 @@ export const stories = {
             opacity: 1,
             visibility: true
           },
-          // stories
           {
             dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
             layers: ['ecddc53a-f7b9-42a8-9e7a-94a30aeef134'],
@@ -81,6 +80,7 @@ export const stories = {
       }
     ],
     payload: {
+      mergeQuery: true,
       map: {
         center: {
           lat: 27,
@@ -89,6 +89,15 @@ export const stories = {
         zoom: 3,
         datasets: [
           // admin boundaries
+          {
+            dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+            layers: [
+              '6f6798e6-39ec-4163-979e-182a74ca65ee',
+              'c5d1e010-383a-4713-9aaa-44f728c0571c'
+            ],
+            opacity: 1,
+            visibility: true
+          },
           {
             dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
             layers: ['e097ebfe-56d9-4564-8e2a-d3328bdaea38'],
@@ -117,6 +126,7 @@ export const stories = {
       }
     ],
     payload: {
+      mergeQuery: true,
       map: {
         center: {
           lat: 27,
@@ -133,6 +143,12 @@ export const stories = {
             ],
             opacity: 1,
             visibility: true
+          },
+          {
+            dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
+            layers: ['2f4d9b87-6629-4658-8175-87d7892a5f32'],
+            opacity: 1,
+            visibility: true
           }
         ]
       }
@@ -144,8 +160,7 @@ export const topics = {
   biodiversity: {
     slug: 'biodiversity',
     title: 'Biodiversity',
-    summary:
-      'Protecting forest habitats is key to maintaining biodiversity. In the last ten years, one in ten trees were lost in protected areas.',
+    summary: 'View the areas most important to terrestrial biodiversity.',
     image: biodiversity,
     buttons: [
       {
@@ -194,8 +209,7 @@ export const topics = {
   climate: {
     slug: 'climate',
     title: 'Climate',
-    summary:
-      'Forests remove carbon from the atmosphere, their loss or degradation compromises their ability to remove our ever-increasing emissions.',
+    summary: 'View emissions from tree cover loss in the tropics.',
     image: climate,
     buttons: [
       {
@@ -241,7 +255,7 @@ export const topics = {
     slug: 'commodities',
     title: 'Commodities',
     summary:
-      'To assist in increasing supply-chain transparency, our platform lets users track deforestation and estimate production over time in concession areas.',
+      'View tree cover loss within areas allocated for commodity production.',
     image: commodities,
     buttons: [
       {
@@ -311,8 +325,7 @@ export const topics = {
   water: {
     slug: 'water',
     title: 'Water',
-    summary:
-      'Healthy forested lands provide critical watershed functions, acting as natural infrastructure by minimizing erosion, purifying water, and reducing the impact of floods and droughts.',
+    summary: 'Explore forest change in each major river basin.',
     image: water,
     buttons: [
       {

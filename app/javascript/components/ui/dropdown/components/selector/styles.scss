@@ -63,6 +63,12 @@ $dd-font-size: rem(13px);
     }
   }
 
+  &.clearable {
+    input {
+      padding-right: rem(25px);
+    }
+  }
+
   .arrow-btn {
     z-index: 3;
     height: 100%;
@@ -80,6 +86,9 @@ $dd-font-size: rem(13px);
   .clear-btn {
     z-index: 3;
     cursor: pointer;
+    position: absolute;
+    right: rem(22px);
+    top: calc(50% - 8px);
 
     .clear-icon {
       max-width: rem(8px);

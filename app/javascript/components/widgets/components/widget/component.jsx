@@ -96,7 +96,7 @@ class Widget extends PureComponent {
       >
         <WidgetHeader {...this.props} />
         {this.renderWidgetBody()}
-        {!simple && <WidgetFooter {...this.props} />}
+        <WidgetFooter {...this.props} />
       </div>
     );
   }
