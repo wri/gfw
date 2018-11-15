@@ -35,6 +35,7 @@ export default {
     id: 'default',
     value: 'default',
     label: 'default',
+    labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=${
@@ -44,6 +45,7 @@ export default {
   dark: {
     id: 'dark',
     label: 'dark matter',
+    labelsKey: 'lightLabels',
     color: '#31312F',
     image: darkImage,
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9/tiles/256/{z}/{x}/{y}@2x?access_token=${
@@ -53,6 +55,7 @@ export default {
   satellite: {
     id: 'satellite',
     label: 'Satellite',
+    labelsKey: 'lightLabels',
     color: '#131620',
     image: satelliteImage,
     url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
@@ -60,6 +63,7 @@ export default {
   landsat: {
     id: 'landsat',
     label: 'landsat',
+    labelsKey: 'lightLabels',
     dynamic: true,
     color: '#0C0045',
     image: landsatImage,
