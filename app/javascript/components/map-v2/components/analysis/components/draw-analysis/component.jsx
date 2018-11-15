@@ -79,7 +79,8 @@ class DrawAnalysis extends PureComponent {
       handleShowDownloads,
       showDownloads,
       downloadUrls,
-      hasLayers
+      hasLayers,
+      zoomLevel
     } = this.props;
 
     return (
@@ -166,11 +167,13 @@ class DrawAnalysis extends PureComponent {
                 </ul>
                 {showWidgets && <Widgets simple analysis />}
                 <div className="disclaimers">
-                  <p>
-                    This algorithm approximates the results by sampling the
-                    selected area. Results are more accurate at closer zoom
-                    levels.
-                  </p>
+                  {zoomLevel < 11 && (
+                    <p>
+                      This algorithm approximates the results by sampling the
+                      selected area. Results are more accurate at closer zoom
+                      levels.
+                    </p>
+                  )}
                   <p>
                     <b>NOTE:</b> tree cover loss and gain statistics cannot be
                     compared against each other.{' '}
@@ -213,7 +216,8 @@ DrawAnalysis.propTypes = {
   setMenuSettings: PropTypes.func,
   showDownloads: PropTypes.bool,
   hasLayers: PropTypes.bool,
-  downloadUrls: PropTypes.array
+  downloadUrls: PropTypes.array,
+  zoomLevel: PropTypes.number
 };
 
 export default DrawAnalysis;
