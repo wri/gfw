@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { SingleDatePicker } from 'react-dates';
 import cx from 'classnames';
 
+import moment from 'moment';
+
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import './datepicker-styles.scss';
@@ -27,6 +29,37 @@ class Datepicker extends PureComponent {
           }}
           focused={this.state.focused}
           onFocusChange={({ focused }) => this.setState({ focused })}
+          // renderCaption={(e) => console.log(e)}
+          renderMonthElement={({ month, onMonthSelect, onYearSelect }) => (
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div>
+                <select
+                  value={month.month()}
+                  onChange={e => {
+                    onMonthSelect(month, e.target.value);
+                  }}
+                >
+                  {moment
+                    .months()
+                    .map((label, value) => (
+                      <option value={value}>{label}</option>
+                    ))}
+                </select>
+              </div>
+              <div>
+                <select
+                  value={month.year()}
+                  onChange={e => {
+                    onYearSelect(month, e.target.value);
+                  }}
+                >
+                  <option value={moment().year() - 1}>Last year</option>
+                  <option value={moment().year()}>{moment().year()}</option>
+                  <option value={moment().year() + 1}>Next year</option>
+                </select>
+              </div>
+            </div>
+          )}
           {...settings}
         />
       </div>
