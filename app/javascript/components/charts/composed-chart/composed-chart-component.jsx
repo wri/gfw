@@ -22,10 +22,11 @@ import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
-    const { yKeys } = config;
+    const { yKeys, xKeys } = config;
+    const dataKeys = yKeys || xKeys;
     const maxValues = [];
-    Object.keys(yKeys).forEach(key => {
-      Object.keys(yKeys[key]).forEach(subKey => {
+    Object.keys(dataKeys).forEach(key => {
+      Object.keys(dataKeys[key]).forEach(subKey => {
         const maxValue = maxBy(data, subKey);
         if (maxValue) {
           maxValues.push(maxValue[subKey]);
@@ -38,6 +39,8 @@ class CustomComposedChart extends PureComponent {
   render() {
     const {
       xKey,
+      yKey,
+      xKeys,
       yKeys,
       xAxis,
       yAxis,
@@ -60,7 +63,9 @@ class CustomComposedChart extends PureComponent {
       handleClick
     } = this.props;
 
-    const { lines, bars, areas } = yKeys;
+    const layout = xKeys && 'vertical';
+    const dataKeys = yKeys || xKeys;
+    const { lines, bars, areas } = dataKeys;
     const maxYValue = this.findMaxValue(data, config);
 
     return (
@@ -83,6 +88,7 @@ class CustomComposedChart extends PureComponent {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
+            layout={layout}
           >
             <defs>
               {gradients &&
@@ -115,6 +121,7 @@ class CustomComposedChart extends PureComponent {
             />
             {!simple && (
               <YAxis
+                dataKey={yKey || ''}
                 axisLine={false}
                 strokeDasharray="3 4"
                 tickSize={-42}
@@ -122,7 +129,7 @@ class CustomComposedChart extends PureComponent {
                 tickMargin={0}
                 tick={
                   <CustomTick
-                    dataMax={maxYValue}
+                    dataMax={xKeys && maxYValue}
                     unit={unit || ''}
                     unitFormat={
                       unitFormat ||
@@ -146,6 +153,7 @@ class CustomComposedChart extends PureComponent {
                 stroke: '#d6d6d9',
                 ...(!!bars && { strokeWidth: `${1.2 * (100 / data.length)}%` })
               }}
+              // TODO: change cursor with layout
               content={<ChartToolTip settings={tooltip} />}
             />
             {areas &&
@@ -168,22 +176,24 @@ class CustomComposedChart extends PureComponent {
                   key={key}
                   dataKey={key}
                   dot={false}
-                  background={d =>
-                    (barBackground && d.index === barBackground.activeIndex ? (
-                      <rect
-                        x={d.x - 0.1 * d.width}
-                        y={15}
-                        key={d.index}
-                        width={1.2 * d.width}
-                        height={'82%'}
-                        opacity={0.1}
-                        fill={
-                          d.index === barBackground.activeIndex
-                            ? '#4a4a4a'
-                            : 'transparent'
-                        }
-                      />
-                    ) : null)
+                  background={
+                    barBackground &&
+                    (d =>
+                      (d.index === barBackground.activeIndex ? (
+                        <rect
+                          x={d.x - 0.1 * d.width}
+                          y={15}
+                          key={d.index}
+                          width={1.2 * d.width}
+                          height={'82%'}
+                          opacity={0.1}
+                          fill={
+                            d.index === barBackground.activeIndex
+                              ? '#4a4a4a'
+                              : 'transparent'
+                          }
+                        />
+                      ) : null))
                   }
                   {...bars[key]}
                   // layout={bars[key].horizontal ? 'horizontal' : 'vertical'}

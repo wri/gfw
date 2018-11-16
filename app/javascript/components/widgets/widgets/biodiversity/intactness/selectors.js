@@ -132,19 +132,23 @@ const parseConfig = createSelector(
   [getColors, getPercentileIndex],
   (colors, index) => ({
     height: 250,
-    xKey: 'name',
-    unit: '%',
-    yKeys: {
+    yKey: 'name',
+    xAxis: {
+      type: 'number',
+      domain: [0, 100]
+    },
+    // unit: '%',
+    unitFormat: text => text,
+    xKeys: {
       bars: {
         percent: {
           fill: colors.main,
           clickable: true
-          // horizontal: true
         }
       }
     },
     yAxis: {
-      domain: [0, 100]
+      type: 'category'
     },
     barBackground: {
       activeIndex: index
