@@ -55,7 +55,7 @@ group :development do
   gem 'foreman'
   gem 'capistrano'
   gem 'spring'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 3.7'
 end
 
 group :production do
