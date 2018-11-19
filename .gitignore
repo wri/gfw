@@ -36,6 +36,7 @@ public/assets
 vendor/assets/bower_components
 jstest/SpecRunner.html
 package-lock.json
+yarn.lock
 /cypress/videos
 /cypress/screenshots
 
