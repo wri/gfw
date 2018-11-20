@@ -7,38 +7,38 @@ class LandingController < ApplicationController
     @keywords = 'forests, forest data, forest monitoring, forest landscapes, maps, gis, visualize, geospatial, forest analysis, forest news, forest alerts, conservation, forest updates, forest watch, analysis, deforestation, deforesting, tree cover loss, explore forests, mapping, trees, forest loss'
     @summary = [
       {
-        "title" => "Be the first to see new deforestation",
-        "paragraph" => "Subscribe and get email notifications straight to your inbox as forest clearing happens in select countries.",
-        "button" => "SUBSCRIBE TO ALERTS",
-        "url" => "/my_gfw/subscriptions/new",
-        "background_orientation" => "left"
-      },
-      {
         "title" => "Discover the world’s forests through data",
         "paragraph" => "Explore over 100 global and local data sets to learn about conservation, land use, forest communities, and much more.",
         "button" => "EXPLORE OUR DATA",
-        "url" => "/map/3/16.52/0.98/ALL/grayscale/loss/607,556,580,592?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30&dont_analyze=true",
+        "url" => "/map?menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D"
         "background_orientation" => "left"
       },
       {
-        "title" => "A suite of tools",
-        "paragraph" => "Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.",
-        "button" => "BROWSE OUR APPS",
-        "url" => "http://developers.globalforestwatch.org/",
+        "title" => "Be the first to see new tropical deforestation",
+        "paragraph" => "View, analyze, and subscribe to get weekly GLAD deforestation alerts that show where tree cover loss is happening right now in the tropics.",
+        "button" => "VIEW GLAD ALERTS",
+        "url" => "/map?analysis=eyJzaG93QW5hbHlzaXMiOnRydWUsImhpZGRlbiI6ZmFsc2V9&map=eyJ6b29tIjozLCJjZW50ZXIiOnsibGF0IjotNC4yMTQ5NDMxNDEzOTA2MzksImxuZyI6LTUuODAwNzgxMjUwMDAwMDAxfSwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImU2NjNlYjA5LTA0ZGUtNGYzOS1iODcxLTM1YzZjMmVkMTBiNSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZDVkZjg3Zi0zOWMyLTRhZWItYTQ2Mi0zZWY5NjliMjBiNjYiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9"
+        "background_orientation" => "left"
+      },
+      {
+        "title" => "Quick global and country stats",
+        "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
+        "button" => "EXPLORE THE DASHBOARDS",
+        "url" => "/dashboards/global",
         "background_orientation" => "right"
       },
       {
-        "title" => "Expert insights",
-        "paragraph" => "Read the latest stories and findings about forests from our team of researchers.",
+        "title" => "Forest insights",
+        "paragraph" => "Read the latest stories and findings about forests from our team of researchers on the GFW blog.",
         "button" => "START LEARNING",
         "url" => "http://blog.globalforestwatch.org/",
         "background_orientation" => "right"
       },
       {
-        "title" => "Research made easy",
-        "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
-        "button" => "START YOUR RESEARCH",
-        "url" => "/map/5/-9.74/-65.37/PER/grayscale/loss?tab=analysis-tab&begin=2001-01-01&end=2016-01-01&threshold=30",
+        "title" => "A suite of tools",
+        "paragraph" => "Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.",
+        "button" => "BROWSE OUR APPS",
+        "url" => "http://developers.globalforestwatch.org",
         "background_orientation" => "right"
       }
     ]
