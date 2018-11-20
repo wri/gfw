@@ -25,12 +25,29 @@
   border-radius: 2px;
 }
 
+.CalendarMonthGrid {
+  z-index: auto;
+  transform: none !important;
+}
+
 .CalendarDay__selected,
 .CalendarDay__selected:active,
 .CalendarDay__selected:hover {
   background: $green-gfw;
   border: 1px solid $green-gfw;
   color: $white;
+}
+
+.c-date-dropdown {
+  width: 120px;
+  height: 30px;
+  margin: 0 2px;
+
+  .c-selector-menu {
+    z-index: 3;
+    max-height: 220px;
+    background-color: white;
+  }
 }
 
 .c-datepicker {
