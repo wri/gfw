@@ -21,20 +21,6 @@ class Datepicker extends PureComponent {
 
   render() {
     const { className, date, handleOnDateChange, settings, theme } = this.props;
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ];
     return (
       <div className={cx('c-datepicker', theme, className)}>
         <SingleDatePicker
@@ -65,13 +51,14 @@ class Datepicker extends PureComponent {
                 <Dropdown
                   className="c-date-dropdown"
                   theme="theme-dropdown-button theme-dropdown-button-small -short"
-                  placeholder={months[month.month()]}
                   noItemsFound="No months found"
-                  noSelectedValue={month.month().toString()}
-                  options={moment.months().map((m, i) => ({ value: i, label: m }))}
+                  options={moment
+                    .months()
+                    .map((m, i) => ({ value: i, label: m }))}
                   onChange={e => {
                     onMonthSelect(month, e.value);
                   }}
+                  value={month.month()}
                 />
               </div>
               <div>
