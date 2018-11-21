@@ -4,7 +4,7 @@ import flatMap from 'lodash/flatMap';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
-import { getActiveLayers } from 'components/map-v2/selectors';
+import { getActiveLayers, getMapZoom } from 'components/map-v2/selectors';
 import { filterWidgetsByCategoryAndLayers } from 'components/widgets/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
@@ -155,5 +155,6 @@ export const getDrawAnalysisProps = createStructuredSelector({
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,
-  showWidgets: getShowWidgets
+  showWidgets: getShowWidgets,
+  zoomLevel: getMapZoom
 });
