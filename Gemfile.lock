@@ -1086,10 +1086,10 @@ GEM
     sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (2.3.3)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      sprockets (>= 2.8, < 4.0)
+    sprockets-rails (3.2.1)
+      actionpack (>= 4.0)
+      activesupport (>= 4.0)
+      sprockets (>= 3.0.0)
     sshkit (1.18.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -1169,7 +1169,7 @@ DEPENDENCIES
   simplecov
   sitemap_generator
   spring
-  sprockets-rails (= 2.3.3)
+  sprockets-rails (= 3.2.1)
   typhoeus
   uglifier (~> 4.1.19)
   unf
