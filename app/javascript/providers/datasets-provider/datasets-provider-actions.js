@@ -34,12 +34,12 @@ const layersBySlug = {
 export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
   axios
     .all([
-      getDatasetsProvider(),
-      fetchGLADLatest(),
-      fetchSADLatest(),
-      fetchGranChacoLatest(),
-      fetchFormaLatest(),
-      fetchTerraiLatest()
+      getDatasetsProvider()
+      // fetchGLADLatest(),
+      // fetchSADLatest(),
+      // fetchGranChacoLatest(),
+      // fetchFormaLatest(),
+      // fetchTerraiLatest()
     ])
     .then(
       axios.spread((allDatasets, ...latestDatesResponses) => {
@@ -49,20 +49,22 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
         );
 
         // parse latest dates from layers
-        const latestDates = latestDatesResponses.reduce((obj, latest) => {
-          const response = latest.data.data;
-          const type = Array.isArray(response)
-            ? response[0].type
-            : response.type;
-          const data = Array.isArray(response)
-            ? response[0].attributes
-            : response.attributes;
-          const layerId = layersBySlug[type];
-          return {
-            ...obj,
-            [layerId]: moment(data.date || data.latest).format('YYYY-MM-DD')
-          };
-        }, {});
+        const latestDates =
+          latestDatesResponses &&
+          latestDatesResponses.reduce((obj, latest) => {
+            const response = latest.data.data;
+            const type = Array.isArray(response)
+              ? response[0].type
+              : response.type;
+            const data = Array.isArray(response)
+              ? response[0].attributes
+              : response.attributes;
+            const layerId = layersBySlug[type];
+            return {
+              ...obj,
+              [layerId]: moment(data.date || data.latest).format('YYYY-MM-DD')
+            };
+          }, {});
 
         const parsedDatasets = serializedDatasets
           .filter(
