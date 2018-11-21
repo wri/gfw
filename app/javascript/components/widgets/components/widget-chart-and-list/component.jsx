@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import WidgetAlerts from 'components/widgets/components/widget-composed-chart';
 import WidgetNumberedList from 'components/widgets/components/widget-numbered-list';
 
+import './styles';
+
 class WidgetChartAndList extends PureComponent {
   handleClick = payload => {
     // console.log(payload);
@@ -30,22 +32,26 @@ class WidgetChartAndList extends PureComponent {
     const { percentiles, list } = data;
 
     return (
-      <div className="">
-        <WidgetAlerts
-          data={percentiles}
-          config={config}
-          active={active}
-          simple={simple}
-          handleClick={this.handleClick}
-          setWidgetsSettings={setWidgetsSettings}
-        />
-        <WidgetNumberedList
-          data={list}
-          settings={settings}
-          setWidgetSettings={setWidgetSettings}
-          embed={embed}
-          widget={widget}
-        />
+      <div className="c-chart-and-list">
+        <div className="c-chart">
+          <WidgetAlerts
+            data={percentiles}
+            config={config}
+            active={active}
+            simple={simple}
+            handleClick={this.handleClick}
+            setWidgetsSettings={setWidgetsSettings}
+          />
+        </div>
+        <div className="c-list">
+          <WidgetNumberedList
+            data={list}
+            settings={settings}
+            setWidgetSettings={setWidgetSettings}
+            embed={embed}
+            widget={widget}
+          />
+        </div>
       </div>
     );
   }

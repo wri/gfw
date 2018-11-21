@@ -9,6 +9,7 @@ const CustomTick = ({
   unit,
   unitFormat,
   fill,
+  fontSize,
   backgroundColor
 }) => {
   const tickValue = payload && payload.value;
@@ -28,7 +29,7 @@ const CustomTick = ({
         x="0"
         y="3"
         textAnchor="start"
-        fontSize="12px"
+        fontSize={fontSize || '12px'}
         fill={fill}
       >
         {tick}
@@ -45,6 +46,7 @@ CustomTick.propTypes = {
   unit: PropTypes.string,
   unitFormat: PropTypes.func,
   fill: PropTypes.string,
+  fontSize: PropTypes.string,
   backgroundColor: PropTypes.string
 };
 

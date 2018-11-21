@@ -137,6 +137,7 @@ class CustomComposedChart extends PureComponent {
                         (value < 1 ? format('.2r')(value) : format('.2s')(value)))
                     }
                     fill="#555555"
+                    fontSize={layout === 'vertical' ? '9px' : '12px'}
                   />
                 }
                 {...yAxis}
@@ -151,7 +152,10 @@ class CustomComposedChart extends PureComponent {
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
-                ...(!!bars && { strokeWidth: `${1.2 * (100 / data.length)}%` })
+                ...(!!bars &&
+                  (layout === 'vertical'
+                    ? { strokeWidth: '20%' }
+                    : { strokeWidth: `${1.2 * (100 / data.length)}%` }))
               }}
               // TODO: change cursor with layout
               content={<ChartToolTip settings={tooltip} />}

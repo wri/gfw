@@ -1,0 +1,18 @@
+.c-chart-and-list {
+  display: flex;
+  align-items: flex-start;
+
+  & > div {
+    display: inline-block;
+  }
+
+  .c-chart {
+    width: 70%;
+    margin-right: 20px;
+    transform: translateY(-14px);
+  }
+
+  .c-list {
+    width: 30%;
+  }
+}
