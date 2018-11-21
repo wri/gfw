@@ -672,7 +672,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.2)
       xpath (~> 3.2)
-    carrierwave (1.2.2)
+    carrierwave (1.2.3)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
