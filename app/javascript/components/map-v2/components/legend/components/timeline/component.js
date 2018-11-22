@@ -54,6 +54,8 @@ class Timeline extends Component {
                   appendToBody: true,
                   displayFormat: 'DD MMM YYYY',
                   numberOfMonths: 1,
+                  minDate,
+                  maxDate: trimEndDate,
                   isOutsideRange: d =>
                     d.isAfter(moment(trimEndDate)) ||
                     d.isBefore(moment(minDate)),
@@ -72,6 +74,8 @@ class Timeline extends Component {
                   appendToBody: true,
                   displayFormat: 'DD MMM YYYY',
                   numberOfMonths: 1,
+                  minDate: startDate,
+                  maxDate,
                   isOutsideRange: d =>
                     d.isAfter(moment(maxDate)) || d.isBefore(moment(startDate)),
                   hideKeyboardShortcutsPanel: true,

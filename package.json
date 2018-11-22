@@ -14,7 +14,7 @@
     "redis": "redis-server /usr/local/etc/redis.conf",
     "prod-server": "bundle exec foreman start -f Procfile",
     "ci": "start-server-and-test prod-server http://localhost:5000 test-ci",
-    "lint": "eslint --ext js --ext jsx .",
+    "lint": "eslint --ext js --ext jsx",
     "precommit": "lint-staged",
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
     "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
