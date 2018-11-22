@@ -7,13 +7,14 @@ import { formatUSD } from 'utils/format';
 
 // get list data
 const getData = state => state.data && state.data.data;
-const getDataOptions = state => state.data && state.data.options;
 const getDataSettings = state => state.data && state.data.settings;
 const getSettings = state => state.settings;
 const getLocationsMeta = state => state.locationData || null;
 const getLocationObject = state => state.locationObject;
 const getColors = state => state.colors;
 const getSentences = state => state.config.sentence;
+// this allows us to get options from the fetch
+export const getDataOptions = state => state.data && state.data.options;
 
 // get lists selected
 export const getFilteredData = createSelector(
@@ -161,7 +162,7 @@ export const parseConfig = () => ({
 export const parseSentence = createSelector(
   [getFilteredData, getSettings, getLocationObject, getSentences],
   (data, settings, locationObject, sentence) => {
-    if (!data) return null;
+    if (isEmpty(data) || !locationObject) return null;
     const selectedFAO = data.filter(item => item.iso === locationObject.value);
     if (!selectedFAO.length) return '';
 
@@ -186,6 +187,5 @@ export default createStructuredSelector({
   data: parseData,
   dataConfig: parseConfig,
   sentence: parseSentence,
-  options: getDataOptions,
   settings: getDataSettings
 });

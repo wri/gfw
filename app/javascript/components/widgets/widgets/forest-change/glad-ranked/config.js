@@ -9,7 +9,7 @@ export default {
     forestTypes: true,
     landCategories: true,
     thresholds: true,
-    units: true,
+    units: ['%', 'ha'],
     extentYears: true,
     weeks: true
   },
