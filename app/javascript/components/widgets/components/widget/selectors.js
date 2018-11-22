@@ -34,22 +34,21 @@ export const getWidgetSettings = createSelector(
   })
 );
 
-export const getWidgetPropsFromState = createSelector(
+export const getWidgetOptionsFromData = createSelector(
   [selectWidgetFromState, selectAllPropsAndState, getWidgetSettings],
-  (widgetState, widgetProps, settings) => ({
-    ...widgetProps.getProps({
-      ...widgetState,
-      ...widgetProps,
-      settings
-    })
-  })
+  (widgetState, widgetProps) =>
+    widgetProps.getDataOptions && {
+      ...widgetProps.getDataOptions({
+        ...widgetState
+      })
+    }
 );
 
 export const getWidgetOptions = createSelector(
-  [selectWidgetOptions, getWidgetPropsFromState],
-  (options, dataProps) => ({
+  [selectWidgetOptions, getWidgetOptionsFromData],
+  (options, dataOptions) => ({
     ...options,
-    ...dataProps.options
+    ...dataOptions
   })
 );
 
@@ -61,26 +60,6 @@ export const getWidgetError = createSelector(
 export const getWidgetLoading = createSelector(
   [selectWidgetFromState],
   props => props && props.loading
-);
-
-export const getWidgetTitle = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.title
-);
-
-export const getWidgetSentence = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.sentence
-);
-
-export const getWidgetData = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.data
-);
-
-export const getWidgetDataConfig = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.dataConfig
 );
 
 export const getRangeYears = createSelector(
@@ -176,6 +155,60 @@ export const getIndicator = createSelector(
       value
     };
   }
+);
+
+export const getWidgetPropsFromState = createSelector(
+  [
+    selectWidgetFromState,
+    selectAllPropsAndState,
+    getWidgetSettings,
+    getOptionsSelected,
+    getOptionsWithYears,
+    getForestType,
+    getLandCategory,
+    getIndicator
+  ],
+  (
+    widgetState,
+    widgetProps,
+    settings,
+    optionsSelected,
+    options,
+    forestType,
+    landCategory,
+    indicator
+  ) => ({
+    ...widgetProps.getProps({
+      ...widgetState,
+      ...widgetProps,
+      options,
+      optionsSelected,
+      settings,
+      forestType,
+      landCategory,
+      indicator
+    })
+  })
+);
+
+export const getWidgetTitle = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.title
+);
+
+export const getWidgetSentence = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.sentence
+);
+
+export const getWidgetData = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.data
+);
+
+export const getWidgetDataConfig = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.dataConfig
 );
 
 export const getWidgetProps = () =>
