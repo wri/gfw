@@ -29,7 +29,7 @@ import * as emissions from './widgets/climate/emissions';
 import * as emissionsDeforestation from './widgets/climate/emissions-deforestation';
 
 // Biodiversity
-import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
+// import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
 
 // Land Use
 import * as economicImpact from './widgets/land-use/economic-impact';
@@ -64,7 +64,7 @@ export default {
   emissions,
   emissionsDeforestation,
   // biodiversity
-  gladBiodiversity,
+  // gladBiodiversity,
   // land use
   economicImpact,
   forestryEmployment
