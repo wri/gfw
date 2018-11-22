@@ -21,8 +21,13 @@
         display: flex;
       }
 
+      .recent-actions {
+        display: flex;
+      }
+
       .close-btn {
         cursor: pointer;
+        margin-left: rem(8px);
 
         svg {
           height: 11px;

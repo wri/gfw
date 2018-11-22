@@ -9,12 +9,14 @@ import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider';
 import Loader from 'components/ui/loader';
 import Dropdown from 'components/ui/dropdown';
+import Button from 'components/ui/button';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
 import closeIcon from 'assets/icons/close.svg';
+import infoIcon from 'assets/icons/info.svg';
 
 import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
@@ -36,7 +38,8 @@ class RecentImagerySettings extends PureComponent {
       tiles,
       loading,
       settings: { date, weeks, bands },
-      setRecentImagerySettings
+      setRecentImagerySettings,
+      setModalMeta
     } = this.props;
 
     const selected = this.state.selected || activeTile || {};
@@ -46,12 +49,21 @@ class RecentImagerySettings extends PureComponent {
         <div className="top-section">
           <div className="recent-menu">
             <div className="title">Recent satellite imagery</div>
-            <button
-              className="close-btn"
-              onClick={() => setRecentImagerySettings({ visible: false })}
-            >
-              <Icon icon={closeIcon} className="icon-close" />
-            </button>
+            <div className="recent-actions">
+              <Button
+                className="info-btn"
+                theme="theme-button-tiny theme-button-grey-filled square"
+                onClick={() => setModalMeta('recent_satellite_imagery')}
+              >
+                <Icon icon={infoIcon} />
+              </Button>
+              <button
+                className="close-btn"
+                onClick={() => setRecentImagerySettings({ visible: false })}
+              >
+                <Icon icon={closeIcon} className="icon-close" />
+              </button>
+            </div>
           </div>
           <div className="dates">
             <div className="title">ACQUISITION DATE</div>
@@ -185,6 +197,7 @@ RecentImagerySettings.propTypes = {
   tiles: PropTypes.array,
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
+  setModalMeta: PropTypes.func,
   loading: PropTypes.bool
 };
 
