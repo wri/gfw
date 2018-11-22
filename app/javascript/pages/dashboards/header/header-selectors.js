@@ -142,7 +142,7 @@ export const getSentence = createSelector(
       emission: `${emissionsWithoutPlantations}t`,
       emissionsTreeCover: `${emissions}t`,
       year: data.totalLoss.year,
-      treeCoverLoss: loss,
+      treeCoverLoss: `${loss}ha`,
       primaryLoss
     };
 
