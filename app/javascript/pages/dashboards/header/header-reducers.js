@@ -15,7 +15,7 @@ export const initialState = {
       withPlantationLoss:
         'In 2010, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {loss} of natural forest',
       indoInitial:
-        'In 2010, {location} had {naturalForest} of natural forest, extending over {percentageNatForest} of its land area. In {year}, it lost {treeCoverLoss} of tree cover, equivalent to {emissionsTreeCover} of CO₂ of emissions. {primaryLoss} of this loss occurred within intact and degraded primary forests and {loss} within natural forest.',
+        'In 2010, {location} had {naturalForest} of natural forest, extending over {percentageNatForest} of its land area. In {year}, it lost {loss} of tree cover, equivalent to {emissionsTreeCover} of CO₂ of emissions. {primaryLoss} of this loss occurred within intact and degraded primary forests and {loss} within natural forest.',
       co2Emissions: ', equivalent to {emission} of CO\u2082 of emissions.',
       end: '.'
     }
