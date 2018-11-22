@@ -138,12 +138,13 @@ export const getSentence = createSelector(
       location: location || 'the world',
       percentage: `${percentageCover}%`,
       percentageNatForest: `${percentageNatForest}%`,
-      loss: `${lossWithOutPlantations}ha`,
+      naturalLoss: `${lossWithOutPlantations}ha`,
+      loss: `${loss}ha`,
       emission: `${emissionsWithoutPlantations}t`,
       emissionsTreeCover: `${emissions}t`,
       year: data.totalLoss.year,
       treeCoverLoss: `${loss}ha`,
-      primaryLoss
+      primaryLoss: `${primaryLoss}ha`
     };
 
     let sentence = sentences.default;
