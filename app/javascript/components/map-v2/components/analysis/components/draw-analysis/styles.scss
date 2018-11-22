@@ -74,7 +74,6 @@
 
     .disclaimers {
       padding-top: rem(20px);
-      border-top: solid 1px $border;
 
       p {
         font-size: rem(12px);
@@ -136,7 +135,8 @@
       }
     }
 
-    &:first-child {
+    &:first-child,
+    &:last-child {
       border-bottom: solid 1px $border;
       padding-bottom: rem(15px);
       margin-bottom: rem(15px);
