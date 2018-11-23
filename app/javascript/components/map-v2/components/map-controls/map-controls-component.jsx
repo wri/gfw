@@ -192,7 +192,7 @@ class MapControlsButtons extends PureComponent {
         open={visible}
         onRequestClose={this.onRecentRequestClose}
         html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
-        offset={100}
+        offset={120}
       >
         {this.renderRecentImageryBtn()}
       </Tooltip>

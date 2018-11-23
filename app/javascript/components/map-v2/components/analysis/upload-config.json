@@ -7,7 +7,9 @@
     ".geojson",
     "application/json",
     "application/vnd.google-earth.kml+xml",
+    ".kml",
     "application/vnd.google-earth.kmz",
+    ".kmz",
     "application/zip",
     "text/csv",
     "application/vnd.ms-excel"

@@ -694,7 +694,7 @@ GEM
       sass
     compass-import-once (1.0.5)
       sass (>= 3.2, < 3.5)
-    compass-rails (3.0.2)
+    compass-rails (3.1.0)
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
@@ -906,7 +906,8 @@ GEM
       signet (~> 0.7)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    httparty (0.16.1)
+    httparty (0.16.3)
+      mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (1.1.1)
@@ -1137,7 +1138,7 @@ DEPENDENCIES
   capistrano
   carrierwave
   compass-flexbox
-  compass-rails (= 3.0.2)
+  compass-rails (= 3.1.0)
   database_cleaner
   dotenv-rails
   erubis
