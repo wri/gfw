@@ -10,11 +10,6 @@ class UserAgentValidator
     Browser.new('Edge', '15')
   ]
 
-  SupportedSnippetCollectors = [
-    Regexp.new("facebookexternalhit"),
-    Regexp.new("https://developers.google.com/\\+/web/snippet/")
-  ]
-
   def self.user_agent_supported? user_agent
     instance = self.new user_agent
     instance.user_agent_supported?
@@ -25,11 +20,7 @@ class UserAgentValidator
   end
 
   def user_agent_supported?
-    is_supported_browser || user_agent.bot? || is_snippet_collector
-  end
-
-  def is_snippet_collector
-    @user_agent.match(Regexp.union(SupportedSnippetCollectors))
+    is_supported_browser || user_agent.bot?
   end
 
   def method_missing method
