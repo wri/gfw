@@ -1,22 +1,28 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-const selectDatasets = state => state.datasets.datasets;
+import { getActiveLayers } from 'components/map-v2/selectors';
 
-const getLatestEndpoints = createSelector(
-  selectDatasets,
-  datasets =>
-    datasets &&
-    datasets.length &&
-    datasets.reduce((arr, next) => {
-      const config = next.decode_config || next.params_config;
-      const endDate = config && config.find(c => c.key === 'endDate' && c.url);
-      console.log(next);
-      if (endDate && endDate.url) {
-        return endDate.url;
-      }
-      return arr;
+const getLatestEndpoints = createSelector(getActiveLayers, layers => {
+  if (!layers || !layers.length) return [];
+  return (
+    layers &&
+    !!layers.length &&
+    layers.reduce((arr, next) => {
+      const latestUrl =
+        (next.params && next.params.latestUrl) ||
+        (next.decodeParams && next.decodeParams.latestUrl);
+      return latestUrl
+        ? [
+          ...arr,
+          {
+            latestUrl,
+            id: next.id
+          }
+        ]
+        : arr;
     }, [])
-);
+  );
+});
 
 export const getLatestProps = createStructuredSelector({
   latestEndpoints: getLatestEndpoints

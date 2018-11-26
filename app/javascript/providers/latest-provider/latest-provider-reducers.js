@@ -1,8 +1,9 @@
 import * as actions from './latest-provider-actions';
 
 export const initialState = {
-  loading: true,
-  error: false
+  loading: false,
+  error: false,
+  data: {}
 };
 
 const setLatestLoading = (state, { payload }) => ({
@@ -10,6 +11,17 @@ const setLatestLoading = (state, { payload }) => ({
   ...payload
 });
 
+const setLatestDates = (state, { payload }) => ({
+  ...state,
+  data: {
+    ...state.data,
+    ...payload
+  },
+  loading: false,
+  error: false
+});
+
 export default {
-  [actions.setLatestLoading]: setLatestLoading
+  [actions.setLatestLoading]: setLatestLoading,
+  [actions.setLatestDates]: setLatestDates
 };

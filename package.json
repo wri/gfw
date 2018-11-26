@@ -118,6 +118,7 @@
     "fbjs": "0.8.16",
     "glob": "7.1.2",
     "history": "4.7.2",
+    "immer": "^1.8.0",
     "install": "0.10.1",
     "layer-manager": "^1.13.1",
     "leaflet-draw": "^1.0.3",
