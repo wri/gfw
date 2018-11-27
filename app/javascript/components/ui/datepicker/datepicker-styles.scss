@@ -39,15 +39,19 @@
 }
 
 .c-date-dropdown {
-  width: 120px;
+  max-width: 290px;
   height: 30px;
   margin: 0 2px;
 
   .c-selector-menu {
     z-index: 3;
     max-height: 220px;
-    background-color: white;
   }
+}
+
+.c-date-month-selector {
+  display: flex;
+  justify-content: center;
 }
 
 .c-datepicker {

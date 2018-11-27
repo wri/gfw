@@ -23,8 +23,8 @@ class Datepicker extends PureComponent {
   render() {
     const { className, date, handleOnDateChange, settings, theme } = this.props;
     const { minDate, maxDate } = settings;
-    const [maxYear] = maxDate.split('-');
-    const [minYear] = minDate.split('-');
+    const maxYear = moment(maxDate).year();
+    const minYear = moment(minDate).year();
     return (
       <div className={cx('c-datepicker', theme, className)}>
         <SingleDatePicker
@@ -34,11 +34,10 @@ class Datepicker extends PureComponent {
           }}
           focused={this.state.focused}
           onFocusChange={({ focused }) => this.setState({ focused })}
-          // renderCaption={(e) => console.log(e)}
           navPrev={<div />}
           navNext={<div />}
           renderMonthElement={({ month, onMonthSelect, onYearSelect }) => (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="c-date-month-selector">
               <div>
                 <Dropdown
                   className="c-date-dropdown"
@@ -57,12 +56,12 @@ class Datepicker extends PureComponent {
                 <Dropdown
                   className="c-date-dropdown"
                   theme="theme-dropdown-button theme-dropdown-button-small -short"
-                  placeholder={month.year().toString()}
                   noItemsFound="No years found"
                   noSelectedValue={month.year().toString()}
-                  options={range(Number(minYear), Number(maxYear) + 1).map(
-                    i => ({ value: i, label: i })
-                  )}
+                  options={range(
+                    parseInt(minYear, 10),
+                    parseInt(maxYear, 10) + 1
+                  ).map(i => ({ value: i, label: i }))}
                   onChange={e => {
                     onYearSelect(month, e.value);
                   }}
