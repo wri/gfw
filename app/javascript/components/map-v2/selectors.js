@@ -202,12 +202,12 @@ export const getDatasetsWithConfig = createSelector(
             ...(!isEmpty(l.params) && {
               params: {
                 ...l.params,
+                ...(maxDate && {
+                  endDate: maxDate
+                }),
                 ...params,
                 ...(hasParamsTimeline && {
                   ...timelineParams
-                }),
-                ...(maxDate && {
-                  maxDate
                 })
               }
             }),
@@ -225,12 +225,12 @@ export const getDatasetsWithConfig = createSelector(
                     layers.includes('confirmedOnly') && {
                       confirmedOnly: true
                     }),
+                  ...(maxDate && {
+                    endDate: maxDate
+                  }),
                   ...decodeParams,
                   ...(hasDecodeTimeline && {
                     ...timelineParams
-                  }),
-                  ...(maxDate && {
-                    maxDate
                   })
                 }
               }),
@@ -243,10 +243,12 @@ export const getDatasetsWithConfig = createSelector(
                 ...(l.hasDecodeTimeline && {
                   ...l.decodeParams
                 }),
-                ...timelineParams,
                 ...(maxDate && {
-                  maxDate
-                })
+                  endDate: maxDate,
+                  maxDate,
+                  trimEndDate: maxDate
+                }),
+                ...timelineParams
               }
             })
           };
