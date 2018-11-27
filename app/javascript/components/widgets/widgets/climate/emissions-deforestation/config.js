@@ -12,7 +12,6 @@ export default {
     yearsRange: ['2001', '2017'],
     units: ['co2Emissions', 'biomassCarbon']
   },
-  layers: ['Biomass-Loss'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
   dataType: 'loss',
   colors: 'emissions',
