@@ -1,15 +1,15 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
+import moment from 'moment';
 import { biomassToCO2, biomassToC } from 'utils/calculations';
-import { getColorPalette } from 'utils/data';
 
 // get list data
 const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
 const getIndicator = state => state.indicator || null;
 const getLocationName = state => state.locationName || null;
-const getColors = state => state.colors || null;
+// const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const parseData = createSelector(
@@ -29,38 +29,43 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector(
-  [getSettings, getColors],
-  (settings, colors) => {
-    const colorRange = getColorPalette(colors.ramp, 2);
-    const { unit } = settings;
-    return {
-      height: 250,
-      xKey: 'year',
-      yKeys: {
-        areas: {
-          [unit]: {
-            fill: colorRange[0],
-            background: false,
-            activeDot: true
-          }
+export const parseConfig = createSelector([getSettings], settings => {
+  const { unit, startYear, endYear } = settings;
+  return {
+    height: 250,
+    xKey: 'year',
+    yKeys: {
+      bars: {
+        [unit]: {
+          fill: '#DF511E',
+          background: false
         }
+      }
+    },
+    xAxis: {
+      interval: 'preserveStartEnd',
+      tickFormatter: tick => {
+        const year = moment(tick, 'YYYY');
+        if (tick === startYear || tick === endYear) {
+          return year.format('YYYY');
+        }
+        return `'${year.format('YY')}`;
+      }
+    },
+    tooltip: [
+      {
+        key: 'year'
       },
-      tooltip: [
-        {
-          key: 'year'
-        },
-        {
-          key: [unit],
-          unit: 't',
-          unitFormat: value => format('.3s')(value)
-        }
-      ],
-      unit: 't',
-      unitFormat: value => format('.2s')(value)
-    };
-  }
-);
+      {
+        key: [unit],
+        unit: 't',
+        unitFormat: value => format('.3s')(value)
+      }
+    ],
+    unit: 't',
+    unitFormat: value => format('.2s')(value)
+  };
+});
 
 export const parseSentence = createSelector(
   [parseData, getSettings, getIndicator, getSentences, getLocationName],

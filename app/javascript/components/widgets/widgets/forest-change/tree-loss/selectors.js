@@ -54,44 +54,48 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = createSelector(
-  [getColors, getSimple],
-  (colors, simple) => ({
-    height: 250,
-    xKey: 'year',
-    yKeys: {
-      bars: {
-        area: {
-          fill: colors.main,
-          background: false
+  [getColors, getSimple, getSettings],
+  (colors, simple, settings) => {
+    const { startYear, endYear } = settings;
+
+    return {
+      height: 250,
+      xKey: 'year',
+      yKeys: {
+        bars: {
+          area: {
+            fill: colors.main,
+            background: false
+          }
         }
-      }
-    },
-    xAxis: {
-      tickFormatter: tick => {
-        const year = moment(tick, 'YYYY');
-        if (!simple && [2001, 2017].includes(tick)) {
-          return year.format('YYYY');
+      },
+      xAxis: {
+        tickFormatter: tick => {
+          const year = moment(tick, 'YYYY');
+          if (simple && (tick === startYear || tick === endYear)) {
+            return year.format('YYYY');
+          }
+          return year.format('YY');
         }
-        return year.format('YY');
-      }
-    },
-    unit: 'ha',
-    tooltip: [
-      {
-        key: 'year'
       },
-      {
-        key: 'area',
-        unit: 'ha',
-        unitFormat: value => format('.3s')(value)
-      },
-      {
-        key: 'percentage',
-        unit: '%',
-        unitFormat: value => format('.2r')(value)
-      }
-    ]
-  })
+      unit: 'ha',
+      tooltip: [
+        {
+          key: 'year'
+        },
+        {
+          key: 'area',
+          unit: 'ha',
+          unitFormat: value => format('.3s')(value)
+        },
+        {
+          key: 'percentage',
+          unit: '%',
+          unitFormat: value => format('.2r')(value)
+        }
+      ]
+    };
+  }
 );
 
 export const parseSentence = createSelector(
