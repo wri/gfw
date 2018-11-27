@@ -177,5 +177,8 @@
     "turf-union": "^3.0.12",
     "wri-api-components": "^2.2.10",
     "wri-json-api-serializer": "^1.0.1"
+  },
+  "resolutions": {
+    "event-stream": "^4.0.1"
   }
 }
