@@ -111,6 +111,7 @@ export const getDatesData = data =>
         .format('MMM')
     )
   }));
+
 export const getChartConfig = (colors, latest) => {
   const ticks = [];
   while (ticks.length < 12) {
@@ -177,4 +178,12 @@ export const getChartConfig = (colors, latest) => {
     },
     height: '280px'
   };
+};
+
+export const yearTicksFormatter = (tick, startYear, endYear) => {
+  const year = moment(tick, 'YYYY');
+  if (tick === startYear || tick === endYear) {
+    return year.format('YYYY');
+  }
+  return `'${year.format('YY')}`;
 };

@@ -4,6 +4,7 @@ import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { biomassToCO2 } from 'utils/calculations';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
@@ -13,7 +14,6 @@ const getLocationName = state => state.locationName || null;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
-const getSimple = state => state.simple || false;
 const getIsTropical = state => state.isTropical || false;
 
 export const parsePayload = payload => {
@@ -53,50 +53,37 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector(
-  [getColors, getSimple, getSettings],
-  (colors, simple, settings) => {
-    const { startYear, endYear } = settings;
-
-    return {
-      height: 250,
-      xKey: 'year',
-      yKeys: {
-        bars: {
-          area: {
-            fill: colors.main,
-            background: false
-          }
-        }
-      },
-      xAxis: {
-        tickFormatter: tick => {
-          const year = moment(tick, 'YYYY');
-          if (simple && (tick === startYear || tick === endYear)) {
-            return year.format('YYYY');
-          }
-          return year.format('YY');
-        }
-      },
+export const parseConfig = createSelector([getColors], colors => ({
+  height: 250,
+  xKey: 'year',
+  yKeys: {
+    bars: {
+      area: {
+        fill: colors.main,
+        background: false
+      }
+    }
+  },
+  xAxis: {
+    tickFormatter: yearTicksFormatter
+  },
+  unit: 'ha',
+  tooltip: [
+    {
+      key: 'year'
+    },
+    {
+      key: 'area',
       unit: 'ha',
-      tooltip: [
-        {
-          key: 'year'
-        },
-        {
-          key: 'area',
-          unit: 'ha',
-          unitFormat: value => format('.3s')(value)
-        },
-        {
-          key: 'percentage',
-          unit: '%',
-          unitFormat: value => format('.2r')(value)
-        }
-      ]
-    };
-  }
-);
+      unitFormat: value => format('.3s')(value)
+    },
+    {
+      key: 'percentage',
+      unit: '%',
+      unitFormat: value => format('.2r')(value)
+    }
+  ]
+}));
 
 export const parseSentence = createSelector(
   [

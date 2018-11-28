@@ -1,8 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
-import moment from 'moment';
 import { biomassToCO2, biomassToC } from 'utils/calculations';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
 const getData = state => (state.data && state.data.loss) || null;
@@ -30,7 +30,7 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = createSelector([getSettings], settings => {
-  const { unit, startYear, endYear } = settings;
+  const { unit } = settings;
   return {
     height: 250,
     xKey: 'year',
@@ -43,14 +43,7 @@ export const parseConfig = createSelector([getSettings], settings => {
       }
     },
     xAxis: {
-      interval: 'preserveStartEnd',
-      tickFormatter: tick => {
-        const year = moment(tick, 'YYYY');
-        if (tick === startYear || tick === endYear) {
-          return year.format('YYYY');
-        }
-        return `'${year.format('YY')}`;
-      }
+      tickFormatter: yearTicksFormatter
     },
     tooltip: [
       {
