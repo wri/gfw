@@ -59,6 +59,7 @@ class AnalysisComponent extends PureComponent {
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
               hasLayers={hasLayers}
+              analysis
             />
           ) : (
             <ChoseAnalysis />
