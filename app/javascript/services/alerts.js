@@ -24,7 +24,9 @@ const getLocationQuery = (adm0, adm1, adm2) =>
   `${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`;
 
 const getLocation = (adm0, adm1, adm2) =>
-  `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${adm2 ? ` AND adm2 = ${adm2}` : ''}`;
+  `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
+    adm2 ? ` AND adm2 = ${adm2}` : ''
+  }`;
 
 export const fetchGladAlerts = ({ adm0, adm1, adm2 }) => {
   let glad_summary_table = GLAD_ISO_DATASET;
@@ -33,7 +35,9 @@ export const fetchGladAlerts = ({ adm0, adm1, adm2 }) => {
   } else if (adm1) {
     glad_summary_table = GLAD_ADM1_DATASET;
   }
-  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${QUERIES.gladIntersectionAlerts}`
+  const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
+    QUERIES.gladIntersectionAlerts
+  }`
     .replace('{location}', getLocation(adm0, adm1, adm2))
     .replace('{polyname}', 'admin');
   return request.get(url, 3600, 'gladRequest');
@@ -45,7 +49,9 @@ export const fetchGladIntersectionAlerts = ({
   forestType,
   landCategory
 }) => {
-  const url = `${REQUEST_URL}/query/${adm1 ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET}?sql=${QUERIES.gladIntersectionAlerts}`
+  const url = `${REQUEST_URL}/query/${
+    adm1 ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
+  }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(adm0, adm1))
     .replace('{polyname}', getIndicator(forestType, landCategory));
   return request.get(url, 3600, 'gladRequest');
@@ -58,7 +64,9 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
   } else if (adm1) {
     fires_summary_table = FIRES_ADM1_DATASET;
   }
-  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${QUERIES.firesIntersectionAlerts}`
+  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
+    QUERIES.firesIntersectionAlerts
+  }`
     .replace('{location}', getLocation(adm0, adm1, adm2))
     .replace('{polyname}', 'admin')
     .replace('{dataset}', dataset);
@@ -66,132 +74,140 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
 };
 
 export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
-  const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${QUERIES.viirsAlerts}`
+  const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${
+    QUERIES.viirsAlerts
+  }`
     .replace('{location}', !adm2 ? getLocationQuery(adm0, adm1, adm2) : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
 };
 
 export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {
-  const url = `${REQUEST_URL}/fire-alerts/summary-stats/admin/${QUERIES.firesStats}`
+  const url = `${REQUEST_URL}/fire-alerts/summary-stats/admin/${
+    QUERIES.firesStats
+  }`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
 };
 
 // Latest Dates for Alerts
-const lastFriday = moment().day(-2).format('YYYY-MM-DD');
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
+
+export const fetchLatestDate = url =>
+  request.get(url, 3600, 'gladRequest').catch(error => {
+    console.error('Error in latest request:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { date: lastFriday }
+            }
+          ]
+        }
+      })
+    );
+  });
 
 export const fetchGLADLatest = () => {
   const url = `${REQUEST_URL}/glad-alerts/latest`;
-  return request
-    .get(url, 3600, 'gladRequest')
-    .catch((error) => {
-      console.log('Error in gladRequest:', error);
-      return new Promise(
-        (resolve) => resolve({
-          data: {
-            data: [
-              {
-                attributes:
-                  { date: lastFriday },
-                id: null,
-                type: 'glad-alerts'
-              }
-            ]
-          }
-        })
-      );
-    });
+  return request.get(url, 3600, 'gladRequest').catch(error => {
+    console.error('Error in gladRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { date: lastFriday },
+              id: null,
+              type: 'glad-alerts'
+            }
+          ]
+        }
+      })
+    );
+  });
 };
 
 export const fetchFormaLatest = () => {
   const url = `${REQUEST_URL}/forma250gfw/latest`;
-  return request
-    .get(url, 3600, 'formaRequest')
-    .catch((error) => {
-      console.log('Error in formaRequest:', error);
-      return new Promise(
-        (resolve) => resolve({
+  return request.get(url, 3600, 'formaRequest').catch(error => {
+    console.error('Error in formaRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
           data: {
-            data: {
-              attributes: {
-                latest: lastFriday
-              },
-              id: null,
-              type: 'forma250gfw'
-            }
+            attributes: {
+              latest: lastFriday
+            },
+            id: null,
+            type: 'forma250gfw'
           }
-        })
-      );
-    });
+        }
+      })
+    );
+  });
 };
 
 export const fetchTerraiLatest = () => {
   const url = `${REQUEST_URL}/terrai-alerts/latest`;
-  return request
-    .get(url, 3600, 'terraRequest')
-    .catch((error) => {
-      console.log('Error in terraRequest:', error);
-      return new Promise(
-        (resolve) => resolve({
-          data: {
-            data: [
-              {
-                attributes:
-                  { date: lastFriday },
-                id: null,
-                type: 'terrai-alerts'
-              }
-            ]
-          }
-        })
-      );
-    });
+  return request.get(url, 3600, 'terraRequest').catch(error => {
+    console.error('Error in terraRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { date: lastFriday },
+              id: null,
+              type: 'terrai-alerts'
+            }
+          ]
+        }
+      })
+    );
+  });
 };
 
 export const fetchSADLatest = () => {
   const url = `${REQUEST_URL}/v2/imazon-alerts/latest`;
-  return request
-    .get(url, 3600, 'sadRequest')
-    .catch((error) => {
-      console.log('Error in sadRequest:', error);
-      return new Promise(
-        (resolve) => resolve({
-          data: {
-            data: [
-              {
-                attributes:
-                  { latest: `${lastFriday}T00:00:00Z` },
-                id: undefined,
-                type: 'imazon-latest'
-              }
-            ]
-          }
-        })
-      );
-    });
+  return request.get(url, 3600, 'sadRequest').catch(error => {
+    console.error('Error in sadRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { latest: `${lastFriday}T00:00:00Z` },
+              id: undefined,
+              type: 'imazon-latest'
+            }
+          ]
+        }
+      })
+    );
+  });
 };
 
 export const fetchGranChacoLatest = () => {
   const url = `${REQUEST_URL}/v2/guira-loss/latest`;
-  return request
-    .get(url, 3600, 'granChacoRequest')
-    .catch((error) => {
-      console.log('Error in granChacoRequest:', error);
-      return new Promise(
-        (resolve) => resolve({
-          data: {
-            data: [
-              {
-                attributes:
-                  { latest: `${lastFriday}T00:00:00Z` },
-                id: undefined,
-                type: 'imazon-latest'
-              }
-            ]
-          }
-        })
-      );
-    });
+  return request.get(url, 3600, 'granChacoRequest').catch(error => {
+    console.error('Error in granChacoRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { latest: `${lastFriday}T00:00:00Z` },
+              id: undefined,
+              type: 'imazon-latest'
+            }
+          ]
+        }
+      })
+    );
+  });
 };

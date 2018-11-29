@@ -9,8 +9,12 @@ import { initialState } from './reducers';
 const getMapUrlState = state =>
   (state.location && state.location.query && state.location.query.map) || null;
 const getDatasets = state => state.datasets.datasets;
+const getLatest = state => state.latest.data;
 const getLoading = state =>
-  state.datasets.loading || state.geostore.loading || state.map.loading;
+  state.datasets.loading ||
+  state.geostore.loading ||
+  state.map.loading ||
+  state.latest.loading;
 const getGeostore = state => state.geostore.geostore || null;
 const getQuery = state => (state.location && state.location.query) || null;
 const selectEmbed = state =>
@@ -149,8 +153,8 @@ export const getActiveBoundaryDatasets = createSelector(
 
 // parse active datasets to add config from url
 export const getDatasetsWithConfig = createSelector(
-  [getActiveDatasets, getActiveDatasetsState],
-  (datasets, activeDatasetsState) => {
+  [getActiveDatasets, getActiveDatasetsState, getLatest],
+  (datasets, activeDatasetsState, latestDates) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
     return datasets.map(d => {
@@ -180,7 +184,13 @@ export const getDatasetsWithConfig = createSelector(
           }
         }),
         layers: d.layers.map(l => {
-          const { hasParamsTimeline, hasDecodeTimeline, timelineConfig } = l;
+          const {
+            hasParamsTimeline,
+            hasDecodeTimeline,
+            timelineConfig,
+            id
+          } = l;
+          const maxDate = latestDates[id];
 
           return {
             ...l,
@@ -192,6 +202,9 @@ export const getDatasetsWithConfig = createSelector(
             ...(!isEmpty(l.params) && {
               params: {
                 ...l.params,
+                ...(maxDate && {
+                  endDate: maxDate
+                }),
                 ...params,
                 ...(hasParamsTimeline && {
                   ...timelineParams
@@ -212,6 +225,9 @@ export const getDatasetsWithConfig = createSelector(
                     layers.includes('confirmedOnly') && {
                       confirmedOnly: true
                     }),
+                  ...(maxDate && {
+                    endDate: maxDate
+                  }),
                   ...decodeParams,
                   ...(hasDecodeTimeline && {
                     ...timelineParams
@@ -226,6 +242,11 @@ export const getDatasetsWithConfig = createSelector(
                 }),
                 ...(l.hasDecodeTimeline && {
                   ...l.decodeParams
+                }),
+                ...(maxDate && {
+                  endDate: maxDate,
+                  maxDate,
+                  trimEndDate: maxDate
                 }),
                 ...timelineParams
               }
