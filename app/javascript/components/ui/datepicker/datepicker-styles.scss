@@ -5,6 +5,8 @@
 
   td {
     vertical-align: middle;
+    text-align: end;
+    padding-right: 10px;
 
     &:focus {
       outline: none;
@@ -13,6 +15,34 @@
 
   strong {
     font-weight: 400;
+  }
+
+  .c-navigation-button {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background-color: #97be32;
+    border-radius: 80px;
+    top: 22px;
+
+    &.c-button-left {
+      left: 26px;
+    }
+
+    &.c-button-right {
+      right: 26px;
+      transform: rotate(180deg);
+    }
+
+    #c-arrow-left {
+      height: 6.9px;
+      width: 6.9px;
+      fill: #fff;
+      position: relative;
+      z-index: 1;
+      top: -6px;
+      left: 6px;
+    }
   }
 }
 
@@ -33,13 +63,14 @@
 .CalendarDay__selected,
 .CalendarDay__selected:active,
 .CalendarDay__selected:hover {
-  background: $green-gfw;
-  border: 1px solid $green-gfw;
+  background: $slate;
+  border: 1px solid #e4e7e7;
   color: $white;
 }
 
 .c-date-dropdown {
   max-width: 290px;
+  width: 100px;
   height: 30px;
   margin: 0 2px;
 

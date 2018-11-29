@@ -34,8 +34,64 @@ class Datepicker extends PureComponent {
           }}
           focused={this.state.focused}
           onFocusChange={({ focused }) => this.setState({ focused })}
-          navPrev={<div />}
-          navNext={<div />}
+          navPrev={
+            <div className="c-navigation-button c-button-left">
+              <svg
+                id="c-arrow-left"
+                width="7px"
+                height="10px"
+                viewBox="0 0 7 10"
+                version="1.1"
+              >
+                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                  <g
+                    transform="translate(-812.000000, -72.000000)"
+                    fill="#FFFFFF"
+                    fillRule="nonzero"
+                  >
+                    <g
+                      id="scroll"
+                      transform="translate(816.000000, 77.000000) scale(-1, 1) rotate(-180.000000) translate(-816.000000, -77.000000) translate(806.000000, 67.000000)"
+                    >
+                      <polygon
+                        id="arrow"
+                        points="12.7071068 13.2928932 11.2928932 14.7071068 6.58578644 10 11.2928932 5.29289322 12.7071068 6.70710678 9.41421356 10"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          }
+          navNext={
+            <div className="c-navigation-button c-button-right">
+              <svg
+                id="c-arrow-left"
+                width="7px"
+                height="10px"
+                viewBox="0 0 7 10"
+                version="1.1"
+              >
+                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                  <g
+                    transform="translate(-812.000000, -72.000000)"
+                    fill="#FFFFFF"
+                    fillRule="nonzero"
+                  >
+                    <g
+                      id="scroll"
+                      transform="translate(816.000000, 77.000000) scale(-1, 1) rotate(-180.000000) translate(-816.000000, -77.000000) translate(806.000000, 67.000000)"
+                    >
+                      <polygon
+                        id="arrow"
+                        points="12.7071068 13.2928932 11.2928932 14.7071068 6.58578644 10 11.2928932 5.29289322 12.7071068 6.70710678 9.41421356 10"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          }
           renderMonthElement={({ month, onMonthSelect, onYearSelect }) => (
             <div className="c-date-month-selector">
               <div>
