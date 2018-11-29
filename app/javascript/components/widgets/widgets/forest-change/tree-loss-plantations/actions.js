@@ -13,7 +13,12 @@ export default ({ params }) =>
         const lossPlantations =
           plantationsloss.data && plantationsloss.data.data;
         const totalLoss = gadmLoss.data && gadmLoss.data.data;
-        if (lossPlantations.length && totalLoss.length) {
+        if (
+          lossPlantations &&
+          totalLoss &&
+          lossPlantations.length &&
+          totalLoss.length
+        ) {
           data = {
             lossPlantations,
             totalLoss
