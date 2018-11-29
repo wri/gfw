@@ -43,6 +43,7 @@ import { reduxModule as CountryDataProvider } from 'providers/country-data-provi
 import { reduxModule as GeostoreProvider } from 'providers/geostore-provider';
 import { reduxModule as WhitelistsProvider } from 'providers/whitelists-provider';
 import { reduxModule as DatasetsProvider } from 'providers/datasets-provider';
+import { reduxModule as LatestProvider } from 'providers/latest-provider';
 import { reduxModule as MyGFWProvider } from 'providers/mygfw-provider';
 import { reduxModule as PTWProvider } from 'providers/ptw-provider';
 import { reduxModule as LayerSpecProvider } from 'providers/layerspec-provider';
@@ -83,6 +84,7 @@ const providersReducers = {
   geostore: handleModule(GeostoreProvider),
   whitelists: handleModule(WhitelistsProvider),
   datasets: handleModule(DatasetsProvider),
+  latest: handleModule(LatestProvider),
   myGfw: handleModule(MyGFWProvider),
   ptw: handleModule(PTWProvider),
   layerSpec: handleModule(LayerSpecProvider)

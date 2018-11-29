@@ -43,13 +43,13 @@ class UTMCoords extends PureComponent {
     const lat = this.convertDMSToDD(
       parseInt(latDeg, 10),
       parseInt(latMin, 10),
-      parseInt(latSec, 10),
+      parseFloat(latSec),
       latCard
     );
     const lng = this.convertDMSToDD(
       parseInt(lngDeg, 10),
       parseInt(lngMin, 10),
-      parseInt(lngSec, 10),
+      parseFloat(lngSec),
       lngCard
     );
     if (validateLatLng(lat, lng)) {
