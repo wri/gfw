@@ -16,11 +16,6 @@ const selectAdmins = state => state.countryData.countries;
 const selectAdmin1s = state => state.countryData.regions;
 const selectAdmin2s = state => state.countryData.subRegions;
 
-export const getShowWidgets = createSelector(
-  [selectLocation],
-  location => location && location.type === 'country'
-);
-
 export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
   (location, adms, adm1s, adm2s) => {
@@ -155,6 +150,5 @@ export const getDrawAnalysisProps = createStructuredSelector({
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,
-  showWidgets: getShowWidgets,
   zoomLevel: getMapZoom
 });

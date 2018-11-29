@@ -2,7 +2,7 @@ export default {
   widget: 'emissionsDeforestation',
   title: 'Emissions from biomass loss in {location}',
   categories: ['climate'],
-  types: ['country'],
+  types: ['country', 'geostore', 'use', 'wdpa'],
   admins: ['adm0', 'adm1', 'adm2'],
   options: {
     forestTypes: true,

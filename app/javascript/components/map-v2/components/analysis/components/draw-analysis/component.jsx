@@ -74,7 +74,6 @@ class DrawAnalysis extends PureComponent {
       loading,
       fullLocationName,
       error,
-      showWidgets,
       setModalSources,
       handleShowDownloads,
       showDownloads,
@@ -165,7 +164,7 @@ class DrawAnalysis extends PureComponent {
                 <ul className="draw-stats">
                   {data.map(d => this.renderStatItem(d))}
                 </ul>
-                {showWidgets && <Widgets simple analysis />}
+                <Widgets simple analysis />
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>
@@ -204,7 +203,6 @@ class DrawAnalysis extends PureComponent {
 }
 
 DrawAnalysis.propTypes = {
-  showWidgets: PropTypes.bool,
   data: PropTypes.array,
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,

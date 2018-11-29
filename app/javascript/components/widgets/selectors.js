@@ -166,18 +166,19 @@ export const filterWidgetsByLocationType = createSelector(
   [filterWidgetsByLocation, selectLocation, getFAOLocationData],
   (widgets, location, faoCountries) => {
     if (!widgets) return null;
-    if (location.type !== 'country') return widgets;
-    const isFAOCountry = faoCountries.find(f => f.value === location.adm0);
+    const isFAOCountry =
+      faoCountries && faoCountries.find(f => f.value === location.adm0);
     return widgets.filter(w => {
-      const { source } = w.config || {};
-      if (source !== 'fao') return true;
-      return isFAOCountry;
+      const { source, types } = w.config || {};
+      const isFao = source === 'fao';
+      const hasType = types.includes(location.type);
+      return hasType && (!isFAOCountry || isFao);
     });
   }
 );
 
 export const filterWidgetsByLocationWhitelist = createSelector(
-  [filterWidgetsByLocation, selectLocation],
+  [filterWidgetsByLocationType, selectLocation],
   (widgets, location) => {
     if (!widgets) return null;
     return widgets.filter(w => {
@@ -317,6 +318,7 @@ export const filterWidgetsByCategoryAndLayers = createSelector(
         w.config.categories.includes(category)
       );
     }
+
     return sortBy(filteredWidgets, `config.sortOrder[${camelCase(category)}]`);
   }
 );
