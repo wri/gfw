@@ -32,13 +32,14 @@ export const parseData = createSelector(
             groupedPlantations && sumBy(groupedPlantations, 'area');
           const summedPlatationsEmissions =
             groupedPlantations && sumBy(groupedPlantations, 'emissions');
+          const totalLossForYear =
+            (totalLossByYear[d.year] && totalLossByYear[d.year][0]) || {};
 
           const returnData = {
             ...d,
-            outsideAreaLoss:
-              totalLossByYear[d.year][0].area - summedPlatationsLoss,
+            outsideAreaLoss: totalLossForYear.area - summedPlatationsLoss,
             areaLoss: summedPlatationsLoss || 0,
-            totalLoss: totalLossByYear[d.year][0].area || 0,
+            totalLoss: totalLossForYear || 0,
             outsideCo2Loss:
               totalLossByYear[d.year][0].emissions - summedPlatationsEmissions,
             co2Loss: summedPlatationsEmissions || 0
