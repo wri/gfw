@@ -1,11 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
-import flatMap from 'lodash/flatMap';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
 import { getActiveLayers, getMapZoom } from 'components/map-v2/selectors';
-import { filterWidgetsByCategoryAndLayers } from 'components/widgets/selectors';
+import { getWidgetLayers } from 'components/map-v2/components/analysis/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
 const selectLoading = state =>
@@ -15,6 +13,7 @@ const selectError = state => state.analysis.error;
 const selectAdmins = state => state.countryData.countries;
 const selectAdmin1s = state => state.countryData.regions;
 const selectAdmin2s = state => state.countryData.subRegions;
+const selectGeostore = state => state.geostore.geostore;
 
 export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
@@ -49,24 +48,15 @@ export const getDataFromLayers = createSelector(
     selectData,
     getLocationName,
     selectLocation,
-    filterWidgetsByCategoryAndLayers
+    getWidgetLayers,
+    selectGeostore
   ],
-  (layers, data, locationName, location, widgets) => {
-    if (!layers || !layers.length || isEmpty(data)) return null;
+  (layers, data, locationName, location, widgetLayers, geostore) => {
+    if (!layers || !layers.length) return null;
 
-    const activeWidgets =
-      widgets &&
-      widgets.filter(
-        w => w.config.analysis && w.config.layers && w.config.layers.length
-      );
-    const widgetLayers =
-      activeWidgets && flatMap(activeWidgets.map(w => w.config.layers));
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
-    const firstDataObj = data[Object.keys(data)[0]];
-    const area =
-      firstDataObj.areaHa ||
-      (firstDataObj.totals && firstDataObj.totals.areaHa);
+    const { areaHa } = geostore;
 
     return [
       {
@@ -74,7 +64,7 @@ export const getDataFromLayers = createSelector(
           location.type !== 'geostore'
             ? `${locationName} total area`
             : 'selected area',
-        value: area || 0,
+        value: areaHa || 0,
         unit: 'ha'
       }
     ].concat(

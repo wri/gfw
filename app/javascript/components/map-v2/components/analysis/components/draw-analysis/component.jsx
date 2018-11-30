@@ -79,6 +79,7 @@ class DrawAnalysis extends PureComponent {
       showDownloads,
       downloadUrls,
       hasLayers,
+      hasWidgets,
       zoomLevel
     } = this.props;
 
@@ -137,10 +138,12 @@ class DrawAnalysis extends PureComponent {
         </div>
         <div className="results">
           {hasLayers &&
+            !hasWidgets &&
             !loading &&
             !error &&
             isEmpty(data) && <NoContent message="No analysis data available" />}
           {!hasLayers &&
+            !hasWidgets &&
             !loading && (
               <NoContent>
                 Select a{' '}
@@ -157,12 +160,11 @@ class DrawAnalysis extends PureComponent {
                 data layer to analyze.
               </NoContent>
             )}
-          {hasLayers &&
-            !loading &&
-            !isEmpty(data) && (
+          {(hasLayers || hasWidgets) &&
+            !loading && (
               <Fragment>
                 <ul className="draw-stats">
-                  {data.map(d => this.renderStatItem(d))}
+                  {data && data.map(d => this.renderStatItem(d))}
                 </ul>
                 <Widgets simple analysis />
                 <div className="disclaimers">
@@ -214,6 +216,7 @@ DrawAnalysis.propTypes = {
   setMenuSettings: PropTypes.func,
   showDownloads: PropTypes.bool,
   hasLayers: PropTypes.bool,
+  hasWidgets: PropTypes.bool,
   downloadUrls: PropTypes.array,
   zoomLevel: PropTypes.number
 };
