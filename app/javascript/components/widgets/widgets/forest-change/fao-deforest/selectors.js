@@ -61,7 +61,7 @@ export const parseSentence = createSelector(
       globalHuman
     } = sentences;
     const topFao = data.fao.filter(d => d.year === settings.period);
-    const { deforest, humdef } = topFao[0];
+    const { deforest, humdef } = topFao[0] || {};
     const totalDeforest = sumBy(data.rank, 'deforest');
     const rate = currentLabel === 'global' ? totalDeforest : deforest;
 

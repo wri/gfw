@@ -35,7 +35,7 @@ export default {
     id: 'default',
     value: 'default',
     label: 'default',
-    labelsKey: 'default', // dark labels
+    labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=${
@@ -69,6 +69,6 @@ export default {
     image: landsatImage,
     defaultUrl:
       'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
-    availableYears: [2013, 2014, 2015, 2016, 2017]
+    availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };

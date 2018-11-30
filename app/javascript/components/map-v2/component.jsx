@@ -127,15 +127,15 @@ class MapComponent extends PureComponent {
                     bounds={
                       bbox
                         ? {
-                          bbox,
-                          options: {
-                            padding: [50, 50]
+                            bbox,
+                            options: {
+                              padding: [50, 50]
+                            }
                           }
-                        }
                         : {}
                     }
                     events={{
-                      move: handleMapMove
+                      moveend: handleMapMove
                     }}
                   >
                     {map => (

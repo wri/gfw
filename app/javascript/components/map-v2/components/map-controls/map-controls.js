@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { setMapTourOpen } from 'components/map-v2/components/map-tour/actions';
 import * as shareActions from 'components/modals/share/share-actions';
 import * as mapActions from 'components/map-v2/actions';
 import * as recentImageryActions from 'components/map-v2/components/recent-imagery/recent-imagery-actions';
@@ -12,6 +13,7 @@ const actions = {
   ...mapActions,
   ...shareActions,
   setMenuSettings,
+  setMapTourOpen,
   ...recentImageryActions
 };
 

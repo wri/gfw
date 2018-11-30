@@ -6,10 +6,15 @@
     "application/vnd.geo+json",
     ".geojson",
     "application/json",
+    ".json",
     "application/vnd.google-earth.kml+xml",
+    ".kml",
     "application/vnd.google-earth.kmz",
+    ".kmz",
     "application/zip",
+    ".zip",
     "text/csv",
+    ".csv",
     "application/vnd.ms-excel"
   ]
 }

@@ -50,7 +50,7 @@ class ModalMeta extends PureComponent {
                 {tableData &&
                   Object.keys(tableData).map(
                     key =>
-                      (tableData[key] ? (
+                      tableData[key] ? (
                         <div key={key} className="table-row">
                           <div
                             className="title-column"
@@ -60,7 +60,7 @@ class ModalMeta extends PureComponent {
                             {this.parseContent(tableData[key])}
                           </div>
                         </div>
-                      ) : null)
+                      ) : null
                   )}
               </div>
               {overview && (
@@ -128,9 +128,13 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { open, setModalMetaClosed } = this.props;
+    const { open, setModalMetaClosed, metaData } = this.props;
     return (
-      <Modal isOpen={open} onRequestClose={() => setModalMetaClosed(false)}>
+      <Modal
+        isOpen={open}
+        contentLabel={`Metadata: ${metaData && metaData.title}`}
+        onRequestClose={() => setModalMetaClosed(false)}
+      >
         {this.getContent()}
       </Modal>
     );

@@ -64,8 +64,8 @@
 
   &.simple {
     display: flex;
-    padding: rem(15px) 0;
-    border-top: solid 1px #e5e5df;
+    padding: rem(5px) 0 rem(15px);
+    border-bottom: solid 1px #e5e5df;
 
     > div {
       width: 100%;
@@ -82,7 +82,7 @@
   }
 
   &.no-widgets {
-    border-top: 0;
+    border-bottom: 0;
     padding: 0;
   }
 }

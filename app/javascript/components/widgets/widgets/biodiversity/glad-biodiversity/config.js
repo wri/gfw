@@ -6,7 +6,7 @@ export default {
     landCategories: ['kba', 'aze', 'tiger_cl', 'wdpa'],
     weeks: true,
     extentYears: true,
-    units: true,
+    units: ['%', 'ha'],
     thresholds: true
   },
   metaKey: 'widget_deforestation_alert_location_biodiversity'

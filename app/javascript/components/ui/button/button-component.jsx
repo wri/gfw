@@ -17,6 +17,7 @@ import './themes/button-grey.scss'; // eslint-disable-line
 import './themes/button-grey-filled.scss'; // eslint-disable-line
 import './themes/button-clear.scss'; // eslint-disable-line
 import './themes/button-map-control.scss'; // eslint-disable-line
+import './themes/button-dashed.scss'; // eslint-disable-line
 
 const Button = props => {
   const {

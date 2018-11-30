@@ -18,6 +18,10 @@ $explore-nav-height: rem(40px);
       line-height: 1.6;
       margin: rem(20px) 0;
 
+      a {
+        color: $green-gfw;
+      }
+
       @media screen and (min-width: $screen-m) {
         margin: rem(30px) 0;
       }

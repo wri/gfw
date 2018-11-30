@@ -37,6 +37,7 @@ class WidgetContainer extends Component {
     const settingsUpdateBlackList = [
       'startYear',
       'endYear',
+      'year',
       'activeData',
       'weeks',
       'page',

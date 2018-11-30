@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { track } from 'utils/analytics';
 
 import Toggle from 'components/ui/toggle';
 import Button from 'components/ui/button';
@@ -57,24 +58,29 @@ class LayerToggle extends PureComponent {
             </div>
             {((!metadata && description) ||
               (metadata && typeof metadata === 'string')) && (
-                <Tooltip
-                  theme="tip"
-                  arrow
-                  hideOnClick
-                  position="top"
-                  disabled={!description}
-                  html={<Tip text={description} />}
+              <Tooltip
+                theme="tip"
+                arrow
+                hideOnClick
+                position="top"
+                disabled={!description}
+                html={<Tip text={description} />}
+                onShow={() =>
+                  track('hoverModalBtn', {
+                    label: `${layer}: ${metadata || description}`
+                  })
+                }
+              >
+                <Button
+                  className={`theme-button-tiny theme-button-grey-filled square info-button ${
+                    !metadata ? '-help' : ''
+                  }`}
+                  onClick={metadata && (() => onInfoClick(metadata))}
                 >
-                  <Button
-                    className={`theme-button-tiny theme-button-grey-filled square info-button ${
-                      !metadata ? '-help' : ''
-                    }`}
-                    onClick={metadata && (() => onInfoClick(metadata))}
-                  >
-                    <Icon icon={metadata ? infoIcon : helpIcon} />
-                  </Button>
-                </Tooltip>
-              )}
+                  <Icon icon={metadata ? infoIcon : helpIcon} />
+                </Button>
+              </Tooltip>
+            )}
           </div>
           {citation &&
             showSubtitle && (

@@ -14,15 +14,20 @@
   @media screen and (min-width: $screen-m) {
     padding: 0 $desktop-gutter;
   }
-}
 
-.message {
-  opacity: 0.5;
-  text-align: center;
-}
+  .message {
+    opacity: 0.5;
+    text-align: center;
+  }
 
-.message-icon {
-  width: rem(25px);
-  height: rem(25px);
-  margin-left: rem(5px);
+  .message-icon {
+    width: rem(25px);
+    height: rem(25px);
+    margin-left: rem(5px);
+  }
+
+  button {
+    color: $green-gfw;
+    cursor: pointer;
+  }
 }

@@ -1,9 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import flatMap from 'lodash/flatMap';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
-import { getActiveLayers } from 'components/map-v2/selectors';
+import { getActiveLayers, getMapZoom } from 'components/map-v2/selectors';
+import { filterWidgetsByCategoryAndLayers } from 'components/widgets/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
 const selectLoading = state =>
@@ -47,13 +49,29 @@ export const getFullLocationName = createSelector(
 );
 
 export const getDataFromLayers = createSelector(
-  [getActiveLayers, selectData, getLocationName, selectLocation],
-  (layers, data, locationName, location) => {
+  [
+    getActiveLayers,
+    selectData,
+    getLocationName,
+    selectLocation,
+    filterWidgetsByCategoryAndLayers
+  ],
+  (layers, data, locationName, location, widgets) => {
     if (!layers || !layers.length || isEmpty(data)) return null;
+
+    const activeWidgets =
+      widgets &&
+      widgets.filter(
+        w => w.config.analysis && w.config.layers && w.config.layers.length
+      );
+    const widgetLayers =
+      activeWidgets && flatMap(activeWidgets.map(w => w.config.layers));
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const firstDataObj = data[Object.keys(data)[0]];
-    const area = firstDataObj.areaHa || firstDataObj.totals.areaHa;
+    const area =
+      firstDataObj.areaHa ||
+      (firstDataObj.totals && firstDataObj.totals.areaHa);
 
     return [
       {
@@ -66,7 +84,13 @@ export const getDataFromLayers = createSelector(
       }
     ].concat(
       layers
-        .filter(l => !l.isBoundary && !l.isRecentImagery && l.analysisConfig)
+        .filter(
+          l =>
+            !l.isBoundary &&
+            !l.isRecentImagery &&
+            l.analysisConfig &&
+            !widgetLayers.includes(l.id)
+        )
         .map(l => {
           let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
           if (!analysisConfig) {
@@ -131,5 +155,6 @@ export const getDrawAnalysisProps = createStructuredSelector({
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,
-  showWidgets: getShowWidgets
+  showWidgets: getShowWidgets,
+  zoomLevel: getMapZoom
 });

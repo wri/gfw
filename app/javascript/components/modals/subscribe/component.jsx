@@ -50,7 +50,11 @@ class ModalSubscribe extends PureComponent {
     const { open, userData, loading, locationName, saved } = this.props;
 
     return (
-      <Modal isOpen={open} onRequestClose={this.handleCloseModal}>
+      <Modal
+        isOpen={open}
+        contentLabel="Subscribe"
+        onRequestClose={this.handleCloseModal}
+      >
         <div className="c-modal-subscribe">
           <h3>
             {saved

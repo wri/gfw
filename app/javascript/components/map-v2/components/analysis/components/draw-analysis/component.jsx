@@ -68,6 +68,7 @@ class DrawAnalysis extends PureComponent {
   render() {
     const {
       setShareModal,
+      setMenuSettings,
       clearAnalysis,
       data,
       loading,
@@ -78,7 +79,8 @@ class DrawAnalysis extends PureComponent {
       handleShowDownloads,
       showDownloads,
       downloadUrls,
-      hasLayers
+      hasLayers,
+      zoomLevel
     } = this.props;
 
     return (
@@ -141,10 +143,23 @@ class DrawAnalysis extends PureComponent {
             isEmpty(data) && <NoContent message="No analysis data available" />}
           {!hasLayers &&
             !loading && (
-              <NoContent message="No analysis layers activated. Please select one from the menu." />
+              <NoContent>
+                Select a{' '}
+                <button
+                  onClick={() =>
+                    setMenuSettings({
+                      menuSection: 'datasets',
+                      datasetCategory: 'forestChange'
+                    })
+                  }
+                >
+                  forest change
+                </button>{' '}
+                data layer to analyze.
+              </NoContent>
             )}
           {// eslint-disable-next-line no-console
-            console.log(this.props, this.map)}
+          console.log(this.props, this.map)}
           {hasLayers &&
             !loading &&
             !isEmpty(data) && (
@@ -154,11 +169,13 @@ class DrawAnalysis extends PureComponent {
                 </ul>
                 {showWidgets && <Widgets simple analysis />}
                 <div className="disclaimers">
-                  <p>
-                    This algorithm approximates the results by sampling the
-                    selected area. Results are more accurate at closer zoom
-                    levels.
-                  </p>
+                  {zoomLevel < 11 && (
+                    <p>
+                      This algorithm approximates the results by sampling the
+                      selected area. Results are more accurate at closer zoom
+                      levels.
+                    </p>
+                  )}
                   <p>
                     <b>NOTE:</b> tree cover loss and gain statistics cannot be
                     compared against each other.{' '}
@@ -198,9 +215,11 @@ DrawAnalysis.propTypes = {
   fullLocationName: PropTypes.string,
   setModalSources: PropTypes.func,
   handleShowDownloads: PropTypes.func,
+  setMenuSettings: PropTypes.func,
   showDownloads: PropTypes.bool,
   hasLayers: PropTypes.bool,
-  downloadUrls: PropTypes.array
+  downloadUrls: PropTypes.array,
+  zoomLevel: PropTypes.number
 };
 
 export default DrawAnalysis;

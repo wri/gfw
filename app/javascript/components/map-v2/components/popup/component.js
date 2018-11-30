@@ -47,14 +47,19 @@ class Popup extends Component {
               theme="theme-card-small"
               data={{
                 ...cardData,
-                buttons: cardData.buttons.map(b => ({
-                  ...b,
-                  onClick: () =>
-                    setMapSettings({
-                      canBound: true,
-                      bbox: cardData.bbox
-                    })
-                }))
+                buttons: cardData.buttons.map(
+                  b =>
+                    b.text === 'ZOOM'
+                      ? {
+                          ...b,
+                          onClick: () =>
+                            setMapSettings({
+                              canBound: true,
+                              bbox: cardData.bbox
+                            })
+                        }
+                      : b
+                )
               }}
             />
           ) : (

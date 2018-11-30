@@ -1,11 +1,13 @@
+import { createThunkAction, createAction } from 'redux-tools';
 import axios from 'axios';
-import { createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getMapZoom, getBasemap } from 'components/map-v2/selectors';
 import { addToDate } from 'utils/dates';
 import { getLocationFromData } from 'utils/format';
 
 const { GFW_API } = process.env;
+
+export const setMapLoading = createAction('setMapLoading');
 
 export const setMapSettings = createThunkAction(
   'setMapSettings',
@@ -21,7 +23,7 @@ export const setMapSettings = createThunkAction(
 
 export const setLandsatBasemap = createThunkAction(
   'setLandsatBasemap',
-  ({ year, defaultUrl }) => (dispatch, getState) => {
+  ({ year, defaultUrl, label }) => (dispatch, getState) => {
     const mapZoom = getMapZoom(getState());
     const currentBasemap = getBasemap(getState());
     const landsat = {
@@ -59,7 +61,8 @@ export const setLandsatBasemap = createThunkAction(
             id: 'landsat',
             url: landsat.url,
             color: '#0C0045'
-          }
+          },
+          label
         })
       );
     }

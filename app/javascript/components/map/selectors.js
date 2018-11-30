@@ -7,12 +7,12 @@ import {
 } from 'components/widgets/selectors';
 
 // get list data
-const selectLoading = state => state.map.loading || state.geostore.loading;
-const selectError = state => state.map.error;
+const selectLoading = state => state.mapOld.loading || state.geostore.loading;
+const selectError = state => state.mapOld.error;
 const selectQuery = state => state.location && state.location.query;
-const selectMapOptions = state => state.map.options;
-const selectSettings = state => state.map.settings;
-const selectLayerSlugs = state => state.map.layerSpec || null;
+const selectMapOptions = state => state.mapOld.options;
+const selectSettings = state => state.mapOld.settings;
+const selectLayerSlugs = state => state.mapOld.layerSpec || null;
 const selectGeojson = state =>
   (state.geostore.geostore && state.geostore.geostore.geojson) || null;
 const selectBounds = state =>

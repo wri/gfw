@@ -143,12 +143,12 @@ export const datasetsSections = [
     Component: Datasets,
     subCategories: [
       {
-        slug: 'carbonDensity',
-        title: 'Carbon Density'
-      },
-      {
         slug: 'carbonEmissions',
         title: 'Carbon Emissions'
+      },
+      {
+        slug: 'carbonDensity',
+        title: 'Carbon Density'
       },
       {
         slug: 'carbonGains',

@@ -1,4 +1,5 @@
 import request from 'utils/request';
+import moment from 'moment';
 import { getIndicator } from 'utils/strings';
 
 const REQUEST_URL = process.env.GFW_API;
@@ -91,28 +92,122 @@ export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {
 };
 
 // Latest Dates for Alerts
+const lastFriday = moment()
+  .day(-2)
+  .format('YYYY-MM-DD');
+
+export const fetchLatestDate = url =>
+  request.get(url, 3600, 'gladRequest').catch(error => {
+    console.error('Error in latest request:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { date: lastFriday }
+            }
+          ]
+        }
+      })
+    );
+  });
 
 export const fetchGLADLatest = () => {
   const url = `${REQUEST_URL}/glad-alerts/latest`;
-  return request.get(url, 3600, 'gladRequest');
+  return request.get(url, 3600, 'gladRequest').catch(error => {
+    console.error('Error in gladRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { date: lastFriday },
+              id: null,
+              type: 'glad-alerts'
+            }
+          ]
+        }
+      })
+    );
+  });
 };
 
 export const fetchFormaLatest = () => {
   const url = `${REQUEST_URL}/forma250gfw/latest`;
-  return request.get(url, 3600, 'formaRequest');
+  return request.get(url, 3600, 'formaRequest').catch(error => {
+    console.error('Error in formaRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: {
+            attributes: {
+              latest: lastFriday
+            },
+            id: null,
+            type: 'forma250gfw'
+          }
+        }
+      })
+    );
+  });
 };
 
 export const fetchTerraiLatest = () => {
   const url = `${REQUEST_URL}/terrai-alerts/latest`;
-  return request.get(url, 3600, 'terraRequest');
+  return request.get(url, 3600, 'terraRequest').catch(error => {
+    console.error('Error in terraRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { date: lastFriday },
+              id: null,
+              type: 'terrai-alerts'
+            }
+          ]
+        }
+      })
+    );
+  });
 };
 
 export const fetchSADLatest = () => {
   const url = `${REQUEST_URL}/v2/imazon-alerts/latest`;
-  return request.get(url, 3600, 'sadRequest');
+  return request.get(url, 3600, 'sadRequest').catch(error => {
+    console.error('Error in sadRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { latest: `${lastFriday}T00:00:00Z` },
+              id: undefined,
+              type: 'imazon-latest'
+            }
+          ]
+        }
+      })
+    );
+  });
 };
 
 export const fetchGranChacoLatest = () => {
   const url = `${REQUEST_URL}/v2/guira-loss/latest`;
-  return request.get(url, 3600, 'granChacoRequest');
+  return request.get(url, 3600, 'granChacoRequest').catch(error => {
+    console.error('Error in granChacoRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: [
+            {
+              attributes: { latest: `${lastFriday}T00:00:00Z` },
+              id: undefined,
+              type: 'imazon-latest'
+            }
+          ]
+        }
+      })
+    );
+  });
 };

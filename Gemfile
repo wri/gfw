@@ -2,11 +2,11 @@ source 'https://rubygems.org'
 
 ruby '2.4.0'
 
-gem 'rails', '5.1.5'
+gem 'rails', '5.2.1.1'
 gem 'jquery-rails'
 gem 'autoprefixer-rails', '~> 9.3.1'
 gem 'sass-rails', '~> 5.0.6'
-gem 'compass-rails', '3.0.2'
+gem 'compass-rails', '3.1.0'
 gem 'compass-flexbox'
 gem 'sprockets-rails', '2.3.3'
 gem 'uglifier', '~> 4.1.19'
@@ -30,7 +30,7 @@ gem 'requirejs-rails', '1.0.0'
 
 gem 'rack-reverse-proxy', '~> 0.12.0', :require => 'rack/reverse_proxy'
 # Amazon Ruby sdk for file upload to S3
-gem 'aws-sdk', '~> 2'
+gem 'aws-sdk', '~> 3'
 
 #Webpacker
 gem 'webpacker', '~> 3.5.5'
@@ -41,7 +41,7 @@ gem 'responders', '~> 2.0'
 gem 'nokogiri', '~> 1.8.5'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.8.0'
+  gem 'rspec-rails', '~> 3.8.1'
   gem 'show_me_the_cookies'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
@@ -55,7 +55,7 @@ group :development do
   gem 'foreman'
   gem 'capistrano'
   gem 'spring'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 3.7'
 end
 
 group :production do

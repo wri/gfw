@@ -13,50 +13,46 @@ $desktop-padding: rem(40px);
   }
 
   h3 {
-    font-size: rem(18px);
+    font-size: rem(30px);
     margin-bottom: rem(20px);
   }
 
   p {
-    margin-bottom: rem(15px);
+    font-size: rem(16px);
   }
 
   a {
     color: $green-gfw;
   }
 
+  b {
+    font-weight: 500;
+  }
+
   .intro {
     margin-bottom: rem(20px);
   }
 
-  .guide-cards {
-    display: flex;
-    justify-content: space-between;
-
-    > * {
-      width: 48%;
-    }
+  .btn-intro {
+    margin-bottom: rem(10px);
   }
 
   .guide-btn {
-    border: $green-gfw 1px dashed;
-    border-radius: rem(5px);
-    padding: rem(15px) rem(10px);
-    cursor: pointer;
-    line-height: 1.2;
+    text-align: left;
+    margin-bottom: rem(15px);
+    height: auto;
 
-    b {
-      font-weight: 500;
-    }
-
-    svg {
+    .guide-btn-icon {
+      width: rem(40px);
+      min-width: rem(40px);
+      height: rem(40px);
+      min-height: rem(40px);
+      margin-right: rem(15px);
       fill: $green-gfw;
-      width: rem(50px);
-      height: rem(50px);
     }
 
-    &:hover {
-      background-color: $grey-light;
+    p {
+      font-size: rem(14px);
     }
   }
 }
