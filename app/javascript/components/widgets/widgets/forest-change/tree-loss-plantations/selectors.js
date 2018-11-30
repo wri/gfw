@@ -39,7 +39,7 @@ export const parseData = createSelector(
             ...d,
             outsideAreaLoss: totalLossForYear.area - summedPlatationsLoss,
             areaLoss: summedPlatationsLoss || 0,
-            totalLoss: totalLossForYear || 0,
+            totalLoss: totalLossForYear.area || 0,
             outsideCo2Loss:
               totalLossByYear[d.year][0].emissions - summedPlatationsEmissions,
             co2Loss: summedPlatationsEmissions || 0
@@ -104,7 +104,6 @@ export const parseSentence = createSelector(
       plantationsLoss > outsideLoss
         ? 100 * plantationsLoss / totalLoss
         : 100 * outsideLoss / totalLoss;
-
     const params = {
       location: locationName,
       startYear,
