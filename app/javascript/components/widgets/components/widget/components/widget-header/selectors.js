@@ -1,12 +1,13 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
+import qs from 'query-string';
 import { isTouch } from 'utils/browser';
 import { SCREEN_L } from 'utils/constants';
 
 export const selectModalOpen = state => state.modalMeta.open;
 export const selectModalClosing = state => state.modalMeta.closing;
 export const selectLocation = state => state.location && state.location.payload;
-export const selectQuery = state => state.location && state.location.query;
+export const selectSearch = state => state.location && state.location.search;
 export const selectConfig = (state, { config }) => config;
 export const selectTitle = (state, { config, title }) => title || config.title;
 export const selectWidget = (state, { widget }) => widget;
@@ -27,8 +28,9 @@ export const getParsedTitle = createSelector(
 );
 
 export const getShareData = createSelector(
-  [getParsedTitle, selectConfig, selectQuery, selectLocation, selectWidget],
-  (title, config, query, location, widget) => {
+  [getParsedTitle, selectConfig, selectSearch, selectLocation, selectWidget],
+  (title, config, search, location, widget) => {
+    const query = qs.parse(search);
     const { category } = query || {};
     const { type, adm0, adm1, adm2 } = location;
     const locationUrl = `dashboards/${type}/${adm0 || ''}${
