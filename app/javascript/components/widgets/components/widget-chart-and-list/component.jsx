@@ -9,7 +9,6 @@ import './styles';
 
 class WidgetChartAndList extends PureComponent {
   handleClick = payload => {
-    // console.log(payload);
     const { setWidgetSettings, widget, parsePayload } = this.props;
     if (parsePayload) {
       const settings = parsePayload(payload);

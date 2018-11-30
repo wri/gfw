@@ -63,7 +63,7 @@ class CustomComposedChart extends PureComponent {
       handleClick
     } = this.props;
 
-    const layout = xKeys && 'vertical';
+    const isVertical = !!xKeys;
     const dataKeys = yKeys || xKeys;
     const { lines, bars, areas } = dataKeys;
     const maxYValue = this.findMaxValue(data, config);
@@ -79,8 +79,8 @@ class CustomComposedChart extends PureComponent {
             margin={
               margin || {
                 top: !simple ? 15 : 0,
-                right: 0,
-                left: !simple ? 42 : 0,
+                right: isVertical ? 10 : 0,
+                left: simple || isVertical ? 0 : 42,
                 bottom: 0
               }
             }
@@ -88,7 +88,7 @@ class CustomComposedChart extends PureComponent {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
-            layout={layout}
+            layout={isVertical ? 'vertical' : 'horizontal'}
           >
             <defs>
               {gradients &&
@@ -122,11 +122,16 @@ class CustomComposedChart extends PureComponent {
             {!simple && (
               <YAxis
                 dataKey={yKey || ''}
+                tickLine={!isVertical}
                 axisLine={false}
-                strokeDasharray="3 4"
-                tickSize={-42}
-                mirror
-                tickMargin={0}
+                {...(!isVertical
+                  ? {
+                    strokeDasharray: '3 4',
+                    tickSize: -42,
+                    mirror: true,
+                    tickMargin: 0
+                  }
+                  : {})}
                 tick={
                   <CustomTick
                     dataMax={xKeys && maxYValue}
@@ -137,14 +142,19 @@ class CustomComposedChart extends PureComponent {
                         (value < 1 ? format('.2r')(value) : format('.2s')(value)))
                     }
                     fill="#555555"
-                    fontSize={layout === 'vertical' ? '9px' : '12px'}
+                    fontSize={'12px'}
+                    vertical={isVertical}
                   />
                 }
                 {...yAxis}
               />
             )}
             {!simple && (
-              <CartesianGrid vertical={false} strokeDasharray="3 4" />
+              <CartesianGrid
+                vertical={isVertical}
+                horizontal={!isVertical}
+                strokeDasharray="3 4"
+              />
             )}
 
             <Tooltip
@@ -153,8 +163,8 @@ class CustomComposedChart extends PureComponent {
                 opacity: 0.5,
                 stroke: '#d6d6d9',
                 ...(!!bars &&
-                  (layout === 'vertical'
-                    ? { strokeWidth: '20%' }
+                  (isVertical
+                    ? { strokeWidth: `${1.2 * (45 / data.length)}%` }
                     : { strokeWidth: `${1.2 * (100 / data.length)}%` }))
               }}
               // TODO: change cursor with layout
@@ -180,27 +190,24 @@ class CustomComposedChart extends PureComponent {
                   key={key}
                   dataKey={key}
                   dot={false}
-                  background={
-                    barBackground &&
-                    (d =>
-                      (d.index === barBackground.activeIndex ? (
-                        <rect
-                          x={d.x - 0.1 * d.width}
-                          y={15}
-                          key={d.index}
-                          width={1.2 * d.width}
-                          height={'82%'}
-                          opacity={0.1}
-                          fill={
-                            d.index === barBackground.activeIndex
-                              ? '#4a4a4a'
-                              : 'transparent'
-                          }
-                        />
-                      ) : null))
+                  background={d =>
+                    barBackground && (
+                      <rect
+                        x={d.x}
+                        y={d.y - 3}
+                        key={d.index}
+                        width={d.width}
+                        height={1.2 * d.height}
+                        opacity={0.1}
+                        fill={
+                          d.index === barBackground.activeIndex
+                            ? '#4a4a4a'
+                            : 'transparent'
+                        }
+                      />
+                    )
                   }
                   {...bars[key]}
-                  // layout={bars[key].horizontal ? 'horizontal' : 'vertical'}
                 >
                   {bars[key].itemColor &&
                     data.map(item => (

@@ -10,7 +10,8 @@ const CustomTick = ({
   unitFormat,
   fill,
   fontSize,
-  backgroundColor
+  backgroundColor,
+  vertical
 }) => {
   const tickValue = payload && payload.value;
   const formattedTick = tickValue ? unitFormat(tickValue) : 0;
@@ -28,7 +29,7 @@ const CustomTick = ({
         filter="url(#solid)"
         x="0"
         y="3"
-        textAnchor="start"
+        textAnchor={vertical ? 'end' : 'start'}
         fontSize={fontSize || '12px'}
         fill={fill}
       >
@@ -47,7 +48,8 @@ CustomTick.propTypes = {
   unitFormat: PropTypes.func,
   fill: PropTypes.string,
   fontSize: PropTypes.string,
-  backgroundColor: PropTypes.string
+  backgroundColor: PropTypes.string,
+  vertical: PropTypes.bool
 };
 
 export default CustomTick;
