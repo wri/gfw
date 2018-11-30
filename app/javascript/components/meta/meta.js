@@ -4,9 +4,11 @@ import replace from 'lodash/replace';
 import MetaComponent from './meta-component';
 
 const mapStateToProps = ({ widgets }) => {
-  const widget = replace(window.location.hash, '#', '');
+  const widgetKey = replace(window.location.hash, '#', '');
+  const widget = widgets.widgets && widgets.widgets[widgetKey];
+
   return {
-    widgetImage: widget ? widgets[widget].config.shareImage : null
+    widgetImage: widget ? widget.config && widget.config.shareImage : null
   };
 };
 

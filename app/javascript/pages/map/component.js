@@ -5,6 +5,7 @@ import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
+import LatestProvider from 'providers/latest-provider';
 
 import Map from 'components/map-v2';
 import MapTour from 'components/map-v2/components/map-tour';
@@ -34,6 +35,7 @@ class MapPage extends PureComponent {
         <CountryDataProvider />
         <WhitelistsProvider />
         <DatasetsProvider />
+        <LatestProvider />
         <GeostoreProvider />
         {!this.props.embed &&
           this.props.isDesktop && (
