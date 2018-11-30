@@ -161,7 +161,8 @@ class DrawAnalysis extends PureComponent {
               </NoContent>
             )}
           {(hasLayers || hasWidgets) &&
-            !loading && (
+            !loading &&
+            !error && (
               <Fragment>
                 <ul className="draw-stats">
                   {data && data.map(d => this.renderStatItem(d))}
