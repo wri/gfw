@@ -10,11 +10,17 @@ export default ({ params }) =>
     .then(
       axios.spread((plantationsloss, gadmLoss) => {
         let data = {};
-        const loss = plantationsloss.data && plantationsloss.data.data;
+        const lossPlantations =
+          plantationsloss.data && plantationsloss.data.data;
         const totalLoss = gadmLoss.data && gadmLoss.data.data;
-        if (loss.length && totalLoss.length) {
+        if (
+          lossPlantations &&
+          totalLoss &&
+          lossPlantations.length &&
+          totalLoss.length
+        ) {
           data = {
-            loss,
+            lossPlantations,
             totalLoss
           };
         }

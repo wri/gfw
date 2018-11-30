@@ -24,7 +24,7 @@ class DecimalDegreeSearch extends PureComponent {
     const { lat, lng } = this.state;
     const { setMapSettings } = this.props;
     setMapSettings({
-      center: { lat: parseInt(lat, 10), lng: parseInt(lng, 10) }
+      center: { lat: parseFloat(lat), lng: parseFloat(lng) }
     });
   };
 
