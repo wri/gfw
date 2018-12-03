@@ -7,7 +7,7 @@ export default {
   options: {
     startYears: true,
     endYears: true,
-    yearsRange: ['2001', '2017'],
+    thresholds: true,
     units: ['co2LossByYear', 'cLossByYear']
   },
   analysis: true,

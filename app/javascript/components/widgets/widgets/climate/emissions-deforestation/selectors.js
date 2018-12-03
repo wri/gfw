@@ -9,7 +9,6 @@ const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
 const getIndicator = state => state.indicator || null;
 const getLocationName = state => state.locationName || null;
-// const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const parseData = createSelector(
