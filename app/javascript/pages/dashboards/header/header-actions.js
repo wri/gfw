@@ -50,19 +50,23 @@ export const getHeaderData = createThunkAction(
 
             // sum over different bound1 within year
             const summedPlantationsLoss =
-              latestPlantationLoss.length && latestPlantationLoss[0].area
+              latestPlantationLoss &&
+              latestPlantationLoss.length &&
+              latestPlantationLoss[0].area
                 ? sumBy(latestPlantationLoss, 'area')
                 : 0;
             const summedPlantationsEmissions =
-              latestPlantationLoss.length && latestPlantationLoss[0].emissions
+              latestPlantationLoss &&
+              latestPlantationLoss.length &&
+              latestPlantationLoss[0].emissions
                 ? sumBy(latestPlantationLoss, 'emissions')
                 : 0;
             const summedLoss =
-              latestLoss.length && latestLoss[0].area
+              latestLoss && latestLoss.length && latestLoss[0].area
                 ? sumBy(latestLoss, 'area')
                 : 0;
             const summedEmissions =
-              latestLoss.length && latestLoss[0].emissions
+              latestLoss && latestLoss.length && latestLoss[0].emissions
                 ? sumBy(latestLoss, 'emissions')
                 : 0;
 
