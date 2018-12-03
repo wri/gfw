@@ -9,7 +9,7 @@ class Meta extends PureComponent {
     const { title, description } = this.props;
 
     return title ? (
-      <Helmet>
+      <Helmet key={window.location.href}>
         <title>{`${title} | Global Forest Watch`}</title>
         <meta name="description" content={description} />
         <meta name="DC.title" content={`${title} | Global Forest Watch`} />
