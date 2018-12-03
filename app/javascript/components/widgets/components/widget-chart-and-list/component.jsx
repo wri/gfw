@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-// TODO: rename WidgetAlerts to WidgetComposedChart or smth
-import WidgetAlerts from 'components/widgets/components/widget-composed-chart';
+import WidgetComposedChart from 'components/widgets/components/widget-composed-chart';
 import WidgetNumberedList from 'components/widgets/components/widget-numbered-list';
 
 import './styles';
@@ -31,26 +30,24 @@ class WidgetChartAndList extends PureComponent {
     const { percentiles, list } = data;
 
     return (
-      <div className="c-chart-and-list">
-        <div className="c-chart">
-          <WidgetAlerts
-            data={percentiles}
-            config={config}
-            active={active}
-            simple={simple}
-            handleClick={this.handleClick}
-            setWidgetsSettings={setWidgetsSettings}
-          />
-        </div>
-        <div className="c-list">
-          <WidgetNumberedList
-            data={list}
-            settings={settings}
-            setWidgetSettings={setWidgetSettings}
-            embed={embed}
-            widget={widget}
-          />
-        </div>
+      <div className="c-widget-chart-and-list">
+        <WidgetComposedChart
+          className="widget-combined-chart"
+          data={percentiles}
+          config={config}
+          active={active}
+          simple={simple}
+          handleClick={this.handleClick}
+          setWidgetsSettings={setWidgetsSettings}
+        />
+        <WidgetNumberedList
+          className="widget-combined-list"
+          data={list}
+          settings={settings}
+          setWidgetSettings={setWidgetSettings}
+          embed={embed}
+          widget={widget}
+        />
       </div>
     );
   }

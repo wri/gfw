@@ -75,5 +75,9 @@
     "ramp": ["#A878F3", "#7C38C5"],
     "male": "#A878F3",
     "female": "#7C38C5"
+  },
+  "biodiversity": {
+    "main": "#6d00e1",
+    "ramp": ["#6d00e1", "#9d36f7", "#c26dfe", "#dfa4ff", "#eccafc"]
   }
 }

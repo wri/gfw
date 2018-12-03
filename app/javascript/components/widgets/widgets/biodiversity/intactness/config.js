@@ -9,7 +9,7 @@ export default {
   options: {
     bTypes: true
   },
-  colors: 'loss',
+  colors: 'biodiversity',
   dataType: 'loss',
   // metaKey: 'widget_tree_cover_loss',
   // layers: ['loss', 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6'],

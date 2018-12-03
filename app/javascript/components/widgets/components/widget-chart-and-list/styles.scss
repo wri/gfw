@@ -1,18 +1,29 @@
-.c-chart-and-list {
-  display: flex;
-  align-items: flex-start;
+@import '~styles/settings.scss';
 
-  & > div {
+.c-widget-chart-and-list {
+  display: inline-block;
+  width: 100%;
+
+  .widget-combined-list {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .widget-combined-chart,
+  .widget-combined-list {
     display: inline-block;
   }
 
-  .c-chart {
-    width: 70%;
-    margin-right: 20px;
-    transform: translateY(-14px);
-  }
+  @media screen and (min-width: $screen-m) {
+    .widget-combined-chart {
+      width: 70%;
+      margin: 0 rem(20px) 0 0;
+      transform: translateY(-14px);
+    }
 
-  .c-list {
-    width: 30%;
+    .widget-combined-list {
+      width: calc(30% - #{rem(20px)});
+      margin-top: 0;
+    }
   }
 }

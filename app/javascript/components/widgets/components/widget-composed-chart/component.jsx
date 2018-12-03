@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 
 import ComposedChart from 'components/charts/composed-chart';
 
-class WidgetAlerts extends Component {
+class WidgetComposedChart extends Component {
   shouldComponentUpdate = nextProps =>
     (!isEqual(nextProps.settings, this.props.settings) &&
       isEqual(nextProps.settings.activeData, this.props.settings.activeData)) ||
@@ -27,26 +27,25 @@ class WidgetAlerts extends Component {
   }, 100);
 
   render() {
-    const { data, config, active, simple, handleClick } = this.props;
+    const { className, data, config, active, simple, handleClick } = this.props;
 
     return (
-      <div className="c-widget-composed-chart">
-        <ComposedChart
-          className="loss-chart"
-          data={data}
-          config={config}
-          handleMouseMove={this.handleMouseMove}
-          handleMouseLeave={this.handleMouseLeave}
-          handleClick={handleClick}
-          backgroundColor={active ? '#fefedc' : ''}
-          simple={simple}
-        />
-      </div>
+      <ComposedChart
+        className={className}
+        data={data}
+        config={config}
+        handleMouseMove={this.handleMouseMove}
+        handleMouseLeave={this.handleMouseLeave}
+        handleClick={handleClick}
+        backgroundColor={active ? '#fefedc' : ''}
+        simple={simple}
+      />
     );
   }
 }
 
-WidgetAlerts.propTypes = {
+WidgetComposedChart.propTypes = {
+  className: PropTypes.string,
   data: PropTypes.array,
   config: PropTypes.object,
   settings: PropTypes.object,
@@ -59,4 +58,4 @@ WidgetAlerts.propTypes = {
   handleClick: PropTypes.func
 };
 
-export default WidgetAlerts;
+export default WidgetComposedChart;

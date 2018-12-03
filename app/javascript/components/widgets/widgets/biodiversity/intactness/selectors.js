@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import { getColorPalette } from 'utils/data';
 
 // get list data
 const getColors = state => state.colors || null;
@@ -108,8 +109,15 @@ const buildData = createSelector(
       label: item.label,
       color: colors.main
     }));
+    const colorRange = getColorPalette(
+      colors.ramp,
+      percentiles.length
+    ).reverse();
+    const data = percentiles
+      .map((p, i) => ({ color: colorRange[i], ...p }))
+      .reverse();
 
-    return { percentiles, list, selectedPercentile };
+    return { percentiles: data, list, selectedPercentile };
   }
 );
 
@@ -128,33 +136,30 @@ const getPercentileIndex = createSelector([buildData], data => {
   return index;
 });
 
-const parseConfig = createSelector(
-  [getColors, getPercentileIndex],
-  (colors, index) => ({
-    height: 250,
-    yKey: 'name',
-    xAxis: {
-      type: 'number',
-      domain: [0, 100]
-    },
-    // unit: '%',
-    unitFormat: text => text,
-    xKeys: {
-      bars: {
-        percent: {
-          fill: colors.main,
-          clickable: true
-        }
+const parseConfig = createSelector([getPercentileIndex], activeIndex => ({
+  height: 250,
+  yKey: 'name',
+  xAxis: {
+    type: 'number',
+    domain: [0, 100]
+  },
+  // unit: '%',
+  unitFormat: text => text,
+  xKeys: {
+    bars: {
+      percent: {
+        clickable: true,
+        itemColor: true
       }
-    },
-    yAxis: {
-      type: 'category'
-    },
-    barBackground: {
-      activeIndex: index
     }
-  })
-);
+  },
+  yAxis: {
+    type: 'category'
+  },
+  barBackground: {
+    activeIndex
+  }
+}));
 
 const parseSentence = createSelector(
   [parseData, getLocationName, getSentences, getSettings],

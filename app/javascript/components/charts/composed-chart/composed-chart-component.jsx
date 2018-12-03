@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import maxBy from 'lodash/maxBy';
 import max from 'lodash/max';
+import cx from 'classnames';
 import {
   Line,
   Bar,
@@ -70,7 +71,7 @@ class CustomComposedChart extends PureComponent {
 
     return (
       <div
-        className={`c-composed-chart ${className}`}
+        className={cx('c-composed-chart', className)}
         style={{ height: simple ? 100 : height || 250 }}
       >
         <ResponsiveContainer width="99%" height="100%">
