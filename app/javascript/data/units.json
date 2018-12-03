@@ -22,5 +22,13 @@
   {
     "label": "CO2 Emissions",
     "value": "co2Emissions"
+  },
+  {
+    "label": "CO2 Emissions",
+    "value": "co2LossByYear"
+  },
+  {
+    "label": "Carbon",
+    "value": "cLossByYear"
   }
 ]
