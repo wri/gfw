@@ -56,7 +56,7 @@ class DataAnalysisMenu extends PureComponent {
               <MapLegend />
             </div>
           )}
-        {!hidden && showAnalysis && <Analysis className="analysis" />}
+        {!hidden && showAnalysis && <Analysis className="analysis" analysis />}
       </div>
     );
   }

@@ -1,12 +1,14 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import compact from 'lodash/compact';
 import groupBy from 'lodash/groupBy';
+import flatMap from 'lodash/flatMap';
 
 import {
   getAllBoundaries,
   getActiveBoundaryDatasets,
   getAllLayers
 } from 'components/map-v2/selectors';
+import { filterWidgetsByCategoryAndLayers } from 'components/widgets/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
@@ -50,40 +52,53 @@ export const getShowDraw = createSelector(
   settings => settings.showDraw
 );
 
+export const getWidgetLayers = createSelector(
+  filterWidgetsByCategoryAndLayers,
+  widgets => {
+    const activeWidgets =
+      widgets &&
+      widgets.filter(
+        w => w.config.analysis && w.config.layers && w.config.layers.length
+      );
+    return activeWidgets && flatMap(activeWidgets.map(w => w.config.layers));
+  }
+);
+
 export const getLayerEndpoints = createSelector(
-  [getAllLayers, selectLocation],
-  (layers, location) => {
+  [getAllLayers, selectLocation, getWidgetLayers],
+  (layers, location, widgetLayers) => {
     if (!layers || !layers.length) return null;
     const { type, adm2 } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
-
     const endpoints = compact(
-      layers.filter(l => l.analysisConfig).map(l => {
-        const analysisConfig =
-          l.analysisConfig.find(
-            a =>
-              a.type === routeType ||
-              ((routeType === 'use' || routeType === 'wdpa') &&
-                a.type === 'geostore')
-          ) || {};
-        const { params, decodeParams } = l;
+      layers
+        .filter(l => l.analysisConfig && !widgetLayers.includes(l.id))
+        .map(l => {
+          const analysisConfig =
+            l.analysisConfig.find(
+              a =>
+                a.type === routeType ||
+                ((routeType === 'use' || routeType === 'wdpa') &&
+                  a.type === 'geostore')
+            ) || {};
+          const { params, decodeParams } = l;
 
-        return {
-          name: l.name,
-          version: analysisConfig.version || 'v1',
-          slug: analysisConfig.service,
-          params: {
-            ...(analysisConfig.service === 'umd-loss-gain' &&
-              lossLayer && {
-                ...lossLayer.decodeParams
-              }),
-            ...decodeParams,
-            ...params,
-            query: analysisConfig.query
-          }
-        };
-      })
+          return {
+            name: l.name,
+            version: analysisConfig.version || 'v1',
+            slug: analysisConfig.service,
+            params: {
+              ...(analysisConfig.service === 'umd-loss-gain' &&
+                lossLayer && {
+                  ...lossLayer.decodeParams
+                }),
+              ...decodeParams,
+              ...params,
+              query: analysisConfig.query
+            }
+          };
+        })
     );
 
     const groupedEndpoints = groupBy(endpoints, 'slug');
@@ -135,5 +150,6 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   location: selectLocation,
   hidden: getHidden,
-  embed: selectEmbed
+  embed: selectEmbed,
+  widgetLayers: getWidgetLayers
 });
