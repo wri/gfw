@@ -19,7 +19,7 @@ const getCountries = state => state.countryData.countries || null;
 const getLoading = state =>
   state.datasets.loading || state.countryData.loading || null;
 const getAnalysisLoading = state => state.analysis.loading;
-const getDatasets = state => state.datasets.datasets || null;
+const getDatasets = state => state.datasets.data || null;
 const getLocation = state => state.location && state.location.payload;
 const getEmbed = (state, { embed }) => embed;
 

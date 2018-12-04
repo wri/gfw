@@ -4,31 +4,31 @@ import isEmpty from 'lodash/isEmpty';
 
 import { initialState } from './reducers';
 
-// get list data
+// map state
 const getMapUrlState = state =>
-  (state.location && state.location.query && state.location.query.map) || null;
-const getDatasets = state => state.datasets.datasets;
-const getLatest = state => state.latest.data;
+  state.location && state.location.query && state.location.query.map;
 const getLoading = state =>
   state.datasets.loading ||
   state.geostore.loading ||
   state.map.loading ||
   state.latest.loading;
-const getGeostore = state => state.geostore.geostore || null;
+
+// datasets
+const getDatasets = state => state.datasets.data;
+const getLatest = state => state.latest.data;
+
+// location
+const getGeostore = state => state.geostore.data || null;
 const selectEmbed = state =>
-  (state.location &&
-    state.location.pathname &&
-    state.location.pathname.includes('embed')) ||
-  null;
-// analysis selects
-const selectAnalysisSettings = state =>
-  state.location && state.location.query && state.location.query.analysis;
-const selectWidgetActiveSettings = state => state.widgets.settings;
-// popup interactons
+  state.location &&
+  state.location.pathname &&
+  state.location.pathname.includes('embed');
+
+// interactions
 const selectSelectedInteractionId = state => state.popup.selected;
 const selectInteractions = state => state.popup.interactions;
 
-// get all map settings
+// SELECTORS
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
   ...initialState.settings,
   ...urlState
@@ -51,8 +51,8 @@ export const getLabels = createSelector(
 );
 
 export const getDraw = createSelector(
-  [getMapSettings, selectAnalysisSettings],
-  (settings, analysisSettings) => settings.draw && analysisSettings.showDraw
+  [getMapSettings],
+  settings => settings.draw
 );
 
 export const getBbox = createSelector(
@@ -293,40 +293,6 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
   if (isEmpty(layers)) return [];
   return layers.filter(l => !l.confirmedOnly);
 });
-
-// flatten datasets into layers for the layer manager
-export const getActiveLayersWithWidgetSettings = createSelector(
-  [getAllLayers, selectWidgetActiveSettings],
-  (layers, widgetSettings) => {
-    if (isEmpty(layers)) return [];
-    if (isEmpty(widgetSettings)) return layers;
-    return layers.map(l => {
-      const layerWidgetState =
-        widgetSettings &&
-        Object.values(widgetSettings).find(
-          w => w.layers && w.layers.includes(l.id)
-        );
-      const { updateLayer } = layerWidgetState || {};
-      return {
-        ...l,
-        ...(l.decodeParams &&
-          updateLayer && {
-            decodeParams: {
-              ...l.decodeParams,
-              ...layerWidgetState
-            }
-          }),
-        ...(l.params &&
-          updateLayer && {
-            params: {
-              ...l.params,
-              ...layerWidgetState
-            }
-          })
-      };
-    });
-  }
-);
 
 export const getLayerBbox = createSelector([getActiveLayers], layers => {
   const layerWithBbox =

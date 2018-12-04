@@ -8,14 +8,14 @@ import { initialState } from './reducers';
 // get list data
 const getMapUrlState = state =>
   (state.location && state.location.query && state.location.query.map) || null;
-const getDatasets = state => state.datasets.datasets;
+const getDatasets = state => state.datasets.data;
 const getLatest = state => state.latest.data;
 const getLoading = state =>
   state.datasets.loading ||
   state.geostore.loading ||
   state.map.loading ||
   state.latest.loading;
-const getGeostore = state => state.geostore.geostore || null;
+const getGeostore = state => state.geostore.data || null;
 const getQuery = state => (state.location && state.location.query) || null;
 const selectEmbed = state =>
   (state.location &&

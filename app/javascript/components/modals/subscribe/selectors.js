@@ -8,7 +8,7 @@ const selectSubscribeUrlState = state =>
   state.location && state.location.query && state.location.query.subscribe;
 const selectUserData = state => state.myGfw.data;
 const selectLoading = state => state.datasets.loading || state.myGfw.loading;
-const selectDatasets = state => state.datasets.datasets;
+const selectDatasets = state => state.datasets.data;
 const selectSaving = state => state.modalSubscribe.saving;
 const selectSaved = state => state.modalSubscribe.saved;
 const selectError = state => state.modalSubscribe.error;

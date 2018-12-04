@@ -36,7 +36,7 @@ class LayerManagerComponent extends PureComponent {
               layerConfig={{
                 id: geostore.id,
                 type: 'geoJSON',
-                body: geostore.geojson,
+                body: geostore.data,
                 options: {
                   style: {
                     stroke: true,

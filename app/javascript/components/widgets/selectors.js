@@ -23,7 +23,7 @@ export const selectQuery = state => state.location && state.location.query;
 export const selectWidgetFromQuery = state =>
   state.location && state.location.query && state.location.query.widget;
 export const selectEmbed = (state, { embed }) => embed;
-export const selectGeostore = state => state.geostore.geostore;
+export const selectGeostore = state => state.geostore.data;
 export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
   noWidgetsMessage;
 export const selectWidgets = state => state.widgets.widgets;
