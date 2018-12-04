@@ -1,10 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getActiveSection } from 'pages/map/components/menu/menu-selectors';
+import { getActiveSection } from 'components/maps/components/menu/menu-selectors';
 import {
   getShowAnalysis,
   getHidden
-} from 'components/map-v2/components/analysis/selectors';
+} from 'components/maps/components/analysis/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
 import analysisIcon from 'assets/icons/analysis.svg';

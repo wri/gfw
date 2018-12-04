@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import * as ownActions from 'components/map-v2/components/analysis/actions';
 import * as modalActions from 'components/modals/sources/actions';
 import * as mapActions from 'components/map-v2/actions';
-import * as menuActions from 'pages/map/components/menu/menu-actions';
+import * as menuActions from 'components/maps/components/menu/menu-actions';
 
 import Component from './component';
 import { getChooseAnalysisProps } from './selectors';

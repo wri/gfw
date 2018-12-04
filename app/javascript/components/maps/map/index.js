@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'utils/analytics';
 
-import * as popupActions from 'components/map-v2/components/popup/actions';
+import * as popupActions from 'components/maps/components/popup/actions';
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import { getMapProps } from './selectors';
@@ -22,8 +22,6 @@ class MapContainer extends PureComponent {
   };
 
   state = {
-    showTooltip: false,
-    tooltipData: {},
     bbox: null
   };
 
@@ -100,7 +98,6 @@ class MapContainer extends PureComponent {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
-      handleShowTooltip: this.handleShowTooltip,
       handleMapInteraction: this.handleMapInteraction,
       handleMapMove: this.handleMapMove,
       setBbox: this.setBbox

@@ -1,16 +1,24 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
+import flatMap from 'lodash/flatMap';
+import { format } from 'd3-format';
+import startCase from 'lodash/startCase';
 import { track } from 'utils/analytics';
 
-import * as popupActions from 'components/map-v2/components/popup/actions';
+import { setRecentImagerySettings } from 'components/maps/components/recent-imagery/recent-imagery-actions';
 import * as ownActions from './actions';
-import reducers, { initialState } from './reducers';
-import { getMapProps } from './selectors';
+import { initialState } from './reducers';
 import MapComponent from './component';
+import { getMapProps } from './selectors';
+// import * as popupActions from './components/popup/actions';
 
 const actions = {
-  ...popupActions,
+  setRecentImagerySettings,
+  // ...popupActions,
   ...ownActions
 };
 
@@ -27,6 +35,14 @@ class MapContainer extends PureComponent {
     bbox: null
   };
 
+  componentDidMount() {
+    const { activeDatasets } = this.props;
+    const layerIds = flatMap(activeDatasets.map(d => d.layers));
+    track('mapInitialLayers', {
+      label: layerIds && layerIds.join(', ')
+    });
+  }
+
   componentDidUpdate(prevProps) {
     const {
       basemap,
@@ -35,7 +51,10 @@ class MapContainer extends PureComponent {
       bbox,
       geostoreBbox,
       setMapSettings,
-      layerBbox
+      layerBbox,
+      selectedInteraction,
+      setAnalysisView,
+      oneClickAnalysisActive
     } = this.props;
 
     // update landsat basemap when changing zoom
@@ -60,7 +79,20 @@ class MapContainer extends PureComponent {
     if (geostoreBbox && geostoreBbox !== prevProps.geostoreBbox) {
       setMapSettings({ bbox: geostoreBbox });
     }
+    // set analysis view if interaction changes
+    if (
+      oneClickAnalysisActive &&
+      selectedInteraction &&
+      !isEmpty(selectedInteraction.data) &&
+      !isEqual(selectedInteraction, prevProps.selectedInteraction)
+    ) {
+      setAnalysisView(selectedInteraction);
+    }
   }
+
+  handleShowTooltip = (show, data) => {
+    this.setState({ showTooltip: show, tooltipData: data });
+  };
 
   setBbox = bbox => {
     this.setState({ bbox });
@@ -75,6 +107,18 @@ class MapContainer extends PureComponent {
       bbox: null
     });
     this.setBbox(null);
+  };
+
+  handleRecentImageryTooltip = e => {
+    const data = e.layer.feature.properties;
+    const { cloudScore, instrument, dateTime } = data;
+    this.handleShowTooltip(true, {
+      instrument: startCase(instrument),
+      date: moment(dateTime)
+        .format('DD MMM YYYY, HH:mm')
+        .toUpperCase(),
+      cloudCoverage: `${format('.0f')(cloudScore)}%`
+    });
   };
 
   handleMapInteraction = ({ e, article, output, layer }) => {
@@ -101,6 +145,7 @@ class MapContainer extends PureComponent {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
+      handleRecentImageryTooltip: this.handleRecentImageryTooltip,
       handleMapInteraction: this.handleMapInteraction,
       handleMapMove: this.handleMapMove,
       setBbox: this.setBbox
@@ -114,10 +159,14 @@ MapContainer.propTypes = {
   geostoreBbox: PropTypes.array,
   setMapSettings: PropTypes.func,
   layerBbox: PropTypes.array,
+  oneClickAnalysisActive: PropTypes.bool,
   draw: PropTypes.bool,
+  setAnalysisView: PropTypes.func,
   setInteraction: PropTypes.func,
-  menuSection: PropTypes.string
+  selectedInteraction: PropTypes.object,
+  menuSection: PropTypes.string,
+  activeDatasets: PropTypes.array
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
+export const reduxModule = { actions: ownActions, initialState };
 export default connect(getMapProps, actions)(MapContainer);

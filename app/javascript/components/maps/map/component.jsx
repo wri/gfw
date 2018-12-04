@@ -6,12 +6,13 @@ import Map from 'wri-api-components/dist/map';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Icon from 'components/ui/icon';
+
 import iconCrosshair from 'assets/icons/crosshair.svg';
 
-import Popup from 'components/map-v2/components/popup';
-import MapDraw from 'components/map-v2/components/draw';
-import MapAttributions from 'components/map-v2/components/map-attributions';
-import LayerManagerComponent from 'components/map-v2/components/layer-manager';
+import Popup from 'components/maps/components/popup';
+import MapDraw from 'components/maps/components/draw';
+import MapAttributions from 'components/maps/components/map-attributions';
+import LayerManagerComponent from 'components/maps/components/layer-manager';
 
 import './styles.scss';
 

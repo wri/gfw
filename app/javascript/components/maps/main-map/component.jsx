@@ -5,23 +5,15 @@ import { SCREEN_M } from 'utils/constants';
 import upperFirst from 'lodash/upperFirst';
 import cx from 'classnames';
 
-import Map from 'wri-api-components/dist/map';
+import Map from 'components/maps/map';
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
-import Loader from 'components/ui/loader';
-import NoContent from 'components/ui/no-content';
-import Icon from 'components/ui/icon';
-import iconCrosshair from 'assets/icons/crosshair.svg';
 import MediaQuery from 'react-responsive';
 import RecentImagery from 'components/map-v2/components/recent-imagery';
 import SubscribeModal from 'components/modals/subscribe';
 
-import Popup from './components/popup';
-import MapControlButtons from './components/map-controls';
-import MapDraw from './components/draw';
-import MapAttributions from './components/map-attributions';
-import LayerManagerComponent from './components/layer-manager';
-import DataAnalysisMenu from './components/data-analysis-menu';
+import MapControlButtons from 'components/maps/components/map-controls';
+import DataAnalysisMenu from 'components/maps/components/data-analysis-menu';
 
 import './styles.scss';
 
@@ -53,21 +45,11 @@ class MapComponent extends PureComponent {
 
   render() {
     const {
-      loading,
-      error,
-      mapOptions,
       basemap,
-      label,
-      handleMapMove,
       tooltipData,
-      bbox,
       showTooltip,
       handleShowTooltip,
-      handleRecentImageryTooltip,
-      analysisActive,
-      handleMapInteraction,
       oneClickAnalysisActive,
-      draw,
       embed,
       hidePanels,
       onMapClick
@@ -112,47 +94,7 @@ class MapComponent extends PureComponent {
                   role="button"
                   tabIndex={0}
                 >
-                  <Map
-                    customClass={cx(
-                      'map-wrapper',
-                      { analysis: analysisActive },
-                      { embed }
-                    )}
-                    onReady={map => {
-                      this.map = map;
-                    }}
-                    mapOptions={mapOptions}
-                    basemap={basemap}
-                    label={label}
-                    bounds={
-                      bbox
-                        ? {
-                          bbox,
-                          options: {
-                            padding: [50, 50]
-                          }
-                        }
-                        : {}
-                    }
-                    events={{
-                      moveend: handleMapMove
-                    }}
-                  >
-                    {map => (
-                      <Fragment>
-                        <LayerManagerComponent
-                          map={map}
-                          handleMapInteraction={handleMapInteraction}
-                          handleRecentImageryTooltip={
-                            handleRecentImageryTooltip
-                          }
-                          handleShowTooltip={handleShowTooltip}
-                        />
-                        <Popup map={map} />
-                        {draw && <MapDraw map={map} />}
-                      </Fragment>
-                    )}
-                  </Map>
+                  <Map />
                 </div>
               </Tooltip>
               {isDesktop &&
@@ -170,16 +112,7 @@ class MapComponent extends PureComponent {
                 />
               )}
               <RecentImagery />
-              <Icon className="icon-crosshair" icon={iconCrosshair} />
-              <MapAttributions className={cx('map-attributions', { embed })} />
               <SubscribeModal />
-              {loading && (
-                <Loader className="map-loader" theme="theme-loader-light" />
-              )}
-              {!loading &&
-                error && (
-                  <NoContent message="An error occured. Please try again later." />
-                )}
             </Fragment>
           )}
         </MediaQuery>
@@ -189,22 +122,12 @@ class MapComponent extends PureComponent {
 }
 
 MapComponent.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
-  mapOptions: PropTypes.object,
   basemap: PropTypes.object,
-  label: PropTypes.object,
-  handleMapMove: PropTypes.func,
   tooltipData: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  bbox: PropTypes.array,
   showTooltip: PropTypes.bool,
   handleShowTooltip: PropTypes.func,
-  handleRecentImageryTooltip: PropTypes.func,
   onMapClick: PropTypes.func,
-  handleMapInteraction: PropTypes.func,
-  analysisActive: PropTypes.bool,
   oneClickAnalysisActive: PropTypes.bool,
-  draw: PropTypes.bool,
   embed: PropTypes.bool,
   hidePanels: PropTypes.bool
 };

@@ -1,11 +1,7 @@
 import { createThunkAction, createAction } from 'redux-tools';
 import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { getMapZoom, getBasemap } from 'components/map-v2/selectors';
 import { addToDate } from 'utils/dates';
-import { getLocationFromData } from 'utils/format';
-
-const { GFW_API } = process.env;
 
 export const setMapLoading = createAction('setMapLoading');
 
@@ -24,8 +20,9 @@ export const setMapSettings = createThunkAction(
 export const setLandsatBasemap = createThunkAction(
   'setLandsatBasemap',
   ({ year, defaultUrl, label }) => (dispatch, getState) => {
-    const mapZoom = getMapZoom(getState());
-    const currentBasemap = getBasemap(getState());
+    const { map } = getState();
+    const mapZoom = map.settings.zoom;
+    const currentBasemap = map.settings.basemap;
     const landsat = {
       key: `GFW__GEE_LANDSAT_BASEMAP_URL_${year}`,
       get geeUrl() {
@@ -48,9 +45,11 @@ export const setLandsatBasemap = createThunkAction(
       }
     };
     if (landsat.geeUrl === null) {
-      axios.get(`${GFW_API}/v1/landsat-tiles/${year}`).then(({ data: res }) => {
-        landsat.geeUrl = res.data.attributes.url;
-      });
+      axios
+        .get(`${process.env.GFW_API}/v1/landsat-tiles/${year}`)
+        .then(({ data: res }) => {
+          landsat.geeUrl = res.data.attributes.url;
+        });
     }
     if (landsat.url !== null && landsat.url !== currentBasemap.url) {
       dispatch(
@@ -65,56 +64,6 @@ export const setLandsatBasemap = createThunkAction(
           label
         })
       );
-    }
-  }
-);
-
-export const setAnalysisView = createThunkAction(
-  'setAnalysisView',
-  ({ data, layer }) => (dispatch, getState) => {
-    const { cartodb_id, wdpaid } = data || {};
-    const { analysisEndpoint, tableName } = layer || {};
-    const { query, type } = getState().location;
-    const { map, analysis } = query || {};
-
-    // get location payload based on layer type
-    let payload = {};
-    if (data) {
-      if (analysisEndpoint === 'admin') {
-        payload = {
-          type: 'country',
-          ...getLocationFromData(data)
-        };
-      } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
-        payload = {
-          type: analysisEndpoint,
-          adm0: wdpaid || cartodb_id
-        };
-      } else if (cartodb_id && tableName) {
-        payload = {
-          type: 'use',
-          adm0: tableName,
-          adm1: cartodb_id
-        };
-      }
-    }
-
-    if (payload && payload.adm0) {
-      dispatch({
-        type,
-        payload,
-        query: {
-          ...query,
-          map: {
-            ...map,
-            canBound: true
-          },
-          analysis: {
-            ...analysis,
-            showAnalysis: true
-          }
-        }
-      });
     }
   }
 );

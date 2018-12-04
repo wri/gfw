@@ -1,22 +1,23 @@
 import basemaps, {
   labels
-} from 'components/map-v2/components/basemaps/basemaps-schema';
-import * as actions from './actions';
+} from 'components/maps/components/basemaps/basemaps-schema';
 
 export const initialState = {
   loading: false,
   settings: {
+    hidePanels: false,
     center: {
       lat: 27,
       lng: 12
     },
+    showBasemaps: false,
     zoom: 3,
     zoomControl: false,
-    attributionControl: false,
     maxZoom: 19,
     minZoom: 3,
     basemap: basemaps.default,
     label: labels.default,
+    attributionControl: false,
     bbox: null,
     canBound: true,
     draw: false,
@@ -54,13 +55,4 @@ export const initialState = {
       }
     ]
   }
-};
-
-const setMapLoading = (state, { payload }) => ({
-  ...state,
-  loading: payload
-});
-
-export default {
-  [actions.setMapLoading]: setMapLoading
 };

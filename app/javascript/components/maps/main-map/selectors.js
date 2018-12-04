@@ -15,11 +15,14 @@ const getLoading = state =>
   state.map.loading ||
   state.latest.loading;
 const getGeostore = state => state.geostore.geostore || null;
+const getQuery = state => (state.location && state.location.query) || null;
 const selectEmbed = state =>
   (state.location &&
     state.location.pathname &&
     state.location.pathname.includes('embed')) ||
   null;
+const selectLocation = state =>
+  (state.location && state.location.payload) || null;
 // analysis selects
 const selectAnalysisSettings = state =>
   state.location && state.location.query && state.location.query.analysis;
@@ -27,6 +30,10 @@ const selectWidgetActiveSettings = state => state.widgets.settings;
 // popup interactons
 const selectSelectedInteractionId = state => state.popup.selected;
 const selectInteractions = state => state.popup.interactions;
+const selectMenuSection = state =>
+  state.location.query &&
+  state.location.query.menu &&
+  state.location.query.menu.menuSection;
 
 // get all map settings
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
@@ -343,6 +350,23 @@ export const getGeostoreBbox = createSelector(
   geostore => geostore && geostore.bbox
 );
 
+// analysis
+export const getShowAnalysis = createSelector(
+  getQuery,
+  query => query && query.analysis && query.analysis.showAnalysis
+);
+
+export const getOneClickAnalysisActive = createSelector(
+  [selectAnalysisSettings, selectLocation, getDraw, getLoading],
+  (settings, location, draw, loading) =>
+    settings &&
+    !draw &&
+    !loading &&
+    settings.showAnalysis &&
+    !settings.showDraw &&
+    !location.adm0
+);
+
 export const filterInteractions = createSelector(
   [selectInteractions],
   interactions => {
@@ -382,15 +406,20 @@ export const getSelectedInteraction = createSelector(
 );
 
 export const getMapProps = createStructuredSelector({
-  loading: getLoading,
   mapOptions: getMapOptions,
   basemap: getBasemap,
   label: getLabels,
+  loading: getLoading,
   layerBbox: getLayerBbox,
   geostoreBbox: getGeostoreBbox,
   bbox: getBbox,
   canBound: getCanBound,
   draw: getDraw,
+  analysisActive: getShowAnalysis,
+  oneClickAnalysisActive: getOneClickAnalysisActive,
   embed: selectEmbed,
-  selectedInteraction: getSelectedInteraction
+  hidePanels: getHidePanels,
+  selectedInteraction: getSelectedInteraction,
+  menuSection: selectMenuSection,
+  activeDatasets: getActiveDatasetsState
 });
