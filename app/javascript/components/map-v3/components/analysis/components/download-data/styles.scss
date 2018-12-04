@@ -1,0 +1,52 @@
+@import '~styles/settings';
+
+.c-download-data {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $white;
+  padding: rem(20px);
+
+  .icon-close {
+    position: absolute;
+    top: rem(25px);
+    right: rem(23px);
+    width: rem(10px);
+    height: rem(10px);
+    fill: $slate;
+    cursor: pointer;
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: $slate;
+    margin-bottom: rem(15px);
+    text-transform: uppercase;
+  }
+
+  span {
+    font-size: rem(12px);
+    color: $slate;
+    margin-bottom: rem(10px);
+    text-transform: uppercase;
+  }
+
+  .download-list {
+    margin-bottom: rem(20px);
+
+    li,
+    a {
+      color: $green-gfw;
+      font-size: rem(14px);
+    }
+  }
+
+  .terms {
+    font-size: rem(10px);
+    color: $slate;
+    margin-bottom: rem(20px);
+  }
+}

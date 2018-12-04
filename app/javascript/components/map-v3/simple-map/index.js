@@ -1,0 +1,123 @@
+import { createElement, PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { track } from 'utils/analytics';
+
+import * as popupActions from 'components/map-v2/components/popup/actions';
+import * as ownActions from './actions';
+import reducers, { initialState } from './reducers';
+import { getMapProps } from './selectors';
+import MapComponent from './component';
+
+const actions = {
+  ...popupActions,
+  ...ownActions
+};
+
+class MapContainer extends PureComponent {
+  static propTypes = {
+    basemap: PropTypes.object,
+    mapOptions: PropTypes.object,
+    setLandsatBasemap: PropTypes.func
+  };
+
+  state = {
+    showTooltip: false,
+    tooltipData: {},
+    bbox: null
+  };
+
+  componentDidUpdate(prevProps) {
+    const {
+      basemap,
+      mapOptions: { zoom },
+      canBound,
+      bbox,
+      geostoreBbox,
+      setMapSettings,
+      layerBbox
+    } = this.props;
+
+    // update landsat basemap when changing zoom
+    if (basemap.id === 'landsat' && zoom !== prevProps.zoom) {
+      this.props.setLandsatBasemap({
+        year: basemap.year,
+        defaultUrl: basemap.defaultUrl
+      });
+    }
+
+    // only set bounding box if action allows it
+    if (canBound && bbox !== prevProps.bbox) {
+      this.setBbox(bbox);
+    }
+
+    // if a new layer contains a bbox
+    if (layerBbox && layerBbox !== prevProps.layerBbox) {
+      setMapSettings({ bbox: layerBbox });
+    }
+
+    // if geostore changes
+    if (geostoreBbox && geostoreBbox !== prevProps.geostoreBbox) {
+      setMapSettings({ bbox: geostoreBbox });
+    }
+  }
+
+  setBbox = bbox => {
+    this.setState({ bbox });
+  };
+
+  handleMapMove = (e, map) => {
+    const { setMapSettings } = this.props;
+    setMapSettings({
+      zoom: map.getZoom(),
+      center: map.getCenter(),
+      canBound: false,
+      bbox: null
+    });
+    this.setBbox(null);
+  };
+
+  handleMapInteraction = ({ e, article, output, layer }) => {
+    const { setInteraction, draw, menuSection } = this.props;
+
+    if (!draw && !menuSection) {
+      setInteraction({
+        ...e,
+        label: layer.name,
+        article,
+        isBoundary: layer.isBoundary,
+        id: layer.id,
+        value: layer.id,
+        config: output
+      });
+      track('mapInteraction', {
+        label: layer.name
+      });
+    }
+  };
+
+  render() {
+    return createElement(MapComponent, {
+      ...this.props,
+      ...this.state,
+      handleShowTooltip: this.handleShowTooltip,
+      handleMapInteraction: this.handleMapInteraction,
+      handleMapMove: this.handleMapMove,
+      setBbox: this.setBbox
+    });
+  }
+}
+
+MapContainer.propTypes = {
+  canBound: PropTypes.bool,
+  bbox: PropTypes.array,
+  geostoreBbox: PropTypes.array,
+  setMapSettings: PropTypes.func,
+  layerBbox: PropTypes.array,
+  draw: PropTypes.bool,
+  setInteraction: PropTypes.func,
+  menuSection: PropTypes.string
+};
+
+export const reduxModule = { actions: ownActions, reducers, initialState };
+export default connect(getMapProps, actions)(MapContainer);

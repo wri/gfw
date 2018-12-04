@@ -1,0 +1,93 @@
+@import '~styles/settings.scss';
+
+.c-map {
+  height: 100%;
+
+  .map-wrapper {
+    position: relative;
+    min-height: rem(300px);
+    z-index: 1;
+
+    .wri_api__map-container {
+      position: absolute !important;
+    }
+
+    .leaflet-container {
+      background-color: transparent;
+    }
+
+    .leaflet-control-container {
+      .leaflet-bottom {
+        right: rem(15px);
+        left: auto;
+        top: rem(15px);
+
+        @media screen and (min-width: $screen-m) {
+          right: rem(15px);
+          bottom: rem(50px);
+          top: auto;
+        }
+      }
+
+      .leaflet-control-scale-line {
+        border: 1px solid $map-grey;
+        border-top: 0;
+        color: $map-grey;
+        padding: 2px 5px 1px;
+        font-size: 10px;
+        background: transparent;
+        margin-top: 0;
+
+        &:first-child {
+          border-right: 0;
+        }
+      }
+
+      .leaflet-control-scale {
+        margin-bottom: 0;
+        display: flex;
+      }
+    }
+  }
+
+  .icon-crosshair {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    fill: $slate;
+    width: rem(12px);
+    height: rem(12px);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .map-attributions {
+    position: absolute;
+    bottom: rem(15px);
+    right: rem(15px);
+    z-index: 5;
+
+    &.embed {
+      right: rem(15px);
+    }
+  }
+
+  .map-loader {
+    background-color: rgba($slate, 0.2);
+    z-index: 4;
+  }
+
+  .c-cluster-icon {
+    border: 0;
+
+    > div {
+      border-radius: 50%;
+      font-size: rem(14px);
+      font-weight: 500;
+      color: $white;
+    }
+  }
+}
