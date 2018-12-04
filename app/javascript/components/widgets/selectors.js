@@ -44,14 +44,33 @@ export const setectCountryData = state => ({
   fao: state.countryData.faoCountries
 });
 
-export const getOptions = () => {
+const locationTypes = {
+  country: {
+    label: 'country',
+    value: 'admin'
+  },
+  geostore: {
+    label: 'your custom area',
+    value: 'geostore'
+  },
+  wdpa: {
+    label: 'your selected protected area',
+    value: 'wdpa'
+  },
+  use: {
+    label: 'your selected area',
+    value: 'use'
+  }
+};
+
+export const getOptions = createSelector([], () => {
   const optionsMeta = {};
   Object.keys(allOptions).forEach(oKey => {
     optionsMeta[oKey] =
       oKey === 'weeks' ? allOptions[oKey] : sortBy(allOptions[oKey], 'label');
   });
   return optionsMeta;
-};
+});
 
 export const getAdminLevel = createSelector([selectLocation], location => {
   const { type, adm0, adm1, adm2 } = location;
@@ -95,8 +114,11 @@ export const getChildLocationData = createSelector(
 export const getLocationObject = createSelector(
   [getActiveLocationData, selectLocation],
   (adms, location) => {
-    if (!adms) return null;
     const { type, adm0, adm1, adm2 } = location;
+    if (type !== 'country') {
+      return locationTypes[type];
+    }
+    if (!adms) return null;
     return adm0
       ? adms.find(a => a.value === (adm2 || adm1 || adm0))
       : { label: type, value: type };
@@ -128,12 +150,10 @@ export const getNoWidgetsMessage = createSelector(
     message && locationName && message.replace('{location}', locationName)
 );
 
-export const getAllWidgets = () => Object.values(allWidgets);
-
 export const parseWidgets = createSelector(
-  [getAllWidgets, selectWidgetFromQuery, selectEmbed],
-  (widgets, widgetQuery, embed) => {
-    if (!widgets) return null;
+  [selectWidgetFromQuery, selectEmbed],
+  (widgetQuery, embed) => {
+    const widgets = Object.values(allWidgets);
     const filteredWidgets = embed
       ? widgets.filter(w => w.config.widget === widgetQuery)
       : widgets;
@@ -166,18 +186,19 @@ export const filterWidgetsByLocationType = createSelector(
   [filterWidgetsByLocation, selectLocation, getFAOLocationData],
   (widgets, location, faoCountries) => {
     if (!widgets) return null;
-    if (location.type !== 'country') return widgets;
-    const isFAOCountry = faoCountries.find(f => f.value === location.adm0);
+    const isFAOCountry =
+      faoCountries && faoCountries.find(f => f.value === location.adm0);
     return widgets.filter(w => {
-      const { source } = w.config || {};
-      if (source !== 'fao') return true;
-      return isFAOCountry;
+      const { source, types } = w.config || {};
+      const isFao = source === 'fao';
+      const hasType = types.includes(location.type);
+      return hasType && (!isFAOCountry || isFao);
     });
   }
 );
 
 export const filterWidgetsByLocationWhitelist = createSelector(
-  [filterWidgetsByLocation, selectLocation],
+  [filterWidgetsByLocationType, selectLocation],
   (widgets, location) => {
     if (!widgets) return null;
     return widgets.filter(w => {
@@ -317,6 +338,7 @@ export const filterWidgetsByCategoryAndLayers = createSelector(
         w.config.categories.includes(category)
       );
     }
+
     return sortBy(filteredWidgets, `config.sortOrder[${camelCase(category)}]`);
   }
 );
