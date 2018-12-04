@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { SingleDatePicker } from 'react-dates';
+import ReactDatePicker from 'react-datepicker';
 import cx from 'classnames';
-import range from 'lodash/range';
+// import range from 'lodash/range';
 
 import moment from 'moment';
-import Dropdown from 'components/ui/dropdown';
+// import Dropdown from 'components/ui/dropdown';
 
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+// import 'react-dates/initialize';
+// import 'react-dates/lib/css/_datepicker.css';
 import './datepicker-styles.scss';
-import './themes/datepicker-small.scss';
+// import './themes/datepicker-small.scss';
 
 class Datepicker extends PureComponent {
   constructor(props) {
@@ -23,11 +23,23 @@ class Datepicker extends PureComponent {
   render() {
     const { className, date, handleOnDateChange, settings, theme } = this.props;
     const { minDate, maxDate } = settings;
-    const maxYear = moment(maxDate).year();
-    const minYear = moment(minDate).year();
+
+    // const maxYear = moment(maxDate).year();
+    // const minYear = moment(minDate).year();
     return (
       <div className={cx('c-datepicker', theme, className)}>
-        <SingleDatePicker
+        <ReactDatePicker
+          selected={date.toDate()}
+          onSelect={d => {
+            handleOnDateChange(moment(d), 0);
+          }}
+          focused={this.state.focused}
+          onFocusChange={({ focused }) => this.setState({ focused })}
+          minDate={new Date(minDate)}
+          maxDate={new Date(maxDate)}
+          withPortal
+        />
+        {/* <SingleDatePicker
           date={date}
           onDateChange={d => {
             handleOnDateChange(d, 0);
@@ -125,6 +137,7 @@ class Datepicker extends PureComponent {
           )}
           {...settings}
         />
+        */}
       </div>
     );
   }

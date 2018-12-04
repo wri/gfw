@@ -133,6 +133,7 @@
     "rails-erb-loader": "^5.5.0",
     "rc-slider": "^8.6.1",
     "react": "^16.4.1",
+    "react-datepicker": "^2.0.0",
     "react-dates": "^17.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
