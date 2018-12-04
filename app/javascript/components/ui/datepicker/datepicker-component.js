@@ -94,35 +94,33 @@ class Datepicker extends PureComponent {
           }
           renderMonthElement={({ month, onMonthSelect, onYearSelect }) => (
             <div className="c-date-month-selector">
-              <div>
-                <Dropdown
-                  className="c-date-dropdown"
-                  theme="theme-dropdown-button theme-dropdown-button-small -short"
-                  noItemsFound="No months found"
-                  options={moment
-                    .months()
-                    .map((m, i) => ({ value: i, label: m }))}
-                  onChange={e => {
-                    onMonthSelect(month, e.value);
-                  }}
-                  value={month.month()}
-                />
-              </div>
-              <div>
-                <Dropdown
-                  className="c-date-dropdown"
-                  theme="theme-dropdown-button theme-dropdown-button-small -short"
-                  noItemsFound="No years found"
-                  noSelectedValue={month.year().toString()}
-                  options={range(
-                    parseInt(minYear, 10),
-                    parseInt(maxYear, 10) + 1
-                  ).map(i => ({ value: i, label: i }))}
-                  onChange={e => {
-                    onYearSelect(month, e.value);
-                  }}
-                />
-              </div>
+              <Dropdown
+                className="c-date-dropdown"
+                theme="theme-dropdown-native theme-dropdown-native-button"
+                noItemsFound="No months found"
+                options={moment
+                  .months()
+                  .map((m, i) => ({ value: i, label: m }))}
+                onChange={e => {
+                  onMonthSelect(month, e);
+                }}
+                value={month.month()}
+                native
+              />
+              <Dropdown
+                className="c-date-dropdown"
+                theme="theme-dropdown-native theme-dropdown-native-button"
+                noItemsFound="No years found"
+                noSelectedValue={month.year().toString()}
+                options={range(
+                  parseInt(minYear, 10),
+                  parseInt(maxYear, 10) + 1
+                ).map(i => ({ value: i, label: i }))}
+                onChange={e => {
+                  onYearSelect(month, e);
+                }}
+                native
+              />
             </div>
           )}
           {...settings}
