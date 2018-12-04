@@ -1,11 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
-import flatMap from 'lodash/flatMap';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
 import { getActiveLayers, getMapZoom } from 'components/map-v2/selectors';
-import { filterWidgetsByCategoryAndLayers } from 'components/widgets/selectors';
+import { getWidgetLayers } from 'components/map-v2/components/analysis/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
 const selectLoading = state =>
@@ -15,11 +13,7 @@ const selectError = state => state.analysis.error;
 const selectAdmins = state => state.countryData.countries;
 const selectAdmin1s = state => state.countryData.regions;
 const selectAdmin2s = state => state.countryData.subRegions;
-
-export const getShowWidgets = createSelector(
-  [selectLocation],
-  location => location && location.type === 'country'
-);
+const selectGeostore = state => state.geostore.geostore;
 
 export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
@@ -54,24 +48,15 @@ export const getDataFromLayers = createSelector(
     selectData,
     getLocationName,
     selectLocation,
-    filterWidgetsByCategoryAndLayers
+    getWidgetLayers,
+    selectGeostore
   ],
-  (layers, data, locationName, location, widgets) => {
-    if (!layers || !layers.length || isEmpty(data)) return null;
+  (layers, data, locationName, location, widgetLayers, geostore) => {
+    if (!layers || !layers.length) return null;
 
-    const activeWidgets =
-      widgets &&
-      widgets.filter(
-        w => w.config.analysis && w.config.layers && w.config.layers.length
-      );
-    const widgetLayers =
-      activeWidgets && flatMap(activeWidgets.map(w => w.config.layers));
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
-    const firstDataObj = data[Object.keys(data)[0]];
-    const area =
-      firstDataObj.areaHa ||
-      (firstDataObj.totals && firstDataObj.totals.areaHa);
+    const { areaHa } = geostore;
 
     return [
       {
@@ -79,7 +64,7 @@ export const getDataFromLayers = createSelector(
           location.type !== 'geostore'
             ? `${locationName} total area`
             : 'selected area',
-        value: area || 0,
+        value: areaHa || 0,
         unit: 'ha'
       }
     ].concat(
@@ -96,16 +81,24 @@ export const getDataFromLayers = createSelector(
           if (!analysisConfig) {
             analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
           }
-          const { subKey, key, service, unit } = analysisConfig || {};
+          const { subKey, key, keys, service, unit } = analysisConfig || {};
           const dataByService = data[service] || {};
           const value = subKey
             ? dataByService[key] && dataByService[key][subKey]
             : dataByService[key];
           const { params, decodeParams } = l;
 
+          const keysValue =
+            keys &&
+            keys.map(k => ({
+              label: k.title,
+              value: dataByService[k.key],
+              unit: k.unit
+            }));
+
           return {
             label: l.name,
-            value: value || 0,
+            value: keysValue || value || 0,
             downloadUrls: dataByService && dataByService.downloadUrls,
             unit,
             color: l.color,
@@ -155,6 +148,5 @@ export const getDrawAnalysisProps = createStructuredSelector({
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,
-  showWidgets: getShowWidgets,
   zoomLevel: getMapZoom
 });

@@ -104,15 +104,16 @@ export const parseSentence = createSelector(
       globalInitial,
       globalWithIndicator
     } = sentences;
-    const percentCover = indicator
-      ? 100 * data.cover / data.totalCover
-      : 100 * data.cover / data.totalArea;
+    const { cover, plantations, totalCover, totalArea } = data;
+    const top = isoPlantations ? cover - plantations : cover;
+    const bottom = indicator ? totalCover : totalArea;
+    const percentCover = 100 * top / bottom;
     const params = {
       year: settings.extentYear,
       location: locationName || 'global',
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
-        percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '<0.1%',
+        percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%',
       value:
         data.cover < 1
           ? `${format('.3r')(data.cover)}ha`
@@ -129,6 +130,7 @@ export const parseSentence = createSelector(
     if (locationName === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
+
     return { sentence, params };
   }
 );

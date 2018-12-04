@@ -7,6 +7,7 @@ import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { sortByKey } from 'utils/data';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 import tscLossCategories from 'data/tsc-loss-categories.json';
 
@@ -168,13 +169,7 @@ export const parseConfig = createSelector(
         bars: yKeys
       },
       xAxis: {
-        tickFormatter: tick => {
-          const year = moment(tick, 'YYYY');
-          if ([2001, 2017].includes(tick)) {
-            return year.format('YYYY');
-          }
-          return year.format('YY');
-        }
+        tickFormatter: yearTicksFormatter
       },
       unit: 'ha',
       tooltip

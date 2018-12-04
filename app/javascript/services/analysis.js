@@ -62,6 +62,36 @@ const buildAnalysisUrl = ({
     .replace('{params}', `?${queryParams}`);
 };
 
+const getUrlTemplate = type => {
+  let urlTemplate = QUERIES.umdGeostore;
+  if (type === 'country') urlTemplate = QUERIES.umdAdmin;
+  if (type === 'use' || type === 'wdpa') urlTemplate = QUERIES.umdByType;
+  return urlTemplate;
+};
+
+const reduceAnalysisResponse = response => {
+  const { data } = response.data;
+  const { attributes } = data || {};
+  if (attributes) {
+    const fetchType = data && data.type;
+    const fetchKey =
+      fetchType === 'umd' ? 'umd-loss-gain' : fetchType.toLowerCase();
+    return {
+      [fetchKey]: attributes
+    };
+  }
+  return {};
+};
+
+export const fetchAnalysisEndpoint = ({ type, ...rest }) =>
+  axios.get(
+    `${REQUEST_URL}${buildAnalysisUrl({
+      urlTemplate: getUrlTemplate(type),
+      type,
+      ...rest
+    })}`
+  );
+
 export const fetchUmdLossGain = ({
   endpoints,
   type,
@@ -73,9 +103,7 @@ export const fetchUmdLossGain = ({
   const endpointUrls =
     endpoints &&
     endpoints.map(endpoint => {
-      let urlTemplate = QUERIES.umdGeostore;
-      if (type === 'country') urlTemplate = QUERIES.umdAdmin;
-      if (type === 'use' || type === 'wdpa') urlTemplate = QUERIES.umdByType;
+      const urlTemplate = getUrlTemplate(type);
 
       return axios.get(
         `${REQUEST_URL}${buildAnalysisUrl({
@@ -97,18 +125,11 @@ export const fetchUmdLossGain = ({
     .then(
       axios.spread((...responses) =>
         responses.reduce((obj, response) => {
-          const { data } = response.data;
-          const { attributes } = data || {};
-          if (attributes) {
-            const fetchType = data && data.type;
-            const fetchKey =
-              fetchType === 'umd' ? 'umd-loss-gain' : fetchType.toLowerCase();
-            return {
-              ...obj,
-              [fetchKey]: attributes
-            };
-          }
-          return obj;
+          const analysis = reduceAnalysisResponse(response);
+          return {
+            ...obj,
+            ...analysis
+          };
         }, {})
       )
     );

@@ -38,6 +38,7 @@ jstest/SpecRunner.html
 package-lock.json
 /cypress/videos
 /cypress/screenshots
+.swp
 
 # Ignore Vagrant
 .vagrant

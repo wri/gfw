@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 const EMISSIONS_KEYS = ['Total including LUCF', 'Land-Use Change and Forestry'];
 
@@ -49,50 +50,49 @@ export const parseData = createSelector([getSortedData], sortedData => {
   return chartData;
 });
 
-export const parseConfig = createSelector(
-  [parseData, getColors],
-  (data, colors) => {
-    if (!data) return null;
+export const parseConfig = createSelector([getColors], colors => {
+  const colorRange = getColorPalette(colors.ramp, 2);
 
-    const colorRange = getColorPalette(colors.ramp, 2);
-    return {
-      height: 250,
-      xKey: 'year',
-      yKeys: {
-        areas: {
-          e1Value: {
-            fill: colorRange[0],
-            stroke: colorRange[0],
-            opacity: 1,
-            strokeWidth: 0,
-            background: false,
-            activeDot: false,
-            stackId: 1
-          }
+  return {
+    height: 250,
+    xKey: 'year',
+    yKeys: {
+      areas: {
+        e1Value: {
+          fill: colorRange[0],
+          stroke: colorRange[0],
+          opacity: 1,
+          strokeWidth: 0,
+          background: false,
+          activeDot: false,
+          stackId: 1
         }
+      }
+    },
+    xAxis: {
+      tickFormatter: yearTicksFormatter
+    },
+    unit: 'tCO₂e',
+    tooltip: [
+      {
+        key: 'year'
       },
-      unit: 'tCO₂e',
-      tooltip: [
-        {
-          key: 'year'
-        },
-        {
-          key: 'total',
-          label: 'Total',
-          unit: 'tCO₂e',
-          unitFormat: num => formatNumber({ num })
-        },
-        {
-          key: 'e1Percentage',
-          label: 'Land-Use Change and Forestry',
-          color: colorRange[0],
-          unit: '%',
-          unitFormat: value => format('.1f')(value)
-        }
-      ]
-    };
-  }
-);
+      {
+        key: 'total',
+        label: 'Total',
+        unit: 'tCO₂e',
+        unitFormat: num => formatNumber({ num })
+      },
+      {
+        key: 'e1Percentage',
+        label: 'Land-Use Change and Forestry',
+        color: colorRange[0],
+        unit: '%',
+        unitFormat: value => format('.1f')(value)
+      }
+    ]
+  };
+});
 
 export const parseSentence = createSelector(
   [getSortedData, getLocationName, getSentences],

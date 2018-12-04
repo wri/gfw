@@ -74,12 +74,12 @@ class DrawAnalysis extends PureComponent {
       loading,
       fullLocationName,
       error,
-      showWidgets,
       setModalSources,
       handleShowDownloads,
       showDownloads,
       downloadUrls,
       hasLayers,
+      hasWidgets,
       zoomLevel
     } = this.props;
 
@@ -138,10 +138,12 @@ class DrawAnalysis extends PureComponent {
         </div>
         <div className="results">
           {hasLayers &&
+            !hasWidgets &&
             !loading &&
             !error &&
             isEmpty(data) && <NoContent message="No analysis data available" />}
           {!hasLayers &&
+            !hasWidgets &&
             !loading && (
               <NoContent>
                 Select a{' '}
@@ -158,14 +160,14 @@ class DrawAnalysis extends PureComponent {
                 data layer to analyze.
               </NoContent>
             )}
-          {hasLayers &&
+          {(hasLayers || hasWidgets) &&
             !loading &&
-            !isEmpty(data) && (
+            !error && (
               <Fragment>
                 <ul className="draw-stats">
-                  {data.map(d => this.renderStatItem(d))}
+                  {data && data.map(d => this.renderStatItem(d))}
                 </ul>
-                {showWidgets && <Widgets simple analysis />}
+                <Widgets simple analysis />
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>
@@ -204,7 +206,6 @@ class DrawAnalysis extends PureComponent {
 }
 
 DrawAnalysis.propTypes = {
-  showWidgets: PropTypes.bool,
   data: PropTypes.array,
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
@@ -216,6 +217,7 @@ DrawAnalysis.propTypes = {
   setMenuSettings: PropTypes.func,
   showDownloads: PropTypes.bool,
   hasLayers: PropTypes.bool,
+  hasWidgets: PropTypes.bool,
   downloadUrls: PropTypes.array,
   zoomLevel: PropTypes.number
 };
