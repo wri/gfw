@@ -3,10 +3,10 @@ import isEmpty from 'lodash/isEmpty';
 import { reverseLatLng } from 'utils/geoms';
 
 import {
-  getActiveDatasetsState,
+  getActiveDatasetsFromState,
   filterInteractions,
   getSelectedInteraction
-} from 'components/map-v2/selectors';
+} from 'components/maps/map/selectors';
 
 const getSearch = state => state.location && state.location.search;
 const getLatLng = state => state.popup.latlng;
@@ -92,7 +92,7 @@ export const getPopupProps = createStructuredSelector({
   tableData: getTableData,
   cardData: getCardData,
   latlng: getLatLng,
-  activeDatasets: getActiveDatasetsState,
+  activeDatasets: getActiveDatasetsFromState,
   search: getSearch,
   isBoundary: getIsBoundary
 });

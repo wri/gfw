@@ -29,7 +29,7 @@ class Popup extends Component {
       interactions,
       selected,
       setInteractionSelected,
-      setAnalysisView,
+      setMainMapAnalysisView,
       setMapSettings,
       isBoundary
     } = this.props;
@@ -83,13 +83,13 @@ class Popup extends Component {
                 <BoundarySentence
                   selected={selected}
                   data={tableData}
-                  setAnalysisView={setAnalysisView}
+                  setMainMapAnalysisView={setMainMapAnalysisView}
                 />
               ) : (
                 <DataTable data={tableData} />
               )}
               <div className="nav-footer">
-                <Button onClick={() => setAnalysisView(selected)}>
+                <Button onClick={() => setMainMapAnalysisView(selected)}>
                   ANALYZE
                 </Button>
               </div>
@@ -111,7 +111,7 @@ Popup.propTypes = {
   isBoundary: PropTypes.bool,
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
-  setAnalysisView: PropTypes.func,
+  setMainMapAnalysisView: PropTypes.func,
   setMapSettings: PropTypes.func
 };
 

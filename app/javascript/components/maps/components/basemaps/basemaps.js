@@ -18,23 +18,22 @@ class BasemapsContainer extends React.Component {
   };
 
   selectBasemap = (basemap, year) => {
-    const label = this.props.labels[basemap.labelsKey]
-      ? this.props.labels[basemap.labelsKey]
-      : this.props.activeLabels; // default fallback label
-
+    const label =
+      this.props.labels[basemap.labelsKey] || this.props.activeLabels;
     if (basemap.dynamic) {
       if (basemap.id === 'landsat') {
-        return this.props.setLandsatBasemap({
+        this.props.setLandsatBasemap({
           year,
-          defaultUrl: basemap.defaultUrl,
-          label
+          defaultUrl: basemap.defaultUrl
         });
       }
+    } else {
+      this.props.setMapSettings({ basemap });
     }
+    this.props.setMapSettings({ label });
     track('basemapChanged', {
       label: basemap.label
     });
-    return this.props.setMapSettings({ basemap, label });
   };
 
   selectLabels = label => {

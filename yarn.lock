@@ -8916,10 +8916,10 @@ layer-manager@^1.10.0:
     reselect "^3.0.1"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^1.13.1:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.13.1.tgz#e3025ecfe29b173e63c009afc47c8dce7df5164e"
-  integrity sha512-9RByRSAgULVzPYsYFDUZfde9HS7BkZWDAqW+ayi1rfoEhd+2GePGyAexUpUg3U5Kq2Tamcn4vV+vWqKS48Q3GA==
+layer-manager@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.13.2.tgz#28fd40054b3a22b8de4ca84c2cad5a873a9988c1"
+  integrity sha512-N/98IOLBz9TOEDsdfHYRDu7Om6ha/OtCVcAdBQtF0aUPUlMNI/0pGCfc8YvlCxym71x8YEOK+IEKmhMrXryhtQ==
   dependencies:
     bluebird "^3.5.2"
     lodash "^4.17.10"

@@ -3,7 +3,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   getActiveLayersWithWidgetSettings,
   getDraw
-} from 'components/map-v2/selectors';
+} from 'components/maps/map/selectors';
 
 export const selectGeostore = state => state.geostore.data;
 

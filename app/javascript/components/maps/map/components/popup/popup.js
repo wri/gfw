@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
-import { setAnalysisView, setMapSettings } from 'components/map-v2/actions';
+import { setMainMapAnalysisView } from 'components/maps/main-map/actions';
+import { setMapSettings } from 'components/maps/map/actions';
 
 import * as ownActions from './actions';
 import Component from './component';
@@ -10,7 +11,7 @@ import { getPopupProps } from './selectors';
 import './styles.scss';
 
 const actions = {
-  setAnalysisView,
+  setMainMapAnalysisView,
   setMapSettings,
   ...ownActions
 };

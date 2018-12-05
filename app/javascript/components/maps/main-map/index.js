@@ -36,7 +36,7 @@ class MapMainContainer extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
       selectedInteraction,
-      setMapAnalysisView,
+      setMainMapAnalysisView,
       oneClickAnalysisActive
     } = this.props;
 
@@ -47,7 +47,7 @@ class MapMainContainer extends PureComponent {
       !isEmpty(selectedInteraction.data) &&
       !isEqual(selectedInteraction, prevProps.selectedInteraction)
     ) {
-      setMapAnalysisView(selectedInteraction);
+      setMainMapAnalysisView(selectedInteraction);
     }
   }
 
@@ -79,7 +79,7 @@ class MapMainContainer extends PureComponent {
 
 MapMainContainer.propTypes = {
   oneClickAnalysisActive: PropTypes.bool,
-  setMapAnalysisView: PropTypes.func,
+  setMainMapAnalysisView: PropTypes.func,
   selectedInteraction: PropTypes.object,
   activeDatasets: PropTypes.array
 };

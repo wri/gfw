@@ -6,8 +6,11 @@ import './styles.scss';
 
 class BoundarySentence extends Component {
   handleSetAnalysisView = () => {
-    const { setAnalysisView, selected, data } = this.props;
-    setAnalysisView({ ...selected, data: { ...data, level: data.level - 1 } });
+    const { setMainMapAnalysisView, selected, data } = this.props;
+    setMainMapAnalysisView({
+      ...selected,
+      data: { ...data, level: data.level - 1 }
+    });
   };
 
   render() {
@@ -40,7 +43,7 @@ class BoundarySentence extends Component {
 
 BoundarySentence.propTypes = {
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  setAnalysisView: PropTypes.func,
+  setMainMapAnalysisView: PropTypes.func,
   selected: PropTypes.object
 };
 
