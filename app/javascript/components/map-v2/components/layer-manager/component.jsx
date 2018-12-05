@@ -63,7 +63,6 @@ class LayerManagerComponent extends PureComponent {
                 }
               }
             }}
-            // Interaction
             interactivity
             events={{
               click: () => {

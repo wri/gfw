@@ -1,6 +1,9 @@
 import { createStructuredSelector } from 'reselect';
 
-import { getActiveDatasetsState, getLegendLayerGroups } from '../../selectors';
+import {
+  getActiveDatasetsFromState,
+  getLegendLayerGroups
+} from 'components/maps/map/selectors';
 
 const getLoading = state =>
   state.datasets.loading || state.countryData.loading || state.latest.loading;
@@ -8,5 +11,5 @@ const getLoading = state =>
 export const getLegendProps = createStructuredSelector({
   loading: getLoading,
   layerGroups: getLegendLayerGroups,
-  activeDatasets: getActiveDatasetsState
+  activeDatasets: getActiveDatasetsFromState
 });

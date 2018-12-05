@@ -6,9 +6,7 @@ export const initialState = {
   errorMessage: '',
   data: {},
   settings: {
-    showAnalysis: false,
-    showDraw: false,
-    hidden: false
+    showDraw: false
   }
 };
 

@@ -5,34 +5,49 @@ import isEmpty from 'lodash/isEmpty';
 import { initialState } from './reducers';
 
 // map state
-const getMapUrlState = state =>
+const selectMapUrlState = state =>
   state.location && state.location.query && state.location.query.map;
-const getLoading = state =>
-  state.datasets.loading ||
-  state.geostore.loading ||
-  state.map.loading ||
-  state.latest.loading;
+const selectMapLoading = state => state.map.loading;
+const selectGeostoreLoading = state => state.geostore.loading;
+const selectLatestLoading = state => state.latest.loading;
+const selectDatasetsLoading = state => state.datasets.loading;
 
 // datasets
-const getDatasets = state => state.datasets.data;
-const getLatest = state => state.latest.data;
+const selectDatasets = state => state.datasets.data;
+const selectLatest = state => state.latest.data;
 
 // location
-const getGeostore = state => state.geostore.data || null;
-const selectEmbed = state =>
-  state.location &&
-  state.location.pathname &&
-  state.location.pathname.includes('embed');
+const selectGeostore = state => state.geostore.data || null;
+const selectLocation = state => state.location || null;
 
 // interactions
 const selectSelectedInteractionId = state => state.popup.selected;
 const selectInteractions = state => state.popup.interactions;
 
+// get widgets
+const selectWidgetActiveSettings = state => state.widgets.settings;
+
 // SELECTORS
-export const getMapSettings = createSelector([getMapUrlState], urlState => ({
+export const getEmbed = createSelector(
+  [selectLocation],
+  location => location && location.routesMap[location.type].embed
+);
+
+export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
   ...initialState.settings,
   ...urlState
 }));
+
+export const getMapLoading = createSelector(
+  [
+    selectMapLoading,
+    selectGeostoreLoading,
+    selectLatestLoading,
+    selectDatasetsLoading
+  ],
+  (mapLoading, geostoreLoading, latestLoading, datasetsLoading) =>
+    mapLoading || geostoreLoading || latestLoading || datasetsLoading
+);
 
 // get single map settings
 export const getBasemap = createSelector(
@@ -95,13 +110,13 @@ export const getMapOptions = createSelector(getMapSettings, settings => {
 });
 
 // select datasets and dataset state
-export const getActiveDatasetsState = createSelector(
+export const getActiveDatasetsFromState = createSelector(
   getMapSettings,
   settings => settings.datasets
 );
 
 export const getActiveDatasetIds = createSelector(
-  [getActiveDatasetsState],
+  [getActiveDatasetsFromState],
   activeDatasetsState => {
     if (!activeDatasetsState || !activeDatasetsState.length) return null;
     return activeDatasetsState.map(l => l.dataset);
@@ -109,24 +124,27 @@ export const getActiveDatasetIds = createSelector(
 );
 
 export const getActiveDatasets = createSelector(
-  [getDatasets, getActiveDatasetIds],
+  [selectDatasets, getActiveDatasetIds],
   (datasets, datasetIds) => {
     if (isEmpty(datasets) || isEmpty(datasetIds)) return null;
     return datasets.filter(d => datasetIds.includes(d.id));
   }
 );
 
-export const getBoundaryDatasets = createSelector([getDatasets], datasets => {
-  if (isEmpty(datasets)) return null;
-  return datasets.filter(d => d.isBoundary).map(d => ({
-    name: d.name,
-    dataset: d.id,
-    layers: d.layers.map(l => l.id),
-    id: d.id,
-    label: d.name,
-    value: d.layer
-  }));
-});
+export const getBoundaryDatasets = createSelector(
+  [selectDatasets],
+  datasets => {
+    if (isEmpty(datasets)) return null;
+    return datasets.filter(d => d.isBoundary).map(d => ({
+      name: d.name,
+      dataset: d.id,
+      layers: d.layers.map(l => l.id),
+      id: d.id,
+      label: d.name,
+      value: d.layer
+    }));
+  }
+);
 
 export const getAllBoundaries = createSelector(
   [getBoundaryDatasets],
@@ -145,7 +163,7 @@ export const getActiveBoundaryDatasets = createSelector(
 
 // parse active datasets to add config from url
 export const getDatasetsWithConfig = createSelector(
-  [getActiveDatasets, getActiveDatasetsState, getLatest],
+  [getActiveDatasets, getActiveDatasetsFromState, selectLatest],
   (datasets, activeDatasetsState, latestDates) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
@@ -252,7 +270,7 @@ export const getDatasetsWithConfig = createSelector(
 
 // map active datasets into correct order based on url state (drag and drop)
 export const getLayerGroups = createSelector(
-  [getDatasetsWithConfig, getActiveDatasetsState],
+  [getDatasetsWithConfig, getActiveDatasetsFromState],
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
@@ -294,6 +312,40 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
   return layers.filter(l => !l.confirmedOnly);
 });
 
+// flatten datasets into layers for the layer manager
+export const getActiveLayersWithWidgetSettings = createSelector(
+  [getAllLayers, selectWidgetActiveSettings],
+  (layers, widgetSettings) => {
+    if (isEmpty(layers)) return [];
+    if (isEmpty(widgetSettings)) return layers;
+    return layers.map(l => {
+      const layerWidgetState =
+        widgetSettings &&
+        Object.values(widgetSettings).find(
+          w => w.layers && w.layers.includes(l.id)
+        );
+      const { updateLayer } = layerWidgetState || {};
+      return {
+        ...l,
+        ...(l.decodeParams &&
+          updateLayer && {
+            decodeParams: {
+              ...l.decodeParams,
+              ...layerWidgetState
+            }
+          }),
+        ...(l.params &&
+          updateLayer && {
+            params: {
+              ...l.params,
+              ...layerWidgetState
+            }
+          })
+      };
+    });
+  }
+);
+
 export const getLayerBbox = createSelector([getActiveLayers], layers => {
   const layerWithBbox =
     layers && layers.find(l => l.bbox || (l.layerConfig && l.layerConfig.bbox));
@@ -305,7 +357,7 @@ export const getLayerBbox = createSelector([getActiveLayers], layers => {
 });
 
 export const getGeostoreBbox = createSelector(
-  [getGeostore],
+  [selectGeostore],
   geostore => geostore && geostore.bbox
 );
 
@@ -348,7 +400,7 @@ export const getSelectedInteraction = createSelector(
 );
 
 export const getMapProps = createStructuredSelector({
-  loading: getLoading,
+  loading: getMapLoading,
   mapOptions: getMapOptions,
   basemap: getBasemap,
   label: getLabels,
@@ -357,6 +409,6 @@ export const getMapProps = createStructuredSelector({
   bbox: getBbox,
   canBound: getCanBound,
   draw: getDraw,
-  embed: selectEmbed,
+  embed: getEmbed,
   selectedInteraction: getSelectedInteraction
 });

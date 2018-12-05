@@ -1,38 +1,28 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
-import { format } from 'd3-format';
+import moment from 'moment';
 import startCase from 'lodash/startCase';
+import { format } from 'd3-format';
 import { track } from 'utils/analytics';
 
-import { setRecentImagerySettings } from 'components/maps/components/recent-imagery/recent-imagery-actions';
+import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
 import * as ownActions from './actions';
-import { initialState } from './reducers';
 import MapComponent from './component';
 import { getMapProps } from './selectors';
-// import * as popupActions from './components/popup/actions';
 
 const actions = {
   setRecentImagerySettings,
-  // ...popupActions,
   ...ownActions
 };
 
-class MapContainer extends PureComponent {
-  static propTypes = {
-    basemap: PropTypes.object,
-    mapOptions: PropTypes.object,
-    setLandsatBasemap: PropTypes.func
-  };
-
+class MapMainContainer extends PureComponent {
   state = {
     showTooltip: false,
-    tooltipData: {},
-    bbox: null
+    tooltipData: {}
   };
 
   componentDidMount() {
@@ -45,40 +35,11 @@ class MapContainer extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      basemap,
-      mapOptions: { zoom },
-      canBound,
-      bbox,
-      geostoreBbox,
-      setMapSettings,
-      layerBbox,
       selectedInteraction,
-      setAnalysisView,
+      setMapAnalysisView,
       oneClickAnalysisActive
     } = this.props;
 
-    // update landsat basemap when changing zoom
-    if (basemap.id === 'landsat' && zoom !== prevProps.zoom) {
-      this.props.setLandsatBasemap({
-        year: basemap.year,
-        defaultUrl: basemap.defaultUrl
-      });
-    }
-
-    // only set bounding box if action allows it
-    if (canBound && bbox !== prevProps.bbox) {
-      this.setBbox(bbox);
-    }
-
-    // if a new layer contains a bbox
-    if (layerBbox && layerBbox !== prevProps.layerBbox) {
-      setMapSettings({ bbox: layerBbox });
-    }
-
-    // if geostore changes
-    if (geostoreBbox && geostoreBbox !== prevProps.geostoreBbox) {
-      setMapSettings({ bbox: geostoreBbox });
-    }
     // set analysis view if interaction changes
     if (
       oneClickAnalysisActive &&
@@ -86,27 +47,12 @@ class MapContainer extends PureComponent {
       !isEmpty(selectedInteraction.data) &&
       !isEqual(selectedInteraction, prevProps.selectedInteraction)
     ) {
-      setAnalysisView(selectedInteraction);
+      setMapAnalysisView(selectedInteraction);
     }
   }
 
   handleShowTooltip = (show, data) => {
     this.setState({ showTooltip: show, tooltipData: data });
-  };
-
-  setBbox = bbox => {
-    this.setState({ bbox });
-  };
-
-  handleMapMove = (e, map) => {
-    const { setMapSettings } = this.props;
-    setMapSettings({
-      zoom: map.getZoom(),
-      center: map.getCenter(),
-      canBound: false,
-      bbox: null
-    });
-    this.setBbox(null);
   };
 
   handleRecentImageryTooltip = e => {
@@ -121,52 +67,21 @@ class MapContainer extends PureComponent {
     });
   };
 
-  handleMapInteraction = ({ e, article, output, layer }) => {
-    const { setInteraction, draw, menuSection } = this.props;
-
-    if (!draw && !menuSection) {
-      setInteraction({
-        ...e,
-        label: layer.name,
-        article,
-        isBoundary: layer.isBoundary,
-        id: layer.id,
-        value: layer.id,
-        config: output
-      });
-      track('mapInteraction', {
-        label: layer.name
-      });
-    }
-  };
-
   render() {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
-      handleRecentImageryTooltip: this.handleRecentImageryTooltip,
-      handleMapInteraction: this.handleMapInteraction,
-      handleMapMove: this.handleMapMove,
-      setBbox: this.setBbox
+      handleRecentImageryTooltip: this.handleRecentImageryTooltip
     });
   }
 }
 
-MapContainer.propTypes = {
-  canBound: PropTypes.bool,
-  bbox: PropTypes.array,
-  geostoreBbox: PropTypes.array,
-  setMapSettings: PropTypes.func,
-  layerBbox: PropTypes.array,
+MapMainContainer.propTypes = {
   oneClickAnalysisActive: PropTypes.bool,
-  draw: PropTypes.bool,
-  setAnalysisView: PropTypes.func,
-  setInteraction: PropTypes.func,
+  setMapAnalysisView: PropTypes.func,
   selectedInteraction: PropTypes.object,
-  menuSection: PropTypes.string,
   activeDatasets: PropTypes.array
 };
 
-export const reduxModule = { actions: ownActions, initialState };
-export default connect(getMapProps, actions)(MapContainer);
+export default connect(getMapProps, actions)(MapMainContainer);

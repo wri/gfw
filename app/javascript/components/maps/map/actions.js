@@ -1,5 +1,6 @@
 import { createThunkAction, createAction } from 'redux-tools';
 import axios from 'axios';
+
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { addToDate } from 'utils/dates';
 

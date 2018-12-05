@@ -90,4 +90,11 @@
       color: $white;
     }
   }
+
+  .map-hover-tooltip {
+    text-align: left;
+    font-size: rem(12px);
+    padding: rem(10px) rem(15px);
+    font-weight: 300;
+  }
 }

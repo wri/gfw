@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'utils/analytics';
 
-import * as popupActions from 'components/maps/components/popup/actions';
+import * as popupActions from 'components/maps/map/components/popup/actions';
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import { getMapProps } from './selectors';

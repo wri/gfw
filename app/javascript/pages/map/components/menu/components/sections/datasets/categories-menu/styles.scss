@@ -1,0 +1,71 @@
+@import '~styles/settings';
+
+.c-categories-menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: rem(10px);
+  background-color: $white;
+  color: $slate;
+  width: 100%;
+  z-index: 5;
+
+  li {
+    width: calc(100% / 3);
+    margin: rem(20px) 0;
+  }
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: rem(12px);
+
+    .category-button {
+      width: rem(60px);
+      height: rem(60px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $green-gfw;
+      border-radius: rem(35px);
+      margin-bottom: rem(10px);
+      position: relative;
+
+      span {
+        position: absolute;
+        top: rem(6px);
+        right: rem(2px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: rem(14px);
+        height: rem(14px);
+        background-color: $slate;
+        border-radius: 100%;
+        font-size: 9px;
+        font-weight: 500;
+        letter-spacing: -0.3px;
+        color: $white;
+      }
+    }
+
+    svg {
+      width: rem(30px);
+      height: rem(30px);
+      fill: $white;
+    }
+
+    &.active {
+      color: $green-gfw;
+
+      svg {
+        fill: $green-gfw;
+      }
+    }
+  }
+}

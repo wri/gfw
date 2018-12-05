@@ -1,30 +1,24 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import startCase from 'lodash/startCase';
 import { SCREEN_M } from 'utils/constants';
-import upperFirst from 'lodash/upperFirst';
 import cx from 'classnames';
-
-import Map from 'components/maps/map';
-import { Tooltip } from 'react-tippy';
-import Tip from 'components/ui/tip';
+import startCase from 'lodash/startCase';
+import upperFirst from 'lodash/upperFirst';
 import MediaQuery from 'react-responsive';
-import RecentImagery from 'components/map-v2/components/recent-imagery';
+import { track } from 'utils/analytics';
+import { Tooltip } from 'react-tippy';
+
+import Tip from 'components/ui/tip';
+import Map from 'components/maps/map';
 import SubscribeModal from 'components/modals/subscribe';
 
-import MapControlButtons from 'components/maps/components/map-controls';
-import DataAnalysisMenu from 'components/maps/components/data-analysis-menu';
+import RecentImagery from './components/recent-imagery';
+import DataAnalysisMenu from './components/data-analysis-menu';
+import MapControlButtons from './components/map-controls';
 
 import './styles.scss';
 
-class MapComponent extends PureComponent {
-  componentDidMount() {
-    requestAnimationFrame(() => {
-      this.map.invalidateSize();
-      L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
-    });
-  }
-
+class MainMapComponent extends PureComponent {
   renderDataTooltip = data => (
     <div>
       {Object.keys(data).map(key => (
@@ -45,29 +39,34 @@ class MapComponent extends PureComponent {
 
   render() {
     const {
-      basemap,
-      tooltipData,
-      showTooltip,
       handleShowTooltip,
       oneClickAnalysisActive,
+      setRecentImagerySettings,
+      handleRecentImageryTooltip,
+      tileGeoJSON,
+      draw,
+      tooltipData,
+      showTooltip,
       embed,
       hidePanels,
       onMapClick
     } = this.props;
 
     return (
-      <div
-        className="c-map"
-        style={{ backgroundColor: basemap.color }}
-        onMouseOver={() =>
-          oneClickAnalysisActive &&
-          handleShowTooltip(true, 'Click shape to analyze.')
-        }
-        onMouseOut={() => handleShowTooltip(false, '')}
-      >
-        <MediaQuery minDeviceWidth={SCREEN_M}>
-          {isDesktop => (
-            <Fragment>
+      <MediaQuery minDeviceWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className="c-map-main">
+            <div
+              className="main-map-container"
+              onClick={onMapClick}
+              role="button"
+              tabIndex={0}
+              onMouseOver={() =>
+                oneClickAnalysisActive &&
+                handleShowTooltip(true, 'Click shape to analyze.')
+              }
+              onMouseOut={() => handleShowTooltip(false, '')}
+            >
               <Tooltip
                 className="map-tooltip"
                 theme="tip"
@@ -88,48 +87,81 @@ class MapComponent extends PureComponent {
                 open={showTooltip}
                 disabled={!isDesktop}
               >
-                <div
-                  className="map-click-container"
-                  onClick={onMapClick}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <Map />
-                </div>
+                <Map
+                  customLayers={
+                    tileGeoJSON
+                      ? [
+                        {
+                          id: 'recentImagery',
+                          name: 'Geojson',
+                          provider: 'leaflet',
+                          layerConfig: {
+                            type: 'geoJSON',
+                            body: tileGeoJSON,
+                            options: {
+                              style: {
+                                stroke: false,
+                                fillOpacity: 0
+                              }
+                            }
+                          },
+                          interactivity: true,
+                          events: {
+                            click: () => {
+                              if (!draw) {
+                                setRecentImagerySettings({ visible: true });
+                                track('recentImageryOpen');
+                              }
+                            },
+                            mouseover: e => {
+                              if (!draw) handleRecentImageryTooltip(e);
+                            },
+                            mouseout: () => {
+                              if (!draw) handleShowTooltip(false, {});
+                            }
+                          }
+                        }
+                      ]
+                      : null
+                  }
+                />
               </Tooltip>
-              {isDesktop &&
-                !hidePanels && (
-                  <DataAnalysisMenu
-                    className={cx('data-analysis-menu', { embed })}
-                    embed={embed}
-                  />
-                )}
-              {!embed && (
-                <MapControlButtons
-                  className="map-controls"
+            </div>
+            {isDesktop &&
+              !hidePanels && (
+                <DataAnalysisMenu
+                  className={cx('data-analysis-menu', { embed })}
                   embed={embed}
-                  isDesktop={isDesktop}
                 />
               )}
-              <RecentImagery />
-              <SubscribeModal />
-            </Fragment>
-          )}
-        </MediaQuery>
-      </div>
+            {!embed && (
+              <MapControlButtons
+                className="main-map-controls"
+                embed={embed}
+                isDesktop={isDesktop}
+              />
+            )}
+            <RecentImagery />
+            <SubscribeModal />
+          </div>
+        )}
+      </MediaQuery>
     );
   }
 }
 
-MapComponent.propTypes = {
-  basemap: PropTypes.object,
-  tooltipData: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  showTooltip: PropTypes.bool,
+MainMapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
   onMapClick: PropTypes.func,
   oneClickAnalysisActive: PropTypes.bool,
   embed: PropTypes.bool,
-  hidePanels: PropTypes.bool
+  hidePanels: PropTypes.bool,
+  setRecentImagerySettings: PropTypes.func,
+  handleRecentImageryTooltip: PropTypes.func,
+  tileGeoJSON: PropTypes.object,
+  draw: PropTypes.bool,
+  tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  showTooltip: PropTypes.bool
 };
 
-export default MapComponent;
+export default MainMapComponent;

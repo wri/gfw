@@ -9,10 +9,10 @@ import Icon from 'components/ui/icon';
 
 import iconCrosshair from 'assets/icons/crosshair.svg';
 
-import Popup from 'components/maps/components/popup';
-import MapDraw from 'components/maps/components/draw';
-import MapAttributions from 'components/maps/components/map-attributions';
-import LayerManagerComponent from 'components/maps/components/layer-manager';
+import Popup from './components/popup';
+import MapDraw from './components/draw';
+import MapAttributions from './components/map-attributions';
+import LayerManagerComponent from './components/layer-manager';
 
 import './styles.scss';
 
@@ -26,27 +26,27 @@ class MapComponent extends PureComponent {
 
   render() {
     const {
+      className,
       loading,
       error,
       mapOptions,
       basemap,
       label,
-      handleMapMove,
       bbox,
-      analysisActive,
-      handleMapInteraction,
       draw,
-      embed
+      embed,
+      handleMapMove,
+      handleMapInteraction,
+      customLayers
     } = this.props;
 
     return (
-      <div className="c-map" style={{ backgroundColor: basemap.color }}>
+      <div
+        className={cx('c-map', className)}
+        style={{ backgroundColor: basemap.color }}
+      >
         <Map
-          customClass={cx(
-            'map-wrapper',
-            { analysis: analysisActive },
-            { embed }
-          )}
+          customClass="map-wrapper"
           onReady={map => {
             this.map = map;
           }}
@@ -71,6 +71,7 @@ class MapComponent extends PureComponent {
             <Fragment>
               <LayerManagerComponent
                 map={map}
+                customLayers={customLayers}
                 handleMapInteraction={handleMapInteraction}
               />
               <Popup map={map} />
@@ -93,6 +94,7 @@ class MapComponent extends PureComponent {
 }
 
 MapComponent.propTypes = {
+  className: PropTypes.string,
   loading: PropTypes.bool,
   error: PropTypes.bool,
   mapOptions: PropTypes.object,
@@ -101,7 +103,7 @@ MapComponent.propTypes = {
   handleMapMove: PropTypes.func,
   bbox: PropTypes.array,
   handleMapInteraction: PropTypes.func,
-  analysisActive: PropTypes.bool,
+  customLayers: PropTypes.array,
   draw: PropTypes.bool,
   embed: PropTypes.bool
 };

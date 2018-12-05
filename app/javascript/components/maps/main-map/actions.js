@@ -1,8 +1,21 @@
 import { createThunkAction } from 'redux-tools';
 import { getLocationFromData } from 'utils/format';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-export const setAnalysisView = createThunkAction(
-  'setAnalysisView',
+export const setMapMainSettings = createThunkAction(
+  'setMapMainSettings',
+  change => (dispatch, state) =>
+    dispatch(
+      setComponentStateToUrl({
+        key: 'mapMain',
+        change,
+        state
+      })
+    )
+);
+
+export const setMapAnalysisView = createThunkAction(
+  'setMapAnalysisView',
   ({ data, layer }) => (dispatch, getState) => {
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
