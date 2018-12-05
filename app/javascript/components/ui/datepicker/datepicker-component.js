@@ -30,7 +30,11 @@ class Datepicker extends PureComponent {
     return (
       <Portal>
         <div
-          style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+          style={{
+            transform: `translate(${position.x}px, calc(${
+              position.y
+            }px + 1.25rem))`
+          }}
         >
           <CalendarContainer className={className}>
             {children}

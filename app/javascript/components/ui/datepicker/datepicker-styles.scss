@@ -1,123 +1,17 @@
 @import '~styles/settings.scss';
 @import '~react-datepicker/dist/react-datepicker.css';
 
-.react-datepicker__portal {
-  width: auto;
-  height: auto;
-  background-color: none;
-  left: auto;
-  top: auto;
-}
-
-.SingleDatePicker_picker {
-  top: rem(30px) !important;
-
-  td {
-    vertical-align: middle;
-    text-align: end;
-    padding-right: 10px;
-
-    &:focus {
-      outline: none;
-    }
-  }
-
-  strong {
-    font-weight: 400;
-  }
-
-  .c-navigation-button {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    background-color: #97be32;
-    border-radius: 80px;
-    top: 22px;
-
-    &.c-button-left {
-      left: 26px;
-    }
-
-    &.c-button-right {
-      right: 26px;
-      transform: rotate(180deg);
-    }
-
-    #c-arrow-left {
-      height: 6.9px;
-      width: 6.9px;
-      fill: #fff;
-      position: relative;
-      z-index: 1;
-      top: -6px;
-      left: 6px;
-    }
-  }
-}
-
-.DayPicker__withBorder {
-  box-shadow: $pop-box-shadow;
-  border-radius: 0;
-}
-
-.DayPickerNavigation_button__horizontalDefault {
-  border-radius: 2px;
-}
-
-.CalendarMonthGrid {
-  z-index: auto;
-}
-
-.CalendarDay__selected,
-.CalendarDay__selected:active,
-.CalendarDay__selected:hover {
-  background: $slate;
-  border: 1px solid #e4e7e7;
-  color: $white;
-}
-
-.c-date-dropdown {
-  max-width: 290px;
-  width: 100px;
-  height: 30px;
-  margin: 0 2px;
-
-  .c-selector-menu {
-    z-index: 3;
-    max-height: 220px;
-  }
-}
-
-.c-date-month-selector {
-  display: flex;
-  justify-content: center;
-}
-
 .c-datepicker {
-  .SingleDatePicker_picker {
-    top: rem(38px) !important;
+  .datepicker-input {
+    height: 1.25rem;
+    width: 100%;
+    border: 1px solid #e5e5df;
+    border-radius: 100px;
+    text-align: center;
+    text-transform: uppercase;
   }
 
-  .DateInput_fang {
-    top: rem(28px) !important;
-  }
-
-  .SingleDatePickerInput {
-    .DateInput {
-      width: auto;
-    }
-
-    .DateInput_input {
-      padding: 0;
-      height: rem(28px);
-      border: 1px solid $green-gfw;
-      border-radius: rem(25px);
-      font-size: 13px;
-      font-weight: normal;
-      text-align: center;
-      text-transform: uppercase;
-      color: $slate;
-      cursor: pointer;
-    }
+  .react-datepicker__day-name {
+    font-family: "Fira Sans", sans-serif;
   }
 }
