@@ -6,7 +6,7 @@ import Search from 'components/ui/search';
 import NoContent from 'components/ui/no-content';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
-import LayerToggle from 'components/map-v2/components/legend/components/layer-toggle';
+import LayerToggle from 'components/maps/components/legend/components/layer-toggle';
 
 import locationIcon from 'assets/icons/location.svg';
 import './styles.scss';

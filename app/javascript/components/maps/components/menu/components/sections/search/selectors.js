@@ -3,7 +3,7 @@ import { deburrUpper } from 'utils/data';
 import { buildGadm36Id } from 'utils/format';
 import sortBy from 'lodash/sortBy';
 
-import { getActiveDatasetsState } from 'components/map-v2/selectors';
+import { getActiveDatasetsFromState } from 'components/maps/map/selectors';
 
 const selectSearch = state =>
   state.location &&
@@ -17,7 +17,7 @@ const selectLocations = state => state.mapMenu.locations || null;
 const selectLoading = state => state.mapMenu.loading || null;
 
 const getDatasetWithUrlState = createSelector(
-  [getActiveDatasetsState, selectDatasets],
+  [getActiveDatasetsFromState, selectDatasets],
   (datasetsState, datasets) => {
     const datasetIds = datasetsState.map(d => d.dataset);
 

@@ -5,7 +5,7 @@ import { track } from 'utils/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
-import * as actions from 'components/map-v2/actions';
+import * as actions from 'components/maps/map/actions';
 import { getBasemapsProps } from './basemaps-selectors';
 import BasemapsComponent from './basemaps-component';
 

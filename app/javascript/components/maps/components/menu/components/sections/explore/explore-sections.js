@@ -8,7 +8,7 @@ import earthJournalism from 'assets/images/earth-journalism.jpg';
 
 import basemaps, {
   labels
-} from 'components/map-v2/components/basemaps/basemaps-schema';
+} from 'components/maps/components/basemaps/basemaps-schema';
 
 export const descriptions = {
   topics: 'Explore data related to the drivers and impacts of forest change.',

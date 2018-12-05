@@ -6,7 +6,7 @@ import {
   getAllBoundaries,
   getActiveBoundaryDatasets,
   getAllLayers
-} from 'components/map-v2/selectors';
+} from 'components/maps/map/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
 import analysisIcon from 'assets/icons/analysis.svg';

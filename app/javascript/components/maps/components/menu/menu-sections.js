@@ -9,10 +9,10 @@ import globeIcon from 'assets/icons/globe.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
-import RecentImagerySettings from 'components/map-v2/components/recent-imagery/components/recent-imagery-settings';
-import Basemaps from 'components/map-v2/components/basemaps';
-import Analysis from 'components/map-v2/components/analysis';
-import Legend from 'components/map-v2/components/legend';
+import RecentImagerySettings from 'components/maps/main-map/components/recent-imagery/components/recent-imagery-settings';
+import Basemaps from 'components/maps/components/basemaps';
+import Analysis from 'components/maps/components/analysis';
+import Legend from 'components/maps/components/legend';
 import Datasets from './components/sections/datasets';
 import Explore from './components/sections/explore';
 import Search from './components/sections/search';

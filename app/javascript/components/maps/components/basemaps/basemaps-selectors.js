@@ -3,16 +3,16 @@ import { createStructuredSelector } from 'reselect';
 import {
   getBasemap,
   getLabels,
-  getActiveDatasetsState,
+  getActiveDatasetsFromState,
   getMapZoom,
   getActiveBoundaryDatasets,
   getAllBoundaries
-} from 'components/map-v2/selectors';
+} from 'components/maps/map/selectors';
 
 import basemaps, { labels } from './basemaps-schema';
 
 export const getBasemapsProps = createStructuredSelector({
-  activeDatasets: getActiveDatasetsState,
+  activeDatasets: getActiveDatasetsFromState,
   mapZoom: getMapZoom,
   activeLabels: getLabels,
   activeBasemap: getBasemap,

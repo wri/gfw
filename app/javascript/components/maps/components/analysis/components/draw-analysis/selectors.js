@@ -4,7 +4,7 @@ import flatMap from 'lodash/flatMap';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
-import { getActiveLayers, getMapZoom } from 'components/map-v2/selectors';
+import { getActiveLayers, getMapZoom } from 'components/maps/map/selectors';
 import { filterWidgetsByCategoryAndLayers } from 'components/widgets/selectors';
 
 const selectLocation = state => state.location && state.location.payload;

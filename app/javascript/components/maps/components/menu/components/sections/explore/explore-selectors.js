@@ -1,14 +1,14 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
-  getActiveDatasetsState,
+  getActiveDatasetsFromState,
   getBasemap,
   getLabels
-} from 'components/map-v2/selectors';
+} from 'components/maps/map/selectors';
 
 import basemaps, {
   labels
-} from 'components/map-v2/components/basemaps/basemaps-schema';
+} from 'components/maps/components/basemaps/basemaps-schema';
 
 import { descriptions, topics, stories } from './explore-sections';
 
@@ -94,7 +94,7 @@ const getDescription = createSelector(
 );
 
 const getCurrentMapPayload = createSelector(
-  [getActiveDatasetsState, getBasemap, getLabels],
+  [getActiveDatasetsFromState, getBasemap, getLabels],
   (datasets, basemap, label) => ({
     datasets,
     basemap,

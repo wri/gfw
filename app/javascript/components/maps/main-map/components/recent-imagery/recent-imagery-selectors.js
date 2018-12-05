@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 
-import { initialState as mapInitialState } from 'components/map-v2/reducers';
+import { initialState as mapInitialState } from 'components/maps/map/reducers';
 import { initialState } from './recent-imagery-reducers';
 
 const getData = state => state.recentImagery.data || null;
@@ -46,7 +46,7 @@ export const getPosition = createSelector([getMapSettings], settings => ({
   lng: settings.center.lat
 }));
 
-export const getActiveDatasetsState = createSelector(
+export const getActiveDatasetsFromState = createSelector(
   getMapSettings,
   settings => settings.datasets
 );
@@ -56,10 +56,13 @@ export const getVisibility = createSelector(
   settings => settings.visible
 );
 
-export const getActive = createSelector([getActiveDatasetsState], datasets => {
-  if (isEmpty(datasets)) return null;
-  return !!datasets.find(d => d.isRecentImagery);
-});
+export const getActive = createSelector(
+  [getActiveDatasetsFromState],
+  datasets => {
+    if (isEmpty(datasets)) return null;
+    return !!datasets.find(d => d.isRecentImagery);
+  }
+);
 
 export const getFilteredData = createSelector(
   [getData, getRecentImagerySettings],
@@ -174,6 +177,6 @@ export const getRecentImageryProps = createStructuredSelector({
   bounds: getTileBounds,
   location: getLocation,
   // url props
-  datasets: getActiveDatasetsState,
+  datasets: getActiveDatasetsFromState,
   recentImageryDataset: getRecentImageryDataset
 });

@@ -3,9 +3,9 @@ import isEmpty from 'lodash/isEmpty';
 import startCase from 'lodash/startCase';
 import flatten from 'lodash/flatten';
 
-import { getActiveDatasetsState } from 'components/map-v2/selectors';
+import { getActiveDatasetsFromState } from 'components/maps/map/selectors';
 
-import { getVisibility } from 'components/map-v2/components/recent-imagery/recent-imagery-selectors';
+import { getVisibility } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
 import { initialState } from './menu-reducers';
 import {
   datasetsSections,
@@ -129,7 +129,7 @@ export const getDatasetSections = createSelector(
 export const getDatasetSectionsWithData = createSelector(
   [
     getDatasetSections,
-    getActiveDatasetsState,
+    getActiveDatasetsFromState,
     getDatasetCategory,
     getMenuSection
   ],
@@ -227,7 +227,7 @@ export const getSearchSections = createSelector([getMenuSection], menuSection =>
 );
 
 export const getMobileSections = createSelector(
-  [getMenuSection, getActiveDatasetsState, getLocation, getEmbed],
+  [getMenuSection, getActiveDatasetsFromState, getLocation, getEmbed],
   (menuSection, activeDatasets, location, embed) =>
     mobileSections.filter(s => !embed || s.embed).map(s => ({
       ...s,
@@ -260,7 +260,7 @@ export const getMenuProps = createStructuredSelector({
   countriesWithoutData: getZeroDataCountries,
   countries: getUnselectedCountries,
   selectedCountries: getActiveCountries,
-  activeDatasets: getActiveDatasetsState,
+  activeDatasets: getActiveDatasetsFromState,
   datasetCategory: getDatasetCategory,
   datasetCategories: getDatasetCategories,
   exploreType: getExploreType,

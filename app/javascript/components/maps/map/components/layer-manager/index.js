@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setMapLoading } from 'components/map-v2/actions';
+import { setMapLoading } from 'components/maps/map/actions';
 import Component from './component';
 import { getLayerManagerProps } from './selectors';
 

@@ -1,6 +1,6 @@
 import basemaps, {
   labels
-} from 'components/map-v2/components/basemaps/basemaps-schema';
+} from 'components/maps/components/basemaps/basemaps-schema';
 import * as actions from './actions';
 
 export const initialState = {

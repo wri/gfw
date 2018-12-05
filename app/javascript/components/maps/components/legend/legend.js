@@ -5,7 +5,7 @@ import difference from 'lodash/difference';
 import { track } from 'utils/analytics';
 
 import * as modalActions from 'components/modals/meta/meta-actions';
-import * as mapActions from 'components/map-v2/actions';
+import * as mapActions from 'components/maps/map/actions';
 
 import Component from './legend-component';
 import { getLegendProps } from './legend-selectors';

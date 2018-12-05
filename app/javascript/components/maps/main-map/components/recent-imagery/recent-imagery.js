@@ -6,7 +6,7 @@ import debounce from 'lodash/debounce';
 import { checkLocationInsideBbox } from 'utils/geoms';
 import { CancelToken } from 'axios';
 
-import * as mapActions from 'components/map-v2/actions';
+import * as mapActions from 'components/maps/map/actions';
 import * as ownActions from './recent-imagery-actions';
 
 import reducers, { initialState } from './recent-imagery-reducers';
