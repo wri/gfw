@@ -22,9 +22,11 @@ class AnalysisComponent extends PureComponent {
       handleFetchAnalysis,
       setSubscribeSettings,
       endpoints,
+      widgetLayers,
       embed
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
+    const hasWidgets = widgetLayers && !!widgetLayers.length;
 
     return (
       <Fragment>
@@ -59,6 +61,8 @@ class AnalysisComponent extends PureComponent {
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
               hasLayers={hasLayers}
+              hasWidgets={hasWidgets}
+              analysis
             />
           ) : (
             <ChoseAnalysis />
@@ -99,6 +103,7 @@ AnalysisComponent.propTypes = {
   clearAnalysis: PropTypes.func,
   className: PropTypes.string,
   endpoints: PropTypes.array,
+  widgetLayers: PropTypes.array,
   loading: PropTypes.bool,
   location: PropTypes.object,
   goToDashboard: PropTypes.func,

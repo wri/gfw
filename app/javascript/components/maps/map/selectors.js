@@ -227,23 +227,22 @@ export const getDatasetsWithConfig = createSelector(
                 ...sqlParams
               }
             }),
-            ...(!isEmpty(l.decodeParams) &&
-              l.decodeFunction && {
-                decodeParams: {
-                  ...l.decodeParams,
-                  ...(layers &&
-                    layers.includes('confirmedOnly') && {
-                      confirmedOnly: true
-                    }),
-                  ...(maxDate && {
-                    endDate: maxDate
+            ...(l.decodeFunction && {
+              decodeParams: {
+                ...l.decodeParams,
+                ...(layers &&
+                  layers.includes('confirmedOnly') && {
+                    confirmedOnly: true
                   }),
-                  ...decodeParams,
-                  ...(hasDecodeTimeline && {
-                    ...timelineParams
-                  })
-                }
-              }),
+                ...(maxDate && {
+                  endDate: maxDate
+                }),
+                ...decodeParams,
+                ...(hasDecodeTimeline && {
+                  ...timelineParams
+                })
+              }
+            }),
             ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
               timelineConfig: {
                 ...timelineConfig,
