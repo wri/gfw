@@ -1,143 +1,120 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import ReactDatePicker from 'react-datepicker';
+import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
 import cx from 'classnames';
-// import range from 'lodash/range';
+import range from 'lodash/range';
+import { Portal } from 'react-portal';
 
 import moment from 'moment';
-// import Dropdown from 'components/ui/dropdown';
+import Dropdown from 'components/ui/dropdown';
 
-// import 'react-dates/initialize';
-// import 'react-dates/lib/css/_datepicker.css';
 import './datepicker-styles.scss';
-// import './themes/datepicker-small.scss';
+// import './themes/datepicker-small.scss'; //TODO: recent imagery styles
 
 class Datepicker extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      focused: false
-    };
+  state = {
+    position: {}
+  };
+
+  componentDidMount() {
+    this.setPosition();
   }
 
-  render() {
-    const { className, date, handleOnDateChange, settings, theme } = this.props;
-    const { minDate, maxDate } = settings;
+  setPosition = () => {
+    this.setState({ position: this.ref.getBoundingClientRect() });
+  };
 
-    // const maxYear = moment(maxDate).year();
-    // const minYear = moment(minDate).year();
+  renderCalendarContainer = ({ className, children }) => {
+    const { position } = this.state;
+
     return (
-      <div className={cx('c-datepicker', theme, className)}>
-        <ReactDatePicker
-          selected={date.toDate()}
-          onSelect={d => {
-            handleOnDateChange(moment(d), 0);
-          }}
-          focused={this.state.focused}
-          onFocusChange={({ focused }) => this.setState({ focused })}
-          minDate={new Date(minDate)}
-          maxDate={new Date(maxDate)}
-          withPortal
-        />
-        {/* <SingleDatePicker
-          date={date}
-          onDateChange={d => {
-            handleOnDateChange(d, 0);
-          }}
-          focused={this.state.focused}
-          onFocusChange={({ focused }) => this.setState({ focused })}
-          navPrev={
-            <div className="c-navigation-button c-button-left">
-              <svg
-                id="c-arrow-left"
-                width="7px"
-                height="10px"
-                viewBox="0 0 7 10"
-                version="1.1"
-              >
-                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                  <g
-                    transform="translate(-812.000000, -72.000000)"
-                    fill="#FFFFFF"
-                    fillRule="nonzero"
-                  >
-                    <g
-                      id="scroll"
-                      transform="translate(816.000000, 77.000000) scale(-1, 1) rotate(-180.000000) translate(-816.000000, -77.000000) translate(806.000000, 67.000000)"
-                    >
-                      <polygon
-                        id="arrow"
-                        points="12.7071068 13.2928932 11.2928932 14.7071068 6.58578644 10 11.2928932 5.29289322 12.7071068 6.70710678 9.41421356 10"
-                      />
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </div>
-          }
-          navNext={
-            <div className="c-navigation-button c-button-right">
-              <svg
-                id="c-arrow-left"
-                width="7px"
-                height="10px"
-                viewBox="0 0 7 10"
-                version="1.1"
-              >
-                <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                  <g
-                    transform="translate(-812.000000, -72.000000)"
-                    fill="#FFFFFF"
-                    fillRule="nonzero"
-                  >
-                    <g
-                      id="scroll"
-                      transform="translate(816.000000, 77.000000) scale(-1, 1) rotate(-180.000000) translate(-816.000000, -77.000000) translate(806.000000, 67.000000)"
-                    >
-                      <polygon
-                        id="arrow"
-                        points="12.7071068 13.2928932 11.2928932 14.7071068 6.58578644 10 11.2928932 5.29289322 12.7071068 6.70710678 9.41421356 10"
-                      />
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </div>
-          }
-          renderMonthElement={({ month, onMonthSelect, onYearSelect }) => (
-            <div className="c-date-month-selector">
-              <Dropdown
-                className="c-date-dropdown"
-                theme="theme-dropdown-native theme-dropdown-native-button"
-                noItemsFound="No months found"
-                options={moment
-                  .months()
-                  .map((m, i) => ({ value: i, label: m }))}
-                onChange={e => {
-                  onMonthSelect(month, e);
-                }}
-                value={month.month()}
-                native
-              />
-              <Dropdown
-                className="c-date-dropdown"
-                theme="theme-dropdown-native theme-dropdown-native-button"
-                noItemsFound="No years found"
-                noSelectedValue={month.year().toString()}
-                options={range(
-                  parseInt(minYear, 10),
-                  parseInt(maxYear, 10) + 1
-                ).map(i => ({ value: i, label: i }))}
-                onChange={e => {
-                  onYearSelect(month, e);
-                }}
-                native
-              />
-            </div>
-          )}
-          {...settings}
-        />
-        */}
+      <Portal>
+        <div
+          style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+        >
+          <CalendarContainer className={className}>
+            {children}
+          </CalendarContainer>
+        </div>
+      </Portal>
+    );
+  };
+
+  render() {
+    const { className, handleOnDateChange, settings, theme } = this.props;
+    const momentDate = this.props.date;
+    const { minDate, maxDate } = settings;
+    const { position } = this.state;
+    const maxYear = moment(maxDate).year();
+    const minYear = moment(minDate).year();
+
+    return (
+      <div
+        ref={ref => {
+          this.ref = ref;
+        }}
+        className={cx('c-datepicker', theme, className)}
+      >
+        {position && (
+          <ReactDatePicker
+            selected={momentDate.toDate()}
+            onSelect={d => {
+              handleOnDateChange(moment(d), 0);
+            }}
+            minDate={new Date(minDate)}
+            maxDate={new Date(maxDate)}
+            dateFormat="dd MMM YYYY" // TODO: CSS uppercase
+            className="datepicker-input"
+            onFocus={this.setPosition}
+            calendarContainer={this.renderCalendarContainer}
+            renderCustomHeader={({
+              date,
+              changeYear,
+              changeMonth,
+              decreaseMonth,
+              increaseMonth,
+              prevMonthButtonDisabled,
+              nextMonthButtonDisabled
+            }) => (
+              <div>
+                {prevMonthButtonDisabled ? (
+                  ''
+                ) : (
+                  <button onClick={decreaseMonth}>prev</button>
+                )}
+                <Dropdown
+                  className="c-date-dropdown"
+                  theme="theme-dropdown-native theme-dropdown-native-button"
+                  options={moment
+                    .months()
+                    .map((m, i) => ({ value: i, label: m }))}
+                  onChange={e => {
+                    changeMonth(e);
+                  }}
+                  value={date.getMonth()}
+                  native
+                />
+                <Dropdown
+                  className="c-date-dropdown"
+                  theme="theme-dropdown-native theme-dropdown-native-button"
+                  noSelectedValue={date.getFullYear().toString()}
+                  options={range(
+                    parseInt(minYear, 10),
+                    parseInt(maxYear, 10) + 1
+                  ).map(i => ({ value: i, label: i }))}
+                  onChange={e => {
+                    changeYear(e.value);
+                  }}
+                />
+                {nextMonthButtonDisabled ? (
+                  ''
+                ) : (
+                  <button onClick={increaseMonth}>next</button>
+                )}
+              </div>
+            )}
+          />
+        )}
       </div>
     );
   }

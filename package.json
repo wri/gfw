@@ -150,6 +150,7 @@
     "react-list-scroll-bound": "16.0.1",
     "react-load-script": "0.0.6",
     "react-modal": "3.1.2",
+    "react-portal": "^4.2.0",
     "react-pose": "^3.3.6",
     "react-redux": "^5.0.7",
     "react-responsive": "^5.0.0",

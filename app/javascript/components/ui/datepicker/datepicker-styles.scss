@@ -1,6 +1,14 @@
 @import '~styles/settings.scss';
 @import '~react-datepicker/dist/react-datepicker.css';
 
+.react-datepicker__portal {
+  width: auto;
+  height: auto;
+  background-color: none;
+  left: auto;
+  top: auto;
+}
+
 .SingleDatePicker_picker {
   top: rem(30px) !important;
 
