@@ -3,8 +3,11 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import {
   getDraw,
   getMapLoading,
-  getActiveDatasetsFromState
+  getActiveDatasetsFromState,
+  getEmbed
 } from 'components/maps/map/selectors';
+import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
+
 import initialState from './initial-state';
 
 // state from url
@@ -64,6 +67,8 @@ export const getMapProps = createStructuredSelector({
   analysisActive: getShowAnalysis,
   oneClickAnalysisActive: getOneClickAnalysisActive,
   hidePanels: getHidePanels,
+  tileGeoJSON: getTileGeoJSON,
   menuSection: selectMenuSection,
-  activeDatasets: getActiveDatasetsFromState
+  activeDatasets: getActiveDatasetsFromState,
+  embed: getEmbed
 });

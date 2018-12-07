@@ -3,20 +3,26 @@
 .c-map-main {
   height: 100%;
 
-  .main-map-tooltip {
-    height: 100%;
-  }
-
-  .main-map-hover-tooltip {
-    .view-more {
-      margin-top: rem(5px);
-      font-size: rem(10px);
-    }
-  }
-
   .main-map-container {
     width: 100%;
     height: 100%;
+
+    .map-attributions {
+      position: absolute;
+      bottom: rem(15px);
+      right: rem(260px);
+      z-index: 5;
+    }
+
+    .leaflet-control-container {
+      .leaflet-bottom {
+        right: rem(65px);
+
+        @media screen and (min-width: $screen-m) {
+          right: rem(260px);
+        }
+      }
+    }
 
     &.analysis {
       .leaflet-container {
@@ -30,8 +36,27 @@
       .leaflet-control-container {
         .leaflet-bottom {
           right: rem(15px);
+
+          @media screen and (min-width: $screen-m) {
+            right: rem(15px);
+          }
         }
       }
+
+      .map-attributions {
+        right: rem(15px);
+      }
+    }
+  }
+
+  .main-map-tooltip {
+    height: 100%;
+  }
+
+  .main-map-hover-tooltip {
+    .view-more {
+      margin-top: rem(5px);
+      font-size: rem(10px);
     }
   }
 

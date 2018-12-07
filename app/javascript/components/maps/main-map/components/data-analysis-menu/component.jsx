@@ -41,7 +41,7 @@ class DataAnalysisMenu extends PureComponent {
             onClick: () => {
               setMapMainSettings({
                 showAnalysis: l.showAnalysis,
-                hidden:
+                hideLegend:
                   (showAnalysis && l.active && !hidden) ||
                   (!showAnalysis && l.active && !hidden)
               });

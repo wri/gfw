@@ -17,11 +17,11 @@ import { reduxModule as MapOld } from 'components/map';
 import { reduxModule as MapNew } from 'components/maps/map';
 
 // Map components
-import { reduxModule as Analysis } from 'components/map-v2/components/analysis';
-import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
-import { reduxModule as Draw } from 'components/map-v2/components/draw';
-import { reduxModule as Popup } from 'components/map-v2/components/popup';
-import { reduxModule as MapTour } from 'components/map-v2/components/map-tour';
+import { reduxModule as Analysis } from 'components/maps/components/analysis';
+import { reduxModule as RecentImagery } from 'components/maps/main-map/components/recent-imagery';
+import { reduxModule as Draw } from 'components/maps/map/components/draw';
+import { reduxModule as Popup } from 'components/maps/map/components/popup';
+import { reduxModule as MapTour } from 'components/maps/main-map/components/map-tour';
 
 // Projects (About and SGF)
 import { reduxModule as MapMenu } from 'components/maps/components/menu';

@@ -57,7 +57,7 @@ class MainMapComponent extends PureComponent {
         {isDesktop => (
           <div className="c-map-main">
             <div
-              className="main-map-container"
+              className={cx('main-map-container', { embed })}
               onClick={onMapClick}
               role="button"
               tabIndex={0}
@@ -88,6 +88,7 @@ class MainMapComponent extends PureComponent {
                 disabled={!isDesktop}
               >
                 <Map
+                  className="main-map"
                   customLayers={
                     tileGeoJSON
                       ? [
@@ -137,7 +138,6 @@ class MainMapComponent extends PureComponent {
             {!embed && (
               <MapControlButtons
                 className="main-map-controls"
-                embed={embed}
                 isDesktop={isDesktop}
               />
             )}

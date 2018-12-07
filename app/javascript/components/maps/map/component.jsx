@@ -34,7 +34,6 @@ class MapComponent extends PureComponent {
       label,
       bbox,
       draw,
-      embed,
       handleMapMove,
       handleMapInteraction,
       customLayers
@@ -80,7 +79,7 @@ class MapComponent extends PureComponent {
           )}
         </Map>
         <Icon className="icon-crosshair" icon={iconCrosshair} />
-        <MapAttributions className={cx('map-attributions', { embed })} />
+        <MapAttributions className="map-attributions" />
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
@@ -104,8 +103,7 @@ MapComponent.propTypes = {
   bbox: PropTypes.array,
   handleMapInteraction: PropTypes.func,
   customLayers: PropTypes.array,
-  draw: PropTypes.bool,
-  embed: PropTypes.bool
+  draw: PropTypes.bool
 };
 
 export default MapComponent;

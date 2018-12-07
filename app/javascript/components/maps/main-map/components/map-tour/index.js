@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { setAnalysisSettings } from 'components/maps/components/analysis/actions';
-import { setMapSettings } from 'components/mapp/map/actions';
+import { setMapSettings } from 'components/maps/map/actions';
 import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
 import * as actions from './actions';
 import Component from './component';

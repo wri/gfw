@@ -408,6 +408,5 @@ export const getMapProps = createStructuredSelector({
   bbox: getBbox,
   canBound: getCanBound,
   draw: getDraw,
-  embed: getEmbed,
   selectedInteraction: getSelectedInteraction
 });
