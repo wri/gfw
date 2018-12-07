@@ -1,9 +1,8 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'vizzuality-redux-tools';
 import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
-import { initialState } from './recent-imagery-reducers';
 
 const serializeReponse = response =>
   response &&
@@ -45,7 +44,7 @@ export const getRecentImageryData = createThunkAction(
             response.data && response.data.data && response.data.data.tiles
           );
           if (serializedResponse && !!serializedResponse.length) {
-            const { clouds } = initialState.settings;
+            const { clouds } = 25;
             const cloudScore = Math.round(serializedResponse[0].cloud_score);
             dispatch(
               setRecentImageryData({

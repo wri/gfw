@@ -298,7 +298,7 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return null;
 
   return flatten(layerGroups.map(d => d.layers))
-    .filter(l => l.active)
+    .filter(l => l.active && (!l.isRecentImagery || l.params.url))
     .map((l, i) => ({
       ...l,
       zIndex:

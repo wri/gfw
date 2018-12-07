@@ -164,8 +164,7 @@
     "redux-first-router-link": "1.4.2",
     "redux-form": "^7.4.2",
     "redux-persist": "^5.10.0",
-    "redux-thunk": "2.2.0",
-    "redux-tools": "github:vizzuality/redux-tools#v3.4.1",
+    "redux-thunk": "^2.3.0",
     "reselect": "3.0.1",
     "stylelint": "8.3.1",
     "terser-webpack-plugin": "^1.1.0",
@@ -175,6 +174,7 @@
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
+    "vizzuality-redux-tools": "^4.0.2",
     "wri-api-components": "^2.2.10",
     "wri-json-api-serializer": "^1.0.1"
   },

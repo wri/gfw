@@ -1,4 +1,4 @@
-import * as actions from './recent-imagery-actions';
+import * as actions from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
 
 export const initialState = {
   loading: false,
@@ -62,5 +62,5 @@ export default {
   [actions.setRecentImageryDataStatus]: setRecentImageryDataStatus,
   [actions.resetRecentImageryData]: resetRecentImageryData,
   [actions.setRecentImageryLoading]: setRecentImageryLoading,
-  [actions.setRecentImageryLoadingMoreTiles]: setRecentImageryLoadingMoreTiles
+  [setRecentImageryLoadingMoreTiles]: setRecentImageryLoadingMoreTiles
 };

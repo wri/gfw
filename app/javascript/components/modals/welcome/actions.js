@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'vizzuality-redux-tools';
 
 export const setModalWelcome = createAction('setModalWelcome');
 

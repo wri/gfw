@@ -1,4 +1,4 @@
-import { createThunkAction } from 'redux-tools';
+import { createThunkAction } from 'vizzuality-redux-tools';
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',

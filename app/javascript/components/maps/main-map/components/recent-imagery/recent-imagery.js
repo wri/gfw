@@ -6,15 +6,14 @@ import debounce from 'lodash/debounce';
 import { checkLocationInsideBbox } from 'utils/geoms';
 import { CancelToken } from 'axios';
 
-import * as mapActions from 'components/maps/map/actions';
+import { setMapSettings } from 'components/maps/map/actions';
 import * as ownActions from './recent-imagery-actions';
-
 import reducers, { initialState } from './recent-imagery-reducers';
 import { getRecentImageryProps } from './recent-imagery-selectors';
 
 const actions = {
   ...ownActions,
-  ...mapActions
+  setMapSettings
 };
 
 const mapStateToProps = getRecentImageryProps;
@@ -108,12 +107,7 @@ class RecentImageryContainer extends PureComponent {
   };
 
   setTile = debounce(() => {
-    const {
-      datasets,
-      activeTile,
-      setMapSettings,
-      recentImageryDataset
-    } = this.props;
+    const { datasets, activeTile, recentImageryDataset } = this.props;
     if (recentImageryDataset && activeTile && activeTile.url) {
       const activeDatasets =
         datasets &&
@@ -129,7 +123,7 @@ class RecentImageryContainer extends PureComponent {
           url: activeTile.url
         }
       };
-      setMapSettings({
+      this.props.setMapSettings({
         datasets: activeDatasets
           ? activeDatasets.concat(recentDataset)
           : [recentDataset]
@@ -138,10 +132,10 @@ class RecentImageryContainer extends PureComponent {
   }, 200);
 
   removeTile() {
-    const { datasets, setMapSettings, setRecentImagerySettings } = this.props;
+    const { datasets, setRecentImagerySettings } = this.props;
     const activeDatasets =
       datasets && !!datasets.length && datasets.filter(d => !d.isRecentImagery);
-    setMapSettings({
+    this.props.setMapSettings({
       datasets: activeDatasets || []
     });
     setRecentImagerySettings({
@@ -174,6 +168,5 @@ RecentImageryContainer.propTypes = {
   setRecentImagerySettings: PropTypes.func
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
-
+export const reduxModule = { actions, reducers, initialState };
 export default connect(mapStateToProps, actions)(RecentImageryContainer);

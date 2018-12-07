@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createAction, createThunkAction } from 'vizzuality-redux-tools';
 import union from 'turf-union';
 import compact from 'lodash/compact';
 import { DASHBOARDS } from 'router';
