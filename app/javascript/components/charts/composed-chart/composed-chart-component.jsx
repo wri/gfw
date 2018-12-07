@@ -74,7 +74,7 @@ class CustomComposedChart extends PureComponent {
         className={cx('c-composed-chart', className)}
         style={{ height: simple ? 100 : height || 250 }}
       >
-        <ResponsiveContainer width="99%" height="100%">
+        <ResponsiveContainer width="99%">
           <ComposedChart
             data={data}
             margin={
@@ -143,7 +143,6 @@ class CustomComposedChart extends PureComponent {
                         (value < 1 ? format('.2r')(value) : format('.2s')(value)))
                     }
                     fill="#555555"
-                    fontSize={'12px'}
                     vertical={isVertical}
                   />
                 }
@@ -163,12 +162,11 @@ class CustomComposedChart extends PureComponent {
               cursor={{
                 opacity: 0.5,
                 stroke: '#d6d6d9',
-                ...(!!bars &&
-                  (isVertical
-                    ? { strokeWidth: `${1.2 * (45 / data.length)}%` }
-                    : { strokeWidth: `${1.2 * (100 / data.length)}%` }))
+                ...(!!bars && {
+                  strokeWidth: `${1.2 *
+                    ((isVertical ? 45 : 100) / data.length)}%`
+                })
               }}
-              // TODO: change cursor with layout
               content={<ChartToolTip settings={tooltip} />}
             />
             {areas &&

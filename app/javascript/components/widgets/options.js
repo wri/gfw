@@ -8,10 +8,10 @@ import tscDriverGroups from 'data/tsc-loss-groups.json';
 import types from 'data/types.json';
 import weeks from 'data/weeks.json';
 import datasets from 'data/datasets.json';
-import bTypes from 'data/biodiversity-int.json';
+import bioTypes from 'data/biodiversity-int.json';
 
 export default {
-  bTypes,
+  bioTypes,
   forestTypes,
   landCategories,
   thresholds,

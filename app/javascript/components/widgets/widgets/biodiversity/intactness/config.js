@@ -7,12 +7,15 @@ export default {
   large: true,
   analysis: false,
   options: {
-    bTypes: true
+    bioTypes: true
   },
   colors: 'biodiversity',
-  dataType: 'loss',
-  // metaKey: 'widget_tree_cover_loss',
-  // layers: ['loss', 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6'],
+  dataType: 'biodiversity',
+  metaKey: 'biodiversity_intactness',
+  layers: [
+    '43a205fe-aad3-4db1-8807-c399a3264349',
+    'f13f86cb-08b5-4e6c-bb8d-b4782052f9e5'
+  ],
   sortOrder: {
     summary: 0,
     forestChange: 0

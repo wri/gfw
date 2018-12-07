@@ -45,7 +45,7 @@ const breaks = {
 const parseData = createSelector(
   [getData, getSettings, getChildLocationDict],
   (data, settings, childLocations) => {
-    if (!data || isEmpty(data) || isEmpty(childLocations)) {
+    if (isEmpty(data) || isEmpty(childLocations)) {
       return null;
     }
     const { bType } = settings;
@@ -92,8 +92,8 @@ const parseData = createSelector(
 const buildData = createSelector(
   [parseData, getColors, getSettings],
   (percentiles, colors, settings) => {
-    if (!percentiles || isEmpty(percentiles)) return null;
-    const { bType, percentile } = settings;
+    if (isEmpty(percentiles)) return null;
+    const { percentile } = settings;
     let selectedPercentile;
 
     if (!percentile) {
@@ -105,7 +105,7 @@ const buildData = createSelector(
       selectedPercentile = percentiles.filter(p => p.name === percentile)[0];
     }
 
-    const list = sortBy(selectedPercentile.data, [bType]).map(item => ({
+    const list = sortBy(selectedPercentile.data, 'label').map(item => ({
       label: item.label,
       color: colors.main
     }));
@@ -121,50 +121,40 @@ const buildData = createSelector(
   }
 );
 
-const getPercentileIndex = createSelector([buildData], data => {
+const parseConfig = createSelector([buildData], data => {
   if (!data) return null;
   const { percentiles, selectedPercentile } = data;
-  if (!selectedPercentile || !percentiles || isEmpty(percentiles)) return null;
-  let index = -1;
 
-  percentiles.forEach((p, i) => {
-    if (p.name === selectedPercentile.name) {
-      index = i;
-    }
-  });
-
-  return index;
-});
-
-const parseConfig = createSelector([getPercentileIndex], activeIndex => ({
-  height: 250,
-  yKey: 'name',
-  xAxis: {
-    type: 'number',
-    domain: [0, 100]
-  },
-  // unit: '%',
-  unitFormat: text => text,
-  xKeys: {
-    bars: {
-      percent: {
-        clickable: true,
-        itemColor: true
+  return {
+    height: 250,
+    yKey: 'name',
+    xAxis: {
+      type: 'number',
+      domain: [0, 100]
+    },
+    xKeys: {
+      bars: {
+        percent: {
+          clickable: true,
+          itemColor: true
+        }
       }
+    },
+    yAxis: {
+      type: 'category'
+    },
+    barBackground: {
+      activeIndex: percentiles.findIndex(
+        p => p.name === selectedPercentile.name
+      )
     }
-  },
-  yAxis: {
-    type: 'category'
-  },
-  barBackground: {
-    activeIndex
-  }
-}));
+  };
+});
 
 const parseSentence = createSelector(
   [parseData, getLocationName, getSentences, getSettings],
   (percentiles, location, sentence, settings) => {
-    if (!percentiles || isEmpty(percentiles)) return null;
+    if (isEmpty(percentiles)) return null;
     const { bType, percentile } = settings;
 
     let selectedPercentile;
@@ -181,7 +171,8 @@ const parseSentence = createSelector(
     const params = {
       location: location === 'global' ? 'the world' : location,
       percent: `${selectedPercentile.percent}%`,
-      percentile: selectedPercentile.name.toLocaleLowerCase(),
+      percentile:
+        selectedPercentile.name && selectedPercentile.name.toLocaleLowerCase(),
       variable: bType === 'int' ? 'intactness' : 'significance'
     };
     return {
