@@ -97,7 +97,7 @@ MapComponent.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   mapOptions: PropTypes.object,
-  basemap: PropTypes.object,
+  basemap: PropTypes.string,
   label: PropTypes.object,
   handleMapMove: PropTypes.func,
   bbox: PropTypes.array,

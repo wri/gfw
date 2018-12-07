@@ -3,8 +3,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import {
   getDraw,
   getMapLoading,
-  getActiveDatasetsFromState,
-  getEmbed
+  getActiveDatasetsFromState
 } from 'components/maps/map/selectors';
 import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 
@@ -13,7 +12,8 @@ import initialState from './initial-state';
 // state from url
 const getMapMainUrlState = state =>
   state.location && state.location.query && state.location.query.mapMain;
-const selectLocation = state => state.location && state.location.payload;
+const selectLocation = state => state.location && state.location;
+const selectLocationPayload = state => state.location && state.location.payload;
 
 // analysis selects
 const selectAnalysisSettings = state =>
@@ -24,6 +24,11 @@ const selectMenuSection = state =>
   state.location.query.menu.menuSection;
 
 // SELECTORS
+export const getEmbed = createSelector(
+  [selectLocation],
+  location => location && location.routesMap[location.type].embed
+);
+
 export const getMainMapSettings = createSelector(
   [getMapMainUrlState],
   urlState => ({
@@ -53,7 +58,7 @@ export const getShowAnalysis = createSelector(
 );
 
 export const getOneClickAnalysisActive = createSelector(
-  [selectAnalysisSettings, selectLocation, getDraw, getMapLoading],
+  [selectAnalysisSettings, selectLocationPayload, getDraw, getMapLoading],
   (settings, location, draw, loading) =>
     settings &&
     !draw &&

@@ -4,6 +4,7 @@ import startCase from 'lodash/startCase';
 import flatten from 'lodash/flatten';
 
 import { getActiveDatasetsFromState } from 'components/maps/map/selectors';
+import { getEmbed } from 'components/maps/main-map/selectors';
 
 import { getVisibility } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
 import { initialState } from './menu-reducers';
@@ -21,7 +22,6 @@ const getLoading = state =>
 const getAnalysisLoading = state => state.analysis.loading;
 const getDatasets = state => state.datasets.data || null;
 const getLocation = state => state.location && state.location.payload;
-const getEmbed = (state, { embed }) => embed;
 
 // setting from state
 export const getMenuSettings = createSelector([getMenuUrlState], urlState => ({

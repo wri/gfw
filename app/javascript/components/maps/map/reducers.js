@@ -1,6 +1,3 @@
-import basemaps, {
-  labels
-} from 'components/maps/components/basemaps/basemaps-schema';
 import * as actions from './actions';
 
 export const initialState = {
@@ -15,8 +12,8 @@ export const initialState = {
     attributionControl: false,
     maxZoom: 19,
     minZoom: 3,
-    basemap: basemaps.default,
-    label: labels.default,
+    basemap: 'default',
+    label: 'default',
     bbox: null,
     canBound: true,
     draw: false,

@@ -3,12 +3,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import {
   getActiveDatasetsFromState,
   getBasemap,
-  getLabels
+  getLabel
 } from 'components/maps/map/selectors';
-
-import basemaps, {
-  labels
-} from 'components/maps/components/basemaps/basemaps-schema';
 
 import { descriptions, topics, stories } from './explore-sections';
 
@@ -59,8 +55,8 @@ const selectPTWData = state => {
             bbox: d.bbox
           }
         ],
-        basemap: basemaps.default,
-        label: labels.default
+        basemap: 'default',
+        label: 'default'
       }
     }
   }));
@@ -94,7 +90,7 @@ const getDescription = createSelector(
 );
 
 const getCurrentMapPayload = createSelector(
-  [getActiveDatasetsFromState, getBasemap, getLabels],
+  [getActiveDatasetsFromState, getBasemap, getLabel],
   (datasets, basemap, label) => ({
     datasets,
     basemap,

@@ -6,10 +6,6 @@ import userStories from 'assets/images/user-stories.jpg';
 import mongabay from 'assets/images/mongabay.jpg';
 import earthJournalism from 'assets/images/earth-journalism.jpg';
 
-import basemaps, {
-  labels
-} from 'components/maps/components/basemaps/basemaps-schema';
-
 export const descriptions = {
   topics: 'Explore data related to the drivers and impacts of forest change.',
   placesToWatch:
@@ -201,8 +197,8 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: basemaps.default,
-        label: labels.default
+        basemap: 'default',
+        label: 'default'
       }
     }
   },
@@ -243,8 +239,8 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: basemaps.dark,
-        label: labels.lightLabels
+        basemap: 'dark',
+        label: 'lightLabels'
       },
       analysis: {
         showAnalysis: true
@@ -317,8 +313,8 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: basemaps.default,
-        label: labels.default
+        basemap: 'default',
+        label: 'default'
       }
     }
   },
@@ -370,8 +366,8 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: basemaps.default,
-        label: labels.default
+        basemap: 'default',
+        label: 'default'
       }
     }
   }

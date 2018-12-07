@@ -1,28 +1,31 @@
-import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector, createSelector } from 'reselect';
 
 import {
-  getBasemap,
+  getBasemaps,
   getLabels,
+  getBasemap,
+  getLabel,
   getActiveDatasetsFromState,
   getMapZoom,
   getActiveBoundaryDatasets,
   getAllBoundaries
 } from 'components/maps/map/selectors';
 
-import basemaps, { labels } from './basemaps-schema';
+export const getLandsatYears = createSelector([getBasemaps], basemaps =>
+  basemaps.landsat.availableYears.map(y => ({
+    label: y,
+    value: y
+  }))
+);
 
 export const getBasemapsProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   mapZoom: getMapZoom,
-  activeLabels: getLabels,
+  activeLabels: getLabel,
   activeBasemap: getBasemap,
   boundaries: getAllBoundaries,
   activeBoundaries: getActiveBoundaryDatasets,
-  basemaps: () => basemaps,
-  labels: () => labels,
-  landsatYears: () =>
-    basemaps.landsat.availableYears.map(y => ({
-      label: y,
-      value: y
-    }))
+  basemaps: getBasemaps,
+  labels: getLabels,
+  landsatYears: getLandsatYears
 });

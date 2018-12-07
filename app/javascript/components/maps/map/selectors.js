@@ -3,6 +3,7 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 
 import { initialState } from './reducers';
+import basemaps, { labels } from './basemaps-schema';
 
 // map state
 const selectMapUrlState = state =>
@@ -18,7 +19,6 @@ const selectLatest = state => state.latest.data;
 
 // location
 const selectGeostore = state => state.geostore.data || null;
-const selectLocation = state => state.location || null;
 
 // interactions
 const selectSelectedInteractionId = state => state.popup.selected;
@@ -27,42 +27,39 @@ const selectInteractions = state => state.popup.interactions;
 // get widgets
 const selectWidgetActiveSettings = state => state.widgets.settings;
 
-// SELECTORS
-export const getEmbed = createSelector(
-  [selectLocation],
-  location => location && location.routesMap[location.type].embed
-);
+// CONSTS
+export const getBasemaps = () => basemaps;
+export const getLabels = () => labels;
 
+// SELECTORS
 export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
   ...initialState.settings,
   ...urlState
 }));
 
-export const getMapLoading = createSelector(
-  [
-    selectMapLoading,
-    selectGeostoreLoading,
-    selectLatestLoading,
-    selectDatasetsLoading
-  ],
-  (mapLoading, geostoreLoading, latestLoading, datasetsLoading) =>
-    mapLoading || geostoreLoading || latestLoading || datasetsLoading
-);
-
-// get single map settings
-export const getBasemap = createSelector(
+export const getBasemapKey = createSelector(
   getMapSettings,
   settings => settings.basemap
+);
+
+export const getBasemap = createSelector(
+  [getBasemapKey],
+  basemapKey => basemaps[basemapKey]
+);
+
+export const getLabelKey = createSelector(
+  getMapSettings,
+  settings => settings.label
+);
+
+export const getLabel = createSelector(
+  [getLabelKey],
+  labelsKey => labels[labelsKey]
 );
 
 export const getMapZoom = createSelector(
   getMapSettings,
   settings => settings.zoom
-);
-
-export const getLabels = createSelector(
-  getMapSettings,
-  settings => settings.label
 );
 
 export const getDraw = createSelector(
@@ -75,39 +72,46 @@ export const getBbox = createSelector(
   settings => settings.bbox
 );
 
-export const getHidePanels = createSelector(
-  getMapSettings,
-  settings => settings.hidePanels
-);
-
 export const getCanBound = createSelector(
   getMapSettings,
   settings => settings.canBound
 );
 
-export const getMapOptions = createSelector(getMapSettings, settings => {
-  if (!settings) return null;
-  const {
-    center,
-    zoom,
-    minZoom,
-    maxZoom,
-    zoomControl,
-    basemap,
-    label,
-    attributionControl
-  } = settings;
-  return {
-    center,
-    zoom,
-    minZoom,
-    maxZoom,
-    zoomControl,
-    label,
-    basemap,
-    attributionControl
-  };
-});
+export const getMapOptions = createSelector(
+  [getMapSettings, getBasemap, getLabel],
+  (settings, basemap, label) => {
+    if (!settings) return null;
+    const {
+      center,
+      zoom,
+      minZoom,
+      maxZoom,
+      zoomControl,
+      attributionControl
+    } = settings;
+    return {
+      center,
+      zoom,
+      minZoom,
+      maxZoom,
+      zoomControl,
+      label,
+      basemap,
+      attributionControl
+    };
+  }
+);
+
+export const getMapLoading = createSelector(
+  [
+    selectMapLoading,
+    selectGeostoreLoading,
+    selectLatestLoading,
+    selectDatasetsLoading
+  ],
+  (mapLoading, geostoreLoading, latestLoading, datasetsLoading) =>
+    mapLoading || geostoreLoading || latestLoading || datasetsLoading
+);
 
 // select datasets and dataset state
 export const getActiveDatasetsFromState = createSelector(
@@ -286,12 +290,6 @@ export const getLayerGroups = createSelector(
   }
 );
 
-// filter out any boundary layers that are for the basemaps comp
-export const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
-  if (!groups) return null;
-  return groups.filter(g => !g.isBoundary && !g.isRecentImagery);
-});
-
 // flatten datasets into layers for the layer manager
 export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return null;
@@ -402,7 +400,7 @@ export const getMapProps = createStructuredSelector({
   loading: getMapLoading,
   mapOptions: getMapOptions,
   basemap: getBasemap,
-  label: getLabels,
+  label: getLabel,
   layerBbox: getLayerBbox,
   geostoreBbox: getGeostoreBbox,
   bbox: getBbox,
