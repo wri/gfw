@@ -20,7 +20,7 @@ export const setMapSettings = createThunkAction(
 
 export const setLandsatBasemap = createThunkAction(
   'setLandsatBasemap',
-  ({ basemap, year, label, zoom }) => dispatch => {
+  ({ basemap, year, zoom }) => dispatch => {
     const { url } = basemap;
     const landsat = {
       key: `GFW__GEE_LANDSAT_BASEMAP_URL_${year}`,
@@ -61,7 +61,7 @@ export const setLandsatBasemap = createThunkAction(
             key: 'landsat',
             url: landsat.url
           },
-          label
+          label: basemap.labelsKey
         })
       );
     }

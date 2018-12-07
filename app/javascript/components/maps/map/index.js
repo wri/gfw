@@ -28,7 +28,6 @@ class MapContainer extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
       basemap,
-      label,
       mapOptions: { zoom },
       canBound,
       bbox,
@@ -43,7 +42,6 @@ class MapContainer extends PureComponent {
       setLandsatBasemap({
         basemap,
         year: basemap.year,
-        label,
         zoom
       });
     }
@@ -117,8 +115,7 @@ MapContainer.propTypes = {
   layerBbox: PropTypes.array,
   draw: PropTypes.bool,
   setInteraction: PropTypes.func,
-  menuSection: PropTypes.string,
-  label: PropTypes.string
+  menuSection: PropTypes.string
 };
 
 export const reduxModule = { actions: ownActions, reducers, initialState };

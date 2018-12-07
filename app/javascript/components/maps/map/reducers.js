@@ -15,8 +15,6 @@ export const initialState = {
     basemap: {
       key: 'default'
     },
-    landsatUrl:
-      'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     label: 'default',
     bbox: null,
     canBound: true,

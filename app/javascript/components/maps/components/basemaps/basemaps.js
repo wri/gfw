@@ -31,7 +31,7 @@ class BasemapsContainer extends React.Component {
   };
 
   selectLabels = label => {
-    this.props.setMapSettings({ label });
+    this.props.setMapSettings({ label: label.value });
     track('labelChanged', {
       label: label.label
     });
