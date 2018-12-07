@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
@@ -11,6 +11,8 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Map from 'components/maps/map';
 import SubscribeModal from 'components/modals/subscribe';
+import MapTour from 'components/maps/main-map/components/map-tour';
+import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from './components/recent-imagery';
 import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
@@ -142,6 +144,13 @@ class MainMapComponent extends PureComponent {
             )}
             <RecentImagery />
             <SubscribeModal />
+            {!embed &&
+              isDesktop && (
+                <Fragment>
+                  <MapTour />
+                  <ModalWelcome />
+                </Fragment>
+              )}
           </div>
         )}
       </MediaQuery>

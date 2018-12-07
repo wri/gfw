@@ -56,7 +56,7 @@ class MapTour extends PureComponent {
   );
 
   getSteps = () => {
-    const { setAnalysisSettings, setMenuSettings, setMapSettings } = this.props;
+    const { setMainMapSettings, setMenuSettings } = this.props;
 
     return [
       {
@@ -72,12 +72,12 @@ class MapTour extends PureComponent {
           text:
             'View and change settings for data layers on the map like date range and opacity. Click the "i" icons to learn more about a dataset.',
           next: () => {
-            setAnalysisSettings({
+            setMainMapSettings({
               showAnalysis: true
             });
           },
           prev: () => {
-            setAnalysisSettings({
+            setMainMapSettings({
               showAnalysis: false
             });
           }
@@ -128,7 +128,7 @@ class MapTour extends PureComponent {
             setMenuSettings({
               menuSection: ''
             });
-            setMapSettings({
+            setMainMapSettings({
               showBasemaps: true
             });
           },
@@ -145,7 +145,7 @@ class MapTour extends PureComponent {
           text:
             'Customize the basemap, including the boundaries displayed and the color of the labels.',
           next: () => {
-            setMapSettings({
+            setMainMapSettings({
               showBasemaps: false
             });
           },
@@ -153,7 +153,7 @@ class MapTour extends PureComponent {
             setMenuSettings({
               menuSection: 'search'
             });
-            setMapSettings({
+            setMainMapSettings({
               showBasemaps: false
             });
           }
@@ -161,8 +161,15 @@ class MapTour extends PureComponent {
       },
       {
         target: '.map-tour-recent-imagery',
-        content:
-          'View recent satellite imagery, searchable by date and cloud cover.'
+        content: {
+          text:
+            'View recent satellite imagery, searchable by date and cloud cover.',
+          prev: () => {
+            setMainMapSettings({
+              showBasemaps: true
+            });
+          }
+        }
       },
       {
         target: '.map-tour-map-controls',
@@ -181,8 +188,8 @@ class MapTour extends PureComponent {
   };
 
   resetMapLayout = () => {
-    const { setAnalysisSettings, setMenuSettings } = this.props;
-    setAnalysisSettings({ showAnalysis: false });
+    const { setMainMapSettings, setMenuSettings } = this.props;
+    setMainMapSettings({ showAnalysis: false });
     setMenuSettings({ menuSection: '' });
   };
 
@@ -267,7 +274,7 @@ class MapTour extends PureComponent {
 
 MapTour.propTypes = {
   open: PropTypes.bool,
-  setAnalysisSettings: PropTypes.func,
+  setMainMapSettings: PropTypes.func,
   setMapTourOpen: PropTypes.func,
   setMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,

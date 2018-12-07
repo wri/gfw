@@ -60,12 +60,7 @@ class App extends PureComponent {
               />
             )}
             <div className="page">
-              <PageComponent
-                embed={embed}
-                path={route.component}
-                sections={route.sections}
-                isDesktop={isDesktop}
-              />
+              <PageComponent path={route.component} sections={route.sections} />
             </div>
             {!embed && <MyGFWProvider />}
             {embed && (

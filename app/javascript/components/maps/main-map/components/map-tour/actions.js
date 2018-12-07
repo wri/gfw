@@ -28,7 +28,7 @@ export const setAnalysisView = createThunkAction(
       payload,
       query: {
         ...query,
-        analysis: {
+        mainMap: {
           showAnalysis: true
         }
       }
