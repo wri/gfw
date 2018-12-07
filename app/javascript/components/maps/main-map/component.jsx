@@ -11,7 +11,6 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Map from 'components/maps/map';
 import SubscribeModal from 'components/modals/subscribe';
-
 import RecentImagery from './components/recent-imagery';
 import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
@@ -39,30 +38,30 @@ class MainMapComponent extends PureComponent {
 
   render() {
     const {
-      handleShowTooltip,
-      oneClickAnalysisActive,
-      setRecentImagerySettings,
-      handleRecentImageryTooltip,
-      tileGeoJSON,
       draw,
-      tooltipData,
-      showTooltip,
       embed,
       hidePanels,
-      onMapClick
+      oneClickAnalysis,
+      tileGeoJSON,
+      showTooltip,
+      tooltipData,
+      setRecentImagerySettings,
+      handleClickMap,
+      handleRecentImageryTooltip,
+      handleShowTooltip
     } = this.props;
 
     return (
       <MediaQuery minDeviceWidth={SCREEN_M}>
         {isDesktop => (
-          <div className="c-map-main">
+          <div className={cx('c-map-main', { embed })}>
             <div
-              className={cx('main-map-container', { embed })}
-              onClick={onMapClick}
+              className="main-map-container"
               role="button"
               tabIndex={0}
+              onClick={handleClickMap}
               onMouseOver={() =>
-                oneClickAnalysisActive &&
+                oneClickAnalysis &&
                 handleShowTooltip(true, 'Click shape to analyze.')
               }
               onMouseOut={() => handleShowTooltip(false, '')}
@@ -70,7 +69,6 @@ class MainMapComponent extends PureComponent {
               <Tooltip
                 className="map-tooltip"
                 theme="tip"
-                hideOnClick
                 html={
                   <Tip
                     className="map-hover-tooltip"
@@ -83,6 +81,7 @@ class MainMapComponent extends PureComponent {
                 }
                 position="top"
                 followCursor
+                hideOnClick
                 animateFill={false}
                 open={showTooltip}
                 disabled={!isDesktop}
@@ -131,7 +130,7 @@ class MainMapComponent extends PureComponent {
             {isDesktop &&
               !hidePanels && (
                 <DataAnalysisMenu
-                  className={cx('data-analysis-menu', { embed })}
+                  className="data-analysis-menu"
                   embed={embed}
                 />
               )}
@@ -152,8 +151,8 @@ class MainMapComponent extends PureComponent {
 
 MainMapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
-  onMapClick: PropTypes.func,
-  oneClickAnalysisActive: PropTypes.bool,
+  handleClickMap: PropTypes.func,
+  oneClickAnalysis: PropTypes.bool,
   embed: PropTypes.bool,
   hidePanels: PropTypes.bool,
   setRecentImagerySettings: PropTypes.func,

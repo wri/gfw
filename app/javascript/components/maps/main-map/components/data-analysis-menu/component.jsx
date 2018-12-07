@@ -9,54 +9,51 @@ import SubNavMenu from 'components/subnav-menu';
 import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
-  render() {
+  getLinks = () => {
     const {
-      className,
-      showAnalysis,
-      menuSection,
       links,
-      setMapMainSettings,
       clearAnalysisError,
-      hidden,
-      embed
+      setMainMapSettings,
+      showAnalysis,
+      hidden
     } = this.props;
+
+    return links.map(l => ({
+      ...l,
+      onClick: () => {
+        setMainMapSettings({
+          showAnalysis: l.showAnalysis,
+          hideLegend:
+            (showAnalysis && l.active && !hidden) ||
+            (!showAnalysis && l.active && !hidden)
+        });
+        clearAnalysisError();
+      }
+    }));
+  };
+
+  render() {
+    const { className, showAnalysis, menuSection, hidden, embed } = this.props;
 
     return (
       <div
         className={cx(
           'c-data-analysis-menu',
           'map-tour-legend',
-          { '-relocate': !!menuSection },
-          { '-big': menuSection && menuSection.large },
-          { '-embed': embed },
+          { relocate: !!menuSection },
+          { big: menuSection && menuSection.large },
+          { embed },
           className
         )}
-        data-map-tour="step-two"
       >
         <SubNavMenu
           className="nav"
           theme="theme-subnav-plain"
-          links={links.map(l => ({
-            ...l,
-            onClick: () => {
-              setMapMainSettings({
-                showAnalysis: l.showAnalysis,
-                hideLegend:
-                  (showAnalysis && l.active && !hidden) ||
-                  (!showAnalysis && l.active && !hidden)
-              });
-              clearAnalysisError();
-            }
-          }))}
+          links={this.getLinks()}
           checkActive
         />
-        {!hidden &&
-          !showAnalysis && (
-            <div className="legend">
-              <MapLegend />
-            </div>
-          )}
-        {!hidden && showAnalysis && <Analysis className="analysis" analysis />}
+        {!hidden && !showAnalysis && <MapLegend className="map-legend" />}
+        {!hidden && showAnalysis && <Analysis className="map-analysis" />}
       </div>
     );
   }
@@ -72,7 +69,7 @@ DataAnalysisMenu.propTypes = {
   className: PropTypes.string,
   menuSection: PropTypes.object,
   links: PropTypes.array,
-  setMapMainSettings: PropTypes.func,
+  setMainMapSettings: PropTypes.func,
   clearAnalysisError: PropTypes.func,
   embed: PropTypes.bool
 };

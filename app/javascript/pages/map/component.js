@@ -7,7 +7,7 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 
-import Map from 'components/maps/map';
+import Map from 'components/maps/main-map';
 import MapTour from 'components/map-v2/components/map-tour';
 import ModalMeta from 'components/modals/meta';
 import ModalWelcome from 'components/modals/welcome';

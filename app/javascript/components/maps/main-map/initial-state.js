@@ -1,5 +1,6 @@
 export default {
   hidePanels: false,
+  hideLegend: false,
   showBasemaps: false,
-  hideLegend: false
+  showAnalysis: false
 };

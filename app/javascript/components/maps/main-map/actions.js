@@ -2,12 +2,12 @@ import { createThunkAction } from 'redux-tools';
 import { getLocationFromData } from 'utils/format';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-export const setMapMainSettings = createThunkAction(
-  'setMapMainSettings',
+export const setMainMapSettings = createThunkAction(
+  'setMainMapSettings',
   change => (dispatch, state) =>
     dispatch(
       setComponentStateToUrl({
-        key: 'mapMain',
+        key: 'mainMap',
         change,
         state
       })

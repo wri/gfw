@@ -38,12 +38,13 @@ class MapLegend extends Component {
       onChangeParam,
       onChangeInfo,
       loading,
+      className,
       ...rest
     } = this.props;
     const noLayers = !layerGroups || !layerGroups.length;
 
     return (
-      <div className={cx('c-legend', { '-empty': noLayers })}>
+      <div className={cx('c-legend', { '-empty': noLayers }, className)}>
         <Icons />
         {loading && <Loader className="datasets-loader" />}
         {!loading && noLayers && <NoContent message="No layers selected" />}
@@ -206,6 +207,7 @@ MapLegend.defaultProps = {
 };
 
 MapLegend.propTypes = {
+  className: PropTypes.string,
   layerGroups: PropTypes.array,
   loading: PropTypes.bool,
   onChangeOrder: PropTypes.func,

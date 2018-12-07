@@ -23,30 +23,6 @@
         }
       }
     }
-
-    &.analysis {
-      .leaflet-container {
-        cursor: pointer;
-      }
-    }
-
-    &.embed {
-      min-height: calc(100vh - 60px);
-
-      .leaflet-control-container {
-        .leaflet-bottom {
-          right: rem(15px);
-
-          @media screen and (min-width: $screen-m) {
-            right: rem(15px);
-          }
-        }
-      }
-
-      .map-attributions {
-        right: rem(15px);
-      }
-    }
   }
 
   .main-map-tooltip {
@@ -79,6 +55,35 @@
     z-index: 6;
 
     &.embed {
+      right: rem(15px);
+      left: auto;
+    }
+  }
+
+  &.analysis {
+    .leaflet-container {
+      cursor: pointer;
+    }
+  }
+
+  &.embed {
+    min-height: calc(100vh - 60px);
+
+    .leaflet-control-container {
+      .leaflet-bottom {
+        right: rem(15px);
+
+        @media screen and (min-width: $screen-m) {
+          right: rem(15px);
+        }
+      }
+    }
+
+    .map-attributions {
+      right: rem(15px);
+    }
+
+    .data-analysis-menu {
       right: rem(15px);
       left: auto;
     }

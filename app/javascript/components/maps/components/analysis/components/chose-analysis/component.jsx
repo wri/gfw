@@ -149,7 +149,12 @@ class ChoseAnalysis extends PureComponent {
   };
 
   render() {
-    const { showDraw, setAnalysisSettings, clearAnalysisError } = this.props;
+    const {
+      showDraw,
+      setMapSettings,
+      setAnalysisSettings,
+      clearAnalysisError
+    } = this.props;
     return (
       <div className="c-chose-analysis">
         <div className="title">ANALYZE AND TRACK FOREST CHANGE</div>
@@ -158,6 +163,7 @@ class ChoseAnalysis extends PureComponent {
             className={cx({ selected: !showDraw })}
             onClick={() => {
               setAnalysisSettings({ showDraw: false });
+              setMapSettings({ draw: false });
               clearAnalysisError();
             }}
           >

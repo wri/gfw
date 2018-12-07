@@ -10,16 +10,18 @@ import { format } from 'd3-format';
 import { track } from 'utils/analytics';
 
 import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
+import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
 import * as ownActions from './actions';
-import MapComponent from './component';
 import { getMapProps } from './selectors';
+import MapComponent from './component';
 
 const actions = {
   setRecentImagerySettings,
+  setMenuSettings,
   ...ownActions
 };
 
-class MapMainContainer extends PureComponent {
+class MainMapContainer extends PureComponent {
   state = {
     showTooltip: false,
     tooltipData: {}
@@ -67,21 +69,30 @@ class MapMainContainer extends PureComponent {
     });
   };
 
+  handleClickMap = () => {
+    if (this.props.menuSection) {
+      this.props.setMenuSettings({ menuSection: '' });
+    }
+  };
+
   render() {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
-      handleRecentImageryTooltip: this.handleRecentImageryTooltip
+      handleRecentImageryTooltip: this.handleRecentImageryTooltip,
+      handleClickMap: this.handleClickMap
     });
   }
 }
 
-MapMainContainer.propTypes = {
+MainMapContainer.propTypes = {
   oneClickAnalysisActive: PropTypes.bool,
   setMainMapAnalysisView: PropTypes.func,
   selectedInteraction: PropTypes.object,
-  activeDatasets: PropTypes.array
+  setMenuSettings: PropTypes.func,
+  activeDatasets: PropTypes.array,
+  menuSection: PropTypes.string
 };
 
-export default connect(getMapProps, actions)(MapMainContainer);
+export default connect(getMapProps, actions)(MainMapContainer);

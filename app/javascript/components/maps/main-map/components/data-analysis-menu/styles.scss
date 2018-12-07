@@ -8,11 +8,11 @@
   position: relative;
   z-index: 1;
 
-  &.-relocate {
+  &.relocate {
     transform: translateX(292px);
   }
 
-  &.-big {
+  &.big {
     transform: translateX(552px);
   }
 
@@ -23,8 +23,8 @@
     height: auto;
   }
 
-  .legend,
-  .analysis {
+  .map-legend,
+  .map-analysis {
     position: relative;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -39,8 +39,8 @@
   }
 
   &.embed {
-    .legend,
-    .analysis {
+    .map-legend,
+    .map-analysis {
       max-height: calc(100vh - 200px);
     }
   }

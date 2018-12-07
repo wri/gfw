@@ -5,19 +5,16 @@ import {
   getMapLoading,
   getActiveDatasetsFromState
 } from 'components/maps/map/selectors';
+import { getShowDraw } from 'components/maps/components/analysis/selectors';
 import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 
 import initialState from './initial-state';
 
 // state from url
-const getMapMainUrlState = state =>
-  state.location && state.location.query && state.location.query.mapMain;
+const selectMainMapUrlState = state =>
+  state.location && state.location.query && state.location.query.mainMap;
 const selectLocation = state => state.location && state.location;
 const selectLocationPayload = state => state.location && state.location.payload;
-
-// analysis selects
-const selectAnalysisSettings = state =>
-  state.location && state.location.query && state.location.query.analysis;
 const selectMenuSection = state =>
   state.location.query &&
   state.location.query.menu &&
@@ -30,7 +27,7 @@ export const getEmbed = createSelector(
 );
 
 export const getMainMapSettings = createSelector(
-  [getMapMainUrlState],
+  [selectMainMapUrlState],
   urlState => ({
     ...initialState,
     ...urlState
@@ -57,20 +54,18 @@ export const getShowAnalysis = createSelector(
   settings => settings.showAnalysis
 );
 
-export const getOneClickAnalysisActive = createSelector(
-  [selectAnalysisSettings, selectLocationPayload, getDraw, getMapLoading],
-  (settings, location, draw, loading) =>
-    settings &&
-    !draw &&
-    !loading &&
-    settings.showAnalysis &&
-    !settings.showDraw &&
-    !location.adm0
+export const getOneClickAnalysis = createSelector(
+  [getShowDraw, selectLocationPayload, getDraw, getMapLoading, getShowAnalysis],
+  (showDraw, location, draw, loading, showAnalysis) => {
+    const hasLocation = !!location.adm0;
+    const isDrawing = draw || showDraw;
+    return !hasLocation && !isDrawing && !loading && showAnalysis;
+  }
 );
 
 export const getMapProps = createStructuredSelector({
   analysisActive: getShowAnalysis,
-  oneClickAnalysisActive: getOneClickAnalysisActive,
+  oneClickAnalysis: getOneClickAnalysis,
   hidePanels: getHidePanels,
   tileGeoJSON: getTileGeoJSON,
   menuSection: selectMenuSection,

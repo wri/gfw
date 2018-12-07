@@ -41,12 +41,12 @@ class MapControlsButtons extends PureComponent {
 
   handleHidePanels = () => {
     const {
-      setMapMainSettings,
+      setMainMapSettings,
       setMenuSettings,
       setRecentImagerySettings,
       hidePanels
     } = this.props;
-    setMapMainSettings({ hidePanels: !hidePanels });
+    setMainMapSettings({ hidePanels: !hidePanels });
     setMenuSettings({ menuSection: '' });
     setRecentImagerySettings({
       visible: false
@@ -80,10 +80,10 @@ class MapControlsButtons extends PureComponent {
   toggleBasemaps = () => {
     const {
       setRecentImagerySettings,
-      setMapMainSettings,
+      setMainMapSettings,
       showBasemaps
     } = this.props;
-    setMapMainSettings({ showBasemaps: !showBasemaps });
+    setMainMapSettings({ showBasemaps: !showBasemaps });
     setRecentImagerySettings({ visible: false });
   };
 
@@ -382,7 +382,7 @@ class MapControlsButtons extends PureComponent {
 MapControlsButtons.propTypes = {
   className: PropTypes.string,
   setMapSettings: PropTypes.func,
-  setMapMainSettings: PropTypes.func,
+  setMainMapSettings: PropTypes.func,
   setShareModal: PropTypes.func,
   mapSettings: PropTypes.object,
   active: PropTypes.bool,
