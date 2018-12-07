@@ -7,7 +7,6 @@ const { MAPBOX_TOKEN } = process.env;
 
 export const labels = {
   default: {
-    id: 'default',
     value: 'default',
     label: 'Dark Labels',
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxwcp212u02rpd1o541omv/tiles/256/{z}/{x}/{y}@2x?access_token=${
@@ -15,24 +14,21 @@ export const labels = {
     }`
   },
   lightLabels: {
-    id: 'light-labels',
-    value: 'light-labels',
+    value: 'lightLabels',
     label: 'Light Labels',
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxw8t412tv2rpdt33iuum3/tiles/256/{z}/{x}/{y}@2x?access_token=${
       MAPBOX_TOKEN
     }`
   },
   noLabels: {
-    id: 'noLabels',
     label: 'No Labels',
-    value: 'no-labels',
+    value: 'noLabels',
     url: ''
   }
 };
 
 export default {
   default: {
-    id: 'default',
     value: 'default',
     label: 'default',
     labelsKey: 'default',
@@ -43,7 +39,7 @@ export default {
     }`
   },
   dark: {
-    id: 'dark',
+    value: 'dark',
     label: 'dark matter',
     labelsKey: 'lightLabels',
     color: '#31312F',
@@ -53,7 +49,7 @@ export default {
     }`
   },
   satellite: {
-    id: 'satellite',
+    value: 'satellite',
     label: 'Satellite',
     labelsKey: 'lightLabels',
     color: '#131620',
@@ -61,14 +57,13 @@ export default {
     url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
   },
   landsat: {
-    id: 'landsat',
+    value: 'landsat',
     label: 'landsat',
     labelsKey: 'lightLabels',
     dynamic: true,
     color: '#0C0045',
     image: landsatImage,
-    defaultUrl:
-      'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
+    url: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };

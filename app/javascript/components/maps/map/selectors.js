@@ -37,14 +37,17 @@ export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
   ...urlState
 }));
 
-export const getBasemapKey = createSelector(
+export const getBasemapFromState = createSelector(
   getMapSettings,
   settings => settings.basemap
 );
 
 export const getBasemap = createSelector(
-  [getBasemapKey],
-  basemapKey => basemaps[basemapKey]
+  [getBasemapFromState],
+  basemapState => ({
+    ...basemaps[basemapState.key],
+    ...basemapState
+  })
 );
 
 export const getLabelKey = createSelector(

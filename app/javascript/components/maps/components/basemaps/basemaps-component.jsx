@@ -25,15 +25,6 @@ class Basemaps extends React.PureComponent {
     getTooltipContentProps: PropTypes.func.isRequired
   };
 
-  onLabelsChange = selected => {
-    this.props.selectLabels(selected);
-  };
-
-  onLansatChange = year => {
-    const { basemaps, selectBasemap } = this.props;
-    selectBasemap(basemaps.landsat, year);
-  };
-
   renderButtonBasemap(item) {
     const { selectBasemap } = this.props;
 
@@ -78,7 +69,9 @@ class Basemaps extends React.PureComponent {
             theme="theme-dropdown-native-inline"
             value={year}
             options={landsatYears}
-            onChange={value => this.onLansatChange(parseInt(value, 10))}
+            onChange={value =>
+              selectBasemap(basemaps.landsat, parseInt(value, 10))
+            }
             native
           />
         </span>
@@ -135,7 +128,7 @@ class Basemaps extends React.PureComponent {
                 label="labels"
                 value={activeLabels}
                 options={Object.values(labels)}
-                onChange={this.onLabelsChange}
+                onChange={this.props.selectLabels}
               />
             </li>
           </ul>
@@ -145,9 +138,9 @@ class Basemaps extends React.PureComponent {
             <ul className="basemaps-list">
               {Object.values(basemaps).map(item => (
                 <li
-                  key={item.id}
+                  key={item.value}
                   className={cx('basemaps-list-item', {
-                    '-active': activeBasemap.id === item.id
+                    '-active': activeBasemap.value === item.value
                   })}
                 >
                   {item.dynamic

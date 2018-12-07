@@ -20,10 +20,8 @@ export const setMapSettings = createThunkAction(
 
 export const setLandsatBasemap = createThunkAction(
   'setLandsatBasemap',
-  ({ year, defaultUrl }) => (dispatch, getState) => {
-    const { map } = getState();
-    const mapZoom = map.settings.zoom;
-    const currentBasemap = map.settings.basemap;
+  ({ basemap, year, label, zoom }) => dispatch => {
+    const { url } = basemap;
     const landsat = {
       key: `GFW__GEE_LANDSAT_BASEMAP_URL_${year}`,
       get geeUrl() {
@@ -34,15 +32,18 @@ export const setLandsatBasemap = createThunkAction(
         }
         return null;
       },
-      set geeUrl(url) {
-        const value = { url, expires: addToDate(Date.now(), 1).getTime() };
+      set geeUrl(newUrl) {
+        const value = {
+          url: newUrl,
+          expires: addToDate(Date.now(), 1).getTime()
+        };
         return localStorage.setItem(this.key, JSON.stringify(value));
       },
       get url() {
-        if (mapZoom > 11) {
+        if (zoom > 11) {
           return this.geeUrl;
         }
-        return defaultUrl && defaultUrl.replace('{year}', year);
+        return url && url.replace('{year}', year);
       }
     };
     if (landsat.geeUrl === null) {
@@ -52,16 +53,15 @@ export const setLandsatBasemap = createThunkAction(
           landsat.geeUrl = res.data.attributes.url;
         });
     }
-    if (landsat.url !== null && landsat.url !== currentBasemap.url) {
+    if (landsat.url !== null && landsat.url !== basemap.url) {
       dispatch(
         setMapSettings({
           basemap: {
             year,
-            defaultUrl,
-            id: 'landsat',
-            url: landsat.url,
-            color: '#0C0045'
-          }
+            key: 'landsat',
+            url: landsat.url
+          },
+          label
         })
       );
     }

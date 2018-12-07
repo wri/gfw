@@ -18,19 +18,13 @@ class BasemapsContainer extends React.Component {
   };
 
   selectBasemap = (basemap, year) => {
-    const label =
-      this.props.labels[basemap.labelsKey] || this.props.activeLabels;
-    if (basemap.dynamic) {
-      if (basemap.id === 'landsat') {
-        this.props.setLandsatBasemap({
-          year,
-          defaultUrl: basemap.defaultUrl
-        });
-      }
+    const { labels, setLandsatBasemap, setMapSettings } = this.props;
+    const label = labels[basemap.labelsKey] || labels.default;
+    if (basemap.value === 'landsat') {
+      setLandsatBasemap({ basemap, year, label: label.value });
     } else {
-      this.props.setMapSettings({ basemap });
+      setMapSettings({ basemap: { key: basemap.value }, label: label.value });
     }
-    this.props.setMapSettings({ label });
     track('basemapChanged', {
       label: basemap.label
     });
@@ -81,6 +75,7 @@ class BasemapsContainer extends React.Component {
 
 BasemapsContainer.propTypes = {
   activeLabels: PropTypes.object,
+  basemaps: PropTypes.object,
   labels: PropTypes.object
 };
 

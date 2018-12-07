@@ -28,19 +28,23 @@ class MapContainer extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
       basemap,
+      label,
       mapOptions: { zoom },
       canBound,
       bbox,
       geostoreBbox,
       setMapSettings,
-      layerBbox
+      layerBbox,
+      setLandsatBasemap
     } = this.props;
 
     // update landsat basemap when changing zoom
-    if (basemap.id === 'landsat' && zoom !== prevProps.zoom) {
-      this.props.setLandsatBasemap({
+    if (basemap.value === 'landsat' && zoom !== prevProps.zoom) {
+      setLandsatBasemap({
+        basemap,
         year: basemap.year,
-        defaultUrl: basemap.defaultUrl
+        label,
+        zoom
       });
     }
 
@@ -113,7 +117,8 @@ MapContainer.propTypes = {
   layerBbox: PropTypes.array,
   draw: PropTypes.bool,
   setInteraction: PropTypes.func,
-  menuSection: PropTypes.string
+  menuSection: PropTypes.string,
+  label: PropTypes.string
 };
 
 export const reduxModule = { actions: ownActions, reducers, initialState };

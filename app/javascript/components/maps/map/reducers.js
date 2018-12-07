@@ -12,7 +12,11 @@ export const initialState = {
     attributionControl: false,
     maxZoom: 19,
     minZoom: 3,
-    basemap: 'default',
+    basemap: {
+      key: 'default'
+    },
+    landsatUrl:
+      'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     label: 'default',
     bbox: null,
     canBound: true,
