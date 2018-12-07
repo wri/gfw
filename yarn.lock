@@ -13306,6 +13306,11 @@ react-event-listener@0.5.1:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
+react-fast-compare@^2.0.2:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+
 react-floater@^0.5.5:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/react-floater/-/react-floater-0.5.5.tgz#52df8403edc1cbf1a9797759f49d4e4066e1d1c6"
@@ -13325,14 +13330,13 @@ react-ga@2.4.1:
     prop-types "^15.6.0"
     react "^15.6.2 || ^16.0"
 
-react-helmet@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.0.tgz#a81811df21313a6d55c5f058c4aeba5d6f3d97a7"
-  integrity sha1-qBgR3yExOm1VxfBYxK66XW89l6c=
+react-helmet@nfl/react-helmet#master:
+  version "6.0.0-beta"
+  resolved "https://codeload.github.com/nfl/react-helmet/tar.gz/a45599880833887d031f6559091bb2f27cbece8b"
   dependencies:
-    deep-equal "^1.0.1"
     object-assign "^4.1.1"
     prop-types "^15.5.4"
+    react-fast-compare "^2.0.2"
     react-side-effect "^1.1.0"
 
 react-hot-loader@^4.3.6, react-hot-loader@^4.3.8:
