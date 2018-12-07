@@ -1,16 +1,9 @@
 @import '~styles/settings.scss';
 
 .c-map {
-  height: 100%;
-
   .map-wrapper {
     position: relative;
     min-height: rem(300px);
-    z-index: 1;
-
-    .wri_api__map-container {
-      position: absolute !important;
-    }
 
     .leaflet-container {
       background-color: transparent;
@@ -19,14 +12,13 @@
     .leaflet-control-container {
       .leaflet-bottom {
         right: rem(15px);
+        bottom: rem(50px);
         left: auto;
-        top: rem(15px);
+      }
 
-        @media screen and (min-width: $screen-m) {
-          right: rem(15px);
-          bottom: rem(50px);
-          top: auto;
-        }
+      .leaflet-control-scale {
+        margin-bottom: 0;
+        display: flex;
       }
 
       .leaflet-control-scale-line {
@@ -42,15 +34,10 @@
           border-right: 0;
         }
       }
-
-      .leaflet-control-scale {
-        margin-bottom: 0;
-        display: flex;
-      }
     }
   }
 
-  .icon-crosshair {
+  .map-icon-crosshair {
     position: absolute;
     top: 0;
     left: 0;
@@ -85,12 +72,5 @@
       font-weight: 500;
       color: $white;
     }
-  }
-
-  .map-hover-tooltip {
-    text-align: left;
-    font-size: rem(12px);
-    padding: rem(10px) rem(15px);
-    font-weight: 300;
   }
 }

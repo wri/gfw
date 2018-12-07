@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 
 import { setMainMapAnalysisView } from 'components/maps/main-map/actions';
 import { setMapSettings } from 'components/maps/map/actions';
-
 import * as ownActions from './actions';
 import Component from './component';
 import reducers, { initialState } from './reducers';

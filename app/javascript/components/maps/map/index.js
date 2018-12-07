@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'utils/analytics';
 
-import * as popupActions from 'components/maps/map/components/popup/actions';
+import { setInteraction } from 'components/maps/map/components/popup/actions';
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import { getMapProps } from './selectors';
 import MapComponent from './component';
 
 const actions = {
-  ...popupActions,
+  setInteraction,
   ...ownActions
 };
 
@@ -78,10 +78,10 @@ class MapContainer extends PureComponent {
   };
 
   handleMapInteraction = ({ e, article, output, layer }) => {
-    const { setInteraction, draw, menuSection } = this.props;
+    const { draw, menuSection } = this.props;
 
     if (!draw && !menuSection) {
-      setInteraction({
+      this.props.setInteraction({
         ...e,
         label: layer.name,
         article,

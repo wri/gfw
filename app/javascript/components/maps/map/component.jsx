@@ -4,7 +4,6 @@ import cx from 'classnames';
 
 import Map from 'wri-api-components/dist/map';
 import Loader from 'components/ui/loader';
-import NoContent from 'components/ui/no-content';
 import Icon from 'components/ui/icon';
 
 import iconCrosshair from 'assets/icons/crosshair.svg';
@@ -28,7 +27,6 @@ class MapComponent extends PureComponent {
     const {
       className,
       loading,
-      error,
       mapOptions,
       basemap,
       label,
@@ -78,15 +76,11 @@ class MapComponent extends PureComponent {
             </Fragment>
           )}
         </Map>
-        <Icon className="icon-crosshair" icon={iconCrosshair} />
+        <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         <MapAttributions className="map-attributions" />
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
-        {!loading &&
-          error && (
-            <NoContent message="An error occured. Please try again later." />
-          )}
       </div>
     );
   }
@@ -95,7 +89,6 @@ class MapComponent extends PureComponent {
 MapComponent.propTypes = {
   className: PropTypes.string,
   loading: PropTypes.bool,
-  error: PropTypes.bool,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
