@@ -3,7 +3,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
 import { getActiveLayers, getMapZoom } from 'components/maps/map/selectors';
-import { getWidgetLayers } from 'components/map-v2/components/analysis/selectors';
+import { getWidgetLayers } from 'components/maps/components/analysis/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
 const selectLoading = state =>
