@@ -1,4 +1,4 @@
-import { createThunkAction } from 'vizzuality-redux-tools';
+import { createThunkAction } from 'redux-tools';
 import { getLocationFromData } from 'utils/format';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 

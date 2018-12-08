@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'vizzuality-redux-tools';
+import { createAction, createThunkAction } from 'redux-tools';
 import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 

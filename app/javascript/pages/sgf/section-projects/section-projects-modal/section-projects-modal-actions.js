@@ -1,3 +1,3 @@
-import { createAction } from 'vizzuality-redux-tools';
+import { createAction } from 'redux-tools';
 
 export const setSectionProjectsModal = createAction('setSectionProjectsModal');

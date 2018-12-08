@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'vizzuality-redux-tools';
+import { createAction, createThunkAction } from 'redux-tools';
 import groupBy from 'lodash/groupBy';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';

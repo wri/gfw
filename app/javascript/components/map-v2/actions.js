@@ -1,4 +1,4 @@
-import { createThunkAction, createAction } from 'vizzuality-redux-tools';
+import { createThunkAction, createAction } from 'redux-tools';
 import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getMapZoom, getBasemap } from 'components/map-v2/selectors';

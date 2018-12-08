@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 import { combineReducers } from 'redux';
-import { handleModule } from 'vizzuality-redux-tools';
+import { handleModule } from 'redux-tools';
 import { reducer as formReducer } from 'redux-form';
 
 // Routes

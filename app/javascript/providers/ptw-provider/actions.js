@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'vizzuality-redux-tools';
+import { createAction, createThunkAction } from 'redux-tools';
 import uniqBy from 'lodash/uniqBy';
 import { reverseLatLng } from 'utils/geoms';
 

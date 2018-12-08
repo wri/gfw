@@ -1,4 +1,4 @@
-import { createAction, createThunkAction } from 'vizzuality-redux-tools';
+import { createAction, createThunkAction } from 'redux-tools';
 import { track } from 'utils/analytics';
 
 import { getGeostoreKey } from 'services/geostore';
