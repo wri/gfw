@@ -3,7 +3,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import {
   getDraw,
   getMapLoading,
-  getActiveDatasetsFromState
+  getActiveDatasetsFromState,
+  getSelectedInteraction
 } from 'components/maps/map/selectors';
 import { getShowDraw } from 'components/maps/components/analysis/selectors';
 import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
@@ -70,5 +71,6 @@ export const getMapProps = createStructuredSelector({
   tileGeoJSON: getTileGeoJSON,
   menuSection: selectMenuSection,
   activeDatasets: getActiveDatasetsFromState,
-  embed: getEmbed
+  embed: getEmbed,
+  selectedInteraction: getSelectedInteraction
 });
