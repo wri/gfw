@@ -20,7 +20,7 @@ export const setMainMapAnalysisView = createThunkAction(
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
     const { query, type } = getState().location;
-    const { map, analysis } = query || {};
+    const { map, mainMap } = query || {};
 
     // get location payload based on layer type
     let payload = {};
@@ -54,8 +54,8 @@ export const setMainMapAnalysisView = createThunkAction(
             ...map,
             canBound: true
           },
-          analysis: {
-            ...analysis,
+          mainMap: {
+            ...mainMap,
             showAnalysis: true
           }
         }

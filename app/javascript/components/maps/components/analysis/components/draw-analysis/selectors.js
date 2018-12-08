@@ -13,7 +13,7 @@ const selectError = state => state.analysis.error;
 const selectAdmins = state => state.countryData.countries;
 const selectAdmin1s = state => state.countryData.regions;
 const selectAdmin2s = state => state.countryData.subRegions;
-const selectGeostore = state => state.geostore.geostore;
+const selectGeostore = state => state.geostore.data;
 
 export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
