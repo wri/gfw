@@ -62,5 +62,5 @@ export default {
   [actions.setRecentImageryDataStatus]: setRecentImageryDataStatus,
   [actions.resetRecentImageryData]: resetRecentImageryData,
   [actions.setRecentImageryLoading]: setRecentImageryLoading,
-  [setRecentImageryLoadingMoreTiles]: setRecentImageryLoadingMoreTiles
+  [actions.setRecentImageryLoadingMoreTiles]: setRecentImageryLoadingMoreTiles
 };

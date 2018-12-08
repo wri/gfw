@@ -39,12 +39,12 @@ class MainMapContainer extends PureComponent {
     const {
       selectedInteraction,
       setMainMapAnalysisView,
-      oneClickAnalysisActive
+      oneClickAnalysis
     } = this.props;
 
     // set analysis view if interaction changes
     if (
-      oneClickAnalysisActive &&
+      oneClickAnalysis &&
       selectedInteraction &&
       !isEmpty(selectedInteraction.data) &&
       !isEqual(selectedInteraction, prevProps.selectedInteraction)
@@ -87,7 +87,7 @@ class MainMapContainer extends PureComponent {
 }
 
 MainMapContainer.propTypes = {
-  oneClickAnalysisActive: PropTypes.bool,
+  oneClickAnalysis: PropTypes.bool,
   setMainMapAnalysisView: PropTypes.func,
   selectedInteraction: PropTypes.object,
   setMenuSettings: PropTypes.func,

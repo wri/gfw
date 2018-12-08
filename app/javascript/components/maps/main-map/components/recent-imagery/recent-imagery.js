@@ -168,5 +168,5 @@ RecentImageryContainer.propTypes = {
   setRecentImagerySettings: PropTypes.func
 };
 
-export const reduxModule = { actions, reducers, initialState };
+export const reduxModule = { actions: ownActions, reducers, initialState };
 export default connect(mapStateToProps, actions)(RecentImageryContainer);
