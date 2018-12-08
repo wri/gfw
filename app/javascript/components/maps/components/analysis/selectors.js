@@ -71,9 +71,14 @@ export const getLayerEndpoints = createSelector(
     const { type, adm2 } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
+    const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
     const endpoints = compact(
       layers
-        .filter(l => l.analysisConfig && !widgetLayers.includes(l.id))
+        .filter(
+          l =>
+            l.analysisConfig &&
+            (!hasWidgetLayers || !widgetLayers.includes(l.id))
+        )
         .map(l => {
           const analysisConfig =
             l.analysisConfig.find(

@@ -29,7 +29,7 @@ class ChoseAnalysis extends PureComponent {
     const selectedBoundaries = activeBoundary || (boundaries && boundaries[0]);
 
     return (
-      <MediaQuery minDeviceWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div className="layer-menu">
             <div className="layer-title">

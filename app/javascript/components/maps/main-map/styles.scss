@@ -17,9 +17,12 @@
     .leaflet-control-container {
       .leaflet-bottom {
         right: rem(65px);
+        top: rem(15px);
 
         @media screen and (min-width: $screen-m) {
           right: rem(260px);
+          bottom: rem(50px);
+          top: auto;
         }
       }
     }

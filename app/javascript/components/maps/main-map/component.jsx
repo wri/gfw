@@ -54,7 +54,7 @@ class MainMapComponent extends PureComponent {
     } = this.props;
 
     return (
-      <MediaQuery minDeviceWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div className={cx('c-map-main', { embed })}>
             <div

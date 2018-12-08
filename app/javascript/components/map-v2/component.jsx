@@ -83,7 +83,7 @@ class MapComponent extends PureComponent {
         }
         onMouseOut={() => handleShowTooltip(false, '')}
       >
-        <MediaQuery minDeviceWidth={SCREEN_M}>
+        <MediaQuery minWidth={SCREEN_M}>
           {isDesktop => (
             <Fragment>
               <Tooltip

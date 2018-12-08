@@ -98,7 +98,7 @@ class MapMenu extends PureComponent {
       activeSection || {};
 
     return (
-      <MediaQuery minDeviceWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div className={cx('c-map-menu', className)}>
             <div

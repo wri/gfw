@@ -33,7 +33,7 @@ class App extends PureComponent {
     const { component, embed } = route;
     const isMapPage = component === 'map';
     return (
-      <MediaQuery minDeviceWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
             className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}
