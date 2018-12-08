@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getFullLocationName } from 'components/map-v2/components/analysis/components/draw-analysis/selectors';
-import { getActiveDatasetIds } from 'components/map-v2/selectors';
+import { getFullLocationName } from 'components/maps/components/analysis/components/show-analysis/selectors';
+import { getActiveDatasetIds } from 'components/maps/map/selectors';
 import { initialState } from './reducers';
 
 const selectSubscribeUrlState = state =>

@@ -17,7 +17,7 @@ import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
 import './styles.scss';
 
-class DrawAnalysis extends PureComponent {
+class ShowAnalysis extends PureComponent {
   renderStatItem = ({
     color,
     value,
@@ -84,7 +84,7 @@ class DrawAnalysis extends PureComponent {
     } = this.props;
 
     return (
-      <div className={cx('c-draw-analysis')}>
+      <div className={cx('c-show-analysis')}>
         <div className="draw-title">
           <Button
             className="title-btn left"
@@ -205,7 +205,7 @@ class DrawAnalysis extends PureComponent {
   }
 }
 
-DrawAnalysis.propTypes = {
+ShowAnalysis.propTypes = {
   data: PropTypes.array,
   setShareModal: PropTypes.func,
   clearAnalysis: PropTypes.func,
@@ -222,4 +222,4 @@ DrawAnalysis.propTypes = {
   zoomLevel: PropTypes.number
 };
 
-export default DrawAnalysis;
+export default ShowAnalysis;

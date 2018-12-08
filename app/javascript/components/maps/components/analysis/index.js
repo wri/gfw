@@ -7,9 +7,8 @@ import { CancelToken } from 'axios';
 import { setSubscribeSettings } from 'components/modals/subscribe/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
-
-import AnalysisComponent from './component';
 import { getAnalysisProps } from './selectors';
+import AnalysisComponent from './component';
 
 class AnalysisContainer extends PureComponent {
   static propTypes = {

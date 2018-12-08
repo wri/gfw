@@ -7,7 +7,7 @@ import * as modalSourcesActions from 'components/modals/sources/actions';
 import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
 import * as dataAnalysisActions from 'components/maps/components/analysis/actions';
 
-import { getDrawAnalysisProps } from './selectors';
+import { getShowAnalysisProps } from './selectors';
 import Component from './component';
 
 const actions = {
@@ -18,7 +18,7 @@ const actions = {
   setMenuSettings
 };
 
-class PolygonAnalysisContainer extends PureComponent {
+class ShowAnalysisContainer extends PureComponent {
   state = {
     showDownloads: false
   };
@@ -36,4 +36,4 @@ class PolygonAnalysisContainer extends PureComponent {
   }
 }
 
-export default connect(getDrawAnalysisProps, actions)(PolygonAnalysisContainer);
+export default connect(getShowAnalysisProps, actions)(ShowAnalysisContainer);

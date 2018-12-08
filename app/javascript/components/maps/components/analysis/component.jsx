@@ -5,7 +5,7 @@ import cx from 'classnames';
 import Button from 'components/ui/button/button-component';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/maps/components/analysis/components/chose-analysis';
-import PolygonAnalysis from 'components/maps/components/analysis/components/draw-analysis';
+import ShowAnalysis from 'components/maps/components/analysis/components/show-analysis';
 
 import './styles.scss';
 
@@ -57,7 +57,7 @@ class AnalysisComponent extends PureComponent {
               </div>
             )}
           {location.type && location.adm0 ? (
-            <PolygonAnalysis
+            <ShowAnalysis
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
               hasLayers={hasLayers}

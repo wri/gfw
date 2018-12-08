@@ -140,7 +140,7 @@ export const getDownloadLinks = createSelector(
     })
 );
 
-export const getDrawAnalysisProps = createStructuredSelector({
+export const getShowAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
   loading: selectLoading,
   locationName: getLocationName,
