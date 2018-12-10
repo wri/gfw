@@ -16,19 +16,26 @@ class AnalysisContainer extends PureComponent {
     getAnalysis: PropTypes.func,
     endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
-    setAnalysisLoading: PropTypes.func
+    setAnalysisLoading: PropTypes.func,
+    analysisLocation: PropTypes.bool
   };
 
   componentDidMount() {
-    const { endpoints, location } = this.props;
-    if (location.type && location.adm0 && endpoints && endpoints.length) {
+    const { endpoints, location, analysisLocation } = this.props;
+    const hasLocationChanged = !isEqual(location, analysisLocation);
+    if (
+      hasLocationChanged &&
+      location.type &&
+      location.adm0 &&
+      endpoints &&
+      endpoints.length
+    ) {
       this.handleFetchAnalysis(location, endpoints);
     }
   }
 
   componentDidUpdate(prevProps) {
     const { location, endpoints } = this.props;
-
     // get analysis if location changes
     if (
       location.type &&

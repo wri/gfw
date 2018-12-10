@@ -42,7 +42,19 @@ export const getAnalysis = createThunkAction(
     });
     dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
     fetchUmdLossGain(location)
-      .then(responses => dispatch(setAnalysisData(responses)))
+      .then(responses =>
+        dispatch(
+          setAnalysisData({
+            responses,
+            location: {
+              type,
+              adm0,
+              adm1,
+              adm2
+            }
+          })
+        )
+      )
       .catch(error => {
         const slugUrl = error.config.url.split('/')[4];
         const slug = slugUrl.split('?')[0];
@@ -61,6 +73,7 @@ export const getAnalysis = createThunkAction(
         dispatch(
           setAnalysisLoading({
             data: {},
+            location: {},
             loading: false,
             error: errorMessage
           })

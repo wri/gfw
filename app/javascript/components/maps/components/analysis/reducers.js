@@ -5,6 +5,7 @@ export const initialState = {
   error: '',
   errorMessage: '',
   data: {},
+  location: {},
   settings: {
     showDraw: false
   }
@@ -12,7 +13,8 @@ export const initialState = {
 
 const setAnalysisData = (state, { payload }) => ({
   ...state,
-  data: payload,
+  data: payload.responses,
+  location: payload.location,
   loading: false
 });
 
@@ -29,7 +31,8 @@ const clearAnalysisError = state => ({
 
 const clearAnalysisData = state => ({
   ...state,
-  data: {}
+  data: {},
+  location: {}
 });
 
 export default {

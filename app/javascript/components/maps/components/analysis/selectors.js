@@ -23,6 +23,7 @@ const selectLoading = state =>
   state.geostore.loading ||
   state.draw.loading;
 const selectLocation = state => state.location && state.location.payload;
+const selectAnalysisLocation = state => state.analysis.location;
 const selectEmbed = state =>
   state.location &&
   state.location.pathname &&
@@ -156,5 +157,6 @@ export const getAnalysisProps = createStructuredSelector({
   location: selectLocation,
   hidden: getHidden,
   embed: selectEmbed,
-  widgetLayers: getWidgetLayers
+  widgetLayers: getWidgetLayers,
+  analysisLocation: selectAnalysisLocation
 });
