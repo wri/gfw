@@ -41,6 +41,7 @@ class LayerManagerComponent extends PureComponent {
                   }
                 }
               }}
+              zIndex={1090}
             />
           )}
         {customLayers &&
