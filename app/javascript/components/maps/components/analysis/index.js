@@ -22,7 +22,10 @@ class AnalysisContainer extends PureComponent {
 
   componentDidMount() {
     const { endpoints, location, analysisLocation } = this.props;
-    const hasLocationChanged = !isEqual(location, analysisLocation);
+    const hasLocationChanged = !isEqual(
+      { ...location, endpoints },
+      analysisLocation
+    );
     if (
       hasLocationChanged &&
       location.type &&

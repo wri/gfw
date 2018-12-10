@@ -47,6 +47,7 @@ export const getAnalysis = createThunkAction(
           setAnalysisData({
             responses,
             location: {
+              endpoints,
               type,
               adm0,
               adm1,
