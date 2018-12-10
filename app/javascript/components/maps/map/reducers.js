@@ -13,7 +13,7 @@ export const initialState = {
     maxZoom: 19,
     minZoom: 3,
     basemap: {
-      key: 'default'
+      value: 'default'
     },
     label: 'default',
     bbox: null,

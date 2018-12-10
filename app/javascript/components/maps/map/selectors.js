@@ -45,7 +45,7 @@ export const getBasemapFromState = createSelector(
 export const getBasemap = createSelector(
   [getBasemapFromState],
   basemapState => ({
-    ...basemaps[basemapState.key],
+    ...basemaps[basemapState.value],
     ...basemapState
   })
 );
@@ -57,7 +57,7 @@ export const getLabelKey = createSelector(
 
 export const getLabel = createSelector(
   [getLabelKey],
-  labelsKey => labels[labelsKey]
+  labelsKey => labels[labelsKey] || labels[labelsKey.id]
 );
 
 export const getMapZoom = createSelector(
