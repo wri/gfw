@@ -15,3 +15,48 @@
     font-family: "Fira Sans", sans-serif;
   }
 }
+
+.react-datepicker {
+  width: 317px;
+
+  .react-datepicker__month-container {
+    width: 100%;
+
+    .react-datepicker__month {
+      margin-bottom: 16px;
+    }
+  }
+
+  .react-datepicker__header--custom {
+    background: none;
+    border: none;
+
+    .c-datepicker-header {
+      text-align: center;
+      padding: 22px 0;
+    }
+
+    .c-date-dropdown {
+      display: inline-block;
+      margin: 0 5px;
+    }
+
+    button.menu-link {
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 100%;
+      background-color: #97be32;
+    }
+
+    .icon-arrow {
+      height: 9px;
+      width: 9px;
+      margin: auto;
+      box-sizing: border-box;
+      color: white;
+    }
+  }
+}

@@ -8,6 +8,8 @@ import { Portal } from 'react-portal';
 import moment from 'moment';
 import Dropdown from 'components/ui/dropdown';
 
+import Icon from 'components/ui/icon';
+import chevron from 'assets/icons/chevron-left.svg';
 import './datepicker-styles.scss';
 // import './themes/datepicker-small.scss'; //TODO: recent imagery styles
 
@@ -33,7 +35,7 @@ class Datepicker extends PureComponent {
           style={{
             transform: `translate(${position.x}px, calc(${
               position.y
-            }px + 1.25rem))`
+            }px + 1.75rem))`
           }}
         >
           <CalendarContainer className={className}>
@@ -80,11 +82,13 @@ class Datepicker extends PureComponent {
               prevMonthButtonDisabled,
               nextMonthButtonDisabled
             }) => (
-              <div>
+              <div className="c-datepicker-header">
                 {prevMonthButtonDisabled ? (
                   ''
                 ) : (
-                  <button onClick={decreaseMonth}>prev</button>
+                  <button className="menu-link" onClick={decreaseMonth}>
+                    <Icon className="icon-arrow" icon={chevron} />
+                  </button>
                 )}
                 <Dropdown
                   className="c-date-dropdown"
@@ -109,11 +113,18 @@ class Datepicker extends PureComponent {
                   onChange={e => {
                     changeYear(e.value);
                   }}
+                  native
                 />
                 {nextMonthButtonDisabled ? (
                   ''
                 ) : (
-                  <button onClick={increaseMonth}>next</button>
+                  <button
+                    className="menu-link"
+                    style={{ transform: 'rotate(180deg' }}
+                    onClick={increaseMonth}
+                  >
+                    <Icon className="icon-arrow" icon={chevron} />
+                  </button>
                 )}
               </div>
             )}
