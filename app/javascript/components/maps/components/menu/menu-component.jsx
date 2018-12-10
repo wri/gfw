@@ -128,11 +128,9 @@ class MapMenu extends PureComponent {
               large={large}
               isDesktop={isDesktop}
               setMenuSettings={setMenuSettings}
+              loading={loading}
               onClose={() =>
                 setMenuSettings({ menuSection: '', datasetCategory: '' })
-              }
-              loading={
-                loading && menuSection !== 'analysis' && !analysisLoading
               }
             >
               {Component && (

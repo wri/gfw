@@ -197,7 +197,9 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: 'default',
+        basemap: {
+          key: 'default'
+        },
         label: 'default'
       }
     }
@@ -239,10 +241,12 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: 'dark',
+        basemap: {
+          key: 'dark'
+        },
         label: 'lightLabels'
       },
-      analysis: {
+      mainMap: {
         showAnalysis: true
       }
     }
@@ -313,7 +317,9 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: 'default',
+        basemap: {
+          key: 'default'
+        },
         label: 'default'
       }
     }
@@ -366,7 +372,9 @@ export const topics = {
             visibility: true
           }
         ],
-        basemap: 'default',
+        basemap: {
+          key: 'default'
+        },
         label: 'default'
       }
     }

@@ -80,7 +80,7 @@ export const handleClickLocation = createThunkAction(
   ({ gid_0, gid_1, gid_2 }) => (dispatch, getState) => {
     const query = getState().location.query || {};
     const location = parseGadm36Id(gid_2 || gid_1 || gid_0);
-    const { map, menu, analysis } = getState().location.query || {};
+    const { map, menu, mainMap } = getState().location.query || {};
 
     if (location) {
       dispatch({
@@ -99,8 +99,8 @@ export const handleClickLocation = createThunkAction(
             ...menu,
             menuSection: ''
           },
-          analysis: {
-            ...analysis,
+          mainMap: {
+            ...mainMap,
             showAnalysis: true
           }
         }

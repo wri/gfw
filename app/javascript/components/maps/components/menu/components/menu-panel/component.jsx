@@ -95,7 +95,7 @@ class MenuPanel extends PureComponent {
                 <Icon icon={closeIcon} className="icon-close-panel" />
               </button>
             )}
-            <div className="panel-body">{children}</div>
+            {!loading && <div className="panel-body">{children}</div>}
             {loading && <Loader className="map-menu-loader" />}
           </Panel>
         )}
