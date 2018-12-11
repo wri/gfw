@@ -17,7 +17,7 @@ class AnalysisContainer extends PureComponent {
     endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
     setAnalysisLoading: PropTypes.func,
-    analysisLocation: PropTypes.bool
+    analysisLocation: PropTypes.object
   };
 
   componentDidMount() {

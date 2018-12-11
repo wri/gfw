@@ -7,7 +7,7 @@ import camelCase from 'lodash/camelCase';
 import intersection from 'lodash/intersection';
 import moment from 'moment';
 
-import { getAllLayers } from 'components/map-v2/selectors';
+import { getAllLayers } from 'components/maps/map/selectors';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
