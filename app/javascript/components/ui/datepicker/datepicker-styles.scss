@@ -59,4 +59,32 @@
       color: white;
     }
   }
+
+  .react-datepicker__day-names {
+    height: 24px;
+
+    & > div {
+      color: #757575;
+      font-size: 90%;
+      font-weight: 400;
+    }
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    height: 36px;
+    width: 36px;
+    margin: 0;
+    padding: 4px 8px;
+    text-align: right;
+
+    &:hover {
+      border-radius: 0;
+    }
+  }
+
+  .react-datepicker__day--selected {
+    background: #97be32;
+    border-radius: 0;
+  }
 }

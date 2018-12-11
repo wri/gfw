@@ -69,7 +69,7 @@ class Datepicker extends PureComponent {
             }}
             minDate={new Date(minDate)}
             maxDate={new Date(maxDate)}
-            dateFormat="dd MMM YYYY" // TODO: CSS uppercase
+            dateFormat="dd MMM YYYY"
             className="datepicker-input"
             onFocus={this.setPosition}
             calendarContainer={this.renderCalendarContainer}
@@ -96,23 +96,19 @@ class Datepicker extends PureComponent {
                   options={moment
                     .months()
                     .map((m, i) => ({ value: i, label: m }))}
-                  onChange={e => {
-                    changeMonth(e);
-                  }}
+                  onChange={changeMonth}
                   value={date.getMonth()}
                   native
                 />
                 <Dropdown
                   className="c-date-dropdown"
                   theme="theme-dropdown-native theme-dropdown-native-button"
-                  noSelectedValue={date.getFullYear().toString()}
                   options={range(
                     parseInt(minYear, 10),
                     parseInt(maxYear, 10) + 1
                   ).map(i => ({ value: i, label: i }))}
-                  onChange={e => {
-                    changeYear(e.value);
-                  }}
+                  onChange={changeYear}
+                  value={date.getFullYear()}
                   native
                 />
                 {nextMonthButtonDisabled ? (
