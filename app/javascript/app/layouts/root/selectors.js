@@ -6,13 +6,18 @@ import { buildFullLocationName } from 'utils/format';
 
 const selectLoggedIn = state => !isEmpty(state.myGfw.data) || null;
 const selectLocation = state => state.location && state.location.payload;
+const selectQuery = state => state.location && state.location.query;
 const selectedCountries = state => state.countryData.countries;
 const selectedRegions = state => state.countryData.regions;
 const selectedSubRegion = state => state.countryData.subRegions;
 const selectPageLocation = state =>
   state.location && state.location.routesMap[state.location.type];
 
-// get lists selected
+export const getIsGFW = createSelector(
+  selectQuery,
+  query => query && query.gfw
+);
+
 export const getMetadata = createSelector(
   [
     selectPageLocation,
@@ -53,5 +58,6 @@ export const getMetadata = createSelector(
 export const getPageProps = createStructuredSelector({
   loggedIn: selectLoggedIn,
   route: selectPageLocation,
-  metadata: getMetadata
+  metadata: getMetadata,
+  isGFW: getIsGFW
 });
