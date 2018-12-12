@@ -8,6 +8,7 @@ import { Portal } from 'react-portal';
 import moment from 'moment';
 import Dropdown from 'components/ui/dropdown';
 
+import Input from 'components/ui/input';
 import Icon from 'components/ui/icon';
 import chevron from 'assets/icons/chevron-left.svg';
 import './datepicker-styles.scss';
@@ -69,10 +70,11 @@ class Datepicker extends PureComponent {
             }}
             minDate={new Date(minDate)}
             maxDate={new Date(maxDate)}
-            dateFormat="dd MMM YYYY"
+            dateFormat="dd MMM yyyy"
             className="datepicker-input"
             onFocus={this.setPosition}
             calendarContainer={this.renderCalendarContainer}
+            customInput={<Input />}
             renderCustomHeader={({
               date,
               changeYear,
