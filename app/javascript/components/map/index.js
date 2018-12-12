@@ -172,5 +172,4 @@ MapContainer.propTypes = {
 };
 
 export const reduxModule = { reducers, initialState, actions };
-
 export default connect(getMapProps, actions)(MapContainer);

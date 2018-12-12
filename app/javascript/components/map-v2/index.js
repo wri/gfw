@@ -8,6 +8,7 @@ import flatMap from 'lodash/flatMap';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
 import { track } from 'utils/analytics';
+import reducerRegistry from 'app/registry';
 
 import MapComponent from './component';
 import { getMapProps } from './selectors';
@@ -169,5 +170,10 @@ MapContainer.propTypes = {
   activeDatasets: PropTypes.array
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
+reducerRegistry.registerModule('map', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
+// export const reduxModule = handleModule({ actions: ownActions, reducers, initialState });
 export default connect(getMapProps, actions)(MapContainer);

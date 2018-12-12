@@ -1,10 +1,10 @@
 /* eslint-disable import/first */
-import { combineReducers } from 'redux';
+// import { combineReducers } from 'redux';
 import { handleModule } from 'redux-tools';
 import { reducer as formReducer } from 'redux-form';
 
 // Routes
-import router from './router';
+// import router from './router';
 
 // COMPONENTS
 
@@ -15,7 +15,7 @@ import { reduxModule as Widgets } from 'components/widgets';
 import { reduxModule as Popup } from 'components/map-v2/components/popup';
 import { reduxModule as Draw } from 'components/map-v2/components/draw';
 import { reduxModule as Header } from 'pages/dashboards/header';
-import { reduxModule as MapNew } from 'components/map-v2';
+// import { reduxModule as MapNew } from 'components/map-v2';
 import { reduxModule as MapTour } from 'components/map-v2/components/map-tour';
 import { reduxModule as MapOld } from 'components/map';
 import { reduxModule as MapMenu } from 'pages/map/components/menu';
@@ -58,7 +58,7 @@ const componentsReducers = {
   draw: handleModule(Draw),
   header: handleModule(Header),
   share: handleModule(Share),
-  map: handleModule(MapNew),
+  // map: handleModule(MapNew),
   mapOld: handleModule(MapOld),
   mapMenu: handleModule(MapMenu),
   mapTour: handleModule(MapTour),
@@ -90,9 +90,9 @@ const providersReducers = {
   layerSpec: handleModule(LayerSpecProvider)
 };
 
-export default combineReducers({
+export default {
   ...providersReducers,
   ...componentsReducers,
-  form: formReducer,
-  location: router.reducer
-});
+  form: formReducer
+  // location: router.reducer
+};
