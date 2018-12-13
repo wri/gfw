@@ -80,7 +80,8 @@ class ShowAnalysis extends PureComponent {
       downloadUrls,
       hasLayers,
       hasWidgets,
-      zoomLevel
+      zoomLevel,
+      widgets
     } = this.props;
 
     return (
@@ -167,7 +168,7 @@ class ShowAnalysis extends PureComponent {
                 <ul className="draw-stats">
                   {data && data.map(d => this.renderStatItem(d))}
                 </ul>
-                <Widgets simple analysis />
+                <Widgets simple analysis widgets={widgets} />
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>
@@ -219,6 +220,7 @@ ShowAnalysis.propTypes = {
   hasLayers: PropTypes.bool,
   hasWidgets: PropTypes.bool,
   downloadUrls: PropTypes.array,
+  widgets: PropTypes.array,
   zoomLevel: PropTypes.number
 };
 

@@ -1,7 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
+import moment from 'moment';
+import intersection from 'lodash/intersection';
 
+import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { initialState } from './reducers';
 import basemaps, { labels } from './basemaps-schema';
 
@@ -23,9 +26,6 @@ const selectGeostore = state => state.geostore.data || null;
 // interactions
 const selectSelectedInteractionId = state => state.popup.selected;
 const selectInteractions = state => state.popup.interactions;
-
-// get widgets
-const selectWidgetActiveSettings = state => state.widgets.settings;
 
 // CONSTS
 export const getBasemaps = () => basemaps;
@@ -319,18 +319,57 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
   return layers.filter(l => !l.confirmedOnly);
 });
 
+// get widgets related to map layers and use them to build the layers
+export const getWidgetsWithLayerParams = createSelector(
+  [parseWidgetsWithOptions, getAllLayers],
+  (widgets, layers) => {
+    if (!widgets || !widgets.length || !layers || !layers.length) return null;
+    const layerIds = layers && layers.map(l => l.id);
+    const filteredWidgets = widgets.filter(w => {
+      const layerIntersection = intersection(w.config.layers, layerIds);
+      return w.config.analysis && layerIntersection && layerIntersection.length;
+    });
+    return filteredWidgets.map(w => {
+      const widgetLayer =
+        layers && layers.find(l => w.config && w.config.layers.includes(l.id));
+      const { params, decodeParams } = widgetLayer || {};
+      const startDate =
+        (params && params.startDate) ||
+        (decodeParams && decodeParams.startDate);
+      const startYear =
+        startDate && parseInt(moment(startDate).format('YYYY'), 10);
+      const endDate =
+        (params && params.endDate) || (decodeParams && decodeParams.endDate);
+      const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
+
+      return {
+        ...w,
+        settings: {
+          ...w.settings,
+          ...params,
+          ...decodeParams,
+          ...(startYear && {
+            startYear
+          }),
+          ...(endYear && {
+            endYear
+          })
+        }
+      };
+    });
+  }
+);
+
 // flatten datasets into layers for the layer manager
 export const getActiveLayersWithWidgetSettings = createSelector(
-  [getAllLayers, selectWidgetActiveSettings],
-  (layers, widgetSettings) => {
+  [getAllLayers, getWidgetsWithLayerParams],
+  (layers, widgets) => {
     if (isEmpty(layers)) return [];
-    if (isEmpty(widgetSettings)) return layers;
+    if (isEmpty(widgets)) return layers;
     return layers.map(l => {
       const layerWidgetState =
-        widgetSettings &&
-        Object.values(widgetSettings).find(
-          w => w.layers && w.layers.includes(l.id)
-        );
+        widgets &&
+        Object.values(widgets).find(w => w.layers && w.layers.includes(l.id));
       const { updateLayer } = layerWidgetState || {};
       return {
         ...l,
