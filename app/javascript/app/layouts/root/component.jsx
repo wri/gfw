@@ -9,7 +9,7 @@ import cx from 'classnames';
 import Meta from 'components/meta';
 import Header from 'components/header';
 import Button from 'components/ui/button';
-import MapMenu from 'pages/map/components/menu';
+import MapMenu from 'components/maps/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
 
@@ -34,7 +34,7 @@ class App extends PureComponent {
     const isMapPage = component === 'map';
 
     return (
-      <MediaQuery minDeviceWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
             className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}
@@ -61,12 +61,7 @@ class App extends PureComponent {
               />
             )}
             <div className="page">
-              <PageComponent
-                embed={embed}
-                path={route.component}
-                sections={route.sections}
-                isDesktop={isDesktop}
-              />
+              <PageComponent path={route.component} sections={route.sections} />
             </div>
             {!embed && <MyGFWProvider />}
             {embed && (

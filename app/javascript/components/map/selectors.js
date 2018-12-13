@@ -14,9 +14,9 @@ const selectMapOptions = state => state.mapOld.options;
 const selectSettings = state => state.mapOld.settings;
 const selectLayerSlugs = state => state.mapOld.layerSpec || null;
 const selectGeojson = state =>
-  (state.geostore.geostore && state.geostore.geostore.geojson) || null;
+  (state.geostore.data && state.geostore.data.geojson) || null;
 const selectBounds = state =>
-  (state.geostore.geostore && state.geostore.geostore.bounds) || null;
+  (state.geostore.data && state.geostore.data.bounds) || null;
 
 export const getMapSettings = createSelector(
   [
