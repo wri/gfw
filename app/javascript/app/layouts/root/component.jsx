@@ -29,7 +29,7 @@ const PageComponent = universal(
 
 class App extends PureComponent {
   render() {
-    const { route, loggedIn, metadata } = this.props;
+    const { route, loggedIn, metadata, isGFW } = this.props;
     const { component, embed } = route;
     const isMapPage = component === 'map';
     return (
@@ -68,17 +68,18 @@ class App extends PureComponent {
               />
             </div>
             {!embed && <MyGFWProvider />}
-            {embed && (
-              <div className="embed-footer">
-                <p>For more info</p>
-                <Button
-                  className="embed-btn"
-                  extLink={window.location.href.replace('/embed', '')}
-                >
-                  EXPLORE ON GFW
-                </Button>
-              </div>
-            )}
+            {embed &&
+              !isGFW && (
+                <div className="embed-footer">
+                  <p>For more info</p>
+                  <Button
+                    className="embed-btn"
+                    extLink={window.location.href.replace('/embed', '')}
+                  >
+                    EXPLORE ON GFW
+                  </Button>
+                </div>
+              )}
             <Meta {...metadata} />
           </div>
         )}
@@ -90,6 +91,7 @@ class App extends PureComponent {
 App.propTypes = {
   route: PropTypes.object.isRequired,
   loggedIn: PropTypes.bool,
+  isGFW: PropTypes.bool,
   metadata: PropTypes.object
 };
 
