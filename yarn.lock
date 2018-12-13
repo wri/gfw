@@ -8916,10 +8916,10 @@ layer-manager@^1.10.0:
     reselect "^3.0.1"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^1.13.1:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.13.1.tgz#e3025ecfe29b173e63c009afc47c8dce7df5164e"
-  integrity sha512-9RByRSAgULVzPYsYFDUZfde9HS7BkZWDAqW+ayi1rfoEhd+2GePGyAexUpUg3U5Kq2Tamcn4vV+vWqKS48Q3GA==
+layer-manager@^1.13.2:
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.13.2.tgz#28fd40054b3a22b8de4ca84c2cad5a873a9988c1"
+  integrity sha512-N/98IOLBz9TOEDsdfHYRDu7Om6ha/OtCVcAdBQtF0aUPUlMNI/0pGCfc8YvlCxym71x8YEOK+IEKmhMrXryhtQ==
   dependencies:
     bluebird "^3.5.2"
     lodash "^4.17.10"
@@ -13899,10 +13899,10 @@ redux-persist@^5.10.0:
   resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.10.0.tgz#5d8d802c5571e55924efc1c3a9b23575283be62b"
   integrity sha512-sSJAzNq7zka3qVHKce1hbvqf0Vf5DuTVm7dr4GtsqQVOexnrvbV47RWFiPxQ8fscnyiuWyD2O92DOxPl0tGCRg==
 
-redux-thunk@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
-  integrity sha1-5hWhbha0ehmlFXZhM9Hj6Zt4UuU=
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+  integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
 
 "redux-tools@github:vizzuality/redux-tools#v3.4.1":
   version "3.3.0"
