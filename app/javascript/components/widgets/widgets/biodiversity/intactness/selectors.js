@@ -2,12 +2,14 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { getColorPalette } from 'utils/data';
+import breaks from './percentiles.json';
 
 // get list data
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
 const getData = state => state.data && state.data;
 const getLocationName = state => state.locationName || null;
+const getLocation = state => state.location || null;
 const getChildLocationDict = state => state.childLocationDict || null;
 const getSettings = state => state.settings || null;
 
@@ -24,31 +26,19 @@ const normalizeSig = d => ({
 export const parsePayload = payload =>
   payload && { percentile: payload.activeLabel };
 
-const breaks = {
-  int: {
-    // upper boundaries
-    '0th': 0.002343949,
-    '10th': 0.008821356,
-    '25th': 0.03595682,
-    '75th': 0.04679092,
-    '90th': 1
-  },
-  sig: {
-    '0th': -4.980669,
-    '10th': -3.941458,
-    '25th': -2.52913,
-    '75th': -1.997363,
-    '90th': 0
-  }
-};
-
 const parseData = createSelector(
-  [getData, getSettings, getChildLocationDict],
-  (data, settings, childLocations) => {
+  [getData, getSettings, getChildLocationDict, getLocation],
+  (data, settings, childLocations, location) => {
     if (isEmpty(data) || isEmpty(childLocations)) {
       return null;
     }
     const { bType } = settings;
+    const { adm0, adm1 } = location;
+
+    let locationType;
+    if (!adm0 && !adm1) locationType = 'global';
+    else if (adm0 && !adm1) locationType = 'country';
+    else locationType = 'region';
 
     const percentiles = [
       { name: 'Very low', data: [], count: 0, percent: 0 },
@@ -62,11 +52,15 @@ const parseData = createSelector(
       const datapoint = bType === 'int' ? normalizeInt(d) : normalizeSig(d);
 
       // foreach percentile division
-      for (let i = 0; i < Object.keys(breaks[bType]).length; i++) {
+      for (
+        let i = 0;
+        i < Object.keys(breaks[locationType][bType]).length;
+        i++
+      ) {
         // get the percentile key (e.g. "10th")
-        const key = Object.keys(breaks[bType])[i];
+        const key = Object.keys(breaks[locationType][bType])[i];
         // if the datapoint[variable] falls behind the break
-        if (datapoint[bType] < breaks[bType][key]) {
+        if (datapoint[bType] < breaks[locationType][bType][key]) {
           // add it to its percentile and update the count
           if (childLocations[datapoint.location]) {
             percentiles[i].data.push({
