@@ -132,6 +132,8 @@ const parseConfig = createSelector([buildData], data => {
       type: 'number',
       domain: [0, 100]
     },
+    // default unitFormat expects a number
+    unitFormat: text => text,
     xKeys: {
       bars: {
         percent: {
