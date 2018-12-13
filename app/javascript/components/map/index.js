@@ -172,7 +172,7 @@ MapContainer.propTypes = {
   geojson: PropTypes.object
 };
 
-reducerRegistry.registerModule('analysis', {
+reducerRegistry.registerModule('mapOld', {
   actions,
   reducers,
   initialState

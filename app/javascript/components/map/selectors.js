@@ -7,12 +7,15 @@ import {
 } from 'components/widgets/selectors';
 
 // get list data
-const selectLoading = state => state.mapOld.loading || state.geostore.loading;
-const selectError = state => state.mapOld.error;
+const selectLoading = state =>
+  (state.mapOld && state.mapOld.loading) ||
+  (state.geostore && state.geostore.loading);
+const selectError = state => state.mapOld && state.mapOld.error;
 const selectQuery = state => state.location && state.location.query;
-const selectMapOptions = state => state.mapOld.options;
-const selectSettings = state => state.mapOld.settings;
-const selectLayerSlugs = state => state.mapOld.layerSpec || null;
+const selectMapOptions = state => state.mapOld && state.mapOld.options;
+const selectSettings = state => state.mapOld && state.mapOld.settings;
+const selectLayerSlugs = state =>
+  (state.mapOld && state.mapOld.layerSpec) || null;
 const selectGeojson = state =>
   (state.geostore.data && state.geostore.data.geojson) || null;
 const selectBounds = state =>
@@ -46,7 +49,7 @@ export const getMapLayers = createSelector(
 export const getLayers = createSelector(
   [getMapLayers, selectLayerSlugs],
   (layers, layerSpec) => {
-    if (isEmpty(layers)) return null;
+    if (isEmpty(layers) || isEmpty(layerSpec)) return null;
 
     return layers.map(l => ({
       slug: l,

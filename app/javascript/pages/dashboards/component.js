@@ -5,7 +5,6 @@ import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
-import LayerSpecProvider from 'providers/layerspec-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 
 import Widgets from 'components/widgets';
@@ -86,7 +85,6 @@ class Page extends PureComponent {
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />
-        <LayerSpecProvider />
         <GeostoreProvider />
       </div>
     );
