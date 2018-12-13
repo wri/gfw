@@ -10,7 +10,8 @@ import Dropdown from 'components/ui/dropdown';
 
 import Input from 'components/ui/input';
 import Icon from 'components/ui/icon';
-import chevron from 'assets/icons/chevron-left.svg';
+import Button from 'components/ui/button';
+import arrowIcon from 'assets/icons/arrow-down.svg';
 import './datepicker-styles.scss';
 // import './themes/datepicker-small.scss'; //TODO: recent imagery styles
 
@@ -85,13 +86,14 @@ class Datepicker extends PureComponent {
               nextMonthButtonDisabled
             }) => (
               <div className="c-datepicker-header">
-                {prevMonthButtonDisabled ? (
-                  ''
-                ) : (
-                  <button className="menu-link" onClick={decreaseMonth}>
-                    <Icon className="icon-arrow" icon={chevron} />
-                  </button>
-                )}
+                <Button
+                  theme="theme-button-small square"
+                  className="menu-link prev-month"
+                  onClick={decreaseMonth}
+                  disabled={prevMonthButtonDisabled}
+                >
+                  <Icon icon={arrowIcon} />
+                </Button>
                 <Dropdown
                   className="c-date-dropdown"
                   theme="theme-dropdown-native theme-dropdown-native-button"
@@ -113,17 +115,14 @@ class Datepicker extends PureComponent {
                   value={date.getFullYear()}
                   native
                 />
-                {nextMonthButtonDisabled ? (
-                  ''
-                ) : (
-                  <button
-                    className="menu-link"
-                    style={{ transform: 'rotate(180deg' }}
-                    onClick={increaseMonth}
-                  >
-                    <Icon className="icon-arrow" icon={chevron} />
-                  </button>
-                )}
+                <Button
+                  theme="theme-button-small square"
+                  className="menu-link next-month"
+                  onClick={increaseMonth}
+                  disabled={nextMonthButtonDisabled}
+                >
+                  <Icon icon={arrowIcon} />
+                </Button>
               </div>
             )}
           />
