@@ -2,21 +2,25 @@ import { formatDate } from 'utils/dates';
 import { deburrUpper } from 'utils/data';
 import moment from 'moment';
 
-export const reduceParams = (params, latestDate) => {
+export const reduceParams = params => {
   if (!params) return null;
   return params.reduce((obj, param) => {
     const { format, key, interval, count } = param;
     let paramValue = param.default;
     const isDate = deburrUpper(param.key).includes('DATE');
     if (isDate && !paramValue) {
-      let date = latestDate || formatDate(new Date());
+      let date = formatDate(new Date());
       if (interval && count) date = moment(date).subtract(count, interval);
       paramValue = moment(date).format(format || 'YYYY-MM-DD');
     }
 
     const newObj = {
       ...obj,
-      [key]: paramValue
+      [key]: paramValue,
+      ...(key === 'endDate' &&
+        param.url && {
+          latestUrl: param.url
+        })
     };
     return newObj;
   }, {});

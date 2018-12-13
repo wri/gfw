@@ -1,6 +1,6 @@
 {
   "name": "globalforestwatch",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "Global Forest Watch",
   "main": "Gruntfile.js",
   "engines": {
@@ -119,7 +119,7 @@
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",
-    "layer-manager": "^1.13.1",
+    "layer-manager": "^1.13.2",
     "leaflet-draw": "^1.0.3",
     "lodash": "^4.17.10",
     "lodash-math": "0.0.7",
@@ -142,7 +142,7 @@
     "react-dropzone": "^4.2.13",
     "react-event-listener": "0.5.1",
     "react-ga": "2.4.1",
-    "react-helmet": "5.2.0",
+    "react-helmet": "^5.2.0",
     "react-hot-loader": "^4.3.8",
     "react-html-parser": "2.0.2",
     "react-joyride": "^2.0.0-15",
@@ -165,7 +165,7 @@
     "redux-first-router-link": "1.4.2",
     "redux-form": "^7.4.2",
     "redux-persist": "^5.10.0",
-    "redux-thunk": "2.2.0",
+    "redux-thunk": "^2.3.0",
     "redux-tools": "github:vizzuality/redux-tools#v3.4.1",
     "reselect": "3.0.1",
     "stylelint": "8.3.1",
@@ -178,5 +178,8 @@
     "turf-union": "^3.0.12",
     "wri-api-components": "^2.2.10",
     "wri-json-api-serializer": "^1.0.1"
+  },
+  "resolutions": {
+    "event-stream": "^4.0.1"
   }
 }

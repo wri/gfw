@@ -33,27 +33,59 @@ export const getHeaderData = createThunkAction(
           ) => {
             const extent = totalExtent.data.data;
             const loss = totalLoss.data.data;
-            const plantationsExtent = totalPlantationsExtent.data.data;
             const plantationsLoss = totalPlantationsLoss.data.data;
+            const plantationsExtent = totalPlantationsExtent.data.data;
+
+            // group over years
+            const groupedLoss = plantationsLoss && groupBy(loss, 'year');
+            const groupedPlantationsLoss =
+              plantationsLoss && groupBy(plantationsLoss, 'year');
+
             const primaryLoss = totalPrimaryLoss.data.data;
-            const groupedLoss = loss && groupBy(loss, 'year');
             const latestYear = max(Object.keys(groupedLoss));
-            const summedLoss = sumBy(groupedLoss[latestYear], 'area');
-            const summedEmissions = sumBy(groupedLoss[latestYear], 'emissions');
+
+            const latestPlantationLoss =
+              groupedPlantationsLoss[latestYear] || null;
+            const latestLoss = groupedLoss[latestYear] || null;
+
+            // sum over different bound1 within year
+            const summedPlantationsLoss =
+              latestPlantationLoss &&
+              latestPlantationLoss.length &&
+              latestPlantationLoss[0].area
+                ? sumBy(latestPlantationLoss, 'area')
+                : 0;
+            const summedPlantationsEmissions =
+              latestPlantationLoss &&
+              latestPlantationLoss.length &&
+              latestPlantationLoss[0].emissions
+                ? sumBy(latestPlantationLoss, 'emissions')
+                : 0;
+            const summedLoss =
+              latestLoss && latestLoss.length && latestLoss[0].area
+                ? sumBy(latestLoss, 'area')
+                : 0;
+            const summedEmissions =
+              latestLoss && latestLoss.length && latestLoss[0].emissions
+                ? sumBy(latestLoss, 'emissions')
+                : 0;
+
             const data = {
               totalArea: (extent[0] && extent[0].total_area) || 0,
               extent: (extent[0] && extent[0].value) || 0,
               plantationsExtent:
-                (plantationsExtent[0] && plantationsExtent[0].value) || 0,
+                plantationsExtent && plantationsExtent.length
+                  ? plantationsExtent[0].value
+                  : 0,
               totalLoss: {
-                area: summedLoss,
-                year: latestYear,
-                emissions: summedEmissions
+                area: summedLoss || 0,
+                year: latestYear || 0,
+                emissions: summedEmissions || 0
               },
-              plantationsLoss:
-                plantationsLoss && plantationsLoss.length
-                  ? reverse(sortBy(plantationsLoss, 'year'))[0]
-                  : {},
+              plantationsLoss: {
+                area: summedPlantationsLoss || 0,
+                emissions: summedPlantationsEmissions || 0
+              },
               primaryLoss:
                 primaryLoss && primaryLoss.length
                   ? reverse(sortBy(primaryLoss, 'year'))[0]

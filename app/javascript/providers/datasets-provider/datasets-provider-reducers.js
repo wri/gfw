@@ -3,7 +3,7 @@ import * as actions from './datasets-provider-actions';
 export const initialState = {
   loading: true,
   error: false,
-  datasets: []
+  data: []
 };
 
 const setDatasetsLoading = (state, { payload }) => ({
@@ -13,7 +13,7 @@ const setDatasetsLoading = (state, { payload }) => ({
 
 const setDatasets = (state, { payload }) => ({
   ...state,
-  datasets: payload,
+  data: payload,
   loading: false
 });
 

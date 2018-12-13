@@ -8,7 +8,8 @@ import { getColorPalette } from 'utils/data';
 import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
-const getLoss = state => (state.data && state.data.loss) || null;
+const getLossPlantations = state =>
+  (state.data && state.data.lossPlantations) || null;
 const getTotalLoss = state => (state.data && state.data.totalLoss) || null;
 const getSettings = state => state.settings || null;
 const getLocationName = state => state.locationName || null;
@@ -17,20 +18,34 @@ const getSentence = state => state.config && state.config.sentence;
 
 // get lists selected
 export const parseData = createSelector(
-  [getLoss, getTotalLoss, getSettings],
-  (loss, totalLoss, settings) => {
-    if (!loss || !totalLoss) return null;
+  [getLossPlantations, getTotalLoss, getSettings],
+  (lossPlantations, totalLoss, settings) => {
+    if (!lossPlantations || !totalLoss) return null;
     const { startYear, endYear } = settings;
     const totalLossByYear = groupBy(totalLoss, 'year');
     return uniqBy(
-      loss.filter(d => d.year >= startYear && d.year <= endYear).map(d => ({
-        ...d,
-        outsideAreaLoss: totalLossByYear[d.year][0].area - d.area,
-        areaLoss: d.area || 0,
-        totalLoss: totalLossByYear[d.year][0].area || 0,
-        outsideCo2Loss: totalLossByYear[d.year][0].emissions - d.emissions,
-        co2Loss: d.emissions || 0
-      })),
+      lossPlantations
+        .filter(d => d.year >= startYear && d.year <= endYear)
+        .map(d => {
+          const groupedPlantations = groupBy(lossPlantations, 'year')[d.year];
+          const summedPlatationsLoss =
+            groupedPlantations && sumBy(groupedPlantations, 'area');
+          const summedPlatationsEmissions =
+            groupedPlantations && sumBy(groupedPlantations, 'emissions');
+          const totalLossForYear =
+            (totalLossByYear[d.year] && totalLossByYear[d.year][0]) || {};
+
+          const returnData = {
+            ...d,
+            outsideAreaLoss: totalLossForYear.area - summedPlatationsLoss,
+            areaLoss: summedPlatationsLoss || 0,
+            totalLoss: totalLossForYear.area || 0,
+            outsideCo2Loss:
+              totalLossByYear[d.year][0].emissions - summedPlatationsEmissions,
+            co2Loss: summedPlatationsEmissions || 0
+          };
+          return returnData;
+        }),
       'year'
     );
   }
@@ -89,7 +104,6 @@ export const parseSentence = createSelector(
       plantationsLoss > outsideLoss
         ? 100 * plantationsLoss / totalLoss
         : 100 * outsideLoss / totalLoss;
-
     const params = {
       location: locationName,
       startYear,

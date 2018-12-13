@@ -34,22 +34,21 @@ export const getWidgetSettings = createSelector(
   })
 );
 
-export const getWidgetPropsFromState = createSelector(
+export const getWidgetOptionsFromData = createSelector(
   [selectWidgetFromState, selectAllPropsAndState, getWidgetSettings],
-  (widgetState, widgetProps, settings) => ({
-    ...widgetProps.getProps({
-      ...widgetState,
-      ...widgetProps,
-      settings
-    })
-  })
+  (widgetState, widgetProps) =>
+    widgetProps.getDataOptions && {
+      ...widgetProps.getDataOptions({
+        ...widgetState
+      })
+    }
 );
 
 export const getWidgetOptions = createSelector(
-  [selectWidgetOptions, getWidgetPropsFromState],
-  (options, dataProps) => ({
+  [selectWidgetOptions, getWidgetOptionsFromData],
+  (options, dataOptions) => ({
     ...options,
-    ...dataProps.options
+    ...dataOptions
   })
 );
 
@@ -63,42 +62,24 @@ export const getWidgetLoading = createSelector(
   props => props && props.loading
 );
 
-export const getWidgetTitle = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.title
-);
-
-export const getWidgetSentence = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.sentence
-);
-
-export const getWidgetData = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.data
-);
-
-export const getWidgetDataConfig = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.dataConfig
-);
-
 export const getRangeYears = createSelector(
   [getWidgetStateData, selectWidgetConfig],
   (data, config) => {
     const { startYears, endYears, yearsRange } = config.options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
     const flatData = flattenObj(data);
-    let years = [];
-    Object.keys(flatData).forEach(key => {
-      if (key.includes('year')) {
-        years = years.concat(flatData[key]);
-      }
-    });
-    years = uniq(years);
-    years = yearsRange
-      ? years.filter(y => y >= yearsRange[0] && y <= yearsRange[1])
-      : years;
+    let years = data.years || [];
+    if (years.length) {
+      Object.keys(flatData).forEach(key => {
+        if (key.includes('year')) {
+          years = years.concat(flatData[key]);
+        }
+      });
+      years = uniq(years);
+      years = yearsRange
+        ? years.filter(y => y >= yearsRange[0] && y <= yearsRange[1])
+        : years;
+    }
 
     return sortBy(
       years.map(y => ({
@@ -176,6 +157,60 @@ export const getIndicator = createSelector(
       value
     };
   }
+);
+
+export const getWidgetPropsFromState = createSelector(
+  [
+    selectWidgetFromState,
+    selectAllPropsAndState,
+    getWidgetSettings,
+    getOptionsSelected,
+    getOptionsWithYears,
+    getForestType,
+    getLandCategory,
+    getIndicator
+  ],
+  (
+    widgetState,
+    widgetProps,
+    settings,
+    optionsSelected,
+    options,
+    forestType,
+    landCategory,
+    indicator
+  ) => ({
+    ...widgetProps.getProps({
+      ...widgetState,
+      ...widgetProps,
+      options,
+      optionsSelected,
+      settings,
+      forestType,
+      landCategory,
+      indicator
+    })
+  })
+);
+
+export const getWidgetTitle = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.title
+);
+
+export const getWidgetSentence = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.sentence
+);
+
+export const getWidgetData = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.data
+);
+
+export const getWidgetDataConfig = createSelector(
+  [getWidgetPropsFromState],
+  props => props && props.dataConfig
 );
 
 export const getWidgetProps = () =>

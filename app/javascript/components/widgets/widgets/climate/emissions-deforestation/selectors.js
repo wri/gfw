@@ -1,81 +1,75 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
-import { biomassToCO2, biomassToC } from 'utils/calculations';
-import { getColorPalette } from 'utils/data';
+import { formatNumber } from 'utils/format';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
 const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
 const getIndicator = state => state.indicator || null;
 const getLocationName = state => state.locationName || null;
-const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 
 export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
-
-    const { startYear, endYear } = settings;
-    return data
-      .filter(d => d.year >= startYear && d.year <= endYear)
-      .map(d => ({
-        ...d,
-        biomassCarbon: biomassToC(d.emissions),
-        co2Emissions: biomassToCO2(d.emissions),
-        biomass: d.emissions
+    const { startYear, endYear, unit } = settings;
+    const dataByUnit = data[unit];
+    const mappedData =
+      dataByUnit &&
+      Object.keys(dataByUnit).map(d => ({
+        year: d,
+        [unit]: dataByUnit[d]
       }));
+    return (
+      mappedData &&
+      mappedData.filter(d => d.year >= startYear && d.year <= endYear)
+    );
   }
 );
 
-export const parseConfig = createSelector(
-  [getSettings, getColors],
-  (settings, colors) => {
-    const colorRange = getColorPalette(colors.ramp, 2);
-    const { unit } = settings;
-    return {
-      height: 250,
-      xKey: 'year',
-      yKeys: {
-        areas: {
-          [unit]: {
-            fill: colorRange[0],
-            background: false,
-            activeDot: true
-          }
+export const parseConfig = createSelector([getSettings], settings => {
+  const { unit } = settings;
+  return {
+    height: 250,
+    xKey: 'year',
+    yKeys: {
+      bars: {
+        [unit]: {
+          fill: '#DF511E',
+          background: false
         }
+      }
+    },
+    xAxis: {
+      tickFormatter: yearTicksFormatter
+    },
+    tooltip: [
+      {
+        key: 'year'
       },
-      tooltip: [
-        {
-          key: 'year'
-        },
-        {
-          key: [unit],
-          unit: 't',
-          unitFormat: value => format('.3s')(value)
-        }
-      ],
-      unit: 't',
-      unitFormat: value => format('.2s')(value)
-    };
-  }
-);
+      {
+        key: [unit],
+        unit: 't',
+        unitFormat: value => format('.3s')(value)
+      }
+    ],
+    unit: 't',
+    unitFormat: value => format('.2s')(value)
+  };
+});
 
 export const parseSentence = createSelector(
   [parseData, getSettings, getIndicator, getSentences, getLocationName],
-  (data, settings, indicator, sentences, locationName) => {
+  (data, settings, indicator, sentence, locationName) => {
     if (!data || isEmpty(data)) return null;
-    const { initial, containsIndicator } = sentences;
     const { startYear, endYear, unit } = settings;
     const totalBiomass = data
-      .map(d => d.biomass)
+      .map(d => d[unit])
       .reduce((sum, d) => (d ? sum + d : sum));
-    const emissionType = unit === 'biomassCarbon' ? 'carbon' : 'CO\u2082';
-    const totalEmissions =
-      unit === 'biomassCarbon'
-        ? biomassToC(totalBiomass) * 1e-6
-        : biomassToCO2(totalBiomass) * 1e-6;
+    const emissionType = unit === 'cLossByYear' ? 'carbon' : 'CO\u2082';
     let indicatorText = '';
     if (indicator && indicator.value === 'mining') {
       indicatorText = ` ${indicator.label.toLowerCase()} regions`;
@@ -85,16 +79,13 @@ export const parseSentence = createSelector(
 
     const params = {
       type: emissionType,
-      value:
-        unit === 'biomassCarbon'
-          ? `${format('.3r')(totalEmissions)}Tg`
-          : `${format('.3r')(totalEmissions)}Mt`,
+      value: formatNumber({ num: totalBiomass, unit: 't' }),
       location: locationName,
+      annualAvg: formatNumber({ num: totalBiomass / data.length, unit: 't' }),
       startYear,
       endYear,
       indicatorText
     };
-    const sentence = indicatorText ? containsIndicator : initial;
     return { sentence, params };
   }
 );

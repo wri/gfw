@@ -9,7 +9,7 @@ import cx from 'classnames';
 import Meta from 'components/meta';
 import Header from 'components/header';
 import Button from 'components/ui/button';
-import MapMenu from 'pages/map/components/menu';
+import MapMenu from 'components/maps/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
 
@@ -29,11 +29,11 @@ const PageComponent = universal(
 
 class App extends PureComponent {
   render() {
-    const { route, loggedIn, metadata } = this.props;
+    const { route, loggedIn, metadata, isGFW } = this.props;
     const { component, embed } = route;
     const isMapPage = component === 'map';
     return (
-      <MediaQuery minDeviceWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
             className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}
@@ -60,25 +60,21 @@ class App extends PureComponent {
               />
             )}
             <div className="page">
-              <PageComponent
-                embed={embed}
-                path={route.component}
-                sections={route.sections}
-                isDesktop={isDesktop}
-              />
+              <PageComponent path={route.component} sections={route.sections} />
             </div>
             {!embed && <MyGFWProvider />}
-            {embed && (
-              <div className="embed-footer">
-                <p>For more info</p>
-                <Button
-                  className="embed-btn"
-                  extLink={window.location.href.replace('/embed', '')}
-                >
-                  EXPLORE ON GFW
-                </Button>
-              </div>
-            )}
+            {embed &&
+              !isGFW && (
+                <div className="embed-footer">
+                  <p>For more info</p>
+                  <Button
+                    className="embed-btn"
+                    extLink={window.location.href.replace('/embed', '')}
+                  >
+                    EXPLORE ON GFW
+                  </Button>
+                </div>
+              )}
             <Meta {...metadata} />
           </div>
         )}
@@ -90,6 +86,7 @@ class App extends PureComponent {
 App.propTypes = {
   route: PropTypes.object.isRequired,
   loggedIn: PropTypes.bool,
+  isGFW: PropTypes.bool,
   metadata: PropTypes.object
 };
 

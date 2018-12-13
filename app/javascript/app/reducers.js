@@ -8,19 +8,23 @@ import router from './router';
 
 // COMPONENTS
 
-// Map & Dashboards
-import { reduxModule as RecentImagery } from 'components/map-v2/components/recent-imagery';
-import { reduxModule as Analysis } from 'components/map-v2/components/analysis';
+// Dashboards
 import { reduxModule as Widgets } from 'components/widgets';
-import { reduxModule as Popup } from 'components/map-v2/components/popup';
-import { reduxModule as Draw } from 'components/map-v2/components/draw';
 import { reduxModule as Header } from 'pages/dashboards/header';
-import { reduxModule as MapNew } from 'components/map-v2';
-import { reduxModule as MapTour } from 'components/map-v2/components/map-tour';
+
+// Maps
 import { reduxModule as MapOld } from 'components/map';
-import { reduxModule as MapMenu } from 'pages/map/components/menu';
+import { reduxModule as MapNew } from 'components/maps/map';
+
+// Map components
+import { reduxModule as Analysis } from 'components/maps/components/analysis';
+import { reduxModule as RecentImagery } from 'components/maps/main-map/components/recent-imagery';
+import { reduxModule as Draw } from 'components/maps/map/components/draw';
+import { reduxModule as Popup } from 'components/maps/map/components/popup';
+import { reduxModule as MapTour } from 'components/maps/main-map/components/map-tour';
 
 // Projects (About and SGF)
+import { reduxModule as MapMenu } from 'components/maps/components/menu';
 import { reduxModule as Impacts } from 'pages/about/section-impacts';
 import { reduxModule as AboutProjects } from 'pages/about/section-projects';
 import { reduxModule as SGFProjects } from 'pages/sgf/section-projects';
@@ -43,6 +47,7 @@ import { reduxModule as CountryDataProvider } from 'providers/country-data-provi
 import { reduxModule as GeostoreProvider } from 'providers/geostore-provider';
 import { reduxModule as WhitelistsProvider } from 'providers/whitelists-provider';
 import { reduxModule as DatasetsProvider } from 'providers/datasets-provider';
+import { reduxModule as LatestProvider } from 'providers/latest-provider';
 import { reduxModule as MyGFWProvider } from 'providers/mygfw-provider';
 import { reduxModule as PTWProvider } from 'providers/ptw-provider';
 import { reduxModule as LayerSpecProvider } from 'providers/layerspec-provider';
@@ -57,8 +62,8 @@ const componentsReducers = {
   draw: handleModule(Draw),
   header: handleModule(Header),
   share: handleModule(Share),
-  map: handleModule(MapNew),
   mapOld: handleModule(MapOld),
+  map: handleModule(MapNew),
   mapMenu: handleModule(MapMenu),
   mapTour: handleModule(MapTour),
   // modals
@@ -83,6 +88,7 @@ const providersReducers = {
   geostore: handleModule(GeostoreProvider),
   whitelists: handleModule(WhitelistsProvider),
   datasets: handleModule(DatasetsProvider),
+  latest: handleModule(LatestProvider),
   myGfw: handleModule(MyGFWProvider),
   ptw: handleModule(PTWProvider),
   layerSpec: handleModule(LayerSpecProvider)

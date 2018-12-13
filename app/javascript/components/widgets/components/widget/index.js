@@ -37,10 +37,12 @@ class WidgetContainer extends Component {
     const settingsUpdateBlackList = [
       'startYear',
       'endYear',
+      'year',
       'activeData',
       'weeks',
       'page',
-      'highlighted'
+      'highlighted',
+      'unit'
     ];
     let changedSetting = '';
     if (settings && prevProps.settings) {
@@ -61,6 +63,11 @@ class WidgetContainer extends Component {
       getWidgetData({ widget, getData, params });
     }
   }
+
+  componentWillUnmount = () => {
+    const { widget, setWidgetData } = this.props;
+    setWidgetData({ widget, data: {} });
+  };
 
   handleDataHighlight = (highlighted, widget) => {
     const { setWidgetSettings } = this.props;
@@ -86,6 +93,7 @@ WidgetContainer.propTypes = {
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   getData: PropTypes.func,
   getWidgetData: PropTypes.func,
+  setWidgetData: PropTypes.func,
   setWidgetSettings: PropTypes.func,
   widget: PropTypes.string
 };
