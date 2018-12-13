@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import WidgetComposedChart from 'components/widgets/components/widget-composed-chart';
 import WidgetNumberedList from 'components/widgets/components/widget-numbered-list';
+import NoContent from 'components/ui/no-content';
 
 import './styles';
 
@@ -40,14 +41,26 @@ class WidgetChartAndList extends PureComponent {
           handleClick={this.handleClick}
           setWidgetsSettings={setWidgetsSettings}
         />
-        <WidgetNumberedList
-          className="widget-combined-list"
-          data={list}
-          settings={settings}
-          setWidgetSettings={setWidgetSettings}
-          embed={embed}
-          widget={widget}
-        />
+        {list.length > 0 ? (
+          <WidgetNumberedList
+            className="widget-combined-list"
+            data={list}
+            settings={settings}
+            setWidgetSettings={setWidgetSettings}
+            embed={embed}
+            widget={widget}
+          />
+        ) : (
+          <div className="widget-combined-list">
+            <NoContent>
+              No data in the{' '}
+              {settings && settings.percentile
+                ? settings.percentile
+                : 'selected'}{' '}
+              category
+            </NoContent>
+          </div>
+        )}
       </div>
     );
   }

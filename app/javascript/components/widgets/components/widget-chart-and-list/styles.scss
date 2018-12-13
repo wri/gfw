@@ -24,6 +24,14 @@
     .widget-combined-list {
       width: calc(30% - #{rem(20px)});
       margin-top: 0;
+      height: 250px;
+      vertical-align: top;
+      position: relative;
+    }
+
+    .c-paginate {
+      position: absolute;
+      bottom: 0;
     }
   }
 }

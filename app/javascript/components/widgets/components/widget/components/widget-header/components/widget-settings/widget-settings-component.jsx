@@ -243,7 +243,7 @@ class WidgetSettings extends PureComponent {
             {bioTypes && (
               <Dropdown
                 theme="theme-select-light"
-                label="BIO DATASET"
+                label="BIODIVERSITY DATASET"
                 value={settings.bType}
                 options={bioTypes}
                 disabled={loading}
