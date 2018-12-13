@@ -198,7 +198,7 @@ export const topics = {
           }
         ],
         basemap: {
-          key: 'default'
+          value: 'default'
         },
         label: 'default'
       }
@@ -242,7 +242,7 @@ export const topics = {
           }
         ],
         basemap: {
-          key: 'dark'
+          value: 'dark'
         },
         label: 'lightLabels'
       },
@@ -318,7 +318,7 @@ export const topics = {
           }
         ],
         basemap: {
-          key: 'default'
+          value: 'default'
         },
         label: 'default'
       }
@@ -373,7 +373,7 @@ export const topics = {
           }
         ],
         basemap: {
-          key: 'default'
+          value: 'default'
         },
         label: 'default'
       }
