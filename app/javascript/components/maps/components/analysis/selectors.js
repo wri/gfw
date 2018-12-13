@@ -6,9 +6,9 @@ import flatMap from 'lodash/flatMap';
 import {
   getAllBoundaries,
   getActiveBoundaryDatasets,
-  getAllLayers
+  getAllLayers,
+  getWidgetsWithLayerParams
 } from 'components/maps/map/selectors';
-import { filterWidgetsByCategoryAndLayers } from 'components/widgets/selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
@@ -54,7 +54,7 @@ export const getShowDraw = createSelector(
 );
 
 export const getWidgetLayers = createSelector(
-  filterWidgetsByCategoryAndLayers,
+  getWidgetsWithLayerParams,
   widgets => {
     const activeWidgets =
       widgets &&

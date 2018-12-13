@@ -2,7 +2,11 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
-import { getActiveLayers, getMapZoom } from 'components/maps/map/selectors';
+import {
+  getActiveLayers,
+  getMapZoom,
+  getWidgetsWithLayerParams
+} from 'components/maps/map/selectors';
 import { getWidgetLayers } from 'components/maps/components/analysis/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
@@ -149,5 +153,6 @@ export const getShowAnalysisProps = createStructuredSelector({
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,
+  widgets: getWidgetsWithLayerParams,
   zoomLevel: getMapZoom
 });

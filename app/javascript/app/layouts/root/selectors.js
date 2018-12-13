@@ -12,10 +12,15 @@ const selectedCountries = state =>
 const selectedRegions = state => state.countryData && state.countryData.regions;
 const selectedSubRegion = state =>
   state.countryData && state.countryData.subRegions;
+const selectQuery = state => state.location && state.location.query;
 const selectPageLocation = state =>
   state.location && state.location.routesMap[state.location.type];
 
-// get lists selected
+export const getIsGFW = createSelector(
+  selectQuery,
+  query => query && query.gfw
+);
+
 export const getMetadata = createSelector(
   [
     selectPageLocation,
@@ -56,5 +61,6 @@ export const getMetadata = createSelector(
 export const getPageProps = createStructuredSelector({
   loggedIn: selectLoggedIn,
   route: selectPageLocation,
-  metadata: getMetadata
+  metadata: getMetadata,
+  isGFW: getIsGFW
 });
