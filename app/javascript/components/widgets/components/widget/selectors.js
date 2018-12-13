@@ -68,16 +68,18 @@ export const getRangeYears = createSelector(
     const { startYears, endYears, yearsRange } = config.options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
     const flatData = flattenObj(data);
-    let years = [];
-    Object.keys(flatData).forEach(key => {
-      if (key.includes('year')) {
-        years = years.concat(flatData[key]);
-      }
-    });
-    years = uniq(years);
-    years = yearsRange
-      ? years.filter(y => y >= yearsRange[0] && y <= yearsRange[1])
-      : years;
+    let years = data.years || [];
+    if (years.length) {
+      Object.keys(flatData).forEach(key => {
+        if (key.includes('year')) {
+          years = years.concat(flatData[key]);
+        }
+      });
+      years = uniq(years);
+      years = yearsRange
+        ? years.filter(y => y >= yearsRange[0] && y <= yearsRange[1])
+        : years;
+    }
 
     return sortBy(
       years.map(y => ({

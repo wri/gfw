@@ -44,7 +44,8 @@ export const getAnalysis = createThunkAction(
     fetchUmdLossGain(location)
       .then(responses => dispatch(setAnalysisData(responses)))
       .catch(error => {
-        const slug = error.config.url.split('/')[4];
+        const slugUrl = error.config.url.split('/')[4];
+        const slug = slugUrl.split('?')[0];
         const layerName = endpoints.find(e => e.slug === slug).name;
         const { response } = error;
         const errors =

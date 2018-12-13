@@ -117,7 +117,7 @@ class CustomComposedChart extends PureComponent {
                 fontSize: simple ? '10px' : '12px',
                 fill: '#555555'
               }}
-              interval={0}
+              interval="preserveStartEnd"
               {...xAxis}
             />
             {!simple && (

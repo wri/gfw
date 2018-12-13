@@ -178,14 +178,14 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       // decode func and params for canvas layers
                       decodeFunction,
                       decodeClusters,
-                      ...(decodeFunction && {
+                      ...(decodeParams && {
                         decodeParams: {
                           // timeline config
                           ...decodeParams,
                           ...(hasDecodeTimeline && {
-                            minDate: decodeParams && decodeParams.startDate,
-                            maxDate: decodeParams && decodeParams.endDate,
-                            trimEndDate: decodeParams && decodeParams.endDate,
+                            minDate: decodeParams.startDate,
+                            maxDate: decodeParams.endDate,
+                            trimEndDate: decodeParams.endDate,
                             canPlay: true
                           })
                         }
