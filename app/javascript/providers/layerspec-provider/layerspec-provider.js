@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -24,5 +25,10 @@ LayerSpecProvider.propTypes = {
   getLayerSpec: PropTypes.func.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('layerSpec', {
+  actions,
+  reducers,
+  initialState
+});
+
 export default connect(mapStateToProps, actions)(LayerSpecProvider);

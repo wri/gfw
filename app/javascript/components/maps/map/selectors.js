@@ -14,7 +14,7 @@ const selectLatestLoading = state => state.latest.loading;
 const selectDatasetsLoading = state => state.datasets.loading;
 
 // datasets
-const selectDatasets = state => state.datasets.data;
+const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLatest = state => state.latest.data;
 
 // location

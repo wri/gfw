@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './video-actions';
 import reducers, { initialState } from './video-reducers';
@@ -9,6 +10,9 @@ const mapStateToProps = ({ modalVideo }) => ({
   data: modalVideo.data
 });
 
-export const reduxModule = { actions, reducers, initialState };
-
+reducerRegistry.registerModule('modalVideo', {
+  actions,
+  reducers,
+  initialState
+});
 export default connect(mapStateToProps, actions)(ModalVideoComponent);

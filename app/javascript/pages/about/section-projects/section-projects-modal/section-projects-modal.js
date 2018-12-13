@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './section-projects-modal-actions';
 import reducers, { initialState } from './section-projects-modal-reducers';
@@ -10,6 +11,10 @@ const mapStateToProps = state => ({
   data: state.modalAbout.data
 });
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('modalAbout', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(mapStateToProps, actions)(SectionProjectsModalComponent);

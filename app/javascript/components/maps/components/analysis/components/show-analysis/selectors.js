@@ -10,9 +10,10 @@ const selectLoading = state =>
   state.analysis.loading || state.datasets.loading || state.geostore.loading;
 const selectData = state => state.analysis.data;
 const selectError = state => state.analysis.error;
-const selectAdmins = state => state.countryData.countries;
-const selectAdmin1s = state => state.countryData.regions;
-const selectAdmin2s = state => state.countryData.subRegions;
+const selectAdmins = state => state.countryData && state.countryData.countries;
+const selectAdmin1s = state => state.countryData && state.countryData.regions;
+const selectAdmin2s = state =>
+  state.countryData && state.countryData.subRegions;
 const selectGeostore = state => state.geostore.data;
 
 export const getLocationName = createSelector(

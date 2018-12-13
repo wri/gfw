@@ -1,6 +1,6 @@
 import { connectRoutes, NOT_FOUND, redirect } from 'redux-first-router';
 import createHistory from 'history/createBrowserHistory';
-import { handlePageTrack } from 'utils/analytics';
+// import { handlePageTrack } from 'utils/analytics';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import compact from 'lodash/compact';
 import { getNewMapRedirect } from './utils';
@@ -18,7 +18,7 @@ const routeChangeThunk = (dispatch, getState) => {
   const currentLocation = getState().location.pathname;
   const prevLocation = getState().location.prev.pathname;
   if (currentLocation !== prevLocation) {
-    handlePageTrack(getState().location);
+    // handlePageTrack(getState().location);
   }
 };
 

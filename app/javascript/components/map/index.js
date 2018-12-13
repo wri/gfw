@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import difference from 'lodash/difference';
 import findIndex from 'lodash/findIndex';
+import reducerRegistry from 'app/registry';
 
 import Layers from './assets/layers';
 import GFWdefault from './assets/maptypes/GFWdefault';
@@ -171,5 +172,10 @@ MapContainer.propTypes = {
   geojson: PropTypes.object
 };
 
-export const reduxModule = { reducers, initialState, actions };
+reducerRegistry.registerModule('analysis', {
+  actions,
+  reducers,
+  initialState
+});
+
 export default connect(getMapProps, actions)(MapContainer);

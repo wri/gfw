@@ -4,11 +4,14 @@ import upperFirst from 'lodash/upperFirst';
 
 import { buildFullLocationName } from 'utils/format';
 
-const selectLoggedIn = state => !isEmpty(state.myGfw.data) || null;
+const selectLoggedIn = state =>
+  (state.myGfw && !isEmpty(state.myGfw.data)) || null;
 const selectLocation = state => state.location && state.location.payload;
-const selectedCountries = state => state.countryData.countries;
-const selectedRegions = state => state.countryData.regions;
-const selectedSubRegion = state => state.countryData.subRegions;
+const selectedCountries = state =>
+  state.countryData && state.countryData.countries;
+const selectedRegions = state => state.countryData && state.countryData.regions;
+const selectedSubRegion = state =>
+  state.countryData && state.countryData.subRegions;
 const selectPageLocation = state =>
   state.location && state.location.routesMap[state.location.type];
 

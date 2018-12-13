@@ -26,7 +26,7 @@ export const selectEmbed = (state, { embed }) => embed;
 export const selectGeostore = state => state.geostore.data;
 export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
   noWidgetsMessage;
-export const selectWidgets = state => state.widgets.widgets;
+export const selectWidgets = state => state.widgets && state.widgets.widgets;
 export const selectLoading = state =>
   state.countryData.countriesLoading ||
   state.countryData.regionsLoading ||

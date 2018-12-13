@@ -124,5 +124,5 @@ reducerRegistry.registerModule('map', {
   reducers,
   initialState
 });
-// export const reduxModule = handleModule({ actions: ownActions, reducers, initialState });
+
 export default connect(getMapProps, actions)(MapContainer);

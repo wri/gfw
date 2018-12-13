@@ -2,6 +2,7 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -62,5 +63,9 @@ GeostoreProvider.propTypes = {
   setGeostore: PropTypes.func.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('geostore', {
+  actions,
+  reducers,
+  initialState
+});
 export default connect(mapStateToProps, actions)(GeostoreProvider);

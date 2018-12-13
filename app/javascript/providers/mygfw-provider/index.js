@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -21,5 +22,10 @@ MyGFWProvider.propTypes = {
   checkLogged: PropTypes.func.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('myGfw', {
+  actions,
+  reducers,
+  initialState
+});
+
 export default connect(getMyGfwProps, actions)(MyGFWProvider);

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import reducerRegistry from 'app/registry';
 
 import { setMainMapSettings } from 'components/maps/main-map/actions';
 import { setMapSettings } from 'components/maps/map/actions';
@@ -9,7 +10,12 @@ import Component from './component';
 import reducers, { initialState } from './reducers';
 import { getMapTourProps } from './selectors';
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('mapTour', {
+  actions,
+  reducers,
+  initialState
+});
+
 export default connect(getMapTourProps, {
   ...actions,
   setMainMapSettings,

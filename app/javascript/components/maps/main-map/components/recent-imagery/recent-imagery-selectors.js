@@ -14,7 +14,7 @@ export const getMoreTilesLoading = state =>
 const getError = state => state.recentImagery.error;
 const getLocation = state => state.location && state.location.query;
 const getDataStatus = state => state.recentImagery.dataStatus || null;
-const getDatasets = state => state.datasets.data || null;
+const getDatasets = state => (state.datasets && state.datasets.data) || null;
 const getRecentUrlState = state =>
   (state.location &&
     state.location.query &&
