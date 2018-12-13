@@ -99,10 +99,9 @@ const buildData = createSelector(
       selectedPercentile = percentiles.filter(p => p.name === percentile)[0];
     }
 
-    const list = sortBy(selectedPercentile.data, 'label').map(item => ({
-      label: item.label,
-      color: colors.main
-    }));
+    const activeIndex = percentiles.findIndex(
+      p => p.name === selectedPercentile.name
+    );
     const colorRange = getColorPalette(
       colors.ramp,
       percentiles.length
@@ -110,6 +109,10 @@ const buildData = createSelector(
     const data = percentiles
       .map((p, i) => ({ color: colorRange[i], ...p }))
       .reverse();
+    const list = sortBy(selectedPercentile.data, 'label').map(item => ({
+      label: item.label,
+      color: colorRange[activeIndex]
+    }));
 
     return { percentiles: data, list, selectedPercentile };
   }
@@ -164,11 +167,12 @@ const parseSentence = createSelector(
       selectedPercentile = percentiles.filter(p => p.name === percentile)[0];
     }
 
+    const percentileName =
+      selectedPercentile.name && selectedPercentile.name.toLocaleLowerCase();
     const params = {
       location: location === 'global' ? 'the world' : location,
       percent: `${selectedPercentile.percent}%`,
-      percentile:
-        selectedPercentile.name && selectedPercentile.name.toLocaleLowerCase(),
+      percentile: percentileName === 'normal' ? 'average' : percentileName,
       variable: bType === 'int' ? 'intactness' : 'significance'
     };
     return {

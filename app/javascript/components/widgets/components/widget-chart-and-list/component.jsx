@@ -12,7 +12,12 @@ class WidgetChartAndList extends PureComponent {
     const { setWidgetSettings, widget, parsePayload } = this.props;
     if (parsePayload) {
       const settings = parsePayload(payload);
-      if (settings) setWidgetSettings({ value: parsePayload(payload), widget });
+      if (settings) {
+        setWidgetSettings({
+          value: { ...parsePayload(payload), page: 0 },
+          widget
+        });
+      }
     }
   };
 
