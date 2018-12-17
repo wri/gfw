@@ -3,11 +3,6 @@ import sortBy from 'lodash/sortBy';
 import uniq from 'lodash/uniq';
 import concat from 'lodash/concat';
 import lowerCase from 'lodash/lowerCase';
-import camelCase from 'lodash/camelCase';
-import intersection from 'lodash/intersection';
-import moment from 'moment';
-
-import { getAllLayers } from 'components/map-v2/selectors';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
@@ -19,11 +14,10 @@ export const selectAnalysis = (state, { analysis }) => analysis;
 export const selectAllLocation = state => state.location;
 export const selectLocationType = state =>
   state.location && state.location.payload && state.location.payload.type;
-export const selectQuery = state => state.location && state.location.query;
 export const selectWidgetFromQuery = state =>
   state.location && state.location.query && state.location.query.widget;
 export const selectEmbed = (state, { embed }) => embed;
-export const selectGeostore = state => state.geostore.geostore;
+export const selectGeostore = state => state.geostore.data;
 export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
   noWidgetsMessage;
 export const selectWidgets = state => state.widgets.widgets;
@@ -139,11 +133,6 @@ export const isTropicalLocation = createSelector([selectLocation], location =>
   tropicalIsos.includes(location && location.adm0)
 );
 
-export const getCategory = createSelector(
-  [selectQuery],
-  query => (query && query.category) || 'summary'
-);
-
 export const getNoWidgetsMessage = createSelector(
   [getLocationName, selecteNoWidgetsMessage],
   (locationName, message) =>
@@ -172,7 +161,7 @@ export const parseWidgets = createSelector(
 export const filterWidgetsByLocation = createSelector(
   [parseWidgets, selectLocationType, getAdminLevel],
   (widgets, type, adminLevel) => {
-    if (!widgets) return null;
+    if (!widgets || !type) return null;
     return widgets.filter(w => {
       const { types, admins } = w.config || {};
       return (
@@ -291,72 +280,10 @@ export const parseWidgetsWithOptions = createSelector(
   }
 );
 
-export const filterWidgetsByCategoryAndLayers = createSelector(
-  [parseWidgetsWithOptions, getCategory, getAllLayers, selectAnalysis],
-  (widgets, category, layers, analysis) => {
-    if (!widgets) return null;
-    let filteredWidgets = widgets;
-    if (analysis) {
-      const layerIds = layers && layers.map(l => l.id);
-      filteredWidgets = widgets.filter(w => {
-        const layerIntersection = intersection(w.config.layers, layerIds);
-        return (
-          w.config.analysis && layerIntersection && layerIntersection.length
-        );
-      });
-      filteredWidgets = filteredWidgets.map(w => {
-        const widgetLayer =
-          layers &&
-          layers.find(l => w.config && w.config.layers.includes(l.id));
-        const { params, decodeParams } = widgetLayer || {};
-        const startDate =
-          (params && params.startDate) ||
-          (decodeParams && decodeParams.startDate);
-        const startYear =
-          startDate && parseInt(moment(startDate).format('YYYY'), 10);
-        const endDate =
-          (params && params.endDate) || (decodeParams && decodeParams.endDate);
-        const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
-
-        return {
-          ...w,
-          settings: {
-            ...w.settings,
-            ...params,
-            ...decodeParams,
-            ...(startYear && {
-              startYear
-            }),
-            ...(endYear && {
-              endYear
-            })
-          }
-        };
-      });
-    } else {
-      filteredWidgets = widgets.filter(w =>
-        w.config.categories.includes(category)
-      );
-    }
-
-    return sortBy(filteredWidgets, `config.sortOrder[${camelCase(category)}]`);
-  }
-);
-
-export const getActiveWidget = createSelector(
-  [filterWidgetsByCategoryAndLayers, selectQuery],
-  (widgets, query) => {
-    if (query && query.widget) return query.widget;
-    return widgets && widgets.length && widgets[0].widget;
-  }
-);
-
 export const getWidgetsProps = createStructuredSelector({
   loading: selectLoading,
   whitelists: selectWhitelists,
   whitelist: getActiveWhitelist,
-  activeWidget: getActiveWidget,
-  category: getCategory,
   allLocation: selectAllLocation,
   location: selectLocation,
   locationType: selectLocationType,
@@ -364,7 +291,6 @@ export const getWidgetsProps = createStructuredSelector({
   locationObject: getLocationObject,
   locationName: getLocationName,
   childLocationData: getChildLocationData,
-  widgets: filterWidgetsByCategoryAndLayers,
   noWidgetsMessage: getNoWidgetsMessage,
   isTropical: isTropicalLocation
 });

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setMapTourOpen } from 'components/map-v2/components/map-tour/actions';
+import { setMapTourOpen } from 'components/maps/main-map/components/map-tour/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';

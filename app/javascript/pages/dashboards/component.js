@@ -32,7 +32,9 @@ class Page extends PureComponent {
       widgetAnchor,
       setMapZoom,
       handleCategoryChange,
-      noWidgetsMessage
+      noWidgetsMessage,
+      widgets,
+      activeWidget
     } = this.props;
 
     return (
@@ -60,6 +62,8 @@ class Page extends PureComponent {
           <Widgets
             className="dashboard-widgets"
             noWidgetsMessage={noWidgetsMessage}
+            widgets={widgets}
+            activeWidget={activeWidget}
           />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
@@ -100,7 +104,9 @@ Page.propTypes = {
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   setMapZoom: PropTypes.func,
   noWidgetsMessage: PropTypes.string,
-  handleCategoryChange: PropTypes.func
+  handleCategoryChange: PropTypes.func,
+  widgets: PropTypes.array,
+  activeWidget: PropTypes.string
 };
 
 export default Page;
