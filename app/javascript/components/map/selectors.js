@@ -1,10 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
-import {
-  filterWidgetsByCategoryAndLayers,
-  getActiveWidget
-} from 'components/widgets/selectors';
+import { getActiveWidget, getWidgets } from 'pages/dashboards/selectors';
 
 // get list data
 const selectLoading = state => state.mapOld.loading || state.geostore.loading;
@@ -14,18 +11,14 @@ const selectMapOptions = state => state.mapOld.options;
 const selectSettings = state => state.mapOld.settings;
 const selectLayerSlugs = state => state.mapOld.layerSpec || null;
 const selectGeojson = state =>
-  (state.geostore.geostore && state.geostore.geostore.geojson) || null;
+  (state.geostore.data && state.geostore.data.geojson) || null;
 const selectBounds = state =>
-  (state.geostore.geostore && state.geostore.geostore.bounds) || null;
+  (state.geostore.data && state.geostore.data.bounds) || null;
 
 export const getMapSettings = createSelector(
-  [
-    selectSettings,
-    filterWidgetsByCategoryAndLayers,
-    getActiveWidget,
-    selectQuery
-  ],
+  [selectSettings, getWidgets, getActiveWidget, selectQuery],
   (settings, widgets, widget, query) => {
+    if (!widgets) return settings;
     const widgetUrlState = query && query[widget];
     const activeWidget = widgets.find(w => w.widget === widget);
     const widgetSettings = activeWidget && activeWidget.settings;

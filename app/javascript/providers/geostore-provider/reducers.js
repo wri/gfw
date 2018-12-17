@@ -3,12 +3,12 @@ import * as actions from './actions';
 export const initialState = {
   loading: false,
   error: false,
-  geostore: {}
+  data: {}
 };
 
 const setGeostore = (state, { payload }) => ({
   ...state,
-  geostore: {
+  data: {
     ...payload
   }
 });
