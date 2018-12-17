@@ -19,6 +19,7 @@ import {
 
 import ChartToolTip from '../components/chart-tooltip';
 import CustomTick from './custom-tick-component';
+import CustomBackground from './custom-background-component';
 import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
@@ -191,18 +192,9 @@ class CustomComposedChart extends PureComponent {
                   dot={false}
                   background={d =>
                     barBackground && (
-                      <rect
-                        x={d.x}
-                        y={d.y - 3}
-                        key={d.index}
-                        width={d.width}
-                        height={1.2 * d.height}
-                        opacity={0.1}
-                        fill={
-                          d.index === barBackground.activeIndex
-                            ? '#4a4a4a'
-                            : 'transparent'
-                        }
+                      <CustomBackground
+                        {...d}
+                        activeIndex={barBackground.activeIndex}
                       />
                     )
                   }
