@@ -10,6 +10,7 @@ const getSentences = state => state.config && state.config.sentence;
 const getData = state => state.data && state.data;
 const getLocationName = state => state.locationName || null;
 const getLocation = state => state.location || null;
+const getAllLocation = state => state.allLocation || null;
 const getChildLocationDict = state => state.childLocationDict || null;
 const getSettings = state => state.settings || null;
 
@@ -84,8 +85,8 @@ const parseData = createSelector(
 );
 
 const buildData = createSelector(
-  [parseData, getColors, getSettings],
-  (percentiles, colors, settings) => {
+  [parseData, getColors, getSettings, getAllLocation],
+  (percentiles, colors, settings, location) => {
     if (isEmpty(percentiles)) return null;
     const { percentile } = settings;
     let selectedPercentile;
@@ -109,9 +110,15 @@ const buildData = createSelector(
     const data = percentiles
       .map((p, i) => ({ color: colorRange[i], ...p }))
       .reverse();
+    const { query, type } = location;
     const list = sortBy(selectedPercentile.data, 'label').map(item => ({
       label: item.label,
-      color: colorRange[activeIndex]
+      color: colorRange[activeIndex],
+      path: {
+        type,
+        payload: { adm0: item.location, type: 'country' },
+        query
+      }
     }));
 
     return { percentiles: data, list, selectedPercentile };
@@ -127,7 +134,8 @@ const parseConfig = createSelector([buildData], data => {
     yKey: 'name',
     xAxis: {
       type: 'number',
-      domain: [0, 100]
+      domain: [0, 100],
+      unit: '%'
     },
     // default unitFormat expects a number
     unitFormat: text => text,
