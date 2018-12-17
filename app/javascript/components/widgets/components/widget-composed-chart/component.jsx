@@ -9,8 +9,7 @@ class WidgetComposedChart extends Component {
   shouldComponentUpdate = nextProps =>
     (!isEqual(nextProps.settings, this.props.settings) &&
       isEqual(nextProps.settings.activeData, this.props.settings.activeData)) ||
-    !isEqual(nextProps.data, this.props.data) ||
-    !isEqual(nextProps.config, this.props.config);
+    !isEqual(nextProps.data, this.props.data);
 
   handleMouseMove = debounce(data => {
     const { parsePayload, setWidgetsSettings, widget, layers } = this.props;
