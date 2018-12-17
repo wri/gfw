@@ -90,6 +90,7 @@ class MainMapComponent extends PureComponent {
               >
                 <Map
                   className="main-map"
+                  scale
                   customLayers={
                     tileGeoJSON
                       ? [

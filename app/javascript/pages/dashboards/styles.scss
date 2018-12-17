@@ -66,6 +66,7 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
     top: rem(15px);
     right: rem(15px);
     z-index: 999;
+    box-shadow: $box-shadow;
 
     @media screen and (min-width: $screen-m) {
       display: block;

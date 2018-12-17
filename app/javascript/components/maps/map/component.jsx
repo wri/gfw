@@ -19,7 +19,9 @@ class MapComponent extends PureComponent {
   componentDidMount() {
     requestAnimationFrame(() => {
       this.map.invalidateSize();
-      L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
+      if (this.props.scale) {
+        L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
+      }
     });
   }
 
@@ -96,7 +98,8 @@ MapComponent.propTypes = {
   bbox: PropTypes.array,
   handleMapInteraction: PropTypes.func,
   customLayers: PropTypes.array,
-  draw: PropTypes.bool
+  draw: PropTypes.bool,
+  scale: PropTypes.bool
 };
 
 export default MapComponent;

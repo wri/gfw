@@ -1,0 +1,19 @@
+@import '~styles/settings.scss';
+
+.c-dashboards-map {
+  height: 100%;
+  position: relative;
+
+  .dashboards-map {
+    z-index: 1;
+  }
+
+  .dashboards-mini-legend {
+    z-index: 2;
+  }
+
+  .map-attributions {
+    bottom: rem(5px);
+    right: rem(5px);
+  }
+}

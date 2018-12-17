@@ -1,6 +1,6 @@
 class DashboardsController < ApplicationController
 
-  layout 'application_react'
+  layout 'application_react_spa'
   before_action :check_location, only: [:index, :embed]
 
   def index
