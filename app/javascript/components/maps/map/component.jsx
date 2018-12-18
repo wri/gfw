@@ -7,7 +7,6 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
 import iconCrosshair from 'assets/icons/crosshair.svg';
-import LayerSpecProvider from 'providers/layerspec-provider';
 
 import Popup from './components/popup';
 import MapDraw from './components/draw';
@@ -84,7 +83,6 @@ class MapComponent extends PureComponent {
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
-        <LayerSpecProvider />
       </div>
     );
   }

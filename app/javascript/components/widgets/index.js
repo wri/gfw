@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import reducerRegistry from 'app/registry';
 
-import { setShowMapMobile } from 'components/map/actions';
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
 import { getWidgetsProps } from './selectors';
 
 const actions = {
-  setShowMapMobile,
   ...ownActions
 };
 
