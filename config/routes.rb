@@ -130,7 +130,6 @@ Gfw::Application.routes.draw do
   get '/stories/*all' => 'stories#index'
 
   # static #
-  get '/contribute-data' => 'static#contribute'
   get '/notsupportedbrowser' => 'static#browser_support', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'
   get '/privacy-policy' => 'static#privacy'
