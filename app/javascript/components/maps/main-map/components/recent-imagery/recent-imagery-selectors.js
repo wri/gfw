@@ -6,14 +6,16 @@ import moment from 'moment';
 import { initialState as mapInitialState } from 'components/maps/map/reducers';
 import { initialState } from './recent-imagery-reducers';
 
-const getData = state => state.recentImagery.data || null;
+const getData = state =>
+  (state.recentImagery && state.recentImagery.data) || null;
 export const getRecentImageryLoading = state =>
-  state.recentImagery.loading || null;
+  (state.recentImagery && state.recentImagery.loading) || null;
 export const getMoreTilesLoading = state =>
-  state.recentImagery.loadingMoreTiles || null;
-const getError = state => state.recentImagery.error;
+  (state.recentImagery && state.recentImagery.loadingMoreTiles) || null;
+const getError = state => state.recentImagery && state.recentImagery.error;
 const getLocation = state => state.location && state.location.query;
-const getDataStatus = state => state.recentImagery.dataStatus || null;
+const getDataStatus = state =>
+  (state.recentImagery && state.recentImagery.dataStatus) || null;
 const getDatasets = state => (state.datasets && state.datasets.data) || null;
 const getRecentUrlState = state =>
   (state.location &&

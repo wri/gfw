@@ -36,9 +36,9 @@ export const getMetadata = createSelector(
 
     if (!type) return metadata;
     if (
-      (adm0 && !adm0s.length) ||
-      (adm1 && !adm1s.length) ||
-      (adm2 && !adm2s.length)
+      (adm0 && (!adm0s || !adm0s.length)) ||
+      (adm1 && (!adm1s || !adm1s.length)) ||
+      (adm2 && (!adm2s || !adm2s.length))
     ) {
       return null;
     }

@@ -15,7 +15,7 @@ import {
 } from './menu-sections';
 
 const getMenuUrlState = state =>
-  (state.location.query && state.location.query.menu) || null;
+  state.location && state.location.query && state.location.query.menu;
 const getCountries = state =>
   (state.countryData && state.countryData.countries) || null;
 const getLoading = state =>

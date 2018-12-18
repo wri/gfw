@@ -17,26 +17,34 @@ export const selectLocationType = state =>
 export const selectWidgetFromQuery = state =>
   state.location && state.location.query && state.location.query.widget;
 export const selectEmbed = (state, { embed }) => embed;
-export const selectGeostore = state => state.geostore.data;
+export const selectGeostore = state => state.geostore && state.geostore.data;
 export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
   noWidgetsMessage;
 export const selectWidgets = state => state.widgets && state.widgets.widgets;
 export const selectLoading = state =>
-  state.countryData.countriesLoading ||
-  state.countryData.regionsLoading ||
-  state.countryData.subRegionsLoading ||
-  state.whitelists.countriesLoading ||
-  state.whitelists.regionsLoading;
-export const selectWhitelists = state => ({
-  adm0: state.whitelists.countries,
-  adm1: state.whitelists.regions
-});
-export const setectCountryData = state => ({
-  adm0: state.countryData.countries,
-  adm1: state.countryData.regions,
-  adm2: state.countryData.subRegions,
-  fao: state.countryData.faoCountries
-});
+  state.countryData &&
+  state.whitelists &&
+  (state.countryData.countriesLoading ||
+    state.countryData.regionsLoading ||
+    state.countryData.subRegionsLoading ||
+    state.whitelists.countriesLoading ||
+    state.whitelists.regionsLoading);
+export const selectWhitelists = state =>
+  (state.whitelists
+    ? {
+      adm0: state.whitelists.countries,
+      adm1: state.whitelists.regions
+    }
+    : {});
+export const setectCountryData = state =>
+  (state.countryData
+    ? {
+      adm0: state.countryData.countries,
+      adm1: state.countryData.regions,
+      adm2: state.countryData.subRegions,
+      fao: state.countryData.faoCountries
+    }
+    : {});
 
 const locationTypes = {
   country: {

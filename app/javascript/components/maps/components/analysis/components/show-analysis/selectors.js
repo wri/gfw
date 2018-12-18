@@ -7,18 +7,19 @@ import {
   getMapZoom,
   getWidgetsWithLayerParams
 } from 'components/maps/map/selectors';
-import { getWidgetLayers } from 'components/maps/components/analysis/selectors';
+import {
+  getWidgetLayers,
+  getLoading
+} from 'components/maps/components/analysis/selectors';
 
 const selectLocation = state => state.location && state.location.payload;
-const selectLoading = state =>
-  state.analysis.loading || state.datasets.loading || state.geostore.loading;
-const selectData = state => state.analysis.data;
-const selectError = state => state.analysis.error;
+const selectData = state => state.analysis && state.analysis.data;
+const selectError = state => state.analysis && state.analysis.error;
 const selectAdmins = state => state.countryData && state.countryData.countries;
 const selectAdmin1s = state => state.countryData && state.countryData.regions;
 const selectAdmin2s = state =>
   state.countryData && state.countryData.subRegions;
-const selectGeostore = state => state.geostore.data;
+const selectGeostore = state => state.geostore && state.geostore.data;
 
 export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
@@ -147,7 +148,7 @@ export const getDownloadLinks = createSelector(
 
 export const getShowAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
-  loading: selectLoading,
+  loading: getLoading,
   locationName: getLocationName,
   fullLocationName: getFullLocationName,
   layers: getActiveLayers,

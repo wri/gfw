@@ -14,9 +14,11 @@ const selectSettings = state => state.mapOld && state.mapOld.settings;
 const selectLayerSlugs = state =>
   (state.mapOld && state.mapOld.layerSpec) || null;
 const selectGeojson = state =>
-  (state.geostore.data && state.geostore.data.geojson) || null;
+  (state.geostore && (state.geostore.data && state.geostore.data.geojson)) ||
+  null;
 const selectBounds = state =>
-  (state.geostore.data && state.geostore.data.bounds) || null;
+  (state.geostore && (state.geostore.data && state.geostore.data.bounds)) ||
+  null;
 
 export const getMapSettings = createSelector(
   [selectSettings, getWidgets, getActiveWidget, selectQuery],

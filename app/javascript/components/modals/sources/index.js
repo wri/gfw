@@ -8,8 +8,8 @@ import Component from './component';
 import sources from './config';
 
 const mapStateToProps = ({ modalSources }) => ({
-  open: modalSources.open,
-  data: sources[modalSources.source] || {}
+  open: modalSources && modalSources.open,
+  data: (modalSources && sources[modalSources.source]) || {}
 });
 
 reducerRegistry.registerModule('modalSources', {

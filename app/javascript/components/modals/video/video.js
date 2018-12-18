@@ -6,8 +6,8 @@ import reducers, { initialState } from './video-reducers';
 import ModalVideoComponent from './video-component';
 
 const mapStateToProps = ({ modalVideo }) => ({
-  open: modalVideo.open,
-  data: modalVideo.data
+  open: modalVideo && modalVideo.open,
+  data: modalVideo && modalVideo.data
 });
 
 reducerRegistry.registerModule('modalVideo', {
