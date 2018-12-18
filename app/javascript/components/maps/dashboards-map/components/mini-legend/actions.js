@@ -9,7 +9,10 @@ export const setMainMapView = createThunkAction(
 
     dispatch({
       type: MAP,
-      payload,
+      payload: {
+        ...payload,
+        type: payload.type === 'global' ? undefined : payload.type
+      },
       query: {
         ...query,
         map: {

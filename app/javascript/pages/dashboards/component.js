@@ -103,8 +103,8 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  showMapMobile: PropTypes.bool.isRequired,
-  setShowMapMobile: PropTypes.func.isRequired,
+  showMapMobile: PropTypes.bool,
+  setShowMapMobile: PropTypes.func,
   links: PropTypes.array.isRequired,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   noWidgetsMessage: PropTypes.string,
