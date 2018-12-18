@@ -1,3 +1,6 @@
-import EmbedComponent from './embed-component';
+import { connect } from 'react-redux';
 
-export default EmbedComponent;
+import EmbedComponent from './embed-component';
+import { getEmbedDashboardsProps } from './embed-selectors';
+
+export default connect(getEmbedDashboardsProps)(EmbedComponent);

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import Widgets from 'components/widgets';
 import CountryDataProvider from 'providers/country-data-provider';
@@ -13,7 +14,7 @@ class Embed extends PureComponent {
     return (
       <div className="c-embed">
         <div className="widget-wrapper">
-          <Widgets embed />
+          <Widgets widgets={this.props.widgets} embed />
         </div>
         <Share />
         <ModalMeta />
@@ -23,5 +24,9 @@ class Embed extends PureComponent {
     );
   }
 }
+
+Embed.propTypes = {
+  widgets: PropTypes.array
+};
 
 export default Embed;
