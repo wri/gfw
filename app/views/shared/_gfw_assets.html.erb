@@ -4,37 +4,39 @@
 %>
 
 <script type="text/javascript">
+  var menuOptions = window.location.pathname.indexOf('small-grants-fund') === -1 ? {
+    options: [
+      {
+        title: 'logo',
+        url: '/'
+      },
+      {
+        title: 'map',
+        url: '/map',
+      },
+      {
+        title: 'Dashboard',
+        url: '/dashboards/global',
+      },
+      {
+        title: 'blog',
+        url: 'http://blog.globalforestwatch.org/',
+      },
+      {
+        title: 'about',
+        url: '/about',
+      },
+    ],
+  } : {};
+
   window.liveSettings = {
     picker: '#transifexTranslateElement',
     api_key: "9eda410a7db74687ba40771c56abd357",
     detectlang: true,
     site: '<%= site %>',
     page: '<%= page %>',
-    menuOptions:
-    {
-      options: [
-        {
-          title: 'logo',
-          url: '/'
-        },
-        {
-          title: 'map',
-          url: '/map',
-        },
-        {
-          title: 'Dashboard',
-          url: '/dashboards/global',
-        },
-        {
-          title: 'blog',
-          url: 'http://blog.globalforestwatch.org/',
-        },
-        {
-          title: 'about',
-          url: '/about',
-        },
-      ],
-    },
+    menuOptions: menuOptions
+
 
     // LIVE SETTINGS OPTIONS
     // api_key: "<key>",
