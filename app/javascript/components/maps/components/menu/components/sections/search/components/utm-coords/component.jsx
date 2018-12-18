@@ -16,13 +16,13 @@ class UTMCoords extends PureComponent {
     east: '',
     north: '',
     zone: '',
-    hemisphere: 'N'
+    hemisphere: 'north'
   };
 
   handleSubmit = () => {
     const { east, north, zone, hemisphere } = this.state;
     const { setMapSettings } = this.props;
-    const utm = `+proj=utm +zone=${zone} ${hemisphere}`;
+    const utm = `+proj=utm +zone=${zone} +${hemisphere}`;
     const wgs84 = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
     let latlng = [];
     try {
@@ -77,11 +77,11 @@ class UTMCoords extends PureComponent {
           options={[
             {
               label: 'N',
-              value: 'N'
+              value: 'north'
             },
             {
               label: 'S',
-              value: 'S'
+              value: 'south'
             }
           ]}
           onChange={value => this.setState({ hemisphere: value.value })}
