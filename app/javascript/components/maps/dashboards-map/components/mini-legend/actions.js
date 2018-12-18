@@ -5,7 +5,7 @@ export const setMainMapView = createThunkAction(
   'setMainMapView',
   datasets => (dispatch, getState) => {
     const { query, payload } = getState().location;
-    const { map } = query || {};
+    const { map, mainMap } = query || {};
 
     dispatch({
       type: MAP,
@@ -18,6 +18,10 @@ export const setMainMapView = createThunkAction(
         map: {
           ...map,
           datasets
+        },
+        mainMap: {
+          ...mainMap,
+          showAnalysis: true
         }
       }
     });

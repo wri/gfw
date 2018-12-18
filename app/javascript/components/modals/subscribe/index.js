@@ -12,6 +12,7 @@ reducerRegistry.registerModule('modalSubscribe', {
   reducers,
   initialState
 });
+
 export default connect(getModalSubscribeProps, { ...actions, setModalMeta })(
   ModalSubscribeComponent
 );

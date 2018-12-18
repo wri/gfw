@@ -27,18 +27,21 @@ const MASTER_TABLE_FIELDS = [
   'license'
 ];
 
-const mapStateToProps = ({ modalMeta }) => ({
-  open: modalMeta.open,
-  metaData: pick(
-    modalMeta.data,
-    modalMeta.data.metaWhitelist || MASTER_META_FIELDS
-  ),
-  tableData: pick(
-    modalMeta.data,
-    modalMeta.data.tableWhitelist || MASTER_TABLE_FIELDS
-  ),
-  loading: modalMeta.loading
-});
+const mapStateToProps = ({ modalMeta }) =>
+  (modalMeta
+    ? {
+      open: modalMeta.open,
+      metaData: pick(
+        modalMeta.data,
+        modalMeta.data.metaWhitelist || MASTER_META_FIELDS
+      ),
+      tableData: pick(
+        modalMeta.data,
+        modalMeta.data.tableWhitelist || MASTER_TABLE_FIELDS
+      ),
+      loading: modalMeta.loading
+    }
+    : {});
 
 reducerRegistry.registerModule('modalMeta', {
   actions,
