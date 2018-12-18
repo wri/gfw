@@ -2,6 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { scroller } from 'react-scroll';
+import reducerRegistry from 'app/registry';
 
 import * as modalActions from 'pages/sgf/section-projects/section-projects-modal/section-projects-modal-actions';
 import * as sectionActions from './section-projects-actions';
@@ -91,6 +92,10 @@ SectionProjectsContainer.propTypes = {
   fetchProjectsImages: PropTypes.func
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('sgfProjects', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(mapStateToProps, actions)(SectionProjectsContainer);

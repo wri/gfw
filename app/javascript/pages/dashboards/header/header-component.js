@@ -36,10 +36,6 @@ class Header extends PureComponent {
           <Button
             className="theme-button-small theme-button-grey square"
             extLink={downloadLink}
-            trackingData={{
-              title: 'download',
-              ...location
-            }}
             tooltip={{
               text: `Download the data${
                 locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''

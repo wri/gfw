@@ -6,8 +6,8 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 const merge = require('webpack-merge');
 const sharedConfig = require('./shared.js');
 const { settings, output } = require('./configuration.js');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-//   .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 module.exports = merge(sharedConfig, {
   devtool: '#eval-source-map',
@@ -16,8 +16,8 @@ module.exports = merge(sharedConfig, {
   output: { pathinfo: true },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new DashboardPlugin()
-    // new BundleAnalyzerPlugin()
+    new DashboardPlugin(),
+    new BundleAnalyzerPlugin()
   ],
   devServer: {
     clientLogLevel: 'none',

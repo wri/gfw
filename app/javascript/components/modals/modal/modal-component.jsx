@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Icon from 'components/ui/icon';
 

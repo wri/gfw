@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './whitelists-provider-actions';
 import reducers, { initialState } from './whitelists-provider-reducers';
@@ -50,5 +51,10 @@ WhitelistProvider.propTypes = {
   getRegionWhitelist: PropTypes.func.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('whitelists', {
+  actions,
+  reducers,
+  initialState
+});
+
 export default connect(mapStateToProps, actions)(WhitelistProvider);

@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { SCREEN_M, SCREEN_MOBILE } from 'utils/constants';
+import { track } from 'app/analytics';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
-import LayerSpecProvider from 'providers/layerspec-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
@@ -56,7 +56,12 @@ class Page extends PureComponent {
             theme="theme-subnav-dark"
             links={links.map(l => ({
               ...l,
-              onClick: () => handleCategoryChange(l.category)
+              onClick: () => {
+                handleCategoryChange(l.category);
+                track('selectDashboardCategory', {
+                  label: l.category
+                });
+              }
             }))}
             checkActive
           />
@@ -89,7 +94,6 @@ class Page extends PureComponent {
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />
-        <LayerSpecProvider />
         <GeostoreProvider />
         <DatasetsProvider />
         <LatestProvider />

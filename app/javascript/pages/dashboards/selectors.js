@@ -9,11 +9,17 @@ import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import CATEGORIES from 'data/categories.json';
 
 // get list data
-const selectShowMap = state => !!state.map.showMapMobile;
+const selectShowMap = state => !!state.map && !!state.map.showMapMobile;
+const selectLocation = state => state.location;
 const selectCategory = state =>
   (state.location && state.location.query && state.location.query.category) ||
   'summary';
 export const selectQuery = state => state.location && state.location.query;
+
+export const getEmbed = createSelector(
+  [selectLocation],
+  location => location && location.routesMap[location.type].embed
+);
 
 export const getLinks = createSelector([selectCategory], activeCategory =>
   CATEGORIES.map(category => ({
@@ -35,12 +41,14 @@ export const getNoWidgetsMessage = createSelector(
 );
 
 export const getWidgets = createSelector(
-  [parseWidgetsWithOptions, selectCategory],
-  (widgets, category) =>
-    sortBy(
+  [parseWidgetsWithOptions, selectCategory, getEmbed, selectQuery],
+  (widgets, category, embed, query) => {
+    if (embed) return widgets.filter(w => query && w.widget === query.widget);
+    return sortBy(
       widgets.filter(w => w.config.categories.includes(category)),
       `config.sortOrder[${camelCase(category)}]`
-    )
+    );
+  }
 );
 
 export const getActiveWidget = createSelector(

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Icon from 'components/ui/icon';
 import Slider from 'components/ui/slider';

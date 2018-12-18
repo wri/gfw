@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createElement, PureComponent } from 'react';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './section-contact-actions';
 import reducers, { initialState } from './section-contact-reducers';
@@ -33,5 +34,9 @@ SectionContactContainer.propTypes = {
   sendContactForm: PropTypes.func.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('contact', {
+  actions,
+  reducers,
+  initialState
+});
 export default connect(mapStateToProps, actions)(SectionContactContainer);

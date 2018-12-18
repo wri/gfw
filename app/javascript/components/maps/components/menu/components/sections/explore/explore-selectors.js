@@ -9,7 +9,7 @@ import {
 import { descriptions, topics, stories } from './explore-sections';
 
 const selectSection = (state, props) => props.exploreType;
-const selectPTWLoading = state => state.ptw.loading;
+const selectPTWLoading = state => state.ptw && state.ptw.loading;
 const selectPTWData = state => {
   const { data } = state.ptw;
   return data.map(d => ({
@@ -56,7 +56,7 @@ const selectPTWData = state => {
           }
         ],
         basemap: {
-          key: 'default'
+          value: 'default'
         },
         label: 'default'
       }

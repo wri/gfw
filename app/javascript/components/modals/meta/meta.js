@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import pick from 'lodash/pick';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './meta-actions';
 import reducers, { initialState } from './meta-reducers';
@@ -39,6 +40,10 @@ const mapStateToProps = ({ modalMeta }) => ({
   loading: modalMeta.loading
 });
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('modalMeta', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(mapStateToProps, actions)(ModalMetaComponent);

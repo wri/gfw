@@ -12,9 +12,10 @@ const selectSearch = state =>
   state.location.query.menu.search;
 const selectLocation = state =>
   (state.location && state.location.payload) || null;
-const selectDatasets = state => state.datasets.data || null;
-const selectLocations = state => state.mapMenu.locations || null;
-const selectLoading = state => state.mapMenu.loading || null;
+const selectDatasets = state => (state.datasets && state.datasets.data) || null;
+const selectLocations = state =>
+  (state.mapMenu && state.mapMenu.locations) || null;
+const selectLoading = state => (state.mapMenu && state.mapMenu.loading) || null;
 
 const getDatasetWithUrlState = createSelector(
   [getActiveDatasetsFromState, selectDatasets],

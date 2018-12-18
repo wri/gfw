@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 import { checkLocationInsideBbox } from 'utils/geoms';
 import { CancelToken } from 'axios';
+import reducerRegistry from 'app/registry';
 
 import { setMapSettings } from 'components/maps/map/actions';
 import * as ownActions from './recent-imagery-actions';
@@ -168,5 +169,10 @@ RecentImageryContainer.propTypes = {
   setRecentImagerySettings: PropTypes.func
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
+reducerRegistry.registerModule('recentImagery', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
+
 export default connect(mapStateToProps, actions)(RecentImageryContainer);
