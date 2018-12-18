@@ -9,7 +9,7 @@ import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import CATEGORIES from 'data/categories.json';
 
 // get list data
-const selectShowMap = state => !!state.map.showMapMobile;
+const selectShowMap = state => !!state.map && !!state.map.showMapMobile;
 const selectLocation = state => state.location;
 const selectCategory = state =>
   (state.location && state.location.query && state.location.query.category) ||

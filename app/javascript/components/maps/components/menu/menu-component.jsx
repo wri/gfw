@@ -5,7 +5,7 @@ import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import MenuPanel from 'components/maps/components/menu/components/menu-panel';
 import MenuDesktop from './components/menu-desktop';

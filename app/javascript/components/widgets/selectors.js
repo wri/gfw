@@ -212,7 +212,7 @@ export const filterWidgetsByIndicatorWhitelist = createSelector(
   [filterWidgetsByLocationWhitelist, getActiveWhitelist],
   (widgets, indicatorWhitelist) => {
     if (!widgets) return null;
-    if (!indicatorWhitelist.length) return widgets;
+    if (!indicatorWhitelist || !indicatorWhitelist.length) return widgets;
     return widgets.filter(w => {
       const { indicators } = w.config.whitelists || {};
       if (!indicators) return true;

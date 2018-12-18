@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 import reducerRegistry from 'app/registry';
 
 import { setInteraction } from 'components/maps/map/components/popup/actions';
