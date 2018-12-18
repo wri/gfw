@@ -33,7 +33,7 @@ class WidgetChartAndList extends PureComponent {
       setWidgetSettings,
       setWidgetsSettings
     } = this.props;
-    const { percentiles, list } = data;
+    const { percentiles, list, barBackground } = data;
 
     return (
       <div className="c-widget-chart-and-list">
@@ -45,6 +45,7 @@ class WidgetChartAndList extends PureComponent {
           simple={simple}
           handleClick={this.handleClick}
           setWidgetsSettings={setWidgetsSettings}
+          barBackground={barBackground}
         />
         {list.length > 0 ? (
           <WidgetNumberedList

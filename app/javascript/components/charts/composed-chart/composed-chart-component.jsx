@@ -51,8 +51,7 @@ class CustomComposedChart extends PureComponent {
       unit,
       unitFormat,
       height,
-      margin,
-      barBackground
+      margin
     } = this.props.config;
 
     const {
@@ -62,7 +61,8 @@ class CustomComposedChart extends PureComponent {
       simple,
       handleMouseMove,
       handleMouseLeave,
-      handleClick
+      handleClick,
+      barBackground
     } = this.props;
 
     const isVertical = !!xKeys;
@@ -221,7 +221,8 @@ CustomComposedChart.propTypes = {
   handleMouseMove: PropTypes.func,
   handleMouseLeave: PropTypes.func,
   handleClick: PropTypes.func,
-  backgroundColor: PropTypes.string
+  backgroundColor: PropTypes.string,
+  barBackground: PropTypes.object
 };
 
 export default CustomComposedChart;

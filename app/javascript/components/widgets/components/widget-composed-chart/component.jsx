@@ -9,7 +9,8 @@ class WidgetComposedChart extends Component {
   shouldComponentUpdate = nextProps =>
     (!isEqual(nextProps.settings, this.props.settings) &&
       isEqual(nextProps.settings.activeData, this.props.settings.activeData)) ||
-    !isEqual(nextProps.data, this.props.data);
+    !isEqual(nextProps.data, this.props.data) ||
+    !isEqual(nextProps.barBackground, this.props.barBackground);
 
   handleMouseMove = debounce(data => {
     const { parsePayload, setWidgetsSettings, widget, layers } = this.props;
@@ -26,7 +27,15 @@ class WidgetComposedChart extends Component {
   }, 100);
 
   render() {
-    const { className, data, config, active, simple, handleClick } = this.props;
+    const {
+      className,
+      data,
+      config,
+      active,
+      simple,
+      handleClick,
+      barBackground
+    } = this.props;
 
     return (
       <ComposedChart
@@ -37,6 +46,7 @@ class WidgetComposedChart extends Component {
         handleMouseLeave={this.handleMouseLeave}
         handleClick={handleClick}
         backgroundColor={active ? '#fefedc' : ''}
+        barBackground={barBackground}
         simple={simple}
       />
     );
@@ -54,7 +64,8 @@ WidgetComposedChart.propTypes = {
   active: PropTypes.bool,
   simple: PropTypes.bool,
   layers: PropTypes.array,
-  handleClick: PropTypes.func
+  handleClick: PropTypes.func,
+  barBackground: PropTypes.object
 };
 
 export default WidgetComposedChart;

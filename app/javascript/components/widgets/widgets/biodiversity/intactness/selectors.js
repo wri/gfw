@@ -121,13 +121,19 @@ const buildData = createSelector(
       }
     }));
 
-    return { percentiles: data, list, selectedPercentile };
+    return {
+      percentiles: data,
+      list,
+      selectedPercentile,
+      barBackground: {
+        activeIndex: data.findIndex(p => p.name === selectedPercentile.name)
+      }
+    };
   }
 );
 
 const parseConfig = createSelector([buildData], data => {
   if (!data) return null;
-  const { percentiles, selectedPercentile } = data;
 
   return {
     height: 250,
@@ -149,11 +155,6 @@ const parseConfig = createSelector([buildData], data => {
     },
     yAxis: {
       type: 'category'
-    },
-    barBackground: {
-      activeIndex: percentiles.findIndex(
-        p => p.name === selectedPercentile.name
-      )
     }
   };
 });
