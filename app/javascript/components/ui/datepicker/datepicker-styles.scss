@@ -116,6 +116,23 @@
 }
 
 .react-datepicker-portal {
-  position: 'relative';
+  position: relative;
   z-index: 9999;
+}
+
+.react-datepicker-modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgba(17, 55, 80, 0.4);
+  transform: none !important;
+
+  .react-datepicker {
+    box-shadow: 0 5px 15px 0 rgba(71, 44, 184, 0.1);
+  }
 }

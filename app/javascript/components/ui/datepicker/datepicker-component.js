@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
+import { SCREEN_M } from 'utils/constants';
+import MediaQuery from 'react-responsive';
 import cx from 'classnames';
 import range from 'lodash/range';
 import { Portal } from 'react-portal';
@@ -38,18 +40,24 @@ class Datepicker extends PureComponent {
 
     return (
       <Portal>
-        <div
-          className="react-datepicker-portal"
-          style={{
-            transform: `translate(${position.x}px, calc(${
-              position.y
-            }px + 1.75rem))`
-          }}
-        >
-          <CalendarContainer className={className}>
-            {children}
-          </CalendarContainer>
-        </div>
+        <MediaQuery minWidth={SCREEN_M}>
+          {isDesktop => (
+            <div
+              className={`react-datepicker-portal ${
+                !isDesktop ? 'react-datepicker-modal' : ''
+              }`}
+              style={{
+                transform: `translate(${position.x}px, calc(${
+                  position.y
+                }px + 1.75rem))`
+              }}
+            >
+              <CalendarContainer className={className}>
+                {children}
+              </CalendarContainer>
+            </div>
+          )}
+        </MediaQuery>
       </Portal>
     );
   };
