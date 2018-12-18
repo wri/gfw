@@ -25,7 +25,12 @@ class Datepicker extends PureComponent {
   }
 
   setPosition = () => {
-    this.setState({ position: this.ref.getBoundingClientRect() });
+    const coords = this.ref.getBoundingClientRect();
+
+    if (coords.x + 290 > window.innerWidth) {
+      coords.x -= 195;
+    }
+    this.setState({ position: coords });
   };
 
   renderCalendarContainer = ({ className, children }) => {
@@ -34,6 +39,7 @@ class Datepicker extends PureComponent {
     return (
       <Portal>
         <div
+          className="react-datepicker-portal"
           style={{
             transform: `translate(${position.x}px, calc(${
               position.y

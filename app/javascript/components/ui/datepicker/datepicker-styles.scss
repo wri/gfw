@@ -9,12 +9,13 @@
     border-radius: 100px;
     text-align: center;
     text-transform: uppercase;
+    font-size: 12px;
     cursor: pointer;
     color: $slate;
   }
 
   .react-datepicker__day-name {
-    font-family: "Fira Sans", sans-serif;
+    font-family: $font-family-1;
   }
 }
 
@@ -112,4 +113,9 @@
 .react-datepicker__triangle {
   left: auto;
   right: 50px;
+}
+
+.react-datepicker-portal {
+  position: 'relative';
+  z-index: 9999;
 }
