@@ -17,12 +17,14 @@ export const selectLoading = state =>
     state.countryData.isSubRegionsLoading);
 export const selectError = state => state.header && state.header.error;
 export const setectCountryData = state =>
-  state.countryData && {
-    adm0: state.countryData.countries,
-    adm1: state.countryData.regions,
-    adm2: state.countryData.subRegions,
-    links: state.countryData.countryLinks
-  };
+  (state.countryData
+    ? {
+      adm0: state.countryData.countries,
+      adm1: state.countryData.regions,
+      adm2: state.countryData.subRegions,
+      links: state.countryData.countryLinks
+    }
+    : {});
 export const selectData = state => state.header && state.header.data;
 export const selectSettings = state => state.header && state.header.settings;
 export const selectSentences = state =>

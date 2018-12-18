@@ -55,7 +55,7 @@ export const getActiveWidget = createSelector(
   [getWidgets, selectQuery],
   (widgets, query) => {
     if (query && query.widget) return query.widget;
-    return widgets && widgets.length && widgets[0].widget;
+    return widgets && !!widgets.length && widgets[0].widget;
   }
 );
 

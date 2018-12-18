@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .c-map {
+  height: 100%;
+
   .map-wrapper {
     position: relative;
     min-height: rem(300px);
