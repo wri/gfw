@@ -30,7 +30,7 @@ class WidgetHeader extends PureComponent {
       locationName,
       isDeviceTouch,
       setActiveWidget,
-      setShowMapMobile
+      setDashboardsSettings
     } = this.props;
     const isSmall = !config.large;
 
@@ -46,7 +46,7 @@ class WidgetHeader extends PureComponent {
         onClick={() => {
           setActiveWidget(widget);
           if (isDeviceTouch) {
-            setShowMapMobile(true);
+            setDashboardsSettings({ showMapMobile: true });
           }
           track('viewWidgetOnMap', {
             label: `${widget} in ${locationName || ''}`
@@ -210,7 +210,7 @@ WidgetHeader.propTypes = {
   isDeviceTouch: PropTypes.bool,
   embed: PropTypes.bool,
   loading: PropTypes.bool,
-  setShowMapMobile: PropTypes.func,
+  setDashboardsSettings: PropTypes.func,
   simple: PropTypes.bool,
   setWidgetSettings: PropTypes.func,
   setActiveWidget: PropTypes.func,

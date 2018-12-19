@@ -1,4 +1,17 @@
 import { createThunkAction } from 'redux-tools';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
+
+export const setDashboardsSettings = createThunkAction(
+  'setDashboardsSettings',
+  change => (dispatch, state) =>
+    dispatch(
+      setComponentStateToUrl({
+        key: 'dashboards',
+        change,
+        state
+      })
+    )
+);
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',

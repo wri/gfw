@@ -47,7 +47,8 @@ export const getAdm2Data = createSelector(
 
 export const getExternalLinks = createSelector(
   [setectCountryData, selectLocation],
-  (data, location) => data && location && data.links[location.adm0]
+  (data, location) =>
+    data && data.links && location && data.links[location.adm0]
 );
 
 export const getForestAtlasLink = createSelector(

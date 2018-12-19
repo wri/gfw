@@ -5,16 +5,30 @@ import camelCase from 'lodash/camelCase';
 import sortBy from 'lodash/sortBy';
 
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
-
 import CATEGORIES from 'data/categories.json';
+import initialState from './initial-state';
 
 // get list data
-const selectShowMap = state => !!state.map && !!state.map.showMapMobile;
+const selectDashboardsUrlState = state =>
+  state.location && state.location.query && state.location.query.mainMap;
 const selectLocation = state => state.location;
 const selectCategory = state =>
   (state.location && state.location.query && state.location.query.category) ||
   'summary';
 export const selectQuery = state => state.location && state.location.query;
+
+export const getDashboardsSettings = createSelector(
+  [selectDashboardsUrlState],
+  urlState => ({
+    ...initialState,
+    ...urlState
+  })
+);
+
+export const getShowMapMobile = createSelector(
+  getDashboardsSettings,
+  settings => settings.showMapMobile
+);
 
 export const getEmbed = createSelector(
   [selectLocation],
@@ -61,7 +75,7 @@ export const getActiveWidget = createSelector(
 );
 
 export const getDashboardsProps = createStructuredSelector({
-  showMapMobile: selectShowMap,
+  showMapMobile: getShowMapMobile,
   category: selectCategory,
   links: getLinks,
   widgets: getWidgets,
