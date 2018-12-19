@@ -6,6 +6,10 @@ const Input = ({ className, type, value, ...other }) => (
     className={className}
     type={type}
     value={value}
+    // TODO: review callback
+    onClick={e =>
+      (other.toggle ? other.toggle(other.onClick, e) : other.onClick(e))
+    }
     {...other}
     readOnly="readonly"
   />

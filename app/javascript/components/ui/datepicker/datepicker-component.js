@@ -15,7 +15,6 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import './datepicker-styles.scss';
-// import './themes/datepicker-small.scss'; //TODO: recent imagery styles
 
 class Datepicker extends PureComponent {
   state = {
@@ -37,6 +36,7 @@ class Datepicker extends PureComponent {
 
   renderCalendarContainer = ({ className, children }) => {
     const { position } = this.state;
+    const { date, handleOnDateChange } = this.props;
 
     return (
       <Portal>
@@ -55,6 +55,19 @@ class Datepicker extends PureComponent {
               <CalendarContainer className={className}>
                 {children}
               </CalendarContainer>
+              {!isDesktop && (
+                <div
+                  className="clickable-modal"
+                  style={{
+                    width: '100vw',
+                    height: '100vh',
+                    position: 'absolute'
+                  }}
+                  onClick={() => handleOnDateChange(moment(date), 0)}
+                  role="button"
+                  tabIndex={-1}
+                />
+              )}
             </div>
           )}
         </MediaQuery>
