@@ -7,8 +7,8 @@ import reducers, { initialState } from './section-projects-modal-reducers';
 import SectionProjectsModalComponent from './section-projects-modal-component';
 
 const mapStateToProps = state => ({
-  isOpen: state.modalAbout.isOpen,
-  data: state.modalAbout.data
+  isOpen: state.modalAbout && state.modalAbout.isOpen,
+  data: state.modalAbout && state.modalAbout.data
 });
 
 reducerRegistry.registerModule('modalAbout', {

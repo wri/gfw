@@ -29,17 +29,12 @@ const Button = props => {
     disabled,
     active,
     onClick,
-    tooltip,
-    trackingData,
-    buttonClicked
+    tooltip
   } = props;
   const isDeviceTouch = isTouch();
   const handleClick = e => {
     if (onClick) {
       onClick(e);
-    }
-    if (trackingData) {
-      buttonClicked(trackingData);
     }
   };
   let button = null;

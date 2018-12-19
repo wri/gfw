@@ -8,9 +8,9 @@ import reducers, { initialState } from './section-contact-reducers';
 import Component from './section-contact-component';
 
 const mapStateToProps = ({ contact }) => ({
-  showConfirm: contact.showConfirm,
-  submitting: contact.submitting,
-  error: contact.error
+  showConfirm: contact && contact.showConfirm,
+  submitting: contact && contact.submitting,
+  error: contact && contact.error
 });
 
 class SectionContactContainer extends PureComponent {

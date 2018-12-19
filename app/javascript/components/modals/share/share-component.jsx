@@ -19,11 +19,12 @@ class Share extends PureComponent {
       selected,
       loading,
       copied,
-      data: { title, subtitle, shareUrl, embedUrl, embedSettings },
+      data,
       handleFocus,
       setShareSelected,
       handleCopyToClipboard
     } = this.props;
+    const { title, subtitle, shareUrl, embedUrl, embedSettings } = data || {};
 
     const inputValue =
       selected === 'embed'

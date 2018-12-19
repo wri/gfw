@@ -36,7 +36,7 @@ const awards = [
 ];
 
 const mapStateToProps = ({ impacts }) => ({
-  data: impacts.data,
+  data: impacts && impacts.data,
   awards
 });
 

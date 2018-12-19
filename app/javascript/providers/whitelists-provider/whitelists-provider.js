@@ -7,7 +7,7 @@ import * as actions from './whitelists-provider-actions';
 import reducers, { initialState } from './whitelists-provider-reducers';
 
 const mapStateToProps = ({ location }) => ({
-  location: location.payload
+  location: location && location.payload
 });
 
 class WhitelistProvider extends PureComponent {

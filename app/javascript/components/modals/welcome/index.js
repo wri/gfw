@@ -7,7 +7,7 @@ import reducers, { initialState } from './reducers';
 import Component from './component';
 
 const mapStateToProps = ({ modalWelcome }) => ({
-  open: modalWelcome.open
+  open: modalWelcome && modalWelcome.open
 });
 
 reducerRegistry.registerModule('modalWelcome', {
