@@ -4,8 +4,7 @@ import upperFirst from 'lodash/upperFirst';
 
 import { buildFullLocationName } from 'utils/format';
 
-const selectLoggedIn = state =>
-  (state.myGfw && !isEmpty(state.myGfw.data)) || null;
+const selectLoggedIn = state => state.myGfw && !isEmpty(state.myGfw.data);
 const selectLocation = state => state.location && state.location.payload;
 const selectedCountries = state =>
   state.countryData && state.countryData.countries;

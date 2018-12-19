@@ -18,8 +18,8 @@ const actions = { ...sectionActions, ...modalActions };
 
 const mapStateToProps = ({ aboutProjects }) => {
   const projectData = {
-    data: aboutProjects.data,
-    categorySelected: aboutProjects.categorySelected
+    data: aboutProjects && aboutProjects.data,
+    categorySelected: aboutProjects && aboutProjects.categorySelected
   };
 
   return {

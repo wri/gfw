@@ -8,8 +8,8 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
 const mapStateToProps = ({ location, ptw }) => ({
-  location: location.payload,
-  data: ptw.data
+  location: location && location.payload,
+  data: ptw && ptw.data
 });
 
 class PlacesToWatchProvider extends PureComponent {

@@ -16,14 +16,12 @@ import {
 
 const getMenuUrlState = state =>
   state.location && state.location.query && state.location.query.menu;
-const getCountries = state =>
-  (state.countryData && state.countryData.countries) || null;
+const getCountries = state => state.countryData && state.countryData.countries;
 const getLoading = state =>
   (state.datasets && state.datasets.loading) ||
-  (state.countryData && state.countryData.loading) ||
-  null;
+  (state.countryData && state.countryData.loading);
 const getAnalysisLoading = state => state.analysis && state.analysis.loading;
-const getDatasets = state => (state.datasets && state.datasets.data) || null;
+const getDatasets = state => state.datasets && state.datasets.data;
 const getLocation = state => state.location && state.location.payload;
 
 // setting from state

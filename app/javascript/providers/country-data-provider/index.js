@@ -7,7 +7,7 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
 const mapStateToProps = ({ location }) => ({
-  location: location.payload
+  location: location && location.payload
 });
 
 class CountryDataProvider extends PureComponent {

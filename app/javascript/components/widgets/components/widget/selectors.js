@@ -12,7 +12,7 @@ export const selectWidgetOptions = (state, { options }) => options;
 export const selectWidgetUrlState = (state, { widget }) =>
   state.location && state.location.query && state.location.query[widget];
 export const selectWidgetFromState = (state, { widget }) =>
-  state.widgets.widgets[widget];
+  state.widgets && state.widgets.widgets[widget];
 export const selectWidgetActive = (state, { activeWidget, widget }) =>
   activeWidget === widget;
 export const selectWidgetActiveData = (state, { widget }) =>

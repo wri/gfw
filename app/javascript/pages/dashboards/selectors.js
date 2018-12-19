@@ -69,8 +69,9 @@ export const getWidgets = createSelector(
 export const getActiveWidget = createSelector(
   [getWidgets, selectQuery],
   (widgets, query) => {
+    if (!widgets || !widgets.length) return null;
     if (query && query.widget) return query.widget;
-    return widgets && !!widgets.length ? widgets[0].widget : null;
+    return widgets[0].widget;
   }
 );
 

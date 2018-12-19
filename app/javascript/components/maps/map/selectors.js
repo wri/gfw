@@ -21,7 +21,7 @@ const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLatest = state => state.latest && state.latest.data;
 
 // location
-const selectGeostore = state => (state.geostore && state.geostore.data) || null;
+const selectGeostore = state => state.geostore && state.geostore.data;
 
 // interactions
 const selectSelectedInteractionId = state =>
