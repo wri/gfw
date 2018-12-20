@@ -28,14 +28,16 @@ class SectionImpacts extends PureComponent {
               <div key={c.id}>
                 <Card
                   key={c.title}
-                  data={c}
-                  buttons={[
-                    {
-                      className: 'read-more',
-                      text: 'READ MORE',
-                      extLink: c.extLink
-                    }
-                  ]}
+                  data={{
+                    ...c,
+                    buttons: [
+                      {
+                        className: 'read-more',
+                        text: 'READ MORE',
+                        extLink: c.extLink
+                      }
+                    ]
+                  }}
                 />
               </div>
             ))}

@@ -61,13 +61,6 @@ class StaticController < ApplicationController
     respond_with @visible
   end
 
-  def contribute
-    @title = 'Contribute data'
-    @desc = 'Share your data with the GFW community by adding it to the GFW Interactive Map.'
-    @keywords = 'GFW, forests, forest data, forest monitoring, forest landscapes, maps, apps, applications, fires, commodities, open landscape partnership, map, palm oil transparency toolkit, forest atlas, develop your own app, climate, biodiversity, deforestation, mobile, explore, browse, tools'
-    @s3_direct_post = S3_DATA_BUCKET_NAME.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: '201', acl: 'public-read')
-  end
-
   def browser_support
     @title = "Oops, your browser isn't supported."
   end
