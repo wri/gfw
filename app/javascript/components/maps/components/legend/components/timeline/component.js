@@ -51,9 +51,9 @@ class Timeline extends Component {
                 date={moment(startDate)}
                 handleOnDateChange={date => handleOnDateChange(date, 0)}
                 settings={{
-                  appendToBody: true,
-                  displayFormat: 'DD MMM YYYY',
                   numberOfMonths: 1,
+                  minDate,
+                  maxDate: trimEndDate,
                   isOutsideRange: d =>
                     d.isAfter(moment(trimEndDate)) ||
                     d.isBefore(moment(minDate)),
@@ -69,9 +69,9 @@ class Timeline extends Component {
                 date={moment(trimEndDate)}
                 handleOnDateChange={date => handleOnDateChange(date, 2)}
                 settings={{
-                  appendToBody: true,
-                  displayFormat: 'DD MMM YYYY',
                   numberOfMonths: 1,
+                  minDate: startDate,
+                  maxDate,
                   isOutsideRange: d =>
                     d.isAfter(moment(maxDate)) || d.isBefore(moment(startDate)),
                   hideKeyboardShortcutsPanel: true,
