@@ -78,8 +78,8 @@ class Datepicker extends PureComponent {
     const momentDate = this.props.date;
     const { minDate, maxDate } = settings;
     const { position } = this.state;
-    const maxYear = moment(maxDate).year();
-    const minYear = moment(minDate).year();
+    const maxMoment = moment(maxDate);
+    const minMoment = moment(minDate);
 
     return (
       <div
@@ -124,6 +124,10 @@ class Datepicker extends PureComponent {
                   theme="theme-dropdown-native theme-dropdown-native-button"
                   options={moment
                     .months()
+                    .filter((m, i) => {
+                      if (date.getFullYear() === minMoment.year()) { return i >= minMoment.month(); } else if (date.getFullYear() === maxMoment.year()) { return i <= maxMoment.month(); }
+                      return true;
+                    })
                     .map((m, i) => ({ value: i, label: m }))}
                   onChange={changeMonth}
                   value={date.getMonth()}
@@ -133,8 +137,8 @@ class Datepicker extends PureComponent {
                   className="c-date-dropdown"
                   theme="theme-dropdown-native theme-dropdown-native-button"
                   options={range(
-                    parseInt(minYear, 10),
-                    parseInt(maxYear, 10) + 1
+                    parseInt(minMoment.year(), 10),
+                    parseInt(maxMoment.year(), 10) + 1
                   ).map(i => ({ value: i, label: i }))}
                   onChange={changeYear}
                   value={date.getFullYear()}
