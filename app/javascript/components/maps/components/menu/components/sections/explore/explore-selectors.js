@@ -56,7 +56,7 @@ const selectPTWData = state => {
           }
         ],
         basemap: {
-          key: 'default'
+          value: 'default'
         },
         label: 'default'
       }
