@@ -25,7 +25,7 @@
   transition: transform 0.3s linear;
   border: none;
   border-radius: 0;
-  font-family: "Fira Sans", sans-serif;
+  font-family: $font-family-1;
 
   .react-datepicker__month-container {
     width: 100%;
@@ -131,8 +131,10 @@
   display: flex;
   background-color: rgba(17, 55, 80, 0.4);
   transform: none !important;
+  pointer-events: none;
 
   .react-datepicker {
     box-shadow: 0 5px 15px 0 rgba(71, 44, 184, 0.1);
+    pointer-events: all;
   }
 }
