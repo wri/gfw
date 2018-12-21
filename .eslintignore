@@ -1,1 +1,5 @@
 /cypress/integration
+/node_modules
+/public/assets
+/public/packs
+/vendor
