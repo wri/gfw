@@ -1,4 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import { getIsTrase } from 'app/layouts/root/selectors';
 import compact from 'lodash/compact';
 
 // get list data
@@ -56,5 +57,6 @@ export const getStatement = createSelector(
 );
 
 export const getWidgetFooterProps = createStructuredSelector({
-  statement: getStatement
+  statement: getStatement,
+  showAttributionLink: getIsTrase
 });

@@ -36,7 +36,11 @@ class App extends PureComponent {
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
-            className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}
+            className={cx(
+              'l-root',
+              { '-map': isMapPage },
+              { '-embed': embed, '-trase': isTrase }
+            )}
           >
             {!embed &&
               route.headerOptions && (

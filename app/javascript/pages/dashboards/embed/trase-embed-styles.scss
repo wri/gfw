@@ -1,4 +1,7 @@
-// Don't delete this file without removing public/trase-fonts directory
+// Don't delete this file without removing
+// public/trase-fonts directory
+// -trase class from app/layouts/root/styles.scss
+
 /* stylelint-disable */
 
 @font-face {
@@ -40,8 +43,11 @@
 }
 
 $charcoal-grey: #34444c;
+$trase-font-family-1: 'DecimaMonoPro';
+$trase-font-family-2: 'Merriweather';
 
 // Custom class for TRASE/GFW integration
+// READ COMMENT FROM TOP
 .c-embed.-trase {
   .c-widget-header {
     .options {
@@ -49,14 +55,14 @@ $charcoal-grey: #34444c;
     }
 
     .title {
-      font-family: 'DecimaMonoPro';
+      font-family: $trase-font-family-1;
       font-weight: 700;
       color: $charcoal-grey;
     }
   }
 
   .container .sentence {
-    font-family: 'Merriweather';
+    font-family: $trase-font-family-2;
     color: $charcoal-grey;
   }
 
@@ -66,6 +72,15 @@ $charcoal-grey: #34444c;
   }
 
   .c-widget-footer {
+    display: flex;
+    justify-content: space-between;
+    font-family: $trase-font-family-2;
     color: $charcoal-grey;
+    font-weight: 300;
+
+    a {
+      color: $charcoal-grey;
+      font-weight: 700;
+    }
   }
 }
