@@ -61,6 +61,12 @@
         min-height: calc(100vh - 60px);
       }
     }
+
+    &.-trase {
+      .c-loader {
+        display: none;
+      }
+    }
   }
 
   .embed-footer {

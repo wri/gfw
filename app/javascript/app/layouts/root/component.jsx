@@ -29,14 +29,18 @@ const PageComponent = universal(
 
 class App extends PureComponent {
   render() {
-    const { route, loggedIn, metadata, isGFW } = this.props;
+    const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
     const { component, embed } = route;
     const isMapPage = component === 'map';
     return (
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
-            className={cx('l-root', { '-map': isMapPage }, { '-embed': embed })}
+            className={cx(
+              'l-root',
+              { '-map': isMapPage },
+              { '-embed': embed, '-trase': isTrase }
+            )}
           >
             {!embed &&
               route.headerOptions && (
@@ -60,11 +64,16 @@ class App extends PureComponent {
               />
             )}
             <div className="page">
-              <PageComponent path={route.component} sections={route.sections} />
+              <PageComponent
+                path={route.component}
+                sections={route.sections}
+                isTrase={isTrase}
+              />
             </div>
             {!embed && <MyGFWProvider />}
             {embed &&
-              !isGFW && (
+              !isGFW &&
+              !isTrase && (
                 <div className="embed-footer">
                   <p>For more info</p>
                   <Button
@@ -87,6 +96,7 @@ App.propTypes = {
   route: PropTypes.object.isRequired,
   loggedIn: PropTypes.bool,
   isGFW: PropTypes.bool,
+  isTrase: PropTypes.bool,
   metadata: PropTypes.object
 };
 
