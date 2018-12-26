@@ -12,24 +12,6 @@ export default ({ params }) =>
         const adminData = admin.data && admin.data.data;
         const plantData = plantations.data && plantations.data.data;
 
-        const adminSum = adminData
-          .filter(
-            data => data.year >= params.startYear && data.year <= params.endYear
-          )
-          .reduce(
-            (acc, next) => (next.emissions ? acc + next.emissions : acc),
-            0
-          );
-
-        const plantSum = plantData
-          .filter(
-            data => data.year >= params.startYear && data.year <= params.endYear
-          )
-          .reduce(
-            (acc, next) => (next.emissions ? acc + next.emissions : acc),
-            0
-          );
-
-        return { adminSum, plantSum };
+        return { adminData, plantData };
       })
     );

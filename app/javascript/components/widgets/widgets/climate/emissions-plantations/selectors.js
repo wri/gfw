@@ -1,40 +1,43 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = state => state.data;
 const getLocationName = state => state.locationName;
-const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
 const getLocationType = state => state.locationType || null;
+const getSettings = state => state.settings;
 
 // get lists selected
 export const parseData = createSelector(
-  [getData, getColors],
-  (data, colors) => {
+  [getData, getColors, getSettings],
+  (data, colors, settings) => {
     if (isEmpty(data)) return null;
-    const { totalArea, totalExtent, extent } = data;
+    const { adminData, plantData } = data;
+
+    const adminTotal = adminData
+      .filter(d => d.year >= settings.startYear && d.year <= settings.endYear)
+      .reduce((acc, next) => (next.emissions ? acc + next.emissions : acc), 0);
+
+    const plantTotal = plantData
+      .filter(d => d.year >= settings.startYear && d.year <= settings.endYear)
+      .reduce((acc, next) => (next.emissions ? acc + next.emissions : acc), 0);
+    const totalArea = adminTotal + plantTotal;
     const parsedData = [
       {
-        label: 'Intact Forest',
-        value: extent,
+        label: 'Natural forest',
+        value: adminTotal,
         color: colors.intactForest,
-        percentage: extent / totalArea * 100
+        percentage: adminTotal / totalArea * 100
       },
       {
-        label: 'Other Tree Cover',
-        value: totalExtent - extent,
-        color: colors.otherCover,
-        percentage: (totalExtent - extent) / totalArea * 100
-      },
-      {
-        label: 'Non-Forest',
-        value: totalArea - totalExtent,
+        label: 'Plantations',
+        value: plantTotal,
         color: colors.nonForest,
-        percentage: (totalArea - totalExtent) / totalArea * 100
+        percentage: plantTotal / totalArea * 100
       }
     ];
     return parsedData;
@@ -42,53 +45,28 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getLocationName, getIndicator, getSentences],
-  (parsedData, locationName, indicator, sentences) => {
+  [parseData, getLocationName, getSentences, getSettings],
+  (parsedData, locationName, sentences, settings) => {
     if (!parsedData) return null;
-    const {
-      initial,
-      withIndicator,
-      noIntact,
-      noIntactWithIndicator
-    } = sentences;
-    const totalExtent = parsedData
-      .filter(d => d.label !== 'Non-Forest')
-      .map(d => d.value)
-      .reduce((sum, d) => sum + d);
-    const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
-    const intactPercentage = intactData && intactData / totalExtent * 100;
-    let indicatorLabel = indicator && indicator.label;
-    switch (indicator && indicator.value) {
-      case 'ifl__mining':
-        indicatorLabel = 'mining concessions';
-        break;
-      case 'ifl__wdpa':
-        indicatorLabel = 'protected areas';
-        break;
-      case 'ifl__landmark':
-        indicatorLabel = 'indigenous lands';
-        break;
-      default:
-        indicatorLabel = 'intact forest';
-    }
+    const { initial } = sentences;
+    const { startYear, endYear } = settings;
+    const plantationsPct = parsedData.find(d => d.label === 'Plantations')
+      .percentage;
+    const emissions = parsedData.find(d => d.label === 'Natural forest').value;
+
     const params = {
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
-      indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`
+        plantationsPct < 0.1
+          ? '<0.1%'
+          : formatNumber({ num: plantationsPct, unit: '%' }),
+      emissions: formatNumber({ num: emissions, unit: 't' }),
+      startYear,
+      endYear
     };
 
-    let sentence =
-      indicator && indicator.value === 'ifl' ? initial : withIndicator;
-    if (intactPercentage === 0) {
-      sentence =
-        indicator && indicator.value === 'ifl'
-          ? noIntact
-          : noIntactWithIndicator;
-    }
-
     return {
-      sentence,
+      sentence: initial,
       params
     };
   }
