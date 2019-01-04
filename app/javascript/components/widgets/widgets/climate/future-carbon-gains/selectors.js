@@ -5,18 +5,28 @@ const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
 const getLocationName = state => state.locationName || null;
 const getSentences = state => state.config && state.config.sentences;
+const getColors = state => state.colors || null;
 
 export const parseData = createSelector([getData], data => {
   if (isEmpty(data)) return null;
-  return data;
+  const years = {};
+  Object.keys(data).forEach(key =>
+    data[key] // YSF, MASF, Pasture, and Crops arrays
+      .forEach(obj => {
+        if (years[obj.year]) years[obj.year][key] = obj.value;
+        else years[obj.year] = { year: obj.year, [key]: obj.value };
+      })
+  );
+  return Object.values(years);
 });
 
-export const parseConfig = createSelector([], () => ({
+export const parseConfig = createSelector([getColors], colors => ({
   height: 250,
-  xKey: '',
+  xKey: 'year',
   yKeys: {
     bars: {
       area: {
+        fill: colors.main,
         background: false
       }
     }
