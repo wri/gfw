@@ -11,7 +11,7 @@ export const parseData = createSelector([getData], data => {
   if (isEmpty(data)) return null;
   const years = {};
   Object.keys(data).forEach(key =>
-    data[key] // YSF, MASF, Pasture, and Crops arrays
+    data[key].values // YSF, MASF, Pasture, and Crops arrays
       .forEach(obj => {
         if (years[obj.year]) years[obj.year][key] = obj.value;
         else years[obj.year] = { year: obj.year, [key]: obj.value };
