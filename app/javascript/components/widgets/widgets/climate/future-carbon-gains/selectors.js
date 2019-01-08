@@ -25,11 +25,10 @@ export const parseConfig = createSelector(
   [getData, getColors],
   (data, colors) => {
     if (isEmpty(data)) return null;
-    const categoryColors = colors.lossDrivers;
     const yKeys = {};
     Object.keys(data).forEach((k, i) => {
       yKeys[k] = {
-        fill: categoryColors[i + 1],
+        fill: colors.ramp && colors.ramp[i],
         stackId: 1
       };
     });
@@ -47,7 +46,7 @@ export const parseConfig = createSelector(
         .map((k, i) => ({
           key: k,
           label: labels[k] ? labels[k] : k,
-          color: categoryColors[i + 1]
+          color: colors.ramp && colors.ramp[i]
           // unit: 'ha',
           // unitFormat: value => format('.3s')(value || 0)
         }))
@@ -87,7 +86,7 @@ export const parseSentence = createSelector(
       sentence: initial,
       params: {
         location,
-        amount: formatNumber({ num: amount * 1000000000000, unit: 'g' }),
+        amount: formatNumber({ num: amount * 1000000, unit: 't' }),
         variable,
         maxYear: maxYear.year
       }
