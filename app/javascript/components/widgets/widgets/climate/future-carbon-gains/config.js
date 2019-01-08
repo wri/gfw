@@ -5,7 +5,7 @@ export default {
     global: 'Global annual tree cover loss by dominant driver'
   },
   categories: ['climate'],
-  colors: 'plantations',
+  colors: 'loss',
   types: ['country', 'region'],
   admins: ['adm0', 'adm1', 'adm2'],
   options: {
@@ -16,7 +16,7 @@ export default {
     yearsRange: [2001, 2015]
   },
   layers: [],
-  metaKey: 'widget_tsc_drivers',
+  metaKey: 'futurecarbongains',
   sortOrder: {
     summary: 1,
     forestChange: 1,
