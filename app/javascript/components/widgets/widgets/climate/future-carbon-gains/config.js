@@ -24,10 +24,6 @@ export default {
   },
   sentences: {
     initial:
-      'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {permanent deforestation}.',
-    noLoss:
-      'In {location} from {startYear} to {endYear}, <b>no</b> tree cover loss occurred in areas where the dominant drivers of loss resulted in {permanent deforestation}.',
-    globalInitial:
-      '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {permanent deforestation}.'
+      'In {location}, potential carbon sequestration may reach {amount} of {variable} by {maxYear}.'
   }
 };

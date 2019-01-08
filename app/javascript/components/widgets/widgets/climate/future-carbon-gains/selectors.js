@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
+import { formatNumber } from 'utils/format';
 
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
@@ -67,14 +68,29 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getSettings, getLocationName, getSentences],
-  sentences => {
+  [getSettings, getLocationName, getSentences, parseData],
+  (settings, location, sentences, data) => {
+    if (isEmpty(data)) return null;
+    const maxYear = data[data.length - 1];
+    const amount = Object.values(maxYear).reduce(
+      (acc, n) => acc + n,
+      -maxYear.year
+    );
+    const variables = {
+      C: 'carbon',
+      C02: 'carbon dioxide'
+    };
+    const variable = variables[settings.variable];
     const { initial } = sentences;
-    const params = {};
 
     return {
       sentence: initial,
-      params
+      params: {
+        location,
+        amount: formatNumber({ num: amount * 1000000000000, unit: 'g' }),
+        variable,
+        maxYear: maxYear.year
+      }
     };
   }
 );
