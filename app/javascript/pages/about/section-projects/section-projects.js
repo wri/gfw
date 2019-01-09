@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import reducerRegistry from 'app/registry';
 
 import * as modalActions from 'pages/about/section-projects/section-projects-modal/section-projects-modal-actions';
 
@@ -17,8 +18,8 @@ const actions = { ...sectionActions, ...modalActions };
 
 const mapStateToProps = ({ aboutProjects }) => {
   const projectData = {
-    data: aboutProjects.data,
-    categorySelected: aboutProjects.categorySelected
+    data: aboutProjects && aboutProjects.data,
+    categorySelected: aboutProjects && aboutProjects.categorySelected
   };
 
   return {
@@ -54,6 +55,10 @@ SectionProjectsContainer.propTypes = {
   fetchProjects: PropTypes.func
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('aboutProjects', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(mapStateToProps, actions)(SectionProjectsContainer);

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import reducerRegistry from 'app/registry';
 
 import 'leaflet-draw/dist/leaflet.draw';
 import './styles.scss';
@@ -60,6 +61,10 @@ MapDraw.propTypes = {
   setDrawnGeostore: PropTypes.func
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('draw', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(getDrawProps, actions)(MapDraw);

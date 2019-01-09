@@ -10,20 +10,23 @@ import tropicalIsos from 'data/tropical-isos.json';
 export const selectLocation = state =>
   (state.location && state.location.payload) || null;
 export const selectLoading = state =>
-  state.header.loading ||
-  state.countryData.isCountriesLoading ||
-  state.countryData.isRegionsLoading ||
-  state.countryData.isSubRegionsLoading;
-export const selectError = state => state.header.error;
-export const setectCountryData = state => ({
-  adm0: state.countryData.countries,
-  adm1: state.countryData.regions,
-  adm2: state.countryData.subRegions,
-  links: state.countryData.countryLinks
-});
-export const selectData = state => state.header.data;
-export const selectSettings = state => state.header.settings;
-export const selectSentences = state => state.header.config.sentences || null;
+  state.header &&
+  (state.header.loading ||
+    state.countryData.isCountriesLoading ||
+    state.countryData.isRegionsLoading ||
+    state.countryData.isSubRegionsLoading);
+export const selectError = state => state.header && state.header.error;
+export const setectCountryData = state =>
+  state.countryData && {
+    adm0: state.countryData.countries,
+    adm1: state.countryData.regions,
+    adm2: state.countryData.subRegions,
+    links: state.countryData.countryLinks
+  };
+export const selectData = state => state.header && state.header.data;
+export const selectSettings = state => state.header && state.header.settings;
+export const selectSentences = state =>
+  (state.header && state.header.config.sentences) || null;
 
 export const getAdm0Data = createSelector(
   [setectCountryData],

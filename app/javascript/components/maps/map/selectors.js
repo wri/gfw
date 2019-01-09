@@ -11,21 +11,22 @@ import basemaps, { labels } from './basemaps-schema';
 // map state
 const selectMapUrlState = state =>
   state.location && state.location.query && state.location.query.map;
-const selectMapLoading = state => state.map.loading;
-const selectGeostoreLoading = state => state.geostore.loading;
-const selectLatestLoading = state => state.latest.loading;
-const selectDatasetsLoading = state => state.datasets.loading;
+const selectMapLoading = state => state.map && state.map.loading;
+const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
+const selectLatestLoading = state => state.latest && state.latest.loading;
+const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
 
 // datasets
-const selectDatasets = state => state.datasets.data;
-const selectLatest = state => state.latest.data;
+const selectDatasets = state => state.datasets && state.datasets.data;
+const selectLatest = state => state.latest && state.latest.data;
 
 // location
-const selectGeostore = state => state.geostore.data || null;
+const selectGeostore = state => state.geostore && state.geostore.data;
 
 // interactions
-const selectSelectedInteractionId = state => state.popup.selected;
-const selectInteractions = state => state.popup.interactions;
+const selectSelectedInteractionId = state =>
+  state.popup && state.popup.selected;
+const selectInteractions = state => state.popup && state.popup.interactions;
 
 // CONSTS
 export const getBasemaps = () => basemaps;

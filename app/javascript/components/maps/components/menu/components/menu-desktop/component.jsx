@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import startCase from 'lodash/startCase';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import MenuTile from '../menu-tile';
 

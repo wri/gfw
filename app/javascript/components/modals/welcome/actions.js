@@ -1,6 +1,14 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-export const setModalWelcome = createAction('setModalWelcome');
+export const setModalWelcomeOpen = createAction('setModalWelcomeOpen');
+
+export const setModalWelcome = createThunkAction(
+  'setModalWelcome',
+  () => dispatch => {
+    localStorage.setItem('welcomeModalHidden', true);
+    dispatch(setModalWelcomeOpen(false));
+  }
+);
 
 export const setExploreView = createThunkAction(
   'setExploreView',

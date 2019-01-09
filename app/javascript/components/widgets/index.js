@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reducerRegistry from 'app/registry';
 
 import { setShowMapMobile } from 'components/map/actions';
 import * as ownActions from './actions';
@@ -30,6 +31,10 @@ WidgetsContainer.propTypes = {
   getWidgetsData: PropTypes.func
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
+reducerRegistry.registerModule('widgets', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
 
 export default connect(getWidgetsProps, actions)(WidgetsContainer);

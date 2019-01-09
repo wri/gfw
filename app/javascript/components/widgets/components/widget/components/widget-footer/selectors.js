@@ -6,11 +6,11 @@ import compact from 'lodash/compact';
 const getSettings = (state, { settings }) => settings || null;
 const getType = (state, { config }) => config.dataType || null;
 const getNonGlobalDatasets = state =>
-  state.widgets.data.nonGlobalDatasets || null;
+  (state.widgets && state.widgets.data.nonGlobalDatasets) || null;
 const getIndicator = (state, { indicator }) => indicator || null;
 const getForestType = (state, { settings }) => settings.forestType || null;
 const getLandCategory = (state, { settings }) => settings.landCategory || null;
-const getLocation = state => (state.location && state.location.payload) || null;
+const getLocation = state => state.location && state.location.payload;
 
 export const getNonGlobalIndicator = createSelector(
   [

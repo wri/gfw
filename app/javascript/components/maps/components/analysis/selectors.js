@@ -16,19 +16,30 @@ import analysisIcon from 'assets/icons/analysis.svg';
 import { initialState } from './reducers';
 
 const selectAnalysisUrlState = state =>
-  (state.location.query && state.location.query.analysis) || null;
-const selectLoading = state =>
-  state.analysis.loading ||
-  state.datasets.loading ||
-  state.geostore.loading ||
-  state.draw.loading;
+  state.location && state.location.query && state.location.query.analysis;
+const selectAnalysisLoading = state => state.analysis && state.analysis.loading;
+const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
+const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
+const selectDrawLoading = state => state.draw && state.draw.loading;
 const selectLocation = state => state.location && state.location.payload;
-const selectAnalysisLocation = state => state.analysis.location;
+const selectAnalysisLocation = state =>
+  state.analysis && state.analysis.location;
 const selectEmbed = state =>
   state.location &&
   state.location.pathname &&
   state.location.pathname.includes('/embed');
-const selectError = state => state.analysis.error;
+const selectError = state => state.analysis && state.analysis.error;
+
+export const getLoading = createSelector(
+  [
+    selectAnalysisLoading,
+    selectDatasetsLoading,
+    selectGeostoreLoading,
+    selectDrawLoading
+  ],
+  (analysisLoading, datasetsLoading, geostoreLoading, drawLoading) =>
+    analysisLoading || datasetsLoading || geostoreLoading || drawLoading
+);
 
 export const getAnalysisSettings = createSelector(
   [selectAnalysisUrlState],
@@ -149,7 +160,7 @@ export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
 export const getAnalysisProps = createStructuredSelector({
   showAnalysis: getShowAnalysis,
   endpoints: getLayerEndpoints,
-  loading: selectLoading,
+  loading: getLoading,
   error: selectError,
   links: getMenuLinks,
   boundaries: getAllBoundaries,

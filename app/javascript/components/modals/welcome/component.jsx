@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';

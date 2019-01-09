@@ -5,7 +5,7 @@ import cx from 'classnames';
 import startCase from 'lodash/startCase';
 import upperFirst from 'lodash/upperFirst';
 import MediaQuery from 'react-responsive';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 import { Tooltip } from 'react-tippy';
 
 import Tip from 'components/ui/tip';

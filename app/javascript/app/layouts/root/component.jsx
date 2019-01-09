@@ -32,6 +32,7 @@ class App extends PureComponent {
     const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
     const { component, embed } = route;
     const isMapPage = component === 'map';
+
     return (
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
