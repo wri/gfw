@@ -23,7 +23,8 @@ class ModalMeta extends PureComponent {
       learn_more,
       download_data,
       amazon_link
-    } = metaData;
+    } =
+      metaData || {};
 
     return (
       <div className="c-modal-meta">

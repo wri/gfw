@@ -8,8 +8,9 @@ import {
 } from 'components/maps/map/selectors';
 import { getShowDraw } from 'components/maps/components/analysis/selectors';
 
-export const selectError = state => state.analysis.error;
-export const selectErrorMessage = state => state.analysis.errorMessage;
+export const selectError = state => state.analysis && state.analysis.error;
+export const selectErrorMessage = state =>
+  state.analysis && state.analysis.errorMessage;
 
 export const getChooseAnalysisProps = createStructuredSelector({
   showDraw: getShowDraw,

@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import { setModalMeta } from 'components/modals/meta/meta-actions';
 import Component from './component';

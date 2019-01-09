@@ -1,7 +1,8 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './share-actions';
 import reducers, { initialState } from './share-reducers';
@@ -49,6 +50,10 @@ ShareContainer.propTypes = {
   data: PropTypes.object
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('share', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(mapStateToProps, actions)(ShareContainer);

@@ -1,7 +1,8 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
+import reducerRegistry from 'app/registry';
 
 import { setInteraction } from 'components/maps/map/components/popup/actions';
 import * as ownActions from './actions';
@@ -118,5 +119,10 @@ MapContainer.propTypes = {
   menuSection: PropTypes.string
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
+reducerRegistry.registerModule('map', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
+
 export default connect(getMapProps, actions)(MapContainer);

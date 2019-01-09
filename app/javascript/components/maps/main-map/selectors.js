@@ -17,6 +17,7 @@ const selectMainMapUrlState = state =>
 const selectLocation = state => state.location && state.location;
 const selectLocationPayload = state => state.location && state.location.payload;
 const selectMenuSection = state =>
+  state.location &&
   state.location.query &&
   state.location.query.menu &&
   state.location.query.menu.menuSection;

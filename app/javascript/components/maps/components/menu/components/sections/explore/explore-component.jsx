@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 import ReactHtmlParser from 'react-html-parser';
 
 import SubnavMenu from 'components/subnav-menu';
