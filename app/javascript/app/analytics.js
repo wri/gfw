@@ -26,7 +26,7 @@ export const handlePageTrack = location => {
   initGA();
   if (gaInitialized) {
     ReactGA.set({ page: location.pathname });
-    ReactGA.pageview(window.location.href);
+    ReactGA.pageview(`${window.location.pathname}${window.location.search}`);
   }
 };
 

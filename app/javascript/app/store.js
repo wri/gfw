@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-// import { handleActionTrack } from 'app/analytics';
 import { reducer as formReducer } from 'redux-form';
 
 import reducerRegistry from './registry';
