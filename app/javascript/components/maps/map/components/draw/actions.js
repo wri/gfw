@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import { getGeostoreKey } from 'services/geostore';
 

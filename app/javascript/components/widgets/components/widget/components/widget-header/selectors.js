@@ -4,8 +4,9 @@ import qs from 'query-string';
 import { isTouch } from 'utils/browser';
 import { SCREEN_L } from 'utils/constants';
 
-export const selectModalOpen = state => state.modalMeta.open;
-export const selectModalClosing = state => state.modalMeta.closing;
+export const selectModalOpen = state => state.modalMeta && state.modalMeta.open;
+export const selectModalClosing = state =>
+  state.modalMeta && state.modalMeta.closing;
 export const selectLocation = state => state.location && state.location.payload;
 export const selectSearch = state => state.location && state.location.search;
 export const selectConfig = (state, { config }) => config;

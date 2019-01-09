@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import pick from 'lodash/pick';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './meta-actions';
 import reducers, { initialState } from './meta-reducers';
@@ -27,18 +28,20 @@ const MASTER_TABLE_FIELDS = [
 ];
 
 const mapStateToProps = ({ modalMeta }) => ({
-  open: modalMeta.open,
-  metaData: pick(
-    modalMeta.data,
-    modalMeta.data.metaWhitelist || MASTER_META_FIELDS
-  ),
-  tableData: pick(
-    modalMeta.data,
-    modalMeta.data.tableWhitelist || MASTER_TABLE_FIELDS
-  ),
-  loading: modalMeta.loading
+  open: modalMeta && modalMeta.open,
+  metaData:
+    modalMeta &&
+    pick(modalMeta.data, modalMeta.data.metaWhitelist || MASTER_META_FIELDS),
+  tableData:
+    modalMeta &&
+    pick(modalMeta.data, modalMeta.data.tableWhitelist || MASTER_TABLE_FIELDS),
+  loading: modalMeta && modalMeta.loading
 });
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('modalMeta', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(mapStateToProps, actions)(ModalMetaComponent);

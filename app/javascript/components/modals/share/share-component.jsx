@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import googleplusIcon from 'assets/icons/googleplus.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
@@ -19,11 +19,12 @@ class Share extends PureComponent {
       selected,
       loading,
       copied,
-      data: { title, subtitle, shareUrl, embedUrl, embedSettings },
+      data,
       handleFocus,
       setShareSelected,
       handleCopyToClipboard
     } = this.props;
+    const { title, subtitle, shareUrl, embedUrl, embedSettings } = data || {};
 
     const inputValue =
       selected === 'embed'

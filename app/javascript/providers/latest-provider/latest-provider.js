@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './latest-provider-actions';
 import { getLatestProps } from './latest-provider-selectors';
@@ -27,5 +28,9 @@ LatestProvider.propTypes = {
   latestEndpoints: PropTypes.array
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('latest', {
+  actions,
+  reducers,
+  initialState
+});
 export default connect(getLatestProps, actions)(LatestProvider);

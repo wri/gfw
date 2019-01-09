@@ -6,12 +6,15 @@ import { initialState } from './reducers';
 
 const selectSubscribeUrlState = state =>
   state.location && state.location.query && state.location.query.subscribe;
-const selectUserData = state => state.myGfw.data;
-const selectLoading = state => state.datasets.loading || state.myGfw.loading;
-const selectDatasets = state => state.datasets.data;
-const selectSaving = state => state.modalSubscribe.saving;
-const selectSaved = state => state.modalSubscribe.saved;
-const selectError = state => state.modalSubscribe.error;
+const selectUserData = state => (state.myGfw && state.myGfw.data) || {};
+const selectLoading = state =>
+  (state.datasets && state.datasets.loading) ||
+  (state.myGfw && state.myGfw.loading);
+const selectDatasets = state => state.datasets && state.datasets.data;
+const selectSaving = state =>
+  state.modalSubscribe && state.modalSubscribe.saving;
+const selectSaved = state => state.modalSubscribe && state.modalSubscribe.saved;
+const selectError = state => state.modalSubscribe && state.modalSubscribe.error;
 const selectLocation = state => state.location && state.location.payload;
 
 export const getSubscribeSettings = createSelector(

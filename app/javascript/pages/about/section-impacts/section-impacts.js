@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import reducerRegistry from 'app/registry';
 
 import awards0 from 'pages/about/section-impacts/images/awards.png';
 import awards1 from 'pages/about/section-impacts/images/awards1.png';
@@ -35,9 +36,14 @@ const awards = [
 ];
 
 const mapStateToProps = ({ impacts }) => ({
-  data: impacts.data,
+  data: impacts && impacts.data,
   awards
 });
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('impacts', {
+  actions,
+  reducers,
+  initialState
+});
+
 export default connect(mapStateToProps, actions)(Component);
