@@ -1,8 +1,3 @@
 export default {
-  tscDriverGroup: 'all',
-  endYear: 2015,
-  layers: ['loss_by_driver'],
-  highlighted: false,
-  variable: 'C',
-  threshold: 0
+  unit: 'co2Gain'
 };

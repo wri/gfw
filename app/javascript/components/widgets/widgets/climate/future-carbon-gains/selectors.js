@@ -9,24 +9,28 @@ const getLocationName = state => state.locationName || null;
 const getSentences = state => state.config && state.config.sentences;
 const getColors = state => state.colors || null;
 
-export const parseData = createSelector([getData], data => {
-  if (isEmpty(data)) return null;
-  const years = {};
-  Object.keys(data).forEach(key =>
-    data[key].values.forEach(obj => {
-      if (years[obj.year]) years[obj.year][key] = obj.value;
-      else years[obj.year] = { year: obj.year, [key]: obj.value };
-    })
-  );
-  return Object.values(years);
-});
+export const parseData = createSelector(
+  [getData, getSettings],
+  (data, settings) => {
+    if (isEmpty(data)) return null;
+    const years = {};
+    const selected = data[settings.unit];
+    Object.keys(selected).forEach(key =>
+      selected[key].forEach(obj => {
+        if (years[obj.year]) years[obj.year][key] = obj.value;
+        else years[obj.year] = { year: obj.year, [key]: obj.value };
+      })
+    );
+    return Object.values(years);
+  }
+);
 
 export const parseConfig = createSelector(
-  [getData, getColors],
-  (data, colors) => {
+  [getData, getSettings, getColors],
+  (data, settings, colors) => {
     if (isEmpty(data)) return null;
     const yKeys = {};
-    Object.keys(data).forEach((k, i) => {
+    Object.keys(data[settings.unit]).forEach((k, i) => {
       yKeys[k] = {
         fill: colors.ramp && colors.ramp[i],
         stackId: 1
@@ -47,8 +51,6 @@ export const parseConfig = createSelector(
           key: k,
           label: labels[k] ? labels[k] : k,
           color: colors.ramp && colors.ramp[i]
-          // unit: 'ha',
-          // unitFormat: value => format('.3s')(value || 0)
         }))
         .reverse()
     );
@@ -76,10 +78,10 @@ export const parseSentence = createSelector(
       -maxYear.year
     );
     const variables = {
-      C: 'carbon',
-      C02: 'carbon dioxide'
+      cGain: 'carbon',
+      co2Gain: 'carbon dioxide'
     };
-    const variable = variables[settings.variable];
+    const variable = variables[settings.unit];
     const { initial } = sentences;
 
     return {
