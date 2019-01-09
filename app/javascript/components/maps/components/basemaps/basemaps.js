@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 

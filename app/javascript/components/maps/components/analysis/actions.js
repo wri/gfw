@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'redux-tools';
 import union from 'turf-union';
 import compact from 'lodash/compact';
 import { DASHBOARDS } from 'router';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import { fetchUmdLossGain } from 'services/analysis';
 import { uploadShapeFile } from 'services/shape';

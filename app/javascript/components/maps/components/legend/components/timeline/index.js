@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import moment from 'moment';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 import debounce from 'lodash/debounce';
 
 import {

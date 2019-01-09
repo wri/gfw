@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import cx from 'classnames';
 import { SCREEN_M } from 'utils/constants';
 import MediaQuery from 'react-responsive';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';

@@ -1,96 +1,34 @@
-import * as shareActions from 'components/modals/share/share-actions';
-import * as modalActions from 'components/modals/meta/meta-actions';
-import * as buttonActions from 'components/ui/button/button-actions';
-import * as widgetActions from 'components/widgets/actions';
-import { DASHBOARDS } from 'router';
+import ReactGA from 'react-ga';
 
-const allActions = {
-  ...shareActions,
-  ...buttonActions,
-  ...modalActions,
-  ...widgetActions
-};
-const actions = Object.keys(allActions).reduce(
-  (state, action) => ({
-    ...state,
-    [action]: allActions[action].toString()
-  }),
-  {}
-);
+import mapEvents from 'analytics/map';
+import sharedEvents from 'analytics/shared';
+import dashboardsEvents from 'analytics/dashboards';
 
-export const ANALYTICS_EVENTS = [
-  {
-    name: actions.setShareData,
-    category: 'Country Page',
-    action: 'Share page',
-    label: payload => payload.country,
-    condition: payload => payload.title === 'Share this Dashboard'
-  },
-  {
-    name: DASHBOARDS,
-    category: 'Country Page',
-    action: 'View',
-    label: payload => payload && payload.query && payload.query.category
-  },
-  {
-    name: actions.buttonClicked,
-    category: 'Country Page',
-    action: 'User views a widget on the map',
-    label: payload => payload.widget,
-    condition: payload => payload.widget
-  },
-  {
-    name: actions.setModalMetaData,
-    category: 'Country Page',
-    action: 'Info',
-    label: payload => payload.title
-  },
-  {
-    name: actions.setShareData,
-    category: 'Country Page',
-    action: 'Share Widget',
-    label: payload => payload.subtitle,
-    condition: payload => payload.title === 'Share this widget'
-  },
-  {
-    name: actions.buttonClicked,
-    category: 'Country Page',
-    action: 'Download page',
-    label: payload => payload.country,
-    condition: payload => payload.title === 'download'
-  },
-  {
-    name: actions.buttonClicked,
-    category: 'Country Page',
-    action: 'User clicks through to main map',
-    label: payload => payload.layers,
-    condition: payload => payload.title === 'view-full-map'
-  },
-  {
-    name: actions.buttonClicked,
-    category: 'Country Page',
-    action: payload => `Share on ${payload.socialNetwork}`,
-    label: payload => payload.socialText,
-    condition: payload => payload.socialNetwork
-  },
-  {
-    name: actions.setShareCopied,
-    category: 'Country Page',
-    action: 'Copies embed code',
-    label: payload => payload.subtitle
-  },
-  {
-    name: actions.settingsItemSelected,
-    category: 'Country Widget Settings',
-    action: payload => `Change ${Object.keys(payload.value)[0]}`,
-    label: payload =>
-      `${payload.value[Object.keys(payload.value)[0]]} | ${payload.widget}`
-  },
-  {
-    name: actions.buttonClicked,
-    category: 'Country Page',
-    action: 'User opens settings menu',
-    label: payload => payload.label,
-    condition: payload => payload.event === 'open-settings'
+const { ANALYTICS_PROPERTY_ID } = process.env;
+let gaInitialized = false;
+
+export const initGA = () => {
+  if (ANALYTICS_PROPERTY_ID) {
+    if (!gaInitialized) {
+      ReactGA.initialize(ANALYTICS_PROPERTY_ID);
+      gaInitialized = true;
+    }
   }
-];
+};
+
+const events = {
+  ...mapEvents,
+  ...dashboardsEvents,
+  ...sharedEvents
+};
+
+export const handlePageTrack = location => {
+  initGA();
+  if (gaInitialized) {
+    ReactGA.set({ page: location.pathname });
+    ReactGA.pageview(window.location.href);
+  }
+};
+
+export const track = (key, data) =>
+  ReactGA && events[key] && ReactGA.event({ ...events[key], ...data });

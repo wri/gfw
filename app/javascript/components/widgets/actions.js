@@ -1,5 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import groupBy from 'lodash/groupBy';
+import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/forest-data';
@@ -72,6 +73,9 @@ export const setWidgetSettings = createThunkAction(
         state
       })
     );
+    track('changeWidgetSettings', {
+      label: `${widget}`
+    });
   }
 );
 

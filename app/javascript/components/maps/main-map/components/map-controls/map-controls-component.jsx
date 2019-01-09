@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 import { isParent } from 'utils/dom';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Basemaps from 'components/maps/components/basemaps';
 import RecentImagerySettings from 'components/maps/main-map/components/recent-imagery/components/recent-imagery-settings-tooltip';

@@ -7,7 +7,7 @@ import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import startCase from 'lodash/startCase';
 import { format } from 'd3-format';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
 import { setMenuSettings } from 'components/maps/components/menu/menu-actions';

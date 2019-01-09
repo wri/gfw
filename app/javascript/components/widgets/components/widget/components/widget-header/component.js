@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { isParent } from 'utils/dom';
 import cx from 'classnames';
+import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -26,7 +27,6 @@ class WidgetHeader extends PureComponent {
       widget,
       active,
       config,
-      title,
       locationName,
       isDeviceTouch,
       setActiveWidget,
@@ -42,16 +42,15 @@ class WidgetHeader extends PureComponent {
           { small: isSmall },
           { square: isDeviceTouch || isSmall }
         )}
-        trackingData={{
-          title: 'map-button',
-          widget: `${title} in ${locationName || ''}`
-        }}
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
         onClick={() => {
           setActiveWidget(widget);
           if (isDeviceTouch) {
             setShowMapMobile(true);
           }
+          track('viewWidgetOnMap', {
+            label: `${widget} in ${locationName || ''}`
+          });
         }}
       >
         {isSmall || isDeviceTouch ? (
