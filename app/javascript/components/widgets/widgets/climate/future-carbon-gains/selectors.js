@@ -14,9 +14,9 @@ export const parseData = createSelector(
   (data, settings) => {
     if (isEmpty(data)) return null;
     const years = {};
-    const selected = data[settings.unit];
-    Object.keys(selected).forEach(key =>
-      selected[key].forEach(obj => {
+    const selectedData = data[settings.unit];
+    Object.keys(selectedData).forEach(key =>
+      selectedData[key].forEach(obj => {
         if (years[obj.year]) years[obj.year][key] = obj.value;
         else years[obj.year] = { year: obj.year, [key]: obj.value };
       })
@@ -29,8 +29,9 @@ export const parseConfig = createSelector(
   [getData, getSettings, getColors],
   (data, settings, colors) => {
     if (isEmpty(data)) return null;
+    const selectedData = data[settings.unit];
     const yKeys = {};
-    Object.keys(data[settings.unit]).forEach((k, i) => {
+    Object.keys(selectedData).forEach((k, i) => {
       yKeys[k] = {
         fill: colors.ramp && colors.ramp[i],
         stackId: 1
@@ -46,7 +47,7 @@ export const parseConfig = createSelector(
       MASF: 'Mid-Age Secondary Forests'
     };
     tooltip = tooltip.concat(
-      Object.keys(data)
+      Object.keys(selectedData)
         .map((k, i) => ({
           key: k,
           label: labels[k] ? labels[k] : k,
@@ -70,9 +71,9 @@ export const parseConfig = createSelector(
 
 export const parseSentence = createSelector(
   [getSettings, getLocationName, getSentences, parseData],
-  (settings, location, sentences, data) => {
-    if (isEmpty(data)) return null;
-    const maxYear = data[data.length - 1];
+  (settings, location, sentences, parsedData) => {
+    if (isEmpty(parsedData)) return null;
+    const maxYear = parsedData[parsedData.length - 1];
     const amount = Object.values(maxYear).reduce(
       (acc, n) => acc + n,
       -maxYear.year
