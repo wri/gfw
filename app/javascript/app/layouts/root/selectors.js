@@ -17,7 +17,12 @@ const selectPageLocation = state =>
 
 export const getIsGFW = createSelector(
   selectQuery,
-  query => query && query.gfw
+  query => query && query.gfw && JSON.parse(query.gfw)
+);
+
+export const getIsTrase = createSelector(
+  selectQuery,
+  query => query && query.trase && JSON.parse(query.trase)
 );
 
 export const getMetadata = createSelector(
@@ -61,5 +66,6 @@ export const getPageProps = createStructuredSelector({
   loggedIn: selectLoggedIn,
   route: selectPageLocation,
   metadata: getMetadata,
-  isGFW: getIsGFW
+  isGFW: getIsGFW,
+  isTrase: getIsTrase
 });

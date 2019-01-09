@@ -23,7 +23,7 @@ class BasemapsContainer extends React.Component {
     if (basemap.value === 'landsat') {
       setLandsatBasemap({ basemap, year, label: label.value });
     } else {
-      setMapSettings({ basemap: { key: basemap.value }, label: label.value });
+      setMapSettings({ basemap: { value: basemap.value }, label: label.value });
     }
     track('basemapChanged', {
       label: basemap.label
