@@ -8,6 +8,7 @@ const mapStateToProps = ({ countryData }, { type, isos }) => ({
   ...config[type],
   ...(!!isos && {
     tooltipDesc:
+      countryData &&
       countryData.countries &&
       countryData.countries
         .filter(c => isos.includes(c.value))

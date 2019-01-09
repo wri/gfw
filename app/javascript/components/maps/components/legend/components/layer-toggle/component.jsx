@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Toggle from 'components/ui/toggle';
 import Button from 'components/ui/button';

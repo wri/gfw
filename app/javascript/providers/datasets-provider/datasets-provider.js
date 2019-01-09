@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './datasets-provider-actions';
 import reducers, { initialState } from './datasets-provider-reducers';
@@ -20,5 +21,9 @@ DatasetsProvider.propTypes = {
   getDatasets: PropTypes.func.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('datasets', {
+  actions,
+  reducers,
+  initialState
+});
 export default connect(null, actions)(DatasetsProvider);

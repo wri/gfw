@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import { track } from 'app/analytics';
 
 import Dropdown from 'components/ui/dropdown';
 import Switch from 'components/ui/switch';
@@ -9,6 +10,12 @@ import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import './widget-settings-styles.scss';
 
 class WidgetSettings extends PureComponent {
+  componentDidMount() {
+    track('openWidgetSettings', {
+      label: `${this.props.widget}`
+    });
+  }
+
   getUnit = (units, widget, settings, onSettingsChange) => {
     if (units.length <= 1) return null;
     if (units.length === 2) {

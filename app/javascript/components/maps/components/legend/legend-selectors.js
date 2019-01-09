@@ -5,8 +5,16 @@ import {
   getLayerGroups
 } from 'components/maps/map/selectors';
 
-const getLoading = state =>
-  state.datasets.loading || state.countryData.loading || state.latest.loading;
+const selectLatestLoading = state => state.latest && state.latest.loading;
+const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
+const selectCountryDataLoading = state =>
+  state.countryData && state.countryData.loading;
+
+export const getLoading = createSelector(
+  [selectLatestLoading, selectDatasetsLoading, selectCountryDataLoading],
+  (latestLoading, datasetsLoading, countryDataLoading) =>
+    latestLoading || datasetsLoading || countryDataLoading
+);
 
 const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
   if (!groups) return null;

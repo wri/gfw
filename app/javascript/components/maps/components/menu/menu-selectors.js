@@ -15,12 +15,13 @@ import {
 } from './menu-sections';
 
 const getMenuUrlState = state =>
-  (state.location.query && state.location.query.menu) || null;
-const getCountries = state => state.countryData.countries || null;
+  state.location && state.location.query && state.location.query.menu;
+const getCountries = state => state.countryData && state.countryData.countries;
 const getLoading = state =>
-  state.datasets.loading || state.countryData.loading || null;
-const getAnalysisLoading = state => state.analysis.loading;
-const getDatasets = state => state.datasets.data || null;
+  (state.datasets && state.datasets.loading) ||
+  (state.countryData && state.countryData.loading);
+const getAnalysisLoading = state => state.analysis && state.analysis.loading;
+const getDatasets = state => state.datasets && state.datasets.data;
 const getLocation = state => state.location && state.location.payload;
 
 // setting from state

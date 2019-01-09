@@ -6,22 +6,20 @@ import moment from 'moment';
 import { initialState as mapInitialState } from 'components/maps/map/reducers';
 import { initialState } from './recent-imagery-reducers';
 
-const getData = state => state.recentImagery.data || null;
+const getData = state => state.recentImagery && state.recentImagery.data;
 export const getRecentImageryLoading = state =>
-  state.recentImagery.loading || null;
+  state.recentImagery && state.recentImagery.loading;
 export const getMoreTilesLoading = state =>
-  state.recentImagery.loadingMoreTiles || null;
-const getError = state => state.recentImagery.error;
+  state.recentImagery && state.recentImagery.loadingMoreTiles;
+const getError = state => state.recentImagery && state.recentImagery.error;
 const getLocation = state => state.location && state.location.query;
-const getDataStatus = state => state.recentImagery.dataStatus || null;
-const getDatasets = state => state.datasets.data || null;
+const getDataStatus = state =>
+  state.recentImagery && state.recentImagery.dataStatus;
+const getDatasets = state => state.datasets && state.datasets.data;
 const getRecentUrlState = state =>
-  (state.location &&
-    state.location.query &&
-    state.location.query.recentImagery) ||
-  null;
+  state.location && state.location.query && state.location.query.recentImagery;
 const getMapUrlState = state =>
-  (state.location && state.location.query && state.location.query.map) || null;
+  state.location && state.location.query && state.location.query.map;
 
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
   ...mapInitialState.settings,

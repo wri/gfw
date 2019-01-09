@@ -4,7 +4,7 @@ import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import cx from 'classnames';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
