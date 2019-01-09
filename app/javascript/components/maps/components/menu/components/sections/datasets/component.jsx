@@ -76,6 +76,7 @@ class Datasets extends PureComponent {
               </div>
               {countriesWithoutData &&
                 !!countriesWithoutData.length &&
+                selectedCountries &&
                 !!selectedCountries.length && (
                   <div className="no-datasets-legend">
                     <span className="legend-dot" />
