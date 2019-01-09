@@ -209,6 +209,10 @@ export const getDatasetsWithConfig = createSelector(
             id
           } = l;
           const maxDate = latestDates[id];
+          const { latestFormat } = l.params || {};
+          const maxDateFormatted = latestFormat
+            ? moment(maxDate).format(latestFormat)
+            : maxDate;
 
           return {
             ...l,
@@ -224,7 +228,10 @@ export const getDatasetsWithConfig = createSelector(
                   endDate: maxDate
                 }),
                 ...params,
-                ...(hasParamsTimeline && {
+                ...(maxDateFormatted && {
+                  date: maxDateFormatted
+                }),
+                ...((hasParamsTimeline || hasDecodeTimeline) && {
                   ...timelineParams
                 })
               }
