@@ -9,7 +9,7 @@ import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import CATEGORIES from 'data/categories.json';
 
 // get list data
-const selectShowMap = state => !!state.map.showMapMobile;
+const selectShowMap = state => !!state.map && !!state.map.showMapMobile;
 const selectLocation = state => state.location;
 const selectCategory = state =>
   (state.location && state.location.query && state.location.query.category) ||
@@ -54,8 +54,9 @@ export const getWidgets = createSelector(
 export const getActiveWidget = createSelector(
   [getWidgets, selectQuery],
   (widgets, query) => {
+    if (!widgets || !widgets.length) return null;
     if (query && query.widget) return query.widget;
-    return widgets && widgets.length && widgets[0].widget;
+    return widgets[0].widget;
   }
 );
 

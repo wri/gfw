@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
@@ -23,7 +23,7 @@ class BasemapsContainer extends React.Component {
     if (basemap.value === 'landsat') {
       setLandsatBasemap({ basemap, year, label: label.value });
     } else {
-      setMapSettings({ basemap: { key: basemap.value }, label: label.value });
+      setMapSettings({ basemap: { value: basemap.value }, label: label.value });
     }
     track('basemapChanged', {
       label: basemap.label

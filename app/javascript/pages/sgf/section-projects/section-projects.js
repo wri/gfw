@@ -2,6 +2,7 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { scroller } from 'react-scroll';
+import reducerRegistry from 'app/registry';
 
 import * as modalActions from 'pages/sgf/section-projects/section-projects-modal/section-projects-modal-actions';
 import * as sectionActions from './section-projects-actions';
@@ -17,13 +18,13 @@ import {
 const actions = { ...sectionActions, ...modalActions };
 
 const mapStateToProps = ({ sgfProjects }) => {
-  const filters = sgfProjects.customFilter;
+  const filters = sgfProjects && sgfProjects.customFilter;
   const projectData = {
-    data: sgfProjects.data && sgfProjects.data.projects,
-    latLngs: sgfProjects.data.latLngs,
-    images: sgfProjects.data.images,
-    search: sgfProjects.search,
-    categorySelected: sgfProjects.categorySelected,
+    data: sgfProjects && sgfProjects.data && sgfProjects.data.projects,
+    latLngs: sgfProjects && sgfProjects.data.latLngs,
+    images: sgfProjects && sgfProjects.data.images,
+    search: sgfProjects && sgfProjects.search,
+    categorySelected: sgfProjects && sgfProjects.categorySelected,
     customFilter: filters
   };
 
@@ -33,13 +34,13 @@ const mapStateToProps = ({ sgfProjects }) => {
     categories: getCategoriesList(projectData),
     categorySelected:
       filters && filters.length ? '' : sgfProjects.categorySelected,
-    search: sgfProjects.search,
+    search: sgfProjects && sgfProjects.search,
     loading:
       !sgfProjects ||
       sgfProjects.loading ||
       (sgfProjects.data.projects && !sgfProjects.data.projects.length) ||
       !sgfProjects.data.images,
-    customFilter: sgfProjects.customFilter
+    customFilter: sgfProjects && sgfProjects.customFilter
   };
 };
 
@@ -91,6 +92,10 @@ SectionProjectsContainer.propTypes = {
   fetchProjectsImages: PropTypes.func
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('sgfProjects', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(mapStateToProps, actions)(SectionProjectsContainer);

@@ -2,13 +2,14 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import reducerRegistry from 'app/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
 const mapStateToProps = ({ location, ptw }) => ({
-  location: location.payload,
-  data: ptw.data
+  location: location && location.payload,
+  data: ptw && ptw.data
 });
 
 class PlacesToWatchProvider extends PureComponent {
@@ -29,5 +30,10 @@ PlacesToWatchProvider.propTypes = {
   getPTW: PropTypes.func.isRequired
 };
 
-export const reduxModule = { actions, reducers, initialState };
+reducerRegistry.registerModule('ptw', {
+  actions,
+  reducers,
+  initialState
+});
+
 export default connect(mapStateToProps, actions)(PlacesToWatchProvider);

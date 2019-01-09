@@ -9,7 +9,7 @@ import {
 } from 'components/maps/map/selectors';
 
 const getSearch = state => state.location && state.location.search;
-const getLatLng = state => state.popup.latlng;
+const getLatLng = state => state.popup && state.popup.latlng;
 
 export const getIsBoundary = createSelector(
   getSelectedInteraction,

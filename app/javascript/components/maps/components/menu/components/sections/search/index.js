@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { CancelToken } from 'axios';
-import { track } from 'utils/analytics';
+import { track } from 'app/analytics';
 
 import Component from './component';
 

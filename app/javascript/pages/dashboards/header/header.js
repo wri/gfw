@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import reducerRegistry from 'app/registry';
 
 import * as shareActions from 'components/modals/share/share-actions';
 import * as ownActions from './header-actions';
@@ -37,6 +38,10 @@ HeaderContainer.propTypes = {
   settings: PropTypes.object.isRequired
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
+reducerRegistry.registerModule('header', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
 
 export default connect(getHeaderProps, actions)(HeaderContainer);

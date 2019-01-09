@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import reducerRegistry from 'app/registry';
 
 import { setMainMapAnalysisView } from 'components/maps/main-map/actions';
 import { setMapSettings } from 'components/maps/map/actions';
@@ -15,6 +16,10 @@ const actions = {
   ...ownActions
 };
 
-export const reduxModule = { actions: ownActions, reducers, initialState };
+reducerRegistry.registerModule('popup', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
 
 export default connect(getPopupProps, actions)(Component);
