@@ -1,17 +1,30 @@
+import axios from 'axios';
 import { fetchAnalysisEndpoint } from 'services/analysis';
+import { getBiomassRanking } from 'services/climate';
 
 export default ({ params }) =>
-  fetchAnalysisEndpoint({
-    ...params,
-    name: 'Woody biomass',
-    params,
-    slug: 'whrc-biomass'
-  }).then(response => {
-    const attributes =
-      response.data && response.data.data && response.data.data.attributes
-        ? response.data.data.attributes
-        : {};
-    const { biomassDensity, totalBiomass } = attributes;
+  axios
+    .all([
+      fetchAnalysisEndpoint({
+        ...params,
+        name: 'Woody biomass',
+        params,
+        slug: 'whrc-biomass'
+      }),
+      getBiomassRanking({ ...params })
+    ])
+    .then(
+      axios.spread((analysis, ranking) => {
+        const attributes =
+          analysis.data && analysis.data.data && analysis.data.data.attributes
+            ? analysis.data.data.attributes
+            : {};
+        const { biomassDensity, totalBiomass } = attributes;
 
-    return { biomassDensity, totalBiomass };
-  });
+        return {
+          biomassDensity,
+          totalBiomass,
+          ranking: ranking.data && ranking.data.rows
+        };
+      })
+    );

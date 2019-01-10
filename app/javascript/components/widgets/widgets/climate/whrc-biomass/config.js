@@ -5,7 +5,8 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   options: {
-    thresholds: true
+    thresholds: true,
+    variables: ['total', 'density']
   },
   colors: 'emissions',
   dataType: 'loss',
