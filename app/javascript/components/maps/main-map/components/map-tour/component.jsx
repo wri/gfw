@@ -251,28 +251,26 @@ class MapTour extends PureComponent {
   render() {
     const { open, setMapTourOpen } = this.props;
     const steps = this.getSteps();
-    return (
-      open && (
-        <Joyride
-          steps={steps}
-          run={open}
-          continuous
-          callback={data => {
-            if (data.action === 'close' || data.type === 'tour:end') {
-              setMapTourOpen(false);
-            }
-          }}
-          spotlightPadding={0}
-          tooltipComponent={e => this.renderTooltip(e, steps.length)}
-          styles={{
-            options: {
-              overlayColor: 'rgba(17, 55, 80, 0.4)',
-              zIndex: 2000
-            }
-          }}
-        />
-      )
-    );
+    return open ? (
+      <Joyride
+        steps={steps}
+        run={open}
+        continuous
+        callback={data => {
+          if (data.action === 'close' || data.type === 'tour:end') {
+            setMapTourOpen(false);
+          }
+        }}
+        spotlightPadding={0}
+        tooltipComponent={e => this.renderTooltip(e, steps.length)}
+        styles={{
+          options: {
+            overlayColor: 'rgba(17, 55, 80, 0.4)',
+            zIndex: 2000
+          }
+        }}
+      />
+    ) : null;
   }
 }
 
