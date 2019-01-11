@@ -337,7 +337,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <div className="map-position">
-        <span>zoom: {zoom}</span>
+        <span>zoom: {format('.2f')(zoom)}</span>
         <span>
           lat,lon:{' '}
           {`${format('.5f')(center.lat)}, ${format('.5f')(center.lng)}`}

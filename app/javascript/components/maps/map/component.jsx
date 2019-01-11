@@ -1,8 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
+import ReactMapGL from 'react-map-gl';
 import Map from 'wri-api-components/dist/map';
+
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
@@ -17,12 +18,12 @@ import LayerManagerComponent from './components/layer-manager';
 import './styles.scss';
 
 class MapComponent extends PureComponent {
-  componentDidMount() {
-    requestAnimationFrame(() => {
-      this.map.invalidateSize();
-      L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
-    });
-  }
+  // componentDidMount() {
+  //   requestAnimationFrame(() => {
+  //     this.map.invalidateSize();
+  //     L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
+  //   });
+  // }
 
   render() {
     const {
@@ -37,13 +38,23 @@ class MapComponent extends PureComponent {
       handleMapInteraction,
       customLayers
     } = this.props;
+    const { center: { lat, lng }, zoom } = mapOptions;
 
     return (
       <div
         className={cx('c-map', className)}
         style={{ backgroundColor: basemap.color }}
       >
-        <Map
+
+        <ReactMapGL
+          width="100%"
+          height="100%"
+          latitude={lat}
+          longitude={lng}
+          zoom={zoom}
+          onViewportChange={handleMapMove}
+        />
+        {/* <Map
           customClass="map-wrapper"
           onReady={map => {
             this.map = map;
@@ -76,7 +87,7 @@ class MapComponent extends PureComponent {
               {draw && <MapDraw map={map} />}
             </Fragment>
           )}
-        </Map>
+        </Map> */}
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         <MapAttributions className="map-attributions" />
         {loading && (

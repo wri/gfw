@@ -67,14 +67,20 @@ class MapContainer extends PureComponent {
     this.setState({ bbox });
   };
 
-  handleMapMove = (e, map) => {
+  handleMapMove = (viewport) => {
+    const { width, height, latitude, longitude, zoom } = viewport;
+
     const { setMapSettings } = this.props;
     setMapSettings({
-      zoom: map.getZoom(),
-      center: map.getCenter(),
+      zoom,
+      center: {
+        lat: latitude,
+        lng: longitude
+      },
       canBound: false,
       bbox: null
     });
+
     this.setBbox(null);
   };
 
