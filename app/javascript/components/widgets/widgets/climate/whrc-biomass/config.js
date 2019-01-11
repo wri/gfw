@@ -16,6 +16,10 @@ export default {
     summary: 0,
     forestChange: 0
   },
-  sentence:
-    'In 2000, {location} had a biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.'
+  sentences: {
+    initial:
+      'In 2000, {location} had a biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.',
+    global:
+      'Around {X} of the world’s total biomass is contained in the top 5 countries, which have an average biomass density of {Y}.'
+  }
 };

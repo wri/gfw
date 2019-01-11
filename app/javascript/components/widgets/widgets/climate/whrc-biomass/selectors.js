@@ -10,7 +10,7 @@ const getLocationName = state => state.locationName || null;
 const getLocation = state => state.allLocation || null;
 const getLocationDict = state => state.locationDict || null;
 const getLocationObject = state => state.locationObject || null;
-const getSentences = state => state.config && state.config.sentence;
+const getSentences = state => state.config && state.config.sentences;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 
@@ -71,19 +71,46 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getSortedData, getLocationName, getSentences],
-  (data, location, sentence) => {
-    if (!sentence || isEmpty(data)) return null;
-    const { biomassdensity, totalbiomass } = data[0]; // TODO: change this
+  [getData, getLocationName, getSentences, getLocationDict],
+  (data, location, sentences, locationsDict) => {
+    if (!sentences || isEmpty(data)) return null;
 
-    const params = {
-      location,
-      biomassDensity: formatNumber({ num: biomassdensity, unit: 't/ha' }),
-      totalBiomass: formatNumber({ num: totalbiomass, unit: 't' })
-    };
+    if (location === 'global') {
+      const sorted = sortByKey(data, 'totalbiomass').reverse();
+
+      let biomTop5 = 0;
+      let densTop5 = 0;
+      const biomTotal = sorted.reduce((acc, next, i) => {
+        if (i < 5) {
+          biomTop5 += next.totalbiomass;
+          densTop5 += next.biomassdensity;
+        }
+        return acc + next.totalbiomass;
+      }, 0);
+
+      const percent = biomTop5 / biomTotal * 100;
+      const avgBiomDensity = densTop5 / 5;
+
+      return {
+        sentence: sentences.global,
+        params: {
+          X: formatNumber({ num: percent, unit: '%' }),
+          Y: formatNumber({ num: avgBiomDensity, unit: 't/ha' })
+        }
+      };
+    }
+    const iso = Object.keys(locationsDict).find(
+      key => locationsDict[key] === location
+    );
+    const region = data.find(item => item.iso === iso);
+    const { biomassdensity, totalbiomass } = region;
     return {
-      sentence,
-      params
+      sentence: sentences.initial,
+      params: {
+        location,
+        biomassDensity: formatNumber({ num: biomassdensity, unit: 't/ha' }),
+        totalBiomass: formatNumber({ num: totalbiomass, unit: 't' })
+      }
     };
   }
 );
