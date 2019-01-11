@@ -2754,6 +2754,11 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
+caseless@~0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.6.0.tgz#8167c1ab8397fb5bb95f96d28e5a81c50f247ac4"
+  integrity sha1-gWfBq4OX+1u5X5bSjlqBxQ8kesQ=
+
 caseless@~0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.8.0.tgz#5bca2881d41437f54b2407ebe34888c7b9ad4f7d"
@@ -7668,7 +7673,7 @@ ieee754@1.1.8:
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
   integrity sha1-vjPUCsEO8ZJnAfbwii2G+/0a0+Q=
 
-ieee754@^1.1.4:
+ieee754@^1.1.4, ieee754@~1.1.2:
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
   integrity sha512-GguP+DRY+pJ3soyIiGPTvdiVXjZ+DbXOxGpXn3eMvNW4x4irjqXm4wHKscC+TfxSJ0yw/S1F24tqdMNsMZTiLA==
@@ -8939,6 +8944,16 @@ leaflet-draw@^1.0.3:
   integrity sha512-HR0zb7nC6v6Fsm80HoBLV++SO66O7mmoKRCxkRPCkk4hMAzr/+WqdojZS+BbapuaoggEaAuTx8xz0hKSv2kHzg==
   dependencies:
     jshint "^2.9.6"
+
+leaflet-mapbox-vector-tile@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/leaflet-mapbox-vector-tile/-/leaflet-mapbox-vector-tile-0.1.6.tgz#3156cee5737f5f053ee9b6f6d308b30c5287346f"
+  integrity sha1-MVbO5XN/XwU+6bb20wizDFKHNG8=
+  dependencies:
+    pbf "0.0.2"
+    point-geometry "0.0.0"
+    request "~2.44.0"
+    vector-tile "~0.1.2"
 
 leven@^2.1.0:
   version "2.1.0"
@@ -10898,6 +10913,11 @@ oauth-sign@~0.3.0:
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.3.0.tgz#cb540f93bb2b22a7d5941691a288d60e8ea9386e"
   integrity sha1-y1QPk7srIqfVlBaRoojWDo6pOG4=
 
+oauth-sign@~0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.4.0.tgz#f22956f31ea7151a821e5f2fb32c113cad8b9f69"
+  integrity sha1-8ilW8x6nFRqCHl8vsywRPK2Ln2k=
+
 oauth-sign@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.5.0.tgz#d767f5169325620eab2e087ef0c472e773db6461"
@@ -11613,6 +11633,13 @@ pause-stream@^0.0.11:
   dependencies:
     through "~2.3"
 
+pbf@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/pbf/-/pbf-0.0.2.tgz#d65d7c0f4c1eebd10c3f0c62eefeb066537760f7"
+  integrity sha1-1l18D0we69EMPwxi7v6wZlN3YPc=
+  dependencies:
+    ieee754 "~1.1.2"
+
 pbkdf2@^3.0.3:
   version "3.0.17"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.0.17.tgz#976c206530617b14ebb32114239f7b09336e93a6"
@@ -11754,6 +11781,11 @@ pluralize@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-4.0.0.tgz#59b708c1c0190a2f692f1c7618c446b052fd1762"
   integrity sha1-WbcIwcAZCi9pLxx2GMRGsFL9F2I=
+
+point-geometry@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/point-geometry/-/point-geometry-0.0.0.tgz#6fcbcad7a803b6418247dd6e49c2853c584daff7"
+  integrity sha1-b8vK16gDtkGCR91uScKFPFhNr/c=
 
 popmotion-pose@^3.3.0:
   version "3.3.1"
@@ -12929,6 +12961,11 @@ qs@~0.6.0:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/qs/-/qs-0.6.6.tgz#6e015098ff51968b8a3c819001d5f2c89bc4b107"
   integrity sha1-bgFQmP9RlouKPIGQAdXyyJvEsQc=
+
+qs@~1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-1.2.2.tgz#19b57ff24dc2a99ce1f8bdf6afcda59f8ef61f88"
+  integrity sha1-GbV/8k3CqZzh+L32r82ln472H4g=
 
 qs@~2.3.1:
   version "2.3.3"
@@ -14241,6 +14278,28 @@ request@~2.36.0:
     oauth-sign "~0.3.0"
     tough-cookie ">=0.12.0"
     tunnel-agent "~0.4.0"
+
+request@~2.44.0:
+  version "2.44.0"
+  resolved "https://registry.yarnpkg.com/request/-/request-2.44.0.tgz#78d62454d68853cadfb07ad31f58b9ec98072ea8"
+  integrity sha1-eNYkVNaIU8rfsHrTH1i57JgHLqg=
+  dependencies:
+    bl "~0.9.0"
+    caseless "~0.6.0"
+    forever-agent "~0.5.0"
+    json-stringify-safe "~5.0.0"
+    mime-types "~1.0.1"
+    node-uuid "~1.4.0"
+    qs "~1.2.0"
+    tunnel-agent "~0.4.0"
+  optionalDependencies:
+    aws-sign2 "~0.5.0"
+    form-data "~0.1.0"
+    hawk "1.1.1"
+    http-signature "~0.10.0"
+    oauth-sign "~0.4.0"
+    stringstream "~0.0.4"
+    tough-cookie ">=0.12.0"
 
 request@~2.51.0:
   version "2.51.0"
@@ -16771,6 +16830,13 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
+
+vector-tile@~0.1.2:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/vector-tile/-/vector-tile-0.1.3.tgz#713e444b1ebe7d8696583a3752e239b76cdce884"
+  integrity sha1-cT5ESx6+fYaWWDo3UuI5t2zc6IQ=
+  dependencies:
+    point-geometry "0.0.0"
 
 vendors@^1.0.0:
   version "1.0.2"
