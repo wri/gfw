@@ -21,11 +21,6 @@ class MapComponent extends PureComponent {
     requestAnimationFrame(() => {
       this.map.invalidateSize();
       L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
-
-      const mvtSource = new L.VectorGrid.Protobuf(`https://api.mapbox.com/styles/v1/resourcewatch/cjlhxwcp212u02rpd1o541omv/tiles/256/{z}/{x}/{y}@2x?access_token=${
-        process.env.MAPBOX_TOKEN
-      }`);
-      this.map.addLayer(mvtSource);
     });
   }
 
