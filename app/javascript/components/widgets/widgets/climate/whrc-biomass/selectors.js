@@ -55,11 +55,11 @@ export const parseData = createSelector(
     }
     const { query, type } = location;
 
-    return dataTrimmed.map(d => ({
+    return dataTrimmed.map((d, i) => ({
       ...d,
       label: locationsDict[d.iso],
       color: colors.main,
-      key: d.iso,
+      key: `${d.iso}-${i}`,
       path: {
         type,
         payload: { type: 'country', adm0: d.iso },
