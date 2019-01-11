@@ -1,15 +1,15 @@
 export default {
   widget: 'emissions-plantations',
   title: {
-    global: 'Emissions loss in plantations vs. natural forest',
-    initial: 'Emissions loss in {location}'
+    initial: 'Biomass loss emissions in natural forest vs. plantations'
   },
   categories: ['climate'],
-  types: ['global', 'country'],
-  admins: ['global', 'adm0', 'adm1', 'adm2'],
+  types: ['country'],
+  admins: ['adm0', 'adm1', 'adm2'],
   options: {
     startYears: true,
-    endYears: true
+    endYears: true,
+    thresholds: true
   },
   colors: 'extent',
   metaKey: '',

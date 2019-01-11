@@ -8,7 +8,6 @@ const getLocationName = state => state.locationName;
 const getColors = state => state.colors;
 const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
-const getLocationType = state => state.locationType || null;
 const getSettings = state => state.settings;
 
 // get lists selected
@@ -72,16 +71,7 @@ export const parseSentence = createSelector(
   }
 );
 
-export const parseTitle = createSelector(
-  [getTitle, getLocationType],
-  (title, type) => {
-    let selectedTitle = title.initial;
-    if (type === 'global') {
-      selectedTitle = title.global;
-    }
-    return selectedTitle;
-  }
-);
+export const parseTitle = createSelector([getTitle], title => title.initial);
 
 export default createStructuredSelector({
   data: parseData,
