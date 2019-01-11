@@ -6,7 +6,7 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   options: {
     thresholds: true,
-    variables: ['total', 'density']
+    variables: ['totalbiomass', 'biomassdensity']
   },
   colors: 'emissions',
   dataType: 'loss',

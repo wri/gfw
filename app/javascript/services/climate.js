@@ -33,9 +33,8 @@ export const getEmissions = ({ threshold, adm0, adm1, adm2 }) =>
     return request.get(url);
   });
 
-export const getBiomassRanking = ({ adm0, adm1, adm2 }) => {
+export const getBiomassRanking = ({ adm0, adm1, adm2, variable }) => {
   let query;
-  const variable = 'totalbiomass'; // variables: {totalbiomass} or {biomassdensity}
 
   if (!adm1) {
     query = SQL_QUERIES.globalAndCountry.replace('{variable}', variable);

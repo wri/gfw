@@ -6,5 +6,6 @@ export default {
   layers: ['loss'],
   pageSize: 5,
   page: 0,
-  unit: 't'
+  unit: 't',
+  variable: 'totalbiomass'
 };
