@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
 
-// get list data
 const getData = state => state.data;
 const getLocationName = state => state.locationName;
 const getColors = state => state.colors;
@@ -10,7 +9,6 @@ const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
 const getSettings = state => state.settings;
 
-// get lists selected
 export const parseData = createSelector(
   [getData, getColors, getSettings],
   (data, colors, settings) => {

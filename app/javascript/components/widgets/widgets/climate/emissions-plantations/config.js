@@ -12,11 +12,14 @@ export default {
     thresholds: true
   },
   colors: 'extent',
-  metaKey: '',
-  layers: [],
+  layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
+  metaKey: 'tree_biomass_loss',
   sortOrder: {},
   sentences: {
     initial:
-      'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within plantations. The total loss within natural forest was equivalent to {emissions} of CO2 emissions.'
+      'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within plantations. The total loss within natural forest was equivalent to {emissions} of CO₂ emissions.'
+  },
+  whitelists: {
+    indicators: ['plantations']
   }
 };
