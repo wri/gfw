@@ -21,5 +21,30 @@ export default {
   sentences: {
     initial:
       'In {location}, potential carbon sequestration may reach {amount} of {variable} by {maxYear}.'
+  },
+  whitelists: {
+    adm0: [
+      'ARG',
+      'BLZ',
+      'BOL',
+      'BRA',
+      'COL',
+      'CRI',
+      'CUB',
+      'ECU',
+      'SLV',
+      'GTM',
+      'GUY',
+      'HND',
+      'JAM',
+      'MEX',
+      'NIC',
+      'PAN',
+      'PRY',
+      'PER',
+      'PRI',
+      'SUR',
+      'VEN'
+    ]
   }
 };
