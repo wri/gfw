@@ -58,7 +58,7 @@ export const parseData = createSelector(
     return dataTrimmed.map((d, i) => ({
       ...d,
       label: locationsDict[d.iso],
-      color: colors.main,
+      color: colors.density,
       key: `${d.iso}-${i}`,
       path: {
         type,
