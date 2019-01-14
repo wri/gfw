@@ -51,7 +51,9 @@ export const parseConfig = createSelector(
         .map((k, i) => ({
           key: k,
           label: labels[k] ? labels[k] : k,
-          color: colors.ramp && colors.ramp[i]
+          color: colors.ramp && colors.ramp[i],
+          unit: 't',
+          unitFormat: num => formatNumber({ num, unit: '' })
         }))
         .reverse()
     );
@@ -80,7 +82,7 @@ export const parseSentence = createSelector(
     );
     const variables = {
       cGain: 'carbon',
-      co2Gain: 'carbon dioxide'
+      co2Gain: 'CO₂'
     };
     const variable = variables[settings.unit];
     const { initial } = sentences;
