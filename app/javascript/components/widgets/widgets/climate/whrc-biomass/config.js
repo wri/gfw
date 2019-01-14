@@ -5,7 +5,6 @@ export default {
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   options: {
-    thresholds: true,
     variables: ['totalbiomass', 'biomassdensity']
   },
   colors: 'climate',
