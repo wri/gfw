@@ -15,15 +15,16 @@ export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
-  const currentLocation = getState().location.pathname;
-  const prevLocation = getState().location.prev.pathname;
+  const { location } = getState() || {};
+  const currentLocation = location.pathname;
+  const prevLocation = location.prev.pathname;
   if (currentLocation !== prevLocation) {
-    handlePageTrack(getState().location);
+    handlePageTrack(location);
   }
 };
 
 const redirectThunk = (dispatch, getState) => {
-  const { location } = getState();
+  const { location } = getState() || {};
   const routeSlugs = location.pathname && location.pathname.split('/');
   const isOldMap = routeSlugs.includes('map');
   if (isOldMap) {

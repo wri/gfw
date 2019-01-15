@@ -9,7 +9,8 @@ export const setDrawLoading = createAction('setDrawLoading');
 export const getGeostoreId = createThunkAction(
   'getGeostoreId',
   geojson => (dispatch, getState) => {
-    if (!getState().analysis.loading) {
+    const { analysis } = getState();
+    if (analysis && !analysis.loading) {
       dispatch(setDrawLoading({ loading: true, error: false, geostoreId: '' }));
       getGeostoreKey(geojson)
         .then(geostore => {
@@ -33,7 +34,7 @@ export const setDrawnGeostore = createThunkAction(
   'setDrawnGeostore',
   geostoreId => (dispatch, getState) => {
     track('analysisDrawComplete');
-    const { query, type } = getState().location;
+    const { query, type } = getState().location || {};
     const { map } = query || {};
     dispatch({
       type,

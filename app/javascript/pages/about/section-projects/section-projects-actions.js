@@ -9,7 +9,8 @@ export const setCategorySelected = createAction('setCategorySelected');
 export const fetchProjects = createThunkAction(
   'fetchProjects',
   () => (dispatch, getState) => {
-    if (!getState().aboutProjects.loading) {
+    const { aboutProjects } = getState();
+    if (aboutProjects && !aboutProjects.loading) {
       dispatch(setProjectsLoading({ loading: true, error: false }));
       fetchAllProjects()
         .then(data => {
