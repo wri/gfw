@@ -26,7 +26,8 @@ export const setCountryLinks = createAction('setCountryLinks');
 export const getCountries = createThunkAction(
   'getCountries',
   () => (dispatch, getState) => {
-    if (!getState().countryData.isCountriesLoading) {
+    const { countryData } = getState();
+    if (countryData && !countryData.isCountriesLoading) {
       dispatch(setCountriesLoading(true));
       axios
         .all([getCountriesProvider(), getFAOCountriesProvider()])
