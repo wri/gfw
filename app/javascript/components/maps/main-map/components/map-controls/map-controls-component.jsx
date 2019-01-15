@@ -359,14 +359,16 @@ class MapControlsButtons extends PureComponent {
                 {this.renderBasemapsTooltip()}
               </div>
             )}
-            <div className={cx('controls-wrapper', 'map-tour-map-controls')}>
-              {this.renderZoomButtons()}
-              {this.renderShowPanelsButton()}
-              {this.renderShareButton()}
-              {this.renderPrintButton()}
-              {this.renderMapTourBtn()}
+            <div className="map-tour-map-controls">
+              <div className="controls-wrapper">
+                {this.renderZoomButtons()}
+                {this.renderShowPanelsButton()}
+                {this.renderShareButton()}
+                {this.renderPrintButton()}
+                {this.renderMapTourBtn()}
+              </div>
+              {this.renderMapPosition()}
             </div>
-            {this.renderMapPosition()}
           </Fragment>
         ) : (
           <div className="mobile-controls-wrapper">
