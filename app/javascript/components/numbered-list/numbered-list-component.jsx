@@ -47,7 +47,7 @@ class NumberedList extends PureComponent {
                   {item.path &&
                     linksExt && (
                       <a
-                        href={`http://${window.location.host}${item.path}`}
+                        href={`https://${window.location.host}${item.path}`}
                         target="_blank"
                         rel="noopener nofollower"
                       >
