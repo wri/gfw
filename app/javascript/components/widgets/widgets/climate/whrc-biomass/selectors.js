@@ -46,6 +46,8 @@ export const parseData = createSelector(
 
     if (location.payload.adm0) {
       const locationIndex = findIndex(data, d => d[key] === locationObj.value);
+      if (locationIndex === -1) return null;
+
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
       if (locationIndex < 2) {
@@ -123,6 +125,8 @@ export const parseSentence = createSelector(
       else if (item.id_1) return String(item.id_1) === iso;
       return item.iso === iso;
     });
+    if (!region) return null;
+
     const { biomassdensity, totalbiomass } = region;
     return {
       sentence: sentences.initial,
