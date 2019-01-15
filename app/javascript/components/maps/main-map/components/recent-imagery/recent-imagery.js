@@ -84,7 +84,8 @@ class RecentImageryContainer extends PureComponent {
         ...position,
         start: dates.start,
         end: dates.end,
-        bands: settings.bands
+        bands: settings.bands,
+        token: this.getDataSource.token
       });
     }
     // get the rest of the tiles
