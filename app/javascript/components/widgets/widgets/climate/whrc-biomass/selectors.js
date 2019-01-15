@@ -77,12 +77,12 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocationName, getSentences, getLocationDict],
-  (data, location, sentences, locationsDict) => {
+  [getData, getLocationName, getSentences, getLocationDict, getSettings],
+  (data, location, sentences, locationsDict, settings) => {
     if (!sentences || isEmpty(data)) return null;
 
     if (location === 'global') {
-      const sorted = sortByKey(data, 'biomassdensity').reverse();
+      const sorted = sortByKey(data, [settings.variable]).reverse();
 
       let biomTop5 = 0;
       let densTop5 = 0;
@@ -97,11 +97,21 @@ export const parseSentence = createSelector(
       const percent = biomTop5 / biomTotal * 100;
       const avgBiomDensity = densTop5 / 5;
 
+      const value =
+        settings.variable === 'totalbiomass'
+          ? formatNumber({ num: percent, unit: '%' })
+          : formatNumber({ num: avgBiomDensity, unit: 't/ha' });
+
+      const labels = {
+        biomassdensity: 'biomass density',
+        totalbiomass: 'total biomass'
+      };
+
       return {
-        sentence: sentences.global,
+        sentence: sentences[settings.variable],
         params: {
-          X: formatNumber({ num: percent, unit: '%' }),
-          Y: formatNumber({ num: avgBiomDensity, unit: 't/ha' })
+          label: labels[settings.variable],
+          value
         }
       };
     }
