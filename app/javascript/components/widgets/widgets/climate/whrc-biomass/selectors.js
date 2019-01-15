@@ -70,7 +70,8 @@ export const parseData = createSelector(
         payload: { type: 'country', adm0: d.iso },
         query
       },
-      value: d[settings.variable]
+      value: d[settings.variable],
+      unit: settings.variable === 'totalbiomass' ? 't' : 't/ha'
     }));
   }
 );
@@ -81,7 +82,7 @@ export const parseSentence = createSelector(
     if (!sentences || isEmpty(data)) return null;
 
     if (location === 'global') {
-      const sorted = sortByKey(data, 'totalbiomass').reverse();
+      const sorted = sortByKey(data, 'biomassdensity').reverse();
 
       let biomTop5 = 0;
       let densTop5 = 0;
