@@ -39,8 +39,13 @@ export const parseData = createSelector(
       rank: i + 1
     }));
 
+    let key;
+    if (data[0].id_2) key = 'id_2';
+    else if (data[0].id_1) key = 'id_1';
+    else key = 'iso';
+
     if (location.payload.adm0) {
-      const locationIndex = findIndex(data, d => d.iso === locationObj.value);
+      const locationIndex = findIndex(data, d => d[key] === locationObj.value);
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
       if (locationIndex < 2) {
@@ -57,7 +62,7 @@ export const parseData = createSelector(
 
     return dataTrimmed.map((d, i) => ({
       ...d,
-      label: locationsDict[d.iso],
+      label: locationsDict[d[key]],
       color: colors.density,
       key: `${d.iso}-${i}`,
       path: {
@@ -102,7 +107,11 @@ export const parseSentence = createSelector(
     const iso = Object.keys(locationsDict).find(
       key => locationsDict[key] === location
     );
-    const region = data.find(item => item.iso === iso);
+    const region = data.find(item => {
+      if (item.id_2) return String(item.id_2) === iso;
+      else if (item.id_1) return String(item.id_1) === iso;
+      return item.iso === iso;
+    });
     const { biomassdensity, totalbiomass } = region;
     return {
       sentence: sentences.initial,
