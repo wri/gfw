@@ -103,24 +103,6 @@ export const getActiveTile = createSelector(
   }
 );
 
-export const getTileGeoJSON = createSelector([getActiveTile], activeTile => {
-  if (!activeTile) return null;
-  return {
-    features: [
-      {
-        type: 'Feature',
-        properties: {
-          ...activeTile
-        },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [activeTile.bbox.geometry.coordinates]
-        }
-      }
-    ]
-  };
-});
-
 export const getTileBounds = createSelector([getActiveTile], activeTile => {
   if (!activeTile) return null;
   return activeTile.bbox.geometry.coordinates;
