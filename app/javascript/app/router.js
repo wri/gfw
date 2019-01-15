@@ -17,7 +17,7 @@ export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
   const currentLocation = location.pathname;
-  const prevLocation = location.prev.pathname;
+  const prevLocation = location && location.prev.pathname;
   if (currentLocation !== prevLocation) {
     handlePageTrack(location);
   }
