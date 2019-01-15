@@ -86,13 +86,15 @@ class RecentImagerySettings extends PureComponent {
                   track('recentImageryDate');
                 }}
                 settings={{
-                  displayFormat: 'D MMM YYYY',
-                  numberOfMonths: 1,
-                  isOutsideRange: d => d.isAfter(moment()),
-                  block: true,
+                  minDate: '2000-01-01',
+                  maxDate: moment().format('YYYY-MM-DD'),
                   hideKeyboardShortcutsPanel: true,
                   noBorder: true,
-                  readOnly: true
+                  readOnly: true,
+                  displayFormat: 'D MMM YYYY',
+                  isOutsideRange: d =>
+                    d.isAfter(moment()) || d.isBefore(moment('2000-01-01')),
+                  block: true
                 }}
               />
             </div>
