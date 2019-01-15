@@ -8912,10 +8912,10 @@ layer-manager@^1.10.0:
     reselect "^3.0.1"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^1.14.2:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.14.2.tgz#087eeaff9f7920f39d60f3b342f29e9311e0e6c7"
-  integrity sha512-MaJ+01wYUka6A8NyXccam5zSSUiRkLj59c8HJpoItfYXSdFgsO2MxjxMcWXMmaiiEQfxuCRXxOH+0yLgWaeUQQ==
+layer-manager@^1.14.3:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.14.3.tgz#1acf32514f7e5861108b1ccd462c1cf7790fa142"
+  integrity sha512-7a1CctsxcV6+p7PKz3OTm3I1S5/83uKdzLg4eDzPBRm+qE5X2eGpXLgCcKat84UXl8mrBuc2PNP8eoVoK9V3fA==
   dependencies:
     axios "^0.18.0"
     lodash-es "^4.17.11"
