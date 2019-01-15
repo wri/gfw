@@ -1,5 +1,5 @@
 export default {
-  widget: 'futurecarbongains',
+  widget: 'futureCarbonGains',
   title: {
     initial: 'Annual tree cover loss by dominant driver in {location}',
     global: 'Global annual tree cover loss by dominant driver'

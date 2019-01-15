@@ -13,14 +13,19 @@ export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
-    const years = {};
     const selectedData = data[settings.unit];
+    const years = {};
+
     Object.keys(selectedData).forEach(key =>
       selectedData[key].forEach(obj => {
-        if (years[obj.year]) years[obj.year][key] = obj.value;
-        else years[obj.year] = { year: obj.year, [key]: obj.value };
+        years[obj.year] = {
+          ...years[obj.year],
+          [key]: obj.value,
+          year: obj.year
+        };
       })
     );
+
     return Object.values(years);
   }
 );
