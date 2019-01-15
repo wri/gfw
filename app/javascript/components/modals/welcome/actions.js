@@ -13,7 +13,7 @@ export const setModalWelcome = createThunkAction(
 export const setExploreView = createThunkAction(
   'setExploreView',
   () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
+    const { query, type, payload } = getState().location || {};
     dispatch(setModalWelcome(false));
     dispatch({
       type,
@@ -31,7 +31,7 @@ export const setExploreView = createThunkAction(
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
   () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
+    const { query, type, payload } = getState().location || {};
     dispatch(setModalWelcome(false));
     dispatch({
       type,

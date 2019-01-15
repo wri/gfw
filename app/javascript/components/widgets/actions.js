@@ -17,7 +17,8 @@ export const setWidgetLoading = createAction('setWidgetLoading');
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
   () => (dispatch, getState) => {
-    if (!getState().widgets.loading) {
+    const { widgets } = getState();
+    if (widgets && !widgets.loading) {
       dispatch(setWidgetsLoading({ loading: true, error: false }));
       getNonGlobalDatasets()
         .then(response => {

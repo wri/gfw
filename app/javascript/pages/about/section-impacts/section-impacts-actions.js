@@ -10,7 +10,8 @@ export const setImpactsProjectsData = createAction('setImpactsProjectsData');
 export const fetchImpactProjects = createThunkAction(
   'fetchImpactProjects',
   () => (dispatch, getState) => {
-    if (!getState().impacts.loading) {
+    const { impacts } = getState();
+    if (impacts && !impacts.loading) {
       dispatch(setImpactsProjectsLoading({ loading: true, error: false }));
       fetchAboutProjects()
         .then(data => {
