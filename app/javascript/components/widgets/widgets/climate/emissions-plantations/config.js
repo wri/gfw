@@ -18,7 +18,7 @@ export default {
   sortOrder: {},
   sentences: {
     initial:
-      'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within plantations. The total loss within natural forest was equivalent to {emissions} of CO₂ emissions.'
+      'From {startYear} to {endYear}, a total of {emissions} of CO₂ emissions were released from tree cover loss in {location} natural forests.'
   },
   whitelists: {
     indicators: ['plantations']
