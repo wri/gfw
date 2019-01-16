@@ -4,5 +4,5 @@ export default {
   startYear: 2013,
   endYear: 2017,
   layers: ['forest2010', 'ifl_2013_deg'],
-  unit: 't'
+  unit: 'co2LossByYear'
 };

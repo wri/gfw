@@ -7,6 +7,7 @@ import { yearTicksFormatter } from 'components/widgets/utils/data';
 // get list data
 const getData = state => (state.data && state.data.loss) || null;
 const getSettings = state => state.settings || null;
+const getColors = state => state.colors;
 const getIndicator = state => state.indicator || null;
 const getLocationName = state => state.locationName || null;
 const getSentences = state => state.config && state.config.sentences;
@@ -30,36 +31,40 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector([getSettings], settings => {
-  const { unit } = settings;
-  return {
-    height: 250,
-    xKey: 'year',
-    yKeys: {
-      bars: {
-        [unit]: {
-          fill: '#DF511E',
-          background: false
+export const parseConfig = createSelector(
+  [getSettings, getColors],
+  (settings, colors) => {
+    const { unit } = settings;
+    const { loss } = colors;
+    return {
+      height: 250,
+      xKey: 'year',
+      yKeys: {
+        bars: {
+          [unit]: {
+            fill: loss.main,
+            background: false
+          }
         }
-      }
-    },
-    xAxis: {
-      tickFormatter: yearTicksFormatter
-    },
-    tooltip: [
-      {
-        key: 'year'
       },
-      {
-        key: [unit],
-        unit: 't',
-        unitFormat: value => format('.3s')(value)
-      }
-    ],
-    unit: 't',
-    unitFormat: value => format('.2s')(value)
-  };
-});
+      xAxis: {
+        tickFormatter: yearTicksFormatter
+      },
+      tooltip: [
+        {
+          key: 'year'
+        },
+        {
+          key: [unit],
+          unit: 't',
+          unitFormat: value => format('.3s')(value)
+        }
+      ],
+      unit: 't',
+      unitFormat: value => format('.2s')(value)
+    };
+  }
+);
 
 export const parseSentence = createSelector(
   [parseData, getSettings, getIndicator, getSentences, getLocationName],

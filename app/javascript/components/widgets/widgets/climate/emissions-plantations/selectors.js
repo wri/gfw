@@ -14,6 +14,7 @@ export const parseData = createSelector(
   (data, colors, settings) => {
     if (isEmpty(data)) return null;
     const { adminData, plantData } = data;
+    const { loss } = colors;
 
     const adminTotal = adminData
       .filter(d => d.year >= settings.startYear && d.year <= settings.endYear)
@@ -26,14 +27,22 @@ export const parseData = createSelector(
     const parsedData = [
       {
         label: 'Natural forest',
-        value: adminTotal,
-        color: '#DF511E',
+        value:
+          settings.unit === 'co2LossByYear'
+            ? adminTotal
+            : adminTotal / (44 / 12),
+        unit: 't',
+        color: loss.main,
         percentage: adminTotal / totalArea * 100
       },
       {
         label: 'Plantations',
-        value: plantTotal,
-        color: '#F9A000',
+        value:
+          settings.unit === 'co2LossByYear'
+            ? plantTotal
+            : plantTotal / (44 / 12),
+        unit: 't',
+        color: loss.secondary,
         percentage: plantTotal / totalArea * 100
       }
     ];
