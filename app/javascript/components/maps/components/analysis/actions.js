@@ -165,7 +165,7 @@ export const uploadShape = createThunkAction(
 export const clearAnalysis = createThunkAction(
   'clearAnalysis',
   () => (dispatch, getState) => {
-    const { query, type } = getState().location;
+    const { query, type } = getState().location || {};
     dispatch({
       type,
       ...(query && {
@@ -179,7 +179,8 @@ export const clearAnalysis = createThunkAction(
 export const goToDashboard = createThunkAction(
   'goToDashboard',
   () => (dispatch, getState) => {
-    const { payload, query } = getState().location.query;
+    const { location } = getState() || {};
+    const { payload, query } = location || {};
     dispatch({
       type: DASHBOARDS,
       payload,

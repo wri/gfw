@@ -52,3 +52,4 @@ export const getBiomassRanking = ({ adm0, adm1, adm2, variable }) => {
 
   return request.get(url);
 };
+

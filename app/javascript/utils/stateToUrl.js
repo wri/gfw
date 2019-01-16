@@ -1,5 +1,3 @@
-// import isEqual from 'lodash/isEqual';
-// import pick from 'lodash/pick';
 import queryString from 'query-string';
 
 export const decodeUrlForState = url => {
@@ -47,24 +45,3 @@ export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
     }
   };
 };
-
-// export const isObjectContained = (contained, container) =>
-//   isEqual(pick(container, Object.keys(contained)), contained);
-
-// export const setUrlStateToStore = ({
-//   key,
-//   query,
-//   setState,
-//   dispatch,
-//   getState
-// }) => {
-//   if (query && query[key]) {
-//     const state = decodeUrlForState(query[key]);
-//     const { settings } = getState()[key];
-//     // Check if the state needs and update checking the values of the new config
-//     // with the existing in the url to avoid dispatch actions without changes
-//     if (!isObjectContained(state, settings)) {
-//       dispatch(setState(state));
-//     }
-//   }
-// };

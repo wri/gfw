@@ -102,6 +102,7 @@ $item-padding-screen-m: rem(40px);
   height: rem(360px);
   padding: rem(17px) rem(16px);
   background-color: $grey-light;
+  overflow: hidden;
 
   &:before {
     content: "";
@@ -133,17 +134,18 @@ $item-padding-screen-m: rem(40px);
 
   .c-home-summary-item__background {
     position: absolute;
-    bottom: 0;
+    bottom: -150px;
     width: auto;
-    max-height: rem(235px);
+    max-width: 160%;
+    max-height: rem(335px);
     z-index: 1;
 
     &.-left {
-      left: 0;
+      left: -150px;
     }
 
     &.-right {
-      right: 0;
+      right: -150px;
     }
   }
 
@@ -166,7 +168,7 @@ $item-padding-screen-m: rem(40px);
     }
 
     .c-home-summary-item__background {
-      max-height: rem(300px);
+      max-height: rem(400px);
     }
   }
 
