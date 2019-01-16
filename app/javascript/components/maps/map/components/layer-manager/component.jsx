@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import { LayerManager, Layer } from 'layer-manager/lib/react';
-import { PluginLeaflet } from 'layer-manager/lib';
+import { LayerManager, Layer } from 'layer-manager/lib/components';
+import { PluginLeaflet } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   render() {
