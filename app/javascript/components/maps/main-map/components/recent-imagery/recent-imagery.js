@@ -77,7 +77,9 @@ class RecentImageryContainer extends PureComponent {
         !isEqual(settings.bands, prevProps.settings.bands))
     ) {
       if (this.getDataSource) {
-        this.getDataSource.cancel();
+        this.getDataSource.cancel(
+          'Cancelling duplicate fetch for recent imagery'
+        );
       }
       this.getDataSource = CancelToken.source();
       getRecentImageryData({
