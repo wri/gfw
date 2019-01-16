@@ -68,7 +68,8 @@ export const parseSentence = createSelector(
           : formatNumber({ num: plantationsPct, unit: '%' }),
       emissions: formatNumber({ num: emissions, unit: 't' }),
       startYear,
-      endYear
+      endYear,
+      variable: settings.unit === 'co2LossByYear' ? 'CO₂' : 'carbon'
     };
 
     return {
