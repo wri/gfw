@@ -1,4 +1,5 @@
 import request from 'utils/request';
+import range from 'lodash/range';
 
 const REQUEST_URL =
   'http://climate.globalforestwatch.org/api/indicators/{indicator}?thresh={thresh}&iso={iso}&id_1={id}&area={area}';
@@ -22,4 +23,26 @@ export const getEmissions = ({ threshold, adm0, adm1, adm2 }) =>
       .replace('{id}', adm1 ? String(adm1) : '')
       .replace('{area}', adm2 ? String(adm1) : '');
     return request.get(url);
+  });
+
+export const getCumulative = params =>
+  range(2015, 2019).map(year => {
+    // const url = `${process.env.GFW_API}`;
+    const url = 'https://production-api.globalforestwatch.org/v1/query/?sql=';
+    const query = `SELECT sum(alerts) AS alerts,
+sum(cumulative_emissions) AS cumulative_emissions,
+sum(above_ground_carbon_loss) AS above_ground_carbon_loss, 
+sum(percent_to_emissions_target) AS percent_to_emissions_target, 
+sum(percent_to_deforestation_target) AS percent_to_deforestation_target, 
+sum(cumulative_deforestation) AS cumulative_deforestation, 
+sum(loss_ha) AS loss, 
+year as year, 
+country_iso, 
+week 
+FROM a98197d2-cd8e-4b17-ab5c-fabf54b25ea0 
+WHERE country_iso ='${params.adm0}' 
+AND year IN ('${year}') AND week <= 53 
+GROUP BY week, country_iso 
+ORDER BY week ASC`;
+    return request.get(`${url}/${query}`);
   });
