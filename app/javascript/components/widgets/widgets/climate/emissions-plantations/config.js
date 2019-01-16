@@ -9,7 +9,8 @@ export default {
   options: {
     startYears: true,
     endYears: true,
-    thresholds: true
+    thresholds: true,
+    units: ['co2LossByYear', 'cLossByYear']
   },
   colors: 'extent',
   layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],

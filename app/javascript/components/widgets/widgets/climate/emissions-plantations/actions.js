@@ -16,9 +16,9 @@ export default ({ params }) =>
 
         const maxYear = Math.max(
           maxBy(adminData, 'year').year,
-          maxBy(adminData, 'year').year
+          maxBy(plantData, 'year').year
         );
 
-        return { adminData, plantData, years: range(2013, maxYear) };
+        return { adminData, plantData, years: range(2013, maxYear + 1) };
       })
     );

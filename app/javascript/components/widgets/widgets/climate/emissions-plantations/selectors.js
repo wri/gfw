@@ -27,13 +27,13 @@ export const parseData = createSelector(
       {
         label: 'Natural forest',
         value: adminTotal,
-        color: colors.intactForest,
+        color: '#DF511E',
         percentage: adminTotal / totalArea * 100
       },
       {
         label: 'Plantations',
         value: plantTotal,
-        color: colors.nonForest,
+        color: '#F9A000',
         percentage: plantTotal / totalArea * 100
       }
     ];
