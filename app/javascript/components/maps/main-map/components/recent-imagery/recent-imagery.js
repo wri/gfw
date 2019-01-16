@@ -89,7 +89,7 @@ class RecentImageryContainer extends PureComponent {
       });
     }
     // get the rest of the tiles
-    if (!dataStatus.haveAllData && !loadingMoreTiles && active) {
+    if (dataStatus && !dataStatus.haveAllData && !loadingMoreTiles && active) {
       getMoreTiles({
         sources,
         dataStatus,
