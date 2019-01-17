@@ -130,7 +130,9 @@ export const getChartConfig = (colors, latest) => {
       lines: {
         count: {
           stroke: colors.main
-        }
+        },
+        alerts: { stroke: 'red' },
+        target: { stroke: 'grey' }
       },
       areas: {
         plusStdDev: {

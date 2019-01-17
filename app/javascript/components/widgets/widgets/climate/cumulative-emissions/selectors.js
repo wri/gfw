@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
+import range from 'lodash/range';
 import moment from 'moment';
 import { getColorPalette } from 'utils/data';
 
@@ -19,43 +20,47 @@ const getWeeks = state => state.settings.weeks || null;
 const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.config.sentence || null;
 
-export const getData = createSelector(
-  [getAlerts, getDataset],
-  (data, dataset) => {
-    if (!data || isEmpty(data)) return null;
-    const groupedByYear = groupBy(data, 'year');
-    const years = [];
-    const latestFullWeek = moment().subtract(2, 'w');
-    const lastWeek = {
-      isoWeek: latestFullWeek.isoWeek(),
-      year: latestFullWeek.year()
-    };
-    const min_year = dataset === 'MODIS' ? 2001 : 2016;
-    for (let i = min_year; i <= lastWeek.year; i += 1) {
-      years.push(i);
+export const getData = createSelector([getAlerts], data => {
+  if (!data || isEmpty(data)) return null;
+
+  // console.log('comparison', data['2018'][0], groupBy(prev, 'year')['2018'][0]);
+
+  const unit = 'cumulative_deforestation';
+  const groupedByYear = Object.entries(data).reduce(
+    (acc, [year, arr]) => ({
+      ...acc,
+      [year]: arr.map(d => ({ ...d, count: d[unit], year, target: 1088880 }))
+    }),
+    {}
+  );
+  const latestFullWeek = moment().subtract(2, 'w');
+  const lastWeek = {
+    isoWeek: latestFullWeek.isoWeek(),
+    year: latestFullWeek.year()
+  };
+
+  const years = range(2015, lastWeek.year);
+  const yearLengths = {};
+
+  years.forEach(y => {
+    yearLengths[y] =
+      lastWeek.year !== parseInt(y, 10)
+        ? moment(`${y}-12-31`).isoWeek()
+        : lastWeek.isoWeek;
+  });
+  const zeroFilledData = [];
+  years.forEach(year => {
+    const yearDataByWeek = groupBy(groupedByYear[year], 'week');
+    for (let i = 1; i <= yearLengths[year]; i += 1) {
+      zeroFilledData.push(
+        yearDataByWeek[i]
+          ? yearDataByWeek[i][0]
+          : { count: 0, week: i, year: parseInt(year, 10) }
+      );
     }
-    const yearLengths = {};
-    years.forEach(y => {
-      const lastIsoWeek =
-        lastWeek.year !== parseInt(y, 10)
-          ? moment(`${y}-12-31`).isoWeek()
-          : lastWeek.isoWeek;
-      yearLengths[y] = lastIsoWeek;
-    });
-    const zeroFilledData = [];
-    years.forEach(d => {
-      const yearDataByWeek = groupBy(groupedByYear[d], 'week');
-      for (let i = 1; i <= yearLengths[d]; i += 1) {
-        zeroFilledData.push(
-          yearDataByWeek[i]
-            ? yearDataByWeek[i][0]
-            : { count: 0, week: i, year: parseInt(d, 10) }
-        );
-      }
-    });
-    return zeroFilledData;
-  }
-);
+  });
+  return zeroFilledData;
+});
 
 export const getMeans = createSelector([getData], data => {
   if (!data) return null;

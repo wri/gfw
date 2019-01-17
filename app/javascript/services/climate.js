@@ -31,11 +31,7 @@ export const getCumulative = params =>
     const url = 'https://production-api.globalforestwatch.org/v1/query/?sql=';
     const query = `SELECT sum(alerts) AS alerts,
 sum(cumulative_emissions) AS cumulative_emissions,
-sum(above_ground_carbon_loss) AS above_ground_carbon_loss, 
-sum(percent_to_emissions_target) AS percent_to_emissions_target, 
-sum(percent_to_deforestation_target) AS percent_to_deforestation_target, 
 sum(cumulative_deforestation) AS cumulative_deforestation, 
-sum(loss_ha) AS loss, 
 year as year, 
 country_iso, 
 week 
@@ -46,3 +42,11 @@ GROUP BY week, country_iso
 ORDER BY week ASC`;
     return request.get(`${url}/${query}`);
   });
+
+/*
+
+sum(above_ground_carbon_loss) AS above_ground_carbon_loss, 
+sum(percent_to_emissions_target) AS percent_to_emissions_target, 
+sum(percent_to_deforestation_target) AS percent_to_deforestation_target, 
+sum(loss_ha) AS loss, 
+*/
