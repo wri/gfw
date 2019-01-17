@@ -4,6 +4,7 @@ import { flattenObj } from 'utils/data';
 import isEmpty from 'lodash/isEmpty';
 import uniq from 'lodash/uniq';
 import sortBy from 'lodash/sortBy';
+import range from 'lodash/range';
 
 export const selectAllPropsAndState = (state, ownProps) => ownProps;
 export const selectWidgetSettings = (state, { settings }) => settings;
@@ -67,9 +68,12 @@ export const getRangeYears = createSelector(
   (data, config) => {
     const { startYears, endYears, yearsRange } = config.options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
-    const flatData = flattenObj(data);
-    let years = data.years || [];
-    if (years.length) {
+    let years =
+      data.years ||
+      (yearsRange && range(yearsRange[0], yearsRange[1] + 1)) ||
+      [];
+    if (!years.length) {
+      const flatData = flattenObj(data);
       Object.keys(flatData).forEach(key => {
         if (key.includes('year')) {
           years = years.concat(flatData[key]);
