@@ -1,0 +1,9 @@
+[
+  {
+    "label": "Total",
+    "value": "totalbiomass"
+  },{
+    "label": "Density",
+    "value": "biomassdensity"
+  }
+]

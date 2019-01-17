@@ -14,6 +14,15 @@ const INDICATORS = [
   3117 // C02 Crops
 ];
 
+const SQL_QUERIES = {
+  globalAndCountry:
+    'SELECT gid_0 as iso, SUM(totalbiomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM whrc_biomass GROUP BY iso',
+  adm1:
+    "SELECT gid_0 as iso, id_1, SUM(totalbiomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM whrc_biomass WHERE gid_0 = '{adm0}' GROUP BY iso, id_1",
+  adm2:
+    "SELECT gid_0 as iso, id_1, id_2, SUM(totalbiomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM whrc_biomass WHERE gid_0 = '{adm0}' AND id_1 = {adm1} GROUP BY iso, id_1, id_2"
+};
+
 export const getEmissions = ({ threshold, adm0, adm1, adm2 }) =>
   INDICATORS.map(indicator => {
     const url = REQUEST_URL.replace('{indicator}', indicator)
@@ -23,3 +32,24 @@ export const getEmissions = ({ threshold, adm0, adm1, adm2 }) =>
       .replace('{area}', adm2 ? String(adm1) : '');
     return request.get(url);
   });
+
+export const getBiomassRanking = ({ adm0, adm1, adm2, variable }) => {
+  let query;
+
+  if (!adm1) {
+    query = SQL_QUERIES.globalAndCountry.replace('{variable}', variable);
+  } else if (adm1 && !adm2) {
+    query = SQL_QUERIES.adm1
+      .replace('{variable}', variable)
+      .replace('{adm0}', adm0);
+  } else if (adm1 && adm2) {
+    query = SQL_QUERIES.adm2
+      .replace('{variable}', variable)
+      .replace('{adm0}', adm0)
+      .replace('{adm1}', adm1);
+  }
+  const url = `${process.env.CARTO_API}/sql?q=${query}`;
+
+  return request.get(url);
+};
+
