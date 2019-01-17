@@ -22,7 +22,9 @@ class RecentImageryThumbnail extends PureComponent {
           selected ? 'c-recent-imagery-thumbnail--selected' : ''
         }`}
         style={{
-          backgroundImage: `url('${tile.thumbnail}')`
+          ...(tile.thumbnail && {
+            backgroundImage: `url('${tile.thumbnail}')`
+          })
         }}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}

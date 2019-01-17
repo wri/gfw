@@ -143,8 +143,10 @@ export const getDates = createSelector([getRecentImagerySettings], settings => {
   const currentDate = date ? moment(date) : moment();
 
   return {
-    end: currentDate.format('YYYY-MM-DD'),
-    start: currentDate.subtract(weeks, 'weeks').format('YYYY-MM-DD')
+    end: moment(currentDate).format('YYYY-MM-DD'),
+    start: moment(currentDate)
+      .subtract(weeks, 'weeks')
+      .format('YYYY-MM-DD')
   };
 });
 

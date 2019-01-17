@@ -5,7 +5,7 @@ export const setMapTourOpen = createAction('setMapTourOpen');
 export const setExploreView = createThunkAction(
   'setExploreView',
   () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
+    const { query, type, payload } = getState().location || {};
     dispatch({
       type,
       payload,
@@ -22,7 +22,7 @@ export const setExploreView = createThunkAction(
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
   () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
+    const { query, type, payload } = getState().location || {};
     dispatch({
       type,
       payload,

@@ -15,7 +15,8 @@ export const setSearch = createAction('setSearch');
 export const fetchProjects = createThunkAction(
   'fetchProjects',
   () => (dispatch, getState) => {
-    if (!getState().sgfProjects.loading) {
+    const { sgfProjects } = getState();
+    if (sgfProjects && !sgfProjects.loading) {
       dispatch(setProjectsLoading({ loading: true, error: false }));
       axios
         .all([fetchSGFProjects(), getCountriesProvider(), getCountriesLatLng()])
