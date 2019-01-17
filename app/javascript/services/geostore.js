@@ -18,7 +18,7 @@ const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
 export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {
   let thresh = 0.005;
   if (type === 'country') {
-    const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
+    const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
     thresh = bigCountries.includes(adm0) ? 0.05 : 0.005;
   }
   const url = buildGeostoreUrl({ type, adm0, adm1, adm2, thresh });

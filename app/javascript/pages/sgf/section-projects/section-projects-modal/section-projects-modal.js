@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
   data: state.modalSGF && state.modalSGF.data
 });
 
-reducerRegistry.registerModule('modalAbout', {
+reducerRegistry.registerModule('modalSGF', {
   actions,
   reducers,
   initialState

@@ -28,7 +28,15 @@
     "value": "co2LossByYear"
   },
   {
+    "label": "C02",
+    "value": "co2Gain"
+  },
+  {
     "label": "Carbon",
     "value": "cLossByYear"
+  },
+  {
+    "label": "Carbon",
+    "value": "cGain"
   }
 ]

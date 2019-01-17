@@ -78,16 +78,17 @@ export const getLocationFromSearch = createThunkAction(
 export const handleClickLocation = createThunkAction(
   'handleClickLocation',
   ({ gid_0, gid_1, gid_2 }) => (dispatch, getState) => {
-    const query = getState().location.query || {};
-    const location = parseGadm36Id(gid_2 || gid_1 || gid_0);
-    const { map, menu, mainMap } = getState().location.query || {};
+    const { location } = getState();
+    const query = (location && location.query) || {};
+    const newLocation = parseGadm36Id(gid_2 || gid_1 || gid_0);
+    const { map, menu, mainMap } = query || {};
 
-    if (location) {
+    if (newLocation) {
       dispatch({
         type: MAP,
         payload: {
           type: 'country',
-          ...location
+          ...newLocation
         },
         query: {
           ...query,
@@ -154,7 +155,7 @@ export const handleViewOnMap = createThunkAction(
 export const showAnalysis = createThunkAction(
   'showAnalysis',
   () => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
+    const { query, type, payload } = getState().location || {};
     const { menu } = query || {};
     dispatch({
       type,

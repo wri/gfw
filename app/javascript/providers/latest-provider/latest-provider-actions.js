@@ -10,7 +10,8 @@ export const setLatestDates = createAction('setLatestDates');
 export const getLatest = createThunkAction(
   'getLatest',
   latestEndpoints => (dispatch, getState) => {
-    const currentLatestDates = Object.keys(getState().latest.data);
+    const { latest } = getState();
+    const currentLatestDates = latest && Object.keys(latest.data);
     const newEndpoints = latestEndpoints.filter(
       l => !currentLatestDates.includes(l.id)
     );
@@ -23,13 +24,13 @@ export const getLatest = createThunkAction(
             const latestDates =
               responses &&
               responses.reduce((obj, response, index) => {
-                const latest = response.data.data || response.data;
-                let date = latest.date;
+                const latestResponse = response.data.data || response.data;
+                let date = latestResponse.date;
                 if (!date) {
-                  const data = Array.isArray(latest)
-                    ? latest[0].attributes
-                    : latest.attributes;
-                  date = data.date || data.latest;
+                  const data = Array.isArray(latestResponse)
+                    ? latestResponse[0].attributes
+                    : latestResponse.attributes;
+                  date = data.date || data.latestResponse;
                 }
                 return {
                   ...obj,

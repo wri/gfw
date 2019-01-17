@@ -9,9 +9,10 @@ export const setModalMeta = createThunkAction(
   'setModalMeta',
   (metaKey, metaWhitelist, tableWhitelist, customCitation) => (
     dispatch,
-    state
+    getState
   ) => {
-    if (!state().modalMeta.loading) {
+    const { modalMeta } = getState();
+    if (modalMeta && !modalMeta.loading) {
       dispatch(
         setModalMetaLoading({ loading: true, error: false, open: true })
       );

@@ -22,7 +22,8 @@ export const setSubscribeSettings = createThunkAction(
 export const saveSubscription = createThunkAction(
   'saveSubscription',
   data => (dispatch, getState) => {
-    if (!getState().modalSubscribe.saving) {
+    const { modalSubscribe } = getState();
+    if (modalSubscribe && !modalSubscribe.saving) {
       dispatch(setSubscribeSaving({ saving: true, error: false }));
       const {
         name,
