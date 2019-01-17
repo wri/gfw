@@ -77,7 +77,9 @@ class RecentImageryContainer extends PureComponent {
         !isEqual(settings.bands, prevProps.settings.bands))
     ) {
       if (this.getDataSource) {
-        this.getDataSource.cancel();
+        this.getDataSource.cancel(
+          'Cancelling duplicate fetch for recent imagery'
+        );
       }
       this.getDataSource = CancelToken.source();
       getRecentImageryData({
@@ -89,7 +91,7 @@ class RecentImageryContainer extends PureComponent {
       });
     }
     // get the rest of the tiles
-    if (!dataStatus.haveAllData && !loadingMoreTiles && active) {
+    if (dataStatus && !dataStatus.haveAllData && !loadingMoreTiles && active) {
       getMoreTiles({
         sources,
         dataStatus,
