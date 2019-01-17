@@ -112,8 +112,8 @@ export const parseData = createSelector(
       path: {
         type,
         payload: {
-          type: 'country',
           ...payload,
+          type: 'country',
           ...(!payload.adm1 && {
             adm0: d.id
           }),
