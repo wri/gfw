@@ -131,7 +131,6 @@ export const getChartConfig = (colors, latest) => {
         count: {
           stroke: colors.main
         },
-        alerts: { stroke: 'red' },
         target: { stroke: 'grey' }
       },
       areas: {

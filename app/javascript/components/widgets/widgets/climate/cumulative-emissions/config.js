@@ -12,13 +12,13 @@ export default {
   admins: ['adm0'],
   layers: [],
   colors: 'fires',
-  metaKey: '',
+  metaKey: 'source-insights-glad-alerts',
   sortOrder: {
     summary: 100,
     forestChange: 100
   },
   sentence:
-    'There were {count} {dataset} fire alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
+    'As of {date}, the total {variable} for {location} in {year} sums a total value of {value}.',
   whitelists: {
     adm0: [
       'BRA',

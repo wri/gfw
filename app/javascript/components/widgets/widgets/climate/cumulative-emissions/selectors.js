@@ -1,23 +1,16 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 import groupBy from 'lodash/groupBy';
 import range from 'lodash/range';
 import moment from 'moment';
-import { getColorPalette } from 'utils/data';
 
-import {
-  getMeansData,
-  getStdDevData,
-  getDatesData,
-  getChartConfig
-} from 'components/widgets/utils/data';
+import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data || null;
+const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getActiveData = state => state.settings.activeData || null;
-const getWeeks = state => state.settings.weeks || null;
-const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.config.sentence || null;
 
 export const getData = createSelector([getAlerts], data => {
@@ -26,13 +19,16 @@ export const getData = createSelector([getAlerts], data => {
   // console.log('comparison', data['2018'][0], groupBy(prev, 'year')['2018'][0]);
 
   const unit = 'cumulative_deforestation';
+  const target = 1088880;
+
   const groupedByYear = Object.entries(data).reduce(
-    (acc, [year, arr]) => ({
+    (acc, [y, arr]) => ({
       ...acc,
-      [year]: arr.map(d => ({ ...d, count: d[unit], year, target: 1088880 }))
+      [y]: arr.map(d => ({ ...d, count: d[unit], year: y, target }))
     }),
     {}
   );
+
   const latestFullWeek = moment().subtract(2, 'w');
   const lastWeek = {
     isoWeek: latestFullWeek.isoWeek(),
@@ -43,51 +39,45 @@ export const getData = createSelector([getAlerts], data => {
   const yearLengths = {};
 
   years.forEach(y => {
-    yearLengths[y] =
-      lastWeek.year !== parseInt(y, 10)
-        ? moment(`${y}-12-31`).isoWeek()
-        : lastWeek.isoWeek;
+    if (lastWeek.year === parseInt(y, 10)) {
+      yearLengths[y] = lastWeek.isoWeek;
+    } else if (moment(`${y}-12-31`).weekday() === 1) {
+      yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+    } else {
+      yearLengths[y] = moment(`${y}-12-31`).isoWeek();
+    }
   });
-  const zeroFilledData = [];
-  years.forEach(year => {
-    const yearDataByWeek = groupBy(groupedByYear[year], 'week');
-    for (let i = 1; i <= yearLengths[year]; i += 1) {
+
+  return Object.entries(groupedByYear).reduce((acc, [y, arr]) => {
+    const yearDataByWeek = groupBy(arr, 'week');
+    const zeroFilledData = [];
+    for (let i = 1; i <= yearLengths[y]; i += 1) {
       zeroFilledData.push(
         yearDataByWeek[i]
           ? yearDataByWeek[i][0]
-          : { count: 0, week: i, year: parseInt(year, 10) }
+          : { count: 0, week: i, year: parseInt(y, 10) }
       );
     }
-  });
-  return zeroFilledData;
+    return { ...acc, [y]: zeroFilledData };
+  }, {});
 });
 
-export const getMeans = createSelector([getData], data => {
+export const getStdDev = createSelector([getData], data => {
   if (!data) return null;
-  return getMeansData(
-    data,
-    moment()
-      .subtract(2, 'w')
-      .format('YYYY-MM-DD')
-  );
+  // const years = Object.keys(data);
+  // const lastYear = years.pop();
+  // calculate mean and std of data[year] related to prev (years)
+  return data['2017'];
 });
-
-export const getStdDev = createSelector(
-  [getMeans, getData],
-  (data, rawData) => {
-    if (!data) return null;
-    return getStdDevData(data, rawData);
-  }
-);
 
 export const getDates = createSelector([getStdDev], data => {
   if (!data) return null;
   return getDatesData(data);
 });
 
-export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
+export const parseData = createSelector([getDates], data => {
   if (!data) return null;
-  return data.slice(-weeks);
+  return data;
 });
 
 export const parseConfig = createSelector([getColors], colors =>
@@ -100,64 +90,28 @@ export const parseConfig = createSelector([getColors], colors =>
 );
 
 export const parseSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences, getDataset],
-  (data, colors, activeData, sentence, dataset) => {
+  [parseData, getActiveData, getSentences, getLocationName],
+  (data, activeData, sentence, locationName) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
-    const colorRange = getColorPalette(colors.ramp, 5);
-    let statusColor = colorRange[4];
-    const {
-      count,
-      twoPlusStdDev,
-      plusStdDev,
-      minusStdDev,
-      twoMinusStdDev,
-      date
-    } =
-      lastDate || {};
+    // const colorRange = getColorPalette(colors.ramp, 5);
+    // let statusColor = colorRange[4];
+    const { count, date } = lastDate || {};
 
-    let status = 'unusually low';
-    if (twoPlusStdDev && count > twoPlusStdDev[1]) {
-      status = 'unusually high';
-      statusColor = colorRange[0];
-    } else if (
-      twoPlusStdDev &&
-      count <= twoPlusStdDev[1] &&
-      count > twoPlusStdDev[0]
-    ) {
-      status = 'high';
-      statusColor = colorRange[1];
-    } else if (
-      plusStdDev &&
-      minusStdDev &&
-      count <= plusStdDev[1] &&
-      count > minusStdDev[0]
-    ) {
-      status = 'average';
-      statusColor = colorRange[2];
-    } else if (
-      twoMinusStdDev &&
-      count >= twoMinusStdDev[0] &&
-      count < twoMinusStdDev[1]
-    ) {
-      status = 'low';
-      statusColor = colorRange[3];
-    }
     const formattedData = moment(date).format('Do of MMMM YYYY');
+    const unit = 'cumulative_deforestation';
+    const year = 2017;
+
     const params = {
+      // {variable} {location} in {year} sums a total cummulative value of {value}
       date: formattedData,
-      dataset,
-      count: {
-        value: format(',')(count),
-        color: colors.main
-      },
-      status: {
-        value: status,
-        color: statusColor
-      }
+      location: locationName,
+      variable: unit,
+      year,
+      value: formatNumber({ num: count, unit: 't' })
     };
     return { sentence, params };
   }

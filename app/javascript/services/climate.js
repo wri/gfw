@@ -44,7 +44,6 @@ ORDER BY week ASC`;
   });
 
 /*
-
 sum(above_ground_carbon_loss) AS above_ground_carbon_loss, 
 sum(percent_to_emissions_target) AS percent_to_emissions_target, 
 sum(percent_to_deforestation_target) AS percent_to_deforestation_target, 
