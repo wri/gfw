@@ -104,7 +104,7 @@ $item-padding-screen-m: rem(40px);
   background-color: $grey-light;
   overflow: hidden;
 
-  &:before {
+  &::before {
     content: "";
     position: absolute;
     left: rem(-1px);
@@ -183,7 +183,6 @@ $item-padding-screen-m: rem(40px);
 
   @media screen and (max-width: $screen-m - 1px) {
     .c-home-summary-item__button {
-
       .c-regular-button {
         width: rem(224px);
       }

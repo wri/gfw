@@ -86,7 +86,7 @@ class RecentImagerySettings extends PureComponent {
                   track('recentImageryDate');
                 }}
                 settings={{
-                  minDate: '2000-01-01',
+                  minDate: '2013-01-01',
                   maxDate: moment().format('YYYY-MM-DD'),
                   hideKeyboardShortcutsPanel: true,
                   noBorder: true,

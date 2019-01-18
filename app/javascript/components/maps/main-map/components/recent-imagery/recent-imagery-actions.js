@@ -66,7 +66,7 @@ export const getRecentImageryData = createThunkAction(
         })
         .catch(error => {
           dispatch(setRecentImageryLoading(false));
-          console.info(error && error.response);
+          console.info(error);
         });
     }
   }
