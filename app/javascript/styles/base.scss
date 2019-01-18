@@ -1,6 +1,7 @@
 @import '~styles/settings.scss';
 
 body {
+  position: unset !important;
   padding: 0;
   margin: 0;
   font-family: $font-family-1;
