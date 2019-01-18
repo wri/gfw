@@ -9,13 +9,17 @@ export const checkLogged = createThunkAction('checkLogged', () => dispatch => {
   axios
     .get(`${process.env.GFW_API}/user`, { withCredentials: true })
     .then(response => {
-      if (response.status < 400) {
+      if (response.status < 400 && response.data && !!response.data.data) {
         dispatch(
           setMyGFW({
             ...response.data.data.attributes,
             id: response.data.data.id
           })
         );
+      }
+      // if profile info incomplete redirect to profile page
+      if (response.status < 400 && response.data && !response.data.data) {
+        window.location.replace('/my_gfw');
       }
     })
     .catch(() => {
