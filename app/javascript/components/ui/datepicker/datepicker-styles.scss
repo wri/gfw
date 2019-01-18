@@ -12,6 +12,10 @@
     font-size: 12px;
     cursor: pointer;
     color: $slate;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .react-datepicker__day-name {
