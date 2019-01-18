@@ -12,7 +12,6 @@ export const initialState = {
     requestFails: 0
   },
   settings: {
-    visible: false,
     selected: null,
     selectedIndex: 0,
     date: null,

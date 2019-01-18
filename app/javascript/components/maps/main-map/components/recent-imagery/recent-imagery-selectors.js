@@ -55,11 +55,6 @@ export const getActiveDatasetsFromState = createSelector(
   settings => settings.datasets
 );
 
-export const getVisibility = createSelector(
-  [getRecentImagerySettings],
-  settings => settings.visible
-);
-
 export const getActive = createSelector(
   [getActiveDatasetsFromState],
   datasets => {
@@ -155,7 +150,6 @@ export const getRecentImageryProps = createStructuredSelector({
   moreTilesLoading: getMoreTilesLoading,
   error: getError,
   active: getActive,
-  visible: getVisibility,
   dates: getDates,
   sources: getSources,
   settings: getRecentImagerySettings,

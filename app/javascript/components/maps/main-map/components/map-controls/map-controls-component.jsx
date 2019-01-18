@@ -11,7 +11,6 @@ import Basemaps from 'components/maps/components/basemaps';
 import RecentImagerySettings from 'components/maps/main-map/components/recent-imagery/components/recent-imagery-settings-tooltip';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import Loader from 'components/ui/loader';
 
 import plusIcon from 'assets/icons/plus.svg';
 import minusIcon from 'assets/icons/minus.svg';
@@ -66,31 +65,25 @@ class MapControlsButtons extends PureComponent {
   };
 
   onRecentRequestClose = () => {
-    const { setRecentImagerySettings } = this.props;
+    const { recentActive } = this.props;
     const isTargetOnTooltip = isParent(
       this.recentImageryRef,
       this.recentImageryRef.evt
     );
     this.recentImageryRef.clearEvt();
-    if (!isTargetOnTooltip && this.props.recentSettings.active) {
-      setRecentImagerySettings({ visible: false });
+    if (!isTargetOnTooltip && recentActive) {
+      this.handleToggleRecentImagery();
     }
   };
 
   toggleBasemaps = () => {
-    const {
-      setRecentImagerySettings,
-      setMainMapSettings,
-      showBasemaps
-    } = this.props;
+    const { setMainMapSettings, showBasemaps } = this.props;
     setMainMapSettings({ showBasemaps: !showBasemaps });
-    setRecentImagerySettings({ visible: false });
   };
 
   handleToggleRecentImagery = () => {
     const {
       setMapSettings,
-      setRecentImagerySettings,
       recentImageryDataset,
       recentActive,
       mapSettings: { datasets, zoom }
@@ -108,9 +101,6 @@ class MapControlsButtons extends PureComponent {
       datasets: newDatasets,
       zoom: !recentActive && zoom < 9 ? 9 : zoom
     });
-    setRecentImagerySettings({
-      visible: false
-    });
     if (!recentActive) {
       track('recentImageryEnable');
     }
@@ -125,13 +115,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderRecentImageryBtn = () => {
-    const {
-      recentSettings,
-      recentLoading,
-      recentActive,
-      datasetsLoading
-    } = this.props;
-    const { visible } = recentSettings || {};
+    const { recentActive, datasetsLoading } = this.props;
 
     return (
       <Button
@@ -139,19 +123,10 @@ class MapControlsButtons extends PureComponent {
         theme="theme-button-map-control"
         onClick={this.handleToggleRecentImagery}
         disabled={datasetsLoading}
-        tooltip={
-          !visible
-            ? {
-              text: !recentActive
-                ? 'Activate Recent Imagery'
-                : 'Disable Recent Imagery',
-              hideOnClick: false
-            }
-            : undefined
-        }
+        tooltip={{
+          text: 'Recent Staellite Imagery'
+        }}
       >
-        {recentLoading &&
-          recentActive && <Loader className="recent-imagery-loader" />}
         <Icon
           icon={satelliteIcon}
           className={cx('satellite-icon', {
@@ -183,8 +158,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderRecentImageryTooltip = () => {
-    const { recentSettings } = this.props;
-    const { visible } = recentSettings || {};
+    const { recentActive } = this.props;
 
     return (
       <Tooltip
@@ -193,9 +167,14 @@ class MapControlsButtons extends PureComponent {
         useContext
         interactive
         animateFill={false}
-        open={visible}
+        open={recentActive}
         onRequestClose={this.onRecentRequestClose}
-        html={<RecentImagerySettings ref={this.setRecentImageryRef} />}
+        html={
+          <RecentImagerySettings
+            ref={this.setRecentImageryRef}
+            onClickClose={this.handleToggleRecentImagery}
+          />
+        }
         offset={120}
       >
         {this.renderRecentImageryBtn()}
@@ -387,12 +366,9 @@ MapControlsButtons.propTypes = {
   setMainMapSettings: PropTypes.func,
   setShareModal: PropTypes.func,
   mapSettings: PropTypes.object,
-  active: PropTypes.bool,
   setMenuSettings: PropTypes.func,
   setMapTourOpen: PropTypes.func,
   mapTourOpen: PropTypes.bool,
-  recentSettings: PropTypes.object,
-  recentLoading: PropTypes.bool,
   showBasemaps: PropTypes.bool,
   hidePanels: PropTypes.bool,
   setRecentImagerySettings: PropTypes.func,

@@ -5,14 +5,14 @@ import RecentImagerySettings from '../recent-imagery-settings';
 
 class RecentImagerySettingsTooltip extends PureComponent {
   render() {
-    const { getTooltipContentProps } = this.props;
+    const { getTooltipContentProps, ...rest } = this.props;
 
     return (
       <div
         className="c-recent-imagery-settings-tooltip"
         {...getTooltipContentProps()}
       >
-        <RecentImagerySettings />
+        <RecentImagerySettings {...rest} />
       </div>
     );
   }

@@ -39,7 +39,8 @@ class RecentImagerySettings extends PureComponent {
       loading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
-      setModalMeta
+      setModalMeta,
+      onClickClose
     } = this.props;
 
     const selected = this.state.selected || activeTile || {};
@@ -57,10 +58,7 @@ class RecentImagerySettings extends PureComponent {
               >
                 <Icon icon={infoIcon} />
               </Button>
-              <button
-                className="close-btn"
-                onClick={() => setRecentImagerySettings({ visible: false })}
-              >
+              <button className="close-btn" onClick={onClickClose}>
                 <Icon icon={closeIcon} className="icon-close" />
               </button>
             </div>
@@ -200,7 +198,8 @@ RecentImagerySettings.propTypes = {
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
   setModalMeta: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  onClickClose: PropTypes.func
 };
 
 export default RecentImagerySettings;
