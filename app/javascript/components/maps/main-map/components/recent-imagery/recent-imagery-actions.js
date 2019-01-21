@@ -45,7 +45,7 @@ export const getRecentImageryData = createThunkAction(
             response.data && response.data.data && response.data.data.tiles
           );
           if (serializedResponse && !!serializedResponse.length) {
-            const { clouds } = 25;
+            const clouds = 25;
             const cloudScore = Math.round(serializedResponse[0].cloud_score);
             dispatch(
               setRecentImageryData({

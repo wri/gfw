@@ -32,7 +32,6 @@ export const getMapSettings = createSelector([getMapUrlState], urlState => ({
 export const getRecentImagerySettings = createSelector(
   [getRecentUrlState],
   urlState => ({
-    ...initialState.settings,
     ...(initialState && {
       ...initialState.settings
     }),

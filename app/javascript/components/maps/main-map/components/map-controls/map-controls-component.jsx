@@ -8,7 +8,7 @@ import { isParent } from 'utils/dom';
 import { track } from 'app/analytics';
 
 import Basemaps from 'components/maps/components/basemaps';
-import RecentImagerySettings from 'components/maps/main-map/components/recent-imagery/components/recent-imagery-settings-tooltip';
+import RecentImagerySettings from 'components/maps/main-map/components/recent-imagery/components/recent-imagery-settings';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -64,21 +64,12 @@ class MapControlsButtons extends PureComponent {
     }
   };
 
-  onRecentRequestClose = () => {
-    const { recentActive } = this.props;
-    const isTargetOnTooltip = isParent(
-      this.recentImageryRef,
-      this.recentImageryRef.evt
-    );
-    this.recentImageryRef.clearEvt();
-    if (!isTargetOnTooltip && recentActive) {
+  toggleBasemaps = () => {
+    const { setMainMapSettings, showBasemaps, recentActive } = this.props;
+    setMainMapSettings({ showBasemaps: !showBasemaps });
+    if (recentActive) {
       this.handleToggleRecentImagery();
     }
-  };
-
-  toggleBasemaps = () => {
-    const { setMainMapSettings, showBasemaps } = this.props;
-    setMainMapSettings({ showBasemaps: !showBasemaps });
   };
 
   handleToggleRecentImagery = () => {
@@ -168,10 +159,8 @@ class MapControlsButtons extends PureComponent {
         interactive
         animateFill={false}
         open={recentActive}
-        onRequestClose={this.onRecentRequestClose}
         html={
           <RecentImagerySettings
-            ref={this.setRecentImageryRef}
             onClickClose={this.handleToggleRecentImagery}
           />
         }
