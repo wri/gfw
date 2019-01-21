@@ -5,6 +5,7 @@ import flatten from 'lodash/flatten';
 
 import { getActiveDatasetsFromState } from 'components/maps/map/selectors';
 import { getEmbed } from 'components/maps/main-map/selectors';
+import { getActive } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
 
 import { initialState } from './menu-reducers';
 import {
@@ -268,5 +269,6 @@ export const getMenuProps = createStructuredSelector({
   searchType: getSearchType,
   location: getLocation,
   loading: getLoading,
-  analysisLoading: getAnalysisLoading
+  analysisLoading: getAnalysisLoading,
+  recentActive: getActive
 });
