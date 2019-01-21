@@ -66,17 +66,22 @@ export const getStdDev = createSelector([getData], data => {
   if (!data) return null;
   const years = Object.keys(data);
   const lastYear = years.pop();
-  const stdevs = data[lastYear].map((obj, weeknum) => {
+  const stdevs = [];
+  const means = data[lastYear].map((obj, weeknum) => {
     const sum = years.reduce((acc, y) => acc + data[y][weeknum].count, 0);
     const mean = sum / years.length;
     const stdev = Math.sqrt(
       data[lastYear].reduce((acc, d) => acc + (d.count - mean) ** 2, 0) /
         data[lastYear].length
     );
-    return stdev;
+    stdevs.push(stdev);
+    return mean;
   });
-  // calculate mean and std of data[year] related to prev (years)
-  return data['2017'].map((d, i) => ({ ...d, stdev: stdevs[i] }));
+  return data['2017'].map((d, i) => ({
+    ...d,
+    twoPlusStdDev: [means[i], means[i] + stdevs[i]],
+    twoMinusStdDev: [means[i] - stdevs[i], means[i]]
+  }));
 });
 
 export const getDates = createSelector([getStdDev], data => {
