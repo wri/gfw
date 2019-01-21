@@ -64,10 +64,19 @@ export const getData = createSelector([getAlerts], data => {
 
 export const getStdDev = createSelector([getData], data => {
   if (!data) return null;
-  // const years = Object.keys(data);
-  // const lastYear = years.pop();
+  const years = Object.keys(data);
+  const lastYear = years.pop();
+  const stdevs = data[lastYear].map((obj, weeknum) => {
+    const sum = years.reduce((acc, y) => acc + data[y][weeknum].count, 0);
+    const mean = sum / years.length;
+    const stdev = Math.sqrt(
+      data[lastYear].reduce((acc, d) => acc + (d.count - mean) ** 2, 0) /
+        data[lastYear].length
+    );
+    return stdev;
+  });
   // calculate mean and std of data[year] related to prev (years)
-  return data['2017'];
+  return data['2017'].map((d, i) => ({ ...d, stdev: stdevs[i] }));
 });
 
 export const getDates = createSelector([getStdDev], data => {
