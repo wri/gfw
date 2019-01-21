@@ -80,7 +80,11 @@ class MapComponent extends PureComponent {
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         <MapAttributions className="map-attributions" />
         {loading && (
-          <Loader className="map-loader" theme="theme-loader-light" />
+          <Loader
+            className="map-loader"
+            theme="theme-loader-light"
+            message="It's loading time..."
+          />
         )}
         <LayerSpecProvider />
       </div>

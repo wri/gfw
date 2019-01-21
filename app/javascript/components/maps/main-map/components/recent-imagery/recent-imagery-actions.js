@@ -38,7 +38,7 @@ export const getRecentImageryData = createThunkAction(
   params => (dispatch, getState) => {
     const { recentImagery } = getState();
     if (recentImagery && !recentImagery.loading) {
-      dispatch(setRecentImageryLoading(true));
+      dispatch(setRecentImageryLoading({ loading: true, error: false }));
       getRecentTiles({ ...params })
         .then(response => {
           const serializedResponse = serializeReponse(
@@ -61,11 +61,11 @@ export const getRecentImageryData = createThunkAction(
                 clouds: cloudScore > clouds ? cloudScore : clouds
               })
             );
-            dispatch(setRecentImageryLoading(false));
+            dispatch(setRecentImageryLoading({ loading: false, error: false }));
           }
         })
         .catch(error => {
-          dispatch(setRecentImageryLoading(false));
+          dispatch(setRecentImageryLoading({ loading: false, error: true }));
           console.info(error);
         });
     }

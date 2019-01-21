@@ -48,7 +48,8 @@ const resetRecentImageryData = () => ({
 
 const setRecentImageryLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload.loading,
+  error: payload.error
 });
 
 const setRecentImageryLoadingMoreTiles = (state, { payload }) => ({
