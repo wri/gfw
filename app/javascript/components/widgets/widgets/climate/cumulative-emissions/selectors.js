@@ -7,16 +7,18 @@ import moment from 'moment';
 
 import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
-const getAlerts = state => state.data || null;
+const getAlerts = state => (state.data && state.data.data) || null;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getActiveData = state => state.settings.activeData || null;
 const getSentences = state => state.config.sentence || null;
+const getSettings = state => state.settings;
+
+const getDataSettings = state => state.data && state.data.settings;
+export const getDataOptions = state => state.data && state.data.options;
 
 export const getData = createSelector([getAlerts], data => {
   if (!data || isEmpty(data)) return null;
-
-  // console.log('comparison', data['2018'][0], groupBy(prev, 'year')['2018'][0]);
 
   const unit = 'cumulative_deforestation';
   const target = 1088880;
@@ -62,27 +64,37 @@ export const getData = createSelector([getAlerts], data => {
   }, {});
 });
 
-export const getStdDev = createSelector([getData], data => {
-  if (!data) return null;
-  const years = Object.keys(data);
-  const lastYear = years.pop();
-  const stdevs = [];
-  const means = data[lastYear].map((obj, weeknum) => {
-    const sum = years.reduce((acc, y) => acc + data[y][weeknum].count, 0);
-    const mean = sum / years.length;
-    const stdev = Math.sqrt(
-      data[lastYear].reduce((acc, d) => acc + (d.count - mean) ** 2, 0) /
-        data[lastYear].length
-    );
-    stdevs.push(stdev);
-    return mean;
-  });
-  return data['2017'].map((d, i) => ({
-    ...d,
-    twoPlusStdDev: [means[i], means[i] + stdevs[i]],
-    twoMinusStdDev: [means[i] - stdevs[i], means[i]]
-  }));
-});
+export const getStdDev = createSelector(
+  [getData, getSettings],
+  (data, settings) => {
+    if (!data) return null;
+    const years = Object.keys(data);
+    const { year } = settings;
+    const stdevs = [];
+    const means = data[year].map((obj, weeknum) => {
+      const sum = years.reduce(
+        (acc, y) =>
+          (y === year || !data[y][weeknum] ? acc : acc + data[y][weeknum].count),
+        0
+      );
+      const mean = sum / years.length;
+      const stdev = Math.sqrt(
+        data[year].reduce((acc, d) => acc + (d.count - mean) ** 2, 0) /
+          data[year].length
+      );
+      stdevs.push(stdev);
+      return mean;
+    });
+    return data[year].map((d, i) => {
+      const w = means[i] === undefined ? i : i - 1;
+      return {
+        ...d,
+        twoPlusStdDev: [means[w], means[w] + stdevs[w]],
+        twoMinusStdDev: [means[w] - stdevs[w], means[w]]
+      };
+    });
+  }
+);
 
 export const getDates = createSelector([getStdDev], data => {
   if (!data) return null;
@@ -104,20 +116,18 @@ export const parseConfig = createSelector([getColors], colors =>
 );
 
 export const parseSentence = createSelector(
-  [parseData, getActiveData, getSentences, getLocationName],
-  (data, activeData, sentence, locationName) => {
+  [parseData, getActiveData, getSentences, getSettings, getLocationName],
+  (data, activeData, sentence, settings, locationName) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
-    // const colorRange = getColorPalette(colors.ramp, 5);
-    // let statusColor = colorRange[4];
     const { count, date } = lastDate || {};
+    const { year } = settings;
 
     const formattedData = moment(date).format('Do of MMMM YYYY');
     const unit = 'cumulative_deforestation';
-    const year = 2017;
 
     const params = {
       // {variable} {location} in {year} sums a total cummulative value of {value}
@@ -131,25 +141,9 @@ export const parseSentence = createSelector(
   }
 );
 
-export const parsePayload = payload => {
-  const payloadData = payload && payload.find(p => p.name === 'count');
-  const payloadValues = payloadData && payloadData.payload;
-  if (payloadValues) {
-    const startDate = moment()
-      .year(payloadValues.year)
-      .week(payloadValues.week);
-
-    return {
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: startDate.add(7, 'days'),
-      ...payloadValues
-    };
-  }
-  return {};
-};
-
 export default createStructuredSelector({
   data: parseData,
   dataConfig: parseConfig,
-  sentence: parseSentence
+  sentence: parseSentence,
+  settings: getDataSettings
 });

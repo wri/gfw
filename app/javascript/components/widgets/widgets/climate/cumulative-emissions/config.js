@@ -4,8 +4,7 @@ export default {
   large: true,
   categories: ['climate'],
   options: {
-    weeks: [13, 26, 52],
-    datasets: true
+    years: true
   },
   analysis: true,
   types: ['country'],
