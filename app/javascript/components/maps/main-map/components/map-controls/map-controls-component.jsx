@@ -241,7 +241,7 @@ class MapControlsButtons extends PureComponent {
             track('zoomOut');
           }}
           tooltip={{ text: 'Zoom out' }}
-          disabled={zoom === minZoom}
+          disabled={zoom <= minZoom}
         >
           <Icon icon={minusIcon} className="minus-icon" />
         </Button>
@@ -252,7 +252,7 @@ class MapControlsButtons extends PureComponent {
             track('zoomIn');
           }}
           tooltip={{ text: 'Zoom in' }}
-          disabled={zoom === maxZoom}
+          disabled={zoom >= maxZoom}
         >
           <Icon icon={plusIcon} className="plus-icon" />
         </Button>

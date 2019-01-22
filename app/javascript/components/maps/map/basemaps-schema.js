@@ -34,9 +34,7 @@ export default {
     labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
-    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MAPBOX_TOKEN
-    }`
+    url: 'mapbox://styles/resourcewatch/cjlhwaoh211hp2stemfz0imqf'
   },
   dark: {
     value: 'dark',
@@ -44,9 +42,7 @@ export default {
     labelsKey: 'lightLabels',
     color: '#31312F',
     image: darkImage,
-    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MAPBOX_TOKEN
-    }`
+    url: 'mapbox://styles/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9'
   },
   satellite: {
     value: 'satellite',

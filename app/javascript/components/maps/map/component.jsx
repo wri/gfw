@@ -18,12 +18,11 @@ import LayerManagerComponent from './components/layer-manager';
 import './styles.scss';
 
 class MapComponent extends PureComponent {
-  // componentDidMount() {
-  //   requestAnimationFrame(() => {
-  //     this.map.invalidateSize();
-  //     L.control.scale({ maxWidth: 80 }).addTo(this.map); // eslint-disable-line
-  //   });
-  // }
+  componentDidMount() {
+    requestAnimationFrame(() => {
+      this.map = this.map.getMap();
+    });
+  }
 
   render() {
     const {
@@ -45,14 +44,19 @@ class MapComponent extends PureComponent {
         className={cx('c-map', className)}
         style={{ backgroundColor: basemap.color }}
       >
-
         <ReactMapGL
+          ref={map => {
+            this.map = map;
+          }}
           width="100%"
           height="100%"
           latitude={lat}
           longitude={lng}
           zoom={zoom}
           onViewportChange={handleMapMove}
+          mapOptions={{
+            style: basemap.url
+          }}
         />
         {/* <Map
           customClass="map-wrapper"
