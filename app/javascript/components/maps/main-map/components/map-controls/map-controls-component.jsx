@@ -107,7 +107,7 @@ class MapControlsButtons extends PureComponent {
         onClick={this.handleToggleRecentImagery}
         disabled={datasetsLoading}
         tooltip={{
-          text: 'Recent Staellite Imagery'
+          text: 'Recent Satellite Imagery'
         }}
       >
         <Icon
