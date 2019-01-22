@@ -102,7 +102,11 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className={cx('recent-imagery-btn', 'map-tour-recent-imagery')}
+        className={cx(
+          'map-tool-btn recent-imagery-btn',
+          { active: recentActive },
+          'map-tour-recent-imagery'
+        )}
         theme="theme-button-map-control"
         onClick={this.handleToggleRecentImagery}
         disabled={datasetsLoading}
@@ -125,7 +129,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <Button
-        className={cx('basemaps-btn')}
+        className={cx('map-tool-btn basemaps-btn', { active: showBasemaps })}
         theme="theme-button-map-control"
         onClick={this.toggleBasemaps}
         tooltip={
@@ -150,6 +154,7 @@ class MapControlsButtons extends PureComponent {
         useContext
         interactive
         animateFill={false}
+        arrow
         open={recentActive}
         html={
           <RecentImagerySettings
@@ -172,6 +177,7 @@ class MapControlsButtons extends PureComponent {
         position="top-end"
         useContext
         interactive
+        arrow
         animateFill={false}
         open={showBasemaps}
         onRequestClose={this.onBasemapsRequestClose}
