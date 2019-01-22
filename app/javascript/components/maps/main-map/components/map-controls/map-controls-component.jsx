@@ -39,17 +39,9 @@ class MapControlsButtons extends PureComponent {
   setPulseTourBtn = pulseTourBtn => this.setState({ pulseTourBtn });
 
   handleHidePanels = () => {
-    const {
-      setMainMapSettings,
-      setMenuSettings,
-      setRecentImagerySettings,
-      hidePanels
-    } = this.props;
+    const { setMainMapSettings, setMenuSettings, hidePanels } = this.props;
     setMainMapSettings({ hidePanels: !hidePanels });
     setMenuSettings({ menuSection: '' });
-    setRecentImagerySettings({
-      visible: false
-    });
     this.setState({ showBasemaps: false });
     if (!hidePanels) {
       track('hidePanels');
@@ -360,7 +352,6 @@ MapControlsButtons.propTypes = {
   mapTourOpen: PropTypes.bool,
   showBasemaps: PropTypes.bool,
   hidePanels: PropTypes.bool,
-  setRecentImagerySettings: PropTypes.func,
   recentImageryDataset: PropTypes.object,
   recentActive: PropTypes.bool,
   datasetsLoading: PropTypes.bool,

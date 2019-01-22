@@ -35,7 +35,8 @@ class MapComponent extends PureComponent {
       draw,
       handleMapMove,
       handleMapInteraction,
-      customLayers
+      customLayers,
+      loadingMessage
     } = this.props;
 
     return (
@@ -83,7 +84,7 @@ class MapComponent extends PureComponent {
           <Loader
             className="map-loader"
             theme="theme-loader-light"
-            message="It's loading time..."
+            message={loadingMessage}
           />
         )}
         <LayerSpecProvider />
@@ -95,6 +96,7 @@ class MapComponent extends PureComponent {
 MapComponent.propTypes = {
   className: PropTypes.string,
   loading: PropTypes.bool,
+  loadingMessage: PropTypes.string,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
