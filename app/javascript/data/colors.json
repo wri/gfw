@@ -26,6 +26,13 @@
     "ramp": ["#070752", "#231f74", "#3c3898", "#5452be", "#6d6de5", "#8a86ec", "#a49ff3", "#bdb9f9", "#d4d4ff"],
     "noGain": "#e7e5a4"
   },
+  "climate": {
+    "ramp": ["#EDD093", "#BFBC35", "#007F53", "#123A33"],
+    "loss": {
+      "main": "#DF511E",
+      "secondary": "#F9A000"
+    }
+  },
   "plantations": {
     "main": "#d67828",
     "species": {

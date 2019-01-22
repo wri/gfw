@@ -26,7 +26,8 @@ export const setCountryLinks = createAction('setCountryLinks');
 export const getCountries = createThunkAction(
   'getCountries',
   () => (dispatch, getState) => {
-    if (!getState().countryData.isCountriesLoading) {
+    const { countryData } = getState();
+    if (countryData && !countryData.isCountriesLoading) {
       dispatch(setCountriesLoading(true));
       axios
         .all([getCountriesProvider(), getFAOCountriesProvider()])
@@ -48,8 +49,9 @@ export const getCountries = createThunkAction(
 
 export const getRegions = createThunkAction(
   'getRegions',
-  country => (dispatch, state) => {
-    if (!state().countryData.isRegionsLoading) {
+  country => (dispatch, getState) => {
+    const { countryData } = getState();
+    if (countryData && !countryData.isRegionsLoading) {
       dispatch(setRegionsLoading(true));
       getRegionsProvider(country)
         .then(response => {
@@ -73,8 +75,9 @@ export const getRegions = createThunkAction(
 
 export const getSubRegions = createThunkAction(
   'getSubRegions',
-  ({ adm0, adm1 }) => (dispatch, state) => {
-    if (!state().countryData.isSubRegionsLoading) {
+  ({ adm0, adm1 }) => (dispatch, getState) => {
+    const { countryData } = getState();
+    if (countryData && !countryData.isSubRegionsLoading) {
       dispatch(setSubRegionsLoading(true));
       getSubRegionsProvider(adm0, adm1)
         .then(subRegions => {
@@ -99,8 +102,9 @@ export const getSubRegions = createThunkAction(
 
 export const getCountryLinks = createThunkAction(
   'getCountryLinks',
-  () => (dispatch, state) => {
-    if (!state().countryData.isCountryLinksLoading) {
+  () => (dispatch, getState) => {
+    const { countryData } = getState();
+    if (countryData && !countryData.isCountryLinksLoading) {
       dispatch(setCountryLinksLoading(true));
       getCountryLinksProvider()
         .then(response => {

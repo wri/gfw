@@ -174,7 +174,7 @@ class MapTour extends PureComponent {
       {
         target: '.map-tour-map-controls',
         content:
-          'Access basic map tools and information: zoom in/out share, expand, zoom level, lat/long coordinates.'
+          'Access basic map tools: zoom out and in, expand the map, share or embed, print, and take a tour of the map. Also view zoom level and lat/long coordinates.'
       },
       {
         target: '.map-tour-main-menu',
