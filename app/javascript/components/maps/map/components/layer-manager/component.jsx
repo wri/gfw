@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
-import { PluginLeaflet } from 'layer-manager';
+import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   render() {
@@ -19,7 +19,7 @@ class LayerManagerComponent extends PureComponent {
     return (
       <LayerManager
         map={map}
-        plugin={PluginLeaflet}
+        plugin={PluginMapboxGl}
         onLayerLoading={loading => setMapLoading(loading)}
       >
         {geostore &&
@@ -57,6 +57,7 @@ class LayerManagerComponent extends PureComponent {
                 interactivity: output.map(i => i.column),
                 events: {
                   click: e => {
+                    console.log(e);
                     if (!draw) {
                       handleMapInteraction({
                         e,

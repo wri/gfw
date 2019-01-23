@@ -18,12 +18,6 @@ import LayerManagerComponent from './components/layer-manager';
 import './styles.scss';
 
 class MapComponent extends PureComponent {
-  componentDidMount() {
-    requestAnimationFrame(() => {
-      this.map = this.map.getMap();
-    });
-  }
-
   render() {
     const {
       className,
@@ -38,6 +32,9 @@ class MapComponent extends PureComponent {
       customLayers
     } = this.props;
     const { center: { lat, lng }, zoom } = mapOptions;
+    if (this.map) {
+      console.log(this.map.getStyle().sources, this.map.getStyle().layers);
+    }
 
     return (
       <div
@@ -46,7 +43,7 @@ class MapComponent extends PureComponent {
       >
         <ReactMapGL
           ref={map => {
-            this.map = map;
+            this.map = map && map.getMap();
           }}
           width="100%"
           height="100%"
@@ -57,7 +54,13 @@ class MapComponent extends PureComponent {
           mapOptions={{
             style: basemap.url
           }}
-        />
+        >
+          {this.map &&
+            <LayerManagerComponent
+              map={this.map}
+            />
+          }
+        </ReactMapGL>
         {/* <Map
           customClass="map-wrapper"
           onReady={map => {
