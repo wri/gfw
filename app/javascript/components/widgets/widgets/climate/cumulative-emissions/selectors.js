@@ -19,13 +19,19 @@ export const getDataOptions = state => state.data && state.data.options;
 export const getData = createSelector([getAlerts], data => {
   if (!data || isEmpty(data)) return null;
 
-  const unit = 'cumulative_emissions';
-  const target = unit === 'cumulative_deforestation' ? 988880 : 265;
+  // const unit = 'cumulative_emissions';
+  const unit = 'cumulative_deforestation';
+  const target = unit === 'cumulative_deforestation' ? 988880 : 265000000;
 
   const groupedByYear = Object.entries(data).reduce(
     (acc, [y, arr]) => ({
       ...acc,
-      [y]: arr.map(d => ({ ...d, count: d[unit], year: y, target }))
+      [y]: arr.map(d => ({
+        ...d,
+        count: unit === 'cumulative_emissions' ? d[unit] * 1000000 : d[unit],
+        year: y,
+        target
+      }))
     }),
     {}
   );
@@ -66,9 +72,10 @@ export const getData = createSelector([getAlerts], data => {
 export const getStdDev = createSelector(
   [getData, getSettings],
   (data, settings) => {
-    if (!data) return null;
+    if (isEmpty(data) || !settings.year) return null;
     const years = Object.keys(data);
     const { year } = settings;
+
     const stdevs = [];
     const means = data[year].map((obj, weeknum) => {
       const sum = years.reduce(
@@ -77,10 +84,14 @@ export const getStdDev = createSelector(
         0
       );
       const mean = sum / years.length;
-      const stdev = Math.sqrt(
-        data[year].reduce((acc, d) => acc + (d.count - mean) ** 2, 0) /
-          data[year].length
+      const numerador = years.reduce(
+        (acc, y) =>
+          (y === year || !data[y][weeknum]
+            ? acc
+            : acc + (data[y][weeknum].count - mean) ** 2),
+        0
       );
+      const stdev = Math.sqrt(numerador / (years.length - 1));
       stdevs.push(stdev);
       return mean;
     });
@@ -88,6 +99,7 @@ export const getStdDev = createSelector(
       const w = means[i] === undefined ? i : i - 1;
       return {
         ...d,
+        mean: means[w],
         twoPlusStdDev: [means[w], means[w] + stdevs[w]],
         twoMinusStdDev: [means[w] - stdevs[w], means[w]]
       };
@@ -132,7 +144,8 @@ export const parseSentence = createSelector(
     } =
       lastDate || {};
     const { year } = settings;
-    const unit = 'cumulative_emissions';
+    // const unit = 'cumulative_emissions';
+    const unit = 'cumulative_deforestation';
 
     const sentence = sentences[unit];
     const weeknum = moment(date).isoWeek();
@@ -149,7 +162,10 @@ export const parseSentence = createSelector(
       year,
       alerts: formatNumber({ num: alerts, unit: '' }),
       loss: formatNumber({ num: loss, unit: 'ha' }),
-      emissions: formatNumber({ num: cumulative_emissions, unit: 't' }),
+      emissions: formatNumber({
+        num: cumulative_emissions * 1000000,
+        unit: 't'
+      }),
       budget
     };
 
