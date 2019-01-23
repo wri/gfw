@@ -16,8 +16,14 @@ export default {
     summary: 100,
     forestChange: 100
   },
-  sentence:
-    'As of {date}, the total {variable} for {location} in {year} sums a total value of {value}.',
+  sentences: {
+    cumulative_deforestation: `By week {weeknum} of {year}, there were {alerts} 
+confirmed alerts and {loss} of tree cover loss, comprising {budget} of 
+the annual budget.`,
+    cumulative_emissions: `By week {weeknum} of {year}, there were {alerts} 
+confirmed alerts and {emissions} CO\u2082 emissions, comprising {budget} of 
+the annual budget.`
+  },
   whitelists: {
     adm0: [
       'BRA',

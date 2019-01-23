@@ -8,10 +8,9 @@ import moment from 'moment';
 import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
 const getAlerts = state => (state.data && state.data.data) || null;
-const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getActiveData = state => state.settings.activeData || null;
-const getSentences = state => state.config.sentence || null;
+const getSentences = state => state.config.sentences || null;
 const getSettings = state => state.settings;
 
 const getDataSettings = state => state.data && state.data.settings;
@@ -20,8 +19,8 @@ export const getDataOptions = state => state.data && state.data.options;
 export const getData = createSelector([getAlerts], data => {
   if (!data || isEmpty(data)) return null;
 
-  const unit = 'cumulative_deforestation';
-  const target = 1088880;
+  const unit = 'cumulative_emissions';
+  const target = unit === 'cumulative_deforestation' ? 988880 : 265;
 
   const groupedByYear = Object.entries(data).reduce(
     (acc, [y, arr]) => ({
@@ -116,30 +115,64 @@ export const parseConfig = createSelector([getColors], colors =>
 );
 
 export const parseSentence = createSelector(
-  [parseData, getActiveData, getSentences, getSettings, getLocationName],
-  (data, activeData, sentence, settings, locationName) => {
+  [parseData, getActiveData, getSentences, getSettings],
+  (data, activeData, sentences, settings) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
-    const { count, date } = lastDate || {};
+    const {
+      date,
+      alerts,
+      loss,
+      percent_to_deforestation_target,
+      percent_to_emissions_target,
+      cumulative_emissions
+    } =
+      lastDate || {};
     const { year } = settings;
+    const unit = 'cumulative_emissions';
 
-    const formattedData = moment(date).format('Do of MMMM YYYY');
-    const unit = 'cumulative_deforestation';
+    const sentence = sentences[unit];
+    const weeknum = moment(date).isoWeek();
+    const budget = formatNumber({
+      num:
+        unit === 'cumulative_deforestation'
+          ? percent_to_deforestation_target
+          : percent_to_emissions_target,
+      unit: '%'
+    });
 
     const params = {
-      // {variable} {location} in {year} sums a total cummulative value of {value}
-      date: formattedData,
-      location: locationName,
-      variable: unit,
+      weeknum,
       year,
-      value: formatNumber({ num: count, unit: 't' })
+      alerts: formatNumber({ num: alerts, unit: '' }),
+      loss: formatNumber({ num: loss, unit: 'ha' }),
+      emissions: formatNumber({ num: cumulative_emissions, unit: 't' }),
+      budget
     };
+
     return { sentence, params };
   }
 );
+
+export const parsePayload = payload => {
+  const payloadData = payload && payload.find(p => p.name === 'count');
+  const payloadValues = payloadData && payloadData.payload;
+  if (payloadValues) {
+    const startDate = moment()
+      .year(payloadValues.year)
+      .week(payloadValues.week);
+
+    return {
+      startDate: startDate.format('YYYY-MM-DD'),
+      endDate: startDate.add(7, 'days'),
+      ...payloadValues
+    };
+  }
+  return {};
+};
 
 export default createStructuredSelector({
   data: parseData,
