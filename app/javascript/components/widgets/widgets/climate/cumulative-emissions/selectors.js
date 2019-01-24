@@ -142,10 +142,10 @@ export const parseSentence = createSelector(
     const {
       date,
       alerts,
-      loss,
       percent_to_deforestation_target,
       percent_to_emissions_target,
-      cumulative_emissions
+      cumulative_emissions,
+      cumulative_deforestation
     } =
       lastDate || {};
     const { year, variable } = settings;
@@ -164,7 +164,10 @@ export const parseSentence = createSelector(
       weeknum,
       year,
       alerts: formatNumber({ num: alerts, unit: '' }),
-      loss: formatNumber({ num: loss, unit: 'ha' }),
+      deforestation: formatNumber({
+        num: cumulative_deforestation,
+        unit: 'ha'
+      }),
       emissions: formatNumber({
         num: cumulative_emissions * 1000000,
         unit: 't'

@@ -19,7 +19,7 @@ export default {
   },
   sentences: {
     cumulative_deforestation: `By week {weeknum} of {year}, there were {alerts} 
-confirmed alerts and {loss} of tree cover loss, comprising {budget} of 
+confirmed alerts and {deforestation} of tree cover loss, comprising {budget} of 
 the annual budget.`,
     cumulative_emissions: `By week {weeknum} of {year}, there were {alerts} 
 confirmed alerts and {emissions} CO\u2082 emissions, comprising {budget} of 
