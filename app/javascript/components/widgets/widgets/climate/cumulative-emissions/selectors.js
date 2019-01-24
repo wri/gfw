@@ -16,58 +16,63 @@ const getSettings = state => state.settings;
 const getDataSettings = state => state.data && state.data.settings;
 export const getDataOptions = state => state.data && state.data.options;
 
-export const getData = createSelector([getAlerts], data => {
-  if (!data || isEmpty(data)) return null;
+export const getData = createSelector(
+  [getAlerts, getSettings],
+  (data, settings) => {
+    if (!data || isEmpty(data)) return null;
 
-  // const unit = 'cumulative_emissions';
-  const unit = 'cumulative_deforestation';
-  const target = unit === 'cumulative_deforestation' ? 988880 : 265000000;
+    const { variable } = settings;
+    const target = variable === 'cumulative_emissions' ? 265000000 : 988880;
 
-  const groupedByYear = Object.entries(data).reduce(
-    (acc, [y, arr]) => ({
-      ...acc,
-      [y]: arr.map(d => ({
-        ...d,
-        count: unit === 'cumulative_emissions' ? d[unit] * 1000000 : d[unit],
-        year: y,
-        target
-      }))
-    }),
-    {}
-  );
+    const groupedByYear = Object.entries(data).reduce(
+      (acc, [y, arr]) => ({
+        ...acc,
+        [y]: arr.map(d => ({
+          ...d,
+          count:
+            variable === 'cumulative_emissions'
+              ? d[variable] * 1000000
+              : d[variable],
+          year: y,
+          target
+        }))
+      }),
+      {}
+    );
 
-  const latestFullWeek = moment().subtract(2, 'w');
-  const lastWeek = {
-    isoWeek: latestFullWeek.isoWeek(),
-    year: latestFullWeek.year()
-  };
+    const latestFullWeek = moment().subtract(2, 'w');
+    const lastWeek = {
+      isoWeek: latestFullWeek.isoWeek(),
+      year: latestFullWeek.year()
+    };
 
-  const years = range(2015, lastWeek.year);
-  const yearLengths = {};
+    const years = range(2015, lastWeek.year);
+    const yearLengths = {};
 
-  years.forEach(y => {
-    if (lastWeek.year === parseInt(y, 10)) {
-      yearLengths[y] = lastWeek.isoWeek;
-    } else if (moment(`${y}-12-31`).weekday() === 1) {
-      yearLengths[y] = moment(`${y}-12-30`).isoWeek();
-    } else {
-      yearLengths[y] = moment(`${y}-12-31`).isoWeek();
-    }
-  });
+    years.forEach(y => {
+      if (lastWeek.year === parseInt(y, 10)) {
+        yearLengths[y] = lastWeek.isoWeek;
+      } else if (moment(`${y}-12-31`).weekday() === 1) {
+        yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+      } else {
+        yearLengths[y] = moment(`${y}-12-31`).isoWeek();
+      }
+    });
 
-  return Object.entries(groupedByYear).reduce((acc, [y, arr]) => {
-    const yearDataByWeek = groupBy(arr, 'week');
-    const zeroFilledData = [];
-    for (let i = 1; i <= yearLengths[y]; i += 1) {
-      zeroFilledData.push(
-        yearDataByWeek[i]
-          ? yearDataByWeek[i][0]
-          : { count: 0, week: i, year: parseInt(y, 10) }
-      );
-    }
-    return { ...acc, [y]: zeroFilledData };
-  }, {});
-});
+    return Object.entries(groupedByYear).reduce((acc, [y, arr]) => {
+      const yearDataByWeek = groupBy(arr, 'week');
+      const zeroFilledData = [];
+      for (let i = 1; i <= yearLengths[y]; i += 1) {
+        zeroFilledData.push(
+          yearDataByWeek[i]
+            ? yearDataByWeek[i][0]
+            : { count: 0, week: i, year: parseInt(y, 10) }
+        );
+      }
+      return { ...acc, [y]: zeroFilledData };
+    }, {});
+  }
+);
 
 export const getStdDev = createSelector(
   [getData, getSettings],
@@ -143,17 +148,15 @@ export const parseSentence = createSelector(
       cumulative_emissions
     } =
       lastDate || {};
-    const { year } = settings;
-    // const unit = 'cumulative_emissions';
-    const unit = 'cumulative_deforestation';
+    const { year, variable } = settings;
 
-    const sentence = sentences[unit];
+    const sentence = sentences[variable];
     const weeknum = moment(date).isoWeek();
     const budget = formatNumber({
       num:
-        unit === 'cumulative_deforestation'
-          ? percent_to_deforestation_target
-          : percent_to_emissions_target,
+        variable === 'cumulative_emissions'
+          ? percent_to_emissions_target
+          : percent_to_deforestation_target,
       unit: '%'
     });
 

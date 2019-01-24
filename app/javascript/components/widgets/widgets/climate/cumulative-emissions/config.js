@@ -4,7 +4,8 @@ export default {
   large: true,
   categories: ['climate'],
   options: {
-    years: true
+    years: true,
+    variables: ['cumulative_emissions', 'cumulative_deforestation']
   },
   analysis: true,
   types: ['country'],
