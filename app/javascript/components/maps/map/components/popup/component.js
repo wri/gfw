@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 
-import { MapPopup } from 'wri-api-components/dist/map';
+// import { MapPopup } from 'wri-api-components/dist/map';
+import { Popup as MapPopup } from 'react-map-gl';
 
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown/dropdown-component';
@@ -22,7 +23,6 @@ class Popup extends Component {
 
   render() {
     const {
-      map,
       tableData,
       cardData,
       latlng,
@@ -34,11 +34,10 @@ class Popup extends Component {
       isBoundary
     } = this.props;
 
-    return (
+    return latlng && latlng.lat ? (
       <MapPopup
-        map={map}
-        latlng={!isEmpty(interactions) ? latlng : null}
-        data={{ interactions, selected }}
+        latitude={latlng.lat}
+        longitude={latlng.lng}
       >
         <div className="c-popup">
           {cardData ? (
@@ -97,7 +96,7 @@ class Popup extends Component {
           )}
         </div>
       </MapPopup>
-    );
+    ) : null;
   }
 }
 

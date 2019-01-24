@@ -84,11 +84,11 @@ class MapContainer extends PureComponent {
     this.setBbox(null);
   };
 
-  handleMapInteraction = ({ e, article, output, layer }) => {
+  handleMapInteraction = ({ e, article, output, layer, data }) => {
     const { draw, menuSection } = this.props;
-
-    if (!draw && !menuSection) {
+    if (!draw && !menuSection && layer) {
       this.props.setInteraction({
+        data,
         ...e,
         label: layer.name,
         article,

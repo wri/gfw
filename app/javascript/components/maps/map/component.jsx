@@ -32,9 +32,7 @@ class MapComponent extends PureComponent {
       customLayers
     } = this.props;
     const { center: { lat, lng }, zoom } = mapOptions;
-    if (this.map) {
-      console.log(this.map.getStyle().sources, this.map.getStyle().layers);
-    }
+
 
     return (
       <div
@@ -54,12 +52,19 @@ class MapComponent extends PureComponent {
           mapOptions={{
             style: basemap.url
           }}
+          onClick={e => {
+            console.log(e)gst;
+            e.features.forEach(feature => {
+              handleMapInteraction({ e, ...feature, data: feature.properties });
+            });
+          }}
         >
           {this.map &&
             <LayerManagerComponent
               map={this.map}
             />
           }
+          <Popup />
         </ReactMapGL>
         {/* <Map
           customClass="map-wrapper"

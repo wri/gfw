@@ -21,15 +21,15 @@ export const initialState = {
     draw: false,
     datasets: [
       // admin boundaries
-      {
-        dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-        layers: [
-          '6f6798e6-39ec-4163-979e-182a74ca65ee',
-          'c5d1e010-383a-4713-9aaa-44f728c0571c'
-        ],
-        opacity: 1,
-        visibility: true
-      },
+      // {
+      //   dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      //   layers: [
+      //     '6f6798e6-39ec-4163-979e-182a74ca65ee',
+      //     'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      //   ],
+      //   opacity: 1,
+      //   visibility: true
+      // },
       // // gain
       // {
       //   dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
@@ -50,7 +50,14 @@ export const initialState = {
       //   layers: ['78747ea1-34a9-4aa7-b099-bdb8948200f4'],
       //   opacity: 1,
       //   visibility: true
-      // }
+      // },
+      // plantations
+      {
+        dataset: 'bb1dced4-3ae8-4908-9f36-6514ae69713f',
+        layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4'],
+        opacity: 1,
+        visibility: true
+      }
     ]
   }
 };

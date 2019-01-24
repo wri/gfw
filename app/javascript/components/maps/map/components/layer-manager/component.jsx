@@ -27,7 +27,7 @@ class LayerManagerComponent extends PureComponent {
             <Layer
               id="geostore"
               name="Geojson"
-              provider="leaflet"
+              provider="geojson"
               layerConfig={{
                 id: geostore.id,
                 type: 'geoJSON',
@@ -57,7 +57,6 @@ class LayerManagerComponent extends PureComponent {
                 interactivity: output.map(i => i.column),
                 events: {
                   click: e => {
-                    console.log(e);
                     if (!draw) {
                       handleMapInteraction({
                         e,

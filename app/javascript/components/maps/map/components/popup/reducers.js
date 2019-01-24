@@ -9,9 +9,13 @@ export const initialState = {
 const setInteraction = (state, { payload }) => {
   const interactions =
     state.latlng === payload.latlng ? state.interactions : {};
+
   return {
     ...state,
-    latlng: payload.latlng,
+    latlng: payload.latlng || {
+      lat: payload.lngLat[1],
+      lng: payload.lngLat[0]
+    },
     interactions: {
       ...interactions,
       [payload.id]: {
