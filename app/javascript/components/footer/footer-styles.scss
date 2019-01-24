@@ -1,0 +1,27 @@
+@import '~styles/settings.scss';
+
+.footerGfw {
+  font-family: Fira GFW Sans, Helvetica, serif;
+  font-feature-settings: "liga" 0;
+  -webkit-font-variant-ligatures: no-common-ligatures;
+
+  .m-footer-subscribe {
+    width: 100%;
+    height: 112px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .m-footer-subscribe-button {
+      width: 260px;
+      height: 40px;
+      background-color: #97bd3d;
+      color: #fff;
+      border-radius: 36px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  }
+}
+
