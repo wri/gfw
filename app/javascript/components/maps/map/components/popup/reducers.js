@@ -7,21 +7,20 @@ export const initialState = {
 };
 
 const setInteraction = (state, { payload }) => {
-  const interactions =
-    state.latlng === payload.latlng ? state.interactions : {};
+  const interactions = payload.features.reduce((obj, next) => ({
+    ...obj,
+    [next.layer.source]: {
+      ...next.properties
+    }
+  }), {});
 
   return {
     ...state,
-    latlng: payload.latlng || {
+    latlng: {
       lat: payload.lngLat[1],
       lng: payload.lngLat[0]
     },
-    interactions: {
-      ...interactions,
-      [payload.id]: {
-        ...payload
-      }
-    }
+    interactions
   };
 };
 

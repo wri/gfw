@@ -63,6 +63,7 @@ export const getCardData = createSelector(
 export const getTableData = createSelector(
   [getSelectedInteraction, getIsBoundary],
   (interaction, isBoundary) => {
+    console.log(interaction);
     if (isEmpty(interaction) || interaction.article) return null;
     const { config, data } = interaction;
     if (isBoundary) {
@@ -75,14 +76,10 @@ export const getTableData = createSelector(
       );
     }
 
-    return (
-      config &&
-      config.filter(c => !c.hidden).map(c => ({
-        ...c,
-        label: c.property,
-        value: data[c.column]
-      }))
-    );
+    return Object.keys(interaction).map(i => ({
+      label: i,
+      value: interaction[i]
+    }));
   }
 );
 

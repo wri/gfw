@@ -12,7 +12,6 @@ class LayerManagerComponent extends PureComponent {
       setMapLoading,
       draw,
       map,
-      customLayers,
       handleMapInteraction
     } = this.props;
 
@@ -25,53 +24,35 @@ class LayerManagerComponent extends PureComponent {
         {geostore &&
           geostore.id && (
             <Layer
-              id="geostore"
+              id={geostore.id}
               name="Geojson"
               provider="geojson"
               layerConfig={{
-                id: geostore.id,
-                type: 'geoJSON',
                 body: geostore.geojson,
-                options: {
-                  style: {
-                    stroke: true,
-                    color: '#4a4a4a',
-                    weight: 2,
-                    fill: false
-                  }
-                }
-              }}
-              zIndex={1090}
-            />
-          )}
-        {customLayers &&
-          customLayers.length &&
-          customLayers.map(l => <Layer key={l.id} {...l} />)}
-        {layers &&
-          layers.map(l => {
-            const { interactionConfig } = l;
-            const { output, article } = interactionConfig || {};
-            const layer = {
-              ...l,
-              ...(!isEmpty(output) && {
-                interactivity: output.map(i => i.column),
-                events: {
-                  click: e => {
-                    if (!draw) {
-                      handleMapInteraction({
-                        e,
-                        layer: l,
-                        article,
-                        output
-                      });
+                layers: [
+                  {
+                    id: `${geostore.id}-fill`,
+                    type: 'fill',
+                    source: geostore.id,
+                    paint: {
+                      'fill-color': 'transparent'
+                    }
+                  },
+                  {
+                    id: `${geostore.id}-line`,
+                    type: 'line',
+                    source: geostore.id,
+                    paint: {
+                      'line-color': '#000',
+                      'line-width': 2
                     }
                   }
-                }
-              })
-            };
-
-            return <Layer key={l.id} {...layer} />;
-          })}
+                ]
+              }}
+            />
+          )}
+        {layers &&
+          layers.map(l => (<Layer key={l.id} {...l} />))}
       </LayerManager>
     );
   }
@@ -84,8 +65,7 @@ LayerManagerComponent.propTypes = {
   setMapLoading: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   draw: PropTypes.bool,
-  map: PropTypes.object,
-  customLayers: PropTypes.array
+  map: PropTypes.object
 };
 
 export default LayerManagerComponent;

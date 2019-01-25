@@ -420,10 +420,10 @@ export const filterInteractions = createSelector(
   interactions => {
     if (isEmpty(interactions)) return null;
     return Object.values(interactions)
-      .filter(i => !isEmpty(i.data))
-      .map(i => ({
-        ...i
-      }));
+      // .filter(i => !isEmpty(i.data))
+      // .map(i => ({
+      //   ...i
+      // }));
   }
 );
 

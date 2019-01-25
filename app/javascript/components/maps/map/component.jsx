@@ -33,7 +33,6 @@ class MapComponent extends PureComponent {
     } = this.props;
     const { center: { lat, lng }, zoom } = mapOptions;
 
-
     return (
       <div
         className={cx('c-map', className)}
@@ -50,14 +49,10 @@ class MapComponent extends PureComponent {
           zoom={zoom}
           onViewportChange={handleMapMove}
           mapOptions={{
-            style: basemap.url
+            style: basemap.url,
+            ...mapOptions
           }}
-          onClick={e => {
-            console.log(e)gst;
-            e.features.forEach(feature => {
-              handleMapInteraction({ e, ...feature, data: feature.properties });
-            });
-          }}
+          onClick={this.props.setInteraction}
         >
           {this.map &&
             <LayerManagerComponent
