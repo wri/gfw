@@ -4,8 +4,9 @@
   font-family: Fira GFW Sans, Helvetica, serif;
   font-feature-settings: "liga" 0;
   -webkit-font-variant-ligatures: no-common-ligatures;
+  background: #eceee8;
 
-  .m-footer-subscribe {
+  .footer-subscribe {
     width: 100%;
     height: 112px;
     background-color: #fff;
@@ -13,7 +14,7 @@
     justify-content: center;
     align-items: center;
 
-    .m-footer-subscribe-button {
+    .footer-subscribe-button {
       width: 260px;
       height: 40px;
       background-color: #97bd3d;
@@ -23,5 +24,138 @@
       cursor: pointer;
     }
   }
+
+  .wrapper {
+    padding: 0 20px;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1120px;
+
+    .footer-list {
+      display: block;
+      padding: 46px 0 25px;
+      border-bottom: 2px solid #d9d9d9;
+
+      .footer-links {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .footer-links-texts {
+        display: flex;
+        flex-flow: row wrap;
+
+        li {
+          flex-basis: auto;
+          margin: 0 45px 20px 0;
+        }
+      }
+
+      .footer-links-social {
+        margin-top: 0;
+        display: flex;
+
+        li {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid rgba(0, 0, 153, 0.2);
+          width: 48px;
+          height: 48px;
+          border-radius: 100%;
+          font-size: 0;
+          margin-left: 17px;
+        }
+      }
+
+      .-links-contact-sitemap {
+        display: flex;
+        flex-direction: row;
+        margin-top: 25px;
+        justify-content: space-between;
+        align-items: center;
+
+        .text-button {
+          margin-bottom: 0;
+          font-size: 12px;
+          letter-spacing: 0.1px;
+          color: #999;
+        }
+
+        .footer-links__contact {
+          position: relative;
+          padding-right: 5px;
+          cursor: pointer;
+        }
+      }
+
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+
+      a {
+        font-size: 14px;
+        line-height: 1.86;
+        letter-spacing: 0.1px;
+        color: #666;
+        text-transform: uppercase;
+      }
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 27px;
+
+      .footer-partner {
+        text-align: left;
+        margin: inherit;
+        align-self: flex-start;
+
+        p {
+          font-size: 14px;
+          letter-spacing: 0.1px;
+          color: #999;
+        }
+
+        .c-icon {
+          margin: 26px 0 0 -5px;
+          font-size: 18px;
+          line-height: 27px;
+          width: 143px;
+          height: 47px;
+        }
+      }
+    }
+
+    .footer-terms {
+      text-align: right;
+      padding: 10px 0 24px;
+      color: #999;
+      font-size: 12px;
+      // font-stretch: 100%;
+      letter-spacing: 0.1px;
+      line-height: 18px;
+      // vertical-align: baseline;
+
+      a {
+        display: inline-block;
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  }
 }
 
+// TODO: responsive styles, fix carousel
+
+// REMOVE !!!!!!!!!!!!!!!!!
+.l-root .page {
+  min-height: 0 !important;
+}

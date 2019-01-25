@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
 
+import wri from 'assets/logos/wri.svg';
+import Icon from 'components/ui/icon';
+import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
 import './footer-styles.scss';
 
@@ -7,15 +10,15 @@ class Footer extends PureComponent {
   render() {
     return (
       <div className="footerGfw">
-        <div className="m-footer-subscribe">
-          <Button className="m-footer-subscribe-button js-footer-newsletter">
+        <div className="footer-subscribe">
+          <Button className="footer-subscribe-button footer-newsletter">
             STAY UPDATED
           </Button>
         </div>
         <div className="wrapper">
-          <div className="m-footer-list">
-            <div className="m-footer-links">
-              <ul className="m-footer-links-texts">
+          <div className="footer-list">
+            <div className="footer-links">
+              <ul className="footer-links-texts">
                 <li>
                   <a href="http://www.globalforestwatch.org/">GFW</a>
                 </li>
@@ -28,7 +31,7 @@ class Footer extends PureComponent {
                   </a>
                 </li>
               </ul>
-              <ul className="m-footer-links-social">
+              <ul className="footer-links-social">
                 <li>
                   <a
                     href="https://twitter.com/globalforests"
@@ -76,32 +79,40 @@ class Footer extends PureComponent {
                 </li>
               </ul>
             </div>
-            <div className="m-footer-links -links-contact-sitemap">
+            <div className="footer-links -links-contact-sitemap">
               <a className="text-button" href="/sitemap">
                 SITEMAP
               </a>
-              <div className="text-button m-footer-links__contact js-footer-contact-us">
+              <div className="text-button footer-links__contact js-footer-contact-us">
                 CONTACT US
               </div>
             </div>
           </div>
-          <div className="m-footer-info">
-            <div className="m-footer-partner">
+          <div className="footer-info">
+            <div className="footer-partner">
               <p>A partnership convened by</p>
               <a
                 href="http://www.wri.org/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                wri_icon
+                <Icon icon={wri} />
               </a>
             </div>
-            <div id="my-gfw-slider" className="m-footer-logos slider js_slider">
+            <div id="my-gfw-slider" className="footer-logos slider js_slider">
               <p>Partners</p>
-              {/* Carousel */}
+              <Carousel
+                className="timeline"
+                settings={{
+                  slidesToShow: 1
+                  // dots: false
+                }}
+              >
+                {[1, 2, 3, 4].map(n => <div key={n}>{n}</div>)}
+              </Carousel>
             </div>
           </div>
-          <div className="m-footer-terms">
+          <div className="footer-terms">
             <a href="/terms">Terms of Service</a>
             .
             <a href="/privacy-policy">Privacy Policy</a>
