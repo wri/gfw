@@ -7,7 +7,7 @@ class LandingController < ApplicationController
     @keywords = 'forests, forest data, forest monitoring, forest landscapes, maps, gis, visualize, geospatial, forest analysis, forest news, forest alerts, conservation, forest updates, forest watch, analysis, deforestation, deforesting, tree cover loss, explore forests, mapping, trees, forest loss'
     @summary = [
       {
-        "title" => "Discover the world’s forests through data",
+        "title" => "Discover the world’s forests through amazing data",
         "paragraph" => "Explore over 100 global and local data sets to learn about conservation, land use, forest communities, and much more.",
         "button" => "EXPLORE OUR DATA",
         "url" => "/map?menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D",
