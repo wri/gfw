@@ -139,10 +139,8 @@
       padding: 10px 0 24px;
       color: #999;
       font-size: 12px;
-      // font-stretch: 100%;
       letter-spacing: 0.1px;
       line-height: 18px;
-      // vertical-align: baseline;
 
       a {
         display: inline-block;
@@ -151,9 +149,32 @@
       }
     }
   }
+
+  .slick-track {
+    display: flex;
+
+    .slick-slide {
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .slick-arrow {
+    top: calc(50% - 20px);
+  }
+
+  .slick-next {
+    right: -10px;
+  }
+
+  .slick-prev {
+    left: -10px;
+  }
 }
 
-// TODO: responsive styles, fix carousel
+// TODO: responsive styles
 
 // REMOVE !!!!!!!!!!!!!!!!!
 .l-root .page {

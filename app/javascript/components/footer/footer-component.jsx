@@ -4,10 +4,30 @@ import wri from 'assets/logos/wri.svg';
 import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
+import arrowIcon from 'assets/icons/arrow-down.svg';
 import './footer-styles.scss';
 
 class Footer extends PureComponent {
   render() {
+    const partners = [
+      { name: 'afc', url: 'http://www.afd.fr/home' },
+      { name: 'airbus', url: 'http://airbusdefenceandspace.com/' },
+      { name: 'agrosatelite', url: 'http://agrosatelite.com.br/' },
+      { name: 'astrodigital', url: '' },
+      { name: 'bei', url: '' },
+      { name: 'bigdataclimatechallengewinner', url: '' },
+      { name: 'blueraster', url: '' },
+      { name: 'bnpb', url: '' },
+      { name: 'bobolinkfundation', url: '' },
+      { name: 'cambridge', url: '' },
+      { name: 'cargill', url: '' },
+      { name: 'cartodb', url: '' },
+      { name: 'centerforglobaldevelopment', url: '' },
+      { name: 'cgiar', url: '' },
+      { name: 'ciat', url: '' },
+      { name: 'clua', url: '' },
+      { name: 'conafor', url: '' }
+    ];
     return (
       <div className="footerGfw">
         <div className="footer-subscribe">
@@ -104,19 +124,37 @@ class Footer extends PureComponent {
               <Carousel
                 className="timeline"
                 settings={{
-                  slidesToShow: 1
-                  // dots: false
+                  slidesToShow: 4,
+                  slidesToScroll: 4,
+                  centerMode: false,
+                  dots: false,
+                  nextArrow: (
+                    <Button theme="theme-button-clear square">
+                      <Icon icon={arrowIcon} />
+                    </Button>
+                  ),
+                  prevArrow: (
+                    <Button theme="theme-button-clear square">
+                      <Icon icon={arrowIcon} />
+                    </Button>
+                  )
                 }}
               >
-                {[1, 2, 3, 4].map(n => <div key={n}>{n}</div>)}
+                {partners.map((p, i) => (
+                  <li className="slide" key={`${p.name}${i}`}>
+                    <a target="_blank" hrel="noopener noreferrer" href={p.url}>
+                      <img src={`assets/logos/${p.name}.png`} alt="" />
+                    </a>
+                  </li>
+                ))}
               </Carousel>
             </div>
           </div>
           <div className="footer-terms">
             <a href="/terms">Terms of Service</a>
-            .
+            {' · '}
             <a href="/privacy-policy">Privacy Policy</a>
-            .
+            {' · '}
             <a
               href="http://stats.pingdom.com/ghabapk9rihc"
               target="_blank"
