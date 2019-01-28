@@ -66,6 +66,16 @@ export const getMapZoom = createSelector(
   settings => settings.zoom
 );
 
+export const getMapLat = createSelector(
+  getMapSettings,
+  settings => settings.center.lat
+);
+
+export const getMapLng = createSelector(
+  getMapSettings,
+  settings => settings.center.lng
+);
+
 export const getDraw = createSelector(
   [getMapSettings],
   settings => settings.draw
@@ -81,30 +91,15 @@ export const getCanBound = createSelector(
   settings => settings.canBound
 );
 
-export const getMapOptions = createSelector(
-  [getMapSettings, getBasemap, getLabel],
-  (settings, basemap, label) => {
-    if (!settings) return null;
-    const {
-      center,
-      zoom,
-      minZoom,
-      maxZoom,
-      zoomControl,
-      attributionControl
-    } = settings;
-    return {
-      center,
-      zoom,
-      minZoom,
-      maxZoom,
-      zoomControl,
-      label,
-      basemap,
-      attributionControl
-    };
-  }
-);
+export const getMapOptions = createSelector([getMapSettings], settings => {
+  if (!settings) return null;
+  const { minZoom, maxZoom, attributionControl } = settings;
+  return {
+    minZoom,
+    maxZoom,
+    attributionControl
+  };
+});
 
 export const getMapLoading = createSelector(
   [
@@ -419,11 +414,11 @@ export const filterInteractions = createSelector(
   [selectInteractions],
   interactions => {
     if (isEmpty(interactions)) return null;
-    return Object.values(interactions)
-      // .filter(i => !isEmpty(i.data))
-      // .map(i => ({
-      //   ...i
-      // }));
+    return Object.values(interactions);
+    // .filter(i => !isEmpty(i.data))
+    // .map(i => ({
+    //   ...i
+    // }));
   }
 );
 
@@ -463,5 +458,8 @@ export const getMapProps = createStructuredSelector({
   bbox: getBbox,
   canBound: getCanBound,
   draw: getDraw,
+  lat: getMapLat,
+  lng: getMapLng,
+  zoom: getMapZoom,
   selectedInteraction: getSelectedInteraction
 });

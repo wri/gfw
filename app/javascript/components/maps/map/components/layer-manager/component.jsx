@@ -11,6 +11,8 @@ class LayerManagerComponent extends PureComponent {
       geostore,
       setMapLoading,
       draw,
+      labels,
+      basemap,
       map,
       handleMapInteraction
     } = this.props;
@@ -21,6 +23,29 @@ class LayerManagerComponent extends PureComponent {
         plugin={PluginMapboxGl}
         onLayerLoading={loading => setMapLoading(loading)}
       >
+        {basemap &&
+          !basemap.mapboxStyleLayer && (
+            <Layer
+              id="basemap"
+              provider="leaflet"
+              layerConfig={{
+                body: {
+                  url: basemap.url
+                }
+              }}
+            />
+          )}
+        {labels && (
+          <Layer
+            id="labels"
+            provider="leaflet"
+            layerConfig={{
+              body: {
+                url: labels.url
+              }
+            }}
+          />
+        )}
         {geostore &&
           geostore.id && (
             <Layer
@@ -51,8 +76,7 @@ class LayerManagerComponent extends PureComponent {
               }}
             />
           )}
-        {layers &&
-          layers.map(l => (<Layer key={l.id} {...l} />))}
+        {layers && layers.map(l => <Layer key={l.id} {...l} />)}
       </LayerManager>
     );
   }

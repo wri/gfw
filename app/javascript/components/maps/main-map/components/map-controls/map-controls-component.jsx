@@ -230,14 +230,14 @@ class MapControlsButtons extends PureComponent {
 
   renderZoomButtons = () => {
     const { mapSettings, setMapSettings } = this.props;
-    const { zoom, minZoom, maxZoom } = mapSettings || {};
+    const { minZoom, maxZoom, zoom } = mapSettings || {};
 
     return (
       <Fragment>
         <Button
           theme="theme-button-map-control"
           onClick={() => {
-            setMapSettings({ zoom: zoom - 1 });
+            setMapSettings({ zoom: zoom - 1 < minZoom ? minZoom : zoom - 1 });
             track('zoomOut');
           }}
           tooltip={{ text: 'Zoom out' }}
@@ -248,7 +248,7 @@ class MapControlsButtons extends PureComponent {
         <Button
           theme="theme-button-map-control"
           onClick={() => {
-            setMapSettings({ zoom: zoom + 1 });
+            setMapSettings({ zoom: zoom + 1 > maxZoom ? maxZoom : zoom + 1 });
             track('zoomIn');
           }}
           tooltip={{ text: 'Zoom in' }}
@@ -332,16 +332,12 @@ class MapControlsButtons extends PureComponent {
   );
 
   renderMapPosition = () => {
-    const { mapSettings } = this.props;
-    const { zoom, center } = mapSettings || {};
+    const { mapSettings: { center: { lat, lng }, zoom } } = this.props;
 
     return (
       <div className="map-position">
         <span>zoom: {format('.2f')(zoom)}</span>
-        <span>
-          lat,lon:{' '}
-          {`${format('.5f')(center.lat)}, ${format('.5f')(center.lng)}`}
-        </span>
+        <span>lat,lon: {`${format('.5f')(lat)}, ${format('.5f')(lng)}`}</span>
       </div>
     );
   };

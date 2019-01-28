@@ -28,10 +28,10 @@ class MapComponent extends PureComponent {
       bbox,
       draw,
       handleMapMove,
-      handleMapInteraction,
-      customLayers
+      zoom,
+      lat,
+      lng
     } = this.props;
-    const { center: { lat, lng }, zoom } = mapOptions;
 
     return (
       <div
@@ -47,18 +47,11 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
+          mapStyle={basemap.mapboxStyleLayer ? basemap.url : null}
           onViewportChange={handleMapMove}
-          mapOptions={{
-            style: basemap.url,
-            ...mapOptions
-          }}
           onClick={this.props.setInteraction}
         >
-          {this.map &&
-            <LayerManagerComponent
-              map={this.map}
-            />
-          }
+          {this.map && <LayerManagerComponent map={this.map} />}
           <Popup />
         </ReactMapGL>
         {/* <Map
@@ -114,8 +107,7 @@ MapComponent.propTypes = {
   label: PropTypes.object,
   handleMapMove: PropTypes.func,
   bbox: PropTypes.array,
-  handleMapInteraction: PropTypes.func,
-  customLayers: PropTypes.array,
+  setInteraction: PropTypes.func,
   draw: PropTypes.bool
 };
 

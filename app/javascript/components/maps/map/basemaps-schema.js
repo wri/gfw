@@ -34,7 +34,8 @@ export default {
     labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
-    url: 'mapbox://styles/resourcewatch/cjlhwaoh211hp2stemfz0imqf'
+    url: 'mapbox://styles/resourcewatch/cjlhwaoh211hp2stemfz0imqf',
+    mapboxStyleLayer: true
   },
   dark: {
     value: 'dark',
@@ -42,7 +43,8 @@ export default {
     labelsKey: 'lightLabels',
     color: '#31312F',
     image: darkImage,
-    url: 'mapbox://styles/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9'
+    url: 'mapbox://styles/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9',
+    mapboxStyleLayer: true
   },
   satellite: {
     value: 'satellite',

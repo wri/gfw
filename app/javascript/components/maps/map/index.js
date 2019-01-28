@@ -67,12 +67,15 @@ class MapContainer extends PureComponent {
     this.setState({ bbox });
   };
 
-  handleMapMove = (viewport) => {
-    const { width, height, latitude, longitude, zoom } = viewport;
+  handleMapMove = viewport => {
+    const { latitude, longitude, zoom } = viewport;
+    const { setMapSettings, mapOptions: { maxZoom, minZoom } } = this.props;
+    let newZoom = zoom;
+    if (zoom > maxZoom) newZoom = maxZoom;
+    if (zoom < minZoom) newZoom = minZoom;
 
-    const { setMapSettings } = this.props;
     setMapSettings({
-      zoom,
+      zoom: newZoom,
       center: {
         lat: latitude,
         lng: longitude
@@ -88,7 +91,6 @@ class MapContainer extends PureComponent {
     const { draw, menuSection } = this.props;
     if (!draw && !menuSection) {
       this.props.setInteraction({
-
         data,
         ...e,
         label: layer.name,
