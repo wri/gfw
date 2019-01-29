@@ -5,6 +5,11 @@ import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
 import arrowIcon from 'assets/icons/arrow-down.svg';
+import facebook from 'assets/icons/social/facebook.svg';
+import googleplus from 'assets/icons/social/google-plus.svg';
+import instagram from 'assets/icons/social/instagram.svg';
+import twitter from 'assets/icons/social/twitter.svg';
+import youtube from 'assets/icons/social/youtube.svg';
 import partners from 'data/partners.json';
 import './footer-styles.scss';
 
@@ -40,7 +45,7 @@ class Footer extends PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    tw
+                    <Icon icon={twitter} />
                   </a>
                 </li>
                 <li>
@@ -49,7 +54,7 @@ class Footer extends PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    fb
+                    <Icon icon={facebook} />
                   </a>
                 </li>
                 <li>
@@ -58,7 +63,7 @@ class Footer extends PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    ig
+                    <Icon icon={instagram} />
                   </a>
                 </li>
                 <li>
@@ -67,7 +72,7 @@ class Footer extends PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    yt
+                    <Icon icon={youtube} />
                   </a>
                 </li>
                 <li>
@@ -76,7 +81,7 @@ class Footer extends PureComponent {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    g+
+                    <Icon icon={googleplus} />
                   </a>
                 </li>
               </ul>
