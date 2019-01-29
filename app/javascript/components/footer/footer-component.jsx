@@ -125,7 +125,22 @@ class Footer extends PureComponent {
                 {partners.map((p, i) => (
                   <li className="slide" key={`${p.name}${i}`}>
                     <a target="_blank" hrel="noopener noreferrer" href={p.url}>
-                      <img src={`assets/logos/${p.name}.png`} alt="" />
+                      <img
+                        onMouseEnter={e => {
+                          e.currentTarget.src = e.currentTarget.src.replace(
+                            '.png',
+                            'hover.png'
+                          );
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.src = e.currentTarget.src.replace(
+                            'hover',
+                            ''
+                          );
+                        }}
+                        src={`assets/logos/${p.name}.png`}
+                        alt={p.name}
+                      />
                     </a>
                   </li>
                 ))}
