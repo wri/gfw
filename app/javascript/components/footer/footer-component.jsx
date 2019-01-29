@@ -5,29 +5,11 @@ import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
 import arrowIcon from 'assets/icons/arrow-down.svg';
+import partners from 'data/partners.json';
 import './footer-styles.scss';
 
 class Footer extends PureComponent {
   render() {
-    const partners = [
-      { name: 'afc', url: 'http://www.afd.fr/home' },
-      { name: 'airbus', url: 'http://airbusdefenceandspace.com/' },
-      { name: 'agrosatelite', url: 'http://agrosatelite.com.br/' },
-      { name: 'astrodigital', url: '' },
-      { name: 'bei', url: '' },
-      { name: 'bigdataclimatechallengewinner', url: '' },
-      { name: 'blueraster', url: '' },
-      { name: 'bnpb', url: '' },
-      { name: 'bobolinkfundation', url: '' },
-      { name: 'cambridge', url: '' },
-      { name: 'cargill', url: '' },
-      { name: 'cartodb', url: '' },
-      { name: 'centerforglobaldevelopment', url: '' },
-      { name: 'cgiar', url: '' },
-      { name: 'ciat', url: '' },
-      { name: 'clua', url: '' },
-      { name: 'conafor', url: '' }
-    ];
     return (
       <div className="footerGfw">
         <div className="footer-subscribe">
