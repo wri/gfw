@@ -130,6 +130,8 @@
           line-height: 27px;
           width: 143px;
           height: 47px;
+          top: 20px;
+          position: relative;
         }
       }
     }
@@ -150,6 +152,57 @@
 
       a:hover {
         text-decoration: underline;
+      }
+    }
+  }
+
+  @media screen and (max-width: 850px) { //$screen-m
+    .wrapper {
+      padding: 0 15px;
+
+      .footer-list .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+
+        .footer-links-texts {
+          li {
+            flex-basis: 100%;
+            margin-bottom: 15px;
+          }
+        }
+
+        .footer-links-social {
+          margin-top: 0;
+
+          li {
+            margin-left: 0;
+            margin-right: 20px;
+          }
+        }
+      }
+
+      .footer-info {
+        display: flex;
+        flex-direction: column-reverse;
+
+        .footer-partner {
+          margin: 30px auto;
+          align-self: flex-start;
+          text-align: center;
+
+          .c-icon {
+            position: initial;
+          }
+        }
+      }
+
+      .footer-terms {
+        text-align: center;
+
+        a {
+          display: block;
+        }
       }
     }
   }
@@ -183,8 +236,6 @@
     left: -10px;
   }
 }
-
-// TODO: responsive styles
 
 // REMOVE !!!!!!!!!!!!!!!!!
 .l-root .page {
