@@ -61,6 +61,8 @@ Gfw::Application.routes.draw do
   # about
   get '/partners' => redirect('/about')
   get '/about/small_grants_fund' => redirect('/small-grants-fund')
+  get '/small_grants_fund' => redirect('/small-grants-fund')
+  get '/small_grants_fund/*all' => redirect('/grants-and-fellowships')
 
   # map
   get '/glad', to: redirect('/map/3/15.00/27.00/ALL/grayscale/umd_as_it_happens')
@@ -117,8 +119,8 @@ Gfw::Application.routes.draw do
   get '/about(/:section)' => 'about#index'
 
   # Small Grunts Fund
-  get '/small-grants-fund' => 'small_grants_fund#index'
-  get '/small-grants-fund/*all' => 'small_grants_fund#index'
+  get '/grants-and-fellowships' => 'small_grants_fund#index'
+  get '/grants-and-fellowships/*all' => 'small_grants_fund#index'
 
   # connect
   get '/my_gfw/' => 'connect#index', as: 'user_index'

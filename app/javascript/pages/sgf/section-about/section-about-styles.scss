@@ -24,8 +24,6 @@
     }
 
     @media screen and (min-width: $screen-m) {
-      margin-bottom: rem(60px);
-
       &.results {
         margin-bottom: rem(60px);
       }
@@ -35,6 +33,12 @@
   .section-title {
     margin-bottom: rem(10px);
     font-size: rem(35px);
+  }
+
+  .section-subtitle {
+    font-size: rem(20px);
+    color: $green-gfw;
+    font-weight: 500;
   }
 
   .list {

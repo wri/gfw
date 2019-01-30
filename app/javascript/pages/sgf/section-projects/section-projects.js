@@ -33,7 +33,9 @@ const mapStateToProps = ({ sgfProjects }) => {
     globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
     categorySelected:
-      filters && filters.length ? '' : sgfProjects.categorySelected,
+      filters && filters.length
+        ? ''
+        : sgfProjects && sgfProjects.categorySelected,
     search: sgfProjects && sgfProjects.search,
     loading:
       !sgfProjects ||

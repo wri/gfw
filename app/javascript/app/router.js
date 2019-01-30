@@ -76,26 +76,26 @@ export const routes = {
   },
   [SGF]: {
     controller: 'small_grants_fund',
-    path: '/small-grants-fund/:tab?',
+    path: '/grants-and-fellowships/:tab?',
     component: 'sgf',
     sections: {
       projects: {
         label: 'Projects',
         submenu: true,
         component: 'projects',
-        path: '/small-grants-fund'
+        path: '/grants-and-fellowships'
       },
       about: {
         label: 'About',
         submenu: true,
         component: 'about',
-        path: '/small-grants-fund/about'
+        path: '/grants-and-fellowships/about'
       },
       apply: {
         label: 'Apply',
         submenu: true,
         component: 'apply',
-        path: '/small-grants-fund/apply'
+        path: '/grants-and-fellowships/apply'
       }
     }
   },
