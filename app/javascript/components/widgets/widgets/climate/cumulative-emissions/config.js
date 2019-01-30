@@ -22,7 +22,7 @@ export default {
 confirmed alerts and {deforestation} of tree cover loss, comprising {budget} of 
 the annual budget.`,
     cumulative_emissions: `By week {weeknum} of {year}, there were {alerts} 
-confirmed alerts and {emissions} CO\u2082 emissions, comprising {budget} of 
+confirmed alerts and {emissions} emissions, comprising {budget} of 
 the annual budget.`
   },
   whitelists: {

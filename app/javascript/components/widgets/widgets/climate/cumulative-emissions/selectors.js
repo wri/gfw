@@ -122,13 +122,16 @@ export const parseData = createSelector([getDates], data => {
   return data;
 });
 
-export const parseConfig = createSelector([getColors], colors =>
-  getChartConfig(
-    colors,
-    moment()
-      .subtract(2, 'w')
-      .format('YYYY-MM-DD')
-  )
+export const parseConfig = createSelector(
+  [getColors, getSettings],
+  (colors, settings) =>
+    getChartConfig(
+      colors,
+      moment()
+        .subtract(2, 'w')
+        .format('YYYY-MM-DD'),
+      settings.variable === 'cumulative_emissions' ? 'tCO\u2082' : 'ha'
+    )
 );
 
 export const parseSentence = createSelector(
@@ -172,7 +175,7 @@ export const parseSentence = createSelector(
       }),
       emissions: formatNumber({
         num: cumulative_emissions * 1000000,
-        unit: 't'
+        unit: 'tCO\u2082'
       }),
       budget
     };
