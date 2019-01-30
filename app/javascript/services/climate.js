@@ -36,9 +36,8 @@ sum(percent_to_emissions_target) AS percent_to_emissions_target,
 sum(percent_to_deforestation_target) AS percent_to_deforestation_target,
 year as year, 
 country_iso, 
-week FROM a98197d2-cd8e-4b17-ab5c-fabf54b25ea0 WHERE country_iso ='${
-  params.adm0
-}' AND year IN ('${year}') AND week
+week FROM a98197d2-cd8e-4b17-ab5c-fabf54b25ea0 WHERE country_iso =
+'${params.adm0}' AND year IN ('${year}') AND week
 <= 53 GROUP BY week, country_iso ORDER BY week ASC`;
-    return request.get(`${url}${query}`);
+    return request.get(encodeURI(`${url}${query}`));
   });
