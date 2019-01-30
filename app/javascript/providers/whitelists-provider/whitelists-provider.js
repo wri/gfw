@@ -17,7 +17,9 @@ class WhitelistProvider extends PureComponent {
       getCountryWhitelist,
       getRegionWhitelist
     } = this.props;
-    getCountryWhitelist(adm0);
+    if (adm0) {
+      getCountryWhitelist(adm0);
+    }
     if (adm1) {
       getRegionWhitelist({ adm0, adm1, adm2 });
     }
