@@ -43,7 +43,7 @@ const parseData = createSelector(
 
     const percentiles = [
       { name: 'Low', data: [], count: 0, percent: 0 },
-      { name: 'Medium-l;ow', data: [], count: 0, percent: 0 },
+      { name: 'Medium-low', data: [], count: 0, percent: 0 },
       { name: 'Medium', data: [], count: 0, percent: 0 },
       { name: 'Medium-high', data: [], count: 0, percent: 0 },
       { name: 'High', data: [], count: 0, percent: 0 }
