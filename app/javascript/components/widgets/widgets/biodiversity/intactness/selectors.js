@@ -42,11 +42,11 @@ const parseData = createSelector(
     else locationType = 'region';
 
     const percentiles = [
-      { name: 'Very low', data: [], count: 0, percent: 0 },
       { name: 'Low', data: [], count: 0, percent: 0 },
-      { name: 'Normal', data: [], count: 0, percent: 0 },
-      { name: 'High', data: [], count: 0, percent: 0 },
-      { name: 'Very high', data: [], count: 0, percent: 0 }
+      { name: 'Medium-l;ow', data: [], count: 0, percent: 0 },
+      { name: 'Medium', data: [], count: 0, percent: 0 },
+      { name: 'Medium-high', data: [], count: 0, percent: 0 },
+      { name: 'High', data: [], count: 0, percent: 0 }
     ];
 
     data.forEach(d => {
