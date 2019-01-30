@@ -10,6 +10,6 @@ describe SmallGrantsFundController, type: :controller do
   describe 'GET index' do
     subject { get :index }
     it_behaves_like 'renders index'
-    it_behaves_like 'assigns title', 'Small Grants Fund'
+    it_behaves_like 'assigns title', 'Grants & Fellowships'
   end
 end
