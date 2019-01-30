@@ -99,6 +99,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-draw": "^1.1.1",
     "@rails/webpacker": "3.0.1",
     "add": "^2.0.6",
     "aws-sdk": "^2.291.0",

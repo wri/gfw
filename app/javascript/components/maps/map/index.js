@@ -87,22 +87,23 @@ class MapContainer extends PureComponent {
     this.setBbox(null);
   };
 
-  handleMapInteraction = ({ lngLat, features }) => {
+  handleMapInteraction = (e) => {
     const { draw, menuSection } = this.props;
     if (!draw && !menuSection) {
-      this.props.setInteraction({
-        data,
-        ...e,
-        label: layer.name,
-        article,
-        isBoundary: layer.isBoundary,
-        id: layer.id,
-        value: layer.id,
-        config: output
-      });
-      track('mapInteraction', {
-        label: layer.name
-      });
+      console.log('interacting...');
+      // this.props.setInteraction({
+      //   data,
+      //   ...e,
+      //   label: layer.name,
+      //   article,
+      //   isBoundary: layer.isBoundary,
+      //   id: layer.id,
+      //   value: layer.id,
+      //   config: output
+      // });
+      // track('mapInteraction', {
+      //   label: layer.name
+      // });
     }
   };
 

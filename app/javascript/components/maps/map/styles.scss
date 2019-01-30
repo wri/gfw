@@ -1,6 +1,13 @@
 @import '~styles/settings.scss';
 
 .c-map {
+
+  &.no-pointer-events {
+    .overlays {
+      pointer-events: none;
+    }
+  }
+
   .map-wrapper {
     position: relative;
     min-height: rem(300px);

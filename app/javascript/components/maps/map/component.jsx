@@ -1,8 +1,7 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactMapGL from 'react-map-gl';
-import Map from 'wri-api-components/dist/map';
 
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -18,6 +17,10 @@ import LayerManagerComponent from './components/layer-manager';
 import './styles.scss';
 
 class MapComponent extends PureComponent {
+  state = {
+    mapReady: false
+  }
+
   render() {
     const {
       className,
@@ -28,14 +31,16 @@ class MapComponent extends PureComponent {
       bbox,
       draw,
       handleMapMove,
+      handleMapInteraction,
       zoom,
       lat,
       lng
     } = this.props;
+    const { mapReady } = this.state;
 
     return (
       <div
-        className={cx('c-map', className)}
+        className={cx('c-map', { 'no-pointer-events': draw }, className)}
         style={{ backgroundColor: basemap.color }}
       >
         <ReactMapGL
@@ -47,47 +52,15 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
-          mapStyle={basemap.mapboxStyleLayer ? basemap.url : null}
+          mapStyle={basemap.url}
           onViewportChange={handleMapMove}
-          onClick={this.props.setInteraction}
+          onClick={handleMapInteraction}
+          onLoad={() => this.setState({ mapReady: true })}
         >
-          {this.map && <LayerManagerComponent map={this.map} />}
-          <Popup />
+          {this.map && mapReady && <LayerManagerComponent map={this.map} />}
+          {this.map && draw && mapReady && <MapDraw map={this.map} />}
+          {this.map && mapReady && <Popup />}
         </ReactMapGL>
-        {/* <Map
-          customClass="map-wrapper"
-          onReady={map => {
-            this.map = map;
-          }}
-          mapOptions={mapOptions}
-          basemap={basemap}
-          label={label}
-          bounds={
-            bbox
-              ? {
-                bbox,
-                options: {
-                  padding: [50, 50]
-                }
-              }
-              : {}
-          }
-          events={{
-            moveend: handleMapMove
-          }}
-        >
-          {map => (
-            <Fragment>
-              <LayerManagerComponent
-                map={map}
-                customLayers={customLayers}
-                handleMapInteraction={handleMapInteraction}
-              />
-              <Popup map={map} />
-              {draw && <MapDraw map={map} />}
-            </Fragment>
-          )}
-        </Map> */}
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         <MapAttributions className="map-attributions" />
         {loading && (
