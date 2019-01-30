@@ -139,8 +139,13 @@ export const parseSentence = createSelector(
     if (!isEmpty(activeData)) {
       lastDate = activeData;
     }
+
+    const { year, variable } = settings;
+    const sentence = sentences[variable];
+    const weeknum = moment(lastDate.date).isoWeek();
+    if (!lastDate.alerts) lastDate = data[weeknum - 1];
+
     const {
-      date,
       alerts,
       percent_to_deforestation_target,
       percent_to_emissions_target,
@@ -148,10 +153,7 @@ export const parseSentence = createSelector(
       cumulative_deforestation
     } =
       lastDate || {};
-    const { year, variable } = settings;
 
-    const sentence = sentences[variable];
-    const weeknum = moment(date).isoWeek();
     const budget = formatNumber({
       num:
         variable === 'cumulative_emissions'

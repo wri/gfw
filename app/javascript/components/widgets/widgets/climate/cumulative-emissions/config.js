@@ -1,6 +1,6 @@
 export default {
   widget: 'firesAlerts',
-  title: 'Fire Alerts in {location}',
+  title: 'New York Declaration Forest disturbance tracker',
   large: true,
   categories: ['climate'],
   options: {
