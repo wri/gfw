@@ -40,7 +40,9 @@ class SectionAbout extends PureComponent {
                   - Review the&nbsp;
                   <a
                     className="text -paragraph -color-4 -bold"
-                    href="https://www.globalforestwatch.org/howto/categories/faqs/?filters=[%22small-grants-fund%22]&page=0"
+                    href="https://www.globalforestwatch.org/howto/categories/faqs/?page=0&filters=[%22small-grants-fund%22]"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     Small Grants Fund Frequently Asked Questions.
                   </a>
@@ -49,7 +51,7 @@ class SectionAbout extends PureComponent {
                   - Read the 2019&nbsp;
                   <a
                     className="text -paragraph -color-4 -bold"
-                    href="https://storage.googleapis.com/bcx_production_attachments/386fd3d4-c993-11e7-aa39-089e019fd298?GoogleAccessId=bcx-production%40bcx-production.iam.gserviceaccount.com&Expires=1510826892&Signature=yFQFuYv6RYQLaqCglmBHk1%2FcWcsZjX3AALvJTDghIwMOjmCknARmKgwJnlAQREs%2FbhK%2B8rmq2159RJCcnfUfLoGkR4mW5fakix9QphMzIqrNqp8rwIy6eHphRviv6cB84Xjau2kD7XRZ1tzJ%2FBJfNrhe9Zr2l0qnDFQDv4AmPpzsKAczo037XRvM%2BsBNenzcqZJ9uibufwV3S3QBr6rYdJriXmk7xgrY83SdrowjnnNaMJdnv88DRqJCF36iXojZv8C%2Br3AHcK7zPGvc6ak2WQ%2B%2F8KGwzyqR9IQGnV2WRs%2FAwnrcbcbYdodIppLM3SCd48yoV1rq%2FeYsCxO93iO3OA%3D%3D&response-content-type=application%2Fpdf&response-content-disposition=inline%3B+filename%3D%22Guidelines+for+Applicants+2017+final.pdf%22%3B+filename%2A%3DUTF-8%27%27Guidelines%2520for%2520Applicants%25202017%2520final.pdf"
+                    href="https://blog.globalforestwatch.org/wp-content/uploads/2019/01/Guidelines-for-SGF-Applicants-2019.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -71,7 +73,15 @@ class SectionAbout extends PureComponent {
               <p className="text -paragraph -color-2 -light -spaced">
                 The call for applications for the 2019 Small Grants Fund will
                 open on February 1st, 2019 and will close on March 15th, 2019.
-                Please check back here for details.
+                <a
+                  className="text -paragraph -color-4 -bold"
+                  href="https://gfw.fluidreview.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {' '}
+                  Apply now.
+                </a>
               </p>
             </div>
             <div className="column small-12 medium-3 logo">
@@ -91,7 +101,7 @@ class SectionAbout extends PureComponent {
                   - Review the&nbsp;
                   <a
                     className="text -paragraph -color-4 -bold"
-                    href="https://www.globalforestwatch.org/howto/categories/faqs/?filters=[%22tech-fellowship%22]&page=0"
+                    href="https://www.globalforestwatch.org/howto/categories/faqs/?page=0&filters=[%22tech-fellowship%22]"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -102,7 +112,7 @@ class SectionAbout extends PureComponent {
                   - Read the 2019&nbsp;
                   <a
                     className="text -paragraph -color-4 -bold"
-                    href="https://storage.googleapis.com/bcx_production_attachments/386fd3d4-c993-11e7-aa39-089e019fd298?GoogleAccessId=bcx-production%40bcx-production.iam.gserviceaccount.com&Expires=1510826892&Signature=yFQFuYv6RYQLaqCglmBHk1%2FcWcsZjX3AALvJTDghIwMOjmCknARmKgwJnlAQREs%2FbhK%2B8rmq2159RJCcnfUfLoGkR4mW5fakix9QphMzIqrNqp8rwIy6eHphRviv6cB84Xjau2kD7XRZ1tzJ%2FBJfNrhe9Zr2l0qnDFQDv4AmPpzsKAczo037XRvM%2BsBNenzcqZJ9uibufwV3S3QBr6rYdJriXmk7xgrY83SdrowjnnNaMJdnv88DRqJCF36iXojZv8C%2Br3AHcK7zPGvc6ak2WQ%2B%2F8KGwzyqR9IQGnV2WRs%2FAwnrcbcbYdodIppLM3SCd48yoV1rq%2FeYsCxO93iO3OA%3D%3D&response-content-type=application%2Fpdf&response-content-disposition=inline%3B+filename%3D%22Guidelines+for+Applicants+2017+final.pdf%22%3B+filename%2A%3DUTF-8%27%27Guidelines%2520for%2520Applicants%25202017%2520final.pdf"
+                    href="https://blog.globalforestwatch.org/wp-content/uploads/2019/01/2019-Fellowship-Guidelines-for-Applicants.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
