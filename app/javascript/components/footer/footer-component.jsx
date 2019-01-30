@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import MediaQuery from 'react-responsive';
 import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
+import ContactUs from 'components/modals/contact-us';
 import wri from 'assets/logos/wri.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import facebook from 'assets/icons/social/facebook.svg';
@@ -20,6 +22,7 @@ class Footer extends PureComponent {
       <MediaQuery minWidth={850}>
         {isDesktop => (
           <div className="footerGfw">
+            <ContactUs open />
             <div className="footer-subscribe">
               <Button className="footer-subscribe-button footer-newsletter">
                 STAY UPDATED
@@ -93,9 +96,12 @@ class Footer extends PureComponent {
                   <a className="text-button" href="/sitemap">
                     SITEMAP
                   </a>
-                  <div className="text-button footer-links__contact js-footer-contact-us">
+                  <button
+                    onClick={() => this.props.setModalContactUsOpen(true)}
+                    className="text-button footer-links__contact"
+                  >
                     CONTACT US
-                  </div>
+                  </button>
                 </div>
               </div>
               <div className="footer-info">
@@ -187,5 +193,9 @@ class Footer extends PureComponent {
     );
   }
 }
+
+Footer.propTypes = {
+  setModalContactUsOpen: PropTypes.func
+};
 
 export default Footer;
