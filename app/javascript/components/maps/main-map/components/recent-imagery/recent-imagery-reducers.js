@@ -6,7 +6,7 @@ export const initialState = {
   loadingMoreTiles: false,
   data: [],
   dataStatus: {
-    tilesPerRequest: 6,
+    tilesPerRequest: 2,
     haveAllData: false,
     requestedTiles: 0,
     requestFails: 0
