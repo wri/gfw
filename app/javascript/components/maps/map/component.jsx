@@ -19,7 +19,7 @@ import './styles.scss';
 class MapComponent extends PureComponent {
   state = {
     mapReady: false
-  }
+  };
 
   render() {
     const {
@@ -27,14 +27,14 @@ class MapComponent extends PureComponent {
       loading,
       mapOptions,
       basemap,
-      label,
-      bbox,
+      // label,
       draw,
       handleMapMove,
       handleMapInteraction,
       zoom,
       lat,
-      lng
+      lng,
+      setMapRect
     } = this.props;
     const { mapReady } = this.state;
 
@@ -42,6 +42,9 @@ class MapComponent extends PureComponent {
       <div
         className={cx('c-map', { 'no-pointer-events': draw }, className)}
         style={{ backgroundColor: basemap.color }}
+        ref={el => {
+          setMapRect(el);
+        }}
       >
         <ReactMapGL
           ref={map => {
@@ -53,6 +56,7 @@ class MapComponent extends PureComponent {
           longitude={lng}
           zoom={zoom}
           mapStyle={basemap.url}
+          mapOptions={mapOptions}
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}
           onLoad={() => this.setState({ mapReady: true })}
@@ -77,11 +81,14 @@ MapComponent.propTypes = {
   loading: PropTypes.bool,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
-  label: PropTypes.object,
+  // label: PropTypes.object,
+  setMapRect: PropTypes.func,
   handleMapMove: PropTypes.func,
-  bbox: PropTypes.array,
-  setInteraction: PropTypes.func,
-  draw: PropTypes.bool
+  handleMapInteraction: PropTypes.func,
+  draw: PropTypes.bool,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+  zoom: PropTypes.number
 };
 
 export default MapComponent;

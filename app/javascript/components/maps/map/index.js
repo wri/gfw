@@ -23,10 +23,12 @@ class MapContainer extends PureComponent {
   };
 
   state = {
-    bbox: null
+    bbox: null,
+    width: 0,
+    height: 0
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const {
       basemap,
       mapOptions: { zoom },
@@ -52,6 +54,10 @@ class MapContainer extends PureComponent {
       this.setBbox(bbox);
     }
 
+    if (this.state.bbox && this.state.bbox !== prevState.bbox) {
+      this.fitBounds(this.state.bbox);
+    }
+
     // if a new layer contains a bbox
     if (layerBbox && layerBbox !== prevProps.layerBbox) {
       setMapSettings({ bbox: layerBbox });
@@ -65,12 +71,34 @@ class MapContainer extends PureComponent {
 
   setBbox = bbox => {
     this.setState({ bbox });
+  };
+
+  setMapRect = map => {
+    if (map && !this.state.width && !this.state.height) {
+      const mapEl = map.getBoundingClientRect();
+      this.setState({ width: mapEl.width, height: mapEl.height });
+    }
+  };
+
+  fitBounds = bbox => {
     const { lat, lng, zoom, setMapSettings } = this.props;
-    if (bbox) {
-      const viewport = new WebMercatorViewport({ width: '100%', height: '100%', longitude: lng, latitude: lat, zoom, pitch: 0, bearing: 0 });
-      const newViewport = viewport.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {
-        padding: 50
+    const { width, height } = this.state;
+    if (bbox && width && height) {
+      const viewport = new WebMercatorViewport({
+        width,
+        height,
+        longitude: lng,
+        latitude: lat,
+        zoom,
+        pitch: 0,
+        bearing: 0
       });
+      const newViewport = viewport.fitBounds(
+        [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
+        {
+          padding: 50
+        }
+      );
       const { latitude, longitude } = newViewport;
       setMapSettings({
         center: {
@@ -102,23 +130,10 @@ class MapContainer extends PureComponent {
     this.setBbox(null);
   };
 
-  handleMapInteraction = (e) => {
+  handleMapInteraction = e => {
     const { draw, menuSection } = this.props;
     if (!draw && !menuSection) {
-      console.log('interacting...');
-      // this.props.setInteraction({
-      //   data,
-      //   ...e,
-      //   label: layer.name,
-      //   article,
-      //   isBoundary: layer.isBoundary,
-      //   id: layer.id,
-      //   value: layer.id,
-      //   config: output
-      // });
-      // track('mapInteraction', {
-      //   label: layer.name
-      // });
+      this.props.setInteraction(e);
     }
   };
 
@@ -128,7 +143,8 @@ class MapContainer extends PureComponent {
       ...this.state,
       handleMapInteraction: this.handleMapInteraction,
       handleMapMove: this.handleMapMove,
-      setBbox: this.setBbox
+      setBbox: this.setBbox,
+      setMapRect: this.setMapRect
     });
   }
 }
@@ -138,10 +154,13 @@ MapContainer.propTypes = {
   bbox: PropTypes.array,
   geostoreBbox: PropTypes.array,
   setMapSettings: PropTypes.func,
+  setInteraction: PropTypes.func,
   layerBbox: PropTypes.array,
   draw: PropTypes.bool,
-  setInteraction: PropTypes.func,
-  menuSection: PropTypes.string
+  menuSection: PropTypes.string,
+  lat: PropTypes.number,
+  lng: PropTypes.number,
+  zoom: PropTypes.number
 };
 
 reducerRegistry.registerModule('map', {
