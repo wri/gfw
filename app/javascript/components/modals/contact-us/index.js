@@ -6,7 +6,9 @@ import reducers, { initialState } from './reducers';
 import Component from './component';
 
 const mapStateToProps = ({ modalContactus }) => ({
-  open: modalContactus && modalContactus.open
+  open: modalContactus && modalContactus.open,
+  showConfirm: modalContactus && modalContactus.showConfirm,
+  submitting: modalContactus && modalContactus.submitting
 });
 
 reducerRegistry.registerModule('modalContactus', {

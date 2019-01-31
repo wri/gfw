@@ -9,6 +9,20 @@ const setModalContactUsOpen = (state, { payload }) => ({
   open: payload
 });
 
+const setShowConfirm = (state, { payload }) => ({
+  ...state,
+  showConfirm: payload,
+  submitting: false,
+  error: false
+});
+
+const setFormSubmitting = (state, { payload }) => ({
+  ...state,
+  ...payload
+});
+
 export default {
-  [actions.setModalContactUsOpen]: setModalContactUsOpen
+  [actions.setModalContactUsOpen]: setModalContactUsOpen,
+  [actions.setShowConfirm]: setShowConfirm,
+  [actions.setFormSubmitting]: setFormSubmitting
 };
