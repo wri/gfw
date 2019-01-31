@@ -40,8 +40,8 @@ class SectionProjects extends PureComponent {
             </div>
             <div className="column small-12 large-5 side">
               <h3>MEET THE GRANTEES AND FELLOWS</h3>
-              <p>
-                With fnancial and technical support from GFW, organizations and
+              <p className="text -paragraph -color-2 -light -spaced">
+                With financial and technical support from GFW, organizations and
                 individuals around the world are using Global Forest Watch to
                 monitor largescale land use projects, enforce community land
                 rights, defend critical habitat, and infuence forest policy.
