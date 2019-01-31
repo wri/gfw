@@ -75,7 +75,7 @@ export const routes = {
     ]
   },
   [SGF]: {
-    controller: 'small_grants_fund',
+    controller: 'grants_and_fellowships',
     path: '/grants-and-fellowships/:tab?',
     component: 'sgf',
     sections: {

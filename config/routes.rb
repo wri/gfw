@@ -119,8 +119,8 @@ Gfw::Application.routes.draw do
   get '/about(/:section)' => 'about#index'
 
   # Small Grunts Fund
-  get '/grants-and-fellowships' => 'small_grants_fund#index'
-  get '/grants-and-fellowships/*all' => 'small_grants_fund#index'
+  get '/grants-and-fellowships' => 'grants_and_fellowships#index'
+  get '/grants-and-fellowships/*all' => 'grants_and_fellowships#index'
 
   # connect
   get '/my_gfw/' => 'connect#index', as: 'user_index'
