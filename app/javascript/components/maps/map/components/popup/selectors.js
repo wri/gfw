@@ -13,13 +13,13 @@ const getLatLng = state => state.popup && state.popup.latlng;
 
 export const getIsBoundary = createSelector(
   getSelectedInteraction,
-  interaction => interaction && interaction.isBoundary
+  interaction => interaction && interaction.layer.isBoundary
 );
 
 export const getCardData = createSelector(
   [getSelectedInteraction],
   interaction => {
-    if (isEmpty(interaction) || !interaction.article) return null;
+    if (isEmpty(interaction) || !interaction.layer.article) return null;
     const { data, config } = interaction;
     const articleData = config.reduce((obj, param) => {
       const { prefix, renderKey } = param;
@@ -64,9 +64,9 @@ export const getTableData = createSelector(
   [getSelectedInteraction, getIsBoundary],
   (interaction, isBoundary) => {
     if (isEmpty(interaction) || interaction.article) return null;
-    const { config, data } = interaction;
+    const { data, layer: { interactionConfig } } = interaction;
     if (isBoundary) {
-      return config.reduce(
+      return interactionConfig.output.reduce(
         (obj, c) => ({
           ...obj,
           [c.column]: data[c.column]
@@ -75,10 +75,14 @@ export const getTableData = createSelector(
       );
     }
 
-    return Object.keys(interaction).map(i => ({
-      label: i,
-      value: interaction[i]
-    }));
+    return (
+      interactionConfig.output &&
+      interactionConfig.output.filter(c => !c.hidden).map(c => ({
+        ...c,
+        label: c.property,
+        value: data[c.column]
+      }))
+    );
   }
 );
 

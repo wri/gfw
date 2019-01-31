@@ -21,6 +21,12 @@ class MapComponent extends PureComponent {
     mapReady: false
   };
 
+  getCursor = ({ isHovering, isDragging }) => {
+    if (isHovering) return 'pointer';
+    if (isDragging) return 'grabbing';
+    return 'grab';
+  };
+
   render() {
     const {
       className,
@@ -34,7 +40,8 @@ class MapComponent extends PureComponent {
       zoom,
       lat,
       lng,
-      setMapRect
+      setMapRect,
+      interactiveLayers
     } = this.props;
     const { mapReady } = this.state;
 
@@ -60,6 +67,8 @@ class MapComponent extends PureComponent {
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}
           onLoad={() => this.setState({ mapReady: true })}
+          getCursor={this.getCursor}
+          interactiveLayerIds={interactiveLayers}
         >
           {this.map && mapReady && <LayerManagerComponent map={this.map} />}
           {this.map && draw && mapReady && <MapDraw map={this.map} />}
@@ -85,6 +94,7 @@ MapComponent.propTypes = {
   setMapRect: PropTypes.func,
   handleMapMove: PropTypes.func,
   handleMapInteraction: PropTypes.func,
+  interactiveLayers: PropTypes.array,
   draw: PropTypes.bool,
   lat: PropTypes.number,
   lng: PropTypes.number,

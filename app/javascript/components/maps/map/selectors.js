@@ -322,6 +322,11 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
   return layers.filter(l => !l.confirmedOnly);
 });
 
+export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
+  if (isEmpty(layers)) return [];
+  return layers.filter(l => l.interactionConfig).map(l => `${l.id}-fill`);
+});
+
 // get widgets related to map layers and use them to build the layers
 export const getWidgetsWithLayerParams = createSelector(
   [parseWidgetsWithOptions, getAllLayers],
@@ -411,14 +416,18 @@ export const getGeostoreBbox = createSelector(
 );
 
 export const filterInteractions = createSelector(
-  [selectInteractions],
-  interactions => {
+  [selectInteractions, getActiveLayers],
+  (interactions, activeLayers) => {
     if (isEmpty(interactions)) return null;
-    return Object.values(interactions);
-    // .filter(i => !isEmpty(i.data))
-    // .map(i => ({
-    //   ...i
-    // }));
+    return Object.keys(interactions).map(i => {
+      const layer = activeLayers.find(l => l.id === i);
+      return {
+        data: interactions[i],
+        layer,
+        label: layer.name,
+        value: layer.id
+      };
+    });
   }
 );
 
@@ -430,21 +439,21 @@ export const getSelectedInteraction = createSelector(
       l => !l.isBoundary && !isEmpty(l.interactionConfig)
     );
     // if there is an article (icon layer) then choose that
-    let selectedData = options.find(o => o.article);
+    let selectedData = options.find(o => o.layer.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
       selectedData = options.find(
-        o => o.value === layersWithoutBoundaries[0].id
+        o => o.layer.id === layersWithoutBoundaries[0].id
       );
     }
     // if only one layer then get that
     if (!selectedData && options.length === 1) selectedData = options[0];
     // otherwise get based on selected
-    if (!selectedData) selectedData = options.find(o => o.value === selected);
-    const layer =
-      selectedData && layers && layers.find(l => l.id === selectedData.id);
+    if (!selectedData) {
+      selectedData = options.find(o => o.layer.id === selected);
+    }
 
-    return { ...selectedData, layer };
+    return selectedData;
   }
 );
 
@@ -461,5 +470,6 @@ export const getMapProps = createStructuredSelector({
   lat: getMapLat,
   lng: getMapLng,
   zoom: getMapZoom,
-  selectedInteraction: getSelectedInteraction
+  selectedInteraction: getSelectedInteraction,
+  interactiveLayers: getInteractiveLayers
 });

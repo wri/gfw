@@ -132,7 +132,7 @@ class MapContainer extends PureComponent {
 
   handleMapInteraction = e => {
     const { draw, menuSection } = this.props;
-    if (!draw && !menuSection) {
+    if (!draw && !menuSection && e.features && e.features.length) {
       this.props.setInteraction(e);
     }
   };

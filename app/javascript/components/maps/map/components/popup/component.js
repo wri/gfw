@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 
 // import { MapPopup } from 'wri-api-components/dist/map';
@@ -9,6 +8,8 @@ import { Popup as MapPopup } from 'react-map-gl';
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown/dropdown-component';
 import Card from 'components/ui/card';
+import closeIcon from 'assets/icons/close.svg';
+import Icon from 'components/ui/icon';
 
 import DataTable from './components/data-table';
 import BoundarySentence from './components/boundary-sentence';
@@ -31,6 +32,7 @@ class Popup extends Component {
       setInteractionSelected,
       setMainMapAnalysisView,
       setMapSettings,
+      clearInteractions,
       isBoundary
     } = this.props;
 
@@ -38,8 +40,16 @@ class Popup extends Component {
       <MapPopup
         latitude={latlng.lat}
         longitude={latlng.lng}
+        closeButton={false}
       >
         <div className="c-popup">
+          <Button
+            className="close-btn"
+            theme="theme-button-clear theme-button-small square"
+            onClick={clearInteractions}
+          >
+            <Icon icon={closeIcon} />
+          </Button>
           {cardData ? (
             <Card
               className="popup-card"
@@ -101,7 +111,7 @@ class Popup extends Component {
 }
 
 Popup.propTypes = {
-  map: PropTypes.object,
+  clearInteractions: PropTypes.func,
   setInteractionSelected: PropTypes.func,
   latlng: PropTypes.object,
   selected: PropTypes.object,

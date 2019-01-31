@@ -4,6 +4,13 @@
   font-family: $font-family-1;
   border-radius: 2px;
   max-width: rem(290px);
+  min-width: rem(200px);
+
+  .close-btn {
+    position: absolute;
+    top: rem(10px);
+    right: rem(10px);
+  }
 
   .popup-card {
     border: 0;
@@ -48,6 +55,8 @@
 
 .mapboxgl-popup-content {
   padding: 0 !important;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+  border-radius: 0 !important;
 }
 
 .mapboxgl-popup-close-button {
