@@ -1,8 +1,8 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { track } from 'app/analytics';
 import reducerRegistry from 'app/registry';
+import WebMercatorViewport from 'viewport-mercator-project';
 
 import { setInteraction } from 'components/maps/map/components/popup/actions';
 import * as ownActions from './actions';
@@ -65,6 +65,21 @@ class MapContainer extends PureComponent {
 
   setBbox = bbox => {
     this.setState({ bbox });
+    const { lat, lng, zoom, setMapSettings } = this.props;
+    if (bbox) {
+      const viewport = new WebMercatorViewport({ width: '100%', height: '100%', longitude: lng, latitude: lat, zoom, pitch: 0, bearing: 0 });
+      const newViewport = viewport.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {
+        padding: 50
+      });
+      const { latitude, longitude } = newViewport;
+      setMapSettings({
+        center: {
+          lat: latitude,
+          lng: longitude
+        },
+        zoom: newViewport.zoom
+      });
+    }
   };
 
   handleMapMove = viewport => {
