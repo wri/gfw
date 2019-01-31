@@ -15,7 +15,7 @@ SitemapGenerator::Sitemap.create do
   end
 
   add '/about', :changefreq => 'weekly', :priority => 0.8
-  add '/small-grants-fund', :changefreq => 'weekly', :priority => 0.8
+  add '/grants-and-fellowships', :changefreq => 'weekly', :priority => 0.8
   add '/search', :changefreq => 'weekly', :priority => 0.8
   add '/stories', :changefreq => 'weekly', :priority => 0.8
 
