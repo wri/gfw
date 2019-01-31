@@ -106,8 +106,8 @@ export default {
       icon: howto
     },
     {
-      label: 'Small Grants Fund',
-      path: '/small-grants-fund',
+      label: 'Grants & Fellowships',
+      path: '/grants-and-fellowships',
       icon: sgf
     },
     {
