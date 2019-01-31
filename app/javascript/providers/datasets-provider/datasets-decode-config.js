@@ -128,9 +128,9 @@ const decodes = {
           const intensity = imgData[pixelPos];
           const scale = myScale(intensity);
           imgData[pixelPos] = rgb[0];
-          imgData[pixelPos + 1] = 72 - z + rgb[1] - 3 * scale / z;
-          imgData[pixelPos + 2] = 33 - z + rgb[2] - intensity / z;
-          imgData[pixelPos + 3] = z < 13 ? scale : intensity;
+          imgData[pixelPos + 1] = rgb[1];
+          imgData[pixelPos + 2] = rgb[2];
+          imgData[pixelPos + 3] = scale * 2;
         } else {
           imgData[pixelPos + 3] = 0;
         }
