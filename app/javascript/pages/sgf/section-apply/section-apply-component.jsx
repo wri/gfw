@@ -14,7 +14,7 @@ class SectionAbout extends PureComponent {
         <div className="row">
           <div className="column small-12 medium-9">
             <p className="text -paragraph -color-2 -light -spaced">
-              The Small Grants Fund and Fellowship Calls for Applications opens
+              The Small Grants Fund and Fellowship Calls for Applications open
               once a year. Though the specific focus of the Calls varies from
               year to year, successful applicants must clearly articulate how
               GFW will support and enhance their ongoing work related to:
