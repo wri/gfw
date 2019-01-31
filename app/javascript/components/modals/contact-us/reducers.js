@@ -6,7 +6,8 @@ export const initialState = {
 
 const setModalContactUsOpen = (state, { payload }) => ({
   ...state,
-  open: payload
+  open: payload,
+  showConfirm: false
 });
 
 const setShowConfirm = (state, { payload }) => ({

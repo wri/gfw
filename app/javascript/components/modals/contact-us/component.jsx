@@ -29,7 +29,7 @@ class ModalContactUs extends PureComponent {
         }}
       >
         {submitting && <Loader />}
-        {showConfirm && (
+        {showConfirm ? (
           <div className="feedback-message">
             <h3>
               Thank you for contacting Global Forest Watch! Check your inbox for
@@ -48,8 +48,9 @@ class ModalContactUs extends PureComponent {
               </Button>
             </div>
           </div>
+        ) : (
+          <Contact onSubmit={this.handleSubmit} />
         )}
-        <Contact onSubmit={this.handleSubmit} />
       </Modal>
     );
   }
