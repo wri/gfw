@@ -113,7 +113,7 @@ const decodes = {
       1: [244, 29, 54],
       2: [239, 211, 26],
       3: [47, 191, 113],
-      4: [173, 54, 36],
+      4: [173, 104, 36],
       5: [178, 53, 204]
     };
 
@@ -126,11 +126,11 @@ const decodes = {
           const lossCat = imgData[pixelPos + 1];
           const rgb = lossColors[lossCat || 0];
           const intensity = imgData[pixelPos];
-          const scale = myScale(intensity);
+          const scale = myScale(intensity) * 2;
           imgData[pixelPos] = rgb[0];
           imgData[pixelPos + 1] = rgb[1];
           imgData[pixelPos + 2] = rgb[2];
-          imgData[pixelPos + 3] = scale * 2;
+          imgData[pixelPos + 3] = scale;
         } else {
           imgData[pixelPos + 3] = 0;
         }
