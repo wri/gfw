@@ -61,8 +61,8 @@ Gfw::Application.routes.draw do
   # about
   get '/partners' => redirect('/about')
   get '/about/small_grants_fund' => redirect('/small-grants-fund')
-  get '/small_grants_fund' => redirect('/small-grants-fund')
-  get '/small_grants_fund/*all' => redirect('/grants-and-fellowships')
+  get '/small-grants-fund' => redirect('/small-grants-fund')
+  get '/small-grants-fund/*all' => redirect('/grants-and-fellowships')
 
   # map
   get '/glad', to: redirect('/map/3/15.00/27.00/ALL/grayscale/umd_as_it_happens')
