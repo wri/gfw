@@ -3,10 +3,7 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
 .c-form {
-  max-height: 90vh;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
   height: 100%;
   width: 100%;
   min-width: 600px;
