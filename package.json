@@ -122,7 +122,6 @@
     "install": "0.10.1",
     "layer-manager": "^1.14.5",
     "leaflet-draw": "^1.0.3",
-    "leaflet-mapbox-vector-tile": "^0.1.6",
     "lodash": "^4.17.10",
     "lodash-math": "0.0.7",
     "moment": "2.19.3",
