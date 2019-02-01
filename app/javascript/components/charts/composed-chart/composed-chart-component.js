@@ -26,7 +26,17 @@ class CustomComposedChart extends PureComponent {
     const maxValues = [];
     Object.keys(yKeys).forEach(key => {
       Object.keys(yKeys[key]).forEach(subKey => {
-        const maxValue = maxBy(data, subKey);
+        const maxValue =
+          yKeys[key][subKey].stackId === 1
+            ? // Total sum of values if graph is a stacked bar chart
+            {
+              [subKey]: max(
+                data.map(d =>
+                  Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+                )
+              )
+            }
+            : maxBy(data, subKey);
         if (maxValue) {
           maxValues.push(maxValue[subKey]);
         }

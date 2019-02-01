@@ -4,18 +4,20 @@ import PropTypes from 'prop-types';
 import Icon from 'components/ui/icon';
 
 import sgfLogo from './img/GFW_SGF_logo.png';
+import techLogo from './img/GFW_TECH_logo.png';
 
 import './section-about-styles.scss';
 
 class SectionAbout extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { results, benefits } = this.props;
+    const { results, sgfBenefits, fellowshipBenefits } = this.props;
     return (
       <div className="l-section-about">
         <section className="intro">
           <div className="row intro">
             <div className="column small-12 medium-9">
+              <h2 className="section-title">Small Grants Fund</h2>
               <p className="text -paragraph -color-2 -light -spaced">
                 Civil Society Organizations operating in and around forested
                 areas are some of the most effective champions of forest
@@ -40,12 +42,19 @@ class SectionAbout extends PureComponent {
         </section>
         <section className="program">
           <div className="row">
-            <div className="column small-12">
-              <h2 className="section-title">Program Benefits</h2>
+            <div className="column small-12 medium-9">
+              <h3 className="section-subtitle">Program Benefits</h3>
               <ul className="list">
-                {benefits && benefits.map(item => <li key={item}>- {item}</li>)}
+                {sgfBenefits &&
+                  sgfBenefits.map(item => <li key={item}>- {item}</li>)}
               </ul>
-              <p>
+            </div>
+          </div>
+        </section>
+        <section className="program">
+          <div className="row">
+            <div className="column small-12 medium-9">
+              <p className="text -paragraph -color-2 -light -spaced">
                 Small Grants Fund projects have used GFW to strengthen community
                 land rights, by providing evidence of the benefits of
                 community-monitored forests; alert authorities to illegal
@@ -59,7 +68,7 @@ class SectionAbout extends PureComponent {
         <section className="results">
           <div className="row">
             <div className="column small-12">
-              <h2 className="section-title">Results</h2>
+              <h2 className="section-subtitle">Results</h2>
               <div className="row icon-list">
                 {results &&
                   results.map(item => (
@@ -72,14 +81,59 @@ class SectionAbout extends PureComponent {
             </div>
           </div>
         </section>
+        <section className="intro">
+          <div className="row intro">
+            <div className="column small-12 medium-9">
+              <h2 className="section-title">Tech Fellowship</h2>
+              <p className="text -paragraph -color-2 -light -spaced">
+                The Global Forest Watch Technology Fellowship aims to recruit
+                and train the best and brightest forest managers, protectors and
+                advocates in facing growing threats to forests through use of
+                pioneering technology solutions and big data, and support others
+                in their networks to do so as well. The objective of the
+                fellowship program is to scale impact by developing a community
+                of GFW power users and champions to support the use of the
+                platform in priority countries, and develop a shared vision on
+                how GFW tools and other forest monitoring technology can be used
+                to protect forests in priority regions around the world. Fellows
+                may be indigenous leaders, investigative journalists, public
+                interest lawyers, foresters, environmental law enforcers,
+                conservationists, or open data experts who have the passion to
+                provide training and ongoing support to governments and local
+                activists to use forest data and monitoring technology
+                effectively within their work and to enhance their ability to
+                participate in monitoring of illegal deforestation.
+              </p>
+            </div>
+            <div className="column small-12 medium-3 logo">
+              <img
+                src={techLogo}
+                alt="Logo Global Forest Watch Tech Fellowship"
+              />
+            </div>
+          </div>
+        </section>
+        <section className="program">
+          <div className="row">
+            <div className="column small-12 medium-9">
+              <h3 className="section-subtitle">Program Benefits</h3>
+              <ul className="list">
+                {fellowshipBenefits &&
+                  fellowshipBenefits.map(item => <li key={item}>- {item}</li>)}
+              </ul>
+            </div>
+          </div>
+        </section>
         <section className="support">
           <div className="row">
             <div className="column small-12 medium-9">
-              <h2 className="section-title">Support the Small Grants Fund</h2>
+              <h2 className="section-title">
+                Support the Small Grants Fund and Fellowship
+              </h2>
               <p className="text -paragraph -color-2 -light -spaced">
-                If you would like to contribute to supporting communities and
-                civil society organizations in using GFW to protect and
-                sustainably manage the world’s forests, please contact us at{' '}
+                If you would like to contribute to supporting communities, civil
+                society, organizations, and individuals in using GFW to protect
+                and sustainably manage the world’s forests, please contact us at{' '}
                 <a
                   className="text -paragraph -color-4 -light"
                   href="mailto:gfwfund@wri.org"
@@ -97,7 +151,8 @@ class SectionAbout extends PureComponent {
 
 SectionAbout.propTypes = {
   results: PropTypes.array.isRequired,
-  benefits: PropTypes.array.isRequired
+  sgfBenefits: PropTypes.array.isRequired,
+  fellowshipBenefits: PropTypes.array.isRequired
 };
 
 export default SectionAbout;
