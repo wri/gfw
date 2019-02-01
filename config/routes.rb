@@ -61,7 +61,7 @@ Gfw::Application.routes.draw do
   # about
   get '/partners' => redirect('/about')
   get '/about/small_grants_fund' => redirect('/small-grants-fund')
-  get '/small-grants-fund' => redirect('/small-grants-fund')
+  get '/small-grants-fund' => redirect('/grants-and-fellowships')
   get '/small-grants-fund/*all' => redirect('/grants-and-fellowships')
 
   # map
