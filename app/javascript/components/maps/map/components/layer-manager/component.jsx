@@ -35,7 +35,7 @@ class LayerManagerComponent extends PureComponent {
               }}
             />
           )}
-        {labels && (
+        {/* {labels && (
           <Layer
             id="labels"
             provider="leaflet"
@@ -45,7 +45,7 @@ class LayerManagerComponent extends PureComponent {
               }
             }}
           />
-        )}
+        )} */}
         {geostore &&
           geostore.id && (
             <Layer

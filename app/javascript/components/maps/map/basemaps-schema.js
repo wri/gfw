@@ -28,14 +28,13 @@ export const labels = {
 };
 
 export default {
-  default: {
+  light: {
     value: 'default',
     label: 'default',
     labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
-    url: 'mapbox://styles/resourcewatch/cjlhwaoh211hp2stemfz0imqf',
-    mapboxStyleLayer: true
+    url: 'mapbox://styles/resourcewatch/cjrlzgwoe4yon2snmcgokg8h3'
   },
   dark: {
     value: 'dark',
@@ -43,8 +42,7 @@ export default {
     labelsKey: 'lightLabels',
     color: '#31312F',
     image: darkImage,
-    url: 'mapbox://styles/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9',
-    mapboxStyleLayer: true
+    url: 'mapbox://styles/resourcewatch/cjlhtst4i0m7e2rmijubkv4y9'
   },
   satellite: {
     value: 'satellite',
@@ -52,7 +50,8 @@ export default {
     labelsKey: 'lightLabels',
     color: '#131620',
     image: satelliteImage,
-    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+    tileUrl: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
   },
   landsat: {
     value: 'landsat',
@@ -62,6 +61,7 @@ export default {
     color: '#0C0045',
     image: landsatImage,
     url: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
+    tileUrl: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };

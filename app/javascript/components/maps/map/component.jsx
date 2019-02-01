@@ -13,6 +13,7 @@ import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
 import LayerManagerComponent from './components/layer-manager';
 
+import 'mapbox-gl/dist/mapbox-gl.css';
 import './styles.scss';
 
 class MapComponent extends PureComponent {
