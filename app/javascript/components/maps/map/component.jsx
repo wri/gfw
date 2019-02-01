@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactMapGL from 'react-map-gl';
@@ -7,7 +7,6 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
 import iconCrosshair from 'assets/icons/crosshair.svg';
-import LayerSpecProvider from 'providers/layerspec-provider';
 
 import Popup from './components/popup';
 import MapDraw from './components/draw';
@@ -33,7 +32,6 @@ class MapComponent extends PureComponent {
       loading,
       mapOptions,
       basemap,
-      // label,
       draw,
       handleMapMove,
       handleMapInteraction,
@@ -70,16 +68,19 @@ class MapComponent extends PureComponent {
           getCursor={this.getCursor}
           interactiveLayerIds={interactiveLayers}
         >
-          {this.map && mapReady && <LayerManagerComponent map={this.map} />}
-          {this.map && draw && mapReady && <MapDraw map={this.map} />}
-          {this.map && mapReady && <Popup />}
+          {mapReady && (
+            <Fragment>
+              <LayerManagerComponent map={this.map} />
+              <Popup />
+              {draw && <MapDraw map={this.map} />}
+            </Fragment>
+          )}
         </ReactMapGL>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         <MapAttributions className="map-attributions" />
         {loading && (
           <Loader className="map-loader" theme="theme-loader-light" />
         )}
-        <LayerSpecProvider />
       </div>
     );
   }
@@ -90,7 +91,6 @@ MapComponent.propTypes = {
   loading: PropTypes.bool,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
-  // label: PropTypes.object,
   setMapRect: PropTypes.func,
   handleMapMove: PropTypes.func,
   handleMapInteraction: PropTypes.func,
