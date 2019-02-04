@@ -31,7 +31,7 @@ export const parseData = createSelector(
           settings.unit === 'co2LossByYear'
             ? adminTotal
             : adminTotal / (44 / 12),
-        unit: 't',
+        unit: settings.unit === 'co2LossByYear' ? 'tCO₂' : 'tC',
         color: loss.main,
         percentage: adminTotal / totalArea * 100
       },
@@ -41,7 +41,7 @@ export const parseData = createSelector(
           settings.unit === 'co2LossByYear'
             ? plantTotal
             : plantTotal / (44 / 12),
-        unit: 't',
+        unit: settings.unit === 'co2LossByYear' ? 'tCO₂' : 'tC',
         color: loss.secondary,
         percentage: plantTotal / totalArea * 100
       }
