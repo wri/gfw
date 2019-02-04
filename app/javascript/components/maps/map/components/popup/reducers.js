@@ -10,7 +10,8 @@ const setInteraction = (state, { payload }) => {
   const interactions = payload.features.reduce((obj, next) => ({
     ...obj,
     [next.layer.source]: {
-      ...next.properties
+      data: next.properties,
+      geometry: next.geometry
     }
   }), {});
 

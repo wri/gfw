@@ -422,7 +422,8 @@ export const filterInteractions = createSelector(
     return Object.keys(interactions).map(i => {
       const layer = activeLayers.find(l => l.id === i);
       return {
-        data: interactions[i],
+        data: interactions[i].data,
+        geometry: interactions[i].geometry,
         layer,
         label: layer.name,
         value: layer.id
