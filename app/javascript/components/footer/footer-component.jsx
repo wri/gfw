@@ -6,6 +6,7 @@ import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
 import ContactUs from 'components/modals/contact-us';
+import Newsletter from 'components/modals/newsletter';
 import wri from 'assets/logos/wri.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import facebook from 'assets/icons/social/facebook.svg';
@@ -22,9 +23,13 @@ class Footer extends PureComponent {
       <MediaQuery minWidth={850}>
         {isDesktop => (
           <div className="footerGfw">
-            <ContactUs open />
+            <ContactUs />
+            <Newsletter />
             <div className="footer-subscribe">
-              <Button className="footer-subscribe-button footer-newsletter">
+              <Button
+                onClick={() => this.props.setModalNewsletterOpen(true)}
+                className="footer-subscribe-button footer-newsletter"
+              >
                 STAY UPDATED
               </Button>
             </div>
@@ -195,7 +200,8 @@ class Footer extends PureComponent {
 }
 
 Footer.propTypes = {
-  setModalContactUsOpen: PropTypes.func
+  setModalContactUsOpen: PropTypes.func,
+  setModalNewsletterOpen: PropTypes.func
 };
 
 export default Footer;
