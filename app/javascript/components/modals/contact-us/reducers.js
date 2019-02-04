@@ -4,12 +4,6 @@ export const initialState = {
   open: false
 };
 
-const setModalContactUsOpen = (state, { payload }) => ({
-  ...state,
-  open: payload,
-  showConfirm: false
-});
-
 const setShowConfirm = (state, { payload }) => ({
   ...state,
   showConfirm: payload,
@@ -23,7 +17,6 @@ const setFormSubmitting = (state, { payload }) => ({
 });
 
 export default {
-  [actions.setModalContactUsOpen]: setModalContactUsOpen,
   [actions.setShowConfirm]: setShowConfirm,
   [actions.setFormSubmitting]: setFormSubmitting
 };

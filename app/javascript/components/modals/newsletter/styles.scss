@@ -6,11 +6,9 @@ $desktop-padding: rem(40px);
   position: relative;
   height: 100%;
   width: 100%;
-  min-width: 600px;
   top: 0;
   left: 0;
-  padding: 3.125rem;
-  padding-top: 2.5rem;
+  padding: 2.5rem $mobile-padding $mobile-padding;
   border-bottom: 66px solid transparent;
   outline: none;
   margin: 0 auto;
@@ -22,6 +20,10 @@ $desktop-padding: rem(40px);
   border-radius: 0;
   font-size: 14px;
   line-height: 1.25;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 2.5rem $desktop-padding $desktop-padding;
+  }
 
   .c-button {
     margin-bottom: 30px;

@@ -4,7 +4,8 @@ import { setModalNewsletterOpen } from 'components/modals/newsletter/actions';
 import Component from './footer-component';
 
 const mapStateToProps = ({ modalContactus, modalNewsletter }) => ({
-  openContactUs: modalContactus && modalContactus.open,
+  openContactUs:
+    modalContactus && modalContactus.settings && modalContactus.settings.open,
   openNewsletter: modalNewsletter && modalNewsletter.open
 });
 

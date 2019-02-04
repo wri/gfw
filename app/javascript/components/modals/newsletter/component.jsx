@@ -19,20 +19,16 @@ class ModalNewsletter extends PureComponent {
       >
         {
           <div className="c-form-container">
-            <h3>Contact us & feedback</h3>
-            <p className="subtitle">
-              Question, comment, request, feedback? We want to hear from you!
-              Help us improve Global Forest Watch by completing the form below.
-            </p>
+            <h3>Updates and newsletters</h3>
+            <p className="subtitle">Subscribe me to the GFW Newsletter!</p>
             <iframe
               title="newsletter"
               scrolling="no"
               src="http://connect.wri.org/l/120942/2016-02-08/2trw5q"
-              width="100%"
+              width={280}
               height="900"
               type="text/html"
               frameBorder="0"
-              allowTransparency="true"
               style={{ border: 0 }}
             />
           </div>
