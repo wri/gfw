@@ -49,7 +49,14 @@ class ModalContactUs extends PureComponent {
             </div>
           </div>
         ) : (
-          <Contact onSubmit={this.handleSubmit} />
+          <div className="c-form-container">
+            <h3>Contact us & feedback</h3>
+            <p className="subtitle">
+              Question, comment, request, feedback? We want to hear from you!
+              Help us improve Global Forest Watch by completing the form below.
+            </p>
+            <Contact onSubmit={this.handleSubmit} />
+          </div>
         )}
       </Modal>
     );

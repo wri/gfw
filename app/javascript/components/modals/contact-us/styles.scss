@@ -2,14 +2,15 @@
 $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
-.c-form {
+.c-form-container {
   position: relative;
   height: 100%;
   width: 100%;
   min-width: 600px;
   top: 0;
   left: 0;
-  padding: 40px 20px 20px;
+  padding: 3.125rem;
+  padding-top: 2.5rem;
   border-bottom: 66px solid transparent;
   outline: none;
   margin: 0 auto;
@@ -24,6 +25,22 @@ $desktop-padding: rem(40px);
 
   .c-button {
     margin-bottom: 30px;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #555;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    margin-top: 0.3125rem;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    color: #999;
+    margin-bottom: 1.875rem;
   }
 }
 
