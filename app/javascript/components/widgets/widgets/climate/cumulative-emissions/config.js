@@ -20,11 +20,11 @@ export default {
   sentences: {
     cumulative_deforestation: `By week {weeknum} of {year}, there were {alerts}
 confirmed alerts and {deforestation} of tree cover loss, comprising {budget} of
-the annual budget. The values are shown in relation to average deforestation
+the annual budget. The values are shown in relation to deforestation
 across previous years, indicated by the grey shading.`,
     cumulative_emissions: `By week {weeknum} of {year}, there were {alerts}
 confirmed alerts and {emissions} emissions, comprising {budget} of
-the annual budget. The values are shown in relation to average emissions
+the annual budget. The values are shown in relation to emissions
 across previous years, indicated by the grey shading.`
   },
   whitelists: {
