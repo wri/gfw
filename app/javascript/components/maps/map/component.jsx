@@ -73,7 +73,7 @@ class MapComponent extends PureComponent {
             <Fragment>
               <LayerManagerComponent map={this.map} />
               <Popup />
-              {draw && <MapDraw map={this.map} />}
+              <MapDraw map={this.map} drawing={draw} />
             </Fragment>
           )}
         </ReactMapGL>

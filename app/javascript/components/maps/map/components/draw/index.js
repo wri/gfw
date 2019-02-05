@@ -8,128 +8,41 @@ import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import './styles.scss';
 
+import drawConfig from './config';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getDrawProps } from './selectors';
 
 class MapDraw extends PureComponent {
   componentDidMount() {
+    if (this.props.drawing) {
+      this.initDrawing();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { drawing, geostoreId, setDrawnGeostore } = this.props;
+
+    // start drawing
+    if (drawing && !isEqual(drawing, prevProps.drawing)) {
+      this.initDrawing();
+    }
+
+    // stop drawing
+    if (!drawing && !isEqual(drawing, prevProps.drawing)) {
+      this.closeDrawing();
+    }
+
+    // new closed shape
+    if (geostoreId && !isEqual(geostoreId, prevProps.geostoreId)) {
+      setDrawnGeostore(geostoreId);
+    }
+  }
+
+  initDrawing = () => {
     const { map, getGeostoreId } = this.props;
 
-    this.draw = new MapboxDraw({
-      displayControlsDefault: false,
-      styles: [
-        // ACTIVE (being drawn)
-        // line stroke
-        {
-          id: 'gl-draw-line',
-          type: 'line',
-          filter: ['all', ['==', '$type', 'LineString'], ['!=', 'mode', 'static']],
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-color': '#97be32',
-            'line-width': 3
-          }
-        },
-        // polygon fill
-        {
-          id: 'gl-draw-polygon-fill',
-          type: 'fill',
-          filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']],
-          paint: {
-            'fill-color': 'transparent'
-          }
-        },
-        // polygon outline stroke
-        // This doesn't style the first edge of the polygon, which uses the line stroke styling instead
-        {
-          id: 'gl-draw-polygon-stroke-active',
-          type: 'line',
-          filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']],
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-color': '#97be32',
-            'line-width': 3
-          }
-        },
-        // vertex point halos
-        {
-          id: 'gl-draw-polygon-and-line-vertex-halo-active',
-          type: 'circle',
-          filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point']],
-          paint: {
-            'circle-radius': 8,
-            'circle-color': '#000'
-          }
-        },
-        // vertex points
-        {
-          id: 'gl-draw-polygon-and-line-vertex-active',
-          type: 'circle',
-          filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point']],
-          paint: {
-            'circle-radius': 6,
-            'circle-color': '#fff'
-          }
-        },
-
-        // INACTIVE (static, already drawn)
-        // line stroke
-        {
-          id: 'gl-draw-line-static',
-          type: 'line',
-          filter: ['all', ['==', '$type', 'LineString'], ['==', 'mode', 'static']],
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-color': '#97be32',
-            'line-width': 3
-          }
-        },
-        // polygon fill
-        {
-          id: 'gl-draw-polygon-fill-static',
-          type: 'fill',
-          filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']],
-          paint: {
-            'fill-color': '#000',
-            'fill-outline-color': '#000',
-            'fill-opacity': 0.1
-          }
-        },
-        // polygon outline
-        {
-          id: 'gl-draw-polygon-stroke-static',
-          type: 'line',
-          filter: ['all', ['==', '$type', 'Polygon'], ['==', 'mode', 'static']],
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-color': '#000',
-            'line-width': 3
-          }
-        },
-        {
-          id: 'gl-draw-point-static',
-          type: 'circle',
-          filter: ['all', ['==', 'mode', 'static'], ['==', '$type', 'Point']],
-          paint: {
-            'circle-radius': 5,
-            'circle-color': '#ff0000'
-          }
-        }
-      ]
-    });
+    this.draw = new MapboxDraw(drawConfig);
     map.addControl(this.draw);
 
     if (this.draw.changeMode) {
@@ -144,15 +57,7 @@ class MapDraw extends PureComponent {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    const { geostoreId, setDrawnGeostore } = this.props;
-
-    if (geostoreId && !isEqual(geostoreId, prevProps.geostoreId)) {
-      setDrawnGeostore(geostoreId);
-    }
-  }
-
-  componentWillUnmount() {
+  closeDrawing = () => {
     const { map } = this.props;
     map.off('draw.create');
     map.removeControl(this.draw);
@@ -165,6 +70,7 @@ class MapDraw extends PureComponent {
 
 MapDraw.propTypes = {
   map: PropTypes.object,
+  drawing: PropTypes.bool,
   geostoreId: PropTypes.string,
   getGeostoreId: PropTypes.func,
   setDrawnGeostore: PropTypes.func

@@ -22,6 +22,12 @@ class Popup extends Component {
     }
   }
 
+  handleClickAnalysis = selectedInteraction => {
+    console.log(selectedInteraction.layer);
+    this.props.getGeostoreId(selectedInteraction.geometry);
+    // this.props.setMainMapAnalysisView(selectedInteraction);
+  }
+
   render() {
     const {
       tableData,
@@ -98,7 +104,7 @@ class Popup extends Component {
                 <DataTable data={tableData} />
               )}
               <div className="nav-footer">
-                <Button onClick={() => setMainMapAnalysisView(selected)}>
+                <Button onClick={() => this.handleClickAnalysis(selected)}>
                   ANALYZE
                 </Button>
               </div>

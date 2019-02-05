@@ -119,7 +119,7 @@ export const getLayerEndpoints = createSelector(
     );
 
     const groupedEndpoints = groupBy(endpoints, 'slug');
-    const parsedEndpoints = Object.keys(groupedEndpoints).map(slug => {
+    const parsedEndpoints = Object.keys(groupedEndpoints).filter(slug => slug !== 'undefined').map(slug => {
       let params = {};
       groupedEndpoints[slug].forEach(e => {
         params = {

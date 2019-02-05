@@ -16,7 +16,7 @@ export const setMainMapSettings = createThunkAction(
 
 export const setMainMapAnalysisView = createThunkAction(
   'setMainMapAnalysisView',
-  ({ data, layer, geometry }) => (dispatch, getState) => {
+  ({ data, layer }) => (dispatch, getState) => {
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
     const { query, type } = getState().location || {};
