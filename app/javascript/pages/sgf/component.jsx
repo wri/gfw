@@ -26,8 +26,10 @@ class Page extends PureComponent {
     return (
       <div>
         <Cover
-          title="Small Grants Fund"
-          description="The Small Grants Fund supports civil society organizations around the world to use GFW in their research, advocacy and fieldwork"
+          title="Grants & Fellowships"
+          description="The Small Grants Fund and Tech Fellowship support civil society organizations
+            and individuals around the world to use Global Forest Watch in their advocacy,
+            research, and feld work."
           bgImage={bgImage}
         />
         <SubnavMenu links={this.props.links} />
