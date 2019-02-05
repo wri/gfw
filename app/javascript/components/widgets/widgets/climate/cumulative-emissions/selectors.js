@@ -82,26 +82,33 @@ export const getStdDev = createSelector(
     const { year } = settings;
 
     const stdevs = [];
-    const means = data[year].map((obj, weeknum) => {
-      const sum = years.reduce(
-        (acc, y) =>
-          (y === year || !data[y][weeknum] ? acc : acc + data[y][weeknum].count),
-        0
-      );
-      const mean = sum / years.length;
-      const numerador = years.reduce(
-        (acc, y) =>
-          (y === year || !data[y][weeknum]
-            ? acc
-            : acc + (data[y][weeknum].count - mean) ** 2),
-        0
-      );
-      const stdev = Math.sqrt(numerador / (years.length - 1));
-      stdevs.push(stdev);
-      return mean;
-    });
+    const means = [];
+
+    for (let weeknum = 0; weeknum < 53; weeknum++) {
+      const n = years.filter(y => !!data[y][weeknum]).length;
+      if (n === 1) {
+        means.push(means[means.length - 1]);
+        stdevs.push(stdevs[stdevs.length - 1]);
+      } else {
+        const sum = years.reduce(
+          (acc, y) => (!data[y][weeknum] ? acc : acc + data[y][weeknum].count),
+          0
+        );
+        const mean = sum / n;
+        const divident = years.reduce(
+          (acc, y) =>
+            (!data[y][weeknum]
+              ? acc
+              : acc + (data[y][weeknum].count - mean) ** 2),
+          0
+        );
+        const stdev = Math.sqrt(divident / n);
+        means.push(mean);
+        stdevs.push(stdev);
+      }
+    }
     return data[year].map((d, i) => {
-      const w = means[i] === undefined ? i : i - 1;
+      const w = means[i] === undefined ? i - 1 : i;
       return {
         ...d,
         mean: means[w],
