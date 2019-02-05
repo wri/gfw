@@ -18,12 +18,14 @@ export default {
     forestChange: 100
   },
   sentences: {
-    cumulative_deforestation: `By week {weeknum} of {year}, there were {alerts} 
-confirmed alerts and {deforestation} of tree cover loss, comprising {budget} of 
-the annual budget.`,
-    cumulative_emissions: `By week {weeknum} of {year}, there were {alerts} 
-confirmed alerts and {emissions} emissions, comprising {budget} of 
-the annual budget.`
+    cumulative_deforestation: `By week {weeknum} of {year}, there were {alerts}
+confirmed alerts and {deforestation} of tree cover loss, comprising {budget} of
+the annual budget. The values are shown in relation to average deforestation
+across previous years, indicated by the grey shading.`,
+    cumulative_emissions: `By week {weeknum} of {year}, there were {alerts}
+confirmed alerts and {emissions} emissions, comprising {budget} of
+the annual budget. The values are shown in relation to average emissions
+across previous years, indicated by the grey shading.`
   },
   whitelists: {
     adm0: [
