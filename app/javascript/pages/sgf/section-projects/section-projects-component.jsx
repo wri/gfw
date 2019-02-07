@@ -32,6 +32,14 @@ class SectionProjects extends PureComponent {
         <div className="l-section-projects-sgf">
           <div className="row">
             <div className="column small-12 large-7 project-globe">
+              <ul className="tags">
+                <li>
+                  <span id="grants" /> <p>Grantees</p>
+                </li>
+                <li>
+                  <span id="fellows" /> <p>Fellows</p>
+                </li>
+              </ul>
               <Globe
                 autorotate={false}
                 data={globeData}
