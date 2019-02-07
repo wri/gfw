@@ -28,13 +28,13 @@ export const labels = {
 };
 
 export default {
-  light: {
+  default: {
     value: 'default',
     label: 'default',
     labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
-    url: 'mapbox://styles/resourcewatch/cjrlzgwoe4yon2snmcgokg8h3'
+    url: 'mapbox://styles/resourcewatch/cjlhwaoh211hp2stemfz0imqf'
   },
   dark: {
     value: 'dark',
@@ -61,7 +61,8 @@ export default {
     color: '#0C0045',
     image: landsatImage,
     url: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
-    tileUrl: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
+    tileUrl:
+      'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };
