@@ -16,6 +16,20 @@ $summary-color: #aaa;
     box-shadow: 0 0 0 1px $green-gfw;
   }
 
+  .tag {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+
+    p {
+      color: white;
+      margin: 3px 10px;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+  }
+
   .image {
     height: rem(220px);
     background-size: cover;

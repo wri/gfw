@@ -77,27 +77,33 @@ class SectionProjects extends PureComponent {
           <ScrollEl name="project-cards" className="row project-cards">
             {hasData &&
               !loading &&
-              data.map(d => (
-                <div
-                  key={d.id}
-                  className="column small-12 medium-6 large-4 card-container"
-                >
-                  <Card
-                    className="project-card"
-                    data={{
-                      ...d,
-                      buttons: [
-                        {
-                          className: 'read-more',
-                          text: 'READ MORE',
-                          onClick: () =>
-                            setSectionProjectsModal({ isOpen: true, data: d })
-                        }
-                      ]
-                    }}
-                  />
-                </div>
-              ))}
+              data.map(d => {
+                const isFellow =
+                  d.categories && d.categories.indexOf('Fellow') !== -1;
+                return (
+                  <div
+                    key={d.id}
+                    className="column small-12 medium-6 large-4 card-container"
+                  >
+                    <Card
+                      className="project-card"
+                      data={{
+                        ...d,
+                        buttons: [
+                          {
+                            className: 'read-more',
+                            text: 'READ MORE',
+                            onClick: () =>
+                              setSectionProjectsModal({ isOpen: true, data: d })
+                          }
+                        ]
+                      }}
+                      tag={isFellow ? 'fellow' : 'grantee'}
+                      tagColour={isFellow ? '#f88000' : '#97bd3d'}
+                    />
+                  </div>
+                );
+              })}
             {!loading &&
               !hasData && (
                 <NoContent

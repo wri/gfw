@@ -208,6 +208,7 @@ class GlobeComponent extends React.Component {
     );
 
     const isFellow =
+      d.cluster &&
       d.cluster.length === 1 &&
       d.cluster[0].categories.indexOf('Fellow') !== -1;
 
