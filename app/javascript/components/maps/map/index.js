@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 import WebMercatorViewport from 'viewport-mercator-project';
 
-import { setInteraction } from 'components/maps/map/components/popup/actions';
+import {
+  setInteraction,
+  clearInteractions
+} from 'components/maps/map/components/popup/actions';
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import { getMapProps } from './selectors';
@@ -12,6 +15,7 @@ import MapComponent from './component';
 
 const actions = {
   setInteraction,
+  clearInteractions,
   ...ownActions
 };
 
@@ -52,6 +56,7 @@ class MapContainer extends PureComponent {
     // only set bounding box if action allows it
     if (canBound && bbox !== prevProps.bbox) {
       this.setBbox(bbox);
+      this.props.clearInteractions();
     }
 
     if (this.state.bbox && this.state.bbox !== prevState.bbox) {
@@ -160,7 +165,8 @@ MapContainer.propTypes = {
   menuSection: PropTypes.string,
   lat: PropTypes.number,
   lng: PropTypes.number,
-  zoom: PropTypes.number
+  zoom: PropTypes.number,
+  clearInteractions: PropTypes.func
 };
 
 reducerRegistry.registerModule('map', {

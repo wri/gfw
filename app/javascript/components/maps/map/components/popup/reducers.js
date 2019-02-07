@@ -7,13 +7,17 @@ export const initialState = {
 };
 
 const setInteraction = (state, { payload }) => {
-  const interactions = payload.features.reduce((obj, next) => ({
-    ...obj,
-    [next.layer.source]: {
-      data: next.properties,
-      geometry: next.geometry
-    }
-  }), {});
+  const interactions = payload.features.reduce(
+    (obj, next) => ({
+      ...obj,
+      [next.layer.source]: {
+        id: next.id,
+        data: next.properties,
+        geometry: next.geometry
+      }
+    }),
+    {}
+  );
 
   return {
     ...state,

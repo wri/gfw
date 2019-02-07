@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-
-// import { MapPopup } from 'wri-api-components/dist/map';
+import bbox from 'turf-bbox';
 import { Popup as MapPopup } from 'react-map-gl';
 
 import Button from 'components/ui/button/button-component';
@@ -22,11 +21,24 @@ class Popup extends Component {
     }
   }
 
-  handleClickAnalysis = selectedInteraction => {
-    console.log(selectedInteraction.layer);
-    this.props.getGeostoreId(selectedInteraction.geometry);
-    // this.props.setMainMapAnalysisView(selectedInteraction);
-  }
+  handleClickAction = selected => {
+    if (this.props.buttonState === 'ZOOM') {
+      this.handleClickZoom(selected);
+    } else {
+      this.handleClickAnalysis(selected);
+    }
+  };
+
+  handleClickZoom = selected => {
+    const { setMapSettings } = this.props;
+    const newBbox = bbox(selected.geometry);
+    setMapSettings({ bbox: newBbox, canBound: true });
+  };
+
+  handleClickAnalysis = selected => {
+    const { getGeostoreId } = this.props;
+    getGeostoreId(selected.geometry);
+  };
 
   render() {
     const {
@@ -39,7 +51,8 @@ class Popup extends Component {
       setMainMapAnalysisView,
       setMapSettings,
       clearInteractions,
-      isBoundary
+      isBoundary,
+      buttonState
     } = this.props;
 
     return latlng && latlng.lat ? (
@@ -104,8 +117,8 @@ class Popup extends Component {
                 <DataTable data={tableData} />
               )}
               <div className="nav-footer">
-                <Button onClick={() => this.handleClickAnalysis(selected)}>
-                  ANALYZE
+                <Button onClick={() => this.handleClickAction(selected)}>
+                  {buttonState}
                 </Button>
               </div>
             </div>
@@ -127,7 +140,9 @@ Popup.propTypes = {
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
   setMainMapAnalysisView: PropTypes.func,
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
+  buttonState: PropTypes.string,
+  getGeostoreId: PropTypes.func
 };
 
 export default Popup;

@@ -14,6 +14,7 @@ class DataAnalysisMenu extends PureComponent {
       links,
       clearAnalysisError,
       setMainMapSettings,
+      setMapSettings,
       showAnalysis,
       hidden
     } = this.props;
@@ -27,6 +28,7 @@ class DataAnalysisMenu extends PureComponent {
             (showAnalysis && l.active && !hidden) ||
             (!showAnalysis && l.active && !hidden)
         });
+        setMapSettings({ draw: false });
         clearAnalysisError();
       }
     }));
@@ -70,6 +72,7 @@ DataAnalysisMenu.propTypes = {
   menuSection: PropTypes.object,
   links: PropTypes.array,
   setMainMapSettings: PropTypes.func,
+  setMapSettings: PropTypes.func,
   clearAnalysisError: PropTypes.func,
   embed: PropTypes.bool
 };

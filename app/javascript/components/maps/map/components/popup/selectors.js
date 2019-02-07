@@ -1,6 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import { reverseLatLng } from 'utils/geoms';
+import bbox from 'turf-bbox';
+import bboxPolygon from 'turf-bbox-polygon';
+import area from 'turf-area';
 
 import {
   getActiveDatasetsFromState,
@@ -10,10 +13,36 @@ import {
 
 const getSearch = state => state.location && state.location.search;
 const getLatLng = state => state.popup && state.popup.latlng;
+const getMap = (state, { map }) => map;
 
 export const getIsBoundary = createSelector(
   getSelectedInteraction,
   interaction => interaction && interaction.layer.isBoundary
+);
+
+export const getButtonState = createSelector(
+  [getSelectedInteraction, getMap],
+  (selected, map) => {
+    if (!selected) return null;
+    const { geometry } = selected;
+    // get bbox of geometry
+    const shapeBbox = bbox(geometry);
+    const shapePolygon = bboxPolygon(shapeBbox);
+    // get bbox of map
+    const mapBounds = map.getBounds();
+    const mapPolygon = bboxPolygon([
+      mapBounds._sw.lng,
+      mapBounds._sw.lat,
+      mapBounds._ne.lng,
+      mapBounds._ne.lat
+    ]);
+    // compare size
+    const shapeArea = area(shapePolygon);
+    const mapArea = area(mapPolygon);
+    const ratio = shapeArea / mapArea;
+
+    return ratio > 0.25 || map.getZoom() > 12 ? 'ANALYZE' : 'ZOOM';
+  }
 );
 
 export const getCardData = createSelector(
@@ -94,5 +123,6 @@ export const getPopupProps = createStructuredSelector({
   latlng: getLatLng,
   activeDatasets: getActiveDatasetsFromState,
   search: getSearch,
-  isBoundary: getIsBoundary
+  isBoundary: getIsBoundary,
+  buttonState: getButtonState
 });

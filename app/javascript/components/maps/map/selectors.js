@@ -15,6 +15,7 @@ const selectMapLoading = state => state.map && state.map.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
 const selectLatestLoading = state => state.latest && state.latest.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
+const selectDrawLoading = state => state.draw && state.draw.loading;
 
 // datasets
 const selectDatasets = state => state.datasets && state.datasets.data;
@@ -106,10 +107,15 @@ export const getMapLoading = createSelector(
     selectMapLoading,
     selectGeostoreLoading,
     selectLatestLoading,
-    selectDatasetsLoading
+    selectDatasetsLoading,
+    selectDrawLoading
   ],
-  (mapLoading, geostoreLoading, latestLoading, datasetsLoading) =>
-    mapLoading || geostoreLoading || latestLoading || datasetsLoading
+  (mapLoading, geostoreLoading, latestLoading, datasetsLoading, drawLoading) =>
+    mapLoading ||
+    geostoreLoading ||
+    latestLoading ||
+    datasetsLoading ||
+    drawLoading
 );
 
 // select datasets and dataset state
@@ -324,7 +330,9 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
 
 export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
   if (isEmpty(layers)) return [];
-  return layers.filter(l => l.interactionConfig).map(l => `${l.id}-fill`);
+  return layers
+    .filter(l => !isEmpty(l.interactionConfig))
+    .map(l => `${l.id}-fill`);
 });
 
 // get widgets related to map layers and use them to build the layers
@@ -424,6 +432,8 @@ export const filterInteractions = createSelector(
       return {
         data: interactions[i].data,
         geometry: interactions[i].geometry,
+        allData: interactions[i].allData,
+        id: interactions[i].id,
         layer,
         label: layer.name,
         value: layer.id

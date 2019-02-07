@@ -7,13 +7,13 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
 import iconCrosshair from 'assets/icons/crosshair.svg';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 import Popup from './components/popup';
 import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
 import LayerManagerComponent from './components/layer-manager';
 
-import 'mapbox-gl/dist/mapbox-gl.css';
 import './styles.scss';
 
 class MapComponent extends PureComponent {
@@ -72,7 +72,7 @@ class MapComponent extends PureComponent {
           {mapReady && (
             <Fragment>
               <LayerManagerComponent map={this.map} />
-              <Popup />
+              <Popup map={this.map} />
               <MapDraw map={this.map} drawing={draw} />
             </Fragment>
           )}

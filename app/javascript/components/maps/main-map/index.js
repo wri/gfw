@@ -39,7 +39,10 @@ class MainMapContainer extends PureComponent {
     const {
       selectedInteraction,
       setMainMapAnalysisView,
-      oneClickAnalysis
+      setMainMapSettings,
+      oneClickAnalysis,
+      analysisActive,
+      geostoreId
     } = this.props;
 
     // set analysis view if interaction changes
@@ -50,6 +53,10 @@ class MainMapContainer extends PureComponent {
       !isEqual(selectedInteraction, prevProps.selectedInteraction)
     ) {
       setMainMapAnalysisView(selectedInteraction);
+    }
+
+    if (!analysisActive && geostoreId && geostoreId !== prevProps.geostoreId) {
+      setMainMapSettings({ showAnalysis: true });
     }
   }
 
@@ -91,8 +98,11 @@ MainMapContainer.propTypes = {
   setMainMapAnalysisView: PropTypes.func,
   selectedInteraction: PropTypes.object,
   setMenuSettings: PropTypes.func,
+  setMainMapSettings: PropTypes.func,
   activeDatasets: PropTypes.array,
-  menuSection: PropTypes.string
+  menuSection: PropTypes.string,
+  analysisActive: PropTypes.bool,
+  geostoreId: PropTypes.string
 };
 
 export default connect(getMapProps, actions)(MainMapContainer);
