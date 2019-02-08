@@ -6,10 +6,11 @@ import './themes/loader-light.scss'; // eslint-disable-line
 
 class Loader extends PureComponent {
   render() {
-    const { className, theme } = this.props;
+    const { className, theme, message } = this.props;
     return (
       <div className={`c-loader ${className} ${theme}`}>
         <div className="spinner" />
+        {message && <p className="message">{message}</p>}
       </div>
     );
   }
@@ -17,7 +18,8 @@ class Loader extends PureComponent {
 
 Loader.propTypes = {
   className: PropTypes.string,
-  theme: PropTypes.string
+  theme: PropTypes.string,
+  message: PropTypes.string
 };
 
 export default Loader;
