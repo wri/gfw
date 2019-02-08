@@ -15,6 +15,8 @@ const selectMapUrlState = state =>
 const selectMapLoading = state => state.map && state.map.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
 const selectLatestLoading = state => state.latest && state.latest.loading;
+const selectRecentImageryLoading = state =>
+  state.recentImagery && state.recentImagery.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
 const selectDrawLoading = state => state.draw && state.draw.loading;
 
@@ -109,14 +111,32 @@ export const getMapLoading = createSelector(
     selectGeostoreLoading,
     selectLatestLoading,
     selectDatasetsLoading,
-    selectDrawLoading
+    selectDrawLoading,
+    selectRecentImageryLoading
   ],
-  (mapLoading, geostoreLoading, latestLoading, datasetsLoading, drawLoading) =>
+  (
+    mapLoading,
+    geostoreLoading,
+    latestLoading,
+    datasetsLoading,
+    drawLoading,
+    recentImageryLoading
+  ) =>
     mapLoading ||
     geostoreLoading ||
     latestLoading ||
     datasetsLoading ||
-    drawLoading
+    drawLoading ||
+    recentImageryLoading
+);
+
+export const getLoadingMessage = createSelector(
+  [selectRecentImageryLoading, selectLatestLoading],
+  (recentLoading, latestLoading) => {
+    if (recentLoading) return 'Fetching the most recent satellite image...';
+    if (latestLoading) return 'Fetching latest data...';
+    return '';
+  }
 );
 
 // select datasets and dataset state
@@ -481,6 +501,7 @@ export const getSelectedInteraction = createSelector(
 
 export const getMapProps = createStructuredSelector({
   loading: getMapLoading,
+  loadingMessage: getLoadingMessage,
   mapOptions: getMapOptions,
   basemap: getBasemap,
   label: getLabel,

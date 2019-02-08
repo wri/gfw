@@ -94,7 +94,8 @@ class RecentImageryContainer extends PureComponent {
       !dataStatus.haveAllData &&
       !loadingMoreTiles &&
       active &&
-      activeTile
+      activeTile &&
+      isNewTile
     ) {
       getMoreTiles({
         sources,
