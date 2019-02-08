@@ -50,7 +50,7 @@ class ModalContactUs extends PureComponent {
               </div>
             </div>
           ) : (
-            <div className="c-contact-form">
+            <div className="contact-form">
               <h3>Contact us & feedback</h3>
               <p className="subtitle">
                 Question, comment, request, feedback? We want to hear from you!

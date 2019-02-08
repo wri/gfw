@@ -3,7 +3,7 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
 .c-contact-us {
-  .c-contact-form {
+  .contact-form {
     position: relative;
     height: 100%;
     width: 100%;
@@ -23,7 +23,7 @@ $desktop-padding: rem(40px);
     font-size: 14px;
     line-height: 1.25;
 
-    .c-button {
+    .submit-btn {
       margin-bottom: 30px;
     }
 
