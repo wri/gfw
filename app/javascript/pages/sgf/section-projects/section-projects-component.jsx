@@ -24,7 +24,7 @@ class SectionProjects extends PureComponent {
       search,
       setSearch,
       handleGlobeClick,
-      setSectionProjectsModal,
+      setSectionProjectsModalSlug,
       loading
     } = this.props;
     const hasData = data && data.length > 0;
@@ -101,8 +101,7 @@ class SectionProjects extends PureComponent {
                           {
                             className: 'read-more',
                             text: 'READ MORE',
-                            onClick: () =>
-                              setSectionProjectsModal({ isOpen: true, data: d })
+                            onClick: () => setSectionProjectsModalSlug(d.id)
                           }
                         ]
                       }}
@@ -137,7 +136,7 @@ SectionProjects.propTypes = {
   search: PropTypes.string,
   setSearch: PropTypes.func.isRequired,
   handleGlobeClick: PropTypes.func,
-  setSectionProjectsModal: PropTypes.func,
+  setSectionProjectsModalSlug: PropTypes.func,
   loading: PropTypes.bool
 };
 

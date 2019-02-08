@@ -24,7 +24,8 @@ class SectionProjectsModal extends PureComponent {
                   {node.children[0].data}
                 </a>
               );
-            } return '';
+            }
+            return '';
           }
         })}
       </div>
@@ -103,13 +104,13 @@ class SectionProjectsModal extends PureComponent {
   }
 
   handleClose = () => {
-    this.props.setSectionProjectsModal({ isOpen: false });
+    this.props.setSectionProjectsModalSlug('');
   };
 
   render() {
-    const { isOpen } = this.props;
+    const { slug } = this.props;
     return (
-      <Modal isOpen={isOpen} onRequestClose={this.handleClose}>
+      <Modal isOpen={!!slug} onRequestClose={this.handleClose}>
         {this.getContent()}
       </Modal>
     );
@@ -118,8 +119,8 @@ class SectionProjectsModal extends PureComponent {
 
 SectionProjectsModal.propTypes = {
   data: PropTypes.object,
-  isOpen: PropTypes.bool.isRequired,
-  setSectionProjectsModal: PropTypes.func.isRequired
+  slug: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setSectionProjectsModalSlug: PropTypes.func.isRequired
 };
 
 export default SectionProjectsModal;

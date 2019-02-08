@@ -1,3 +1,15 @@
-import { createAction } from 'redux-tools';
+import { createThunkAction } from 'redux-tools';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-export const setSectionProjectsModal = createAction('setSectionProjectsModal');
+export const setSectionProjectsModalSlug = createThunkAction(
+  'setSectionProjectsModal',
+  slug => (dispatch, state) => {
+    dispatch(
+      setComponentStateToUrl({
+        key: 'sgfModal',
+        change: slug,
+        state
+      })
+    );
+  }
+);
