@@ -6,8 +6,8 @@ export default {
   },
   categories: ['climate'],
   colors: 'climate',
-  types: ['country', 'region'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['country'],
+  admins: ['adm0'],
   options: {
     units: ['co2Gain', 'cGain']
   },
