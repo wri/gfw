@@ -1,6 +1,6 @@
 @import '~styles/settings.scss';
 
-.footerGfw {
+.c-footer {
   font-family: Fira GFW Sans, Helvetica, serif;
   font-feature-settings: "liga" 0;
   -webkit-font-variant-ligatures: no-common-ligatures;
@@ -25,7 +25,7 @@
     }
   }
 
-  .wrapper {
+  .footer-main {
     padding: 0 20px;
     position: relative;
     margin: 0 auto;
@@ -168,7 +168,7 @@
   }
 
   @media screen and (max-width: 850px) { //$screen-m
-    .wrapper {
+    .footer-main {
       padding: 0 15px;
 
       .footer-list .footer-links {

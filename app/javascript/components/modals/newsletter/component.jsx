@@ -16,13 +16,13 @@ class ModalNewsletter extends PureComponent {
         {isDesktop => (
           <Modal
             isOpen={open}
-            contentLabel="Contact Us"
+            contentLabel="Newsletter"
             onRequestClose={() => {
               setModalNewsletterOpen(false);
             }}
           >
             {
-              <div className="c-form-container">
+              <div className="c-newsletter">
                 <h3>Updates and newsletters</h3>
                 <p className="subtitle">Subscribe me to the GFW Newsletter!</p>
                 <iframe
