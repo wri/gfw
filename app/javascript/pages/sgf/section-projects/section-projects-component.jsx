@@ -8,6 +8,8 @@ import Search from 'components/ui/search';
 import NoContent from 'components/ui/no-content';
 import Loader from 'components/ui/loader';
 import { Element as ScrollEl } from 'react-scroll';
+import { SCREEN_L } from 'utils/constants';
+import MediaQuery from 'react-responsive';
 
 import './section-projects-styles.scss';
 
@@ -31,21 +33,27 @@ class SectionProjects extends PureComponent {
       <div>
         <div className="l-section-projects-sgf">
           <div className="row">
-            <div className="column small-12 large-7 project-globe">
-              <ul className="tags">
-                <li>
-                  <span id="grants" /> <p>Grantees</p>
-                </li>
-                <li>
-                  <span id="fellows" /> <p>Fellows</p>
-                </li>
-              </ul>
-              <Globe
-                autorotate={false}
-                data={globeData}
-                onClick={handleGlobeClick}
-              />
-            </div>
+            <MediaQuery minWidth={SCREEN_L}>
+              {isDesktop =>
+                isDesktop && (
+                  <div className="column small-12 large-7 project-globe">
+                    <ul className="tags">
+                      <li>
+                        <span id="grants" /> <p>Grantees</p>
+                      </li>
+                      <li>
+                        <span id="fellows" /> <p>Fellows</p>
+                      </li>
+                    </ul>
+                    <Globe
+                      autorotate={false}
+                      data={globeData}
+                      onClick={handleGlobeClick}
+                    />
+                  </div>
+                )
+              }
+            </MediaQuery>
             <div className="column small-12 large-5 side">
               <h3>MEET THE GRANTEES AND FELLOWS</h3>
               <p className="text -paragraph -color-2 -light -spaced">

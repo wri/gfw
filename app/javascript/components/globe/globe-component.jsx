@@ -6,8 +6,6 @@ import markerFellow from 'assets/icons/markers/marker_fellow.png';
 import markerGrantee from 'assets/icons/markers/marker_grantee.png';
 import earthImage from './img/earth-image.jpg';
 
-import './globe-styles.scss';
-
 function latLongToVector3(lat, lon, radius, height) {
   const phi = lat * (Math.PI / 180);
   const theta = (lon - 180) * (Math.PI / 180);
