@@ -5,7 +5,14 @@ import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   render() {
-    const { layers, geostore, setMapLoading, basemap, map } = this.props;
+    const {
+      layers,
+      geostore,
+      setMapLoading,
+      basemap,
+      labels,
+      map
+    } = this.props;
 
     return (
       <LayerManager
@@ -21,6 +28,18 @@ class LayerManagerComponent extends PureComponent {
               layerConfig={{
                 body: {
                   url: basemap.tileUrl
+                }
+              }}
+            />
+          )}
+        {labels &&
+          labels.url && (
+            <Layer
+              id="layers"
+              provider="leaflet"
+              layerConfig={{
+                body: {
+                  url: labels.url
                 }
               }}
             />
@@ -72,7 +91,8 @@ LayerManagerComponent.propTypes = {
   setMapLoading: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   draw: PropTypes.bool,
-  map: PropTypes.object
+  map: PropTypes.object,
+  labels: PropTypes.object
 };
 
 export default LayerManagerComponent;

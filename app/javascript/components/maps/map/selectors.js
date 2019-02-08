@@ -3,6 +3,7 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import intersection from 'lodash/intersection';
+import flatMap from 'lodash/flatMap';
 
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { initialState } from './reducers';
@@ -330,9 +331,19 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
 
 export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
   if (isEmpty(layers)) return [];
-  return layers
-    .filter(l => !isEmpty(l.interactionConfig))
-    .map(l => `${l.id}-fill-0`);
+  const interactiveLayers = layers.filter(
+    l => !isEmpty(l.interactionConfig) && l.layerConfig.layers
+  );
+
+  return flatMap(
+    interactiveLayers.reduce((arr, layer) => {
+      const fillLayers =
+        layer.layerConfig.layers &&
+        layer.layerConfig.layers.filter(l => l.type === 'fill');
+
+      return [...arr, fillLayers.map((l, i) => `${layer.id}-${l.type}-${i}`)];
+    }, [])
+  );
 });
 
 // get widgets related to map layers and use them to build the layers
