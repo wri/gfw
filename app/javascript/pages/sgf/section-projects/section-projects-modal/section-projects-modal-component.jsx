@@ -24,7 +24,7 @@ class SectionProjectsModal extends PureComponent {
                   {node.children[0].data}
                 </a>
               );
-            }
+            } return '';
           }
         })}
       </div>
@@ -34,11 +34,22 @@ class SectionProjectsModal extends PureComponent {
   getContent() {
     const { data } = this.props;
     if (!data) return null;
+    const isFellow =
+      data.categories && data.categories.indexOf('Fellow') !== -1;
+
     return (
       <div className="c-sgf-projects-modal">
         <div className="header">
           {data.title && <h1>{data.title}</h1>}
-          <h2>{data.meta}</h2>
+          <span className="subtitle">
+            <p
+              className="tag"
+              style={{ backgroundColor: isFellow ? '#f88000' : '#97bd3d' }}
+            >
+              {isFellow ? 'fellow' : 'grantee'}
+            </p>
+            <h2>{data.meta}</h2>
+          </span>
         </div>
         {data.images &&
           data.images.length > 1 && (

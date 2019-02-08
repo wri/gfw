@@ -41,12 +41,12 @@ $summary-color: #aaa;
   }
 
   .body {
-    padding: rem(15px);
+    padding: rem(20px) rem(15px) rem(15px);
     border-top: 0;
     z-index: 2;
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(25px);
+      padding: rem(30px) rem(25px) rem(25px);
     }
 
     span {
