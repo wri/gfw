@@ -332,7 +332,7 @@ export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
   if (isEmpty(layers)) return [];
   return layers
     .filter(l => !isEmpty(l.interactionConfig))
-    .map(l => `${l.id}-fill`);
+    .map(l => `${l.id}-fill-0`);
 });
 
 // get widgets related to map layers and use them to build the layers

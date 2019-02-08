@@ -1,21 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   render() {
-    const {
-      layers,
-      geostore,
-      setMapLoading,
-      draw,
-      labels,
-      basemap,
-      map,
-      handleMapInteraction
-    } = this.props;
+    const { layers, geostore, setMapLoading, basemap, map } = this.props;
 
     return (
       <LayerManager
@@ -24,34 +14,26 @@ class LayerManagerComponent extends PureComponent {
         onLayerLoading={loading => setMapLoading(loading)}
       >
         {basemap &&
-          !basemap.mapboxStyleLayer && (
+          basemap.tileUrl && (
             <Layer
               id="basemap"
               provider="leaflet"
               layerConfig={{
                 body: {
-                  url: basemap.url
+                  url: basemap.tileUrl
                 }
               }}
             />
           )}
-        {/* {labels && (
-          <Layer
-            id="labels"
-            provider="leaflet"
-            layerConfig={{
-              body: {
-                url: labels.url
-              }
-            }}
-          />
-        )} */}
         {geostore &&
           geostore.id && (
             <Layer
               id={geostore.id}
               name="Geojson"
               provider="geojson"
+              params={{
+                id: geostore.id
+              }}
               layerConfig={{
                 body: geostore.geojson,
                 layers: [
@@ -85,6 +67,7 @@ class LayerManagerComponent extends PureComponent {
 LayerManagerComponent.propTypes = {
   loading: PropTypes.bool,
   layers: PropTypes.array,
+  basemap: PropTypes.object,
   geostore: PropTypes.object,
   setMapLoading: PropTypes.func,
   handleMapInteraction: PropTypes.func,

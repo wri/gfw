@@ -36,8 +36,20 @@ class Popup extends Component {
   };
 
   handleClickAnalysis = selected => {
-    const { getGeostoreId } = this.props;
-    getGeostoreId(selected.geometry);
+    const { data, layer, geometry } = selected;
+    const { cartodb_id, wdpaid } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+
+    const isAdmin = analysisEndpoint === 'admin';
+    const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
+    const isUse = cartodb_id && tableName;
+
+    const { getGeostoreId, setMainMapAnalysisView } = this.props;
+    if (isAdmin || isWdpa || isUse) {
+      setMainMapAnalysisView(selected);
+    } else {
+      getGeostoreId(geometry);
+    }
   };
 
   render() {

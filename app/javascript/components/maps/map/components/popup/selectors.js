@@ -24,7 +24,17 @@ export const getButtonState = createSelector(
   [getSelectedInteraction, getMap],
   (selected, map) => {
     if (!selected) return null;
-    const { geometry } = selected;
+
+    const { data, layer, geometry } = selected;
+    const { cartodb_id, wdpaid } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+
+    const isAdmin = analysisEndpoint === 'admin';
+    const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
+    const isUse = cartodb_id && tableName;
+
+    if (isAdmin || isWdpa || isUse) return 'ANALYZE';
+
     // get bbox of geometry
     const shapeBbox = bbox(geometry);
     const shapePolygon = bboxPolygon(shapeBbox);
