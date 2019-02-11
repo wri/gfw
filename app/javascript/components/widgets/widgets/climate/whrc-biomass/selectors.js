@@ -40,8 +40,8 @@ export const parseData = createSelector(
     }));
 
     let key;
-    if (data[0].id_2) key = 'id_2';
-    else if (data[0].id_1) key = 'id_1';
+    if (data[0].admin_2) key = 'admin_2';
+    else if (data[0].admin_1) key = 'admin_1';
     else key = 'iso';
 
     if (location.payload.adm0) {
@@ -121,8 +121,8 @@ export const parseSentence = createSelector(
       key => locationsDict[key] === location
     );
     const region = data.find(item => {
-      if (item.id_2) return String(item.id_2) === iso;
-      else if (item.id_1) return String(item.id_1) === iso;
+      if (item.admin_2) return String(item.admin_2) === iso;
+      else if (item.admin_1) return String(item.admin_1) === iso;
       return item.iso === iso;
     });
     if (!region) return null;

@@ -13,11 +13,11 @@ const INDICATORS = [
 
 const SQL_QUERIES = {
   globalAndCountry:
-    'SELECT gid_0 as iso, SUM(totalbiomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM whrc_biomass GROUP BY iso',
+    'SELECT iso, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 GROUP BY iso',
   adm1:
-    "SELECT gid_0 as iso, id_1, SUM(totalbiomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM whrc_biomass WHERE gid_0 = '{adm0}' GROUP BY iso, id_1",
+    "SELECT iso, admin_1, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' GROUP BY iso, admin_1",
   adm2:
-    "SELECT gid_0 as iso, id_1, id_2, SUM(totalbiomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM whrc_biomass WHERE gid_0 = '{adm0}' AND id_1 = {adm1} GROUP BY iso, id_1, id_2"
+    "SELECT iso, admin_1, admin_2, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} GROUP BY iso, admin_1, admin_2"
 };
 
 export const getEmissions = ({ threshold, adm0 }) =>
