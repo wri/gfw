@@ -7461,6 +7461,17 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
+layer-manager@1.15.0-beta:
+  version "1.15.0-beta"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.15.0-beta.tgz#b48ce1b44d5e8466831c77f29b8303db489126d2"
+  integrity sha512-ZzIReyRc/sWnS2Vi2t0rCWpi7w2M6b7zu+Qq15DlqONbpptMKtjUr5xi1ogKWNS7qbdErFW5a59y+dScCnDSRw==
+  dependencies:
+    axios "^0.18.0"
+    lodash "^4.17.11"
+    prop-types "^15.6.2"
+    supercluster "^4.1.1"
+    wri-json-api-serializer "^1.0.1"
+
 layer-manager@^1.10.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.12.1.tgz#daadbf1ccdfb79735b8e5ebda619e17b45fbb087"
@@ -7469,16 +7480,6 @@ layer-manager@^1.10.0:
     lodash "^4.17.10"
     prop-types "^15.6.2"
     reselect "^3.0.1"
-    wri-json-api-serializer "^1.0.1"
-
-layer-manager@^1.14.5:
-  version "1.14.5"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.14.5.tgz#3b7b3a87fa9c773daa3dcfa1e0de059c9dfe9cf2"
-  dependencies:
-    axios "^0.18.0"
-    lodash "^4.17.11"
-    prop-types "^15.6.2"
-    supercluster "^4.1.1"
     wri-json-api-serializer "^1.0.1"
 
 lazy-ass@1.6.0:
