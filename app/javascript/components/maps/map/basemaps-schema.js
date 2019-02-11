@@ -50,8 +50,7 @@ export default {
     labelsKey: 'lightLabels',
     color: '#131620',
     image: satelliteImage,
-    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-    tileUrl: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
   },
   landsat: {
     value: 'landsat',
@@ -61,8 +60,6 @@ export default {
     color: '#0C0045',
     image: landsatImage,
     url: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
-    tileUrl:
-      'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
     availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };

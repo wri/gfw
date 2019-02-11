@@ -21,27 +21,31 @@ class LayerManagerComponent extends PureComponent {
         onLayerLoading={loading => setMapLoading(loading)}
       >
         {basemap &&
-          basemap.tileUrl && (
+          basemap.url && (
             <Layer
               id="basemap"
+              name="Basemap"
               provider="leaflet"
               layerConfig={{
                 body: {
-                  url: basemap.tileUrl
+                  url: basemap.url
                 }
               }}
+              zIndex={1}
             />
           )}
         {labels &&
           labels.url && (
             <Layer
-              id="layers"
+              id="labels"
+              name="Labels"
               provider="leaflet"
               layerConfig={{
                 body: {
                   url: labels.url
                 }
               }}
+              zIndex={1100}
             />
           )}
         {geostore &&
