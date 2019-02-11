@@ -62,7 +62,7 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
-          // mapStyle={basemap.url}
+          mapStyle="mapbox://styles/resourcewatch/cjrkzkvhy9roh2smyy26avof0"
           mapOptions={mapOptions}
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}

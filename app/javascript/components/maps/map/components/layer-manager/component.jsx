@@ -20,20 +20,17 @@ class LayerManagerComponent extends PureComponent {
         plugin={PluginMapboxGl}
         onLayerLoading={loading => setMapLoading(loading)}
       >
-        {basemap &&
-          basemap.url && (
-            <Layer
-              id="basemap"
-              name="Basemap"
-              provider="leaflet"
-              layerConfig={{
-                body: {
-                  url: basemap.url
-                }
-              }}
-              zIndex={1}
-            />
-          )}
+        <Layer
+          id="basemap"
+          name="Basemap"
+          provider="leaflet"
+          layerConfig={{
+            body: {
+              url: basemap.url
+            }
+          }}
+          zIndex={100}
+        />
         {labels &&
           labels.url && (
             <Layer
