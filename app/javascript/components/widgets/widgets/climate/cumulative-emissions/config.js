@@ -10,7 +10,7 @@ export default {
   analysis: true,
   types: ['country'],
   admins: ['adm0'],
-  layers: [],
+  layers: ['umd_as_it_happens', 'dd5df87f-39c2-4aeb-a462-3ef969b20b66'],
   colors: 'fires',
   metaKey: 'source-insights-glad-alerts',
   sortOrder: {
