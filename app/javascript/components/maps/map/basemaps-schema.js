@@ -3,21 +3,21 @@ import darkImage from './images/dark.png';
 import landsatImage from './images/landsat.png';
 import satelliteImage from './images/satellite.png';
 
-const { MAPBOX_TOKEN } = process.env;
+const { MapboxAccessToken } = process.env;
 
 export const labels = {
   default: {
     value: 'default',
     label: 'Dark Labels',
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxwcp212u02rpd1o541omv/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MAPBOX_TOKEN
+      MapboxAccessToken
     }`
   },
   lightLabels: {
     value: 'lightLabels',
     label: 'Light Labels',
     url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxw8t412tv2rpdt33iuum3/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MAPBOX_TOKEN
+      MapboxAccessToken
     }`
   },
   noLabels: {
