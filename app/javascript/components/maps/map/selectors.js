@@ -357,9 +357,7 @@ export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
 
   return flatMap(
     interactiveLayers.reduce((arr, layer) => {
-      const fillLayers =
-        layer.layerConfig.layers &&
-        layer.layerConfig.layers.filter(l => l.type === 'fill');
+      const fillLayers = layer.layerConfig.layers && layer.layerConfig.layers;
 
       return [...arr, fillLayers.map((l, i) => `${layer.id}-${l.type}-${i}`)];
     }, [])

@@ -62,20 +62,24 @@ export const getCardData = createSelector(
     if (
       isEmpty(interaction) ||
       (interaction.layer && !interaction.layer.article)
-    ) { return null; }
+    ) {
+      return null;
+    }
     const { data, config } = interaction;
-    const articleData = config.reduce((obj, param) => {
-      const { prefix, renderKey } = param;
-      const value = data[param.column || param.key];
-      const newObj = {
-        ...obj,
-        ...(renderKey &&
-          value && {
-            [renderKey]: `${prefix || ''}${value}`
-          })
-      };
-      return newObj;
-    }, {});
+    const articleData =
+      config &&
+      config.reduce((obj, param) => {
+        const { prefix, renderKey } = param;
+        const value = data[param.column || param.key];
+        const newObj = {
+          ...obj,
+          ...(renderKey &&
+            value && {
+              [renderKey]: `${prefix || ''}${value}`
+            })
+        };
+        return newObj;
+      }, {});
     const { readMoreLink } = articleData || {};
 
     const readMoreBtn = {
