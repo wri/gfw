@@ -13,11 +13,11 @@ const INDICATORS = [
 
 const SQL_QUERIES = {
   globalAndCountry:
-    'SELECT iso, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 GROUP BY iso',
+    'SELECT iso, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE threshold = {threshold} GROUP BY iso',
   adm1:
-    "SELECT iso, admin_1, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' GROUP BY iso, admin_1",
+    "SELECT iso, admin_1, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND threshold = {threshold} GROUP BY iso, admin_1",
   adm2:
-    "SELECT iso, admin_1, admin_2, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} GROUP BY iso, admin_1, admin_2"
+    "SELECT iso, admin_1, admin_2, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2"
 };
 
 export const getEmissions = ({ threshold, adm0 }) =>
@@ -50,20 +50,30 @@ ${threshold || 0} AND values.iso = UPPER('${
     return request.get(encodeURI(`${url}${query}`));
   });
 
-export const getBiomassRanking = ({ adm0, adm1, adm2, variable }) => {
+export const getBiomassRanking = ({
+  adm0,
+  adm1,
+  adm2,
+  variable,
+  threshold
+}) => {
   let query;
 
   if (!adm1) {
-    query = SQL_QUERIES.globalAndCountry.replace('{variable}', variable);
+    query = SQL_QUERIES.globalAndCountry
+      .replace('{variable}', variable)
+      .replace('{threshold}', threshold);
   } else if (adm1 && !adm2) {
     query = SQL_QUERIES.adm1
       .replace('{variable}', variable)
-      .replace('{adm0}', adm0);
+      .replace('{adm0}', adm0)
+      .replace('{threshold}', threshold);
   } else if (adm1 && adm2) {
     query = SQL_QUERIES.adm2
       .replace('{variable}', variable)
       .replace('{adm0}', adm0)
-      .replace('{adm1}', adm1);
+      .replace('{adm1}', adm1)
+      .replace('{threshold}', threshold);
   }
   const url = `${process.env.CARTO_API}/sql?q=${query}`;
 
