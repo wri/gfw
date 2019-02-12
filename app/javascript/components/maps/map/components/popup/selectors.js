@@ -17,7 +17,8 @@ const getMap = (state, { map }) => map;
 
 export const getIsBoundary = createSelector(
   getSelectedInteraction,
-  interaction => interaction && interaction.layer.isBoundary
+  interaction =>
+    interaction && interaction.layer && interaction.layer.isBoundary
 );
 
 export const getButtonState = createSelector(
@@ -58,7 +59,10 @@ export const getButtonState = createSelector(
 export const getCardData = createSelector(
   [getSelectedInteraction],
   interaction => {
-    if (isEmpty(interaction) || !interaction.layer.article) return null;
+    if (
+      isEmpty(interaction) ||
+      (interaction.layer && !interaction.layer.article)
+    ) { return null; }
     const { data, config } = interaction;
     const articleData = config.reduce((obj, param) => {
       const { prefix, renderKey } = param;
@@ -103,8 +107,9 @@ export const getTableData = createSelector(
   [getSelectedInteraction, getIsBoundary],
   (interaction, isBoundary) => {
     if (isEmpty(interaction) || interaction.article) return null;
-    const { data, layer: { interactionConfig } } = interaction;
-    if (isBoundary) {
+    const { data, layer } = interaction;
+    const { interactionConfig } = layer || {};
+    if (isBoundary && interactionConfig) {
       return interactionConfig.output.reduce(
         (obj, c) => ({
           ...obj,
@@ -115,6 +120,7 @@ export const getTableData = createSelector(
     }
 
     return (
+      interactionConfig &&
       interactionConfig.output &&
       interactionConfig.output.filter(c => !c.hidden).map(c => ({
         ...c,

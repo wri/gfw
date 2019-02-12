@@ -466,8 +466,8 @@ export const filterInteractions = createSelector(
         allData: interactions[i].allData,
         id: interactions[i].id,
         layer,
-        label: layer.name,
-        value: layer.id
+        label: layer && layer.name,
+        value: layer && layer.id
       };
     });
   }
@@ -481,18 +481,18 @@ export const getSelectedInteraction = createSelector(
       l => !l.isBoundary && !isEmpty(l.interactionConfig)
     );
     // if there is an article (icon layer) then choose that
-    let selectedData = options.find(o => o.layer.article);
+    let selectedData = options.find(o => o.layer && o.layer.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
       selectedData = options.find(
-        o => o.layer.id === layersWithoutBoundaries[0].id
+        o => o.layer && o.layer.id === layersWithoutBoundaries[0].id
       );
     }
     // if only one layer then get that
     if (!selectedData && options.length === 1) selectedData = options[0];
     // otherwise get based on selected
     if (!selectedData) {
-      selectedData = options.find(o => o.layer.id === selected);
+      selectedData = options.find(o => o.layer && o.layer.id === selected);
     }
 
     return selectedData;

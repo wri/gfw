@@ -20,17 +20,6 @@ class LayerManagerComponent extends PureComponent {
         plugin={PluginMapboxGl}
         onLayerLoading={loading => setMapLoading(loading)}
       >
-        <Layer
-          id="basemap"
-          name="Basemap"
-          provider="leaflet"
-          layerConfig={{
-            body: {
-              url: basemap.url
-            }
-          }}
-          zIndex={100}
-        />
         {labels &&
           labels.url && (
             <Layer
@@ -76,9 +65,21 @@ class LayerManagerComponent extends PureComponent {
                   }
                 ]
               }}
+              zIndex={1060}
             />
           )}
         {layers && layers.map(l => <Layer key={l.id} {...l} />)}
+        <Layer
+          id="basemap"
+          name="Basemap"
+          provider="leaflet"
+          layerConfig={{
+            body: {
+              url: basemap.url
+            }
+          }}
+          zIndex={100}
+        />
       </LayerManager>
     );
   }
