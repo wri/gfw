@@ -13684,6 +13684,11 @@ turf-invariant@^3.0.12:
   version "3.0.12"
   resolved "https://registry.yarnpkg.com/turf-invariant/-/turf-invariant-3.0.12.tgz#3b95253953991ebd962dd35d4f6704c287de8ebe"
 
+turf-linestring@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/turf-linestring/-/turf-linestring-1.0.2.tgz#604a63a7c54c9346ab9f39f273bbb7ece05a3096"
+  integrity sha1-YEpjp8VMk0arnznyc7u37OBaMJY=
+
 turf-meta@^3.0.12:
   version "3.0.12"
   resolved "https://registry.yarnpkg.com/turf-meta/-/turf-meta-3.0.12.tgz#0aa9a1caf82b2a5a08d54e0830b5b5a3fa0e8a38"

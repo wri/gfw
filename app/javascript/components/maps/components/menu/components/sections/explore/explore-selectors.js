@@ -1,4 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
+import bbox from 'turf-bbox';
+import linestring from 'turf-linestring';
 
 import {
   getActiveDatasetsFromState,
@@ -12,6 +14,7 @@ const selectSection = (state, { exploreType }) => exploreType;
 const selectPTWLoading = state => state.ptw && state.ptw.loading;
 const selectPTWData = state => {
   const { data } = state.ptw || {};
+
   return (
     data &&
     data.map(d => ({
@@ -54,7 +57,7 @@ const selectPTWData = state => {
               ],
               opacity: 1,
               visibility: true,
-              bbox: d.bbox
+              bbox: bbox(linestring(d.bbox))
             }
           ],
           basemap: {
