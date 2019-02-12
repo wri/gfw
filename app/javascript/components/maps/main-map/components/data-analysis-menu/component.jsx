@@ -40,7 +40,7 @@ class DataAnalysisMenu extends PureComponent {
         className={cx(
           'c-data-analysis-menu',
           'map-tour-legend',
-          { relocate: !!menuSection },
+          { relocate: !!menuSection && menuSection.Component },
           { big: menuSection && menuSection.large },
           { embed },
           className
