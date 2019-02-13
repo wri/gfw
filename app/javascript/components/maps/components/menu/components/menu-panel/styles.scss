@@ -81,6 +81,10 @@ $map-menu-panel-width-big: rem(560px);
       .button-wrapper {
         justify-content: flex-end;
       }
+
+      .collapsed {
+        transform: rotate(180deg);
+      }
     }
   }
 

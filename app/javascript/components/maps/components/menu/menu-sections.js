@@ -51,10 +51,16 @@ export const mobileSections = [
     Component: Search
   },
   {
-    label: 'Recent Imagery',
+    label: 'Recent Satellite Imagery',
     slug: 'recent-imagery',
-    icon: searchIcon,
     Component: RecentImagerySettings,
+    hidden: true
+  },
+  {
+    label: 'Recent Satellite Imagery',
+    slug: 'recent-imagery-collapsed',
+    openSection: 'recent-imagery',
+    collapsed: true,
     hidden: true
   }
 ];

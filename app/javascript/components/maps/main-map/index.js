@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
-import moment from 'moment';
-import startCase from 'lodash/startCase';
-import { format } from 'd3-format';
 import { track } from 'app/analytics';
 
 import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
@@ -57,18 +54,6 @@ class MainMapContainer extends PureComponent {
     this.setState({ showTooltip: show, tooltipData: data });
   };
 
-  handleRecentImageryTooltip = e => {
-    const data = e.layer.feature.properties;
-    const { cloudScore, instrument, dateTime } = data;
-    this.handleShowTooltip(true, {
-      instrument: startCase(instrument),
-      date: moment(dateTime)
-        .format('DD MMM YYYY, HH:mm')
-        .toUpperCase(),
-      cloudCoverage: `${format('.0f')(cloudScore)}%`
-    });
-  };
-
   handleClickMap = () => {
     if (this.props.menuSection) {
       this.props.setMenuSettings({ menuSection: '' });
@@ -80,7 +65,6 @@ class MainMapContainer extends PureComponent {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
-      handleRecentImageryTooltip: this.handleRecentImageryTooltip,
       handleClickMap: this.handleClickMap
     });
   }

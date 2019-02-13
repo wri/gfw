@@ -2,10 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
-import startCase from 'lodash/startCase';
-import upperFirst from 'lodash/upperFirst';
 import MediaQuery from 'react-responsive';
-import { track } from 'app/analytics';
 import { Tooltip } from 'react-tippy';
 
 import Tip from 'components/ui/tip';
@@ -20,18 +17,6 @@ import MapControlButtons from './components/map-controls';
 import './styles.scss';
 
 class MainMapComponent extends PureComponent {
-  renderDataTooltip = data => (
-    <div>
-      {Object.keys(data).map(key => (
-        <p key={key}>
-          <strong>{upperFirst(startCase(key).toLowerCase())}</strong>:{' '}
-          {data[key]}
-        </p>
-      ))}
-      <p className="view-more">Click to view more.</p>
-    </div>
-  );
-
   renderInfoTooltip = string => (
     <div>
       <p className="tooltip-info">{string}</p>
@@ -40,16 +25,12 @@ class MainMapComponent extends PureComponent {
 
   render() {
     const {
-      draw,
       embed,
       hidePanels,
       oneClickAnalysis,
-      tileGeoJSON,
       showTooltip,
       tooltipData,
-      setRecentImagerySettings,
       handleClickMap,
-      handleRecentImageryTooltip,
       handleShowTooltip
     } = this.props;
 
@@ -74,11 +55,7 @@ class MainMapComponent extends PureComponent {
                 html={
                   <Tip
                     className="map-hover-tooltip"
-                    text={
-                      typeof tooltipData === 'string'
-                        ? this.renderInfoTooltip(tooltipData)
-                        : this.renderDataTooltip(tooltipData)
-                    }
+                    text={this.renderInfoTooltip(tooltipData)}
                   />
                 }
                 position="top"
@@ -88,45 +65,7 @@ class MainMapComponent extends PureComponent {
                 open={showTooltip}
                 disabled={!isDesktop}
               >
-                <Map
-                  className="main-map"
-                  customLayers={
-                    tileGeoJSON
-                      ? [
-                        {
-                          id: 'recentImagery',
-                          name: 'Geojson',
-                          provider: 'leaflet',
-                          layerConfig: {
-                            type: 'geoJSON',
-                            body: tileGeoJSON,
-                            options: {
-                              style: {
-                                stroke: false,
-                                fillOpacity: 0
-                              }
-                            }
-                          },
-                          interactivity: true,
-                          events: {
-                            click: () => {
-                              if (!draw) {
-                                setRecentImagerySettings({ visible: true });
-                                track('recentImageryOpen');
-                              }
-                            },
-                            mouseover: e => {
-                              if (!draw) handleRecentImageryTooltip(e);
-                            },
-                            mouseout: () => {
-                              if (!draw) handleShowTooltip(false, {});
-                            }
-                          }
-                        }
-                      ]
-                      : null
-                  }
-                />
+                <Map className="main-map" />
               </Tooltip>
             </div>
             {isDesktop &&
@@ -164,10 +103,6 @@ MainMapComponent.propTypes = {
   oneClickAnalysis: PropTypes.bool,
   embed: PropTypes.bool,
   hidePanels: PropTypes.bool,
-  setRecentImagerySettings: PropTypes.func,
-  handleRecentImageryTooltip: PropTypes.func,
-  tileGeoJSON: PropTypes.object,
-  draw: PropTypes.bool,
   tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   showTooltip: PropTypes.bool
 };

@@ -12,6 +12,15 @@ const INDICATORS = [
   3117 // C02 Crops
 ];
 
+const SQL_QUERIES = {
+  globalAndCountry:
+    'SELECT iso, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE threshold = {threshold} GROUP BY iso',
+  adm1:
+    "SELECT iso, admin_1, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND threshold = {threshold} GROUP BY iso, admin_1",
+  adm2:
+    "SELECT iso, admin_1, admin_2, SUM(biomass) as totalbiomass, SUM(biomassdensity) as biomassdensity FROM biomass_whrc_gadm36 WHERE iso = '{adm0}' AND admin_1 = {adm1} AND threshold = {threshold} GROUP BY iso, admin_1, admin_2"
+};
+
 export const getEmissions = ({ threshold, adm0 }) =>
   INDICATORS.map(indicator => {
     const url = `${process.env.CARTO_API}/sql?q=`;
@@ -47,14 +56,44 @@ export const getCumulative = params =>
     const url = 'https://production-api.globalforestwatch.org/v1/query/?sql=';
     const query = `SELECT sum(alerts) AS alerts,
 sum(cumulative_emissions) AS cumulative_emissions,
-sum(cumulative_deforestation) AS cumulative_deforestation, 
-sum(loss_ha) AS loss, 
+sum(cumulative_deforestation) AS cumulative_deforestation,
+sum(loss_ha) AS loss,
 sum(percent_to_emissions_target) AS percent_to_emissions_target,
 sum(percent_to_deforestation_target) AS percent_to_deforestation_target,
-year as year, 
-country_iso, 
+year as year,
+country_iso,
 week FROM a98197d2-cd8e-4b17-ab5c-fabf54b25ea0 WHERE country_iso =
 '${params.adm0}' AND year IN ('${year}') AND week
 <= 53 GROUP BY week, country_iso ORDER BY week ASC`;
     return request.get(encodeURI(`${url}${query}`));
   });
+
+export const getBiomassRanking = ({
+  adm0,
+  adm1,
+  adm2,
+  variable,
+  threshold
+}) => {
+  let query;
+
+  if (!adm1) {
+    query = SQL_QUERIES.globalAndCountry
+      .replace('{variable}', variable)
+      .replace('{threshold}', threshold);
+  } else if (adm1 && !adm2) {
+    query = SQL_QUERIES.adm1
+      .replace('{variable}', variable)
+      .replace('{adm0}', adm0)
+      .replace('{threshold}', threshold);
+  } else if (adm1 && adm2) {
+    query = SQL_QUERIES.adm2
+      .replace('{variable}', variable)
+      .replace('{adm0}', adm0)
+      .replace('{adm1}', adm1)
+      .replace('{threshold}', threshold);
+  }
+  const url = `${process.env.CARTO_API}/sql?q=${query}`;
+
+  return request.get(url);
+};

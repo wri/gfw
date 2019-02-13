@@ -27,6 +27,19 @@ class SectionAbout extends PureComponent {
               <li>- Journalism</li>
             </ul>
             <p className="text -paragraph -color-2 -light -spaced">
+              Please join us for the GFW Grants and Fellowship Webinar on
+              Wednesday, February 27th at 8:30am ET (
+              <a
+                className="text -paragraph -color-4 -bold"
+                href="https://wri.zoom.us/webinar/register/WN_CeRLurgpR2Ou5CVvupZBDQ?utm_campaign=gfw_sgf&utm_source=emailblast&utm_medium=hyperlink&utm_term=sgfandfellowshipwebinar_2_2019"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                register here
+              </a>
+              ).
+            </p>
+            <p className="text -paragraph -color-2 -light -spaced">
               For details on how to apply to each, please see below:
             </p>
           </div>
@@ -123,7 +136,16 @@ class SectionAbout extends PureComponent {
               <p className="text -paragraph -color-2 -light -spaced">
                 The call for applications for the 2019 Tech Fellowship will open
                 on February 15th, 2019. Applications will be reviewed on a
-                rolling basis. Please check back here for details.
+                rolling basis.
+                <a
+                  className="text -paragraph -color-4 -bold"
+                  href="https://gfw.fluidreview.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {' '}
+                  Apply now.
+                </a>
               </p>
             </div>
             <div className="column small-12 medium-3 logo">
