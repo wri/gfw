@@ -17,10 +17,7 @@ export default ({ params }) =>
 
       return {
         data,
-        options: { years },
-        settings: {
-          year: years[0].value
-        }
+        options: { years }
       };
     })
   );
