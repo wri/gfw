@@ -7461,10 +7461,10 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@1.15.2-beta:
-  version "1.15.2-beta"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.15.2-beta.tgz#03e058e2388e56c74ea34bbaa43b0c30b60815d7"
-  integrity sha512-d6Gqe1AbGdn/bOwmPPCllv2E/X0GXuMFsux9rgz5TXBaUgQMKBq7r+g8BOqTkPJcxri62nww2gcsfDm4otdXFw==
+layer-manager@1.15.3-beta:
+  version "1.15.3-beta"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.15.3-beta.tgz#79426d3c357d109bb1c397d956b08397e0737a0f"
+  integrity sha512-5SreX1uTj9nz/jXCXVIqTXu7zpuaJeavrJomlJFUYzHxV46roGfp8LwWOanZo41gbQ4VDCzhyqTsMqbdcTsikw==
   dependencies:
     axios "^0.18.0"
     lodash "^4.17.11"
