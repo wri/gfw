@@ -44,26 +44,28 @@ class LayerManagerComponent extends PureComponent {
                 id: geostore.id
               }}
               layerConfig={{
-                body: geostore.geojson,
-                layers: [
-                  {
-                    id: `${geostore.id}-fill`,
-                    type: 'fill',
-                    source: geostore.id,
-                    paint: {
-                      'fill-color': 'transparent'
+                data: geostore.geojson,
+                body: {
+                  vectorLayers: [
+                    {
+                      id: `${geostore.id}-fill`,
+                      type: 'fill',
+                      source: geostore.id,
+                      paint: {
+                        'fill-color': 'transparent'
+                      }
+                    },
+                    {
+                      id: `${geostore.id}-line`,
+                      type: 'line',
+                      source: geostore.id,
+                      paint: {
+                        'line-color': '#000',
+                        'line-width': 2
+                      }
                     }
-                  },
-                  {
-                    id: `${geostore.id}-line`,
-                    type: 'line',
-                    source: geostore.id,
-                    paint: {
-                      'line-color': '#000',
-                      'line-width': 2
-                    }
-                  }
-                ]
+                  ]
+                }
               }}
               zIndex={1060}
             />

@@ -177,7 +177,9 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       }),
                       // decode func and params for canvas layers
                       decodeFunction,
-                      decodeClusters,
+                      ...(decodeClusters && {
+                        decodeGeoJson: decodeClusters
+                      }),
                       ...(decodeParams && {
                         decodeParams: {
                           // timeline config
