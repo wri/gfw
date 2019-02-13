@@ -32,7 +32,6 @@ export const getMapSettings = createSelector([getMapUrlState], urlState => ({
 export const getRecentImagerySettings = createSelector(
   [getRecentUrlState],
   urlState => ({
-    ...initialState.settings,
     ...(initialState && {
       ...initialState.settings
     }),
@@ -53,11 +52,6 @@ export const getPosition = createSelector([getMapSettings], settings => ({
 export const getActiveDatasetsFromState = createSelector(
   getMapSettings,
   settings => settings.datasets
-);
-
-export const getVisibility = createSelector(
-  [getRecentImagerySettings],
-  settings => settings.visible
 );
 
 export const getActive = createSelector(
@@ -103,24 +97,6 @@ export const getActiveTile = createSelector(
     return selectedTileByIndex || tiles[0];
   }
 );
-
-export const getTileGeoJSON = createSelector([getActiveTile], activeTile => {
-  if (!activeTile) return null;
-  return {
-    features: [
-      {
-        type: 'Feature',
-        properties: {
-          ...activeTile
-        },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [activeTile.bbox.geometry.coordinates]
-        }
-      }
-    ]
-  };
-});
 
 export const getTileBounds = createSelector([getActiveTile], activeTile => {
   if (!activeTile) return null;
@@ -173,7 +149,6 @@ export const getRecentImageryProps = createStructuredSelector({
   moreTilesLoading: getMoreTilesLoading,
   error: getError,
   active: getActive,
-  visible: getVisibility,
   dates: getDates,
   sources: getSources,
   settings: getRecentImagerySettings,

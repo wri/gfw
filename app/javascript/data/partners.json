@@ -1,0 +1,85 @@
+[
+  { "name": "afc", "url": "http://www.afd.fr/home" },
+  { "name": "airbus", "url": "http://airbusdefenceandspace.com/" },
+  { "name": "agrosatelite", "url": "http://agrosatelite.com.br/" },
+  { "name": "astrodigital", "url": "https://astrodigital.com/" },
+
+  { "name": "bnpb", "url": "http://bnpb.go.id/" },
+  { "name": "bei", "url": "http://www.cisl.cam.ac.uk/banking" },
+  { "name": "blueraster", "url": "http://blueraster.com/" },
+  { "name": "cambridge", "url": "http://www.cisl.cam.ac.uk/" },
+
+  { "name": "cargill", "url": "http://www.cargill.com/" },
+  { "name": "cartodb", "url": "http://cartodb.com/" },
+  { "name": "centerforglobaldevelopment", "url": "http://www.cgdev.org/" },
+  { "name": "cgiar", "url": "http://foreststreesagroforestry.org/" },
+
+  { "name": "ciat", "url": "http://ciat.cgiar.org/" },
+  { "name": "clua", "url": "http://www.climateandlandusealliance.org/" },
+  { "name": "conafor", "url": "http://www.conafor.gob.mx/" },
+  { "name": "conservationinternational", "url": "http://www.conservation.org/" },
+
+  { "name": "digitalglobe", "url": "https://www.digitalglobe.com/" },
+  { "name": "esri", "url": "http://www.esri.com/gfw" },
+  { "name": "ejn", "url": "http://earthjournalism.net/" },
+  { "name": "ewmi", "url": "http://ewmi.org/" },
+
+  { "name": "gef", "url": "http://www.thegef.org/gef/" },
+  { "name": "generation", "url": "https://www.genfound.org/" },
+  { "name": "globalforestwatchcanada", "url": "http://globalforestwatch.ca/" },
+  { "name": "google", "url": "http://earthengine.google.org/" },
+
+  { "name": "haka", "url": "http://www.haka.or.id/" },
+  { "name": "icf", "url": "http://www.icf.gob.hn/" },
+  { "name": "idb", "url": "https://www.iadb.org/en" },
+  { "name": "idbinvest", "url": "http://www.idbinvest.org/" },
+
+  { "name": "imazon", "url": "http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en" },
+  { "name": "inab", "url": "http://www.inab.gob.gt/" },
+  { "name": "ioi", "url": "http://europe.croklaan.com/taking-responsibility" },
+  { "name": "jjfast", "url": "http://www.eorc.jaxa.jp/jjfast/" },
+
+  { "name": "thejanegoodallinstitute", "url": "http://www.janegoodall.org/" },
+  { "name": "lapig", "url": "https://www.lapig.iesa.ufg.br/lapig/" },
+  { "name": "macarthur", "url": "https://www.macfound.org/" },
+  { "name": "minepat", "url": "http://www.minepat.gov.cm/index.php/en/?lang=en" },
+
+  { "name": "ministiere", "url": "http://www.minfof.cm/" },
+  { "name": "moises", "url": "http://www.mbertoni.org.py/v1/en" },
+  { "name": "mongabay", "url": "http://www.mongabay.com/" },
+  { "name": "moore", "url": "http://www.moore.org/" },
+
+  { "name": "muyissi", "url": "http://www.ongmuyissi.org/" },
+  { "name": "norwegianministri", "url": "https://www.regjeringen.no/en/topics/climate-and-environment/climate/klima--og-skogprosjektet/id2000712/" },
+  { "name": "opendevcam", "url": "http://www.opendevelopmentcambodia.net/" },
+  { "name": "orbital", "url": "http://orbitalinsight.com/" },
+
+  { "name": "osfac", "url": "http://osfac.net/index.php?lang=en" },
+  { "name": "osinfor", "url": "http://www.osinfor.gob.pe/portal/index.php" },
+  { "name": "rfuk", "url": "http://www.rainforestfoundationuk.org/" },
+  { "name": "raisg", "url": "http://raisg.socioambiental.org/" },
+
+  { "name": "redd", "url": "http://www.redd-indonesia.org/" },
+  { "name": "rm", "url": "http://www.reforestamosmexico.org/" },
+  { "name": "resolve", "url": "http://www.resolv.org/site-BiodiversityWildlifeSolutions/" },
+  { "name": "rspo", "url": "http://www.rspo.org/" },
+
+  { "name": "rtrs", "url": "http://www.responsiblesoy.org/?lang=en" },
+  { "name": "scannex", "url": "http://www.scanex.ru/en/" },
+  { "name": "thetiliafund", "url": "http://www.tiliafund.org/" },
+  { "name": "tipos", "url": "http://www.transparentworld.ru/ru/" },
+
+  { "name": "ukaid", "url": "http://www.gov.uk/government/organisations/department-for-international-development" },
+  { "name": "unep", "url": "http://www.unep.org/" },
+  { "name": "unepwcmc", "url": "http://www.unep-wcmc.org/" },
+  { "name": "unilever", "url": "http://www.unilever.com/" },
+
+  { "name": "universityofmaryland", "url": "http://www.geog.umd.edu/" },
+  { "name": "usaid", "url": "http://www.usaid.gov/" },
+  { "name": "vizzuality", "url": "http://vizzuality.com/" },
+  { "name": "whrc", "url": "http://www.whrc.org/" },
+
+  { "name": "wilburforce", "url": "http://www.wilburforce.org/" },
+  { "name": "zeroextinction", "url": "http://www.zeroextinction.org/" },
+  { "name": "zsl", "url": "http://www.zsl.org/" }
+]
