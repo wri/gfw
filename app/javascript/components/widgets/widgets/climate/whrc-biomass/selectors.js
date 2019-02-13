@@ -45,7 +45,9 @@ export const parseData = createSelector(
     else key = 'iso';
 
     if (location.payload.adm0) {
-      const locationIndex = findIndex(data, d => d[key] === locationObj.value);
+      const locationIndex = locationObj
+        ? findIndex(data, d => d[key] === locationObj.value)
+        : -1;
       if (locationIndex === -1) return null;
 
       let trimStart = locationIndex - 2;
