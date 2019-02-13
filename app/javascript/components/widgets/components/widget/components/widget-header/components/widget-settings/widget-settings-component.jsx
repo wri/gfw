@@ -113,7 +113,7 @@ class WidgetSettings extends PureComponent {
       loading,
       onSettingsChange,
       widget,
-      setModalMeta,
+      setModalMetaSettings,
       getTooltipContentProps
     } = this.props;
     const {
@@ -166,7 +166,7 @@ class WidgetSettings extends PureComponent {
                   })
                 }
                 disabled={loading}
-                optionsAction={setModalMeta}
+                optionsAction={setModalMetaSettings}
                 optionsActionKey="metaKey"
                 clearable={
                   settings.hasOwnProperty('clearable') // eslint-disable-line
@@ -189,7 +189,7 @@ class WidgetSettings extends PureComponent {
                   })
                 }
                 disabled={loading}
-                optionsAction={setModalMeta}
+                optionsAction={setModalMetaSettings}
                 optionsActionKey="metaKey"
                 clearable={
                   settings.hasOwnProperty('clearable') // eslint-disable-line
@@ -230,7 +230,9 @@ class WidgetSettings extends PureComponent {
                     widget
                   });
                 }}
-                infoAction={() => setModalMeta('widget_tree_cover_extent')}
+                infoAction={() =>
+                  setModalMetaSettings({ metakey: 'widget_tree_cover_extent' })
+                }
               />
             )}
             {datasets && (
@@ -354,7 +356,9 @@ class WidgetSettings extends PureComponent {
               onSettingsChange({ value: { threshold: option.value }, widget })
             }
             disabled={loading}
-            infoAction={() => setModalMeta('widget_canopy_density')}
+            infoAction={() =>
+              setModalMetaSettings({ metakey: 'widget_canopy_density' })
+            }
           />
         )}
       </div>
@@ -379,7 +383,7 @@ WidgetSettings.propTypes = {
   options: PropTypes.object,
   onSettingsChange: PropTypes.func,
   widget: PropTypes.string,
-  setModalMeta: PropTypes.func,
+  setModalMetaSettings: PropTypes.func,
   getTooltipContentProps: PropTypes.func.isRequired
 };
 

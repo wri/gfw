@@ -12,6 +12,20 @@ import Modal from '../modal';
 import './meta-styles.scss';
 
 class ModalMeta extends PureComponent {
+  componentDidMount() {
+    const { getModalMetaData, metakey } = this.props;
+    if (metakey) {
+      getModalMetaData(metakey);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { getModalMetaData, metakey } = this.props;
+    if (metakey && metakey !== prevProps.metakey) {
+      getModalMetaData(metakey);
+    }
+  }
+
   getContent() {
     const { metaData, tableData, loading, error } = this.props;
     const {
@@ -127,12 +141,19 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { open, setModalMetaClosed, metaData } = this.props;
+    const { metakey, setModalMetaSettings, metaData } = this.props;
     return (
       <Modal
-        isOpen={open}
+        isOpen={!!metakey}
         contentLabel={`Metadata: ${metaData && metaData.title}`}
-        onRequestClose={() => setModalMetaClosed(false)}
+        onRequestClose={() =>
+          setModalMetaSettings({
+            metakey: '',
+            metaWhitelist: [],
+            tableWhitelist: [],
+            citation: ''
+          })
+        }
       >
         {this.getContent()}
       </Modal>
@@ -141,9 +162,10 @@ class ModalMeta extends PureComponent {
 }
 
 ModalMeta.propTypes = {
-  open: PropTypes.bool,
-  setModalMetaClosed: PropTypes.func,
+  setModalMetaSettings: PropTypes.func,
   metaData: PropTypes.object,
+  getModalMetaData: PropTypes.func,
+  metakey: PropTypes.string,
   tableData: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.bool
