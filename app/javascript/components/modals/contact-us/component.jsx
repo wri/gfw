@@ -28,36 +28,39 @@ class ModalContactUs extends PureComponent {
           setModalContactUsOpen(false);
         }}
       >
-        {submitting && <Loader />}
-        {showConfirm ? (
-          <div className="feedback-message">
-            <h3>
-              Thank you for contacting Global Forest Watch! Check your inbox for
-              a confirmation email.
-            </h3>
-            <p>Interested in getting news and updates from us?</p>
-            <div className="button-group">
-              <Button link="/about?show_newsletter=true">
-                Sign up for our newsletter
-              </Button>
-              <Button
-                className="close-button"
-                onClick={() => setModalContactUsOpen(false)}
-              >
-                No thanks
-              </Button>
+        <div className="c-contact-us">
+          {submitting && <Loader />}
+          {showConfirm ? (
+            <div className="feedback-message">
+              <h3>
+                Thank you for contacting Global Forest Watch! Check your inbox
+                for a confirmation email.
+              </h3>
+              <p>Interested in getting news and updates from us?</p>
+              <div className="button-group">
+                <Button link="/about?show_newsletter=true">
+                  Sign up for our newsletter
+                </Button>
+                <Button
+                  className="close-button"
+                  onClick={() => setModalContactUsOpen(false)}
+                >
+                  No thanks
+                </Button>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="c-form-container">
-            <h3>Contact us & feedback</h3>
-            <p className="subtitle">
-              Question, comment, request, feedback? We want to hear from you!
-              Help us improve Global Forest Watch by completing the form below.
-            </p>
-            <Contact onSubmit={this.handleSubmit} />
-          </div>
-        )}
+          ) : (
+            <div className="contact-form">
+              <h3>Contact us & feedback</h3>
+              <p className="subtitle">
+                Question, comment, request, feedback? We want to hear from you!
+                Help us improve Global Forest Watch by completing the form
+                below.
+              </p>
+              <Contact onSubmit={this.handleSubmit} />
+            </div>
+          )}
+        </div>
       </Modal>
     );
   }

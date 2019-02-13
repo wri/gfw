@@ -22,7 +22,7 @@ class Footer extends PureComponent {
     return (
       <MediaQuery minWidth={850}>
         {isDesktop => (
-          <div className="footerGfw">
+          <div className="c-footer">
             <ContactUs />
             <Newsletter />
             <div className="footer-subscribe">
@@ -33,7 +33,7 @@ class Footer extends PureComponent {
                 STAY UPDATED
               </Button>
             </div>
-            <div className="wrapper">
+            <div className="footer-main">
               <div className="footer-list">
                 <div className="footer-links">
                   <ul className="footer-links-texts">

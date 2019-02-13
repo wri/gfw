@@ -50,9 +50,11 @@ class MenuPanel extends PureComponent {
       category,
       large,
       onClose,
+      onOpen,
       children,
       loading,
-      setMenuSettings
+      setMenuSettings,
+      collapsed
     } = this.props;
     const Panel = isDesktop ? PanelDesktop : PanelMobile;
 
@@ -85,9 +87,12 @@ class MenuPanel extends PureComponent {
                 <Button
                   className="panel-close"
                   theme="theme-button-clear"
-                  onClick={onClose}
+                  onClick={collapsed ? onOpen : onClose}
                 >
-                  <Icon icon={arrowIcon} className="icon-close-panel" />
+                  <Icon
+                    icon={arrowIcon}
+                    className={cx('icon-close-panel', { collapsed })}
+                  />
                 </Button>
               </div>
             ) : (
@@ -114,7 +119,9 @@ MenuPanel.propTypes = {
   label: PropTypes.string,
   category: PropTypes.string,
   active: PropTypes.bool,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  collapsed: PropTypes.bool,
+  onOpen: PropTypes.func
 };
 
 export default MenuPanel;
