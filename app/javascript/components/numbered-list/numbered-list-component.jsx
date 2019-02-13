@@ -38,7 +38,10 @@ class NumberedList extends PureComponent {
                     <div className="item-name">{item.label}</div>
                   </div>
                   <div className="item-value">
-                    {formatNumber({ num: item.value, unit })}
+                    {formatNumber({
+                      num: item.value,
+                      unit: item.unit || unit
+                    })}
                   </div>
                 </div>
               );
