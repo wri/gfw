@@ -11,7 +11,7 @@ export default {
   colors: 'climate',
   dataType: 'loss',
   metaKey: 'aboveground_biomass',
-  layers: ['f10bded4-94e2-40b6-8602-ae5bdfc07c08'],
+  // layers: ['f10bded4-94e2-40b6-8602-ae5bdfc07c08'],
   sortOrder: {
     summary: 0,
     forestChange: 0
