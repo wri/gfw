@@ -5,7 +5,6 @@ import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
 import { setMapSettings } from 'components/maps/map/actions';
 import { setMapTourOpen } from 'components/maps/main-map/components/map-tour/actions';
 import { setMainMapSettings } from 'components/maps/main-map/actions';
-import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
 
 import Component from './map-controls-component';
 import { getMapControlsProps } from './map-controls-selectors';
@@ -15,6 +14,5 @@ export default connect(getMapControlsProps, {
   setMenuSettings,
   setMapTourOpen,
   setMapSettings,
-  setMainMapSettings,
-  setRecentImagerySettings
+  setMainMapSettings
 })(Component);

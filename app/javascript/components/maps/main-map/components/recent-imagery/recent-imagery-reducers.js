@@ -6,13 +6,12 @@ export const initialState = {
   loadingMoreTiles: false,
   data: [],
   dataStatus: {
-    tilesPerRequest: 6,
+    tilesPerRequest: 2,
     haveAllData: false,
     requestedTiles: 0,
     requestFails: 0
   },
   settings: {
-    visible: false,
     selected: null,
     selectedIndex: 0,
     date: null,
@@ -49,7 +48,8 @@ const resetRecentImageryData = () => ({
 
 const setRecentImageryLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload.loading,
+  error: payload.error
 });
 
 const setRecentImageryLoadingMoreTiles = (state, { payload }) => ({

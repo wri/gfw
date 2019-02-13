@@ -29,6 +29,12 @@
     }
   }
 
+  .map-tool-btn {
+    &.active {
+      box-shadow: $tooltip-box-shadow;
+    }
+  }
+
   .recent-imagery-btn {
     position: relative;
   }

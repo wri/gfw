@@ -37,11 +37,12 @@ class RecentImagerySettings extends PureComponent {
       activeTile,
       tiles,
       loading,
+      moreTilesLoading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
-      setModalMeta
+      setModalMeta,
+      onClickClose
     } = this.props;
-
     const selected = this.state.selected || activeTile || {};
 
     return (
@@ -57,10 +58,7 @@ class RecentImagerySettings extends PureComponent {
               >
                 <Icon icon={infoIcon} />
               </Button>
-              <button
-                className="close-btn"
-                onClick={() => setRecentImagerySettings({ visible: false })}
-              >
+              <button className="close-btn" onClick={onClickClose}>
                 <Icon icon={closeIcon} className="icon-close" />
               </button>
             </div>
@@ -187,7 +185,7 @@ class RecentImagerySettings extends PureComponent {
                 message="We can't find additional images for the selection"
               />
             )}
-          {loading && <Loader className="placeholder" />}
+          {loading && !moreTilesLoading && <Loader className="placeholder" />}
         </div>
       </div>
     );
@@ -200,7 +198,9 @@ RecentImagerySettings.propTypes = {
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
   setModalMeta: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  moreTilesLoading: PropTypes.bool,
+  onClickClose: PropTypes.func
 };
 
 export default RecentImagerySettings;
