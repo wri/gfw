@@ -359,11 +359,14 @@ export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
 
   return flatMap(
     interactiveLayers.reduce((arr, layer) => {
-      const fillLayers =
+      const clickableLayers =
         (layer.layerConfig.layers && layer.layerConfig.layers) ||
         layer.layerConfig.body.vectorLayers;
 
-      return [...arr, fillLayers.map((l, i) => `${layer.id}-${l.type}-${i}`)];
+      return [
+        ...arr,
+        clickableLayers.map((l, i) => `${layer.id}-${l.type}-${i}`)
+      ];
     }, [])
   );
 });
@@ -465,11 +468,11 @@ export const filterInteractions = createSelector(
       return {
         data: interactions[i].data,
         geometry: interactions[i].geometry,
-        allData: interactions[i].allData,
-        id: interactions[i].id,
         layer,
         label: layer && layer.name,
-        value: layer && layer.id
+        value: layer && layer.id,
+        article:
+          layer && layer.interactionConfig && layer.interactionConfig.article
       };
     });
   }
@@ -483,7 +486,8 @@ export const getSelectedInteraction = createSelector(
       l => !l.isBoundary && !isEmpty(l.interactionConfig)
     );
     // if there is an article (icon layer) then choose that
-    let selectedData = options.find(o => o.layer && o.layer.article);
+    let selectedData = options.find(o => o.data.cluster);
+    selectedData = options.find(o => o.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
       selectedData = options.find(

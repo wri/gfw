@@ -59,16 +59,15 @@ export const getButtonState = createSelector(
 export const getCardData = createSelector(
   [getSelectedInteraction],
   interaction => {
-    if (
-      isEmpty(interaction) ||
-      (interaction.layer && !interaction.layer.article)
-    ) {
+    if (isEmpty(interaction) || !interaction.article) {
       return null;
     }
-    const { data, config } = interaction;
+    const { data, layer } = interaction;
+    const { interactionConfig } = layer || {};
     const articleData =
-      config &&
-      config.reduce((obj, param) => {
+      interactionConfig &&
+      interactionConfig.output &&
+      interactionConfig.output.reduce((obj, param) => {
         const { prefix, renderKey } = param;
         const value = data[param.column || param.key];
         const newObj = {

@@ -40,6 +40,7 @@ class MapComponent extends PureComponent {
       lat,
       lng,
       setMapRect,
+      setMap,
       interactiveLayers,
       loadingMessage
     } = this.props;
@@ -56,6 +57,7 @@ class MapComponent extends PureComponent {
         <ReactMapGL
           ref={map => {
             this.map = map && map.getMap();
+            setMap(map && map.getMap());
           }}
           width="100%"
           height="100%"
@@ -99,6 +101,7 @@ MapComponent.propTypes = {
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   setMapRect: PropTypes.func,
+  setMap: PropTypes.func,
   handleMapMove: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   interactiveLayers: PropTypes.array,

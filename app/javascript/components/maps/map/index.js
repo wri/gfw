@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 import WebMercatorViewport from 'viewport-mercator-project';
+import isEqual from 'lodash/isEqual';
 
 import {
   setInteraction,
@@ -29,7 +30,8 @@ class MapContainer extends PureComponent {
   state = {
     bbox: null,
     width: 0,
-    height: 0
+    height: 0,
+    map: null
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -41,7 +43,8 @@ class MapContainer extends PureComponent {
       geostoreBbox,
       setMapSettings,
       layerBbox,
-      setLandsatBasemap
+      setLandsatBasemap,
+      selectedInteraction
     } = this.props;
 
     // update landsat basemap when changing zoom
@@ -72,7 +75,47 @@ class MapContainer extends PureComponent {
     if (geostoreBbox && geostoreBbox !== prevProps.geostoreBbox) {
       setMapSettings({ bbox: geostoreBbox });
     }
+
+    // fit bounds on cluster if clicked
+    if (
+      selectedInteraction &&
+      !isEqual(selectedInteraction, prevProps.selectedInteraction) &&
+      selectedInteraction.data.cluster
+    ) {
+      const { data, layer, geometry } = selectedInteraction;
+      this.state.map
+        .getSource(layer.id)
+        .getClusterExpansionZoom(data.cluster_id, (err, newZoom) => {
+          if (err) return;
+          const { coordinates } = geometry;
+          this.setMapPosition(coordinates[1], coordinates[0], newZoom);
+        });
+    }
   }
+
+  setMapPosition = (lat, lng, zoom) => {
+    const { setMapSettings } = this.props;
+    const { width, height } = this.state;
+    if (width && height) {
+      const newViewport = new WebMercatorViewport({
+        width,
+        height,
+        longitude: lng,
+        latitude: lat,
+        zoom,
+        pitch: 0,
+        bearing: 0
+      });
+      const { latitude, longitude } = newViewport;
+      setMapSettings({
+        center: {
+          lat: latitude,
+          lng: longitude
+        },
+        zoom: newViewport.zoom
+      });
+    }
+  };
 
   setBbox = bbox => {
     this.setState({ bbox });
@@ -83,6 +126,10 @@ class MapContainer extends PureComponent {
       const mapEl = map.getBoundingClientRect();
       this.setState({ width: mapEl.width, height: mapEl.height });
     }
+  };
+
+  setMap = map => {
+    this.setState({ map });
   };
 
   fitBounds = bbox => {
@@ -149,7 +196,8 @@ class MapContainer extends PureComponent {
       handleMapInteraction: this.handleMapInteraction,
       handleMapMove: this.handleMapMove,
       setBbox: this.setBbox,
-      setMapRect: this.setMapRect
+      setMapRect: this.setMapRect,
+      setMap: this.setMap
     });
   }
 }
@@ -166,7 +214,8 @@ MapContainer.propTypes = {
   lat: PropTypes.number,
   lng: PropTypes.number,
   zoom: PropTypes.number,
-  clearInteractions: PropTypes.func
+  clearInteractions: PropTypes.func,
+  selectedInteraction: PropTypes.object
 };
 
 reducerRegistry.registerModule('map', {
