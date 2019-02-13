@@ -1,5 +1,5 @@
 export default {
-  widget: 'firesAlerts',
+  widget: 'cumulativeGlad',
   title: 'New York Declaration Forest disturbance tracker',
   large: true,
   categories: ['climate'],
