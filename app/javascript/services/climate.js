@@ -44,7 +44,7 @@ ${threshold || 0} AND values.iso = UPPER('${
 
 export const getCumulative = params =>
   range(2015, 2019).map(year => {
-    const url = `${process.env.GFW_API}/v1/query/?sql=`;
+    const url = 'https://production-api.globalforestwatch.org/v1/query/?sql=';
     const query = `SELECT sum(alerts) AS alerts,
 sum(cumulative_emissions) AS cumulative_emissions,
 sum(cumulative_deforestation) AS cumulative_deforestation, 

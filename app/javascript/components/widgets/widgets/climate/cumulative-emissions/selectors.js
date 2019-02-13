@@ -16,13 +16,19 @@ const getSettings = state => state.settings;
 const getDataSettings = state => state.data && state.data.settings;
 export const getDataOptions = state => state.data && state.data.options;
 
+const TARGET_EMISSIONS = 265000000;
+const TARGET_DEFORESTATION = 988880;
+
 export const getData = createSelector(
   [getAlerts, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
 
     const { variable } = settings;
-    const target = variable === 'cumulative_emissions' ? 265000000 : 988880;
+    const target =
+      variable === 'cumulative_emissions'
+        ? TARGET_EMISSIONS
+        : TARGET_DEFORESTATION;
 
     const groupedByYear = Object.entries(data).reduce(
       (acc, [y, arr]) => ({
