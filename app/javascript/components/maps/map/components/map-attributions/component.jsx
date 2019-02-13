@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import googleLogo from 'assets/logos/google.png';
+import googleLogo from 'assets/logos/google-light.png';
 import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
 
