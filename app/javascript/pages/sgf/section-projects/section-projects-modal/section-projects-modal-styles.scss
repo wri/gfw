@@ -19,11 +19,25 @@
       line-height: 1.2;
     }
 
-    > h2 {
-      font-size: rem(14px);
-      text-transform: uppercase;
-      font-weight: 400;
-      opacity: 0.5;
+    .subtitle {
+      > * {
+        display: inline-block;
+      }
+
+      .tag {
+        color: white;
+        padding: 3px 10px;
+        margin-right: 10px;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        font-size: rem(14px);
+        text-transform: uppercase;
+        font-weight: 400;
+        opacity: 0.5;
+      }
     }
   }
 

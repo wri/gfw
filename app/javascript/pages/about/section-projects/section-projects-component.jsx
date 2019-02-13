@@ -4,6 +4,8 @@ import Globe from 'components/globe';
 import ProjectsModal from 'pages/about/section-projects/section-projects-modal';
 import ItemsList from 'components/items-list';
 import Button from 'components/ui/button';
+import { SCREEN_L } from 'utils/constants';
+import MediaQuery from 'react-responsive';
 
 import growth from 'pages/about/section-projects/images/growth.png';
 import './section-projects-styles.scss';
@@ -22,14 +24,20 @@ class SectionProjects extends PureComponent {
     return (
       <div className="l-section-projects">
         <div className="row">
-          <div className="column small-12 large-6 project-globe">
-            <Globe
-              autorotate={false}
-              data={projects}
-              onClick={handleGlobeClick}
-            />
-            <ProjectsModal />
-          </div>
+          <MediaQuery minWidth={SCREEN_L}>
+            {isDesktop =>
+              isDesktop && (
+                <div className="column small-12 large-6 project-globe">
+                  <Globe
+                    autorotate={false}
+                    data={projects}
+                    onClick={handleGlobeClick}
+                  />
+                  <ProjectsModal />
+                </div>
+              )
+            }
+          </MediaQuery>
           <div className="column small-12 large-6 project-side">
             <h3>WHO USES GLOBAL FOREST WATCH?</h3>
             <p>
