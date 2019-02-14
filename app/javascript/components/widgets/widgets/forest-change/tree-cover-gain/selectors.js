@@ -105,6 +105,7 @@ export const parseData = createSelector(
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
     const { payload, query, type } = allLocation;
+    const { adm1, adm2 } = payload || {};
 
     return dataTrimmed.map(d => ({
       ...d,
@@ -114,13 +115,13 @@ export const parseData = createSelector(
         payload: {
           ...payload,
           type: 'country',
-          ...(!payload.adm1 && {
+          ...(!adm1 && {
             adm0: d.id
           }),
-          ...(payload.adm1 && {
-            adm1: payload.adm2 ? payload.adm1 : d.id
+          ...(adm1 && {
+            adm1: adm2 ? adm1 : d.id
           }),
-          ...(payload.adm2 && {
+          ...(adm2 && {
             adm2: d.id
           })
         },
