@@ -132,7 +132,7 @@ class WidgetHeader extends PureComponent {
   };
 
   renderMetadataButton = () => {
-    const { metakey, citation, setModalMetaSettings, simple } = this.props;
+    const { metakey, setModalMetaSettings, simple } = this.props;
     return (
       <Button
         theme={cx('theme-button-small square', {
@@ -142,8 +142,7 @@ class WidgetHeader extends PureComponent {
           setModalMetaSettings({
             metakey,
             metaWhitelist: ['title', 'citation'],
-            tableWhitelist: ['function', 'source'],
-            citation
+            tableWhitelist: ['function', 'source']
           })
         }
         tooltip={{ text: 'Learn more about the data' }}
@@ -204,7 +203,6 @@ WidgetHeader.propTypes = {
   setModalMetaSettings: PropTypes.func.isRequired,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,
-  citation: PropTypes.string,
   config: PropTypes.object,
   locationName: PropTypes.string,
   isDeviceTouch: PropTypes.bool,

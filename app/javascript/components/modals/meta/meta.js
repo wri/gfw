@@ -38,8 +38,12 @@ const mapStateToProps = ({ modalMeta, location }) => {
 
   return {
     metakey,
-    metaData: data && pick(data, metaWhitelist.length || MASTER_META_FIELDS),
-    tableData: data && pick(data, tableWhitelist.length || MASTER_TABLE_FIELDS),
+    metaData:
+      data &&
+      pick(data, metaWhitelist.length ? metaWhitelist : MASTER_META_FIELDS),
+    tableData:
+      data &&
+      pick(data, tableWhitelist.length ? tableWhitelist : MASTER_TABLE_FIELDS),
     loading: modalMeta && modalMeta.loading
   };
 };
