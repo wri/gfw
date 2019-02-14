@@ -13,7 +13,7 @@ export default {
     units: ['co2LossByYear', 'cLossByYear']
   },
   colors: 'climate',
-  layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
+  // layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
   metaKey: 'tree_biomass_loss',
   sortOrder: {},
   sentences: {

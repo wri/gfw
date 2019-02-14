@@ -38,7 +38,8 @@ class Widget extends PureComponent {
         {loading && <Loader className="widget-loader" />}
         {!loading &&
           !error &&
-          !hasData && (
+          !hasData &&
+          Component && (
             <NoContent message={`No data in selection for ${locationName}`} />
           )}
         {!loading &&
@@ -56,7 +57,8 @@ class Widget extends PureComponent {
             />
           )}
         {!error &&
-          hasData && (
+          hasData &&
+          Component && (
             <Component
               widget={widget}
               data={data}

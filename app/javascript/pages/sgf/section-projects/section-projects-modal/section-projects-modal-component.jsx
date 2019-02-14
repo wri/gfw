@@ -32,11 +32,22 @@ class SectionProjectsModal extends PureComponent {
   getContent() {
     const { data } = this.props;
     if (!data) return null;
+    const isFellow =
+      data.categories && data.categories.indexOf('Fellow') !== -1;
+
     return (
       <div className="c-sgf-projects-modal">
         <div className="header">
           {data.title && <h1>{data.title}</h1>}
-          <h2>{data.meta}</h2>
+          <span className="subtitle">
+            <p
+              className="tag"
+              style={{ backgroundColor: isFellow ? '#f88000' : '#97bd3d' }}
+            >
+              {isFellow ? 'fellow' : 'grantee'}
+            </p>
+            <h2>{data.meta}</h2>
+          </span>
         </div>
         {data.images &&
           data.images.length > 1 && (
@@ -90,13 +101,13 @@ class SectionProjectsModal extends PureComponent {
   }
 
   handleClose = () => {
-    this.props.setSectionProjectsModal({ isOpen: false });
+    this.props.setSectionProjectsModalSlug('');
   };
 
   render() {
-    const { isOpen } = this.props;
+    const { slug } = this.props;
     return (
-      <Modal isOpen={isOpen} onRequestClose={this.handleClose}>
+      <Modal isOpen={!!slug} onRequestClose={this.handleClose}>
         {this.getContent()}
       </Modal>
     );
@@ -105,8 +116,8 @@ class SectionProjectsModal extends PureComponent {
 
 SectionProjectsModal.propTypes = {
   data: PropTypes.object,
-  isOpen: PropTypes.bool.isRequired,
-  setSectionProjectsModal: PropTypes.func.isRequired
+  slug: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setSectionProjectsModalSlug: PropTypes.func.isRequired
 };
 
 export default SectionProjectsModal;
