@@ -18,8 +18,7 @@ const actions = {
 class MapContainer extends PureComponent {
   static propTypes = {
     basemap: PropTypes.object,
-    mapOptions: PropTypes.object,
-    setLandsatBasemap: PropTypes.func
+    mapOptions: PropTypes.object
   };
 
   state = {
@@ -34,16 +33,16 @@ class MapContainer extends PureComponent {
       bbox,
       geostoreBbox,
       setMapSettings,
-      layerBbox,
-      setLandsatBasemap
+      layerBbox
     } = this.props;
 
     // update landsat basemap when changing zoom
     if (basemap.value === 'landsat' && zoom !== prevProps.zoom) {
-      setLandsatBasemap({
-        basemap,
-        year: basemap.year,
-        zoom
+      setMapSettings({
+        basemap: {
+          value: basemap.value,
+          url: basemap.url.replace('{year}', basemap.year)
+        }
       });
     }
 

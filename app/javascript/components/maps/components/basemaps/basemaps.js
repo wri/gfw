@@ -13,15 +13,20 @@ class BasemapsContainer extends React.Component {
   static propTypes = {
     activeDatasets: PropTypes.array,
     activeBoundaries: PropTypes.object,
-    setMapSettings: PropTypes.func.isRequired,
-    setLandsatBasemap: PropTypes.func.isRequired
+    setMapSettings: PropTypes.func.isRequired
   };
 
   selectBasemap = (basemap, year) => {
-    const { labels, setLandsatBasemap, setMapSettings } = this.props;
+    const { labels, setMapSettings } = this.props;
     const label = labels[basemap.labelsKey] || labels.default;
     if (basemap.value === 'landsat') {
-      setLandsatBasemap({ basemap, year, label: label.value });
+      setMapSettings({
+        basemap: {
+          value: basemap.value,
+          url: basemap.url.replace('{year}', year)
+        },
+        label: label.value
+      });
     } else {
       setMapSettings({ basemap: { value: basemap.value }, label: label.value });
     }
