@@ -23,6 +23,7 @@ class BasemapsContainer extends React.Component {
       setMapSettings({
         basemap: {
           value: basemap.value,
+          year,
           url: basemap.url.replace('{year}', year)
         },
         label: label.value
