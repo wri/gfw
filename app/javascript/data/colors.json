@@ -27,7 +27,8 @@
     "noGain": "#e7e5a4"
   },
   "climate": {
-    "ramp": ["#EDD093", "#BFBC35", "#007F53", "#123A33"],
+    "ramp": [ "#EDD093", "#BFBC35", "#007F53", "#123A33"],
+    "density": "#895122",
     "loss": {
       "main": "#DF511E",
       "secondary": "#F9A000"

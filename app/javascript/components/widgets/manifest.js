@@ -27,8 +27,10 @@ import * as treeCoverLocated from './widgets/land-cover/tree-cover-located';
 // Climate
 import * as emissions from './widgets/climate/emissions';
 import * as emissionsDeforestation from './widgets/climate/emissions-deforestation';
+import * as woodyBiomass from './widgets/climate/whrc-biomass/';
 import * as emissionsPlantations from './widgets/climate/emissions-plantations';
 import * as futureCarbonGains from './widgets/climate/future-carbon-gains';
+import * as cumulativeEmissions from './widgets/climate/cumulative-emissions';
 
 // Biodiversity
 // import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
@@ -65,8 +67,10 @@ export default {
   // climate
   emissions,
   emissionsDeforestation,
+  woodyBiomass,
   emissionsPlantations,
   futureCarbonGains,
+  cumulativeEmissions,
   // biodiversity
   // gladBiodiversity,
   // land use
