@@ -1,4 +1,5 @@
 import request from 'utils/request';
+import range from 'lodash/range';
 
 const INDICATORS = [
   3110, // (Carbon) Young Secondary Forest
@@ -47,6 +48,23 @@ ${threshold || 0} AND values.iso = UPPER('${
   adm0
 }') AND values.sub_nat_id IS NULL AND values.boundary_code = 'admin' ORDER BY year`;
 
+    return request.get(encodeURI(`${url}${query}`));
+  });
+
+export const getCumulative = params =>
+  range(2015, 2019).map(year => {
+    const url = 'https://production-api.globalforestwatch.org/v1/query/?sql=';
+    const query = `SELECT sum(alerts) AS alerts,
+sum(cumulative_emissions) AS cumulative_emissions,
+sum(cumulative_deforestation) AS cumulative_deforestation,
+sum(loss_ha) AS loss,
+sum(percent_to_emissions_target) AS percent_to_emissions_target,
+sum(percent_to_deforestation_target) AS percent_to_deforestation_target,
+year as year,
+country_iso,
+week FROM a98197d2-cd8e-4b17-ab5c-fabf54b25ea0 WHERE country_iso =
+'${params.adm0}' AND year IN ('${year}') AND week
+<= 53 GROUP BY week, country_iso ORDER BY week ASC`;
     return request.get(encodeURI(`${url}${query}`));
   });
 

@@ -5,5 +5,13 @@
   },{
     "label": "Density",
     "value": "biomassdensity"
+  },
+  {
+    "label": "Emissions",
+    "value": "cumulative_emissions"
+  },
+  {
+    "label": "Deforestation",
+    "value": "cumulative_deforestation"
   }
 ]
