@@ -37,11 +37,16 @@ class MapContainer extends PureComponent {
     } = this.props;
 
     // update landsat basemap when changing zoom
-    if (basemap.value === 'landsat' && zoom !== prevProps.zoom) {
+    if (
+      basemap.value === 'landsat' &&
+      prevProps.mapOptions &&
+      zoom !== prevProps.mapOptions.zoom
+    ) {
       setMapSettings({
         basemap: {
           value: basemap.value,
-          url: basemap.url.replace('{year}', basemap.year)
+          url: basemap.url.replace('{year}', basemap.year),
+          year: basemap.year
         }
       });
     }
