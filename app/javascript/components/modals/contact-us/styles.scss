@@ -1,0 +1,90 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(20px);
+$desktop-padding: rem(40px);
+
+.c-contact-us {
+  .contact-form {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 3.125rem;
+    padding-top: 2.5rem;
+    border-bottom: 66px solid transparent;
+    outline: none;
+    margin: 0 auto;
+    max-width: 700px;
+    color: #333;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 1.25;
+
+    .submit-btn {
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: #555;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin-top: 0.3125rem;
+      font-size: 0.8125rem;
+      line-height: 1.2;
+      color: #999;
+      margin-bottom: 1.875rem;
+    }
+  }
+
+  .feedback-message {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: #fff;
+    max-width: 70rem;
+    width: 600px;
+    padding: 1rem;
+    margin: auto;
+
+    h3 {
+      font-size: 2.1875rem;
+      margin-bottom: 1.25rem;
+      text-transform: none;
+      opacity: 1;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: row;
+
+      a,
+      button {
+        width: 15rem;
+      }
+
+      .close-button {
+        background-color: $error;
+        margin-bottom: 0.625rem;
+        margin-left: 0.625rem;
+
+        &:hover {
+          background-color: #c4143b;
+        }
+      }
+    }
+  }
+}
+

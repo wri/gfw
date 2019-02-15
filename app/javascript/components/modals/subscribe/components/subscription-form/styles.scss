@@ -13,6 +13,18 @@ $desktop-padding: rem(50px);
     }
   }
 
+  input {
+    height: rem(40px);
+    border: solid 1px $border;
+    padding: 0 rem(10px);
+    border-radius: rem(4px);
+    font-size: rem(14px);
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   .save-subscription {
     display: flex;
     justify-content: flex-end;
@@ -29,6 +41,7 @@ $desktop-padding: rem(50px);
 
     .submit-btn {
       margin-left: rem(15px);
+      max-width: rem(290px);
       position: relative;
 
       &.error {

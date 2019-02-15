@@ -7,7 +7,6 @@ import {
   getSelectedInteraction
 } from 'components/maps/map/selectors';
 import { getShowDraw } from 'components/maps/components/analysis/selectors';
-import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 
 import initialState from './initial-state';
 
@@ -69,7 +68,6 @@ export const getMapProps = createStructuredSelector({
   analysisActive: getShowAnalysis,
   oneClickAnalysis: getOneClickAnalysis,
   hidePanels: getHidePanels,
-  tileGeoJSON: getTileGeoJSON,
   menuSection: selectMenuSection,
   activeDatasets: getActiveDatasetsFromState,
   embed: getEmbed,

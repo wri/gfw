@@ -11,7 +11,7 @@ const getData = state => state.data && state.data;
 const getLocationName = state => state.locationName || null;
 const getLocation = state => state.location || null;
 const getAllLocation = state => state.allLocation || null;
-const getChildLocationDict = state => state.childLocationDict || null;
+const getLocationDict = state => state.locationDict || null;
 const getSettings = state => state.settings || null;
 
 const normalizeInt = d => ({
@@ -28,7 +28,7 @@ export const parsePayload = payload =>
   payload && { percentile: payload.activeLabel };
 
 const parseData = createSelector(
-  [getData, getSettings, getChildLocationDict, getLocation],
+  [getData, getSettings, getLocationDict, getLocation],
   (data, settings, childLocations, location) => {
     if (isEmpty(data) || isEmpty(childLocations)) {
       return null;

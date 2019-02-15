@@ -22,7 +22,7 @@ class PieChartLegend extends PureComponent {
         {data.map((item, index) => {
           const value = `${formatNumber({
             num: item[config.key],
-            unit: config.unit
+            unit: item.unit ? item.unit : config.unit
           })}`;
           return (
             <li className="legend-item" key={index.toString()}>

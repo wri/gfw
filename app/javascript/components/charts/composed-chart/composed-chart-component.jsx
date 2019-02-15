@@ -24,18 +24,30 @@ import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
-    const { yKeys, xKeys } = config;
-    const dataKeys = yKeys || xKeys;
+    const { yKeys } = config;
     const maxValues = [];
-    Object.keys(dataKeys).forEach(key => {
-      Object.keys(dataKeys[key]).forEach(subKey => {
-        const maxValue = maxBy(data, subKey);
-        if (maxValue) {
-          maxValues.push(maxValue[subKey]);
-        }
+    if (yKeys) {
+      Object.keys(yKeys).forEach(key => {
+        Object.keys(yKeys[key]).forEach(subKey => {
+          const maxValue =
+            yKeys[key][subKey].stackId === 1
+              ? // Total sum of values if graph is a stacked bar chart
+              {
+                [subKey]: max(
+                  data.map(d =>
+                    Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+                  )
+                )
+              }
+              : maxBy(data, subKey);
+          if (maxValue) {
+            maxValues.push(maxValue[subKey]);
+          }
+        });
       });
-    });
-    return max(maxValues);
+      return max(maxValues);
+    }
+    return 0;
   };
 
   render() {

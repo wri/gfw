@@ -113,20 +113,24 @@ export const getChildLocationData = createSelector(
   }
 );
 
-export const getChildLocationDict = createSelector(
+export const getLocationDict = createSelector(
   [getLocationData, selectLocation],
   (locationData, location) => {
     let values;
-    if (location.adm2) return null;
-    else if (!location.adm0) values = locationData.adm0;
-    else values = locationData[location.adm1 ? 'adm2' : 'adm1'];
+    if (location.adm2) values = locationData.adm2;
+    else if (location.adm1) values = locationData.adm1;
+    else values = locationData.adm0;
 
-    return values.reduce(
-      (dict, next) => ({
-        ...dict,
-        [next.value]: next.label
-      }),
-      {}
+    return (
+      values &&
+      values.length &&
+      values.reduce(
+        (dict, next) => ({
+          ...dict,
+          [next.value]: next.label
+        }),
+        {}
+      )
     );
   }
 );
@@ -316,8 +320,8 @@ export const getWidgetsProps = createStructuredSelector({
   locationData: getActiveLocationData,
   locationObject: getLocationObject,
   locationName: getLocationName,
+  locationDict: getLocationDict,
   childLocationData: getChildLocationData,
-  childLocationDict: getChildLocationDict,
   noWidgetsMessage: getNoWidgetsMessage,
   isTropical: isTropicalLocation
 });

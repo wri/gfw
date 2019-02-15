@@ -20,7 +20,7 @@ export const parseData = createSelector(
       selectedData[key].forEach(obj => {
         years[obj.year] = {
           ...years[obj.year],
-          [key]: obj.value,
+          [key]: obj.value * 1000000,
           year: obj.year
         };
       })
@@ -51,13 +51,15 @@ export const parseConfig = createSelector(
       YSF: 'Young Secondary Forest',
       MASF: 'Mid-Age Secondary Forests'
     };
+    const unit = settings.unit === 'co2Gain' ? 'tCO₂' : 'tC';
+
     tooltip = tooltip.concat(
       Object.keys(selectedData)
         .map((k, i) => ({
           key: k,
           label: labels[k] ? labels[k] : k,
           color: colors.ramp && colors.ramp[i],
-          unit: 't',
+          unit,
           unitFormat: num => formatNumber({ num, unit: '' })
         }))
         .reverse()
@@ -71,6 +73,7 @@ export const parseConfig = createSelector(
       xAxis: {
         ticksFormatter: yearTicksFormatter
       },
+      unit,
       tooltip
     };
   }
@@ -96,7 +99,7 @@ export const parseSentence = createSelector(
       sentence: initial,
       params: {
         location,
-        amount: formatNumber({ num: amount * 1000000, unit: 't' }),
+        amount: formatNumber({ num: amount, unit: 't' }),
         variable,
         maxYear: maxYear.year
       }

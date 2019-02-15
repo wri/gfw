@@ -16,16 +16,16 @@ export default ({ params }) =>
       ) => {
         const data = {
           cGain: {
-            YSF: cYSF.data && cYSF.data.values,
-            MASF: cMASF.data && cMASF.data.values,
-            Pasture: cPasture.data && cPasture.data.values,
-            Crops: cCrops.data && cCrops.data.values
+            YSF: cYSF.data && cYSF.data.rows,
+            MASF: cMASF.data && cMASF.data.rows,
+            Pasture: cPasture.data && cPasture.data.rows,
+            Crops: cCrops.data && cCrops.data.rows
           },
           co2Gain: {
-            YSF: co2YSF.data && co2YSF.data.values,
-            MASF: co2MASF.data && co2MASF.data.values,
-            Pasture: co2Pasture.data && co2Pasture.data.values,
-            Crops: co2Crops.data && co2Crops.data.values
+            YSF: co2YSF.data && co2YSF.data.rows,
+            MASF: co2MASF.data && co2MASF.data.rows,
+            Pasture: co2Pasture.data && co2Pasture.data.rows,
+            Crops: co2Crops.data && co2Crops.data.rows
           }
         };
         return data;

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
-import { checkLocationInsideBbox } from 'utils/geoms';
 import { CancelToken } from 'axios';
 import reducerRegistry from 'app/registry';
 
@@ -48,12 +47,12 @@ class RecentImageryContainer extends PureComponent {
       active,
       dataStatus,
       activeTile,
-      bounds,
       sources,
       dates,
       settings,
       getRecentImageryData,
       getMoreTiles,
+      positionInsideTile,
       position,
       loadingMoreTiles,
       resetRecentImageryData
@@ -63,15 +62,13 @@ class RecentImageryContainer extends PureComponent {
       activeTile &&
       !!activeTile.url &&
       (!prevProps.activeTile || activeTile.url !== prevProps.activeTile.url);
-    const positionInsideTile = bounds
-      ? checkLocationInsideBbox([position.lat, position.lng], bounds)
-      : true;
 
     // get data if activated or new props
     if (
       active &&
       (active !== prevProps.active ||
-        !positionInsideTile ||
+        (!positionInsideTile &&
+          !isEqual(positionInsideTile, prevProps.positionInsideTile)) ||
         !isEqual(settings.date, prevProps.settings.date) ||
         !isEqual(settings.weeks, prevProps.settings.weeks) ||
         !isEqual(settings.bands, prevProps.settings.bands))
@@ -90,8 +87,16 @@ class RecentImageryContainer extends PureComponent {
         token: this.getDataSource.token
       });
     }
+
     // get the rest of the tiles
-    if (dataStatus && !dataStatus.haveAllData && !loadingMoreTiles && active) {
+    if (
+      dataStatus &&
+      !dataStatus.haveAllData &&
+      !loadingMoreTiles &&
+      active &&
+      activeTile &&
+      isNewTile
+    ) {
       getMoreTiles({
         sources,
         dataStatus,
@@ -159,7 +164,7 @@ RecentImageryContainer.propTypes = {
   active: PropTypes.bool,
   dataStatus: PropTypes.object,
   activeTile: PropTypes.object,
-  bounds: PropTypes.array,
+  positionInsideTile: PropTypes.bool,
   sources: PropTypes.array,
   dates: PropTypes.object,
   settings: PropTypes.object,

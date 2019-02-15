@@ -6,12 +6,12 @@ export default {
   },
   categories: ['climate'],
   colors: 'climate',
-  types: ['country', 'region'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['country'],
+  admins: ['adm0'],
   options: {
     units: ['co2Gain', 'cGain']
   },
-  layers: ['fffa76d3-5008-48b7-afeb-2c7054548f2e'],
+  // layers: ['fffa76d3-5008-48b7-afeb-2c7054548f2e'],
   metaKey: 'potential_tree_biomass_gain',
   sortOrder: {
     summary: 1,

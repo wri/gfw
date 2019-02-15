@@ -126,7 +126,7 @@ class Contact extends PureComponent {
             component={renderRadio}
           />
         </div>
-        <Button type="submit" disabled={submitting}>
+        <Button className="submit-btn" type="submit" disabled={submitting}>
           Submit
         </Button>
       </form>
