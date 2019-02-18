@@ -1,4 +1,4 @@
-import { getBiomassRanking } from 'services/climate';
+import { getSoilOrganicCarbon } from 'services/climate';
 
 export default ({ params }) =>
-  getBiomassRanking({ ...params }).then(res => res.data && res.data.rows);
+  getSoilOrganicCarbon({ ...params }).then(res => res.data && res.data.rows);
