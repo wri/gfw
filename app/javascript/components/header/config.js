@@ -26,6 +26,10 @@ export default {
       path: '/dashboards/global'
     },
     {
+      label: 'Topics',
+      path: '/topics'
+    },
+    {
       label: 'Blog',
       path: 'http://blog.globalforestwatch.org',
       target: '_blank',

@@ -1,0 +1,84 @@
+@import '~styles/settings.scss';
+
+.l-section-projects-sgf {
+  margin-top: rem(-30px);
+
+  h2 {
+    opacity: 0.5;
+    font-size: rem(18px);
+    text-transform: uppercase;
+  }
+
+  .project-header {
+    display: none;
+
+    @media screen and (min-width: $screen-l) {
+      display: block;
+    }
+  }
+
+  .project-search {
+    margin-bottom: rem(30px);
+  }
+
+  .side {
+    padding-top: rem(40px);
+
+    h3 {
+      margin-bottom: rem(20px);
+      font-size: rem(18px);
+      opacity: 0.5;
+    }
+
+    p {
+      margin-bottom: rem(30px);
+    }
+  }
+
+  .project-list {
+    margin-bottom: rem(30px);
+  }
+
+  .project-cards {
+    position: relative;
+    min-height: rem(200px);
+
+    .card-container {
+      margin-bottom: rem(30px);
+    }
+  }
+
+  .project-globe {
+    position: relative;
+
+    ul {
+      position: absolute;
+      top: 2.5rem;
+
+      li {
+        font-size: 14px;
+        text-transform: uppercase;
+
+        span,
+        p {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        span {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        #grants {
+          background: #97bd3d;
+        }
+
+        #fellows {
+          background: #f88000;
+        }
+      }
+    }
+  }
+}

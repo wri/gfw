@@ -13,6 +13,7 @@ export const MAP = 'location/MAP';
 export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
+export const TOPICS = 'location/TOPICS';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -116,6 +117,19 @@ export const routes = {
     path: '/embed/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     embed: true
+  },
+  [TOPICS]: {
+    controller: 'topics',
+    path: '/topics',
+    component: 'topics',
+    sections: {
+      biodiversity: {
+        label: 'Biodiversity',
+        // submenu: true,
+        component: 'biodiversity'
+        // path: ''
+      }
+    }
   },
   [DASHBOARDS]: {
     controller: 'dashboards',
