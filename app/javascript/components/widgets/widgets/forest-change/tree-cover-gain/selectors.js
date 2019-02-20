@@ -158,7 +158,7 @@ export const parseSentence = createSelector(
     const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
 
-    const adminLevel = locationObject.adminLevel;
+    const adminLevel = locationObject.adminLevel || 'global';
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
