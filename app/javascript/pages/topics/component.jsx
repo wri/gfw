@@ -6,7 +6,9 @@ import React, { PureComponent } from 'react';
 // import Apply from 'pages/sgf/section-apply';
 
 import Cover from 'components/cover';
-// import SubnavMenu from 'components/subnav-menu';
+import Footer from 'components/footer';
+import Header from 'components/header';
+import SubnavMenu from 'components/subnav-menu';
 
 import bgImage from './header-bg';
 import './styles.scss';
@@ -21,20 +23,27 @@ class Page extends PureComponent {
   render() {
     // const { section } = this.props;
     // const SectionComponent = sectionComponents[(section && section.component) || 'projects'];
+    const links = [
+      { label: 'Biodiversity', path: '/topics/biodiversity' },
+      { label: 'Commodities', path: '/topics/commodities' },
+      { label: 'Water', path: '/topics/water' },
+      { label: 'Climate', path: '/topics/climate' }
+    ];
     return (
       <div>
+        <Header />
         <Cover
           title="Topics"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          description="Explore the relationship between forests and several key themes critical to sustainability and the health of our
+          future ecosystems."
           bgImage={bgImage}
         />
-        {/* <SubnavMenu links={this.props.links} /> */}
+        <SubnavMenu links={links} />
         <div className="l-main">
           {/* <SectionComponent /> */}
           <div>Here goes biodiversity stuff</div>
         </div>
+        <Footer />
       </div>
     );
   }
