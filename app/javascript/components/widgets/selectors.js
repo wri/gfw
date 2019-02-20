@@ -51,6 +51,10 @@ const locationTypes = {
     label: 'country',
     value: 'admin'
   },
+  global: {
+    label: 'global',
+    value: 'global'
+  },
   geostore: {
     label: 'your custom area',
     value: 'geostore'
@@ -148,15 +152,6 @@ export const getLocationObject = createSelector(
   (adminLevel, adms, location, parent) => {
     if (location.type !== 'country') {
       return locationTypes[location.type];
-    }
-    if (!adms || adminLevel === 'global') {
-      return {
-        parentLabel: null,
-        parentValue: null,
-        label: 'global',
-        value: 'global',
-        adminLevel
-      };
     }
 
     const locationObject = location.adm0

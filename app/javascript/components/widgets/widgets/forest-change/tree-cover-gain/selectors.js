@@ -167,13 +167,13 @@ export const parseSentence = createSelector(
       percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
       gainPercent:
         gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '<0.1%',
-      parent: locationObject && locationObject.parentLabel
+      parent: locationObject.parentLabel || null
     };
 
     let sentence = indicator ? withIndicator : initial;
     if (adminLevel === 'adm1' || adminLevel === 'adm2') {
       sentence = indicator ? regionWithIndicator : regionInitial;
-    } else if (adminLevel === 'global' || adminLevel === 'adm2') {
+    } else if (adminLevel === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
 
