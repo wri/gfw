@@ -4,13 +4,14 @@ import React, { PureComponent } from 'react';
 // import Projects from 'pages/sgf/section-projects';
 // import About from 'pages/sgf/section-about';
 // import Apply from 'pages/sgf/section-apply';
+import Biodiversity from 'pages/topics/section-biodiversity';
 
 import Cover from 'components/cover';
 import Footer from 'components/footer';
 import Header from 'components/header';
 import SubnavMenu from 'components/subnav-menu';
 
-import bgImage from './header-bg.png';
+import bgImage from './header-bg';
 import './styles.scss';
 
 // const sectionComponents = {
@@ -41,7 +42,7 @@ class Page extends PureComponent {
         <SubnavMenu links={links} />
         <div className="l-main">
           {/* <SectionComponent /> */}
-          <div>Here goes biodiversity stuff</div>
+          <Biodiversity />
         </div>
         <Footer />
       </div>

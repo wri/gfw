@@ -115,6 +115,7 @@
     "dotenv": "4.0.0",
     "downshift": "1.30.0",
     "fbjs": "0.8.16",
+    "fullpage.js": "^3.0.4",
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",
