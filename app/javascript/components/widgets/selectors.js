@@ -36,7 +36,7 @@ export const selectWhitelists = state =>
       adm1: state.whitelists.regions
     }
     : {});
-export const setectCountryData = state =>
+export const selectCountryData = state =>
   (state.countryData
     ? {
       adm0: state.countryData.countries,
@@ -89,7 +89,7 @@ export const getActiveWhitelist = createSelector(
 );
 
 export const getLocationData = createSelector(
-  [selectLocationType, setectCountryData],
+  [selectLocationType, selectCountryData],
   (type, countryData) => {
     if (type === 'country' || type === 'global') return countryData;
     return {};
@@ -110,6 +110,14 @@ export const getChildLocationData = createSelector(
     if (location.adm2) return null;
     if (!location.adm0) return locationData.adm0;
     return locationData[location.adm1 ? 'adm2' : 'adm1'];
+  }
+);
+
+export const getParentLocationData = createSelector(
+  [getLocationData, selectLocation],
+  (locationData, location) => {
+    if (!location.adm1 && !location.adm2) return null;
+    return locationData[location.adm2 ? 'adm1' : 'adm0'];
   }
 );
 
@@ -136,16 +144,40 @@ export const getLocationDict = createSelector(
 );
 
 export const getLocationObject = createSelector(
-  [getActiveLocationData, selectLocation],
-  (adms, location) => {
-    const { type, adm0, adm1, adm2 } = location;
-    if (type !== 'country') {
-      return locationTypes[type];
+  [getAdminLevel, getActiveLocationData, selectLocation, getParentLocationData],
+  (adminLevel, adms, location, parent) => {
+    if (location.type !== 'country') {
+      return locationTypes[location.type];
     }
     if (!adms) return null;
-    return adm0
-      ? adms.find(a => a.value === (adm2 || adm1 || adm0))
-      : { label: type, value: type };
+
+    const locationObject = location.adm0
+      ? adms.find(a => a.value === location[adminLevel])
+      : { label: location.type, value: location.type };
+    let parentObject = {};
+
+    if (adminLevel === 'adm0') {
+      parentObject = { label: 'global', value: 'global' };
+    } else if (adminLevel === 'adm1') {
+      parentObject = parent.find(a => a.value === location.adm0) || {
+        label: location.type,
+        value: location.type
+      };
+    } else if (adminLevel === 'adm2') {
+      parentObject = parent.find(a => a.value === location.adm1) || {
+        label: location.type,
+        value: location.type
+      };
+    }
+
+    const returnObject = {
+      parentLabel: parentObject.label,
+      parentValue: parentObject.value,
+      ...locationObject,
+      adminLevel
+    };
+
+    return returnObject;
   }
 );
 
@@ -155,7 +187,7 @@ export const getLocationName = createSelector(
 );
 
 export const getFAOLocationData = createSelector(
-  [setectCountryData],
+  [selectCountryData],
   countryData => countryData.faoCountries
 );
 
