@@ -121,12 +121,16 @@ export const getLocationDict = createSelector(
     else if (location.adm1) values = locationData.adm1;
     else values = locationData.adm0;
 
-    return values.reduce(
-      (dict, next) => ({
-        ...dict,
-        [next.value]: next.label
-      }),
-      {}
+    return (
+      values &&
+      values.length &&
+      values.reduce(
+        (dict, next) => ({
+          ...dict,
+          [next.value]: next.label
+        }),
+        {}
+      )
     );
   }
 );
