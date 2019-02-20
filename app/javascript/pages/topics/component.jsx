@@ -10,7 +10,7 @@ import Footer from 'components/footer';
 import Header from 'components/header';
 import SubnavMenu from 'components/subnav-menu';
 
-import bgImage from './header-bg';
+import bgImage from './header-bg.png';
 import './styles.scss';
 
 // const sectionComponents = {
