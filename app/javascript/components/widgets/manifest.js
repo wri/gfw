@@ -68,9 +68,9 @@ export default {
   // climate
   emissions,
   emissionsDeforestation,
+  emissionsPlantations,
   woodyBiomass,
   soilBiomass,
-  emissionsPlantations,
   futureCarbonGains,
   cumulativeEmissions,
   // biodiversity
