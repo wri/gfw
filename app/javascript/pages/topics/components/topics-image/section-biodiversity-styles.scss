@@ -1,0 +1,68 @@
+@import '~styles/settings.scss';
+
+.l-section-about {
+  .intro {
+    .logo {
+      margin-top: 30px;
+
+      @media screen and (min-width: $screen-m) {
+        margin-top: 0;
+        float: right;
+      }
+    }
+  }
+
+  section {
+    color: $slate;
+    font-weight: 300;
+    font-size: rem(18px);
+    line-height: 1.67;
+    margin-bottom: rem(40px);
+
+    &.results {
+      margin-bottom: rem(20px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      &.results {
+        margin-bottom: rem(60px);
+      }
+    }
+  }
+
+  .section-title {
+    margin-bottom: rem(10px);
+    font-size: rem(35px);
+  }
+
+  .section-subtitle {
+    font-size: rem(20px);
+    color: $green-gfw;
+    font-weight: 500;
+  }
+
+  .list {
+    margin-bottom: rem(20px);
+  }
+
+  .icon-list {
+    text-align: center;
+    margin-bottom: 0;
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(40px);
+    }
+
+    svg {
+      width: 40%;
+      height: 40%;
+      margin-top: rem(20px);
+      margin-bottom: rem(40px);
+    }
+
+    li {
+      margin-bottom: rem(30px);
+    }
+  }
+}
+

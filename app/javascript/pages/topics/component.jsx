@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 // import Projects from 'pages/sgf/section-projects';
 // import About from 'pages/sgf/section-about';
 // import Apply from 'pages/sgf/section-apply';
-import Biodiversity from 'pages/topics/section-biodiversity';
+// import Fullpage from 'fullpage.js';
 
 import Cover from 'components/cover';
 import Footer from 'components/footer';
@@ -21,6 +21,12 @@ import './styles.scss';
 // };
 
 class Page extends PureComponent {
+  componentDidMount() {
+    //     new Fullpage('#myFullpage', {
+    //       navigation: true
+    //     });
+  }
+
   render() {
     // const { section } = this.props;
     // const SectionComponent = sectionComponents[(section && section.component) || 'projects'];
@@ -42,7 +48,12 @@ class Page extends PureComponent {
         <SubnavMenu links={links} />
         <div className="l-main">
           {/* <SectionComponent /> */}
-          <Biodiversity />
+          <div id="fullpage">
+            <div className="section">Some section</div>
+            <div className="section">Some section</div>
+            <div className="section">Some section</div>
+            <div className="section">Some section</div>
+          </div>
         </div>
         <Footer />
       </div>
