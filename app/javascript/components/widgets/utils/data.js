@@ -112,7 +112,7 @@ export const getDatesData = data =>
     )
   }));
 
-export const getChartConfig = (colors, latest) => {
+export const getChartConfig = (colors, latest, unit = '') => {
   const ticks = [];
   while (ticks.length < 12) {
     ticks.push(
@@ -130,7 +130,8 @@ export const getChartConfig = (colors, latest) => {
       lines: {
         count: {
           stroke: colors.main
-        }
+        },
+        target: { stroke: 'grey' }
       },
       areas: {
         plusStdDev: {
@@ -176,7 +177,8 @@ export const getChartConfig = (colors, latest) => {
       domain: [0, 'auto'],
       allowDataOverflow: true
     },
-    height: '280px'
+    height: '280px',
+    unit
   };
 };
 
