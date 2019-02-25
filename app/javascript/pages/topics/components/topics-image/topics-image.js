@@ -1,5 +1,5 @@
 import { createElement } from 'react';
 
-import Component from './section-biodiversity-component';
+import Component from './topics-image';
 
 export default () => createElement(Component, {});
