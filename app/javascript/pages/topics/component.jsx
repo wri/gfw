@@ -40,9 +40,9 @@ class Page extends PureComponent {
           future ecosystems."
           bgImage={bgImage}
         />
-        <SubnavMenu links={links} />
+        <SubnavMenu links={links} theme="theme-subnav-dark" />
         <div className="l-main">
-          <Topic />
+          <Topic topic={'Biodiversity'} />
         </div>
         <Footer />
       </div>

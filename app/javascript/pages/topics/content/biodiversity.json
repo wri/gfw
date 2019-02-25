@@ -2,21 +2,25 @@
   {
     "title": "Biodiversity",
     "subtitle": "Pristine state",
-    "text": "Forests are critical homes to plant and animal species. In turn, species that live within forests play important role in maintaining forest health."
+    "text": "Forests are critical homes to plant and animal species. In turn, species that live within forests play important role in maintaining forest health.",
+    "src": "biodiversity1"
   },
   {
     "title": "Biodiversity",
     "subtitle": "Drivers of change",
-    "text": "Changes to forested habitats can lead to the extinction of the species that depend on them. With fewer species, the resilience of the entire food chain suffers."
+    "text": "Changes to forested habitats can lead to the extinction of the species that depend on them. With fewer species, the resilience of the entire food chain suffers.",
+    "src": "biodiversity2"
   },
   {
     "title": "Biodiversity",
     "subtitle": "Compromised state",
-    "text": "Failure to protect critical wildlife areas from deforestation means the loss of biodiversity and extinction of endangered species."
+    "text": "Failure to protect critical wildlife areas from deforestation means the loss of biodiversity and extinction of endangered species.",
+    "src": "biodiversity3"
   },
   {
     "title": "Biodiversity",
     "subtitle": "Recovery state",
-    "text": "Protecting forest habitats is key to maintaining biodiversity. With better data on where tree cover loss in important biodiversity ares is happening, governments can make more informed decisions related to concessions and conservation projects and civil society can call attention to areas at risk."
+    "text": "Protecting forest habitats is key to maintaining biodiversity. With better data on where tree cover loss in important biodiversity ares is happening, governments can make more informed decisions related to concessions and conservation projects and civil society can call attention to areas at risk.",
+    "src": "biodiversity4"
   }
 ]

@@ -8,8 +8,8 @@ class TopicsText extends PureComponent {
     const { title, subtitle, text } = this.props;
     return (
       <div className="c-topics-text">
-        <h3>{subtitle}</h3>
-        <h1>{title}</h1>
+        <h3>{title}</h3>
+        <h1>{subtitle}</h1>
         <p>{text}</p>
       </div>
     );
