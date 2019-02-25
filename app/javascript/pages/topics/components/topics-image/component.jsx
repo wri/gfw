@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './section-biodiversity-styles.scss';
+// import './styles.scss';
 
 class TopicsImage extends PureComponent {
   render() {
     const { url, description } = this.props;
     return (
-      <div className="topics-image">
+      <div className="c-topics-image">
         <img src={url} alt={description} />
       </div>
     );

@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import './section-biodiversity-styles.scss';
+import './styles.scss';
 
 class TopicsText extends PureComponent {
   render() {
     const { title, subtitle, text } = this.props;
     return (
-      <div className="topics-text">
+      <div className="c-topics-text">
         <h3>{subtitle}</h3>
         <h1>{title}</h1>
         <p>{text}</p>

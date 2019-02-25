@@ -13,6 +13,7 @@ import SubnavMenu from 'components/subnav-menu';
 
 import bgImage from './header-bg';
 import './styles.scss';
+import Topic from './components/topic';
 
 // const sectionComponents = {
 //   projects: Projects,
@@ -21,12 +22,6 @@ import './styles.scss';
 // };
 
 class Page extends PureComponent {
-  componentDidMount() {
-    //     new Fullpage('#myFullpage', {
-    //       navigation: true
-    //     });
-  }
-
   render() {
     // const { section } = this.props;
     // const SectionComponent = sectionComponents[(section && section.component) || 'projects'];
@@ -47,13 +42,7 @@ class Page extends PureComponent {
         />
         <SubnavMenu links={links} />
         <div className="l-main">
-          {/* <SectionComponent /> */}
-          <div id="fullpage">
-            <div className="section">Some section</div>
-            <div className="section">Some section</div>
-            <div className="section">Some section</div>
-            <div className="section">Some section</div>
-          </div>
+          <Topic />
         </div>
         <Footer />
       </div>
