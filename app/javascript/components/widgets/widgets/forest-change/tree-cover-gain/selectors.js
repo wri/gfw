@@ -164,9 +164,9 @@ export const parseSentence = createSelector(
       location: currentLabel === 'global' ? 'globally' : currentLabel,
       gain: gain < 1 ? `${format('.3r')(gain)}ha` : `${format('.3s')(gain)}ha`,
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
-      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
+      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '< 0.1%',
       gainPercent:
-        gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '<0.1%',
+        gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '< 0.1%',
       parent: locationObject.parentLabel || null
     };
 

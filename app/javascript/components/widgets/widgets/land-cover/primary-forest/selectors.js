@@ -74,7 +74,7 @@ export const parseSentence = createSelector(
       indicator: indicatorLabel,
       percentage:
         primaryPercentage < 0.1
-          ? '<0.1%'
+          ? '< 0.1%'
           : `${format('.2r')(primaryPercentage)}%`,
       extentYear: settings.extentYear
     };

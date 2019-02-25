@@ -78,7 +78,7 @@ export const parseSentence = createSelector(
           ? `${format('.3r')(extent)}ha`
           : `${format('.3s')(extent)}ha`,
       primaryPercent:
-        primaryPercent >= 0.1 ? `${format('.2r')(primaryPercent)}%` : '<0.1%'
+        primaryPercent >= 0.1 ? `${format('.2r')(primaryPercent)}%` : '< 0.1%'
     };
     let sentence = forest_primary > 0 ? initial : noPrimary;
     if (locationName === 'global') {

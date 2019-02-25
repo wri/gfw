@@ -112,9 +112,9 @@ export const parseSentence = createSelector(
           : `${format('.3s')(extent)}ha`,
       indicator: indicator && indicator.label.toLowerCase(),
       landPercentage:
-        landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '<0.1%',
+        landPercent >= 0.1 ? `${format('.2r')(landPercent)}%` : '< 0.1%',
       globalPercentage:
-        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '<0.1%'
+        globalPercent >= 0.1 ? `${format('.2r')(globalPercent)}%` : '< 0.1%'
     };
 
     let sentence = indicator ? withInd : initial;
