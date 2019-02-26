@@ -126,11 +126,11 @@ export const parseSentence = createSelector(
 
     const topRegionPercent =
       topRegion.percentage < 0.1
-        ? '<0.1%'
+        ? '< 0.1%'
         : `${format('.2r')(topRegion.percentage)}%`;
     const aveRegionPercent =
       avgExtentPercentage < 0.1
-        ? '<0.1%'
+        ? '< 0.1%'
         : `${format('.2r')(avgExtentPercentage)}%`;
 
     const params = {

@@ -75,7 +75,9 @@ export const parseSentence = createSelector(
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
       indicator: indicatorLabel,
       percentage:
-        intactPercentage < 0.1 ? '<0.1%' : `${format('.2r')(intactPercentage)}%`
+        intactPercentage < 0.1
+          ? '< 0.1%'
+          : `${format('.2r')(intactPercentage)}%`
     };
 
     let sentence =

@@ -168,9 +168,9 @@ export const parseSentence = createSelector(
           ? `${format('.3r')(lossArea)}ha`
           : `${format('.3s')(lossArea)}ha`,
       localPercent:
-        areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
+        areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '< 0.1%',
       globalPercent:
-        lossPercent >= 0.1 ? `${format('.2r')(lossPercent)}%` : '<0.1%',
+        lossPercent >= 0.1 ? `${format('.2r')(lossPercent)}%` : '< 0.1%',
       extentYear: settings.extentYear
     };
 
