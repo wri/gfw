@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import ReactFullpage from '@fullpage/react-fullpage';
 
 import Section from 'pages/topics/components/section';
 import Biodiversity from 'pages/topics/content/biodiversity.json';
@@ -11,15 +12,33 @@ class Topic extends PureComponent {
     };
     const topic = topics[this.props.topic] || [];
     return (
-      <div id="fullpage" className="c-topic">
-        {topic.map(s => (
-          <Section
-            content={{ text: s.text, title: s.title, subtitle: s.subtitle }}
-            imgURL={s.src}
-            key={s.subtitle}
-          />
-        ))}
-      </div>
+      <ReactFullpage
+        // fitToSection={false}
+        // scrollOverflow
+        // verticalCentered={false}
+        // paddingTop={400}
+        // normalScrollElements=".c-header, .c-cover, .c-subnav-menu"
+        fixedElements=".c-header"
+        render={
+          // ({ state, fullpageApi }) => (
+          () => (
+            <ReactFullpage.Wrapper>
+              {topic.map((s, i) => (
+                <Section
+                  content={{
+                    text: s.text,
+                    title: s.title,
+                    subtitle: s.subtitle
+                  }}
+                  imgURL={s.src}
+                  key={s.subtitle}
+                  index={i}
+                />
+              ))}
+            </ReactFullpage.Wrapper>
+          )
+        }
+      />
     );
   }
 }

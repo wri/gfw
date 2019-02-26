@@ -41,9 +41,7 @@ class Page extends PureComponent {
           bgImage={bgImage}
         />
         <SubnavMenu links={links} theme="theme-subnav-dark" />
-        <div className="l-main">
-          <Topic topic={'Biodiversity'} />
-        </div>
+        <Topic topic={'Biodiversity'} />
         <Footer />
       </div>
     );
