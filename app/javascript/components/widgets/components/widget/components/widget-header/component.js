@@ -111,7 +111,7 @@ class WidgetHeader extends PureComponent {
               options={options}
               loading={loading}
               onSettingsChange={setWidgetSettings}
-              setModalMeta={setModalMetaSettings}
+              setModalMetaSettings={setModalMetaSettings}
             />
           }
         >
