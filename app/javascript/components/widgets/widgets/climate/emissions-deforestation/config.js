@@ -11,7 +11,7 @@ export default {
     units: ['co2LossByYear', 'cLossByYear']
   },
   analysis: true,
-  // layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
+  layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
   dataType: 'loss',
   colors: 'climate',
