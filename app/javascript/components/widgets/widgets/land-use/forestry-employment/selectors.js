@@ -79,7 +79,7 @@ export const parseSentence = createSelector(
     const params = {
       location: `${locationObject && locationObject && locationObject.label}'s`,
       value: `${employees ? format('.3s')(employees) : 'no'}`,
-      percent: percentage >= 0.1 ? `${format('.2r')(percentage)}%` : '<0.1%',
+      percent: percentage >= 0.1 ? `${format('.2r')(percentage)}%` : '< 0.1%',
       year
     };
 

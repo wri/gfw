@@ -116,7 +116,7 @@ export const parseSentence = createSelector(
       location_alt: `${locationName}'s`,
       percentage:
         Math.abs(emissionFraction) < 0.1
-          ? '<0.1%'
+          ? '< 0.1%'
           : `${format('.2r')(Math.abs(emissionFraction))}%`,
       value: `${format('.3s')(
         Math.abs(emissionsCount / (endYear - startYear))
