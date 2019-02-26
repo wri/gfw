@@ -310,16 +310,15 @@ export const getLayerGroups = createSelector(
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
-    return activeDatasetsState
-      .map(l => datasets.find(d => d.id === l.dataset))
-      .filter(l => l)
-      .map(d => {
-        const { metadata } = (d && d.layers.find(l => l.active)) || {};
-        return {
-          ...d,
-          metadata: metadata || d.metadata
-        };
-      });
+    return activeDatasetsState.map(layer => {
+      const dataset = datasets.find(d => d.id === layer.dataset);
+      const { metadata } =
+        (dataset && dataset.layers.find(l => l.active)) || {};
+      return {
+        ...dataset,
+        metadata: metadata || dataset.metadata
+      };
+    });
   }
 );
 
@@ -373,7 +372,7 @@ export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
 
 // get widgets related to map layers and use them to build the layers
 export const getWidgetsWithLayerParams = createSelector(
-  [parseWidgetsWithOptions, getAllLayers],
+  [parseWidgetsWithOptions, getActiveLayers],
   (widgets, layers) => {
     if (!widgets || !widgets.length || !layers || !layers.length) return null;
     const layerIds = layers && layers.map(l => l.id);
@@ -414,7 +413,7 @@ export const getWidgetsWithLayerParams = createSelector(
 
 // flatten datasets into layers for the layer manager
 export const getActiveLayersWithWidgetSettings = createSelector(
-  [getAllLayers, getWidgetsWithLayerParams],
+  [getActiveLayers, getWidgetsWithLayerParams],
   (layers, widgets) => {
     if (isEmpty(layers)) return [];
     if (isEmpty(widgets)) return layers;
