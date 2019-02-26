@@ -148,7 +148,7 @@ class CustomComposedChart extends PureComponent {
                   : {})}
                 tick={
                   <CustomTick
-                    dataMax={xKeys && maxYValue}
+                    dataMax={maxYValue}
                     unit={unit || ''}
                     unitFormat={
                       unitFormat ||
