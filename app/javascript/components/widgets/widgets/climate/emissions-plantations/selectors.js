@@ -64,7 +64,7 @@ export const parseSentence = createSelector(
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
       percentage:
         plantationsPct < 0.1
-          ? '<0.1%'
+          ? '< 0.1%'
           : formatNumber({ num: plantationsPct, unit: '%' }),
       emissions: formatNumber({ num: emissions, unit: 't' }),
       startYear,

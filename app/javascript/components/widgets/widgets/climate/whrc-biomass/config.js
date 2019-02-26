@@ -1,6 +1,6 @@
 export default {
   widget: 'whrc-biomass',
-  title: 'Biomass density in {location}',
+  title: 'Aboveground live woody biomass in {location}',
   categories: ['climate'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
@@ -9,7 +9,6 @@ export default {
     variables: ['totalbiomass', 'biomassdensity']
   },
   colors: 'climate',
-  dataType: 'loss',
   metaKey: 'aboveground_biomass',
   // layers: ['f10bded4-94e2-40b6-8602-ae5bdfc07c08'],
   sortOrder: {
@@ -18,10 +17,6 @@ export default {
   },
   sentences: {
     initial:
-      'In 2000, {location} had a biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.',
-    totalbiomass:
-      'Around {value} of the world’s {label} is contained in the top 5 countries.',
-    biomassdensity:
-      'The average {label} of the world’s top 5 countries is {value}.'
+      'In 2000, {location} had an aboveground live woody biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.'
   }
 };
