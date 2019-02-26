@@ -62,7 +62,7 @@ export const parseSentence = createSelector(
           : `${format('.3s')(otherExtent)}ha`,
       count: data.length - top.length,
       topType: `${top[0].label}${endsWith(top[0].label, 's') ? '' : 's'}`,
-      percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '<0.1%'
+      percent: areaPerc >= 0.1 ? `${format('.2r')(areaPerc)}%` : '< 0.1%'
     };
     const sentence =
       settings.type === 'bound1'

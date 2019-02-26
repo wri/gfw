@@ -16,17 +16,17 @@ class WidgetSettings extends PureComponent {
     });
   }
 
-  getUnit = (units, widget, settings, onSettingsChange) => {
-    if (units.length <= 1) return null;
-    if (units.length === 2) {
+  getUnitVariable = (items, widget, settings, onSettingsChange, type) => {
+    if (items.length <= 1) return null;
+    if (items.length === 2) {
       return (
         <Switch
           theme="theme-switch-light"
-          label="UNIT"
-          value={settings.unit}
-          options={units}
+          label={type === 'unit' ? 'UNIT' : 'VARIABLE'}
+          value={settings[type]}
+          options={items}
           onChange={option =>
-            onSettingsChange({ value: { unit: option }, widget })
+            onSettingsChange({ value: { [type]: option }, widget })
           }
         />
       );
@@ -35,11 +35,11 @@ class WidgetSettings extends PureComponent {
     return (
       <Dropdown
         theme="theme-select-light"
-        label="UNIT"
-        value={settings.unit}
-        options={units}
+        label={type === 'unit' ? 'UNIT' : 'VARIABLE'}
+        value={settings[type]}
+        options={items}
         onChange={option =>
-          onSettingsChange({ value: { unit: option.value }, widget })
+          onSettingsChange({ value: { [type]: option.value }, widget })
         }
       />
     );
@@ -118,6 +118,7 @@ class WidgetSettings extends PureComponent {
     } = this.props;
     const {
       units,
+      variables,
       forestTypes,
       landCategories,
       periods,
@@ -133,6 +134,7 @@ class WidgetSettings extends PureComponent {
     } = this.props.options;
     const hasExtraOptions =
       units ||
+      variables ||
       periods ||
       years ||
       startYears ||
@@ -284,7 +286,22 @@ class WidgetSettings extends PureComponent {
                 settings,
                 onSettingsChange
               )}
-            {units && this.getUnit(units, widget, settings, onSettingsChange)}
+            {units &&
+              this.getUnitVariable(
+                units,
+                widget,
+                settings,
+                onSettingsChange,
+                'unit'
+              )}
+            {variables &&
+              this.getUnitVariable(
+                variables,
+                widget,
+                settings,
+                onSettingsChange,
+                'variable'
+              )}
             {periods && (
               <Dropdown
                 theme="theme-select-light"

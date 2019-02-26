@@ -19,9 +19,6 @@ const getTitle = state => state.config.title;
 const getLocationType = state => state.locationType || null;
 const getAllLocation = state => state.allLocation || null;
 
-const getAdminLevel = state => state.adminLevel || null;
-const getParentLocation = state => state[state.parentLevel] || null;
-
 const haveData = (data, locationObject) =>
   locationObject &&
   data &&
@@ -138,19 +135,9 @@ export const parseSentence = createSelector(
     getIndicator,
     getLocationObject,
     getLocationName,
-    getSentences,
-    getParentLocation,
-    getAdminLevel
+    getSentences
   ],
-  (
-    data,
-    indicator,
-    locationObject,
-    currentLabel,
-    sentences,
-    parent,
-    adminLevel
-  ) => {
+  (data, indicator, locationObject, currentLabel, sentences) => {
     if (
       !data ||
       !data.length ||
@@ -172,20 +159,22 @@ export const parseSentence = createSelector(
     const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
 
+    const adminLevel = locationObject.adminLevel || 'global';
+
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
       gain: gain < 1 ? `${format('.3r')(gain)}ha` : `${format('.3s')(gain)}ha`,
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
-      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '<0.1%',
+      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '< 0.1%',
       gainPercent:
-        gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '<0.1%',
-      parent: parent && parent.label
+        gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '< 0.1%',
+      parent: locationObject.parentLabel || null
     };
 
     let sentence = indicator ? withIndicator : initial;
-    if (adminLevel === 'region' || adminLevel === 'subRegion') {
+    if (adminLevel === 'adm1' || adminLevel === 'adm2') {
       sentence = indicator ? regionWithIndicator : regionInitial;
-    } else if (adminLevel === 'global' || adminLevel === 'subRegion') {
+    } else if (adminLevel === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
 
