@@ -21,7 +21,7 @@ import Topic from './components/topic';
 //   apply: Apply
 // };
 
-class Page extends PureComponent {
+class TopicsPage extends PureComponent {
   render() {
     // const { section } = this.props;
     // const SectionComponent = sectionComponents[(section && section.component) || 'projects'];
@@ -32,7 +32,7 @@ class Page extends PureComponent {
       { label: 'Climate', path: '/topics/climate' }
     ];
     return (
-      <div>
+      <div className="c-topics-page">
         <Header />
         <Cover
           title="Topics"
@@ -41,16 +41,18 @@ class Page extends PureComponent {
           bgImage={bgImage}
         />
         <SubnavMenu links={links} theme="theme-subnav-dark" />
-        <Topic topic={'Biodiversity'} />
+        <div className="l-main">
+          <Topic topic={'Biodiversity'} />
+        </div>
         <Footer />
       </div>
     );
   }
 }
 
-// Page.propTypes = {
+// TopicsPage.propTypes = {
 //    section: PropTypes.object.isRequired,
 //    links: PropTypes.array.isRequired
 // };
 
-export default Page;
+export default TopicsPage;
