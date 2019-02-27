@@ -1,0 +1,23 @@
+@import '~styles/settings.scss';
+
+.l-section-about {
+  .intro {
+    margin-top: 30px;
+
+    @media screen and (min-width: $screen-m) {
+      margin-top: 0;
+    }
+  }
+
+  section {
+    &.results {
+      margin-bottom: rem(20px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      &.results {
+        margin-bottom: rem(60px);
+      }
+    }
+  }
+}

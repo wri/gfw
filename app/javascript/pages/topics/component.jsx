@@ -6,15 +6,19 @@ import React, { PureComponent } from 'react';
 // import Apply from 'pages/sgf/section-apply';
 // import Fullpage from 'fullpage.js';
 
-import Cover from 'components/cover';
-import Footer from 'components/footer';
 import Header from 'components/header';
-import SubnavMenu from 'components/subnav-menu';
+import TopicsHeader from 'pages/topics/components/topics-header';
+import TopicsFooter from 'pages/topics/components/topics-footer';
 
-import bgImage from './header-bg';
+import Section from 'pages/topics/components/section';
+import Biodiversity from 'pages/topics/content/biodiversity.json';
+
+import Text from 'pages/topics/components/topics-text';
+import Image from 'pages/topics/components/topics-image';
+import Button from 'components/ui/button';
+
+// import Topic from './components/topic';
 import './styles.scss';
-import Topic from './components/topic';
-
 // const sectionComponents = {
 //   projects: Projects,
 //   about: About,
@@ -22,29 +26,47 @@ import Topic from './components/topic';
 // };
 
 class TopicsPage extends PureComponent {
+  componentDidMount() {
+    /* global $ */
+    $(document).ready(() => {
+      $('#fullpage').fullpage();
+    });
+  }
+
   render() {
     // const { section } = this.props;
     // const SectionComponent = sectionComponents[(section && section.component) || 'projects'];
-    const links = [
-      { label: 'Biodiversity', path: '/topics/biodiversity' },
+
+    const topics = [
+      {
+        label: 'Biodiversity',
+        path: '/topics/biodiversity',
+        active: true,
+        component: Biodiversity
+      },
       { label: 'Commodities', path: '/topics/commodities' },
       { label: 'Water', path: '/topics/water' },
       { label: 'Climate', path: '/topics/climate' }
     ];
+
+    const activeTopic = topics.find(t => t.active);
+    const topic = activeTopic ? activeTopic.component : Biodiversity;
+
     return (
       <div className="c-topics-page">
         <Header />
-        <Cover
-          title="Topics"
-          description="Explore the relationship between forests and several key themes critical to sustainability and the health of our
-          future ecosystems."
-          bgImage={bgImage}
-        />
-        <SubnavMenu links={links} theme="theme-subnav-dark" />
-        <div className="l-main">
-          <Topic topic={'Biodiversity'} />
+        <div id="fullpage">
+          <TopicsHeader topics={topics} />
+          {/* <Topic topic={'Biodiversity'} /> */}
+          {topic.map(s => (
+            <Section key={s.subtitle}>
+              <Text text={s.text} title={s.title} subtitle={s.subtitle} />
+              <Image url={s.src} description={s.subtitle} />
+              <Button theme="theme-button-grey topics-btn">Skip</Button>
+            </Section>
+          ))}
+          <TopicsFooter />
         </div>
-        <Footer />
       </div>
     );
   }
