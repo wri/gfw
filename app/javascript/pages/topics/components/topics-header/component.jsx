@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
+import Intro from 'pages/topics/components/intro';
 import Section from 'pages/topics/components/section';
 
-import bgImage from './header-bg';
+import bgImage from 'pages/topics/assets/header-bg';
 
 class TopicsHeader extends PureComponent {
   render() {
@@ -19,6 +20,7 @@ class TopicsHeader extends PureComponent {
           bgImage={bgImage}
         />
         <SubnavMenu links={topics} theme="theme-subnav-dark" checkActive />
+        <Intro />
       </Section>
     );
   }

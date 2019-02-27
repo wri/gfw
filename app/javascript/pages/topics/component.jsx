@@ -17,7 +17,6 @@ import Text from 'pages/topics/components/topics-text';
 import Image from 'pages/topics/components/topics-image';
 import Button from 'components/ui/button';
 
-// import Topic from './components/topic';
 import './styles.scss';
 // const sectionComponents = {
 //   projects: Projects,
@@ -32,6 +31,12 @@ class TopicsPage extends PureComponent {
       $('#fullpage').fullpage();
     });
   }
+
+  // componentWillUnmount() {
+  //   $.document.ready(() => {
+  //     $('#fullpage').destroy('all');
+  //   });
+  // }
 
   render() {
     // const { section } = this.props;
@@ -57,7 +62,6 @@ class TopicsPage extends PureComponent {
         <Header />
         <div id="fullpage">
           <TopicsHeader topics={topics} />
-          {/* <Topic topic={'Biodiversity'} /> */}
           {topic.map(s => (
             <Section key={s.subtitle}>
               <Text text={s.text} title={s.title} subtitle={s.subtitle} />
