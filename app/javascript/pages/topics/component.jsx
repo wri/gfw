@@ -64,9 +64,15 @@ class TopicsPage extends PureComponent {
           <TopicsHeader topics={topics} />
           {topic.map(s => (
             <Section key={s.subtitle}>
-              <Text text={s.text} title={s.title} subtitle={s.subtitle} />
-              <Image url={s.src} description={s.subtitle} />
-              <Button theme="theme-button-grey topics-btn">Skip</Button>
+              <div className="row">
+                <div className="column small-12 medium-6">
+                  <Text text={s.text} title={s.title} subtitle={s.subtitle} />
+                  <Button theme="theme-button-grey topics-btn">Skip</Button>
+                </div>
+                <div className="column small-12 medium-6">
+                  <Image url={s.src} description={s.subtitle} />
+                </div>
+              </div>
             </Section>
           ))}
           <TopicsFooter />

@@ -1,23 +1,38 @@
 @import '~styles/settings.scss';
 
-.l-section-about {
-  .intro {
-    margin-top: 30px;
+.c-topics-intro {
+  position: relative;
 
-    @media screen and (min-width: $screen-m) {
-      margin-top: 0;
-    }
+  .titleBg {
+    margin-top: 70px;
+    background-color: #e5e5df;
   }
 
-  section {
-    &.results {
-      margin-bottom: rem(20px);
-    }
+  .tigerImg {
+    // max-width: 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+    height: 100%;
+    align-content: center;
+    align-items: center;
 
-    @media screen and (min-width: $screen-m) {
-      &.results {
-        margin-bottom: rem(60px);
-      }
-    }
+    // max-width: 100%;
+    padding-left: 1.25rem;
+    width: 286px;
+    position: absolute;
+    top: 56px;
+  }
+
+  .intro-title {
+    font-size: 48px;
+    font-weight: 300;
+    color: black;
+  }
+
+  .intro-text {
+    color: $slate-light;
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 18px;
   }
 }
