@@ -11,8 +11,14 @@ class Topic extends PureComponent {
       Biodiversity
     };
     const topic = topics[this.props.topic] || [];
+    const settings = {
+      slidesToShow: 1,
+      vertical: true,
+      swipeToSlide: true,
+      swipe: true
+    };
     return (
-      <Carousel settings={{ slidesToShow: 1 }}>
+      <Carousel settings={settings}>
         {topic.map((s, i) => (
           <div key={s.subtitle}>
             <Section
