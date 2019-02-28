@@ -26,6 +26,11 @@ const entry = packPaths.reduce((map, entryParam) => {
   return localMap;
 }, {});
 
+const nodeLibsBrowser = require('node-libs-browser');
+
+nodeLibsBrowser.assert = require.resolve('browser-assert');
+nodeLibsBrowser.util = require.resolve('util');
+
 module.exports = {
   entry,
   output: {
