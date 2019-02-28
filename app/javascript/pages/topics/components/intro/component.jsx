@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 // import PropTypes from 'prop-types';
-import tigerBg from 'pages/topics/assets/tiger.svg';
+import tiger from 'pages/topics/assets/tiger.png';
+import tiger2x from 'pages/topics/assets/tiger@2x.png';
+import arrowIcon from 'assets/icons/arrow-down.svg';
+import Icon from 'components/ui/icon';
 
 import './styles.scss';
 
@@ -9,7 +12,17 @@ class Intro extends PureComponent {
     return (
       <div className="c-topics-intro">
         <div className="row titleBg">
-          <div className="column small-12 medium-6" />
+          <div className="column small-12 medium-6">
+            <div className="tiger-wrapper">
+              <div className="tiger-img">
+                <img
+                  srcSet={`${tiger} 1x, ${tiger2x} 2x`}
+                  src={tiger}
+                  alt="sad tiger"
+                />
+              </div>
+            </div>
+          </div>
           <div className="column small-12 medium-6">
             <h1 className="intro-title">
               80% of terrestrial species live in forests.
@@ -27,10 +40,13 @@ class Intro extends PureComponent {
             </p>
           </div>
         </div>
-        <div className="tigerImg">
-          <svg viewBox={tigerBg.viewBox || '0 0 32 32'}>
-            <use xlinkHref={`#${tigerBg.id || tigerBg}`} />
-          </svg>
+        <div className="row scrollToDiscover">
+          <div className="column small-12 medium-6">
+            <h1>Prueba...</h1>
+            <h2>Prueba...</h2>
+            <h3>Prueba...</h3>
+            <Icon icon={arrowIcon} />
+          </div>
         </div>
       </div>
     );

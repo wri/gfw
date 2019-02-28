@@ -145,7 +145,7 @@ class Footer extends PureComponent {
                     }}
                   >
                     {partners.map((p, i) => (
-                      <li className="slide" key={`${p.name}${i}`}>
+                      <li className="carousel-slide" key={`${p.name}${i}`}>
                         <a
                           target="_blank"
                           hrel="noopener noreferrer"

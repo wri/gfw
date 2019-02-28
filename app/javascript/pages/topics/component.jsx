@@ -8,7 +8,7 @@ import React, { PureComponent } from 'react';
 
 import Header from 'components/header';
 import TopicsHeader from 'pages/topics/components/topics-header';
-import TopicsFooter from 'pages/topics/components/topics-footer';
+// import TopicsFooter from 'pages/topics/components/topics-footer';
 
 import Section from 'pages/topics/components/section';
 import Biodiversity from 'pages/topics/content/biodiversity.json';
@@ -26,9 +26,22 @@ import './styles.scss';
 
 class TopicsPage extends PureComponent {
   componentDidMount() {
+    this.anchors = [
+      'intro',
+      'biodiversity1',
+      'biodiversity2',
+      'biodiversity3',
+      'biodiversity4',
+      'footer'
+    ];
     /* global $ */
     $(document).ready(() => {
-      $('#fullpage').fullpage();
+      $('#fullpage').fullpage({
+        scrollOverflow: true,
+        navigation: true,
+        navigationPosition: 'right',
+        anchors: this.anchors
+      });
     });
   }
 
@@ -63,21 +76,21 @@ class TopicsPage extends PureComponent {
         <div id="fullpage">
           <TopicsHeader topics={topics} />
           {topic.map(s => (
-            <Section key={s.subtitle}>
+            <Section key={s.subtitle} anchors={this.anchors}>
               <div className="row">
-                <div className="column small-12 medium-6">
+                <div className="column small-12 medium-4">
                   <div className="topic-content">
                     <Text text={s.text} title={s.title} subtitle={s.subtitle} />
                     <Button theme="theme-button-grey topics-btn">Skip</Button>
                   </div>
                 </div>
-                <div className="column small-12 medium-6">
+                <div className="column small-12 medium-8 topic-image">
                   <Image url={s.src} description={s.subtitle} />
                 </div>
               </div>
             </Section>
           ))}
-          <TopicsFooter />
+          {/* <TopicsFooter /> */}
         </div>
       </div>
     );

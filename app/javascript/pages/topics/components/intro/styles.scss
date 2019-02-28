@@ -8,19 +8,26 @@
     background-color: #e5e5df;
   }
 
-  .tigerImg {
-    // max-width: 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
-    height: 100%;
-    align-content: center;
-    align-items: center;
+  .tiger-wrapper {
+    position: relative;
 
-    // max-width: 100%;
-    padding-left: 1.25rem;
-    width: 286px;
-    position: absolute;
-    top: 56px;
+    .tiger-img {
+      width: 100%;
+      margin: 0 auto;
+      display: none;
+
+      @media screen and (min-width: $screen-m) {
+        position: absolute;
+        top: 0;
+        display: initial;
+      }
+
+      img {
+        // height: 286px;
+        max-width: 397px;
+        width: 100%;
+      }
+    }
   }
 
   .intro-title {
@@ -34,5 +41,11 @@
     font-size: 16px;
     font-weight: 300;
     margin-top: 18px;
+    max-width: 400px;
+  }
+
+  .scrollToDiscover {
+    margin-bottom: 100px;
+    padding-bottom: 100px;
   }
 }

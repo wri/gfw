@@ -8,11 +8,13 @@ import Section from 'pages/topics/components/section';
 
 import bgImage from 'pages/topics/assets/header-bg';
 
+// import './styles.scss';
+
 class TopicsHeader extends PureComponent {
   render() {
     const { topics } = this.props;
     return (
-      <Section className="fp-auto-height">
+      <Section className="fp-auto-height-responsive">
         <Cover
           title="Topics"
           description="Explore the relationship between forests and several key themes critical to sustainability and the health of our
