@@ -10,15 +10,28 @@ import biodiversity4 from 'pages/topics/assets/biodiversity4.png';
 class TopicsImage extends PureComponent {
   render() {
     const imgs = {
-      biodiversity1,
-      biodiversity2,
-      biodiversity3,
-      biodiversity4
+      '1x': {
+        biodiversity1,
+        biodiversity2,
+        biodiversity3,
+        biodiversity4
+      },
+      '2x': {
+        biodiversity1,
+        biodiversity2,
+        biodiversity3,
+        biodiversity4
+      }
     };
     const { url, description } = this.props;
     return (
       <div className="c-topics-image">
-        <img src={imgs[url]} alt={description} />
+        <img
+          srcSet={`${imgs['2x'][url]} 2x,
+          ${imgs['1x'][url]} 1x`}
+          src={`${imgs['1x'][url]} 1x`}
+          alt={description}
+        />
       </div>
     );
   }

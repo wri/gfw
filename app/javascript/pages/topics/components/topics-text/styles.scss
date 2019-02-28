@@ -1,23 +1,28 @@
 @import '~styles/settings.scss';
 
-.l-section-about {
-  .intro {
-    margin-top: 30px;
-
-    @media screen and (min-width: $screen-m) {
-      margin-top: 0;
-    }
+.c-topics-text {
+  h3 {
+    font-weight: 500;
+    font-size: 14px;
+    color: $slate-light;
+    text-transform: uppercase;
+    margin-bottom: 5px;
   }
 
-  section {
-    &.results {
-      margin-bottom: rem(20px);
-    }
+  h1 {
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 36px;
+    color: $slate-light;
+    margin: 0 0 14px;
+  }
 
-    @media screen and (min-width: $screen-m) {
-      &.results {
-        margin-bottom: rem(60px);
-      }
-    }
+  p {
+    font-weight: 300;
+    font-size: 16px;
+    color: $slate-light;
+    line-height: 24px;
+    margin: 0;
+    max-width: 80%;
   }
 }

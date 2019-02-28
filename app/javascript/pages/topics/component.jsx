@@ -66,8 +66,10 @@ class TopicsPage extends PureComponent {
             <Section key={s.subtitle}>
               <div className="row">
                 <div className="column small-12 medium-6">
-                  <Text text={s.text} title={s.title} subtitle={s.subtitle} />
-                  <Button theme="theme-button-grey topics-btn">Skip</Button>
+                  <div className="topic-content">
+                    <Text text={s.text} title={s.title} subtitle={s.subtitle} />
+                    <Button theme="theme-button-grey topics-btn">Skip</Button>
+                  </div>
                 </div>
                 <div className="column small-12 medium-6">
                   <Image url={s.src} description={s.subtitle} />

@@ -1,1 +1,23 @@
 @import '~styles/settings.scss';
+
+.topic-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+
+  .c-topics-text {
+    margin-bottom: 50px;
+  }
+
+  .topics-btn {
+    position: absolute;
+    bottom: 0;
+    max-width: 130px;
+    color: $slate-light;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
