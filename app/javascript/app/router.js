@@ -120,7 +120,7 @@ export const routes = {
   },
   [TOPICS]: {
     controller: 'topics',
-    path: '/topics/:tab?',
+    path: '/topics/:tab',
     component: 'topics',
     sections: {
       biodiversity: {
