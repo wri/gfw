@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
 
-import { setModalMeta } from 'components/modals/meta/meta-actions';
+import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 import Component from './component';
 
 class DatasetsMenuContainer extends PureComponent {
@@ -44,4 +44,4 @@ class DatasetsMenuContainer extends PureComponent {
   }
 }
 
-export default connect(null, { setModalMeta })(DatasetsMenuContainer);
+export default connect(null, { setModalMetaSettings })(DatasetsMenuContainer);

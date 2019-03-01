@@ -63,7 +63,8 @@ export default {
     dynamic: true,
     color: '#0C0045',
     image: landsatImage,
-    url: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
+    url:
+      'https://production-api.globalforestwatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
     availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };
