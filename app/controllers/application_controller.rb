@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
         title: 'Dashboards',
         desc: 'Data about forest change, tenure, forest related employment and land use'
       },
+      topics: {
+        title: 'Topics',
+        desc: 'Data about forest change, tenure, forest related employment and land use'
+      },
       types: {
         use: 'Shape',
         geostore: 'Custom Area',
