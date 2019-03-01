@@ -348,6 +348,37 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
   return layers.filter(l => !l.confirmedOnly);
 });
 
+export const getActiveLayersWithDates = createSelector(
+  getActiveLayers,
+  layers => {
+    if (isEmpty(layers)) return [];
+    return layers.map(l => {
+      const { decodeFunction, decodeParams } = l;
+      const { startDate, endDate } = decodeParams || {};
+
+      return {
+        ...l,
+        ...(decodeFunction &&
+          decodeParams && {
+            decodeParams: {
+              ...decodeParams,
+              ...(startDate && {
+                startYear: moment(startDate).year(),
+                startMonth: moment(startDate).month(),
+                startDay: moment(startDate).month()
+              }),
+              ...(endDate && {
+                endYear: moment(endDate).year(),
+                endMonth: moment(endDate).month(),
+                endDay: moment(endDate).month()
+              })
+            }
+          })
+      };
+    });
+  }
+);
+
 export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
   if (isEmpty(layers)) return [];
   const interactiveLayers = layers.filter(
@@ -372,7 +403,7 @@ export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
 
 // get widgets related to map layers and use them to build the layers
 export const getWidgetsWithLayerParams = createSelector(
-  [parseWidgetsWithOptions, getActiveLayers],
+  [parseWidgetsWithOptions, getActiveLayersWithDates],
   (widgets, layers) => {
     if (!widgets || !widgets.length || !layers || !layers.length) return null;
     const layerIds = layers && layers.map(l => l.id);
@@ -413,7 +444,7 @@ export const getWidgetsWithLayerParams = createSelector(
 
 // flatten datasets into layers for the layer manager
 export const getActiveLayersWithWidgetSettings = createSelector(
-  [getActiveLayers, getWidgetsWithLayerParams],
+  [getActiveLayersWithDates, getWidgetsWithLayerParams],
   (layers, widgets) => {
     if (isEmpty(layers)) return [];
     if (isEmpty(widgets)) return layers;
