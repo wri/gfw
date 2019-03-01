@@ -1,10 +1,6 @@
 import React, { PureComponent } from 'react';
-// import PropTypes from 'prop-types';
 import tiger from 'pages/topics/assets/tiger.png';
 import tiger2x from 'pages/topics/assets/tiger@2x.png';
-import arrowIcon from 'assets/icons/arrow-down.svg';
-import Icon from 'components/ui/icon';
-import Button from 'components/ui/button';
 
 import './styles.scss';
 
@@ -41,27 +37,9 @@ class Intro extends PureComponent {
             </p>
           </div>
         </div>
-        <div className="row">
-          <div className="column small-12 medium-12">
-            <div className="scrollToDiscover">
-              <Button
-                onClick={() => {
-                  /* global $ */
-                  $('#fullpage').fullpage.moveSectionDown();
-                }}
-              >
-                <Icon icon={arrowIcon} />
-              </Button>
-              <p>Scroll to discover</p>
-            </div>
-          </div>
-        </div>
       </div>
     );
   }
 }
-
-// Intro.propTypes = {
-// };
 
 export default Intro;
