@@ -2,7 +2,7 @@
 
 .l-topics-page {
   .topic-content {
-    height: 100%;
+    height: calc(100% - 55px);
     display: flex;
     flex-direction: column;
     position: relative;
