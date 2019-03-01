@@ -12,8 +12,8 @@ class Intro extends PureComponent {
   render() {
     return (
       <div className="c-topics-intro">
-        <div className="row titleBg">
-          <div className="column small-12 medium-6">
+        <div className="row titleRow">
+          <div className="column small-12 medium-6 titleCol">
             <div className="tiger-wrapper">
               <div className="tiger-img">
                 <img
@@ -24,7 +24,7 @@ class Intro extends PureComponent {
               </div>
             </div>
           </div>
-          <div className="column small-12 medium-6">
+          <div className="column small-12 medium-6 titleCol">
             <h1 className="intro-title">
               80% of terrestrial species live in forests.
             </h1>

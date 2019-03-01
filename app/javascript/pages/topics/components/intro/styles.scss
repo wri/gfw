@@ -3,8 +3,16 @@
 .c-topics-intro {
   position: relative;
 
-  .titleBg {
+  .titleRow {
     margin-top: 70px;
+    padding: 0 $mobile-gutter;
+
+    @media screen and (min-width: $screen-m) {
+      padding: 0 $desktop-gutter;
+    }
+  }
+
+  .titleCol {
     background-color: #e5e5df;
   }
 
@@ -34,6 +42,7 @@
     font-size: 48px;
     font-weight: 300;
     color: black;
+    padding: rem(10px) 0;
   }
 
   .intro-text {
@@ -46,7 +55,7 @@
 
   .scrollToDiscover {
     margin: 80px 0 100px;
-    padding-bottom: 100px;
+    // padding-bottom: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,6 +64,7 @@
       height: 46px;
       width: 46px;
       border-radius: 50px;
+      margin-bottom: rem(20px);
     }
 
     p {
