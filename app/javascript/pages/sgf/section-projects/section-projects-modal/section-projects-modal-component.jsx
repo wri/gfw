@@ -11,22 +11,19 @@ class SectionProjectsModal extends PureComponent {
     return (
       <div className={className}>
         {ReactHtmlParser(html, {
-          transform: node => {
-            // eslint-disable-line
-            if (node.name === 'a') {
-              return (
-                <a
-                  key={node.attribs.href}
-                  href={node.attribs.href}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {node.children[0].data}
-                </a>
-              );
-            }
-            return '';
-          }
+          transform: node =>
+            (node.name === 'a' ? (
+              <a
+                key={node.attribs.href}
+                href={node.attribs.href}
+                target="_blank"
+                rel="noopener"
+              >
+                {node.children[0].data}
+              </a>
+            ) : (
+              ''
+            ))
         })}
       </div>
     );

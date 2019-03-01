@@ -20,7 +20,7 @@ class LayerListMenu extends PureComponent {
                   tabIndex={i}
                   data={{ ...l, layer: l.id }}
                   onToggle={onToggle}
-                  onInfoClick={onInfoClick}
+                  onInfoClick={() => onInfoClick(l.metadata)}
                   small
                 />
                 {l.moreInfo && (

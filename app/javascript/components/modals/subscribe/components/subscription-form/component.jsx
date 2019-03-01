@@ -59,7 +59,7 @@ class SubscriptionForm extends PureComponent {
     const {
       datasets,
       activeDatasets,
-      setModalMeta,
+      setModalMetaSettings,
       saveSubscription,
       userData,
       saving,
@@ -89,7 +89,7 @@ class SubscriptionForm extends PureComponent {
                 <LayerToggle
                   key={d.id}
                   data={d}
-                  onInfoClick={setModalMeta}
+                  onInfoClick={setModalMetaSettings}
                   onToggle={() => this.onToggleLayer(d.subscriptionKey)}
                   showSubtitle
                 />
@@ -146,7 +146,7 @@ SubscriptionForm.propTypes = {
   saveSubscription: PropTypes.func,
   datasets: PropTypes.array,
   userData: PropTypes.object,
-  setModalMeta: PropTypes.func,
+  setModalMetaSettings: PropTypes.func,
   activeDatasets: PropTypes.array,
   lang: PropTypes.string,
   locationName: PropTypes.string,
