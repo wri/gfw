@@ -1,10 +1,5 @@
 import React, { PureComponent } from 'react';
-// import PropTypes from 'prop-types';
-
-// import Projects from 'pages/sgf/section-projects';
-// import About from 'pages/sgf/section-about';
-// import Apply from 'pages/sgf/section-apply';
-// import Fullpage from 'fullpage.js';
+import PropTypes from 'prop-types';
 
 import Header from 'components/header';
 import TopicsHeader from 'pages/topics/components/topics-header';
@@ -18,11 +13,6 @@ import Image from 'pages/topics/components/topics-image';
 import Button from 'components/ui/button';
 
 import './styles.scss';
-// const sectionComponents = {
-//   projects: Projects,
-//   about: About,
-//   apply: Apply
-// };
 
 class TopicsPage extends PureComponent {
   componentDidMount() {
@@ -55,26 +45,15 @@ class TopicsPage extends PureComponent {
     // const { section } = this.props;
     // const SectionComponent = sectionComponents[(section && section.component) || 'projects'];
 
-    const topics = [
-      {
-        label: 'Biodiversity',
-        path: '/topics/biodiversity',
-        active: true,
-        component: Biodiversity
-      },
-      { label: 'Commodities', path: '/topics/commodities' },
-      { label: 'Water', path: '/topics/water' },
-      { label: 'Climate', path: '/topics/climate' }
-    ];
-
-    const activeTopic = topics.find(t => t.active);
+    const { links } = this.props;
+    const activeTopic = links.find(t => t.active);
     const topic = activeTopic ? activeTopic.component : Biodiversity;
 
     return (
-      <div className="c-topics-page">
+      <div className="l-topics-page">
         <Header />
         <div id="fullpage">
-          <TopicsHeader topics={topics} />
+          <TopicsHeader topics={links} />
           {topic.map(s => (
             <Section key={s.subtitle} anchors={this.anchors}>
               <div className="row">
@@ -97,9 +76,8 @@ class TopicsPage extends PureComponent {
   }
 }
 
-// TopicsPage.propTypes = {
-//    section: PropTypes.object.isRequired,
-//    links: PropTypes.array.isRequired
-// };
+TopicsPage.propTypes = {
+  links: PropTypes.array.isRequired
+};
 
 export default TopicsPage;

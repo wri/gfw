@@ -128,6 +128,24 @@ export const routes = {
         submenu: true,
         component: 'biodiversity',
         path: '/topics/biodiversity'
+      },
+      climate: {
+        label: 'Climate',
+        submenu: true,
+        component: 'biodiversity',
+        path: '/topics/climate'
+      },
+      commodities: {
+        label: 'Commodities',
+        submenu: true,
+        component: 'biodiversity',
+        path: '/topics/commodities'
+      },
+      water: {
+        label: 'Water',
+        submenu: true,
+        component: 'biodiversity',
+        path: '/topics/water'
       }
     }
   },
