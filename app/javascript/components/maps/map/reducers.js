@@ -9,7 +9,7 @@ export const initialState = {
     },
     zoom: 2,
     attributionControl: false,
-    maxZoom: 19,
+    maxZoom: 18,
     minZoom: 2,
     basemap: {
       value: 'default'
