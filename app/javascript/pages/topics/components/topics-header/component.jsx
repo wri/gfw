@@ -8,7 +8,7 @@ import Section from 'pages/topics/components/section';
 
 import bgImage from 'pages/topics/assets/header-bg';
 
-// import './styles.scss';
+import './styles.scss';
 
 class TopicsHeader extends PureComponent {
   render() {

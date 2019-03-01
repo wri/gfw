@@ -1,1 +1,13 @@
 @import '~styles/settings.scss';
+
+.cover-texts {
+  h1 {
+    font-weight: 300;
+  }
+
+  p {
+    line-height: 30px;
+    font-size: 18px;
+    font-weight: normal;
+  }
+}

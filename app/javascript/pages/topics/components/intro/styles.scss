@@ -26,13 +26,16 @@
 
       @media screen and (min-width: $screen-m) {
         position: absolute;
-        top: 0;
+        // top: 56px;
+        top: 25px;
+        left: 43px;
         display: initial;
       }
 
       img {
         // height: 286px;
-        max-width: 397px;
+        // max-width: 397px;
+        max-width: 350px;
         width: 100%;
       }
     }
@@ -43,6 +46,8 @@
     font-weight: 300;
     color: black;
     padding: rem(10px) 0;
+    line-height: 54px;
+    max-width: 400px;
   }
 
   .intro-text {
