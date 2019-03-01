@@ -120,18 +120,14 @@ class Footer extends PureComponent {
                     <Icon icon={wri} />
                   </a>
                 </div>
-                <div
-                  id="my-gfw-slider"
-                  className="footer-logos slider js_slider"
-                >
+                <div className="footer-logos">
                   <p>Partners</p>
                   <Carousel
-                    className="timeline"
+                    className="partners-slide"
                     settings={{
                       slidesToShow: isDesktop ? 4 : 1,
                       slidesToScroll: isDesktop ? 4 : 1,
                       centerMode: false,
-                      dots: false,
                       nextArrow: (
                         <Button theme="theme-button-clear square">
                           <Icon icon={arrowIcon} />
@@ -164,7 +160,7 @@ class Footer extends PureComponent {
                                 ''
                               );
                             }}
-                            src={`assets/logos/${p.name}.png`}
+                            src={`/assets/logos/${p.name}.png`}
                             alt={p.name}
                           />
                         </a>

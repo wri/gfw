@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Header from 'components/header';
 import TopicsHeader from 'pages/topics/components/topics-header';
-// import TopicsFooter from 'pages/topics/components/topics-footer';
+import TopicsFooter from 'pages/topics/components/topics-footer';
 
 import Section from 'pages/topics/components/section';
 import Biodiversity from 'pages/topics/content/biodiversity.json';
@@ -69,7 +69,7 @@ class TopicsPage extends PureComponent {
               </div>
             </Section>
           ))}
-          {/* <TopicsFooter /> */}
+          <TopicsFooter />
         </div>
       </div>
     );

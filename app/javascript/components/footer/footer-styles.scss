@@ -218,6 +218,14 @@
     }
   }
 
+  .partners-slide {
+    max-width: rem(750px);
+
+    .slick-dots {
+      display: none !important;
+    }
+  }
+
   .slick-track {
     display: flex;
 
