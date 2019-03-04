@@ -7,7 +7,7 @@ import Section from 'pages/topics/components/section';
 class TopicsFooter extends PureComponent {
   render() {
     return (
-      <Section className="fp-auto-height">
+      <Section className="fp-auto-height topics-footer">
         {/* <h2>COMMODITIES RELATED TOOLS</h2> */}
         {/* [0, 1, 2, 3].map(item => (
           <Card

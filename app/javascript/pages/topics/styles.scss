@@ -41,6 +41,11 @@
 
 #fp-nav ul li {
   margin: rem(20px);
+
+  &:last-child,
+  &:first-child {
+    display: none;
+  }
 }
 
 #fp-nav ul li a span {

@@ -30,21 +30,29 @@ class TopicsPage extends PureComponent {
         scrollOverflow: true,
         navigation: true,
         navigationPosition: 'right',
-        anchors: this.anchors
+        anchors: this.anchors,
+        onLeave: (origin, destination, direction) =>
+          this.handleLeave(origin, destination, direction),
+        // afterLoad 3.X: (origin, destination, direction) => {}
+        afterLoad: (section, index) => this.slideDidLoad(section, index)
       });
+      $('#fp-nav').hide();
     });
   }
 
-  // componentWillUnmount() {
-  //   $.document.ready(() => {
-  //     $('#fullpage').destroy('all');
-  //   });
+  slideDidLoad(section, index) {
+    if (index === 1 || index === this.anchors.length) {
+      $('#fp-nav').hide();
+    } else {
+      $('#fp-nav').show();
+    }
+  }
+
+  // handleLeave(origin, destination, direction) {
+  //   console.log(origin, destination, direction);
   // }
 
   render() {
-    // const { section } = this.props;
-    // const SectionComponent = sectionComponents[(section && section.component) || 'projects'];
-
     const { links } = this.props;
     const activeTopic = links.find(t => t.active);
     const topic = activeTopic ? activeTopic.component : Biodiversity;
