@@ -7,6 +7,7 @@ import TopicsFooter from 'pages/topics/components/topics-footer';
 
 import Section from 'pages/topics/components/section';
 import Biodiversity from 'pages/topics/content/biodiversity.json';
+// import Commodities from 'pages/topics/content/commodities.json';
 
 import Text from 'pages/topics/components/topics-text';
 import Image from 'pages/topics/components/topics-image';
@@ -16,14 +17,7 @@ import './styles.scss';
 
 class TopicsPage extends PureComponent {
   componentDidMount() {
-    this.anchors = [
-      'intro',
-      'biodiversity1',
-      'biodiversity2',
-      'biodiversity3',
-      'biodiversity4',
-      'footer'
-    ];
+    this.anchors = ['intro', '1', '2', '3', '4', 'footer'];
     /* global $ */
     $(document).ready(() => {
       $('#fullpage').fullpage({
@@ -31,8 +25,9 @@ class TopicsPage extends PureComponent {
         navigation: true,
         navigationPosition: 'right',
         anchors: this.anchors,
-        onLeave: (origin, destination, direction) =>
-          this.handleLeave(origin, destination, direction),
+        // fadingEffect: true,
+        // onLeave: (origin, destination, direction) =>
+        //   this.handleLeave(origin, destination, direction),
         // afterLoad 3.X: (origin, destination, direction) => {}
         afterLoad: (section, index) => this.slideDidLoad(section, index)
       });
