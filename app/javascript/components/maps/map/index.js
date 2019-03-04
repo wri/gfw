@@ -21,12 +21,6 @@ const actions = {
 };
 
 class MapContainer extends PureComponent {
-  static propTypes = {
-    basemap: PropTypes.object,
-    mapOptions: PropTypes.object,
-    setLandsatBasemap: PropTypes.func
-  };
-
   state = {
     bbox: null,
     width: 0,
@@ -36,25 +30,13 @@ class MapContainer extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      basemap,
-      mapOptions: { zoom },
       canBound,
       bbox,
       geostoreBbox,
       setMapSettings,
       layerBbox,
-      setLandsatBasemap,
       selectedInteraction
     } = this.props;
-
-    // update landsat basemap when changing zoom
-    if (basemap.value === 'landsat' && zoom !== prevProps.zoom) {
-      setLandsatBasemap({
-        basemap,
-        year: basemap.year,
-        zoom
-      });
-    }
 
     // only set bounding box if action allows it
     if (canBound && bbox !== prevProps.bbox) {
@@ -207,6 +189,7 @@ MapContainer.propTypes = {
   bbox: PropTypes.array,
   geostoreBbox: PropTypes.array,
   setMapSettings: PropTypes.func,
+  mapOptions: PropTypes.object,
   setInteraction: PropTypes.func,
   layerBbox: PropTypes.array,
   draw: PropTypes.bool,

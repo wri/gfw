@@ -3,9 +3,14 @@ import * as actions from './meta-actions';
 export const initialState = {
   loading: false,
   error: false,
-  open: false,
   closing: false,
-  data: {}
+  data: {},
+  settings: {
+    metakey: '',
+    metaWhitelist: [],
+    tableWhitelist: [],
+    citation: ''
+  }
 };
 
 const setModalMetaLoading = (state, { payload }) => ({
@@ -20,8 +25,8 @@ const setModalMetaData = (state, { payload }) => ({
 });
 
 const setModalMetaClosing = (state, { payload }) => ({
-  ...state,
-  ...payload
+  ...initialState,
+  closing: payload
 });
 
 export default {

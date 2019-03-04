@@ -34,8 +34,9 @@ export default {
     labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
-    url:
-      'https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjajFlcXZhNzcwMDBqMzNzMTQ0bDN6Y3U4In0.FRcIP_yusVaAy0mwAX1B8w'
+    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=${
+      MapboxAccessToken
+    }`
   },
   dark: {
     value: 'dark',
@@ -43,8 +44,9 @@ export default {
     labelsKey: 'lightLabels',
     color: '#31312F',
     image: darkImage,
-    url:
-      'https://api.mapbox.com/styles/v1/resourcewatch/cjhqgjq1908ar2smep2wd7wf7/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicmVzb3VyY2V3YXRjaCIsImEiOiJjajFlcXZhNzcwMDBqMzNzMTQ0bDN6Y3U4In0.FRcIP_yusVaAy0mwAX1B8w'
+    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjhqgjq1908ar2smep2wd7wf7/tiles/256/{z}/{x}/{y}@2x?access_token=${
+      MapboxAccessToken
+    }`
   },
   satellite: {
     value: 'satellite',
@@ -61,7 +63,8 @@ export default {
     dynamic: true,
     color: '#0C0045',
     image: landsatImage,
-    url: 'https://storage.googleapis.com/landsat-cache/{year}/{z}/{x}/{y}.png',
+    url:
+      'https://production-api.globalforestwatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
     availableYears: [2017, 2016, 2015, 2014, 2013]
   }
 };
