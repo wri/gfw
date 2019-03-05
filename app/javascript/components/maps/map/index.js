@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 import WebMercatorViewport from 'viewport-mercator-project';
 import isEqual from 'lodash/isEqual';
+import debounce from 'lodash/debounce';
 
 import {
   setInteraction,
@@ -25,7 +26,10 @@ class MapContainer extends PureComponent {
     bbox: null,
     width: 0,
     height: 0,
-    map: null
+    map: null,
+    zoom: this.props.zoom,
+    lat: this.props.lat,
+    lng: this.props.lng
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -146,23 +150,35 @@ class MapContainer extends PureComponent {
 
   handleMapMove = viewport => {
     const { latitude, longitude, zoom } = viewport;
-    const { setMapSettings, mapOptions: { maxZoom, minZoom } } = this.props;
+    const { mapOptions: { maxZoom, minZoom } } = this.props;
     let newZoom = zoom;
     if (zoom > maxZoom) newZoom = maxZoom;
     if (zoom < minZoom) newZoom = minZoom;
 
-    setMapSettings({
+    this.setState({
+      zoom: newZoom,
+      lat: latitude,
+      lng: longitude
+    });
+
+    this.setMapViewport({
       zoom: newZoom,
       center: {
         lat: latitude,
         lng: longitude
-      },
-      canBound: false,
-      bbox: null
+      }
     });
 
     this.setBbox(null);
   };
+
+  setMapViewport = debounce(view => {
+    this.props.setMapSettings({
+      ...view,
+      canBound: false,
+      bbox: null
+    });
+  }, 300);
 
   handleMapInteraction = e => {
     const { draw, menuSection } = this.props;
