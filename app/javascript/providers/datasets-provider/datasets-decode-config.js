@@ -49,54 +49,58 @@ const getDayRange = params => {
 };
 
 const decodes = {
-  treeCover: (data, w, h, z) => {
-    'use asm';
+  treeCover: `// values for creating power scale, domain (input), and range (output)
+    float domainMin = 0.;
+    float domainMax = 255.;
+    float rangeMin = 0.;
+    float rangeMax = 255.;
 
-    const imgData = data;
-    const components = 4;
-    const myScale = getScale(z);
+    float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+    float intensity = color.g * 255.;
 
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        const pixelPos = (j * w + i) * components;
-        const intensity = imgData[pixelPos + 1];
+    // get the min, max, and current values on the power scale
+    float minPow = pow(domainMin, exponent - domainMin);
+    float maxPow = pow(domainMax, exponent);
+    float currentPow = pow(intensity, exponent);
 
-        imgData[pixelPos] = 151;
-        imgData[pixelPos + 1] = 189;
-        imgData[pixelPos + 2] = 61;
-        imgData[pixelPos + 3] =
-          z < 13 ? myScale(intensity) * 0.8 : intensity * 0.8;
-      }
+    // get intensity value mapped to range
+    float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+    // a value between 0 and 255
+    alpha = zoom < 13. ? scaleIntensity * 0.8 / 255. : color.g * 0.8;
+
+    color.r = 151. / 255.;
+    color.g = 189. / 255.;
+    color.b = 61. / 255.;`,
+  treeCoverLoss: `// values for creating power scale, domain (input), and range (output)
+    float domainMin = 0.;
+    float domainMax = 255.;
+    float rangeMin = 0.;
+    float rangeMax = 255.;
+
+    float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+    float intensity = color.r * 255.;
+
+    // get the min, max, and current values on the power scale
+    float minPow = pow(domainMin, exponent - domainMin);
+    float maxPow = pow(domainMax, exponent);
+    float currentPow = pow(intensity, exponent);
+
+    // get intensity value mapped to range
+    float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+    // a value between 0 and 255
+    alpha = zoom < 13. ? scaleIntensity / 255. : color.g;
+
+    float year = 2000.0 + (color.b * 255.);
+    // map to years
+    if (year >= startYear && year <= endYear && year >= 2001.) {
+      color.r = 220. / 255.;
+      color.g = (72. - zoom + 102. - 3. * scaleIntensity / zoom) / 255.;
+      color.b = (33. - zoom + 153. - intensity / zoom) / 255.;
+      return vec4(color, alpha);
+    } else {
+      return vec4(0., 0., 0., 0.);
     }
-  },
-  treeCoverLoss: (data, w, h, z, params) => {
-    'use asm';
-
-    const components = 4;
-    const imgData = data;
-    const myScale = getScale(z);
-
-    const { startDate, endDate } = params;
-    const yearStart = getYear(startDate);
-    const yearEnd = getYear(endDate);
-
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        const pixelPos = (j * w + i) * components;
-        const yearLoss = 2000 + imgData[pixelPos + 2];
-        if (yearLoss >= yearStart && yearLoss <= yearEnd) {
-          const intensity = imgData[pixelPos];
-          const scaleIntensity = myScale(intensity);
-          imgData[pixelPos] = 220;
-          imgData[pixelPos + 1] = 72 - z + 102 - 3 * scaleIntensity / z;
-          imgData[pixelPos + 2] = 33 - z + 153 - intensity / z;
-          imgData[pixelPos + 3] = z < 13 ? scaleIntensity : intensity;
-        } else {
-          imgData[pixelPos + 3] = 0;
-        }
-      }
-    }
-  },
+  `,
   treeLossByDriver: (data, w, h, z, params) => {
     'use asm';
 

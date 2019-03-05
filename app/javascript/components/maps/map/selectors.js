@@ -253,7 +253,7 @@ export const getDatasetsWithConfig = createSelector(
                 ...(maxDateFormatted && {
                   date: maxDateFormatted
                 }),
-                ...((hasParamsTimeline || hasDecodeTimeline) && {
+                ...(hasParamsTimeline && {
                   ...timelineParams
                 })
               }
