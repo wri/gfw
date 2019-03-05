@@ -5,6 +5,8 @@ import moment from 'moment';
 import intersection from 'lodash/intersection';
 import flatMap from 'lodash/flatMap';
 
+import { getDayRange } from 'utils/dates';
+
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { initialState } from './reducers';
 import basemaps, { labels } from './basemaps-schema';
@@ -255,6 +257,9 @@ export const getDatasetsWithConfig = createSelector(
                 }),
                 ...(hasParamsTimeline && {
                   ...timelineParams
+                }),
+                ...(maxDate && {
+                  maxDate
                 })
               }
             }),
@@ -267,16 +272,18 @@ export const getDatasetsWithConfig = createSelector(
             ...(l.decodeFunction && {
               decodeParams: {
                 ...l.decodeParams,
-                ...(layers &&
-                  layers.includes('confirmedOnly') && {
-                    confirmedOnly: true
-                  }),
+                ...(layers && {
+                  confirmedOnly: layers.includes('confirmedOnly') ? 1 : 0
+                }),
                 ...(maxDate && {
                   endDate: maxDate
                 }),
                 ...decodeParams,
                 ...(hasDecodeTimeline && {
                   ...timelineParams
+                }),
+                ...(maxDate && {
+                  maxDate
                 })
               }
             }),
@@ -371,7 +378,8 @@ export const getActiveLayersWithDates = createSelector(
                 endYear: moment(endDate).year(),
                 endMonth: moment(endDate).month(),
                 endDay: moment(endDate).month()
-              })
+              }),
+              ...getDayRange(decodeParams)
             }
           })
       };

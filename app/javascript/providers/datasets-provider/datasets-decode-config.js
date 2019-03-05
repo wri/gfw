@@ -72,35 +72,35 @@ const decodes = {
     color.g = 189. / 255.;
     color.b = 61. / 255.;`,
   treeCoverLoss: `// values for creating power scale, domain (input), and range (output)
-    float domainMin = 0.;
-    float domainMax = 255.;
-    float rangeMin = 0.;
-    float rangeMax = 255.;
+      float domainMin = 0.;
+      float domainMax = 255.;
+      float rangeMin = 0.;
+      float rangeMax = 255.;
 
-    float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
-    float intensity = color.r * 255.;
+      float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+      float intensity = color.r * 255.;
 
-    // get the min, max, and current values on the power scale
-    float minPow = pow(domainMin, exponent - domainMin);
-    float maxPow = pow(domainMax, exponent);
-    float currentPow = pow(intensity, exponent);
+      // get the min, max, and current values on the power scale
+      float minPow = pow(domainMin, exponent - domainMin);
+      float maxPow = pow(domainMax, exponent);
+      float currentPow = pow(intensity, exponent);
 
-    // get intensity value mapped to range
-    float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
-    // a value between 0 and 255
-    alpha = zoom < 13. ? scaleIntensity / 255. : color.g;
+      // get intensity value mapped to range
+      float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+      // a value between 0 and 255
+      alpha = zoom < 13. ? scaleIntensity / 255. : color.g;
 
-    float year = 2000.0 + (color.b * 255.);
-    // map to years
-    if (year >= startYear && year <= endYear && year >= 2001.) {
-      color.r = 220. / 255.;
-      color.g = (72. - zoom + 102. - 3. * scaleIntensity / zoom) / 255.;
-      color.b = (33. - zoom + 153. - intensity / zoom) / 255.;
-      return vec4(color, alpha);
-    } else {
-      return vec4(0., 0., 0., 0.);
-    }
-  `,
+      float year = 2000.0 + (color.b * 255.);
+      // map to years
+      if (year >= startYear && year <= endYear && year >= 2001.) {
+        color.r = 220. / 255.;
+        color.g = (72. - zoom + 102. - 3. * scaleIntensity / zoom) / 255.;
+        color.b = (33. - zoom + 153. - intensity / zoom) / 255.;
+        return vec4(color, alpha);
+      } else {
+        return vec4(0., 0., 0., 0.);
+      }
+    `,
   treeLossByDriver: (data, w, h, z, params) => {
     'use asm';
 
@@ -141,55 +141,40 @@ const decodes = {
       }
     }
   },
-  GLADs: (data, w, h, z, params) => {
-    'use asm';
-
-    // fixed variables
-    const imgData = data;
-    const { confirmedOnly } = params;
-
-    const { startDay, endDay, numberOfDays } = getDayRange(params) || {};
-
-    const confidenceValue = confirmedOnly ? 200 : 0;
-    const pixelComponents = 4; // RGBA
-    let pixelPos = 0;
-
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        pixelPos = (j * w + i) * pixelComponents;
-        // day 0 is 2015-01-01 until latest date from fetch
-        const day = imgData[pixelPos] * 255 + imgData[pixelPos + 1];
-        const confidence = data[pixelPos + 2];
-
-        if (
-          day > 0 &&
-          day >= startDay &&
-          day <= endDay &&
-          confidence >= confidenceValue
-        ) {
-          // get intensity
-          let intensity = (confidence % 100) * 50;
-          if (intensity > 255) {
-            intensity = 255;
-          }
-          if (day >= numberOfDays - 7 && day <= numberOfDays) {
-            imgData[pixelPos] = 219;
-            imgData[pixelPos + 1] = 168;
-            imgData[pixelPos + 2] = 0;
-            imgData[pixelPos + 3] = intensity;
-          } else {
-            imgData[pixelPos] = 220;
-            imgData[pixelPos + 1] = 102;
-            imgData[pixelPos + 2] = 153;
-            imgData[pixelPos + 3] = intensity;
-          }
-          continue; // eslint-disable-line
-        }
-
-        imgData[pixelPos + 3] = 0;
-      }
+  GLADs: `// values for creating power scale, domain (input), and range (output)
+    float confidenceValue = 0.;
+    if (confirmedOnly > 0.) {
+      confidenceValue = 200.;
     }
-  },
+    float day = color.r * 255. * 255. + (color.g * 255.);
+    float confidence = color.b * 255.;
+
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex &&
+      confidence >= confidenceValue
+    ) {
+      // get intensity
+      float intensity = mod(confidence, 100.) * 50.;
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      if (day >= numberOfDays - 7. && day <= numberOfDays) {
+        color.r = 219. / 255.;
+        color.g = 168. / 255.;
+        color.b = 0.;
+        alpha = intensity / 255.;
+      } else {
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      }
+    } else {
+      alpha = 0.;
+    }
+  `,
   biomassLoss: (data, w, h, z, params) => {
     'use asm';
 
