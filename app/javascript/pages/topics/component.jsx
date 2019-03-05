@@ -6,8 +6,6 @@ import TopicsHeader from 'pages/topics/components/topics-header';
 import TopicsFooter from 'pages/topics/components/topics-footer';
 
 import Section from 'pages/topics/components/section';
-import Biodiversity from 'pages/topics/content/biodiversity.json';
-// import Commodities from 'pages/topics/content/commodities.json';
 
 import Text from 'pages/topics/components/topics-text';
 import Image from 'pages/topics/components/topics-image';
@@ -48,22 +46,29 @@ class TopicsPage extends PureComponent {
   // }
 
   render() {
-    const { links } = this.props;
-    const activeTopic = links.find(t => t.active);
-    const topic = activeTopic ? activeTopic.component : Biodiversity;
+    const { links, topicData } = this.props;
 
     return (
       <div className="l-topics-page">
         <Header />
         <div id="fullpage">
           <TopicsHeader topics={links} />
-          {topic.map(s => (
+          {topicData.slides.map(s => (
             <Section key={s.subtitle} anchors={this.anchors}>
               <div className="row">
                 <div className="column small-12 medium-4">
                   <div className="topic-content">
                     <Text text={s.text} title={s.title} subtitle={s.subtitle} />
-                    <Button theme="theme-button-grey topics-btn">Skip</Button>
+                    <Button
+                      theme="theme-button-grey topics-btn"
+                      link="#footer"
+                      onClick={() => {
+                        /* global $ */
+                        $('#fullpage').fullpage.moveTo('footer', 0);
+                      }}
+                    >
+                      Skip
+                    </Button>
                   </div>
                 </div>
                 <div className="column small-12 medium-8 topic-image">
@@ -72,7 +77,7 @@ class TopicsPage extends PureComponent {
               </div>
             </Section>
           ))}
-          <TopicsFooter />
+          <TopicsFooter cards={topicData.cards} />
         </div>
       </div>
     );
@@ -80,7 +85,8 @@ class TopicsPage extends PureComponent {
 }
 
 TopicsPage.propTypes = {
-  links: PropTypes.array.isRequired
+  links: PropTypes.array.isRequired,
+  topicData: PropTypes.object
 };
 
 export default TopicsPage;
