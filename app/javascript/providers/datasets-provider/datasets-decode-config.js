@@ -244,28 +244,13 @@ const decodes = {
       alpha = 0.;
     }
   `,
-  woodyBiomass: (data, w, h) => {
-    'use asm';
-
-    const imgData = data;
-    const components = 4;
-
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        const pixelPos = (j * w + i) * components;
-        const intensity = imgData[pixelPos + 2];
-        imgData[pixelPos] = 255 - intensity;
-        imgData[pixelPos + 1] = 128;
-        imgData[pixelPos + 2] = 0;
-        imgData[pixelPos + 3] = 0;
-        if (intensity > 0) {
-          imgData[pixelPos + 3] = intensity;
-        }
-      }
-
-      continue; // eslint-disable-line
-    }
-  },
+  woodyBiomass: `
+    float intensity = color.b * 255.;
+    color.r = (255. - intensity) / 255.;
+    color.g = 128. / 255.;
+    color.b = 0.;
+    alpha = intensity / 255.;
+  `,
   forma: (data, w, h, z, params) => {
     'use asm';
 
