@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import intersection from 'lodash/intersection';
 import flatMap from 'lodash/flatMap';
+import sortBy from 'lodash/sortBy';
 
 import { getDayRange } from 'utils/dates';
 
@@ -333,20 +334,23 @@ export const getLayerGroups = createSelector(
 export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return null;
 
-  return flatten(layerGroups.map(d => d.layers))
-    .filter(l => l.active && (!l.isRecentImagery || l.params.url))
-    .map((l, i) => {
-      let zIndex =
-        l.interactionConfig && l.interactionConfig.article
-          ? 1100 + i
-          : 1000 - i;
-      if (l.isRecentImagery) zIndex = 500;
-      if (l.isBoundary) zIndex = 1050 - i;
-      return {
-        ...l,
-        zIndex
-      };
-    });
+  return sortBy(
+    flatten(layerGroups.map(d => d.layers))
+      .filter(l => l.active && (!l.isRecentImagery || l.params.url))
+      .map((l, i) => {
+        let zIndex =
+          l.interactionConfig && l.interactionConfig.article
+            ? 1100 + i
+            : 1000 - i;
+        if (l.isRecentImagery) zIndex = 500;
+        if (l.isBoundary) zIndex = 1050 - i;
+        return {
+          ...l,
+          zIndex
+        };
+      }),
+    'zIndex'
+  );
 });
 
 // all layers for importing by other components
