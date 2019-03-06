@@ -47,37 +47,43 @@ class TopicsPage extends PureComponent {
 
   render() {
     const { links, topicData } = this.props;
+    const { cards, slides } = topicData || {};
 
     return (
       <div className="l-topics-page">
         <Header />
         <div id="fullpage">
           <TopicsHeader topics={links} />
-          {topicData.slides.map(s => (
-            <Section key={s.subtitle} anchors={this.anchors}>
-              <div className="row">
-                <div className="column small-12 medium-4">
-                  <div className="topic-content">
-                    <Text text={s.text} title={s.title} subtitle={s.subtitle} />
-                    <Button
-                      theme="theme-button-grey topics-btn"
-                      link="#footer"
-                      onClick={() => {
-                        /* global $ */
-                        $('#fullpage').fullpage.moveTo('footer', 0);
-                      }}
-                    >
-                      Skip
-                    </Button>
+          {slides &&
+            slides.map(s => (
+              <Section key={s.subtitle} anchors={this.anchors}>
+                <div className="row">
+                  <div className="column small-12 medium-4">
+                    <div className="topic-content">
+                      <Text
+                        text={s.text}
+                        title={s.title}
+                        subtitle={s.subtitle}
+                      />
+                      <Button
+                        theme="theme-button-grey topics-btn"
+                        link="#footer"
+                        onClick={() => {
+                          /* global $ */
+                          $('#fullpage').fullpage.moveTo('footer', 0);
+                        }}
+                      >
+                        Skip
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="column small-12 medium-8 topic-image">
+                    <Image url={s.src} description={s.subtitle} />
                   </div>
                 </div>
-                <div className="column small-12 medium-8 topic-image">
-                  <Image url={s.src} description={s.subtitle} />
-                </div>
-              </div>
-            </Section>
-          ))}
-          <TopicsFooter cards={topicData.cards} />
+              </Section>
+            ))}
+          <TopicsFooter cards={cards} />
         </div>
       </div>
     );
