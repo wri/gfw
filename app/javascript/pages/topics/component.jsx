@@ -23,9 +23,8 @@ class TopicsPage extends PureComponent {
         navigation: true,
         navigationPosition: 'right',
         anchors: this.anchors,
-        // fadingEffect: true,
-        // onLeave: (origin, destination, direction) =>
-        //   this.handleLeave(origin, destination, direction),
+        // onLeave: (origin, destination, direction) => {}
+        onLeave: () => this.handleLeave(),
         // afterLoad 3.X: (origin, destination, direction) => {}
         afterLoad: (section, index) => this.slideDidLoad(section, index)
       });
@@ -39,11 +38,13 @@ class TopicsPage extends PureComponent {
     } else {
       $('#fp-nav').show();
     }
+    this.activeSection = document.querySelectorAll('.section')[section];
+    if (this.activeSection) this.activeSection.classList.remove('leaving');
   }
 
-  // handleLeave(origin, destination, direction) {
-  //   console.log(origin, destination, direction);
-  // }
+  handleLeave() {
+    if (this.activeSection) this.activeSection.classList.add('leaving');
+  }
 
   render() {
     const { links, topicData } = this.props;
