@@ -123,9 +123,9 @@ const decodes = {
 
       // get intensity value mapped to range
       float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+
       // a value between 0 and 255
       alpha = scaleIntensity * 2. / 255.;
-
       float lossCat = color.g * 255.;
 
       float r = 255.;
@@ -196,60 +196,54 @@ const decodes = {
       alpha = 0.;
     }
   `,
-  biomassLoss: (data, w, h, z, params) => {
-    'use asm';
+  biomassLoss: `
+    float countBuckets = 5.; // buckets length / 3: three bands
+    float year = 2000.0 + (color.r * 255.);
 
-    const imgData = data;
-    const components = 4;
-    const myScale = getScale(z);
+    if (year >= 2001. && year >= startYear && year <= endYear) {
+      // values for creating power scale, domain (input), and range (output)
+      float domainMin = 0.;
+      float domainMax = 255.;
+      float rangeMin = 0.;
+      float rangeMax = 255.;
 
-    const { startDate, endDate } = params;
-    const yearStart = getYear(startDate);
-    const yearEnd = getYear(endDate);
+      float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+      float intensity = color.g * 255.;
 
-    const buckets = [
-      255,
-      31,
-      38, // first bucket R G B
-      210,
-      31,
-      38,
-      210,
-      31,
-      38,
-      241,
-      152,
-      19,
-      255,
-      208,
-      11
-    ]; // last bucket
-    const countBuckets = buckets.length / 3; // 3: three bands
+      // get the min, max, and current values on the power scale
+      float minPow = pow(domainMin, exponent - domainMin);
+      float maxPow = pow(domainMax, exponent);
+      float currentPow = pow(intensity, exponent);
 
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        const pixelPos = (j * w + i) * components;
-        imgData[pixelPos + 3] = 0;
+      // get intensity value mapped to range
+      float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
 
-        if (imgData[pixelPos] !== 0) {
-          // get values from data
-          const intensity = myScale(imgData[pixelPos + 1]);
-          // filter range from dashboard
-          if (intensity >= 0 && intensity <= 255) {
-            const yearLoss = 2000 + imgData[pixelPos];
-            if (yearLoss >= yearStart && yearLoss < yearEnd) {
-              const bucket = Math.floor(countBuckets * intensity / 256) * 3;
-              imgData[pixelPos] = buckets[bucket]; // R 0-255
-              imgData[pixelPos + 1] = buckets[bucket + 1]; // G 0-255
-              imgData[pixelPos + 2] = buckets[bucket + 2]; // B 0-255
-              imgData[pixelPos + 3] = intensity; // alpha channel 0-255
-            }
-          }
-        }
-        continue; // eslint-disable-line
+      float bucket = floor(countBuckets * scaleIntensity / 256.) * 3.;
+      float r = 255.;
+      float g = 31.;
+      float b = 38.;
+
+      if (bucket == 3. || bucket == 6.) {
+        r = 210.;
+        g = 31.;
+        b = 38.;
+      } else if (bucket == 9.) {
+        r = 241.;
+        g = 152.;
+        b = 19.;
+      } else if (bucket == 12.) {
+        r = 255.;
+        g = 208.;
+        b = 11.;
       }
+      color.r = r / 255.;
+      color.g = g / 255.;
+      color.b = b / 255.;
+      alpha = scaleIntensity / 255.;
+    } else {
+      alpha = 0.;
     }
-  },
+  `,
   woodyBiomass: (data, w, h) => {
     'use asm';
 
