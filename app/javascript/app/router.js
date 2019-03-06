@@ -138,7 +138,7 @@ export const routes = {
       commodities: {
         label: 'Commodities',
         submenu: true,
-        component: 'biodiversity',
+        component: 'commodities',
         path: '/topics/commodities'
       },
       water: {
