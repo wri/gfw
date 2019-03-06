@@ -39,7 +39,10 @@ class MapContainer extends PureComponent {
       geostoreBbox,
       setMapSettings,
       layerBbox,
-      selectedInteraction
+      selectedInteraction,
+      lat,
+      lng,
+      zoom
     } = this.props;
 
     // only set bounding box if action allows it
@@ -60,6 +63,19 @@ class MapContainer extends PureComponent {
     // if geostore changes
     if (geostoreBbox && geostoreBbox !== prevProps.geostoreBbox) {
       setMapSettings({ bbox: geostoreBbox });
+    }
+
+    // sync position props with state
+    if (
+      lat !== prevProps.lat ||
+      lng !== prevProps.lng ||
+      zoom !== prevProps.zoom
+    ) {
+      this.setPositionState({
+        zoom,
+        lat,
+        lng
+      });
     }
 
     // fit bounds on cluster if clicked
@@ -105,6 +121,10 @@ class MapContainer extends PureComponent {
 
   setBbox = bbox => {
     this.setState({ bbox });
+  };
+
+  setPositionState = position => {
+    this.setState(position);
   };
 
   setMapRect = map => {

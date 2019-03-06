@@ -70,7 +70,8 @@ const decodes = {
 
     color.r = 151. / 255.;
     color.g = 189. / 255.;
-    color.b = 61. / 255.;`,
+    color.b = 61. / 255.;
+  `,
   treeCoverLoss: `// values for creating power scale, domain (input), and range (output)
       float domainMin = 0.;
       float domainMax = 255.;
@@ -96,9 +97,8 @@ const decodes = {
         color.r = 220. / 255.;
         color.g = (72. - zoom + 102. - 3. * scaleIntensity / zoom) / 255.;
         color.b = (33. - zoom + 153. - intensity / zoom) / 255.;
-        return vec4(color, alpha);
       } else {
-        return vec4(0., 0., 0., 0.);
+        alpha = 0.;
       }
     `,
   treeLossByDriver: (data, w, h, z, params) => {
