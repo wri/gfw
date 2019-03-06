@@ -24,9 +24,9 @@ export default {
     globalWithIndicator:
       'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}.',
     initial:
-      'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} of global total.',
+      'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} of the {parent} total.',
     withIndicator:
-      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of global total.',
+      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of the {parent} total.',
     regionInitial:
       'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
     regionWithIndicator:
