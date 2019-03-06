@@ -49,7 +49,8 @@ const getDayRange = params => {
 };
 
 const decodes = {
-  treeCover: `// values for creating power scale, domain (input), and range (output)
+  treeCover: `
+    // values for creating power scale, domain (input), and range (output)
     float domainMin = 0.;
     float domainMax = 255.;
     float rangeMin = 0.;
@@ -72,7 +73,41 @@ const decodes = {
     color.g = 189. / 255.;
     color.b = 61. / 255.;
   `,
-  treeCoverLoss: `// values for creating power scale, domain (input), and range (output)
+  treeCoverLoss: `
+    // values for creating power scale, domain (input), and range (output)
+    float domainMin = 0.;
+    float domainMax = 255.;
+    float rangeMin = 0.;
+    float rangeMax = 255.;
+
+    float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+    float intensity = color.r * 255.;
+
+    // get the min, max, and current values on the power scale
+    float minPow = pow(domainMin, exponent - domainMin);
+    float maxPow = pow(domainMax, exponent);
+    float currentPow = pow(intensity, exponent);
+
+    // get intensity value mapped to range
+    float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+    // a value between 0 and 255
+    alpha = zoom < 13. ? scaleIntensity / 255. : color.g;
+
+    float year = 2000.0 + (color.b * 255.);
+    // map to years
+    if (year >= startYear && year <= endYear && year >= 2001.) {
+      color.r = 220. / 255.;
+      color.g = (72. - zoom + 102. - 3. * scaleIntensity / zoom) / 255.;
+      color.b = (33. - zoom + 153. - intensity / zoom) / 255.;
+    } else {
+      alpha = 0.;
+    }
+  `,
+  treeLossByDriver: `
+    float year = 2000.0 + (color.b * 255.);
+    // map to years
+    if (year >= startYear && year <= endYear && year >= 2001.) {
+      // values for creating power scale, domain (input), and range (output)
       float domainMin = 0.;
       float domainMax = 255.;
       float rangeMin = 0.;
@@ -89,59 +124,45 @@ const decodes = {
       // get intensity value mapped to range
       float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
       // a value between 0 and 255
-      alpha = zoom < 13. ? scaleIntensity / 255. : color.g;
+      alpha = scaleIntensity * 2. / 255.;
 
-      float year = 2000.0 + (color.b * 255.);
-      // map to years
-      if (year >= startYear && year <= endYear && year >= 2001.) {
-        color.r = 220. / 255.;
-        color.g = (72. - zoom + 102. - 3. * scaleIntensity / zoom) / 255.;
-        color.b = (33. - zoom + 153. - intensity / zoom) / 255.;
-      } else {
-        alpha = 0.;
+      float lossCat = color.g * 255.;
+
+      float r = 255.;
+      float g = 255.;
+      float b = 255.;
+
+      if (lossCat == 1.) {
+        r = 244.;
+        g = 29.;
+        b = 54.;
+      } else if (lossCat == 2.) {
+        r = 239.;
+        g = 211.;
+        b = 26.;
+      } else if (lossCat == 3.) {
+        r = 47.;
+        g = 191.;
+        b = 113.;
+      } else if (lossCat == 4.) {
+        r = 173.;
+        g = 104.;
+        b = 36.;
+      } else if (lossCat == 5.) {
+        r = 178.;
+        g = 53.;
+        b = 204.;
       }
-    `,
-  treeLossByDriver: (data, w, h, z, params) => {
-    'use asm';
 
-    const components = 4;
-    const imgData = data;
-    const myScale = getScale(z);
-
-    const { startDate, endDate } = params;
-    const yearStart = getYear(startDate);
-    const yearEnd = getYear(endDate);
-
-    const lossColors = {
-      0: [255, 255, 255],
-      1: [244, 29, 54],
-      2: [239, 211, 26],
-      3: [47, 191, 113],
-      4: [173, 104, 36],
-      5: [178, 53, 204]
-    };
-
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        const pixelPos = (j * w + i) * components;
-        const yearLoss = 2000 + imgData[pixelPos + 2];
-
-        if (yearLoss >= yearStart && yearLoss < yearEnd) {
-          const lossCat = imgData[pixelPos + 1];
-          const rgb = lossColors[lossCat || 0];
-          const intensity = imgData[pixelPos];
-          const scale = myScale(intensity) * 2;
-          imgData[pixelPos] = rgb[0];
-          imgData[pixelPos + 1] = rgb[1];
-          imgData[pixelPos + 2] = rgb[2];
-          imgData[pixelPos + 3] = scale;
-        } else {
-          imgData[pixelPos + 3] = 0;
-        }
-      }
+      color.r = r / 255.;
+      color.g = g / 255.;
+      color.b = b / 255.;
+    } else {
+      alpha = 0.;
     }
-  },
-  GLADs: `// values for creating power scale, domain (input), and range (output)
+  `,
+  GLADs: `
+    // values for creating power scale, domain (input), and range (output)
     float confidenceValue = 0.;
     if (confirmedOnly > 0.) {
       confidenceValue = 200.;
