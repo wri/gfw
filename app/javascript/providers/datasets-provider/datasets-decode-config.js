@@ -1,53 +1,3 @@
-import { scalePow } from 'd3-scale';
-
-import {
-  dateDiffInDays,
-  getYear,
-  getDayOfYear,
-  addToDate,
-  formatDate
-} from 'utils/dates';
-
-const getExp = z => (z < 11 ? 0.3 + (z - 3) / 20 : 1);
-
-const getScale = z =>
-  scalePow()
-    .exponent(getExp(z))
-    .domain([0, 256])
-    .range([0, 256]);
-
-const padNumber = number => {
-  const s = `00${number}`;
-  return s.substr(s.length - 3);
-};
-
-const getDayRange = params => {
-  const { startDate, endDate, minDate, maxDate, weeks } = params || {};
-
-  const minDateTime = new Date(minDate);
-  const maxDateTime = new Date(maxDate);
-  const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
-
-  // timeline or hover effect active range
-  const startDateTime = new Date(startDate);
-  const endDateTime = new Date(endDate);
-  const activeStartDay =
-    numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
-  const activeEndDay = numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
-
-  // show specified weeks from end date
-  const rangeStartDate = weeks && numberOfDays - 7 * weeks;
-  // get start and end day
-  const startDay = activeStartDay || rangeStartDate || 0;
-  const endDay = activeEndDay || numberOfDays;
-
-  return {
-    startDay,
-    endDay,
-    numberOfDays
-  };
-};
-
 const decodes = {
   treeCover: `
     // values for creating power scale, domain (input), and range (output)
@@ -251,213 +201,162 @@ const decodes = {
     color.b = 0.;
     alpha = intensity / 255.;
   `,
-  forma: (data, w, h, z, params) => {
-    'use asm';
+  forma: `
+    float day = (255. * (color.g * 255.)) + (color.b * 255.);
 
-    const imgData = data;
-    const components = 4;
-
-    const { startDay, endDay } = getDayRange(params) || {};
-
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        const pixelPos = (j * w + i) * components;
-        const g = imgData[pixelPos + 1];
-        const b = imgData[pixelPos + 2];
-        const day = 255 * g + b;
-
-        if (day >= startDay && day <= endDay) {
-          const band3_str = padNumber(imgData[pixelPos].toString());
-          const intensity_raw = parseInt(band3_str.slice(1, 3), 10);
-          // Scale the intensity to make it visible
-          let intensity = intensity_raw * 55;
-          // Set intensity to 255 if it's > than that value
-          if (intensity > 255) {
-            intensity = 255;
-          }
-
-          imgData[pixelPos] = 220;
-          imgData[pixelPos + 1] = 102;
-          imgData[pixelPos + 2] = 153;
-          imgData[pixelPos + 3] = intensity;
-
-          continue; // eslint-disable-line
-        }
-        imgData[pixelPos + 3] = 0;
+    if (day >= startDay && day <= endDay) {
+      float band3 = color.r * 255.;
+      if (band3 > 100.) {
+        band3 = band3 - 100.;
+      } else if (band3 > 200.) {
+        band3 = band3 - 200.;
       }
-    }
-  },
-  terrai: (data, w, h, z, params) => {
-    'use asm';
-
-    const imgData = data;
-    const components = 4;
-
-    const { startDate, endDate, minDate, maxDate } = params || {};
-
-    const startYear = getYear(startDate);
-    const minYear = getYear(minDate);
-    const maxYear = getYear(maxDate);
-    const maxYearDay = getDayOfYear(maxDate);
-    const endYearDay = getDayOfYear(endDate);
-    const recentStartDate = formatDate(addToDate(maxDate, -1, 'months'));
-    const recentStartYear = getYear(recentStartDate);
-    const recentStartDay = getDayOfYear(recentStartDate);
-
-    const startDay =
-      (startYear - minYear) * 23 + Math.floor(endYearDay / 16 + 1);
-
-    const endDay =
-      (getYear(endDate) - minYear) * 23 + Math.floor(endYearDay / 16 + 1);
-
-    const recentStartRange =
-      (recentStartYear - minYear) * 23 + Math.floor(recentStartDay / 16 + 1);
-
-    const recentEndRange =
-      (maxYear - minYear) * 23 + Math.floor(maxYearDay / 16 + 1);
-
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        const pixelPos = (j * w + i) * components;
-
-        const r = imgData[pixelPos];
-        const g = imgData[pixelPos + 1];
-        const day = r + g;
-
-        if (day >= startDay && day <= endDay) {
-          const b = imgData[pixelPos + 2];
-          const intensity = Math.min(b * 4, 255);
-          if (day >= recentStartRange && day <= recentEndRange) {
-            imgData[pixelPos] = 219;
-            imgData[pixelPos + 1] = 168;
-            imgData[pixelPos + 2] = 0;
-            imgData[pixelPos + 3] = intensity;
-          } else {
-            imgData[pixelPos] = 220;
-            imgData[pixelPos + 1] = 102;
-            imgData[pixelPos + 2] = 153;
-            imgData[pixelPos + 3] = intensity;
-          }
-
-          continue; // eslint-disable-line
-        }
-
-        imgData[pixelPos + 3] = 0;
+      float intensity = band3 * 55.;
+      if (intensity > 255.) {
+        intensity = 255.;
       }
+      color.r = 220. / 255.;
+      color.g = 102. / 255.;
+      color.b = 153. / 255.;
+      alpha = intensity / 255.;
+    } else {
+      alpha = 0.;
     }
-  },
-  braLandCover: (data, w, h, z) => {
-    'use asm';
+  `,
+  terrai: `
+    float day = color.r * 255. + color.g * 255.;
 
-    const imgData = data;
-    const components = 4;
-    const myScale = getScale(z);
-
-    for (let i = 0; i < w; ++i) {
-      for (let j = 0; j < h; ++j) {
-        // maps over square
-        const pixelPos = (j * w + i) * components;
-        const intensity = imgData[pixelPos + 1];
-
-        imgData[pixelPos + 3] =
-          z < 13 ? myScale(intensity) * 256 : intensity * 256;
-
-        // Forest Formations
-        if (imgData[pixelPos] === 3) {
-          imgData[pixelPos] = 0;
-          imgData[pixelPos + 1] = 100;
-          imgData[pixelPos + 2] = 0;
-        } else if (imgData[pixelPos] === 4) {
-          // Savannah Formations
-          imgData[pixelPos] = 141;
-          imgData[pixelPos + 1] = 144;
-          imgData[pixelPos + 2] = 35;
-        } else if (imgData[pixelPos] === 5) {
-          // Mangroves
-          imgData[pixelPos] = 138;
-          imgData[pixelPos + 1] = 168;
-          imgData[pixelPos + 2] = 29;
-        } else if (imgData[pixelPos] === 9) {
-          // Planted Forest
-          imgData[pixelPos] = 232;
-          imgData[pixelPos + 1] = 163;
-          imgData[pixelPos + 2] = 229;
-        } else if (imgData[pixelPos] === 11) {
-          // Non-forest Wetlands
-          imgData[pixelPos] = 39;
-          imgData[pixelPos + 1] = 137;
-          imgData[pixelPos + 2] = 212;
-        } else if (imgData[pixelPos] === 12) {
-          // Grassland
-          imgData[pixelPos] = 204;
-          imgData[pixelPos + 1] = 219;
-          imgData[pixelPos + 2] = 152;
-        } else if (imgData[pixelPos] === 13) {
-          // Other Non-forest Vegetation
-          imgData[pixelPos] = 138;
-          imgData[pixelPos + 1] = 184;
-          imgData[pixelPos + 2] = 75;
-        } else if (imgData[pixelPos] === 15) {
-          // Pasture
-          imgData[pixelPos] = 255;
-          imgData[pixelPos + 1] = 184;
-          imgData[pixelPos + 2] = 126;
-        } else if (imgData[pixelPos] === 18) {
-          // Agriculture
-          imgData[pixelPos] = 210;
-          imgData[pixelPos + 1] = 169;
-          imgData[pixelPos + 2] = 101;
-        } else if (imgData[pixelPos] === 21) {
-          // Pasture or Agriculture
-          imgData[pixelPos] = 232;
-          imgData[pixelPos + 1] = 176;
-          imgData[pixelPos + 2] = 113;
-        } else if (imgData[pixelPos] === 23) {
-          // Beaches and Dunes
-          imgData[pixelPos] = 221;
-          imgData[pixelPos + 1] = 126;
-          imgData[pixelPos + 2] = 107;
-        } else if (imgData[pixelPos] === 24) {
-          // Urban Infrastructure
-          imgData[pixelPos] = 233;
-          imgData[pixelPos + 1] = 70;
-          imgData[pixelPos + 2] = 43;
-        } else if (imgData[pixelPos] === 25) {
-          // Other Non-vegetated Area
-          imgData[pixelPos] = 255;
-          imgData[pixelPos + 1] = 153;
-          imgData[pixelPos + 2] = 255;
-        } else if (imgData[pixelPos] === 26) {
-          // Water Bodies
-          imgData[pixelPos] = 163;
-          imgData[pixelPos + 1] = 220;
-          imgData[pixelPos + 2] = 254;
-        } else if (imgData[pixelPos] === 27) {
-          // Unobserved
-          imgData[pixelPos] = 235;
-          imgData[pixelPos + 1] = 236;
-          imgData[pixelPos + 2] = 236;
-          imgData[pixelPos + 3] = 0;
-        } else if (
-          imgData[pixelPos] === 1 ||
-          imgData[pixelPos] === 2 ||
-          imgData[pixelPos] === 10 ||
-          imgData[pixelPos] === 14
-        ) {
-          // Unknown / No data
-          imgData[pixelPos] = 256;
-          imgData[pixelPos + 1] = 256;
-          imgData[pixelPos + 2] = 256;
-          imgData[pixelPos + 3] = 0;
-        } else {
-          imgData[pixelPos] = 256;
-          imgData[pixelPos + 1] = 256;
-          imgData[pixelPos + 2] = 256;
-          imgData[pixelPos + 3] = 0;
-        }
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex
+    ) {
+      float intensity = color.b * 255. * 4.;
+      if (intensity > 255.) {
+        intensity = 255.;
       }
+      if (day >= numberOfDays - 30. && day <= numberOfDays) {
+        color.r = 219. / 255.;
+        color.g = 168. / 255.;
+        color.b = 0.;
+        alpha = intensity / 255.;
+      } else {
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
+        alpha = intensity / 255.;
+      }
+    } else {
+      alpha = 0.;
     }
-  }
+  `,
+  braLandCover: `
+    float domainMin = 0.;
+    float domainMax = 255.;
+    float rangeMin = 0.;
+    float rangeMax = 255.;
+
+    float exponent = zoom < 13. ? 0.3 + (zoom - 3.) / 20. : 1.;
+    float intensity = color.g * 255.;
+
+    // get the min, max, and current values on the power scale
+    float minPow = pow(domainMin, exponent - domainMin);
+    float maxPow = pow(domainMax, exponent);
+    float currentPow = pow(intensity, exponent);
+
+    // get intensity value mapped to range
+    float scaleIntensity = ((currentPow - minPow) / (maxPow - minPow) * (rangeMax - rangeMin)) + rangeMin;
+
+    alpha = (zoom < 13. ? scaleIntensity : intensity) * 256. / 255.;
+
+    // Forest Formations
+    if (color.r == 3. / 255.) {
+      color.r = 0. / 255.;
+      color.g = 100. / 255.;
+      color.b = 0. / 255.;
+    } else if (color.r == 4. / 255.) {
+      // Savannah Formations
+      color.r = 141. / 255.;
+      color.g = 144. / 255.;
+      color.b = 35. / 255.;
+    } else if (color.r == 5. / 255.) {
+      // Mangroves
+      color.r = 138. / 255.;
+      color.g = 168. / 255.;
+      color.b = 29. / 255.;
+    } else if (color.r == 9. / 255.) {
+      // Planted Forest
+      color.r = 232. / 255.;
+      color.g = 163. / 255.;
+      color.b = 229. / 255.;
+    } else if (color.r == 11. / 255.) {
+      // Non-forest Wetlands
+      color.r = 39. / 255.;
+      color.g = 137. / 255.;
+      color.b = 212. / 255.;
+    } else if (color.r == 12. / 255.) {
+      // Grassland
+      color.r = 204. / 255.;
+      color.g = 219. / 255.;
+      color.b = 152. / 255.;
+    } else if (color.r == 13. / 255.) {
+      // Other Non-forest Vegetation
+      color.r = 138. / 255.;
+      color.g = 184. / 255.;
+      color.b = 75. / 255.;
+    } else if (color.r == 15. / 255.) {
+      // Pasture
+      color.r = 255. / 255.;
+      color.g = 184. / 255.;
+      color.b = 126. / 255.;
+    } else if (color.r == 18. / 255.) {
+      // Agriculture
+      color.r = 210. / 255.;
+      color.g = 169. / 255.;
+      color.b = 101. / 255.;
+    } else if (color.r == 21. / 255.) {
+      // Pasture or Agriculture
+      color.r = 232. / 255.;
+      color.g = 176. / 255.;
+      color.b = 113. / 255.;
+    } else if (color.r == 23. / 255.) {
+      // Beaches and Dunes
+      color.r = 221. / 255.;
+      color.g = 126. / 255.;
+      color.b = 107. / 255.;
+    } else if (color.r == 24. / 255.) {
+      // Urban Infrastructure
+      color.r = 233. / 255.;
+      color.g = 70. / 255.;
+      color.b = 43. / 255.;
+    } else if (color.r == 25. / 255.) {
+      // Other Non-vegetated Area
+      color.r = 255. / 255.;
+      color.g = 153. / 255.;
+      color.b = 255. / 255.;
+    } else if (color.r == 26. / 255.) {
+      // Water Bodies
+      color.r = 163. / 255.;
+      color.g = 220. / 255.;
+      color.b = 254. / 255.;
+    } else if (color.r == 27. / 255.) {
+      // Unobserved
+      color.r = 235. / 255.;
+      color.g = 236. / 255.;
+      color.b = 236. / 255.;
+      alpha = 0.;
+    } else if (
+      color.r == 1. / 255. ||
+      color.r == 2. / 255. ||
+      color.r == 10. / 255. ||
+      color.r == 14. / 255.
+    ) {
+      // Unknown / No data
+      alpha = 0.;
+    } else {
+      alpha = 0.;
+    }
+  `
 };
 
 export default {
