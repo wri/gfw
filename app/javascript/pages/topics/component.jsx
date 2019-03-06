@@ -67,7 +67,6 @@ class TopicsPage extends PureComponent {
                       />
                       <Button
                         theme="theme-button-grey topics-btn"
-                        link="#footer"
                         onClick={() => {
                           /* global $ */
                           $('#fullpage').fullpage.moveTo('footer', 0);
