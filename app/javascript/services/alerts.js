@@ -73,6 +73,30 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset }) => {
   return request.get(url, 3600, 'firesRequest');
 };
 
+export const fetchFiresLatest = ({ adm1, adm2 }) => {
+  let fires_summary_table = FIRES_ISO_DATASET;
+  if (adm2) {
+    fires_summary_table = FIRES_ADM2_DATASET;
+  } else if (adm1) {
+    fires_summary_table = FIRES_ADM1_DATASET;
+  }
+  const url = `${REQUEST_URL}/dataset/${fires_summary_table}`;
+  return request.get(url, 3600, 'firesRequest').catch(error => {
+    console.error('Error in firesRequest:', error);
+    return new Promise(resolve =>
+      resolve({
+        data: {
+          data: {
+            attributes: { updatedAt: lastFriday },
+            id: null,
+            type: 'fires-alerts'
+          }
+        }
+      })
+    );
+  });
+};
+
 export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
   const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${
     QUERIES.viirsAlerts
@@ -112,20 +136,24 @@ export const fetchLatestDate = url =>
     );
   });
 
-export const fetchGLADLatest = () => {
-  const url = `${REQUEST_URL}/glad-alerts/latest`;
+export const fetchGLADLatest = ({ adm1, adm2 }) => {
+  let glad_summary_table = GLAD_ISO_DATASET;
+  if (adm2) {
+    glad_summary_table = GLAD_ADM2_DATASET;
+  } else if (adm1) {
+    glad_summary_table = GLAD_ADM1_DATASET;
+  }
+  const url = `${REQUEST_URL}/dataset/${glad_summary_table}`;
   return request.get(url, 3600, 'gladRequest').catch(error => {
     console.error('Error in gladRequest:', error);
     return new Promise(resolve =>
       resolve({
         data: {
-          data: [
-            {
-              attributes: { date: lastFriday },
-              id: null,
-              type: 'glad-alerts'
-            }
-          ]
+          data: {
+            attributes: { updatedAt: lastFriday },
+            id: null,
+            type: 'glad-alerts'
+          }
         }
       })
     );
