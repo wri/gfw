@@ -31,7 +31,9 @@ class TopicsFooter extends PureComponent {
           </div>
         </div>
         <div className="row">
-          <h2>COMMODITIES RELATED TOOLS</h2>
+          <div className="column small-12">
+            <h2>COMMODITIES RELATED TOOLS</h2>
+          </div>
         </div>
         <Carousel>
           {cards &&
