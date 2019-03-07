@@ -36,7 +36,7 @@ export const stories = {
           lat: 27,
           lng: 12
         },
-        zoom: 3,
+        zoom: 2,
         datasets: [
           // admin boundaries
           {
@@ -82,7 +82,7 @@ export const stories = {
           lat: 27,
           lng: 12
         },
-        zoom: 3,
+        zoom: 2,
         datasets: [
           // admin boundaries
           {
@@ -128,7 +128,7 @@ export const stories = {
           lat: 27,
           lng: 12
         },
-        zoom: 3,
+        zoom: 2,
         datasets: [
           // admin boundaries
           {
@@ -170,7 +170,7 @@ export const topics = {
           lat: 27,
           lng: 12
         },
-        zoom: 3,
+        zoom: 2,
         datasets: [
           // admin boundaries
           {
@@ -221,7 +221,7 @@ export const topics = {
           lat: 27,
           lng: 12
         },
-        zoom: 3,
+        zoom: 2,
         datasets: [
           // admin boundaries
           {
@@ -269,7 +269,7 @@ export const topics = {
           lat: 27,
           lng: 12
         },
-        zoom: 3,
+        zoom: 2,
         datasets: [
           // admin boundaries
           {
@@ -341,7 +341,7 @@ export const topics = {
           lat: 27,
           lng: 12
         },
-        zoom: 3,
+        zoom: 2,
         datasets: [
           // admin boundaries
           {
