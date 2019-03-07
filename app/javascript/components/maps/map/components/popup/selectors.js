@@ -1,9 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { reverseLatLng } from 'utils/geoms';
 import bbox from 'turf-bbox';
 import bboxPolygon from 'turf-bbox-polygon';
 import area from 'turf-area';
+import lineString from 'turf-linestring';
 
 import {
   getActiveDatasetsFromState,
@@ -96,10 +96,16 @@ export const getCardData = createSelector(
       ])
       : [readMoreBtn];
 
+    let newBbox = data.bbox && JSON.parse(data.bbox).coordinates[0];
+    if (newBbox) {
+      const bboxCoords = newBbox.slice(0, 4);
+      newBbox = bbox(lineString(bboxCoords));
+    }
+
     return {
       ...articleData,
-      ...(data.bbox && {
-        bbox: reverseLatLng(JSON.parse(data.bbox).coordinates[0])
+      ...(bbox && {
+        bbox: newBbox
       }),
       buttons
     };
