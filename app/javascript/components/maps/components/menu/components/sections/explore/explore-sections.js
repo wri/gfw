@@ -305,7 +305,7 @@ export const topics = {
           // wood fiber
           {
             dataset: '93e67a77-1a31-4d04-a75d-86a4d6e35d54',
-            layers: ['557dc2cf-0ba7-4410-813c-99d692725fe7'],
+            layers: ['f680828e-be68-4895-b1ed-1d0915d07457'],
             opacity: 1,
             visibility: true
           },
