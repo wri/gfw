@@ -18,8 +18,14 @@ const selectPTWData = state => {
   return (
     data &&
     data.map(d => {
-      const bboxCoords = d.bbox.slice(0, 4).map(o => o.reverse());
+      const bboxCoords = d.bbox.slice(0, 4);
       const bboxFromCoords = bbox(lineString(bboxCoords));
+      const reverseBbox = [
+        bboxFromCoords[1],
+        bboxFromCoords[0],
+        bboxFromCoords[3],
+        bboxFromCoords[2]
+      ];
 
       return {
         id: d.cartodb_id,
@@ -61,7 +67,7 @@ const selectPTWData = state => {
                 ],
                 opacity: 1,
                 visibility: true,
-                bbox: bboxFromCoords
+                bbox: reverseBbox
               }
             ],
             basemap: {
