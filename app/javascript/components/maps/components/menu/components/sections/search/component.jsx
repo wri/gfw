@@ -33,7 +33,7 @@ class MapMenuSearch extends PureComponent {
                 value: 'coords'
               },
               {
-                label: 'decimal degress',
+                label: 'decimal degrees',
                 value: 'decimals'
               },
               {

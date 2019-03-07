@@ -6,7 +6,7 @@ export default ({ params }) =>
   axios
     .all([
       fetchGladIntersectionAlerts({ ...params }),
-      fetchGLADLatest(),
+      fetchGLADLatest(params),
       getMultiRegionExtent({ ...params })
     ])
     .then(
@@ -18,7 +18,7 @@ export default ({ params }) =>
           ? {
             alerts: data,
             extent: areas,
-            latest: latestData[0].attributes.date
+            latest: latestData.attributes && latestData.attributes.updatedAt
           }
           : {};
       })
