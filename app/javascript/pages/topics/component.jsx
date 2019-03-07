@@ -38,8 +38,8 @@ class TopicsPage extends PureComponent {
     } else {
       $('#fp-nav').show();
     }
-    this.activeSection = document.querySelectorAll('.section')[section];
     if (this.activeSection) this.activeSection.classList.remove('leaving');
+    this.activeSection = document.querySelectorAll('.section')[section];
   }
 
   handleLeave() {

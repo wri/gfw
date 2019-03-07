@@ -13,7 +13,8 @@ const contents = {
 const mapStateToProps = ({ location }, { sections }) => ({
   section:
     location && sections && sections[location.payload.tab || 'biodiversity'],
-  topicData: location && contents[location.payload.tab || 'biodiversity'],
+  topicData:
+    (location && contents[location.payload.tab]) || contents.biodiversity,
   links: Object.values(sections)
     .filter(r => r.submenu)
     .map(r => ({ label: r.label, path: r.path }))
