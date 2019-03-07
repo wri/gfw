@@ -394,16 +394,12 @@ export const getActiveLayersWithDates = createSelector(
 export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
   if (isEmpty(layers)) return [];
   const interactiveLayers = layers.filter(
-    l =>
-      !isEmpty(l.interactionConfig) &&
-      (l.layerConfig.layers || l.layerConfig.body.vectorLayers)
+    l => !isEmpty(l.interactionConfig) && l.layerConfig.body.vectorLayers
   );
 
   return flatMap(
     interactiveLayers.reduce((arr, layer) => {
-      const clickableLayers =
-        (layer.layerConfig.layers && layer.layerConfig.layers) ||
-        layer.layerConfig.body.vectorLayers;
+      const clickableLayers = layer.layerConfig.body.vectorLayers;
 
       return [
         ...arr,
