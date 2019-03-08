@@ -67,7 +67,7 @@ class Popup extends Component {
       buttonState
     } = this.props;
 
-    return latlng && latlng.lat && !selected.data.cluster ? (
+    return latlng && latlng.lat && selected && !selected.data.cluster ? (
       <MapPopup
         latitude={latlng.lat}
         longitude={latlng.lng}
