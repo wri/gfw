@@ -202,9 +202,9 @@ const decodes = {
     alpha = intensity / 255.;
   `,
   forma: `
-    float day = (255. * (color.g * 255.)) + (color.b * 255.);
+    float day = color.g * 255. * 255. + (color.b * 255.);
 
-    if (day >= startDay && day <= endDay) {
+    if (day >= startDayIndex && day <= endDayIndex) {
       float band3 = color.r * 255.;
       if (band3 > 100.) {
         band3 = band3 - 100.;
