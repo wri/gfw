@@ -79,4 +79,8 @@
       color: $white;
     }
   }
+
+  .mapboxgl-control-container {
+    display: none;
+  }
 }
