@@ -15,7 +15,7 @@ import './styles.scss';
 
 class TopicsHeader extends PureComponent {
   render() {
-    const { topics } = this.props;
+    const { topics, intro } = this.props;
     return (
       <Section className="fp-auto-height-responsive topics-header">
         <div className="intro-top">
@@ -26,7 +26,7 @@ class TopicsHeader extends PureComponent {
             bgImage={bgImage}
           />
           <SubnavMenu links={topics} theme="theme-subnav-dark" />
-          <Intro />
+          <Intro intro={intro} />
         </div>
         <div className="intro-bottom">
           <div className="row">
@@ -51,7 +51,8 @@ class TopicsHeader extends PureComponent {
 }
 
 TopicsHeader.propTypes = {
-  topics: PropTypes.array
+  topics: PropTypes.array,
+  intro: PropTypes.object
 };
 
 export default TopicsHeader;

@@ -48,13 +48,13 @@ class TopicsPage extends PureComponent {
 
   render() {
     const { links, topicData } = this.props;
-    const { cards, slides } = topicData || {};
+    const { cards, slides, intro } = topicData || {};
 
     return (
       <div className="l-topics-page">
         <Header />
         <div id="fullpage">
-          <TopicsHeader topics={links} />
+          <TopicsHeader topics={links} intro={intro} />
           {slides &&
             slides.map(s => (
               <Section key={s.subtitle} anchors={this.anchors}>

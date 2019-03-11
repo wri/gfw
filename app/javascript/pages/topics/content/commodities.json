@@ -1,4 +1,10 @@
 {
+  "intro": {
+    "img": "",
+    "alt": "",
+    "title": "27% of global tree cover loss is commodity-driven deforestation.",
+    "text": "Production of commodities including beef, soy, palm oil, pulp, paper, energy and minerals,  is the leading cause of deforestation.  More sustainable commodity production is critical for conserving forests and mitigating climate change."
+  },
   "slides": [
     {
       "title": "Commodities",

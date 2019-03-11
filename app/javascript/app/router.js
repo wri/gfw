@@ -132,7 +132,7 @@ export const routes = {
       climate: {
         label: 'Climate',
         submenu: true,
-        component: 'biodiversity',
+        component: 'climate',
         path: '/topics/climate'
       },
       commodities: {
@@ -144,7 +144,7 @@ export const routes = {
       water: {
         label: 'Water',
         submenu: true,
-        component: 'biodiversity',
+        component: 'water',
         path: '/topics/water'
       }
     }

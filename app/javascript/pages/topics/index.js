@@ -2,12 +2,16 @@ import { connect } from 'react-redux';
 
 import Biodiversity from 'pages/topics/content/biodiversity.json';
 import Commodities from 'pages/topics/content/commodities.json';
+import Climate from 'pages/topics/content/climate.json';
+import Water from 'pages/topics/content/water.json';
 
 import PageComponent from './component';
 
 const contents = {
   biodiversity: Biodiversity,
-  commodities: Commodities
+  commodities: Commodities,
+  climate: Climate,
+  water: Water
 };
 
 const mapStateToProps = ({ location }, { sections }) => ({
