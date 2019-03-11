@@ -26,7 +26,7 @@
 
   .topic-image {
     text-align: center;
-    padding-bottom: 50px;
+    padding-bottom: 100px;
 
     .c-topics-image {
       margin: auto;
@@ -66,6 +66,15 @@
 .fullpage-wrapper {
   width: 100% !important;
   transform: none !important;
+
+  .fullpage-view {
+    height: 90vh;
+    display: flex;
+
+    .row {
+      margin: auto;
+    }
+  }
 
   .fp-section {
     width: 100% !important;

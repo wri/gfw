@@ -54,36 +54,52 @@ class TopicsPage extends PureComponent {
       <div className="l-topics-page">
         <Header />
         <div id="fullpage">
-          <TopicsHeader topics={links} intro={intro} />
           {slides &&
-            slides.map(s => (
-              <Section key={s.subtitle} anchors={this.anchors}>
-                <div className="row">
-                  <div className="column small-12 medium-4">
-                    <div className="topic-content">
-                      <Text
-                        text={s.text}
-                        title={s.title}
-                        subtitle={s.subtitle}
-                      />
-                      <Button
-                        theme="theme-button-grey topics-btn"
-                        onClick={() => {
-                          /* global $ */
-                          $('#fullpage').fullpage.moveTo('footer', 0);
-                        }}
-                      >
-                        Skip
-                      </Button>
+            slides.map((s, index) => {
+              let sectionClass = '';
+              if (index === 0) {
+                sectionClass = 'fp-auto-height-responsive topics-header';
+              } else if (index === 3) {
+                sectionClass = 'fp-auto-height topics-footer';
+              }
+              return (
+                <Section
+                  key={s.subtitle}
+                  anchors={this.anchors}
+                  className={sectionClass}
+                >
+                  {index === 0 && <TopicsHeader topics={links} intro={intro} />}
+                  <div
+                    className={(index === 0 || index === 3) && 'fullpage-view'}
+                  >
+                    <div className="row">
+                      <div className="column small-12 medium-4">
+                        <div className="topic-content">
+                          <Text
+                            text={s.text}
+                            title={s.title}
+                            subtitle={s.subtitle}
+                          />
+                          <Button
+                            theme="theme-button-grey topics-btn"
+                            onClick={() => {
+                              /* global $ */
+                              $('#fullpage').fullpage.moveTo('footer', 0);
+                            }}
+                          >
+                            Skip
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="column small-12 medium-8 topic-image">
+                        <Image url={s.src} description={s.subtitle} />
+                      </div>
                     </div>
                   </div>
-                  <div className="column small-12 medium-8 topic-image">
-                    <Image url={s.src} description={s.subtitle} />
-                  </div>
-                </div>
-              </Section>
-            ))}
-          <TopicsFooter cards={cards} />
+                  {index === 3 && <TopicsFooter cards={cards} />}
+                </Section>
+              );
+            })}
         </div>
       </div>
     );

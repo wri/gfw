@@ -7,7 +7,7 @@ import Card from 'components/ui/card';
 import Button from 'components/ui/button';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import Icon from 'components/ui/icon';
-import Section from 'pages/topics/components/section';
+// import Section from 'pages/topics/components/section';
 
 import './styles.scss';
 
@@ -15,7 +15,7 @@ class TopicsFooter extends PureComponent {
   render() {
     const { cards } = this.props;
     return (
-      <Section className="fp-auto-height topics-footer">
+      <div>
         <div className="row">
           <div className="column small-12 medium-12">
             <div className="goToHeader-btn">
@@ -57,7 +57,7 @@ class TopicsFooter extends PureComponent {
             ))}
         </Carousel>
         <Footer />
-      </Section>
+      </div>
     );
   }
 }

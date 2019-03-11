@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
 import Intro from 'pages/topics/components/intro';
-import Section from 'pages/topics/components/section';
+// import Section from 'pages/topics/components/section';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
@@ -17,7 +17,7 @@ class TopicsHeader extends PureComponent {
   render() {
     const { topics, intro } = this.props;
     return (
-      <Section className="fp-auto-height-responsive topics-header">
+      <div>
         <div className="intro-top">
           <Cover
             title="Topics"
@@ -45,7 +45,7 @@ class TopicsHeader extends PureComponent {
             </div>
           </div>
         </div>
-      </Section>
+      </div>
     );
   }
 }
