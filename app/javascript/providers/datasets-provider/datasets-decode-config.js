@@ -365,6 +365,7 @@ export default {
   'c3075c5a-5567-4b09-bc0d-96ed1673f8b6': decodes.treeCoverLoss,
   'fd05bc2c-6ade-408c-862e-7318557dd4fc': decodes.treeLossByDriver,
   'dd5df87f-39c2-4aeb-a462-3ef969b20b66': decodes.GLADs,
+  '9a370f5a-6631-44e3-a955-7f3884c27d91': decodes.GLADs,
   'b32a2f15-25e8-4ecc-98e0-68782ab1c0fe': decodes.biomassLoss,
   'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
