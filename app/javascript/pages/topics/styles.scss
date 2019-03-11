@@ -82,4 +82,13 @@
       // transition: opacity 1s ease-out;
     }
   }
+
+  .fp-scrollable {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .iScrollVerticalScrollbar {
+    display: none;
+  }
 }
