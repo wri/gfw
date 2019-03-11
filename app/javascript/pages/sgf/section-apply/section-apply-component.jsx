@@ -27,15 +27,14 @@ class SectionAbout extends PureComponent {
               <li>- Journalism</li>
             </ul>
             <p className="text -paragraph -color-2 -light -spaced">
-              Please join us for the GFW Grants and Fellowship Webinar on
-              Wednesday, February 27th at 8:30am ET (
+              Listen to the 2019 GFW Grants and Fellowships Webinar (
               <a
                 className="text -paragraph -color-4 -bold"
-                href="https://wri.zoom.us/webinar/register/WN_CeRLurgpR2Ou5CVvupZBDQ?utm_campaign=gfw_sgf&utm_source=emailblast&utm_medium=hyperlink&utm_term=sgfandfellowshipwebinar_2_2019"
+                href="https://www.youtube.com/watch?v=ddDyu_l663k&feature=youtu.be"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                register here
+                video link here
               </a>
               ).
             </p>
