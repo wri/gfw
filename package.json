@@ -7,8 +7,7 @@
     "node": "10.15.2"
   },
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install",
-    "build": "./bin/webpack --progress --colors",
+    "build": "./node_modules/bower/bin/bower install",
     "start": "./bin/server",
     "start:prod": "RAILS_ENV=production_local NODE_ENV=production yarn prod-server",
     "redis": "redis-server /usr/local/etc/redis.conf",
@@ -192,5 +191,6 @@
   },
   "resolutions": {
     "event-stream": "^4.0.1"
-  }
+  },
+  "heroku-run-build-script": false
 }
