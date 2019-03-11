@@ -123,14 +123,16 @@ export const fetchUmdLossGain = ({
       timeout: 1800
     })
     .then(
-      axios.spread((...responses) =>
-        responses.reduce((obj, response) => {
-          const analysis = reduceAnalysisResponse(response);
-          return {
-            ...obj,
-            ...analysis
-          };
-        }, {})
+      axios.spread(
+        (...responses) =>
+          responses &&
+          responses.reduce((obj, response) => {
+            const analysis = reduceAnalysisResponse(response);
+            return {
+              ...obj,
+              ...analysis
+            };
+          }, {})
       )
     );
 };

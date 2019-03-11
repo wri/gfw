@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .c-data-table {
+  font-size: rem(14px);
+
   .wrapper {
     display: flex;
     justify-content: flex-start;

@@ -3,6 +3,10 @@ import flatten from 'lodash/flatten';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import intersection from 'lodash/intersection';
+import flatMap from 'lodash/flatMap';
+import sortBy from 'lodash/sortBy';
+
+import { getDayRange } from 'utils/dates';
 
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { initialState } from './reducers';
@@ -17,6 +21,7 @@ const selectLatestLoading = state => state.latest && state.latest.loading;
 const selectRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
+const selectDrawLoading = state => state.draw && state.draw.loading;
 
 // datasets
 const selectDatasets = state => state.datasets && state.datasets.data;
@@ -68,6 +73,16 @@ export const getMapZoom = createSelector(
   settings => settings.zoom
 );
 
+export const getMapLat = createSelector(
+  getMapSettings,
+  settings => settings.center.lat
+);
+
+export const getMapLng = createSelector(
+  getMapSettings,
+  settings => settings.center.lng
+);
+
 export const getDraw = createSelector(
   [getMapSettings],
   settings => settings.draw
@@ -83,30 +98,15 @@ export const getCanBound = createSelector(
   settings => settings.canBound
 );
 
-export const getMapOptions = createSelector(
-  [getMapSettings, getBasemap, getLabel],
-  (settings, basemap, label) => {
-    if (!settings) return null;
-    const {
-      center,
-      zoom,
-      minZoom,
-      maxZoom,
-      zoomControl,
-      attributionControl
-    } = settings;
-    return {
-      center,
-      zoom,
-      minZoom,
-      maxZoom,
-      zoomControl,
-      label,
-      basemap,
-      attributionControl
-    };
-  }
-);
+export const getMapOptions = createSelector([getMapSettings], settings => {
+  if (!settings) return null;
+  const { minZoom, maxZoom, attributionControl } = settings;
+  return {
+    minZoom,
+    maxZoom,
+    attributionControl
+  };
+});
 
 export const getMapLoading = createSelector(
   [
@@ -114,6 +114,7 @@ export const getMapLoading = createSelector(
     selectGeostoreLoading,
     selectLatestLoading,
     selectDatasetsLoading,
+    selectDrawLoading,
     selectRecentImageryLoading
   ],
   (
@@ -121,12 +122,14 @@ export const getMapLoading = createSelector(
     geostoreLoading,
     latestLoading,
     datasetsLoading,
+    drawLoading,
     recentImageryLoading
   ) =>
     mapLoading ||
     geostoreLoading ||
     latestLoading ||
     datasetsLoading ||
+    drawLoading ||
     recentImageryLoading
 );
 
@@ -253,8 +256,11 @@ export const getDatasetsWithConfig = createSelector(
                 ...(maxDateFormatted && {
                   date: maxDateFormatted
                 }),
-                ...((hasParamsTimeline || hasDecodeTimeline) && {
+                ...(hasParamsTimeline && {
                   ...timelineParams
+                }),
+                ...(maxDate && {
+                  maxDate
                 })
               }
             }),
@@ -267,16 +273,18 @@ export const getDatasetsWithConfig = createSelector(
             ...(l.decodeFunction && {
               decodeParams: {
                 ...l.decodeParams,
-                ...(layers &&
-                  layers.includes('confirmedOnly') && {
-                    confirmedOnly: true
-                  }),
+                ...(layers && {
+                  confirmedOnly: layers.includes('confirmedOnly') ? 1 : 0
+                }),
                 ...(maxDate && {
                   endDate: maxDate
                 }),
                 ...decodeParams,
                 ...(hasDecodeTimeline && {
                   ...timelineParams
+                }),
+                ...(maxDate && {
+                  maxDate
                 })
               }
             }),
@@ -310,16 +318,15 @@ export const getLayerGroups = createSelector(
   (datasets, activeDatasetsState) => {
     if (isEmpty(datasets) || isEmpty(activeDatasetsState)) return null;
 
-    return activeDatasetsState
-      .map(l => datasets.find(d => d.id === l.dataset))
-      .filter(l => l)
-      .map(d => {
-        const { metadata } = (d && d.layers.find(l => l.active)) || {};
-        return {
-          ...d,
-          metadata: metadata || d.metadata
-        };
-      });
+    return activeDatasetsState.map(layer => {
+      const dataset = datasets.find(d => d.id === layer.dataset);
+      const { metadata } =
+        (dataset && dataset.layers.find(l => l.active)) || {};
+      return {
+        ...dataset,
+        metadata: metadata || dataset.metadata
+      };
+    });
   }
 );
 
@@ -327,20 +334,23 @@ export const getLayerGroups = createSelector(
 export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
   if (isEmpty(layerGroups)) return null;
 
-  return flatten(layerGroups.map(d => d.layers))
-    .filter(l => l.active && (!l.isRecentImagery || l.params.url))
-    .map((l, i) => {
-      let zIndex =
-        l.interactionConfig && l.interactionConfig.article
-          ? 1100 + i
-          : 1000 - i;
-      if (l.isRecentImagery) zIndex = 500;
-      if (l.isBoundary) zIndex = 1050 - i;
-      return {
-        ...l,
-        zIndex
-      };
-    });
+  return sortBy(
+    flatten(layerGroups.map(d => d.layers))
+      .filter(l => l.active && (!l.isRecentImagery || l.params.url))
+      .map((l, i) => {
+        let zIndex =
+          l.interactionConfig && l.interactionConfig.article
+            ? 1100 + i
+            : 1000 - i;
+        if (l.isRecentImagery) zIndex = 500;
+        if (l.isBoundary) zIndex = 1050 - i;
+        return {
+          ...l,
+          zIndex
+        };
+      }),
+    'zIndex'
+  );
 });
 
 // all layers for importing by other components
@@ -349,9 +359,59 @@ export const getActiveLayers = createSelector(getAllLayers, layers => {
   return layers.filter(l => !l.confirmedOnly);
 });
 
+export const getActiveLayersWithDates = createSelector(
+  getActiveLayers,
+  layers => {
+    if (isEmpty(layers)) return [];
+    return layers.map(l => {
+      const { decodeFunction, decodeParams } = l;
+      const { startDate, endDate } = decodeParams || {};
+
+      return {
+        ...l,
+        ...(decodeFunction &&
+          decodeParams && {
+            decodeParams: {
+              ...decodeParams,
+              ...(startDate && {
+                startYear: moment(startDate).year(),
+                startMonth: moment(startDate).month(),
+                startDay: moment(startDate).month()
+              }),
+              ...(endDate && {
+                endYear: moment(endDate).year(),
+                endMonth: moment(endDate).month(),
+                endDay: moment(endDate).month()
+              }),
+              ...getDayRange(decodeParams)
+            }
+          })
+      };
+    });
+  }
+);
+
+export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
+  if (isEmpty(layers)) return [];
+  const interactiveLayers = layers.filter(
+    l => !isEmpty(l.interactionConfig) && l.layerConfig.body.vectorLayers
+  );
+
+  return flatMap(
+    interactiveLayers.reduce((arr, layer) => {
+      const clickableLayers = layer.layerConfig.body.vectorLayers;
+
+      return [
+        ...arr,
+        clickableLayers.map((l, i) => `${layer.id}-${l.type}-${i}`)
+      ];
+    }, [])
+  );
+});
+
 // get widgets related to map layers and use them to build the layers
 export const getWidgetsWithLayerParams = createSelector(
-  [parseWidgetsWithOptions, getAllLayers],
+  [parseWidgetsWithOptions, getActiveLayersWithDates],
   (widgets, layers) => {
     if (!widgets || !widgets.length || !layers || !layers.length) return null;
     const layerIds = layers && layers.map(l => l.id);
@@ -392,7 +452,7 @@ export const getWidgetsWithLayerParams = createSelector(
 
 // flatten datasets into layers for the layer manager
 export const getActiveLayersWithWidgetSettings = createSelector(
-  [getAllLayers, getWidgetsWithLayerParams],
+  [getActiveLayersWithDates, getWidgetsWithLayerParams],
   (layers, widgets) => {
     if (isEmpty(layers)) return [];
     if (isEmpty(widgets)) return layers;
@@ -438,14 +498,21 @@ export const getGeostoreBbox = createSelector(
 );
 
 export const filterInteractions = createSelector(
-  [selectInteractions],
-  interactions => {
+  [selectInteractions, getActiveLayers],
+  (interactions, activeLayers) => {
     if (isEmpty(interactions)) return null;
-    return Object.values(interactions)
-      .filter(i => !isEmpty(i.data))
-      .map(i => ({
-        ...i
-      }));
+    return Object.keys(interactions).map(i => {
+      const layer = activeLayers.find(l => l.id === i);
+      return {
+        data: interactions[i].data,
+        geometry: interactions[i].geometry,
+        layer,
+        label: layer && layer.name,
+        value: layer && layer.id,
+        article:
+          layer && layer.interactionConfig && layer.interactionConfig.article
+      };
+    });
   }
 );
 
@@ -457,21 +524,22 @@ export const getSelectedInteraction = createSelector(
       l => !l.isBoundary && !isEmpty(l.interactionConfig)
     );
     // if there is an article (icon layer) then choose that
-    let selectedData = options.find(o => o.article);
+    let selectedData = options.find(o => o.data.cluster);
+    selectedData = options.find(o => o.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
       selectedData = options.find(
-        o => o.value === layersWithoutBoundaries[0].id
+        o => o.layer && o.layer.id === layersWithoutBoundaries[0].id
       );
     }
     // if only one layer then get that
     if (!selectedData && options.length === 1) selectedData = options[0];
     // otherwise get based on selected
-    if (!selectedData) selectedData = options.find(o => o.value === selected);
-    const layer =
-      selectedData && layers && layers.find(l => l.id === selectedData.id);
+    if (!selectedData) {
+      selectedData = options.find(o => o.layer && o.layer.id === selected);
+    }
 
-    return { ...selectedData, layer };
+    return selectedData;
   }
 );
 
@@ -486,5 +554,9 @@ export const getMapProps = createStructuredSelector({
   bbox: getBbox,
   canBound: getCanBound,
   draw: getDraw,
-  selectedInteraction: getSelectedInteraction
+  lat: getMapLat,
+  lng: getMapLng,
+  zoom: getMapZoom,
+  selectedInteraction: getSelectedInteraction,
+  interactiveLayers: getInteractiveLayers
 });

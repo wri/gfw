@@ -120,3 +120,29 @@ export const dateDiffInDays = (startDate, endDate) => {
 
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 };
+
+export const getDayRange = params => {
+  const { startDate, endDate, minDate, maxDate, weeks } = params || {};
+
+  const minDateTime = new Date(minDate);
+  const maxDateTime = new Date(maxDate);
+  const numberOfDays = dateDiffInDays(maxDateTime, minDateTime);
+
+  // timeline or hover effect active range
+  const startDateTime = new Date(startDate);
+  const endDateTime = new Date(endDate);
+  const activeStartDay =
+    numberOfDays - dateDiffInDays(maxDateTime, startDateTime);
+  const activeEndDay = numberOfDays - dateDiffInDays(maxDateTime, endDateTime);
+  // show specified weeks from end date
+  const rangeStartDate = weeks && numberOfDays - 7 * weeks;
+  // get start and end day
+  const startDayIndex = activeStartDay || rangeStartDate || 0;
+  const endDayIndex = activeEndDay || numberOfDays;
+
+  return {
+    startDayIndex,
+    endDayIndex,
+    numberOfDays
+  };
+};
