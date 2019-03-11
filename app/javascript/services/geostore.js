@@ -12,7 +12,7 @@ const buildGeostoreUrl = ({ type, adm0, adm1, adm2, thresh }) => {
 
   return `${REQUEST_URL}/v2/geostore${slug ? `/${slug}` : ''}/${adm0}${
     adm1 ? `/${adm1}` : ''
-  }${adm2 ? `/${adm2}` : ''}${`?simplify=${thresh / 10}`}`;
+  }${adm2 ? `/${adm2}` : ''}${`?simplify=${!adm1 ? thresh : thresh / 10}`}`;
 };
 
 export const getGeostoreProvider = ({ type, adm0, adm1, adm2, token }) => {

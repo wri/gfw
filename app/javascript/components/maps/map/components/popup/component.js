@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
-
-import { MapPopup } from 'wri-api-components/dist/map';
+import bbox from 'turf-bbox';
+import { Popup as MapPopup } from 'react-map-gl';
 
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown/dropdown-component';
 import Card from 'components/ui/card';
+import closeIcon from 'assets/icons/close.svg';
+import Icon from 'components/ui/icon';
 
 import DataTable from './components/data-table';
 import BoundarySentence from './components/boundary-sentence';
@@ -20,9 +21,39 @@ class Popup extends Component {
     }
   }
 
+  handleClickAction = selected => {
+    if (this.props.buttonState === 'ZOOM') {
+      this.handleClickZoom(selected);
+    } else {
+      this.handleClickAnalysis(selected);
+    }
+  };
+
+  handleClickZoom = selected => {
+    const { setMapSettings } = this.props;
+    const newBbox = bbox(selected.geometry);
+    setMapSettings({ bbox: newBbox, canBound: true });
+  };
+
+  handleClickAnalysis = selected => {
+    const { data, layer, geometry } = selected;
+    const { cartodb_id, wdpaid } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+
+    const isAdmin = analysisEndpoint === 'admin';
+    const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
+    const isUse = cartodb_id && tableName;
+
+    const { getGeostoreId, setMainMapAnalysisView } = this.props;
+    if (isAdmin || isWdpa || isUse) {
+      setMainMapAnalysisView(selected);
+    } else {
+      getGeostoreId(geometry);
+    }
+  };
+
   render() {
     const {
-      map,
       tableData,
       cardData,
       latlng,
@@ -31,16 +62,25 @@ class Popup extends Component {
       setInteractionSelected,
       setMainMapAnalysisView,
       setMapSettings,
-      isBoundary
+      clearInteractions,
+      isBoundary,
+      buttonState
     } = this.props;
 
-    return (
+    return latlng && latlng.lat && selected && !selected.data.cluster ? (
       <MapPopup
-        map={map}
-        latlng={!isEmpty(interactions) ? latlng : null}
-        data={{ interactions, selected }}
+        latitude={latlng.lat}
+        longitude={latlng.lng}
+        closeButton={false}
       >
         <div className="c-popup">
+          <Button
+            className="close-btn"
+            theme="theme-button-clear theme-button-small square"
+            onClick={clearInteractions}
+          >
+            <Icon icon={closeIcon} />
+          </Button>
           {cardData ? (
             <Card
               className="popup-card"
@@ -89,20 +129,20 @@ class Popup extends Component {
                 <DataTable data={tableData} />
               )}
               <div className="nav-footer">
-                <Button onClick={() => setMainMapAnalysisView(selected)}>
-                  ANALYZE
+                <Button onClick={() => this.handleClickAction(selected)}>
+                  {buttonState}
                 </Button>
               </div>
             </div>
           )}
         </div>
       </MapPopup>
-    );
+    ) : null;
   }
 }
 
 Popup.propTypes = {
-  map: PropTypes.object,
+  clearInteractions: PropTypes.func,
   setInteractionSelected: PropTypes.func,
   latlng: PropTypes.object,
   selected: PropTypes.object,
@@ -112,7 +152,9 @@ Popup.propTypes = {
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
   setMainMapAnalysisView: PropTypes.func,
-  setMapSettings: PropTypes.func
+  setMapSettings: PropTypes.func,
+  buttonState: PropTypes.string,
+  getGeostoreId: PropTypes.func
 };
 
 export default Popup;

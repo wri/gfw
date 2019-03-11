@@ -29,9 +29,9 @@ export const buildGadm36Id = (country, region, subRegion) =>
 export const parseGadm36Id = gid => {
   if (!gid) return null;
   const ids = gid.split('.');
-  const adm0 = ids[0] || null;
-  const adm1 = ids[1] && ids[1].split('_')[0];
-  const adm2 = ids[2] && ids[2].split('_')[0];
+  const adm0 = (ids && ids[0]) || null;
+  const adm1 = ids && ids[1] && ids[1].split('_')[0];
+  const adm2 = ids && ids[2] && ids[2].split('_')[0];
   return {
     adm0,
     adm1: adm1 ? parseInt(adm1, 10) : undefined,
