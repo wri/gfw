@@ -3,27 +3,36 @@ import darkImage from './images/dark.png';
 import landsatImage from './images/landsat.png';
 import satelliteImage from './images/satellite.png';
 
-const { MapboxAccessToken } = process.env;
-
 export const labels = {
   default: {
     value: 'default',
     label: 'Dark Labels',
-    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxwcp212u02rpd1o541omv/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MapboxAccessToken
-    }`
+    paint: {
+      'text-color': '#1a1a1a',
+      'text-halo-color': '#ffffff'
+    },
+    layout: {
+      visibility: 'visible'
+    }
   },
   lightLabels: {
     value: 'lightLabels',
     label: 'Light Labels',
-    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhxw8t412tv2rpdt33iuum3/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MapboxAccessToken
-    }`
+    paint: {
+      'text-color': '#ffffff',
+      'text-halo-color': '#1a1a1a'
+    },
+    layout: {
+      visibility: 'visible'
+    }
   },
   noLabels: {
     label: 'No Labels',
     value: 'noLabels',
-    url: ''
+    url: '',
+    layout: {
+      visibility: 'none'
+    }
   }
 };
 
@@ -34,9 +43,20 @@ export default {
     labelsKey: 'default',
     color: '#A2DFFF',
     image: defaultImage,
-    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjlhwaoh211hp2stemfz0imqf/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MapboxAccessToken
-    }`
+    layerStyles: [
+      {
+        id: 'background',
+        'background-color': '#ffffff'
+      },
+      {
+        id: 'waterway-river-canal',
+        'line-color': '#8dcbf7'
+      },
+      {
+        id: 'water',
+        'fill-color': '#aedffd'
+      }
+    ]
   },
   dark: {
     value: 'dark',
@@ -44,9 +64,20 @@ export default {
     labelsKey: 'lightLabels',
     color: '#31312F',
     image: darkImage,
-    url: `https://api.mapbox.com/styles/v1/resourcewatch/cjhqgjq1908ar2smep2wd7wf7/tiles/256/{z}/{x}/{y}@2x?access_token=${
-      MapboxAccessToken
-    }`
+    layerStyles: [
+      {
+        id: 'background',
+        'background-color': '#31312f'
+      },
+      {
+        id: 'waterway-river-canal',
+        'line-color': '#000000'
+      },
+      {
+        id: 'water',
+        'fill-color': '#20201d'
+      }
+    ]
   },
   satellite: {
     value: 'satellite',
@@ -54,7 +85,21 @@ export default {
     labelsKey: 'lightLabels',
     color: '#131620',
     image: satelliteImage,
-    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+    url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+    layerStyles: [
+      {
+        id: 'background',
+        'background-color': '#ffffff'
+      },
+      {
+        id: 'waterway-river-canal',
+        'line-color': '#131620'
+      },
+      {
+        id: 'water',
+        'fill-color': '#131620'
+      }
+    ]
   },
   landsat: {
     value: 'landsat',
@@ -65,6 +110,20 @@ export default {
     image: landsatImage,
     url:
       'https://production-api.globalforestwatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
-    availableYears: [2017, 2016, 2015, 2014, 2013]
+    availableYears: [2017, 2016, 2015, 2014, 2013],
+    layerStyles: [
+      {
+        id: 'background',
+        'background-color': '#ffffff'
+      },
+      {
+        id: 'waterway-river-canal',
+        'line-color': '#0C0045'
+      },
+      {
+        id: 'water',
+        'fill-color': '#0C0045'
+      }
+    ]
   }
 };

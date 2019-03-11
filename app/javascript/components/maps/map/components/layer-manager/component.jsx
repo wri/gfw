@@ -5,14 +5,7 @@ import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   render() {
-    const {
-      layers,
-      geostore,
-      setMapLoading,
-      basemap,
-      labels,
-      map
-    } = this.props;
+    const { layers, geostore, setMapLoading, basemap, map } = this.props;
 
     return (
       <LayerManager
@@ -20,20 +13,6 @@ class LayerManagerComponent extends PureComponent {
         plugin={PluginMapboxGl}
         onLayerLoading={loading => setMapLoading(loading)}
       >
-        {labels &&
-          labels.url && (
-            <Layer
-              id="labels"
-              name="Labels"
-              provider="leaflet"
-              layerConfig={{
-                body: {
-                  url: labels.url
-                }
-              }}
-              zIndex={1100}
-            />
-          )}
         {geostore &&
           geostore.id && (
             <Layer
@@ -71,17 +50,20 @@ class LayerManagerComponent extends PureComponent {
             />
           )}
         {layers && layers.map(l => <Layer key={l.id} {...l} />)}
-        <Layer
-          id="basemap"
-          name="Basemap"
-          provider="leaflet"
-          layerConfig={{
-            body: {
-              url: basemap.url
-            }
-          }}
-          zIndex={100}
-        />
+        {basemap &&
+          basemap.url && (
+            <Layer
+              id="basemap"
+              name="Basemap"
+              provider="leaflet"
+              layerConfig={{
+                body: {
+                  url: basemap.url
+                }
+              }}
+              zIndex={100}
+            />
+          )}
       </LayerManager>
     );
   }
@@ -95,8 +77,7 @@ LayerManagerComponent.propTypes = {
   setMapLoading: PropTypes.func,
   handleMapInteraction: PropTypes.func,
   draw: PropTypes.bool,
-  map: PropTypes.object,
-  labels: PropTypes.object
+  map: PropTypes.object
 };
 
 export default LayerManagerComponent;

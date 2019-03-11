@@ -21,10 +21,70 @@ class MapComponent extends PureComponent {
     mapReady: false
   };
 
+  componentDidUpdate(prevProps) {
+    const { label, basemap } = this.props;
+    const { mapReady } = this.state;
+
+    if (mapReady && label.value !== prevProps.label.value) {
+      this.setLabelStyles();
+    }
+
+    if (mapReady && basemap.value !== prevProps.basemap.value) {
+      this.setBasemapStyles();
+    }
+  }
+
   getCursor = ({ isHovering, isDragging }) => {
     if (isHovering) return 'pointer';
     if (isDragging) return 'grabbing';
     return 'grab';
+  };
+
+  setBasemapStyles = () => {
+    const { basemap } = this.props;
+    if (this.map && basemap) {
+      const { layerStyles } = basemap;
+      if (layerStyles) {
+        layerStyles.forEach(l => {
+          const { id, ...styles } = l;
+          const styleOptions = Object.entries(styles);
+          if (styleOptions) {
+            styleOptions.forEach(ly => {
+              this.map.setPaintProperty(id, ly[0], ly[1]);
+            });
+          }
+        });
+      }
+    }
+  };
+
+  setLabelStyles = () => {
+    const { label } = this.props;
+    if (this.map && label) {
+      const { paint, layout } = label || {};
+      const allLayers = this.map.getStyle().layers;
+      const labelLayers = allLayers.filter(
+        l =>
+          (l.id.includes('label') ||
+            l.id.includes('place') ||
+            l.id.includes('poi')) &&
+          l.type === 'symbol'
+      );
+      const paintOptions = paint && Object.entries(paint);
+      const layoutOptions = layout && Object.entries(layout);
+      labelLayers.forEach(l => {
+        if (paintOptions) {
+          paintOptions.forEach(p => {
+            this.map.setPaintProperty(l.id, p[0], p[1]);
+          });
+        }
+        if (layoutOptions) {
+          layoutOptions.forEach(ly => {
+            this.map.setLayoutProperty(l.id, ly[0], ly[1]);
+          });
+        }
+      });
+    }
   };
 
   render() {
@@ -64,11 +124,15 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
-          mapStyle="mapbox://styles/resourcewatch/cjrkzkvhy9roh2smyy26avof0"
+          mapStyle="mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc"
           mapOptions={mapOptions}
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}
-          onLoad={() => this.setState({ mapReady: true })}
+          onLoad={() => {
+            this.setState({ mapReady: true });
+            this.setLabelStyles();
+            this.setBasemapStyles();
+          }}
           getCursor={this.getCursor}
           interactiveLayerIds={interactiveLayers}
         >
@@ -100,6 +164,7 @@ MapComponent.propTypes = {
   loadingMessage: PropTypes.string,
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
+  label: PropTypes.object,
   setMapRect: PropTypes.func,
   setMap: PropTypes.func,
   handleMapMove: PropTypes.func,
