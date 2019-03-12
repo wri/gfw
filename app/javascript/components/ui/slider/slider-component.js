@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import fill from 'lodash/fill';
 
 import RCSlider, { Range, Handle } from 'rc-slider';
-import Tooltip from 'wri-api-components/dist/tooltip';
+import Tooltip from 'vizzuality-components/dist/tooltip';
 
 import 'rc-slider/assets/index.css';
 import './styles.scss';
