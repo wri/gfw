@@ -27,7 +27,7 @@ class SectionAbout extends PureComponent {
               <li>- Journalism</li>
             </ul>
             <p className="text -paragraph -color-2 -light -spaced">
-              Listen to the 
+              Listen to the {' '}
               <a
                 className="text -paragraph -color-4 -bold"
                 href="https://www.youtube.com/watch?v=ddDyu_l663k&feature=youtu.be"
