@@ -11,6 +11,7 @@ import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 
 import Widgets from 'components/widgets';
+import Footer from 'components/footer';
 import Share from 'components/modals/share';
 import Map from 'components/maps/dashboards-map';
 import MapControls from 'components/maps/dashboards-map/components/map-controls';
@@ -99,6 +100,7 @@ class Page extends PureComponent {
         <GeostoreProvider />
         <DatasetsProvider />
         <LatestProvider />
+        <Footer />
       </div>
     );
   }

@@ -139,7 +139,11 @@ export const handleLocationChange = createThunkAction(
       },
       query: {
         ...newQuery,
-        widget: undefined
+        widget: undefined,
+        map: {
+          ...(query && query.map),
+          canBound: true
+        }
       }
     });
   }
