@@ -94,9 +94,9 @@ class Legend extends PureComponent {
   };
 
   onChangeInfo = metadata => {
-    const { setModalMeta } = this.props;
+    const { setModalMetaSettings } = this.props;
     if (metadata && typeof metadata === 'string') {
-      setModalMeta(metadata);
+      setModalMetaSettings({ metakey: metadata });
     }
   };
 
@@ -167,7 +167,7 @@ class Legend extends PureComponent {
 Legend.propTypes = {
   activeDatasets: PropTypes.array,
   setMapSettings: PropTypes.func,
-  setModalMeta: PropTypes.func
+  setModalMetaSettings: PropTypes.func
 };
 
 export default connect(getLegendProps, actions)(Legend);

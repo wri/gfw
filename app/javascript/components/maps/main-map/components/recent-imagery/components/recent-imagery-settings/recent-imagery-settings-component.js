@@ -37,11 +37,12 @@ class RecentImagerySettings extends PureComponent {
       activeTile,
       tiles,
       loading,
+      moreTilesLoading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
-      setModalMeta
+      setModalMetaSettings,
+      onClickClose
     } = this.props;
-
     const selected = this.state.selected || activeTile || {};
 
     return (
@@ -53,14 +54,13 @@ class RecentImagerySettings extends PureComponent {
               <Button
                 className="info-btn"
                 theme="theme-button-tiny theme-button-grey-filled square"
-                onClick={() => setModalMeta('recent_satellite_imagery')}
+                onClick={() =>
+                  setModalMetaSettings({ metakey: 'recent_satellite_imagery' })
+                }
               >
                 <Icon icon={infoIcon} />
               </Button>
-              <button
-                className="close-btn"
-                onClick={() => setRecentImagerySettings({ visible: false })}
-              >
+              <button className="close-btn" onClick={onClickClose}>
                 <Icon icon={closeIcon} className="icon-close" />
               </button>
             </div>
@@ -86,13 +86,15 @@ class RecentImagerySettings extends PureComponent {
                   track('recentImageryDate');
                 }}
                 settings={{
-                  displayFormat: 'D MMM YYYY',
-                  numberOfMonths: 1,
-                  isOutsideRange: d => d.isAfter(moment()),
-                  block: true,
+                  minDate: '2013-01-01',
+                  maxDate: moment().format('YYYY-MM-DD'),
                   hideKeyboardShortcutsPanel: true,
                   noBorder: true,
-                  readOnly: true
+                  readOnly: true,
+                  displayFormat: 'D MMM YYYY',
+                  isOutsideRange: d =>
+                    d.isAfter(moment()) || d.isBefore(moment('2000-01-01')),
+                  block: true
                 }}
               />
             </div>
@@ -185,7 +187,7 @@ class RecentImagerySettings extends PureComponent {
                 message="We can't find additional images for the selection"
               />
             )}
-          {loading && <Loader className="placeholder" />}
+          {loading && !moreTilesLoading && <Loader className="placeholder" />}
         </div>
       </div>
     );
@@ -197,8 +199,10 @@ RecentImagerySettings.propTypes = {
   tiles: PropTypes.array,
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
-  setModalMeta: PropTypes.func,
-  loading: PropTypes.bool
+  setModalMetaSettings: PropTypes.func,
+  loading: PropTypes.bool,
+  moreTilesLoading: PropTypes.bool,
+  onClickClose: PropTypes.func
 };
 
 export default RecentImagerySettings;

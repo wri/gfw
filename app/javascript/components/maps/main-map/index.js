@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
-import moment from 'moment';
-import startCase from 'lodash/startCase';
-import { format } from 'd3-format';
 import { track } from 'app/analytics';
 
 import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
@@ -39,7 +36,10 @@ class MainMapContainer extends PureComponent {
     const {
       selectedInteraction,
       setMainMapAnalysisView,
-      oneClickAnalysis
+      setMainMapSettings,
+      oneClickAnalysis,
+      analysisActive,
+      geostoreId
     } = this.props;
 
     // set analysis view if interaction changes
@@ -51,22 +51,14 @@ class MainMapContainer extends PureComponent {
     ) {
       setMainMapAnalysisView(selectedInteraction);
     }
+
+    if (!analysisActive && geostoreId && geostoreId !== prevProps.geostoreId) {
+      setMainMapSettings({ showAnalysis: true });
+    }
   }
 
   handleShowTooltip = (show, data) => {
     this.setState({ showTooltip: show, tooltipData: data });
-  };
-
-  handleRecentImageryTooltip = e => {
-    const data = e.layer.feature.properties;
-    const { cloudScore, instrument, dateTime } = data;
-    this.handleShowTooltip(true, {
-      instrument: startCase(instrument),
-      date: moment(dateTime)
-        .format('DD MMM YYYY, HH:mm')
-        .toUpperCase(),
-      cloudCoverage: `${format('.0f')(cloudScore)}%`
-    });
   };
 
   handleClickMap = () => {
@@ -80,7 +72,6 @@ class MainMapContainer extends PureComponent {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
-      handleRecentImageryTooltip: this.handleRecentImageryTooltip,
       handleClickMap: this.handleClickMap
     });
   }
@@ -91,8 +82,11 @@ MainMapContainer.propTypes = {
   setMainMapAnalysisView: PropTypes.func,
   selectedInteraction: PropTypes.object,
   setMenuSettings: PropTypes.func,
+  setMainMapSettings: PropTypes.func,
   activeDatasets: PropTypes.array,
-  menuSection: PropTypes.string
+  menuSection: PropTypes.string,
+  analysisActive: PropTypes.bool,
+  geostoreId: PropTypes.string
 };
 
 export default connect(getMapProps, actions)(MainMapContainer);

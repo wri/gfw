@@ -1,20 +1,19 @@
 import { connect } from 'react-redux';
-import reducerRegistry from 'app/registry';
+
+import { getProjectsWithImages } from 'pages/sgf/section-projects/section-projects-selectors';
 
 import * as actions from './section-projects-modal-actions';
-import reducers, { initialState } from './section-projects-modal-reducers';
-
 import SectionProjectsModalComponent from './section-projects-modal-component';
 
-const mapStateToProps = state => ({
-  isOpen: state.modalSGF && state.modalSGF.isOpen,
-  data: state.modalSGF && state.modalSGF.data
-});
+const mapStateToProps = ({ location, sgfProjects }) => {
+  const slug = location && location.query && location.query.sgfModal;
+  const { projects, images } = (sgfProjects && sgfProjects.data) || {};
+  const allProjects = getProjectsWithImages({ data: projects, images });
 
-reducerRegistry.registerModule('modalAbout', {
-  actions,
-  reducers,
-  initialState
-});
+  return {
+    slug,
+    data: allProjects && allProjects.find(p => p.id === parseInt(slug, 10))
+  };
+};
 
 export default connect(mapStateToProps, actions)(SectionProjectsModalComponent);

@@ -73,7 +73,7 @@ class WidgetHeader extends PureComponent {
       setWidgetSettings,
       widget,
       options,
-      setModalMeta
+      setModalMetaSettings
     } = this.props;
     const { tooltipOpen } = this.state;
     return (
@@ -111,7 +111,7 @@ class WidgetHeader extends PureComponent {
               options={options}
               loading={loading}
               onSettingsChange={setWidgetSettings}
-              setModalMeta={setModalMeta}
+              setModalMetaSettings={setModalMetaSettings}
             />
           }
         >
@@ -132,19 +132,18 @@ class WidgetHeader extends PureComponent {
   };
 
   renderMetadataButton = () => {
-    const { metakey, citation, setModalMeta, simple } = this.props;
+    const { metakey, setModalMetaSettings, simple } = this.props;
     return (
       <Button
         theme={cx('theme-button-small square', {
           'theme-button-grey-filled theme-button-xsmall': simple
         })}
         onClick={() =>
-          setModalMeta(
+          setModalMetaSettings({
             metakey,
-            ['title', 'citation'],
-            ['function', 'source'],
-            citation
-          )
+            metaWhitelist: ['title', 'citation'],
+            tableWhitelist: ['function', 'source']
+          })
         }
         tooltip={{ text: 'Learn more about the data' }}
       >
@@ -201,10 +200,9 @@ WidgetHeader.propTypes = {
   options: PropTypes.object,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
-  setModalMeta: PropTypes.func.isRequired,
+  setModalMetaSettings: PropTypes.func.isRequired,
   modalClosing: PropTypes.bool,
   active: PropTypes.bool,
-  citation: PropTypes.string,
   config: PropTypes.object,
   locationName: PropTypes.string,
   isDeviceTouch: PropTypes.bool,

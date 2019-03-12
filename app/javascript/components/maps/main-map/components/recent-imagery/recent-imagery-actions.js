@@ -36,15 +36,16 @@ export const setRecentImagerySettings = createThunkAction(
 export const getRecentImageryData = createThunkAction(
   'getRecentImageryData',
   params => (dispatch, getState) => {
-    if (!getState().recentImagery.loading) {
-      dispatch(setRecentImageryLoading(true));
+    const { recentImagery } = getState();
+    if (recentImagery && !recentImagery.loading) {
+      dispatch(setRecentImageryLoading({ loading: true, error: false }));
       getRecentTiles({ ...params })
         .then(response => {
           const serializedResponse = serializeReponse(
             response.data && response.data.data && response.data.data.tiles
           );
           if (serializedResponse && !!serializedResponse.length) {
-            const { clouds } = 25;
+            const clouds = 25;
             const cloudScore = Math.round(serializedResponse[0].cloud_score);
             dispatch(
               setRecentImageryData({
@@ -57,15 +58,17 @@ export const getRecentImageryData = createThunkAction(
             );
             dispatch(
               setRecentImagerySettings({
-                clouds: cloudScore > clouds ? cloudScore : clouds
+                clouds: cloudScore > clouds ? cloudScore : clouds,
+                selected: null,
+                selectedIndex: 0
               })
             );
-            dispatch(setRecentImageryLoading(false));
+            dispatch(setRecentImageryLoading({ loading: false, error: false }));
           }
         })
         .catch(error => {
-          dispatch(setRecentImageryLoading(false));
-          console.info(error && error.response);
+          dispatch(setRecentImageryLoading({ loading: false, error: true }));
+          console.info(error);
         });
     }
   }
@@ -74,7 +77,8 @@ export const getRecentImageryData = createThunkAction(
 export const getMoreTiles = createThunkAction(
   'getMoreTiles',
   params => (dispatch, getState) => {
-    if (!getState().recentImagery.loadingMoreTiles) {
+    const { recentImagery } = getState();
+    if (recentImagery && !recentImagery.loadingMoreTiles) {
       dispatch(
         setRecentImageryLoadingMoreTiles({
           loadingMoreTiles: true,
@@ -96,7 +100,7 @@ export const getMoreTiles = createThunkAction(
               thumbsReponse.data.data.attributes;
 
             if (tiles && thumbs) {
-              const data = getState().recentImagery.data.slice();
+              const data = recentImagery && recentImagery.data.slice();
               const requestedTiles = dataStatus.requestedTiles + tiles.length;
               const haveAllData = requestedTiles >= data.length;
               const newData = data.map((d, i) => {

@@ -38,7 +38,10 @@ class NumberedList extends PureComponent {
                     <div className="item-name">{item.label}</div>
                   </div>
                   <div className="item-value">
-                    {formatNumber({ num: item.value, unit })}
+                    {formatNumber({
+                      num: item.value,
+                      unit: item.unit || unit
+                    })}
                   </div>
                 </div>
               );
@@ -47,7 +50,7 @@ class NumberedList extends PureComponent {
                   {item.path &&
                     linksExt && (
                       <a
-                        href={`http://${window.location.host}${item.path}`}
+                        href={`https://${window.location.host}${item.path}`}
                         target="_blank"
                         rel="noopener nofollower"
                       >

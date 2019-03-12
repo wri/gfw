@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 
-import { setModalMeta } from 'components/modals/meta/meta-actions';
+import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import ModalSubscribeComponent from './component';
@@ -12,7 +12,7 @@ reducerRegistry.registerModule('modalSubscribe', {
   reducers,
   initialState
 });
-
-export default connect(getModalSubscribeProps, { ...actions, setModalMeta })(
-  ModalSubscribeComponent
-);
+export default connect(getModalSubscribeProps, {
+  ...actions,
+  setModalMetaSettings
+})(ModalSubscribeComponent);

@@ -10,7 +10,6 @@ import developer from 'assets/icons/developer.svg';
 import howto from 'assets/icons/howto.svg';
 import sgf from 'assets/icons/sgf.svg';
 import openData from 'assets/icons/open-data.svg';
-import contribute from 'assets/icons/contribute.svg';
 import blog from 'assets/icons/blog.svg';
 import stories from 'assets/icons/stories.svg';
 import forum from 'assets/icons/forum.svg';
@@ -23,7 +22,7 @@ export default {
       navLink: true
     },
     {
-      label: 'Dashboards',
+      label: 'Dashboard',
       path: '/dashboards/global'
     },
     {
@@ -107,19 +106,14 @@ export default {
       icon: howto
     },
     {
-      label: 'Small Grants Fund',
-      path: '/small-grants-fund',
+      label: 'Grants & Fellowships',
+      path: '/grants-and-fellowships',
       icon: sgf
     },
     {
       label: 'Open data portal',
       path: 'http://data.globalforestwatch.org/',
       icon: openData
-    },
-    {
-      label: 'Contribute data',
-      path: '/contribute-data',
-      icon: contribute
     },
     {
       label: 'Blog',

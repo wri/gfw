@@ -25,21 +25,21 @@ class LandingController < ApplicationController
         "paragraph" => "Analyze forest change and investigate trends anywhere in the world with just a few clicks.",
         "button" => "EXPLORE THE DASHBOARDS",
         "url" => "/dashboards/global",
-        "background_orientation" => "right"
+        "background_orientation" => "left"
       },
       {
         "title" => "Forest insights",
         "paragraph" => "Read the latest stories and findings about forests from our team of researchers on the GFW blog.",
         "button" => "START LEARNING",
         "url" => "http://blog.globalforestwatch.org/",
-        "background_orientation" => "right"
+        "background_orientation" => "left"
       },
       {
         "title" => "A suite of tools",
         "paragraph" => "Find out about the connections between deforestation and climate change, fires and haze, water security, and commodity supply chains with our specialized web applications.",
         "button" => "BROWSE OUR APPS",
         "url" => "http://developers.globalforestwatch.org",
-        "background_orientation" => "right"
+        "background_orientation" => "left"
       }
     ]
     @uses = [

@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
+import { checkLocationInsideBbox } from 'utils/geoms';
 
 import { initialState as mapInitialState } from 'components/maps/map/reducers';
 import { initialState } from './recent-imagery-reducers';
@@ -22,14 +23,18 @@ const getMapUrlState = state =>
   state.location && state.location.query && state.location.query.map;
 
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
-  ...mapInitialState.settings,
+  ...(mapInitialState && {
+    ...mapInitialState.settings
+  }),
   ...urlState
 }));
 
 export const getRecentImagerySettings = createSelector(
   [getRecentUrlState],
   urlState => ({
-    ...initialState.settings,
+    ...(initialState && {
+      ...initialState.settings
+    }),
     ...urlState
   })
 );
@@ -49,11 +54,6 @@ export const getActiveDatasetsFromState = createSelector(
   settings => settings.datasets
 );
 
-export const getVisibility = createSelector(
-  [getRecentImagerySettings],
-  settings => settings.visible
-);
-
 export const getActive = createSelector(
   [getActiveDatasetsFromState],
   datasets => {
@@ -62,69 +62,54 @@ export const getActive = createSelector(
   }
 );
 
-export const getFilteredData = createSelector(
+export const getFilteredTiles = createSelector(
   [getData, getRecentImagerySettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
     const { clouds } = settings;
 
-    return data
-      .filter(item => Math.round(item.cloud_score) <= clouds)
-      .map(item => item);
+    return data.filter(item => item.cloud_score <= clouds).map(t => ({
+      id: t.source,
+      url: t.tile_url,
+      thumbnail: t.thumbnail_url,
+      cloudScore: t.cloud_score,
+      dateTime: t.date_time,
+      instrument: t.instrument,
+      bbox: t.bbox
+    }));
   }
 );
 
-export const getTiles = createSelector([getFilteredData], data => {
+export const getTiles = createSelector([getFilteredTiles], data => {
   if (!data || isEmpty(data)) return [];
-
-  return sortBy(
-    data.map(item => ({
-      id: item.source,
-      url: item.tile_url,
-      thumbnail: item.thumbnail_url,
-      cloudScore: item.cloud_score,
-      dateTime: item.date_time,
-      instrument: item.instrument,
-      bbox: item.bbox
-    })),
-    d => new Date(d.dateTime)
-  ).reverse();
+  return sortBy(data, d => new Date(d.dateTime)).reverse();
 });
 
 export const getActiveTile = createSelector(
-  [getTiles, getRecentImagerySettings],
+  [getFilteredTiles, getRecentImagerySettings],
   (tiles, settings) => {
     if (isEmpty(tiles)) return null;
     const { selected, selectedIndex } = settings;
     const selectedTileById = tiles.find(t => t.id === selected);
     if (selectedTileById) return selectedTileById;
     const selectedTileByIndex = selectedIndex && tiles[selectedIndex];
+
     return selectedTileByIndex || tiles[0];
   }
 );
-
-export const getTileGeoJSON = createSelector([getActiveTile], activeTile => {
-  if (!activeTile) return null;
-  return {
-    features: [
-      {
-        type: 'Feature',
-        properties: {
-          ...activeTile
-        },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [activeTile.bbox.geometry.coordinates]
-        }
-      }
-    ]
-  };
-});
 
 export const getTileBounds = createSelector([getActiveTile], activeTile => {
   if (!activeTile) return null;
   return activeTile.bbox.geometry.coordinates;
 });
+
+export const getPositionInsideTile = createSelector(
+  [getTileBounds, getPosition],
+  (bounds, position) =>
+    (bounds
+      ? checkLocationInsideBbox([position.lat, position.lng], bounds)
+      : true)
+);
 
 export const getSources = createSelector(
   [getData, getDataStatus],
@@ -143,8 +128,10 @@ export const getDates = createSelector([getRecentImagerySettings], settings => {
   const currentDate = date ? moment(date) : moment();
 
   return {
-    end: currentDate.format('YYYY-MM-DD'),
-    start: currentDate.subtract(weeks, 'weeks').format('YYYY-MM-DD')
+    end: moment(currentDate).format('YYYY-MM-DD'),
+    start: moment(currentDate)
+      .subtract(weeks, 'weeks')
+      .format('YYYY-MM-DD')
   };
 });
 
@@ -162,7 +149,6 @@ export const getRecentImageryProps = createStructuredSelector({
   moreTilesLoading: getMoreTilesLoading,
   error: getError,
   active: getActive,
-  visible: getVisibility,
   dates: getDates,
   sources: getSources,
   settings: getRecentImagerySettings,
@@ -172,7 +158,7 @@ export const getRecentImageryProps = createStructuredSelector({
   dataStatus: getDataStatus,
   tiles: getTiles,
   activeTile: getActiveTile,
-  bounds: getTileBounds,
+  positionInsideTile: getPositionInsideTile,
   location: getLocation,
   // url props
   datasets: getActiveDatasetsFromState,

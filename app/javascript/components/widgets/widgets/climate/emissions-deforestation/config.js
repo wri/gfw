@@ -14,7 +14,7 @@ export default {
   layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
   dataType: 'loss',
-  colors: 'emissions',
+  colors: 'climate',
   sentences:
     'Between {startYear} and {endYear}, a total of {value} of {type} ({annualAvg} per year) was released into the atmosphere as a result of tree cover loss in {location}.'
 };

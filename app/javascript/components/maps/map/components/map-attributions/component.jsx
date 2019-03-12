@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import googleLogo from 'assets/logos/google.png';
+import Icon from 'components/ui/icon';
+
+import mapboxLogo from 'assets/logos/mapbox-logo-white.svg';
 import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
 
@@ -13,11 +15,11 @@ class MapAttributions extends PureComponent {
     return (
       <div className={`c-map-attributions ${className || ''}`}>
         <a
-          href="https://www.google.com/maps/@15,-2.970703,3z?hl=es"
+          href="https://www.mapbox.com/about/maps/"
           rel="noopener noreferrer"
           target="_blank"
         >
-          <img src={googleLogo} alt="google" width="55" />
+          <Icon className="mapbox-logo" icon={mapboxLogo} />
         </a>
         <a
           href="https://earthengine.google.com/"

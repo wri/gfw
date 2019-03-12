@@ -47,4 +47,38 @@
       margin-bottom: rem(30px);
     }
   }
+
+  .project-globe {
+    position: relative;
+
+    ul {
+      position: absolute;
+      top: 2.5rem;
+
+      li {
+        font-size: 14px;
+        text-transform: uppercase;
+
+        span,
+        p {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        span {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        #grants {
+          background: #97bd3d;
+        }
+
+        #fellows {
+          background: #f88000;
+        }
+      }
+    }
+  }
 }

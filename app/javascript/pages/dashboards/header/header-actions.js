@@ -105,7 +105,7 @@ export const getHeaderData = createThunkAction(
 export const handleLocationChange = createThunkAction(
   'handleLocationChange',
   location => (dispatch, getState) => {
-    const { query, type } = getState().location;
+    const { query, type } = getState().location || {};
     const newQuery = {};
 
     if (query) {

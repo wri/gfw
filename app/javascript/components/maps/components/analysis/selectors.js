@@ -119,22 +119,24 @@ export const getLayerEndpoints = createSelector(
     );
 
     const groupedEndpoints = groupBy(endpoints, 'slug');
-    const parsedEndpoints = Object.keys(groupedEndpoints).map(slug => {
-      let params = {};
-      groupedEndpoints[slug].forEach(e => {
-        params = {
-          ...params,
-          ...e.params
+    const parsedEndpoints = Object.keys(groupedEndpoints)
+      .filter(slug => slug !== 'undefined')
+      .map(slug => {
+        let params = {};
+        groupedEndpoints[slug].forEach(e => {
+          params = {
+            ...params,
+            ...e.params
+          };
+        });
+
+        return {
+          slug,
+          params,
+          version: groupedEndpoints[slug][0].version,
+          name: groupedEndpoints[slug][0].name
         };
       });
-
-      return {
-        slug,
-        params,
-        version: groupedEndpoints[slug][0].version,
-        name: groupedEndpoints[slug][0].name
-      };
-    });
 
     return adm2
       ? parsedEndpoints.filter(e => !e.slug.includes('forma'))

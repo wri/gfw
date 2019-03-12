@@ -4,6 +4,14 @@
   font-family: $font-family-1;
   border-radius: 2px;
   max-width: rem(290px);
+  min-width: rem(200px);
+
+  .close-btn {
+    position: absolute;
+    top: rem(10px);
+    right: rem(10px);
+    z-index: 3;
+  }
 
   .popup-card {
     border: 0;
@@ -46,25 +54,14 @@
   }
 }
 
-.leaflet-popup-content {
-  margin: 0;
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+  border-radius: 0 !important;
 }
 
-.leaflet-popup-content-wrapper {
-  border-radius: 0;
-  padding: 0;
-}
-
-.leaflet-container a.leaflet-popup-close-button {
-  top: 7px;
-  right: 5px;
-  z-index: 2;
-  width: rem(25px);
-  height: rem(25px);
+.mapboxgl-popup-close-button {
+  top: rem(10px);
+  right: rem(10px);
   font-size: rem(20px);
-}
-
-.leaflet-container a {
-  color: inherit;
-  -webkit-tap-highlight-color: unset;
 }

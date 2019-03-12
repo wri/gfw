@@ -1,7 +1,11 @@
 @import '~styles/settings.scss';
 
 .c-map {
-  height: 100%;
+  &.no-pointer-events {
+    .overlays {
+      pointer-events: none;
+    }
+  }
 
   .map-wrapper {
     position: relative;
@@ -74,5 +78,9 @@
       font-weight: 500;
       color: $white;
     }
+  }
+
+  .mapboxgl-control-container {
+    display: none;
   }
 }

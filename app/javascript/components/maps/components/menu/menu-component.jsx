@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
-import { SCREEN_M } from 'utils/constants';
 import cx from 'classnames';
 import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
@@ -47,10 +45,9 @@ class MapMenu extends PureComponent {
     const {
       showAnalysis,
       setMenuSettings,
-      setRecentImagerySettings,
       location,
-      recentVisible,
       menuSection,
+      recentActive,
       isDesktop
     } = this.props;
     if (
@@ -63,19 +60,14 @@ class MapMenu extends PureComponent {
       showAnalysis();
     }
 
-    if (!isDesktop && recentVisible) {
-      setMenuSettings({ menuSection: 'recent-imagery' });
+    if (!isDesktop && !menuSection && recentActive) {
+      setMenuSettings({ menuSection: 'recent-imagery-collapsed' });
     }
 
     if (
-      !isDesktop &&
-      !menuSection &&
-      !isEqual(menuSection, prevProps.menuSection)
+      !isEqual(isDesktop, prevProps.isDesktop) ||
+      (!recentActive && !isEqual(recentActive, prevProps.recentActive))
     ) {
-      setRecentImagerySettings({ visible: false });
-    }
-
-    if (!isEqual(isDesktop, prevProps.isDesktop)) {
       setMenuSettings({ menuSection: '' });
     }
   }
@@ -92,61 +84,69 @@ class MapMenu extends PureComponent {
       loading,
       analysisLoading,
       embed,
+      isDesktop,
       ...props
     } = this.props;
-    const { Component, label, category, large, icon, ...rest } =
+    const {
+      Component,
+      label,
+      category,
+      large,
+      icon,
+      collapsed,
+      openSection,
+      ...rest
+    } =
       activeSection || {};
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
-        {isDesktop => (
-          <div className={cx('c-map-menu', className)}>
-            <div
-              className={cx('menu-tiles', 'map-tour-data-layers', { embed })}
-            >
-              {isDesktop &&
-                !embed && (
-                  <MenuDesktop
-                    className="menu-desktop"
-                    datasetSections={datasetSections}
-                    searchSections={searchSections}
-                    setMenuSettings={setMenuSettings}
-                  />
-                )}
-              {!isDesktop && (
-                <MenuMobile
-                  sections={mobileSections}
-                  setMenuSettings={setMenuSettings}
-                />
-              )}
-            </div>
-            <MenuPanel
-              className="menu-panel"
-              label={label}
-              category={category}
-              active={!!menuSection}
-              large={large}
+      <div className={cx('c-map-menu', className)}>
+        <div className={cx('menu-tiles', 'map-tour-data-layers', { embed })}>
+          {isDesktop &&
+            !embed && (
+              <MenuDesktop
+                className="menu-desktop"
+                datasetSections={datasetSections}
+                searchSections={searchSections}
+                setMenuSettings={setMenuSettings}
+              />
+            )}
+          {!isDesktop && (
+            <MenuMobile
+              sections={mobileSections}
+              setMenuSettings={setMenuSettings}
+            />
+          )}
+        </div>
+        <MenuPanel
+          className="menu-panel"
+          label={label}
+          category={category}
+          active={!!menuSection}
+          large={large}
+          isDesktop={isDesktop}
+          setMenuSettings={setMenuSettings}
+          loading={loading}
+          collapsed={collapsed}
+          onClose={() =>
+            setMenuSettings({ menuSection: '', datasetCategory: '' })
+          }
+          onOpen={() => setMenuSettings({ menuSection: openSection })}
+        >
+          {Component && (
+            <Component
+              menuSection={menuSection}
               isDesktop={isDesktop}
               setMenuSettings={setMenuSettings}
-              loading={loading}
-              onClose={() =>
-                setMenuSettings({ menuSection: '', datasetCategory: '' })
-              }
-            >
-              {Component && (
-                <Component
-                  menuSection={menuSection}
-                  isDesktop={isDesktop}
-                  setMenuSettings={setMenuSettings}
-                  onToggleLayer={this.onToggleLayer}
-                  {...props}
-                  {...rest}
-                />
-              )}
-            </MenuPanel>
-          </div>
-        )}
-      </MediaQuery>
+              onToggleLayer={this.onToggleLayer}
+              {...props}
+              {...menuSection === 'datasets' && {
+                ...rest
+              }}
+            />
+          )}
+        </MenuPanel>
+      </div>
     );
   }
 }
@@ -160,7 +160,6 @@ MapMenu.propTypes = {
   activeSection: PropTypes.object,
   setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
-  setModalMeta: PropTypes.func,
   loading: PropTypes.bool,
   analysisLoading: PropTypes.bool,
   countries: PropTypes.array,
@@ -175,10 +174,9 @@ MapMenu.propTypes = {
   datasetCategory: PropTypes.string,
   showAnalysis: PropTypes.func,
   location: PropTypes.object,
-  setRecentImagerySettings: PropTypes.func,
-  recentVisible: PropTypes.bool,
   isDesktop: PropTypes.bool,
-  embed: PropTypes.bool
+  embed: PropTypes.bool,
+  recentActive: PropTypes.bool
 };
 
 export default MapMenu;

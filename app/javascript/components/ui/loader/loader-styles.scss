@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -19,6 +20,13 @@
     border: 5px solid transparent;
     border-top-color: rgba($slate, 0.7);
     border-radius: 50%;
+  }
+
+  .message {
+    margin-top: rem(10px);
+    font-size: rem(14px);
+    background-color: rgba($white, 0.5);
+    padding: rem(5px) rem(8px);
   }
 }
 

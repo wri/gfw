@@ -6,7 +6,7 @@ export default {
   admins: ['adm0', 'adm1'],
   options: {
     forestTypes: true,
-    landCategories: true,
+    landCategories: ['mining', 'wdpa', 'landmark'],
     thresholds: true,
     units: ['%', 'ha'],
     extentYears: true,

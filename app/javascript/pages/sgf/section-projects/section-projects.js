@@ -33,7 +33,9 @@ const mapStateToProps = ({ sgfProjects }) => {
     globeData: getGlobeClusters(projectData),
     categories: getCategoriesList(projectData),
     categorySelected:
-      filters && filters.length ? '' : sgfProjects.categorySelected,
+      filters && filters.length
+        ? ''
+        : sgfProjects && sgfProjects.categorySelected,
     search: sgfProjects && sgfProjects.search,
     loading:
       !sgfProjects ||
@@ -51,20 +53,10 @@ class SectionProjectsContainer extends PureComponent {
     fetchProjectsImages();
   }
 
-  handleCardClick = d => {
-    this.props.setSectionProjectsModal({
-      isOpen: true,
-      data: d
-    });
-  };
-
   handleGlobeClick = d => {
-    const { setSectionProjectsModal, setCustomFilter } = this.props;
+    const { setSectionProjectsModalSlug, setCustomFilter } = this.props;
     if (!d.cluster || d.cluster.length === 1) {
-      setSectionProjectsModal({
-        isOpen: true,
-        data: d.cluster[0]
-      });
+      setSectionProjectsModalSlug(d.id || (d.cluster && d.cluster[0].id));
     } else {
       const projectIds = d.cluster.map(p => p.id);
       setCustomFilter(projectIds);
@@ -79,14 +71,13 @@ class SectionProjectsContainer extends PureComponent {
   render() {
     return createElement(SectionProjectsComponent, {
       ...this.props,
-      handleCardClick: this.handleCardClick,
       handleGlobeClick: this.handleGlobeClick
     });
   }
 }
 
 SectionProjectsContainer.propTypes = {
-  setSectionProjectsModal: PropTypes.func,
+  setSectionProjectsModalSlug: PropTypes.func,
   setCustomFilter: PropTypes.func,
   fetchProjects: PropTypes.func,
   fetchProjectsImages: PropTypes.func

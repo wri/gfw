@@ -42,7 +42,9 @@ const SQL_QUERIES = {
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   nonGlobalDatasets:
     'SELECT iso, polyname FROM data WHERE polyname IN ({indicators}) GROUP BY iso, polyname ORDER BY polyname, iso',
-  globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}'
+  globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
+  admin:
+    "SELECT polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions from {dataset} WHERE {location} AND polyname = '{indicator}' AND thresh= {threshold} GROUP BY {grouping}"
 };
 
 const getExtentYear = year =>
@@ -297,5 +299,20 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
     '{location}',
     getLocationQuery(adm0, adm1, adm2)
   );
+  return request.get(url);
+};
+
+export const getAdmin = ({ adm0, adm1, adm2, threshold, indicator }) => {
+  const url = `${REQUEST_URL}${SQL_QUERIES.admin}`
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
+    .replace('{threshold}', threshold)
+    .replace('{dataset}', DATASET)
+    .replace('{indicator}', getIndicator(indicator))
+    .replace(
+      '{grouping}',
+      indicator
+        ? 'polyname, iso, nested(year_data.year)'
+        : 'bound1, polyname, iso, nested(year_data.year)'
+    );
   return request.get(url);
 };

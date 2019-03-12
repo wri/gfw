@@ -11,6 +11,7 @@ export const selectLocation = state =>
   (state.location && state.location.payload) || null;
 export const selectLoading = state =>
   state.header &&
+  state.countryData &&
   (state.header.loading ||
     state.countryData.isCountriesLoading ||
     state.countryData.isRegionsLoading ||

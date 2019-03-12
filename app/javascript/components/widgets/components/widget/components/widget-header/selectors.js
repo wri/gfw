@@ -33,7 +33,7 @@ export const getShareData = createSelector(
   (title, config, search, location, widget) => {
     const query = qs.parse(search);
     const { category } = query || {};
-    const { type, adm0, adm1, adm2 } = location;
+    const { type, adm0, adm1, adm2 } = location || {};
     const locationUrl = `dashboards/${type}/${adm0 || ''}${
       adm1 ? `/${adm1}` : ''
     }${adm2 ? `/${adm2}` : ''}`;

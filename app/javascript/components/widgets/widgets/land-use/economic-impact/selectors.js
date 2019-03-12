@@ -172,7 +172,7 @@ export const parseSentence = createSelector(
       percentage:
         selectedFAO[0].net_perc >= 0.1
           ? `${format('2r')(selectedFAO[0].net_perc)}%`
-          : '<0.1%',
+          : '< 0.1%',
       year: settings.year
     };
 

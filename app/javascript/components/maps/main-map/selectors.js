@@ -7,7 +7,6 @@ import {
   getSelectedInteraction
 } from 'components/maps/map/selectors';
 import { getShowDraw } from 'components/maps/components/analysis/selectors';
-import { getTileGeoJSON } from './components/recent-imagery/recent-imagery-selectors';
 
 import initialState from './initial-state';
 
@@ -21,6 +20,7 @@ const selectMenuSection = state =>
   state.location.query &&
   state.location.query.menu &&
   state.location.query.menu.menuSection;
+const getDrawGeostoreId = state => state.draw && state.draw.geostoreId;
 
 // SELECTORS
 export const getEmbed = createSelector(
@@ -69,9 +69,9 @@ export const getMapProps = createStructuredSelector({
   analysisActive: getShowAnalysis,
   oneClickAnalysis: getOneClickAnalysis,
   hidePanels: getHidePanels,
-  tileGeoJSON: getTileGeoJSON,
   menuSection: selectMenuSection,
   activeDatasets: getActiveDatasetsFromState,
   embed: getEmbed,
+  geostoreId: getDrawGeostoreId,
   selectedInteraction: getSelectedInteraction
 });

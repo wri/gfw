@@ -25,7 +25,7 @@ class Datasets extends PureComponent {
       datasets,
       subCategories,
       onToggleLayer,
-      setModalMeta,
+      setModalMetaSettings,
       setMenuSettings,
       handleRemoveCountry,
       handleAddCountry
@@ -76,6 +76,7 @@ class Datasets extends PureComponent {
               </div>
               {countriesWithoutData &&
                 !!countriesWithoutData.length &&
+                selectedCountries &&
                 !!selectedCountries.length && (
                   <div className="no-datasets-legend">
                     <span className="legend-dot" />
@@ -106,7 +107,7 @@ class Datasets extends PureComponent {
                           className="dataset-toggle"
                           data={{ ...d, dataset: d.id }}
                           onToggle={onToggleLayer}
-                          onInfoClick={setModalMeta}
+                          onInfoClick={setModalMetaSettings}
                           showSubtitle
                         />
                       ))
@@ -126,7 +127,7 @@ class Datasets extends PureComponent {
                       className="dataset-toggle"
                       data={{ ...d, dataset: d.id }}
                       onToggle={onToggleLayer}
-                      onInfoClick={setModalMeta}
+                      onInfoClick={setModalMetaSettings}
                     />
                   ))}
             </Fragment>
@@ -140,7 +141,7 @@ Datasets.propTypes = {
   name: PropTypes.string,
   datasets: PropTypes.array,
   onToggleLayer: PropTypes.func,
-  setModalMeta: PropTypes.func,
+  setModalMetaSettings: PropTypes.func,
   subCategories: PropTypes.array,
   selectedCountries: PropTypes.array,
   countries: PropTypes.array,

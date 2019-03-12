@@ -15,15 +15,16 @@ export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 
 const routeChangeThunk = (dispatch, getState) => {
-  const currentLocation = getState().location.pathname;
-  const prevLocation = getState().location.prev.pathname;
+  const { location } = getState() || {};
+  const currentLocation = location.pathname;
+  const prevLocation = location && location.prev.pathname;
   if (currentLocation !== prevLocation) {
-    handlePageTrack(getState().location);
+    handlePageTrack(location);
   }
 };
 
 const redirectThunk = (dispatch, getState) => {
-  const { location } = getState();
+  const { location } = getState() || {};
   const routeSlugs = location.pathname && location.pathname.split('/');
   const isOldMap = routeSlugs.includes('map');
   if (isOldMap) {
@@ -74,27 +75,27 @@ export const routes = {
     ]
   },
   [SGF]: {
-    controller: 'small_grants_fund',
-    path: '/small-grants-fund/:tab?',
+    controller: 'grants_and_fellowships',
+    path: '/grants-and-fellowships/:tab?',
     component: 'sgf',
     sections: {
       projects: {
         label: 'Projects',
         submenu: true,
         component: 'projects',
-        path: '/small-grants-fund'
+        path: '/grants-and-fellowships'
       },
       about: {
         label: 'About',
         submenu: true,
         component: 'about',
-        path: '/small-grants-fund/about'
+        path: '/grants-and-fellowships/about'
       },
       apply: {
         label: 'Apply',
         submenu: true,
         component: 'apply',
-        path: '/small-grants-fund/apply'
+        path: '/grants-and-fellowships/apply'
       }
     }
   },

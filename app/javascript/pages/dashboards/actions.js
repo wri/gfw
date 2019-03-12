@@ -16,7 +16,7 @@ export const setDashboardsSettings = createThunkAction(
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
   category => (dispatch, getState) => {
-    const { query, type, payload } = getState().location;
+    const { query, type, payload } = getState().location || {};
     dispatch({
       type,
       payload,

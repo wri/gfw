@@ -22,4 +22,11 @@
       color: $map-grey;
     }
   }
+
+  .mapbox-logo {
+    width: auto;
+    height: rem(20px);
+    display: inline-block;
+    vertical-align: middle;
+  }
 }
