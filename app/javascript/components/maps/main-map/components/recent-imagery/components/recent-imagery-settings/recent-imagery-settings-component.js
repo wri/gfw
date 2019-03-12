@@ -40,7 +40,7 @@ class RecentImagerySettings extends PureComponent {
       moreTilesLoading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
-      setModalMeta,
+      setModalMetaSettings,
       onClickClose
     } = this.props;
     const selected = this.state.selected || activeTile || {};
@@ -54,7 +54,9 @@ class RecentImagerySettings extends PureComponent {
               <Button
                 className="info-btn"
                 theme="theme-button-tiny theme-button-grey-filled square"
-                onClick={() => setModalMeta('recent_satellite_imagery')}
+                onClick={() =>
+                  setModalMetaSettings({ metakey: 'recent_satellite_imagery' })
+                }
               >
                 <Icon icon={infoIcon} />
               </Button>
@@ -197,7 +199,7 @@ RecentImagerySettings.propTypes = {
   tiles: PropTypes.array,
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
-  setModalMeta: PropTypes.func,
+  setModalMetaSettings: PropTypes.func,
   loading: PropTypes.bool,
   moreTilesLoading: PropTypes.bool,
   onClickClose: PropTypes.func

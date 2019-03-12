@@ -160,7 +160,6 @@ MapMenu.propTypes = {
   activeSection: PropTypes.object,
   setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
-  setModalMeta: PropTypes.func,
   loading: PropTypes.bool,
   analysisLoading: PropTypes.bool,
   countries: PropTypes.array,

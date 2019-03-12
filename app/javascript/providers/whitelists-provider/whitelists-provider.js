@@ -13,32 +13,37 @@ const mapStateToProps = ({ location }) => ({
 class WhitelistProvider extends PureComponent {
   componentDidMount() {
     const {
-      location: { adm0, adm1, adm2 },
+      location: { type, adm0, adm1, adm2 },
       getCountryWhitelist,
       getRegionWhitelist
     } = this.props;
-    if (adm0) {
+    const isCountry = type === 'country';
+    if (adm0 && isCountry) {
       getCountryWhitelist(adm0);
     }
-    if (adm1) {
+    if (adm1 && isCountry) {
       getRegionWhitelist({ adm0, adm1, adm2 });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { location: { adm0, adm1, adm2 } } = this.props;
-    const { getCountryWhitelist, getRegionWhitelist } = prevProps;
-    const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
-    const hasRegionChanged = adm0 && adm1 !== prevProps.location.adm1;
-    const hasSubRegionChanged =
-      adm0 && adm1 && adm2 !== prevProps.location.adm2;
+    const { location: { type, adm0, adm1, adm2 } } = this.props;
+    const isCountry = type === 'country';
 
-    if (hasCountryChanged) {
-      getCountryWhitelist(adm0);
-    }
+    if (isCountry) {
+      const { getCountryWhitelist, getRegionWhitelist } = prevProps;
+      const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
+      const hasRegionChanged = adm0 && adm1 !== prevProps.location.adm1;
+      const hasSubRegionChanged =
+        adm0 && adm1 && adm2 !== prevProps.location.adm2;
 
-    if (hasRegionChanged || hasSubRegionChanged) {
-      getRegionWhitelist({ adm0, adm1, adm2 });
+      if (hasCountryChanged) {
+        getCountryWhitelist(adm0);
+      }
+
+      if (hasRegionChanged || hasSubRegionChanged) {
+        getRegionWhitelist({ adm0, adm1, adm2 });
+      }
     }
   }
 

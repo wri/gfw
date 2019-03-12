@@ -83,7 +83,6 @@ ModalSubscribe.propTypes = {
   resetSubscribe: PropTypes.func,
   userData: PropTypes.object,
   datasets: PropTypes.array,
-  setModalMeta: PropTypes.func,
   locationName: PropTypes.string,
   activeDatasets: PropTypes.array
 };

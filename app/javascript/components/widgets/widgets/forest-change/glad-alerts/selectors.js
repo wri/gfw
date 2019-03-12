@@ -73,11 +73,13 @@ export const getData = createSelector(
     }
     const yearLengths = {};
     years.forEach(y => {
-      const lastIsoWeek =
-        lastWeek.year !== parseInt(y, 10)
-          ? moment(`${y}-12-31`).isoWeek()
-          : lastWeek.isoWeek;
-      yearLengths[y] = lastIsoWeek;
+      if (lastWeek.year === parseInt(y, 10)) {
+        yearLengths[y] = lastWeek.isoWeek;
+      } else if (moment(`${y}-12-31`).weekday() === 1) {
+        yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+      } else {
+        yearLengths[y] = moment(`${y}-12-31`).isoWeek();
+      }
     });
     const zeroFilledData = [];
     years.forEach(d => {

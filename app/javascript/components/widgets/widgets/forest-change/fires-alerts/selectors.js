@@ -12,7 +12,8 @@ import {
   getChartConfig
 } from 'components/widgets/utils/data';
 
-const getAlerts = state => state.data || null;
+const getAlerts = state => (state.data && state.data.alerts) || null;
+const getLatest = state => (state.data && state.data.latest) || null;
 const getColors = state => state.colors || null;
 const getActiveData = state => state.settings.activeData || null;
 const getWeeks = state => state.settings.weeks || null;
@@ -36,11 +37,13 @@ export const getData = createSelector(
     }
     const yearLengths = {};
     years.forEach(y => {
-      const lastIsoWeek =
-        lastWeek.year !== parseInt(y, 10)
-          ? moment(`${y}-12-31`).isoWeek()
-          : lastWeek.isoWeek;
-      yearLengths[y] = lastIsoWeek;
+      if (lastWeek.year === parseInt(y, 10)) {
+        yearLengths[y] = lastWeek.isoWeek;
+      } else if (moment(`${y}-12-31`).weekday() === 1) {
+        yearLengths[y] = moment(`${y}-12-30`).isoWeek();
+      } else {
+        yearLengths[y] = moment(`${y}-12-31`).isoWeek();
+      }
     });
     const zeroFilledData = [];
     years.forEach(d => {
@@ -85,13 +88,9 @@ export const parseData = createSelector([getDates, getWeeks], (data, weeks) => {
   return data.slice(-weeks);
 });
 
-export const parseConfig = createSelector([getColors], colors =>
-  getChartConfig(
-    colors,
-    moment()
-      .subtract(2, 'w')
-      .format('YYYY-MM-DD')
-  )
+export const parseConfig = createSelector(
+  [getColors, getLatest],
+  (colors, latest) => getChartConfig(colors, moment(latest))
 );
 
 export const parseSentence = createSelector(
