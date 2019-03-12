@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import Footer from 'components/footer';
 import Carousel from 'components/ui/carousel';
 import Card from 'components/ui/card';
-import Button from 'components/ui/button';
-import arrowIcon from 'assets/icons/arrow-down.svg';
-import Icon from 'components/ui/icon';
 // import Section from 'pages/topics/components/section';
 
 import './styles.scss';
@@ -16,20 +13,6 @@ class TopicsFooter extends PureComponent {
     const { cards } = this.props;
     return (
       <div>
-        <div className="row">
-          <div className="column small-12 medium-12">
-            <div className="goToHeader-btn">
-              <Button
-                onClick={() => {
-                  /* global $ */
-                  $('#fullpage').fullpage.moveTo('intro', 0);
-                }}
-              >
-                <Icon icon={arrowIcon} />
-              </Button>
-            </div>
-          </div>
-        </div>
         <div className="row">
           <div className="column small-12">
             <h2>COMMODITIES RELATED TOOLS</h2>

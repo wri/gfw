@@ -44,7 +44,7 @@
 #fp-nav ul li {
   margin: rem(20px);
 
-  &:last-child,
+  // &:last-child,
   &:first-child {
     display: none;
   }
@@ -68,7 +68,7 @@
   transform: none !important;
 
   .fullpage-view {
-    height: 90vh;
+    height: 100vh;
     display: flex;
 
     .row {
