@@ -4,16 +4,19 @@
   position: relative;
 
   .titleRow {
-    margin-top: 70px;
-    padding: 0 $mobile-gutter;
+    padding-top: 30px;
+    // padding: 0 $mobile-gutter;
 
     @media screen and (min-width: $screen-m) {
+      margin-top: 70px;
       padding: 0 $desktop-gutter;
     }
   }
 
   .titleCol {
-    background-color: #e5e5df;
+    @media screen and (min-width: $screen-m) {
+      background-color: #e5e5df;
+    }
   }
 
   .intro-img-wrapper {
@@ -42,12 +45,17 @@
   }
 
   .intro-title {
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 300;
-    color: black;
-    padding: rem(10px) 0;
-    line-height: 54px;
+    line-height: 40px;
+    color: $slate-light;
     max-width: 400px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 48px;
+      line-height: 54px;
+      padding: rem(10px) 0;
+    }
   }
 
   .intro-text {

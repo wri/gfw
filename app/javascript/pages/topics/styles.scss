@@ -10,17 +10,26 @@
     padding-bottom: 50px;
 
     .c-topics-text {
-      margin-bottom: 50px;
-    }
+      margin-top: 80px;
 
-    .topics-btn {
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: 50px;
+      }
+    }
+  }
+
+  .topics-btn {
+    color: $slate-light;
+    border: 1px solid #97bd3d;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+
+    @media screen and (min-width: $screen-m) {
       position: absolute;
-      bottom: 0;
+      bottom: calc(100px - 2.5rem);
+      left: 1.25rem;
       max-width: 130px;
-      color: $slate-light;
-      text-transform: uppercase;
-      font-size: 14px;
-      font-weight: 500;
     }
   }
 
@@ -66,6 +75,10 @@
 .fullpage-wrapper {
   width: 100% !important;
   transform: none !important;
+
+  .row {
+    position: relative;
+  }
 
   .fullpage-view {
     height: 100vh;

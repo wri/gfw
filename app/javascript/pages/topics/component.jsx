@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import MediaQuery from 'react-responsive';
+import { SCREEN_M } from 'utils/constants';
+
 import Header from 'components/header';
 import TopicsHeader from 'pages/topics/components/topics-header';
 import TopicsFooter from 'pages/topics/components/topics-footer';
@@ -58,52 +61,58 @@ class TopicsPage extends PureComponent {
     const { cards, slides, intro } = topicData || {};
 
     return (
-      <div className="l-topics-page">
-        <Header />
-        <div id="fullpage">
-          <TopicsHeader topics={links} intro={intro} />
-          {slides &&
-            slides.map((s, index) => {
-              const isFooter = index === 3;
-              return (
-                <Section
-                  key={s.subtitle}
-                  anchors={this.anchors}
-                  className={cx(isFooter && 'fp-auto-height topics-footer')}
-                >
-                  <div className={cx(isFooter && 'fullpage-view')}>
-                    <div className="row">
-                      <div className="column small-12 medium-4">
-                        <div className="topic-content">
-                          <Text
-                            text={s.text}
-                            title={s.title}
-                            subtitle={s.subtitle}
-                          />
+      <MediaQuery minWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className="l-topics-page">
+            <Header isMobile={!isDesktop} />
+            <div id="fullpage">
+              <TopicsHeader topics={links} intro={intro} />
+              {slides &&
+                slides.map((s, index) => {
+                  const isFooter = index === 3;
+                  return (
+                    <Section
+                      key={s.subtitle}
+                      anchors={this.anchors}
+                      className={cx(isFooter && 'fp-auto-height topics-footer')}
+                    >
+                      <div className={cx(isFooter && 'fullpage-view')}>
+                        <div className="row">
+                          <div className="column small-12 medium-4">
+                            <div className="topic-content">
+                              <Text
+                                text={s.text}
+                                title={s.title}
+                                subtitle={s.subtitle}
+                              />
+                            </div>
+                          </div>
+                          <div className="column small-12 medium-8 topic-image">
+                            <Image url={s.src} description={s.subtitle} />
+                          </div>
                           {!isFooter && (
-                            <Button
-                              theme="theme-button-grey topics-btn"
-                              onClick={() => {
-                                /* global $ */
-                                $('#fullpage').fullpage.moveTo('footer', 0);
-                              }}
-                            >
-                              Skip
-                            </Button>
+                            <div className="column small-12">
+                              <Button
+                                theme="theme-button-grey topics-btn"
+                                onClick={() => {
+                                  /* global $ */
+                                  $('#fullpage').fullpage.moveTo('footer', 0);
+                                }}
+                              >
+                                Skip
+                              </Button>
+                            </div>
                           )}
                         </div>
                       </div>
-                      <div className="column small-12 medium-8 topic-image">
-                        <Image url={s.src} description={s.subtitle} />
-                      </div>
-                    </div>
-                  </div>
-                  {index === 3 && <TopicsFooter cards={cards} />}
-                </Section>
-              );
-            })}
-        </div>
-      </div>
+                      {index === 3 && <TopicsFooter cards={cards} />}
+                    </Section>
+                  );
+                })}
+            </div>
+          </div>
+        )}
+      </MediaQuery>
     );
   }
 }
