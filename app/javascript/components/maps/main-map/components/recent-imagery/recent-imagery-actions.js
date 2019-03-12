@@ -58,7 +58,9 @@ export const getRecentImageryData = createThunkAction(
             );
             dispatch(
               setRecentImagerySettings({
-                clouds: cloudScore > clouds ? cloudScore : clouds
+                clouds: cloudScore > clouds ? cloudScore : clouds,
+                selected: null,
+                selectedIndex: 0
               })
             );
             dispatch(setRecentImageryLoading({ loading: false, error: false }));

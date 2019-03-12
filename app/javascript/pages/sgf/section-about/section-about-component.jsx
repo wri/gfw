@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
+import ScrollTo from 'components/scroll-to';
 
 import sgfLogo from './img/GFW_SGF_logo.png';
 import techLogo from './img/GFW_TECH_logo.png';
@@ -12,12 +13,18 @@ class SectionAbout extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { results, sgfBenefits, fellowshipBenefits } = this.props;
+    const anchorId = window.location.hash;
+    const anchor =
+      anchorId && document.getElementById(anchorId.replace('#', ''));
+
     return (
       <div className="l-section-about">
         <section className="intro">
           <div className="row intro">
             <div className="column small-12 medium-9">
-              <h2 className="section-title">Small Grants Fund</h2>
+              <h2 className="section-title" id="small-grants-fund">
+                Small Grants Fund
+              </h2>
               <p className="text -paragraph -color-2 -light -spaced">
                 Civil Society Organizations operating in and around forested
                 areas are some of the most effective champions of forest
@@ -84,7 +91,9 @@ class SectionAbout extends PureComponent {
         <section className="intro">
           <div className="row intro">
             <div className="column small-12 medium-9">
-              <h2 className="section-title">Tech Fellowship</h2>
+              <h2 className="section-title" id="tech-fellowship">
+                Tech Fellowship
+              </h2>
               <p className="text -paragraph -color-2 -light -spaced">
                 The Global Forest Watch Technology Fellowship aims to recruit
                 and train the best and brightest forest managers, protectors and
@@ -127,7 +136,7 @@ class SectionAbout extends PureComponent {
         <section className="support">
           <div className="row">
             <div className="column small-12 medium-9">
-              <h2 className="section-title">
+              <h2 className="section-title" id="support">
                 Support the Small Grants Fund and Fellowship
               </h2>
               <p className="text -paragraph -color-2 -light -spaced">
@@ -144,6 +153,7 @@ class SectionAbout extends PureComponent {
             </div>
           </div>
         </section>
+        {anchor && <ScrollTo target={anchor} />}
       </div>
     );
   }

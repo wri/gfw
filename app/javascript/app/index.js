@@ -1,4 +1,9 @@
 import 'babel-polyfill';
+
+// babel -> core-js shims that aren't yet fully supported
+import 'core-js/modules/es7.promise.finally'; // eslint-disable-line import/no-extraneous-dependencies
+import 'core-js/modules/es7.promise.try'; // eslint-disable-line import/no-extraneous-dependencies
+
 import React from 'react';
 import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
