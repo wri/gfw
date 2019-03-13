@@ -97,9 +97,9 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
-    "@fullpage/react-fullpage": "^0.1.13",
     "@deck.gl/experimental-layers": "^6.4.5",
     "@deck.gl/mapbox": "^6.4.5",
+    "@fullpage/react-fullpage": "^0.1.13",
     "@loaders.gl/core": "^0.6.2",
     "@luma.gl/constants": "^7.0.0-alpha.3",
     "@mapbox/mapbox-gl-draw": "^1.1.1",

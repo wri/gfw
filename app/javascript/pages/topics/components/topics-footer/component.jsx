@@ -12,7 +12,7 @@ class TopicsFooter extends PureComponent {
   render() {
     const { cards } = this.props;
     return (
-      <div>
+      <div className="section fp-auto-height">
         <div className="row">
           <div className="column small-12">
             <h2>COMMODITIES RELATED TOOLS</h2>

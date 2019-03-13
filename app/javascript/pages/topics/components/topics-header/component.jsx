@@ -15,7 +15,7 @@ import './styles.scss';
 
 class TopicsHeader extends PureComponent {
   render() {
-    const { topics, intro } = this.props;
+    const { topics, intro, fullpageApi } = this.props;
     return (
       <Section className="fp-auto-height-responsive topics-header">
         <div className="intro-top">
@@ -34,8 +34,7 @@ class TopicsHeader extends PureComponent {
               <div className="scrollToDiscover">
                 <Button
                   onClick={() => {
-                    /* global $ */
-                    $('#fullpage').fullpage.moveSectionDown();
+                    fullpageApi.moveSectionDown();
                   }}
                 >
                   <Icon icon={arrowIcon} />
@@ -52,7 +51,8 @@ class TopicsHeader extends PureComponent {
 
 TopicsHeader.propTypes = {
   topics: PropTypes.array,
-  intro: PropTypes.object
+  intro: PropTypes.object,
+  fullpageApi: PropTypes.object
 };
 
 export default TopicsHeader;
