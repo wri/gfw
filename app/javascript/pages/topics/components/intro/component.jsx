@@ -1,15 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import './styles.scss';
 
 class Intro extends PureComponent {
   render() {
-    const { intro } = this.props;
+    const { intro, className } = this.props;
     const { img, title, text } = intro;
 
     return (
-      <div className="c-topics-intro">
+      <div className={cx('c-topics-intro', className)}>
         <div className="row titleRow">
           <div className="column small-12 medium-6 titleCol">
             <div className="intro-img-wrapper">
@@ -36,7 +37,8 @@ class Intro extends PureComponent {
 }
 
 Intro.propTypes = {
-  intro: PropTypes.object
+  intro: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default Intro;

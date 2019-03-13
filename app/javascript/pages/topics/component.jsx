@@ -94,6 +94,7 @@ class TopicsPage extends PureComponent {
                       topics={links}
                       intro={intro}
                       fullpageApi={fullpageApi}
+                      title={title}
                     />
                     <div className="section">
                       {slides &&

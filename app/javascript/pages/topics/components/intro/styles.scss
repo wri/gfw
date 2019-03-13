@@ -36,6 +36,15 @@
     }
   }
 
+  &.water {
+    .intro-img {
+      top: 0;
+      left: 100px;
+      width: 60%;
+      padding-right: 0;
+    }
+  }
+
   .intro-title {
     font-size: 36px;
     font-weight: 300;
