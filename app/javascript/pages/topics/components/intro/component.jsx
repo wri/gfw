@@ -1,33 +1,22 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import tiger from 'pages/topics/assets/biodiversity/tiger.png';
-import tiger2x from 'pages/topics/assets/biodiversity/tiger@2x.png';
 
 import './styles.scss';
 
 class Intro extends PureComponent {
   render() {
     const { intro } = this.props;
-    const { img, title, text, alt } = intro;
-    const images = {
-      '1x': {
-        tiger
-      },
-      '2x': {
-        tiger: tiger2x
-      }
-    };
+    const { img, title, text } = intro;
+
     return (
       <div className="c-topics-intro">
         <div className="row titleRow">
           <div className="column small-12 medium-6 titleCol">
             <div className="intro-img-wrapper">
               <div className="intro-img">
-                <img
-                  srcSet={`${images['1x'][img]} 1x, ${images['2x'][img]} 2x`}
-                  src={images['1x'][img]}
-                  alt={alt}
-                />
+                <svg viewBox={img.viewBox || '0 0 32 32'}>
+                  <use xlinkHref={`#${img.id || img}`} />
+                </svg>
               </div>
             </div>
           </div>

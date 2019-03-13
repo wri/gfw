@@ -4,11 +4,11 @@ import carbonImage from 'pages/topics/assets/climate/cards/carbon.png';
 import calculateImage from 'pages/topics/assets/climate/cards/calculate.png';
 import insightsImage from 'pages/topics/assets/climate/cards/insights.png';
 import researchImage from 'pages/topics/assets/climate/cards/research.png';
+import climate from 'pages/topics/assets/climate/climate-leaf.svg';
 
 export default {
   intro: {
-    img: '',
-    alt: '',
+    img: climate,
     title:
       'Forests can provide 30% of the solution needed to meet climate goals of staying below 2C of warming.',
     text:

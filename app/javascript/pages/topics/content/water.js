@@ -1,11 +1,11 @@
 import healthImage from 'pages/topics/assets/water/cards/health.png';
 import solutionsImage from 'pages/topics/assets/water/cards/solutions.png';
 import learnImage from 'pages/topics/assets/water/cards/learn.png';
+import water from 'pages/topics/assets/water/water.svg';
 
 export default {
   intro: {
-    img: '',
-    alt: '',
+    img: water,
     title:
       'Nearly 20% of the worlds population will be at-risk for floods by 2050',
     text:

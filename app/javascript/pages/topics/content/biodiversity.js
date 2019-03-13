@@ -1,11 +1,11 @@
 import investigateImage from 'pages/topics/assets/biodiversity/cards/investigate.png';
 import exploreImage from 'pages/topics/assets/biodiversity/cards/explore.png';
 import tigersImage from 'pages/topics/assets/biodiversity/cards/tigers.png';
+import tiger from 'pages/topics/assets/biodiversity/tiger.svg';
 
 export default {
   intro: {
-    img: 'tiger',
-    alt: 'sad tiger',
+    img: tiger,
     title: '80% of terrestrial species live in forests.',
     text:
       'We are currently undergoing the sixth great mass extinction of species. Human activity is driving extinction at a rate 1,000 to 10,000 times beyond natural levels. Protecting forest habitats is key to protecting our planet’s remaining biodiversity.'
