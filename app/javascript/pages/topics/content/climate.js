@@ -46,12 +46,57 @@ export default {
   ],
   cards: [
     {
-      id: 'example',
-      title: 'Card title',
+      id: 'carbon',
+      title: 'View carbon and emissions statistics',
       summary:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus laoreet erat vitae sapien tempor viverra. Aenean id nisi mauris. Nunc ultricies, mauris elementum lobortis dictum.',
-      extLink: '',
+        'Find answers to questions about carbon and emissions globally, by country or even subnationally.',
+      extLink: 'http://bit.ly/2TeK815',
+      image: carbonImage
+    },
+    {
+      id: 'monitor',
+      title: 'Monitor progress in real time',
+      summary:
+        'The political will to reduce tropical deforestation has never been higher. Are countries on track to meet commitments? Track progress in near-real time with weekly deforestation alerts - just select a country',
+      extLink: 'http://bit.ly/2TeK815',
       image: monitorImage
+    },
+    {
+      id: 'explore',
+      title: 'Explore data on the map',
+      summary: 'View biomass density and loss, emissions and more.',
+      extLink: 'http://bit.ly/2TeJQY3',
+      image: exploreImage
+    },
+    {
+      id: 'research',
+      title: 'The latest research and insights from GFW',
+      summary: 'Read about forests and climate on the GFW blog.',
+      extLink: 'http://bit.ly/2TeJQY3',
+      image: researchImage
+    },
+    {
+      id: 'calculate',
+      title: 'Calculate emissions from deforestation',
+      summary:
+        'Create a customized Forest Monitoring Report with the latest forest-related emissions.',
+      extLink: 'http://bit.ly/2TeJQY3',
+      image: calculateImage
+    },
+    {
+      id: 'insights',
+      title: 'Build your own insights',
+      summary:
+        'Use the custom dataset downloader to find information related to forests and climate.',
+      extLink: 'http://bit.ly/2TeJQY3',
+      image: insightsImage
+    },
+    {
+      id: 'feedback',
+      title:
+        'What other biodiversity data and analysis would you like to see on GFW?',
+      summary: 'Tell us!',
+      extLink: ''
     }
   ]
 };

@@ -42,10 +42,25 @@ export default {
   ],
   cards: [
     {
-      id: 'example',
-      title: 'Card title',
+      id: 'health',
+      title: 'How healthy is your watershed? ',
+      summary: 'Measure forest and track recent forest loss in your watershed.',
+      extLink: '',
+      image: healthImage
+    },
+    {
+      id: 'solutions',
+      title: 'Forest solutions for healthy watersheds ',
       summary:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus laoreet erat vitae sapien tempor viverra. Aenean id nisi mauris. Nunc ultricies, mauris elementum lobortis dictum.',
+        'Learn about options for mitigating risks to watersheds and read case studies.',
+      extLink: '',
+      image: solutionsImage
+    },
+    {
+      id: 'feedback',
+      title:
+        'What other water-related data and analysis would you like to see on GFW? ',
+      summary: 'Tell us!',
       extLink: ''
     }
   ]

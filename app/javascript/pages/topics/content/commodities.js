@@ -57,18 +57,18 @@ export default {
       image: investigateImage
     },
     {
+      id: 'learn',
+      title: 'Learn more',
+      summary: 'Read about forests and commodities on the GFW blog.',
+      extLink: '',
+      image: learnImage
+    },
+    {
       id: 'feedback',
       title:
         'What other commodities data and analysis would you like to see on GFW?',
       summary: 'Tell us!',
-      extLink: '',
-      image: learnImage
+      extLink: ''
     }
-    // {
-    //   id: 'concessions',
-    //   title: 'High risk concessions',
-    //   summary: 'View concessions within intact forest landscapes, peat or primary forest with the most deforestation alerts.',
-    //   extLink: ''
-    // }
   ]
 };
