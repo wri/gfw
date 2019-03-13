@@ -39,6 +39,10 @@ class TopicsPage extends PureComponent {
       return true;
     }
 
+    if (origin.anchor !== 'slides') {
+      return true;
+    }
+
     if (direction === 'down' && origin.anchor === 'slides' && slide !== 3) {
       this.fullpageApi.moveSlideRight();
       return false;

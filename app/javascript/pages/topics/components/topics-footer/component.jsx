@@ -12,10 +12,10 @@ class TopicsFooter extends PureComponent {
   render() {
     const { cards } = this.props;
     return (
-      <div className="section fp-auto-height">
+      <div className="c-topics-footer section fp-auto-height-responsive">
         <div className="row">
           <div className="column small-12">
-            <h2>COMMODITIES RELATED TOOLS</h2>
+            <h2 className="footer-title">COMMODITIES RELATED TOOLS</h2>
           </div>
         </div>
         <Carousel>
