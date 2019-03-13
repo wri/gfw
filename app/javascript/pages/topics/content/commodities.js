@@ -6,9 +6,9 @@ import digger from 'pages/topics/assets/commodities/digger.svg';
 export default {
   intro: {
     img: digger,
-    title: '27% of global tree cover loss is commodity-driven deforestation.',
+    title: '27% of global deforestation is commodity-driven.',
     text:
-      'Production of commodities including beef, soy, palm oil, pulp, paper, energy and minerals,  is the leading cause of deforestation.  More sustainable commodity production is critical for conserving forests and mitigating climate change.'
+      'Production of commodities including beef, soy, palm oil, pulp, paper, energy and minerals, is the leading cause of deforestation. More sustainable commodity production is critical for conserving forests and mitigating climate change.'
   },
   slides: [
     {

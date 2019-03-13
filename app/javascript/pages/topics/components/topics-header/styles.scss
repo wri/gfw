@@ -1,38 +1,25 @@
 @import '~styles/settings.scss';
 
-.cover-texts {
-  h1 {
-    font-weight: 300;
+.c-topics-header {
+  .scroll-to-discover {
+    margin: 130px 0 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .scroll-btn {
+      height: 46px;
+      width: 46px;
+      border-radius: 50px;
+      margin-bottom: rem(20px);
+    }
+
+    p {
+      font-size: 14px;
+      color: #555;
+    }
   }
 
-  p {
-    line-height: 30px;
-    font-size: 18px;
-    font-weight: normal;
-  }
-}
-
-.scrollToDiscover {
-  margin: 130px 0 100px;
-  // padding-bottom: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .c-button {
-    height: 46px;
-    width: 46px;
-    border-radius: 50px;
-    margin-bottom: rem(20px);
-  }
-
-  p {
-    font-size: 14px;
-    color: #555;
-  }
-}
-
-.topics-header {
   .fp-tableCell {
     justify-content: space-between !important;
   }

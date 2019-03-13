@@ -10,7 +10,7 @@ export default {
   intro: {
     img: climate,
     title:
-      'Forests can provide 30% of the solution needed to meet climate goals of staying below 2C of warming.',
+      'Forests can provide 30% of the solution to keeping global warming below 2°C.',
     text:
       'Forests remove and store carbon from the atmosphere, representing cost-effective solution for mitigating climate change. The loss or degredation of forests compromises their ability to remove emissions.'
   },

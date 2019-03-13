@@ -17,7 +17,7 @@ class TopicsHeader extends PureComponent {
   render() {
     const { topics, intro, fullpageApi } = this.props;
     return (
-      <Section className="fp-auto-height-responsive topics-header">
+      <Section className="c-topics-header">
         <div className="intro-top">
           <Cover
             title="Topics"
@@ -31,8 +31,9 @@ class TopicsHeader extends PureComponent {
         <div className="intro-bottom">
           <div className="row">
             <div className="column small-12 medium-12">
-              <div className="scrollToDiscover">
+              <div className="scroll-to-discover">
                 <Button
+                  className="scroll-btn"
                   onClick={() => {
                     fullpageApi.moveSectionDown();
                   }}

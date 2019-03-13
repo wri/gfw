@@ -5,7 +5,6 @@
 
   .titleRow {
     padding-top: 30px;
-    // padding: 0 $mobile-gutter;
 
     @media screen and (min-width: $screen-m) {
       margin-top: 70px;
@@ -45,17 +44,16 @@
     max-width: 400px;
 
     @media screen and (min-width: $screen-m) {
-      font-size: 48px;
-      line-height: 54px;
-      padding: rem(10px) 0;
+      font-size: 36px;
+      padding: rem(30px) 0;
     }
   }
 
   .intro-text {
     color: $slate-light;
     font-size: 16px;
-    font-weight: 300;
-    margin-top: 18px;
+    line-height: 1.5;
+    margin-top: 20px;
     max-width: 400px;
   }
 }
