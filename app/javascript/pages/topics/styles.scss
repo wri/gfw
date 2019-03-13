@@ -41,6 +41,13 @@
     }
   }
 
+  // overwrite library styles	  .fp-slidesContainer {
+  .fp-tableCell {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .fp-slidesContainer {
     transform: none !important;
     width: 100% !important;
