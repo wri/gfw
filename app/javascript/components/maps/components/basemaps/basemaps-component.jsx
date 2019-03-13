@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
+import Button from 'components/ui/button';
 import closeIcon from 'assets/icons/close.svg';
+import infoIcon from 'assets/icons/info.svg';
 
 import './styles.scss';
 
@@ -22,7 +24,8 @@ class Basemaps extends React.PureComponent {
     selectBoundaries: PropTypes.func.isRequired,
     activeBoundaries: PropTypes.object,
     isDesktop: PropTypes.bool,
-    getTooltipContentProps: PropTypes.func.isRequired
+    getTooltipContentProps: PropTypes.func.isRequired,
+    setModalMetaSettings: PropTypes.func
   };
 
   renderButtonBasemap(item) {
@@ -90,7 +93,8 @@ class Basemaps extends React.PureComponent {
       boundaries,
       basemaps,
       labels,
-      isDesktop
+      isDesktop,
+      setModalMetaSettings
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -106,6 +110,15 @@ class Basemaps extends React.PureComponent {
             <div className="basemaps-header">
               <h2 className="basemaps-title">Basemap Options</h2>
               <div className="basemaps-actions">
+                <Button
+                  className="info-btn"
+                  theme="theme-button-tiny theme-button-grey-filled square"
+                  onClick={() =>
+                    setModalMetaSettings({ metakey: 'flagship_basemaps' })
+                  }
+                >
+                  <Icon icon={infoIcon} />
+                </Button>
                 <button className="basemaps-action-button" onClick={onClose}>
                   <Icon icon={closeIcon} />
                 </button>
