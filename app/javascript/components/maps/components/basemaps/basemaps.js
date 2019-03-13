@@ -28,6 +28,19 @@ class BasemapsContainer extends React.Component {
         },
         label: label.value
       });
+    } else if (basemap.value === 'planet') {
+      const month = 12;
+      setMapSettings({
+        basemap: {
+          value: basemap.value,
+          year,
+          month,
+          url: basemap.url
+            .replace('{year}', year || 2018)
+            .replace('{month}', month)
+        },
+        label: label.value
+      });
     } else {
       setMapSettings({ basemap: { value: basemap.value }, label: label.value });
     }

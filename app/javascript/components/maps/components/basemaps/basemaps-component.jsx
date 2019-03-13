@@ -5,6 +5,7 @@ import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
 import closeIcon from 'assets/icons/close.svg';
+import moment from 'moment';
 
 import './styles.scss';
 
@@ -46,12 +47,18 @@ class Basemaps extends React.PureComponent {
 
   renderDropdownBasemap(item) {
     const { selectBasemap, activeBasemap, landsatYears, basemaps } = this.props;
+    const planetYears = [2016, 2017, 2018].map(y => ({ value: y, label: y }));
+    const isPlanet = item.value === 'planet';
     const year = activeBasemap.year || landsatYears[0].value;
+    const month = isPlanet && (activeBasemap.month || 12);
+    const basemap = basemaps[item.value]
+      ? basemaps[item.value]
+      : basemaps.landsat;
 
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(basemaps.landsat, year)}
+        onClick={() => selectBasemap(basemap, year, month)}
       >
         <div
           className="basemaps-list-item-image"
@@ -64,14 +71,26 @@ class Basemaps extends React.PureComponent {
           onClick={e => e.stopPropagation()}
         >
           {item.label}
+          {isPlanet && (
+            <Dropdown
+              className="landsat-selector"
+              theme="theme-dropdown-native-inline"
+              value={year}
+              options={moment
+                .months()
+                .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
+              onChange={value =>
+                selectBasemap(basemap, year, parseInt(value, 10))
+              }
+              native
+            />
+          )}
           <Dropdown
             className="landsat-selector"
             theme="theme-dropdown-native-inline"
             value={year}
-            options={landsatYears}
-            onChange={value =>
-              selectBasemap(basemaps.landsat, parseInt(value, 10))
-            }
+            options={isPlanet ? planetYears : landsatYears}
+            onChange={value => selectBasemap(basemap, parseInt(value, 10))}
             native
           />
         </span>
