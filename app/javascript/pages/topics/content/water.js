@@ -1,5 +1,6 @@
 import healthImage from 'pages/topics/assets/water/cards/health.png';
 import solutionsImage from 'pages/topics/assets/water/cards/solutions.png';
+import learnImage from 'pages/topics/assets/water/cards/learn.png';
 
 export default {
   intro: {
@@ -50,11 +51,18 @@ export default {
     },
     {
       id: 'solutions',
-      title: 'Forest solutions for healthy watersheds ',
+      title: 'Forest solutions for healthy watersheds',
       summary:
         'Learn about options for mitigating risks to watersheds and read case studies.',
       extLink: '',
       image: solutionsImage
+    },
+    {
+      id: 'learn',
+      title: 'Learn more',
+      summary: 'Read about how forests can benefit water supply globally.',
+      extLink: '',
+      image: learnImage
     },
     {
       id: 'feedback',
