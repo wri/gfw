@@ -69,7 +69,7 @@ class TopicsPage extends PureComponent {
   };
 
   render() {
-    const { links, topicData } = this.props;
+    const { links, topicData, title } = this.props;
     const { cards, slides, intro } = topicData || {};
     const { slideLeaving } = this.state;
 
@@ -128,7 +128,7 @@ class TopicsPage extends PureComponent {
                           </div>
                         ))}
                     </div>
-                    <TopicsFooter cards={cards} />
+                    <TopicsFooter cards={cards} topic={title} />
                   </ReactFullpage.Wrapper>
                 );
               }}
@@ -142,7 +142,8 @@ class TopicsPage extends PureComponent {
 
 TopicsPage.propTypes = {
   links: PropTypes.array.isRequired,
-  topicData: PropTypes.object
+  topicData: PropTypes.object,
+  title: PropTypes.string
 };
 
 export default TopicsPage;
