@@ -6,6 +6,7 @@ import cx from 'classnames';
 
 import './card-styles.scss';
 import './themes/card-small.scss';
+import './themes/card-dark.scss';
 
 class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function

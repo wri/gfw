@@ -103,6 +103,7 @@ export default {
         'What other biodiversity data and analysis would you like to see on GFW?',
       summary: 'Tell us!',
       extLink: '',
+      theme: 'theme-card-dark',
       btnText: 'feedback'
     }
   ]

@@ -26,6 +26,7 @@ class TopicsFooter extends PureComponent {
                   <div key={c.id}>
                     <Card
                       key={c.title}
+                      theme={c.theme}
                       data={{
                         ...c,
                         buttons: [

@@ -73,6 +73,7 @@ export default {
         'What other water-related data and analysis would you like to see on GFW? ',
       summary: 'Tell us!',
       extLink: '',
+      theme: 'theme-card-dark',
       btnText: 'feedback'
     }
   ]

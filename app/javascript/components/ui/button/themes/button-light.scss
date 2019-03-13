@@ -1,7 +1,7 @@
 @import '~styles/settings';
 
 .theme-button-light {
-  background-color: transparent;
+  background-color: $white;
   color: $slate;
   border: solid 1px $green-gfw;
   text-transform: uppercase;
