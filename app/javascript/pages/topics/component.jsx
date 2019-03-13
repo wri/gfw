@@ -36,6 +36,7 @@ class TopicsPage extends PureComponent {
 
     if (this.state.skip) {
       this.setState({ skip: false, slideLeaving: slide });
+      this.fullpageApi.moveTo('slides', 3);
       return true;
     }
 
@@ -79,8 +80,8 @@ class TopicsPage extends PureComponent {
           <div className="l-topics-page">
             <Header isMobile={!isDesktop} />
             <ReactFullpage
-              scrollOverflow
               pluginWrapper={pluginWrapper}
+              scrollOverflow
               anchors={anchors}
               onLeave={this.handleLeave}
               onSlideLeave={this.handleSlideLeave}
