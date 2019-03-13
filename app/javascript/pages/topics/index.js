@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 
 import Biodiversity from 'pages/topics/content/biodiversity';
 import Commodities from 'pages/topics/content/commodities';
-import Climate from 'pages/topics/content/climate.json';
-import Water from 'pages/topics/content/water.json';
+import Climate from 'pages/topics/content/climate';
+import Water from 'pages/topics/content/water';
 
 import PageComponent from './component';
 
