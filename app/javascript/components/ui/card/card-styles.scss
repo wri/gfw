@@ -8,7 +8,7 @@ $summary-color: #aaa;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: $grey-light;
+  background-color: $white;
   border: solid 1px $border;
 
   &.active {
@@ -41,12 +41,12 @@ $summary-color: #aaa;
   }
 
   .body {
-    padding: rem(20px) rem(15px) rem(15px);
+    padding: rem(15px) rem(20px) rem(15px);
     border-top: 0;
     z-index: 2;
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(30px) rem(25px) rem(25px);
+      padding: rem(20px) rem(40px) rem(25px);
     }
 
     span {
@@ -58,16 +58,14 @@ $summary-color: #aaa;
 
     .title {
       margin-bottom: rem(15px);
-      font-size: rem(28px);
-      line-height: 1.25;
-      letter-spacing: -0.4px;
+      font-size: rem(30px);
       font-weight: 300;
     }
 
     .summary {
       font-size: rem(16px);
       margin-bottom: rem(20px);
-      line-height: 1.9;
+      line-height: 1.5;
       height: rem(80px);
       overflow: hidden;
     }

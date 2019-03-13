@@ -14,7 +14,7 @@
   .slick-slide {
     padding: 0 rem(5px);
     opacity: 0.5;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
 
     @media screen and (min-width: $screen-xl) {
       padding: 0 rem(20px);
