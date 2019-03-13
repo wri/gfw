@@ -51,7 +51,8 @@ export default {
       summary:
         'Find answers to questions about carbon and emissions globally, by country or even subnationally.',
       extLink: 'http://bit.ly/2TeK815',
-      image: carbonImage
+      image: carbonImage,
+      btnText: 'view data'
     },
     {
       id: 'monitor',
@@ -59,21 +60,24 @@ export default {
       summary:
         'The political will to reduce tropical deforestation has never been higher. Are countries on track to meet commitments? Track progress in near-real time with weekly deforestation alerts - just select a country',
       extLink: 'http://bit.ly/2TeK815',
-      image: monitorImage
+      image: monitorImage,
+      btnText: 'view data'
     },
     {
       id: 'explore',
       title: 'Explore data on the map',
       summary: 'View biomass density and loss, emissions and more.',
       extLink: 'http://bit.ly/2TeJQY3',
-      image: exploreImage
+      image: exploreImage,
+      btnText: 'view on map'
     },
     {
       id: 'research',
       title: 'The latest research and insights from GFW',
       summary: 'Read about forests and climate on the GFW blog.',
       extLink: 'http://bit.ly/2TeJQY3',
-      image: researchImage
+      image: researchImage,
+      btnText: 'read the blog'
     },
     {
       id: 'calculate',
@@ -81,7 +85,8 @@ export default {
       summary:
         'Create a customized Forest Monitoring Report with the latest forest-related emissions.',
       extLink: 'http://bit.ly/2TeJQY3',
-      image: calculateImage
+      image: calculateImage,
+      btnText: 'view data'
     },
     {
       id: 'insights',
@@ -89,14 +94,16 @@ export default {
       summary:
         'Use the custom dataset downloader to find information related to forests and climate.',
       extLink: 'http://bit.ly/2TeJQY3',
-      image: insightsImage
+      image: insightsImage,
+      btnText: 'view data'
     },
     {
       id: 'feedback',
       title:
         'What other biodiversity data and analysis would you like to see on GFW?',
       summary: 'Tell us!',
-      extLink: ''
+      extLink: '',
+      btnText: 'feedback'
     }
   ]
 };

@@ -46,7 +46,8 @@ export default {
       title: 'Explore data on the map',
       summary: 'View commodity production areas, tree cover loss and more.',
       extLink: '/map',
-      image: exploreImage
+      image: exploreImage,
+      btnText: 'view on map'
     },
     {
       id: 'analysis',
@@ -54,21 +55,24 @@ export default {
       summary:
         'View recent deforestation alerts and satellite imagery and and subscribe to alerts.',
       extLink: 'http://bit.ly/2TcafWm',
-      image: investigateImage
+      image: investigateImage,
+      btnText: 'view on map'
     },
     {
       id: 'learn',
       title: 'Learn more',
       summary: 'Read about forests and commodities on the GFW blog.',
       extLink: '',
-      image: learnImage
+      image: learnImage,
+      btnText: 'read the blog'
     },
     {
       id: 'feedback',
       title:
         'What other commodities data and analysis would you like to see on GFW?',
       summary: 'Tell us!',
-      extLink: ''
+      extLink: '',
+      btnText: 'feedback'
     }
   ]
 };

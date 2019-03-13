@@ -31,7 +31,7 @@ class TopicsFooter extends PureComponent {
                         buttons: [
                           {
                             className: 'read-more',
-                            text: 'READ MORE',
+                            text: c.btnText || 'READ MORE',
                             extLink: c.extLink
                           }
                         ]

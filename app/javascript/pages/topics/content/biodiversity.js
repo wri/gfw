@@ -47,7 +47,8 @@ export default {
       summary:
         'View recent deforestation alerts and satellite imagery and and subscribe to alerts',
       extLink: 'http://bit.ly/2TeK815',
-      image: investigateImage
+      image: investigateImage,
+      btnText: 'view on map'
     },
     {
       id: 'map',
@@ -55,7 +56,8 @@ export default {
       summary:
         'View important areas for biodiversity, biodiversity hotspots and more',
       extLink: 'http://bit.ly/2TeK815',
-      image: exploreImage
+      image: exploreImage,
+      btnText: 'view on map'
     },
     {
       id: 'tigers',
@@ -63,14 +65,16 @@ export default {
       summary:
         '13 countries aim to double the wild tiger population by 2022 - the next year of the tiger. View tree cover loss in the past year in important tiger habitat.',
       extLink: 'http://bit.ly/2TeJQY3',
-      image: tigersImage
+      image: tigersImage,
+      btnText: 'view on map'
     },
     {
       id: 'feedback',
       title:
         'What other biodiversity data and analysis would you like to see on GFW?',
       summary: 'Tell us!',
-      extLink: ''
+      extLink: '',
+      btnText: 'feedback'
     }
   ]
 };

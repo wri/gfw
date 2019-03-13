@@ -47,7 +47,8 @@ export default {
       title: 'How healthy is your watershed? ',
       summary: 'Measure forest and track recent forest loss in your watershed.',
       extLink: '',
-      image: healthImage
+      image: healthImage,
+      btnText: 'view on map'
     },
     {
       id: 'solutions',
@@ -55,21 +56,24 @@ export default {
       summary:
         'Learn about options for mitigating risks to watersheds and read case studies.',
       extLink: '',
-      image: solutionsImage
+      image: solutionsImage,
+      btnText: 'view data'
     },
     {
       id: 'learn',
       title: 'Learn more',
       summary: 'Read about how forests can benefit water supply globally.',
       extLink: '',
-      image: learnImage
+      image: learnImage,
+      btnText: 'view data'
     },
     {
       id: 'feedback',
       title:
         'What other water-related data and analysis would you like to see on GFW? ',
       summary: 'Tell us!',
-      extLink: ''
+      extLink: '',
+      btnText: 'feedback'
     }
   ]
 };
