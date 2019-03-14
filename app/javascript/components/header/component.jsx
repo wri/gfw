@@ -26,6 +26,8 @@ class Header extends PureComponent {
       setShowPanel,
       setShowMyGfw,
       setShowLangSelector,
+      setActiveNavItem,
+      activeNavItem,
       showPanel,
       showMyGfw,
       showLangSelector,
@@ -112,9 +114,41 @@ class Header extends PureComponent {
                               {item.label}
                             </NavLink>
                           ) : (
-                            <a href={item.path} className="nav-link">
-                              {item.label}
-                            </a>
+                            <Fragment>
+                              {item.submenu && (
+                                <Fragment>
+                                  <button
+                                    className="nav-link"
+                                    onClick={() =>
+                                      setActiveNavItem(
+                                        item.label === activeNavItem
+                                          ? null
+                                          : item.label
+                                      )
+                                    }
+                                  >
+                                    {item.label}
+                                    <Icon
+                                      className={cx('icon-arrow', {
+                                        active: activeNavItem === item.label
+                                      })}
+                                      icon={arrowIcon}
+                                    />
+                                  </button>
+                                  {activeNavItem === item.label && (
+                                    <DropdownMenu
+                                      className="sub-menu"
+                                      options={item.submenu}
+                                    />
+                                  )}
+                                </Fragment>
+                              )}
+                              {!item.submenu && (
+                                <a href={item.path} className="nav-link">
+                                  {item.label}
+                                </a>
+                              )}
+                            </Fragment>
                           )}
                         </li>
                       ))}
@@ -234,7 +268,9 @@ Header.propTypes = {
   toggle: PropTypes.bool,
   useNavLinks: PropTypes.bool,
   isMobile: PropTypes.bool,
-  isMap: PropTypes.bool
+  isMap: PropTypes.bool,
+  setActiveNavItem: PropTypes.func,
+  activeNavItem: PropTypes.string
 };
 
 export default Header;

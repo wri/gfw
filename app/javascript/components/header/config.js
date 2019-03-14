@@ -27,7 +27,25 @@ export default {
     },
     {
       label: 'Topics',
-      path: '/topics'
+      path: '/topics',
+      submenu: [
+        {
+          label: 'Biodiversity',
+          path: '/topics/biodiversity'
+        },
+        {
+          label: 'Climate',
+          path: '/topics/climate'
+        },
+        {
+          label: 'Commodities',
+          path: '/topics/commodities'
+        },
+        {
+          label: 'Water',
+          path: '/topics/water'
+        }
+      ]
     },
     {
       label: 'Blog',

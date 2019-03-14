@@ -39,7 +39,7 @@ class TopicsHeader extends PureComponent {
                 >
                   <Icon icon={arrowIcon} />
                 </Button>
-                <p>Click to discover</p>
+                <p>Scroll to discover</p>
               </div>
             </div>
           </div>
