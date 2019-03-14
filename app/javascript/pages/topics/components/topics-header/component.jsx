@@ -14,7 +14,7 @@ import './styles.scss';
 
 class TopicsHeader extends PureComponent {
   render() {
-    const { topics, intro, fullpageApi, title } = this.props;
+    const { topics, intro, fullpageApi, title, handleSkipToTools } = this.props;
     return (
       <div className="c-topics-header">
         <div className="intro-top">
@@ -25,7 +25,11 @@ class TopicsHeader extends PureComponent {
             bgImage={bgImage}
           />
           <SubnavMenu links={topics} theme="theme-subnav-dark" />
-          <Intro className={title} intro={intro} />
+          <Intro
+            className={title}
+            intro={intro}
+            handleSkipToTools={handleSkipToTools}
+          />
         </div>
         <div className="intro-bottom">
           <div className="row">
@@ -53,7 +57,8 @@ TopicsHeader.propTypes = {
   topics: PropTypes.array,
   intro: PropTypes.object,
   fullpageApi: PropTypes.object,
-  title: PropTypes.string
+  title: PropTypes.string,
+  handleSkipToTools: PropTypes.func
 };
 
 export default TopicsHeader;

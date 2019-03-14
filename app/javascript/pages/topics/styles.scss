@@ -19,12 +19,6 @@
   }
 
   .topics-btn {
-    color: $slate-light;
-    border: 1px solid #97bd3d;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 500;
-
     @media screen and (min-width: $screen-m) {
       position: absolute;
       bottom: calc(100px - 2.5rem);

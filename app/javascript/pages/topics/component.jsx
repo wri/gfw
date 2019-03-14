@@ -45,6 +45,11 @@ class TopicsPage extends PureComponent {
     const slide =
       (location && location.length > 1 && parseInt(location[1], 10)) || 0;
 
+    if (origin.anchor === 'intro' && destination.anchor === 'footer') {
+      this.setState({ skip: false });
+      return true;
+    }
+
     if (this.state.skip) {
       this.setState({ skip: false, slideLeaving: slide });
       this.fullpageApi.moveTo('slides', 3);
@@ -80,6 +85,12 @@ class TopicsPage extends PureComponent {
     this.setState({ slideLeaving: origin.index });
   };
 
+  handleSkipToTools = () => {
+    this.setState({ skip: true }, () => {
+      this.fullpageApi.moveTo('footer');
+    });
+  };
+
   render() {
     const { links, topicData, title } = this.props;
     const { cards, slides, intro } = topicData || {};
@@ -109,6 +120,7 @@ class TopicsPage extends PureComponent {
                         intro={intro}
                         fullpageApi={fullpageApi}
                         title={title}
+                        handleSkipToTools={this.handleSkipToTools}
                       />
                     </div>
                     <div className="section">
@@ -127,12 +139,8 @@ class TopicsPage extends PureComponent {
                                     subtitle={s.subtitle}
                                   />
                                   <Button
-                                    theme="theme-button-grey topics-btn"
-                                    onClick={() => {
-                                      this.setState({ skip: true }, () => {
-                                        fullpageApi.moveTo('footer');
-                                      });
-                                    }}
+                                    theme="theme-button-light topics-btn"
+                                    onClick={this.handleSkipToTools}
                                   >
                                     Related tools
                                   </Button>
