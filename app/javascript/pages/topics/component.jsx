@@ -24,10 +24,16 @@ const pluginWrapper = () => ({
 
 class TopicsPage extends PureComponent {
   state = {
-    fullpageApi: null,
     skip: false,
     slideLeaving: 0
   };
+
+  componentDidUpdate(prevProps) {
+    const { title } = this.props;
+    if (this.fullpageApi && title !== prevProps.title) {
+      this.fullpageApi.reBuild();
+    }
+  }
 
   handleLeave = (origin, destination, direction) => {
     const location = window.location.hash && window.location.hash.split('/');
@@ -83,6 +89,8 @@ class TopicsPage extends PureComponent {
               pluginWrapper={pluginWrapper}
               scrollOverflow
               anchors={anchors}
+              animateAnchor={false}
+              slidesNavigation
               onLeave={this.handleLeave}
               onSlideLeave={this.handleSlideLeave}
               render={({ fullpageApi }) => {
@@ -90,12 +98,14 @@ class TopicsPage extends PureComponent {
 
                 return (
                   <ReactFullpage.Wrapper>
-                    <TopicsHeader
-                      topics={links}
-                      intro={intro}
-                      fullpageApi={fullpageApi}
-                      title={title}
-                    />
+                    <div className="section">
+                      <TopicsHeader
+                        topics={links}
+                        intro={intro}
+                        fullpageApi={fullpageApi}
+                        title={title}
+                      />
+                    </div>
                     <div className="section">
                       {slides &&
                         slides.map((s, index) => (
@@ -130,7 +140,9 @@ class TopicsPage extends PureComponent {
                           </div>
                         ))}
                     </div>
-                    <TopicsFooter cards={cards} topic={title} />
+                    <div className="section">
+                      <TopicsFooter cards={cards} topic={title} />
+                    </div>
                   </ReactFullpage.Wrapper>
                 );
               }}

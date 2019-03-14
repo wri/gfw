@@ -7,7 +7,7 @@ export default {
   intro: {
     img: water,
     title:
-      "Nearly 20% of the world's population will be at-risk for floods by 2050",
+      "Nearly 20% of the world's population will be at-risk for floods by 2050.",
     text:
       'Forests are a natural, cost-effective way to secure ample, clean water and to protect against natural disasters like floods and droughts.'
   },

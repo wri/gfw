@@ -11,10 +11,10 @@ class TopicsFooter extends PureComponent {
   render() {
     const { cards, topic } = this.props;
     return (
-      <div className="c-topics-footer section">
+      <div className="c-topics-footer">
         <div className="row">
           <div className="column small-12">
-            <h2 className="footer-title">{`${topic} RELATED TOOLS`}</h2>
+            <h3 className="footer-title">{`${topic} RELATED TOOLS`}</h3>
           </div>
         </div>
         <div className="row">
