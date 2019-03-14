@@ -50,7 +50,7 @@ class Basemaps extends React.PureComponent {
     const planetYears = [2016, 2017, 2018].map(y => ({ value: y, label: y }));
     const isPlanet = item.value === 'planet';
     const year = activeBasemap.year || landsatYears[0].value;
-    const month = isPlanet && (activeBasemap.month || 12);
+    const month = isPlanet && (activeBasemap.month || 1);
     const basemap = basemaps[item.value]
       ? basemaps[item.value]
       : basemaps.landsat;
@@ -76,12 +76,16 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 className="landsat-selector"
                 theme="theme-dropdown-native-inline"
-                value={year}
+                value={parseInt(month - 1, 10)}
                 options={moment
                   .months()
                   .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
                 onChange={value =>
-                  selectBasemap(basemap, year, parseInt(value, 10))
+                  selectBasemap(
+                    basemap,
+                    year,
+                    `0${parseInt(value + 1, 10)}`.slice(-2)
+                  )
                 }
                 native
               />
@@ -91,7 +95,9 @@ class Basemaps extends React.PureComponent {
               theme="theme-dropdown-native-inline"
               value={year}
               options={isPlanet ? planetYears : landsatYears}
-              onChange={value => selectBasemap(basemap, parseInt(value, 10))}
+              onChange={value =>
+                selectBasemap(basemap, parseInt(value, 10), month)
+              }
               native
             />
           </div>
