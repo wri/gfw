@@ -31,9 +31,14 @@ class TopicsPage extends PureComponent {
   componentDidUpdate(prevProps) {
     const { title } = this.props;
     if (this.fullpageApi && title !== prevProps.title) {
+      this.resetState();
       this.fullpageApi.reBuild();
     }
   }
+
+  resetState = () => {
+    this.setState({ skip: false, slideLeaving: 0 });
+  };
 
   handleLeave = (origin, destination, direction) => {
     const location = window.location.hash && window.location.hash.split('/');
@@ -125,7 +130,7 @@ class TopicsPage extends PureComponent {
                                     theme="theme-button-grey topics-btn"
                                     onClick={() => {
                                       this.setState({ skip: true }, () => {
-                                        fullpageApi.moveTo('footer', 0);
+                                        fullpageApi.moveTo('footer');
                                       });
                                     }}
                                   >
