@@ -103,7 +103,7 @@ class TopicsPage extends PureComponent {
 
                 return (
                   <ReactFullpage.Wrapper>
-                    <div className="section">
+                    <div className="header-section section">
                       <TopicsHeader
                         topics={links}
                         intro={intro}

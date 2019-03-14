@@ -1,6 +1,11 @@
 @import '~styles/settings.scss';
 
 .c-topics-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
   .scroll-to-discover {
     margin: 130px 0 100px;
     display: flex;
