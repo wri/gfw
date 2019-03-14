@@ -71,7 +71,6 @@ $top-section-height: 125px;
 
   .basemaps-list {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     height: 100%;
@@ -114,8 +113,12 @@ $top-section-height: 125px;
     margin: rem(6px) 0 0;
   }
 
+  .basemaps-list-item-selectors {
+    display: flex;
+  }
+
   .landsat-selector {
     margin-top: rem(3px);
-    width: rem(30px);
+    margin-right: rem(6px);
   }
 }

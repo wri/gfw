@@ -71,28 +71,30 @@ class Basemaps extends React.PureComponent {
           onClick={e => e.stopPropagation()}
         >
           {item.label}
-          {isPlanet && (
+          <div className="basemaps-list-item-selectors">
+            {isPlanet && (
+              <Dropdown
+                className="landsat-selector"
+                theme="theme-dropdown-native-inline"
+                value={year}
+                options={moment
+                  .months()
+                  .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
+                onChange={value =>
+                  selectBasemap(basemap, year, parseInt(value, 10))
+                }
+                native
+              />
+            )}
             <Dropdown
               className="landsat-selector"
               theme="theme-dropdown-native-inline"
               value={year}
-              options={moment
-                .months()
-                .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
-              onChange={value =>
-                selectBasemap(basemap, year, parseInt(value, 10))
-              }
+              options={isPlanet ? planetYears : landsatYears}
+              onChange={value => selectBasemap(basemap, parseInt(value, 10))}
               native
             />
-          )}
-          <Dropdown
-            className="landsat-selector"
-            theme="theme-dropdown-native-inline"
-            value={year}
-            options={isPlanet ? planetYears : landsatYears}
-            onChange={value => selectBasemap(basemap, parseInt(value, 10))}
-            native
-          />
+          </div>
         </span>
       </button>
     );
