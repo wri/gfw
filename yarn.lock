@@ -3927,13 +3927,10 @@ decompress-response@^3.2.0:
   dependencies:
     mimic-response "^1.0.0"
 
-deep-diff@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
-
-deep-diff@^1.0.1:
+deep-diff@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-1.0.2.tgz#afd3d1f749115be965e89c63edc7abb1506b9c26"
+  integrity sha512-aWS3UIVH+NPGCD1kki+DCU9Dua032iSsO43LqQpcs4R3+dVv7tX0qBGjiVHJHjplsoUM2XRO/KB92glqc68awg==
 
 deep-equal@^1.0.1:
   version "1.0.1"
@@ -3951,9 +3948,10 @@ deepmerge@1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-1.3.2.tgz#1663691629d4dbfe364fa12a2a4f0aa86aa3a050"
 
-deepmerge@^2.1.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
+deepmerge@^3.1.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.2.0.tgz#58ef463a57c08d376547f8869fdc5bcee957f44e"
+  integrity sha512-6+LuZGU7QCNUnAJyX8cIrlzoEgggTM6B7mm+znKOX4t5ltluT9KLjN6g61ECMS0LTsLW7yDpNoxhix5FZcrIow==
 
 default-gateway@^2.6.0:
   version "2.7.2"
@@ -5893,7 +5891,7 @@ global-prefix@^1.0.1:
     is-windows "^1.0.1"
     which "^1.2.14"
 
-global@^4.3.0, global@~4.3.0:
+global@^4.3.0:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
   dependencies:
@@ -7050,9 +7048,10 @@ is-installed-globally@0.1.0, is-installed-globally@^0.1.0:
     global-dirs "^0.1.0"
     is-path-inside "^1.0.0"
 
-is-lite@^0.2.0:
+is-lite@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/is-lite/-/is-lite-0.2.2.tgz#e4c6dee53871f26fa7743a469db12fa6158d732e"
+  integrity sha512-CnO9kJOQvaXa9lJK4OSgnpao2XG9EGQHCaaPDCK9gTEqz+duD2hPXtl69Rgq879TUs+76Fuz87XBJ5H9FgYRNA==
 
 is-lower-case@^1.1.0:
   version "1.1.3"
@@ -10011,13 +10010,14 @@ popper.js@^1.11.1:
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.4.tgz#8eec1d8ff02a5a3a152dd43414a15c7b79fd69b6"
 
-popper.js@^1.14.3:
-  version "1.14.5"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.5.tgz#98abcce7c7c34c4ee47fcbc6b3da8af2c0a127bc"
-
 popper.js@^1.14.4:
   version "1.14.6"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.6.tgz#ab20dd4edf9288b8b3b6531c47c361107b60b4b0"
+
+popper.js@^1.14.7:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.7.tgz#e31ec06cfac6a97a53280c3e55e4e0c860e7738e"
+  integrity sha512-4q1hNvoUre/8srWsH7hnoSJ5xVmIL4qgz+s4qf2TnJIMyZFUFMGH+9vE7mXynAlHSZ/NdTmmow86muD0myUkVQ==
 
 portfinder@^1.0.9:
   version "1.0.17"
@@ -11084,12 +11084,6 @@ raf@^3.0.0, raf@^3.4.0:
   dependencies:
     performance-now "^2.1.0"
 
-rafl@~1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/rafl/-/rafl-1.2.2.tgz#fe930f758211020d47e38815f5196a8be4150740"
-  dependencies:
-    global "~4.3.0"
-
 rails-erb-loader@^5.2.1, rails-erb-loader@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/rails-erb-loader/-/rails-erb-loader-5.5.0.tgz#fcf698f693e6a3b9b86d0d657040c2bfd8b88e28"
@@ -11297,15 +11291,17 @@ react-fast-compare@^2.0.2:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
 
-react-floater@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/react-floater/-/react-floater-0.5.5.tgz#52df8403edc1cbf1a9797759f49d4e4066e1d1c6"
+react-floater@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/react-floater/-/react-floater-0.6.4.tgz#12bee84aa798bbc747b551428c04e8fec077bcea"
+  integrity sha512-KCOUpAnd2Y7u6BtfubZ8QqNuBrf3XWjHRMYXxTZXiubXkgrDVD7ipYxn9vBZ2PrFG8qpL89gB0BZWzQf2keaBw==
   dependencies:
-    deepmerge "^2.1.1"
+    deepmerge "^3.1.0"
     exenv "^1.2.2"
-    is-lite "^0.2.0"
-    popper.js "^1.14.3"
+    is-lite "^0.2.2"
+    popper.js "^1.14.7"
     react-proptype-conditional-require "^1.0.4"
+    tree-changes "^0.4.0"
 
 react-ga@2.4.1:
   version "2.4.1"
@@ -11344,21 +11340,27 @@ react-is@^16.5.1:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.5.2.tgz#e2a7b7c3f5d48062eb769fcb123505eb928722e3"
 
-react-joyride@^2.0.0-15:
-  version "2.0.0-15"
-  resolved "https://registry.yarnpkg.com/react-joyride/-/react-joyride-2.0.0-15.tgz#58f9274b8de739b78648ae260826319ea066ae44"
+react-is@^16.8.1:
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
+  integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
+
+react-joyride@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-joyride/-/react-joyride-2.0.5.tgz#902c90d05b37bc7e3db97a7030203669e54a4c0d"
+  integrity sha512-T09B5crC+knRAHhYAv9dYtgPGDTF5eEv1+N3g8JKQwIjl0kLNEnHmfHMLJkeqyrN/lJ/Tz9ywab25PYyplB9pg==
   dependencies:
-    deep-diff "^1.0.1"
-    deepmerge "^2.1.1"
+    deep-diff "^1.0.2"
+    deepmerge "^3.1.0"
     exenv "^1.2.2"
-    is-lite "^0.2.0"
+    is-lite "^0.2.2"
     nested-property "^0.0.7"
-    react-floater "^0.5.5"
-    react-proptype-conditional-require "^1.0.4"
-    scroll "^2.0.3"
+    react-floater "^0.6.4"
+    react-is "^16.8.1"
+    scroll "^3.0.0"
     scroll-doc "^0.2.1"
     scrollparent "^2.0.1"
-    tree-changes "^0.3.2"
+    tree-changes "^0.4.0"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
@@ -12483,11 +12485,10 @@ scroll-doc@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/scroll-doc/-/scroll-doc-0.2.1.tgz#168f9e9ac598743dd682c992839b44a38ce4dd91"
 
-scroll@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/scroll/-/scroll-2.0.3.tgz#0951b785544205fd17753bc3d294738ba16fc2ab"
-  dependencies:
-    rafl "~1.2.1"
+scroll@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/scroll/-/scroll-3.0.1.tgz#d5afb59fb3592ee3df31c89743e78b39e4cd8a26"
+  integrity sha512-pz7y517OVls1maEzlirKO5nPYle9AXsFzTMNJrRGmT951mzpIBy7sNHOg5o/0MQd/NqliCiWnAi0kZneMPFLcg==
 
 scrollparent@^2.0.1:
   version "2.0.1"
@@ -13764,11 +13765,12 @@ traverse@^0.6.6, traverse@~0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
 
-tree-changes@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/tree-changes/-/tree-changes-0.3.2.tgz#ad7d3b499155bd6176f2c9c6a472d8155df0a9ce"
+tree-changes@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/tree-changes/-/tree-changes-0.4.0.tgz#128b5a50862795f5c7818a3583dc4c3fbd54d569"
+  integrity sha512-ayVwCHFCCm2LtaEqf2cbgt9Em8QTnn6nIMFZErAE4XwdPawRmSSE+AUUrt6MZmwxPqELSH3ZAcOTOkpIvCxhew==
   dependencies:
-    deep-diff "^0.3.8"
+    deep-diff "^1.0.2"
     nested-property "0.0.7"
 
 trim-newlines@^1.0.0:
