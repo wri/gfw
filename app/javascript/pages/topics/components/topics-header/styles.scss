@@ -5,17 +5,12 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  margin-bottom: rem(80px);
 
   .scroll-to-discover {
-    margin: 0 0 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    @media screen and (min-width: $screen-m) {
-      margin: 130px 0 120px;
-    }
+    margin: rem(100px) 0;
 
     .scroll-btn {
       height: 46px;

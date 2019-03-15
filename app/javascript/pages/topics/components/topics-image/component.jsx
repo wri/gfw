@@ -116,9 +116,9 @@ class TopicsImage extends PureComponent {
                   top: p.position[1]
                 }}
                 theme="light"
-                trigger="click"
                 interactive
                 arrow
+                sticky
                 html={
                   <div className="c-info-tooltip">
                     <p>{p.content}</p>

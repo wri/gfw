@@ -3,6 +3,10 @@
 .c-topics-image {
   position: relative;
 
+  img {
+    width: 100%;
+  }
+
   .image-info {
     position: absolute;
     z-index: 1;

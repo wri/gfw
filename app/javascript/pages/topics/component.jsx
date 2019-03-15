@@ -103,7 +103,11 @@ class TopicsPage extends PureComponent {
   getSlide = (s, index, isDesktop) => (
     <div
       key={s.subtitle}
-      className={cx({ last: index === 3 }, { slide: isDesktop })}
+      className={cx(
+        'content-section',
+        { last: !isDesktop && index === 3 },
+        { slide: isDesktop }
+      )}
     >
       <div className="row">
         <div className="column small-12 medium-4">
@@ -168,7 +172,6 @@ class TopicsPage extends PureComponent {
               onSlideLeave={this.handleSlideLeave}
               render={({ fullpageApi }) => {
                 this.fullpageApi = fullpageApi;
-
                 return (
                   <ReactFullpage.Wrapper>
                     <div className="header-section section">

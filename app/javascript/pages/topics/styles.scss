@@ -1,14 +1,8 @@
 @import '~styles/settings.scss';
 
 .l-topics-page {
-  @media screen and (min-width: $screen-m) {
-    .header {
-      z-index: 10;
-    }
-
-    .last {
-      margin-bottom: rem(80px);
-    }
+  .last {
+    margin-bottom: rem(80px);
   }
 
   .topic-content {
@@ -17,11 +11,6 @@
     flex-direction: column;
     position: relative;
     justify-content: center;
-    margin-top: 30px;
-
-    @media screen and (min-width: $screen-m) {
-      margin-bottom: 70px;
-    }
   }
 
   .topic-btn {
@@ -35,11 +24,6 @@
 
   .topic-image {
     padding: rem(30px) 0;
-
-    @media screen and (min-width: $screen-m) {
-      padding: rem(30px) 0;
-      padding: 0;
-    }
   }
 
   .related-tools-btn {
@@ -68,6 +52,8 @@
   }
 
   .header-section {
+    z-index: 10;
+
     .fp-tableCell {
       justify-content: space-between;
     }
@@ -80,11 +66,7 @@
   .fp-slidesNav {
     bottom: calc(50% - 50px) !important;
     left: unset !important;
-    right: rem(15px) !important;
-
-    @media screen and (min-width: $screen-m) {
-      right: 40px;
-    }
+    right: rem(20px) !important;
 
     li {
       display: block;
