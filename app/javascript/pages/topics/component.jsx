@@ -147,7 +147,11 @@ class TopicsPage extends PureComponent {
                                 </div>
                               </div>
                               <div className="column small-12 medium-8 topic-image">
-                                <Image url={s.src} description={s.subtitle} />
+                                <Image
+                                  url={s.src}
+                                  description={s.subtitle}
+                                  prompts={s.prompts}
+                                />
                               </div>
                             </div>
                           </div>

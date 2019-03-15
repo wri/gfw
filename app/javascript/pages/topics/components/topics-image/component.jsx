@@ -1,7 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-// import './styles.scss';
+import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
+import infoIcon from 'assets/icons/info.svg';
+import { Tooltip } from 'react-tippy';
+
 // @1x biodiversity
 import bio1 from 'pages/topics/assets/biodiversity/biodiversity1.png';
 import bio2 from 'pages/topics/assets/biodiversity/biodiversity2.png';
@@ -50,6 +54,8 @@ import water2_2x from 'pages/topics/assets/water/water2@2x.png';
 import water3_2x from 'pages/topics/assets/water/water3@2x.png';
 import water4_2x from 'pages/topics/assets/water/water4@2x.png';
 
+import './styles.scss';
+
 class TopicsImage extends PureComponent {
   render() {
     const imgs = {
@@ -90,7 +96,8 @@ class TopicsImage extends PureComponent {
         water4: water4_2x
       }
     };
-    const { url, description } = this.props;
+    const { url, description, prompts } = this.props;
+
     return (
       <div className="c-topics-image">
         <img
@@ -99,6 +106,36 @@ class TopicsImage extends PureComponent {
           src={`${imgs['1x'][url]} 1x`}
           alt={description}
         />
+        {prompts &&
+          prompts.map(p => (
+            <Fragment key={p.id}>
+              <Tooltip
+                className="image-info"
+                style={{
+                  left: p.position[0],
+                  top: p.position[1]
+                }}
+                theme="light"
+                trigger="click"
+                interactive
+                arrow
+                html={
+                  <div className="c-info-tooltip">
+                    <p>{p.content}</p>
+                    {p.link && (
+                      <Button extLink={p.link} theme="theme-button-small">
+                        {p.btnText}
+                      </Button>
+                    )}
+                  </div>
+                }
+              >
+                <Button className="info-btn" theme="theme-button-small square">
+                  <Icon icon={infoIcon} />
+                </Button>
+              </Tooltip>
+            </Fragment>
+          ))}
       </div>
     );
   }
@@ -106,7 +143,8 @@ class TopicsImage extends PureComponent {
 
 TopicsImage.propTypes = {
   url: PropTypes.string.isRequired,
-  description: PropTypes.string
+  description: PropTypes.string,
+  prompts: PropTypes.array
 };
 
 export default TopicsImage;

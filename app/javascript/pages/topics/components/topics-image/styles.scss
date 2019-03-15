@@ -1,23 +1,23 @@
 @import '~styles/settings.scss';
 
-.l-section-about {
-  .intro {
-    margin-top: 30px;
+.c-topics-image {
+  position: relative;
 
-    @media screen and (min-width: $screen-m) {
-      margin-top: 0;
-    }
+  .image-info {
+    position: absolute;
+    z-index: 1;
+    border: solid 15px rgba($white, 0.5);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
   }
+}
 
-  section {
-    &.results {
-      margin-bottom: rem(20px);
-    }
+.c-info-tooltip {
+  padding: rem(20px);
+  text-align: left;
 
-    @media screen and (min-width: $screen-m) {
-      &.results {
-        margin-bottom: rem(60px);
-      }
-    }
+  p {
+    margin-bottom: rem(15px);
   }
 }

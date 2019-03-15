@@ -1,7 +1,7 @@
 import investigateImage from 'pages/topics/assets/commodities/cards/investigate.png';
 import exploreImage from 'pages/topics/assets/commodities/cards/explore.png';
 import learnImage from 'pages/topics/assets/commodities/cards/learn.png';
-import digger from 'pages/topics/assets/commodities/digger.svg';
+import digger from 'pages/topics/assets/commodities/commodities-intro.svg';
 
 export default {
   intro: {

@@ -1,7 +1,7 @@
 import healthImage from 'pages/topics/assets/water/cards/health.png';
 import solutionsImage from 'pages/topics/assets/water/cards/solutions.png';
 import learnImage from 'pages/topics/assets/water/cards/learn.png';
-import water from 'pages/topics/assets/water/water.svg';
+import water from 'pages/topics/assets/water/water-intro.svg';
 
 export default {
   intro: {

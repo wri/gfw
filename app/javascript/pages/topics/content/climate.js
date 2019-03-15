@@ -4,7 +4,7 @@ import carbonImage from 'pages/topics/assets/climate/cards/carbon.png';
 import calculateImage from 'pages/topics/assets/climate/cards/calculate.png';
 import insightsImage from 'pages/topics/assets/climate/cards/insights.png';
 import researchImage from 'pages/topics/assets/climate/cards/research.png';
-import climate from 'pages/topics/assets/climate/climate-leaf.svg';
+import climate from 'pages/topics/assets/climate/climate-intro.svg';
 
 export default {
   intro: {
