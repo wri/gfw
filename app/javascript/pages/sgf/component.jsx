@@ -6,6 +6,7 @@ import About from 'pages/sgf/section-about';
 import Apply from 'pages/sgf/section-apply';
 
 import Cover from 'components/cover';
+import Cookies from 'components/cookies';
 import SubnavMenu from 'components/subnav-menu';
 
 import bgImage from './header-bg';
@@ -36,6 +37,7 @@ class Page extends PureComponent {
         <div className="l-main">
           <SectionComponent />
         </div>
+        <Cookies />
       </div>
     );
   }
