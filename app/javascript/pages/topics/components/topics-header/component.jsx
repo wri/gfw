@@ -39,25 +39,23 @@ class TopicsHeader extends PureComponent {
             isDesktop={isDesktop}
           />
         </div>
-        {isDesktop && (
-          <div className="intro-bottom">
-            <div className="row">
-              <div className="column small-12 medium-12">
-                <div className="scroll-to-discover">
-                  <Button
-                    className="scroll-btn"
-                    onClick={() => {
-                      fullpageApi.moveSectionDown();
-                    }}
-                  >
-                    <Icon icon={arrowIcon} />
-                  </Button>
-                  <p>Scroll to discover</p>
-                </div>
+        <div className="intro-bottom">
+          <div className="row">
+            <div className="column small-12 medium-12">
+              <div className="scroll-to-discover">
+                <Button
+                  className="scroll-btn"
+                  onClick={() => {
+                    fullpageApi.moveSectionDown();
+                  }}
+                >
+                  <Icon icon={arrowIcon} />
+                </Button>
+                <p>Scroll to discover</p>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     );
   }

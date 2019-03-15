@@ -2,12 +2,6 @@
 
 .c-topics-image {
   position: relative;
-  padding: rem(30px) 0;
-
-  @media screen and (min-width: $screen-m) {
-    padding: rem(30px) 0;
-    padding: 0;
-  }
 
   .image-info {
     position: absolute;

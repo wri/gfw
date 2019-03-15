@@ -25,7 +25,8 @@ const pluginWrapper = () => ({
 class TopicsPage extends PureComponent {
   state = {
     skip: false,
-    slideLeaving: 0
+    slideLeaving: 0,
+    showRelated: window.location.hash.includes('slides')
   };
 
   componentDidUpdate(prevProps) {
@@ -81,6 +82,14 @@ class TopicsPage extends PureComponent {
     return true;
   };
 
+  handleMobileLeave = (origin, destination) => {
+    if (destination.anchor === 'slides') {
+      this.setState({ showRelated: true });
+    } else {
+      this.setState({ showRelated: false });
+    }
+  };
+
   handleSlideLeave = (section, origin) => {
     this.setState({ slideLeaving: origin.index });
   };
@@ -92,7 +101,10 @@ class TopicsPage extends PureComponent {
   };
 
   getSlide = (s, index, isDesktop) => (
-    <div key={s.subtitle} className="slide">
+    <div
+      key={s.subtitle}
+      className={cx({ last: index === 3 }, { slide: isDesktop })}
+    >
       <div className="row">
         <div className="column small-12 medium-4">
           <div className="topic-content">
@@ -106,7 +118,8 @@ class TopicsPage extends PureComponent {
             />
             {isDesktop && (
               <Button
-                theme="theme-button-light topics-btn"
+                className="topic-btn"
+                theme="theme-button-light"
                 onClick={this.handleSkipToTools}
               >
                 Related tools
@@ -114,8 +127,10 @@ class TopicsPage extends PureComponent {
             )}
           </div>
         </div>
-        <div className="column small-12 medium-8 topic-image">
-          <Image url={s.src} description={s.subtitle} prompts={s.prompts} />
+        <div className="column small-12 medium-8">
+          <div className="topic-image">
+            <Image url={s.src} description={s.subtitle} prompts={s.prompts} />
+          </div>
         </div>
       </div>
     </div>
@@ -130,25 +145,34 @@ class TopicsPage extends PureComponent {
         {isDesktop => (
           <div className="l-topics-page">
             <Header isMobile={!isDesktop} />
+            {!isDesktop &&
+              this.state.showRelated && (
+                <div className="related-tools-btn">
+                  <Button
+                    theme="theme-button-light"
+                    onClick={() => {
+                      this.fullpageApi.moveSectionDown();
+                    }}
+                  >
+                    Related Tools
+                  </Button>
+                </div>
+              )}
             <ReactFullpage
               pluginWrapper={pluginWrapper}
               scrollOverflow
               anchors={anchors}
               animateAnchor={false}
-              slidesNavigation
-              responsiveWidth={SCREEN_M}
-              onLeave={this.handleLeave}
+              slidesNavigation={isDesktop}
+              onLeave={isDesktop ? this.handleLeave : this.handleMobileLeave}
               onSlideLeave={this.handleSlideLeave}
+              paddingBottom="55px"
               render={({ fullpageApi }) => {
                 this.fullpageApi = fullpageApi;
 
                 return (
                   <ReactFullpage.Wrapper>
-                    <div
-                      className={cx('header section', {
-                        'fp-auto-height': !isDesktop
-                      })}
-                    >
+                    <div className="header-section section">
                       <TopicsHeader
                         topics={links}
                         intro={intro}
@@ -158,21 +182,13 @@ class TopicsPage extends PureComponent {
                         isDesktop={isDesktop}
                       />
                     </div>
-                    <div
-                      className={cx('section', {
-                        'fp-auto-height': !isDesktop
-                      })}
-                    >
+                    <div className="slides section">
                       {slides &&
                         slides.map((s, index) =>
                           this.getSlide(s, index, isDesktop)
                         )}
                     </div>
-                    <div
-                      className={cx('header section', {
-                        'fp-auto-height': !isDesktop
-                      })}
-                    >
+                    <div className="section">
                       <TopicsFooter cards={cards} topic={title} />
                     </div>
                   </ReactFullpage.Wrapper>

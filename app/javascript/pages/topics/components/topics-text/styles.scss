@@ -17,10 +17,6 @@
     color: $slate-light;
     text-transform: uppercase;
     margin-bottom: 15px;
-
-    // @media screen and (min-width: $screen-m) {
-    //   font-size: rem(14px);
-    // }
   }
 
   h4 {
@@ -29,11 +25,6 @@
     line-height: 36px;
     color: $slate-light;
     margin-bottom: 15px;
-
-    // @media screen and (min-width: $screen-m) {
-    //   margin-bottom: 15px;
-    //   font-size: rem(30px);
-    // }
   }
 
   p {
@@ -42,11 +33,6 @@
     color: $slate-light;
     line-height: 24px;
     margin: 0;
-
-    // @media screen and (min-width: $screen-m) {
-    //   line-height: 24px;
-    //   font-size: rem(16px);
-    // }
   }
 }
 

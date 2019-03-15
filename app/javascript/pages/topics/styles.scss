@@ -1,29 +1,58 @@
 @import '~styles/settings.scss';
 
 .l-topics-page {
+  @media screen and (min-width: $screen-m) {
+    .header {
+      z-index: 10;
+    }
+
+    .last {
+      margin-bottom: rem(80px);
+    }
+  }
+
   .topic-content {
     height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
     justify-content: center;
+    margin-top: 30px;
 
-    .c-topics-text {
-      margin-top: 30px;
-
-      @media screen and (min-width: $screen-m) {
-        margin-bottom: 70px;
-      }
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 70px;
     }
   }
 
-  .topics-btn {
+  .topic-btn {
     margin: auto;
 
     @media screen and (min-width: $screen-m) {
       position: absolute;
       bottom: 0;
-      max-width: 160px;
+    }
+  }
+
+  .topic-image {
+    padding: rem(30px) 0;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(30px) 0;
+      padding: 0;
+    }
+  }
+
+  .related-tools-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $white;
+    padding: rem(15px);
+    z-index: 1;
+
+    button {
+      width: 100%;
     }
   }
 
@@ -52,11 +81,9 @@
     bottom: calc(50% - 50px) !important;
     left: unset !important;
     right: rem(15px) !important;
-    display: none;
 
     @media screen and (min-width: $screen-m) {
       right: 40px;
-      display: block;
     }
 
     li {
@@ -88,31 +115,27 @@
 
     .slide {
       width: 100% !important;
-      position: relative;
       transition: opacity 0.7s ease-in;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 0;
+      position: absolute;
 
-      @media screen and (min-width: $screen-m) {
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+      .c-topics-text {
         opacity: 0;
-        position: absolute;
+        transform: translateY(-20px);
+        transition:
+          transform 0.7s ease-in-out,
+          opacity 0.7s ease-in-out;
 
-        .c-topics-text {
-          opacity: 0;
-          transform: translateY(-20px);
+        &.leaving {
+          opacity: 1;
+          transform: translateY(20px);
           transition:
             transform 0.7s ease-in-out,
             opacity 0.7s ease-in-out;
-
-          &.leaving {
-            opacity: 1;
-            transform: translateY(20px);
-            transition:
-              transform 0.7s ease-in-out,
-              opacity 0.7s ease-in-out;
-          }
         }
       }
 
