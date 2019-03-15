@@ -36,7 +36,7 @@ class BasemapsContainer extends React.Component {
           month,
           url: basemap.url
             .replace('{year}', year || 2018)
-            .replace('{month}', month)
+            .replace('{month}', `0${month}`.slice(-2))
         },
         label: label.value
       });

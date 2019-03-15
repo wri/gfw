@@ -81,11 +81,7 @@ class Basemaps extends React.PureComponent {
                   .months()
                   .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
                 onChange={value =>
-                  selectBasemap(
-                    basemap,
-                    year,
-                    `0${parseInt(value + 1, 10)}`.slice(-2)
-                  )
+                  selectBasemap(basemap, year, parseInt(value, 10) + 1)
                 }
                 native
               />
