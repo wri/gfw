@@ -166,7 +166,6 @@ class TopicsPage extends PureComponent {
               slidesNavigation={isDesktop}
               onLeave={isDesktop ? this.handleLeave : this.handleMobileLeave}
               onSlideLeave={this.handleSlideLeave}
-              paddingBottom="55px"
               render={({ fullpageApi }) => {
                 this.fullpageApi = fullpageApi;
 
