@@ -9,8 +9,8 @@ class TopicsText extends PureComponent {
     const { title, subtitle, text, className } = this.props;
     return (
       <div className={cx('c-topics-text', className)}>
-        <h3>{title}</h3>
-        <h1>{subtitle}</h1>
+        <span>{title}</span>
+        <h4>{subtitle}</h4>
         <p>{text}</p>
       </div>
     );

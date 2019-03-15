@@ -13,35 +13,35 @@
   }
 
   .titleCol {
+    position: relative;
+
     @media screen and (min-width: $screen-m) {
       background-color: #e5e5df;
     }
   }
 
-  .intro-img-wrapper {
-    position: relative;
+  .intro-img {
+    width: 100%;
+    margin: rem(10px) 0;
+    padding: rem(15px);
 
-    .intro-img {
-      width: 100%;
-      margin: 0 auto;
-      display: none;
-
-      @media screen and (min-width: $screen-m) {
-        position: absolute;
-        top: 40px;
-        left: 40px;
-        padding-right: rem(80px);
-        display: initial;
-      }
+    @media screen and (min-width: $screen-m) {
+      position: absolute;
+      left: 40px;
+      padding-right: rem(80px);
+      display: initial;
+      margin: rem(30px) 0 rem(50px);
     }
   }
 
   &.water {
-    .intro-img {
-      top: 30px;
-      left: 100px;
-      width: 60%;
-      padding-right: 0;
+    @media screen and (min-width: $screen-m) {
+      .intro-img {
+        top: 30px;
+        left: 100px;
+        width: 60%;
+        padding-right: 0;
+      }
     }
   }
 

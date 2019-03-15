@@ -7,10 +7,14 @@
   height: 100%;
 
   .scroll-to-discover {
-    margin: 130px 0 100px;
+    margin: 0 0 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media screen and (min-width: $screen-m) {
+      margin: 130px 0 120px;
+    }
 
     .scroll-btn {
       height: 46px;

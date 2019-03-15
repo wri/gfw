@@ -14,7 +14,14 @@ import './styles.scss';
 
 class TopicsHeader extends PureComponent {
   render() {
-    const { topics, intro, fullpageApi, title, handleSkipToTools } = this.props;
+    const {
+      topics,
+      intro,
+      fullpageApi,
+      title,
+      handleSkipToTools,
+      isDesktop
+    } = this.props;
     return (
       <div className="c-topics-header">
         <div className="intro-top">
@@ -29,25 +36,28 @@ class TopicsHeader extends PureComponent {
             className={title}
             intro={intro}
             handleSkipToTools={handleSkipToTools}
+            isDesktop={isDesktop}
           />
         </div>
-        <div className="intro-bottom">
-          <div className="row">
-            <div className="column small-12 medium-12">
-              <div className="scroll-to-discover">
-                <Button
-                  className="scroll-btn"
-                  onClick={() => {
-                    fullpageApi.moveSectionDown();
-                  }}
-                >
-                  <Icon icon={arrowIcon} />
-                </Button>
-                <p>Scroll to discover</p>
+        {isDesktop && (
+          <div className="intro-bottom">
+            <div className="row">
+              <div className="column small-12 medium-12">
+                <div className="scroll-to-discover">
+                  <Button
+                    className="scroll-btn"
+                    onClick={() => {
+                      fullpageApi.moveSectionDown();
+                    }}
+                  >
+                    <Icon icon={arrowIcon} />
+                  </Button>
+                  <p>Scroll to discover</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
@@ -58,7 +68,8 @@ TopicsHeader.propTypes = {
   intro: PropTypes.object,
   fullpageApi: PropTypes.object,
   title: PropTypes.string,
-  handleSkipToTools: PropTypes.func
+  handleSkipToTools: PropTypes.func,
+  isDesktop: PropTypes.bool
 };
 
 export default TopicsHeader;

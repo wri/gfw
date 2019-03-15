@@ -58,8 +58,12 @@ $summary-color: #aaa;
 
     .title {
       margin-bottom: rem(15px);
-      font-size: rem(30px);
+      font-size: rem(26px);
       font-weight: 300;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: rem(30px);
+      }
     }
 
     .summary {

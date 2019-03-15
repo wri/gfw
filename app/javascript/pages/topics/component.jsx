@@ -91,10 +91,39 @@ class TopicsPage extends PureComponent {
     });
   };
 
+  getSlide = (s, index, isDesktop) => (
+    <div key={s.subtitle} className="slide">
+      <div className="row">
+        <div className="column small-12 medium-4">
+          <div className="topic-content">
+            <Text
+              className={cx({
+                leaving: this.state.slideLeaving === index
+              })}
+              text={s.text}
+              title={s.title}
+              subtitle={s.subtitle}
+            />
+            {isDesktop && (
+              <Button
+                theme="theme-button-light topics-btn"
+                onClick={this.handleSkipToTools}
+              >
+                Related tools
+              </Button>
+            )}
+          </div>
+        </div>
+        <div className="column small-12 medium-8 topic-image">
+          <Image url={s.src} description={s.subtitle} prompts={s.prompts} />
+        </div>
+      </div>
+    </div>
+  );
+
   render() {
     const { links, topicData, title } = this.props;
     const { cards, slides, intro } = topicData || {};
-    const { slideLeaving } = this.state;
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -107,6 +136,7 @@ class TopicsPage extends PureComponent {
               anchors={anchors}
               animateAnchor={false}
               slidesNavigation
+              responsiveWidth={SCREEN_M}
               onLeave={this.handleLeave}
               onSlideLeave={this.handleSlideLeave}
               render={({ fullpageApi }) => {
@@ -114,50 +144,35 @@ class TopicsPage extends PureComponent {
 
                 return (
                   <ReactFullpage.Wrapper>
-                    <div className="header-section section">
+                    <div
+                      className={cx('header section', {
+                        'fp-auto-height': !isDesktop
+                      })}
+                    >
                       <TopicsHeader
                         topics={links}
                         intro={intro}
                         fullpageApi={fullpageApi}
                         title={title}
                         handleSkipToTools={this.handleSkipToTools}
+                        isDesktop={isDesktop}
                       />
                     </div>
-                    <div className="section">
+                    <div
+                      className={cx('section', {
+                        'fp-auto-height': !isDesktop
+                      })}
+                    >
                       {slides &&
-                        slides.map((s, index) => (
-                          <div key={s.subtitle} className="slide">
-                            <div className="row">
-                              <div className="column small-12 medium-4">
-                                <div className="topic-content">
-                                  <Text
-                                    className={cx({
-                                      leaving: slideLeaving === index
-                                    })}
-                                    text={s.text}
-                                    title={s.title}
-                                    subtitle={s.subtitle}
-                                  />
-                                  <Button
-                                    theme="theme-button-light topics-btn"
-                                    onClick={this.handleSkipToTools}
-                                  >
-                                    Related tools
-                                  </Button>
-                                </div>
-                              </div>
-                              <div className="column small-12 medium-8 topic-image">
-                                <Image
-                                  url={s.src}
-                                  description={s.subtitle}
-                                  prompts={s.prompts}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
+                        slides.map((s, index) =>
+                          this.getSlide(s, index, isDesktop)
+                        )}
                     </div>
-                    <div className="section">
+                    <div
+                      className={cx('header section', {
+                        'fp-auto-height': !isDesktop
+                      })}
+                    >
                       <TopicsFooter cards={cards} topic={title} />
                     </div>
                   </ReactFullpage.Wrapper>

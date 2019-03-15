@@ -2,9 +2,13 @@
 
 .c-topics-footer {
   .footer-title {
-    padding: rem(80px) 0 rem(20px);
+    padding: rem(40px) 0 0;
     text-transform: uppercase;
     color: #999;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(80px) 0 0;
+    }
   }
 
   .slick-dots {

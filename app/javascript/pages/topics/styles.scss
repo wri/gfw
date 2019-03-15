@@ -2,15 +2,14 @@
 
 .l-topics-page {
   .topic-content {
-    height: calc(100% - 55px);
+    height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
     justify-content: center;
-    padding-bottom: 50px;
 
     .c-topics-text {
-      margin-top: 80px;
+      margin-top: 30px;
 
       @media screen and (min-width: $screen-m) {
         margin-bottom: 70px;
@@ -19,19 +18,12 @@
   }
 
   .topics-btn {
+    margin: auto;
+
     @media screen and (min-width: $screen-m) {
       position: absolute;
-      bottom: calc(100px - 2.5rem);
+      bottom: 0;
       max-width: 160px;
-    }
-  }
-
-  .topic-image {
-    text-align: center;
-    padding-bottom: 100px;
-
-    .c-topics-image {
-      margin: auto;
     }
   }
 
@@ -57,9 +49,15 @@
   }
 
   .fp-slidesNav {
-    bottom: calc(50% - 50px);
-    right: 40px;
+    bottom: calc(50% - 50px) !important;
     left: unset !important;
+    right: rem(15px) !important;
+    display: none;
+
+    @media screen and (min-width: $screen-m) {
+      right: 40px;
+      display: block;
+    }
 
     li {
       display: block;
@@ -89,28 +87,32 @@
     width: 100% !important;
 
     .slide {
-      opacity: 0;
       width: 100% !important;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      position: absolute;
+      position: relative;
       transition: opacity 0.7s ease-in;
 
-      .c-topics-text {
+      @media screen and (min-width: $screen-m) {
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
         opacity: 0;
-        transform: translateY(-20px);
-        transition:
-          transform 0.7s ease-in-out,
-          opacity 0.7s ease-in-out;
+        position: absolute;
 
-        &.leaving {
-          opacity: 1;
-          transform: translateY(20px);
+        .c-topics-text {
+          opacity: 0;
+          transform: translateY(-20px);
           transition:
             transform 0.7s ease-in-out,
             opacity 0.7s ease-in-out;
+
+          &.leaving {
+            opacity: 1;
+            transform: translateY(20px);
+            transition:
+              transform 0.7s ease-in-out,
+              opacity 0.7s ease-in-out;
+          }
         }
       }
 
