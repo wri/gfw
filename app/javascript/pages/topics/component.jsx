@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactFullpage from '@fullpage/react-fullpage';
-import posed, { PoseGroup } from 'react-pose';
 
 import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
@@ -19,21 +18,6 @@ import './styles.scss';
 const anchors = ['intro', 'slides', 'footer'];
 const pluginWrapper = () => ({
   scrollOverflow
-});
-
-const RelatedToolsBtn = posed.div({
-  enter: {
-    y: 0,
-    opacity: 1,
-    delay: 200,
-    transition: { duration: 200 }
-  },
-  exit: {
-    y: 50,
-    opacity: 0,
-    delay: 200,
-    transition: { duration: 200 }
-  }
 });
 
 class TopicsPage extends PureComponent {
@@ -125,20 +109,16 @@ class TopicsPage extends PureComponent {
             <Header isMobile={!isDesktop} />
             {!isDesktop &&
               this.state.showRelated && (
-                <PoseGroup>
-                  <RelatedToolsBtn key="asdass">
-                    <div className="related-tools-btn">
-                      <Button
-                        theme="theme-button-light"
-                        onClick={() => {
-                          this.fullpageApi.moveSectionDown();
-                        }}
-                      >
-                        Related Tools
-                      </Button>
-                    </div>
-                  </RelatedToolsBtn>
-                </PoseGroup>
+                <div className="related-tools-btn">
+                  <Button
+                    theme="theme-button-light"
+                    onClick={() => {
+                      this.fullpageApi.moveSectionDown();
+                    }}
+                  >
+                    Related Tools
+                  </Button>
+                </div>
               )}
             <ReactFullpage
               pluginWrapper={pluginWrapper}

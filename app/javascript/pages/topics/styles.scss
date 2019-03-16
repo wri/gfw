@@ -3,6 +3,10 @@
 .l-topics-page {
   .last {
     margin-bottom: rem(110px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
   }
 
   .topic-content {
@@ -13,13 +17,7 @@
     justify-content: center;
   }
 
-  .topic-btn {
-    margin: auto;
-    position: absolute;
-    bottom: 0;
-  }
-
-  .topic-image {
+  .topic-intro-image {
     padding: rem(30px) 0;
   }
 
@@ -54,6 +52,10 @@
     .fp-tableCell {
       justify-content: space-between;
     }
+  }
+
+  .topic-slides {
+    z-index: 5;
   }
 
   // custom dots styles
