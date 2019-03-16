@@ -22,7 +22,6 @@ class TopicsFooter extends PureComponent {
             <Carousel>
               {cards &&
                 cards.map(c => (
-                  // "id", "title", "summary", "meta", "image", "imageCredit", "extLink"
                   <div key={c.id}>
                     <Card
                       key={c.title}

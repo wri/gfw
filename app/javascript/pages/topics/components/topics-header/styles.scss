@@ -10,18 +10,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: rem(100px) 0;
+    margin: rem(60px) 0 rem(100px);
 
     .scroll-btn {
-      height: 46px;
-      width: 46px;
-      border-radius: 50px;
+      height: rem(46px);
+      width: rem(46px);
+      border-radius: rem(50px);
       margin-bottom: rem(20px);
     }
 
     p {
-      font-size: 14px;
-      color: #555;
+      font-size: rem(14px);
+      color: $slate;
     }
   }
 

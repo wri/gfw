@@ -120,7 +120,7 @@ class TopicsImage extends PureComponent {
                 arrow
                 sticky
                 html={
-                  <div className="c-info-tooltip">
+                  <div className="c-topics-info-tooltip">
                     <p>{p.content}</p>
                     {p.link && (
                       <Button extLink={p.link} theme="theme-button-small">

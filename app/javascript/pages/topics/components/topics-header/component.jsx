@@ -8,7 +8,7 @@ import arrowIcon from 'assets/icons/arrow-down.svg';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import bgImage from 'pages/topics/assets/header-bg';
+import bgImage from 'pages/topics/assets/header-bg.jpg';
 
 import './styles.scss';
 
