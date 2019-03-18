@@ -63,6 +63,7 @@ class Datepicker extends PureComponent {
           theme="theme-dropdown-native theme-dropdown-native-button"
           options={moment
             .months()
+            .map((m, i) => ({ value: i, label: m }))
             .filter((m, i) => {
               if (date.getFullYear() === minMoment.year()) {
                 return i >= minMoment.month();
@@ -70,8 +71,7 @@ class Datepicker extends PureComponent {
                 return i <= maxMoment.month();
               }
               return true;
-            })
-            .map((m, i) => ({ value: i, label: m }))}
+            })}
           onChange={changeMonth}
           value={date.getMonth()}
           native
