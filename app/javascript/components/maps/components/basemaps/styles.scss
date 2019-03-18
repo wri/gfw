@@ -120,6 +120,15 @@ $top-section-height: 125px;
 
   .basemaps-list-item-selectors {
     display: flex;
+
+    .basemaps-tooltip {
+      display: flex;
+      height: auto;
+
+      button {
+        font-size: rem(10px);
+      }
+    }
   }
 
   .landsat-selector {

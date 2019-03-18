@@ -131,7 +131,7 @@ export default {
     labelsKey: 'default',
     color: '#131620',
     image: satelliteImage,
-    dynamic: true,
+    tooltip: true,
     url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_{year}_{month}_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
       process.env.PLANET_API_KEY
     }`,

@@ -29,7 +29,7 @@ class BasemapsContainer extends React.Component {
         },
         label: label.value
       });
-    } else if (basemap.value === 'planet') {
+    } else if (month && basemap.value === 'planet') {
       setMapSettings({
         basemap: {
           value: basemap.value,

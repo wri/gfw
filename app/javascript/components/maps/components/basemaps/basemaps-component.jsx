@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Tooltip } from 'react-tippy';
+import Switch from 'components/ui/switch';
 import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
@@ -50,14 +52,50 @@ class Basemaps extends React.PureComponent {
 
   renderDropdownBasemap(item) {
     const { selectBasemap, activeBasemap, landsatYears, basemaps } = this.props;
-    const planetYears = [2016, 2017, 2018].map(y => ({ value: y, label: y }));
-    const isPlanet = item.value === 'planet';
     const year = activeBasemap.year || landsatYears[0].value;
-    const month = isPlanet && (activeBasemap.month || 1);
     const basemap = basemaps[item.value]
       ? basemaps[item.value]
       : basemaps.landsat;
 
+    return (
+      <button
+        className="basemaps-list-item-button"
+        onClick={() => selectBasemap(basemap, year)}
+      >
+        <div
+          className="basemaps-list-item-image"
+          style={{
+            backgroundImage: `url(${item.image})`
+          }}
+        />
+        <span
+          className="basemaps-list-item-name"
+          onClick={e => e.stopPropagation()}
+        >
+          {item.label}
+          <div className="basemaps-list-item-selectors">
+            <Dropdown
+              className="landsat-selector"
+              theme="theme-dropdown-native-inline"
+              value={year}
+              options={landsatYears}
+              onChange={value => selectBasemap(basemap, parseInt(value, 10))}
+              native
+            />
+          </div>
+        </span>
+      </button>
+    );
+  }
+
+  renderTooltipBasemap(item) {
+    const { selectBasemap, activeBasemap, basemaps } = this.props;
+    const basemap = basemaps[item.value]
+      ? basemaps[item.value]
+      : basemaps.planet;
+    const years = [2016, 2017, 2018].map(y => ({ value: y, label: y }));
+    const year = activeBasemap.year || 2018;
+    const month = activeBasemap.month || 1;
     return (
       <button
         className="basemaps-list-item-button"
@@ -75,33 +113,62 @@ class Basemaps extends React.PureComponent {
         >
           {item.label}
           <div className="basemaps-list-item-selectors">
-            {isPlanet && (
-              <Dropdown
-                className="landsat-selector"
-                theme="theme-dropdown-native-inline"
-                value={parseInt(month - 1, 10)}
-                options={moment
-                  .months()
-                  .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
-                onChange={value =>
-                  selectBasemap(basemap, year, parseInt(value, 10) + 1)
-                }
-                native
-              />
-            )}
-            <Dropdown
-              className="landsat-selector"
-              theme="theme-dropdown-native-inline"
-              value={year}
-              options={isPlanet ? planetYears : landsatYears}
-              onChange={value =>
-                selectBasemap(basemap, parseInt(value, 10), month)
-              }
-              native
-            />
+            <Tooltip
+              className="basemaps-tooltip"
+              // style={{}}
+              theme="light"
+              interactive
+              arrow
+              sticky
+              useContext
+              html={this.renderTooltipWindow({ month, year, years })}
+            >
+              {/* <Button theme="theme-button-xsmall theme-button-clear"> */}
+              <p>{`${`0${month + 1}`.slice(-2)}/${year}`}</p>
+              {/* </Button> */}
+            </Tooltip>
           </div>
         </span>
       </button>
+    );
+  }
+
+  renderTooltipWindow(options) {
+    const { month, year, years } = options;
+    return (
+      <div className="c-topics-info-tooltip">
+        <Switch
+          theme="theme-switch-light"
+          label="FREQUENCY"
+          value={'monthly'}
+          options={[
+            { label: 'Monthly', value: 'monthly' },
+            { label: 'Quarterly', value: 'quarterly' }
+          ]}
+          // onChange={option => console.log(option)}
+        />
+        <div className="years-select">
+          <span className="label">YEARS</span>
+          <div className="select-container">
+            <Dropdown
+              className="years-dropdown"
+              theme="theme-dropdown-button"
+              value={month}
+              options={moment
+                .months()
+                .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
+              // onChange={option => console.log(option)}
+            />
+            <span className="text-date">/</span>
+            <Dropdown
+              theme="theme-dropdown-button"
+              value={year}
+              options={years}
+              // onChange={option => console.log(option)}
+            />
+          </div>
+        </div>
+      </div>
     );
   }
 
@@ -172,18 +239,26 @@ class Basemaps extends React.PureComponent {
         <div className="basemaps-bottom-section">
           <div className="basemap-list-scroll-wrapper">
             <ul className="basemaps-list">
-              {Object.values(basemaps).map(item => (
-                <li
-                  key={item.value}
-                  className={cx('basemaps-list-item', {
-                    '-active': activeBasemap.value === item.value
-                  })}
-                >
-                  {item.dynamic
-                    ? this.renderDropdownBasemap(item)
-                    : this.renderButtonBasemap(item)}
-                </li>
-              ))}
+              {Object.values(basemaps).map(item => {
+                let basemapButton;
+                if (item.dynamic) {
+                  basemapButton = this.renderDropdownBasemap(item);
+                } else if (item.tooltip) {
+                  basemapButton = this.renderTooltipBasemap(item);
+                } else {
+                  basemapButton = this.renderButtonBasemap(item);
+                }
+                return (
+                  <li
+                    key={item.value}
+                    className={cx('basemaps-list-item', {
+                      '-active': activeBasemap.value === item.value
+                    })}
+                  >
+                    {basemapButton}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
