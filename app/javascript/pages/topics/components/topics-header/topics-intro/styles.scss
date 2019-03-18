@@ -22,6 +22,7 @@
 
   .intro-img {
     width: 100%;
+    padding: rem(15px);
 
     img {
       width: 100%;
@@ -29,8 +30,8 @@
 
     @media screen and (min-width: $screen-m) {
       position: absolute;
-      padding-right: rem(80px);
       display: initial;
+      padding: 0 rem(80px) 0 0;
     }
   }
 
