@@ -136,3 +136,30 @@ $top-section-height: 125px;
     margin-right: rem(6px);
   }
 }
+
+.c-basemaps-tooltip {
+  padding: 20px;
+
+  .years-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: rem(10px);
+    font-size: 13px;
+
+    .label {
+      margin-right: rem(10px);
+    }
+
+    .select-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .text-date {
+      margin: 0 10px;
+    }
+  }
+}

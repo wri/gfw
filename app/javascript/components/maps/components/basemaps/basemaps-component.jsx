@@ -28,7 +28,8 @@ class Basemaps extends React.PureComponent {
     activeBoundaries: PropTypes.object,
     isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
-    setModalMetaSettings: PropTypes.func
+    setModalMetaSettings: PropTypes.func,
+    setMapSettings: PropTypes.func
   };
 
   renderButtonBasemap(item) {
@@ -95,7 +96,8 @@ class Basemaps extends React.PureComponent {
       : basemaps.planet;
     const years = [2016, 2017, 2018].map(y => ({ value: y, label: y }));
     const year = activeBasemap.year || 2018;
-    const month = activeBasemap.month || 1;
+    const month = parseInt(activeBasemap.month, 10) || 1;
+    const frequency = activeBasemap.frequency || 'monthly';
     return (
       <button
         className="basemaps-list-item-button"
@@ -124,10 +126,12 @@ class Basemaps extends React.PureComponent {
                 month,
                 year,
                 years,
+                frequency,
                 onDateChange: (m, y) => selectBasemap(basemap, m, y)
               })}
+              open
             >
-              <span>{`${`0${month + 1}`.slice(-2)}/${year}`}</span>
+              <span>{`${`0${month}`.slice(-2)}/${year}`}</span>
             </Tooltip>
           </div>
         </span>
@@ -136,32 +140,38 @@ class Basemaps extends React.PureComponent {
   }
 
   renderTooltipWindow(options) {
-    const { month, year, years, onDateChange } = options;
+    const { month, year, years, frequency, onDateChange } = options;
+    const { setMapSettings } = this.props;
+    const months = moment
+      .months()
+      .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }));
+    const Qs = ['Q1', 'Q2', 'Q3', 'Q4'].map(y => ({ value: y, label: y }));
     return (
-      <div className="c-topics-info-tooltip">
+      <div className="c-basemaps-tooltip">
         <Switch
           theme="theme-switch-light"
           label="FREQUENCY"
-          value={'monthly'}
+          value={frequency}
           options={[
             { label: 'Monthly', value: 'monthly' },
             { label: 'Quarterly', value: 'quarterly' }
           ]}
-          // onChange={option => console.log(option)}
+          onChange={option => {
+            setMapSettings({ basemap: { frequency: option } });
+          }}
         />
         <div className="years-select">
-          <span className="label">YEARS</span>
+          <span className="label">PERIOD</span>
           <div className="select-container">
             <Dropdown
               className="years-dropdown"
               theme="theme-dropdown-button"
-              value={month}
-              options={moment
-                .months()
-                .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
+              value={month - 1}
+              options={frequency === 'monthly' ? months : Qs}
               onChange={m => {
-                onDateChange(year, m.label);
+                onDateChange(year, `0${parseInt(m, 10) + 1}`.slice(-2));
               }}
+              native
             />
             <span className="text-date">/</span>
             <Dropdown
@@ -169,8 +179,9 @@ class Basemaps extends React.PureComponent {
               value={year}
               options={years}
               onChange={y => {
-                onDateChange(y.value, month);
+                onDateChange(y, month);
               }}
+              native
             />
           </div>
         </div>
