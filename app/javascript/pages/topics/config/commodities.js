@@ -1,14 +1,32 @@
-import investigateImage from 'pages/topics/assets/commodities/cards/investigate.png';
-import exploreImage from 'pages/topics/assets/commodities/cards/explore.png';
-import learnImage from 'pages/topics/assets/commodities/cards/learn.png';
-import digger from 'pages/topics/assets/commodities/commodities-intro.svg';
+// intro
+import intro1x from 'pages/topics/assets/commodities/intro/digger.png';
+import intro2x from 'pages/topics/assets/commodities/intro/digger@2x.png';
+
+// slides
+import commodities1 from 'pages/topics/assets/commodities/slides/commodities1.png';
+import commodities1Large from 'pages/topics/assets/commodities/slides/commodities1@2x.png';
+import commodities2 from 'pages/topics/assets/commodities/slides/commodities2.png';
+import commodities2Large from 'pages/topics/assets/commodities/slides/commodities2@2x.png';
+import commodities3 from 'pages/topics/assets/commodities/slides/commodities3.png';
+import commodities3Large from 'pages/topics/assets/commodities/slides/commodities3@2x.png';
+import commodities4 from 'pages/topics/assets/commodities/slides/commodities4.png';
+import commodities4Large from 'pages/topics/assets/commodities/slides/commodities4@2x.png';
+
+// cards
+import investigate from 'pages/topics/assets/commodities/cards/investigate.png';
+import investigateLarge from 'pages/topics/assets/commodities/cards/investigate@2x.png';
+import explore from 'pages/topics/assets/commodities/cards/explore.png';
+import exploreLarge from 'pages/topics/assets/commodities/cards/explore@2x.png';
+import learn from 'pages/topics/assets/commodities/cards/learn.png';
+import learnLarge from 'pages/topics/assets/commodities/cards/learn@2x.png';
 
 export default {
   intro: {
-    img: digger,
     title: '27% of global deforestation is commodity-driven.',
     text:
-      'Production of commodities including beef, soy, palm oil, pulp, paper, energy and minerals, is the leading cause of deforestation. More sustainable commodity production is critical for conserving forests and mitigating climate change.'
+      'Production of commodities including beef, soy, palm oil, pulp, paper, energy and minerals, is the leading cause of deforestation. More sustainable commodity production is critical for conserving forests and mitigating climate change.',
+    img1x: intro1x,
+    img2x: intro2x
   },
   slides: [
     {
@@ -16,7 +34,8 @@ export default {
       subtitle: 'Ideal state',
       text:
         'Societies around the world have relied on nearby forests for food, fuel and medicine for thousands of years. Traditional practices like agroforestry, and small-scale and shifting agriculture had a reduced impact on the surrounding environment and generated socioeconomic benefits for local communities.',
-      src: 'commodities1',
+      img1x: commodities1,
+      img2x: commodities1Large,
       prompts: [
         {
           id: 'comms-learn',
@@ -34,7 +53,8 @@ export default {
       subtitle: 'Drivers of change',
       text:
         'As demand for commodities grows, deforestation from industrial-scale agriculture, illegal harvesting of timber and mining increases. The inability to track where products come from and a lack of consequences for environmental outcomes make it difficult to curb the impacts of these industries.',
-      src: 'commodities2',
+      img1x: commodities2,
+      img2x: commodities2Large,
       prompts: [
         {
           id: 'comms-learn',
@@ -60,7 +80,8 @@ export default {
       subtitle: 'Compromised state',
       text:
         'The unsustainable expansion of commodity production can permanently damage ecosystems, displace local communities, exacerbate climate change, and accelerate biodiversity loss.',
-      src: 'commodities3',
+      img1x: commodities3,
+      img2x: commodities3Large,
       prompts: [
         {
           id: 'comms-data',
@@ -86,7 +107,8 @@ export default {
       subtitle: 'Recovery state',
       text:
         'Deforestation-free commodity production is possible. Improved forest monitoring can help companies make more sustainable purchasing decisions, faciliate action against illegal clearing and enable policymakers to create more informed land use allocations.',
-      src: 'commodities4',
+      img1x: commodities4,
+      img2x: commodities4Large,
       prompts: [
         {
           id: 'comms-pro',
@@ -115,7 +137,8 @@ export default {
       summary: 'View commodity production areas, tree cover loss and more.',
       link:
         '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiI3YTRkOWE2NC1lY2IxLTQ1ZWMtYTAxZS02NThmMTM2NGZiMmUiLCJsYXllcnMiOlsiZmNkMTAwMjYtZTg5Mi00ZmI4LThkNzktOGQ3NmUzYjk0MDA1Il0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6IjRmYzI0YTAzLWNiM2UtNGRmMy1hMmVlLWUyYThkY2EzNDJiMyIsImxheWVycyI6WyJjMjZkYjQxYS1iNTg2LTQ2MWMtYjY0OC05MzIwNWVhZmVhMGIiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX0seyJkYXRhc2V0IjoiYzRkNGUwN2MtYzViNC00ZTJjLTlkYjEtNWMzYmVjMTg1ZjBlIiwibGF5ZXJzIjpbIjA5MTFhYmM0LWQ4NjEtNGQ3YS04NGQ2LTBmYTA3YjUxZDdkOCJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiI5M2U2N2E3Ny0xYTMxLTRkMDQtYTc1ZC04NmE0ZDZlMzVkNTQiLCJsYXllcnMiOlsiZjY4MDgyOGUtYmU2OC00ODk1LWIxZWQtMWQwOTE1ZDA3NDU3Il0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6Ijg5N2VjYzc2LTIzMDgtNGM1MS1hZWIzLTQ5NWRlMGJkY2E3OSIsImxheWVycyI6WyJjMzA3NWM1YS01NTY3LTRiMDktYmMwZC05NmVkMTY3M2Y4YjYiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZX0%3D&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoibGFuZFVzZSJ9',
-      image: exploreImage,
+      img1x: explore,
+      img2x: exploreLarge,
       btnText: 'view on map'
     },
     {
@@ -125,7 +148,8 @@ export default {
         'View recent deforestation alerts and satellite imagery and and subscribe to alerts.',
       link:
         '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImU2NjNlYjA5LTA0ZGUtNGYzOS1iODcxLTM1YzZjMmVkMTBiNSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZDVkZjg3Zi0zOWMyLTRhZWItYTQ2Mi0zZWY5NjliMjBiNjYiXX0seyJkYXRhc2V0IjoiOTNlNjdhNzctMWEzMS00ZDA0LWE3NWQtODZhNGQ2ZTM1ZDU0Iiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImY2ODA4MjhlLWJlNjgtNDg5NS1iMWVkLTFkMDkxNWQwNzQ1NyJdfSx7ImRhdGFzZXQiOiI3YTRkOWE2NC1lY2IxLTQ1ZWMtYTAxZS02NThmMTM2NGZiMmUiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiZmNkMTAwMjYtZTg5Mi00ZmI4LThkNzktOGQ3NmUzYjk0MDA1Il19LHsiZGF0YXNldCI6ImM0ZDRlMDdjLWM1YjQtNGUyYy05ZGIxLTVjM2JlYzE4NWYwZSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyIwOTExYWJjNC1kODYxLTRkN2EtODRkNi0wZmEwN2I1MWQ3ZDgiXX0seyJkYXRhc2V0IjoiNGZjMjRhMDMtY2IzZS00ZGYzLWEyZWUtZTJhOGRjYTM0MmIzIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImMyNmRiNDFhLWI1ODYtNDYxYy1iNjQ4LTkzMjA1ZWFmZWEwYiJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiY2FuQm91bmQiOmZhbHNlLCJ6b29tIjozLCJjZW50ZXIiOnsibGF0IjoxMS40MzY5NTUyMTYxNDMxOSwibG5nIjoyNC4yNTc4MTI1MDAwMDAwMDR9LCJiYm94IjpudWxsfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6IiJ9',
-      image: investigateImage,
+      img1x: investigate,
+      img2x: investigateLarge,
       btnText: 'view on map'
     },
     {
@@ -133,7 +157,8 @@ export default {
       title: 'Learn more',
       summary: 'Read about forests and commodities on the GFW blog.',
       extLink: 'https://blog.globalforestwatch.org',
-      image: learnImage,
+      img1x: learn,
+      img2x: learnLarge,
       btnText: 'read the blog'
     },
     {
