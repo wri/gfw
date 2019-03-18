@@ -115,17 +115,19 @@ class Basemaps extends React.PureComponent {
           <div className="basemaps-list-item-selectors">
             <Tooltip
               className="basemaps-tooltip"
-              // style={{}}
               theme="light"
               interactive
               arrow
               sticky
               useContext
-              html={this.renderTooltipWindow({ month, year, years })}
+              html={this.renderTooltipWindow({
+                month,
+                year,
+                years,
+                onDateChange: (m, y) => selectBasemap(basemap, m, y)
+              })}
             >
-              {/* <Button theme="theme-button-xsmall theme-button-clear"> */}
-              <p>{`${`0${month + 1}`.slice(-2)}/${year}`}</p>
-              {/* </Button> */}
+              <span>{`${`0${month + 1}`.slice(-2)}/${year}`}</span>
             </Tooltip>
           </div>
         </span>
@@ -134,7 +136,7 @@ class Basemaps extends React.PureComponent {
   }
 
   renderTooltipWindow(options) {
-    const { month, year, years } = options;
+    const { month, year, years, onDateChange } = options;
     return (
       <div className="c-topics-info-tooltip">
         <Switch
@@ -157,14 +159,18 @@ class Basemaps extends React.PureComponent {
               options={moment
                 .months()
                 .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }))}
-              // onChange={option => console.log(option)}
+              onChange={m => {
+                onDateChange(year, m.label);
+              }}
             />
             <span className="text-date">/</span>
             <Dropdown
               theme="theme-dropdown-button"
               value={year}
               options={years}
-              // onChange={option => console.log(option)}
+              onChange={y => {
+                onDateChange(y.value, month);
+              }}
             />
           </div>
         </div>
