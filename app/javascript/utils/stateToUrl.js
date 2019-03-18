@@ -1,4 +1,5 @@
 import queryString from 'query-string';
+import omit from 'lodash/omit';
 
 export const decodeUrlForState = url => {
   const paramsParsed = {};
@@ -26,27 +27,27 @@ export const encodeStateForUrl = params => {
 };
 
 export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
-  const { location } = state();
+  const { location: { query, payload, type } } = state();
   let params = change;
-  if (
-    location.query &&
-    location.query[subKey || key] &&
-    !!change &&
-    typeof change === 'object'
-  ) {
+  if (query && query[subKey || key] && !!change && typeof change === 'object') {
     params = {
-      ...location.query[subKey || key],
+      ...query[subKey || key],
       ...change
     };
   }
 
+  // if a false value if sent we should remove the key from the url
+  const cleanLocationQuery = !change && query && omit(query, subKey || key);
+
   return {
     key,
-    type: location.type,
-    payload: location.payload,
+    type,
+    payload,
     query: {
-      ...location.query,
-      [subKey || key]: params
+      ...cleanLocationQuery,
+      ...(params && {
+        [subKey || key]: params
+      })
     }
   };
 };
