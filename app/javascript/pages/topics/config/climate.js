@@ -1,18 +1,39 @@
-import monitorImage from 'pages/topics/assets/climate/cards/monitor.png';
-import exploreImageClimate from 'pages/topics/assets/climate/cards/explore.png';
-import carbonImage from 'pages/topics/assets/climate/cards/carbon.png';
-import calculateImage from 'pages/topics/assets/climate/cards/calculate.png';
-import insightsImage from 'pages/topics/assets/climate/cards/insights.png';
-import researchImage from 'pages/topics/assets/climate/cards/research.png';
-import climate from 'pages/topics/assets/climate/climate-intro.svg';
+// intro
+import intro1x from 'pages/topics/assets/climate/intro/leaf.png';
+import intro2x from 'pages/topics/assets/climate/intro/leaf@2x.png';
+
+// slides
+import climate1 from 'pages/topics/assets/climate/slides/climate1.png';
+import climate1Large from 'pages/topics/assets/climate/slides/climate1@2x.png';
+import climate2 from 'pages/topics/assets/climate/slides/climate2.png';
+import climate2Large from 'pages/topics/assets/climate/slides/climate2@2x.png';
+import climate3 from 'pages/topics/assets/climate/slides/climate3.png';
+import climate3Large from 'pages/topics/assets/climate/slides/climate3@2x.png';
+import climate4 from 'pages/topics/assets/climate/slides/climate4.png';
+import climate4Large from 'pages/topics/assets/climate/slides/climate4@2x.png';
+
+// cards
+import monitor from 'pages/topics/assets/climate/cards/monitor.png';
+import monitorLarge from 'pages/topics/assets/climate/cards/monitor@2x.png';
+import explore from 'pages/topics/assets/climate/cards/explore.png';
+import exploreLarge from 'pages/topics/assets/climate/cards/explore@2x.png';
+import carbon from 'pages/topics/assets/climate/cards/carbon.png';
+import carbonLarge from 'pages/topics/assets/climate/cards/carbon@2x.png';
+import calculate from 'pages/topics/assets/climate/cards/calculate.png';
+import calculateLarge from 'pages/topics/assets/climate/cards/calculate@2x.png';
+import insights from 'pages/topics/assets/climate/cards/insights.png';
+import insightsLarge from 'pages/topics/assets/climate/cards/insights@2x.png';
+import research from 'pages/topics/assets/climate/cards/research.png';
+import researchLarge from 'pages/topics/assets/climate/cards/research@2x.png';
 
 export default {
   intro: {
-    img: climate,
     title:
       'Forests can provide 30% of the solution to keeping global warming below 2°C.',
     text:
-      'Forests remove and store carbon from the atmosphere, representing cost-effective solution for mitigating climate change. The loss or degredation of forests compromises their ability to remove emissions.'
+      'Forests remove and store carbon from the atmosphere, representing cost-effective solution for mitigating climate change. The loss or degredation of forests compromises their ability to remove emissions.',
+    img1x: intro1x,
+    img2x: intro2x
   },
   slides: [
     {
@@ -20,7 +41,8 @@ export default {
       subtitle: 'Ideal state',
       text:
         'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossil fuels, thus helping to remove harmful emissions from within the atmosphere and ocean.',
-      src: 'climate1',
+      img1x: climate1,
+      img2x: climate1Large,
       prompts: [
         {
           id: 'climate-learn',
@@ -46,7 +68,8 @@ export default {
       subtitle: 'Drivers of change',
       text:
         'Forests ability to absorb carbon from the atmosphere can be compromised by commodity production, urbanization, disease and fires that cause forest loss. When a tree burns or decays, it emits the carbon it was storing into the atmosphere, futher exacerbating climate change.',
-      src: 'climate2',
+      img1x: climate2,
+      img2x: climate2Large,
       prompts: [
         {
           id: 'climate-learn',
@@ -73,7 +96,8 @@ export default {
       subtitle: 'Compromised state',
       text:
         'With fewer trees to help absorb and regulate carbon in the atmopshere, the Earths temperate rises and the effects of climate change increase.',
-      src: 'climate3',
+      img1x: climate3,
+      img2x: climate3Large,
       prompts: [
         {
           id: 'climate-explore',
@@ -100,7 +124,8 @@ export default {
       subtitle: 'Recovery state',
       text:
         'Sustainable forest management, improved land tenure, conservation, performance-based financing and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions also have positive economic, biodiversity, and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
-      src: 'climate4',
+      img1x: climate4,
+      img2x: climate4Large,
       prompts: [
         {
           id: 'climate-learn',
@@ -129,7 +154,8 @@ export default {
       summary:
         'Find answers to questions about carbon and emissions globally, by country or even subnationally.',
       extLink: '/dashboards/global?category=climate',
-      image: carbonImage,
+      img1x: carbon,
+      img2x: carbonLarge,
       btnText: 'view data'
     },
     {
@@ -138,7 +164,8 @@ export default {
       summary:
         'The political will to reduce tropical deforestation has never been higher. Are countries on track to meet commitments? Track progress in near-real time with weekly deforestation alerts - just select a country',
       extLink: '/dashboards/global?category=climate',
-      image: monitorImage,
+      img1x: monitor,
+      img2x: monitorLarge,
       btnText: 'view data'
     },
     {
@@ -147,7 +174,8 @@ export default {
       summary: 'View biomass density and loss, emissions and more.',
       extLink:
         '?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhOWNjNmVjMC01YzFjLTRlMzYtOWIyNi1iNGVlMGI1MDU4N2IiLCJsYXllcnMiOlsiYjMyYTJmMTUtMjVlOC00ZWNjLTk4ZTAtNjg3ODJhYjFjMGZlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRhcmsifSwibGFiZWwiOiJsaWdodExhYmVscyIsImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiY2xpbWF0ZSJ9',
-      image: exploreImageClimate,
+      img1x: explore,
+      img2x: exploreLarge,
       btnText: 'view on map'
     },
     {
@@ -155,7 +183,8 @@ export default {
       title: 'The latest research and insights from GFW',
       summary: 'Read about forests and climate on the GFW blog.',
       extLink: 'https://blog.globalforestwatch.org/climate',
-      image: researchImage,
+      img1x: research,
+      img2x: researchLarge,
       btnText: 'read the blog'
     },
     {
@@ -164,7 +193,8 @@ export default {
       summary:
         'Create a customized Forest Monitoring Report with the latest forest-related emissions.',
       extLink: 'http://climate.globalforestwatch.org/',
-      image: calculateImage,
+      img1x: calculate,
+      img2x: calculateLarge,
       btnText: 'view data'
     },
     {
@@ -173,7 +203,8 @@ export default {
       summary:
         'Use the custom dataset downloader to find information related to forests and climate.',
       extLink: 'http://climate.globalforestwatch.org/',
-      image: insightsImage,
+      img1x: insights,
+      img2x: insightsLarge,
       btnText: 'view data'
     },
     {
