@@ -12,7 +12,8 @@ class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { className, theme, data, active, tag, tagColour } = this.props;
-    const { image, imageCredit, title, summary, meta, buttons } = data || {};
+    const { image, img1x, img2x, imageCredit, title, summary, meta, buttons } =
+      data || {};
 
     return (
       <div className={cx('c-card', className, theme, { active })}>
@@ -24,6 +25,14 @@ class Card extends PureComponent {
           )}
         {image && (
           <div className="image" style={{ backgroundImage: `url(${image})` }} />
+        )}
+        {(img1x || img2x) && (
+          <img
+            className="image"
+            srcSet={`${img1x} 2x, ${img2x} 1x`}
+            src={`${img1x} 1x`}
+            alt={title}
+          />
         )}
         <div className={cx('body', { 'no-image': !image })}>
           <div className="text-content">

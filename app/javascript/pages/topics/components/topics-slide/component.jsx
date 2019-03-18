@@ -17,7 +17,8 @@ class TopicsSlide extends PureComponent {
       subtitle,
       text,
       title,
-      src,
+      img1x,
+      img2x,
       prompts,
       isDesktop,
       handleSkipToTools
@@ -55,7 +56,12 @@ class TopicsSlide extends PureComponent {
           </div>
           <div className="column small-12 medium-8">
             <div className="topic-image">
-              <TopicsImage url={src} description={subtitle} prompts={prompts} />
+              <TopicsImage
+                img1x={img1x}
+                img2x={img2x}
+                description={subtitle}
+                prompts={prompts}
+              />
             </div>
           </div>
         </div>
@@ -68,7 +74,8 @@ TopicsSlide.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
   text: PropTypes.string,
-  src: PropTypes.string,
+  img1x: PropTypes.string,
+  img2x: PropTypes.string,
   prompts: PropTypes.array,
   isLast: PropTypes.bool,
   isLeaving: PropTypes.bool,

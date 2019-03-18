@@ -9,7 +9,7 @@ import './styles.scss';
 class Intro extends PureComponent {
   render() {
     const { intro, className, handleSkipToTools, isDesktop } = this.props;
-    const { img, title, text } = intro;
+    const { img1x, img2x, title, text } = intro;
 
     return (
       <div className={cx('c-topics-intro', className)}>
@@ -17,9 +17,11 @@ class Intro extends PureComponent {
           <div className="column small-12 medium-6 titleCol">
             {isDesktop && (
               <div className="intro-img">
-                <svg viewBox={img.viewBox || '0 0 32 32'}>
-                  <use xlinkHref={`#${img.id || img}`} />
-                </svg>
+                <img
+                  srcSet={`${img1x} 2x, ${img2x} 1x,`}
+                  src={`${img1x} 1x`}
+                  alt={title}
+                />
               </div>
             )}
           </div>
@@ -43,9 +45,11 @@ class Intro extends PureComponent {
         </div>
         {!isDesktop && (
           <div className="intro-img">
-            <svg viewBox={img.viewBox || '0 0 32 32'}>
-              <use xlinkHref={`#${img.id || img}`} />
-            </svg>
+            <img
+              srcSet={`${img1x} 2x, ${img2x} 1x,`}
+              src={`${img1x} 1x`}
+              alt={title}
+            />
           </div>
         )}
       </div>
