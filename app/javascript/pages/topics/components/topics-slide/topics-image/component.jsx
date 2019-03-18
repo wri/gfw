@@ -112,8 +112,8 @@ class TopicsImage extends PureComponent {
               <Tooltip
                 className="image-info"
                 style={{
-                  left: p.position[0],
-                  top: p.position[1]
+                  left: `${p.position[0]}%`,
+                  top: `${p.position[1]}%`
                 }}
                 theme="light"
                 interactive
@@ -123,7 +123,7 @@ class TopicsImage extends PureComponent {
                   <div className="c-topics-info-tooltip">
                     <p>{p.content}</p>
                     {p.link && (
-                      <Button extLink={p.link} theme="theme-button-small">
+                      <Button theme="theme-button-small" extLink={p.link}>
                         {p.btnText}
                       </Button>
                     )}

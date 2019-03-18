@@ -6,7 +6,7 @@ import reducers, { initialState } from './reducers';
 import Component from './component';
 
 const mapStateToProps = ({ modalContactus, location }) => ({
-  open: location && location.query && location.query.contactUs,
+  open: location && location.query && location.query.contactUs !== 'false',
   showConfirm: modalContactus && modalContactus.showConfirm,
   submitting: modalContactus && modalContactus.submitting
 });

@@ -9,7 +9,7 @@ import './styles.scss';
 
 class TopicsFooter extends PureComponent {
   render() {
-    const { cards, topic } = this.props;
+    const { cards, topic, setModalContactUsOpen } = this.props;
     return (
       <div className="c-topics-footer">
         <div className="row">
@@ -29,9 +29,13 @@ class TopicsFooter extends PureComponent {
                       ...c,
                       buttons: [
                         {
-                          className: 'read-more',
                           text: c.btnText || 'READ MORE',
-                          extLink: c.extLink
+                          link: c.link,
+                          extLink: c.extLink,
+                          onClick:
+                            c.id === 'feedback'
+                              ? () => setModalContactUsOpen(true)
+                              : null
                         }
                       ]
                     }}
@@ -48,7 +52,8 @@ class TopicsFooter extends PureComponent {
 
 TopicsFooter.propTypes = {
   cards: PropTypes.array,
-  topic: PropTypes.string
+  topic: PropTypes.string,
+  setModalContactUsOpen: PropTypes.func
 };
 
 export default TopicsFooter;
