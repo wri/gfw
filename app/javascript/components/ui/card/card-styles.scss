@@ -10,6 +10,7 @@ $summary-color: #aaa;
   justify-content: flex-start;
   background-color: $white;
   border: solid 1px $border;
+  height: 100%;
 
   &.active {
     border-color: $green-gfw;
@@ -41,12 +42,20 @@ $summary-color: #aaa;
   }
 
   .body {
-    padding: rem(15px) rem(20px) rem(15px);
+    height: calc(100% - #{rem(220px)});
+    padding: rem(15px) rem(20px) rem(20px);
     border-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     z-index: 2;
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(20px) rem(40px) rem(25px);
+      padding: rem(20px) rem(40px) rem(40px);
+    }
+
+    &.no-image {
+      height: 100%;
     }
 
     span {

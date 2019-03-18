@@ -11,7 +11,17 @@
     margin-left: -20px;
   }
 
+  .slick-list {
+    overflow: visible;
+  }
+
+  .slick-track {
+    display: flex;
+  }
+
   .slick-slide {
+    display: flex;
+    height: auto;
     padding: 0 rem(5px);
     opacity: 0.5;
     transition: opacity 0.5s ease-in-out;
@@ -23,10 +33,6 @@
 
   .slick-active {
     opacity: 1;
-  }
-
-  .slick-list {
-    overflow: visible;
   }
 
   .slick-arrow {

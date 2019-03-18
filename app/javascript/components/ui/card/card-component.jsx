@@ -25,15 +25,17 @@ class Card extends PureComponent {
         {image && (
           <div className="image" style={{ backgroundImage: `url(${image})` }} />
         )}
-        <div className="body">
-          {imageCredit && <span>{imageCredit}</span>}
-          {title && <h3 className="title">{title}</h3>}
-          {summary && (
-            <div className="summary">
-              <Dotdotdot clamp={3}>{summary}</Dotdotdot>
-            </div>
-          )}
-          {meta && <p className="meta">{meta}</p>}
+        <div className={cx('body', { 'no-image': !image })}>
+          <div className="text-content">
+            {imageCredit && <span>{imageCredit}</span>}
+            {title && <h3 className="title">{title}</h3>}
+            {summary && (
+              <div className="summary">
+                <Dotdotdot clamp={3}>{summary}</Dotdotdot>
+              </div>
+            )}
+            {meta && <p className="meta">{meta}</p>}
+          </div>
           {buttons && (
             <div className="buttons">
               {buttons.map((button, i) => (

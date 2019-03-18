@@ -22,22 +22,20 @@ class TopicsFooter extends PureComponent {
             <Carousel>
               {cards &&
                 cards.map(c => (
-                  <div key={c.id}>
-                    <Card
-                      key={c.title}
-                      theme={c.theme}
-                      data={{
-                        ...c,
-                        buttons: [
-                          {
-                            className: 'read-more',
-                            text: c.btnText || 'READ MORE',
-                            extLink: c.extLink
-                          }
-                        ]
-                      }}
-                    />
-                  </div>
+                  <Card
+                    key={c.title}
+                    theme={c.theme}
+                    data={{
+                      ...c,
+                      buttons: [
+                        {
+                          className: 'read-more',
+                          text: c.btnText || 'READ MORE',
+                          extLink: c.extLink
+                        }
+                      ]
+                    }}
+                  />
                 ))}
             </Carousel>
           </div>
