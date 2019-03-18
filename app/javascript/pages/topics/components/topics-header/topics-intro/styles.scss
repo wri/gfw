@@ -22,8 +22,6 @@
 
   .intro-img {
     width: 100%;
-    // margin: rem(10px) 0;
-    // padding: rem(15px);
 
     img {
       width: 100%;
@@ -31,20 +29,8 @@
 
     @media screen and (min-width: $screen-m) {
       position: absolute;
-      // left: rem(40px);
       padding-right: rem(80px);
       display: initial;
-      // margin: rem(30px) 0 rem(50px);
-    }
-  }
-
-  &.water {
-    @media screen and (min-width: $screen-m) {
-      .intro-img {
-        left: 100px;
-        width: 65%;
-        padding-right: 0;
-      }
     }
   }
 
