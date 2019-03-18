@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { track } from 'app/analytics';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
+import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 
 import * as actions from 'components/maps/map/actions';
 import { getBasemapsProps } from './basemaps-selectors';
@@ -99,5 +100,7 @@ BasemapsContainer.propTypes = {
 };
 
 export default withTooltipEvt(
-  connect(getBasemapsProps, actions)(BasemapsContainer)
+  connect(getBasemapsProps, { setModalMetaSettings, ...actions })(
+    BasemapsContainer
+  )
 );

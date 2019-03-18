@@ -13,13 +13,18 @@ $top-section-height: 125px;
     margin: 0 0 rem(15px);
   }
 
-  .basemaps-action-button {
-    cursor: pointer;
+  .basemaps-actions {
+    display: flex;
 
-    svg {
-      height: 11px;
-      width: 11px;
-      fill: $warm-grey;
+    .basemaps-action-button {
+      cursor: pointer;
+      margin-left: rem(8px);
+
+      svg {
+        height: 11px;
+        width: 11px;
+        fill: $warm-grey;
+      }
     }
   }
 
