@@ -9,9 +9,9 @@ import Legend, {
   LegendItemButtonRemove,
   LegendItemTypes,
   LegendListItem
-} from 'wri-api-components/dist/legend';
+} from 'vizzuality-components/dist/legend';
 
-import Icons from 'wri-api-components/dist/icons';
+import Icons from 'vizzuality-components/dist/icons';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';

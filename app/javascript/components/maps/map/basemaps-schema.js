@@ -53,6 +53,14 @@ export default {
         'line-color': '#8dcbf7'
       },
       {
+        id: 'waterway-river-canal-shadow',
+        'line-color': '#6ea5f2'
+      },
+      {
+        id: 'waterway-small',
+        'line-color': '#8dcbf7'
+      },
+      {
         id: 'water',
         'fill-color': '#aedffd'
       }
@@ -71,6 +79,14 @@ export default {
       },
       {
         id: 'waterway-river-canal',
+        'line-color': '#000000'
+      },
+      {
+        id: 'waterway-river-canal-shadow',
+        'line-color': '#000000'
+      },
+      {
+        id: 'waterway-small',
         'line-color': '#000000'
       },
       {
@@ -96,6 +112,14 @@ export default {
         'line-color': '#131620'
       },
       {
+        id: 'waterway-river-canal-shadow',
+        'line-color': '#131620'
+      },
+      {
+        id: 'waterway-small',
+        'line-color': '#131620'
+      },
+      {
         id: 'water',
         'fill-color': '#131620'
       }
@@ -118,6 +142,14 @@ export default {
       },
       {
         id: 'waterway-river-canal',
+        'line-color': '#0C0045'
+      },
+      {
+        id: 'waterway-river-canal-shadow',
+        'line-color': '#0C0045'
+      },
+      {
+        id: 'waterway-small',
         'line-color': '#0C0045'
       },
       {
