@@ -17,7 +17,7 @@ class BasemapsContainer extends React.Component {
     setMapSettings: PropTypes.func.isRequired
   };
 
-  selectBasemap = (basemap, year) => {
+  selectBasemap = (basemap, year, month) => {
     const { labels, setMapSettings } = this.props;
     const label = labels[basemap.labelsKey] || labels.default;
     if (basemap.value === 'landsat') {
@@ -30,7 +30,6 @@ class BasemapsContainer extends React.Component {
         label: label.value
       });
     } else if (basemap.value === 'planet') {
-      const month = 12;
       setMapSettings({
         basemap: {
           value: basemap.value,
@@ -38,7 +37,7 @@ class BasemapsContainer extends React.Component {
           month,
           url: basemap.url
             .replace('{year}', year || 2018)
-            .replace('{month}', month)
+            .replace('{month}', `0${month}`.slice(-2))
         },
         label: label.value
       });
