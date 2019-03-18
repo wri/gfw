@@ -19,7 +19,8 @@ class TopicsSlide extends PureComponent {
       title,
       src,
       prompts,
-      isDesktop
+      isDesktop,
+      handleSkipToTools
     } = this.props;
     return (
       <div
@@ -45,7 +46,7 @@ class TopicsSlide extends PureComponent {
                 <Button
                   className="topic-btn"
                   theme="theme-button-light"
-                  onClick={this.handleSkipToTools}
+                  onClick={handleSkipToTools}
                 >
                   Related tools
                 </Button>
@@ -71,7 +72,8 @@ TopicsSlide.propTypes = {
   prompts: PropTypes.array,
   isLast: PropTypes.bool,
   isLeaving: PropTypes.bool,
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  handleSkipToTools: PropTypes.func
 };
 
 export default TopicsSlide;

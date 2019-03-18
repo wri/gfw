@@ -93,6 +93,10 @@ $summary-color: #aaa;
     .buttons {
       display: flex;
       justify-content: space-between;
+
+      * {
+        min-width: rem(130px);
+      }
     }
 
     .read-more {

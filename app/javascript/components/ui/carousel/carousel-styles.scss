@@ -29,6 +29,10 @@
     @media screen and (min-width: $screen-xl) {
       padding: 0 rem(20px);
     }
+
+    div {
+      width: 100%;
+    }
   }
 
   .slick-active {

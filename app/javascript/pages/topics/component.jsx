@@ -153,6 +153,7 @@ class TopicsPage extends PureComponent {
                             isDesktop={isDesktop}
                             isLeaving={this.state.slideLeaving === index}
                             isLast={index === 3}
+                            handleSkipToTools={this.handleSkipToTools}
                           />
                         ))}
                     </div>
