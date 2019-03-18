@@ -124,6 +124,13 @@ $full-screen-height: rem(75px);
         margin: 0 rem(5px);
       }
 
+      > li {
+        div {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
       .icon-arrow {
         height: rem(10px);
         margin-left: rem(5px);
@@ -224,6 +231,12 @@ $full-screen-height: rem(75px);
       .icon-close,
       .icon-arrow {
         height: rem(10px);
+      }
+
+      .icon-arrow {
+        &.active {
+          transform: rotate(180deg);
+        }
       }
     }
   }

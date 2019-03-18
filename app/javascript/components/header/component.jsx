@@ -1,6 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+// import ClickOutside from 'react-click-outside';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 import { NavLink } from 'redux-first-router-link';
 
@@ -105,51 +107,59 @@ class Header extends PureComponent {
                     >
                       {navMain.map(item => (
                         <li key={item.label}>
-                          {useNavLinks ? (
-                            <NavLink
-                              to={item.path}
-                              className="nav-link"
-                              activeClassName="-active"
-                            >
-                              {item.label}
-                            </NavLink>
-                          ) : (
-                            <Fragment>
-                              {item.submenu && (
-                                <Fragment>
-                                  <button
-                                    className="nav-link"
-                                    onClick={() =>
-                                      setActiveNavItem(
-                                        item.label === activeNavItem
-                                          ? null
-                                          : item.label
-                                      )
-                                    }
-                                  >
+                          <OutsideClickHandler
+                            onOutsideClick={() => {
+                              if (activeNavItem === item.label) {
+                                setActiveNavItem(null);
+                              }
+                            }}
+                          >
+                            {useNavLinks ? (
+                              <NavLink
+                                to={item.path}
+                                className="nav-link"
+                                activeClassName="-active"
+                              >
+                                {item.label}
+                              </NavLink>
+                            ) : (
+                              <Fragment>
+                                {item.submenu && (
+                                  <Fragment>
+                                    <button
+                                      className="nav-link"
+                                      onClick={() =>
+                                        setActiveNavItem(
+                                          item.label === activeNavItem
+                                            ? null
+                                            : item.label
+                                        )
+                                      }
+                                    >
+                                      {item.label}
+                                      <Icon
+                                        className={cx('icon-arrow', {
+                                          active: activeNavItem === item.label
+                                        })}
+                                        icon={arrowIcon}
+                                      />
+                                    </button>
+                                    {activeNavItem === item.label && (
+                                      <DropdownMenu
+                                        className="sub-menu"
+                                        options={item.submenu}
+                                      />
+                                    )}
+                                  </Fragment>
+                                )}
+                                {!item.submenu && (
+                                  <a href={item.path} className="nav-link">
                                     {item.label}
-                                    <Icon
-                                      className={cx('icon-arrow', {
-                                        active: activeNavItem === item.label
-                                      })}
-                                      icon={arrowIcon}
-                                    />
-                                  </button>
-                                  {activeNavItem === item.label && (
-                                    <DropdownMenu
-                                      className="sub-menu"
-                                      options={item.submenu}
-                                    />
-                                  )}
-                                </Fragment>
-                              )}
-                              {!item.submenu && (
-                                <a href={item.path} className="nav-link">
-                                  {item.label}
-                                </a>
-                              )}
-                            </Fragment>
-                          )}
+                                  </a>
+                                )}
+                              </Fragment>
+                            )}
+                          </OutsideClickHandler>
                         </li>
                       ))}
                     </ul>
@@ -162,7 +172,12 @@ class Header extends PureComponent {
                           onClick={() => setShowLangSelector(!showLangSelector)}
                         >
                           {(activeLang && activeLang.label) || 'English'}
-                          <Icon className="icon-arrow" icon={arrowIcon} />
+                          <Icon
+                            className={cx('icon-arrow', {
+                              active: showLangSelector
+                            })}
+                            icon={arrowIcon}
+                          />
                         </button>
                         {showLangSelector && (
                           <DropdownMenu

@@ -7,7 +7,8 @@ import arrowIcon from 'assets/icons/arrow-down.svg';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
-import bgImage from 'pages/topics/assets/header-bg.jpg';
+import bgImage from 'pages/topics/assets/bg-leaf.jpeg';
+import bgImageLarge from 'pages/topics/assets/bg-leaf@2x.jpeg';
 
 import Intro from './topics-intro';
 
@@ -30,7 +31,7 @@ class TopicsHeader extends PureComponent {
             title="Topics"
             description="Explore the relationship between forests and several key themes critical to sustainability and the health of our
             future ecosystems."
-            bgImage={bgImage}
+            bgImage={isDesktop ? bgImageLarge : bgImage}
           />
           <SubnavMenu links={topics} theme="theme-subnav-dark" />
           <Intro
