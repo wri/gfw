@@ -128,7 +128,7 @@ export default {
   planet: {
     value: 'planet',
     label: 'Planet',
-    labelsKey: 'lightLabels',
+    labelsKey: 'default',
     color: '#131620',
     image: satelliteImage,
     dynamic: true,
