@@ -19,6 +19,12 @@
     }
   }
 
+  z-index: 1;
+
+  &.active {
+    z-index: 2;
+  }
+
   .topic-btn {
     margin: auto;
     position: absolute;

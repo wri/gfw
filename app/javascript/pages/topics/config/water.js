@@ -1,15 +1,33 @@
-import healthImage from 'pages/topics/assets/water/cards/health.png';
-import solutionsImage from 'pages/topics/assets/water/cards/solutions.png';
-import learnImage from 'pages/topics/assets/water/cards/learn.png';
-import water from 'pages/topics/assets/water/water-intro.svg';
+// intro
+import intro1x from 'pages/topics/assets/water/intro/pond.png';
+import intro2x from 'pages/topics/assets/water/intro/pond@2x.png';
+
+// slides
+import water1 from 'pages/topics/assets/water/slides/water1.png';
+import water1Large from 'pages/topics/assets/water/slides/water1@2x.png';
+import water2 from 'pages/topics/assets/water/slides/water2.png';
+import water2Large from 'pages/topics/assets/water/slides/water2@2x.png';
+import water3 from 'pages/topics/assets/water/slides/water3.png';
+import water3Large from 'pages/topics/assets/water/slides/water3@2x.png';
+import water4 from 'pages/topics/assets/water/slides/water4.png';
+import water4Large from 'pages/topics/assets/water/slides/water4@2x.png';
+
+// cards
+import health from 'pages/topics/assets/water/cards/health.png';
+import healthLarge from 'pages/topics/assets/water/cards/health@2x.png';
+import solutions from 'pages/topics/assets/water/cards/solutions.png';
+import solutionsLarge from 'pages/topics/assets/water/cards/solutions@2x.png';
+import learn from 'pages/topics/assets/water/cards/learn.png';
+import learnLarge from 'pages/topics/assets/water/cards/learn@2x.png';
 
 export default {
   intro: {
-    img: water,
     title:
       "Nearly 20% of the world's population will be at-risk for floods by 2050.",
     text:
-      'Forests are a natural, cost-effective way to secure ample, clean water and to protect against natural disasters like floods and droughts.'
+      'Forests are a natural, cost-effective way to secure ample, clean water and to protect against natural disasters like floods and droughts.',
+    img1x: intro1x,
+    img2x: intro2x
   },
   slides: [
     {
@@ -17,7 +35,8 @@ export default {
       subtitle: 'Ideal state',
       text:
         'Forests are critical to supplying clean and plentiful water around the world. Healthy forests filter water, reduce erosion, regulate rainfall, recharge groundwater tables and buffer against the impacts of droughts and floods. Coastal forests are especially important in providing protection from surges and are crucial breeding grounds for marine life.',
-      src: 'water1',
+      img1x: water1,
+      img2x: water1Large,
       prompts: [
         {
           id: 'water-learn',
@@ -50,7 +69,8 @@ export default {
       subtitle: 'Drivers of change',
       text:
         'Deforestation compromises watershed health and increases risk of floods and drought. More frequent and severe forest fires, exacerbated by climate change, can pollute water supplies, reduce forest cover and devastate communities.',
-      src: 'water2',
+      img1x: water2,
+      img2x: water2Large,
       prompts: [
         {
           id: 'water-learn',
@@ -76,7 +96,8 @@ export default {
       subtitle: 'Compromised state',
       text:
         'Deforested watersheds are unable to properly filter water and regulate water supply for the communities that depend on them. Erosion, flood and landslide risks increase without forests to hold sediment in place and channel precipitation under ground. Deforested coasts are more vulnerable to storm surges and fisheries suffer.',
-      src: 'water3',
+      img1x: water3,
+      img2x: water3Large,
       prompts: [
         {
           id: 'water-learn',
@@ -101,7 +122,8 @@ export default {
       subtitle: 'Recovery state',
       text:
         'Restoring and conserving forests can help increase water security. There is a growing wave of investments in forests for water, given the economic, environmental and public health benefits these critical lands can generate.',
-      src: 'water4',
+      img1x: water4,
+      img2x: water4Large,
       prompts: [
         {
           id: 'water-learn',
@@ -139,7 +161,8 @@ export default {
       summary: 'Measure forest and track recent forest loss in your watershed.',
       link:
         '/map?mainMap=eyJzaG93QmFzZW1hcHMiOnRydWV9&map=eyJ6b29tIjoyLCJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImNhbkJvdW5kIjpmYWxzZSwiYmJveCI6bnVsbCwiZGF0YXNldHMiOlt7ImxheWVycyI6WyJkNTkwZjgzYy05YjU0LTQ1NDItOGQyNy1mNjFiOGIxOWRmNDYiXSwiZGF0YXNldCI6IjYzMjk1YjA1LTU1YTEtNDU2Yy1hNTZjLWM5Y2NiM2E3MTFlYyIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6IjcwZTI1NDljLWQ3MjItNDRhNi1hOGQ3LTRhMzg1ZDc4NTY1ZSIsImxheWVycyI6WyIzYjIyYTU3NC0yNTA3LTRiNGEtYTI0Ny04MDA1N2MxYTFhZDQiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX0seyJkYXRhc2V0IjoiODk3ZWNjNzYtMjMwOC00YzUxLWFlYjMtNDk1ZGUwYmRjYTc5IiwibGF5ZXJzIjpbImMzMDc1YzVhLTU1NjctNGIwOS1iYzBkLTk2ZWQxNjczZjhiNiJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiIwNDRmNGFmOC1iZTcyLTQ5OTktYjdkZC0xMzQzNGZjNGEzOTQiLCJsYXllcnMiOlsiNzg3NDdlYTEtMzRhOS00YWE3LWIwOTktYmRiODk0ODIwMGY0Il0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XX0%3D',
-      image: healthImage,
+      img1x: health,
+      img2x: healthLarge,
       btnText: 'view on map'
     },
     {
@@ -149,7 +172,8 @@ export default {
         'Learn about options for mitigating risks to watersheds and read case studies.',
       extLink:
         'https://www.wri.org/publication/protecting-drinking-water-source',
-      image: solutionsImage,
+      img1x: solutions,
+      img2x: solutionsLarge,
       btnText: 'view data'
     },
     {
@@ -158,7 +182,8 @@ export default {
       summary: 'Read about how forests can benefit water supply globally.',
       extLink:
         'http://www.wri.org/our-work/project/natural-infrastructure-water/blog',
-      image: learnImage,
+      img1x: learn,
+      img2x: learnLarge,
       btnText: 'view data'
     },
     {
