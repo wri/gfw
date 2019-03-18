@@ -1,12 +1,13 @@
 {
   "name": "globalforestwatch",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Global Forest Watch",
   "main": "Gruntfile.js",
   "engines": {
     "node": "10.15.2"
   },
   "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install",
     "build": "./node_modules/bower/bin/bower install",
     "start": "./bin/server",
     "start:prod": "RAILS_ENV=production_local NODE_ENV=production yarn prod-server",
@@ -134,6 +135,7 @@
     "postcss-smart-import": "0.7.5",
     "precss": "2.0.0",
     "proj4": "^2.5.0",
+    "promise.prototype.finally": "^3.1.0",
     "query-string": "5.0.1",
     "rails-erb-loader": "^5.5.0",
     "rc-slider": "^8.6.1",
@@ -186,7 +188,7 @@
     "turf-point": "^2.0.1",
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
-    "wri-api-components": "^2.2.10",
+    "vizzuality-components": "^1.0.0",
     "wri-json-api-serializer": "^1.0.1"
   },
   "resolutions": {
