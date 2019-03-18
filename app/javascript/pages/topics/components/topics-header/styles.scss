@@ -10,13 +10,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: rem(60px) 0 rem(100px);
+    margin: rem(100px) 0 rem(100px);
 
     .scroll-btn {
       height: rem(46px);
       width: rem(46px);
       border-radius: rem(50px);
-      margin-bottom: rem(20px);
+      margin-bottom: rem(10px);
     }
 
     p {
