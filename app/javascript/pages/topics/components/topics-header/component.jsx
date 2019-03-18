@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
-import Intro from 'pages/topics/components/intro';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
 import bgImage from 'pages/topics/assets/header-bg.jpg';
+
+import Intro from './topics-intro';
 
 import './styles.scss';
 
