@@ -11,6 +11,7 @@ class Cookies extends PureComponent {
     return (
       <div className="c-cookies">
         <div className="row">
+          <div className="medium-1" />
           <div className="column small-12 medium-8">
             <p className="cookies-text">
               This website uses cookies to provide you with an improved user
@@ -19,7 +20,7 @@ class Cookies extends PureComponent {
               <a href=""> privacy policy </a> for further details.
             </p>
           </div>
-          <div className="column small-12 medium-4 cookies-button">
+          <div className="column small-12 medium-2 cookies-button">
             <Button
               theme="theme-button-grey theme-button-small"
               onClick={agreeCookies}
@@ -27,6 +28,7 @@ class Cookies extends PureComponent {
               I agree
             </Button>
           </div>
+          <div className="medium-1" />
         </div>
       </div>
     );

@@ -4,7 +4,7 @@
   position: fixed;
   width: 100%;
   bottom: 0;
-  z-index: 9999;
+  z-index: 99999;
   background-color: rgba(51, 51, 51, 0.9);
 
   .cookies-text {
@@ -27,6 +27,8 @@
       text-transform: uppercase;
       font-size: 14px;
       font-weight: 500;
+      width: 100%;
+      max-width: 170px;
     }
   }
 }
