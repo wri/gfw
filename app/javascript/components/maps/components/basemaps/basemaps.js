@@ -30,14 +30,19 @@ class BasemapsContainer extends React.Component {
         label: label.value
       });
     } else if (month && basemap.value === 'planet') {
+      const yearStr = String(Number(year) || 2018);
+      const isMonthly = !month.includes('Q');
+      const period = isMonthly
+        ? `monthly_${yearStr}_${`0${month}`.slice(-2)}`
+        : `quarterly_${yearStr}${month}`;
       setMapSettings({
         basemap: {
           value: basemap.value,
           year,
           month,
           url: basemap.url
-            .replace('{year}', year || 2018)
-            .replace('{month}', `0${month}`.slice(-2))
+            .replace('{period}', period)
+            .replace('{frequency}', isMonthly ? 'monthly' : 'quarterly')
         },
         label: label.value
       });

@@ -129,7 +129,6 @@ class Basemaps extends React.PureComponent {
                 frequency,
                 onDateChange: (m, y) => selectBasemap(basemap, m, y)
               })}
-              open
             >
               <span>{`${`0${month}`.slice(-2)}/${year}`}</span>
             </Tooltip>
