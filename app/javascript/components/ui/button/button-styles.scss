@@ -61,4 +61,8 @@ $button-height: rem(40px);
     padding: 0;
     font-size: 0;
   }
+
+  &.wide {
+    width: 100%;
+  }
 }
