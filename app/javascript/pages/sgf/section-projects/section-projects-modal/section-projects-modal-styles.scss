@@ -75,7 +75,11 @@
   }
 
   .content {
-    padding: rem(30px) calc(50% - 260px) rem(40px);
+    padding: rem(30px) rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(30px) calc(50% - 260px) rem(40px);
+    }
 
     .description {
       margin-bottom: rem(20px);
