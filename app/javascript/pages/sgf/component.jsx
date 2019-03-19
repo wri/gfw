@@ -7,7 +7,6 @@ import Apply from 'pages/sgf/section-apply';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
-import Footer from 'components/footer';
 
 import bgImage from './header-bg';
 import './styles.scss';
@@ -26,7 +25,6 @@ class Page extends PureComponent {
       sectionComponents[(section && section.component) || 'projects'];
     return (
       <div>
-        <Footer />
         <Cover
           title="Grants & Fellowships"
           description="The Small Grants Fund and Tech Fellowship support civil society organizations
