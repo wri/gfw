@@ -10,7 +10,7 @@ import { SCREEN_M } from 'utils/constants';
 import './carousel-styles.scss';
 
 const defaultSettings = {
-  dots: true,
+  dots: false,
   speed: 500,
   infinite: false,
   slidesToShow: 2,

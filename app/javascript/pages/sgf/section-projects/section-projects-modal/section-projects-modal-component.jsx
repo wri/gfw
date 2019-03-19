@@ -55,9 +55,8 @@ class SectionProjectsModal extends PureComponent {
               className="modal-image-slider"
               settings={{
                 slidesToShow: 1,
-                centerPadding: '0px',
-                centerMode: false,
-                arrows: false
+                arrows: false,
+                dots: true
               }}
             >
               {data.images &&

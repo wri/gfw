@@ -5,10 +5,9 @@ $subnav-height-dark: rem(40px);
 .theme-subnav-dark {
   background-color: $black-menu;
   height: $subnav-height-dark;
+  border-top: solid 1px $slate;
 
   .buttons {
-    height: $subnav-height-dark;
-
     li {
       border-right: 0;
       background-color: $white;

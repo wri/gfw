@@ -127,6 +127,7 @@ class Footer extends PureComponent {
                     settings={{
                       slidesToShow: isDesktop ? 4 : 1,
                       slidesToScroll: isDesktop ? 4 : 1,
+                      infinite: true,
                       nextArrow: (
                         <Button theme="theme-button-clear square">
                           <Icon icon={arrowIcon} />
