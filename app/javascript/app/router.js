@@ -103,6 +103,7 @@ export const routes = {
     controller: 'map_v2',
     path: '/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
+    header: true,
     headerOptions: {
       isMap: true,
       fullScreen: true,
@@ -121,7 +122,8 @@ export const routes = {
     controller: 'dashboards',
     path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards',
-    headerOptions: true
+    header: true,
+    footer: true
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',

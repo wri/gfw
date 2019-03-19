@@ -11,7 +11,6 @@ import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 
 import Widgets from 'components/widgets';
-import Footer from 'components/footer';
 import Share from 'components/modals/share';
 import Map from 'components/maps/dashboards-map';
 import MapControls from 'components/maps/dashboards-map/components/map-controls';
@@ -21,7 +20,7 @@ import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
 
-import Header from 'pages/dashboards/header';
+import DashboardsHeader from 'pages/dashboards/header';
 
 import closeIcon from 'assets/icons/close.svg';
 import './styles.scss';
@@ -53,7 +52,7 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          <Header className="header" />
+          <DashboardsHeader className="header" />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"
@@ -100,7 +99,6 @@ class Page extends PureComponent {
         <GeostoreProvider />
         <DatasetsProvider />
         <LatestProvider />
-        <Footer />
       </div>
     );
   }

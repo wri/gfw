@@ -8,6 +8,7 @@ import cx from 'classnames';
 
 import Meta from 'components/meta';
 import Header from 'components/header';
+import Footer from 'components/footer';
 import Button from 'components/ui/button';
 import MapMenu from 'components/maps/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
@@ -44,7 +45,7 @@ class App extends PureComponent {
             )}
           >
             {!embed &&
-              route.headerOptions && (
+              route.header && (
                 <Header
                   className={cx('map-tour-main-menu')}
                   isMobile={!isDesktop}
@@ -71,6 +72,7 @@ class App extends PureComponent {
                 isTrase={isTrase}
               />
             </div>
+            {!embed && route.footer && <Footer />}
             {!embed && <MyGFWProvider />}
             {embed &&
               !isGFW &&
