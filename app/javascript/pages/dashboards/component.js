@@ -35,7 +35,8 @@ class Page extends PureComponent {
       handleCategoryChange,
       noWidgetsMessage,
       widgets,
-      activeWidget
+      activeWidget,
+      handleLocationChange
     } = this.props;
 
     return (
@@ -80,7 +81,15 @@ class Page extends PureComponent {
             bottomBoundary=".l-country"
           >
             <div className="map-container">
-              <Map />
+              <Map
+                onSelectBoundary={handleLocationChange}
+                popupActions={[
+                  {
+                    label: 'View dashboard',
+                    action: handleLocationChange
+                  }
+                ]}
+              />
             </div>
           </Sticky>
         </div>
@@ -111,6 +120,7 @@ Page.propTypes = {
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   noWidgetsMessage: PropTypes.string,
   handleCategoryChange: PropTypes.func,
+  handleLocationChange: PropTypes.func,
   widgets: PropTypes.array,
   activeWidget: PropTypes.string
 };

@@ -6,11 +6,12 @@ import reducerRegistry from 'app/registry';
 
 import * as shareActions from 'components/modals/share/share-actions';
 import * as ownActions from './header-actions';
+import { handleLocationChange } from '../../actions';
 import { getHeaderProps } from './header-selectors';
 import reducers, { initialState } from './header-reducers';
 import HeaderComponent from './header-component';
 
-const actions = { ...ownActions, ...shareActions };
+const actions = { ...ownActions, ...shareActions, handleLocationChange };
 
 class HeaderContainer extends PureComponent {
   componentWillMount() {

@@ -9,7 +9,7 @@ class DashboardsMapComponent extends PureComponent {
   render() {
     return (
       <div className="c-dashboards-map">
-        <Map className="dashboards-map" />
+        <Map className="dashboards-map" {...this.props} />
         <MiniLegend className="dashboards-mini-legend" />
       </div>
     );
