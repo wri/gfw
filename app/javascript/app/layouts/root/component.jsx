@@ -10,7 +10,7 @@ import Meta from 'components/meta';
 import Header from 'components/header';
 import Footer from 'components/footer';
 import Button from 'components/ui/button';
-import MapMenu from 'components/maps/components/menu';
+import MapMenu from 'pages/map/components/map/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
 

@@ -12,15 +12,15 @@ import LatestProvider from 'providers/latest-provider';
 
 import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
-import Map from 'components/maps/dashboards-map';
-import MapControls from 'components/maps/dashboards-map/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
 
-import DashboardsHeader from 'pages/dashboards/header';
+import DashboardsHeader from 'pages/dashboards/components/header';
+import Map from 'pages/dashboards/components/map';
+import MapControls from 'pages/dashboards/components/map/components/map-controls';
 
 import closeIcon from 'assets/icons/close.svg';
 import './styles.scss';
