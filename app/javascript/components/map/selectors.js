@@ -21,7 +21,6 @@ const selectLatestLoading = state => state.latest && state.latest.loading;
 const selectRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
-const selectDrawLoading = state => state.draw && state.draw.loading;
 
 // datasets
 const selectDatasets = state => state.datasets && state.datasets.data;
@@ -90,9 +89,9 @@ export const getMapLng = createSelector(
   settings => settings.center.lng
 );
 
-export const getDraw = createSelector(
+export const getDrawing = createSelector(
   [getMapSettings],
-  settings => settings.draw
+  settings => settings.drawing
 );
 
 export const getBbox = createSelector(
@@ -126,7 +125,6 @@ export const getMapLoading = createSelector(
     selectGeostoreLoading,
     selectLatestLoading,
     selectDatasetsLoading,
-    selectDrawLoading,
     selectRecentImageryLoading
   ],
   (
@@ -134,14 +132,12 @@ export const getMapLoading = createSelector(
     geostoreLoading,
     latestLoading,
     datasetsLoading,
-    drawLoading,
     recentImageryLoading
   ) =>
     mapLoading ||
     geostoreLoading ||
     latestLoading ||
     datasetsLoading ||
-    drawLoading ||
     recentImageryLoading
 );
 
@@ -565,7 +561,7 @@ export const getMapProps = createStructuredSelector({
   geostoreBbox: getGeostoreBbox,
   bbox: getBbox,
   canBound: getCanBound,
-  draw: getDraw,
+  drawing: getDrawing,
   lat: getMapLat,
   lng: getMapLng,
   zoom: getMapZoom,

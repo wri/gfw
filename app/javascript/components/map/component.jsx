@@ -10,7 +10,7 @@ import iconCrosshair from 'assets/icons/crosshair.svg';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import Popup from './components/popup';
-import MapDraw from './components/draw';
+import Draw from './components/draw';
 import MapAttributions from './components/attributions';
 import LayerManagerComponent from './components/layer-manager';
 
@@ -94,7 +94,7 @@ class MapComponent extends PureComponent {
       loadingMessage,
       mapOptions,
       basemap,
-      draw,
+      drawing,
       zoom,
       lat,
       lng,
@@ -105,13 +105,14 @@ class MapComponent extends PureComponent {
       handleMapMove,
       handleMapInteraction,
       popupActions,
+      onSelectBoundary,
       onDrawComplete
     } = this.props;
     const { mapReady } = this.state;
 
     return (
       <div
-        className={cx('c-map', { 'no-pointer-events': draw }, className)}
+        className={cx('c-map', { 'no-pointer-events': drawing }, className)}
         style={{ backgroundColor: basemap.color }}
         ref={el => {
           setMapRect(el);
@@ -142,12 +143,18 @@ class MapComponent extends PureComponent {
           {mapReady && (
             <Fragment>
               <LayerManagerComponent map={this.map} />
-              <Popup map={this.map} buttons={popupActions} />
-              <MapDraw
+              <Popup
                 map={this.map}
-                drawing={draw}
-                onDrawComplete={onDrawComplete}
+                buttons={popupActions}
+                onSelectBoundary={onSelectBoundary}
               />
+              {onDrawComplete && (
+                <Draw
+                  map={this.map}
+                  drawing={drawing}
+                  onDrawComplete={onDrawComplete}
+                />
+              )}
             </Fragment>
           )}
         </ReactMapGL>
@@ -172,7 +179,7 @@ MapComponent.propTypes = {
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
-  draw: PropTypes.bool,
+  drawing: PropTypes.bool,
   lat: PropTypes.number,
   lng: PropTypes.number,
   zoom: PropTypes.number,
@@ -182,12 +189,9 @@ MapComponent.propTypes = {
   setMapRect: PropTypes.func,
   popupActions: PropTypes.array,
   onDrawComplete: PropTypes.func,
+  onSelectBoundary: PropTypes.func,
   handleMapMove: PropTypes.func,
   handleMapInteraction: PropTypes.func
-};
-
-MapComponent.defaultProps = {
-  onDrawComplete: () => {}
 };
 
 export default MapComponent;

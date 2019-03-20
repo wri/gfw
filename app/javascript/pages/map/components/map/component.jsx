@@ -8,11 +8,12 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Map from 'components/map';
 import SubscribeModal from 'components/modals/subscribe';
-import MapTour from 'pages/map/components/map-tour';
 import ModalWelcome from 'components/modals/welcome';
-import RecentImagery from './components/recent-imagery';
-import DataAnalysisMenu from './components/data-analysis-menu';
-import MapControlButtons from './components/map-controls';
+
+import MapTour from 'pages/map/components/map-tour';
+import RecentImagery from 'pages/map/components/recent-imagery';
+import DataAnalysisMenu from 'pages/map/components/data-analysis-menu';
+import MapControlButtons from 'pages/map/components/map-controls';
 
 import './styles.scss';
 
@@ -68,7 +69,11 @@ class MainMapComponent extends PureComponent {
               >
                 <Map
                   className="main-map"
-                  datasets={[]}
+                  onDrawComplete={geoJson => {
+                    // get geostore if from geometry
+                    // use result to set url
+                  }}
+                  onSelectBoundary={setMainMapAnalysisView}
                   popupActions={[
                     {
                       label: 'Analyze',
@@ -110,6 +115,7 @@ class MainMapComponent extends PureComponent {
 MainMapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
   handleClickMap: PropTypes.func,
+  setMainMapAnalysisView: PropTypes.func,
   oneClickAnalysis: PropTypes.bool,
   embed: PropTypes.bool,
   hidePanels: PropTypes.bool,

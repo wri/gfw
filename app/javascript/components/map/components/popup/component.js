@@ -15,9 +15,9 @@ import BoundarySentence from './components/boundary-sentence';
 
 class Popup extends Component {
   componentDidUpdate(prevProps) {
-    const { activeDatasets, clearInteractions } = prevProps;
+    const { activeDatasets, clearMapInteractions } = prevProps;
     if (!isEqual(activeDatasets.length, this.props.activeDatasets.length)) {
-      clearInteractions();
+      clearMapInteractions();
     }
   }
 
@@ -53,10 +53,10 @@ class Popup extends Component {
       latlng,
       interactions,
       selected,
-      setInteractionSelected,
-      setMainMapAnalysisView,
+      setMapInteractionSelected,
+      clearMapInteractions,
+      onSelectBoundary,
       setMapSettings,
-      clearInteractions,
       isBoundary,
       zoomToShape,
       buttons
@@ -72,7 +72,7 @@ class Popup extends Component {
           <Button
             className="close-btn"
             theme="theme-button-clear theme-button-small square"
-            onClick={clearInteractions}
+            onClick={clearMapInteractions}
           >
             <Icon icon={closeIcon} />
           </Button>
@@ -106,7 +106,7 @@ class Popup extends Component {
                     theme="theme-dropdown-native"
                     value={selected}
                     options={interactions}
-                    onChange={setInteractionSelected}
+                    onChange={setMapInteractionSelected}
                     native
                   />
                 )}
@@ -118,7 +118,7 @@ class Popup extends Component {
                 <BoundarySentence
                   selected={selected}
                   data={tableData}
-                  setMainMapAnalysisView={setMainMapAnalysisView}
+                  onSelectBoundary={onSelectBoundary}
                 />
               ) : (
                 <DataTable data={tableData} />
@@ -149,8 +149,8 @@ class Popup extends Component {
 }
 
 Popup.propTypes = {
-  clearInteractions: PropTypes.func,
-  setInteractionSelected: PropTypes.func,
+  clearMapInteractions: PropTypes.func,
+  setMapInteractionSelected: PropTypes.func,
   latlng: PropTypes.object,
   selected: PropTypes.object,
   interactions: PropTypes.array,
@@ -158,7 +158,7 @@ Popup.propTypes = {
   isBoundary: PropTypes.bool,
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
-  setMainMapAnalysisView: PropTypes.func,
+  onSelectBoundary: PropTypes.func,
   setMapSettings: PropTypes.func,
   zoomToShape: PropTypes.bool,
   buttons: PropTypes.array

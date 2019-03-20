@@ -214,8 +214,8 @@ class MapContainer extends PureComponent {
    * Save all data onClick to store
    */
   handleMapInteraction = e => {
-    const { draw, setMapInteraction } = this.props;
-    if (!draw && e.features && e.features.length) {
+    const { drawing, setMapInteraction } = this.props;
+    if (!drawing && e.features && e.features.length) {
       setMapInteraction(e);
     }
   };
@@ -238,7 +238,7 @@ MapContainer.propTypes = {
   lng: PropTypes.number,
   zoom: PropTypes.number,
   mapOptions: PropTypes.object,
-  draw: PropTypes.bool,
+  drawing: PropTypes.bool,
   canBound: PropTypes.bool,
   bbox: PropTypes.array,
   geostoreBbox: PropTypes.array,

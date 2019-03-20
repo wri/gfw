@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import {
-  getDraw,
+  getDrawing,
   getMapLoading,
   getActiveDatasetsFromState,
   getSelectedInteraction
@@ -57,7 +57,13 @@ export const getShowAnalysis = createSelector(
 );
 
 export const getOneClickAnalysis = createSelector(
-  [getShowDraw, selectLocationPayload, getDraw, getMapLoading, getShowAnalysis],
+  [
+    getShowDraw,
+    selectLocationPayload,
+    getDrawing,
+    getMapLoading,
+    getShowAnalysis
+  ],
   (showDraw, location, draw, loading, showAnalysis) => {
     const hasLocation = !!location.adm0;
     const isDrawing = draw || showDraw;

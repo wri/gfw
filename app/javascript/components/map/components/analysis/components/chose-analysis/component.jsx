@@ -78,7 +78,7 @@ class ChoseAnalysis extends PureComponent {
 
   renderPolygonOption = () => {
     const {
-      draw,
+      drawing,
       setMapSettings,
       setMenuSettings,
       setModalSources,
@@ -93,16 +93,16 @@ class ChoseAnalysis extends PureComponent {
           Draw in the map the area you want to analyze or subscribe to
         </div>
         <Button
-          theme={draw ? 'theme-button-light' : ''}
+          theme={drawing ? 'theme-button-light' : ''}
           onClick={() => {
-            setMapSettings({ draw: !draw });
-            if (!draw) {
+            setMapSettings({ drawing: !drawing });
+            if (!drawing) {
               setMenuSettings({ menuSection: '' });
             }
-            track(draw ? 'analysisDrawCancel' : 'analysisDrawStart');
+            track(drawing ? 'analysisDrawCancel' : 'analysisDrawStart');
           }}
         >
-          {draw ? 'CANCEL' : 'START DRAWING'}
+          {drawing ? 'CANCEL' : 'START DRAWING'}
         </Button>
         <div className="draw-menu-separator">or</div>
         <Tooltip
@@ -163,7 +163,7 @@ class ChoseAnalysis extends PureComponent {
             className={cx({ selected: !showDraw })}
             onClick={() => {
               setAnalysisSettings({ showDraw: false });
-              setMapSettings({ draw: false });
+              setMapSettings({ drawing: false });
               clearAnalysisError();
             }}
           >
@@ -201,7 +201,7 @@ ChoseAnalysis.propTypes = {
   error: PropTypes.string,
   errorMessage: PropTypes.string,
   uploadConfig: PropTypes.object,
-  draw: PropTypes.bool,
+  drawing: PropTypes.bool,
   setMapSettings: PropTypes.func
 };
 

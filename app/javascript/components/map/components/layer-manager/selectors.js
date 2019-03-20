@@ -2,7 +2,7 @@ import { createStructuredSelector } from 'reselect';
 
 import {
   getActiveLayersWithWidgetSettings,
-  getDraw,
+  getDrawing,
   getLabel,
   getBasemap
 } from 'components/map/selectors';
@@ -14,5 +14,5 @@ export const getLayerManagerProps = createStructuredSelector({
   geostore: selectGeostore,
   labels: getLabel,
   basemap: getBasemap,
-  draw: getDraw
+  drawing: getDrawing
 });

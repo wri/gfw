@@ -20,7 +20,6 @@ const selectAnalysisUrlState = state =>
 const selectAnalysisLoading = state => state.analysis && state.analysis.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
-const selectDrawLoading = state => state.draw && state.draw.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectAnalysisLocation = state =>
   state.analysis && state.analysis.location;
@@ -31,14 +30,9 @@ const selectEmbed = state =>
 const selectError = state => state.analysis && state.analysis.error;
 
 export const getLoading = createSelector(
-  [
-    selectAnalysisLoading,
-    selectDatasetsLoading,
-    selectGeostoreLoading,
-    selectDrawLoading
-  ],
-  (analysisLoading, datasetsLoading, geostoreLoading, drawLoading) =>
-    analysisLoading || datasetsLoading || geostoreLoading || drawLoading
+  [selectAnalysisLoading, selectDatasetsLoading, selectGeostoreLoading],
+  (analysisLoading, datasetsLoading, geostoreLoading) =>
+    analysisLoading || datasetsLoading || geostoreLoading
 );
 
 export const getAnalysisSettings = createSelector(

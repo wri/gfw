@@ -25,7 +25,7 @@ export const initialState = {
     label: 'default',
     bbox: null,
     canBound: true,
-    draw: false,
+    drawing: false,
     datasets: [
       // admin boundaries
       {

@@ -7,7 +7,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 import drawConfig from './config';
 
-class MapDraw extends PureComponent {
+class Draw extends PureComponent {
   componentDidMount() {
     if (this.props.drawing) {
       this.initDrawing();
@@ -57,10 +57,10 @@ class MapDraw extends PureComponent {
   }
 }
 
-MapDraw.propTypes = {
+Draw.propTypes = {
   map: PropTypes.object,
   drawing: PropTypes.bool,
   onDrawComplete: PropTypes.func
 };
 
-export default MapDraw;
+export default Draw;

@@ -4,7 +4,7 @@ import {
   getAllBoundaries,
   getActiveBoundaryDatasets,
   getActiveDatasetsFromState,
-  getDraw
+  getDrawing
 } from 'components/map/selectors';
 import { getShowDraw } from 'components/map/components/analysis/selectors';
 
@@ -19,5 +19,5 @@ export const getChooseAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   activeDatasets: getActiveDatasetsFromState,
-  draw: getDraw
+  drawing: getDrawing
 });
