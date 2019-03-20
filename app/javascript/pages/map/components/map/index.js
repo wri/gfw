@@ -8,6 +8,7 @@ import { track } from 'app/analytics';
 
 import { setRecentImagerySettings } from 'pages/map/components/recent-imagery/recent-imagery-actions';
 import { setMenuSettings } from 'pages/map/components/menu/menu-actions';
+import { getGeostoreId } from 'providers/geostore-provider/actions';
 import * as ownActions from './actions';
 import { getMapProps } from './selectors';
 import MapComponent from './component';
@@ -15,6 +16,7 @@ import MapComponent from './component';
 const actions = {
   setRecentImagerySettings,
   setMenuSettings,
+  getGeostoreId,
   ...ownActions
 };
 
@@ -67,11 +69,17 @@ class MainMapContainer extends PureComponent {
     }
   };
 
+  handleDrawComplete = geojson => {
+    const { setDrawnGeostore } = this.props;
+    this.props.getGeostoreId({ geojson, callback: setDrawnGeostore });
+  };
+
   render() {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
+      handleDrawComplete: this.handleDrawComplete,
       handleClickMap: this.handleClickMap
     });
   }
@@ -83,6 +91,8 @@ MainMapContainer.propTypes = {
   selectedInteraction: PropTypes.object,
   setMenuSettings: PropTypes.func,
   setMainMapSettings: PropTypes.func,
+  setDrawnGeostore: PropTypes.func,
+  getGeostoreId: PropTypes.func,
   activeDatasets: PropTypes.array,
   menuSection: PropTypes.string,
   analysisActive: PropTypes.bool,

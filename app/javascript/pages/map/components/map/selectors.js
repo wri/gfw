@@ -20,7 +20,11 @@ const selectMenuSection = state =>
   state.location.query &&
   state.location.query.menu &&
   state.location.query.menu.menuSection;
-const getDrawGeostoreId = state => state.draw && state.draw.geostoreId;
+const getGeostoreId = state =>
+  (state.location &&
+    state.location.payload.adm0 === 'geostore' &&
+    state.location.payload.adm1) ||
+  '';
 
 // SELECTORS
 export const getEmbed = createSelector(
@@ -78,6 +82,6 @@ export const getMapProps = createStructuredSelector({
   menuSection: selectMenuSection,
   activeDatasets: getActiveDatasetsFromState,
   embed: getEmbed,
-  geostoreId: getDrawGeostoreId,
+  geostoreId: getGeostoreId,
   selectedInteraction: getSelectedInteraction
 });

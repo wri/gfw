@@ -37,15 +37,16 @@ export const getGeostore = createThunkAction(
 
 export const getGeostoreId = createThunkAction(
   'getGeostoreId',
-  geojson => dispatch => {
-    dispatch(
-      setGeostoreLoading({ loading: true, error: false, geostoreId: '' })
-    );
+  ({ geojson, callback }) => dispatch => {
+    dispatch(setGeostoreLoading({ loading: true, error: false }));
     getGeostoreKey(geojson)
       .then(geostore => {
         if (geostore && geostore.data && geostore.data.data) {
           const { id } = geostore.data.data;
-          dispatch(setGeostoreId(id));
+          dispatch(setGeostoreLoading({ loading: false, error: false }));
+          if (callback) {
+            callback(id);
+          }
         }
       })
       .catch(error => {

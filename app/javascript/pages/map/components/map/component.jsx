@@ -33,7 +33,8 @@ class MainMapComponent extends PureComponent {
       showTooltip,
       tooltipData,
       handleClickMap,
-      handleShowTooltip
+      handleShowTooltip,
+      handleDrawComplete
     } = this.props;
 
     return (
@@ -69,10 +70,7 @@ class MainMapComponent extends PureComponent {
               >
                 <Map
                   className="main-map"
-                  onDrawComplete={geoJson => {
-                    // get geostore if from geometry
-                    // use result to set url
-                  }}
+                  onDrawComplete={handleDrawComplete}
                   onSelectBoundary={setMainMapAnalysisView}
                   popupActions={[
                     {
@@ -116,6 +114,7 @@ MainMapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
   handleClickMap: PropTypes.func,
   setMainMapAnalysisView: PropTypes.func,
+  handleDrawComplete: PropTypes.func,
   oneClickAnalysis: PropTypes.bool,
   embed: PropTypes.bool,
   hidePanels: PropTypes.bool,

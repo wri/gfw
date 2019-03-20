@@ -1,6 +1,7 @@
 import { createThunkAction } from 'redux-tools';
 import { getLocationFromData } from 'utils/format';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { track } from 'app/analytics';
 
 export const setMainMapSettings = createThunkAction(
   'setMainMapSettings',
@@ -61,5 +62,29 @@ export const setMainMapAnalysisView = createThunkAction(
         }
       });
     }
+  }
+);
+
+export const setDrawnGeostore = createThunkAction(
+  'setDrawnGeostore',
+  geostoreId => (dispatch, getState) => {
+    track('analysisDrawComplete');
+    const { query, type } = getState().location || {};
+    const { map } = query || {};
+    dispatch({
+      type,
+      payload: {
+        type: 'geostore',
+        adm0: geostoreId
+      },
+      query: {
+        ...query,
+        map: {
+          ...map,
+          canBound: true,
+          drawing: false
+        }
+      }
+    });
   }
 );
