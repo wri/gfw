@@ -29,6 +29,7 @@ export const getShouldZoomToShape = createSelector(
   [getSelectedInteraction, getMap],
   (selected, map) => {
     if (!selected) return null;
+    if (map.getZoom() > 12) return false;
 
     const { data, layer, geometry } = selected;
     const { cartodb_id, wdpaid } = data || {};
@@ -56,7 +57,7 @@ export const getShouldZoomToShape = createSelector(
     const mapArea = area(mapPolygon);
     const ratio = shapeArea / mapArea;
 
-    return ratio > 0.25 || map.getZoom() > 12;
+    return ratio < 0.25;
   }
 );
 

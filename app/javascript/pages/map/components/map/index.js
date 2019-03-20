@@ -74,11 +74,28 @@ class MainMapContainer extends PureComponent {
     this.props.getGeostoreId({ geojson, callback: setDrawnGeostore });
   };
 
+  handleSetAnalysisView = ({
+    data,
+    layer,
+    geometry,
+    isAdmin,
+    isWdpa,
+    isUse
+  }) => {
+    const { setMainMapAnalysisView } = this.props;
+    if (isAdmin || isWdpa || isUse) {
+      setMainMapAnalysisView({ data, layer });
+    } else {
+      this.handleDrawComplete(geometry);
+    }
+  };
+
   render() {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
+      handleSetAnalysisView: this.handleSetAnalysisView,
       handleDrawComplete: this.handleDrawComplete,
       handleClickMap: this.handleClickMap
     });

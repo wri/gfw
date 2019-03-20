@@ -29,12 +29,12 @@ class MainMapComponent extends PureComponent {
       embed,
       hidePanels,
       oneClickAnalysis,
-      setMainMapAnalysisView,
       showTooltip,
       tooltipData,
       handleClickMap,
       handleShowTooltip,
-      handleDrawComplete
+      handleDrawComplete,
+      handleSetAnalysisView
     } = this.props;
 
     return (
@@ -71,11 +71,11 @@ class MainMapComponent extends PureComponent {
                 <Map
                   className="main-map"
                   onDrawComplete={handleDrawComplete}
-                  onSelectBoundary={setMainMapAnalysisView}
+                  onSelectBoundary={handleSetAnalysisView}
                   popupActions={[
                     {
                       label: 'Analyze',
-                      action: setMainMapAnalysisView
+                      action: handleSetAnalysisView
                     }
                   ]}
                 />
@@ -113,7 +113,7 @@ class MainMapComponent extends PureComponent {
 MainMapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
   handleClickMap: PropTypes.func,
-  setMainMapAnalysisView: PropTypes.func,
+  handleSetAnalysisView: PropTypes.func,
   handleDrawComplete: PropTypes.func,
   oneClickAnalysis: PropTypes.bool,
   embed: PropTypes.bool,
