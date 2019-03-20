@@ -21,21 +21,13 @@ class Popup extends Component {
     }
   }
 
-  handleClickAction = selected => {
-    if (this.props.buttonState === 'ZOOM') {
-      this.handleClickZoom(selected);
-    } else {
-      this.handleClickAnalysis(selected);
-    }
-  };
-
   handleClickZoom = selected => {
     const { setMapSettings } = this.props;
     const newBbox = bbox(selected.geometry);
     setMapSettings({ bbox: newBbox, canBound: true });
   };
 
-  handleClickAnalysis = (selected, handleAction) => {
+  handleClickAction = (selected, handleAction) => {
     const { data, layer, geometry } = selected;
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
@@ -44,12 +36,14 @@ class Popup extends Component {
     const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
     const isUse = cartodb_id && tableName;
 
-    const { getGeostoreId } = this.props;
-    if (isAdmin || isWdpa || isUse) {
-      handleAction(selected);
-    } else {
-      getGeostoreId(geometry);
-    }
+    handleAction({
+      data,
+      layer,
+      geometry,
+      isUse,
+      isAdmin,
+      isWdpa
+    });
   };
 
   render() {
@@ -64,7 +58,7 @@ class Popup extends Component {
       setMapSettings,
       clearInteractions,
       isBoundary,
-      buttonState,
+      zoomToShape,
       buttons
     } = this.props;
 
@@ -129,15 +123,22 @@ class Popup extends Component {
               ) : (
                 <DataTable data={tableData} />
               )}
-              <div className="nav-footer">
-                {buttons && buttons.map(p => (
-                  <Button
-                    key={p.label}
-                    onClick={() => this.handleClickAnalysis(selected, p.action)}
-                  >
-                    {p.label}
+              <div className="popup-footer">
+                {zoomToShape ? (
+                  <Button onClick={() => this.handleClickZoom(selected)}>
+                    Zoom
                   </Button>
-                ))}
+                ) : (
+                  buttons &&
+                  buttons.map(p => (
+                    <Button
+                      key={p.label}
+                      onClick={() => this.handleClickAction(selected, p.action)}
+                    >
+                      {p.label}
+                    </Button>
+                  ))
+                )}
               </div>
             </div>
           )}
@@ -159,8 +160,8 @@ Popup.propTypes = {
   activeDatasets: PropTypes.array,
   setMainMapAnalysisView: PropTypes.func,
   setMapSettings: PropTypes.func,
-  buttonState: PropTypes.string,
-  getGeostoreId: PropTypes.func
+  zoomToShape: PropTypes.bool,
+  buttons: PropTypes.array
 };
 
 export default Popup;

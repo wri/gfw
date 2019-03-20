@@ -11,7 +11,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import Popup from './components/popup';
 import MapDraw from './components/draw';
-import MapAttributions from './components/map-attributions';
+import MapAttributions from './components/attributions';
 import LayerManagerComponent from './components/layer-manager';
 
 import './styles.scss';
@@ -91,19 +91,21 @@ class MapComponent extends PureComponent {
     const {
       className,
       loading,
+      loadingMessage,
       mapOptions,
       basemap,
       draw,
-      handleMapMove,
-      handleMapInteraction,
       zoom,
       lat,
       lng,
+      mapStyle,
+      interactiveLayers,
       setMapRect,
       setMap,
-      interactiveLayers,
-      loadingMessage,
-      popupActions
+      handleMapMove,
+      handleMapInteraction,
+      popupActions,
+      onDrawComplete
     } = this.props;
     const { mapReady } = this.state;
 
@@ -125,7 +127,7 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
-          mapStyle="mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc"
+          mapStyle={mapStyle}
           mapOptions={mapOptions}
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}
@@ -140,16 +142,17 @@ class MapComponent extends PureComponent {
           {mapReady && (
             <Fragment>
               <LayerManagerComponent map={this.map} />
-              <Popup
+              <Popup map={this.map} buttons={popupActions} />
+              <MapDraw
                 map={this.map}
-                buttons={popupActions}
+                drawing={draw}
+                onDrawComplete={onDrawComplete}
               />
-              <MapDraw map={this.map} drawing={draw} />
             </Fragment>
           )}
         </ReactMapGL>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
-        <MapAttributions className="map-attributions" />
+        <MapAttributions className="attributions" />
         {loading && (
           <Loader
             className="map-loader"
@@ -169,15 +172,22 @@ MapComponent.propTypes = {
   mapOptions: PropTypes.object,
   basemap: PropTypes.object,
   label: PropTypes.object,
-  setMapRect: PropTypes.func,
-  setMap: PropTypes.func,
-  handleMapMove: PropTypes.func,
-  handleMapInteraction: PropTypes.func,
-  interactiveLayers: PropTypes.array,
   draw: PropTypes.bool,
   lat: PropTypes.number,
   lng: PropTypes.number,
-  zoom: PropTypes.number
+  zoom: PropTypes.number,
+  mapStyle: PropTypes.string,
+  interactiveLayers: PropTypes.array,
+  setMap: PropTypes.func,
+  setMapRect: PropTypes.func,
+  popupActions: PropTypes.array,
+  onDrawComplete: PropTypes.func,
+  handleMapMove: PropTypes.func,
+  handleMapInteraction: PropTypes.func
+};
+
+MapComponent.defaultProps = {
+  onDrawComplete: () => {}
 };
 
 export default MapComponent;

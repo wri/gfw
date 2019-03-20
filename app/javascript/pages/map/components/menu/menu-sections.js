@@ -9,7 +9,7 @@ import globeIcon from 'assets/icons/globe.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
-import RecentImagerySettings from 'pages/map/components/map/components/recent-imagery/components/recent-imagery-settings';
+import RecentImagerySettings from 'pages/map/components/recent-imagery/components/recent-imagery-settings';
 import Basemaps from 'components/map/components/basemaps';
 import Analysis from 'components/map/components/analysis';
 import Legend from 'components/map/components/legend';

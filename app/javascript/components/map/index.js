@@ -6,20 +6,10 @@ import WebMercatorViewport from 'viewport-mercator-project';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 
-import {
-  setInteraction,
-  clearInteractions
-} from 'components/map/components/popup/actions';
-import * as ownActions from './actions';
+import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getMapProps } from './selectors';
 import MapComponent from './component';
-
-const actions = {
-  setInteraction,
-  clearInteractions,
-  ...ownActions
-};
 
 class MapContainer extends PureComponent {
   state = {
@@ -40,42 +30,31 @@ class MapContainer extends PureComponent {
       setMapSettings,
       layerBbox,
       selectedInteraction,
+      clearMapInteractions,
       lat,
       lng,
       zoom
     } = this.props;
 
-    // only set bounding box if action allows it
-    if (canBound && bbox !== prevProps.bbox) {
-      this.setBbox(bbox);
-      this.props.clearInteractions();
-    }
-
-    if (this.state.bbox && this.state.bbox !== prevState.bbox) {
-      this.fitBounds(this.state.bbox);
-    }
-
-    // if a new layer contains a bbox
+    // if a new layer contains a bbox set it
     if (layerBbox && layerBbox !== prevProps.layerBbox) {
       setMapSettings({ bbox: layerBbox });
     }
 
-    // if geostore changes
+    // if geostore changes set the bbox
     if (geostoreBbox && geostoreBbox !== prevProps.geostoreBbox) {
       setMapSettings({ bbox: geostoreBbox });
     }
 
-    // sync position props with state
-    if (
-      lat !== prevProps.lat ||
-      lng !== prevProps.lng ||
-      zoom !== prevProps.zoom
-    ) {
-      this.setPositionState({
-        zoom,
-        lat,
-        lng
-      });
+    // only set bounding box if action allows it
+    if (canBound && bbox !== prevProps.bbox) {
+      this.setBbox(bbox);
+      clearMapInteractions();
+    }
+
+    // use state to prev bbox fit if canBound is false
+    if (this.state.bbox && this.state.bbox !== prevState.bbox) {
+      this.fitBounds(this.state.bbox);
     }
 
     // fit bounds on cluster if clicked
@@ -93,8 +72,49 @@ class MapContainer extends PureComponent {
           this.setMapPosition(coordinates[1], coordinates[0], newZoom);
         });
     }
+
+    // sync position props with state
+    // on iOS you are only allowed 100 url changes per 30secs.
+    // we use state to debounce the view port changes to the store
+    if (
+      lat !== prevProps.lat ||
+      lng !== prevProps.lng ||
+      zoom !== prevProps.zoom
+    ) {
+      this.setPositionState({
+        zoom,
+        lat,
+        lng
+      });
+    }
   }
 
+  /**
+   * Set reference to map and state
+   */
+  setMap = map => {
+    this.setState({ map });
+  };
+
+  // we need the map size in order to get find the viewport
+  setMapRect = map => {
+    if (map && !this.state.width && !this.state.height) {
+      const mapEl = map.getBoundingClientRect();
+      this.setState({ width: mapEl.width, height: mapEl.height });
+    }
+  };
+
+  setPositionState = position => {
+    this.setState(position);
+  };
+
+  setBbox = bbox => {
+    this.setState({ bbox });
+  };
+
+  /**
+   * Change map view based on new lat lng and zoom
+   */
   setMapPosition = (lat, lng, zoom) => {
     const { setMapSettings } = this.props;
     const { width, height } = this.state;
@@ -119,25 +139,9 @@ class MapContainer extends PureComponent {
     }
   };
 
-  setBbox = bbox => {
-    this.setState({ bbox });
-  };
-
-  setPositionState = position => {
-    this.setState(position);
-  };
-
-  setMapRect = map => {
-    if (map && !this.state.width && !this.state.height) {
-      const mapEl = map.getBoundingClientRect();
-      this.setState({ width: mapEl.width, height: mapEl.height });
-    }
-  };
-
-  setMap = map => {
-    this.setState({ map });
-  };
-
+  /**
+   * Fit bounds using viewport-web-mercator
+   */
   fitBounds = bbox => {
     const { lat, lng, zoom, setMapSettings } = this.props;
     const { width, height } = this.state;
@@ -168,6 +172,9 @@ class MapContainer extends PureComponent {
     }
   };
 
+  /**
+   * Change map view based on new lat lng and zoom
+   */
   handleMapMove = viewport => {
     const { latitude, longitude, zoom } = viewport;
     const { mapOptions: { maxZoom, minZoom } } = this.props;
@@ -192,6 +199,9 @@ class MapContainer extends PureComponent {
     this.setBbox(null);
   };
 
+  /**
+   * Debounce url updates for iOS devices
+   */
   setMapViewport = debounce(view => {
     this.props.setMapSettings({
       ...view,
@@ -200,10 +210,13 @@ class MapContainer extends PureComponent {
     });
   }, 300);
 
+  /**
+   * Save all data onClick to store
+   */
   handleMapInteraction = e => {
-    const { draw, menuSection } = this.props;
-    if (!draw && !menuSection && e.features && e.features.length) {
-      this.props.setInteraction(e);
+    const { draw, setMapInteraction } = this.props;
+    if (!draw && e.features && e.features.length) {
+      setMapInteraction(e);
     }
   };
 
@@ -211,34 +224,33 @@ class MapContainer extends PureComponent {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
-      handleMapInteraction: this.handleMapInteraction,
-      handleMapMove: this.handleMapMove,
-      setBbox: this.setBbox,
+      setMap: this.setMap,
       setMapRect: this.setMapRect,
-      setMap: this.setMap
+      setBbox: this.setBbox,
+      handleMapMove: this.handleMapMove,
+      handleMapInteraction: this.handleMapInteraction
     });
   }
 }
 
 MapContainer.propTypes = {
-  canBound: PropTypes.bool,
-  bbox: PropTypes.array,
-  geostoreBbox: PropTypes.array,
-  setMapSettings: PropTypes.func,
-  mapOptions: PropTypes.object,
-  setInteraction: PropTypes.func,
-  layerBbox: PropTypes.array,
-  draw: PropTypes.bool,
-  menuSection: PropTypes.string,
   lat: PropTypes.number,
   lng: PropTypes.number,
   zoom: PropTypes.number,
-  clearInteractions: PropTypes.func,
-  selectedInteraction: PropTypes.object
+  mapOptions: PropTypes.object,
+  draw: PropTypes.bool,
+  canBound: PropTypes.bool,
+  bbox: PropTypes.array,
+  geostoreBbox: PropTypes.array,
+  layerBbox: PropTypes.array,
+  selectedInteraction: PropTypes.object,
+  setMapSettings: PropTypes.func,
+  setMapInteraction: PropTypes.func,
+  clearMapInteractions: PropTypes.func
 };
 
 reducerRegistry.registerModule('map', {
-  actions: ownActions,
+  actions,
   reducers,
   initialState
 });

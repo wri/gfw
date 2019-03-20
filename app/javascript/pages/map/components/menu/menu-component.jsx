@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual';
 import remove from 'lodash/remove';
 import { track } from 'app/analytics';
 
-import MenuPanel from 'pages/map/components/map/components/menu/components/menu-panel';
+import MenuPanel from 'pages/map/components/menu/components/menu-panel';
 import MenuDesktop from './components/menu-desktop';
 import MenuMobile from './components/menu-mobile';
 

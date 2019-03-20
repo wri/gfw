@@ -5,7 +5,7 @@ import flatten from 'lodash/flatten';
 
 import { getActiveDatasetsFromState } from 'components/map/selectors';
 import { getEmbed } from 'pages/map/components/map/selectors';
-import { getActive } from 'pages/map/components/map/components/recent-imagery/recent-imagery-selectors';
+import { getActive } from 'pages/map/components/recent-imagery/recent-imagery-selectors';
 
 import { initialState } from './menu-reducers';
 import {

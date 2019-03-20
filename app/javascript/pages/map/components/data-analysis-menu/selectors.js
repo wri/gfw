@@ -5,7 +5,7 @@ import {
   getHideLegend,
   getEmbed
 } from 'pages/map/components/map/selectors';
-import { getActiveSection } from 'pages/map/components/map/components/menu/menu-selectors';
+import { getActiveSection } from 'pages/map/components/menu/menu-selectors';
 
 import layersIcon from 'assets/icons/layers.svg';
 import analysisIcon from 'assets/icons/analysis.svg';

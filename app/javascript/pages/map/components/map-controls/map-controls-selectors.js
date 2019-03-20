@@ -6,7 +6,7 @@ import {
   getMapSettings,
   getActive,
   getRecentImageryDataset
-} from 'pages/map/components/map/components/recent-imagery/recent-imagery-selectors';
+} from 'pages/map/components/recent-imagery/recent-imagery-selectors';
 import {
   getHidePanels,
   getShowBasemaps

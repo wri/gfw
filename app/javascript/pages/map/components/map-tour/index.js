@@ -3,7 +3,7 @@ import reducerRegistry from 'app/registry';
 
 import { setMainMapSettings } from 'pages/map/components/map/actions';
 import { setMapSettings } from 'components/map/actions';
-import { setMenuSettings } from 'pages/map/components/map/components/menu/menu-actions';
+import { setMenuSettings } from 'pages/map/components/menu/menu-actions';
 import * as actions from './actions';
 import Component from './component';
 

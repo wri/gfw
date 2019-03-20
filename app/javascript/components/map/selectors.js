@@ -32,8 +32,15 @@ const selectGeostore = state => state.geostore && state.geostore.data;
 
 // interactions
 const selectSelectedInteractionId = state =>
-  state.popup && state.popup.selected;
-const selectInteractions = state => state.popup && state.popup.interactions;
+  state.map &&
+  state.map.data &&
+  state.map.data.interactions &&
+  state.map.data.interactions.selected;
+const selectInteractions = state =>
+  state.map &&
+  state.map.data &&
+  state.map.data.interactions &&
+  state.map.data.interactions.data;
 
 // CONSTS
 export const getBasemaps = () => basemaps;
@@ -96,6 +103,11 @@ export const getBbox = createSelector(
 export const getCanBound = createSelector(
   getMapSettings,
   settings => settings.canBound
+);
+
+export const getMapStyle = createSelector(
+  getMapSettings,
+  settings => settings.mapStyle
 );
 
 export const getMapOptions = createSelector([getMapSettings], settings => {
@@ -557,6 +569,7 @@ export const getMapProps = createStructuredSelector({
   lat: getMapLat,
   lng: getMapLng,
   zoom: getMapZoom,
+  mapStyle: getMapStyle,
   selectedInteraction: getSelectedInteraction,
   interactiveLayers: getInteractiveLayers
 });

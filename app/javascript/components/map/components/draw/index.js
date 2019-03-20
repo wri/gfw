@@ -1,17 +1,11 @@
 import { PureComponent } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
-import reducerRegistry from 'app/registry';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
-import './styles.scss';
 
 import drawConfig from './config';
-import * as actions from './actions';
-import reducers, { initialState } from './reducers';
-import { getDrawProps } from './selectors';
 
 class MapDraw extends PureComponent {
   componentDidMount() {
@@ -21,7 +15,7 @@ class MapDraw extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { drawing, geostoreId, setDrawnGeostore } = this.props;
+    const { drawing } = this.props;
 
     // start drawing
     if (drawing && !isEqual(drawing, prevProps.drawing)) {
@@ -32,15 +26,10 @@ class MapDraw extends PureComponent {
     if (!drawing && !isEqual(drawing, prevProps.drawing)) {
       this.closeDrawing();
     }
-
-    // new closed shape
-    if (geostoreId && !isEqual(geostoreId, prevProps.geostoreId)) {
-      setDrawnGeostore(geostoreId);
-    }
   }
 
   initDrawing = () => {
-    const { map, getGeostoreId } = this.props;
+    const { map, onDrawComplete } = this.props;
 
     this.draw = new MapboxDraw(drawConfig);
     map.addControl(this.draw);
@@ -52,7 +41,7 @@ class MapDraw extends PureComponent {
     map.on('draw.create', e => {
       const geoJSON = e.features && e.features[0];
       if (geoJSON) {
-        getGeostoreId(geoJSON);
+        onDrawComplete(geoJSON);
       }
     });
   };
@@ -71,15 +60,7 @@ class MapDraw extends PureComponent {
 MapDraw.propTypes = {
   map: PropTypes.object,
   drawing: PropTypes.bool,
-  geostoreId: PropTypes.string,
-  getGeostoreId: PropTypes.func,
-  setDrawnGeostore: PropTypes.func
+  onDrawComplete: PropTypes.func
 };
 
-reducerRegistry.registerModule('draw', {
-  actions,
-  reducers,
-  initialState
-});
-
-export default connect(getDrawProps, actions)(MapDraw);
+export default MapDraw;

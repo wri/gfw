@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
 import { setShareModal } from 'components/modals/share/share-actions';
-import { setMenuSettings } from 'pages/map/components/map/components/menu/menu-actions';
+import { setMenuSettings } from 'pages/map/components/menu/menu-actions';
 import { setMapSettings } from 'components/map/actions';
-import { setMapTourOpen } from 'pages/map/components/map/components/map-tour/actions';
+import { setMapTourOpen } from 'pages/map/components/map-tour/actions';
 import { setMainMapSettings } from 'pages/map/components/map/actions';
 
 import Component from './map-controls-component';

@@ -1,4 +1,4 @@
-import * as actions from 'pages/map/components/map/components/recent-imagery/recent-imagery-actions';
+import * as actions from 'pages/map/components/recent-imagery/recent-imagery-actions';
 
 export const initialState = {
   loading: false,

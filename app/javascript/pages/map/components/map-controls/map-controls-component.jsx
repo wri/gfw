@@ -8,7 +8,7 @@ import { isParent } from 'utils/dom';
 import { track } from 'app/analytics';
 
 import Basemaps from 'components/map/components/basemaps';
-import RecentImagerySettings from 'pages/map/components/map/components/recent-imagery/components/recent-imagery-settings';
+import RecentImagerySettings from 'pages/map/components/recent-imagery/components/recent-imagery-settings';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 

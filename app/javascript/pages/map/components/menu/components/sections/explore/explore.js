@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import * as actions from 'pages/map/components/map/components/menu/menu-actions';
+import * as actions from 'pages/map/components/menu/menu-actions';
 import { mapStateToProps } from './explore-selectors';
 
 import ExploreComponent from './explore-component';

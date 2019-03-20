@@ -2,6 +2,13 @@ import * as actions from './actions';
 
 export const initialState = {
   loading: false,
+  data: {
+    interactions: {
+      latlng: {},
+      data: {},
+      selected: ''
+    }
+  },
   settings: {
     center: {
       lat: 27,
@@ -9,6 +16,7 @@ export const initialState = {
     },
     zoom: 2,
     attributionControl: false,
+    mapStyle: 'mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc',
     maxZoom: 18,
     minZoom: 2,
     basemap: {
@@ -59,6 +67,60 @@ const setMapLoading = (state, { payload }) => ({
   loading: payload
 });
 
+const setMapInteraction = (state, { payload }) => {
+  const interactions = payload.features.reduce(
+    (obj, next) => ({
+      ...obj,
+      [next.layer.source]: {
+        id: next.id,
+        data: next.properties,
+        geometry: next.geometry
+      }
+    }),
+    {}
+  );
+
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      interactions: {
+        latlng: {
+          lat: payload.lngLat[1],
+          lng: payload.lngLat[0]
+        },
+        data: interactions
+      }
+    }
+  };
+};
+
+const setMapInteractionSelected = (state, { payload }) => ({
+  ...state,
+  data: {
+    ...state.data,
+    interactions: {
+      ...state.data.interactions,
+      selected: payload
+    }
+  }
+});
+
+const clearMapInteractions = state => ({
+  ...state,
+  data: {
+    ...state.data,
+    interactions: {
+      latlng: {},
+      data: {},
+      selected: ''
+    }
+  }
+});
+
 export default {
-  [actions.setMapLoading]: setMapLoading
+  [actions.setMapLoading]: setMapLoading,
+  [actions.setMapInteraction]: setMapInteraction,
+  [actions.setMapInteractionSelected]: setMapInteractionSelected,
+  [actions.clearMapInteractions]: clearMapInteractions
 };

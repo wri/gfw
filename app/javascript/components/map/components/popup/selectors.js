@@ -12,7 +12,11 @@ import {
 } from 'components/map/selectors';
 
 const getSearch = state => state.location && state.location.search;
-const getLatLng = state => state.popup && state.popup.latlng;
+const getLatLng = state =>
+  state.map &&
+  state.map.data &&
+  state.map.data.interactions &&
+  state.map.data.interactions.latlng;
 const getMap = (state, { map }) => map;
 
 export const getIsBoundary = createSelector(
@@ -21,7 +25,7 @@ export const getIsBoundary = createSelector(
     interaction && interaction.layer && interaction.layer.isBoundary
 );
 
-export const getButtonState = createSelector(
+export const getShouldZoomToShape = createSelector(
   [getSelectedInteraction, getMap],
   (selected, map) => {
     if (!selected) return null;
@@ -34,7 +38,7 @@ export const getButtonState = createSelector(
     const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
     const isUse = cartodb_id && tableName;
 
-    if (isAdmin || isWdpa || isUse) return 'ANALYZE';
+    if (isAdmin || isWdpa || isUse) return false;
 
     // get bbox of geometry
     const shapeBbox = bbox(geometry);
@@ -52,7 +56,7 @@ export const getButtonState = createSelector(
     const mapArea = area(mapPolygon);
     const ratio = shapeArea / mapArea;
 
-    return ratio > 0.25 || map.getZoom() > 12 ? 'ANALYZE' : 'ZOOM';
+    return ratio > 0.25 || map.getZoom() > 12;
   }
 );
 
@@ -149,5 +153,5 @@ export const getPopupProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   search: getSearch,
   isBoundary: getIsBoundary,
-  buttonState: getButtonState
+  zoomToShape: getShouldZoomToShape
 });

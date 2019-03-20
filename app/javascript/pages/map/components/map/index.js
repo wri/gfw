@@ -6,8 +6,8 @@ import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import { track } from 'app/analytics';
 
-import { setRecentImagerySettings } from 'pages/map/components/map/components/recent-imagery/recent-imagery-actions';
-import { setMenuSettings } from 'pages/map/components/map/components/menu/menu-actions';
+import { setRecentImagerySettings } from 'pages/map/components/recent-imagery/recent-imagery-actions';
+import { setMenuSettings } from 'pages/map/components/menu/menu-actions';
 import * as ownActions from './actions';
 import { getMapProps } from './selectors';
 import MapComponent from './component';

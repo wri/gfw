@@ -8,7 +8,7 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Map from 'components/map';
 import SubscribeModal from 'components/modals/subscribe';
-import MapTour from 'pages/map/components/map/components/map-tour';
+import MapTour from 'pages/map/components/map-tour';
 import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from './components/recent-imagery';
 import DataAnalysisMenu from './components/data-analysis-menu';

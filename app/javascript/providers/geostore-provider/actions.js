@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import { getGeostoreProvider } from 'services/geostore';
+import { getGeostoreProvider, getGeostoreKey } from 'services/geostore';
 import { getBoxBounds, getLeafletBbox } from 'utils/geoms';
 
 export const setGeostoreLoading = createAction('setGeostoreLoading');
@@ -32,5 +32,28 @@ export const getGeostore = createThunkAction(
           console.info(error);
         });
     }
+  }
+);
+
+export const getGeostoreId = createThunkAction(
+  'getGeostoreId',
+  geojson => dispatch => {
+    dispatch(
+      setGeostoreLoading({ loading: true, error: false, geostoreId: '' })
+    );
+    getGeostoreKey(geojson)
+      .then(geostore => {
+        if (geostore && geostore.data && geostore.data.data) {
+          const { id } = geostore.data.data;
+          dispatch(setGeostoreId(id));
+        }
+      })
+      .catch(error => {
+        setGeostoreLoading({
+          loading: false,
+          error: true
+        });
+        console.info(error);
+      });
   }
 );
