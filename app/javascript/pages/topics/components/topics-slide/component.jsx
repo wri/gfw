@@ -20,6 +20,7 @@ class TopicsSlide extends PureComponent {
       img1x,
       img2x,
       prompts,
+      animations,
       isDesktop,
       handleSkipToTools
     } = this.props;
@@ -61,6 +62,7 @@ class TopicsSlide extends PureComponent {
                 img2x={img2x}
                 description={subtitle}
                 prompts={prompts}
+                animations={animations}
               />
             </div>
           </div>
@@ -73,6 +75,7 @@ class TopicsSlide extends PureComponent {
 TopicsSlide.propTypes = {
   title: PropTypes.string,
   subtitle: PropTypes.string,
+  animations: PropTypes.array,
   text: PropTypes.string,
   img1x: PropTypes.string,
   img2x: PropTypes.string,
