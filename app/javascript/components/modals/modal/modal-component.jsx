@@ -11,7 +11,9 @@ import './modal-styles.scss';
 
 class CustomModal extends PureComponent {
   trackModalOpen = () => {
-    track('openModal', { label: this.props.contentLabel });
+    if (this.props.track) {
+      track('openModal', { label: this.props.contentLabel });
+    }
   };
 
   render() {
@@ -45,6 +47,7 @@ class CustomModal extends PureComponent {
 
 CustomModal.propTypes = {
   isOpen: PropTypes.bool,
+  track: PropTypes.bool,
   onRequestClose: PropTypes.func.isRequired,
   contentLabel: PropTypes.string,
   customStyles: PropTypes.object,
@@ -54,6 +57,7 @@ CustomModal.propTypes = {
 
 CustomModal.defaultProps = {
   contentLabel: 'Modal content',
+  track: true,
   customStyles: {
     overlay: {
       zIndex: 10000,
