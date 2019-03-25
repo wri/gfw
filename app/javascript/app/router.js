@@ -19,8 +19,8 @@ const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
   const currentLocation = location.pathname;
   const prevLocation = location && location.prev.pathname;
-  if (currentLocation !== prevLocation) {
-    handlePageTrack(location);
+  if (prevLocation && currentLocation !== prevLocation) {
+    handlePageTrack();
   }
 };
 

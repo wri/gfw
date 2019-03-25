@@ -28,7 +28,7 @@ class Explore extends PureComponent {
         active: section === 'topics',
         onClick: () => {
           setMenuSettings({ exploreType: 'topics' });
-          track('mapMenuExploreCategory', { label: 'topics' });
+          track('mapMenuExploreCategory', { label: 'Topics' });
         }
       },
       {
@@ -36,7 +36,7 @@ class Explore extends PureComponent {
         active: section === 'placesToWatch',
         onClick: () => {
           setMenuSettings({ exploreType: 'placesToWatch' });
-          track('mapMenuExploreCategory', { label: 'places to watch' });
+          track('mapMenuExploreCategory', { label: 'Places to watch' });
         }
       },
       {
@@ -44,7 +44,7 @@ class Explore extends PureComponent {
         active: section === 'stories',
         onClick: () => {
           setMenuSettings({ exploreType: 'stories' });
-          track('mapMenuExploreCategory', { label: 'stories' });
+          track('mapMenuExploreCategory', { label: 'Stories' });
         }
       }
     ];

@@ -1,5 +1,6 @@
 import ReactGA from 'react-ga';
 
+import { decodeUrlForState } from 'utils/stateToUrl';
 import mapEvents from 'analytics/map';
 import sharedEvents from 'analytics/shared';
 import dashboardsEvents from 'analytics/dashboards';
@@ -10,7 +11,10 @@ let gaInitialized = false;
 export const initGA = () => {
   if (ANALYTICS_PROPERTY_ID) {
     if (!gaInitialized) {
-      ReactGA.initialize(ANALYTICS_PROPERTY_ID);
+      ReactGA.initialize(ANALYTICS_PROPERTY_ID, {
+        debug: false,
+        titleCase: false
+      });
       gaInitialized = true;
     }
   }
@@ -22,11 +26,31 @@ const events = {
   ...sharedEvents
 };
 
-export const handlePageTrack = location => {
+export const handlePageTrack = () => {
   initGA();
   if (gaInitialized) {
-    ReactGA.set({ page: location.pathname });
-    ReactGA.pageview(`${window.location.pathname}${window.location.search}`);
+    ReactGA.set({ page: window.location.pathname });
+    ReactGA.pageview(
+      `${window.location.pathname}?${JSON.stringify(
+        decodeUrlForState(window.location.search)
+      )}`
+    );
+  }
+};
+
+export const handleMapLatLonTrack = location => {
+  if (gaInitialized) {
+    const { query } = location || {};
+    const { map } = query || {};
+    const position =
+      map && `/location/${map.center.lat}/${map.center.lng}/${map.zoom}`;
+    if (position) {
+      ReactGA.pageview(
+        `${position}${window.location.pathname}?${JSON.stringify(
+          decodeUrlForState(window.location.search)
+        )}`
+      );
+    }
   }
 };
 
