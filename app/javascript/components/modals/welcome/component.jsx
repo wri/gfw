@@ -38,7 +38,7 @@ class ModalWelcome extends PureComponent {
             onClick={() => {
               setModalWelcome(false);
               setMapTourOpen(true);
-              track('welcomeModal', { label: 'tour' });
+              track('welcomeModal', { label: 'Tour' });
             }}
           >
             <Icon className="guide-btn-icon" icon={helpGreenIcon} />
@@ -54,7 +54,7 @@ class ModalWelcome extends PureComponent {
             theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setExploreView();
-              track('welcomeModal', { label: 'topics' });
+              track('welcomeModal', { label: 'Topics' });
             }}
           >
             <Icon className="guide-btn-icon" icon={exploreGreenIcon} />
@@ -68,7 +68,7 @@ class ModalWelcome extends PureComponent {
             theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setAnalysisView();
-              track('welcomeModal', { label: 'analysis' });
+              track('welcomeModal', { label: 'Analysis' });
             }}
           >
             <Icon className="guide-btn-icon" icon={analysisGreenIcon} />
@@ -87,7 +87,7 @@ class ModalWelcome extends PureComponent {
         contentLabel="Welcome"
         onRequestClose={() => {
           setModalWelcome(false);
-          track('welcomeModal', { label: 'close' });
+          track('welcomeModal', { label: 'Close' });
         }}
       >
         {this.getContent()}
