@@ -6,21 +6,24 @@
   bottom: 0;
   z-index: 99999;
   background-color: rgba(51, 51, 51, 0.9);
+  padding: rem(20px) 0;
 
   .cookies-text {
-    color: #fff;
-    font-size: 12px;
-    line-height: 18px;
-    margin: 17px 0;
+    color: $white;
+    font-size: rem(12px);
+    line-height: rem(18px);
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
   }
 
   .cookies-button {
     display: flex;
     align-items: center;
 
-    button {
-      // height: 20px;
-      // width: 110px;
+    .cookies-btn {
       color: #fff;
       border-color: transparent;
       background: $slate-light;
@@ -28,7 +31,6 @@
       font-size: 14px;
       font-weight: 500;
       width: 100%;
-      max-width: 170px;
     }
   }
 }

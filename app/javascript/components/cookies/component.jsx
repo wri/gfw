@@ -29,6 +29,7 @@ class Cookies extends PureComponent {
           </div>
           <div className="column small-12 medium-2 cookies-button">
             <Button
+              className="cookies-btn"
               theme="theme-button-grey theme-button-small"
               onClick={agreeCookies}
             >
