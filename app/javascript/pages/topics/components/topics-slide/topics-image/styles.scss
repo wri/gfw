@@ -15,6 +15,14 @@
     border: solid 15px rgba($white, 0.5);
     border-radius: 50%;
     cursor: pointer;
+
+    &:hover {
+      border-color: darken(rgba($white, 0.5), 20%);
+
+      .info-btn {
+        background-color: darken($green-gfw, 20%);
+      }
+    }
   }
 
   .svg-animation {

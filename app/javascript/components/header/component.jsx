@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-// import ClickOutside from 'react-click-outside';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 import { NavLink } from 'redux-first-router-link';
