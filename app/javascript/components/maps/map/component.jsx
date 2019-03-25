@@ -40,10 +40,6 @@ class MapComponent extends PureComponent {
         'bottom-right'
       );
       this.map.addControl(new ScaleControl(), 'bottom-right');
-      // const scale = new this.map.ScaleControl({
-      //   maxWidth: 80
-      // });
-      // this.map.addControl(scale);
     }
   }
 
