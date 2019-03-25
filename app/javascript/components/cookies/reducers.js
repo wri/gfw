@@ -6,9 +6,9 @@ export const initialState = {
   open: !hideCookies
 };
 
-const setCookiesBannerClosed = (state, { payload }) => ({
+const setCookiesBannerClosed = state => ({
   ...state,
-  open: payload
+  open: false
 });
 
 export default {
