@@ -46,7 +46,7 @@ class MapTour extends PureComponent {
         onClick={() => {
           this.props.setAnalysisView();
           this.props.setMapTourOpen(false);
-          track('welcomeModal', { label: 'analysis' });
+          track('welcomeModal', { label: 'Analysis' });
         }}
       >
         <Icon className="guide-btn-icon" icon={analysisGreenIcon} />

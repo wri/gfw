@@ -2,13 +2,13 @@ export default {
   // share
   shareCopyLink: {
     category: 'Share',
-    action: 'copy share link',
-    label: 'copy link'
+    action: 'Copy share link',
+    label: 'Copy link'
   },
   shareCopyEmbed: {
     category: 'Share',
-    action: 'copy embed link',
-    label: 'copy embed'
+    action: 'Copy embed link',
+    label: 'Copy embed'
   },
   shareSocial: {
     category: 'Share',
@@ -17,12 +17,12 @@ export default {
   // modals
   openModal: {
     category: 'Open modal',
-    action: 'click to open',
+    action: 'Click to open',
     label: '[modalTypes]'
   },
   hoverModalBtn: {
     category: 'Open modal',
-    action: 'hover modal button',
+    action: 'Hover modal button',
     label: '[modalTypes]'
   }
 };
