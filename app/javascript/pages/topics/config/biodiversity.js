@@ -21,9 +21,13 @@ import tigers from 'pages/topics/assets/biodiversity/cards/tigers.png';
 import tigersLarge from 'pages/topics/assets/biodiversity/cards/tigers@2x.png';
 
 // animations
-import scene1 from 'pages/topics/assets/biodiversity/slides/scene1.json';
-import birds from 'pages/topics/assets/biodiversity/slides/birds.json';
-import tigerRiver from 'pages/topics/assets/biodiversity/slides/tiger-river.json';
+import scene1 from 'pages/topics/assets/biodiversity/animations/scene1.json';
+import birds1 from 'pages/topics/assets/biodiversity/animations/birds1.json';
+import scene2 from 'pages/topics/assets/biodiversity/animations/scene2.json';
+import birds2 from 'pages/topics/assets/biodiversity/animations/birds2.json';
+import scene3 from 'pages/topics/assets/biodiversity/animations/scene3.json';
+import scene4 from 'pages/topics/assets/biodiversity/animations/scene4.json';
+import birds4 from 'pages/topics/assets/biodiversity/animations/birds4.json';
 
 export default {
   intro: {
@@ -55,6 +59,11 @@ export default {
         {
           id: 'scene1',
           data: scene1
+        },
+        {
+          id: 'birds',
+          data: birds1,
+          behind: true
         }
       ]
     },
@@ -78,12 +87,13 @@ export default {
       ],
       animations: [
         {
-          id: 'birds',
-          data: birds
+          id: 'scene2',
+          data: scene2
         },
         {
-          id: 'tigerRiver',
-          data: tigerRiver
+          id: 'birds2',
+          data: birds2,
+          behind: true
         }
       ]
     },
@@ -104,6 +114,12 @@ export default {
             'https://blog.globalforestwatch.org/data/worlds-last-intact-forests-are-becoming-increasingly-fragmented',
           position: [38, 45]
         }
+      ],
+      animations: [
+        {
+          id: 'scene3',
+          data: scene3
+        }
       ]
     },
     {
@@ -122,6 +138,17 @@ export default {
           link:
             'https://blog.globalforestwatch.org/uncategorized/glad-alerts-help-protect-sumatras-leuser-rainforest-ecosystem',
           position: [35, 55]
+        }
+      ],
+      animations: [
+        {
+          id: 'scene4',
+          data: scene4
+        },
+        {
+          id: 'birds4',
+          data: birds4,
+          behind: true
         }
       ]
     }

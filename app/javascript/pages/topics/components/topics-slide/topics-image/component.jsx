@@ -40,6 +40,9 @@ class TopicsImage extends PureComponent {
               key={a.id}
               className="svg-animation"
               id={a.id}
+              style={{
+                zIndex: a.behind ? 0 : 2
+              }}
               ref={ref => {
                 this.svgWrappers = {
                   ...this.svgWrappers,
@@ -48,12 +51,6 @@ class TopicsImage extends PureComponent {
               }}
             />
           ))}
-        <div
-          ref={ref => {
-            this.wrapper = ref;
-          }}
-          id="svg-container"
-        />
         {prompts &&
           prompts.map(p => (
             <Fragment key={p.id}>

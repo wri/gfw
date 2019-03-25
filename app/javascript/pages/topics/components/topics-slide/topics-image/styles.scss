@@ -6,11 +6,12 @@
   img {
     width: 100%;
     z-index: 1;
+    position: relative;
   }
 
   .image-info {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     border: solid 15px rgba($white, 0.5);
     border-radius: 50%;
     cursor: pointer;
@@ -22,6 +23,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 2;
   }
 }
 
