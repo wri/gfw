@@ -130,7 +130,9 @@ class TopicsPage extends PureComponent {
               onSlideLeave={this.handleSlideLeave}
               controlArrows={false}
               render={({ fullpageApi }) => {
-                this.fullpageApi = fullpageApi;
+                if (!this.fullpageApi) {
+                  this.fullpageApi = fullpageApi;
+                }
                 return (
                   <ReactFullpage.Wrapper>
                     <div className="topic-header section">
