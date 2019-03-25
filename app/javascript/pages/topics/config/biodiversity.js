@@ -42,7 +42,7 @@ export default {
       title: 'Biodiversity',
       subtitle: 'Ideal state',
       text:
-        'Forests are critical homes to plant and animal species. In turn, species that live within forests play important role in maintaining forest health.',
+        'Forests are critical homes to plant and animal species. In turn, species that live within forests play an important role in maintaining forest health.',
       img1x: biodiversity1,
       img2x: biodiversity1Large,
       prompts: [
@@ -126,7 +126,7 @@ export default {
       title: 'Biodiversity',
       subtitle: 'Recovery state',
       text:
-        'Protecting forest habitats is key to maintaining biodiversity. With better data on where tree cover loss in important biodiversity ares is happening, governments can make more informed decisions related to concessions and conservation projects and civil society can call attention to areas at risk.',
+        'Protecting forest habitats is key to maintaining biodiversity. With better data on where tree cover loss in important biodiversity areas is happening, governments can make more informed decisions related to concessions and conservation projects and civil society can call attention to areas at risk.',
       img1x: biodiversity4,
       img2x: biodiversity4Large,
       prompts: [

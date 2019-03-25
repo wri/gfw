@@ -31,7 +31,7 @@ export default {
     title:
       'Forests can provide 30% of the solution to keeping global warming below 2°C.',
     text:
-      'Forests remove and store carbon from the atmosphere, representing cost-effective solution for mitigating climate change. The loss or degredation of forests compromises their ability to remove emissions.',
+      'Forests remove and store carbon from the atmosphere, representing a cost-effective solution for mitigating climate change. The loss or degradation of forests compromises their ability to remove emissions.',
     img1x: intro1x,
     img2x: intro2x
   },
@@ -40,7 +40,7 @@ export default {
       title: 'Climate',
       subtitle: 'Ideal state',
       text:
-        'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossil fuels, thus helping to remove harmful emissions from within the atmosphere and ocean.',
+        'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossel fuels, which include coal, natural gas, and oil.',
       img1x: climate1,
       img2x: climate1Large,
       prompts: [
@@ -67,7 +67,7 @@ export default {
       title: 'Climate',
       subtitle: 'Drivers of change',
       text:
-        'Forests ability to absorb carbon from the atmosphere can be compromised by commodity production, urbanization, disease and fires that cause forest loss. When a tree burns or decays, it emits the carbon it was storing into the atmosphere, futher exacerbating climate change.',
+        "Forests' ability to absorb carbon from the atmosphere can be compromised by conversion into agricultural lands, commodity production, urbanization, disease and fires that cause forest loss. When a tree burns or decays, the carbon stored is released into the atmosphere, further exacerbating climate change.",
       img1x: climate2,
       img2x: climate2Large,
       prompts: [
@@ -95,7 +95,7 @@ export default {
       title: 'Climate',
       subtitle: 'Compromised state',
       text:
-        'With fewer trees to help absorb and regulate carbon in the atmopshere, the Earths temperate rises and the effects of climate change increase.',
+        "With fewer trees to help absorb and regulate carbon in the atmopshere, the Earth's temperature rises and the effects of climate change increase.",
       img1x: climate3,
       img2x: climate3Large,
       prompts: [
@@ -123,7 +123,7 @@ export default {
       title: 'Climate',
       subtitle: 'Recovery state',
       text:
-        'Sustainable forest management, improved land tenure, conservation, performance-based financing and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions also have positive economic, biodiversity, and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
+        'Sustainable forest management, improved land tenure, conservation and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions can have positive economic, biodiversity, and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
       img1x: climate4,
       img2x: climate4Large,
       prompts: [
