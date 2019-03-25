@@ -1,68 +1,68 @@
 export default {
   // recent imagery
   recentImageryEnable: {
-    category: 'map settings',
-    action: 'recent imagery feature',
-    label: 'user turns on recent imagery'
+    category: 'Map settings',
+    action: 'Recent imagery feature',
+    label: 'User turns on recent imagery'
   },
   recentImageryOpen: {
-    category: 'map settings',
-    action: 'recent imagery feature',
+    category: 'Map settings',
+    action: 'Recent imagery feature',
     label: 'User opens the config window'
   },
   recentImageryClouds: {
-    category: 'map settings',
-    action: 'recent imagery feature',
+    category: 'Map settings',
+    action: 'Recent imagery feature',
     label: 'User changes cloud-cover value'
   },
   recentImageryDateRange: {
-    category: 'map settings',
-    action: 'recent imagery feature',
+    category: 'Map settings',
+    action: 'Recent imagery feature',
     label: 'User changes date range'
   },
   recentImageryDate: {
-    category: 'map settings',
-    action: 'recent imagery feature',
+    category: 'Map settings',
+    action: 'Recent imagery feature',
     label: 'User changes start date'
   },
   recentImageryImageType: {
-    category: 'map settings',
-    action: 'recent imagery feature',
+    category: 'Map settings',
+    action: 'Recent imagery feature',
     label: 'User changes image type'
   },
   // map controls
   zoomIn: {
-    category: 'map settings',
+    category: 'Map settings',
     action: 'Other buttons',
-    label: 'zoom in'
+    label: 'Zoom in'
   },
   zoomOut: {
-    category: 'map settings',
+    category: 'Map settings',
     action: 'Other buttons',
-    label: 'zoom out'
+    label: 'Zoom out'
   },
   hidePanels: {
-    category: 'map settings',
+    category: 'Map settings',
     action: 'Other buttons',
-    label: 'map only'
+    label: 'Map only'
   },
   printMap: {
-    category: 'map settings',
+    category: 'Map settings',
     action: 'Other buttons',
-    label: 'print map'
+    label: 'Print map'
   },
-  // map menu
+  // Map menu
   mapMenuSarch: {
-    category: 'map menu',
-    action: 'search'
+    category: 'Map menu',
+    action: 'Search'
   },
   mapMenuSection: {
-    category: 'map menu',
-    action: 'select map menu'
+    category: 'Map menu',
+    action: 'Select Map menu'
   },
   mapMenuExploreCategory: {
-    category: 'map menu',
-    action: 'select explore category'
+    category: 'Map menu',
+    action: 'Select explore category'
   },
   mapMenuAddTopic: {
     category: 'Map data',
@@ -74,83 +74,83 @@ export default {
   },
   // layers
   mapInitialLayers: {
-    category: 'map data',
+    category: 'Map data',
     action: 'Initial layers loaded'
   },
   mapRemoveLayer: {
-    category: 'map data',
+    category: 'Map data',
     action: 'User turns off a layer'
   },
   mapAddLayer: {
-    category: 'map data',
+    category: 'Map data',
     action: 'User turns on a layer'
   },
   // legend
   legendTimelineChange: {
-    category: 'map legend',
+    category: 'Map legend',
     action: 'User changes date range for [insert layer name]',
     label: '[start time]:[end time]'
   },
   legendTimelinePlay: {
-    category: 'map legend',
+    category: 'Map legend',
     action: 'User animates data',
     label: 'Play [layer name]'
   },
   // analysis
   analysis: {
-    category: 'map analysis',
+    category: 'Map analysis',
     action: '[location]',
     label: '[layers]'
   },
   analysisDownload: {
-    category: 'map analysis',
+    category: 'Map analysis',
     action: 'Download',
     label: '[layers]'
   },
   mapInteraction: {
-    category: 'map analysis',
+    category: 'Map analysis',
     action: 'User opens analysis popup infowindow',
     label: '[area]'
   },
   analysisDrawStart: {
-    category: 'map analysis',
+    category: 'Map analysis',
     action: 'User drawn shape',
-    label: 'start'
+    label: 'Start'
   },
   analysisDrawComplete: {
-    category: 'map analysis',
+    category: 'Map analysis',
     action: 'User drawn shape',
-    label: 'complete'
+    label: 'Complete'
   },
   analysisDrawCancel: {
-    category: 'map analysis',
+    category: 'Map analysis',
     action: 'User drawn shape',
-    label: 'cancel'
+    label: 'Cancel'
   },
   // basemaps
   basemapsInitial: {
-    category: 'map data',
+    category: 'Map data',
     action: 'initial basemap loaded',
     label: '[basemap]'
   },
   basemapChanged: {
-    category: 'map data',
+    category: 'Map data',
     action: 'basemap changed',
     label: '[basemap]'
   },
   boundaryChanged: {
-    category: 'map data',
-    action: 'boundary changed',
+    category: 'Map data',
+    action: 'Boundary changed',
     label: '[boundary]'
   },
   labelChanged: {
-    category: 'map data',
-    action: 'label changed',
+    category: 'Map data',
+    action: 'Label changed',
     label: '[boundary]'
   },
   // welcome modal
   welcomeModal: {
-    category: 'map landing',
+    category: 'Map landing',
     action: 'User interacts with popup',
     label: '[clicked]'
   }
