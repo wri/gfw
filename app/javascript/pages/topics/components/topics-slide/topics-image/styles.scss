@@ -17,10 +17,8 @@
     cursor: pointer;
 
     &:hover {
-      border-color: darken(rgba($white, 0.5), 20%);
-
       .info-btn {
-        background-color: darken($green-gfw, 20%);
+        background-color: darken($green-gfw, 10%);
       }
     }
   }
