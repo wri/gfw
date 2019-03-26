@@ -55,7 +55,9 @@ class RecentImageryContainer extends PureComponent {
       positionInsideTile,
       position,
       loadingMoreTiles,
-      resetRecentImageryData
+      resetRecentImageryData,
+      getClassifiedImage,
+      classifiedImage
     } = this.props;
 
     const isNewTile =
@@ -94,8 +96,7 @@ class RecentImageryContainer extends PureComponent {
       !dataStatus.haveAllData &&
       !loadingMoreTiles &&
       active &&
-      activeTile &&
-      isNewTile
+      activeTile
     ) {
       getMoreTiles({
         sources,
@@ -109,6 +110,19 @@ class RecentImageryContainer extends PureComponent {
       this.setTile();
     }
 
+    if (active && isNewTile && settings.bands === 'classified') {
+      getClassifiedImage({ imgId: activeTile.id });
+    }
+
+    if (
+      active &&
+      settings.bands === 'classified' &&
+      classifiedImage &&
+      classifiedImage !== prevProps.classifiedImage
+    ) {
+      this.setTile();
+    }
+
     if (!active && active !== prevProps.active) {
       this.removeTile();
       resetRecentImageryData();
@@ -116,7 +130,13 @@ class RecentImageryContainer extends PureComponent {
   };
 
   setTile = debounce(() => {
-    const { datasets, activeTile, recentImageryDataset } = this.props;
+    const {
+      datasets,
+      activeTile,
+      recentImageryDataset,
+      classifiedImage,
+      settings
+    } = this.props;
     if (recentImageryDataset && activeTile && activeTile.url) {
       const activeDatasets =
         datasets &&
@@ -129,7 +149,10 @@ class RecentImageryContainer extends PureComponent {
         opacity: 1,
         isRecentImagery: true,
         params: {
-          url: activeTile.url
+          url:
+            classifiedImage && settings.bands === 'classified'
+              ? classifiedImage
+              : activeTile.url
         }
       };
       this.props.setMapSettings({
@@ -174,6 +197,8 @@ RecentImageryContainer.propTypes = {
   setMapSettings: PropTypes.func,
   recentImageryDataset: PropTypes.object,
   resetRecentImageryData: PropTypes.func,
+  getClassifiedImage: PropTypes.func,
+  classifiedImage: PropTypes.string,
   setRecentImagerySettings: PropTypes.func
 };
 

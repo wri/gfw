@@ -6,5 +6,9 @@
   {
     "label": "Vegetation Health",
     "value": "[B8,B11,B2]"
+  },
+  {
+    "label": "Classify Image",
+    "value": "classified"
   }
 ]

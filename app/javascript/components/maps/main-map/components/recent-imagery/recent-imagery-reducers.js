@@ -5,6 +5,7 @@ export const initialState = {
   error: false,
   loadingMoreTiles: false,
   data: [],
+  classifiedImage: '',
   dataStatus: {
     tilesPerRequest: 2,
     haveAllData: false,
@@ -23,6 +24,7 @@ export const initialState = {
 
 const setRecentImageryData = (state, { payload }) => ({
   ...state,
+  classifiedImage: payload.classifiedImage || state.classifiedImage,
   data: payload.data ? payload.data : state.data,
   dataStatus: {
     ...state.dataStatus,

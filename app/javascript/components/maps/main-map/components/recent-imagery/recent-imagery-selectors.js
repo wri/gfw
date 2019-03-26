@@ -8,6 +8,8 @@ import { initialState as mapInitialState } from 'components/maps/map/reducers';
 import { initialState } from './recent-imagery-reducers';
 
 const getData = state => state.recentImagery && state.recentImagery.data;
+const getClassifiedUrl = state =>
+  state.recentImagery && state.recentImagery.classifiedImage;
 export const getRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
 export const getMoreTilesLoading = state =>
@@ -162,5 +164,6 @@ export const getRecentImageryProps = createStructuredSelector({
   location: getLocation,
   // url props
   datasets: getActiveDatasetsFromState,
-  recentImageryDataset: getRecentImageryDataset
+  recentImageryDataset: getRecentImageryDataset,
+  classifiedImage: getClassifiedUrl
 });

@@ -6,7 +6,8 @@ const QUERIES = {
   recentTiles:
     '/recent-tiles?lat={lat}&lon={lng}&start={start}&end={end}&bands={bands}',
   tiles: '/recent-tiles/tiles',
-  thumbs: '/recent-tiles/thumbs'
+  thumbs: '/recent-tiles/thumbs',
+  classifiedImage: '/recent-tiles-classifier?img_id={img_id}'
 };
 
 export const getRecentTiles = ({ lat, lng, start, end, bands, token }) => {
@@ -15,18 +16,26 @@ export const getRecentTiles = ({ lat, lng, start, end, bands, token }) => {
     .replace('{lng}', lng)
     .replace('{start}', start)
     .replace('{end}', end)
-    .replace('{bands}', bands || '');
+    .replace('{bands}', bands !== 'classified' && bands ? bands : '');
+  return axios.get(url, { cancelToken: token });
+};
+
+export const getRecentClassifiedImage = ({ imgId, token }) => {
+  const url = `${REQUEST_URL}${QUERIES.classifiedImage}`.replace(
+    '{img_id}',
+    imgId
+  );
   return axios.get(url, { cancelToken: token });
 };
 
 export const getTiles = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.tiles}`, {
     source_data: sources,
-    bands
+    bands: bands === 'classified' ? '' : bands
   });
 
 export const getThumbs = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.thumbs}`, {
     source_data: sources,
-    bands
+    bands: bands === 'classified' ? '' : bands
   });

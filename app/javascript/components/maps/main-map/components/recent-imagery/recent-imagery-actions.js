@@ -2,7 +2,12 @@ import { createAction, createThunkAction } from 'redux-tools';
 import axios from 'axios';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
+import {
+  getRecentTiles,
+  getTiles,
+  getThumbs,
+  getRecentClassifiedImage
+} from 'services/recent-imagery';
 
 const serializeReponse = response =>
   response &&
@@ -152,5 +157,30 @@ export const getMoreTiles = createThunkAction(
           );
         });
     }
+  }
+);
+
+export const getClassifiedImage = createThunkAction(
+  'getRecentImageryData',
+  params => dispatch => {
+    dispatch(setRecentImageryLoading({ loading: true, error: false }));
+    getRecentClassifiedImage(params)
+      .then(response => {
+        const { url } =
+          (response.data &&
+            response.data.data &&
+            response.data.data.attributes) ||
+          {};
+        dispatch(
+          setRecentImageryData({
+            classifiedImage: url
+          })
+        );
+        dispatch(setRecentImageryLoading({ loading: false, error: false }));
+      })
+      .catch(error => {
+        dispatch(setRecentImageryLoading({ loading: false, error: true }));
+        console.info(error);
+      });
   }
 );
