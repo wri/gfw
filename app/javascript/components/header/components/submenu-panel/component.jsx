@@ -42,7 +42,8 @@ class Header extends PureComponent {
       setShowPanel,
       handleLangSelect,
       toggleMenu,
-      loggedIn
+      loggedIn,
+      handleShowContactUs
     } = this.props;
 
     return (
@@ -158,6 +159,9 @@ class Header extends PureComponent {
               <a className="title" href="/privacy-policy">
                 Privacy Policy
               </a>
+              <button className="title" onClick={handleShowContactUs}>
+                Contact us
+              </button>
             </div>
           </div>
         </div>
@@ -180,6 +184,7 @@ Header.propTypes = {
   setShowPanel: PropTypes.func,
   handleLangSelect: PropTypes.func,
   toggleMenu: PropTypes.func,
+  handleShowContactUs: PropTypes.func,
   loggedIn: PropTypes.bool
 };
 

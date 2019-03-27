@@ -22,6 +22,7 @@
     color: $slate;
     font-size: rem(14px);
     margin-bottom: rem(23px);
+    text-align: left;
   }
 
   .menu-section {
@@ -102,8 +103,10 @@
     @media screen and (min-width: $screen-m) {
       flex-direction: row;
 
-      > a {
+      > a,
+      button {
         margin-right: rem(30px);
+        cursor: pointer;
       }
     }
   }
