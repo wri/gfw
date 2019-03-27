@@ -170,8 +170,8 @@ export const datasetsSections = [
     Component: Datasets,
     subCategories: [
       {
-        slug: 'conservation',
-        title: 'Conservation'
+        slug: 'biodiversity',
+        title: 'Biodiversity'
       }
     ]
   },
