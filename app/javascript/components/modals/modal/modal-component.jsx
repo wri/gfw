@@ -10,12 +10,11 @@ import closeIcon from 'assets/icons/close.svg';
 import './modal-styles.scss';
 
 class CustomModal extends PureComponent {
-  componentDidUpdate(prevProps) {
-    const { isOpen, contentLabel } = this.props;
-    if (isOpen && isOpen !== prevProps.isOpen) {
-      track('openModal', { label: contentLabel });
+  trackModalOpen = () => {
+    if (this.props.track) {
+      track('openModal', { label: this.props.contentLabel });
     }
-  }
+  };
 
   render() {
     const {
@@ -32,6 +31,7 @@ class CustomModal extends PureComponent {
         onRequestClose={onRequestClose}
         style={customStyles}
         contentLabel={contentLabel}
+        onAfterOpen={this.trackModalOpen}
       >
         <button
           onClick={onRequestClose}
@@ -47,6 +47,7 @@ class CustomModal extends PureComponent {
 
 CustomModal.propTypes = {
   isOpen: PropTypes.bool,
+  track: PropTypes.bool,
   onRequestClose: PropTypes.func.isRequired,
   contentLabel: PropTypes.string,
   customStyles: PropTypes.object,
@@ -56,6 +57,7 @@ CustomModal.propTypes = {
 
 CustomModal.defaultProps = {
   contentLabel: 'Modal content',
+  track: true,
   customStyles: {
     overlay: {
       zIndex: 10000,

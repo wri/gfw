@@ -3,7 +3,10 @@ import isEmpty from 'lodash/isEmpty';
 import startCase from 'lodash/startCase';
 import flatten from 'lodash/flatten';
 
-import { getActiveDatasetsFromState } from 'components/maps/map/selectors';
+import {
+  getActiveDatasetsFromState,
+  getLayerGroups
+} from 'components/maps/map/selectors';
 import { getEmbed } from 'components/maps/main-map/selectors';
 import { getActive } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
 
@@ -227,8 +230,13 @@ export const getSearchSections = createSelector([getMenuSection], menuSection =>
   }))
 );
 
+const getLegendLayerGroups = createSelector([getLayerGroups], groups => {
+  if (!groups) return null;
+  return groups.filter(g => !g.isBoundary && !g.isRecentImagery);
+});
+
 export const getMobileSections = createSelector(
-  [getMenuSection, getActiveDatasetsFromState, getLocation, getEmbed],
+  [getMenuSection, getLegendLayerGroups, getLocation, getEmbed],
   (menuSection, activeDatasets, location, embed) =>
     mobileSections.filter(s => !embed || s.embed).map(s => ({
       ...s,
