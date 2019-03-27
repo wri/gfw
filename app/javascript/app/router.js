@@ -37,7 +37,10 @@ const redirectThunk = (dispatch, getState) => {
       )
     );
   } else {
-    dispatch(redirect({ type: MAP }));
+    const splitPath = location.pathname && location.pathname.split('/');
+    const newPath =
+      (splitPath && splitPath.length > 1 && splitPath[1]) || 'map';
+    dispatch(redirect({ type: `location/${newPath.toUpperCase()}` }));
   }
 };
 
