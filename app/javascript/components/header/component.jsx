@@ -13,6 +13,7 @@ import myGfwIcon from 'assets/icons/mygfw.svg';
 import closeIcon from 'assets/icons/close.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 
+import ContactUs from 'components/modals/contact-us';
 import MyGFWLogin from 'components/mygfw-login';
 import DropdownMenu from './components/dropdown-menu';
 import SubmenuPanel from './components/submenu-panel';
@@ -44,7 +45,8 @@ class Header extends PureComponent {
       toggle,
       useNavLinks,
       isMobile,
-      isMap
+      isMap,
+      setModalContactUsOpen
     } = this.props;
 
     let moreText = fullScreen ? 'close' : 'more';
@@ -200,12 +202,14 @@ class Header extends PureComponent {
                   setShowMyGfw(false);
                   setShowLangSelector(false);
                 }}
+                handleShowContactUs={() => setModalContactUsOpen(true)}
                 setShowPanel={setShowPanel}
                 handleLangSelect={handleLangSelect}
               />
             )}
           </Fragment>
         )}
+        <ContactUs />
       </div>
     );
   }
@@ -216,6 +220,7 @@ Header.propTypes = {
   setShowPanel: PropTypes.func,
   setShowMyGfw: PropTypes.func,
   setShowLangSelector: PropTypes.func,
+  setModalContactUsOpen: PropTypes.func,
   showPanel: PropTypes.bool,
   showMyGfw: PropTypes.bool,
   showLangSelector: PropTypes.bool,
