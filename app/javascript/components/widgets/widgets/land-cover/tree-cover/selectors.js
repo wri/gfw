@@ -10,14 +10,13 @@ const getWhitelist = state => state.whitelists && state.whitelists.adm0;
 const getColors = state => state.colors;
 const getSentence = state => state.config.sentence;
 const getTitle = state => state.config.title;
-const getLocationType = state => state.type;
 const getLocationName = state => state.locationName;
 
 export const isoHasPlantations = createSelector(
-  [getWhitelist, getLocationType],
-  (whitelist, type) => {
+  [getWhitelist, getLocationName],
+  (whitelist, name) => {
     const hasPlantations =
-      (type !== 'global' && isEmpty(whitelist)) ||
+      (name !== 'global' && isEmpty(whitelist)) ||
       (whitelist && whitelist.includes('plantations'));
     return hasPlantations;
   }
@@ -68,10 +67,10 @@ export const parseData = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getLocationType, getWhitelist],
-  (title, type, whitelist) => {
+  [getTitle, getLocationName, getWhitelist],
+  (title, name, whitelist) => {
     let selectedTitle = title.default;
-    if (type === 'global') {
+    if (name === 'global') {
       selectedTitle = title.global;
     } else if (
       whitelist &&
