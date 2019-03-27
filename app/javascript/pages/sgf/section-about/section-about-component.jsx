@@ -153,7 +153,7 @@ class SectionAbout extends PureComponent {
             </div>
           </div>
         </section>
-        {anchor && <ScrollTo target={anchor} />}
+        {anchor && <ScrollTo target={anchor} delay={500} />}
       </div>
     );
   }
