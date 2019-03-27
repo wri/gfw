@@ -20,7 +20,7 @@ const getQuery = state => state.query || null;
 const getLocationObject = state => state.locationObject || null;
 const getSentences = state => state.config && state.config.sentence;
 const getTitle = state => state.config.title;
-const getLocationType = state => state.type;
+const getLocationName = state => state.locationName || null;
 
 export const getSummedByYearsData = createSelector(
   [getData, getSettings],
@@ -182,10 +182,10 @@ export const parseSentence = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getLocationType],
-  (title, type) => {
+  [getTitle, getLocationName],
+  (title, name) => {
     let selectedTitle = title.default;
-    if (type === 'global') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;

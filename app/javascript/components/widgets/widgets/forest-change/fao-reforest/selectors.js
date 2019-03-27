@@ -11,7 +11,6 @@ const getLocationName = state => state.locationName || null;
 const getPeriod = state => state.settings.period || null;
 const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
-const getLocationType = state => state.locationType || null;
 const getAllLocation = state => state.allLocation || null;
 
 export const getSortedData = createSelector([getData], data => {
@@ -101,10 +100,10 @@ export const parseSentence = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getLocationType],
-  (title, type) => {
+  [getTitle, getLocationName],
+  (title, name) => {
     let selectedTitle = title.initial;
-    if (type === 'global') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;
