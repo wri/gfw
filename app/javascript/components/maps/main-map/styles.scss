@@ -13,21 +13,25 @@
 
     .map-attributions {
       position: absolute;
-      bottom: rem(15px);
-      right: rem(260px);
+      bottom: rem(10px);
+      right: rem(10px);
+      left: rem(10px);
       z-index: 5;
+
+      @media screen and (min-width: $screen-m) {
+        right: rem(260px);
+        bottom: rem(15px);
+        justify-content: flex-end;
+        width: auto;
+      }
     }
 
-    .leaflet-control-container {
-      .leaflet-bottom {
-        right: rem(65px);
-        top: rem(15px);
-
-        @media screen and (min-width: $screen-m) {
-          right: rem(260px);
-          bottom: rem(50px);
-          top: auto;
-        }
+    .mapboxgl-ctrl-bottom-right {
+      @media screen and (min-width: $screen-m) {
+        right: rem(260px);
+        bottom: rem(50px);
+        left: auto;
+        top: auto;
       }
     }
   }
