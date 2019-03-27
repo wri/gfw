@@ -213,7 +213,7 @@ export const parseSentence = createSelector(
           ? '< 0.1%'
           : `${format('.2r')(permPercent)}%`,
       component: {
-        key: 'permanent deforestation',
+        key: 'deforestation',
         tooltip:
           'The drivers of permanent deforestation are urbanization and commodity-driven deforestation.'
       }
