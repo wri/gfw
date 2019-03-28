@@ -10,10 +10,16 @@ export const getPlanetBasemaps = createThunkAction(
   () => (dispatch, state) => {
     const { basemaps } = state() || {};
     if (basemaps && !basemaps.loading) {
-      fetchPlanetBasemaps().then(response => {
-        const { mosaics } = (response && response.data) || {};
-        dispatch(setBasemapsData({ planet: mosaics }));
-      });
+      dispatch(setBasemapsLoading({ loading: true, error: false }));
+      fetchPlanetBasemaps()
+        .then(response => {
+          const { mosaics } = (response && response.data) || {};
+          dispatch(setBasemapsData({ planet: mosaics }));
+        })
+        .catch(error => {
+          console.info(error);
+          dispatch(setBasemapsLoading({ loading: false, error: true }));
+        });
     }
   }
 );
