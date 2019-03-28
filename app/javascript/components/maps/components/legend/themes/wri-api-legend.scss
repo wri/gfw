@@ -8,6 +8,17 @@
 .wri_api__c-legend-item {
   font-family: inherit !important;
 
+  .wri_api__custom-icon {
+    width: 25px !important;
+    height: 25px !important;
+    margin-top: -2px;
+
+    img {
+      width: 25px !important;
+      height: 25px !important;
+    }
+  }
+
   .wri_api__icon-square {
     margin-top: 3px;
     margin-right: 11px;
