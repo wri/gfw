@@ -10,13 +10,12 @@
       font-size: rem(10px);
       text-transform: uppercase;
       font-weight: 400;
-      // padding: 0 rem(10px) 0 0;
-      padding: 0;
+      padding: 0 8px 0 0;
       height: auto;
     }
 
     .arrow-icon {
-      right: rem(-6px);
+      right: 0;
       width: rem(6px);
     }
   }

@@ -65,8 +65,8 @@ class Basemaps extends React.PureComponent {
         onClick={() =>
           selectBasemap({
             value: 'landsat',
-            url: basemap.url,
-            year: basemap.year
+            url: basemap.url.replace('{year}', basemap.defaultYear),
+            year: basemap.defaultYear
           })
         }
       >

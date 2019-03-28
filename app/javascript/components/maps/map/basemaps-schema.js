@@ -134,6 +134,7 @@ export default {
     url:
       'https://production-api.globalforestwatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
     availableYears: [2017, 2016, 2015, 2014, 2013],
+    defaultYear: 2017,
     layerStyles: [
       {
         id: 'background',
