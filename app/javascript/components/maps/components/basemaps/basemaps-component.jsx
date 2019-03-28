@@ -62,7 +62,13 @@ class Basemaps extends React.PureComponent {
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(basemap, year)}
+        onClick={() =>
+          selectBasemap({
+            value: 'landsat',
+            url: basemap.url,
+            year: basemap.year
+          })
+        }
       >
         <div
           className="basemaps-list-item-image"
@@ -81,7 +87,14 @@ class Basemaps extends React.PureComponent {
               theme="theme-dropdown-native-inline"
               value={year}
               options={landsatYears}
-              onChange={value => selectBasemap(basemap, parseInt(value, 10))}
+              onChange={value => {
+                const selectedYear = parseInt(value, 10);
+                selectBasemap({
+                  value: 'landsat',
+                  url: basemap.url.replace('{year}', selectedYear),
+                  year: selectedYear
+                });
+              }}
               native
             />
           </div>

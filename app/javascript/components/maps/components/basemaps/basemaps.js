@@ -30,21 +30,10 @@ class BasemapsContainer extends React.Component {
     this.props.getPlanetBasemaps();
   }
 
-  selectBasemap = (basemap, year) => {
+  selectBasemap = basemap => {
     const { labels, setMapSettings } = this.props;
     const label = labels[basemap.labelsKey] || labels.default;
-    if (basemap.value === 'landsat') {
-      setMapSettings({
-        basemap: {
-          value: basemap.value,
-          year,
-          url: basemap.url.replace('{year}', year)
-        },
-        label: label.value
-      });
-    } else {
-      setMapSettings({ basemap, label: label.value });
-    }
+    setMapSettings({ basemap, label: label.value });
     track('basemapChanged', {
       label: basemap.label
     });
