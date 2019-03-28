@@ -81,20 +81,22 @@ export const getCardData = createSelector(
       }, {});
     const { readMoreLink } = articleData || {};
 
-    const readMoreBtn = {
-      text: 'READ MORE',
-      extLink: readMoreLink,
-      theme: `theme-button-small ${data.bbox ? 'theme-button-light' : ''}`
-    };
-
-    const buttons = data.bbox
-      ? [readMoreBtn].concat([
+    const buttons = readMoreLink
+      ? [
         {
-          text: 'ZOOM',
-          theme: 'theme-button-small'
+          text: 'READ MORE',
+          extLink: readMoreLink,
+          theme: `theme-button-small ${data.bbox ? 'theme-button-light' : ''}`
         }
-      ])
-      : [readMoreBtn];
+      ]
+      : [];
+
+    if (data.bbox) {
+      buttons.push({
+        text: 'ZOOM',
+        theme: 'theme-button-small'
+      });
+    }
 
     let newBbox = data.bbox && JSON.parse(data.bbox).coordinates[0];
     if (newBbox) {
@@ -104,6 +106,9 @@ export const getCardData = createSelector(
 
     return {
       ...articleData,
+      ...(articleData.tag && {
+        tagColor: layer.color
+      }),
       ...(bbox && {
         bbox: newBbox
       }),

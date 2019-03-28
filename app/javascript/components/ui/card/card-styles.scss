@@ -45,6 +45,10 @@ $summary-color: #aaa;
     border-top: 0;
     z-index: 2;
 
+    &.top-padding {
+      padding-top: rem(40px);
+    }
+
     @media screen and (min-width: $screen-m) {
       padding: rem(30px) rem(25px) rem(25px);
     }

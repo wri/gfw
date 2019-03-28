@@ -10,21 +10,24 @@ import './themes/card-small.scss';
 class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { className, theme, data, active, tag, tagColour } = this.props;
-    const { image, imageCredit, title, summary, meta, buttons } = data || {};
+    const { className, theme, data, active } = this.props;
+    const { image, imageCredit, title, summary, meta, buttons, tag, tagColor } =
+      data || {};
 
     return (
       <div className={cx('c-card', className, theme, { active })}>
         {tag &&
-          tagColour && (
-            <span className="tag" style={{ backgroundColor: tagColour }}>
+          tagColor && (
+            <span className="tag" style={{ backgroundColor: tagColor }}>
               <p>{tag}</p>
             </span>
           )}
         {image && (
           <div className="image" style={{ backgroundImage: `url(${image})` }} />
         )}
-        <div className="body">
+        <div
+          className={cx('body', { 'top-padding': tag && tagColor && !image })}
+        >
           {imageCredit && <span>{imageCredit}</span>}
           {title && <h3 className="title">{title}</h3>}
           {summary && (
@@ -55,7 +58,7 @@ Card.propTypes = {
   onClick: PropTypes.func,
   active: PropTypes.bool,
   tag: PropTypes.string,
-  tagColour: PropTypes.string
+  tagColor: PropTypes.string
 };
 
 export default Card;
