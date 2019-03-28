@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tooltip } from 'react-tippy';
-import Switch from 'components/ui/switch';
 import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import closeIcon from 'assets/icons/close.svg';
-import moment from 'moment';
 import infoIcon from 'assets/icons/info.svg';
 
 import './styles.scss';
@@ -29,7 +26,11 @@ class Basemaps extends React.PureComponent {
     isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func,
-    setMapSettings: PropTypes.func
+    setMapSettings: PropTypes.func,
+    planetFreqOptions: PropTypes.array,
+    planetFreqSelected: PropTypes.object,
+    planetBasemapOptions: PropTypes.array,
+    planetBasemapSelected: PropTypes.object
   };
 
   renderButtonBasemap(item) {
@@ -51,7 +52,7 @@ class Basemaps extends React.PureComponent {
     );
   }
 
-  renderDropdownBasemap(item) {
+  renderLandsatBasemap(item) {
     const { selectBasemap, activeBasemap, landsatYears, basemaps } = this.props;
     const year = activeBasemap.year || landsatYears[0].value;
     const basemap = basemaps[item.value]
@@ -89,19 +90,26 @@ class Basemaps extends React.PureComponent {
     );
   }
 
-  renderTooltipBasemap(item) {
-    const { selectBasemap, activeBasemap, basemaps } = this.props;
-    const basemap = basemaps[item.value]
-      ? basemaps[item.value]
-      : basemaps.planet;
-    const years = [2016, 2017, 2018].map(y => ({ value: y, label: y }));
-    const year = activeBasemap.year || 2018;
-    const month = parseInt(activeBasemap.month, 10) || 1;
-    const frequency = activeBasemap.frequency || 'monthly';
+  renderPlanetBasemap(item) {
+    const {
+      selectBasemap,
+      planetFreqOptions,
+      planetFreqSelected,
+      planetBasemapOptions,
+      planetBasemapSelected
+    } = this.props;
+
+    const { value, frequency } = planetBasemapSelected || {};
+    const basemap = {
+      value: 'planet',
+      url: value,
+      frequency
+    };
+
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(basemap, year, month)}
+        onClick={() => selectBasemap(basemap)}
       >
         <div
           className="basemaps-list-item-image"
@@ -115,76 +123,39 @@ class Basemaps extends React.PureComponent {
         >
           {item.label}
           <div className="basemaps-list-item-selectors">
-            <Tooltip
-              className="basemaps-tooltip"
-              theme="light"
-              interactive
-              arrow
-              sticky
-              useContext
-              html={this.renderTooltipWindow({
-                month,
-                year,
-                years,
-                frequency,
-                onDateChange: (m, y) => selectBasemap(basemap, m, y)
-              })}
-            >
-              <span>{`${`0${month}`.slice(-2)}/${year}`}</span>
-            </Tooltip>
+            <Dropdown
+              className="landsat-selector"
+              theme="theme-dropdown-native-inline"
+              value={planetFreqSelected}
+              options={planetFreqOptions}
+              onChange={selected => {
+                const selectedFreq = planetFreqOptions.find(
+                  f => f.value === selected
+                );
+                selectBasemap({
+                  ...basemap,
+                  frequency: selected,
+                  url: (selectedFreq && selectedFreq.url) || ''
+                });
+              }}
+              native
+            />
+            <Dropdown
+              className="landsat-selector"
+              theme="theme-dropdown-native-inline"
+              value={planetBasemapSelected}
+              options={planetBasemapOptions}
+              onChange={selected =>
+                selectBasemap({
+                  ...basemap,
+                  url: selected
+                })
+              }
+              native
+            />
           </div>
         </span>
       </button>
-    );
-  }
-
-  renderTooltipWindow(options) {
-    const { month, year, years, frequency, onDateChange } = options;
-    const { setMapSettings } = this.props;
-    const months = moment
-      .months()
-      .map((m, i) => ({ value: i, label: `0${i + 1}`.slice(-2) }));
-    const Qs = ['Q1', 'Q2', 'Q3', 'Q4'].map(y => ({ value: y, label: y }));
-    return (
-      <div className="c-basemaps-tooltip">
-        <Switch
-          theme="theme-switch-light"
-          label="FREQUENCY"
-          value={frequency}
-          options={[
-            { label: 'Monthly', value: 'monthly' },
-            { label: 'Quarterly', value: 'quarterly' }
-          ]}
-          onChange={option => {
-            setMapSettings({ basemap: { frequency: option } });
-          }}
-        />
-        <div className="years-select">
-          <span className="label">PERIOD</span>
-          <div className="select-container">
-            <Dropdown
-              className="years-dropdown"
-              theme="theme-dropdown-button"
-              value={month - 1}
-              options={frequency === 'monthly' ? months : Qs}
-              onChange={m => {
-                onDateChange(year, `0${parseInt(m, 10) + 1}`.slice(-2));
-              }}
-              native
-            />
-            <span className="text-date">/</span>
-            <Dropdown
-              theme="theme-dropdown-button"
-              value={year}
-              options={years}
-              onChange={y => {
-                onDateChange(y, month);
-              }}
-              native
-            />
-          </div>
-        </div>
-      </div>
     );
   }
 
@@ -256,14 +227,13 @@ class Basemaps extends React.PureComponent {
           <div className="basemap-list-scroll-wrapper">
             <ul className="basemaps-list">
               {Object.values(basemaps).map(item => {
-                let basemapButton;
-                if (item.dynamic) {
-                  basemapButton = this.renderDropdownBasemap(item);
-                } else if (item.tooltip) {
-                  basemapButton = this.renderTooltipBasemap(item);
-                } else {
-                  basemapButton = this.renderButtonBasemap(item);
+                let basemapButton = this.renderButtonBasemap(item);
+                if (item.value === 'landsat') {
+                  basemapButton = this.renderLandsatBasemap(item);
+                } else if (item.value === 'planet') {
+                  basemapButton = this.renderPlanetBasemap(item);
                 }
+
                 return (
                   <li
                     key={item.value}

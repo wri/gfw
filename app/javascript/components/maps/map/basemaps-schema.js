@@ -125,44 +125,10 @@ export default {
       }
     ]
   },
-  planet: {
-    value: 'planet',
-    label: 'Planet',
-    labelsKey: 'default',
-    color: '#131620',
-    image: satelliteImage,
-    tooltip: true,
-    url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_{frequency}_{period}_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
-      process.env.PLANET_API_KEY
-    }`,
-    layerStyles: [
-      {
-        id: 'background',
-        'background-color': '#ffffff'
-      },
-      {
-        id: 'waterway-river-canal',
-        'line-color': '#8dcbf7'
-      },
-      {
-        id: 'waterway-river-canal-shadow',
-        'line-color': '#6ea5f2'
-      },
-      {
-        id: 'waterway-small',
-        'line-color': '#8dcbf7'
-      },
-      {
-        id: 'water',
-        'fill-color': '#aedffd'
-      }
-    ]
-  },
   landsat: {
     value: 'landsat',
     label: 'landsat',
     labelsKey: 'lightLabels',
-    dynamic: true,
     color: '#0C0045',
     image: landsatImage,
     url:
@@ -188,6 +154,38 @@ export default {
       {
         id: 'water',
         'fill-color': '#0C0045'
+      }
+    ]
+  },
+  planet: {
+    value: 'planet',
+    label: 'Planet',
+    labelsKey: 'default',
+    color: '#131620',
+    image: satelliteImage,
+    url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_{frequency}_{period}_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
+      process.env.PLANET_API_KEY
+    }`,
+    layerStyles: [
+      {
+        id: 'background',
+        'background-color': '#ffffff'
+      },
+      {
+        id: 'waterway-river-canal',
+        'line-color': '#03132e'
+      },
+      {
+        id: 'waterway-river-canal-shadow',
+        'line-color': '#03132e'
+      },
+      {
+        id: 'waterway-small',
+        'line-color': '#03132e'
+      },
+      {
+        id: 'water',
+        'fill-color': '#03132e'
       }
     ]
   }

@@ -2,13 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'app/analytics';
+import reducerRegistry from 'app/registry';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import * as mapActions from 'components/maps/map/actions';
 
-import * as actions from 'components/maps/map/actions';
+import reducers, { initialState } from './basemaps-reducers';
+import * as ownActions from './basemaps-actions';
 import { getBasemapsProps } from './basemaps-selectors';
 import BasemapsComponent from './basemaps-component';
+
+const actions = {
+  setModalMetaSettings,
+  ...mapActions,
+  ...ownActions
+};
 
 class BasemapsContainer extends React.Component {
   static propTypes = {
@@ -17,7 +26,11 @@ class BasemapsContainer extends React.Component {
     setMapSettings: PropTypes.func.isRequired
   };
 
-  selectBasemap = (basemap, year, month) => {
+  componentDidMount() {
+    this.props.getPlanetBasemaps();
+  }
+
+  selectBasemap = (basemap, year) => {
     const { labels, setMapSettings } = this.props;
     const label = labels[basemap.labelsKey] || labels.default;
     if (basemap.value === 'landsat') {
@@ -29,25 +42,8 @@ class BasemapsContainer extends React.Component {
         },
         label: label.value
       });
-    } else if (month && basemap.value === 'planet') {
-      const yearStr = String(Number(year) || 2018);
-      const isMonthly = !month.includes('Q');
-      const period = isMonthly
-        ? `monthly_${yearStr}_${`0${month}`.slice(-2)}`
-        : `quarterly_${yearStr}${month}`;
-      setMapSettings({
-        basemap: {
-          value: basemap.value,
-          year,
-          month,
-          url: basemap.url
-            .replace('{period}', period)
-            .replace('{frequency}', isMonthly ? 'monthly' : 'quarterly')
-        },
-        label: label.value
-      });
     } else {
-      setMapSettings({ basemap: { value: basemap.value }, label: label.value });
+      setMapSettings({ basemap, label: label.value });
     }
     track('basemapChanged', {
       label: basemap.label
@@ -100,11 +96,16 @@ class BasemapsContainer extends React.Component {
 BasemapsContainer.propTypes = {
   activeLabels: PropTypes.object,
   basemaps: PropTypes.object,
-  labels: PropTypes.object
+  labels: PropTypes.object,
+  getPlanetBasemaps: PropTypes.func
 };
 
+reducerRegistry.registerModule('basemaps', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
+
 export default withTooltipEvt(
-  connect(getBasemapsProps, { setModalMetaSettings, ...actions })(
-    BasemapsContainer
-  )
+  connect(getBasemapsProps, actions)(BasemapsContainer)
 );
