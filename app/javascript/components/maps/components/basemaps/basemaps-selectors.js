@@ -139,6 +139,7 @@ export const getPlanetPeriods = createSelector(
 
     return planetBasemaps.filter(p => p.year === yearSelected.value).map(p => ({
       ...p,
+      value: p.period,
       label:
         !basemap.interval || basemap.interval === '1 mon'
           ? moment(`${yearSelected.value}-${p.period}`).format('MMM')
@@ -153,6 +154,15 @@ export const getPlanetPeriodSelected = createSelector(
     if (isEmpty(planetPeriods)) return null;
     if (basemap.value !== 'planet') return planetPeriods[0];
     return planetPeriods.find(p => p.value === basemap.period);
+  }
+);
+
+export const getPlanetLabel = createSelector(
+  [getPlanetBasemapSelected],
+  basemap => {
+    if (!basemap) return '';
+    const { period, year } = basemap || {};
+    return `${period}/${year}`;
   }
 );
 
@@ -179,5 +189,6 @@ export const getBasemapsProps = createStructuredSelector({
   planetYears: getPlanetYears,
   planetYearSelected: getPlanetYearsSelected,
   planetPeriods: getPlanetPeriods,
-  planetPeriodSelected: getPlanetPeriodSelected
+  planetPeriodSelected: getPlanetPeriodSelected,
+  planetBasemapLabel: getPlanetLabel
 });

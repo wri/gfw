@@ -35,7 +35,8 @@ class Basemaps extends React.PureComponent {
     planetYears: PropTypes.array,
     planetYearSelected: PropTypes.object,
     planetPeriods: PropTypes.array,
-    planetPeriodSelected: PropTypes.object
+    planetPeriodSelected: PropTypes.object,
+    planetBasemapLabel: PropTypes.object
   };
 
   renderButtonBasemap(item) {
@@ -117,7 +118,8 @@ class Basemaps extends React.PureComponent {
       planetYears,
       planetYearSelected,
       planetPeriods,
-      planetPeriodSelected
+      planetPeriodSelected,
+      planetBasemapLabel
     } = this.props;
 
     const { value, interval, year, period } = planetBasemapSelected || {};
@@ -147,12 +149,12 @@ class Basemaps extends React.PureComponent {
           {item.label}
           <div className="basemaps-list-item-selectors">
             <Tooltip
-              theme="tip"
-              hideOnClick
               useContext
+              theme="light"
+              arrow
               interactive
               html={
-                <div>
+                <div className="c-basemaps-tooltip">
                   <Switch
                     theme="theme-switch-light"
                     label="Interval"
@@ -171,7 +173,7 @@ class Basemaps extends React.PureComponent {
                   />
                   <div className="period-selector">
                     <Dropdown
-                      label="year"
+                      label="Year"
                       theme="theme-dropdown-native"
                       value={planetYearSelected}
                       options={planetYears}
@@ -188,7 +190,7 @@ class Basemaps extends React.PureComponent {
                       native
                     />
                     <Dropdown
-                      label="period"
+                      label="Period"
                       theme="theme-dropdown-native"
                       value={planetPeriodSelected}
                       options={planetPeriods}
@@ -210,7 +212,7 @@ class Basemaps extends React.PureComponent {
               trigger="click"
               position="top"
             >
-              <div>test</div>
+              <div>{planetBasemapLabel}</div>
             </Tooltip>
           </div>
         </span>

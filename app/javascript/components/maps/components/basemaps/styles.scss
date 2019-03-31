@@ -152,8 +152,9 @@ $top-section-height: 125px;
 
 .c-basemaps-tooltip {
   padding: 20px;
+  min-width: 200px;
 
-  .years-select {
+  .period-selector {
     display: flex;
     justify-content: space-between;
     align-items: center;
