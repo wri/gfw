@@ -1,5 +1,7 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import groupBy from 'lodash/groupBy';
+import moment from 'moment';
 
 import {
   getBasemaps,
@@ -12,7 +14,7 @@ import {
   getAllBoundaries
 } from 'components/maps/map/selectors';
 
-const frequencyOptions = [
+const intervalOptions = [
   {
     label: 'Monthly',
     value: '1 mon'
@@ -33,27 +35,35 @@ export const getPlanetBasemaps = createSelector(
     return planetBasemaps.map(p => {
       const splitName = p.name.split('_');
       let label = '';
+      let year = '';
+      let period = '';
       if (p.interval === '1 mon') {
         label = `${splitName[3]}/${splitName[2]}`;
+        year = parseInt(splitName[2], 10);
+        period = parseInt(splitName[3], 10);
       } else if (p.interval === '3 mons') {
         label = splitName[2];
+        year = parseInt(splitName[2].slice(0, 4), 10);
+        period = splitName[2].slice(4, 6);
       }
 
       return {
         label,
-        frequency: p.interval,
-        value: p._links.tiles
+        interval: p.interval,
+        value: p._links.tiles,
+        year,
+        period
       };
     });
   }
 );
 
-export const getPlanetBasemapsByFrequency = createSelector(
+export const getPlanetBasemapsByInvertal = createSelector(
   [getPlanetBasemaps],
   planetBasemaps => {
     if (isEmpty(planetBasemaps)) return null;
-    const monthly = planetBasemaps.filter(m => m.frequency === '1 mon');
-    const quarterly = planetBasemaps.filter(m => m.frequency === '3 mons');
+    const monthly = planetBasemaps.filter(m => m.interval === '1 mon');
+    const quarterly = planetBasemaps.filter(m => m.interval === '3 mons');
 
     return {
       '1 mon': monthly,
@@ -62,30 +72,30 @@ export const getPlanetBasemapsByFrequency = createSelector(
   }
 );
 
-export const selectPlanetBasemapsFreqOptions = createSelector(
-  [getPlanetBasemapsByFrequency],
+export const selectPlanetBasemapsIntervalOptions = createSelector(
+  [getPlanetBasemapsByInvertal],
   planetBasemaps => {
-    if (isEmpty(planetBasemaps)) return frequencyOptions;
-    return frequencyOptions.map(f => ({
+    if (isEmpty(planetBasemaps)) return intervalOptions;
+    return intervalOptions.map(f => ({
       ...f,
       url: planetBasemaps[f.value][0].value
     }));
   }
 );
 
-export const getPlanetBasemapsFrequencySelected = createSelector(
-  [selectPlanetBasemapsFreqOptions, getBasemap],
+export const getPlanetBasemapsInvertalSelected = createSelector(
+  [selectPlanetBasemapsIntervalOptions, getBasemap],
   (options, basemap) =>
-    (basemap.frequency
-      ? options.find(o => o.value === basemap.frequency)
+    (basemap.interval
+      ? options.find(o => o.value === basemap.interval)
       : options[0])
 );
 
 export const getPlanetBasemapsOptions = createSelector(
-  [getPlanetBasemapsByFrequency, getBasemap],
+  [getPlanetBasemapsByInvertal, getBasemap],
   (planetBasemaps, basemap) => {
     if (isEmpty(planetBasemaps)) return null;
-    return planetBasemaps[basemap.frequency || '1 mon'];
+    return planetBasemaps[basemap.interval || '1 mon'];
   }
 );
 
@@ -95,6 +105,54 @@ export const getPlanetBasemapSelected = createSelector(
     if (isEmpty(planetBasemaps)) return null;
     if (basemap.value !== 'planet') return planetBasemaps[0];
     return planetBasemaps.find(p => p.value === basemap.url);
+  }
+);
+
+export const getPlanetYears = createSelector(
+  [getPlanetBasemapsOptions],
+  planetBasemaps => {
+    if (isEmpty(planetBasemaps)) return null;
+    const groupByYears = groupBy(planetBasemaps, 'year');
+
+    return Object.keys(groupByYears).map(y => ({
+      label: y,
+      value: parseInt(y, 10),
+      url: groupByYears[y] && groupByYears[y][0].value
+    }));
+  }
+);
+
+export const getPlanetYearsSelected = createSelector(
+  [getPlanetYears, getBasemap],
+  (planetYears, basemap) => {
+    if (isEmpty(planetYears)) return null;
+    if (basemap.value !== 'planet') return planetYears[0];
+
+    return planetYears.find(p => p.value === basemap.year);
+  }
+);
+
+export const getPlanetPeriods = createSelector(
+  [getPlanetBasemapsOptions, getPlanetYearsSelected, getBasemap],
+  (planetBasemaps, yearSelected, basemap) => {
+    if (isEmpty(planetBasemaps) || !yearSelected) return null;
+
+    return planetBasemaps.filter(p => p.year === yearSelected.value).map(p => ({
+      ...p,
+      label:
+        !basemap.interval || basemap.interval === '1 mon'
+          ? moment(`${yearSelected.value}-${p.period}`).format('MMM')
+          : p.period
+    }));
+  }
+);
+
+export const getPlanetPeriodSelected = createSelector(
+  [getPlanetPeriods, getBasemap],
+  (planetPeriods, basemap) => {
+    if (isEmpty(planetPeriods)) return null;
+    if (basemap.value !== 'planet') return planetPeriods[0];
+    return planetPeriods.find(p => p.value === basemap.period);
   }
 );
 
@@ -115,8 +173,11 @@ export const getBasemapsProps = createStructuredSelector({
   basemaps: getBasemaps,
   labels: getLabels,
   landsatYears: getLandsatYears,
-  planetFreqOptions: selectPlanetBasemapsFreqOptions,
-  planetFreqSelected: getPlanetBasemapsFrequencySelected,
-  planetBasemapOptions: getPlanetBasemapsOptions,
-  planetBasemapSelected: getPlanetBasemapSelected
+  planetInvertalOptions: selectPlanetBasemapsIntervalOptions,
+  planetIntervalSelected: getPlanetBasemapsInvertalSelected,
+  planetBasemapSelected: getPlanetBasemapSelected,
+  planetYears: getPlanetYears,
+  planetYearSelected: getPlanetYearsSelected,
+  planetPeriods: getPlanetPeriods,
+  planetPeriodSelected: getPlanetPeriodSelected
 });

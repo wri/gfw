@@ -7,6 +7,8 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import closeIcon from 'assets/icons/close.svg';
 import infoIcon from 'assets/icons/info.svg';
+import { Tooltip } from 'react-tippy';
+import Switch from 'components/ui/switch';
 
 import './styles.scss';
 
@@ -27,10 +29,13 @@ class Basemaps extends React.PureComponent {
     getTooltipContentProps: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func,
     setMapSettings: PropTypes.func,
-    planetFreqOptions: PropTypes.array,
-    planetFreqSelected: PropTypes.object,
-    planetBasemapOptions: PropTypes.array,
-    planetBasemapSelected: PropTypes.object
+    planetInvertalOptions: PropTypes.array,
+    planetIntervalSelected: PropTypes.object,
+    planetBasemapSelected: PropTypes.object,
+    planetYears: PropTypes.array,
+    planetYearSelected: PropTypes.object,
+    planetPeriods: PropTypes.array,
+    planetPeriodSelected: PropTypes.object
   };
 
   renderButtonBasemap(item) {
@@ -106,17 +111,22 @@ class Basemaps extends React.PureComponent {
   renderPlanetBasemap(item) {
     const {
       selectBasemap,
-      planetFreqOptions,
-      planetFreqSelected,
-      planetBasemapOptions,
-      planetBasemapSelected
+      planetInvertalOptions,
+      planetIntervalSelected,
+      planetBasemapSelected,
+      planetYears,
+      planetYearSelected,
+      planetPeriods,
+      planetPeriodSelected
     } = this.props;
 
-    const { value, frequency } = planetBasemapSelected || {};
+    const { value, interval, year, period } = planetBasemapSelected || {};
     const basemap = {
       value: 'planet',
       url: value,
-      frequency
+      interval,
+      year,
+      period
     };
 
     return (
@@ -136,36 +146,72 @@ class Basemaps extends React.PureComponent {
         >
           {item.label}
           <div className="basemaps-list-item-selectors">
-            <Dropdown
-              className="landsat-selector"
-              theme="theme-dropdown-native-inline"
-              value={planetFreqSelected}
-              options={planetFreqOptions}
-              onChange={selected => {
-                const selectedFreq = planetFreqOptions.find(
-                  f => f.value === selected
-                );
-                selectBasemap({
-                  ...basemap,
-                  frequency: selected,
-                  url: (selectedFreq && selectedFreq.url) || ''
-                });
-              }}
-              native
-            />
-            <Dropdown
-              className="landsat-selector"
-              theme="theme-dropdown-native-inline"
-              value={planetBasemapSelected}
-              options={planetBasemapOptions}
-              onChange={selected =>
-                selectBasemap({
-                  ...basemap,
-                  url: selected
-                })
+            <Tooltip
+              theme="tip"
+              hideOnClick
+              useContext
+              interactive
+              html={
+                <div>
+                  <Switch
+                    theme="theme-switch-light"
+                    label="Interval"
+                    value={planetIntervalSelected}
+                    options={planetInvertalOptions}
+                    onChange={selected => {
+                      const selectedInvertal = planetInvertalOptions.find(
+                        f => f.value === selected
+                      );
+                      selectBasemap({
+                        ...basemap,
+                        interval: selected,
+                        url: (selectedInvertal && selectedInvertal.url) || ''
+                      });
+                    }}
+                  />
+                  <div className="period-selector">
+                    <Dropdown
+                      label="year"
+                      theme="theme-dropdown-native"
+                      value={planetYearSelected}
+                      options={planetYears}
+                      onChange={selected => {
+                        const selectedYear = planetYears.find(
+                          f => f.value === parseInt(selected, 10)
+                        );
+                        selectBasemap({
+                          ...basemap,
+                          year: parseInt(selected, 10),
+                          url: (selectedYear && selectedYear.url) || ''
+                        });
+                      }}
+                      native
+                    />
+                    <Dropdown
+                      label="period"
+                      theme="theme-dropdown-native"
+                      value={planetPeriodSelected}
+                      options={planetPeriods}
+                      onChange={selected => {
+                        const selectedPeriod = planetPeriods.find(
+                          f => f.value === selected
+                        );
+                        selectBasemap({
+                          ...basemap,
+                          period: selected,
+                          url: (selectedPeriod && selectedPeriod.url) || ''
+                        });
+                      }}
+                      native
+                    />
+                  </div>
+                </div>
               }
-              native
-            />
+              trigger="click"
+              position="top"
+            >
+              <div>test</div>
+            </Tooltip>
           </div>
         </span>
       </button>
