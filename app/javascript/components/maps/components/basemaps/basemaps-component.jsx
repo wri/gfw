@@ -5,11 +5,11 @@ import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
-import closeIcon from 'assets/icons/close.svg';
-import infoIcon from 'assets/icons/info.svg';
 import { Tooltip } from 'react-tippy';
 import Switch from 'components/ui/switch';
 
+import infoIcon from 'assets/icons/info.svg';
+import closeIcon from 'assets/icons/close.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 
 import './styles.scss';
@@ -38,6 +38,10 @@ class Basemaps extends React.PureComponent {
     planetYearSelected: PropTypes.object,
     planetPeriods: PropTypes.array,
     planetPeriodSelected: PropTypes.object
+  };
+
+  state = {
+    planetTooltipOpen: false
   };
 
   renderButtonBasemap(item) {
@@ -121,6 +125,7 @@ class Basemaps extends React.PureComponent {
       planetPeriods,
       planetPeriodSelected
     } = this.props;
+    const { planetTooltipOpen } = this.state;
     const { url, interval, year, period } = planetBasemapSelected || {};
     const basemap = {
       value: 'planet',
@@ -152,8 +157,15 @@ class Basemaps extends React.PureComponent {
               theme="light"
               arrow
               interactive
+              open={planetTooltipOpen}
               html={
                 <div className="c-basemaps-tooltip">
+                  <button
+                    className="planet-tooltip-close"
+                    onClick={() => this.setState({ planetTooltipOpen: false })}
+                  >
+                    <Icon icon={closeIcon} />
+                  </button>
                   <Switch
                     theme="theme-switch-light"
                     label="Interval"
@@ -168,6 +180,8 @@ class Basemaps extends React.PureComponent {
                       selectBasemap({
                         ...basemap,
                         interval: selected,
+                        planetYear:
+                          (selectedInvertal && selectedInvertal.year) || null,
                         url: (selectedInvertal && selectedInvertal.url) || ''
                       });
                     }}
@@ -215,10 +229,15 @@ class Basemaps extends React.PureComponent {
               trigger="click"
               position="top"
             >
-              <div className="planet-label">
+              <button
+                className="planet-label"
+                onClick={() => {
+                  this.setState({ planetTooltipOpen: !planetTooltipOpen });
+                }}
+              >
                 {planetBasemapSelected && planetBasemapSelected.label}
                 <Icon icon={arrowIcon} className="arrow-icon" />
-              </div>
+              </button>
             </Tooltip>
           </div>
         </span>

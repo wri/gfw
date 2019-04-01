@@ -1,6 +1,7 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 
 import {
@@ -32,26 +33,29 @@ export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
   planetBasemaps => {
     if (isEmpty(planetBasemaps)) return null;
-    return planetBasemaps.map(p => {
-      const splitName = p.name.split('_');
-      let year = '';
-      let period = '';
-      if (p.interval === '1 mon') {
-        year = parseInt(splitName[2], 10);
-        period = moment(`${year}-${splitName[3]}`).format('MMM');
-      } else if (p.interval === '3 mons') {
-        year = parseInt(splitName[2].slice(0, 4), 10);
-        period = splitName[2].slice(4, 6).toUpperCase();
-      }
+    return sortBy(
+      planetBasemaps.map(p => {
+        const splitName = p.name.split('_');
+        let year = '';
+        let period = '';
+        if (p.interval === '1 mon') {
+          year = parseInt(splitName[2], 10);
+          period = moment(`${year}-${splitName[3]}`).format('MMM');
+        } else if (p.interval === '3 mons') {
+          year = parseInt(splitName[2].slice(0, 4), 10);
+          period = splitName[2].slice(4, 6).toUpperCase();
+        }
 
-      return {
-        label: `${year}/${period}`,
-        interval: p.interval,
-        url: p._links.tiles,
-        year,
-        period
-      };
-    });
+        return {
+          label: `${year}/${period}`,
+          interval: p.interval,
+          url: p._links.tiles,
+          year,
+          period
+        };
+      }),
+      'year'
+    ).reverse();
   }
 );
 
@@ -75,6 +79,7 @@ export const selectPlanetBasemapsIntervalOptions = createSelector(
     if (isEmpty(planetBasemaps)) return intervalOptions;
     return intervalOptions.map(f => ({
       ...f,
+      year: planetBasemaps[f.value][0].year,
       url: planetBasemaps[f.value][0].url
     }));
   }
