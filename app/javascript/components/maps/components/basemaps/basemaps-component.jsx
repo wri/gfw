@@ -10,6 +10,8 @@ import infoIcon from 'assets/icons/info.svg';
 import { Tooltip } from 'react-tippy';
 import Switch from 'components/ui/switch';
 
+import arrowIcon from 'assets/icons/arrow-down.svg';
+
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
@@ -170,8 +172,9 @@ class Basemaps extends React.PureComponent {
                       });
                     }}
                   />
-                  <div className="period-selector">
+                  <div className="date-selectors">
                     <Dropdown
+                      className="year-selector"
                       label="Year"
                       theme="theme-dropdown-native"
                       value={planetYearSelected}
@@ -189,6 +192,7 @@ class Basemaps extends React.PureComponent {
                       native
                     />
                     <Dropdown
+                      className="period-selector"
                       label="Period"
                       theme="theme-dropdown-native"
                       value={planetPeriodSelected}
@@ -211,7 +215,10 @@ class Basemaps extends React.PureComponent {
               trigger="click"
               position="top"
             >
-              <div>{planetBasemapSelected && planetBasemapSelected.label}</div>
+              <div className="planet-label">
+                {planetBasemapSelected && planetBasemapSelected.label}
+                <Icon icon={arrowIcon} className="arrow-icon" />
+              </div>
             </Tooltip>
           </div>
         </span>

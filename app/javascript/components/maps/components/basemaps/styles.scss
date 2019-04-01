@@ -124,6 +124,21 @@ $top-section-height: 125px;
     align-items: center;
     margin-top: rem(8px);
 
+    .planet-label {
+      display: flex;
+      align-items: center;
+      height: rem(10px);
+      font-size: rem(10px);
+
+      .arrow-icon {
+        right: 0;
+        width: rem(6px);
+        height: auto;
+        fill: $green-gfw;
+        margin-left: rem(3px);
+      }
+    }
+
     .basemaps-tooltip {
       display: flex;
       height: auto;
@@ -154,26 +169,19 @@ $top-section-height: 125px;
   padding: 20px;
   min-width: 200px;
 
-  .period-selector {
+  .date-selectors {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: rem(10px);
     font-size: 13px;
 
-    .label {
-      margin-right: rem(10px);
-    }
+    > div {
+      width: 45%;
 
-    .select-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .text-date {
-      margin: 0 10px;
+      .select-wrapper {
+        width: 100%;
+      }
     }
   }
 }
