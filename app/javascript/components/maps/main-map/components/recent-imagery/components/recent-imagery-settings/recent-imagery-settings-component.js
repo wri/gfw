@@ -40,8 +40,10 @@ class RecentImagerySettings extends PureComponent {
       moreTilesLoading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
+      setRecentImageryLoading,
       setModalMetaSettings,
-      onClickClose
+      onClickClose,
+      error
     } = this.props;
     const selected = this.state.selected || activeTile || {};
 
@@ -180,7 +182,22 @@ class RecentImagerySettings extends PureComponent {
                 </div>
               </Fragment>
             )}
-          {(!tiles || !tiles.length) &&
+          {error && (
+            <NoContent className="refresh">
+              <p>There was an error fetching the data</p>
+              <Button
+                className="refresh-btn"
+                onClick={() =>
+                  setRecentImageryLoading({ loading: false, error: false })
+                }
+                theme="theme-button-small"
+              >
+                Try again
+              </Button>
+            </NoContent>
+          )}
+          {!error &&
+            (!tiles || !tiles.length) &&
             !loading && (
               <NoContent
                 className="placeholder"
@@ -199,10 +216,12 @@ RecentImagerySettings.propTypes = {
   tiles: PropTypes.array,
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
+  setRecentImageryLoading: PropTypes.func,
   setModalMetaSettings: PropTypes.func,
   loading: PropTypes.bool,
   moreTilesLoading: PropTypes.bool,
-  onClickClose: PropTypes.func
+  onClickClose: PropTypes.func,
+  error: PropTypes.bool
 };
 
 export default RecentImagerySettings;
