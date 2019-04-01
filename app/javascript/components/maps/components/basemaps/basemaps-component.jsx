@@ -35,8 +35,7 @@ class Basemaps extends React.PureComponent {
     planetYears: PropTypes.array,
     planetYearSelected: PropTypes.object,
     planetPeriods: PropTypes.array,
-    planetPeriodSelected: PropTypes.object,
-    planetBasemapLabel: PropTypes.object
+    planetPeriodSelected: PropTypes.object
   };
 
   renderButtonBasemap(item) {
@@ -118,14 +117,12 @@ class Basemaps extends React.PureComponent {
       planetYears,
       planetYearSelected,
       planetPeriods,
-      planetPeriodSelected,
-      planetBasemapLabel
+      planetPeriodSelected
     } = this.props;
-
-    const { value, interval, year, period } = planetBasemapSelected || {};
+    const { url, interval, year, period } = planetBasemapSelected || {};
     const basemap = {
       value: 'planet',
-      url: value,
+      url,
       interval,
       year,
       period
@@ -158,7 +155,9 @@ class Basemaps extends React.PureComponent {
                   <Switch
                     theme="theme-switch-light"
                     label="Interval"
-                    value={planetIntervalSelected}
+                    value={
+                      planetIntervalSelected && planetIntervalSelected.value
+                    }
                     options={planetInvertalOptions}
                     onChange={selected => {
                       const selectedInvertal = planetInvertalOptions.find(
@@ -212,7 +211,7 @@ class Basemaps extends React.PureComponent {
               trigger="click"
               position="top"
             >
-              <div>{planetBasemapLabel}</div>
+              <div>{planetBasemapSelected && planetBasemapSelected.label}</div>
             </Tooltip>
           </div>
         </span>

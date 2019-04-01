@@ -34,23 +34,20 @@ export const getPlanetBasemaps = createSelector(
     if (isEmpty(planetBasemaps)) return null;
     return planetBasemaps.map(p => {
       const splitName = p.name.split('_');
-      let label = '';
       let year = '';
       let period = '';
       if (p.interval === '1 mon') {
-        label = `${splitName[3]}/${splitName[2]}`;
         year = parseInt(splitName[2], 10);
-        period = parseInt(splitName[3], 10);
+        period = moment(`${year}-${splitName[3]}`).format('MMM');
       } else if (p.interval === '3 mons') {
-        label = splitName[2];
         year = parseInt(splitName[2].slice(0, 4), 10);
-        period = splitName[2].slice(4, 6);
+        period = splitName[2].slice(4, 6).toUpperCase();
       }
 
       return {
-        label,
+        label: `${year}/${period}`,
         interval: p.interval,
-        value: p._links.tiles,
+        url: p._links.tiles,
         year,
         period
       };
@@ -78,7 +75,7 @@ export const selectPlanetBasemapsIntervalOptions = createSelector(
     if (isEmpty(planetBasemaps)) return intervalOptions;
     return intervalOptions.map(f => ({
       ...f,
-      url: planetBasemaps[f.value][0].value
+      url: planetBasemaps[f.value][0].url
     }));
   }
 );
@@ -104,7 +101,8 @@ export const getPlanetBasemapSelected = createSelector(
   (planetBasemaps, basemap) => {
     if (isEmpty(planetBasemaps)) return null;
     if (basemap.value !== 'planet') return planetBasemaps[0];
-    return planetBasemaps.find(p => p.value === basemap.url);
+
+    return planetBasemaps.find(p => p.url === basemap.url);
   }
 );
 
@@ -117,7 +115,7 @@ export const getPlanetYears = createSelector(
     return Object.keys(groupByYears).map(y => ({
       label: y,
       value: parseInt(y, 10),
-      url: groupByYears[y] && groupByYears[y][0].value
+      url: groupByYears[y] && groupByYears[y][0].url
     }));
   }
 );
@@ -133,17 +131,14 @@ export const getPlanetYearsSelected = createSelector(
 );
 
 export const getPlanetPeriods = createSelector(
-  [getPlanetBasemapsOptions, getPlanetYearsSelected, getBasemap],
-  (planetBasemaps, yearSelected, basemap) => {
+  [getPlanetBasemapsOptions, getPlanetYearsSelected],
+  (planetBasemaps, yearSelected) => {
     if (isEmpty(planetBasemaps) || !yearSelected) return null;
 
     return planetBasemaps.filter(p => p.year === yearSelected.value).map(p => ({
       ...p,
       value: p.period,
-      label:
-        !basemap.interval || basemap.interval === '1 mon'
-          ? moment(`${yearSelected.value}-${p.period}`).format('MMM')
-          : p.period
+      label: p.period
     }));
   }
 );
@@ -154,15 +149,6 @@ export const getPlanetPeriodSelected = createSelector(
     if (isEmpty(planetPeriods)) return null;
     if (basemap.value !== 'planet') return planetPeriods[0];
     return planetPeriods.find(p => p.value === basemap.period);
-  }
-);
-
-export const getPlanetLabel = createSelector(
-  [getPlanetBasemapSelected],
-  basemap => {
-    if (!basemap) return '';
-    const { period, year } = basemap || {};
-    return `${period}/${year}`;
   }
 );
 
@@ -189,6 +175,5 @@ export const getBasemapsProps = createStructuredSelector({
   planetYears: getPlanetYears,
   planetYearSelected: getPlanetYearsSelected,
   planetPeriods: getPlanetPeriods,
-  planetPeriodSelected: getPlanetPeriodSelected,
-  planetBasemapLabel: getPlanetLabel
+  planetPeriodSelected: getPlanetPeriodSelected
 });
