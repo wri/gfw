@@ -63,7 +63,7 @@ export const getCardData = createSelector(
       return null;
     }
     const { data, layer } = interaction;
-    const { interactionConfig } = layer || {};
+    const { interactionConfig, customMeta } = layer || {};
     const articleData =
       interactionConfig &&
       interactionConfig.output &&
@@ -104,11 +104,28 @@ export const getCardData = createSelector(
       newBbox = bbox(lineString(bboxCoords));
     }
 
+    const splitGridId = data.grid_id.split('_');
+    const locationFromGridId = `${splitGridId[0]}${
+      splitGridId[2] ? `, ${splitGridId[2]}` : ''
+    }`;
+    const meta = customMeta && customMeta[data.type];
+
     return {
       ...articleData,
       ...(articleData.tag && {
-        tagColor: layer.color
+        tagColor: (meta && meta.color) || layer.color
       }),
+      ...(!articleData.title &&
+        meta && {
+          title: `Place to Watch: ${meta.label}`
+        }),
+      ...(!articleData.summary &&
+        meta && {
+          summary: `FOREST CLEARING IN ${locationFromGridId.toUpperCase()}: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+            meta.label
+          }.`,
+          showFullSummary: true
+        }),
       ...(bbox && {
         bbox: newBbox
       }),

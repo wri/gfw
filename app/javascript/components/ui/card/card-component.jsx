@@ -11,7 +11,17 @@ class Card extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { className, theme, data, active } = this.props;
-    const { image, imageCredit, title, summary, meta, buttons, tag, tagColor } =
+    const {
+      image,
+      imageCredit,
+      title,
+      summary,
+      showFullSummary,
+      meta,
+      buttons,
+      tag,
+      tagColor
+    } =
       data || {};
 
     return (
@@ -32,7 +42,11 @@ class Card extends PureComponent {
           {title && <h3 className="title">{title}</h3>}
           {summary && (
             <div className="summary">
-              <Dotdotdot clamp={3}>{summary}</Dotdotdot>
+              {showFullSummary ? (
+                summary
+              ) : (
+                <Dotdotdot clamp={3}>{summary}</Dotdotdot>
+              )}
             </div>
           )}
           {meta && <p className="meta">{meta}</p>}
