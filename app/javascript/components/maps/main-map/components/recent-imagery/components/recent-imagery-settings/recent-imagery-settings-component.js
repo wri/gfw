@@ -184,7 +184,7 @@ class RecentImagerySettings extends PureComponent {
             )}
           {error && (
             <NoContent className="refresh">
-              <p>There was an error fetching the data</p>
+              <p>An error occured while fetching data.</p>
               <Button
                 className="refresh-btn"
                 onClick={() =>

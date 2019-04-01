@@ -5,6 +5,7 @@ import cx from 'classnames';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
+import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from './components/widget-header';
@@ -21,6 +22,7 @@ class Widget extends PureComponent {
       locationName,
       setWidgetsSettings,
       setWidgetSettings,
+      setWidgetLoading,
       handleDataHighlight,
       data,
       dataConfig,
@@ -44,7 +46,18 @@ class Widget extends PureComponent {
           )}
         {!loading &&
           error && (
-            <NoContent message="An error occured while fetching data. Please try again later." />
+            <NoContent className="refresh">
+              <p>An error occured while fetching data.</p>
+              <Button
+                className="refresh-btn"
+                onClick={() =>
+                  setWidgetLoading({ widget, loading: false, error: false })
+                }
+                theme="theme-button-small"
+              >
+                Try again
+              </Button>
+            </NoContent>
           )}
         {!error &&
           sentence &&
@@ -122,6 +135,7 @@ Widget.propTypes = {
   Component: PropTypes.any,
   parsePayload: PropTypes.func,
   setWidgetsSettings: PropTypes.func,
+  setWidgetLoading: PropTypes.func,
   handleDataHighlight: PropTypes.func,
   setWidgetSettings: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),

@@ -80,4 +80,19 @@
       }
     }
   }
+
+  .refresh .message {
+    opacity: 1;
+
+    p {
+      opacity: 0.5;
+    }
+
+    button {
+      margin: 8px auto 0;
+      color: white;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+  }
 }
