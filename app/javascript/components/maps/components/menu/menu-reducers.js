@@ -6,6 +6,7 @@ export const initialState = {
   datasetCategory: '',
   exploreType: 'topics',
   searchType: 'dataset',
+  ptwType: 'all',
   search: '',
   locations: [],
   loading: false

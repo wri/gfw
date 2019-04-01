@@ -5,6 +5,7 @@ import { track } from 'app/analytics';
 import ReactHtmlParser from 'react-html-parser';
 
 import SubnavMenu from 'components/subnav-menu';
+import Dropdown from 'components/ui/dropdown';
 import Card from 'components/ui/card';
 import Loader from 'components/ui/loader';
 import PTWProvider from 'providers/ptw-provider';
@@ -20,7 +21,8 @@ class Explore extends PureComponent {
       handleViewOnMap,
       description,
       mapState,
-      loading
+      loading,
+      ptwType
     } = this.props;
     const links = [
       {
@@ -62,11 +64,37 @@ class Explore extends PureComponent {
               <div className="description">
                 {section === 'placesToWatch' ? (
                   <Fragment>
-                    {ReactHtmlParser(description)}
+                    <p>{ReactHtmlParser(description)}</p>
+                    <p className="ptw-type-intro">Showing information about</p>
+                    <Dropdown
+                      className="ptw-type-selector"
+                      theme="theme-dropdown-native-button"
+                      value={ptwType}
+                      options={[
+                        {
+                          label: 'All Places to Watch',
+                          value: 'all'
+                        },
+                        {
+                          label: 'Mongabay reporting',
+                          value: 'mongabay'
+                        },
+                        {
+                          label: 'Soy',
+                          value: 'soy'
+                        },
+                        {
+                          label: 'Palm oil',
+                          value: 'palm'
+                        }
+                      ]}
+                      onChange={value => setMenuSettings({ ptwType: value })}
+                      native
+                    />
                     <PTWProvider />
                   </Fragment>
                 ) : (
-                  description
+                  <p>{description}</p>
                 )}
               </div>
             </div>
@@ -111,7 +139,8 @@ Explore.propTypes = {
   description: PropTypes.string,
   mapState: PropTypes.object,
   loading: PropTypes.bool,
-  handleViewOnMap: PropTypes.func
+  handleViewOnMap: PropTypes.func,
+  ptwType: PropTypes.string
 };
 
 export default Explore;

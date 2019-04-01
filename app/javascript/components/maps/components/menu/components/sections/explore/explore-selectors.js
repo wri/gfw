@@ -26,6 +26,7 @@ const types = {
 };
 
 const selectSection = (state, { exploreType }) => exploreType;
+const selectPTWType = (state, { ptwType }) => ptwType;
 const selectPTWLoading = state => state.ptw && state.ptw.loading;
 const selectPTWData = state => {
   const { data } = state.ptw || {};
@@ -50,6 +51,7 @@ const selectPTWData = state => {
 
       return {
         tag: meta.label,
+        type: d.type,
         tagColor: meta.color,
         id: d.cartodb_id,
         image: d.image,
@@ -116,7 +118,16 @@ const selectPTWData = state => {
   );
 };
 
-const selectedData = createSelector([selectPTWData], ptw => ({
+const filterPTWData = createSelector(
+  [selectPTWData, selectPTWType],
+  (data, type) => {
+    if (!data || !data.length || type === 'all') return data;
+
+    return data.filter(d => d.type === type);
+  }
+);
+
+const selectedData = createSelector([filterPTWData], ptw => ({
   topics: Object.values(topics),
   placesToWatch: ptw,
   stories: Object.values(stories)
