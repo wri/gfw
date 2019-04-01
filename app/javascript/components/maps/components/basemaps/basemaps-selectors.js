@@ -126,7 +126,9 @@ export const getPlanetYearsSelected = createSelector(
     if (isEmpty(planetYears)) return null;
     if (basemap.value !== 'planet') return planetYears[0];
 
-    return planetYears.find(p => p.value === basemap.year) || planetYears[0];
+    return (
+      planetYears.find(p => p.value === basemap.planetYear) || planetYears[0]
+    );
   }
 );
 

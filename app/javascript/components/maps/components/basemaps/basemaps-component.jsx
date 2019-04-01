@@ -126,7 +126,7 @@ class Basemaps extends React.PureComponent {
       value: 'planet',
       url,
       interval,
-      year,
+      planetYear: year,
       period
     };
 
@@ -185,7 +185,7 @@ class Basemaps extends React.PureComponent {
                         );
                         selectBasemap({
                           ...basemap,
-                          year: parseInt(selected, 10),
+                          planetYear: parseInt(selected, 10),
                           url: (selectedYear && selectedYear.url) || ''
                         });
                       }}
