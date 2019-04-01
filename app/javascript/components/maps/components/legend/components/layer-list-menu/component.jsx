@@ -30,6 +30,9 @@ class LayerListMenu extends PureComponent {
                       <LegendItemTypes activeLayer={l} />
                     </div>
                   )}
+                {l.legendDesc && (
+                  <p className="layer-description">{l.legendDesc}</p>
+                )}
                 {l.moreInfo && (
                   <LayerMoreInfo className="more-info" {...l.moreInfo} />
                 )}
