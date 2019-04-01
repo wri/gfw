@@ -10,6 +10,21 @@ import {
 
 import { descriptions, topics, stories } from './explore-sections';
 
+const types = {
+  mongabay: {
+    label: 'mongabay reporting',
+    color: '#D53369'
+  },
+  soy: {
+    label: 'soy',
+    color: '#1b6e03'
+  },
+  palm: {
+    label: 'palm oil',
+    color: '#ff4a00'
+  }
+};
+
 const selectSection = (state, { exploreType }) => exploreType;
 const selectPTWLoading = state => state.ptw && state.ptw.loading;
 const selectPTWData = state => {
@@ -27,23 +42,43 @@ const selectPTWData = state => {
         bboxFromCoords[2]
       ];
 
+      const meta = types[d.type];
+      const splitGridId = d.grid_id.split('_');
+      const locationFromGridId = `${splitGridId[0]}${
+        splitGridId[2] ? `, ${splitGridId[2]}` : ''
+      }`;
+
       return {
+        tag: meta.label,
+        tagColor: meta.color,
         id: d.cartodb_id,
         image: d.image,
         imageCredit: d.image_source,
-        title: d.name,
-        summary: d.description,
-        buttons: [
-          {
-            text: 'READ MORE',
-            extLink: d.link,
-            theme: 'theme-button-light theme-button-small'
-          },
-          {
-            text: 'VIEW ON MAP',
-            theme: 'theme-button-small'
-          }
-        ],
+        title: d.name || `Place to Watch: ${meta.label}`,
+        summary:
+          d.description ||
+          `FOREST CLEARING IN ${locationFromGridId.toUpperCase()}: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+            meta.label
+          }.`,
+        showFullSummary: true,
+        buttons: d.link
+          ? [
+            {
+              text: 'READ MORE',
+              extLink: d.link,
+              theme: 'theme-button-light theme-button-small'
+            },
+            {
+              text: 'VIEW ON MAP',
+              theme: 'theme-button-small'
+            }
+          ]
+          : [
+            {
+              text: 'VIEW ON MAP',
+              theme: 'theme-button-small'
+            }
+          ],
         payload: {
           mergeQuery: true,
           map: {

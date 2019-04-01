@@ -112,9 +112,11 @@ export const getCardData = createSelector(
 
     return {
       ...articleData,
-      ...(articleData.tag && {
-        tagColor: (meta && meta.color) || layer.color
-      }),
+      ...(articleData.tag &&
+        meta && {
+          tag: meta.label,
+          tagColor: (meta && meta.color) || layer.color
+        }),
       ...(!articleData.title &&
         meta && {
           title: `Place to Watch: ${meta.label}`
