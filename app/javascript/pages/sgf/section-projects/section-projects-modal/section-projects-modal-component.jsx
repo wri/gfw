@@ -55,19 +55,12 @@ class SectionProjectsModal extends PureComponent {
               className="modal-image-slider"
               settings={{
                 slidesToShow: 1,
-                centerPadding: '0px',
-                centerMode: false,
-                arrows: false
+                arrows: false,
+                infinite: false
               }}
             >
               {data.images &&
-                data.images.map(c => (
-                  <div
-                    className="image-background"
-                    key={c}
-                    style={{ backgroundImage: `url(${c})` }}
-                  />
-                ))}
+                data.images.map(c => <img src={c} alt={data.title} />)}
             </Carousel>
           )}
         {data.image &&

@@ -23,14 +23,14 @@ class ModalNewsletter extends PureComponent {
           >
             {
               <div className="c-newsletter">
-                <h3>Updates and newsletters</h3>
+                <h2>Updates and newsletters</h2>
                 <p className="subtitle">Subscribe me to the GFW Newsletter!</p>
                 <iframe
                   title="newsletter"
                   scrolling="no"
                   src="http://connect.wri.org/l/120942/2016-02-08/2trw5q"
                   width={isDesktop ? 600 : 280}
-                  height="900"
+                  height="800"
                   type="text/html"
                   frameBorder="0"
                   style={{ border: 0 }}

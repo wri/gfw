@@ -5,6 +5,7 @@ import { SCREEN_M } from 'utils/constants';
 import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
 import cx from 'classnames';
+import { handlePageTrack } from 'app/analytics';
 
 import Meta from 'components/meta';
 import Header from 'components/header';
@@ -29,6 +30,10 @@ const PageComponent = universal(
 );
 
 class App extends PureComponent {
+  componentDidMount() {
+    handlePageTrack();
+  }
+
   render() {
     const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
     const { component, embed } = route;
