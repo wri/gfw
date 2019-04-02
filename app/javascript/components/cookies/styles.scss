@@ -22,6 +22,11 @@
   .cookies-button {
     display: flex;
     align-items: center;
+    max-width: rem(220px);
+
+    @media screen and (min-width: $screen-m) {
+      max-width: auto;
+    }
 
     .cookies-btn {
       color: #fff;
