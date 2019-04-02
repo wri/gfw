@@ -40,7 +40,7 @@ class CustomModal extends PureComponent {
         >
           <Icon icon={closeIcon} />
         </button>
-        {title && <p className="modal-title">{title}</p>}
+        {title && <p className="modal-title">:{title}</p>}
         {children}
       </Modal>
     );

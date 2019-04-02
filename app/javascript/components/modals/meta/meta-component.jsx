@@ -38,7 +38,6 @@ class ModalMeta extends PureComponent {
   getContent() {
     const { metaData, tableData, loading, error } = this.props;
     const {
-      title,
       subtitle,
       overview,
       citation,
@@ -65,7 +64,6 @@ class ModalMeta extends PureComponent {
           !error &&
           !isEmpty(metaData) && (
             <div>
-              <h3 className="title">{title}</h3>
               <p
                 className="subtitle"
                 dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
@@ -150,7 +148,8 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { metakey, setModalMetaSettings } = this.props;
+    const { metakey, setModalMetaSettings, metaData } = this.props;
+    const { title } = metaData || {};
     return (
       <Modal
         isOpen={!!metakey}
@@ -163,6 +162,7 @@ class ModalMeta extends PureComponent {
             citation: ''
           })
         }
+        title={title}
       >
         {this.getContent()}
       </Modal>
