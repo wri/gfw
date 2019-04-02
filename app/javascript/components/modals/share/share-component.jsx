@@ -35,7 +35,7 @@ class Share extends PureComponent {
 
     return (
       <div className="c-share">
-        <div className="title">{title}</div>
+        {/* <div className="title">{title}</div> */}
         <div className="subtitle">{subtitle}</div>
         <div className="actions">
           <p className="info">
@@ -135,6 +135,7 @@ class Share extends PureComponent {
         isOpen={open}
         contentLabel={`Share: ${data && data.title}`}
         onRequestClose={() => setShareOpen(false)}
+        title={this.props.data && this.props.data.title}
       >
         {this.getContent()}
       </Modal>

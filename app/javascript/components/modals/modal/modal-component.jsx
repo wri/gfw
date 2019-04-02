@@ -23,7 +23,8 @@ class CustomModal extends PureComponent {
       customStyles,
       contentLabel,
       closeClass,
-      children
+      children,
+      title
     } = this.props;
     return (
       <Modal
@@ -39,6 +40,7 @@ class CustomModal extends PureComponent {
         >
           <Icon icon={closeIcon} />
         </button>
+        {title && <p className="modal-title">{title}</p>}
         {children}
       </Modal>
     );
@@ -52,7 +54,8 @@ CustomModal.propTypes = {
   contentLabel: PropTypes.string,
   customStyles: PropTypes.object,
   closeClass: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
+  title: PropTypes.string
 };
 
 CustomModal.defaultProps = {

@@ -2,7 +2,7 @@
 $input-button-width: rem(100px);
 
 .c-share {
-  padding: rem(20px) rem(20px);
+  padding: 0 rem(20px) rem(20px);
   min-width: rem(320px);
 
   @media screen and (min-width: $screen-m) {

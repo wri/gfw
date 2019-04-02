@@ -18,6 +18,17 @@ $close-position-mobile: 15px;
   }
 }
 
+.modal-title {
+  color: #333;
+  line-height: 40px;
+  margin: 50px auto 0;
+  padding: 0.3125rem 1.25rem;
+  // font-size: rem(20px);
+  font-size: 30px;
+  font-weight: 300;
+  text-align: center;
+}
+
 .modal-close {
   position: absolute;
   top: $close-position-mobile;
