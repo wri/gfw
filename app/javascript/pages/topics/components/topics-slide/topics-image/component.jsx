@@ -25,7 +25,14 @@ class TopicsImage extends PureComponent {
   }
 
   render() {
-    const { img1x, img2x, description, prompts, animations } = this.props;
+    const {
+      img1x,
+      img2x,
+      description,
+      prompts,
+      animations,
+      leaving
+    } = this.props;
 
     return (
       <div className="c-topics-image">
@@ -63,7 +70,9 @@ class TopicsImage extends PureComponent {
                 theme="light"
                 interactive
                 arrow
+                disabled={leaving}
                 sticky
+                stickyDuration={0}
                 html={
                   <div className="c-topics-info-tooltip">
                     <p>{p.content}</p>
@@ -91,7 +100,8 @@ TopicsImage.propTypes = {
   img2x: PropTypes.string.isRequired,
   description: PropTypes.string,
   prompts: PropTypes.array,
-  animations: PropTypes.array
+  animations: PropTypes.array,
+  leaving: PropTypes.bool
 };
 
 export default TopicsImage;

@@ -22,8 +22,10 @@ class TopicsSlide extends PureComponent {
       prompts,
       animations,
       isDesktop,
-      handleSkipToTools
+      handleSkipToTools,
+      leaving
     } = this.props;
+
     return (
       <div
         key={subtitle}
@@ -63,6 +65,7 @@ class TopicsSlide extends PureComponent {
                 description={subtitle}
                 prompts={prompts}
                 animations={animations}
+                leaving={leaving}
               />
             </div>
           </div>
@@ -82,6 +85,7 @@ TopicsSlide.propTypes = {
   prompts: PropTypes.array,
   isLast: PropTypes.bool,
   isLeaving: PropTypes.bool,
+  leaving: PropTypes.bool,
   isDesktop: PropTypes.bool,
   handleSkipToTools: PropTypes.func
 };

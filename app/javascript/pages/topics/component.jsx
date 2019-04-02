@@ -24,6 +24,7 @@ class TopicsPage extends PureComponent {
   state = {
     skip: false,
     slideLeaving: 0,
+    leaving: false,
     showRelated: window.location.hash.includes('slides')
   };
 
@@ -77,6 +78,8 @@ class TopicsPage extends PureComponent {
       this.setState({ slideLeaving: 3 });
     }
 
+    this.handleSetLeaving();
+
     return true;
   };
 
@@ -86,16 +89,27 @@ class TopicsPage extends PureComponent {
     } else {
       this.setState({ showRelated: false });
     }
+    this.handleSetLeaving();
   };
 
   handleSlideLeave = (section, origin) => {
     this.setState({ slideLeaving: origin.index });
+    this.handleSetLeaving();
   };
 
   handleSkipToTools = () => {
     this.setState({ skip: true }, () => {
       this.fullpageApi.moveTo('footer');
     });
+  };
+
+  handleSetLeaving = () => {
+    this.setState({ leaving: true });
+    setTimeout(() => {
+      this.setState({
+        leaving: false
+      });
+    }, 500);
   };
 
   render() {
@@ -156,6 +170,7 @@ class TopicsPage extends PureComponent {
                             isLeaving={this.state.slideLeaving === index}
                             isLast={index === 3}
                             handleSkipToTools={this.handleSkipToTools}
+                            leaving={this.state.leaving}
                           />
                         ))}
                     </div>
