@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactMapGL from 'react-map-gl';
+import { ScaleControl } from 'mapbox-gl';
 
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -21,7 +22,7 @@ class MapComponent extends PureComponent {
     mapReady: false
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { label, basemap } = this.props;
     const { mapReady } = this.state;
 
@@ -31,6 +32,14 @@ class MapComponent extends PureComponent {
 
     if (mapReady && basemap.value !== prevProps.basemap.value) {
       this.setBasemapStyles();
+    }
+
+    if (mapReady && this.map && mapReady !== prevState.mapReady) {
+      this.map.addControl(
+        new ScaleControl({ unit: 'imperial' }),
+        'bottom-right'
+      );
+      this.map.addControl(new ScaleControl(), 'bottom-right');
     }
   }
 
@@ -102,7 +111,8 @@ class MapComponent extends PureComponent {
       setMapRect,
       setMap,
       interactiveLayers,
-      loadingMessage
+      loadingMessage,
+      smallView
     } = this.props;
     const { mapReady } = this.state;
 
@@ -145,7 +155,7 @@ class MapComponent extends PureComponent {
           )}
         </ReactMapGL>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
-        <MapAttributions className="map-attributions" />
+        <MapAttributions className="map-attributions" smallView={smallView} />
         {loading && (
           <Loader
             className="map-loader"
@@ -173,7 +183,8 @@ MapComponent.propTypes = {
   draw: PropTypes.bool,
   lat: PropTypes.number,
   lng: PropTypes.number,
-  zoom: PropTypes.number
+  zoom: PropTypes.number,
+  smallView: PropTypes.bool
 };
 
 export default MapComponent;

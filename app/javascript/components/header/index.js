@@ -1,5 +1,8 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 
 import config from './config';
 import Component from './component';
@@ -93,4 +96,4 @@ HeaderContainer.propTypes = {
   showLangSelector: PropTypes.bool
 };
 
-export default HeaderContainer;
+export default connect(null, { setModalContactUsOpen })(HeaderContainer);

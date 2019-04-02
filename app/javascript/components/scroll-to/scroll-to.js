@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class ScrollTo extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   componentDidMount() {
-    setTimeout(this.handleScroll, 150);
+    setTimeout(this.handleScroll, this.props.delay);
   }
 
   handleFadeOut = el => {
@@ -37,7 +37,12 @@ class ScrollTo extends PureComponent {
 }
 
 ScrollTo.propTypes = {
-  target: PropTypes.object
+  target: PropTypes.object,
+  delay: PropTypes.number
+};
+
+ScrollTo.defaultProps = {
+  delay: 150
 };
 
 export default ScrollTo;

@@ -16,7 +16,6 @@ const getLocationObject = state => state.locationObject || null;
 const getLocationName = state => state.locationName || null;
 const getSentences = state => state.config.sentences || null;
 const getTitle = state => state.config.title;
-const getLocationType = state => state.locationType || null;
 const getAllLocation = state => state.allLocation || null;
 
 const haveData = (data, locationObject) =>
@@ -186,10 +185,10 @@ export const parseSentence = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getLocationType],
-  (title, type) => {
+  [getTitle, getLocationName],
+  (title, name) => {
     let selectedTitle = title.initial;
-    if (type === 'global') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;

@@ -5,7 +5,6 @@ import MediaQuery from 'react-responsive';
 import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
-import ContactUs from 'components/modals/contact-us';
 import Newsletter from 'components/modals/newsletter';
 import wri from 'assets/logos/wri.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -23,7 +22,6 @@ class Footer extends PureComponent {
       <MediaQuery minWidth={850}>
         {isDesktop => (
           <div className="c-footer">
-            <ContactUs />
             <Newsletter />
             <div className="footer-subscribe">
               <Button
