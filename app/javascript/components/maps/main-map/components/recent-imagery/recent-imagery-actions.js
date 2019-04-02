@@ -41,7 +41,6 @@ export const getRecentImageryData = createThunkAction(
       dispatch(setRecentImageryLoading({ loading: true, error: false }));
       getRecentTiles({ ...params })
         .then(response => {
-          //  new Error('Please refresh');
           const serializedResponse = serializeReponse(
             response.data && response.data.data && response.data.data.tiles
           );
