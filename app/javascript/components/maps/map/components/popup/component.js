@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import bbox from 'turf-bbox';
 import { Popup as MapPopup } from 'react-map-gl';
+import cx from 'classnames';
 
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown/dropdown-component';
@@ -79,7 +80,10 @@ class Popup extends Component {
             theme="theme-button-clear theme-button-small square"
             onClick={clearInteractions}
           >
-            <Icon icon={closeIcon} />
+            <Icon
+              className={cx({ 'btn-on-card': cardData && !!cardData.image })}
+              icon={closeIcon}
+            />
           </Button>
           {cardData ? (
             <Card
