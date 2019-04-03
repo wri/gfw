@@ -4,6 +4,7 @@ $desktop-padding: rem(50px);
 
 .c-modal-meta {
   padding: $mobile-padding;
+  padding-top: 0;
   min-width: rem(320px);
   min-height: rem(320px);
   width: 100%;
@@ -13,15 +14,42 @@ $desktop-padding: rem(50px);
 
   @media screen and (min-width: $screen-m) {
     padding: $desktop-padding;
-    padding-top: rem(40px);
+    padding-top: 0;
   }
 
-  .title {
-    font-weight: 500;
-    font-size: rem(16px);
-    text-transform: uppercase;
-    color: $slate;
-    line-height: 1.25;
+  p {
+    margin-bottom: rem(10px);
+
+    a {
+      color: $green-gfw;
+
+      &:hover {
+        color: darken($green-gfw, 10%);
+      }
+    }
+  }
+
+  .ext-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-top: solid 1px $border;
+    margin: 0 rem(-30px) rem(-45px);
+    width: auto;
+    padding: rem(20px) rem(30px) rem(10px);
+
+    > a {
+      max-width: rem(150px);
+      margin: 0 rem(10px);
+      margin-bottom: rem(10px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      margin: 0 rem(-50px) rem(-45px);
+      padding: rem(20px) rem(50px) rem(10px);
+      flex-direction: row;
+    }
   }
 
   .subtitle {
@@ -125,41 +153,6 @@ $desktop-padding: rem(50px);
       font-size: rem(12px);
       color: #aaa;
       font-weight: 300;
-    }
-  }
-
-  .ext-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-top: solid 1px $border;
-    margin: 0 rem(-30px) rem(-45px);
-    width: auto;
-    padding: rem(20px) rem(30px) rem(10px);
-
-    > a {
-      max-width: rem(150px);
-      margin: 0 rem(10px);
-      margin-bottom: rem(10px);
-    }
-
-    @media screen and (min-width: $screen-m) {
-      margin: 0 rem(-50px) rem(-45px);
-      padding: rem(20px) rem(50px) rem(10px);
-      flex-direction: row;
-    }
-  }
-
-  p {
-    margin-bottom: rem(10px);
-
-    a {
-      color: $green-gfw;
-
-      &:hover {
-        color: darken($green-gfw, 10%);
-      }
     }
   }
 

@@ -27,15 +27,20 @@ class ModalContactUs extends PureComponent {
         onRequestClose={() => {
           setModalContactUsOpen(false);
         }}
+        title={
+          showConfirm
+            ? 'Thank you for contacting Global Forest Watch! Check your inbox for a confirmation email.'
+            : 'Contact us & feedback'
+        }
       >
         <div className="c-contact-us">
           {submitting && <Loader />}
           {showConfirm ? (
             <div className="feedback-message">
-              <h2>
+              {/* <h2>
                 Thank you for contacting Global Forest Watch! Check your inbox
                 for a confirmation email.
-              </h2>
+              </h2> */}
               <p>Interested in getting news and updates from us?</p>
               <div className="button-group">
                 <Button link="/about?show_newsletter=true">
@@ -51,7 +56,7 @@ class ModalContactUs extends PureComponent {
             </div>
           ) : (
             <div className="contact-form">
-              <h2>Contact us & feedback</h2>
+              {/* <h2>Contact us & feedback</h2> */}
               <p className="subtitle">
                 Question, comment, request, feedback? We want to hear from you!
                 Help us improve Global Forest Watch by completing the form

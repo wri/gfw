@@ -18,9 +18,10 @@ class ModalAttributions extends PureComponent {
         isOpen={open}
         contentLabel="Attributions"
         onRequestClose={() => setModalAttributions(false)}
+        title="Map Attributions"
+        className="c-modal-attributions"
       >
-        <div className="c-modal-attributions">
-          <h3>Map Attributions</h3>
+        <div className="modal-attributions-content">
           <div className="body">
             <div className="logos">
               <a

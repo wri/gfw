@@ -12,14 +12,7 @@ $desktop-padding: rem(50px);
 
   @media screen and (min-width: $screen-m) {
     padding: $desktop-padding;
-    padding-top: rem(40px);
-  }
-
-  h3 {
-    margin-top: rem(10px);
-    margin-bottom: rem(30px);
-    text-align: center;
-    font-size: rem(20px);
+    padding-top: rem(20px);
   }
 
   .mygfw-subscribe {

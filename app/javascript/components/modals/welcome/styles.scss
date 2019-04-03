@@ -3,56 +3,61 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
 .c-modal-welcome {
+  background: #fff;
   max-width: rem(450px);
-  padding: $mobile-padding;
-  padding-top: rem(40px);
-  padding-bottom: rem(30px);
 
-  @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding;
+  .modal-title {
+    padding: 0.3125rem 2.5rem;
   }
 
-  h3 {
-    font-size: rem(30px);
-    margin-bottom: rem(20px);
-  }
+  .modal-welcome-content {
+    padding: $mobile-padding;
+    padding-top: rem(40px);
+    padding-bottom: rem(30px);
 
-  p {
-    font-size: rem(16px);
-  }
-
-  a {
-    color: $green-gfw;
-  }
-
-  b {
-    font-weight: 500;
-  }
-
-  .intro {
-    margin-bottom: rem(20px);
-  }
-
-  .btn-intro {
-    margin-bottom: rem(10px);
-  }
-
-  .guide-btn {
-    text-align: left;
-    margin-bottom: rem(15px);
-    height: auto;
-
-    .guide-btn-icon {
-      width: rem(40px);
-      min-width: rem(40px);
-      height: rem(40px);
-      min-height: rem(40px);
-      margin-right: rem(15px);
-      fill: $green-gfw;
+    @media screen and (min-width: $screen-m) {
+      padding: $desktop-padding;
+      padding-top: rem(20px);
     }
 
     p {
-      font-size: rem(14px);
+      font-size: rem(16px);
+    }
+
+    a {
+      color: $green-gfw;
+    }
+
+    b {
+      font-weight: 500;
+    }
+
+    .intro {
+      margin-bottom: rem(20px);
+    }
+
+    .btn-intro {
+      margin-bottom: rem(10px);
+    }
+
+    .guide-btn {
+      text-align: left;
+      margin-bottom: rem(15px);
+      height: auto;
+
+      .guide-btn-icon {
+        width: rem(40px);
+        min-width: rem(40px);
+        height: rem(40px);
+        min-height: rem(40px);
+        margin-right: rem(15px);
+        fill: $green-gfw;
+      }
+
+      p {
+        font-size: rem(14px);
+      }
     }
   }
 }
+
