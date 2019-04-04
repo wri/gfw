@@ -21,9 +21,29 @@ class PromptTooltip extends PureComponent {
       size,
       title
     } = this.props;
-    const { content, learnHowLink = 1 } = step;
+    const { content, learnHowLink = 1, actions } = step;
     const stepNum = index + 1;
     const isLastStep = stepNum === size;
+
+    const prevOnClick =
+      actions && actions.prev
+        ? e => {
+          if (actions.prev) {
+            actions.prev();
+          }
+          setTimeout(() => backProps.onClick(e), 400);
+        }
+        : backProps && backProps.onClick;
+
+    const nextOnClick =
+      actions && actions.next
+        ? e => {
+          if (actions.next) {
+            actions.next();
+          }
+          setTimeout(() => primaryProps.onClick(e), 400);
+        }
+        : primaryProps && primaryProps.onClick;
 
     return (
       <div className="c-prompt-tooltip" {...tooltipProps}>
@@ -35,19 +55,30 @@ class PromptTooltip extends PureComponent {
         <div className="step-actions">
           <div className="step-btns">
             {index !== 0 && (
-              <button className="step-nav-btn" {...backProps}>
+              <button
+                className="step-nav-btn"
+                {...backProps}
+                onClick={prevOnClick}
+              >
                 BACK
               </button>
             )}
-            {isLastStep ? (
+            {isLastStep && (
               <button className="step-nav-btn" {...closeProps}>
                 CLOSE
               </button>
-            ) : (
-              <button className="step-nav-btn" {...primaryProps}>
-                NEXT
-              </button>
             )}
+            {size !== 1 &&
+              !isLastStep && (
+                <button
+                  className="step-nav-btn"
+                  {...primaryProps}
+                  onClick={nextOnClick}
+                >
+                  NEXT
+                </button>
+              )}
+            {size === 1 && <div>Show me tips</div>}
           </div>
           {learnHowLink && (
             <Button theme="theme-button-small" onClick={() => {}}>

@@ -85,9 +85,9 @@ class MapTour extends PureComponent {
       {
         target: '.map-tour-legend',
         placement: 'right',
-        content: {
-          text:
-            'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
+        content:
+          'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
+        actions: {
           next: () => {
             setMenuSettings({
               menuSection: 'explore'
@@ -103,9 +103,9 @@ class MapTour extends PureComponent {
       {
         target: '.map-tour-menu-panel',
         placement: 'right',
-        content: {
-          text:
-            'Explore data related to important forest topics, Places to Watch (high priority areas with recent forest loss), and stories about forests.',
+        content:
+          'Explore data related to important forest topics, Places to Watch (high priority areas with recent forest loss), and stories about forests.',
+        actions: {
           next: () => {
             setMenuSettings({
               menuSection: 'search'
@@ -121,8 +121,8 @@ class MapTour extends PureComponent {
       {
         target: '.map-tour-menu-panel',
         placement: 'right',
-        content: {
-          text: 'Search for a dataset, location or geographic coordinates.',
+        content: 'Search for a dataset, location or geographic coordinates.',
+        actions: {
           next: () => {
             setMenuSettings({
               menuSection: ''
@@ -140,9 +140,9 @@ class MapTour extends PureComponent {
       },
       {
         target: '.map-tour-basemaps',
-        content: {
-          text:
-            'Customize the basemap, including the boundaries displayed and the color of the labels.',
+        content:
+          'Customize the basemap, including the boundaries displayed and the color of the labels.',
+        actions: {
           next: () => {
             setMainMapSettings({
               showBasemaps: false
@@ -160,9 +160,9 @@ class MapTour extends PureComponent {
       },
       {
         target: '.map-tour-recent-imagery',
-        content: {
-          text:
-            'View recent satellite imagery, searchable by date and cloud cover.',
+        content:
+          'View recent satellite imagery, searchable by date and cloud cover.',
+        actions: {
           prev: () => {
             setMainMapSettings({
               showBasemaps: true
@@ -191,61 +191,6 @@ class MapTour extends PureComponent {
     setMainMapSettings({ showAnalysis: false });
     setMenuSettings({ menuSection: '' });
   };
-
-  // renderTooltip = (
-  //   { closeProps, backProps, content, primaryProps, isLastStep, index },
-  //   numOfSteps
-  // ) => {
-  //   let prevOnClick = backProps && backProps.onClick;
-  //   let nextOnClick = primaryProps && primaryProps.onClick;
-  //   let html = content;
-  //   if (typeof content === 'object') {
-  //     html = content.text;
-  //     prevOnClick = e => {
-  //       if (content.prev) {
-  //         content.prev();
-  //       }
-  //       setTimeout(() => backProps.onClick(e), 400);
-  //     };
-  //     nextOnClick = e => {
-  //       if (content.next) {
-  //         content.next();
-  //       }
-  //       setTimeout(() => primaryProps.onClick(e), 400);
-  //     };
-  //   }
-  //   return (
-  //     <div className="c-tour-tooltip">
-  //       <button className="tour-close" {...closeProps}>
-  //         <Icon icon={closeIcon} />
-  //       </button>
-  //       <div className="tour-step">
-  //         {index + 1}/{numOfSteps}
-  //       </div>
-  //       <div className="tour-content">
-  //         {typeof html === 'function' ? html() : html}
-  //       </div>
-  //       <div className="tour-btns">
-  //         {index !== 0 && (
-  //           <Button
-  //             theme="theme-button-light"
-  //             {...backProps}
-  //             onClick={prevOnClick}
-  //           >
-  //             Prev
-  //           </Button>
-  //         )}
-  //         {isLastStep ? (
-  //           <Button {...closeProps}>Finish</Button>
-  //         ) : (
-  //           <Button {...primaryProps} onClick={nextOnClick}>
-  //             Next
-  //           </Button>
-  //         )}
-  //       </div>
-  //     </div>
-  //   );
-  // };
 
   render() {
     const { open, setMapTourOpen } = this.props;
