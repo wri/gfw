@@ -12,6 +12,7 @@ import Dropdown from 'components/ui/dropdown';
 import Button from 'components/ui/button';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
+import RefreshButton from 'components/ui/refresh-button';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
@@ -183,18 +184,11 @@ class RecentImagerySettings extends PureComponent {
               </Fragment>
             )}
           {error && (
-            <NoContent className="refresh">
-              <p>An error occured while fetching data.</p>
-              <Button
-                className="refresh-btn"
-                onClick={() =>
-                  setRecentImageryLoading({ loading: false, error: false })
-                }
-                theme="theme-button-small"
-              >
-                Try again
-              </Button>
-            </NoContent>
+            <RefreshButton
+              refetchFn={() =>
+                setRecentImageryLoading({ loading: false, error: false })
+              }
+            />
           )}
           {!error &&
             (!tiles || !tiles.length) &&

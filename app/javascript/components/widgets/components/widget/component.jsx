@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
-import Button from 'components/ui/button';
+import RefreshButton from 'components/ui/refresh-button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from './components/widget-header';
@@ -46,18 +46,11 @@ class Widget extends PureComponent {
           )}
         {!loading &&
           error && (
-            <NoContent className="refresh">
-              <p>An error occured while fetching data.</p>
-              <Button
-                className="refresh-btn"
-                onClick={() =>
-                  setWidgetLoading({ widget, loading: false, error: false })
-                }
-                theme="theme-button-small"
-              >
-                Try again
-              </Button>
-            </NoContent>
+            <RefreshButton
+              refetchFn={() =>
+                setWidgetLoading({ widget, loading: false, error: false })
+              }
+            />
           )}
         {!error &&
           sentence &&
