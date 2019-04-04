@@ -36,9 +36,15 @@
     color: $white;
   }
 
+  .step-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .step-btns {
     display: flex;
     justify-content: space-between;
+    min-width: rem(90px);
   }
 
   .step-nav-btn {

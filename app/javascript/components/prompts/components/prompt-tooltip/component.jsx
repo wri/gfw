@@ -21,7 +21,7 @@ class PromptTooltip extends PureComponent {
       size,
       title
     } = this.props;
-    const { content, link } = step;
+    const { content, learnHowLink = 1 } = step;
     const stepNum = index + 1;
     const isLastStep = stepNum === size;
 
@@ -32,27 +32,29 @@ class PromptTooltip extends PureComponent {
         </button>
         <div className="step-title">{`${title} · ${index + 1}/${size}`}</div>
         <div className="step-content">{content}</div>
-        <div className="step-btns">
-          {index !== 0 && (
-            <button className="step-nav-btn" {...backProps}>
-              BACK
-            </button>
-          )}
-          {isLastStep ? (
-            <button className="step-nav-btn" {...closeProps}>
-              CLOSE
-            </button>
-          ) : (
-            <button className="step-nav-btn" {...primaryProps}>
-              NEXT
-            </button>
+        <div className="step-actions">
+          <div className="step-btns">
+            {index !== 0 && (
+              <button className="step-nav-btn" {...backProps}>
+                BACK
+              </button>
+            )}
+            {isLastStep ? (
+              <button className="step-nav-btn" {...closeProps}>
+                CLOSE
+              </button>
+            ) : (
+              <button className="step-nav-btn" {...primaryProps}>
+                NEXT
+              </button>
+            )}
+          </div>
+          {learnHowLink && (
+            <Button theme="theme-button-small" onClick={() => {}}>
+              LEARN HOW
+            </Button>
           )}
         </div>
-        {link && (
-          <Button theme="theme-button-small" extLink={link}>
-            learn how
-          </Button>
-        )}
       </div>
     );
   }
