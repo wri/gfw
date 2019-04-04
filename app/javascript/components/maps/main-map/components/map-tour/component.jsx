@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Joyride from 'react-joyride';
 import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
+import PromptTour from 'components/prompts/components/prompt-tour';
 
-import closeIcon from 'assets/icons/close.svg';
 import exploreGreenIcon from 'assets/icons/explore-green.svg';
 import analysisGreenIcon from 'assets/icons/analysis-green.svg';
 
@@ -68,9 +67,9 @@ class MapTour extends PureComponent {
       {
         target: '.map-tour-legend',
         placement: 'right',
-        content: {
-          text:
-            'View and change settings for data layers on the map like date range and opacity. Click the "i" icons to learn more about a dataset.',
+        content:
+          'View and change settings for data layers on the map like date range and opacity. Click the "i" icons to learn more about a dataset.',
+        actions: {
           next: () => {
             setMainMapSettings({
               showAnalysis: true
@@ -193,82 +192,71 @@ class MapTour extends PureComponent {
     setMenuSettings({ menuSection: '' });
   };
 
-  renderTooltip = (
-    { closeProps, backProps, content, primaryProps, isLastStep, index },
-    numOfSteps
-  ) => {
-    let prevOnClick = backProps && backProps.onClick;
-    let nextOnClick = primaryProps && primaryProps.onClick;
-    let html = content;
-    if (typeof content === 'object') {
-      html = content.text;
-      prevOnClick = e => {
-        if (content.prev) {
-          content.prev();
-        }
-        setTimeout(() => backProps.onClick(e), 400);
-      };
-      nextOnClick = e => {
-        if (content.next) {
-          content.next();
-        }
-        setTimeout(() => primaryProps.onClick(e), 400);
-      };
-    }
-    return (
-      <div className="c-tour-tooltip">
-        <button className="tour-close" {...closeProps}>
-          <Icon icon={closeIcon} />
-        </button>
-        <div className="tour-step">
-          {index + 1}/{numOfSteps}
-        </div>
-        <div className="tour-content">
-          {typeof html === 'function' ? html() : html}
-        </div>
-        <div className="tour-btns">
-          {index !== 0 && (
-            <Button
-              theme="theme-button-light"
-              {...backProps}
-              onClick={prevOnClick}
-            >
-              Prev
-            </Button>
-          )}
-          {isLastStep ? (
-            <Button {...closeProps}>Finish</Button>
-          ) : (
-            <Button {...primaryProps} onClick={nextOnClick}>
-              Next
-            </Button>
-          )}
-        </div>
-      </div>
-    );
-  };
+  // renderTooltip = (
+  //   { closeProps, backProps, content, primaryProps, isLastStep, index },
+  //   numOfSteps
+  // ) => {
+  //   let prevOnClick = backProps && backProps.onClick;
+  //   let nextOnClick = primaryProps && primaryProps.onClick;
+  //   let html = content;
+  //   if (typeof content === 'object') {
+  //     html = content.text;
+  //     prevOnClick = e => {
+  //       if (content.prev) {
+  //         content.prev();
+  //       }
+  //       setTimeout(() => backProps.onClick(e), 400);
+  //     };
+  //     nextOnClick = e => {
+  //       if (content.next) {
+  //         content.next();
+  //       }
+  //       setTimeout(() => primaryProps.onClick(e), 400);
+  //     };
+  //   }
+  //   return (
+  //     <div className="c-tour-tooltip">
+  //       <button className="tour-close" {...closeProps}>
+  //         <Icon icon={closeIcon} />
+  //       </button>
+  //       <div className="tour-step">
+  //         {index + 1}/{numOfSteps}
+  //       </div>
+  //       <div className="tour-content">
+  //         {typeof html === 'function' ? html() : html}
+  //       </div>
+  //       <div className="tour-btns">
+  //         {index !== 0 && (
+  //           <Button
+  //             theme="theme-button-light"
+  //             {...backProps}
+  //             onClick={prevOnClick}
+  //           >
+  //             Prev
+  //           </Button>
+  //         )}
+  //         {isLastStep ? (
+  //           <Button {...closeProps}>Finish</Button>
+  //         ) : (
+  //           <Button {...primaryProps} onClick={nextOnClick}>
+  //             Next
+  //           </Button>
+  //         )}
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   render() {
     const { open, setMapTourOpen } = this.props;
     const steps = this.getSteps();
+
     return open ? (
-      <Joyride
+      <PromptTour
+        title="Map tour"
         steps={steps}
-        run={open}
-        continuous
-        callback={data => {
-          if (data.action === 'close' || data.type === 'tour:end') {
-            setMapTourOpen(false);
-          }
-        }}
-        spotlightPadding={0}
-        tooltipComponent={e => this.renderTooltip(e, steps.length)}
-        styles={{
-          options: {
-            overlayColor: 'rgba(17, 55, 80, 0.4)',
-            zIndex: 2000
-          }
-        }}
+        open={open}
+        setTourClosed={setMapTourOpen}
       />
     ) : null;
   }
@@ -278,7 +266,6 @@ MapTour.propTypes = {
   open: PropTypes.bool,
   setMainMapSettings: PropTypes.func,
   setMapTourOpen: PropTypes.func,
-  setMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,
   setExploreView: PropTypes.func,
   setAnalysisView: PropTypes.func

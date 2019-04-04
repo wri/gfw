@@ -6,38 +6,46 @@ import Icon from 'components/ui/icon';
 
 import closeIcon from 'assets/icons/close.svg';
 
+import './styles.scss';
+
 class PromptTooltip extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const {
-      closeProps,
-      backProps,
-      step: { title, content, link },
-      primaryProps,
-      isLastStep,
       index,
-      numOfSteps
+      step,
+      backProps,
+      closeProps,
+      primaryProps,
+      tooltipProps,
+      size,
+      title
     } = this.props;
+    const { content, link } = step;
+    const stepNum = index + 1;
+    const isLastStep = stepNum === size;
 
     return (
-      <div className="c-prompt-tooltip">
-        <button className="prompt-close" {...closeProps}>
-          <Icon icon={closeIcon} />
+      <div className="c-prompt-tooltip" {...tooltipProps}>
+        <button className="step-close" {...closeProps}>
+          <Icon className="step-close-btn" icon={closeIcon} />
         </button>
-        <div className="step-title">
-          {`${title} · ${index + 1}/${numOfSteps}`}
-        </div>
+        <div className="step-title">{`${title} · ${index + 1}/${size}`}</div>
         <div className="step-content">{content}</div>
         <div className="step-btns">
           {index !== 0 && (
-            <Button theme="theme-button-light" {...backProps}>
+            <button className="step-nav-btn" {...backProps}>
               BACK
-            </Button>
+            </button>
           )}
           {isLastStep ? (
-            <Button {...closeProps}>CLOSE</Button>
+            <button className="step-nav-btn" {...closeProps}>
+              CLOSE
+            </button>
           ) : (
-            <Button {...primaryProps}>NEXT</Button>
+            <button className="step-nav-btn" {...primaryProps}>
+              NEXT
+            </button>
           )}
         </div>
         {link && (
@@ -53,11 +61,14 @@ class PromptTooltip extends PureComponent {
 PromptTooltip.propTypes = {
   closeProps: PropTypes.object,
   backProps: PropTypes.object,
-  step: PropTypes.string,
+  step: PropTypes.object,
   primaryProps: PropTypes.object,
   isLastStep: PropTypes.bool,
   index: PropTypes.number,
-  numOfSteps: PropTypes.number
+  numOfSteps: PropTypes.number,
+  tooltipProps: PropTypes.object,
+  size: PropTypes.number,
+  title: PropTypes.string
 };
 
 export default PromptTooltip;

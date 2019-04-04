@@ -3,54 +3,50 @@
 .c-prompt-tooltip {
   font-size: rem(14px);
   color: $white;
-  background-color: $slate;
-  padding: rem(20px);
+  background-color: #333;
+  padding: rem(30px);
   max-width: rem(320px);
   position: relative;
 
-  .tour-close {
+  .step-close {
     position: absolute;
-    top: rem(20px);
-    right: rem(20px);
+    top: rem(10px);
+    right: rem(10px);
     cursor: pointer;
 
-    svg {
-      fill: $slate;
+    .step-close-btn {
+      fill: #aaa;
+      width: rem(10px);
+      height: rem(10px);
     }
   }
 
-  .tour-step {
-    background-color: $warm-grey;
-    width: rem(35px);
-    height: rem(35px);
-    font-size: rem(12px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .step-title {
+    font-size: rem(14px);
+    text-transform: uppercase;
     margin-bottom: rem(15px);
-    border-radius: 50%;
+    color: #aaa;
+    font-weight: 500;
+  }
+
+  .step-content {
+    margin-bottom: rem(20px);
+    font-size: rem(12px);
+    line-height: rem(18px);
     color: $white;
   }
 
-  .tour-content {
-    margin-bottom: rem(20px);
-  }
-
-  .tour-btns {
+  .step-btns {
     display: flex;
     justify-content: space-between;
+  }
 
-    button {
-      text-transform: uppercase;
-
-      &:first-child {
-        margin-right: rem(5px);
-      }
-
-      &:last-child {
-        margin-left: rem(5px);
-      }
-    }
+  .step-nav-btn {
+    font-size: rem(14px);
+    font-weight: 500;
+    color: $green-gfw;
+    text-transform: uppercase;
+    cursor: pointer;
   }
 
   .tour-exit-actions {
