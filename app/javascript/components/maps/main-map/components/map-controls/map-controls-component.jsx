@@ -286,7 +286,12 @@ class MapControlsButtons extends PureComponent {
     <Button
       theme="theme-button-map-control"
       tooltip={{ text: 'Take a tour of the map' }}
-      onClick={() => this.props.setMapTourOpen(true)}
+      onClick={() =>
+        this.props.setMapPromptsSettings({
+          open: true,
+          stepsKey: 'recentImagery'
+        })
+      }
     >
       <Icon
         icon={helpIocn}
@@ -352,7 +357,7 @@ MapControlsButtons.propTypes = {
   setShareModal: PropTypes.func,
   mapSettings: PropTypes.object,
   setMenuSettings: PropTypes.func,
-  setMapTourOpen: PropTypes.func,
+  setMapPromptsSettings: PropTypes.func,
   mapTourOpen: PropTypes.bool,
   showBasemaps: PropTypes.bool,
   hidePanels: PropTypes.bool,

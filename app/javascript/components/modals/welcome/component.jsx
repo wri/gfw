@@ -18,7 +18,7 @@ class ModalWelcome extends PureComponent {
     const {
       setAnalysisView,
       setExploreView,
-      setMapTourOpen,
+      setMapPromptsSettings,
       setModalWelcome
     } = this.props;
     return (
@@ -37,7 +37,7 @@ class ModalWelcome extends PureComponent {
             theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setModalWelcome(false);
-              setMapTourOpen(true);
+              setMapPromptsSettings({ open: true });
               track('welcomeModal', { label: 'Tour' });
             }}
           >
@@ -100,7 +100,7 @@ ModalWelcome.propTypes = {
   open: PropTypes.bool,
   setModalWelcome: PropTypes.func,
   setAnalysisView: PropTypes.func,
-  setMapTourOpen: PropTypes.func,
+  setMapPromptsSettings: PropTypes.func,
   setExploreView: PropTypes.func
 };
 

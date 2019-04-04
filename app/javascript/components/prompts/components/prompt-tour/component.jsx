@@ -1,17 +1,25 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Joyride from 'react-joyride';
+import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 
 import PromptTooltip from 'components/prompts/components/prompt-tooltip';
 
 class PromptTour extends PureComponent {
   render() {
-    const { open, setTourClosed, steps, title } = this.props;
+    const {
+      open,
+      steps,
+      title,
+      stepIndex,
+      handleStateChange,
+      settings
+    } = this.props;
 
     return open ? (
       <Joyride
         steps={steps}
         run={open}
+        stepIndex={stepIndex}
         continuous
         floaterProps={{
           styles: {
@@ -21,8 +29,34 @@ class PromptTour extends PureComponent {
           }
         }}
         callback={data => {
-          if (data.action === 'close' || data.type === 'tour:end') {
-            setTourClosed(false);
+          const { action, index, type, status, step } = data;
+          const { actions } = step || {};
+
+          if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+            // Need to set our running state to false, so we can restart if we click start again.
+            handleStateChange({ open: false, stepIndex: 0 });
+          } else if (data.action === 'close' || data.type === 'tour:end') {
+            handleStateChange({
+              stepIndex: 0,
+              open: false
+            });
+          } else if (
+            [EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)
+          ) {
+            const newStepIndex = index + (action === ACTIONS.PREV ? -1 : 1);
+            // Update state to advance the tour
+            if (action === 'prev' && actions && actions.prev) {
+              actions.prev();
+            }
+            if (action === 'next' && actions && actions.next) {
+              actions.next();
+            }
+
+            setTimeout(() => {
+              handleStateChange({
+                stepIndex: newStepIndex
+              });
+            }, 400);
           }
         }}
         spotlightPadding={0}
@@ -34,6 +68,7 @@ class PromptTour extends PureComponent {
             arrowColor: '#333'
           }
         }}
+        {...settings}
       />
     ) : null;
   }
@@ -43,7 +78,10 @@ PromptTour.propTypes = {
   open: PropTypes.bool,
   steps: PropTypes.array,
   setTourClosed: PropTypes.func,
-  title: PropTypes.string
+  title: PropTypes.string,
+  stepIndex: PropTypes.number,
+  handleStateChange: PropTypes.func,
+  settings: PropTypes.object
 };
 
 export default PromptTour;

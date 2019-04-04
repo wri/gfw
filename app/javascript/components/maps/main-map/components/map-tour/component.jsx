@@ -9,8 +9,6 @@ import PromptTour from 'components/prompts/components/prompt-tour';
 import exploreGreenIcon from 'assets/icons/explore-green.svg';
 import analysisGreenIcon from 'assets/icons/analysis-green.svg';
 
-import './styles.scss';
-
 class MapTour extends PureComponent {
   componentDidUpdate(prevProps) {
     const { open } = this.props;
@@ -181,7 +179,7 @@ class MapTour extends PureComponent {
       },
       {
         target: 'body',
-        content: this.renderExitOptions
+        content: () => this.renderExitOptions()
       }
     ];
   };
@@ -193,15 +191,26 @@ class MapTour extends PureComponent {
   };
 
   render() {
-    const { open, setMapTourOpen } = this.props;
-    const steps = this.getSteps();
+    const {
+      open,
+      stepIndex,
+      stepsKey,
+      data,
+      setMapTourOpen,
+      setMapPromptsSettings
+    } = this.props;
 
-    return open ? (
+    return open && data ? (
       <PromptTour
-        title="Map tour"
-        steps={steps}
+        title={data.title}
+        steps={data.steps}
         open={open}
+        stepIndex={stepIndex}
         setTourClosed={setMapTourOpen}
+        handleStateChange={state =>
+          setMapPromptsSettings({ stepsKey, ...state })
+        }
+        settings={data.settings}
       />
     ) : null;
   }
@@ -209,6 +218,10 @@ class MapTour extends PureComponent {
 
 MapTour.propTypes = {
   open: PropTypes.bool,
+  stepIndex: PropTypes.number,
+  stepsKey: PropTypes.string,
+  data: PropTypes.object,
+  setMapPromptsSettings: PropTypes.func,
   setMainMapSettings: PropTypes.func,
   setMapTourOpen: PropTypes.func,
   setMenuSettings: PropTypes.func,

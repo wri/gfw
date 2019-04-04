@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 
-import { setMapTourOpen } from 'components/maps/main-map/components/map-tour/actions';
+import { setMapPromptsSettings } from 'components/maps/main-map/components/map-tour/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
@@ -15,6 +15,6 @@ reducerRegistry.registerModule('modalWelcome', {
   reducers,
   initialState
 });
-export default connect(mapStateToProps, { ...actions, setMapTourOpen })(
+export default connect(mapStateToProps, { ...actions, setMapPromptsSettings })(
   Component
 );

@@ -1,6 +1,17 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createThunkAction } from 'redux-tools';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-export const setMapTourOpen = createAction('setMapTourOpen');
+export const setMapPromptsSettings = createThunkAction(
+  'setMapPromptsSettings',
+  change => (dispatch, state) =>
+    dispatch(
+      setComponentStateToUrl({
+        key: 'mapPrompts',
+        change,
+        state
+      })
+    )
+);
 
 export const setExploreView = createThunkAction(
   'setExploreView',
