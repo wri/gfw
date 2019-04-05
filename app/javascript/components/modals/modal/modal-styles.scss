@@ -28,6 +28,10 @@ $close-position-mobile: 15px;
   text-align: left;
 }
 
+.modal-content {
+  padding: rem(30px) rem(100px) rem(50px);
+}
+
 .modal-close {
   position: absolute;
   top: $close-position-mobile;

@@ -2,7 +2,6 @@
 $input-button-width: rem(100px);
 
 .c-share {
-  padding: 0 rem(20px) rem(20px);
   min-width: rem(320px);
 
   @media screen and (min-width: $screen-m) {
@@ -20,7 +19,9 @@ $input-button-width: rem(100px);
 
   .actions {
     @media screen and (min-width: $screen-m) {
-      padding: 0 rem(40px);
+      .c-switch {
+        max-width: rem(225px);
+      }
     }
   }
 
@@ -31,6 +32,7 @@ $input-button-width: rem(100px);
     line-height: rem(30px);
     width: 100%;
     margin-bottom: rem(10px);
+    margin-top: rem(30px);
   }
 
   .input-container {
@@ -100,7 +102,7 @@ $input-button-width: rem(100px);
     color: $slate;
   }
 
-  .react-toggle-thumb {
+  .react-toggle-track-check {
     font-weight: 500;
   }
 
