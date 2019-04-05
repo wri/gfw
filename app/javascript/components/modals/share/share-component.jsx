@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
 
-import googleplusIcon from 'assets/icons/googleplus.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
 import facebookIcon from 'assets/icons/facebook.svg';
 
+import Switch from 'components/ui/switch';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon/icon';
 import Loader from 'components/ui/loader';
@@ -24,7 +24,7 @@ class Share extends PureComponent {
       setShareSelected,
       handleCopyToClipboard
     } = this.props;
-    const { title, subtitle, shareUrl, embedUrl, embedSettings } = data || {};
+    const { title, shareUrl, embedUrl, embedSettings } = data || {};
 
     const inputValue =
       selected === 'embed'
@@ -36,8 +36,23 @@ class Share extends PureComponent {
     return (
       <div className="c-share">
         {/* <div className="title">{title}</div> */}
-        <div className="subtitle">{subtitle}</div>
+        {/* <div className="subtitle">{subtitle}</div> */}
         <div className="actions">
+          {embedUrl ? (
+            <Switch
+              theme="theme-switch-light"
+              value={selected}
+              options={[
+                { label: 'LINK', value: 'link' },
+                { label: 'EMBED', value: 'embed' }
+              ]}
+              onChange={
+                selected === 'embed'
+                  ? () => setShareSelected('link')
+                  : () => setShareSelected('embed')
+              }
+            />
+          ) : null}
           <p className="info">
             {selected === 'embed'
               ? 'Click and paste HTML to embed in website'
@@ -66,39 +81,8 @@ class Share extends PureComponent {
               {copied ? 'COPIED!' : 'COPY'}
             </Button>
           </div>
-          {embedUrl ? (
-            <div className="buttons-container">
-              <Button
-                className={`share-button ${
-                  selected === 'embed' ? 'theme-button-light' : ''
-                }`}
-                onClick={() => setShareSelected('link')}
-              >
-                LINK
-              </Button>
-              <Button
-                className={`share-button ${
-                  selected !== 'embed' ? 'theme-button-light' : ''
-                }`}
-                onClick={() => setShareSelected('embed')}
-              >
-                EMBED
-              </Button>
-            </div>
-          ) : null}
         </div>
         <div className="social-container">
-          <Button
-            extLink={`https://plus.google.com/share?url=${shareUrl}`}
-            className="social-button -googleplus"
-            onClick={() =>
-              track('shareSocial', {
-                label: shareUrl
-              })
-            }
-          >
-            <Icon icon={googleplusIcon} className="googleplus-icon" />
-          </Button>
           <Button
             extLink={`https://twitter.com/intent/tweet?text=${
               title
