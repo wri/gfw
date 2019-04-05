@@ -4,7 +4,7 @@ import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
-import PromptTour from 'components/prompts/components/prompt-tour';
+import PromptTour from 'components/prompts';
 
 import exploreGreenIcon from 'assets/icons/explore-green.svg';
 import analysisGreenIcon from 'assets/icons/analysis-green.svg';

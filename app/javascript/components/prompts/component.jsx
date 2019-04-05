@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 
-import PromptTooltip from 'components/prompts/components/prompt-tooltip';
+import PromptTooltip from 'components/prompts/prompt-tooltip';
 
 class PromptTour extends PureComponent {
   render() {

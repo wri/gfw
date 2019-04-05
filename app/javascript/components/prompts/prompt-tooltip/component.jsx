@@ -30,7 +30,9 @@ class PromptTooltip extends PureComponent {
         <button className="step-close" {...closeProps}>
           <Icon className="step-close-btn" icon={closeIcon} />
         </button>
-        <div className="step-title">{`${title} · ${index + 1}/${size}`}</div>
+        <div className="step-title">{`${title}${
+          size > 1 ? ` · ${index + 1}/${size}` : ''
+        }`}</div>
         <div className="step-content">{content}</div>
         <div className="step-actions">
           <div className="step-btns">
