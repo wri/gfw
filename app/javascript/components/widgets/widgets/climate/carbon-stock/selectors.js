@@ -16,8 +16,8 @@ export const calculateData = createSelector(
   (data, settings, variables) => {
     if (isEmpty(data)) return null;
     const soil = data && data.soilCarbon[settings.variable];
-    const aboveGround = data.aboveGround[settings.variable] * 0.5;
-    const belowGround = aboveGroundToBelowGround(aboveGround) * 0.5;
+    const aboveGround = data.aboveGround[settings.variable];
+    const belowGround = aboveGroundToBelowGround(aboveGround);
     const total = soil + aboveGround + belowGround;
     const activeVariable =
       variables && variables.find(v => v.value === settings.variable);

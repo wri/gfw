@@ -75,7 +75,7 @@ export const parseData = createSelector(
         query
       },
       value: d[settings.variable],
-      unit: settings.variable === 'totalbiomass' ? 't' : 't/ha'
+      unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha'
     }));
   }
 );
@@ -104,7 +104,7 @@ export const parseSentence = createSelector(
       const value =
         settings.variable === 'totalbiomass'
           ? formatNumber({ num: percent, unit: '%' })
-          : formatNumber({ num: avgBiomDensity, unit: 't/ha' });
+          : formatNumber({ num: avgBiomDensity, unit: 'tC/ha' });
 
       const labels = {
         biomassdensity: 'biomass density',
@@ -136,8 +136,8 @@ export const parseSentence = createSelector(
       sentence: sentences.initial,
       params: {
         location,
-        biomassDensity: formatNumber({ num: biomassdensity, unit: 't/ha' }),
-        totalBiomass: formatNumber({ num: totalbiomass, unit: 't' })
+        biomassDensity: formatNumber({ num: biomassdensity, unit: 'tC/ha' }),
+        totalBiomass: formatNumber({ num: totalbiomass, unit: 'tC' })
       }
     };
   }
