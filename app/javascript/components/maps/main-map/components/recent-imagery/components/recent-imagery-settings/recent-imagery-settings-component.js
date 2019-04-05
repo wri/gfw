@@ -12,6 +12,7 @@ import Dropdown from 'components/ui/dropdown';
 import Button from 'components/ui/button';
 import Datepicker from 'components/ui/datepicker';
 import NoContent from 'components/ui/no-content';
+import RefreshButton from 'components/ui/refresh-button';
 
 import WEEKS from 'data/weeks.json';
 import BANDS from 'data/bands.json';
@@ -40,8 +41,10 @@ class RecentImagerySettings extends PureComponent {
       moreTilesLoading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
+      setRecentImageryLoading,
       setModalMetaSettings,
-      onClickClose
+      onClickClose,
+      error
     } = this.props;
     const selected = this.state.selected || activeTile || {};
 
@@ -180,7 +183,15 @@ class RecentImagerySettings extends PureComponent {
                 </div>
               </Fragment>
             )}
-          {(!tiles || !tiles.length) &&
+          {error && (
+            <RefreshButton
+              refetchFn={() =>
+                setRecentImageryLoading({ loading: false, error: false })
+              }
+            />
+          )}
+          {!error &&
+            (!tiles || !tiles.length) &&
             !loading && (
               <NoContent
                 className="placeholder"
@@ -199,10 +210,12 @@ RecentImagerySettings.propTypes = {
   tiles: PropTypes.array,
   settings: PropTypes.object,
   setRecentImagerySettings: PropTypes.func,
+  setRecentImageryLoading: PropTypes.func,
   setModalMetaSettings: PropTypes.func,
   loading: PropTypes.bool,
   moreTilesLoading: PropTypes.bool,
-  onClickClose: PropTypes.func
+  onClickClose: PropTypes.func,
+  error: PropTypes.bool
 };
 
 export default RecentImagerySettings;
