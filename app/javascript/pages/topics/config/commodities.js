@@ -1,6 +1,6 @@
 // intro
-import intro1x from 'pages/topics/assets/commodities/intro/digger.png';
-import intro2x from 'pages/topics/assets/commodities/intro/digger@2x.png';
+import intro1x from 'pages/topics/assets/commodities/intro/truck.png';
+import intro2x from 'pages/topics/assets/commodities/intro/truck@2x.png';
 
 // slides
 import commodities1 from 'pages/topics/assets/commodities/slides/commodities1.png';
@@ -31,7 +31,7 @@ export default {
   slides: [
     {
       title: 'Commodities',
-      subtitle: 'Ideal state',
+      subtitle: 'Natural state',
       text:
         'Societies around the world have relied on nearby forests for food, fuel and medicine for thousands of years. Traditional practices like agroforestry, and small-scale and shifting agriculture had a reduced impact on the surrounding environment and generated socioeconomic benefits for local communities.',
       img1x: commodities1,

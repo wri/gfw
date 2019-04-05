@@ -40,7 +40,7 @@ export default {
   slides: [
     {
       title: 'Biodiversity',
-      subtitle: 'Ideal state',
+      subtitle: 'Natural state',
       text:
         'Forests are critical homes to plant and animal species. In turn, species that live within forests play an important role in maintaining forest health.',
       img1x: biodiversity1,

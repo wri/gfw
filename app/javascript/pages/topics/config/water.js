@@ -1,6 +1,6 @@
 // intro
-import intro1x from 'pages/topics/assets/water/intro/pond.png';
-import intro2x from 'pages/topics/assets/water/intro/pond@2x.png';
+import intro1x from 'pages/topics/assets/water/intro/mangrove.png';
+import intro2x from 'pages/topics/assets/water/intro/mangrove@2x.png';
 
 // slides
 import water1 from 'pages/topics/assets/water/slides/water1.png';
@@ -25,14 +25,14 @@ export default {
     title:
       "Nearly 20% of the world's population will be at-risk for floods by 2050.",
     text:
-      'Forests are a natural, cost-effective way to secure ample, clean water and to protect against natural disasters like floods and droughts.',
+      'Forests are a natural, cost-effective way to help secure ample, clean water and to protect against natural disasters like floods and droughts.',
     img1x: intro1x,
     img2x: intro2x
   },
   slides: [
     {
       title: 'Water',
-      subtitle: 'Ideal state',
+      subtitle: 'Natural state',
       text:
         'Forests are critical to supplying clean and plentiful water around the world. Healthy forests filter water, reduce erosion, regulate rainfall, recharge groundwater tables and buffer against the impacts of droughts and floods. Coastal forests are especially important in providing protection from surges and are crucial breeding grounds for marine life.',
       img1x: water1,
@@ -109,7 +109,7 @@ export default {
         {
           id: 'water-read',
           content:
-            "Read how deforestation is exasterbating Jakarta's water risks.",
+            "Read how deforestation is exacerbating Jakarta's water risks.",
           btnText: 'Read the blog',
           link:
             'https://www.wri.org/blog/2017/07/without-forests-jakartas-water-situation-worsens',
@@ -136,7 +136,7 @@ export default {
         {
           id: 'water-read',
           content:
-            'Learn how the City of Sao Paulo utilizes forests to clean its water.',
+            'Learn how the City of São Paulo utilizes forests to clean its water.',
           btnText: 'Read the blog',
           link:
             'https://www.wri.org/publication/natural-infrastructure-sao-paulo',
@@ -145,7 +145,7 @@ export default {
         {
           id: 'water-forest',
           content:
-            'Read about the Forest Resilience Bond, a project that finances forest restoration now to prevent future fires',
+            'Read about the Forest Resilience Bond, a project that finances forest restoration now to reduce the risk of future fires.',
           btnText: 'Read the blog',
           link:
             'https://www.wri.org/blog/2017/09/wildfires-scorch-us-forests-forest-resilience-bond-blazes-new-trail',

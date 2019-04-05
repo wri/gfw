@@ -38,7 +38,7 @@ export default {
   slides: [
     {
       title: 'Climate',
-      subtitle: 'Ideal state',
+      subtitle: 'Natural state',
       text:
         'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossel fuels, which include coal, natural gas, and oil.',
       img1x: climate1,
