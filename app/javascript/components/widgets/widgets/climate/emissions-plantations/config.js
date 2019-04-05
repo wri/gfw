@@ -15,7 +15,9 @@ export default {
   colors: 'climate',
   // layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
   metaKey: 'tree_biomass_loss',
-  sortOrder: {},
+  sortOrder: {
+    climate: 3
+  },
   sentences: {
     initial:
       'From {startYear} to {endYear}, a total of {emissions} of {variable} emissions were released from tree cover loss in {location} natural forests.'
