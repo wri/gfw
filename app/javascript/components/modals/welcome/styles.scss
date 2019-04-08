@@ -3,22 +3,9 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
 .c-modal-welcome {
-  max-width: rem(450px);
-
-  .modal-title {
-    padding: 0.3125rem 2.5rem;
-  }
+  max-width: rem(600px);
 
   .modal-welcome-content {
-    padding: $mobile-padding;
-    padding-top: rem(40px);
-    padding-bottom: rem(30px);
-
-    @media screen and (min-width: $screen-m) {
-      padding: $desktop-padding;
-      padding-top: rem(20px);
-    }
-
     p {
       font-size: rem(16px);
     }
@@ -59,4 +46,3 @@ $desktop-padding: rem(40px);
     }
   }
 }
-
