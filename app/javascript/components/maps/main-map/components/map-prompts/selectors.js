@@ -1,7 +1,6 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 
-import initialState from './reducers';
-import allSteps from './config';
+import initialState from './initial-state';
 
 const getMapPromptsState = state =>
   state.location && state.location.query && state.location.query.mapPrompts;
@@ -26,17 +25,11 @@ export const getMapPromptsStepIndex = createSelector(
 
 export const getMapPromptsStepsKey = createSelector(
   getMapPromptsSettings,
-  settings => settings.stepIndex
-);
-
-export const getMapPromptsData = createSelector(
-  getMapPromptsSettings,
-  settings => settings.stepsKey && allSteps[settings.stepsKey]
+  settings => settings.stepsKey
 );
 
 export const getMapPromptsProps = createStructuredSelector({
   open: getMapPromptsOpen,
   stepIndex: getMapPromptsStepIndex,
-  stepsKey: getMapPromptsStepsKey,
-  data: getMapPromptsData
+  stepsKey: getMapPromptsStepsKey
 });

@@ -8,7 +8,7 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Map from 'components/maps/map';
 import SubscribeModal from 'components/modals/subscribe';
-import MapTour from 'components/maps/main-map/components/map-tour';
+import MapPrompts from 'components/maps/main-map/components/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from './components/recent-imagery';
 import DataAnalysisMenu from './components/data-analysis-menu';
@@ -86,7 +86,7 @@ class MainMapComponent extends PureComponent {
             {!embed &&
               isDesktop && (
                 <Fragment>
-                  <MapTour />
+                  <MapPrompts />
                   <ModalWelcome />
                 </Fragment>
               )}

@@ -37,7 +37,7 @@ class ModalWelcome extends PureComponent {
             theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setModalWelcome(false);
-              setMapPromptsSettings({ open: true });
+              setMapPromptsSettings({ open: true, stepsKey: 'mapTour' });
               track('welcomeModal', { label: 'Tour' });
             }}
           >

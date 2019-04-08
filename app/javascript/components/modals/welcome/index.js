@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 
-import { setMapPromptsSettings } from 'components/maps/main-map/components/map-tour/actions';
+import { setMapPromptsSettings } from 'components/maps/main-map/components/map-prompts/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
