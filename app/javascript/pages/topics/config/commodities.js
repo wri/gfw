@@ -22,7 +22,7 @@ import learnLarge from 'pages/topics/assets/commodities/cards/learn@2x.png';
 
 export default {
   intro: {
-    title: '27% of global deforestation is commodity-driven.',
+    title: '40% of global deforestation is commodity-driven.',
     text:
       'Production of commodities including beef, soy, palm oil, pulp, paper, energy and minerals, is the leading cause of deforestation. More sustainable commodity production is critical for conserving forests and mitigating climate change.',
     img1x: intro1x,
