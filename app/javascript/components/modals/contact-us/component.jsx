@@ -32,8 +32,9 @@ class ModalContactUs extends PureComponent {
             ? 'Thank you for contacting Global Forest Watch! Check your inbox for a confirmation email.'
             : 'Contact us & feedback'
         }
+        className="c-contact-us"
       >
-        <div className="c-contact-us">
+        <div className="contact-us-content">
           {submitting && <Loader />}
           {showConfirm ? (
             <div className="feedback-message">
