@@ -19,13 +19,11 @@ $close-position-mobile: 15px;
 }
 
 .modal-title {
-  color: #333;
-  line-height: 40px;
-  margin: 0 auto;
   padding: rem(36px) rem(42px) 0;
-  font-size: 30px;
+  color: $greyish-brown;
+  font-size: 18px;
   font-weight: 300;
-  text-align: left;
+  line-height: 30px;
 }
 
 .modal-content {
@@ -35,6 +33,12 @@ $close-position-mobile: 15px;
 @media screen and (min-width: $screen-m) {
   .modal-title {
     padding: rem(50px) rem(100px) 0;
+    color: #333;
+    line-height: 40px;
+    margin: 0 auto;
+    font-size: 30px;
+    font-weight: 300;
+    text-align: left;
   }
 
   .modal-content {

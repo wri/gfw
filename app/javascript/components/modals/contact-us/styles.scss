@@ -10,7 +10,7 @@ $mobile-margin: rem(8px);
 
   @media screen and (min-width: $screen-m) {
     width: auto;
-    margin-top: auto;
+    margin-top: auto !important;
   }
 
   .contact-us-content {

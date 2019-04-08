@@ -49,7 +49,7 @@ class ModalMeta extends PureComponent {
       metaData || {};
 
     return (
-      <div className="c-modal-meta">
+      <div className="modal-meta-content">
         {loading && <Loader />}
         {error &&
           !loading && (
@@ -162,6 +162,7 @@ class ModalMeta extends PureComponent {
             citation: ''
           })
         }
+        className="c-modal-meta"
         title={title}
       >
         {this.getContent()}
