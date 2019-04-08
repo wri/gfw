@@ -38,18 +38,20 @@ class Card extends PureComponent {
         <div
           className={cx('body', { 'top-padding': tag && tagColor && !image })}
         >
-          {imageCredit && <span>{imageCredit}</span>}
-          {title && <h3 className="title">{title}</h3>}
-          {summary && (
-            <div className="summary">
-              {showFullSummary ? (
-                summary
-              ) : (
-                <Dotdotdot clamp={3}>{summary}</Dotdotdot>
-              )}
-            </div>
-          )}
-          {meta && <p className="meta">{meta}</p>}
+          <div className="text-content">
+            {imageCredit && <span>{imageCredit}</span>}
+            {title && <h3 className="title">{title}</h3>}
+            {summary && (
+              <div className="summary">
+                {showFullSummary ? (
+                  summary
+                ) : (
+                  <Dotdotdot clamp={3}>{summary}</Dotdotdot>
+                )}
+              </div>
+            )}
+            {meta && <p className="meta">{meta}</p>}
+          </div>
           {buttons && (
             <div className="buttons">
               {buttons.map((button, i) => (
