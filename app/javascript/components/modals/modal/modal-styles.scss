@@ -2,72 +2,80 @@
 
 $close-position: 25px;
 $close-position-mobile: 15px;
+$mobile-margin: rem(16px);
 
-.ReactModal__Body--open {
-  overflow: hidden;
-}
+.c-modal {
+  background: #fff;
+  width: calc(100vw - #{$mobile-margin} * 2);
 
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  /* IE10+ CSS */
-  .ReactModal__Overlay {
-    align-items: flex-start !important;
+  .ReactModal__Body--open {
+    overflow: hidden;
   }
 
-  .ReactModal__Content {
-    margin: 0 !important;
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE10+ CSS */
+    .ReactModal__Overlay {
+      align-items: flex-start !important;
+    }
+
+    .ReactModal__Content {
+      margin: 0 !important;
+    }
   }
-}
 
-.modal-title {
-  padding: rem(36px) rem(42px) 0;
-  color: $greyish-brown;
-  font-size: 18px;
-  font-weight: 300;
-  line-height: 30px;
-}
-
-.modal-content {
-  padding: rem(36px) rem(42px);
-}
-
-@media screen and (min-width: $screen-m) {
   .modal-title {
-    padding: rem(50px) rem(100px) 0;
-    color: #333;
-    line-height: 40px;
-    margin: 0 auto;
-    font-size: 30px;
+    padding: rem(36px) rem(42px) 0;
+    color: $greyish-brown;
+    font-size: 18px;
     font-weight: 300;
-    text-align: left;
+    line-height: 30px;
   }
 
   .modal-content {
-    padding: rem(30px) rem(100px) rem(50px);
+    padding: rem(36px) rem(42px);
   }
-}
-
-.modal-close {
-  position: absolute;
-  top: $close-position-mobile;
-  right: $close-position-mobile;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  z-index: 10;
 
   @media screen and (min-width: $screen-m) {
-    top: $close-position;
-    right: $close-position;
+    width: auto;
+
+    .modal-title {
+      padding: rem(50px) rem(100px) 0;
+      color: #333;
+      line-height: 40px;
+      margin: 0 auto;
+      font-size: 30px;
+      font-weight: 300;
+      text-align: left;
+    }
+
+    .modal-content {
+      padding: rem(30px) rem(100px) rem(50px);
+    }
   }
 
-  svg {
-    width: rem(15px);
-    height: rem(15px);
-    fill: $slate;
-  }
-}
+  .modal-close {
+    position: absolute;
+    top: $close-position-mobile;
+    right: $close-position-mobile;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 10;
 
-html,
-body {
-  overflow-x: visible !important;
+    @media screen and (min-width: $screen-m) {
+      top: $close-position;
+      right: $close-position;
+    }
+
+    svg {
+      width: rem(15px);
+      height: rem(15px);
+      fill: $slate;
+    }
+  }
+
+  html,
+  body {
+    overflow-x: visible !important;
+  }
 }

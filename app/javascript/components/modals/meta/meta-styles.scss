@@ -4,7 +4,6 @@ $desktop-padding: rem(50px);
 $mobile-margin: rem(16px);
 
 .c-modal-meta {
-  background: #fff;
   width: calc(100vw - #{$mobile-margin} * 2);
   margin-top: $mobile-margin !important;
 

@@ -4,12 +4,9 @@ $desktop-padding: rem(40px);
 $mobile-margin: rem(8px);
 
 .c-contact-us {
-  background: #fff;
-  width: calc(100vw - #{$mobile-margin} * 2);
   margin-top: $mobile-margin !important;
 
   @media screen and (min-width: $screen-m) {
-    width: auto;
     margin-top: auto !important;
   }
 

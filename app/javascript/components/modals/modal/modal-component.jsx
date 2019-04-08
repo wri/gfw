@@ -34,7 +34,7 @@ class CustomModal extends PureComponent {
         style={customStyles}
         contentLabel={contentLabel}
         onAfterOpen={this.trackModalOpen}
-        className={className}
+        className={`c-modal ${className}`}
       >
         <button
           onClick={onRequestClose}

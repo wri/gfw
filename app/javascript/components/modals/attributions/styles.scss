@@ -2,18 +2,9 @@
 $mobile-margin: rem(16px);
 
 .c-modal-attributions {
-  background: #fff;
   max-width: rem(800px);
   width: calc(100vw - #{$mobile-margin});
   height: calc(100vh - #{$mobile-margin});
-
-  .modal-title {
-    padding: rem(36px) rem(42px) 0;
-    color: $greyish-brown;
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 30px;
-  }
 
   .modal-content {
     padding: rem(36px) rem(42px) 0;
