@@ -63,7 +63,7 @@ $ gem install rails
 ```
 
 Aaaaand now use [Bundler](http://bundler.io/), a rubygem manager, to
-install all the gem depenencies for the app:
+install all the gem dependencies for the app:
 
 ```bash
 $ bundle install
@@ -89,7 +89,7 @@ $ yarn start
 The app should now be accessible on [http://0.0.0.0:5000](http://0.0.0.0:5000).
 
 ### REDIS
-We have a local redis server for caching in production. We dont run this locally by default but if you want to test or develop on this feature you will need to install redis and run it:
+We have a local redis server for caching in production. We don't run this locally by default but if you want to test or develop on this feature you will need to install redis and run it:
 
 ```bash
 $ brew install redis
@@ -111,7 +111,7 @@ $ flushall
 
 ## Releases
 
-We are using github releases to record changes to the app. To help us manage this we are using [Zeit Releases](https://github.com/zeit/release), an npm package for handling github releases, tagging commits (major, minor, patch), and automating semantic release logs. For a more detailed explantion of semantic changelogs see [this post](https://semver.org/).
+We are using github releases to record changes to the app. To help us manage this we are using [Zeit Releases](https://github.com/zeit/release), an npm package for handling github releases, tagging commits (major, minor, patch), and automating semantic release logs. For a more detailed explanation of semantic changelogs see [this post](https://semver.org/).
 
 #### Managing commits for a release
 
