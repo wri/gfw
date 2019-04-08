@@ -4,12 +4,6 @@ $desktop-padding: rem(50px);
 
 .c-modal-sources {
   max-width: rem(800px);
-  padding: $mobile-padding;
-
-  @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding;
-    padding-top: rem(40px);
-  }
 
   h3 {
     margin-bottom: rem(20px);
