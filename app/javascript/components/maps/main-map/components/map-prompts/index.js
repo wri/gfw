@@ -20,10 +20,11 @@ class MapPromptsContainer extends PureComponent {
 
   getStepsData = () => {
     const { stepsKey } = this.props;
+    const { setMapPromptsSettings } = this.props;
 
     const allSteps = {
       mapTour: {
-        title: 'Recent Satellite Imagery',
+        title: 'Map tour',
         steps: [
           {
             target: '.map-tour-data-layers',
@@ -157,9 +158,49 @@ class MapPromptsContainer extends PureComponent {
         title: 'Recent Satellite Imagery',
         steps: [
           {
-            target: '.map-tour-data-layers',
+            target: '.recent-imagery-btn',
             content:
               'Display recent satellite imagery over an area, filtered by date and cloud cover.',
+            disableBeacon: true,
+            actions: {
+              learnHow: () => {
+                setMapPromptsSettings({
+                  open: true,
+                  stepsKey: 'recentImageryTour'
+                });
+              }
+            }
+          }
+        ],
+        settings: {
+          disableOverlay: true
+        }
+      },
+      recentImageryTour: {
+        title: 'Recent Satellite Imagery',
+        steps: [
+          {
+            target: '.recent-imagery-btn',
+            content:
+              'Click the Satellite icon to overlay a satellite tile at the center of the map, beneath the crosshair icon.',
+            disableBeacon: true
+          },
+          {
+            target: '.recent-imagery-btn',
+            content:
+              'The map will automatically fetch the most recent satellite image with the least amount of cloud cover for your targeted area.',
+            disableBeacon: true
+          },
+          {
+            target: '.recent-imagery-btn',
+            content:
+              'Change the settings like the Acquisition Date and Cloud Cover Percentage to filter the available images. Click on a thumbnail to overlay that image on the map. They are ordered by date (most recent first). You can see the date of an image by hovering over it.',
+            disableBeacon: true
+          },
+          {
+            target: '.recent-imagery-btn',
+            content:
+              'Move the crosshair icon on the map outside of the image to load a new tile in a different area.',
             disableBeacon: true
           }
         ],
@@ -189,6 +230,7 @@ MapPromptsContainer.propTypes = {
   open: PropTypes.bool,
   setMainMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,
+  setMapPromptsSettings: PropTypes.func,
   stepsKey: PropTypes.string
 };
 

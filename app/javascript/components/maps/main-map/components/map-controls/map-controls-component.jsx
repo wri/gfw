@@ -289,7 +289,8 @@ class MapControlsButtons extends PureComponent {
       onClick={() =>
         this.props.setMapPromptsSettings({
           open: true,
-          stepsKey: 'mapTour'
+          stepsKey: 'recentImagery',
+          stepIndex: 0
         })
       }
     >

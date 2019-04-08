@@ -23,10 +23,11 @@ class PromptTour extends PureComponent {
         continuous
         floaterProps={{
           styles: {
-            arrow: {
-              color: 'red'
+            floater: {
+              transition: 'none'
             }
-          }
+          },
+          disableAnimation: true
         }}
         callback={data => {
           const { action, index, type, status, step } = data;

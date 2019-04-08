@@ -21,7 +21,7 @@ class PromptTooltip extends PureComponent {
       size,
       title
     } = this.props;
-    const { content, learnHowLink = 1 } = step;
+    const { content, actions } = step;
     const stepNum = index + 1;
     const isLastStep = stepNum === size;
 
@@ -55,11 +55,15 @@ class PromptTooltip extends PureComponent {
               )}
             {size === 1 && <div>Show me tips</div>}
           </div>
-          {learnHowLink && (
-            <Button theme="theme-button-small" onClick={() => {}}>
-              LEARN HOW
-            </Button>
-          )}
+          {actions &&
+            actions.learnHow && (
+              <Button
+                theme="theme-button-small"
+                onClick={() => actions.learnHow()}
+              >
+                LEARN HOW
+              </Button>
+            )}
         </div>
       </div>
     );
