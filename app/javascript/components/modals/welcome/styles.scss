@@ -7,6 +7,8 @@ $desktop-padding: rem(40px);
   padding: $mobile-padding;
   padding-top: rem(40px);
   padding-bottom: rem(30px);
+  background-color: #333;
+  color: $white;
 
   @media screen and (min-width: $screen-m) {
     padding: $desktop-padding;
@@ -19,6 +21,7 @@ $desktop-padding: rem(40px);
 
   p {
     font-size: rem(16px);
+    color: $white;
   }
 
   a {
@@ -30,16 +33,17 @@ $desktop-padding: rem(40px);
   }
 
   .intro {
-    margin-bottom: rem(20px);
+    margin-bottom: rem(30px);
   }
 
   .btn-intro {
     margin-bottom: rem(10px);
+    text-transform: uppercase;
   }
 
   .guide-btn {
     text-align: left;
-    margin-bottom: rem(15px);
+    margin-bottom: rem(10px);
     height: auto;
 
     .guide-btn-icon {
@@ -51,8 +55,28 @@ $desktop-padding: rem(40px);
       fill: $green-gfw;
     }
 
+    .arrow-icon {
+      transform: rotate(-90deg);
+      width: rem(30px);
+    }
+
     p {
       font-size: rem(14px);
+      margin-right: rem(15px);
     }
+
+    &.negative {
+      background-color: $white;
+      color: $slate;
+      border: none;
+
+      p {
+        color: $slate;
+      }
+    }
+  }
+
+  .tour-btn {
+    margin-bottom: rem(30px);
   }
 }

@@ -5,6 +5,7 @@ import { track } from 'app/analytics';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
+import arrowIcon from 'assets/icons/arrow-down.svg';
 import exploreGreenIcon from 'assets/icons/explore-green.svg';
 import helpGreenIcon from 'assets/icons/help-green.svg';
 import analysisGreenIcon from 'assets/icons/analysis-green.svg';
@@ -29,11 +30,8 @@ class ModalWelcome extends PureComponent {
             We&#39;ve made exciting changes to the map to make it faster, more
             powerful, and easier to use.
           </p>
-          <p className="btn-intro">
-            <b>If it&#39;s your first time:</b>
-          </p>
           <Button
-            className="guide-btn"
+            className="guide-btn tour-btn negative"
             theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setModalWelcome(false);
@@ -45,9 +43,10 @@ class ModalWelcome extends PureComponent {
             <p>
               Check out the highlights and learn what you can do with the map.
             </p>
+            <Icon className="arrow-icon" icon={arrowIcon} />
           </Button>
           <p className="btn-intro">
-            <b>If you&#39;re returning:</b>
+            <b>How-to guide:</b>
           </p>
           <Button
             className="guide-btn"
@@ -62,6 +61,7 @@ class ModalWelcome extends PureComponent {
               Try out the Explore tab for an introduction to key forest topics
               and high priority areas with recent forest loss.
             </p>
+            <Icon className="arrow-icon" icon={arrowIcon} />
           </Button>
           <Button
             className="guide-btn"
@@ -73,6 +73,7 @@ class ModalWelcome extends PureComponent {
           >
             <Icon className="guide-btn-icon" icon={analysisGreenIcon} />
             <p>Test out our new and improved analysis features.</p>
+            <Icon className="arrow-icon" icon={arrowIcon} />
           </Button>
         </div>
       </div>
