@@ -48,16 +48,23 @@ class PromptTour extends PureComponent {
             // Update state to advance the tour
             if (action === 'prev' && actions && actions.prev) {
               actions.prev();
-            }
-            if (action === 'next' && actions && actions.next) {
+              setTimeout(() => {
+                handleStateChange({
+                  stepIndex: newStepIndex
+                });
+              }, 400);
+            } else if (action === 'next' && actions && actions.next) {
               actions.next();
-            }
-
-            setTimeout(() => {
+              setTimeout(() => {
+                handleStateChange({
+                  stepIndex: newStepIndex
+                });
+              }, 400);
+            } else {
               handleStateChange({
                 stepIndex: newStepIndex
               });
-            }, 400);
+            }
           }
         }}
         spotlightPadding={0}
