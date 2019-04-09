@@ -35,8 +35,6 @@ class Share extends PureComponent {
 
     return (
       <div className="c-share">
-        {/* <div className="title">{title}</div> */}
-        {/* <div className="subtitle">{subtitle}</div> */}
         <div className="actions">
           {embedUrl ? (
             <Switch
@@ -73,7 +71,7 @@ class Share extends PureComponent {
               />
             </div>
             <Button
-              theme="theme-button-light"
+              theme="theme-button-medium"
               className="input-button"
               onClick={() => handleCopyToClipboard(this.textInput)}
               disabled={loading}
