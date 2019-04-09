@@ -1,14 +1,7 @@
 @import '~styles/settings.scss';
-$mobile-margin: rem(16px);
 
 .c-modal-attributions {
   max-width: rem(800px);
-  width: calc(100vw - #{$mobile-margin});
-  height: calc(100vh - #{$mobile-margin});
-
-  .modal-content {
-    padding: rem(36px) rem(42px) 0;
-  }
 
   .modal-attributions-content {
     min-width: 290px;
