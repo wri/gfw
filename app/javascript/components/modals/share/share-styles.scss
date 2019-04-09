@@ -35,10 +35,10 @@ $input-button-width: rem(100px);
   }
 
   .input-container {
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
+    width: calc(100% + (#{$input-button-width} / 2));
+    // position: relative;
+    // display: flex;
+    // align-items: center;
 
     .input,
     .input-button {
@@ -47,17 +47,21 @@ $input-button-width: rem(100px);
 
     .input {
       width: calc(100% - #{$input-button-width});
-      border: 1px solid $border;
-      border-right: 0;
+      max-width: rem(300px);
+      border: 0;
       font-size: rem(13px);
       position: relative;
       display: inline-block;
 
       > input {
+        background: none;
         padding-left: rem(10px);
+        padding-right: calc((#{$input-button-width} / 2) + #{rem(10px)});
         width: 100%;
         height: 100%;
-        border: 0;
+        border: 1px solid #dededd;
+        border-right: 0;
+        border-radius: 4px;
 
         &:focus {
           outline: none;
@@ -105,7 +109,7 @@ $input-button-width: rem(100px);
 
   .social-container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     margin-top: rem(25px);
   }
 
@@ -113,39 +117,16 @@ $input-button-width: rem(100px);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: rem(44px);
-    height: rem(44px);
+    width: rem(50px);
+    height: rem(50px);
     margin: 0 rem(8px);
-    border-radius: 0;
+    border: 1px solid #aaa;
+    border-radius: rem(25px);
 
-    .c-icon {
-      width: rem(20px);
-      height: rem(20px);
-      fill: $white;
-    }
-
-    &.-googleplus {
-      background-color: $googleplus;
-
-      &:hover {
-        background-color: darken($googleplus, 10%);
-      }
-    }
-
-    &.-twitter {
-      background-color: $twitter;
-
-      &:hover {
-        background-color: darken($twitter, 10%);
-      }
-    }
-
-    &.-facebook {
-      background-color: $facebook;
-
-      &:hover {
-        background-color: darken($facebook, 10%);
-      }
+    svg {
+      fill: #555;
+      height: 20px;
+      width: 20px;
     }
   }
 }

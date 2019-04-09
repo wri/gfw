@@ -85,7 +85,8 @@ class Share extends PureComponent {
             extLink={`https://twitter.com/intent/tweet?text=${
               title
             }&via=globalforests&url=${shareUrl}`}
-            className="social-button -twitter"
+            className="social-button"
+            theme="theme-button-light theme-button-grey  square"
             onClick={() =>
               track('shareSocial', {
                 label: shareUrl
@@ -96,7 +97,8 @@ class Share extends PureComponent {
           </Button>
           <Button
             extLink={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
-            className="social-button -facebook"
+            theme="theme-button-light theme-button-grey square"
+            className="social-button"
             onClick={() =>
               track('shareSocial', {
                 label: shareUrl

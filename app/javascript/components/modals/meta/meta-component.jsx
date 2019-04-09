@@ -5,7 +5,6 @@ import lowerCase from 'lodash/lowerCase';
 import ReactHtmlParser from 'react-html-parser';
 import { track } from 'app/analytics';
 
-import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
 import Modal from '../modal';
@@ -50,7 +49,6 @@ class ModalMeta extends PureComponent {
 
     return (
       <div className="modal-meta-content">
-        {loading && <Loader />}
         {error &&
           !loading && (
             <NoContent message="There was a problem finding this info. Please try again later." />
@@ -148,7 +146,7 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { metakey, setModalMetaSettings, metaData } = this.props;
+    const { metakey, setModalMetaSettings, metaData, loading } = this.props;
     const { title } = metaData || {};
     return (
       <Modal
@@ -164,6 +162,7 @@ class ModalMeta extends PureComponent {
         }
         className="c-modal-meta"
         title={title}
+        loading={loading}
       >
         {this.getContent()}
       </Modal>

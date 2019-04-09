@@ -2,11 +2,15 @@
 
 $close-position: 25px;
 $close-position-mobile: 15px;
-$mobile-margin: rem(8px);
+$mobile-margin: rem(10px);
 
 .c-modal {
   background: #fff;
-  width: calc(100vw - #{$mobile-margin} * 2);
+  max-width: calc(100vw - #{$mobile-margin} * 2);
+
+  /* Predefined modal size when loading content */
+  min-width: 200px;
+  min-height: 150px;
 
   .ReactModal__Body--open {
     overflow: hidden;
@@ -24,7 +28,7 @@ $mobile-margin: rem(8px);
   }
 
   .modal-title {
-    padding: rem(36px) rem(42px) 0;
+    padding: $vertical-modal-padding-mobile $horizontal-modal-padding-mobile 0;
     color: $greyish-brown;
     font-size: 18px;
     font-weight: 300;
@@ -32,14 +36,16 @@ $mobile-margin: rem(8px);
   }
 
   .modal-content {
-    padding: rem(36px) rem(42px);
+    padding: $vertical-modal-padding-mobile $horizontal-modal-padding-mobile;
+    margin: auto;
   }
 
   @media screen and (min-width: $screen-m) {
     width: auto;
+    max-width: rem(800px);
 
     .modal-title {
-      padding: rem(50px) rem(100px) 0;
+      padding: $vertical-modal-padding-desktop $horizontal-modal-padding-desktop 0;
       color: #333;
       line-height: 40px;
       margin: 0 auto;
@@ -49,7 +55,7 @@ $mobile-margin: rem(8px);
     }
 
     .modal-content {
-      padding: rem(30px) rem(100px) rem(50px);
+      padding: rem(30px) $horizontal-modal-padding-desktop $vertical-modal-padding-desktop;
     }
   }
 

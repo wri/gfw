@@ -60,7 +60,7 @@ class SectionProjectsModal extends PureComponent {
               }}
             >
               {data.images &&
-                data.images.map(c => <img src={c} alt={data.title} />)}
+                data.images.map(c => <img key={c} src={c} alt={data.title} />)}
             </Carousel>
           )}
         {data.image &&

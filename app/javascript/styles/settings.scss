@@ -56,3 +56,9 @@ $font-color-6: $slate-light;
 /* SHADOWS */
 $pop-box-shadow: 1px 1px 10px 0 rgba($slate, 0.25);
 $tooltip-box-shadow: 0 4px 20px 4px rgba(0, 20, 60, 0.1), 0 4px 80px -8px rgba(0, 20, 60, 0.2);
+
+$horizontal-modal-padding-desktop: rem(100px);
+$vertical-modal-padding-desktop: rem(50px);
+
+$horizontal-modal-padding-mobile: rem(25px);
+$vertical-modal-padding-mobile: rem(35px);

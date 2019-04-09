@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
 
+import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
 import closeIcon from 'assets/icons/close.svg';
@@ -25,7 +26,8 @@ class CustomModal extends PureComponent {
       closeClass,
       children,
       title,
-      className
+      className,
+      loading
     } = this.props;
     return (
       <Modal
@@ -42,8 +44,9 @@ class CustomModal extends PureComponent {
         >
           <Icon icon={closeIcon} />
         </button>
-        {title && <p className="modal-title">{title}</p>}
-        <div className="modal-content">{children}</div>
+        {loading && <Loader />}
+        {!loading && title && <p className="modal-title">{title}</p>}
+        {!loading && <div className="modal-content">{children}</div>}
       </Modal>
     );
   }
@@ -51,6 +54,7 @@ class CustomModal extends PureComponent {
 
 CustomModal.propTypes = {
   isOpen: PropTypes.bool,
+  loading: PropTypes.bool,
   track: PropTypes.bool,
   onRequestClose: PropTypes.func.isRequired,
   contentLabel: PropTypes.string,

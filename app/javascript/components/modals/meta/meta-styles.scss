@@ -1,22 +1,18 @@
 @import '~styles/settings.scss';
 $mobile-padding: rem(42px);
 $desktop-padding: rem(50px);
-$mobile-margin: rem(8px);
+$mobile-margin: rem(10px);
 
 .c-modal-meta {
   margin-top: $mobile-margin !important;
 
   .modal-content {
-    padding: 0;
+    padding-top: 5px;
   }
 
   @media screen and (min-width: $screen-m) {
     width: auto;
     margin-top: auto !important;
-
-    .modal-title {
-      padding-left: $desktop-padding;
-    }
   }
 
   .modal-meta-content {
@@ -28,7 +24,6 @@ $mobile-margin: rem(8px);
 
     @media screen and (min-width: $screen-m) {
       min-width: rem(320px);
-      padding: $desktop-padding;
       padding-top: 0;
     }
 
@@ -51,7 +46,8 @@ $mobile-margin: rem(8px);
       flex-direction: column;
       border-top: solid 1px $border;
       margin: 0 rem(-30px) rem(-45px);
-      width: auto;
+      margin-left: -$horizontal-modal-padding-mobile;
+      width: calc(100% + (2 * #{$horizontal-modal-padding-mobile}));
       padding: rem(20px) rem(30px) rem(10px);
 
       > a {
@@ -61,7 +57,8 @@ $mobile-margin: rem(8px);
       }
 
       @media screen and (min-width: $screen-m) {
-        margin: 0 rem(-50px) rem(-45px);
+        margin-left: -$horizontal-modal-padding-desktop;
+        width: calc(100% + (2 * #{$horizontal-modal-padding-desktop}));
         padding: rem(20px) rem(50px) rem(10px);
         flex-direction: row;
       }
@@ -69,10 +66,10 @@ $mobile-margin: rem(8px);
 
     .subtitle {
       margin-top: rem(5px);
+      margin-bottom: rem(45px);
       font-size: rem(13px);
       line-height: 1.2;
       color: $warm-grey;
-      margin-bottom: rem(30px);
     }
 
     .meta-table {
@@ -82,9 +79,12 @@ $mobile-margin: rem(8px);
       justify-content: flex-start;
       border-top: solid 1px $border;
       margin-bottom: rem(30px);
+      width: calc(100% + (2 * #{$horizontal-modal-padding-mobile}));
+      margin-left: -$horizontal-modal-padding-mobile;
 
       @media screen and (min-width: $screen-m) {
-        margin: 0 rem(-50px);
+        width: calc(100% + (2 * #{$horizontal-modal-padding-desktop}));
+        margin-left: -$horizontal-modal-padding-desktop;
         margin-bottom: rem(30px);
       }
     }
@@ -109,12 +109,12 @@ $mobile-margin: rem(8px);
         font-weight: 500;
         font-size: rem(11px);
         text-transform: uppercase;
-        padding: rem(15px) rem(5px) rem(2px) $mobile-padding;
+        padding: rem(15px) rem(5px) rem(2px) $horizontal-modal-padding-mobile;
         color: $slate;
         width: rem(150px);
 
         @media screen and (min-width: $screen-m) {
-          padding: rem(15px) $desktop-padding;
+          padding: rem(15px) $horizontal-modal-padding-desktop;
           padding-right: rem(5px);
         }
       }
@@ -126,10 +126,11 @@ $mobile-margin: rem(8px);
         color: $slate;
         width: calc(100% - 100px);
         width: 100%;
-        padding: 0 $mobile-padding rem(15px) $mobile-padding;
+        padding: 0 $horizontal-modal-padding-mobile rem(15px) $horizontal-modal-padding-mobile;
+        word-break: break-word;
 
         @media screen and (min-width: $screen-m) {
-          padding: rem(13px) $desktop-padding rem(3px);
+          padding: rem(13px) $horizontal-modal-padding-desktop rem(3px);
         }
 
         p {
@@ -155,11 +156,8 @@ $mobile-margin: rem(8px);
 
     .citation {
       margin-bottom: rem(30px);
-      padding: 0 $mobile-padding;
-
-      @media screen and (min-width: $screen-m) {
-        padding: 0;
-      }
+      padding: 0;
+      word-break: break-word;
 
       h5 {
         font-size: rem(12px);

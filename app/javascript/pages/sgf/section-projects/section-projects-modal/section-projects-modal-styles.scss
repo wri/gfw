@@ -1,7 +1,6 @@
 @import '~styles/settings.scss';
 
 .c-sgf-projects-modal {
-  max-width: rem(600px);
   width: 100%;
   color: $slate;
   font-weight: 300;
@@ -9,7 +8,6 @@
   line-height: 1.67;
 
   .header {
-    max-width: rem(600px);
     padding: 0;
     margin: auto;
 
