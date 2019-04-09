@@ -12,14 +12,16 @@ import './styles.scss';
 class TopicsImage extends PureComponent {
   componentDidMount() {
     const { animations } = this.props;
-    if (animations) {
+    if (animations && animations.length) {
       animations.forEach(a => {
-        lottie.loadAnimation({
-          wrapper: this.svgWrappers[a.id],
-          animType: 'svg',
-          loop: true,
-          animationData: a.data
-        });
+        if (a.type !== 'gif') {
+          lottie.loadAnimation({
+            wrapper: this.svgWrappers[a.id],
+            animType: 'svg',
+            loop: true,
+            animationData: a.data
+          });
+        }
       });
     }
   }
@@ -42,22 +44,35 @@ class TopicsImage extends PureComponent {
           alt={description}
         />
         {animations &&
-          animations.map(a => (
-            <div
-              key={a.id}
-              className="svg-animation"
-              id={a.id}
-              style={{
-                zIndex: a.behind ? 0 : 2
-              }}
-              ref={ref => {
-                this.svgWrappers = {
-                  ...this.svgWrappers,
-                  [a.id]: ref
-                };
-              }}
-            />
-          ))}
+          animations.map(
+            a =>
+              (a.type !== 'gif' ? (
+                <div
+                  key={a.id}
+                  className="svg-animation"
+                  id={a.id}
+                  style={{
+                    zIndex: a.behind ? 0 : 2,
+                    ...(a.type === 'gif' && {
+                      backgroundImage: `url('${a.data}')`
+                    })
+                  }}
+                  ref={ref => {
+                    this.svgWrappers = {
+                      ...this.svgWrappers,
+                      [a.id]: ref
+                    };
+                  }}
+                />
+              ) : (
+                <img
+                  key={a.id}
+                  className="gif-animation"
+                  src={a.data}
+                  alt={a.id}
+                />
+              ))
+          )}
         {prompts &&
           prompts.map(p => (
             <Fragment key={p.id}>

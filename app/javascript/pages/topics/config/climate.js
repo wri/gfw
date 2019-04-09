@@ -26,6 +26,16 @@ import insightsLarge from 'pages/topics/assets/climate/cards/insights@2x.png';
 import research from 'pages/topics/assets/climate/cards/research.png';
 import researchLarge from 'pages/topics/assets/climate/cards/research@2x.png';
 
+// animations
+import scene1 from 'pages/topics/assets/climate/animations/scene1.json';
+import birds1 from 'pages/topics/assets/climate/animations/birds1.json';
+import scene2 from 'pages/topics/assets/climate/animations/scene2.json';
+import birds2 from 'pages/topics/assets/climate/animations/birds2.json';
+import smoke2 from 'pages/topics/assets/climate/animations/smoke2.gif';
+import scene3 from 'pages/topics/assets/climate/animations/scene3.json';
+import scene4 from 'pages/topics/assets/climate/animations/scene4.json';
+import birds4 from 'pages/topics/assets/climate/animations/birds4.json';
+
 export default {
   intro: {
     title:
@@ -61,6 +71,17 @@ export default {
             '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiNzBlMjU0OWMtZDcyMi00NGE2LWE4ZDctNGEzODVkNzg1NjVlIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIjNiMjJhNTc0LTI1MDctNGI0YS1hMjQ3LTgwMDU3YzFhMWFkNCJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRlZmF1bHQifSwibGFiZWwiOiJkZWZhdWx0IiwiY2FuQm91bmQiOnRydWV9&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
           position: [65, 55]
         }
+      ],
+      animations: [
+        {
+          id: 'scene1',
+          data: scene1
+        },
+        {
+          id: 'birds1',
+          data: birds1,
+          behind: true
+        }
       ]
     },
     {
@@ -88,6 +109,22 @@ export default {
           link:
             'https://blog.globalforestwatch.org/fires/weather-patterns-that-fueled-great-smoky-mountain-forest-fire-could-increase-with-climate-change',
           position: [45, 40]
+        }
+      ],
+      animations: [
+        {
+          id: 'scene2',
+          data: scene2
+        },
+        {
+          id: 'birds2',
+          data: birds2,
+          behind: true
+        },
+        {
+          id: 'smoke2',
+          data: smoke2,
+          type: 'gif'
         }
       ]
     },
@@ -117,6 +154,12 @@ export default {
             '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZTY2M2ViMDktMDRkZS00ZjM5LWI4NzEtMzVjNmMyZWQxMGI1Iiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImRkNWRmODdmLTM5YzItNGFlYi1hNDYyLTNlZjk2OWIyMGI2NiJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImE5Y2M2ZWMwLTVjMWMtNGUzNi05YjI2LWI0ZWUwYjUwNTg3YiIsImxheWVycyI6WyJiMzJhMmYxNS0yNWU4LTRlY2MtOThlMC02ODc4MmFiMWMwZmUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGFyayJ9LCJsYWJlbCI6ImxpZ2h0TGFiZWxzIiwiY2FuQm91bmQiOnRydWV9&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
           position: [43, 40]
         }
+      ],
+      animations: [
+        {
+          id: 'scene3',
+          data: scene3
+        }
       ]
     },
     {
@@ -143,6 +186,17 @@ export default {
           link:
             'https://blog.globalforestwatch.org/climate/3-new-features-on-gfw-climate-measure-progress-on-forest-conservation-goals',
           position: [50, 30]
+        }
+      ],
+      animations: [
+        {
+          id: 'scene4',
+          data: scene4
+        },
+        {
+          id: 'birds4',
+          data: birds4,
+          behind: true
         }
       ]
     }
