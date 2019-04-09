@@ -57,11 +57,11 @@ export default {
       ],
       animations: [
         {
-          id: 'scene1',
+          id: 'bio-scene1',
           data: scene1
         },
         {
-          id: 'birds',
+          id: 'bio-birds1',
           data: birds1,
           behind: true
         }
@@ -87,11 +87,11 @@ export default {
       ],
       animations: [
         {
-          id: 'scene2',
+          id: 'bio-scene2',
           data: scene2
         },
         {
-          id: 'birds2',
+          id: 'bio-birds2',
           data: birds2,
           behind: true
         }
@@ -117,7 +117,7 @@ export default {
       ],
       animations: [
         {
-          id: 'scene3',
+          id: 'bio-scene3',
           data: scene3
         }
       ]
@@ -142,11 +142,11 @@ export default {
       ],
       animations: [
         {
-          id: 'scene4',
+          id: 'bio-scene4',
           data: scene4
         },
         {
-          id: 'birds4',
+          id: 'bio-birds4',
           data: birds4,
           behind: true
         }

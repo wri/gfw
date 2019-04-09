@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import lottie from 'lottie-web';
 
 import Button from 'components/ui/button';
@@ -11,20 +12,47 @@ import './styles.scss';
 
 class TopicsImage extends PureComponent {
   componentDidMount() {
+    this.animations = {};
     const { animations } = this.props;
     if (animations && animations.length) {
-      animations.forEach(a => {
-        if (a.type !== 'gif') {
-          lottie.loadAnimation({
-            wrapper: this.svgWrappers[a.id],
-            animType: 'svg',
-            loop: true,
-            animationData: a.data
-          });
-        }
-      });
+      this.renderAnimations(animations);
     }
   }
+
+  componentDidUpdate(prevProps) {
+    const { animations } = this.props;
+    const { animations: prevAnimations } = prevProps;
+    if (animations && !isEqual(animations, prevAnimations)) {
+      if (prevAnimations && prevAnimations.length) {
+        this.destroyAnimations(prevAnimations);
+      }
+      this.renderAnimations(animations);
+    }
+  }
+
+  componentWillUnmount() {
+    lottie.destroy();
+  }
+
+  destroyAnimations = animations => {
+    animations.forEach(
+      a =>
+        this.animations &&
+        this.animations[a.id] &&
+        this.animations[a.id].destroy()
+    );
+  };
+
+  renderAnimations = animations => {
+    animations.forEach(a => {
+      this.animations[a.id] = lottie.loadAnimation({
+        wrapper: this.svgWrappers[a.id],
+        animType: 'svg',
+        loop: true,
+        animationData: a.data
+      });
+    });
+  };
 
   render() {
     const {
@@ -44,35 +72,22 @@ class TopicsImage extends PureComponent {
           alt={description}
         />
         {animations &&
-          animations.map(
-            a =>
-              (a.type !== 'gif' ? (
-                <div
-                  key={a.id}
-                  className="svg-animation"
-                  id={a.id}
-                  style={{
-                    zIndex: a.behind ? 0 : 2,
-                    ...(a.type === 'gif' && {
-                      backgroundImage: `url('${a.data}')`
-                    })
-                  }}
-                  ref={ref => {
-                    this.svgWrappers = {
-                      ...this.svgWrappers,
-                      [a.id]: ref
-                    };
-                  }}
-                />
-              ) : (
-                <img
-                  key={a.id}
-                  className="gif-animation"
-                  src={a.data}
-                  alt={a.id}
-                />
-              ))
-          )}
+          animations.map(a => (
+            <div
+              key={a.id}
+              className="svg-animation"
+              id={a.id}
+              style={{
+                zIndex: a.behind ? 0 : 2
+              }}
+              ref={ref => {
+                this.svgWrappers = {
+                  ...this.svgWrappers,
+                  [a.id]: ref
+                };
+              }}
+            />
+          ))}
         {prompts &&
           prompts.map(p => (
             <Fragment key={p.id}>

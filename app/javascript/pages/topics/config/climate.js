@@ -31,7 +31,7 @@ import scene1 from 'pages/topics/assets/climate/animations/scene1.json';
 import birds1 from 'pages/topics/assets/climate/animations/birds1.json';
 import scene2 from 'pages/topics/assets/climate/animations/scene2.json';
 import birds2 from 'pages/topics/assets/climate/animations/birds2.json';
-import smoke2 from 'pages/topics/assets/climate/animations/smoke2.gif';
+import smoke from 'pages/topics/assets/climate/animations/smoke.json';
 import scene3 from 'pages/topics/assets/climate/animations/scene3.json';
 import scene4 from 'pages/topics/assets/climate/animations/scene4.json';
 import birds4 from 'pages/topics/assets/climate/animations/birds4.json';
@@ -74,11 +74,11 @@ export default {
       ],
       animations: [
         {
-          id: 'scene1',
+          id: 'climate-scene1',
           data: scene1
         },
         {
-          id: 'birds1',
+          id: 'climate-birds1',
           data: birds1,
           behind: true
         }
@@ -113,18 +113,17 @@ export default {
       ],
       animations: [
         {
-          id: 'scene2',
+          id: 'climate-smoke',
+          data: smoke
+        },
+        {
+          id: 'climate-scene2',
           data: scene2
         },
         {
-          id: 'birds2',
+          id: 'climate-birds2',
           data: birds2,
           behind: true
-        },
-        {
-          id: 'smoke2',
-          data: smoke2,
-          type: 'gif'
         }
       ]
     },
@@ -157,7 +156,7 @@ export default {
       ],
       animations: [
         {
-          id: 'scene3',
+          id: 'climate-scene3',
           data: scene3
         }
       ]
@@ -190,11 +189,11 @@ export default {
       ],
       animations: [
         {
-          id: 'scene4',
+          id: 'climate-scene4',
           data: scene4
         },
         {
-          id: 'birds4',
+          id: 'climate-birds4',
           data: birds4,
           behind: true
         }
