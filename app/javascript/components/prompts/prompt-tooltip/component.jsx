@@ -33,7 +33,9 @@ class PromptTooltip extends PureComponent {
         <div className="step-title">{`${title}${
           size > 1 ? ` · ${index + 1}/${size}` : ''
         }`}</div>
-        <div className="step-content">{content}</div>
+        <div className="step-content">
+          {typeof content === 'string' ? content : content}
+        </div>
         <div className="step-actions">
           <div className="step-btns">
             {index !== 0 && (

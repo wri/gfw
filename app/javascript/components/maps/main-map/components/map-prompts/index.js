@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { setMainMapSettings } from 'components/maps/main-map/actions';
 import { setMapSettings } from 'components/maps/map/actions';
 import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
+
 import * as actions from './actions';
 import Component from './component';
-
 import { getMapPromptsProps } from './selectors';
 
 class MapPromptsContainer extends PureComponent {
@@ -147,10 +147,6 @@ class MapPromptsContainer extends PureComponent {
           {
             target: '.map-tour-main-menu',
             content: 'Access the main navigation menu.'
-          },
-          {
-            target: 'body',
-            content: () => this.renderExitOptions()
           }
         ]
       },
