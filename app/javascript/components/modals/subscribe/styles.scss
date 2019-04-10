@@ -3,8 +3,6 @@ $mobile-padding: rem(30px);
 $desktop-padding: rem(50px);
 
 .c-modal-subscribe {
-  padding: $mobile-padding;
-  min-width: rem(320px);
   min-height: rem(320px);
   max-width: rem(800px);
   width: 100%;
@@ -13,6 +11,7 @@ $desktop-padding: rem(50px);
   @media screen and (min-width: $screen-m) {
     padding: $desktop-padding;
     padding-top: rem(20px);
+    min-width: rem(320px);
   }
 
   .mygfw-subscribe {
