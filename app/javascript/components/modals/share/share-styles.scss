@@ -36,9 +36,6 @@ $input-button-width: rem(100px);
 
   .input-container {
     width: calc(100% + (#{$input-button-width} / 2));
-    // position: relative;
-    // display: flex;
-    // align-items: center;
 
     .input,
     .input-button {
