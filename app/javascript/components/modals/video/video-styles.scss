@@ -1,6 +1,8 @@
 @import '~styles/settings.scss';
 
 .c-modal-video {
+  max-width: unset;
+
   .modal-content,
   .modal-title {
     padding: 0;
