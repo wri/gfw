@@ -271,7 +271,7 @@ export default {
           data: arrowsMedium,
           type: 'svg',
           className: 'co2-arrows medium down',
-          position: [55, 18]
+          position: [55, 13]
         },
         {
           id: 'climate-arrows4-4',

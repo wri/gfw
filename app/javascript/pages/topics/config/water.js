@@ -184,7 +184,8 @@ export default {
       animations: [
         {
           id: 'water-birds4',
-          data: birds4
+          data: birds4,
+          behind: true
         }
       ]
     }
