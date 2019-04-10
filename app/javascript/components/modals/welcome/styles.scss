@@ -46,11 +46,15 @@ $desktop-padding: rem(40px);
     margin-bottom: rem(10px);
     height: auto;
 
+    &:hover {
+      background-color: $slate;
+    }
+
     .guide-btn-icon {
-      width: rem(40px);
-      min-width: rem(40px);
-      height: rem(40px);
-      min-height: rem(40px);
+      width: rem(30px);
+      min-width: rem(30px);
+      height: rem(30px);
+      min-height: rem(30px);
       margin-right: rem(15px);
       fill: $green-gfw;
     }
@@ -58,6 +62,7 @@ $desktop-padding: rem(40px);
     .arrow-icon {
       transform: rotate(-90deg);
       width: rem(30px);
+      min-width: rem(30px);
     }
 
     p {

@@ -42,11 +42,6 @@ class MapPromptsContainer extends PureComponent {
                 this.props.setMainMapSettings({
                   showAnalysis: true
                 });
-              },
-              prev: () => {
-                this.props.setMainMapSettings({
-                  showAnalysis: false
-                });
               }
             }
           },
@@ -62,8 +57,8 @@ class MapPromptsContainer extends PureComponent {
                 });
               },
               prev: () => {
-                this.props.setMenuSettings({
-                  menuSection: ''
+                this.props.setMainMapSettings({
+                  showAnalysis: false
                 });
               }
             }
