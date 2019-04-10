@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactFullpage from '@fullpage/react-fullpage';
+import { track } from 'app/analytics';
 
 import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
@@ -97,9 +98,12 @@ class TopicsPage extends PureComponent {
     this.handleSetLeaving();
   };
 
-  handleSkipToTools = () => {
+  handleSkipToTools = source => {
     this.setState({ skip: true }, () => {
       this.fullpageApi.moveTo('footer');
+    });
+    track('topicsRelatedTools', {
+      label: source
     });
   };
 
@@ -155,7 +159,9 @@ class TopicsPage extends PureComponent {
                         intro={intro}
                         fullpageApi={fullpageApi}
                         title={title}
-                        handleSkipToTools={this.handleSkipToTools}
+                        handleSkipToTools={() =>
+                          this.handleSkipToTools('intro')
+                        }
                         isDesktop={isDesktop}
                       />
                     </div>
@@ -169,7 +175,11 @@ class TopicsPage extends PureComponent {
                             isDesktop={isDesktop}
                             isLeaving={this.state.slideLeaving === index}
                             isLast={index === 3}
-                            handleSkipToTools={this.handleSkipToTools}
+                            handleSkipToTools={() =>
+                              this.handleSkipToTools(
+                                `${s.title}: ${s.subtitle}`
+                              )
+                            }
                             leaving={this.state.leaving}
                           />
                         ))}

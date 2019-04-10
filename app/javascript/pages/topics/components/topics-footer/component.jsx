@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { track } from 'app/analytics';
 
 import Footer from 'components/footer';
 import Carousel from 'components/ui/carousel';
@@ -32,10 +33,14 @@ class TopicsFooter extends PureComponent {
                           text: c.btnText || 'READ MORE',
                           link: c.link,
                           extLink: c.extLink,
-                          onClick:
-                            c.id === 'feedback'
-                              ? () => setModalContactUsOpen(true)
-                              : null
+                          onClick: () => {
+                            if (c.id === 'feedback') {
+                              setModalContactUsOpen(true);
+                            }
+                            track('topicsCardClicked', {
+                              label: `${topic}: ${c.title}`
+                            });
+                          }
                         }
                       ]
                     }}
