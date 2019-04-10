@@ -29,12 +29,12 @@ import researchLarge from 'pages/topics/assets/climate/cards/research@2x.png';
 // animations
 import scene1 from 'pages/topics/assets/climate/animations/scene1.json';
 import birds1 from 'pages/topics/assets/climate/animations/birds1.json';
-import scene2 from 'pages/topics/assets/climate/animations/scene2.json';
 import birds2 from 'pages/topics/assets/climate/animations/birds2.json';
 import smoke from 'pages/topics/assets/climate/animations/smoke.json';
 import scene3 from 'pages/topics/assets/climate/animations/scene3.json';
 import scene4 from 'pages/topics/assets/climate/animations/scene4.json';
 import birds4 from 'pages/topics/assets/climate/animations/birds4.json';
+import arrows from 'pages/topics/assets/climate/animations/arrow_test.svg';
 
 export default {
   intro: {
@@ -118,7 +118,9 @@ export default {
         },
         {
           id: 'climate-scene2',
-          data: scene2
+          data: arrows,
+          type: 'svg',
+          className: 'co2-arrows'
         },
         {
           id: 'climate-birds2',

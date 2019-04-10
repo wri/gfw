@@ -12,6 +12,7 @@ import './styles.scss';
 
 class TopicsImage extends PureComponent {
   componentDidMount() {
+    lottie.setQuality(2);
     this.animations = {};
     const { animations } = this.props;
     if (animations && animations.length) {
@@ -26,6 +27,7 @@ class TopicsImage extends PureComponent {
       if (prevAnimations && prevAnimations.length) {
         this.destroyAnimations(prevAnimations);
       }
+      lottie.setQuality(2);
       this.renderAnimations(animations);
     }
   }
@@ -45,12 +47,14 @@ class TopicsImage extends PureComponent {
 
   renderAnimations = animations => {
     animations.forEach(a => {
-      this.animations[a.id] = lottie.loadAnimation({
-        wrapper: this.svgWrappers[a.id],
-        animType: 'svg',
-        loop: true,
-        animationData: a.data
-      });
+      if (a.type !== 'svg') {
+        this.animations[a.id] = lottie.loadAnimation({
+          wrapper: this.svgWrappers[a.id],
+          animType: 'svg',
+          loop: true,
+          animationData: a.data
+        });
+      }
     });
   };
 
@@ -72,22 +76,32 @@ class TopicsImage extends PureComponent {
           alt={description}
         />
         {animations &&
-          animations.map(a => (
-            <div
-              key={a.id}
-              className="svg-animation"
-              id={a.id}
-              style={{
-                zIndex: a.behind ? 0 : 2
-              }}
-              ref={ref => {
-                this.svgWrappers = {
-                  ...this.svgWrappers,
-                  [a.id]: ref
-                };
-              }}
-            />
-          ))}
+          animations.map(
+            a =>
+              (a.type === 'svg' ? (
+                <svg
+                  className={a.className || ''}
+                  viewBox={a.data.viewBox || '0 0 32 32'}
+                >
+                  <use xlinkHref={`#${a.data.id || a.data}`} />
+                </svg>
+              ) : (
+                <div
+                  key={a.id}
+                  className="svg-animation"
+                  id={a.id}
+                  style={{
+                    zIndex: a.behind ? 0 : 2
+                  }}
+                  ref={ref => {
+                    this.svgWrappers = {
+                      ...this.svgWrappers,
+                      [a.id]: ref
+                    };
+                  }}
+                />
+              ))
+          )}
         {prompts &&
           prompts.map(p => (
             <Fragment key={p.id}>

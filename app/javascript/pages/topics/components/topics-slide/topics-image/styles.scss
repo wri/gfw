@@ -32,6 +32,27 @@
     right: 0;
     z-index: 2;
   }
+
+  .co2-arrows {
+    width: rem(30px);
+    height: rem(40px);
+    position: absolute;
+    top: 31%;
+    left: 11.2%;
+    z-index: 3;
+    animation: up 1s infinite;
+  }
+
+  @keyframes up {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+  }
 }
 
 .c-topics-info-tooltip {
