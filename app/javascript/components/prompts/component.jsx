@@ -52,14 +52,14 @@ class PromptTour extends PureComponent {
                 handleStateChange({
                   stepIndex: newStepIndex
                 });
-              }, 400);
+              }, 500);
             } else if (action === 'next' && actions && actions.next) {
               actions.next();
               setTimeout(() => {
                 handleStateChange({
                   stepIndex: newStepIndex
                 });
-              }, 400);
+              }, 500);
             } else {
               handleStateChange({
                 stepIndex: newStepIndex

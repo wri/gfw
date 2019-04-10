@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -22,6 +23,7 @@ class PromptTooltip extends PureComponent {
       title
     } = this.props;
     const { content, actions } = step;
+    const { learnHow } = actions || {};
     const stepNum = index + 1;
     const isLastStep = stepNum === size;
 
@@ -37,7 +39,7 @@ class PromptTooltip extends PureComponent {
           {typeof content === 'string' ? content : content}
         </div>
         <div className="step-actions">
-          <div className="step-btns">
+          <div className={cx('step-btns', { 'align-left': learnHow })}>
             {index !== 0 && (
               <button className="step-nav-btn" {...backProps}>
                 BACK
@@ -57,15 +59,11 @@ class PromptTooltip extends PureComponent {
               )}
             {size === 1 && <div>Show me tips</div>}
           </div>
-          {actions &&
-            actions.learnHow && (
-              <Button
-                theme="theme-button-small"
-                onClick={() => actions.learnHow()}
-              >
-                LEARN HOW
-              </Button>
-            )}
+          {learnHow && (
+            <Button theme="theme-button-small" onClick={() => learnHow()}>
+              LEARN HOW
+            </Button>
+          )}
         </div>
       </div>
     );

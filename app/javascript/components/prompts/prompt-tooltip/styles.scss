@@ -5,7 +5,7 @@
   color: $white;
   background-color: #333;
   padding: rem(30px);
-  max-width: rem(320px);
+  max-width: rem(300px);
   position: relative;
 
   .step-close {
@@ -46,6 +46,14 @@
     justify-content: space-between;
     min-width: rem(90px);
     width: 100%;
+
+    &.align-left {
+      justify-content: flex-start;
+
+      > button {
+        margin-right: rem(30px);
+      }
+    }
   }
 
   .step-nav-btn {

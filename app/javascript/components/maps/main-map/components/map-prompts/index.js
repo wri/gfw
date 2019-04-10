@@ -131,6 +131,13 @@ class MapPromptsContainer extends PureComponent {
                 this.props.setMainMapSettings({
                   showBasemaps: true
                 });
+              },
+              learnHow: () => {
+                setMapPromptsSettings({
+                  open: true,
+                  stepsKey: 'recentImageryTour',
+                  stepIndex: 0
+                });
               }
             }
           },
@@ -157,7 +164,8 @@ class MapPromptsContainer extends PureComponent {
               learnHow: () => {
                 setMapPromptsSettings({
                   open: true,
-                  stepsKey: 'recentImageryTour'
+                  stepsKey: 'recentImageryTour',
+                  stepIndex: 0
                 });
               }
             }
