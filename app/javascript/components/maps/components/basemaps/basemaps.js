@@ -46,7 +46,7 @@ class BasemapsContainer extends React.Component {
 
   selectRoads = roads => {
     this.props.setMapSettings({ roads: roads.value });
-    track('labelChanged', {
+    track('roadsChanged', {
       roads: roads.label
     });
   };
