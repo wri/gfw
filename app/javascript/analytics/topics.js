@@ -8,5 +8,10 @@ export default {
     category: 'Topics pages',
     action: 'Clicks through on a card',
     label: '[card name]'
+  },
+  topicsImageBubble: {
+    category: 'Topics pages',
+    action: 'Use bubble to advance to advance',
+    label: '[destination]'
   }
 };

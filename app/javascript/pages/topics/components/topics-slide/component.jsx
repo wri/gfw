@@ -60,6 +60,7 @@ class TopicsSlide extends PureComponent {
           <div className="column small-12 medium-8">
             <div className="topic-image">
               <TopicsImage
+                topic={title}
                 img1x={img1x}
                 img2x={img2x}
                 description={subtitle}

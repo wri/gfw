@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import lottie from 'lottie-web';
+import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -65,7 +66,8 @@ class TopicsImage extends PureComponent {
       description,
       prompts,
       animations,
-      leaving
+      leaving,
+      topic
     } = this.props;
 
     return (
@@ -126,7 +128,15 @@ class TopicsImage extends PureComponent {
                   <div className="c-topics-info-tooltip">
                     <p>{p.content}</p>
                     {p.link && (
-                      <Button theme="theme-button-small" extLink={p.link}>
+                      <Button
+                        theme="theme-button-small"
+                        extLink={p.link}
+                        onClick={() => {
+                          track('topicsImageBubble', {
+                            label: `${topic}: ${p.content}`
+                          });
+                        }}
+                      >
                         {p.btnText}
                       </Button>
                     )}
@@ -150,7 +160,8 @@ TopicsImage.propTypes = {
   description: PropTypes.string,
   prompts: PropTypes.array,
   animations: PropTypes.array,
-  leaving: PropTypes.bool
+  leaving: PropTypes.bool,
+  topic: PropTypes.string
 };
 
 export default TopicsImage;
