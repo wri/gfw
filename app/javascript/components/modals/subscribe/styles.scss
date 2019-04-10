@@ -1,6 +1,4 @@
 @import '~styles/settings.scss';
-$mobile-padding: rem(30px);
-$desktop-padding: rem(50px);
 
 .c-modal-subscribe {
   min-height: rem(320px);
@@ -9,7 +7,6 @@ $desktop-padding: rem(50px);
   color: $slate;
 
   @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding;
     padding-top: rem(20px);
     min-width: rem(320px);
   }
