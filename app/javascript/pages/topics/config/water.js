@@ -20,6 +20,13 @@ import solutionsLarge from 'pages/topics/assets/water/cards/solutions@2x.png';
 import learn from 'pages/topics/assets/water/cards/learn.png';
 import learnLarge from 'pages/topics/assets/water/cards/learn@2x.png';
 
+// animations
+import scene1 from 'pages/topics/assets/water/animations/scene1.json';
+import scene2 from 'pages/topics/assets/water/animations/scene2.json';
+import palm3 from 'pages/topics/assets/water/animations/palm3.json';
+import rain3 from 'pages/topics/assets/water/animations/rain3.json';
+import birds4 from 'pages/topics/assets/water/animations/birds4.json';
+
 export default {
   intro: {
     title:
@@ -62,6 +69,12 @@ export default {
             '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImJkNWQ3OTI0LTYxMWUtNDMwMi05MTg1LTgwNTRhY2IwYjQ0YiIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0OWUzZjk1NS0yYmFiLTRmNzMtODU4OS1jOWMwMzliOGRhMjkiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiIwNDRmNGFmOC1iZTcyLTQ5OTktYjdkZC0xMzQzNGZjNGEzOTQiLCJsYXllcnMiOlsiNzg3NDdlYTEtMzRhOS00YWE3LWIwOTktYmRiODk0ODIwMGY0Il0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiY2FuQm91bmQiOnRydWV9',
           position: [31, 71]
         }
+      ],
+      animations: [
+        {
+          id: 'water-scene1',
+          data: scene1
+        }
       ]
     },
     {
@@ -89,6 +102,12 @@ export default {
             'https://blog.globalforestwatch.org/data/watersheds-lost-up-to-22-of-their-forests-in-14-years-heres-how-it-affects-your-water-supply',
           position: [55, 73]
         }
+      ],
+      animations: [
+        {
+          id: 'water-scene2',
+          data: scene2
+        }
       ]
     },
     {
@@ -114,6 +133,16 @@ export default {
           link:
             'https://www.wri.org/blog/2017/07/without-forests-jakartas-water-situation-worsens',
           position: [62, 65]
+        }
+      ],
+      animations: [
+        {
+          id: 'water-rain3',
+          data: rain3
+        },
+        {
+          id: 'water-palm3',
+          data: palm3
         }
       ]
     },
@@ -150,6 +179,12 @@ export default {
           link:
             'https://www.wri.org/blog/2017/09/wildfires-scorch-us-forests-forest-resilience-bond-blazes-new-trail',
           position: [57, 75]
+        }
+      ],
+      animations: [
+        {
+          id: 'water-birds4',
+          data: birds4
         }
       ]
     }
