@@ -80,8 +80,13 @@ class TopicsImage extends PureComponent {
             a =>
               (a.type === 'svg' ? (
                 <svg
+                  key={a.id}
                   className={a.className || ''}
-                  viewBox={a.data.viewBox || '0 0 32 32'}
+                  viewBox={a.viewBox || '0 0 32 32'}
+                  style={{
+                    left: `${a.position[0]}%`,
+                    top: `${a.position[1]}%`
+                  }}
                 >
                   <use xlinkHref={`#${a.data.id || a.data}`} />
                 </svg>

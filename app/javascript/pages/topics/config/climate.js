@@ -27,14 +27,13 @@ import research from 'pages/topics/assets/climate/cards/research.png';
 import researchLarge from 'pages/topics/assets/climate/cards/research@2x.png';
 
 // animations
-import scene1 from 'pages/topics/assets/climate/animations/scene1.json';
 import birds1 from 'pages/topics/assets/climate/animations/birds1.json';
 import birds2 from 'pages/topics/assets/climate/animations/birds2.json';
-import smoke from 'pages/topics/assets/climate/animations/smoke.json';
-import scene3 from 'pages/topics/assets/climate/animations/scene3.json';
-import scene4 from 'pages/topics/assets/climate/animations/scene4.json';
+import scene2 from 'pages/topics/assets/climate/animations/scene2.json';
 import birds4 from 'pages/topics/assets/climate/animations/birds4.json';
-import arrows from 'pages/topics/assets/climate/animations/arrow_test.svg';
+import arrowsSmall from 'pages/topics/assets/climate/animations/arrow-small.svg';
+import arrowsMedium from 'pages/topics/assets/climate/animations/arrow-medium.svg';
+import arrowsLarge from 'pages/topics/assets/climate/animations/arrow-large.svg';
 
 export default {
   intro: {
@@ -74,8 +73,25 @@ export default {
       ],
       animations: [
         {
-          id: 'climate-scene1',
-          data: scene1
+          id: 'climate-arrows1-1',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small',
+          position: [8.8, 26]
+        },
+        {
+          id: 'climate-arrows1-2',
+          data: arrowsMedium,
+          type: 'svg',
+          className: 'co2-arrows medium down',
+          position: [48, -4]
+        },
+        {
+          id: 'climate-arrows1-3',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small down',
+          position: [89, 49]
         },
         {
           id: 'climate-birds1',
@@ -113,14 +129,36 @@ export default {
       ],
       animations: [
         {
-          id: 'climate-smoke',
-          data: smoke
+          id: 'climate-fire',
+          data: scene2
         },
         {
-          id: 'climate-scene2',
-          data: arrows,
+          id: 'climate-arrows2-1',
+          data: arrowsMedium,
           type: 'svg',
-          className: 'co2-arrows'
+          className: 'co2-arrows medium',
+          position: [8, 26]
+        },
+        {
+          id: 'climate-arrows2-2',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows medium',
+          position: [43, -4]
+        },
+        {
+          id: 'climate-arrows2-3',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows medium down',
+          position: [50, -4]
+        },
+        {
+          id: 'climate-arrows2-4',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small down',
+          position: [89, 49]
         },
         {
           id: 'climate-birds2',
@@ -158,8 +196,32 @@ export default {
       ],
       animations: [
         {
-          id: 'climate-scene3',
-          data: scene3
+          id: 'climate-arrows3-1',
+          data: arrowsLarge,
+          type: 'svg',
+          className: 'co2-arrows large',
+          position: [7.3, 26]
+        },
+        {
+          id: 'climate-arrows3-2',
+          data: arrowsMedium,
+          type: 'svg',
+          className: 'co2-arrows medium',
+          position: [50, 25]
+        },
+        {
+          id: 'climate-arrows3-3',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small down',
+          position: [74, 34]
+        },
+        {
+          id: 'climate-arrows3-4',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small down',
+          position: [89, 49]
         }
       ]
     },
@@ -191,8 +253,32 @@ export default {
       ],
       animations: [
         {
-          id: 'climate-scene4',
-          data: scene4
+          id: 'climate-arrows4-1',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small',
+          position: [20, 20]
+        },
+        {
+          id: 'climate-arrows4-2',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small',
+          position: [47, 17]
+        },
+        {
+          id: 'climate-arrows4-3',
+          data: arrowsMedium,
+          type: 'svg',
+          className: 'co2-arrows medium down',
+          position: [55, 18]
+        },
+        {
+          id: 'climate-arrows4-4',
+          data: arrowsSmall,
+          type: 'svg',
+          className: 'co2-arrows small down',
+          position: [89, 49]
         },
         {
           id: 'climate-birds4',

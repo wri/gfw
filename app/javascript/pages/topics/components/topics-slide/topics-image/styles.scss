@@ -34,13 +34,26 @@
   }
 
   .co2-arrows {
-    width: rem(30px);
-    height: rem(40px);
     position: absolute;
-    top: 31%;
-    left: 11.2%;
-    z-index: 3;
+    z-index: 2;
     animation: up 1s infinite;
+
+    &.small {
+      width: rem(60px);
+    }
+
+    &.medium {
+      width: rem(70px);
+    }
+
+    &.large {
+      width: rem(80px);
+    }
+
+    &.down {
+      transform: rotate(180deg);
+      animation: down 1s infinite;
+    }
   }
 
   @keyframes up {
@@ -50,6 +63,17 @@
 
     to {
       transform: translateY(-20px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes down {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(20px) rotate(180deg);
       opacity: 0;
     }
   }
