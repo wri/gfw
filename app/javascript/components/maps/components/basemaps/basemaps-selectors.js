@@ -8,7 +8,9 @@ import {
   getActiveDatasetsFromState,
   getMapZoom,
   getActiveBoundaryDatasets,
-  getAllBoundaries
+  getAllBoundaries,
+  getRoads,
+  getActiveRoads
 } from 'components/maps/map/selectors';
 
 export const getLandsatYears = createSelector([getBasemaps], basemaps =>
@@ -27,5 +29,7 @@ export const getBasemapsProps = createStructuredSelector({
   activeBoundaries: getActiveBoundaryDatasets,
   basemaps: getBasemaps,
   labels: getLabels,
-  landsatYears: getLandsatYears
+  landsatYears: getLandsatYears,
+  roads: getRoads,
+  activeRoads: getActiveRoads
 });

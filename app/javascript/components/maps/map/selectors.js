@@ -10,7 +10,7 @@ import { getDayRange } from 'utils/dates';
 
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { initialState } from './reducers';
-import basemaps, { labels } from './basemaps-schema';
+import basemaps, { labels, roads } from './basemaps-schema';
 
 // map state
 const selectMapUrlState = state =>
@@ -39,6 +39,7 @@ const selectInteractions = state => state.popup && state.popup.interactions;
 // CONSTS
 export const getBasemaps = () => basemaps;
 export const getLabels = () => labels;
+export const getRoads = () => roads;
 
 // SELECTORS
 export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
@@ -67,6 +68,16 @@ export const getLabelKey = createSelector(
 export const getLabel = createSelector(
   [getLabelKey],
   labelsKey => labels[labelsKey] || labels[labelsKey.id]
+);
+
+export const getRoadsKey = createSelector(
+  getMapSettings,
+  settings => settings.roads
+);
+
+export const getActiveRoads = createSelector(
+  [getRoadsKey],
+  roadsKey => roads[roadsKey] || roads[roadsKey.id]
 );
 
 export const getMapZoom = createSelector(
@@ -560,5 +571,6 @@ export const getMapProps = createStructuredSelector({
   lng: getMapLng,
   zoom: getMapZoom,
   selectedInteraction: getSelectedInteraction,
-  interactiveLayers: getInteractiveLayers
+  interactiveLayers: getInteractiveLayers,
+  roads: getActiveRoads
 });

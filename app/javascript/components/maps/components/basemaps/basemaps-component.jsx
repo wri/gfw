@@ -25,7 +25,10 @@ class Basemaps extends React.PureComponent {
     activeBoundaries: PropTypes.object,
     isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
-    setModalMetaSettings: PropTypes.func
+    setModalMetaSettings: PropTypes.func,
+    activeRoads: PropTypes.object.isRequired,
+    selectRoads: PropTypes.func.isRequired,
+    roads: PropTypes.object.isRequired
   };
 
   renderButtonBasemap(item) {
@@ -94,7 +97,10 @@ class Basemaps extends React.PureComponent {
       basemaps,
       labels,
       isDesktop,
-      setModalMetaSettings
+      setModalMetaSettings,
+      activeRoads,
+      selectRoads,
+      roads
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -142,6 +148,15 @@ class Basemaps extends React.PureComponent {
                 value={activeLabels}
                 options={Object.values(labels)}
                 onChange={this.props.selectLabels}
+              />
+            </li>
+            <li className="basemaps-options-wrapper">
+              <Dropdown
+                className="theme-dropdown-button"
+                label="roads"
+                value={activeRoads}
+                options={Object.values(roads)}
+                onChange={selectRoads}
               />
             </li>
           </ul>

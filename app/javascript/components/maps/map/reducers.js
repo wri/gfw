@@ -15,6 +15,7 @@ export const initialState = {
       value: 'default'
     },
     label: 'default',
+    roads: 'default',
     bbox: null,
     canBound: true,
     draw: false,

@@ -23,11 +23,15 @@ class MapComponent extends PureComponent {
   };
 
   componentDidUpdate(prevProps) {
-    const { label, basemap } = this.props;
+    const { label, basemap, roads } = this.props;
     const { mapReady } = this.state;
 
     if (mapReady && label.value !== prevProps.label.value) {
       this.setLabelStyles();
+    }
+
+    if (mapReady && roads.value !== prevProps.roads.value) {
+      this.setRoadsStyles();
     }
 
     if (mapReady && basemap.value !== prevProps.basemap.value) {
@@ -88,6 +92,23 @@ class MapComponent extends PureComponent {
     }
   };
 
+  setRoadsStyles = () => {
+    const { roads } = this.props;
+    if (this.map && roads) {
+      const { layout } = roads || {};
+      const allLayers = this.map.getStyle().layers;
+      const roadsLayer = allLayers.find(
+        l => l.id.includes('roads') && l.type === 'line'
+      );
+      const layoutOptions = layout && Object.entries(layout);
+      if (layoutOptions && roadsLayer) {
+        layoutOptions.forEach(opt => {
+          this.map.setLayoutProperty(roadsLayer.id, opt[0], opt[1]);
+        });
+      }
+    }
+  };
+
   render() {
     const {
       className,
@@ -126,7 +147,7 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
-          mapStyle="mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc"
+          mapStyle="mapbox://styles/resourcewatch/cju8idqwd3js31fo32b0f9y1f"
           mapOptions={mapOptions}
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}
@@ -183,7 +204,8 @@ MapComponent.propTypes = {
   lat: PropTypes.number,
   lng: PropTypes.number,
   zoom: PropTypes.number,
-  smallView: PropTypes.bool
+  smallView: PropTypes.bool,
+  roads: PropTypes.object
 };
 
 export default MapComponent;
