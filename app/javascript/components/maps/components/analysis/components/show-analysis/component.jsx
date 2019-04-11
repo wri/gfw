@@ -84,6 +84,10 @@ class ShowAnalysis extends PureComponent {
       widgets
     } = this.props;
 
+    const treeCoverGain =
+      data && data.find(d => d.label.includes('Tree cover gain'));
+    const treeCoverLoss = widgets && widgets.find(w => w.widget === 'treeLoss');
+
     return (
       <div className={cx('c-show-analysis')}>
         <div className="draw-title">
@@ -177,20 +181,23 @@ class ShowAnalysis extends PureComponent {
                       levels.
                     </p>
                   )}
-                  <p>
-                    <b>NOTE:</b> tree cover loss and gain statistics cannot be
-                    compared against each other.{' '}
-                    <button
-                      onClick={() =>
-                        setModalSources({
-                          open: true,
-                          source: 'lossDisclaimer'
-                        })
-                      }
-                    >
-                      Learn more.
-                    </button>
-                  </p>
+                  {!!treeCoverGain &&
+                    !!treeCoverLoss && (
+                      <p>
+                        <b>NOTE:</b> tree cover loss and gain statistics cannot
+                        be compared against each other.{' '}
+                        <button
+                          onClick={() =>
+                            setModalSources({
+                              open: true,
+                              source: 'lossDisclaimer'
+                            })
+                          }
+                        >
+                          Learn more.
+                        </button>
+                      </p>
+                    )}
                 </div>
               </Fragment>
             )}
