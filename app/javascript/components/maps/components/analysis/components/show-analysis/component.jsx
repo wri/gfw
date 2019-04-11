@@ -85,7 +85,7 @@ class ShowAnalysis extends PureComponent {
     } = this.props;
 
     const treeCoverGain =
-      data && data.find(d => d.label.includes('Tree cover gain'));
+      data && data.find(d => d.label && d.label.includes('Tree cover gain'));
     const treeCoverLoss = widgets && widgets.find(w => w.widget === 'treeLoss');
 
     return (
