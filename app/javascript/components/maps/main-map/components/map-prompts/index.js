@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 
 import { setMainMapSettings } from 'components/maps/main-map/actions';
 import { setMapSettings } from 'components/maps/map/actions';
@@ -12,9 +13,32 @@ import { getMapPromptsProps } from './selectors';
 
 class MapPromptsContainer extends PureComponent {
   componentDidUpdate(prevProps) {
-    const { open } = this.props;
+    const {
+      open,
+      mapZoom,
+      setMapPromptsSettings,
+      location,
+      recentActive
+    } = this.props;
     if (open && open !== prevProps.open) {
       this.resetMapLayout();
+    }
+
+    const shouldOpenRecentImageryPrompt =
+      !recentActive &&
+      // if map zooms past 9
+      ((mapZoom > 9 && prevProps.mapZoom <= 9) ||
+        // if analysis is made, except adm0 and 1 countries
+        (!isEqual(location, prevProps.location) &&
+          ((location.type && location.type !== 'country') ||
+            (location.type === 'country' && location.adm2))));
+
+    if (shouldOpenRecentImageryPrompt) {
+      setMapPromptsSettings({
+        open: true,
+        stepsKey: 'recentImagery',
+        stepIndex: 0
+      });
     }
   }
 
@@ -230,7 +254,10 @@ MapPromptsContainer.propTypes = {
   setMainMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,
-  stepsKey: PropTypes.string
+  stepsKey: PropTypes.string,
+  mapZoom: PropTypes.number,
+  location: PropTypes.object,
+  recentActive: PropTypes.bool
 };
 
 export default connect(getMapPromptsProps, {

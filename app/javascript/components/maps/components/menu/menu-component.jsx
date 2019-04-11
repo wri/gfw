@@ -13,8 +13,9 @@ import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
   onToggleLayer = (data, enable) => {
-    const { activeDatasets } = this.props;
-    const { dataset, layer, iso } = data;
+    const { activeDatasets, recentActive } = this.props;
+    const { dataset, layer, iso, category } = data;
+
     let newActiveDatasets = [...activeDatasets];
     if (!enable) {
       newActiveDatasets = remove(newActiveDatasets, l => l.dataset !== dataset);
@@ -36,6 +37,18 @@ class MapMenu extends PureComponent {
       datasets: newActiveDatasets || [],
       ...(enable && { canBound: true })
     });
+    if (
+      !recentActive &&
+      enable &&
+      (data.dataset === 'e663eb09-04de-4f39-b871-35c6c2ed10b5' ||
+        (category === 'landUse' || category === 'biodiversity'))
+    ) {
+      this.props.setMapPromptsSettings({
+        stepsKey: 'recentImagery',
+        stepsIndex: 0,
+        open: true
+      });
+    }
     track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
       label: layer
     });
@@ -176,7 +189,8 @@ MapMenu.propTypes = {
   location: PropTypes.object,
   isDesktop: PropTypes.bool,
   embed: PropTypes.bool,
-  recentActive: PropTypes.bool
+  recentActive: PropTypes.bool,
+  setMapPromptsSettings: PropTypes.func
 };
 
 export default MapMenu;
