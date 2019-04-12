@@ -24,5 +24,10 @@ export default {
     category: 'Open modal',
     action: 'Hover modal button',
     label: '[modalTypes]'
+  },
+  refetchDataBtn: {
+    category: 'Refetch data',
+    action: 'Data failed to fetch, user clicks to refetch',
+    label: '[source]'
   }
 };
