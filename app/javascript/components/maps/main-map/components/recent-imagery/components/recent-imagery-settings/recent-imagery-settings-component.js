@@ -185,9 +185,12 @@ class RecentImagerySettings extends PureComponent {
             )}
           {error && (
             <RefreshButton
-              refetchFn={() =>
-                setRecentImageryLoading({ loading: false, error: false })
-              }
+              refetchFn={() => {
+                setRecentImageryLoading({ loading: false, error: false });
+                track('refetchDataBtn', {
+                  label: 'Recent imagery'
+                });
+              }}
             />
           )}
           {!error &&
