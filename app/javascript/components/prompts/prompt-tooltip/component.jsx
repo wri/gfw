@@ -20,7 +20,9 @@ class PromptTooltip extends PureComponent {
       primaryProps,
       tooltipProps,
       size,
-      title
+      title,
+      showPrompts,
+      handleShowPrompts
     } = this.props;
     const { content, actions } = step;
     const { learnHow } = actions || {};
@@ -57,7 +59,13 @@ class PromptTooltip extends PureComponent {
                   NEXT
                 </button>
               )}
-            {size === 1 && <div>Show me tips</div>}
+            {size === 1 && (
+              <div>
+                <button onClick={() => handleShowPrompts(false)}>
+                  {showPrompts ? 'Hide tips' : 'Show tips'}
+                </button>
+              </div>
+            )}
           </div>
           {learnHow && (
             <Button theme="theme-button-small" onClick={() => learnHow()}>
@@ -80,7 +88,9 @@ PromptTooltip.propTypes = {
   numOfSteps: PropTypes.number,
   tooltipProps: PropTypes.object,
   size: PropTypes.number,
-  title: PropTypes.string
+  title: PropTypes.string,
+  showPrompts: PropTypes.bool,
+  handleShowPrompts: PropTypes.func
 };
 
 export default PromptTooltip;

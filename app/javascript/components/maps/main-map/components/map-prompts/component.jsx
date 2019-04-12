@@ -11,7 +11,9 @@ class MapPrompts extends PureComponent {
       stepsKey,
       data,
       setMapTourOpen,
-      setMapPromptsSettings
+      setMapPromptsSettings,
+      showPrompts,
+      handleShowPrompts
     } = this.props;
 
     return open && data ? (
@@ -21,9 +23,11 @@ class MapPrompts extends PureComponent {
         open={open}
         stepIndex={stepIndex}
         setTourClosed={setMapTourOpen}
+        showPrompts={showPrompts}
         handleStateChange={state =>
           setMapPromptsSettings({ stepsKey, ...state })
         }
+        handleShowPrompts={handleShowPrompts}
         settings={data.settings}
       />
     ) : null;
@@ -36,7 +40,9 @@ MapPrompts.propTypes = {
   stepsKey: PropTypes.string,
   data: PropTypes.object,
   setMapPromptsSettings: PropTypes.func,
-  setMapTourOpen: PropTypes.func
+  setMapTourOpen: PropTypes.func,
+  showPrompts: PropTypes.bool,
+  handleShowPrompts: PropTypes.func
 };
 
 export default MapPrompts;

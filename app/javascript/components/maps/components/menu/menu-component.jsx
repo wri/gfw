@@ -13,7 +13,7 @@ import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
   onToggleLayer = (data, enable) => {
-    const { activeDatasets, recentActive } = this.props;
+    const { activeDatasets, recentActive, showPrompts } = this.props;
     const { dataset, layer, iso, category } = data;
 
     let newActiveDatasets = [...activeDatasets];
@@ -38,6 +38,7 @@ class MapMenu extends PureComponent {
       ...(enable && { canBound: true })
     });
     if (
+      showPrompts &&
       !recentActive &&
       enable &&
       (data.dataset === 'e663eb09-04de-4f39-b871-35c6c2ed10b5' ||
@@ -190,6 +191,7 @@ MapMenu.propTypes = {
   isDesktop: PropTypes.bool,
   embed: PropTypes.bool,
   recentActive: PropTypes.bool,
+  showPrompts: PropTypes.bool,
   setMapPromptsSettings: PropTypes.func
 };
 

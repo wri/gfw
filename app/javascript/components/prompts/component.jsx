@@ -12,7 +12,9 @@ class PromptTour extends PureComponent {
       title,
       stepIndex,
       handleStateChange,
-      settings
+      settings,
+      showPrompts,
+      handleShowPrompts
     } = this.props;
 
     return open ? (
@@ -68,7 +70,14 @@ class PromptTour extends PureComponent {
           }
         }}
         spotlightPadding={0}
-        tooltipComponent={step => <PromptTooltip {...step} title={title} />}
+        tooltipComponent={step => (
+          <PromptTooltip
+            {...step}
+            title={title}
+            showPrompts={showPrompts}
+            handleShowPrompts={handleShowPrompts}
+          />
+        )}
         styles={{
           options: {
             overlayColor: 'rgba(17, 55, 80, 0.4)',
@@ -89,7 +98,9 @@ PromptTour.propTypes = {
   title: PropTypes.string,
   stepIndex: PropTypes.number,
   handleStateChange: PropTypes.func,
-  settings: PropTypes.object
+  settings: PropTypes.object,
+  showPrompts: PropTypes.bool,
+  handleShowPrompts: PropTypes.func
 };
 
 export default PromptTour;

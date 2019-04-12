@@ -2,12 +2,14 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import reducerRegistry from 'app/registry';
 
 import { setMainMapSettings } from 'components/maps/main-map/actions';
 import { setMapSettings } from 'components/maps/map/actions';
 import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
 
 import * as actions from './actions';
+import reducers, { initialState } from './reducers';
 import Component from './component';
 import { getMapPromptsProps } from './selectors';
 
@@ -18,7 +20,8 @@ class MapPromptsContainer extends PureComponent {
       mapZoom,
       setMapPromptsSettings,
       location,
-      recentActive
+      recentActive,
+      showPrompts
     } = this.props;
     if (open && open !== prevProps.open) {
       this.resetMapLayout();
@@ -26,6 +29,7 @@ class MapPromptsContainer extends PureComponent {
 
     const shouldOpenRecentImageryPrompt =
       !recentActive &&
+      showPrompts &&
       // if map zooms past 9
       ((mapZoom > 9 && prevProps.mapZoom <= 9) ||
         // if analysis is made, except adm0 and 1 countries
@@ -241,10 +245,15 @@ class MapPromptsContainer extends PureComponent {
     this.props.setMenuSettings({ menuSection: '' });
   };
 
+  handleShowPrompts = showPrompts => {
+    this.props.setShowMapPrompts(showPrompts);
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
-      data: this.getStepsData()
+      data: this.getStepsData(),
+      handleShowPrompts: this.handleShowPrompts
     });
   }
 }
@@ -254,11 +263,19 @@ MapPromptsContainer.propTypes = {
   setMainMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,
+  setShowMapPrompts: PropTypes.func,
   stepsKey: PropTypes.string,
   mapZoom: PropTypes.number,
   location: PropTypes.object,
-  recentActive: PropTypes.bool
+  recentActive: PropTypes.bool,
+  showPrompts: PropTypes.bool
 };
+
+reducerRegistry.registerModule('mapPrompts', {
+  actions,
+  reducers,
+  initialState
+});
 
 export default connect(getMapPromptsProps, {
   ...actions,

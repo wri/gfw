@@ -49,7 +49,7 @@ class RecentImagerySettings extends PureComponent {
     const selected = this.state.selected || activeTile || {};
 
     return (
-      <div className="c-recent-imagery-settings">
+      <div className="c-recent-imagery-settings prompts-recent-imagery">
         <div className="top-section">
           <div className="recent-menu">
             <div className="title">Recent satellite imagery</div>
