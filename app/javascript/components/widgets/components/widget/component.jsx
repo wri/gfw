@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
+import { track } from 'app/analytics';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
+import RefreshButton from 'components/ui/refresh-button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from './components/widget-header';
@@ -21,6 +23,7 @@ class Widget extends PureComponent {
       locationName,
       setWidgetsSettings,
       setWidgetSettings,
+      setWidgetLoading,
       handleDataHighlight,
       data,
       dataConfig,
@@ -44,7 +47,14 @@ class Widget extends PureComponent {
           )}
         {!loading &&
           error && (
-            <NoContent message="An error occured while fetching data. Please try again later." />
+            <RefreshButton
+              refetchFn={() => {
+                setWidgetLoading({ widget, loading: false, error: false });
+                track('refetchDataBtn', {
+                  label: `Widget: ${widget}`
+                });
+              }}
+            />
           )}
         {!error &&
           sentence &&
@@ -122,6 +132,7 @@ Widget.propTypes = {
   Component: PropTypes.any,
   parsePayload: PropTypes.func,
   setWidgetsSettings: PropTypes.func,
+  setWidgetLoading: PropTypes.func,
   handleDataHighlight: PropTypes.func,
   setWidgetSettings: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),

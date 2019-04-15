@@ -6,7 +6,7 @@ import Modal from '../modal';
 
 import './styles.scss';
 
-class ModalMeta extends PureComponent {
+class ModalSources extends PureComponent {
   parseContent(html) {
     return (
       <div>
@@ -54,10 +54,10 @@ class ModalMeta extends PureComponent {
   }
 }
 
-ModalMeta.propTypes = {
+ModalSources.propTypes = {
   open: PropTypes.bool,
   setModalSources: PropTypes.func,
   data: PropTypes.object
 };
 
-export default ModalMeta;
+export default ModalSources;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import ReactHtmlParser from 'react-html-parser';
+import { track } from 'app/analytics';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -20,9 +21,17 @@ class ModalMeta extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { getModalMetaData, metakey } = this.props;
+    const { getModalMetaData, metakey, metaData } = this.props;
     if (metakey && metakey !== prevProps.metakey) {
       getModalMetaData(metakey);
+    }
+
+    if (
+      metaData &&
+      metaData.title &&
+      metaData.title !== prevProps.metaData.title
+    ) {
+      track('openModal', { label: `Metadata: ${metaData && metaData.title}` });
     }
   }
 
@@ -141,11 +150,11 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { metakey, setModalMetaSettings, metaData } = this.props;
+    const { metakey, setModalMetaSettings } = this.props;
     return (
       <Modal
         isOpen={!!metakey}
-        contentLabel={`Metadata: ${metaData && metaData.title}`}
+        track={false}
         onRequestClose={() =>
           setModalMetaSettings({
             metakey: '',

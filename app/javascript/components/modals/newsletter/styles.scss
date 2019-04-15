@@ -29,19 +29,17 @@ $desktop-padding: rem(40px);
     margin-bottom: 30px;
   }
 
-  h3 {
-    font-weight: 500;
-    font-size: 1rem;
-    text-transform: uppercase;
-    color: #555;
-    line-height: 1.25;
+  h2 {
+    font-weight: 300;
+    font-size: rem(36px);
+    color: $slate;
+    margin-bottom: rem(20px);
   }
 
   .subtitle {
     margin-top: 0.3125rem;
-    font-size: 0.8125rem;
-    line-height: 1.2;
-    color: #999;
-    margin-bottom: 1.875rem;
+    font-size: rem(18px);
+    line-height: rem(25px);
+    margin-bottom: rem(40px);
   }
 }

@@ -83,17 +83,7 @@ class SectionAbout extends PureComponent {
                 </li>
               </ul>
               <p className="text -paragraph -color-2 -light -spaced">
-                The call for applications for the 2019 Small Grants Fund will
-                open on February 1st, 2019 and will close on March 15th, 2019.
-                <a
-                  className="text -paragraph -color-4 -bold"
-                  href="https://gfw.fluidreview.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {' '}
-                  Apply now.
-                </a>
+                The 2019 Small Grants Fund application window is now closed.
               </p>
             </div>
             <div className="column small-12 medium-3 logo">
@@ -133,18 +123,7 @@ class SectionAbout extends PureComponent {
                 </li>
               </ul>
               <p className="text -paragraph -color-2 -light -spaced">
-                The call for applications for the 2019 Tech Fellowship will open
-                on February 15th, 2019. Applications will be reviewed on a
-                rolling basis.
-                <a
-                  className="text -paragraph -color-4 -bold"
-                  href="https://gfw.fluidreview.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {' '}
-                  Apply now.
-                </a>
+                The 2019 Tech Fellowship application window is now closed.
               </p>
             </div>
             <div className="column small-12 medium-3 logo">

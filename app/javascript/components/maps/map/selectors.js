@@ -22,6 +22,7 @@ const selectRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
 const selectDrawLoading = state => state.draw && state.draw.loading;
+const selectLocation = state => state.location;
 
 // datasets
 const selectDatasets = state => state.datasets && state.datasets.data;
@@ -546,6 +547,7 @@ export const getSelectedInteraction = createSelector(
 export const getMapProps = createStructuredSelector({
   loading: getMapLoading,
   loadingMessage: getLoadingMessage,
+  location: selectLocation,
   mapOptions: getMapOptions,
   basemap: getBasemap,
   label: getLabel,

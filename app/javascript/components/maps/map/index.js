@@ -5,6 +5,7 @@ import reducerRegistry from 'app/registry';
 import WebMercatorViewport from 'viewport-mercator-project';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
+import { handleMapLatLonTrack } from 'app/analytics';
 
 import {
   setInteraction,
@@ -198,6 +199,7 @@ class MapContainer extends PureComponent {
       canBound: false,
       bbox: null
     });
+    handleMapLatLonTrack(this.props.location);
   }, 300);
 
   handleMapInteraction = e => {
@@ -234,7 +236,8 @@ MapContainer.propTypes = {
   lng: PropTypes.number,
   zoom: PropTypes.number,
   clearInteractions: PropTypes.func,
-  selectedInteraction: PropTypes.object
+  selectedInteraction: PropTypes.object,
+  location: PropTypes.object
 };
 
 reducerRegistry.registerModule('map', {
