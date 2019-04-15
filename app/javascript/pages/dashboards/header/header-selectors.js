@@ -17,7 +17,7 @@ export const selectLoading = state =>
     state.countryData.isRegionsLoading ||
     state.countryData.isSubRegionsLoading);
 export const selectError = state => state.header && state.header.error;
-export const setectCountryData = state =>
+export const selectCountryData = state =>
   state.countryData && {
     adm0: state.countryData.countries,
     adm1: state.countryData.regions,
@@ -30,22 +30,22 @@ export const selectSentences = state =>
   (state.header && state.header.config.sentences) || null;
 
 export const getAdm0Data = createSelector(
-  [setectCountryData],
+  [selectCountryData],
   data => data.adm0
 );
 
 export const getAdm1Data = createSelector(
-  [setectCountryData],
+  [selectCountryData],
   data => data.adm1
 );
 
 export const getAdm2Data = createSelector(
-  [setectCountryData],
+  [selectCountryData],
   data => data.adm2
 );
 
 export const getExternalLinks = createSelector(
-  [setectCountryData, selectLocation],
+  [selectCountryData, selectLocation],
   (data, location) => data.links[location.adm0]
 );
 
@@ -99,8 +99,8 @@ export const getShareData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getAdminsSelected, selectData, selectSentences, selectError],
-  (locationNames, data, sentences, error) => {
+  [getAdminsSelected, selectData, selectSentences, selectError, selectLocation],
+  (locationNames, data, sentences, error, locationObj) => {
     if (error) {
       return 'An error occured while fetching data. Please try again later.';
     }
@@ -109,7 +109,7 @@ export const getSentence = createSelector(
       withLoss,
       withPlantationLoss,
       globalInitial,
-      indoInitial,
+      countrySpecific,
       co2Emissions,
       end
     } = sentences;
@@ -135,6 +135,7 @@ export const getSentence = createSelector(
     const primaryLoss = format('.3s')(data.primaryLoss.area || 0);
     const loss = format('.3s')(data.totalLoss.area || 0);
     const location = locationNames && locationNames.label;
+    const { adm0 } = locationObj || {};
 
     const params = {
       extent: `${extent}ha`,
@@ -151,16 +152,15 @@ export const getSentence = createSelector(
       primaryLoss: `${primaryLoss}ha`
     };
 
-    let sentence = sentences.default;
+    let sentence = sentences[countrySpecific[adm0]] || sentences.default;
     if (data.extent > 0 && data.totalLoss.area) {
       sentence =
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
     }
-    sentence = tropicalIsos.includes(locationNames.value)
+    sentence = tropicalIsos.includes(adm0)
       ? sentence + co2Emissions
       : sentence + end;
     if (!location) sentence = globalInitial;
-    else if (location === 'Indonesia') sentence = indoInitial;
 
     return {
       sentence,

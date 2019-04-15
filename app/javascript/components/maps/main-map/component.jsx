@@ -65,7 +65,7 @@ class MainMapComponent extends PureComponent {
                 open={showTooltip}
                 disabled={!isDesktop}
               >
-                <Map className="main-map" />
+                <Map className="main-map" smallView={!isDesktop} />
               </Tooltip>
             </div>
             {isDesktop &&

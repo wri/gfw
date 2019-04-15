@@ -1,0 +1,50 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(30px);
+$desktop-padding: rem(50px);
+
+.c-modal-attributions {
+  max-width: rem(800px);
+  min-width: 290px;
+  padding: $mobile-padding;
+
+  h3 {
+    margin-bottom: rem(40px);
+  }
+
+  .logos {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: rem(20px);
+
+    a {
+      margin-bottom: rem(15px);
+    }
+
+    .mapbox-logo {
+      width: rem(100px);
+      height: rem(25px);
+    }
+
+    .ee-logo {
+      width: rem(180px);
+    }
+
+    .carto-logo {
+      width: rem(90px);
+    }
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    font-size: rem(12px);
+
+    * {
+      margin-bottom: rem(15px);
+    }
+
+    a {
+      color: $green-gfw;
+    }
+  }
+}

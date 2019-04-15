@@ -1,46 +1,29 @@
 @import '~styles/settings.scss';
 
 .c-map {
+  position: relative;
+
   &.no-pointer-events {
     .overlays {
       pointer-events: none;
     }
   }
 
+  .mapboxgl-ctrl-logo {
+    display: none;
+  }
+
+  .map-scale {
+    position: absolute;
+    z-index: 321321312;
+    left: rem(10px);
+    bottom: rem(40px);
+    right: auto;
+  }
+
   .map-wrapper {
     position: relative;
     min-height: rem(300px);
-
-    .leaflet-container {
-      background-color: transparent;
-    }
-
-    .leaflet-control-container {
-      .leaflet-bottom {
-        right: rem(15px);
-        bottom: rem(50px);
-        left: auto;
-      }
-
-      .leaflet-control-scale {
-        margin-bottom: 0;
-        display: flex;
-      }
-
-      .leaflet-control-scale-line {
-        border: 1px solid $map-grey;
-        border-top: 0;
-        color: $map-grey;
-        padding: 2px 5px 1px;
-        font-size: 10px;
-        background: transparent;
-        margin-top: 0;
-
-        &:first-child {
-          border-right: 0;
-        }
-      }
-    }
   }
 
   .map-icon-crosshair {
@@ -78,9 +61,5 @@
       font-weight: 500;
       color: $white;
     }
-  }
-
-  .mapboxgl-control-container {
-    display: none;
   }
 }

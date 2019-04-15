@@ -57,7 +57,8 @@ class RecentImageryContainer extends PureComponent {
       loadingMoreTiles,
       resetRecentImageryData,
       getClassifiedImage,
-      classifiedImage
+      classifiedImage,
+      error
     } = this.props;
 
     const isNewTile =
@@ -67,13 +68,14 @@ class RecentImageryContainer extends PureComponent {
 
     // get data if activated or new props
     if (
-      active &&
-      (active !== prevProps.active ||
-        (!positionInsideTile &&
-          !isEqual(positionInsideTile, prevProps.positionInsideTile)) ||
-        !isEqual(settings.date, prevProps.settings.date) ||
-        !isEqual(settings.weeks, prevProps.settings.weeks) ||
-        !isEqual(settings.bands, prevProps.settings.bands))
+      (active &&
+        (active !== prevProps.active ||
+          (!positionInsideTile &&
+            !isEqual(positionInsideTile, prevProps.positionInsideTile)) ||
+          !isEqual(settings.date, prevProps.settings.date) ||
+          !isEqual(settings.weeks, prevProps.settings.weeks) ||
+          !isEqual(settings.bands, prevProps.settings.bands))) ||
+      (!error && !isEqual(error, prevProps.error))
     ) {
       if (this.getDataSource) {
         this.getDataSource.cancel(
@@ -199,7 +201,8 @@ RecentImageryContainer.propTypes = {
   resetRecentImageryData: PropTypes.func,
   getClassifiedImage: PropTypes.func,
   classifiedImage: PropTypes.string,
-  setRecentImagerySettings: PropTypes.func
+  setRecentImagerySettings: PropTypes.func,
+  error: PropTypes.bool
 };
 
 reducerRegistry.registerModule('recentImagery', {
