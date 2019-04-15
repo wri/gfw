@@ -108,7 +108,7 @@ class Basemaps extends React.PureComponent {
         <div className="basemaps-top-section">
           {isDesktop && (
             <div className="basemaps-header">
-              <h2 className="basemaps-title">Basemap Options</h2>
+              <h2 className="basemaps-title">Map settings</h2>
               <div className="basemaps-actions">
                 <Button
                   className="info-btn"
