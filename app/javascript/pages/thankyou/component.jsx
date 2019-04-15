@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-// import PropTypes from 'prop-types';
+
+import treeImage from './assets/tree.png';
 
 import './styles.scss';
 
@@ -10,7 +11,8 @@ class ThankyouPage extends PureComponent {
         <div className="row">
           <div className="column small-12 medium-8 medium-offset-2">
             <div className="thankyou-message">
-              <h1>Thank you</h1>
+              <img src={treeImage} alt="thank-you-tree" />
+              <h1>Thank You!</h1>
               <p>
                 Thank you for letting us know you still want to hear from Global
                 Forest Watch.
@@ -27,8 +29,5 @@ class ThankyouPage extends PureComponent {
     );
   }
 }
-
-// ThankyouPage.propTypes = {
-// };
 
 export default ThankyouPage;
