@@ -49,7 +49,7 @@ export default {
       title: 'Climate',
       subtitle: 'Natural state',
       text:
-        'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossel fuels, which include coal, natural gas, and oil.',
+        'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossel fuels, which include coal, natural gas and oil.',
       img1x: climate1,
       img2x: climate1Large,
       prompts: [
@@ -104,7 +104,7 @@ export default {
       title: 'Climate',
       subtitle: 'Drivers of change',
       text:
-        "Forests' ability to absorb carbon from the atmosphere can be compromised by conversion into agricultural lands, commodity production, urbanization, disease and fires that cause forest loss. When a tree burns or decays, the carbon stored is released into the atmosphere, further exacerbating climate change.",
+        "Forests' ability to absorb carbon from the atmosphere can be compromised by conversion into agricultural lands, commodity production, urbanization, disease and fires that cause forest loss. When a tree burns or decays, the carbon stored is released into the atmosphere further exacerbating climate change.",
       img1x: climate2,
       img2x: climate2Large,
       prompts: [
@@ -314,7 +314,7 @@ export default {
       title: 'Explore data on the map',
       summary: 'View biomass density and loss, emissions and more.',
       extLink:
-        '?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhOWNjNmVjMC01YzFjLTRlMzYtOWIyNi1iNGVlMGI1MDU4N2IiLCJsYXllcnMiOlsiYjMyYTJmMTUtMjVlOC00ZWNjLTk4ZTAtNjg3ODJhYjFjMGZlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRhcmsifSwibGFiZWwiOiJsaWdodExhYmVscyIsImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiY2xpbWF0ZSJ9',
+        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhOWNjNmVjMC01YzFjLTRlMzYtOWIyNi1iNGVlMGI1MDU4N2IiLCJsYXllcnMiOlsiYjMyYTJmMTUtMjVlOC00ZWNjLTk4ZTAtNjg3ODJhYjFjMGZlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRhcmsifSwibGFiZWwiOiJsaWdodExhYmVscyIsImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiY2xpbWF0ZSJ9',
       img1x: explore,
       img2x: exploreLarge,
       btnText: 'view on map'
@@ -343,7 +343,7 @@ export default {
       title: 'Build your own insights',
       summary:
         'Use the custom dataset downloader to find information related to forests and climate.',
-      extLink: 'http://climate.globalforestwatch.org/',
+      extLink: 'http://climate.globalforestwatch.org/insights',
       img1x: insights,
       img2x: insightsLarge,
       btnText: 'view data'

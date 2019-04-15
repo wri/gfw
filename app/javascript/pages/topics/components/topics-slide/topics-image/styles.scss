@@ -36,7 +36,7 @@
   .co2-arrows {
     position: absolute;
     z-index: 2;
-    animation: up 1s infinite;
+    animation: up 1.5s infinite;
 
     &.small {
       width: rem(60px);
@@ -52,7 +52,7 @@
 
     &.down {
       transform: rotate(180deg);
-      animation: down 1s infinite;
+      animation: down 1.5s infinite;
     }
   }
 
