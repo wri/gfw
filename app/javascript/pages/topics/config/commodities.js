@@ -98,7 +98,7 @@ export default {
       title: 'Commodities',
       subtitle: 'Compromised state',
       text:
-        'The unsustainable expansion of commodity production can permanently damage ecosystems, displace local communities, exacerbate climate change, and accelerate biodiversity loss.',
+        'The unsustainable expansion of commodity production can permanently damage ecosystems, displace local communities, exacerbate climate change and accelerate biodiversity loss.',
       img1x: commodities3,
       img2x: commodities3Large,
       prompts: [
@@ -188,7 +188,7 @@ export default {
       id: 'learn',
       title: 'Learn more',
       summary: 'Read about forests and commodities on the GFW blog.',
-      extLink: 'https://blog.globalforestwatch.org',
+      extLink: 'https://blog.globalforestwatch.org/commodities',
       img1x: learn,
       img2x: learnLarge,
       btnText: 'read the blog'
