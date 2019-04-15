@@ -8,7 +8,8 @@ export const initialState = {
 
 const setModalWelcomeOpen = (state, { payload }) => ({
   ...state,
-  open: payload
+  open: payload,
+  title: hideModal ? 'dfadsada' : 'Welcome to the new Global Forest Watch map!'
 });
 
 export default {

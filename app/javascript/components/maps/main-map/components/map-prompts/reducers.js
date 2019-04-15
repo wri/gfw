@@ -5,7 +5,7 @@ const mapPrompts = JSON.parse(localStorage.getItem('mapPrompts'));
 export const initialState = {
   data: {
     showPrompts: true,
-    promptsViewed: ['recentImagery'],
+    promptsViewed: [],
     ...mapPrompts
   },
   settings: {

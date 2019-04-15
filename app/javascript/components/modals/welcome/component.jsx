@@ -20,11 +20,12 @@ class ModalWelcome extends PureComponent {
       setAnalysisView,
       setExploreView,
       setMapPromptsSettings,
-      setModalWelcome
+      setModalWelcome,
+      title
     } = this.props;
     return (
       <div className="c-modal-welcome">
-        <h3>Welcome to the new Global Forest Watch map!</h3>
+        <h3>{title}</h3>
         <div className="body">
           <p className="intro">
             We&#39;ve made exciting changes to the map to make it faster, more
@@ -99,6 +100,7 @@ class ModalWelcome extends PureComponent {
 
 ModalWelcome.propTypes = {
   open: PropTypes.bool,
+  title: PropTypes.string,
   setModalWelcome: PropTypes.func,
   setAnalysisView: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,
