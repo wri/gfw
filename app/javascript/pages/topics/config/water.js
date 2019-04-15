@@ -168,7 +168,7 @@ export default {
             'Learn how the City of São Paulo utilizes forests to clean its water.',
           btnText: 'Read the blog',
           link:
-            'https://www.wri.org/publication/natural-infrastructure-sao-paulo',
+            'https://www.wri.org/blog/2018/09/help-s-o-paulo-s-complex-water-woes-protect-and-restore-forests',
           position: [15, 47]
         },
         {
@@ -195,7 +195,7 @@ export default {
       id: 'health',
       title: 'How healthy is your watershed?',
       summary: 'Measure forest and track recent forest loss in your watershed.',
-      link:
+      extLink:
         '/map?mainMap=eyJzaG93QmFzZW1hcHMiOnRydWV9&map=eyJ6b29tIjoyLCJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImNhbkJvdW5kIjpmYWxzZSwiYmJveCI6bnVsbCwiZGF0YXNldHMiOlt7ImxheWVycyI6WyJkNTkwZjgzYy05YjU0LTQ1NDItOGQyNy1mNjFiOGIxOWRmNDYiXSwiZGF0YXNldCI6IjYzMjk1YjA1LTU1YTEtNDU2Yy1hNTZjLWM5Y2NiM2E3MTFlYyIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6IjcwZTI1NDljLWQ3MjItNDRhNi1hOGQ3LTRhMzg1ZDc4NTY1ZSIsImxheWVycyI6WyIzYjIyYTU3NC0yNTA3LTRiNGEtYTI0Ny04MDA1N2MxYTFhZDQiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX0seyJkYXRhc2V0IjoiODk3ZWNjNzYtMjMwOC00YzUxLWFlYjMtNDk1ZGUwYmRjYTc5IiwibGF5ZXJzIjpbImMzMDc1YzVhLTU1NjctNGIwOS1iYzBkLTk2ZWQxNjczZjhiNiJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiIwNDRmNGFmOC1iZTcyLTQ5OTktYjdkZC0xMzQzNGZjNGEzOTQiLCJsYXllcnMiOlsiNzg3NDdlYTEtMzRhOS00YWE3LWIwOTktYmRiODk0ODIwMGY0Il0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XX0%3D',
       img1x: health,
       img2x: healthLarge,
@@ -210,7 +210,7 @@ export default {
         'https://www.wri.org/publication/protecting-drinking-water-source',
       img1x: solutions,
       img2x: solutionsLarge,
-      btnText: 'view data'
+      btnText: 'view the publication'
     },
     {
       id: 'learn',
@@ -220,7 +220,7 @@ export default {
         'http://www.wri.org/our-work/project/natural-infrastructure-water/blog',
       img1x: learn,
       img2x: learnLarge,
-      btnText: 'view data'
+      btnText: 'view the blog'
     },
     {
       id: 'feedback',
