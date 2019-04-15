@@ -33,7 +33,14 @@ class WidgetContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, settings, getData, getWidgetData, widget } = this.props;
+    const {
+      location,
+      settings,
+      getData,
+      getWidgetData,
+      widget,
+      error
+    } = this.props;
     const settingsUpdateBlackList = [
       'startYear',
       'endYear',
@@ -58,8 +65,9 @@ class WidgetContainer extends Component {
       changedSetting &&
       !settingsUpdateBlackList.includes(changedSetting);
     const hasLocationChanged = !isEqual(location, prevProps.location);
+    const hasErrorChanged = !error && !isEqual(error, prevProps.error);
     const params = { ...location, ...settings };
-    if (hasSettingsChanged || hasLocationChanged) {
+    if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       getWidgetData({ widget, getData, params });
     }
   }
@@ -95,7 +103,8 @@ WidgetContainer.propTypes = {
   getWidgetData: PropTypes.func,
   setWidgetData: PropTypes.func,
   setWidgetSettings: PropTypes.func,
-  widget: PropTypes.string
+  widget: PropTypes.string,
+  error: PropTypes.bool
 };
 
 export default connect(makeMapStateToProps, actions)(WidgetContainer);

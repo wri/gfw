@@ -1,57 +1,24 @@
 @import '~styles/settings.scss';
 
 .c-map {
+  position: relative;
+
   &.no-pointer-events {
     .overlays {
       pointer-events: none;
     }
   }
 
-  .mapboxgl-ctrl-bottom-left {
+  .mapboxgl-ctrl-logo {
     display: none;
   }
 
-  .mapboxgl-ctrl-bottom-right {
-    display: flex;
+  .map-scale {
+    position: absolute;
+    z-index: 321321312;
     left: rem(10px);
     bottom: rem(40px);
     right: auto;
-    padding: 0 4px 4px 4px;
-
-    .mapboxgl-ctrl-scale {
-      position: relative;
-      margin: 0;
-      border: 0;
-      border-bottom: 1px solid $map-grey;
-      color: $map-grey;
-      padding: 0 6px 0;
-      font-size: 10px;
-      height: rem(19px);
-      background: transparent;
-      letter-spacing: 1.2px;
-
-      &:last-child {
-        &::after {
-          content: '';
-          height: 4px;
-          width: 1px;
-          background-color: $map-grey;
-          position: absolute;
-          right: 0;
-          bottom: 0;
-        }
-      }
-
-      &::before {
-        content: '';
-        height: 4px;
-        width: 1px;
-        background-color: $map-grey;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-      }
-    }
   }
 
   .map-wrapper {
