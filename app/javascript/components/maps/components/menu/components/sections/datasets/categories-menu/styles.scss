@@ -2,8 +2,8 @@
 
 .c-categories-menu {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
+  overflow-x: scroll;
   font-size: rem(10px);
   background-color: $white;
   color: $slate;
@@ -12,7 +12,7 @@
 
   li {
     width: calc(100% / 3);
-    margin: rem(20px) 0;
+    margin: rem(20px) rem(10px);
   }
 
   button {
@@ -23,11 +23,12 @@
     height: 100%;
     width: 100%;
     text-transform: uppercase;
-    font-size: rem(12px);
+    font-size: rem(11px);
+    color: $slate-light;
 
     .category-button {
-      width: rem(60px);
-      height: rem(60px);
+      width: rem(48px);
+      height: rem(48px);
       display: flex;
       justify-content: center;
       align-items: center;
