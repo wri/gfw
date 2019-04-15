@@ -108,7 +108,7 @@ export default {
         {
           id: 'bio-status',
           content:
-            'Learn how the loss of Intact Forest Landscapes effects biodiversity.',
+            'Learn how the loss of Intact Forest Landscapes affects biodiversity.',
           btnText: 'Read the blog',
           link:
             'https://blog.globalforestwatch.org/data/worlds-last-intact-forests-are-becoming-increasingly-fragmented',
