@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactMapGL from 'react-map-gl';
-import { ScaleControl } from 'mapbox-gl';
 
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -10,6 +9,7 @@ import Icon from 'components/ui/icon';
 import iconCrosshair from 'assets/icons/crosshair.svg';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import MapScale from './components/scale';
 import Popup from './components/popup';
 import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
@@ -22,7 +22,7 @@ class MapComponent extends PureComponent {
     mapReady: false
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { label, basemap } = this.props;
     const { mapReady } = this.state;
 
@@ -32,14 +32,6 @@ class MapComponent extends PureComponent {
 
     if (mapReady && basemap.value !== prevProps.basemap.value) {
       this.setBasemapStyles();
-    }
-
-    if (mapReady && this.map && mapReady !== prevState.mapReady) {
-      this.map.addControl(
-        new ScaleControl({ unit: 'imperial' }),
-        'bottom-right'
-      );
-      this.map.addControl(new ScaleControl(), 'bottom-right');
     }
   }
 
@@ -156,6 +148,13 @@ class MapComponent extends PureComponent {
         </ReactMapGL>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         <MapAttributions className="map-attributions" smallView={smallView} />
+        <MapScale
+          className="map-scale"
+          map={this.map}
+          lat={lat}
+          lng={lng}
+          zoom={zoom}
+        />
         {loading && (
           <Loader
             className="map-loader"
