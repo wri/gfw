@@ -12,13 +12,18 @@
       padding: rem(200px) 0;
     }
 
+    img {
+      max-width: rem(200px);
+      margin-bottom: rem(20px);
+    }
+
     h1 {
-      font-size: rem(60px);
+      font-size: rem(50px);
       color: $slate;
       margin-bottom: rem(30px);
 
       @media screen and (min-width: $screen-m) {
-        margin-bottom: rem(50px);
+        font-size: rem(60px);
       }
     }
 
