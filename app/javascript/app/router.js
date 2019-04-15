@@ -13,6 +13,7 @@ export const MAP = 'location/MAP';
 export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
+export const THANKYOU = 'location/THANKYOU';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -130,6 +131,11 @@ export const routes = {
     path: '/embed/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards/embed',
     embed: true
+  },
+  [THANKYOU]: {
+    path: '/thank-you',
+    component: 'thankyou',
+    controller: 'thankyou'
   },
   [NOT_FOUND]: {
     path: '/404',
