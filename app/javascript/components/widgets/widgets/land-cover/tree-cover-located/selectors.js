@@ -18,7 +18,6 @@ const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
-const getLocationType = state => state.locationType || null;
 
 export const parseList = createSelector(
   [getData, getSettings, getLocation, getLocationsMeta, getColors],
@@ -173,10 +172,10 @@ export const parseSentence = createSelector(
 );
 
 export const parseTitle = createSelector(
-  [getTitle, getLocationType],
-  (title, type) => {
+  [getTitle, getLocationName],
+  (title, name) => {
     let selectedTitle = title.initial;
-    if (type === 'global') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;

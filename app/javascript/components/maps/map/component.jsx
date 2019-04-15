@@ -9,6 +9,7 @@ import Icon from 'components/ui/icon';
 import iconCrosshair from 'assets/icons/crosshair.svg';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import MapScale from './components/scale';
 import Popup from './components/popup';
 import MapDraw from './components/draw';
 import MapAttributions from './components/map-attributions';
@@ -102,7 +103,8 @@ class MapComponent extends PureComponent {
       setMapRect,
       setMap,
       interactiveLayers,
-      loadingMessage
+      loadingMessage,
+      smallView
     } = this.props;
     const { mapReady } = this.state;
 
@@ -145,7 +147,14 @@ class MapComponent extends PureComponent {
           )}
         </ReactMapGL>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
-        <MapAttributions className="map-attributions" />
+        <MapAttributions className="map-attributions" smallView={smallView} />
+        <MapScale
+          className="map-scale"
+          map={this.map}
+          lat={lat}
+          lng={lng}
+          zoom={zoom}
+        />
         {loading && (
           <Loader
             className="map-loader"
@@ -173,7 +182,8 @@ MapComponent.propTypes = {
   draw: PropTypes.bool,
   lat: PropTypes.number,
   lng: PropTypes.number,
-  zoom: PropTypes.number
+  zoom: PropTypes.number,
+  smallView: PropTypes.bool
 };
 
 export default MapComponent;
