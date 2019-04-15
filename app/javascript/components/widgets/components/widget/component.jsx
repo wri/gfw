@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
+import { track } from 'app/analytics';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
@@ -47,9 +48,12 @@ class Widget extends PureComponent {
         {!loading &&
           error && (
             <RefreshButton
-              refetchFn={() =>
-                setWidgetLoading({ widget, loading: false, error: false })
-              }
+              refetchFn={() => {
+                setWidgetLoading({ widget, loading: false, error: false });
+                track('refetchDataBtn', {
+                  label: `Widget: ${widget}`
+                });
+              }}
             />
           )}
         {!error &&
