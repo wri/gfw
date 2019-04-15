@@ -35,8 +35,6 @@ class Share extends PureComponent {
 
     return (
       <div className="c-share">
-        {/* <div className="title">{title}</div> */}
-        {/* <div className="subtitle">{subtitle}</div> */}
         <div className="actions">
           {embedUrl ? (
             <Switch
@@ -73,7 +71,7 @@ class Share extends PureComponent {
               />
             </div>
             <Button
-              theme="theme-button-light"
+              theme="theme-button-medium"
               className="input-button"
               onClick={() => handleCopyToClipboard(this.textInput)}
               disabled={loading}
@@ -87,7 +85,8 @@ class Share extends PureComponent {
             extLink={`https://twitter.com/intent/tweet?text=${
               title
             }&via=globalforests&url=${shareUrl}`}
-            className="social-button -twitter"
+            className="social-button"
+            theme="theme-button-light theme-button-grey  square"
             onClick={() =>
               track('shareSocial', {
                 label: shareUrl
@@ -98,7 +97,8 @@ class Share extends PureComponent {
           </Button>
           <Button
             extLink={`https://www.facebook.com/sharer.php?u=${shareUrl}`}
-            className="social-button -facebook"
+            theme="theme-button-light theme-button-grey square"
+            className="social-button"
             onClick={() =>
               track('shareSocial', {
                 label: shareUrl
