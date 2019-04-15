@@ -20,6 +20,12 @@ import exploreLarge from 'pages/topics/assets/commodities/cards/explore@2x.png';
 import learn from 'pages/topics/assets/commodities/cards/learn.png';
 import learnLarge from 'pages/topics/assets/commodities/cards/learn@2x.png';
 
+// animations
+import birds1 from 'pages/topics/assets/commodities/animations/birds1.json';
+import scene2 from 'pages/topics/assets/commodities/animations/scene2.json';
+import scene3 from 'pages/topics/assets/commodities/animations/scene3.json';
+import birds4 from 'pages/topics/assets/commodities/animations/birds4.json';
+
 export default {
   intro: {
     title: '40% of global deforestation is commodity-driven.',
@@ -45,6 +51,13 @@ export default {
           link:
             'https://blog.globalforestwatch.org/data/new-map-helps-distinguish-between-cyclical-farming-and-deforestation-in-the-congo-basin',
           position: [35, 82]
+        }
+      ],
+      animations: [
+        {
+          id: 'commodities-birds1',
+          data: birds1,
+          behind: true
         }
       ]
     },
@@ -73,6 +86,12 @@ export default {
             '/map?map=eyJ6b29tIjoyLCJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImNhbkJvdW5kIjp0cnVlLCJiYm94IjpudWxsLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImFlMWU0ODVhLTViMzktNDNiMy05YTRlLTBlZGMzOGZkMTFhNiIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyIzZjBhYWM0YS03Y2NhLTRiNzctOWEwMS05NWZjZjVlOThjYzAiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiI3MTQzMzljMS1jNzc1LTQzMDMtYWFkNC0xNmQ5NzViMmYwMjMiLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlLCJsYXllcnMiOlsiMDc5ZmFlMDgtNTY5Ni00OTI2LTk0MTctNzk0YmQzYTdlOGRjIl19LHsiZGF0YXNldCI6IjEzZTI4NTUwLTNmYzktNDVlYy1iYjAwLTVhNDhhODJiNzdlMSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJmZDQ0Yjk3Ni02MmU2LTQwNzItODIxOC04YWJmNmUyNTRlZDgiXX1dfQ%3D%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6InNlYXJjaCIsInNlYXJjaCI6IiJ9',
           position: [33, 75]
         }
+      ],
+      animations: [
+        {
+          id: 'commodities-scene2',
+          data: scene2
+        }
       ]
     },
     {
@@ -100,6 +119,12 @@ export default {
             'https://blog.globalforestwatch.org/gfw-community/smart-phones-and-satellite-imagery-indigenous-communities-solution-to-protect-the-peruvian-rainforest',
           position: [40, 60]
         }
+      ],
+      animations: [
+        {
+          id: 'commodities-scene3',
+          data: scene3
+        }
       ]
     },
     {
@@ -126,6 +151,13 @@ export default {
           link:
             'https://blog.globalforestwatch.org/supplychain/how-big-data-and-satellites-can-help-banks-tackle-deforestation',
           position: [35, 72]
+        }
+      ],
+      animations: [
+        {
+          id: 'commodities-birds4',
+          data: birds4,
+          behind: true
         }
       ]
     }
