@@ -42,6 +42,9 @@ class ApplicationController < ActionController::Base
         title: 'Topics',
         desc: 'Data about forest change, tenure, forest related employment and land use'
       },
+      thankyou: {
+        title: 'Thank You'
+      },
       types: {
         use: 'Shape',
         geostore: 'Custom Area',
