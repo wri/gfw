@@ -170,7 +170,7 @@ export default {
             'Read about the Forest Resilience Bond, a project that finances forest restoration now to reduce the risk of future fires.',
           btnText: 'Read the blog',
           link:
-            'https://www.wri.org/blog/2017/09/wildfires-scorch-us-forests-forest-resilience-bond-blazes-new-trail',
+            'https://www.wri.org/blog/2018/11/investors-think-they-can-make-money-reducing-wildfire-risk-forest-restoration-project',
           position: [57, 75]
         }
       ],
