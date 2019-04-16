@@ -61,7 +61,7 @@ class PromptTooltip extends PureComponent {
               )}
             {size === 1 && (
               <div>
-                <button onClick={() => handleShowPrompts(false)}>
+                <button onClick={() => handleShowPrompts(!showPrompts)}>
                   {showPrompts ? 'Hide tips' : 'Show tips'}
                 </button>
               </div>

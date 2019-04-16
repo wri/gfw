@@ -6,9 +6,7 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 
 import arrowIcon from 'assets/icons/arrow-down.svg';
-import exploreGreenIcon from 'assets/icons/explore-green.svg';
 import helpGreenIcon from 'assets/icons/help-green.svg';
-import analysisGreenIcon from 'assets/icons/analysis-green.svg';
 
 import Modal from '../modal';
 
@@ -17,20 +15,17 @@ import './styles.scss';
 class ModalWelcome extends PureComponent {
   getContent() {
     const {
-      setAnalysisView,
-      setExploreView,
       setMapPromptsSettings,
       setModalWelcome,
-      title
+      title,
+      description,
+      mapTourSteps
     } = this.props;
     return (
       <div className="c-modal-welcome">
         <h3>{title}</h3>
         <div className="body">
-          <p className="intro">
-            We&#39;ve made exciting changes to the map to make it faster, more
-            powerful, and easier to use.
-          </p>
+          <p className="intro">{description}</p>
           <Button
             className="guide-btn tour-btn negative"
             theme="theme-button-clear theme-button-dashed"
@@ -49,33 +44,24 @@ class ModalWelcome extends PureComponent {
           <p className="btn-intro">
             <b>How-to guide:</b>
           </p>
-          <Button
-            className="guide-btn"
-            theme="theme-button-clear theme-button-dashed"
-            onClick={() => {
-              setExploreView();
-              track('welcomeModal', { label: 'Topics' });
-            }}
-          >
-            <Icon className="guide-btn-icon" icon={exploreGreenIcon} />
-            <p>
-              Try out the Explore tab for an introduction to key forest topics
-              and high priority areas with recent forest loss.
-            </p>
-            <Icon className="arrow-icon" icon={arrowIcon} />
-          </Button>
-          <Button
-            className="guide-btn"
-            theme="theme-button-clear theme-button-dashed"
-            onClick={() => {
-              setAnalysisView();
-              track('welcomeModal', { label: 'Analysis' });
-            }}
-          >
-            <Icon className="guide-btn-icon" icon={analysisGreenIcon} />
-            <p>Test out our new and improved analysis features.</p>
-            <Icon className="arrow-icon" icon={arrowIcon} />
-          </Button>
+          {mapTourSteps &&
+            mapTourSteps.map(step => (
+              <Button
+                key={step.label}
+                className="guide-btn"
+                theme="theme-button-clear theme-button-dashed"
+                onClick={() => {
+                  setModalWelcome(false);
+                  setMapPromptsSettings({
+                    open: true,
+                    stepsKey: step.promptKey
+                  });
+                }}
+              >
+                <p>{step.label}</p>
+                <Icon className="arrow-icon" icon={arrowIcon} />
+              </Button>
+            ))}
         </div>
       </div>
     );
@@ -101,10 +87,10 @@ class ModalWelcome extends PureComponent {
 ModalWelcome.propTypes = {
   open: PropTypes.bool,
   title: PropTypes.string,
+  description: PropTypes.string,
   setModalWelcome: PropTypes.func,
-  setAnalysisView: PropTypes.func,
-  setMapPromptsSettings: PropTypes.func,
-  setExploreView: PropTypes.func
+  mapTourSteps: PropTypes.array,
+  setMapPromptsSettings: PropTypes.func
 };
 
 export default ModalWelcome;

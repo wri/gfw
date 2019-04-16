@@ -46,6 +46,10 @@ $desktop-padding: rem(40px);
     margin-bottom: rem(10px);
     height: auto;
 
+    > div {
+      justify-content: space-between;
+    }
+
     &:hover {
       background-color: $slate;
     }

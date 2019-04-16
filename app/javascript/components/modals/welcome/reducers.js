@@ -3,13 +3,14 @@ import * as actions from './actions';
 const hideModal = JSON.parse(localStorage.getItem('welcomeModalHidden'));
 
 export const initialState = {
-  open: !hideModal
+  open: !hideModal,
+  hideModal
 };
 
 const setModalWelcomeOpen = (state, { payload }) => ({
   ...state,
   open: payload,
-  title: hideModal ? 'dfadsada' : 'Welcome to the new Global Forest Watch map!'
+  hideModal: true
 });
 
 export default {
