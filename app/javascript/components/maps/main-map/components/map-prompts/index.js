@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 
 import { setMainMapSettings } from 'components/maps/main-map/actions';
+import { setAnalysisSettings } from 'components/maps/components/analysis/actions';
 import { setMapSettings } from 'components/maps/map/actions';
 import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
 
@@ -23,9 +24,9 @@ class MapPromptsContainer extends PureComponent {
       recentActive,
       showPrompts
     } = this.props;
-    if (open && open !== prevProps.open) {
-      this.resetMapLayout();
-    }
+    // if (open && open !== prevProps.open) {
+    //   this.resetMapLayout();
+    // }
 
     const shouldOpenRecentImageryPrompt =
       !recentActive &&
@@ -87,6 +88,13 @@ class MapPromptsContainer extends PureComponent {
               prev: () => {
                 this.props.setMainMapSettings({
                   showAnalysis: false
+                });
+              },
+              learnHow: () => {
+                setMapPromptsSettings({
+                  open: true,
+                  stepsKey: 'analyzeAnArea',
+                  stepIndex: 0
                 });
               }
             }
@@ -203,6 +211,35 @@ class MapPromptsContainer extends PureComponent {
           disableOverlay: true
         }
       },
+      analyzeAnArea: {
+        title: 'Analyze an Area of Interest',
+        steps: [
+          {
+            target: '.c-data-analysis-menu',
+            content:
+              'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
+            disableBeacon: true,
+            actions: {
+              learnHow: () => {
+                this.props.setMainMapSettings({
+                  showAnalysis: true
+                });
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+                setMapPromptsSettings({
+                  open: true,
+                  stepsKey: 'analyzeAnAreaTour',
+                  stepIndex: 0
+                });
+              }
+            }
+          }
+        ],
+        settings: {
+          disableOverlay: true
+        }
+      },
       recentImageryTour: {
         title: 'Recent Satellite Imagery',
         steps: [
@@ -228,6 +265,50 @@ class MapPromptsContainer extends PureComponent {
             target: '.recent-imagery-btn',
             content:
               'Move the crosshair icon on the map outside of the image to load a new tile in a different area.',
+            disableBeacon: true
+          }
+        ],
+        settings: {
+          disableOverlay: true
+        }
+      },
+      analyzeAnAreaTour: {
+        title: 'Analyze an Area',
+        steps: [
+          {
+            target: '.c-data-analysis-menu',
+            content:
+              'Click on the Analysis tab to analyze and track forest change.',
+            disableBeacon: true
+          },
+          {
+            target: '.analysis-boundary-menu',
+            content:
+              'For a one click analysis, first choose your preferred map boundaries. Then click on a shape on the map and the analysis will be performed.',
+            disableBeacon: true
+          },
+          {
+            target: '.draw-upload-tab',
+            content:
+              'To draw a shape, click the Draw or Upload Shape tab and click Start Drawing. Click on the map, drag the mouse, and click again until you form your desired shape. Once the shape is fully connected, the analysis will be performed.',
+            disableBeacon: true,
+            actions: {
+              next: () => {
+                this.props.setAnalysisSettings({
+                  showDraw: true
+                });
+              },
+              prev: () => {
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+              }
+            }
+          },
+          {
+            target: '.draw-menu-input',
+            content:
+              'To upload a shape, click Pick a File or Drop One Here and select your desired shapefile. Once uploaded, the shape will appear on the map and the analysis will be performed.',
             disableBeacon: true
           }
         ],
@@ -263,6 +344,7 @@ MapPromptsContainer.propTypes = {
   setMainMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,
+  setAnalysisSettings: PropTypes.func,
   setShowMapPrompts: PropTypes.func,
   stepsKey: PropTypes.string,
   mapZoom: PropTypes.number,
@@ -281,5 +363,6 @@ export default connect(getMapPromptsProps, {
   ...actions,
   setMainMapSettings,
   setMenuSettings,
-  setMapSettings
+  setMapSettings,
+  setAnalysisSettings
 })(MapPromptsContainer);

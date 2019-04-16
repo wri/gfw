@@ -67,7 +67,8 @@ class ModalWelcome extends PureComponent {
                   setModalWelcome(false);
                   setMapPromptsSettings({
                     open: true,
-                    stepsKey: step.promptKey
+                    stepsKey: step.promptKey,
+                    stepIndex: 0
                   });
                 }}
               >

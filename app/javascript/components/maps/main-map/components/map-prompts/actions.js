@@ -11,14 +11,14 @@ export const setMapPromptsSettings = createThunkAction(
     const { promptsViewed } = mapPrompts || {};
     const { open, stepsKey, stepIndex } = change || {};
 
-    if (
-      open &&
-      !stepIndex &&
-      promptsViewed &&
-      promptsViewed.includes(stepsKey)
-    ) {
-      return false;
-    }
+    // if (
+    //   open &&
+    //   !stepIndex &&
+    //   promptsViewed &&
+    //   promptsViewed.includes(stepsKey)
+    // ) {
+    //   return false;
+    // }
 
     dispatch(
       setComponentStateToUrl({
