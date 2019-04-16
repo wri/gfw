@@ -89,4 +89,18 @@
       }
     }
   }
+
+  .show-prompts-btn {
+    display: flex;
+    align-items: center;
+    color: #aaa;
+    height: 100%;
+    font-size: rem(13px);
+    cursor: pointer;
+
+    .prompts-checkbox {
+      margin-top: -1px;
+      margin-right: rem(10px);
+    }
+  }
 }

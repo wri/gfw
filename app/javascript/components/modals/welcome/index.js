@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 
-import { setMapPromptsSettings } from 'components/maps/main-map/components/map-prompts/actions';
+import {
+  setMapPromptsSettings,
+  setShowMapPrompts
+} from 'components/maps/main-map/components/map-prompts/actions';
+import { getShowMapPrompts } from 'components/maps/main-map/components/map-prompts/selectors';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
@@ -13,12 +17,13 @@ const mapTourSteps = [
   }
 ];
 
-const mapStateToProps = ({ modalWelcome }) => {
-  const { open, hideModal } = modalWelcome || {};
+const mapStateToProps = state => {
+  const { open, hideModal } = state.modalWelcome || {};
 
   return {
     open,
     mapTourSteps,
+    showPrompts: getShowMapPrompts(state),
     title: hideModal
       ? 'Map how-to guide'
       : 'Welcome to the new Global Forest Watch map!',
@@ -33,6 +38,8 @@ reducerRegistry.registerModule('modalWelcome', {
   reducers,
   initialState
 });
-export default connect(mapStateToProps, { ...actions, setMapPromptsSettings })(
-  Component
-);
+export default connect(mapStateToProps, {
+  ...actions,
+  setMapPromptsSettings,
+  setShowMapPrompts
+})(Component);

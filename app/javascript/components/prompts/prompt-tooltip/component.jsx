@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
+import Checkbox from 'components/ui/checkbox';
 
 import closeIcon from 'assets/icons/close.svg';
 
@@ -60,11 +61,13 @@ class PromptTooltip extends PureComponent {
                 </button>
               )}
             {size === 1 && (
-              <div>
-                <button onClick={() => handleShowPrompts(!showPrompts)}>
-                  {showPrompts ? 'Hide tips' : 'Show tips'}
-                </button>
-              </div>
+              <button
+                className="show-prompts-btn"
+                onClick={() => handleShowPrompts(!showPrompts)}
+              >
+                <Checkbox className="prompts-checkbox" value={showPrompts} />
+                {'Show me tips'}
+              </button>
             )}
           </div>
           {learnHow && (
