@@ -2,28 +2,24 @@ import { createThunkAction, createAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 export const setShowMapPrompts = createAction('setShowMapPrompts');
-
-export const setMapPromptsData = createThunkAction(
-  'setMapPromptsData',
-  data => dispatch => {
-    localStorage.setItem('mapPrompts', data);
-    dispatch(setShowMapPrompts(data.showPrompts));
-  }
-);
+export const setShowPromptsViewed = createAction('setShowPromptsViewed');
 
 export const setMapPromptsSettings = createThunkAction(
   'setMapPromptsSettings',
   change => (dispatch, state) => {
-    const { data } = state().mapPrompts || {};
-    const { promptsViewed } = data || {};
+    const { mapPrompts } = state() || {};
+    const { promptsViewed } = mapPrompts || {};
+    const { open, stepsKey, stepIndex } = change || {};
+
     if (
-      change &&
-      !change.stepsIndex &&
+      open &&
+      !stepIndex &&
       promptsViewed &&
-      promptsViewed.includes(change.stepsKey)
+      promptsViewed.includes(stepsKey)
     ) {
       return false;
     }
+
     dispatch(
       setComponentStateToUrl({
         key: 'mapPrompts',
@@ -31,6 +27,9 @@ export const setMapPromptsSettings = createThunkAction(
         state
       })
     );
+    if (stepsKey) {
+      dispatch(setShowPromptsViewed(stepsKey));
+    }
 
     return true;
   }

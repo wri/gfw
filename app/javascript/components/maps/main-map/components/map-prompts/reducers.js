@@ -1,13 +1,11 @@
 import * as actions from './actions';
 
-const mapPrompts = JSON.parse(localStorage.getItem('mapPrompts'));
+const showMapPrompts = JSON.parse(localStorage.getItem('showMapPrompts'));
+const mapPromptsViewed = JSON.parse(localStorage.getItem('mapPromptsViewed'));
 
 export const initialState = {
-  data: {
-    showPrompts: true,
-    promptsViewed: [],
-    ...mapPrompts
-  },
+  showPrompts: showMapPrompts === null || showMapPrompts,
+  promptsViewed: mapPromptsViewed || [],
   settings: {
     open: false,
     stepIndex: 0,
@@ -15,14 +13,30 @@ export const initialState = {
   }
 };
 
-const setShowMapPrompts = (state, { payload }) => ({
-  ...state,
-  data: {
-    ...state.data,
+const setShowMapPrompts = (state, { payload }) => {
+  localStorage.setItem('showMapPrompts', payload);
+
+  return {
+    ...state,
     showPrompts: payload
-  }
-});
+  };
+};
+
+const setShowPromptsViewed = (state, { payload }) => {
+  const { promptsViewed } = state;
+  const newPromptsViewed =
+    promptsViewed && promptsViewed.length && promptsViewed.includes(payload)
+      ? promptsViewed
+      : promptsViewed.concat([payload]);
+  localStorage.setItem('mapPromptsViewed', JSON.stringify(newPromptsViewed));
+
+  return {
+    ...state,
+    promptsViewed: newPromptsViewed
+  };
+};
 
 export default {
-  [actions.setShowMapPrompts]: setShowMapPrompts
+  [actions.setShowMapPrompts]: setShowMapPrompts,
+  [actions.setShowPromptsViewed]: setShowPromptsViewed
 };

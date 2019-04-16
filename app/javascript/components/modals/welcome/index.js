@@ -5,7 +5,7 @@ import {
   setMapPromptsSettings,
   setShowMapPrompts
 } from 'components/maps/main-map/components/map-prompts/actions';
-import { getShowMapPrompts } from 'components/maps/main-map/components/map-prompts/selectors';
+import { selectShowMapPrompts } from 'components/maps/main-map/components/map-prompts/selectors';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
@@ -23,7 +23,7 @@ const mapStateToProps = state => {
   return {
     open,
     mapTourSteps,
-    showPrompts: getShowMapPrompts(state),
+    showPrompts: selectShowMapPrompts(state),
     title: hideModal
       ? 'Map how-to guide'
       : 'Welcome to the new Global Forest Watch map!',
