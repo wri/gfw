@@ -19,8 +19,6 @@ import explore from 'pages/topics/assets/climate/cards/explore.png';
 import exploreLarge from 'pages/topics/assets/climate/cards/explore@2x.png';
 import carbon from 'pages/topics/assets/climate/cards/carbon.png';
 import carbonLarge from 'pages/topics/assets/climate/cards/carbon@2x.png';
-import calculate from 'pages/topics/assets/climate/cards/calculate.png';
-import calculateLarge from 'pages/topics/assets/climate/cards/calculate@2x.png';
 import insights from 'pages/topics/assets/climate/cards/insights.png';
 import insightsLarge from 'pages/topics/assets/climate/cards/insights@2x.png';
 import research from 'pages/topics/assets/climate/cards/research.png';
@@ -181,16 +179,16 @@ export default {
             'GFW data show carbon emissions from tropical tree cover loss.',
           btnText: 'Explore the data',
           link:
-            '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiODFjODAyYWEtNWZlYi00ZmJlLTk5ODYtOGYzMGMwNTk3YzRkIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImYxMGJkZWQ0LTk0ZTItNDBiNi04NjAyLWFlNWJkZmMwN2MwOCJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRlZmF1bHQifSwibGFiZWwiOiJkZWZhdWx0IiwiY2FuQm91bmQiOnRydWV9&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiIsInNlYXJjaCI6ImJpb21hc3MifQ%3D%3D',
+            '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhOWNjNmVjMC01YzFjLTRlMzYtOWIyNi1iNGVlMGI1MDU4N2IiLCJsYXllcnMiOlsiYjMyYTJmMTUtMjVlOC00ZWNjLTk4ZTAtNjg3ODJhYjFjMGZlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRhcmsifSwibGFiZWwiOiJsaWdodExhYmVscyIsImNhbkJvdW5kIjpmYWxzZSwiYmJveCI6bnVsbH0%3D&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
           position: [65, 50]
         },
         {
           id: 'climate-explore-emissions',
           content:
-            'GFW tracks emissions from forest loss against invidiual country commitiments.',
+            'GFW tracks emissions from forest loss against individual country commitments.',
           btnText: 'Explore the data',
           link:
-            '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZTY2M2ViMDktMDRkZS00ZjM5LWI4NzEtMzVjNmMyZWQxMGI1Iiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImRkNWRmODdmLTM5YzItNGFlYi1hNDYyLTNlZjk2OWIyMGI2NiJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImE5Y2M2ZWMwLTVjMWMtNGUzNi05YjI2LWI0ZWUwYjUwNTg3YiIsImxheWVycyI6WyJiMzJhMmYxNS0yNWU4LTRlY2MtOThlMC02ODc4MmFiMWMwZmUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGFyayJ9LCJsYWJlbCI6ImxpZ2h0TGFiZWxzIiwiY2FuQm91bmQiOnRydWV9&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
+            '/dashboards/country/BRA?widget=cumulativeGlad&category=climate#cumulativeGlad',
           position: [43, 40]
         }
       ],
@@ -244,7 +242,7 @@ export default {
         {
           id: 'climate-blog',
           content:
-            'Read how GFW monitoring data supports implementation of forests conservation goals.',
+            'Read how GFW monitoring data support implementation of forest conservation goals.',
           btnText: 'Read the blog',
           link:
             'https://blog.globalforestwatch.org/climate/3-new-features-on-gfw-climate-measure-progress-on-forest-conservation-goals',
@@ -314,7 +312,7 @@ export default {
       title: 'Explore data on the map',
       summary: 'View biomass density and loss, emissions and more.',
       extLink:
-        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhOWNjNmVjMC01YzFjLTRlMzYtOWIyNi1iNGVlMGI1MDU4N2IiLCJsYXllcnMiOlsiYjMyYTJmMTUtMjVlOC00ZWNjLTk4ZTAtNjg3ODJhYjFjMGZlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRhcmsifSwibGFiZWwiOiJsaWdodExhYmVscyIsImNhbkJvdW5kIjp0cnVlfQ%3D%3D&menu=eyJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIiwiZGF0YXNldENhdGVnb3J5IjoiY2xpbWF0ZSJ9',
+        '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNS41ODE2NzIyNTQ1MTE2MDYsImxuZyI6LTE0LjcxODc1MDAwMDAyNzM0N30sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiODFjODAyYWEtNWZlYi00ZmJlLTk5ODYtOGYzMGMwNTk3YzRkIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbImYxMGJkZWQ0LTk0ZTItNDBiNi04NjAyLWFlNWJkZmMwN2MwOCJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImE5Y2M2ZWMwLTVjMWMtNGUzNi05YjI2LWI0ZWUwYjUwNTg3YiIsImxheWVycyI6WyJiMzJhMmYxNS0yNWU4LTRlY2MtOThlMC02ODc4MmFiMWMwZmUiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGFyayJ9LCJsYWJlbCI6ImxpZ2h0TGFiZWxzIiwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsfQ%3D%3D&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6ImNsaW1hdGUifQ%3D%3D',
       img1x: explore,
       img2x: exploreLarge,
       btnText: 'view on map'
@@ -329,21 +327,11 @@ export default {
       btnText: 'read the blog'
     },
     {
-      id: 'calculate',
-      title: 'Calculate emissions from deforestation',
-      summary:
-        'Create a customized Forest Monitoring Report with the latest forest-related emissions.',
-      extLink: 'http://climate.globalforestwatch.org/',
-      img1x: calculate,
-      img2x: calculateLarge,
-      btnText: 'view data'
-    },
-    {
       id: 'insights',
       title: 'Build your own insights',
       summary:
         'Use the custom dataset downloader to find information related to forests and climate.',
-      extLink: 'http://climate.globalforestwatch.org/insights',
+      extLink: 'http://climate.globalforestwatch.org/data-download',
       img1x: insights,
       img2x: insightsLarge,
       btnText: 'view data'

@@ -50,7 +50,7 @@ export default {
           content: 'GFW enables investigation into watershed areas.',
           btnText: 'Explore the data',
           link:
-            '/map?map=eyJkYXRhc2V0cyI6W3sibGF5ZXJzIjpbImQ1OTBmODNjLTliNTQtNDU0Mi04ZDI3LWY2MWI4YjE5ZGY0NiJdLCJkYXRhc2V0IjoiNjMyOTViMDUtNTVhMS00NTZjLWE1NmMtYzljY2IzYTcxMWVjIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX0seyJkYXRhc2V0IjoiMDQ0ZjRhZjgtYmU3Mi00OTk5LWI3ZGQtMTM0MzRmYzRhMzk0IiwibGF5ZXJzIjpbIjc4NzQ3ZWExLTM0YTktNGFhNy1iMDk5LWJkYjg5NDgyMDBmNCJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19',
+            '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6Ijg5N2VjYzc2LTIzMDgtNGM1MS1hZWIzLTQ5NWRlMGJkY2E3OSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJjMzA3NWM1YS01NTY3LTRiMDktYmMwZC05NmVkMTY3M2Y4YjYiXX0seyJkYXRhc2V0IjoiNzBlMjU0OWMtZDcyMi00NGE2LWE4ZDctNGEzODVkNzg1NjVlIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIjNiMjJhNTc0LTI1MDctNGI0YS1hMjQ3LTgwMDU3YzFhMWFkNCJdfSx7ImxheWVycyI6WyJkNTkwZjgzYy05YjU0LTQ1NDItOGQyNy1mNjFiOGIxOWRmNDYiXSwiZGF0YXNldCI6IjYzMjk1YjA1LTU1YTEtNDU2Yy1hNTZjLWM5Y2NiM2E3MTFlYyIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6IjA0NGY0YWY4LWJlNzItNDk5OS1iN2RkLTEzNDM0ZmM0YTM5NCIsImxheWVycyI6WyI3ODc0N2VhMS0zNGE5LTRhYTctYjA5OS1iZGI4OTQ4MjAwZjQiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJ6b29tIjoyLCJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sImNhbkJvdW5kIjpmYWxzZSwiYmJveCI6bnVsbH0%3D&menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiIiLCJtZW51U2VjdGlvbiI6IiJ9',
           position: [21, 18]
         },
         {
@@ -66,7 +66,7 @@ export default {
           content: 'Mangrove forests around the world are visable on GFW.',
           btnText: 'Explore the data',
           link:
-            '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImJkNWQ3OTI0LTYxMWUtNDMwMi05MTg1LTgwNTRhY2IwYjQ0YiIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0OWUzZjk1NS0yYmFiLTRmNzMtODU4OS1jOWMwMzliOGRhMjkiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiIwNDRmNGFmOC1iZTcyLTQ5OTktYjdkZC0xMzQzNGZjNGEzOTQiLCJsYXllcnMiOlsiNzg3NDdlYTEtMzRhOS00YWE3LWIwOTktYmRiODk0ODIwMGY0Il0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiY2FuQm91bmQiOnRydWV9',
+            '/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImJkNWQ3OTI0LTYxMWUtNDMwMi05MTg1LTgwNTRhY2IwYjQ0YiIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0OWUzZjk1NS0yYmFiLTRmNzMtODU4OS1jOWMwMzliOGRhMjkiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6NCwiY2VudGVyIjp7ImxhdCI6LTIuNjkxMTE4MjkwMjQ4MjEzNCwibG5nIjoxMjEuOTk1MTE3MTg3NDg4M30sImJib3giOm51bGx9',
           position: [31, 71]
         }
       ],
@@ -118,13 +118,6 @@ export default {
       img1x: water3,
       img2x: water3Large,
       prompts: [
-        {
-          id: 'water-learn',
-          content:
-            'Learn about the deadly impacts of deforestation and heavy rains in Kerala India.',
-          btnText: 'Read the blog',
-          position: [36, 42]
-        },
         {
           id: 'water-read',
           content:
@@ -205,9 +198,8 @@ export default {
       id: 'solutions',
       title: 'Forest solutions for healthy watersheds',
       summary:
-        'Learn about options for mitigating risks to watersheds and read case studies.',
-      extLink:
-        'https://www.wri.org/publication/protecting-drinking-water-source',
+        'Learn about successful efforts to secure the water-related functions of networks of forests and other ecosystems in the United States.',
+      extLink: 'https://www.wri.org/publication/natural-infrastructure',
       img1x: solutions,
       img2x: solutionsLarge,
       btnText: 'view the publication'
