@@ -94,7 +94,8 @@ class Basemaps extends React.PureComponent {
       basemaps,
       labels,
       isDesktop,
-      setModalMetaSettings
+      setModalMetaSettings,
+      selectBasemap
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -132,6 +133,20 @@ class Basemaps extends React.PureComponent {
                   'theme-dropdown-dark-round': !isDesktop,
                   'theme-dropdown-dark-squared': isDesktop
                 })}
+                value={activeBasemap && activeBasemap.value}
+                options={Object.values(basemaps)}
+                onChange={item => selectBasemap(item)}
+                // style={{
+                //   backgroundImage: `url(${activeBasemap.image})`
+                // }}
+              />
+            </li>
+            <li className="basemaps-options-wrapper">
+              <Dropdown
+                theme={cx('theme-dropdown-button', {
+                  'theme-dropdown-dark-round': !isDesktop,
+                  'theme-dropdown-dark-squared': isDesktop
+                })}
                 value={selectedBoundaries}
                 options={boundaries}
                 onChange={selectBoundaries}
@@ -139,7 +154,10 @@ class Basemaps extends React.PureComponent {
             </li>
             <li className="basemaps-options-wrapper">
               <Dropdown
-                theme="theme-dropdown-button"
+                theme={cx('theme-dropdown-button', {
+                  'theme-dropdown-dark-round': !isDesktop,
+                  'theme-dropdown-dark-squared': isDesktop
+                })}
                 value={activeLabels}
                 options={Object.values(labels)}
                 onChange={this.props.selectLabels}

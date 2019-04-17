@@ -1,8 +1,11 @@
 @import '~styles/settings.scss';
 
 $icon-size: rem(50px);
+$margin-top: rem(5px);
 
 .theme-dropdown-dark-round {
+  height: rem(80px);
+
   .container {
     .c-selector {
       margin: auto;
@@ -10,11 +13,18 @@ $icon-size: rem(50px);
       height: $icon-size;
 
       .value {
-        top: $icon-size;
+        top: calc(#{$icon-size} + #{$margin-top});
         left: rem(-10px);
-        height: rem(30px);
+        height: rem(40px);
         width: rem(70px);
+        white-space: initial;
+        font-size: rem(11px);
+        text-transform: uppercase;
       }
+    }
+
+    .arrow-btn {
+      display: none;
     }
   }
 }
