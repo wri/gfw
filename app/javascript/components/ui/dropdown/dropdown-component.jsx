@@ -25,6 +25,8 @@ import './themes/dropdown-native-button.scss';
 import './themes/dropdown-native-plain.scss';
 import './themes/dropdown-native-inline.scss';
 import './themes/dropdown-native-form.scss';
+import './themes/dropdown-dark-round.scss';
+// import './themes/dropdnw-dark-squared.scss';
 
 class Dropdown extends PureComponent {
   static propTypes = {

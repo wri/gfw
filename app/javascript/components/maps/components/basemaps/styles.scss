@@ -37,12 +37,16 @@ $top-section-height: 125px;
   }
 
   .basemaps-top-section {
-    padding: 15px 20px 25px;
+    padding: 15px 0 25px;
+
+    @media screen and (min-width: $screen-m) {
+      padding: 15px 20px 25px;
+    }
   }
 
   .basemaps-bottom-section {
     height: calc(100% - #{$top-section-height});
-    padding: 25px 20px 5px;
+    padding: 25px 0 5px;
     border-top: 1px solid rgba($hot-grey, 0.3);
 
     @media screen and (min-width: $screen-m) {

@@ -12,7 +12,8 @@
 
   li {
     width: calc(100% / 3);
-    margin: rem(20px) rem(10px);
+    margin: rem(20px);
+    margin-left: 0;
   }
 
   button {

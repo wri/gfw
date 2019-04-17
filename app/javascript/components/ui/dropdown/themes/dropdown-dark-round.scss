@@ -1,0 +1,20 @@
+@import '~styles/settings.scss';
+
+$icon-size: rem(50px);
+
+.theme-dropdown-dark-round {
+  .container {
+    .c-selector {
+      margin: auto;
+      width: $icon-size;
+      height: $icon-size;
+
+      .value {
+        top: $icon-size;
+        left: rem(-10px);
+        height: rem(30px);
+        width: rem(70px);
+      }
+    }
+  }
+}
