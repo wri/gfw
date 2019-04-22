@@ -15,6 +15,7 @@ reducerRegistry.registerModule('modalWelcome', {
   reducers,
   initialState
 });
+
 export default connect(mapStateToProps, { ...actions, setMapTourOpen })(
   Component
 );

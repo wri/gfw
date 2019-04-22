@@ -112,6 +112,9 @@
     "MAPBOX_TOKEN": {
       "required": true
     },
+    "MapboxAccessToken": {
+      "required": true
+    },
     "NODE_ENV": {
       "required": true
     },
