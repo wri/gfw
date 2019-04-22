@@ -83,7 +83,11 @@ export default {
       },
       {
         id: 'roads',
-        'line-color': '#ff841f'
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
     ]
   },
@@ -116,7 +120,11 @@ export default {
       },
       {
         id: 'roads',
-        'line-color': '#ff841f'
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
     ]
   },
@@ -150,7 +158,11 @@ export default {
       },
       {
         id: 'roads',
-        'line-color': '#ff841f'
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
     ]
   },
@@ -187,7 +199,11 @@ export default {
       },
       {
         id: 'roads',
-        'line-color': '#ff841f'
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
     ]
   }
