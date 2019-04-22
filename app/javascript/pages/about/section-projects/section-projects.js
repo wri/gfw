@@ -25,7 +25,7 @@ const mapStateToProps = ({ aboutProjects }) => {
   return {
     projects: getProjectsSelected(projectData),
     categories: getCategoriesList(projectData),
-    categorySelected: aboutProjects.categorySelected
+    categorySelected: aboutProjects && aboutProjects.categorySelected
   };
 };
 class SectionProjectsContainer extends PureComponent {
