@@ -297,7 +297,7 @@ export default {
       id: 'monitor',
       title: 'Monitor progress in real time',
       summary:
-        'The political will to reduce tropical deforestation has never been higher. Are countries on track to meet commitments? Track progress in near-real time with weekly deforestation alerts - just select a country',
+        'The political will to reduce tropical deforestation has never been higher. Are countries on track to meet commitments? Select a country below to find out.',
       extLink: '/dashboards/global?category=climate',
       img1x: monitor,
       img2x: monitorLarge,
