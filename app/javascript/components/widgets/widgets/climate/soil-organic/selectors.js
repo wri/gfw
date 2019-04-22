@@ -120,14 +120,16 @@ export const parseSentence = createSelector(
         }
       };
     }
-    const iso = Object.keys(locationsDict).find(
-      key => locationsDict[key] === location
-    );
-    const region = data.find(item => {
-      if (item.admin_2) return String(item.admin_2) === iso;
-      else if (item.admin_1) return String(item.admin_1) === iso;
-      return item.iso === iso;
-    });
+    const iso =
+      locationsDict &&
+      Object.keys(locationsDict).find(key => locationsDict[key] === location);
+    const region =
+      data &&
+      data.find(item => {
+        if (item.admin_2) return String(item.admin_2) === iso;
+        else if (item.admin_1) return String(item.admin_1) === iso;
+        return item.iso === iso;
+      });
     if (!region) return null;
 
     const { biomassdensity, totalbiomass } = region;

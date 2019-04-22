@@ -51,14 +51,18 @@ class MapAttributions extends PureComponent {
             </a>
           </Fragment>
         )}
-        <Button
-          className="attribution-info-btn"
-          theme="theme-button-small square theme-button-grey-filled theme-button-xsmall"
-          onClick={() => setModalAttributions(true)}
-        >
-          <Icon icon={infoIcon} />
-        </Button>
-        <ModalAttributions />
+        {smallView && (
+          <Fragment>
+            <Button
+              className="attribution-info-btn"
+              theme="theme-button-small square theme-button-grey-filled theme-button-xsmall"
+              onClick={() => setModalAttributions(true)}
+            >
+              <Icon icon={infoIcon} />
+            </Button>
+            <ModalAttributions />
+          </Fragment>
+        )}
       </div>
     );
   }
