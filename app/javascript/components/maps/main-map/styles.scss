@@ -19,16 +19,16 @@
       z-index: 5;
 
       @media screen and (min-width: $screen-m) {
-        right: rem(260px);
+        right: rem(255px);
         bottom: rem(15px);
         justify-content: flex-end;
         width: auto;
       }
     }
 
-    .mapboxgl-ctrl-bottom-right {
+    .map-scale {
       @media screen and (min-width: $screen-m) {
-        right: rem(260px);
+        right: rem(255px);
         bottom: rem(50px);
         left: auto;
         top: auto;

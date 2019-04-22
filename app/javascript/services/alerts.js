@@ -136,7 +136,8 @@ export const fetchLatestDate = url =>
     );
   });
 
-export const fetchGLADLatest = ({ adm1, adm2 }) => {
+export const fetchGLADLatest = params => {
+  const { adm1, adm2 } = params || {};
   let glad_summary_table = GLAD_ISO_DATASET;
   if (adm2) {
     glad_summary_table = GLAD_ADM2_DATASET;
