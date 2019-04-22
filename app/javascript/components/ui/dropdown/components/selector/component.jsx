@@ -21,7 +21,9 @@ const Selector = props => {
     inputProps,
     handleClearSelection,
     children,
-    innerRef
+    innerRef,
+    selectorBackground,
+    selectorIcon
   } = props;
 
   return (
@@ -33,6 +35,7 @@ const Selector = props => {
         className={`c-selector ${arrowPosition ? 'align-left' : ''} ${
           clearable && activeValue ? 'clearable' : ''
         }`}
+        style={selectorBackground && { background: selectorBackground }}
       >
         {arrowPosition === 'left' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
@@ -46,6 +49,11 @@ const Selector = props => {
         >
           {(isOpen && !searchable) || !isOpen ? activeLabel : ''}
         </span>
+        {selectorIcon && (
+          <button className="selector-btn" onClick={onSelectorClick}>
+            <Icon className="selector-icon" icon={selectorIcon} />
+          </button>
+        )}
         <input {...inputProps()} />
         {clearable &&
           activeValue && (
@@ -77,7 +85,9 @@ Selector.propTypes = {
   inputProps: PropTypes.func,
   handleClearSelection: PropTypes.func,
   innerRef: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  selectorBackground: PropTypes.string,
+  selectorIcon: PropTypes.object
 };
 
 export default Selector;

@@ -26,7 +26,8 @@ import './themes/dropdown-native-plain.scss';
 import './themes/dropdown-native-inline.scss';
 import './themes/dropdown-native-form.scss';
 import './themes/dropdown-dark-round.scss';
-// import './themes/dropdnw-dark-squared.scss';
+// import './themes/dropdown-dark-squared.scss';
+import './themes/dropdown-no-border.scss';
 
 class Dropdown extends PureComponent {
   static propTypes = {
@@ -69,7 +70,9 @@ class Dropdown extends PureComponent {
     activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     highlightedIndex: PropTypes.number,
     native: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    selectorBackground: PropTypes.string,
+    selectorIcon: PropTypes.object
   };
 
   stateReducer = (state, changes) => {
@@ -116,7 +119,9 @@ class Dropdown extends PureComponent {
       native,
       value,
       onChange,
-      options
+      options,
+      selectorBackground,
+      selectorIcon
     } = this.props;
 
     const dropdown = (
@@ -158,6 +163,8 @@ class Dropdown extends PureComponent {
               searchable={searchable}
               inputProps={() => buildInputProps(getInputProps)}
               handleClearSelection={() => handleClearSelection()}
+              selectorBackground={selectorBackground}
+              selectorIcon={selectorIcon}
               {...getRootProps({ refKey: 'innerRef' })}
             >
               <Menu

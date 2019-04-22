@@ -1,25 +1,33 @@
 @import '~styles/settings.scss';
 
 $icon-size: rem(50px);
-$margin-top: rem(5px);
+$margin: rem(5px);
 
 .theme-dropdown-dark-round {
   height: rem(80px);
 
   .container {
     .c-selector {
+      background: $border;
+      border: 1px solid #aaa;
       margin: auto;
       width: $icon-size;
       height: $icon-size;
 
       .value {
-        top: calc(#{$icon-size} + #{$margin-top});
+        top: calc(#{$icon-size} + #{$margin});
         left: rem(-10px);
         height: rem(40px);
         width: rem(70px);
         white-space: initial;
         font-size: rem(11px);
         text-transform: uppercase;
+      }
+
+      .selector-btn .c-icon {
+        width: rem(18px);
+        height: rem(18px);
+        margin-left: $margin;
       }
     }
 

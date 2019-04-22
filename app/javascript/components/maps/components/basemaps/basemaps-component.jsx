@@ -8,6 +8,10 @@ import Button from 'components/ui/button';
 import closeIcon from 'assets/icons/close.svg';
 import infoIcon from 'assets/icons/info.svg';
 
+import boundariesIcon from 'assets/icons/boundaries.svg';
+import labelsIcon from 'assets/icons/labels.svg';
+// import roadsIcon from 'assets/icons/roads.svg';
+
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
@@ -136,36 +140,44 @@ class Basemaps extends React.PureComponent {
                 value={activeBasemap && activeBasemap.value}
                 options={Object.values(basemaps)}
                 onChange={item => selectBasemap(item)}
-                // style={{
-                //   backgroundImage: `url(${activeBasemap.image})`
-                // }}
+                selectorBackground={`url(${activeBasemap.image})`}
               />
             </li>
             <li className="basemaps-options-wrapper">
               <Dropdown
-                theme={cx('theme-dropdown-button', {
-                  'theme-dropdown-dark-round': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
-                })}
+                theme={cx(
+                  'theme-dropdown-button',
+                  {
+                    'theme-dropdown-dark-round': !isDesktop,
+                    'theme-dropdown-dark-squared': isDesktop
+                  },
+                  'theme-dropdown-no-border'
+                )}
                 value={selectedBoundaries}
                 options={boundaries}
                 onChange={selectBoundaries}
+                selectorIcon={boundariesIcon}
               />
             </li>
             <li className="basemaps-options-wrapper">
               <Dropdown
-                theme={cx('theme-dropdown-button', {
-                  'theme-dropdown-dark-round': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
-                })}
+                theme={cx(
+                  'theme-dropdown-button',
+                  {
+                    'theme-dropdown-dark-round': !isDesktop,
+                    'theme-dropdown-dark-squared': isDesktop
+                  },
+                  'theme-dropdown-no-border'
+                )}
                 value={activeLabels}
                 options={Object.values(labels)}
                 onChange={this.props.selectLabels}
+                selectorIcon={labelsIcon}
               />
             </li>
           </ul>
         </div>
-        <div className="basemaps-bottom-section">
+        {/* <div className="basemaps-bottom-section">
           <div className="basemap-list-scroll-wrapper">
             <ul className="basemaps-list">
               {Object.values(basemaps).map(item => (
@@ -182,7 +194,7 @@ class Basemaps extends React.PureComponent {
               ))}
             </ul>
           </div>
-        </div>
+          </div> */}
       </div>
     );
   }
