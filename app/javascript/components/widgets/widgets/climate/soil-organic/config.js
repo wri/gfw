@@ -1,6 +1,9 @@
 export default {
   widget: 'soilOrganic',
-  title: 'Soil organic carbon in {location}',
+  title: {
+    default: 'Soil organic carbon in {location}',
+    global: 'Global soil organic carbon'
+  },
   categories: ['climate'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
