@@ -1,0 +1,41 @@
+@import '~styles/settings.scss';
+
+.c-cookies {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 99999;
+  background-color: rgba(51, 51, 51, 0.9);
+  padding: rem(20px) 0;
+
+  .cookies-text {
+    color: $white;
+    font-size: rem(12px);
+    line-height: rem(18px);
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
+  }
+
+  .cookies-button {
+    display: flex;
+    align-items: center;
+    max-width: rem(220px);
+
+    @media screen and (min-width: $screen-m) {
+      max-width: auto;
+    }
+
+    .cookies-btn {
+      color: #fff;
+      border-color: transparent;
+      background: $slate-light;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 500;
+      width: 100%;
+    }
+  }
+}

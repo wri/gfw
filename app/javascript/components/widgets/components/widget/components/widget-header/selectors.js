@@ -17,7 +17,7 @@ export const selectWidgetMetaKey = (state, { config, widget, whitelist }) =>
   (widget === 'treeCover' &&
   whitelist.length &&
   whitelist.includes('plantations')
-    ? 'widget_natural_vs _planted'
+    ? 'widget_natural_vs_planted'
     : config.metaKey);
 
 export const getParsedTitle = createSelector(
