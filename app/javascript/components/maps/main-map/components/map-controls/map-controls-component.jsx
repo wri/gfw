@@ -285,7 +285,7 @@ class MapControlsButtons extends PureComponent {
   renderMapTourBtn = () => (
     <Button
       theme="theme-button-map-control"
-      tooltip={{ text: 'Take a tour of the map' }}
+      tooltip={{ text: 'Map How-To Guide' }}
       onClick={() => this.props.setModalWelcomeOpen(true)}
     >
       <Icon
