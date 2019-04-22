@@ -15,6 +15,11 @@ import labelsIcon from 'assets/icons/labels.svg';
 import './styles.scss';
 
 class Basemaps extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { showBasemaps: false };
+  }
+
   static propTypes = {
     onClose: PropTypes.func,
     boundaries: PropTypes.array,
@@ -83,6 +88,30 @@ class Basemaps extends React.PureComponent {
           />
         </span>
       </button>
+    );
+  }
+
+  renderBasemapsSelector() {
+    const { activeBasemap, basemaps } = this.props;
+    return (
+      <div className="basemaps-bottom-section">
+        <div className="basemap-list-scroll-wrapper">
+          <ul className="basemaps-list">
+            {Object.values(basemaps).map(item => (
+              <li
+                key={item.value}
+                className={cx('basemaps-list-item', {
+                  '-active': activeBasemap.value === item.value
+                })}
+              >
+                {item.dynamic
+                  ? this.renderDropdownBasemap(item)
+                  : this.renderButtonBasemap(item)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     );
   }
 
@@ -177,24 +206,6 @@ class Basemaps extends React.PureComponent {
             </li>
           </ul>
         </div>
-        {/* <div className="basemaps-bottom-section">
-          <div className="basemap-list-scroll-wrapper">
-            <ul className="basemaps-list">
-              {Object.values(basemaps).map(item => (
-                <li
-                  key={item.value}
-                  className={cx('basemaps-list-item', {
-                    '-active': activeBasemap.value === item.value
-                  })}
-                >
-                  {item.dynamic
-                    ? this.renderDropdownBasemap(item)
-                    : this.renderButtonBasemap(item)}
-                </li>
-              ))}
-            </ul>
-          </div>
-          </div> */}
       </div>
     );
   }
