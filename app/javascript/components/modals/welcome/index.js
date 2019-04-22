@@ -30,11 +30,11 @@ const mapStateToProps = state => {
     mapTourSteps,
     showPrompts: selectShowMapPrompts(state),
     title: hideModal
-      ? 'Map how-to guide'
+      ? 'Map How-To Guide'
       : 'Welcome to the new Global Forest Watch map!',
     description: hideModal
       ? ''
-      : 'We&#39;ve made exciting changes to the map to make it faster, more powerful, and easier to use.'
+      : "We've made exciting changes to the map to make it faster, more powerful, and easier to use."
   };
 };
 
