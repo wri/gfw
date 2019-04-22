@@ -31,7 +31,7 @@ class MapComponent extends PureComponent {
     }
 
     if (mapReady && roads.value !== prevProps.roads.value) {
-      this.setRoadsStyles();
+      this.setRoadsLayout();
     }
 
     if (mapReady && basemap.value !== prevProps.basemap.value) {
@@ -92,7 +92,7 @@ class MapComponent extends PureComponent {
     }
   };
 
-  setRoadsStyles = () => {
+  setRoadsLayout = () => {
     const { roads } = this.props;
     if (this.map && roads) {
       const { layout } = roads || {};
