@@ -124,11 +124,9 @@ class Basemaps extends React.PureComponent {
       activeBoundaries,
       selectBoundaries,
       boundaries,
-      basemaps,
       labels,
       isDesktop,
-      setModalMetaSettings,
-      selectBasemap
+      setModalMetaSettings
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -160,18 +158,19 @@ class Basemaps extends React.PureComponent {
             </div>
           )}
           <ul className="basemaps-options-container">
-            <li className="basemaps-options-wrapper">
-              <Dropdown
-                theme={cx('theme-dropdown-button', {
-                  'theme-dropdown-dark-round': !isDesktop,
-                  'theme-dropdown-dark-squared': isDesktop
-                })}
-                value={activeBasemap && activeBasemap.value}
-                options={Object.values(basemaps)}
-                onChange={item => selectBasemap(item)}
-                selectorBackground={`url(${activeBasemap.image})`}
-              />
-            </li>
+            {!isDesktop && (
+              <li className="basemaps-options-wrapper">
+                <Button
+                  theme="theme-button-dark-round"
+                  background={`url(${activeBasemap.image})`}
+                  onClick={() =>
+                    this.setState({ showBasemaps: !this.state.showBasemaps })
+                  }
+                >
+                  <span className="value">{activeBasemap.label}</span>
+                </Button>
+              </li>
+            )}
             <li className="basemaps-options-wrapper">
               <Dropdown
                 theme={cx(
@@ -206,6 +205,8 @@ class Basemaps extends React.PureComponent {
             </li>
           </ul>
         </div>
+        {(isDesktop || this.state.showBasemaps) &&
+          this.renderBasemapsSelector()}
       </div>
     );
   }

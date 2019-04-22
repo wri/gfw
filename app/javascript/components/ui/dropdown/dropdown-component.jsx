@@ -71,7 +71,6 @@ class Dropdown extends PureComponent {
     highlightedIndex: PropTypes.number,
     native: PropTypes.bool,
     onChange: PropTypes.func,
-    selectorBackground: PropTypes.string,
     selectorIcon: PropTypes.object
   };
 
@@ -120,7 +119,6 @@ class Dropdown extends PureComponent {
       value,
       onChange,
       options,
-      selectorBackground,
       selectorIcon
     } = this.props;
 
@@ -163,7 +161,6 @@ class Dropdown extends PureComponent {
               searchable={searchable}
               inputProps={() => buildInputProps(getInputProps)}
               handleClearSelection={() => handleClearSelection()}
-              selectorBackground={selectorBackground}
               selectorIcon={selectorIcon}
               {...getRootProps({ refKey: 'innerRef' })}
             >

@@ -22,7 +22,6 @@ const Selector = props => {
     handleClearSelection,
     children,
     innerRef,
-    selectorBackground,
     selectorIcon
   } = props;
 
@@ -35,7 +34,6 @@ const Selector = props => {
         className={`c-selector ${arrowPosition ? 'align-left' : ''} ${
           clearable && activeValue ? 'clearable' : ''
         }`}
-        style={selectorBackground && { background: selectorBackground }}
       >
         {arrowPosition === 'left' && (
           <button className="arrow-btn" onClick={onSelectorClick}>
@@ -86,7 +84,6 @@ Selector.propTypes = {
   handleClearSelection: PropTypes.func,
   innerRef: PropTypes.func,
   className: PropTypes.string,
-  selectorBackground: PropTypes.string,
   selectorIcon: PropTypes.object
 };
 

@@ -61,8 +61,9 @@ $top-section-height: 125px;
   }
 
   .basemaps-options-wrapper {
-    z-index: 5;
+    height: rem(80px);
     width: 48%;
+    z-index: 5;
 
     &:first-child {
       margin-right: rem(10px);
