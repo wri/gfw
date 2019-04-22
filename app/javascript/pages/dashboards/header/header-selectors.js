@@ -152,7 +152,7 @@ export const getSentence = createSelector(
       primaryLoss: `${primaryLoss}ha`
     };
 
-    let sentence = sentences[countrySpecific[adm0]] || sentences.default;
+    let sentence = sentences.default;
     if (data.extent > 0 && data.totalLoss.area) {
       sentence =
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
@@ -161,6 +161,9 @@ export const getSentence = createSelector(
       ? sentence + co2Emissions
       : sentence + end;
     if (!location) sentence = globalInitial;
+    if (adm0 in countrySpecific) {
+      sentence = countrySpecific[adm0];
+    }
 
     return {
       sentence,

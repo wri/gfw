@@ -11,6 +11,7 @@ const getLocation = state => state.allLocation || null;
 const getLocationDict = state => state.locationDict || null;
 const getLocationObject = state => state.locationObject || null;
 const getSentences = state => state.config && state.config.sentences;
+const getTitle = state => state.config.title;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 
@@ -122,11 +123,13 @@ export const parseSentence = createSelector(
     const iso =
       locationsDict &&
       Object.keys(locationsDict).find(key => locationsDict[key] === location);
-    const region = data.find(item => {
-      if (item.admin_2) return String(item.admin_2) === iso;
-      else if (item.admin_1) return String(item.admin_1) === iso;
-      return item.iso === iso;
-    });
+    const region =
+      data &&
+      data.find(item => {
+        if (item.admin_2) return String(item.admin_2) === iso;
+        else if (item.admin_1) return String(item.admin_1) === iso;
+        return item.iso === iso;
+      });
     if (!region) return null;
 
     const { biomassdensity, totalbiomass } = region;
@@ -141,7 +144,19 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    let selectedTitle = title.default;
+    if (name === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
+  title: parseTitle
 });
