@@ -20,6 +20,17 @@
     }
   }
 
+  .citation-link {
+    position: absolute;
+    top: rem(10px);
+    right: rem(10px);
+
+    .citation-icon {
+      fill: $slate;
+      opacity: 0.8;
+    }
+  }
+
   .intro-img {
     width: 100%;
     padding: rem(15px);

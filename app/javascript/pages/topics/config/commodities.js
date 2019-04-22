@@ -31,6 +31,7 @@ export default {
     title: '40% of global deforestation is commodity-driven.',
     text:
       'Production of commodities including beef, soy, palm oil, pulp, paper, energy and minerals, is the leading cause of deforestation. More sustainable commodity production is critical for conserving forests and mitigating climate change.',
+    citation: 'https://iopscience.iop.org/article/10.1088/1748-9326/7/4/044009',
     img1x: intro1x,
     img2x: intro2x
   },

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
 
+import infoIcon from 'assets/icons/info.svg';
 import './styles.scss';
 
 class Intro extends PureComponent {
   render() {
     const { intro, className, handleSkipToTools, isDesktop } = this.props;
-    const { img1x, img2x, title, text } = intro;
+    const { img1x, img2x, title, text, citation } = intro;
 
     return (
       <div className={cx('c-topics-intro', className)}>
@@ -27,6 +29,11 @@ class Intro extends PureComponent {
           </div>
           <div className="column small-12 medium-6 titleCol">
             <h1 className="intro-title">{title}</h1>
+            {citation && (
+              <a className="citation-link" href={citation} target="_blank">
+                <Icon className="citation-icon" icon={infoIcon} />
+              </a>
+            )}
           </div>
         </div>
         <div className="row">
