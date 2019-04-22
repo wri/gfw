@@ -161,7 +161,7 @@ export default {
   planet: {
     value: 'planet',
     label: 'Planet',
-    labelsKey: 'default',
+    labelsKey: 'lightLabels',
     color: '#131620',
     image: satelliteImage,
     url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_{frequency}_{period}_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
