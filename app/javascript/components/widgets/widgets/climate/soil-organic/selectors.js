@@ -11,6 +11,7 @@ const getLocation = state => state.allLocation || null;
 const getLocationDict = state => state.locationDict || null;
 const getLocationObject = state => state.locationObject || null;
 const getSentences = state => state.config && state.config.sentences;
+const getTitle = state => state.config.title;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 
@@ -141,7 +142,19 @@ export const parseSentence = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    let selectedTitle = title.default;
+    if (name === 'global') {
+      selectedTitle = title.global;
+    }
+    return selectedTitle;
+  }
+);
+
 export default createStructuredSelector({
   data: parseData,
-  sentence: parseSentence
+  sentence: parseSentence,
+  title: parseTitle
 });
