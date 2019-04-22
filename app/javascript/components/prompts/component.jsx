@@ -5,6 +5,14 @@ import Joyride, { ACTIONS, EVENTS, STATUS } from 'react-joyride';
 import PromptTooltip from 'components/prompts/prompt-tooltip';
 
 class PromptTour extends PureComponent {
+  componentDidUpdate(prevProps) {
+    const { initAction } = this.props;
+    console.log(initAction);
+    if (initAction && initAction !== prevProps.initAction) {
+      initAction();
+    }
+  }
+
   render() {
     const {
       open,

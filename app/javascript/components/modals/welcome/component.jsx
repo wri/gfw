@@ -14,13 +14,10 @@ import Modal from '../modal';
 import './styles.scss';
 
 class ModalWelcome extends PureComponent {
-  handleShowPrompts = showPrompts => {
-    this.props.setShowMapPrompts(showPrompts);
-  };
-
   getContent() {
     const {
       setMapPromptsSettings,
+      setShowMapPrompts,
       setModalWelcome,
       title,
       description,
@@ -37,7 +34,11 @@ class ModalWelcome extends PureComponent {
             theme="theme-button-clear theme-button-dashed"
             onClick={() => {
               setModalWelcome(false);
-              setMapPromptsSettings({ open: true, stepsKey: 'mapTour' });
+              setMapPromptsSettings({
+                open: true,
+                stepsKey: 'mapTour',
+                force: true
+              });
               track('welcomeModal', { label: 'Tour' });
             }}
           >
@@ -51,7 +52,7 @@ class ModalWelcome extends PureComponent {
             <b>How-to guide:</b>
             <button
               className="show-prompts-btn"
-              onClick={() => this.handleShowPrompts(!showPrompts)}
+              onClick={() => setShowMapPrompts(!showPrompts)}
             >
               <Checkbox className="prompts-checkbox" value={showPrompts} />
               {'Show me tips'}
@@ -68,7 +69,8 @@ class ModalWelcome extends PureComponent {
                   setMapPromptsSettings({
                     open: true,
                     stepsKey: step.promptKey,
-                    stepIndex: 0
+                    stepIndex: 0,
+                    force: true
                   });
                 }}
               >

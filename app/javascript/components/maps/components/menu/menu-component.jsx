@@ -13,7 +13,7 @@ import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
   onToggleLayer = (data, enable) => {
-    const { activeDatasets, recentActive, showPrompts } = this.props;
+    const { activeDatasets, recentActive } = this.props;
     const { dataset, layer, iso, category } = data;
 
     let newActiveDatasets = [...activeDatasets];
@@ -37,19 +37,28 @@ class MapMenu extends PureComponent {
       datasets: newActiveDatasets || [],
       ...(enable && { canBound: true })
     });
-    if (
-      showPrompts &&
-      !recentActive &&
-      enable &&
-      (data.dataset === 'e663eb09-04de-4f39-b871-35c6c2ed10b5' ||
-        (category === 'landUse' || category === 'biodiversity'))
-    ) {
-      this.props.setMapPromptsSettings({
-        stepsKey: 'recentImagery',
-        stepsIndex: 0,
-        open: true
-      });
-    }
+
+    // if (
+    //   !recentActive &&
+    //   enable &&
+    //   category === 'forestChange'
+    // ) {
+    //   this.props.setMapPromptsSettings({
+    //     stepsKey: 'recentImagery',
+    //     stepsIndex: 0,
+    //     open: true
+    //   });
+    // } else if (
+    //   enable &&
+    //   (category === 'landUse' || category === 'biodiversity' || data.dataset === 'biomassloss' )
+    // ) {
+    //   this.props.setMapPromptsSettings({
+    //     stepsKey: 'analyzeAnArea',
+    //     stepsIndex: 0,
+    //     open: true
+    //   });
+    // }
+
     track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
       label: layer
     });
@@ -191,7 +200,6 @@ MapMenu.propTypes = {
   isDesktop: PropTypes.bool,
   embed: PropTypes.bool,
   recentActive: PropTypes.bool,
-  showPrompts: PropTypes.bool,
   setMapPromptsSettings: PropTypes.func
 };
 

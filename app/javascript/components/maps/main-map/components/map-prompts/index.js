@@ -17,7 +17,7 @@ import { getMapPromptsProps } from './selectors';
 class MapPromptsContainer extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
-      open,
+      // open,
       mapZoom,
       setMapPromptsSettings,
       location,
@@ -172,7 +172,8 @@ class MapPromptsContainer extends PureComponent {
                 setMapPromptsSettings({
                   open: true,
                   stepsKey: 'recentImageryTour',
-                  stepIndex: 0
+                  stepIndex: 0,
+                  force: true
                 });
               }
             }
@@ -201,7 +202,8 @@ class MapPromptsContainer extends PureComponent {
                 setMapPromptsSettings({
                   open: true,
                   stepsKey: 'recentImageryTour',
-                  stepIndex: 0
+                  stepIndex: 0,
+                  force: true
                 });
               }
             }
@@ -216,6 +218,7 @@ class MapPromptsContainer extends PureComponent {
         steps: [
           {
             target: '.c-data-analysis-menu',
+            placement: 'right',
             content:
               'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
             disableBeacon: true,
@@ -230,7 +233,8 @@ class MapPromptsContainer extends PureComponent {
                 setMapPromptsSettings({
                   open: true,
                   stepsKey: 'analyzeAnAreaTour',
-                  stepIndex: 0
+                  stepIndex: 0,
+                  force: true
                 });
               }
             }

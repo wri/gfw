@@ -25,10 +25,11 @@ class MapPrompts extends PureComponent {
         setTourClosed={setMapTourOpen}
         showPrompts={showPrompts}
         handleStateChange={state =>
-          setMapPromptsSettings({ stepsKey, ...state })
+          setMapPromptsSettings({ stepsKey, ...state, force: true })
         }
         handleShowPrompts={handleShowPrompts}
         settings={data.settings}
+        initAction={data.initAction}
       />
     ) : null;
   }

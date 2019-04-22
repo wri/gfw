@@ -8,30 +8,25 @@ export const setMapPromptsSettings = createThunkAction(
   'setMapPromptsSettings',
   change => (dispatch, state) => {
     const { mapPrompts } = state() || {};
-    const { promptsViewed } = mapPrompts || {};
-    const { open, stepsKey, stepIndex } = change || {};
+    const { promptsViewed, showPrompts } = mapPrompts || {};
+    const { stepsKey, force } = change || {};
 
-    // if (
-    //   open &&
-    //   !stepIndex &&
-    //   promptsViewed &&
-    //   promptsViewed.includes(stepsKey)
-    // ) {
-    //   return false;
-    // }
-
-    dispatch(
-      setComponentStateToUrl({
-        key: 'mapPrompts',
-        change,
-        state
-      })
-    );
-    if (stepsKey) {
-      dispatch(setShowPromptsViewed(stepsKey));
+    if (
+      force ||
+      (showPrompts && (!promptsViewed || !promptsViewed.includes(stepsKey)))
+    ) {
+      dispatch(
+        setComponentStateToUrl({
+          key: 'mapPrompts',
+          change,
+          state
+        })
+      );
     }
 
-    return true;
+    if (stepsKey && showPrompts) {
+      dispatch(setShowPromptsViewed(stepsKey));
+    }
   }
 );
 

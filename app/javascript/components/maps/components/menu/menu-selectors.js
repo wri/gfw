@@ -5,11 +5,11 @@ import flatten from 'lodash/flatten';
 
 import {
   getActiveDatasetsFromState,
-  getLayerGroups
+  getLayerGroups,
+  getMapZoom
 } from 'components/maps/map/selectors';
 import { getEmbed } from 'components/maps/main-map/selectors';
 import { getActive } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
-import { selectShowMapPrompts } from 'components/maps/main-map/components/map-prompts/selectors';
 
 import { initialState } from './menu-reducers';
 import {
@@ -280,5 +280,5 @@ export const getMenuProps = createStructuredSelector({
   loading: getLoading,
   analysisLoading: getAnalysisLoading,
   recentActive: getActive,
-  showPrompts: selectShowMapPrompts
+  zoom: getMapZoom
 });
