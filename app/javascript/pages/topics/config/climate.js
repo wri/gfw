@@ -47,7 +47,7 @@ export default {
       title: 'Climate',
       subtitle: 'Natural state',
       text:
-        'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossel fuels, which include coal, natural gas and oil.',
+        'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossil fuels, which include coal, natural gas and oil.',
       img1x: climate1,
       img2x: climate1Large,
       prompts: [
@@ -181,15 +181,6 @@ export default {
           link:
             '/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhOWNjNmVjMC01YzFjLTRlMzYtOWIyNi1iNGVlMGI1MDU4N2IiLCJsYXllcnMiOlsiYjMyYTJmMTUtMjVlOC00ZWNjLTk4ZTAtNjg3ODJhYjFjMGZlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRhcmsifSwibGFiZWwiOiJsaWdodExhYmVscyIsImNhbkJvdW5kIjpmYWxzZSwiYmJveCI6bnVsbH0%3D&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9',
           position: [65, 50]
-        },
-        {
-          id: 'climate-explore-emissions',
-          content:
-            'GFW tracks emissions from forest loss against individual country commitments.',
-          btnText: 'Explore the data',
-          link:
-            '/dashboards/country/BRA?widget=cumulativeGlad&category=climate#cumulativeGlad',
-          position: [43, 40]
         }
       ],
       animations: [
@@ -227,7 +218,7 @@ export default {
       title: 'Climate',
       subtitle: 'Recovery state',
       text:
-        'Sustainable forest management, improved land tenure, conservation and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions can have positive economic, biodiversity, and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
+        'Sustainable forest management, improved land tenure, conservation and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions can have positive economic, biodiversity and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
       img1x: climate4,
       img2x: climate4Large,
       prompts: [
