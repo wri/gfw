@@ -33,6 +33,11 @@ import arrowsSmall from 'pages/topics/assets/climate/animations/arrow-small.svg'
 import arrowsMedium from 'pages/topics/assets/climate/animations/arrow-medium.svg';
 import arrowsLarge from 'pages/topics/assets/climate/animations/arrow-large.svg';
 
+// NYC tracker widget config
+import nycWidgetConfig from 'components/widgets/widgets/climate/cumulative-emissions/config';
+
+const nycWidgetIsos = nycWidgetConfig.whitelists.adm0;
+
 export default {
   intro: {
     title:
@@ -296,7 +301,15 @@ export default {
       extLink: '/dashboards/global?category=climate',
       img1x: monitor,
       img2x: monitorLarge,
-      btnText: 'view data'
+      selector: {
+        options: nycWidgetIsos.map(iso => ({
+          label: iso,
+          value: iso,
+          path: `/dashboards/country/${
+            iso
+          }?widget=cumulativeGlad&category=climate#cumulativeGlad`
+        }))
+      }
     },
     {
       id: 'explore',

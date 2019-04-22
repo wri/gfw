@@ -1,7 +1,9 @@
 @import '~styles/settings.scss';
 
 $dd-height: rem(30px);
+$dd-height-large: rem(40px);
 $dd-font-size: rem(12px);
+$dd-font-size-large: rem(16px);
 
 .theme-dropdown-native {
   .select-wrapper {
@@ -45,5 +47,15 @@ $dd-font-size: rem(12px);
     width: 10px;
     z-index: 1;
     fill: $green-gfw;
+  }
+
+  &.large {
+    .select-wrapper {
+      height: $dd-height-large;
+
+      select {
+        font-size: $dd-font-size-large;
+      }
+    }
   }
 }
