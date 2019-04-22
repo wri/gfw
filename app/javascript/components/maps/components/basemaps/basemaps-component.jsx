@@ -157,6 +157,7 @@ class Basemaps extends React.PureComponent {
               theme="light"
               arrow
               interactive
+              onRequestClose={() => this.setState({ planetTooltipOpen: false })}
               open={planetTooltipOpen}
               html={
                 <div className="c-basemaps-tooltip">
