@@ -48,6 +48,8 @@ const ALLOWED_PARAMS = [
   'landCategory'
 ];
 
+const CATEGORIZED_POLYNAMES = ['plantations', 'tcs', 'wdpa'];
+
 // quyery building helpers
 const getAdmDatasetId = (adm0, adm1, adm2, grouped) => {
   if (adm2 || (adm1 && grouped)) return ADM2_DATASET;
@@ -80,12 +82,12 @@ const getWHEREQuery = params => {
       const isPolyname = ['forestType', 'landCategory'].includes(p);
       const value = isPolyname ? 1 : params[p];
       let appendString = '';
-      if (params[p] !== 'plantations') {
+      if (!CATEGORIZED_POLYNAMES.includes(params[p])) {
         appendString = `${isPolyname ? params[p] : p} = ${
           typeof value === 'number' ? value : `'${value}'`
         }${isLast ? '' : ' AND '}`;
       } else {
-        appendString = `plantations is not null${isLast ? '' : ' AND '}`;
+        appendString = `${params[p]} is not null${isLast ? '' : ' AND '}`;
       }
       paramString = paramString.concat(appendString);
     });
