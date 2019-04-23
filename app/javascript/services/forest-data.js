@@ -22,7 +22,7 @@ const NEW_SQL_QUERIES = {
     'SELECT {location}, SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain: 'SELECT SUM(total_gain) as gain FROM data {WHERE}',
   gainGrouped:
-    'SELECT {location}, SUM(total_gain) as gain FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, SUM(total_gain) as gain, SUM(extent_2000) as extent FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT SUM(total_area) AS intersection_area, {location}, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY intersection_area DESC',
   fao:
