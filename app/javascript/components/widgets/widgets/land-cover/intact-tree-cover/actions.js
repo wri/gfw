@@ -23,11 +23,11 @@ export default ({ params }) =>
         let data = {};
         const plantationsData =
           plantationsResponse.data && plantationsResponse.data.data;
-        plantations = plantationsData.length ? plantationsData[0].value : 0;
+        plantations = plantationsData.length ? plantationsData[0].extent : 0;
         if (iflExtent.length && gadmExtent.length) {
           totalArea = gadmExtent[0].total_area;
-          totalExtent = gadmExtent[0].value;
-          extent = iflExtent[0].value;
+          totalExtent = gadmExtent[0].extent;
+          extent = iflExtent[0].extent;
           data = {
             totalArea,
             totalExtent,
