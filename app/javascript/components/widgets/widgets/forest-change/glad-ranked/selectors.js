@@ -48,16 +48,14 @@ export const parseList = createSelector(
             .subtract(settings.weeks, 'weeks')
         )
     );
-    const groupedAlerts = groupBy(
-      alertsByDate,
-      location.region ? 'adm2' : 'adm1'
-    );
+    const groupKey = location.payload.adm1 ? 'adm2' : 'adm1';
+    const groupedAlerts = groupBy(alertsByDate, groupKey);
     const mappedData = Object.keys(groupedAlerts).map(k => {
       const region = meta.find(l => parseInt(k, 10) === l.value);
-      const regionExtent = extent.find(a => a.region === parseInt(k, 10));
+      const regionExtent = extent.find(a => a[groupKey] === parseInt(k, 10));
       const regionData = groupedAlerts[k];
       const countsArea = sumBy(regionData, 'area_ha');
-      const counts = sumBy(regionData, 'count');
+      const counts = sumBy(regionData, 'alerts');
       const countsAreaPerc =
         countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
       const countsPerHa =
