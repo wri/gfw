@@ -48,7 +48,7 @@ const ALLOWED_PARAMS = [
   'landCategory'
 ];
 
-const CATEGORIZED_POLYNAMES = ['plantations', 'tcs', 'wdpa'];
+const CATEGORIZED_POLYNAMES = ['plantations', 'tcs', 'wdpa', 'ifl'];
 
 // quyery building helpers
 const getAdmDatasetId = (adm0, adm1, adm2, grouped) => {
