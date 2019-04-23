@@ -14,8 +14,8 @@ export default ({ params }) =>
       if (extentData && extentData.length) {
         extentMappedData = extentData.map(d => ({
           id: d[groupKey],
-          extent: d.value || 0,
-          percentage: d.value ? d.value / d.total * 100 : 0
+          extent: d.extent || 0,
+          percentage: d.extent ? d.extent / d.total * 100 : 0
         }));
       }
       const lossData = lossGrouped.data.data;
