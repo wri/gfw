@@ -41,7 +41,6 @@ export const parseData = createSelector(
   (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear } = settings;
-
     return data
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
