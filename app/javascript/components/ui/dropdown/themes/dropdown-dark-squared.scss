@@ -1,0 +1,41 @@
+@import '~styles/settings.scss';
+
+$icon-size: rem(50px);
+$margin: rem(5px);
+
+.theme-dropdown-dark-squared {
+  .container {
+    position: relative;
+    width: rem(80px);
+    height: rem(70px);
+
+    .c-selector {
+      background: $border;
+      border: 1px solid #aaa;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      padding: 0;
+
+      .value {
+        position: absolute;
+        bottom: rem(10px);
+        left: 0;
+        padding: 0;
+        width: 100%;
+        white-space: initial;
+        font-size: rem(11px);
+      }
+
+      .selector-btn .c-icon {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+    }
+
+    .arrow-btn {
+      display: none;
+    }
+  }
+}
