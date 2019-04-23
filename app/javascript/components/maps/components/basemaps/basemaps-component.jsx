@@ -95,6 +95,9 @@ class Basemaps extends React.PureComponent {
     const { activeBasemap, basemaps } = this.props;
     return (
       <div className="basemaps-bottom-section">
+        <div className="basemaps-header">
+          <h2 className="basemaps-title">MAP STYLES</h2>
+        </div>
         <div className="basemap-list-scroll-wrapper">
           <ul className="basemaps-list">
             {Object.values(basemaps).map(item => (

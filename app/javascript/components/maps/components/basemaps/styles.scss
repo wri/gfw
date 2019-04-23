@@ -96,7 +96,11 @@ $top-section-height: 125px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    // margin: auto;
+    margin: auto;
+
+    @media screen and (min-width: $screen-m) {
+      margin: initial;
+    }
   }
 
   .basemaps-list-item {
@@ -122,9 +126,12 @@ $top-section-height: 125px;
     text-transform: uppercase;
     color: $slate-light;
     margin: rem(6px) 0 0;
-    // text-align: left;
-    // width: 100%;
-    // margin-left: 3px;
+
+    @media screen and (min-width: $screen-m) {
+      text-align: left;
+      width: 100%;
+      margin-left: 3px;
+    }
   }
 
   .landsat-selector {
