@@ -4,9 +4,9 @@ export default {
   categories: ['land-cover'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
-  options: {
-    types: true
-  },
+  // options: {
+  //   types: true
+  // },
   colors: 'plantations',
   layers: ['plantations_by_type', 'plantations_by_species'],
   metaKey: 'widget_plantation_extent',
