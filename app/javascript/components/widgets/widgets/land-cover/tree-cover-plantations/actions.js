@@ -15,7 +15,7 @@ export default ({ params }) =>
         let data = {};
         if (gadmExtent.length && plantationsExtent.length) {
           const totalArea = gadmExtent[0].total_area;
-          const totalExtent = gadmExtent[0].value;
+          const totalExtent = gadmExtent[0].extent;
           data = {
             totalArea,
             totalExtent,

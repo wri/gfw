@@ -7,7 +7,7 @@ export default ({ params }) =>
     if (data && data.length) {
       mappedData = data.map(item => {
         const area = item.total_area || 0;
-        const extent = item.value || 0;
+        const extent = item.extent || 0;
         return {
           id: item.iso,
           extent,
