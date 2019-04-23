@@ -173,14 +173,10 @@ class Basemaps extends React.PureComponent {
             )}
             <li className="basemaps-options-wrapper">
               <Dropdown
-                theme={cx(
-                  'theme-dropdown-button',
-                  {
-                    'theme-dropdown-dark-round': !isDesktop,
-                    'theme-dropdown-dark-squared': isDesktop
-                  },
-                  'theme-dropdown-no-border'
-                )}
+                theme={cx('theme-dropdown-button', {
+                  'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                  'theme-dropdown-dark-squared': isDesktop
+                })}
                 value={selectedBoundaries}
                 options={boundaries}
                 onChange={selectBoundaries}
@@ -189,14 +185,10 @@ class Basemaps extends React.PureComponent {
             </li>
             <li className="basemaps-options-wrapper">
               <Dropdown
-                theme={cx(
-                  'theme-dropdown-button',
-                  {
-                    'theme-dropdown-dark-round': !isDesktop,
-                    'theme-dropdown-dark-squared': isDesktop
-                  },
-                  'theme-dropdown-no-border'
-                )}
+                theme={cx('theme-dropdown-button', {
+                  'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                  'theme-dropdown-dark-squared': isDesktop
+                })}
                 value={activeLabels}
                 options={Object.values(labels)}
                 onChange={this.props.selectLabels}

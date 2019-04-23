@@ -1,7 +1,6 @@
 @import '~styles/settings.scss';
 
-$icon-size: rem(50px);
-$margin: rem(5px);
+$margin: rem(10px);
 
 .theme-dropdown-dark-squared {
   .container {
@@ -10,27 +9,46 @@ $margin: rem(5px);
     height: rem(70px);
 
     .c-selector {
-      background: $border;
-      border: 1px solid #aaa;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
       width: 100%;
       height: 100%;
+      background: $grey-light;
+      border: 1px solid $border;
       border-radius: 0;
       padding: 0;
 
       .value {
-        position: absolute;
-        bottom: rem(10px);
+        position: relative;
+        top: initial;
+        bottom: 0;
         left: 0;
-        padding: 0;
         width: 100%;
+        padding: 0 4px;
+        margin-bottom: $margin;
         white-space: initial;
         font-size: rem(11px);
+        line-height: rem(12px);
+        max-height: rem(22px);
       }
 
-      .selector-btn .c-icon {
+      .selector-btn {
         width: 100%;
-        height: 100%;
-        border-radius: 0;
+        height: rem(20px);
+        margin-top: $margin;
+
+        .c-icon {
+          width: 100%;
+          height: 100%;
+          border-radius: 0;
+        }
+      }
+
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
       }
     }
 
