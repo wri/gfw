@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { fetchLossRanked, fetchExtentRanked } from 'services/forest-data';
+import { getLossGrouped, getExtentGrouped } from 'services/forest-data';
 
 export default ({ params }) =>
-  axios.all([fetchLossRanked(params), fetchExtentRanked(params)]).then(
+  axios.all([getLossGrouped(params), getExtentGrouped(params)]).then(
     axios.spread((lossResponse, extentResponse) => {
       const { data } = lossResponse.data;
       let mappedData = [];

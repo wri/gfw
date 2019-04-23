@@ -1,11 +1,7 @@
-import { getLocations, fetchExtentRanked } from 'services/forest-data';
+import { getExtentGrouped } from 'services/forest-data';
 
-export default ({ params }) => {
-  const fetchFunc =
-    !params.type || params.type === 'global'
-      ? fetchExtentRanked(params)
-      : getLocations(params);
-  return fetchFunc.then(response => {
+export default ({ params }) =>
+  getExtentGrouped(params).then(response => {
     const { data } = response.data;
     let mappedData = {};
     if (data && data.length) {
@@ -24,4 +20,3 @@ export default ({ params }) => {
     }
     return mappedData;
   });
-};

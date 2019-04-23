@@ -1,11 +1,11 @@
-import { getExtent, getPlantationsExtent } from 'services/forest-data';
+import { getExtent, getAreaIntersection } from 'services/forest-data';
 import axios from 'axios';
 
 export default ({ params }) =>
   axios
     .all([
       getExtent({ ...params, forestType: '' }),
-      getPlantationsExtent(params)
+      getAreaIntersection(params)
     ])
     .then(
       axios.spread((gadmResponse, plantationsResponse) => {

@@ -49,7 +49,7 @@ class Page extends PureComponent {
           </Button>
         )}
         <div className="content-panel">
-          {/* <Header className="header" /> */}
+          <Header className="header" />
           <SubNavMenu
             className="nav"
             theme="theme-subnav-dark"

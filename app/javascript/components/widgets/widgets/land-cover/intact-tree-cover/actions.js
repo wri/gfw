@@ -1,23 +1,16 @@
 import { getExtent } from 'services/forest-data';
 import axios from 'axios';
 
-export default ({ params }) => {
-  let polyname = 'plantations';
-  switch (params.indicator) {
-    case 'ifl__wdpa':
-      polyname = 'plantations__wdpa';
-      break;
-    case 'ifl__mining':
-      polyname = 'plantations__mining';
-      break;
-    default:
-      break;
-  }
-  return axios
+export default ({ params }) =>
+  axios
     .all([
       getExtent({ ...params, forestType: '' }),
       getExtent({ ...params }),
-      getExtent({ ...params, indicator: polyname })
+      getExtent({
+        ...params,
+        forestType:
+          params.forestType === 'ifl' ? 'plantations' : params.forestType
+      })
     ])
     .then(
       axios.spread((gadm28Response, iflResponse, plantationsResponse) => {
@@ -45,4 +38,3 @@ export default ({ params }) => {
         return data;
       })
     );
-};

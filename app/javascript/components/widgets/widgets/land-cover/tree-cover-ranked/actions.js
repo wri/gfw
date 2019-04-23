@@ -1,7 +1,7 @@
-import { fetchExtentRanked } from 'services/forest-data';
+import { getExtentGrouped } from 'services/forest-data';
 
 export default ({ params }) =>
-  fetchExtentRanked(params).then(response => {
+  getExtentGrouped(params).then(response => {
     const { data } = response.data;
     let mappedData = [];
     if (data && data.length) {

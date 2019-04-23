@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import { getGainRanked } from 'services/forest-data';
+import { getGainGrouped } from 'services/forest-data';
 
 export default ({ params }) =>
-  axios.all([getGainRanked(params)]).then(
+  axios.all([getGainGrouped(params)]).then(
     axios.spread(gainResponse => {
       const gainData = gainResponse.data.data;
       let mappedData = [];
