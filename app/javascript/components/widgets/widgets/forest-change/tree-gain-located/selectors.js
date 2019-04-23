@@ -94,7 +94,7 @@ export const parseSentence = createSelector(
       percentileLength += 1;
     }
 
-    const topGain = percentileGain / totalGain * 100;
+    const topGain = percentileGain / totalGain * 100 || 0;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
       sentence = !indicator ? initial : withIndicator;
@@ -107,7 +107,7 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label.toLowerCase(),
       location: locationName,
       topGain: `${format('.2r')(topGain)}%`,
-      percentileLength,
+      percentileLength: percentileLength || '0',
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
         topRegion.percentage > 0 && settings.unit === '%'

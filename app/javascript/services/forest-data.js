@@ -17,12 +17,12 @@ const NEW_SQL_QUERIES = {
   lossGrouped:
     'SELECT {location}, year_data.year as year, SUM(year_data.area_loss) as area_loss FROM data {WHERE} GROUP BY {location}, nested(year_data.year) ORDER BY {location}',
   extent:
-    'SELECT SUM({extentYear}) as value, SUM(total_area) as total_area FROM data {WHERE}',
+    'SELECT SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE}',
   extentGrouped:
-    'SELECT {location}, SUM({extentYear}) as value, SUM(total_area) as total_area FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
-  gain: 'SELECT SUM(gain) as value FROM data {WHERE}',
+    'SELECT {location}, SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+  gain: 'SELECT SUM(total_gain) as gain FROM data {WHERE}',
   gainGrouped:
-    'SELECT {location}, SUM(gain) as value FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, SUM(total_gain) as gain FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
     'SELECT SUM(total_area) AS intersection_area, {location}, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY intersection_area DESC',
   fao:
@@ -79,11 +79,15 @@ const getWHEREQuery = params => {
       const isLast = paramKeysFiltered.length - 1 === i;
       const isPolyname = ['forestType', 'landCategory'].includes(p);
       const value = isPolyname ? 1 : params[p];
-      paramString = paramString.concat(
-        `${isPolyname ? params[p] : p} = ${
+      let appendString = '';
+      if (params[p] !== 'plantations') {
+        appendString = `${isPolyname ? params[p] : p} = ${
           typeof value === 'number' ? value : `'${value}'`
-        }${isLast ? '' : ' AND '}`
-      );
+        }${isLast ? '' : ' AND '}`;
+      } else {
+        appendString = `plantations is not null${isLast ? '' : ' AND '}`;
+      }
+      paramString = paramString.concat(appendString);
     });
     return paramString;
   }

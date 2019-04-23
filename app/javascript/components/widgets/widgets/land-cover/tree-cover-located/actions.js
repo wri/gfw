@@ -5,8 +5,12 @@ export default ({ params }) =>
     const { data } = response.data;
     let mappedData = {};
     if (data && data.length) {
+      let groupKey = 'adm0';
+      if (params.adm0) groupKey = 'adm1';
+      if (params.adm1) groupKey = 'adm2';
+
       mappedData = data.map(d => ({
-        id: d.region,
+        id: d[groupKey],
         extent: d.extent || 0,
         percentage: d.extent ? d.extent / d.total * 100 : 0
       }));

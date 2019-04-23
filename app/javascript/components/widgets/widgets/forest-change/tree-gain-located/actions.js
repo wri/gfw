@@ -3,12 +3,16 @@ import axios from 'axios';
 
 export default ({ params }) =>
   axios.all([getExtentGrouped(params), getGainGrouped(params)]).then(
-    axios.spread((locations, gainGrouped) => {
-      const extentData = locations.data.data;
+    axios.spread((extentGrouped, gainGrouped) => {
+      let groupKey = 'adm0';
+      if (params.adm0) groupKey = 'adm1';
+      if (params.adm1) groupKey = 'adm2';
+
+      const extentData = extentGrouped.data.data;
       let extentMappedData = {};
       if (extentData && extentData.length) {
         extentMappedData = extentData.map(d => ({
-          id: d.region,
+          id: d[groupKey],
           extent: d.extent || 0,
           percentage: d.extent ? d.extent / d.total * 100 : 0
         }));
@@ -18,7 +22,7 @@ export default ({ params }) =>
       let gainMappedData = {};
       if (gainData && gainData.length) {
         gainMappedData = gainData.map(d => ({
-          id: d.region,
+          id: d[groupKey],
           gain: d.gain || 0
         }));
       }

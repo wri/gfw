@@ -9,7 +9,7 @@ export default {
     startYears: true,
     endYears: true,
     thresholds: true,
-    yearsRange: ['2013', '2017']
+    yearsRange: ['2013', '2018']
   },
   colors: 'loss',
   metaKey: 'widget_plantations_tree_cover_loss',

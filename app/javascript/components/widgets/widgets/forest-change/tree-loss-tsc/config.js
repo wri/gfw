@@ -5,7 +5,7 @@ export default {
     global: 'Global annual tree cover loss by dominant driver'
   },
   types: ['global', 'country'],
-  admins: ['global', 'adm0', 'adm1'],
+  admins: ['global', 'adm0'],
   options: {
     tscDriverGroups: true,
     thresholds: true,
