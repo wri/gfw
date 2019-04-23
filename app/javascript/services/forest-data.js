@@ -24,7 +24,7 @@ const NEW_SQL_QUERIES = {
   gainGrouped:
     'SELECT {location}, SUM(gain) as value FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   areaIntersection:
-    'SELECT SUM(total_area) AS plantation_extent, {location} AS region, plantations as label FROM data {WHERE} GROUP BY {location}, plantations ORDER BY plantation_extent DESC',
+    'SELECT SUM(total_area) AS intersection_area, {location}, {intersection} FROM data {WHERE} GROUP BY {location}, {intersection} ORDER BY intersection_area DESC',
   fao:
     'SELECT country AS iso, name, plantfor * 1000 AS planted_forest, primfor * 1000 AS forest_primary, natregfor * 1000 AS forest_regenerated, forest * 1000 AS extent, totarea as area_ha FROM table_1_forest_area_and_characteristics WHERE {location} AND year = 2015',
   faoExtent:
@@ -146,11 +146,19 @@ export const getExtentGrouped = ({
 };
 
 // total area for a given of polyname in location
-export const getAreaIntersection = ({ adm0, adm1, adm2, ...params }) => {
+export const getAreaIntersection = ({
+  adm0,
+  adm1,
+  adm2,
+  forestType,
+  landCategory,
+  ...params
+}) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
     NEW_SQL_QUERIES.areaIntersection
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
+    .replace(/{intersection}/g, forestType || landCategory)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
   return request.get(url);

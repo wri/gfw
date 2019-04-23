@@ -5,7 +5,7 @@ export default ({ params }) =>
   axios
     .all([
       getExtent({ ...params, forestType: '' }),
-      getAreaIntersection(params)
+      getAreaIntersection({ ...params, forestType: 'plantations' })
     ])
     .then(
       axios.spread((gadmResponse, plantationsResponse) => {

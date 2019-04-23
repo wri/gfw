@@ -5,7 +5,7 @@ export default ({ params }) =>
   axios
     .all([
       getExtentGrouped(params),
-      getAreaIntersection({ ...params, groupByRegion: true })
+      getAreaIntersection({ ...params, forestType: 'plantations' })
     ])
     .then(
       axios.spread((extentGrouped, plantationsExtentResponse) => {
