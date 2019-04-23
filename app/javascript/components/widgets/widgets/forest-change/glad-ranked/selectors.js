@@ -48,46 +48,48 @@ export const parseList = createSelector(
             .subtract(settings.weeks, 'weeks')
         )
     );
-    const groupedAlerts = groupBy(
-      alertsByDate,
-      location.region ? 'adm2' : 'adm1'
-    );
-    const mappedData = Object.keys(groupedAlerts).map(k => {
-      const region = meta.find(l => parseInt(k, 10) === l.value);
-      const regionExtent = extent.find(a => a.region === parseInt(k, 10));
-      const regionData = groupedAlerts[k];
-      const countsArea = sumBy(regionData, 'area_ha');
-      const counts = sumBy(regionData, 'count');
-      const countsAreaPerc =
-        countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
-      const countsPerHa =
-        counts && regionExtent ? counts / regionExtent.extent : 0;
-      const { payload, query, type } = location;
+    const groupKey = location.payload.adm1 ? 'adm2' : 'adm1';
+    const groupedAlerts = groupBy(alertsByDate, groupKey);
+    const mappedData =
+      groupedAlerts &&
+      Object.keys(groupedAlerts).map(k => {
+        const region = meta.find(l => parseInt(k, 10) === l.value);
+        const regionExtent = extent.find(a => a[groupKey] === parseInt(k, 10));
+        const regionData = groupedAlerts[k];
+        const countsArea = sumBy(regionData, 'area_ha');
+        const counts = sumBy(regionData, 'alerts');
+        const countsAreaPerc =
+          countsArea && regionExtent
+            ? countsArea / regionExtent.extent * 100
+            : 0;
+        const countsPerHa =
+          counts && regionExtent ? counts / regionExtent.extent : 0;
+        const { payload, query, type } = location;
 
-      return {
-        id: k,
-        color: colors.main,
-        percentage: `${format('.2r')(countsAreaPerc)}%`,
-        countsPerHa,
-        count: counts,
-        area: countsArea,
-        value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
-        label: (region && region.label) || '',
-        path: {
-          type,
-          payload: {
-            ...payload,
-            ...(payload.adm1 && {
-              adm2: k
-            }),
-            ...(!payload.adm1 && {
-              adm1: k
-            })
-          },
-          query
-        }
-      };
-    });
+        return {
+          id: k,
+          color: colors.main,
+          percentage: `${format('.2r')(countsAreaPerc)}%`,
+          countsPerHa,
+          count: counts,
+          area: countsArea,
+          value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
+          label: (region && region.label) || '',
+          path: {
+            type,
+            payload: {
+              ...payload,
+              ...(payload.adm1 && {
+                adm2: k
+              }),
+              ...(!payload.adm1 && {
+                adm1: k
+              })
+            },
+            query
+          }
+        };
+      });
     return sortBy(mappedData, 'area').reverse();
   }
 );
