@@ -21,7 +21,7 @@ const getSentences = state => state.config.sentence || null;
 const getPlanationKeys = createSelector(
   [getPlantations],
   plantations =>
-    (plantations ? Object.keys(groupBy(plantations, 'label')) : null)
+    (plantations ? Object.keys(groupBy(plantations, 'plantations')) : null)
 );
 
 export const parseData = createSelector(
@@ -35,7 +35,11 @@ export const parseData = createSelector(
   ],
   (plantations, extent, plantationKeys, meta, location, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
-    const groupedByRegion = groupBy(plantations, 'region');
+    let groupKey = 'adm0';
+    if (location.payload.adm0) groupKey = 'adm1';
+    if (location.payload.adm1) groupKey = 'adm2';
+
+    const groupedByRegion = groupBy(plantations, groupKey);
     const regionData = Object.keys(groupedByRegion).map(r => {
       const yKeys = {};
       const regionId = parseInt(r, 10);
@@ -43,14 +47,14 @@ export const parseData = createSelector(
         meta && meta.find(region => region.value === regionId);
       const totalRegionPlantations = sumBy(
         groupedByRegion[regionId],
-        'plantation_extent'
+        'intersection_area'
       );
-      const totalArea = extent.find(e => e.region === regionId).total;
+      const totalArea = extent.find(e => e[groupKey] === regionId).total_area;
       plantationKeys.forEach(key => {
         const labelFromKey = groupedByRegion[regionId].find(
-          p => p.label === key
+          p => p.plantations === key
         );
-        const pExtent = labelFromKey && labelFromKey.plantation_extent;
+        const pExtent = labelFromKey && labelFromKey.intersection_area;
         const pPercentage = pExtent / totalRegionPlantations * 100;
         yKeys[key] = pPercentage || 0;
         yKeys[`${key} label`] = key;

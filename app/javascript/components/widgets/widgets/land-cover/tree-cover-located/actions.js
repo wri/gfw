@@ -12,13 +12,13 @@ export default ({ params }) =>
       mappedData = data.map(d => ({
         id: d[groupKey],
         extent: d.extent || 0,
-        percentage: d.extent ? d.extent / d.total * 100 : 0
+        percentage: d.extent ? d.extent / d.total_area * 100 : 0
       }));
       if (!params.type || params.type === 'global') {
         mappedData = data.map(d => ({
           id: d.iso,
-          extent: d.value || 0,
-          percentage: d.value ? d.value / d.total_area * 100 : 0
+          extent: d.extent || 0,
+          percentage: d.extent ? d.extent / d.total_area * 100 : 0
         }));
       }
     }
