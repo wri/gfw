@@ -72,10 +72,10 @@ export const getHeaderData = createThunkAction(
 
             const data = {
               totalArea: (extent[0] && extent[0].total_area) || 0,
-              extent: (extent[0] && extent[0].value) || 0,
+              extent: (extent[0] && extent[0].extent) || 0,
               plantationsExtent:
                 plantationsExtent && plantationsExtent.length
-                  ? plantationsExtent[0].value
+                  ? plantationsExtent[0].extent
                   : 0,
               totalLoss: {
                 area: summedLoss || 0,
