@@ -17,7 +17,14 @@ const NEW_SQL_QUERIES = {
     'SELECT SUM({extentYear}) as value, SUM(total_area) as total_area FROM data {WHERE}'
 };
 
-const ALLOWED_PARAMS = ['iso', 'adm1', 'adm2', 'threshold'];
+const ALLOWED_PARAMS = [
+  'iso',
+  'adm1',
+  'adm2',
+  'threshold',
+  'forestType',
+  'landCategory'
+];
 
 const getAdmDatasetId = (adm1, adm2) => {
   if (adm2) return ADM2_DATASET;
@@ -39,11 +46,12 @@ const getWHEREQuery = params => {
     let paramString = 'WHERE ';
     paramKeysFiltered.forEach((p, i) => {
       const isLast = paramKeysFiltered.length - 1 === i;
-      const value = params[p];
+      const isPolyname = ['forestType', 'landCategory'].includes(p);
+      const value = isPolyname ? 1 : params[p];
       paramString = paramString.concat(
-        `${p} = ${typeof value === 'number' ? value : `'${value}'`}${
-          isLast ? '' : ' AND '
-        }`
+        `${isPolyname ? params[p] : p} = ${
+          typeof value === 'number' ? value : `'${value}'`
+        }${isLast ? '' : ' AND '}`
       );
     });
     return paramString;
