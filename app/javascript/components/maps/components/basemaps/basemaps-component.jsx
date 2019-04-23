@@ -141,9 +141,9 @@ class Basemaps extends React.PureComponent {
         {...getTooltipContentProps()}
       >
         <div className="basemaps-top-section">
-          {isDesktop && (
-            <div className="basemaps-header">
-              <h2 className="basemaps-title">Map settings</h2>
+          <div className="basemaps-header">
+            <h2 className="basemaps-title">Map settings</h2>
+            {isDesktop && (
               <div className="basemaps-actions">
                 <Button
                   className="info-btn"
@@ -158,8 +158,8 @@ class Basemaps extends React.PureComponent {
                   <Icon icon={closeIcon} />
                 </button>
               </div>
-            </div>
-          )}
+            )}
+          </div>
           <ul className="basemaps-options-container">
             {!isDesktop && (
               <li className="basemaps-options-wrapper">
