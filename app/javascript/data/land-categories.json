@@ -9,7 +9,8 @@
     "label": "Protected Areas",
     "value": "wdpa",
     "metaKey": "wdpa_protected_areas",
-    "global": true
+    "global": true,
+    "categories": ["Category Ia/b or II", "Other Category", "Unkown"]
   },
   {
     "label": "Key Biodiversity Areas",

@@ -3,13 +3,15 @@
     "label": "Plantations",
     "value": "plantations",
     "metaKey": "gfw_plantations",
-    "global": true
+    "global": true,
+    "categories": ["Unknown", "Oil Palm ", "Wood fiber / Timber", "Rubber", "Fruit"]
   },
   {
     "label": "Intact Forest Landscapes",
     "value": "ifl",
     "metaKey": "intact_forest_landscapes_change",
-    "global": true
+    "global": true,
+    "categories": [2016, 2013, 2000, 0]
   },
   {
     "label": "Primary Forests",
