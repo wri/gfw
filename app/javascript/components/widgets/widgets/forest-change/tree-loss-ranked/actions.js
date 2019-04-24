@@ -10,7 +10,7 @@ export default ({ params }) => {
   };
   return axios
     .all([
-      getLossGrouped({ ...rest, ...parentLocation, test: 'test' }),
+      getLossGrouped({ ...rest, ...parentLocation }),
       getExtentGrouped({ ...rest, ...parentLocation })
     ])
     .then(
