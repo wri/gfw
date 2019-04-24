@@ -19,7 +19,12 @@ class ModalWelcome extends PureComponent {
             the meantime, download 2018 tree cover loss statistics here.
           </p>
           <div className="buttons">
-            <Button>DOWNLOAD 2018 DATA</Button>
+            <Button
+              className="download-btn"
+              extLink="http://gfw-files.s3.amazonaws.com/2018_update/results/download/global.xlsx"
+            >
+              DOWNLOAD 2018 DATA
+            </Button>
             <Button
               theme="theme-button-light"
               onClick={() => setModalTCLDislaimer(false)}
