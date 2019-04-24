@@ -125,7 +125,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderBasemapsBtn = () => {
-    const { showBasemaps } = this.props;
+    const { showBasemaps, activeBasemap } = this.props;
 
     return (
       <Button
@@ -133,13 +133,26 @@ class MapControlsButtons extends PureComponent {
         theme="theme-button-map-control"
         onClick={this.toggleBasemaps}
         tooltip={
-          !showBasemaps ? { text: 'Basemaps', hideOnClick: false } : undefined
+          !showBasemaps
+            ? { text: 'Map Settings', hideOnClick: false }
+            : undefined
         }
       >
-        <Icon
-          icon={globeIcon}
-          className={cx('globe-icon', { '-active': showBasemaps })}
-        />
+        {activeBasemap ? (
+          <div className="basemaps-btn-content">
+            <img
+              className="basemaps-btn-img"
+              src={activeBasemap.image}
+              alt={activeBasemap.value}
+            />
+            <span className="basemaps-btn-label">{activeBasemap.label}</span>
+          </div>
+        ) : (
+          <Icon
+            icon={globeIcon}
+            className={cx('globe-icon', { '-active': showBasemaps })}
+          />
+        )}
       </Button>
     );
   };
@@ -359,7 +372,8 @@ MapControlsButtons.propTypes = {
   recentImageryDataset: PropTypes.object,
   recentActive: PropTypes.bool,
   datasetsLoading: PropTypes.bool,
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  activeBasemap: PropTypes.object
 };
 
 export default connect()(MapControlsButtons);

@@ -54,7 +54,7 @@ $top-section-height: 125px;
     border-top: 1px solid rgba($hot-grey, 0.3);
 
     @media screen and (min-width: $screen-m) {
-      padding: 25px 20px 10px;
+      padding: 15px 20px 10px;
     }
   }
 
@@ -65,7 +65,7 @@ $top-section-height: 125px;
   }
 
   .basemaps-options-wrapper {
-    height: rem(80px);
+    height: rem(70px);
     width: 48%;
     z-index: 5;
 

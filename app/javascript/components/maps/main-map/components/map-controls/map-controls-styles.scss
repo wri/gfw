@@ -33,6 +33,23 @@
     &.active {
       box-shadow: $tooltip-box-shadow;
     }
+
+    .basemaps-btn-content {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+
+      .basemaps-btn-img {
+        height: 100%;
+        float: left;
+      }
+
+      .basemaps-btn-label {
+        margin-left: 5px;
+        text-transform: uppercase;
+      }
+    }
   }
 
   .recent-imagery-btn {
