@@ -3,5 +3,6 @@ export default {
   unit: 'ha',
   pageSize: 5,
   page: 0,
-  layers: ['forestgain']
+  layers: ['forestgain'],
+  extentYear: 2000
 };
