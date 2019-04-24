@@ -129,7 +129,7 @@ class Dropdown extends PureComponent {
           (native ? (
             <div className="select-wrapper">
               <select
-                value={value && (value.value || value)}
+                value={(value && (value.value || value)) || ''}
                 onChange={e => onChange(e.target.value)}
               >
                 {options &&
