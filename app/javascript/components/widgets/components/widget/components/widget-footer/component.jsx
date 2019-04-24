@@ -6,7 +6,13 @@ import './styles.scss';
 
 class WidgetFooter extends PureComponent {
   render() {
-    const { statement, simple, showAttributionLink, type } = this.props;
+    const {
+      statement,
+      simple,
+      showAttributionLink,
+      type,
+      location
+    } = this.props;
     return statement ? (
       <div className={cx('c-widget-footer', { simple })}>
         {statement}
@@ -14,7 +20,11 @@ class WidgetFooter extends PureComponent {
           <p>
             NOTE: 2018 tree cover loss data is coming soon! In the meantime,
             download 2018 tree cover loss statistics{' '}
-            <a href="" target="_blank">
+            <a
+              href={`http://gfw-files.s3.amazonaws.com/2018_update/results/download/${location.adm0 ||
+                'global'}.xlsx`}
+              target="_blank"
+            >
               here
             </a>.
           </p>
@@ -38,6 +48,7 @@ class WidgetFooter extends PureComponent {
 
 WidgetFooter.propTypes = {
   simple: PropTypes.bool,
+  location: PropTypes.object,
   type: PropTypes.string,
   statement: PropTypes.string,
   showAttributionLink: PropTypes.bool
