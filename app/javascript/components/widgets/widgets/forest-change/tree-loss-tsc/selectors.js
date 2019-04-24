@@ -20,7 +20,7 @@ const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
 
 export const getPermCats = createSelector([], () =>
-  tscLossCategories.filter(x => x.permanent).map(el => el.value.toString())
+  tscLossCategories.filter(x => x.permanent).map(el => el.value)
 );
 
 export const mergeDataWithCetagories = createSelector(
@@ -80,7 +80,7 @@ export const getDrivers = createSelector(
     const sortedLoss = !isEmpty(groupedLoss)
       ? sortByKey(
         Object.keys(groupedLoss).map(k => {
-          const cat = tscLossCategories.find(c => c.value.toString() === k);
+          const cat = tscLossCategories.find(c => c.value === k);
           return {
             driver: k,
             position: cat && cat.position,
@@ -92,7 +92,7 @@ export const getDrivers = createSelector(
         true
       )
       : permCats.map(x => ({
-        driver: x.toString(),
+        driver: x,
         area: 0.0
       }));
     return sortedLoss;
@@ -142,9 +142,7 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       drivers
         .map(d => {
-          const tscCat = tscLossCategories.find(
-            c => c.value === parseInt(d.driver, 10)
-          );
+          const tscCat = tscLossCategories.find(c => c.value === d.driver);
           const label = tscCat && tscCat.label;
           return {
             key: `class_${d.driver}`,
@@ -156,7 +154,7 @@ export const parseConfig = createSelector(
         })
         .reverse()
     );
-    const insertIndex = findIndex(tooltip, { key: 'class_5' });
+    const insertIndex = findIndex(tooltip, { key: 'class_Urbanization' });
     if (insertIndex > -1) {
       tooltip.splice(insertIndex, 0, {
         key: 'break',
