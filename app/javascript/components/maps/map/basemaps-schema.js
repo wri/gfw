@@ -129,12 +129,12 @@ export default {
     value: 'landsat',
     label: 'landsat',
     labelsKey: 'lightLabels',
-    dynamic: true,
     color: '#0C0045',
     image: landsatImage,
     url:
       'https://production-api.globalforestwatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
     availableYears: [2017, 2016, 2015, 2014, 2013],
+    defaultYear: 2017,
     layerStyles: [
       {
         id: 'background',
@@ -155,6 +155,38 @@ export default {
       {
         id: 'water',
         'fill-color': '#0C0045'
+      }
+    ]
+  },
+  planet: {
+    value: 'planet',
+    label: 'Planet',
+    labelsKey: 'lightLabels',
+    color: '#131620',
+    image: satelliteImage,
+    url: `https://tiles.planet.com/basemaps/v1/planet-tiles/global_{frequency}_{period}_mosaic/gmap/{z}/{x}/{y}.png?api_key=${
+      process.env.PLANET_API_KEY
+    }`,
+    layerStyles: [
+      {
+        id: 'background',
+        'background-color': '#ffffff'
+      },
+      {
+        id: 'waterway-river-canal',
+        'line-color': '#03132e'
+      },
+      {
+        id: 'waterway-river-canal-shadow',
+        'line-color': '#03132e'
+      },
+      {
+        id: 'waterway-small',
+        'line-color': '#03132e'
+      },
+      {
+        id: 'water',
+        'fill-color': '#03132e'
       }
     ]
   }

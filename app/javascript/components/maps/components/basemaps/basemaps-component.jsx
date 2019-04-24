@@ -5,8 +5,12 @@ import Dropdown from 'components/ui/dropdown';
 import cx from 'classnames';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
-import closeIcon from 'assets/icons/close.svg';
+import { Tooltip } from 'react-tippy';
+import Switch from 'components/ui/switch';
+
 import infoIcon from 'assets/icons/info.svg';
+import closeIcon from 'assets/icons/close.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg';
 
 import './styles.scss';
 
@@ -25,7 +29,19 @@ class Basemaps extends React.PureComponent {
     activeBoundaries: PropTypes.object,
     isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
-    setModalMetaSettings: PropTypes.func
+    setModalMetaSettings: PropTypes.func,
+    setMapSettings: PropTypes.func,
+    planetInvertalOptions: PropTypes.array,
+    planetIntervalSelected: PropTypes.object,
+    planetBasemapSelected: PropTypes.object,
+    planetYears: PropTypes.array,
+    planetYearSelected: PropTypes.object,
+    planetPeriods: PropTypes.array,
+    planetPeriodSelected: PropTypes.object
+  };
+
+  state = {
+    planetTooltipOpen: false
   };
 
   renderButtonBasemap(item) {
@@ -47,14 +63,23 @@ class Basemaps extends React.PureComponent {
     );
   }
 
-  renderDropdownBasemap(item) {
+  renderLandsatBasemap(item) {
     const { selectBasemap, activeBasemap, landsatYears, basemaps } = this.props;
     const year = activeBasemap.year || landsatYears[0].value;
+    const basemap = basemaps[item.value]
+      ? basemaps[item.value]
+      : basemaps.landsat;
 
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(basemaps.landsat, year)}
+        onClick={() =>
+          selectBasemap({
+            value: 'landsat',
+            url: basemap.url.replace('{year}', basemap.defaultYear),
+            year: basemap.defaultYear
+          })
+        }
       >
         <div
           className="basemaps-list-item-image"
@@ -67,16 +92,155 @@ class Basemaps extends React.PureComponent {
           onClick={e => e.stopPropagation()}
         >
           {item.label}
-          <Dropdown
-            className="landsat-selector"
-            theme="theme-dropdown-native-inline"
-            value={year}
-            options={landsatYears}
-            onChange={value =>
-              selectBasemap(basemaps.landsat, parseInt(value, 10))
-            }
-            native
-          />
+          <div className="basemaps-list-item-selectors">
+            <Dropdown
+              className="landsat-selector"
+              theme="theme-dropdown-native-inline"
+              value={year}
+              options={landsatYears}
+              onChange={value => {
+                const selectedYear = parseInt(value, 10);
+                selectBasemap({
+                  value: 'landsat',
+                  url: basemap.url.replace('{year}', selectedYear),
+                  year: selectedYear
+                });
+              }}
+              native
+            />
+          </div>
+        </span>
+      </button>
+    );
+  }
+
+  renderPlanetBasemap(item) {
+    const {
+      selectBasemap,
+      planetInvertalOptions,
+      planetIntervalSelected,
+      planetBasemapSelected,
+      planetYears,
+      planetYearSelected,
+      planetPeriods,
+      planetPeriodSelected
+    } = this.props;
+    const { planetTooltipOpen } = this.state;
+    const { url, interval, year, period } = planetBasemapSelected || {};
+    const basemap = {
+      value: 'planet',
+      url,
+      interval,
+      planetYear: year,
+      period
+    };
+
+    return (
+      <button
+        className="basemaps-list-item-button"
+        onClick={() => selectBasemap(basemap)}
+      >
+        <div
+          className="basemaps-list-item-image"
+          style={{
+            backgroundImage: `url(${item.image})`
+          }}
+        />
+        <span
+          className="basemaps-list-item-name"
+          onClick={e => e.stopPropagation()}
+        >
+          {item.label}
+          <div className="basemaps-list-item-selectors">
+            <Tooltip
+              useContext
+              theme="light"
+              arrow
+              interactive
+              onRequestClose={() => this.setState({ planetTooltipOpen: false })}
+              open={planetTooltipOpen}
+              html={
+                <div className="c-basemaps-tooltip">
+                  <button
+                    className="planet-tooltip-close"
+                    onClick={() => this.setState({ planetTooltipOpen: false })}
+                  >
+                    <Icon icon={closeIcon} />
+                  </button>
+                  <Switch
+                    theme="theme-switch-light"
+                    label="Interval"
+                    value={
+                      planetIntervalSelected && planetIntervalSelected.value
+                    }
+                    options={planetInvertalOptions}
+                    onChange={selected => {
+                      const selectedInvertal = planetInvertalOptions.find(
+                        f => f.value === selected
+                      );
+                      selectBasemap({
+                        ...basemap,
+                        interval: selected,
+                        planetYear:
+                          (selectedInvertal && selectedInvertal.year) || null,
+                        url: (selectedInvertal && selectedInvertal.url) || ''
+                      });
+                    }}
+                  />
+                  <div className="date-selectors">
+                    <Dropdown
+                      className="year-selector"
+                      label="Year"
+                      theme="theme-dropdown-native"
+                      value={planetYearSelected}
+                      options={planetYears}
+                      onChange={selected => {
+                        const selectedYear = planetYears.find(
+                          f => f.value === parseInt(selected, 10)
+                        );
+                        selectBasemap({
+                          ...basemap,
+                          planetYear: parseInt(selected, 10),
+                          url: (selectedYear && selectedYear.url) || ''
+                        });
+                      }}
+                      native
+                    />
+                    <Dropdown
+                      className="period-selector"
+                      label="Period"
+                      theme="theme-dropdown-native"
+                      value={planetPeriodSelected}
+                      options={planetPeriods}
+                      onChange={selected => {
+                        const selectedPeriod = planetPeriods.find(
+                          f => f.value === selected
+                        );
+                        selectBasemap({
+                          ...basemap,
+                          period: selected,
+                          url: (selectedPeriod && selectedPeriod.url) || ''
+                        });
+                      }}
+                      native
+                    />
+                  </div>
+                </div>
+              }
+              trigger="click"
+              position="top"
+            >
+              <button
+                className="planet-label"
+                onClick={() => {
+                  this.setState({ planetTooltipOpen: !planetTooltipOpen });
+                }}
+              >
+                {planetBasemapSelected && planetBasemapSelected.label}
+                <Icon icon={arrowIcon} className="arrow-icon" />
+              </button>
+            </Tooltip>
+          </div>
         </span>
       </button>
     );
@@ -149,18 +313,25 @@ class Basemaps extends React.PureComponent {
         <div className="basemaps-bottom-section">
           <div className="basemap-list-scroll-wrapper">
             <ul className="basemaps-list">
-              {Object.values(basemaps).map(item => (
-                <li
-                  key={item.value}
-                  className={cx('basemaps-list-item', {
-                    '-active': activeBasemap.value === item.value
-                  })}
-                >
-                  {item.dynamic
-                    ? this.renderDropdownBasemap(item)
-                    : this.renderButtonBasemap(item)}
-                </li>
-              ))}
+              {Object.values(basemaps).map(item => {
+                let basemapButton = this.renderButtonBasemap(item);
+                if (item.value === 'landsat') {
+                  basemapButton = this.renderLandsatBasemap(item);
+                } else if (item.value === 'planet') {
+                  basemapButton = this.renderPlanetBasemap(item);
+                }
+
+                return (
+                  <li
+                    key={item.value}
+                    className={cx('basemaps-list-item', {
+                      '-active': activeBasemap.value === item.value
+                    })}
+                  >
+                    {basemapButton}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

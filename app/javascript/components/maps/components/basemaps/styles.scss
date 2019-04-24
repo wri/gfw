@@ -76,7 +76,6 @@ $top-section-height: 125px;
 
   .basemaps-list {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     height: 100%;
@@ -119,8 +118,83 @@ $top-section-height: 125px;
     margin: rem(6px) 0 0;
   }
 
+  .basemaps-list-item-selectors {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: rem(4px);
+
+    .planet-label {
+      display: flex;
+      align-items: center;
+      height: rem(10px);
+      font-size: rem(10px);
+
+      .arrow-icon {
+        right: 0;
+        width: rem(6px);
+        height: auto;
+        fill: $green-gfw;
+        margin-left: rem(3px);
+      }
+    }
+
+    .basemaps-tooltip {
+      display: flex;
+      height: auto;
+      position: relative;
+
+      span {
+        bottom: -7px;
+        position: absolute;
+      }
+
+      button {
+        font-size: rem(10px);
+      }
+    }
+  }
+
   .landsat-selector {
-    margin-top: rem(3px);
-    width: rem(30px);
+    margin-bottom: rem(5px);
+    height: rem(10px);
+
+    .select-wrapper {
+      height: auto;
+    }
+  }
+}
+
+.c-basemaps-tooltip {
+  padding: 20px;
+  min-width: 200px;
+
+  .date-selectors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: rem(10px);
+    font-size: 13px;
+
+    > div {
+      width: 45%;
+
+      .select-wrapper {
+        width: 100%;
+      }
+    }
+  }
+
+  .planet-tooltip-close {
+    cursor: pointer;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
   }
 }
