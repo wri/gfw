@@ -39,7 +39,8 @@ export const getFilteredData = createSelector(
   (data, settings, permCats) => {
     if (isEmpty(data)) return null;
     const { startYear, endYear } = settings;
-    const filteredByYear = data.filter(
+    const filterUnknown = data.filter(d => d.tcs !== 'Unknown');
+    const filteredByYear = filterUnknown.filter(
       d => d.year >= startYear && d.year <= endYear
     );
     const permanentData = filteredByYear.filter(d =>

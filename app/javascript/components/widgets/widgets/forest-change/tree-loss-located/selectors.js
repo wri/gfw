@@ -27,7 +27,7 @@ export const mapData = createSelector(
       const loss =
         sumBy(
           d.loss.filter(l => l.year >= startYear && l.year <= endYear),
-          'area_loss'
+          'area'
         ) || 0;
       const locationExtent = extent.filter(l => l.id === d.id);
       const percentage = loss / locationExtent[0].extent * 100 || 0;

@@ -15,7 +15,7 @@ const NEW_SQL_QUERIES = {
   lossTsc:
     'SELECT tcs as bound1, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.carbon_emissions) as emissions FROM data {WHERE} GROUP BY bound1, nested(year_data.year)',
   lossGrouped:
-    'SELECT {location}, year_data.year as year, SUM(year_data.area_loss) as area_loss FROM data {WHERE} GROUP BY {location}, nested(year_data.year) ORDER BY {location}',
+    'SELECT {location}, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.carbon_emissions) as emissions FROM data {WHERE} GROUP BY {location}, nested(year_data.year) ORDER BY {location}',
   extent:
     'SELECT SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE}',
   extentGrouped:
