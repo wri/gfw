@@ -9,6 +9,7 @@ import './themes/switch-light.scss';
 class Switch extends PureComponent {
   render() {
     const { theme, label, value, options, onChange } = this.props;
+
     return (
       <div className={`c-switch ${theme || ''}`}>
         {label && <div className="label">{label}</div>}

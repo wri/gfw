@@ -1,6 +1,9 @@
 export default {
   widget: 'whrc-biomass',
-  title: 'Aboveground live woody biomass in {location}',
+  title: {
+    default: 'Aboveground live woody biomass in {location}',
+    global: 'Global aboveground live woody biomass'
+  },
   categories: ['climate'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],

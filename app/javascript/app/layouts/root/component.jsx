@@ -9,6 +9,7 @@ import { handlePageTrack } from 'app/analytics';
 
 import Meta from 'components/meta';
 import Header from 'components/header';
+import Cookies from 'components/cookies';
 import Button from 'components/ui/button';
 import MapMenu from 'components/maps/components/menu';
 import MyGFWProvider from 'providers/mygfw-provider';
@@ -91,6 +92,7 @@ class App extends PureComponent {
                 </div>
               )}
             <Meta {...metadata} />
+            <Cookies />
           </div>
         )}
       </MediaQuery>
