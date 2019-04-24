@@ -10,11 +10,13 @@ export default ({ params }) =>
       axios.spread((admin, plantations) => {
         const adminData = admin.data && admin.data.data;
         const plantData = plantations.data && plantations.data.data;
-
-        const maxYear = Math.max(
-          maxBy(adminData, 'year').year,
-          maxBy(plantData, 'year').year
-        );
+        const maxYear =
+          adminData &&
+          adminData.length &&
+          Math.max(
+            maxBy(adminData, 'year').year,
+            maxBy(plantData, 'year').year
+          );
 
         return { adminData, plantData, years: range(2013, maxYear + 1) };
       })
