@@ -5,9 +5,9 @@ const OPTIONS = {
   threshold: 30,
   dataMaxZoom: 12,
   urlTemplate:
-    'https://storage.googleapis.com/wri-public/Hansen15/tiles/hansen_world/v1/tc{threshold}/{z}/{x}/{y}.png',
+    'https://storage.googleapis.com/wri-public/Hansen18/tiles/hansen_world/v1/tc{threshold}/{z}/{x}/{y}.png',
   startYear: 2001,
-  endYear: 2017
+  endYear: 2018
 };
 
 class Loss extends Canvas {
