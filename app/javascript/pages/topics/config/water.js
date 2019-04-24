@@ -158,7 +158,7 @@ export default {
         {
           id: 'water-read',
           content:
-            'Learn how the City of São Paulo utilizes forests to clean its water.',
+            'Learn how the City of São Paulo can utilize forests to clean its water.',
           btnText: 'Read the blog',
           link:
             'https://www.wri.org/blog/2018/09/help-s-o-paulo-s-complex-water-woes-protect-and-restore-forests',
