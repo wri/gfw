@@ -12,8 +12,8 @@ class WidgetFooter extends PureComponent {
         {statement}
         {type === 'loss' && (
           <p>
-            NOTE: 2018 tree cover loss data coming to the dashboards soon! In
-            the meantime, download 2018 tree cover loss statistics{' '}
+            NOTE: 2018 tree cover loss data is coming soon! In the meantime,
+            download 2018 tree cover loss statistics{' '}
             <a href="" target="_blank">
               here
             </a>.

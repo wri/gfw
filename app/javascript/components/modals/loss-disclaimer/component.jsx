@@ -15,7 +15,7 @@ class ModalWelcome extends PureComponent {
         <h3>Tree Cover loss 2018!</h3>
         <div className="body">
           <p className="intro">
-            NOTE: 2018 tree cover loss data coming to the dashboards soon! In
+            NOTE: 2018 tree cover loss data is coming to the dashboards soon! In
             the meantime, download 2018 tree cover loss statistics here.
           </p>
           <div className="buttons">
