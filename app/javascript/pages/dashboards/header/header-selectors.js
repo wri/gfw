@@ -31,22 +31,22 @@ export const selectSentences = state =>
 
 export const getAdm0Data = createSelector(
   [selectCountryData],
-  data => data.adm0
+  data => data && data.adm0
 );
 
 export const getAdm1Data = createSelector(
   [selectCountryData],
-  data => data.adm1
+  data => data && data.adm1
 );
 
 export const getAdm2Data = createSelector(
   [selectCountryData],
-  data => data.adm2
+  data => data && data.adm2
 );
 
 export const getExternalLinks = createSelector(
   [selectCountryData, selectLocation],
-  (data, location) => data.links[location.adm0]
+  (data, location) => data && data.links[location.adm0]
 );
 
 export const getForestAtlasLink = createSelector(
