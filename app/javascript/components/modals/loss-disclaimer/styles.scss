@@ -1,0 +1,35 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(20px);
+$desktop-padding: rem(40px);
+
+.c-modal-tcl-disclaimer {
+  max-width: rem(450px);
+  padding: $mobile-padding;
+  padding-top: rem(40px);
+  padding-bottom: rem(30px);
+
+  @media screen and (min-width: $screen-m) {
+    padding: $desktop-padding;
+  }
+
+  h3 {
+    font-size: rem(30px);
+    margin-bottom: rem(20px);
+  }
+
+  p {
+    font-size: rem(16px);
+  }
+
+  .intro {
+    margin-bottom: rem(30px);
+  }
+
+  .buttons {
+    display: flex;
+
+    button {
+      margin-right: rem(20px);
+    }
+  }
+}
