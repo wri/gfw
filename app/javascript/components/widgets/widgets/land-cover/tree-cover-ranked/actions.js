@@ -1,7 +1,13 @@
 import { getExtentGrouped } from 'services/forest-data';
 
-export default ({ params }) =>
-  getExtentGrouped(params).then(response => {
+export default ({ params }) => {
+  const { adm0, adm1, adm2, ...rest } = params || {};
+  const parentLocation = {
+    adm0: adm0 && !adm1 ? null : adm0,
+    adm1: adm1 && !adm2 ? null : adm1,
+    adm2: null
+  };
+  return getExtentGrouped({ ...rest, ...parentLocation }).then(response => {
     const { data } = response.data;
     let mappedData = [];
     if (data && data.length) {
@@ -18,3 +24,4 @@ export default ({ params }) =>
     }
     return mappedData;
   });
+};

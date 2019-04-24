@@ -5,7 +5,7 @@ export default ({ params }) =>
   axios
     .all([
       getExtent(params),
-      getExtent({ ...params, forestType: null, landCategory: null }),
+      getExtent({ ...params, forestType: '', landCategory: '' }),
       getExtent({ ...params, forestType: 'plantations' })
     ])
     .then(
@@ -44,6 +44,7 @@ export default ({ params }) =>
             plantations
           };
         }
+
         return data;
       })
     );
