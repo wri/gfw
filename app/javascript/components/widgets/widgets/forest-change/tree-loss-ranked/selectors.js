@@ -34,7 +34,7 @@ export const getSummedByYearsData = createSelector(
     const isos = Object.keys(groupedByIso);
     const mappedData = isos.map(i => {
       const isoLoss = sumBy(groupedByIso[i], 'loss') || 0;
-      const isoExtent = extent.find(e => e.iso === i).value;
+      const isoExtent = extent.find(e => e.iso === i).extent;
       return {
         id: i,
         loss: isoLoss,
@@ -91,7 +91,7 @@ export const parseData = createSelector(
       ...d,
       rank: i + 1
     }));
-    if (location.country) {
+    if (location.adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
         d => d.id === locationObject.value
@@ -113,7 +113,7 @@ export const parseData = createSelector(
       color: colors.main,
       path: getAdminPath({
         ...location,
-        country: location.region && location.country,
+        adm0: location.adm1 && location.adm0,
         query,
         id: d.id
       }),
