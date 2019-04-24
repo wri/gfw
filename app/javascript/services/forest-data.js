@@ -76,7 +76,7 @@ const getRequestUrl = (adm0, adm1, adm2, grouped) =>
 const getWHEREQuery = params => {
   const paramKeys = params && Object.keys(params);
   const paramKeysFiltered = paramKeys.filter(
-    p => params[p] && ALLOWED_PARAMS.includes(p)
+    p => (params[p] || p === 'threshold') && ALLOWED_PARAMS.includes(p)
   );
   if (params) {
     let paramString = 'WHERE ';
@@ -210,7 +210,6 @@ export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
       '{WHERE}',
       getWHEREQuery({ iso: adm0, adm1, adm2, ...params, threshold: 0 })
     );
-
   return request.get(url);
 };
 

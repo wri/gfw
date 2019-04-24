@@ -3,14 +3,15 @@ import axios from 'axios';
 import { getGainGrouped } from 'services/forest-data';
 
 export default ({ params }) => {
-  const { adm1, adm2, ...rest } = params || {};
+  const { adm0, adm1, adm2, ...rest } = params || {};
   const parentLocation = {
+    adm0: adm0 && !adm1 ? null : adm0,
     adm1: adm1 && !adm2 ? null : adm1,
     adm2: null
   };
   return axios.all([getGainGrouped({ ...rest, ...parentLocation })]).then(
     axios.spread(gainResponse => {
-      let groupKey = 'adm0';
+      let groupKey = 'iso';
       if (adm1) groupKey = 'adm1';
       if (adm2) groupKey = 'adm2';
       const gainData = gainResponse.data.data;
