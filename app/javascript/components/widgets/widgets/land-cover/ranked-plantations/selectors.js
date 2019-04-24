@@ -38,7 +38,6 @@ export const parseData = createSelector(
     let groupKey = 'adm0';
     if (location.payload.adm0) groupKey = 'adm1';
     if (location.payload.adm1) groupKey = 'adm2';
-
     const groupedByRegion = groupBy(plantations, groupKey);
     const regionData = Object.keys(groupedByRegion).map(r => {
       const yKeys = {};

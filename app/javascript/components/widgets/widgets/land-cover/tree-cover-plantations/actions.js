@@ -4,7 +4,7 @@ import axios from 'axios';
 export default ({ params }) =>
   axios
     .all([
-      getExtent({ ...params, forestType: '' }),
+      getExtent(params),
       getAreaIntersection({ ...params, forestType: 'plantations' })
     ])
     .then(
@@ -22,6 +22,7 @@ export default ({ params }) =>
             plantations: plantationsExtent
           };
         }
+
         return data;
       })
     );

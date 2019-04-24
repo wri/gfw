@@ -1,11 +1,14 @@
-import { getExtentGrouped, getAreaIntersection } from 'services/forest-data';
+import {
+  getExtentGrouped,
+  getAreaIntersectionGrouped
+} from 'services/forest-data';
 import axios from 'axios';
 
 export default ({ params }) =>
   axios
     .all([
       getExtentGrouped(params),
-      getAreaIntersection({ ...params, forestType: 'plantations' })
+      getAreaIntersectionGrouped({ ...params, forestType: 'plantations' })
     ])
     .then(
       axios.spread((extentGrouped, plantationsExtentResponse) => {
@@ -19,6 +22,7 @@ export default ({ params }) =>
             plantations: plantationsExtent
           };
         }
+
         return data;
       })
     );

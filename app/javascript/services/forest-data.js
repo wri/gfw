@@ -59,6 +59,9 @@ const getAdmDatasetId = (adm0, adm1, adm2, grouped) => {
 
 const getExtentYear = year => `extent_${year}`;
 
+const getLocationSelect = ({ adm1, adm2 }) =>
+  `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
+
 const getLocationSelectGrouped = ({ adm0, adm1 }) =>
   `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
 
@@ -153,6 +156,25 @@ export const getExtentGrouped = ({
 
 // total area for a given of polyname in location
 export const getAreaIntersection = ({
+  adm0,
+  adm1,
+  adm2,
+  forestType,
+  landCategory,
+  ...params
+}) => {
+  const url = `${getRequestUrl(adm0, adm1, adm2)}${
+    NEW_SQL_QUERIES.areaIntersection
+  }`
+    .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
+    .replace(/{intersection}/g, forestType || landCategory)
+    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
+
+  return request.get(url);
+};
+
+// total area for a given of polyname in location
+export const getAreaIntersectionGrouped = ({
   adm0,
   adm1,
   adm2,

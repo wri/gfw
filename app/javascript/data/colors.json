@@ -37,18 +37,18 @@
   "plantations": {
     "main": "#d67828",
     "species": {
-      "Oil palm": "#fdada9",
-      "Wood fiber / timber": "#98a7c4",
+      "Oil Palm ": "#fdada9",
+      "Wood fiber / Timber": "#98a7c4",
       "Rubber": "#9993a3",
       "Fruit": "#dada95",
       "Other": "#d1e6ab",
-      "Wood fiber / timber mix": "#9ebbf2",
-      "Oil palm mix": "#fcc4c1",
-      "Rubber mix": "#a4fdff",
-      "Fruit mix": "#fefe97",
-      "Other mix": "#e1efc8",
+      "Wood fiber / Timber Mix": "#9ebbf2",
+      "Oil Palm Mix": "#fcc4c1",
+      "Rubber Mix": "#a4fdff",
+      "Fruit Mix": "#fefe97",
+      "Other Mix": "#e1efc8",
       "Unknown": "#dcd9d9",
-      "Recently cleared": "#d5a6ea"
+      "Recently Cleared": "#d5a6ea"
     },
     "types": {
       "Large industrial plantation": "#fdada9",

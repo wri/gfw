@@ -23,7 +23,6 @@ export const parseData = createSelector(
       ...colors.species
     };
     const totalPlantations = sumBy(plantations, 'intersection_area');
-
     return sortByKey(
       plantations.filter(d => d.intersection_area).map(d => ({
         label: d.plantations,
