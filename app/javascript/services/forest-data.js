@@ -36,7 +36,9 @@ const NEW_SQL_QUERIES = {
   faoEcoLive:
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   nonGlobalDatasets: 'SELECT iso FROM data {WHERE} GROUP BY iso ORDER BY iso',
-  globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}'
+  globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
+  getLocationPolynameWhitelist:
+    'SELECT {location}, {polynames} FROM data {WHERE} GROUP BY {location}'
 };
 
 const ALLOWED_PARAMS = [
@@ -69,6 +71,21 @@ const getLocationQuery = (adm0, adm1, adm2) =>
   `${adm0 ? `iso = '${adm0}'` : '1 = 1'}${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
+
+const buildPolynameSelects = () => {
+  const allPolynames = forestTypes.concat(landCategories);
+  let polyString = '';
+  allPolynames.forEach((p, i) => {
+    const isLast = i === allPolynames.length - 1;
+    polyString = polyString.concat(
+      p.categories
+        ? `count(${p.value}) as ${p.value}${isLast ? '' : ', '}`
+        : `max(${p.value}) as ${p.value}${isLast ? '' : ', '}`
+    );
+  });
+
+  return polyString;
+};
 
 const getRequestUrl = (adm0, adm1, adm2, grouped) =>
   REQUEST_URL.replace('{dataset}', getAdmDatasetId(adm0, adm1, adm2, grouped));
@@ -262,5 +279,15 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
     '{location}',
     getLocationQuery(adm0, adm1, adm2)
   );
+  return request.get(url);
+};
+
+export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
+  const url = `${getRequestUrl(adm0, adm1, adm2)}${
+    NEW_SQL_QUERIES.getLocationPolynameWhitelist
+  }`
+    .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
+    .replace('{polynames}', buildPolynameSelects())
+    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2 }));
   return request.get(url);
 };

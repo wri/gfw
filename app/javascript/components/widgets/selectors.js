@@ -27,15 +27,9 @@ export const selectLoading = state =>
   (state.countryData.countriesLoading ||
     state.countryData.regionsLoading ||
     state.countryData.subRegionsLoading ||
-    state.whitelists.countriesLoading ||
-    state.whitelists.regionsLoading);
+    state.whitelists.loading);
 export const selectWhitelists = state =>
-  (state.whitelists
-    ? {
-      adm0: state.whitelists.countries,
-      adm1: state.whitelists.regions
-    }
-    : {});
+  state.whitelists && state.whitelists.data;
 export const selectCountryData = state =>
   (state.countryData
     ? {
@@ -85,12 +79,6 @@ export const getAdminLevel = createSelector([selectLocation], location => {
   if (adm0) return 'adm0';
   return type || 'global';
 });
-
-export const getActiveWhitelist = createSelector(
-  [selectWhitelists, getAdminLevel],
-  (whitelists, adminLevel) =>
-    whitelists[adminLevel === 'adm0' ? 'adm0' : 'adm1']
-);
 
 export const getLocationData = createSelector(
   [selectLocationType, selectCountryData],
@@ -266,10 +254,11 @@ export const filterWidgetsByLocationWhitelist = createSelector(
 );
 
 export const filterWidgetsByIndicatorWhitelist = createSelector(
-  [filterWidgetsByLocationWhitelist, getActiveWhitelist],
+  [filterWidgetsByLocationWhitelist, selectWhitelists],
   (widgets, indicatorWhitelist) => {
     if (!widgets) return null;
     if (!indicatorWhitelist || !indicatorWhitelist.length) return widgets;
+
     return widgets.filter(w => {
       const { indicators } = w.config.whitelists || {};
       if (!indicators) return true;
@@ -286,7 +275,7 @@ export const parseWidgetsWithOptions = createSelector(
   [
     filterWidgetsByIndicatorWhitelist,
     getOptions,
-    getActiveWhitelist,
+    selectWhitelists,
     selectLocation
   ],
   (widgets, options, polynameWhitelist, location) => {
@@ -348,7 +337,7 @@ export const parseWidgetsWithOptions = createSelector(
 export const getWidgetsProps = createStructuredSelector({
   loading: selectLoading,
   whitelists: selectWhitelists,
-  whitelist: getActiveWhitelist,
+  whitelist: selectWhitelists,
   allLocation: selectAllLocation,
   location: selectLocation,
   locationType: selectLocationType,

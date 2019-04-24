@@ -1,54 +1,26 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-import {
-  getCountryWhitelistProvider,
-  getRegionWhitelistProvider
-} from 'services/whitelists';
+import { getLocationPolynameWhitelist } from 'services/forest-data';
 
-export const setCountryWhitelistLoading = createAction(
-  'setCountryWhitelistLoading'
-);
-export const setRegionWhitelistLoading = createAction(
-  'setRegionWhitelistLoading'
-);
+export const setWhitelistLoading = createAction('setWhitelistLoading');
 
-export const setCountryWhitelist = createAction('setCountryWhitelist');
-export const setRegionWhitelist = createAction('setRegionWhitelist');
+export const setWhitelist = createAction('setWhitelist');
 
-export const getCountryWhitelist = createThunkAction(
-  'getCountryWhitelist',
-  adm0 => (dispatch, getState) => {
-    const { whitelists } = getState();
-    if (whitelists && !whitelists.countriesLoading) {
-      dispatch(setCountryWhitelistLoading(true));
-      getCountryWhitelistProvider(adm0)
-        .then(response => {
-          const data =
-            response.data.data && response.data.data.map(d => d.polyname);
-          dispatch(setCountryWhitelist(data));
-        })
-        .catch(error => {
-          dispatch(setCountryWhitelistLoading(false));
-          console.info(error);
-        });
-    }
-  }
-);
-
-export const getRegionWhitelist = createThunkAction(
-  'getRegionWhitelist',
+export const getWhitelist = createThunkAction(
+  'getWhitelist',
   ({ adm0, adm1, adm2 }) => (dispatch, getState) => {
     const { whitelists } = getState();
-    if (whitelists && !whitelists.regionsLoading) {
-      dispatch(setRegionWhitelistLoading(true));
-      getRegionWhitelistProvider(adm0, adm1, adm2)
+    if (whitelists && !whitelists.loading) {
+      dispatch(setWhitelistLoading(true));
+      getLocationPolynameWhitelist({ adm0, adm1, adm2 })
         .then(response => {
-          const data =
-            response.data.data && response.data.data.map(d => d.polyname);
-          dispatch(setRegionWhitelist(data));
+          const { data } = (response && response.data) || {};
+          const whitelistObject = data && data[0];
+          const whitelist = whitelistObject ? Object.keys(whitelistObject) : [];
+          dispatch(setWhitelist(whitelist));
         })
         .catch(error => {
-          dispatch(setRegionWhitelistLoading(false));
+          dispatch(setWhitelistLoading(false));
           console.info(error);
         });
     }
