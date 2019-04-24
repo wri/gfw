@@ -1,6 +1,6 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import reducerRegistry from 'app/registry';
 
 import { setShowMapMobile } from 'components/map/actions';
@@ -15,10 +15,10 @@ const actions = {
 };
 
 class WidgetsContainer extends PureComponent {
-  componentDidMount() {
-    const { getWidgetsData } = this.props;
-    getWidgetsData();
-  }
+  // componentDidMount() {
+  //   const { getWidgetsData } = this.props;
+  //   getWidgetsData();
+  // }
 
   render() {
     return createElement(Component, {
@@ -27,9 +27,9 @@ class WidgetsContainer extends PureComponent {
   }
 }
 
-WidgetsContainer.propTypes = {
-  getWidgetsData: PropTypes.func
-};
+// WidgetsContainer.propTypes = {
+//   getWidgetsData: PropTypes.func
+// };
 
 reducerRegistry.registerModule('widgets', {
   actions: ownActions,
