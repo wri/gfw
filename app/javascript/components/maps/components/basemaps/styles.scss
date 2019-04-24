@@ -99,6 +99,14 @@ $top-section-height: 125px;
     &:last-child {
       margin-left: rem(10px);
     }
+
+    & .basemaps-roads {
+      .selector-btn .c-icon {
+        width: rem(26px);
+        height: rem(26px);
+        margin-left: rem(2px);
+      }
+    }
   }
 
   .basemap-list-scroll-wrapper {
@@ -129,7 +137,7 @@ $top-section-height: 125px;
     @media screen and (min-width: $screen-m) {
       width: $item-size;
       height: $item-size;
-      margin: initial;
+      // margin: initial;
       border: 3px solid transparent;
       border-radius: 0;
     }
@@ -159,12 +167,12 @@ $top-section-height: 125px;
     font-size: rem(10px);
     text-transform: uppercase;
     color: $slate-light;
-    margin: rem(6px) 0 0;
+    margin: rem(6px) auto 0;
 
     @media screen and (min-width: $screen-m) {
       text-align: center;
       width: $item-size;
-      padding-left: rem(3px);
+      // padding-left: rem(3px);
     }
   }
 

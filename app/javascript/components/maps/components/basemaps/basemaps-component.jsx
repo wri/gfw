@@ -10,7 +10,7 @@ import infoIcon from 'assets/icons/info.svg';
 
 import boundariesIcon from 'assets/icons/boundaries.svg';
 import labelsIcon from 'assets/icons/labels.svg';
-// import roadsIcon from 'assets/icons/roads.svg';
+import roadsIcon from 'assets/icons/roads.svg';
 
 import './styles.scss';
 
@@ -222,6 +222,22 @@ class Basemaps extends React.PureComponent {
                 options={Object.values(labels)}
                 onChange={this.props.selectLabels}
                 selectorIcon={labelsIcon}
+              />
+            </li>
+            <li className="basemaps-options-wrapper">
+              <Dropdown
+                theme={cx('theme-dropdown-button', {
+                  'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
+                  'theme-dropdown-dark-squared': isDesktop
+                })}
+                className="basemaps-roads"
+                value={'roads'}
+                options={[
+                  { label: 'Roads', value: 'roads' },
+                  { label: 'No roads', value: 'noroads' }
+                ]}
+                onChange={() => {}}
+                selectorIcon={roadsIcon}
               />
             </li>
           </ul>
