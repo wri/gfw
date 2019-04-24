@@ -1,5 +1,6 @@
 @import '~styles/settings.scss';
 $item-size: 55px;
+$item-size-small: 45px;
 $top-section-height: 125px;
 
 .c-basemaps {
@@ -116,16 +117,21 @@ $top-section-height: 125px;
   }
 
   .basemaps-list-item-image {
-    width: $item-size;
-    height: $item-size;
-    border: 3px solid transparent;
+    width: $item-size-small;
+    height: $item-size-small;
+    border: 3px solid $white-tree;
+    border-radius: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     margin: auto;
 
     @media screen and (min-width: $screen-m) {
+      width: $item-size;
+      height: $item-size;
       margin: initial;
+      border: 3px solid transparent;
+      border-radius: 0;
     }
   }
 
