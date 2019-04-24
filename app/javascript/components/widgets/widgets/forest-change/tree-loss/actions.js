@@ -1,8 +1,18 @@
 import axios from 'axios';
-import { getExtent, getLoss } from 'services/forest-data';
+import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
 
-export default ({ params }) =>
-  axios.all([getLoss(params), getExtent(params)]).then(
+export default ({ params }) => {
+  const { adm0, adm1, adm2, ...rest } = params || {};
+  const globalLocation = {
+    adm0: params.type === 'global' ? null : adm0,
+    adm1: params.type === 'global' ? null : adm1,
+    adm2: params.type === 'global' ? null : adm2
+  };
+  const lossFetch =
+    params.type === 'global'
+      ? getLossGrouped({ ...rest, ...globalLocation })
+      : getLoss({ ...rest, ...globalLocation });
+  return axios.all([lossFetch, getExtent({ ...rest, ...globalLocation })]).then(
     axios.spread((loss, extent) => {
       let data = {};
       if (loss && loss.data && extent && extent.data) {
@@ -14,3 +24,4 @@ export default ({ params }) =>
       return data;
     })
   );
+};

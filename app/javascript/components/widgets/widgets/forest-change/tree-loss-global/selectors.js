@@ -33,7 +33,7 @@ export const parsePayload = payload => {
 const groupData = data => {
   const groupByYear = groupBy(data, 'year');
   const sumData = Object.keys(groupBy(data, 'year')).map(y => {
-    const area = sumBy(groupByYear[y], 'area') || 0;
+    const area = sumBy(groupByYear[y], 'area_loss') || 0;
     const emissions = sumBy(groupByYear[y], 'emissions') || 0;
     return {
       iso: 'Other',

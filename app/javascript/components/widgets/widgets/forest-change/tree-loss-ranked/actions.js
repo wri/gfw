@@ -19,7 +19,7 @@ export default ({ params }) => {
         let mappedData = [];
         if (data && data.length) {
           mappedData = data.map(item => {
-            const loss = item.area_loss || 0;
+            const loss = item.area || 0;
             return {
               ...item,
               loss
