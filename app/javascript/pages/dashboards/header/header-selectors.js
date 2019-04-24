@@ -31,22 +31,22 @@ export const selectSentences = state =>
 
 export const getAdm0Data = createSelector(
   [selectCountryData],
-  data => data.adm0
+  data => data && data.adm0
 );
 
 export const getAdm1Data = createSelector(
   [selectCountryData],
-  data => data.adm1
+  data => data && data.adm1
 );
 
 export const getAdm2Data = createSelector(
   [selectCountryData],
-  data => data.adm2
+  data => data && data.adm2
 );
 
 export const getExternalLinks = createSelector(
   [selectCountryData, selectLocation],
-  (data, location) => data.links[location.adm0]
+  (data, location) => data && data.links[location.adm0]
 );
 
 export const getForestAtlasLink = createSelector(
@@ -59,9 +59,8 @@ export const getForestAtlasLink = createSelector(
 export const getDownloadLink = createSelector(
   [selectLocation],
   location =>
-    `http://gfw2-data.s3.amazonaws.com/country/umd_country_stats${
-      location.adm0 ? '/iso' : ''
-    }/tree_cover_stats_2017${location.adm0 ? `_${location.adm0}` : ''}.xlsx`
+    `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${location.adm0 ||
+      'global'}.xlsx`
 );
 
 export const getAdminsSelected = createSelector(
@@ -152,7 +151,7 @@ export const getSentence = createSelector(
       primaryLoss: `${primaryLoss}ha`
     };
 
-    let sentence = sentences[countrySpecific[adm0]] || sentences.default;
+    let sentence = sentences.default;
     if (data.extent > 0 && data.totalLoss.area) {
       sentence =
         data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
@@ -161,6 +160,9 @@ export const getSentence = createSelector(
       ? sentence + co2Emissions
       : sentence + end;
     if (!location) sentence = globalInitial;
+    if (adm0 in countrySpecific) {
+      sentence = countrySpecific[adm0];
+    }
 
     return {
       sentence,
