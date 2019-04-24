@@ -10,7 +10,7 @@ export default ({ params }) => {
   };
   return axios.all([getGainGrouped({ ...rest, ...parentLocation })]).then(
     axios.spread(gainResponse => {
-      let groupKey = 'adm0';
+      let groupKey = 'iso';
       if (adm1) groupKey = 'adm1';
       if (adm2) groupKey = 'adm2';
       const gainData = gainResponse.data.data;

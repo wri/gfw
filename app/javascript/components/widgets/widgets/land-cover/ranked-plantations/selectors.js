@@ -35,7 +35,7 @@ export const parseData = createSelector(
   ],
   (plantations, extent, plantationKeys, meta, location, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
-    let groupKey = 'adm0';
+    let groupKey = 'iso';
     if (location.payload.adm0) groupKey = 'adm1';
     if (location.payload.adm1) groupKey = 'adm2';
     const groupedByRegion = groupBy(plantations, groupKey);

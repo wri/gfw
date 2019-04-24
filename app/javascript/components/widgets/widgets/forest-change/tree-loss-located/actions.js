@@ -5,7 +5,7 @@ import axios from 'axios';
 export default ({ params }) =>
   axios.all([getExtentGrouped(params), getLossGrouped(params)]).then(
     axios.spread((extentGrouped, lossGrouped) => {
-      let groupKey = 'adm0';
+      let groupKey = 'iso';
       if (params.adm0) groupKey = 'adm1';
       if (params.adm1) groupKey = 'adm2';
 

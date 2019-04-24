@@ -5,7 +5,7 @@ export default ({ params }) =>
     const { data } = response.data;
     let mappedData = {};
     if (data && data.length) {
-      let groupKey = 'adm0';
+      let groupKey = 'iso';
       if (params.adm0) groupKey = 'adm1';
       if (params.adm1) groupKey = 'adm2';
 

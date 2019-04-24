@@ -25,8 +25,10 @@ export const getSortedData = createSelector(
     data.forEach(d => {
       const region = meta.find(l => d.id === l.value);
       if (region) {
-        const locationExtent = extent.filter(l => l.id === d.id);
-        const percentage = d.gain / locationExtent[0].extent * 100;
+        const locationExtent = extent.find(l => l.id === d.id);
+        const percentage = locationExtent
+          ? d.gain / locationExtent.extent * 100
+          : 0;
         const { payload, query, type } = location;
 
         dataMapped.push({
