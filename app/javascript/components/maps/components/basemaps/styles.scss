@@ -41,20 +41,42 @@ $top-section-height: 125px;
   }
 
   .basemaps-top-section {
-    padding: 0 0 25px;
+    padding: rem(20px) rem(20px) 0;
 
     @media screen and (min-width: $screen-m) {
-      padding: 15px 20px 25px;
+      padding: rem(15px) rem(20px) rem(25px);
     }
   }
 
   .basemaps-bottom-section {
+    position: relative;
     height: calc(100% - #{$top-section-height});
-    padding: 25px 0 5px;
+    padding: rem(25px) 0 rem(5px);
     border-top: 1px solid rgba($hot-grey, 0.3);
+    border-bottom: 1px solid rgba($hot-grey, 0.3);
+    background: $white-tree;
 
     @media screen and (min-width: $screen-m) {
-      padding: 15px 20px 10px;
+      padding: rem(15px) rem(20px) rem(10px);
+      background: #fff;
+    }
+
+    .menu-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      margin: 0 9px;
+      border-bottom: 7px solid $white-tree;
+      border-left: 7px solid transparent;
+      border-left-color: $white-tree;
+      border-right: none;
+      transform-origin: 0 0;
+      transform: rotate(-45deg);
+      top: 0;
+      left: calc(15% - #{rem(5px)});
+      border-bottom-color: $white-tree;
+      box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
+      z-index: 3;
     }
   }
 
@@ -65,7 +87,7 @@ $top-section-height: 125px;
   }
 
   .basemaps-options-wrapper {
-    height: rem(70px);
+    height: calc(#{$item-size} + #{rem(40px)});
     width: 48%;
     z-index: 5;
 
@@ -121,6 +143,8 @@ $top-section-height: 125px;
   .basemaps-list-item-button {
     cursor: pointer;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .basemaps-list-item-name {
@@ -132,14 +156,14 @@ $top-section-height: 125px;
     margin: rem(6px) 0 0;
 
     @media screen and (min-width: $screen-m) {
-      text-align: left;
-      width: 100%;
+      text-align: center;
+      width: $item-size;
       padding-left: rem(3px);
     }
   }
 
   .landsat-selector {
-    margin-top: rem(3px);
+    margin: rem(3px) auto 0;
     width: rem(30px);
   }
 }

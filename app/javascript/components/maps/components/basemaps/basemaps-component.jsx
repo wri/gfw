@@ -38,12 +38,17 @@ class Basemaps extends React.PureComponent {
   };
 
   renderButtonBasemap(item) {
-    const { selectBasemap } = this.props;
+    const { selectBasemap, isDesktop } = this.props;
 
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(item)}
+        onClick={() => {
+          if (!isDesktop) {
+            this.setState({ showBasemaps: !this.state.showBasemaps });
+          }
+          selectBasemap(item);
+        }}
       >
         <div
           className="basemaps-list-item-image"
@@ -57,13 +62,24 @@ class Basemaps extends React.PureComponent {
   }
 
   renderDropdownBasemap(item) {
-    const { selectBasemap, activeBasemap, landsatYears, basemaps } = this.props;
+    const {
+      selectBasemap,
+      activeBasemap,
+      landsatYears,
+      basemaps,
+      isDesktop
+    } = this.props;
     const year = activeBasemap.year || landsatYears[0].value;
 
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(basemaps.landsat, year)}
+        onClick={() => {
+          if (!isDesktop) {
+            this.setState({ showBasemaps: !this.state.showBasemaps });
+          }
+          selectBasemap(basemaps.landsat, year);
+        }}
       >
         <div
           className="basemaps-list-item-image"
@@ -81,9 +97,12 @@ class Basemaps extends React.PureComponent {
             theme="theme-dropdown-native-inline"
             value={year}
             options={landsatYears}
-            onChange={value =>
-              selectBasemap(basemaps.landsat, parseInt(value, 10))
-            }
+            onChange={value => {
+              if (!isDesktop) {
+                this.setState({ showBasemaps: !this.state.showBasemaps });
+              }
+              selectBasemap(basemaps.landsat, parseInt(value, 10));
+            }}
             native
           />
         </span>
@@ -92,12 +111,16 @@ class Basemaps extends React.PureComponent {
   }
 
   renderBasemapsSelector() {
-    const { activeBasemap, basemaps } = this.props;
+    const { activeBasemap, basemaps, isDesktop } = this.props;
     return (
       <div className="basemaps-bottom-section">
-        <div className="basemaps-header">
-          <h2 className="basemaps-title">MAP STYLES</h2>
-        </div>
+        {isDesktop ? (
+          <div className="basemaps-header">
+            <h2 className="basemaps-title">MAP STYLES</h2>
+          </div>
+        ) : (
+          <div className="menu-arrow" />
+        )}
         <div className="basemap-list-scroll-wrapper">
           <ul className="basemaps-list">
             {Object.values(basemaps).map(item => (
@@ -170,7 +193,10 @@ class Basemaps extends React.PureComponent {
                     this.setState({ showBasemaps: !this.state.showBasemaps })
                   }
                 >
-                  <span className="value">{activeBasemap.label}</span>
+                  <span className="value">
+                    {activeBasemap.label}
+                    {activeBasemap.year && ` - ${activeBasemap.year}`}
+                  </span>
                 </Button>
               </li>
             )}
