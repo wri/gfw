@@ -94,6 +94,7 @@ class ChoseAnalysis extends PureComponent {
         </div>
         <Button
           theme={draw ? 'theme-button-light' : ''}
+          className="draw-menu-button"
           onClick={() => {
             setMapSettings({ draw: !draw });
             if (!draw) {
