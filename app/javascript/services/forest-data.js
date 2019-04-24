@@ -35,7 +35,8 @@ const NEW_SQL_QUERIES = {
     'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest from rank',
   faoEcoLive:
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
-  nonGlobalDatasets: 'SELECT iso FROM data {WHERE} GROUP BY iso ORDER BY iso',
+  nonGlobalDatasets:
+    'SELECT iso, count(plantations) as plantations, count(ifl) as ifl, max(primary_forest) as primary_forest, max(mangroves) as mangroves, max(mining) as mining, count(wdpa) as wdpa, max(kba) as kba, max(tiger_cl) as tiger_cl, max(aze) as aze, max(landmark) as landmark, max(idn_mys_peatlands) as idn_mys_peatlands, max(idn_forest_moratorium) as idn_forest_moratorium, max(oil_palm) as oil_palm, max(wood_fiber) as wood_fiber, max(managed_forests) as managed_forests FROM data GROUP BY iso',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   getLocationPolynameWhitelist:
     'SELECT {location}, {polynames} FROM data {WHERE} GROUP BY {location}'
@@ -114,13 +115,6 @@ const getWHEREQuery = params => {
     return paramString;
   }
   return '';
-};
-
-const getIndicatorsFromData = () => {
-  const allPolynames = forestTypes
-    .concat(landCategories)
-    .filter(p => !p.global);
-  return allPolynames.reduce((obj, next) => ({ ...obj, [next.value]: 1 }), {});
 };
 
 // summed loss for single location
@@ -267,10 +261,7 @@ export const getFAOEcoLive = () => {
 };
 
 export const getNonGlobalDatasets = () => {
-  const url = `${getRequestUrl()}${NEW_SQL_QUERIES.nonGlobalDatasets}`.replace(
-    '{WHERE}',
-    getWHEREQuery(getIndicatorsFromData())
-  );
+  const url = `${getRequestUrl()}${NEW_SQL_QUERIES.nonGlobalDatasets}`;
   return request.get(url);
 };
 
