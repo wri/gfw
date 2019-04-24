@@ -21,7 +21,7 @@ class WidgetFooter extends PureComponent {
             NOTE: 2018 tree cover loss data is coming soon! In the meantime,
             download 2018 tree cover loss statistics{' '}
             <a
-              href={`http://gfw-files.s3.amazonaws.com/2018_update/results/download/${location.adm0 ||
+              href={`https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${location.adm0 ||
                 'global'}.xlsx`}
               target="_blank"
             >

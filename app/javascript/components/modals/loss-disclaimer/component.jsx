@@ -21,7 +21,7 @@ class ModalWelcome extends PureComponent {
           <div className="buttons">
             <Button
               className="download-btn"
-              extLink="http://gfw-files.s3.amazonaws.com/2018_update/results/download/global.xlsx"
+              extLink="https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/global.xlsx"
             >
               DOWNLOAD 2018 DATA
             </Button>

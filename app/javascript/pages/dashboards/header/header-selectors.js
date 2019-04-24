@@ -59,7 +59,7 @@ export const getForestAtlasLink = createSelector(
 export const getDownloadLink = createSelector(
   [selectLocation],
   location =>
-    `http://gfw-files.s3.amazonaws.com/2018_update/results/download/${location.adm0 ||
+    `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${location.adm0 ||
       'global'}.xlsx`
 );
 
