@@ -7,7 +7,6 @@ import PromptTooltip from 'components/prompts/prompt-tooltip';
 class PromptTour extends PureComponent {
   componentDidUpdate(prevProps) {
     const { initAction } = this.props;
-    console.log(initAction);
     if (initAction && initAction !== prevProps.initAction) {
       initAction();
     }
@@ -89,7 +88,7 @@ class PromptTour extends PureComponent {
         styles={{
           options: {
             overlayColor: 'rgba(17, 55, 80, 0.4)',
-            zIndex: 2000,
+            zIndex: 10000,
             arrowColor: '#333'
           }
         }}
@@ -108,7 +107,8 @@ PromptTour.propTypes = {
   handleStateChange: PropTypes.func,
   settings: PropTypes.object,
   showPrompts: PropTypes.bool,
-  handleShowPrompts: PropTypes.func
+  handleShowPrompts: PropTypes.func,
+  initAction: PropTypes.func
 };
 
 export default PromptTour;
