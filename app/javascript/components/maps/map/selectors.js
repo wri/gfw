@@ -437,17 +437,25 @@ export const getWidgetsWithLayerParams = createSelector(
         (params && params.endDate) || (decodeParams && decodeParams.endDate);
       const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
 
+      // fix for 2018 data not being ready. please remove once active
+      const newSettings = {
+        ...params,
+        ...decodeParams,
+        ...(startYear && {
+          startYear
+        }),
+        ...(endYear && {
+          endYear
+        })
+      };
+
       return {
         ...w,
         settings: {
           ...w.settings,
-          ...params,
-          ...decodeParams,
-          ...(startYear && {
-            startYear
-          }),
-          ...(endYear && {
-            endYear
+          ...newSettings,
+          ...(newSettings.endYear > w.settings.endYear && {
+            endYear: w.settings.endYear
           })
         }
       };
