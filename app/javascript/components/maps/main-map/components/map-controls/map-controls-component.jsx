@@ -159,7 +159,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderRecentImageryTooltip = () => {
-    const { recentActive } = this.props;
+    const { recentActive, setMainMapSettings } = this.props;
 
     return (
       <Tooltip
@@ -172,7 +172,9 @@ class MapControlsButtons extends PureComponent {
         open={recentActive}
         html={
           <RecentImagerySettings
-            onClickClose={this.handleToggleRecentImagery}
+            onClickClose={() =>
+              setMainMapSettings({ showRecentImagery: false })
+            }
           />
         }
         offset={120}
