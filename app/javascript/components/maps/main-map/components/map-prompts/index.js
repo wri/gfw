@@ -410,6 +410,21 @@ class MapPromptsContainer extends PureComponent {
         settings: {
           disableOverlay: true
         }
+      },
+      subscribeToArea: {
+        title: 'Subscribe to alerts',
+        steps: [
+          {
+            target: '.analysis-action-btn',
+            content:
+              'Did you know you can subscribe to receive email updates when new forest change is detected in this area?',
+            disableBeacon: true,
+            placement: 'right'
+          }
+        ],
+        settings: {
+          disableOverlay: true
+        }
       }
     };
 

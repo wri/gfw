@@ -79,5 +79,6 @@ export const getMapProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   embed: getEmbed,
   geostoreId: getDrawGeostoreId,
-  selectedInteraction: getSelectedInteraction
+  selectedInteraction: getSelectedInteraction,
+  location: selectLocationPayload
 });
