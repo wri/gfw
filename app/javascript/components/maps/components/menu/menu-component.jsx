@@ -13,7 +13,7 @@ import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
   onToggleLayer = (data, enable) => {
-    const { activeDatasets, recentActive } = this.props;
+    const { activeDatasets, recentActive, zoom } = this.props;
     const { dataset, layer, iso, category } = data;
 
     let newActiveDatasets = [...activeDatasets];
@@ -38,15 +38,22 @@ class MapMenu extends PureComponent {
       ...(enable && { canBound: true })
     });
 
+    // show recent imagery prompt
     if (!recentActive && enable && category === 'forestChange') {
       this.props.setMapPromptsSettings({
         stepsKey: 'recentImagery',
         stepsIndex: 0,
         open: true
       });
-    } else if (
+    }
+
+    // show analysis prompts
+    if (
       enable &&
-      (category === 'landUse' || category === 'biodiversity')
+      zoom > 3 &&
+      (category === 'landUse' ||
+        category === 'biodiversity' ||
+        dataset === 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b')
     ) {
       this.props.setMapPromptsSettings({
         stepsKey: 'analyzeAnArea',
@@ -179,6 +186,7 @@ MapMenu.propTypes = {
   activeSection: PropTypes.object,
   setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
+  zoom: PropTypes.number,
   loading: PropTypes.bool,
   analysisLoading: PropTypes.bool,
   countries: PropTypes.array,

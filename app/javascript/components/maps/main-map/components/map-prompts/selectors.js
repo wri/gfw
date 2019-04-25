@@ -1,6 +1,8 @@
 import { createStructuredSelector, createSelector } from 'reselect';
+import flatMap from 'lodash/flatMap';
+import uniq from 'lodash/uniq';
 
-import { getMapZoom } from 'components/maps/map/selectors';
+import { getMapZoom, getActiveDatasets } from 'components/maps/map/selectors';
 import { getShowRecentImagery } from 'components/maps/main-map/selectors';
 
 import { initialState } from './reducers';
@@ -34,6 +36,16 @@ export const getMapPromptsStepsKey = createSelector(
   settings => settings.stepsKey
 );
 
+export const getDatasetCategories = createSelector(
+  [getActiveDatasets],
+  datasets => datasets && uniq(flatMap(datasets.map(d => d.tags)))
+);
+
+export const getDatasetIds = createSelector(
+  [getActiveDatasets],
+  datasets => datasets && datasets.map(d => d.id)
+);
+
 export const getMapPromptsProps = createStructuredSelector({
   open: getMapPromptsOpen,
   stepIndex: getMapPromptsStepIndex,
@@ -41,5 +53,7 @@ export const getMapPromptsProps = createStructuredSelector({
   mapZoom: getMapZoom,
   location: getLocation,
   recentActive: getShowRecentImagery,
-  showPrompts: selectShowMapPrompts
+  showPrompts: selectShowMapPrompts,
+  activeCategories: getDatasetCategories,
+  datasetIds: getDatasetIds
 });

@@ -21,12 +21,14 @@ class MapPromptsContainer extends PureComponent {
       setMapPromptsSettings,
       location,
       recentActive,
-      showPrompts
+      showPrompts,
+      activeCategories,
+      datasetIds
     } = this.props;
 
     const shouldOpenRecentImageryPrompt =
-      !recentActive &&
       showPrompts &&
+      !recentActive &&
       // if map zooms past 9
       ((mapZoom > 9 && prevProps.mapZoom <= 9) ||
         // if analysis is made, except adm0 and 1 countries
@@ -34,10 +36,27 @@ class MapPromptsContainer extends PureComponent {
           ((location.type && location.type !== 'country') ||
             (location.type === 'country' && location.adm2))));
 
+    const shouldOpenAnalysisPrompt =
+      showPrompts &&
+      // if map zooms past 9
+      (mapZoom > 3 &&
+        prevProps.mapZoom <= 3 &&
+        (activeCategories.includes('landUse') ||
+          activeCategories.includes('biodiversity') ||
+          datasetIds.includes('a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b')));
+
     if (shouldOpenRecentImageryPrompt) {
       setMapPromptsSettings({
         open: true,
         stepsKey: 'recentImagery',
+        stepIndex: 0
+      });
+    }
+
+    if (shouldOpenAnalysisPrompt) {
+      setMapPromptsSettings({
+        open: true,
+        stepsKey: 'analyzeAnArea',
         stepIndex: 0
       });
     }
@@ -242,6 +261,14 @@ class MapPromptsContainer extends PureComponent {
               'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
             disableBeacon: true,
             actions: {
+              prev: () => {
+                this.props.setMainMapSettings({
+                  showAnalysis: true
+                });
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+              },
               learnHow: () => {
                 this.resetPrompts();
                 setTimeout(() => {
@@ -384,7 +411,9 @@ MapPromptsContainer.propTypes = {
   mapZoom: PropTypes.number,
   location: PropTypes.object,
   recentActive: PropTypes.bool,
-  showPrompts: PropTypes.bool
+  showPrompts: PropTypes.bool,
+  activeCategories: PropTypes.array,
+  datasetIds: PropTypes.array
 };
 
 reducerRegistry.registerModule('mapPrompts', {
