@@ -29,10 +29,17 @@ class MapControlsButtons extends PureComponent {
   };
 
   componentDidUpdate(prevProps) {
-    const { mapTourOpen } = this.props;
+    const { mapTourOpen, showRecentImagery } = this.props;
     if (!mapTourOpen && mapTourOpen !== prevProps.mapTourOpen) {
       this.setPulseTourBtn(true);
       setTimeout(() => this.setPulseTourBtn(false), 3000);
+    }
+
+    if (
+      showRecentImagery &&
+      showRecentImagery !== prevProps.showRecentImagery
+    ) {
+      this.handleToggleRecentImagery();
     }
   }
 
@@ -98,7 +105,12 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderRecentImageryBtn = () => {
-    const { recentActive, datasetsLoading } = this.props;
+    const {
+      recentActive,
+      datasetsLoading,
+      showRecentImagery,
+      setMainMapSettings
+    } = this.props;
 
     return (
       <Button
@@ -108,7 +120,9 @@ class MapControlsButtons extends PureComponent {
           'map-tour-recent-imagery'
         )}
         theme="theme-button-map-control"
-        onClick={this.handleToggleRecentImagery}
+        onClick={() =>
+          setMainMapSettings({ showRecentImagery: !showRecentImagery })
+        }
         disabled={datasetsLoading}
         tooltip={{
           text: 'Recent Satellite Imagery'
@@ -359,7 +373,8 @@ MapControlsButtons.propTypes = {
   recentImageryDataset: PropTypes.object,
   recentActive: PropTypes.bool,
   datasetsLoading: PropTypes.bool,
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  showRecentImagery: PropTypes.bool
 };
 
 export default connect()(MapControlsButtons);

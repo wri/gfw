@@ -31,7 +31,8 @@ class MainMapComponent extends PureComponent {
       showTooltip,
       tooltipData,
       handleClickMap,
-      handleShowTooltip
+      handleShowTooltip,
+      recentActive
     } = this.props;
 
     return (
@@ -81,7 +82,7 @@ class MainMapComponent extends PureComponent {
                 isDesktop={isDesktop}
               />
             )}
-            <RecentImagery />
+            <RecentImagery active={recentActive} />
             <SubscribeModal />
             {!embed &&
               isDesktop && (
@@ -101,8 +102,9 @@ MainMapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
   handleClickMap: PropTypes.func,
   oneClickAnalysis: PropTypes.bool,
-  embed: PropTypes.bool,
   hidePanels: PropTypes.bool,
+  embed: PropTypes.bool,
+  recentActive: PropTypes.bool,
   tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   showTooltip: PropTypes.bool
 };

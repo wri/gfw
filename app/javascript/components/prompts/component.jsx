@@ -30,49 +30,50 @@ class PromptTour extends PureComponent {
         run={open}
         stepIndex={stepIndex}
         continuous
-        floaterProps={{
-          styles: {
-            floater: {
-              transition: 'none'
-            }
-          },
-          disableAnimation: true
-        }}
         callback={data => {
           const { action, index, type, status, step } = data;
           const { actions } = step || {};
+          const { prev, next } = actions || {};
 
           if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
             // Need to set our running state to false, so we can restart if we click start again.
-            handleStateChange({ open: false, stepIndex: 0 });
+            handleStateChange({ open: false, stepIndex: 0, stepsKey: '' });
           } else if (data.action === 'close' || data.type === 'tour:end') {
             handleStateChange({
               stepIndex: 0,
               open: false
             });
           } else if (
-            [EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)
+            [
+              EVENTS.STEP_AFTER,
+              EVENTS.TARGET_NOT_FOUND,
+              EVENTS.TOUR_START
+            ].includes(type)
           ) {
             const newStepIndex = index + (action === ACTIONS.PREV ? -1 : 1);
             // Update state to advance the tour
-            if (action === 'prev' && actions && actions.prev) {
-              actions.prev();
+            let delay = 500;
+
+            if (action === 'prev' && prev) {
+              prev();
+            }
+
+            if (action === 'next' && next) {
+              next();
+            }
+
+            if (action === 'start' && prev && index === 0) {
+              prev();
+            }
+
+            if ((!prev && !next) || action !== 'start') delay = 0;
+
+            if (action === 'prev' || action === 'next') {
               setTimeout(() => {
                 handleStateChange({
                   stepIndex: newStepIndex
                 });
-              }, 500);
-            } else if (action === 'next' && actions && actions.next) {
-              actions.next();
-              setTimeout(() => {
-                handleStateChange({
-                  stepIndex: newStepIndex
-                });
-              }, 500);
-            } else {
-              handleStateChange({
-                stepIndex: newStepIndex
-              });
+              }, delay);
             }
           }
         }}

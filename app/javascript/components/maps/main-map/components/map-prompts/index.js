@@ -17,16 +17,12 @@ import { getMapPromptsProps } from './selectors';
 class MapPromptsContainer extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
-      // open,
       mapZoom,
       setMapPromptsSettings,
       location,
       recentActive,
       showPrompts
     } = this.props;
-    // if (open && open !== prevProps.open) {
-    //   this.resetMapLayout();
-    // }
 
     const shouldOpenRecentImageryPrompt =
       !recentActive &&
@@ -59,11 +55,17 @@ class MapPromptsContainer extends PureComponent {
             target: '.map-tour-data-layers',
             content: 'Explore available data layers',
             disableBeacon: true,
-            placement: 'right'
+            placement: 'right',
+            actions: {
+              prev: () => {
+                this.resetMapLayout();
+              }
+            }
           },
           {
             target: '.map-tour-legend',
             placement: 'right',
+            disableBeacon: true,
             content:
               'View and change settings for data layers on the map like date range and opacity. Click the "i" icons to learn more about a dataset.',
             actions: {
@@ -77,6 +79,7 @@ class MapPromptsContainer extends PureComponent {
           {
             target: '.map-tour-legend',
             placement: 'right',
+            disableBeacon: true,
             content:
               'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
             actions: {
@@ -91,17 +94,22 @@ class MapPromptsContainer extends PureComponent {
                 });
               },
               learnHow: () => {
-                setMapPromptsSettings({
-                  open: true,
-                  stepsKey: 'analyzeAnArea',
-                  stepIndex: 0
-                });
+                this.resetPrompts();
+                setTimeout(() => {
+                  setMapPromptsSettings({
+                    open: true,
+                    stepsKey: 'analyzeAnAreaTour',
+                    stepIndex: 0,
+                    force: true
+                  });
+                }, 100);
               }
             }
           },
           {
             target: '.map-tour-menu-panel',
             placement: 'right',
+            disableBeacon: true,
             content:
               'Explore data related to important forest topics, Places to Watch (high priority areas with recent forest loss), and stories about forests.',
             actions: {
@@ -120,6 +128,7 @@ class MapPromptsContainer extends PureComponent {
           {
             target: '.map-tour-menu-panel',
             placement: 'right',
+            disableBeacon: true,
             content:
               'Search for a dataset, location or geographic coordinates.',
             actions: {
@@ -142,6 +151,7 @@ class MapPromptsContainer extends PureComponent {
             target: '.map-tour-basemaps',
             content:
               'Customize the basemap, including the boundaries displayed and the color of the labels.',
+            disableBeacon: true,
             actions: {
               next: () => {
                 this.props.setMainMapSettings({
@@ -162,6 +172,7 @@ class MapPromptsContainer extends PureComponent {
             target: '.map-tour-recent-imagery',
             content:
               'View recent satellite imagery, searchable by date and cloud cover.',
+            disableBeacon: true,
             actions: {
               prev: () => {
                 this.props.setMainMapSettings({
@@ -169,23 +180,28 @@ class MapPromptsContainer extends PureComponent {
                 });
               },
               learnHow: () => {
-                setMapPromptsSettings({
-                  open: true,
-                  stepsKey: 'recentImageryTour',
-                  stepIndex: 0,
-                  force: true
-                });
+                this.resetPrompts();
+                setTimeout(() => {
+                  this.props.setMapPromptsSettings({
+                    open: true,
+                    stepsKey: 'recentImageryTour',
+                    stepIndex: 0,
+                    force: true
+                  });
+                }, 100);
               }
             }
           },
           {
             target: '.map-tour-map-controls',
+            disableBeacon: true,
             content:
               'Access basic map tools: zoom out and in, expand the map, share or embed, print, and take a tour of the map. Also view zoom level and lat/long coordinates.'
           },
           {
             target: '.map-tour-main-menu',
-            content: 'Access the main navigation menu.'
+            content: 'Access the main navigation menu.',
+            disableBeacon: true
           }
         ]
       },
@@ -199,12 +215,15 @@ class MapPromptsContainer extends PureComponent {
             disableBeacon: true,
             actions: {
               learnHow: () => {
-                setMapPromptsSettings({
-                  open: true,
-                  stepsKey: 'recentImageryTour',
-                  stepIndex: 0,
-                  force: true
-                });
+                this.resetPrompts();
+                setTimeout(() => {
+                  this.props.setMapPromptsSettings({
+                    open: true,
+                    stepsKey: 'recentImageryTour',
+                    stepIndex: 0,
+                    force: true
+                  });
+                }, 100);
               }
             }
           }
@@ -224,18 +243,15 @@ class MapPromptsContainer extends PureComponent {
             disableBeacon: true,
             actions: {
               learnHow: () => {
-                this.props.setMainMapSettings({
-                  showAnalysis: true
-                });
-                this.props.setAnalysisSettings({
-                  showDraw: false
-                });
-                setMapPromptsSettings({
-                  open: true,
-                  stepsKey: 'analyzeAnAreaTour',
-                  stepIndex: 0,
-                  force: true
-                });
+                this.resetPrompts();
+                setTimeout(() => {
+                  setMapPromptsSettings({
+                    open: true,
+                    stepsKey: 'analyzeAnAreaTour',
+                    stepIndex: 0,
+                    force: true
+                  });
+                }, 100);
               }
             }
           }
@@ -248,33 +264,32 @@ class MapPromptsContainer extends PureComponent {
         title: 'Recent Satellite Imagery',
         steps: [
           {
-            target: '.recent-imagery-btn',
-            content:
-              'Click the Satellite icon to overlay a satellite tile at the center of the map, beneath the crosshair icon.',
-            disableBeacon: true
-          },
-          {
-            target: '.recent-imagery-btn',
+            target: '.prompts-recent-imagery',
             content:
               'The map will automatically fetch the most recent satellite image with the least amount of cloud cover for your targeted area.',
-            disableBeacon: true
+            disableBeacon: true,
+            placement: 'left',
+            actions: {
+              prev: () => {
+                this.props.setMainMapSettings({ showRecentImagery: true });
+              }
+            }
           },
           {
-            target: '.recent-imagery-btn',
+            target: '.top-section',
             content:
               'Change the settings like the Acquisition Date and Cloud Cover Percentage to filter the available images. Click on a thumbnail to overlay that image on the map. They are ordered by date (most recent first). You can see the date of an image by hovering over it.',
-            disableBeacon: true
+            disableBeacon: true,
+            placement: 'left'
           },
           {
-            target: '.recent-imagery-btn',
+            target: '.map-icon-crosshair',
             content:
-              'Move the crosshair icon on the map outside of the image to load a new tile in a different area.',
-            disableBeacon: true
+              'Move the map to align the crosshair icon on the map outside of the image to load a new tile image  in a different area.',
+            disableBeacon: true,
+            placement: 'left'
           }
-        ],
-        settings: {
-          disableOverlay: true
-        }
+        ]
       },
       analyzeAnAreaTour: {
         title: 'Analyze an Area',
@@ -283,19 +298,32 @@ class MapPromptsContainer extends PureComponent {
             target: '.c-data-analysis-menu',
             content:
               'Click on the Analysis tab to analyze and track forest change.',
-            disableBeacon: true
+            disableBeacon: true,
+            placement: 'right',
+            actions: {
+              prev: () => {
+                this.props.setMainMapSettings({
+                  showAnalysis: true
+                });
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+              }
+            }
           },
           {
             target: '.analysis-boundary-menu',
             content:
               'For a one click analysis, first choose your preferred map boundaries. Then click on a shape on the map and the analysis will be performed.',
-            disableBeacon: true
+            disableBeacon: true,
+            placement: 'right'
           },
           {
             target: '.draw-upload-tab',
             content:
               'To draw a shape, click the Draw or Upload Shape tab and click Start Drawing. Click on the map, drag the mouse, and click again until you form your desired shape. Once the shape is fully connected, the analysis will be performed.',
             disableBeacon: true,
+            placement: 'right',
             actions: {
               next: () => {
                 this.props.setAnalysisSettings({
@@ -313,12 +341,10 @@ class MapPromptsContainer extends PureComponent {
             target: '.draw-menu-input',
             content:
               'To upload a shape, click Pick a File or Drop One Here and select your desired shapefile. Once uploaded, the shape will appear on the map and the analysis will be performed.',
-            disableBeacon: true
+            disableBeacon: true,
+            placement: 'right'
           }
-        ],
-        settings: {
-          disableOverlay: true
-        }
+        ]
       }
     };
 
@@ -326,8 +352,20 @@ class MapPromptsContainer extends PureComponent {
   };
 
   resetMapLayout = () => {
-    this.props.setMainMapSettings({ showAnalysis: false });
+    this.props.setMainMapSettings({
+      showAnalysis: false,
+      showRecentImagery: false
+    });
     this.props.setMenuSettings({ menuSection: '' });
+  };
+
+  resetPrompts = () => {
+    this.props.setMapPromptsSettings({
+      open: false,
+      stepIndex: 0,
+      stepsKey: '',
+      force: true
+    });
   };
 
   handleShowPrompts = showPrompts => {
@@ -344,7 +382,6 @@ class MapPromptsContainer extends PureComponent {
 }
 
 MapPromptsContainer.propTypes = {
-  open: PropTypes.bool,
   setMainMapSettings: PropTypes.func,
   setMenuSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,

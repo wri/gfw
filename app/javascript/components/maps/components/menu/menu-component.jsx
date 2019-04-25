@@ -38,26 +38,22 @@ class MapMenu extends PureComponent {
       ...(enable && { canBound: true })
     });
 
-    // if (
-    //   !recentActive &&
-    //   enable &&
-    //   category === 'forestChange'
-    // ) {
-    //   this.props.setMapPromptsSettings({
-    //     stepsKey: 'recentImagery',
-    //     stepsIndex: 0,
-    //     open: true
-    //   });
-    // } else if (
-    //   enable &&
-    //   (category === 'landUse' || category === 'biodiversity' || data.dataset === 'biomassloss' )
-    // ) {
-    //   this.props.setMapPromptsSettings({
-    //     stepsKey: 'analyzeAnArea',
-    //     stepsIndex: 0,
-    //     open: true
-    //   });
-    // }
+    if (!recentActive && enable && category === 'forestChange') {
+      this.props.setMapPromptsSettings({
+        stepsKey: 'recentImagery',
+        stepsIndex: 0,
+        open: true
+      });
+    } else if (
+      enable &&
+      (category === 'landUse' || category === 'biodiversity')
+    ) {
+      this.props.setMapPromptsSettings({
+        stepsKey: 'analyzeAnArea',
+        stepsIndex: 0,
+        open: true
+      });
+    }
 
     track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
       label: layer

@@ -13,12 +13,12 @@ import Component from './component';
 const mapTourSteps = [
   {
     label: 'View recent satellite imagery, searchable by date and cloud cover.',
-    promptKey: 'recentImagery'
+    promptKey: 'recentImageryTour'
   },
   {
     label:
       'Analyze forest change within your area of interest by clicking a shape on the map or drawing or uploading a shape.',
-    promptKey: 'analyzeAnArea'
+    promptKey: 'analyzeAnAreaTour'
   }
 ];
 

@@ -43,8 +43,14 @@ class PromptTooltip extends PureComponent {
         </div>
         <div className="step-actions">
           <div className={cx('step-btns', { 'align-left': learnHow })}>
-            {index !== 0 && (
-              <button className="step-nav-btn" {...backProps}>
+            {size > 1 && (
+              <button
+                className="step-nav-btn"
+                {...backProps}
+                style={{
+                  opacity: index !== 0 ? 1 : 0
+                }}
+              >
                 BACK
               </button>
             )}

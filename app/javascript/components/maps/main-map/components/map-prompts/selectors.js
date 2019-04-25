@@ -1,7 +1,7 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 
 import { getMapZoom } from 'components/maps/map/selectors';
-import { getActive } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
+import { getShowRecentImagery } from 'components/maps/main-map/selectors';
 
 import { initialState } from './reducers';
 
@@ -40,6 +40,6 @@ export const getMapPromptsProps = createStructuredSelector({
   stepsKey: getMapPromptsStepsKey,
   mapZoom: getMapZoom,
   location: getLocation,
-  recentActive: getActive,
+  recentActive: getShowRecentImagery,
   showPrompts: selectShowMapPrompts
 });
