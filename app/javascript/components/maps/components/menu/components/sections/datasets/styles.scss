@@ -5,6 +5,10 @@
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 
+  @media screen and (min-width: $screen-m) {
+    padding: rem(20px);
+  }
+
   .datasets-header {
     text-transform: uppercase;
     display: flex;
