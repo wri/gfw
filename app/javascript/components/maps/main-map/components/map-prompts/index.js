@@ -295,9 +295,9 @@ class MapPromptsContainer extends PureComponent {
         title: 'Analyze an Area',
         steps: [
           {
-            target: '.c-data-analysis-menu',
+            target: '.analysis-boundary-menu',
             content:
-              'Click on the Analysis tab to analyze and track forest change.',
+              'For a one click analysis, first choose your preferred map boundaries (political boundaries, river basins, ecoregions). Then click on a shape on the map and the analysis will be performed.',
             disableBeacon: true,
             placement: 'right',
             actions: {
@@ -310,13 +310,6 @@ class MapPromptsContainer extends PureComponent {
                 });
               }
             }
-          },
-          {
-            target: '.analysis-boundary-menu',
-            content:
-              'For a one click analysis, first choose your preferred map boundaries. Then click on a shape on the map and the analysis will be performed.',
-            disableBeacon: true,
-            placement: 'right'
           },
           {
             target: '.draw-upload-tab',
