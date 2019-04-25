@@ -365,6 +365,51 @@ class MapPromptsContainer extends PureComponent {
             placement: 'right'
           }
         ]
+      },
+      topicsClimate: {
+        title: 'Climate',
+        steps: [
+          {
+            target: '.map-icon-crosshair',
+            content:
+              'Click on a tropical country to calculate emissions from forest loss.',
+            disableBeacon: true,
+            placement: 'top'
+          }
+        ],
+        settings: {
+          disableOverlay: true
+        }
+      },
+      topicsCommodities: {
+        title: 'Commodities',
+        steps: [
+          {
+            target: '.map-icon-crosshair',
+            content:
+              'Zoom in to click on a concession and calculate tree cover loss.',
+            disableBeacon: true,
+            placement: 'top'
+          }
+        ],
+        settings: {
+          disableOverlay: true
+        }
+      },
+      topicsWater: {
+        title: 'Water',
+        steps: [
+          {
+            target: '.map-icon-crosshair',
+            content:
+              'Click on any of the watershed boundaries on the map to calculate forest change.',
+            disableBeacon: true,
+            placement: 'top'
+          }
+        ],
+        settings: {
+          disableOverlay: true
+        }
       }
     };
 
