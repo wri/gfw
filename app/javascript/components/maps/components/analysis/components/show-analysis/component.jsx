@@ -81,12 +81,9 @@ class ShowAnalysis extends PureComponent {
       hasLayers,
       hasWidgets,
       zoomLevel,
-      widgets
+      widgets,
+      showAnalysisDisclaimer
     } = this.props;
-
-    const treeCoverGain =
-      data && data.find(d => d.label && d.label.includes('Tree cover gain'));
-    const treeCoverLoss = widgets && widgets.find(w => w.widget === 'treeLoss');
 
     return (
       <div className={cx('c-show-analysis')}>
@@ -181,23 +178,22 @@ class ShowAnalysis extends PureComponent {
                       levels.
                     </p>
                   )}
-                  {!!treeCoverGain &&
-                    !!treeCoverLoss && (
-                      <p>
-                        <b>NOTE:</b> tree cover loss and gain statistics cannot
-                        be compared against each other.{' '}
-                        <button
-                          onClick={() =>
-                            setModalSources({
-                              open: true,
-                              source: 'lossDisclaimer'
-                            })
-                          }
-                        >
-                          Learn more.
-                        </button>
-                      </p>
-                    )}
+                  {showAnalysisDisclaimer && (
+                    <p>
+                      <b>NOTE:</b> tree cover loss and gain statistics cannot be
+                      compared against each other.{' '}
+                      <button
+                        onClick={() =>
+                          setModalSources({
+                            open: true,
+                            source: 'lossDisclaimer'
+                          })
+                        }
+                      >
+                        Learn more.
+                      </button>
+                    </p>
+                  )}
                 </div>
               </Fragment>
             )}
@@ -228,7 +224,8 @@ ShowAnalysis.propTypes = {
   hasWidgets: PropTypes.bool,
   downloadUrls: PropTypes.array,
   widgets: PropTypes.array,
-  zoomLevel: PropTypes.number
+  zoomLevel: PropTypes.number,
+  showAnalysisDisclaimer: PropTypes.bool
 };
 
 export default ShowAnalysis;
