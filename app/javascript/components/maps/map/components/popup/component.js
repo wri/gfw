@@ -129,7 +129,10 @@ class Popup extends Component {
                 <DataTable data={tableData} />
               )}
               <div className="nav-footer">
-                <Button onClick={() => this.handleClickAction(selected)}>
+                <Button
+                  className="footer-action-btn"
+                  onClick={() => this.handleClickAction(selected)}
+                >
                   {buttonState}
                 </Button>
               </div>
