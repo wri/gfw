@@ -5,7 +5,7 @@ $button-height: rem(40px);
   height: $button-height;
   font-family: $font-family-1;
   border-radius: rem(20px);
-  width: 100%;
+  width: fit-content;
   padding: 0 rem(15px);
   display: flex;
   justify-content: center;
