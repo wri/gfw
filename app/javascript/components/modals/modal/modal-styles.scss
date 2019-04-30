@@ -39,6 +39,16 @@ $mobile-margin: rem(10px);
   .modal-content {
     padding: $vertical-modal-padding-mobile $horizontal-modal-padding-mobile;
     margin: auto;
+
+    .element-fullwidth {
+      width: calc(100% + 2 * #{$horizontal-modal-padding-mobile});
+      margin-left: -$horizontal-modal-padding-mobile;
+
+      @media screen and (min-width: $screen-m) {
+        width: calc(100% + 2 * #{$horizontal-modal-padding-desktop});
+        margin-left: -$horizontal-modal-padding-desktop;
+      }
+    }
   }
 
   @media screen and (min-width: $screen-m) {

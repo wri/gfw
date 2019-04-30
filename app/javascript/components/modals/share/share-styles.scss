@@ -68,6 +68,7 @@ $input-button-width: rem(100px);
 
     .input-button {
       position: relative;
+      z-index: 1;
       right: calc(#{$input-button-width} / 2);
       border-radius: rem(22.5px);
       width: $input-button-width;

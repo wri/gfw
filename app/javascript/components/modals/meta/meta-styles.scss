@@ -79,12 +79,8 @@ $mobile-margin: rem(10px);
       justify-content: flex-start;
       border-top: solid 1px $border;
       margin-bottom: rem(30px);
-      width: calc(100% + (2 * #{$horizontal-modal-padding-mobile}));
-      margin-left: -$horizontal-modal-padding-mobile;
 
       @media screen and (min-width: $screen-m) {
-        width: calc(100% + (2 * #{$horizontal-modal-padding-desktop}));
-        margin-left: -$horizontal-modal-padding-desktop;
         margin-bottom: rem(30px);
       }
     }
