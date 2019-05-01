@@ -162,6 +162,7 @@
     "react-redux": "^5.0.7",
     "react-responsive": "^5.0.0",
     "react-scroll": "1.5.4",
+    "react-simple-maps": "^0.12.1",
     "react-slick": "0.18.1",
     "react-stickynode": "1.4.1",
     "react-tippy": "1.2.2",
