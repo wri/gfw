@@ -12,7 +12,7 @@
     pointer-events: visibleFill;
 
     &.-dark {
-      fill: rgba($warm-grey, 0.5);
+      fill: rgba($grey-dark, 1);
     }
 
     &.-pink {
@@ -45,5 +45,20 @@
     &.-label {
       transform: translateY(3px);
     }
+  }
+}
+
+.c-world-map-tooltip {
+  background-color: $slate;
+  padding: rem(10px) rem(15px);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+
+  p {
+    color: $white;
+    text-transform: capitalize;
+    font-size: rem(14px);
   }
 }

@@ -6,36 +6,26 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-top: rem(30px);
-  padding: 0 rem(15px);
 
   .locations-list {
     width: 100%;
-    margin: auto 0;
 
     @media screen and (min-width: $screen-m) {
-      width: 50%;
-    }
-
-    @media screen and (min-width: $screen-l) {
-      width: 40%;
+      width: 35%;
     }
   }
 
   .simple-map {
-    display: none;
-    width: 50%;
-    min-width: 50%;
+    width: 100%;
+    min-width: 100%;
     justify-content: center;
     align-items: center;
+    display: flex;
 
     @media screen and (min-width: $screen-m) {
-      display: flex;
-      padding-right: rem(40px);
-    }
-
-    @media screen and (min-width: $screen-l) {
-      width: 60%;
-      min-width: 60%;
+      width: 65%;
+      min-width: 65%;
+      margin-right: rem(20px);
     }
   }
 }

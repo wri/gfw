@@ -8,7 +8,8 @@ import {
   ZoomableGroup,
   Line
 } from 'react-simple-maps';
-// import UnitsTooltip from 'react-components/shared/units-tooltip/units-tooltip.component';
+import { Tooltip } from 'react-tippy';
+
 import cx from 'classnames';
 import { formatNumber } from 'utils/format';
 import xor from 'lodash/xor';
@@ -78,14 +79,17 @@ class WorldMap extends React.PureComponent {
     const { flows } = this.state;
     const geoId = geometry.properties ? geometry.properties.iso2 : geometry.geoId;
     if (WorldMap.isDestinationCountry(geoId, flows)) {
+      console.log(geometry);
       const x = e.clientX + 10;
       const y = e.clientY + window.scrollY + 10;
       const text = geometry.name || geometry.properties.name;
       const title = 'Trade Volume';
       const unit = 't';
       const volume = geometry.value || (flows.find(flow => flow.geoId === geoId) || {}).value;
-      const value = formatNumber({ num: volume, unit: 'tons' });
-      const tooltipConfig = { x, y, text, items: [{ title, value, unit }] };
+      const height = geometry.height || (flows.find(flow => flow.geoId === geoId) || {}).height;
+      const value = formatNumber({ num: volume, unit: 't' });
+      const percentage = formatNumber({ num: height * 100, unit: '%' });
+      const tooltipConfig = { x, y, text, items: [{ title, value, unit, percentage }] };
       this.setState(() => ({ tooltipConfig }));
     }
   };
@@ -138,14 +142,24 @@ class WorldMap extends React.PureComponent {
   };
 
   render() {
-    // const { tooltipConfig } = this.state;
-    console.log('component data', this.props);
+    const { tooltipConfig } = this.state;
     const { className } = this.props;
+    const { text, items } = tooltipConfig || {};
     return (
-      <React.Fragment>
-        {/* <UnitsTooltip show={!!tooltipConfig} {...tooltipConfig} /> */}
+      <Tooltip
+        className={className}
+        theme="tip"
+        html={<div className="c-world-map-tooltip">
+          <p>{text && text.toLowerCase()}</p>
+          <p>{items && items[0].value}</p>
+          <p>{items && items[0].percentage}</p>
+        </div>}
+        followCursor
+        animateFill={false}
+        open={!!tooltipConfig}
+      >
         <ComposableMap
-          className={cx('c-world-map', className)}
+          className={cx('c-world-map')}
           projection="robinson"
           style={{ width: '100%', height: 'auto' }}
           projectionConfig={{ scale: 145 }}
@@ -157,7 +171,7 @@ class WorldMap extends React.PureComponent {
             <Lines>{this.renderLines()}</Lines>
           </ZoomableGroup>
         </ComposableMap>
-      </React.Fragment>
+      </Tooltip>
     );
   }
 }

@@ -12,9 +12,10 @@ class WidgetTraseCommodities extends PureComponent {
     const { rankedData } = data;
 
     return (
-      <div className="c-widget-economic-impact">
+      <div className="c-widget-trase-commodities">
         {data && (
           <WorldMap
+            className="simple-map"
             {...data}
           />
         )}

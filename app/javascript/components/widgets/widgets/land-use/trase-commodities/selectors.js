@@ -47,7 +47,7 @@ export const parseSentence = createSelector(
     const params = {
       startYear,
       endYear,
-      commodity,
+      commodity: `${locationName} ${commodity}`,
       source: topLocation.label,
       volume: formatNumber({ num: topLocation.value, unit: 't' }),
       percentage: formatNumber({ num: topLocation.percentage, unit: '%' }),
