@@ -43,42 +43,42 @@ import * as forestryEmployment from './widgets/land-use/forestry-employment';
 import * as traseCommodities from './widgets/land-use/trase-commodities';
 
 export default {
-  traseCommodities,
-  // // forest change
-  // gladAlerts,
-  // treeLoss,
-  // treeLossGlobal,
-  // treeLossRanked,
-  // firesAlerts,
-  // faoDeforest,
-  // faoReforest,
-  // gladRanked,
-  // treeCoverGain,
-  // treeGainLocated,
-  // treeLossLocated,
-  // treeLossPlantations,
-  // treeLossTsc,
-  // // land cover
-  // treeCover,
-  // treeCoverRanked,
-  // rankedPlantations,
-  // treeCoverPlantations,
-  // faoCover,
-  // globalLandCover,
-  // intactTreeCover,
-  // primaryForest,
-  // treeCoverLocated,
-  // // climate
-  // emissions,
-  // emissionsDeforestation,
-  // emissionsPlantations,
-  // woodyBiomass,
-  // soilBiomass,
-  // futureCarbonGains,
-  // cumulativeEmissions,
-  // // biodiversity
-  // // gladBiodiversity,
-  // // land use
-  // economicImpact,
-  // forestryEmployment
+  // forest change
+  gladAlerts,
+  treeLoss,
+  treeLossGlobal,
+  treeLossRanked,
+  firesAlerts,
+  faoDeforest,
+  faoReforest,
+  gladRanked,
+  treeCoverGain,
+  treeGainLocated,
+  treeLossLocated,
+  treeLossPlantations,
+  treeLossTsc,
+  // land cover
+  treeCover,
+  treeCoverRanked,
+  rankedPlantations,
+  treeCoverPlantations,
+  faoCover,
+  globalLandCover,
+  intactTreeCover,
+  primaryForest,
+  treeCoverLocated,
+  // climate
+  emissions,
+  emissionsDeforestation,
+  emissionsPlantations,
+  woodyBiomass,
+  soilBiomass,
+  futureCarbonGains,
+  cumulativeEmissions,
+  // biodiversity
+  // gladBiodiversity,
+  // land use
+  economicImpact,
+  forestryEmployment,
+  traseCommodities
 };

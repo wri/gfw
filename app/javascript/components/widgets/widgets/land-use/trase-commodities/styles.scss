@@ -2,10 +2,14 @@
 
 .c-widget-trase-commodities {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   margin-top: rem(30px);
+
+  @media screen and (min-width: $screen-m) {
+    flex-direction: row;
+  }
 
   .locations-list {
     width: 100%;
