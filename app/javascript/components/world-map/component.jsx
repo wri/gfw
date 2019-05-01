@@ -88,6 +88,7 @@ class WorldMap extends React.PureComponent {
 
   renderGeographies = (geographies, projection) => {
     const { flows, originGeoId } = this.state;
+
     return geographies.map(
       geography =>
         geography.properties.iso2 !== 'AQ' && (

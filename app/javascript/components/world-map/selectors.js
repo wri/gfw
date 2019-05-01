@@ -202,7 +202,7 @@ export const COUNTRIES_COORDINATES = {
 };
 
 const getSelectedContext = (state, { context }) => context;
-const getTopNodes = (state, { data }) => data && data.targetNodes;
+const getTopNodes = (state, { topNodes }) => topNodes && topNodes.targetNodes;
 
 export const getOriginGeoId = createSelector(
   getSelectedContext,
@@ -232,7 +232,8 @@ export const getWorldMapFlows = createSelector(
         .map((country, index) => ({
           ...country,
           strokeWidth: index + 1,
-          coordinates: COUNTRIES_COORDINATES[country.geo_id]
+          coordinates: COUNTRIES_COORDINATES[country.geo_id],
+          geoId: country.geo_id
         }))
       : [];
 
