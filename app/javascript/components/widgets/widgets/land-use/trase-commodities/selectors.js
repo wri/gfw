@@ -1,16 +1,12 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import findIndex from 'lodash/findIndex';
 import isEmpty from 'lodash/isEmpty';
 import capitalize from 'lodash/capitalize';
-import { format } from 'd3-format';
-import { sortByKey } from 'utils/data';
 import { formatNumber } from 'utils/format';
 
 // get list data
-const getData = state => state.data && state.data;
+const getData = state => state.data && state.data.data;
 const getDataSettings = state => state.data && state.data.settings;
 const getSettings = state => state.settings;
-const getLocationObject = state => state.locationObject;
 const getLocationName = state => state.locationName;
 const getColors = state => state.colors;
 const getSentences = state => state.config.sentence;
@@ -18,16 +14,16 @@ const getSentences = state => state.config.sentence;
 export const getDataOptions = state => state.data && state.data.options;
 
 export const parseData = createSelector(
-  [getData, getColors],
-  (data, colors) => {
+  [getData, getColors, getSettings],
+  (data, colors, settings) => {
     if (isEmpty(data)) return null;
-    const list = data.data.targetNodes;
+    const list = data.topNodes.targetNodes;
     const rankedList = list.map(l => ({
       label: capitalize(l.name),
-      value: l.value,
+      value: settings.unit === 't' ? l.value : l.height * 100,
       id: l.id,
       percentage: l.height,
-      unit: data.data.unit,
+      unit: settings.unit,
       iso: l.geo_id,
       color: colors.main
     }));
@@ -47,17 +43,17 @@ export const parseSentence = createSelector(
     const params = {
       startYear,
       endYear,
-      commodity: `${locationName} ${commodity}`,
+      commodity: `${locationName} ${commodity.toLowerCase()}`,
       source: topLocation.label,
       volume: formatNumber({ num: topLocation.value, unit: 't' }),
       percentage: formatNumber({ num: topLocation.percentage, unit: '%' }),
       location: locationName
-    }
+    };
 
     return {
       sentence,
       params
-    }
+    };
   }
 );
 

@@ -5,6 +5,12 @@ export default {
   categories: ['land-use'],
   types: ['country'],
   admins: ['adm0'],
+  options: {
+    startYears: true,
+    endYears: true,
+    units: ['t', '%'],
+    commodities: true
+  },
   dataType: 'trase',
   colors: 'extent',
   metaKey: 'trase',
@@ -14,8 +20,6 @@ export default {
   sentence:
     'From {startYear} to {endYear}, the top sourcing country for {commodity} was {source}, with a trade volume of {volume}, representing {percentage} of total {location} exports.',
   whitelists: {
-    adm0: [
-      'BRA'
-    ]
+    adm0: ['BRA']
   }
 };

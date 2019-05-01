@@ -201,10 +201,7 @@ export const COUNTRIES_COORDINATES = {
   HK: [114.18306345846304, 22.30692675357551]
 };
 
-export const getTopNodesKey = (ctx, col, start, end) => (ctx && col && start && end ? `CTX${ctx}_COL${col}_START${start}_END${end}` : null);
-
 const getSelectedContext = (state, { context }) => context;
-const getSelectedYears = (state, { context }) => [2015, 2016, 2017];
 const getTopNodes = (state, { data }) => data && data.targetNodes;
 
 export const getOriginGeoId = createSelector(
@@ -215,15 +212,6 @@ export const getOriginGeoId = createSelector(
 export const getOriginCoordinates = createSelector(
   getOriginGeoId,
   originGeoId => (originGeoId ? COUNTRIES_COORDINATES[originGeoId] : null)
-);
-
-export const getCountries = createSelector(
-  [getTopNodes, getSelectedContext, getSelectedYears],
-  (topNodes, selectedContext, selectedYears) => {
-    const selectedContextId = selectedContext ? selectedContext.id : null;
-    const topNodesKey = getTopNodesKey(selectedContextId, 'country', ...selectedYears);
-    return topNodes[topNodesKey];
-  }
 );
 
 export const getWorldMapFlows = createSelector(
@@ -247,19 +235,18 @@ export const getWorldMapFlows = createSelector(
           coordinates: COUNTRIES_COORDINATES[country.geo_id]
         }))
       : [];
-    console.log('flows', contextFlows);
 
     const contextFlowsWithCoordinates = contextFlows.filter(
       f => typeof f.coordinates !== 'undefined'
     );
 
-    console.log('flows with coords', contextFlowsWithCoordinates);
-
     if (contextFlowsWithCoordinates.length !== contextFlows.length) {
       console.warn('World map flows are missing geoids. Check your database.');
     }
 
-    const [minX, , maxX] = bbox(lineString(contextFlowsWithCoordinates.map(f => f.coordinates)));
+    const [minX, , maxX] = bbox(
+      lineString(contextFlowsWithCoordinates.map(f => f.coordinates))
+    );
     const medianX = (maxX + minX) / 2;
     const originLeftOfBbox = originCoordinates[0] < medianX;
     const pointOfControl = {
@@ -285,7 +272,6 @@ export const getWorldMapFlows = createSelector(
 export const getWorldMapProps = createStructuredSelector({
   flows: getWorldMapFlows,
   originGeoId: getOriginGeoId,
-  selectedYears: getSelectedYears,
   selectedContext: getSelectedContext,
   originCoordinates: getOriginCoordinates
 });

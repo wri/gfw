@@ -12,8 +12,6 @@ import { Tooltip } from 'react-tippy';
 
 import cx from 'classnames';
 import { formatNumber } from 'utils/format';
-import xor from 'lodash/xor';
-export const getTopNodesKey = (ctx, col, start, end) => (ctx && col && start && end ? `CTX${ctx}_COL${col}_START${start}_END${end}` : null);
 
 import WORLD_GEOGRAPHIES from 'data/WORLD.topo.json';
 import './style.scss';
@@ -55,41 +53,31 @@ class WorldMap extends React.PureComponent {
     originCoordinates: []
   };
 
-  // componentDidMount() {
-  //   if (this.props.flows.length === 0 && this.props.selectedContext && this.props.selectedYears) {
-  //     this.props.getTopNodes();
-  //   }
-  // }
-
-  componentDidUpdate(prevProps) {
-    // if (!this.props.selectedContext) {
-    //   return;
-    // }
-
-    // if (
-    //   !prevProps.selectedContext ||
-    //   this.props.selectedContext.id !== prevProps.selectedContext.id ||
-    //   xor(this.props.selectedYears, prevProps.selectedYears).length !== 0
-    // ) {
-    //   this.props.getTopNodes();
-    // }
-  }
-
   onMouseMove = (geometry, e) => {
     const { flows } = this.state;
-    const geoId = geometry.properties ? geometry.properties.iso2 : geometry.geoId;
+    const geoId = geometry.properties
+      ? geometry.properties.iso2
+      : geometry.geoId;
     if (WorldMap.isDestinationCountry(geoId, flows)) {
-      console.log(geometry);
       const x = e.clientX + 10;
       const y = e.clientY + window.scrollY + 10;
       const text = geometry.name || geometry.properties.name;
       const title = 'Trade Volume';
       const unit = 't';
-      const volume = geometry.value || (flows.find(flow => flow.geoId === geoId) || {}).value;
-      const height = geometry.height || (flows.find(flow => flow.geoId === geoId) || {}).height;
+      const volume =
+        geometry.value ||
+        (flows.find(flow => flow.geoId === geoId) || {}).value;
+      const height =
+        geometry.height ||
+        (flows.find(flow => flow.geoId === geoId) || {}).height;
       const value = formatNumber({ num: volume, unit: 't' });
       const percentage = formatNumber({ num: height * 100, unit: '%' });
-      const tooltipConfig = { x, y, text, items: [{ title, value, unit, percentage }] };
+      const tooltipConfig = {
+        x,
+        y,
+        text,
+        items: [{ title, value, unit, percentage }]
+      };
       this.setState(() => ({ tooltipConfig }));
     }
   };
@@ -107,7 +95,12 @@ class WorldMap extends React.PureComponent {
             key={geography.properties.cartodb_id}
             className={cx(
               'world-map-geography',
-              { '-dark': WorldMap.isDestinationCountry(geography.properties.iso2, flows) },
+              {
+                '-dark': WorldMap.isDestinationCountry(
+                  geography.properties.iso2,
+                  flows
+                )
+              },
               { '-pink': originGeoId === geography.properties.iso2 }
             )}
             geography={geography}
@@ -149,11 +142,13 @@ class WorldMap extends React.PureComponent {
       <Tooltip
         className={className}
         theme="tip"
-        html={<div className="c-world-map-tooltip">
-          <p>{text && text.toLowerCase()}</p>
-          <p>{items && items[0].value}</p>
-          <p>{items && items[0].percentage}</p>
-        </div>}
+        html={
+          <div className="c-world-map-tooltip">
+            <p>{text && text.toLowerCase()}</p>
+            <p>{items && items[0].value}</p>
+            <p>{items && items[0].percentage}</p>
+          </div>
+        }
         followCursor
         animateFill={false}
         open={!!tooltipConfig}
@@ -177,13 +172,7 @@ class WorldMap extends React.PureComponent {
 }
 
 WorldMap.propTypes = {
-  className: PropTypes.string,
-  flows: PropTypes.array.isRequired,
-  originCoordinates: PropTypes.array,
-  originGeoId: PropTypes.string,
-  selectedContext: PropTypes.object,
-  selectedYears: PropTypes.array,
-  getTopNodes: PropTypes.func.isRequired
+  className: PropTypes.string
 };
 
 export default WorldMap;

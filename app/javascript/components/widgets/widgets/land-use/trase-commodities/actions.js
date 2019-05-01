@@ -1,17 +1,34 @@
-import uniq from 'lodash/uniq';
-import sortBy from 'lodash/sortBy';
+import groupBy from 'lodash/groupBy';
 
 import { fetchTraseContexts, fetchTraseLocationData } from 'services/trase';
 
 export default ({ params }) =>
   fetchTraseContexts().then(response => {
-    const context = response.data.data.filter(d => d.countryName === 'BRAZIL' && d.commodityName === 'COFFEE');
+    const commodityGrouped = groupBy(response.data.data, 'commodityName');
+    const commodities = Object.keys(commodityGrouped).map(c => ({
+      label: c,
+      value: c
+    }));
+    const context = response.data.data.filter(
+      d => d.countryName === 'BRAZIL' && d.commodityName === params.commodity
+    );
+    const countryContext = context && context[0];
 
-    return fetchTraseLocationData(context[0].id, context[0].worldMap.countryColumnId)
-      .then(data => {
-        return {
-          context: context[0],
-          data: data.data.data
-        };
-      });
+    return fetchTraseLocationData(
+      countryContext.id,
+      countryContext.worldMap.countryColumnId
+    ).then(data => ({
+      data: {
+        context: countryContext,
+        topNodes: data.data.data
+      },
+      options: {
+        yearsRange: countryContext.years,
+        commodities
+      },
+      settings: {
+        startYear: countryContext.years[0],
+        endYear: countryContext.years[countryContext.years.length - 1]
+      }
+    }));
   });
