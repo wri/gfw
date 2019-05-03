@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -30,7 +31,16 @@ class Intro extends PureComponent {
           <div className="column small-12 medium-6 titleCol">
             <h1 className="intro-title">{title}</h1>
             {citation && (
-              <a className="citation-link" href={citation} target="_blank">
+              <a
+                className="citation-link"
+                href={citation}
+                target="_blank"
+                onClick={() => {
+                  track('topicsCitation', {
+                    label: title
+                  });
+                }}
+              >
                 <Icon className="citation-icon" icon={infoIcon} />
               </a>
             )}

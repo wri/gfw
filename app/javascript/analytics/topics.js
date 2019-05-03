@@ -13,5 +13,10 @@ export default {
     category: 'Topics pages',
     action: 'Use bubble to advance to advance',
     label: '[destination]'
+  },
+  topicsCitation: {
+    category: 'Topics pages',
+    action: 'Open citation info button',
+    label: '[topic]'
   }
 };
