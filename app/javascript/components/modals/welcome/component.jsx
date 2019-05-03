@@ -19,66 +19,62 @@ class ModalWelcome extends PureComponent {
       setMapPromptsSettings,
       setShowMapPrompts,
       setModalWelcome,
-      title,
       description,
       mapTourSteps,
       showPrompts
     } = this.props;
     return (
-      <div className="c-modal-welcome">
-        <h3>{title}</h3>
-        <div className="body">
-          <p className="intro">{description}</p>
-          <Button
-            className="guide-btn tour-btn negative"
-            theme="theme-button-clear theme-button-dashed"
-            onClick={() => {
-              setModalWelcome(false);
-              setMapPromptsSettings({
-                open: true,
-                stepsKey: 'mapTour',
-                force: true
-              });
-              track('welcomeModal', { label: 'Tour' });
-            }}
-          >
-            <Icon className="guide-btn-icon" icon={helpGreenIcon} />
-            <p>
-              Check out the highlights and learn what you can do with the map.
-            </p>
-            <Icon className="arrow-icon" icon={arrowIcon} />
-          </Button>
-          <p className="btn-intro">
-            <b>How-to guide:</b>
-            <button
-              className="show-prompts-btn"
-              onClick={() => setShowMapPrompts(!showPrompts)}
-            >
-              <Checkbox className="prompts-checkbox" value={showPrompts} />
-              {'Show me tips'}
-            </button>
+      <div className="modal-welcome-content">
+        <p className="intro">{description}</p>
+        <Button
+          className="guide-btn tour-btn negative"
+          theme="theme-button-clear theme-button-dashed"
+          onClick={() => {
+            setModalWelcome(false);
+            setMapPromptsSettings({
+              open: true,
+              stepsKey: 'mapTour',
+              force: true
+            });
+            track('welcomeModal', { label: 'Tour' });
+          }}
+        >
+          <Icon className="guide-btn-icon" icon={helpGreenIcon} />
+          <p>
+            Check out the highlights and learn what you can do with the map.
           </p>
-          {mapTourSteps &&
-            mapTourSteps.map(step => (
-              <Button
-                key={step.label}
-                className="guide-btn"
-                theme="theme-button-clear theme-button-dashed"
-                onClick={() => {
-                  setModalWelcome(false);
-                  setMapPromptsSettings({
-                    open: true,
-                    stepsKey: step.promptKey,
-                    stepIndex: 0,
-                    force: true
-                  });
-                }}
-              >
-                <p>{step.label}</p>
-                <Icon className="arrow-icon" icon={arrowIcon} />
-              </Button>
-            ))}
-        </div>
+          <Icon className="arrow-icon" icon={arrowIcon} />
+        </Button>
+        <p className="btn-intro">
+          <b>How-to guide:</b>
+          <button
+            className="show-prompts-btn"
+            onClick={() => setShowMapPrompts(!showPrompts)}
+          >
+            <Checkbox className="prompts-checkbox" value={showPrompts} />
+            {'Show me tips'}
+          </button>
+        </p>
+        {mapTourSteps &&
+          mapTourSteps.map(step => (
+            <Button
+              key={step.label}
+              className="guide-btn"
+              theme="theme-button-clear theme-button-dashed"
+              onClick={() => {
+                setModalWelcome(false);
+                setMapPromptsSettings({
+                  open: true,
+                  stepsKey: step.promptKey,
+                  stepIndex: 0,
+                  force: true
+                });
+              }}
+            >
+              <p>{step.label}</p>
+              <Icon className="arrow-icon" icon={arrowIcon} />
+            </Button>
+          ))}
       </div>
     );
   }
@@ -93,6 +89,8 @@ class ModalWelcome extends PureComponent {
           setModalWelcome(false);
           track('welcomeModal', { label: 'Close' });
         }}
+        title="Welcome to the new Global Forest Watch map!"
+        className="c-modal-welcome"
       >
         {this.getContent()}
       </Modal>
@@ -103,7 +101,6 @@ class ModalWelcome extends PureComponent {
 ModalWelcome.propTypes = {
   open: PropTypes.bool,
   showPrompts: PropTypes.bool,
-  title: PropTypes.string,
   description: PropTypes.string,
   setModalWelcome: PropTypes.func,
   mapTourSteps: PropTypes.array,

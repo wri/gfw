@@ -3,20 +3,12 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
 .c-modal-welcome {
-  max-width: rem(450px);
-  padding: $mobile-padding;
-  padding-top: rem(40px);
-  padding-bottom: rem(30px);
   background-color: #333;
   color: $white;
+  max-width: rem(600px);
 
-  @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding;
-  }
-
-  h3 {
-    font-size: rem(30px);
-    margin-bottom: rem(20px);
+  .modal-title {
+    color: $white;
   }
 
   p {
@@ -28,9 +20,9 @@ $desktop-padding: rem(40px);
     color: $green-gfw;
   }
 
-  b {
-    font-weight: 500;
-  }
+    a {
+      color: $green-gfw;
+    }
 
   .intro {
     margin-bottom: rem(30px);

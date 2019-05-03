@@ -27,6 +27,7 @@ class HeaderContainer extends PureComponent {
       showMyGfw,
       showLangSelector,
       showHeader: false,
+      activeNavItem: null,
       languages,
       lang: txLang
     };
@@ -48,6 +49,12 @@ class HeaderContainer extends PureComponent {
     this.setState({
       showMyGfw,
       showLangSelector: false
+    });
+  };
+
+  setActiveNavItem = item => {
+    this.setState({
+      activeNavItem: item
     });
   };
 
@@ -74,6 +81,7 @@ class HeaderContainer extends PureComponent {
       setShowPanel: this.setShowPanel,
       setShowMyGfw: this.setShowMyGfw,
       setShowLangSelector: this.setShowLangSelector,
+      setActiveNavItem: this.setActiveNavItem,
       handleLangSelect: this.handleLangSelect,
       toggleMenu: this.toggleMenu,
       activeLang,

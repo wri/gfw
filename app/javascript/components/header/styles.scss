@@ -94,8 +94,7 @@ $full-screen-height: rem(75px);
           background-color: transparent;
         }
 
-        &.-active,
-        &:hover {
+        &.-active {
           &::after {
             background-color: $green-gfw;
           }
@@ -118,10 +117,61 @@ $full-screen-height: rem(75px);
       justify-content: flex-start;
       padding-left: rem(100px);
       flex: 1;
+      z-index: 1;
 
       > li .nav-link {
         padding: 0 rem(10px);
         margin: 0 rem(5px);
+      }
+
+      > li {
+        div {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .icon-arrow {
+        height: rem(10px);
+        margin-left: rem(5px);
+
+        &.active {
+          transform: rotate(180deg);
+        }
+      }
+
+      li {
+        position: relative;
+      }
+
+      .sub-menu {
+        position: absolute;
+        top: 55px;
+        left: -60%;
+
+        &::before,
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+        }
+
+        &::before {
+          top: -12px;
+          border-color: transparent transparent $border transparent;
+          border-width: 6px;
+          right: 45%;
+        }
+
+        &::after {
+          top: -10px;
+          border-color: transparent transparent $white transparent;
+          border-width: 5px;
+          right: calc(45% + 1px);
+        }
       }
     }
 
@@ -182,6 +232,12 @@ $full-screen-height: rem(75px);
       .icon-arrow {
         height: rem(10px);
       }
+
+      .icon-arrow {
+        &.active {
+          transform: rotate(180deg);
+        }
+      }
     }
   }
 
@@ -191,6 +247,12 @@ $full-screen-height: rem(75px);
     .nav {
       height: $full-screen-height;
       padding-right: rem(15px);
+    }
+
+    .nav-main {
+      .sub-menu {
+        top: 75px;
+      }
     }
 
     .logo {

@@ -118,7 +118,7 @@ class MapControlsButtons extends PureComponent {
           { active: showRecentImagery },
           'map-tour-recent-imagery'
         )}
-        theme="theme-button-map-control"
+        theme="theme-button-map-control wide"
         onClick={() =>
           setMainMapSettings({ showRecentImagery: !showRecentImagery })
         }
@@ -143,7 +143,7 @@ class MapControlsButtons extends PureComponent {
     return (
       <Button
         className={cx('map-tool-btn basemaps-btn', { active: showBasemaps })}
-        theme="theme-button-map-control"
+        theme="theme-button-map-control wide"
         onClick={this.toggleBasemaps}
         tooltip={
           !showBasemaps ? { text: 'Basemaps', hideOnClick: false } : undefined
