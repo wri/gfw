@@ -29,7 +29,6 @@ class MapPrompts extends PureComponent {
         }
         handleShowPrompts={handleShowPrompts}
         settings={data.settings}
-        initAction={data.initAction}
       />
     ) : null;
   }
