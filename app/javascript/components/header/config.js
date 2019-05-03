@@ -3,7 +3,6 @@ import axios from 'axios';
 import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwCommodities from 'assets/logos/gfw-commodities.png';
-import gfwWater from 'assets/logos/gfw-water.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
 
 import developer from 'assets/icons/developer.svg';
@@ -24,6 +23,28 @@ export default {
     {
       label: 'Dashboard',
       path: '/dashboards/global'
+    },
+    {
+      label: 'Topics',
+      path: '/topics',
+      submenu: [
+        {
+          label: 'Biodiversity',
+          path: '/topics/biodiversity'
+        },
+        {
+          label: 'Climate',
+          path: '/topics/climate'
+        },
+        {
+          label: 'Commodities',
+          path: '/topics/commodities'
+        },
+        {
+          label: 'Water',
+          path: '/topics/water'
+        }
+      ]
     },
     {
       label: 'Blog',
@@ -82,11 +103,6 @@ export default {
       label: 'GFW Comodities',
       path: 'http://commodities.globalforestwatch.org',
       image: gfwCommodities
-    },
-    {
-      label: 'GFW Water',
-      path: 'http://water.globalforestwatch.org',
-      image: gfwWater
     },
     {
       label: 'Forest Watcher',

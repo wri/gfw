@@ -1,0 +1,31 @@
+@import '~styles/settings.scss';
+
+.c-topics-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  .scroll-to-discover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: rem(100px) 0 rem(100px);
+
+    .scroll-btn {
+      height: rem(46px);
+      width: rem(46px);
+      border-radius: rem(50px);
+      margin-bottom: rem(10px);
+    }
+
+    p {
+      font-size: rem(14px);
+      color: $slate;
+    }
+  }
+
+  .fp-tableCell {
+    justify-content: space-between !important;
+  }
+}

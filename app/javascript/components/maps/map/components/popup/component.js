@@ -130,7 +130,7 @@ class Popup extends Component {
               )}
               <div className="nav-footer">
                 <Button
-                  className="footer-action-btn"
+                  className="popup-action-btn"
                   onClick={() => this.handleClickAction(selected)}
                 >
                   {buttonState}

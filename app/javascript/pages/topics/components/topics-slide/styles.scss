@@ -1,0 +1,33 @@
+@import '~styles/settings.scss';
+
+.c-topics-slide {
+  padding-top: rem(55px);
+
+  @media screen and (min-width: $screen-m) {
+    margin-top: -40px;
+    padding-top: 0;
+
+    .topic-image {
+      margin-right: rem(30px);
+      max-width: rem(600px);
+    }
+  }
+
+  @media screen and (min-width: $screen-xl) {
+    .topic-image {
+      margin: auto;
+    }
+  }
+
+  z-index: 1;
+
+  &.active {
+    z-index: 2;
+  }
+
+  .topic-btn {
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+  }
+}

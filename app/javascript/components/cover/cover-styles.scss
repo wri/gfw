@@ -18,6 +18,7 @@
 
     h1 {
       margin-bottom: rem(5px);
+      font-size: 48px;
 
       @media screen and (min-width: $screen-m) {
         margin-bottom: rem(10px);
@@ -25,6 +26,8 @@
     }
 
     .description {
+      font-size: 18px;
+      line-height: 30px;
       max-width: rem(768px);
     }
   }

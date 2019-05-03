@@ -160,6 +160,11 @@ export const topics = {
     image: biodiversity,
     buttons: [
       {
+        text: 'view topic',
+        theme: 'theme-button-small theme-button-light',
+        extLink: '/topics/biodiversity'
+      },
+      {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
       }
@@ -211,6 +216,11 @@ export const topics = {
     image: climate,
     buttons: [
       {
+        text: 'view topic',
+        theme: 'theme-button-small theme-button-light',
+        extLink: '/topics/climate'
+      },
+      {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
       }
@@ -258,6 +268,11 @@ export const topics = {
       'View tree cover loss within areas allocated for commodity production.',
     image: commodities,
     buttons: [
+      {
+        text: 'view topic',
+        theme: 'theme-button-small theme-button-light',
+        extLink: '/topics/commodities'
+      },
       {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
@@ -330,6 +345,11 @@ export const topics = {
     summary: 'Explore forest change in each major river basin.',
     image: water,
     buttons: [
+      {
+        text: 'view topic',
+        theme: 'theme-button-small theme-button-light',
+        extLink: '/topics/water'
+      },
       {
         text: 'VIEW ON MAP',
         theme: 'theme-button-small'
