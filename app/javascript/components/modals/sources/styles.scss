@@ -4,19 +4,15 @@ $desktop-padding: rem(50px);
 
 .c-modal-sources {
   max-width: rem(800px);
-  padding: $mobile-padding;
-
-  @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding;
-    padding-top: rem(40px);
-  }
 
   h3 {
     margin-bottom: rem(20px);
   }
 
   p {
-    margin-bottom: rem(10px);
+    margin-bottom: rem(20px);
+    font-size: rem(16px);
+    line-height: rem(30px);
   }
 
   strong {
@@ -24,9 +20,8 @@ $desktop-padding: rem(50px);
   }
 
   ul {
-    list-style: disc;
-    margin-left: rem(15px);
-    font-size: rem(14px);
+    list-style: none;
+    font-size: rem(16px);
 
     li {
       margin-bottom: rem(5px);
