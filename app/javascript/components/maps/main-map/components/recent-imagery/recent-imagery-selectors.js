@@ -22,6 +22,8 @@ const getRecentUrlState = state =>
 const getMapUrlState = state =>
   state.location && state.location.query && state.location.query.map;
 
+export const getActive = (state, { active }) => active;
+
 export const getMapSettings = createSelector([getMapUrlState], urlState => ({
   ...(mapInitialState && {
     ...mapInitialState.settings
@@ -54,13 +56,13 @@ export const getActiveDatasetsFromState = createSelector(
   settings => settings.datasets
 );
 
-export const getActive = createSelector(
-  [getActiveDatasetsFromState],
-  datasets => {
-    if (isEmpty(datasets)) return null;
-    return !!datasets.find(d => d.isRecentImagery);
-  }
-);
+// export const getActive = createSelector(
+//   [getActiveDatasetsFromState, getActive],
+//   (datasets, active) => {
+//     if (isEmpty(datasets)) return null;
+//     return active && !!datasets.find(d => d.isRecentImagery);
+//   }
+// );
 
 export const getFilteredTiles = createSelector(
   [getData, getRecentImagerySettings],

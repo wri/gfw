@@ -26,7 +26,7 @@ const Menu = props => {
       {items && items.length ? (
         items.map((item, index) => (
           <Item
-            key={item.value}
+            key={item && item.value}
             index={index}
             item={item}
             showGroup={showGroup}

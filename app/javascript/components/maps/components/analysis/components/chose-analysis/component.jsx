@@ -38,7 +38,7 @@ class ChoseAnalysis extends PureComponent {
                 : 'Analysis on shape or:'}
             </div>
             <Dropdown
-              className="boundary-selector"
+              className="boundary-selector analysis-boundary-menu"
               options={boundaries}
               value={selectedBoundaries && selectedBoundaries.value}
               onChange={selectBoundaries}
@@ -174,7 +174,7 @@ class ChoseAnalysis extends PureComponent {
             </div>
           </button>
           <button
-            className={cx({ selected: showDraw })}
+            className={cx('draw-upload-tab', { selected: showDraw })}
             onClick={() => setAnalysisSettings({ showDraw: true })}
           >
             <div className="button-wrapper">

@@ -3,46 +3,96 @@ $mobile-padding: rem(20px);
 $desktop-padding: rem(40px);
 
 .c-modal-welcome {
+  background-color: #333;
+  color: $white;
   max-width: rem(600px);
 
-  .modal-welcome-content {
-    p {
-      font-size: rem(16px);
-    }
+  .modal-title {
+    color: $white;
+  }
+
+  p {
+    font-size: rem(16px);
+    color: $white;
+  }
+
+  a {
+    color: $green-gfw;
+  }
 
     a {
       color: $green-gfw;
     }
 
-    b {
-      font-weight: 500;
-    }
+  .intro {
+    margin-bottom: rem(30px);
+  }
 
-    .intro {
-      margin-bottom: rem(20px);
-    }
+  .btn-intro {
+    margin-bottom: rem(10px);
+    color: #aaa;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
 
-    .btn-intro {
-      margin-bottom: rem(10px);
-    }
+    .show-prompts-btn {
+      display: flex;
+      color: #aaa;
+      cursor: pointer;
+      font-size: rem(12px);
+      align-items: center;
 
-    .guide-btn {
-      text-align: left;
-      margin-bottom: rem(15px);
-      height: auto;
-
-      .guide-btn-icon {
-        width: rem(40px);
-        min-width: rem(40px);
-        height: rem(40px);
-        min-height: rem(40px);
-        margin-right: rem(15px);
-        fill: $green-gfw;
+      .prompts-checkbox {
+        margin-right: rem(10px);
       }
+    }
+  }
+
+  .guide-btn {
+    text-align: left;
+    margin-bottom: rem(10px);
+    height: auto;
+
+    > div {
+      justify-content: space-between;
+    }
+
+    &:hover {
+      background-color: $slate;
+    }
+
+    .guide-btn-icon {
+      width: rem(30px);
+      min-width: rem(30px);
+      height: rem(30px);
+      min-height: rem(30px);
+      margin-right: rem(15px);
+      fill: $green-gfw;
+    }
+
+    .arrow-icon {
+      transform: rotate(-90deg);
+      width: rem(30px);
+      min-width: rem(30px);
+    }
+
+    p {
+      font-size: rem(14px);
+      margin-right: rem(15px);
+    }
+
+    &.negative {
+      background-color: $white;
+      color: $slate;
+      border: none;
 
       p {
-        font-size: rem(14px);
+        color: $slate;
       }
     }
+  }
+
+  .tour-btn {
+    margin-bottom: rem(30px);
   }
 }

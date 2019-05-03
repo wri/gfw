@@ -20,7 +20,8 @@ class Explore extends PureComponent {
       handleViewOnMap,
       description,
       mapState,
-      loading
+      loading,
+      setMapPromptsSettings
     } = this.props;
     const links = [
       {
@@ -89,6 +90,11 @@ class Explore extends PureComponent {
                         ...(b.text === 'VIEW ON MAP' && {
                           onClick: () => {
                             handleViewOnMap({ ...item.payload });
+                            setMapPromptsSettings({
+                              open: true,
+                              stepIndex: 0,
+                              stepsKey: `topics${item.title}`
+                            });
                             track('mapMenuAddTopic', { label: item.title });
                           }
                         })
@@ -113,7 +119,8 @@ Explore.propTypes = {
   description: PropTypes.string,
   mapState: PropTypes.object,
   loading: PropTypes.bool,
-  handleViewOnMap: PropTypes.func
+  handleViewOnMap: PropTypes.func,
+  setMapPromptsSettings: PropTypes.func
 };
 
 export default Explore;

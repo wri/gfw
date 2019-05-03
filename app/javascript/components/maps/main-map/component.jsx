@@ -8,7 +8,7 @@ import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 import Map from 'components/maps/map';
 import SubscribeModal from 'components/modals/subscribe';
-import MapTour from 'components/maps/main-map/components/map-tour';
+import MapPrompts from 'components/maps/main-map/components/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from './components/recent-imagery';
 import DataAnalysisMenu from './components/data-analysis-menu';
@@ -31,7 +31,8 @@ class MainMapComponent extends PureComponent {
       showTooltip,
       tooltipData,
       handleClickMap,
-      handleShowTooltip
+      handleShowTooltip,
+      recentActive
     } = this.props;
 
     return (
@@ -81,12 +82,12 @@ class MainMapComponent extends PureComponent {
                 isDesktop={isDesktop}
               />
             )}
-            <RecentImagery />
+            <RecentImagery active={recentActive} />
             <SubscribeModal />
             {!embed &&
               isDesktop && (
                 <Fragment>
-                  <MapTour />
+                  <MapPrompts />
                   <ModalWelcome />
                 </Fragment>
               )}
@@ -101,8 +102,9 @@ MainMapComponent.propTypes = {
   handleShowTooltip: PropTypes.func,
   handleClickMap: PropTypes.func,
   oneClickAnalysis: PropTypes.bool,
-  embed: PropTypes.bool,
   hidePanels: PropTypes.bool,
+  embed: PropTypes.bool,
+  recentActive: PropTypes.bool,
   tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   showTooltip: PropTypes.bool
 };
