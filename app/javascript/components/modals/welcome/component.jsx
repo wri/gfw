@@ -22,8 +22,7 @@ class ModalWelcome extends PureComponent {
       setModalWelcome
     } = this.props;
     return (
-      <div className="c-modal-welcome">
-        <h3>Welcome to the new Global Forest Watch map!</h3>
+      <div className="modal-welcome-content">
         <div className="body">
           <p className="intro">
             We&#39;ve made exciting changes to the map to make it faster, more
@@ -89,6 +88,8 @@ class ModalWelcome extends PureComponent {
           setModalWelcome(false);
           track('welcomeModal', { label: 'Close' });
         }}
+        title="Welcome to the new Global Forest Watch map!"
+        className="c-modal-welcome"
       >
         {this.getContent()}
       </Modal>

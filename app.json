@@ -16,9 +16,6 @@
     "ANALYTICS_PROPERTY_ID": {
       "required": true
     },
-    "API_CACHE": {
-      "required": true
-    },
     "AWS_ACCESS_KEY_ID": {
       "required": true
     },
@@ -106,9 +103,6 @@
     "GOOGLE_SEARCH_API_KEY": {
       "required": true
     },
-    "HEROKU_POSTGRESQL_IVORY_URL": {
-      "required": true
-    },
     "LANDSTAD_KEY": {
       "required": true
     },
@@ -118,10 +112,7 @@
     "MAPBOX_TOKEN": {
       "required": true
     },
-    "NEW_RELIC_LICENSE_KEY": {
-      "required": true
-    },
-    "NEW_RELIC_LOG": {
+    "MapboxAccessToken": {
       "required": true
     },
     "NODE_ENV": {
@@ -131,15 +122,6 @@
       "required": true
     },
     "NPM_CONFIG_PRODUCTION": {
-      "required": true
-    },
-    "oauth_key": {
-      "required": true
-    },
-    "password": {
-      "required": true
-    },
-    "PASSWORD": {
       "required": true
     },
     "RAILS_ENV": {
@@ -176,9 +158,6 @@
       "required": true
     },
     "SPARKPOST_SMTP_USERNAME": {
-      "required": true
-    },
-    "username": {
       "required": true
     }
   },

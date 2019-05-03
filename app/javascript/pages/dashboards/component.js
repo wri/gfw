@@ -16,6 +16,7 @@ import SubNavMenu from 'components/subnav-menu';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
+import ModalTCL from 'components/modals/loss-disclaimer';
 import ScrollTo from 'components/scroll-to';
 
 import Header from 'pages/dashboards/header';
@@ -92,6 +93,7 @@ class Page extends PureComponent {
         />
         <Share />
         <ModalMeta />
+        <ModalTCL />
         {widgetAnchor && <ScrollTo target={widgetAnchor} />}
         <CountryDataProvider />
         <WhitelistsProvider />

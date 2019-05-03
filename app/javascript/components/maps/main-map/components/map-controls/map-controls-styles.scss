@@ -30,6 +30,8 @@
   }
 
   .map-tool-btn {
+    width: 100%;
+
     &.active {
       box-shadow: $tooltip-box-shadow;
     }
@@ -43,6 +45,7 @@
       .basemaps-btn-img {
         height: 100%;
         float: left;
+        width: rem(38px);
       }
 
       .basemaps-btn-label {

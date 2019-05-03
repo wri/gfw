@@ -10,7 +10,7 @@ class ModalVideo extends PureComponent {
     const { data } = this.props;
 
     return (
-      <div className="c-modal-video">
+      <div className="modal-video-content">
         <iframe
           src={data && data.src}
           width="100%"
@@ -53,6 +53,7 @@ class ModalVideo extends PureComponent {
             borderRadius: 0
           }
         }}
+        className="c-modal-video"
       >
         {this.getContent()}
       </Modal>
