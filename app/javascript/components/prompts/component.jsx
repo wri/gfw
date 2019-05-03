@@ -24,7 +24,7 @@ class PromptTour extends PureComponent {
       handleShowPrompts
     } = this.props;
 
-    return open ? (
+    return (
       <Joyride
         steps={steps}
         run={open}
@@ -69,7 +69,9 @@ class PromptTour extends PureComponent {
             if (
               ((action === 'next' && !next) || (action === 'prev' && !prev)) &&
               action !== 'start'
-            ) { delay = 0; }
+            ) {
+              delay = 0;
+            }
 
             if (action === 'prev' || action === 'next') {
               setTimeout(() => {
@@ -98,7 +100,7 @@ class PromptTour extends PureComponent {
         }}
         {...settings}
       />
-    ) : null;
+    );
   }
 }
 
