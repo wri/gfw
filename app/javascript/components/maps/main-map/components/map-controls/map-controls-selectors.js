@@ -23,7 +23,6 @@ export const getMapControlsProps = createStructuredSelector({
   showBasemaps: getShowBasemaps,
   showRecentImagery: getShowRecentImagery,
   recentSettings: getRecentImagerySettings,
-  recentActive: getShowRecentImagery,
   recentImageryDataset: getRecentImageryDataset,
   mapTourOpen: getMapTourOpen
 });
