@@ -5,18 +5,19 @@ $button-height: rem(40px);
   height: $button-height;
   font-family: $font-family-1;
   border-radius: rem(20px);
-  width: fit-content;
   padding: 0 rem(15px);
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: $green-gfw;
   font-size: rem(16px);
-  text-transform: capitalize;
+  text-transform: uppercase;
+  font-weight: 500;
   color: $white;
   cursor: pointer;
   transition: background-color 150ms ease-out;
   text-decoration: none;
+  width: fit-content;
 
   .button-wrapper {
     height: 100%;
@@ -59,5 +60,9 @@ $button-height: rem(40px);
     min-width: $button-height;
     padding: 0;
     font-size: 0;
+  }
+
+  &.wide {
+    width: 100%;
   }
 }

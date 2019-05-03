@@ -59,16 +59,18 @@ class Explore extends PureComponent {
         <div className="content">
           <div className="row">
             <div className="column small-12">
-              <div className="description">
-                {section === 'placesToWatch' ? (
-                  <Fragment>
-                    {ReactHtmlParser(description)}
-                    <PTWProvider />
-                  </Fragment>
-                ) : (
-                  description
-                )}
-              </div>
+              {description && (
+                <div className="description">
+                  {section === 'placesToWatch' ? (
+                    <Fragment>
+                      {ReactHtmlParser(description)}
+                      <PTWProvider />
+                    </Fragment>
+                  ) : (
+                    description
+                  )}
+                </div>
+              )}
             </div>
             {!loading &&
               data &&

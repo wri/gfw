@@ -49,19 +49,19 @@ class MapDraw extends PureComponent {
       this.draw.changeMode('draw_polygon');
     }
 
-    map.on('draw.create', (e) => {
+    map.on('draw.create', e => {
       const geoJSON = e.features && e.features[0];
       if (geoJSON) {
         getGeostoreId(geoJSON);
       }
     });
-  }
+  };
 
   closeDrawing = () => {
     const { map } = this.props;
     map.off('draw.create');
     map.removeControl(this.draw);
-  }
+  };
 
   render() {
     return null;
