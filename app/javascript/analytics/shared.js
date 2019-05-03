@@ -37,7 +37,7 @@ export default {
     label: '[promptKey][promptStepIndex]'
   },
   userPromptShowHide: {
-    category: 'User prompts show/hide',
+    category: 'User prompts',
     action: 'User prompt is hidden/shown',
     label: '[status]'
   }
