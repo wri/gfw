@@ -52,7 +52,7 @@ class PromptTour extends PureComponent {
           ) {
             const newStepIndex = index + (action === ACTIONS.PREV ? -1 : 1);
             // Update state to advance the tour
-            let delay = 500;
+            let delay = 400;
 
             if (action === 'prev' && prev) {
               prev();
@@ -66,7 +66,7 @@ class PromptTour extends PureComponent {
               prev();
             }
 
-            if ((!prev && !next) || action !== 'start') delay = 0;
+            if (!prev && !next && action !== 'start') delay = 0;
 
             if (action === 'prev' || action === 'next') {
               setTimeout(() => {
