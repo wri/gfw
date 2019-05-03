@@ -291,6 +291,17 @@ class MapPromptsContainer extends PureComponent {
             disableBeacon: true,
             placement: 'left',
             actions: {
+              returnToTour: () => {
+                this.resetPrompts();
+                setTimeout(() => {
+                  this.props.setMapPromptsSettings({
+                    open: true,
+                    stepsKey: 'mapTour',
+                    stepIndex: 6,
+                    force: true
+                  });
+                }, 100);
+              },
               prev: () => {
                 this.props.setMainMapSettings({ showRecentImagery: true });
               }
@@ -322,6 +333,17 @@ class MapPromptsContainer extends PureComponent {
             disableBeacon: true,
             placement: 'right',
             actions: {
+              returnToTour: () => {
+                this.resetPrompts();
+                setTimeout(() => {
+                  this.props.setMapPromptsSettings({
+                    open: true,
+                    stepsKey: 'mapTour',
+                    stepIndex: 2,
+                    force: true
+                  });
+                }, 100);
+              },
               prev: () => {
                 this.props.setMainMapSettings({
                   showAnalysis: true

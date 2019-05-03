@@ -66,7 +66,10 @@ class PromptTour extends PureComponent {
               prev();
             }
 
-            if (!prev && !next && action !== 'start') delay = 0;
+            if (
+              ((action === 'next' && !next) || (action === 'prev' && !prev)) &&
+              action !== 'start'
+            ) { delay = 0; }
 
             if (action === 'prev' || action === 'next') {
               setTimeout(() => {

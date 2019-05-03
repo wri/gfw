@@ -43,6 +43,12 @@ class PromptTooltip extends PureComponent {
         </div>
         <div className="step-actions">
           <div className={cx('step-btns', { 'align-left': learnHow })}>
+            {actions &&
+              actions.returnToTour && (
+                <button className="step-nav-btn" onClick={actions.returnToTour}>
+                  BACK
+                </button>
+              )}
             {size > 1 && (
               <button
                 className="step-nav-btn"
