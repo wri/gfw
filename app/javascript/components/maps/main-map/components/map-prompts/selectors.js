@@ -9,7 +9,6 @@ import { initialState } from './reducers';
 
 const getMapPromptsState = state =>
   state.location && state.location.query && state.location.query.mapPrompts;
-const getLocation = state => state.location && state.location.payload;
 export const selectShowMapPrompts = state =>
   state.mapPrompts && state.mapPrompts.showPrompts;
 
@@ -51,7 +50,6 @@ export const getMapPromptsProps = createStructuredSelector({
   stepIndex: getMapPromptsStepIndex,
   stepsKey: getMapPromptsStepsKey,
   mapZoom: getMapZoom,
-  location: getLocation,
   recentActive: getShowRecentImagery,
   showPrompts: selectShowMapPrompts,
   activeCategories: getDatasetCategories,

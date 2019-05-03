@@ -1,7 +1,6 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 
 import { setMainMapSettings } from 'components/maps/main-map/actions';
@@ -19,7 +18,6 @@ class MapPromptsContainer extends PureComponent {
     const {
       mapZoom,
       setMapPromptsSettings,
-      location,
       recentActive,
       showPrompts,
       activeCategories,
@@ -30,11 +28,7 @@ class MapPromptsContainer extends PureComponent {
       showPrompts &&
       !recentActive &&
       // if map zooms past 9
-      ((mapZoom > 9 && prevProps.mapZoom <= 9) ||
-        // if analysis is made, except adm0 and 1 countries
-        (!isEqual(location, prevProps.location) &&
-          ((location.type && location.type !== 'country') ||
-            (location.type === 'country' && location.adm2))));
+      (mapZoom > 9 && prevProps.mapZoom <= 9);
 
     const shouldOpenAnalysisPrompt =
       showPrompts &&
@@ -469,7 +463,6 @@ MapPromptsContainer.propTypes = {
   setShowMapPrompts: PropTypes.func,
   stepsKey: PropTypes.string,
   mapZoom: PropTypes.number,
-  location: PropTypes.object,
   recentActive: PropTypes.bool,
   showPrompts: PropTypes.bool,
   activeCategories: PropTypes.array,
