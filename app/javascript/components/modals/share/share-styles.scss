@@ -16,22 +16,18 @@ $input-button-width: rem(100px);
     opacity: 0.5;
   }
 
-  .actions {
-    @media screen and (min-width: $screen-m) {
-      .c-switch {
-        max-width: rem(225px);
-      }
-    }
+  .share-switch-tab {
+    max-width: rem(225px);
+    margin-bottom: rem(30px);
   }
 
   .info {
     text-align: left;
     color: #555;
-    font-size: rem(18px);
+    font-size: rem(16px);
     line-height: rem(30px);
     width: 100%;
     margin-bottom: rem(10px);
-    margin-top: rem(30px);
   }
 
   .input-container {

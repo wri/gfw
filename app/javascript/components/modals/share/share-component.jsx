@@ -38,6 +38,7 @@ class Share extends PureComponent {
         <div className="actions">
           {embedUrl ? (
             <Switch
+              className="share-switch-tab"
               theme="theme-switch-light"
               value={selected}
               options={[

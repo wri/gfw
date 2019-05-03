@@ -7,7 +7,7 @@ $mobile-margin: rem(10px);
   margin-top: $mobile-margin !important;
 
   .modal-content {
-    padding-top: 5px;
+    padding-top: 0;
   }
 
   @media screen and (min-width: $screen-m) {
@@ -66,10 +66,14 @@ $mobile-margin: rem(10px);
 
     .subtitle {
       margin-top: rem(5px);
-      margin-bottom: rem(45px);
+      margin-bottom: $vertical-modal-padding-mobile;
       font-size: rem(13px);
       line-height: 1.2;
       color: $warm-grey;
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: $vertical-modal-padding-desktop;
+      }
     }
 
     .meta-table {
