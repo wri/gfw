@@ -1,7 +1,16 @@
 @import '~styles/settings.scss';
 
 .c-modal-video {
-  width: 100vw;
-  height: 100vh;
-  background: $black;
+  max-width: unset;
+
+  .modal-content,
+  .modal-title {
+    padding: 0;
+  }
+
+  .modal-video-content {
+    width: 100vw;
+    height: 100vh;
+    background: $black;
+  }
 }
