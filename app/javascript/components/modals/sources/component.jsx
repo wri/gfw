@@ -41,16 +41,12 @@ class ModalSources extends PureComponent {
 
   render() {
     const { open, setModalSources, data } = this.props;
-    const lowerCaseTitle = data && data.title && data.title.toLowerCase();
-    const formattedTitle = lowerCaseTitle
-      ? `${lowerCaseTitle.charAt(0).toUpperCase()}${lowerCaseTitle.slice(1)}`
-      : '';
     return (
       <Modal
         isOpen={open}
         contentLabel={`Sources: ${data && data.title}`}
         onRequestClose={() => setModalSources({ open: false })}
-        title={formattedTitle}
+        title={data && data.title}
       >
         {this.getContent()}
       </Modal>

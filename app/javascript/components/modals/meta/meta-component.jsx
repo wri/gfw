@@ -66,7 +66,7 @@ class ModalMeta extends PureComponent {
                 className="subtitle"
                 dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
               />
-              <div className="meta-table">
+              <div className="meta-table element-fullwidth">
                 {tableData &&
                   Object.keys(tableData).map(
                     key =>

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
+import cx from 'classnames';
 
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -36,7 +37,7 @@ class CustomModal extends PureComponent {
         style={customStyles}
         contentLabel={contentLabel}
         onAfterOpen={this.trackModalOpen}
-        className={`c-modal ${className}`}
+        className={cx('c-modal', className)}
       >
         <button
           onClick={onRequestClose}

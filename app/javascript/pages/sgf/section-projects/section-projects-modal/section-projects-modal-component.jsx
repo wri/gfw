@@ -52,7 +52,7 @@ class SectionProjectsModal extends PureComponent {
         {data.images &&
           data.images.length > 1 && (
             <Carousel
-              className="modal-image-slider"
+              className="modal-image-slider element-fullwidth"
               settings={{
                 slidesToShow: 1,
                 arrows: false,
@@ -65,7 +65,7 @@ class SectionProjectsModal extends PureComponent {
           )}
         {data.image &&
           data.images.length === 1 && (
-            <div className="image">
+            <div className="image element-fullwidth">
               <img src={data.image} alt="SGF project detail" />
             </div>
           )}
