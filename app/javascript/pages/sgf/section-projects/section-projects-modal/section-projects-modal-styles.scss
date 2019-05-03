@@ -40,12 +40,16 @@
   }
 
   .image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     margin-top: rem(20px);
     width: 100%;
+    height: rem(250px);
     position: relative;
 
-    > img {
-      width: 100%;
+    @media screen and (min-width: $screen-m) {
+      height: rem(400px);
     }
 
     > span {
