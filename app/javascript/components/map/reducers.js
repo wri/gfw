@@ -2,6 +2,14 @@ import * as actions from './actions';
 
 export const initialState = {
   loading: false,
+  data: {
+    interactions: {
+      latlng: {},
+      interactions: {},
+      selected: ''
+    },
+    bbox: null
+  },
   settings: {
     viewport: {
       latitude: 27,
@@ -15,9 +23,8 @@ export const initialState = {
     basemap: {
       value: 'default'
     },
-    labels: true,
-    roads: true,
-    bbox: null,
+    labels: [],
+    roads: [],
     canBound: true,
     draw: false,
     datasets: [
@@ -61,6 +68,71 @@ const setMapLoading = (state, { payload }) => ({
   loading: payload
 });
 
+const setMapBbox = (state, { payload }) => ({
+  ...state,
+  data: {
+    bbox: payload
+  }
+});
+
+const setMapInteractions = (state, { payload }) => {
+  const interactions =
+    payload &&
+    payload.features.reduce(
+      (obj, next) => ({
+        ...obj,
+        [next.layer.source]: {
+          id: next.id,
+          data: next.properties,
+          geometry: next.geometry
+        }
+      }),
+      {}
+    );
+
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      interactions: {
+        ...state.data.interactions,
+        interactions,
+        latlng: {
+          lat: payload.lngLat[1],
+          lng: payload.lngLat[0]
+        }
+      }
+    }
+  };
+};
+
+const setMapInteractionSelected = (state, { payload }) => ({
+  ...state,
+  data: {
+    ...state.data,
+    interactions: {
+      ...state.data.interactions,
+      selected: payload
+    }
+  }
+});
+
+const clearMapInteractions = state => ({
+  ...state,
+  data: {
+    ...state.data,
+    interaction: {
+      interactions: {},
+      latlng: null,
+      selected: ''
+    }
+  }
+});
+
 export default {
-  [actions.setMapLoading]: setMapLoading
+  [actions.setMapLoading]: setMapLoading,
+  [actions.setMapInteractions]: setMapInteractions,
+  [actions.setMapInteractionSelected]: setMapInteractionSelected,
+  [actions.clearMapInteractions]: clearMapInteractions,
+  [actions.setMapBbox]: setMapBbox
 };
