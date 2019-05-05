@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
+import cx from 'classnames';
+
 import { handleMapLatLonTrack } from 'app/analytics';
 
 import Loader from 'components/ui/loader';
@@ -23,6 +25,7 @@ import './styles.scss';
 
 class MapComponent extends Component {
   static propTypes = {
+    className: PropTypes.string,
     viewport: PropTypes.shape().isRequired,
     bounds: PropTypes.shape(),
     mapStyle: PropTypes.string.isRequired,
@@ -43,7 +46,8 @@ class MapComponent extends Component {
     onDrawComplete: PropTypes.func,
     drawing: PropTypes.bool,
     loading: PropTypes.bool,
-    loadingMessage: PropTypes.string
+    loadingMessage: PropTypes.string,
+    basemap: PropTypes.object
   };
 
   static defaultProps = {
@@ -227,6 +231,7 @@ class MapComponent extends Component {
 
   render() {
     const {
+      className,
       mapStyle,
       viewport,
       minZoom,
@@ -235,11 +240,15 @@ class MapComponent extends Component {
       onDrawComplete,
       drawing,
       loading,
-      loadingMessage
+      loadingMessage,
+      basemap
     } = this.props;
 
     return (
-      <div className="c-map">
+      <div
+        className={cx('c-map', { 'no-pointer-events': drawing }, className)}
+        style={{ backgroundColor: basemap && basemap.color }}
+      >
         <Map
           mapStyle={mapStyle}
           viewport={viewport}

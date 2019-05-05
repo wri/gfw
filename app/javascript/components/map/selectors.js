@@ -424,5 +424,6 @@ export const getMapProps = createStructuredSelector({
   geostoreBbox: getGeostoreBbox,
   dataBbox: getDataBbox,
   interaction: getInteractionSelected,
-  interactiveLayerIds: getInteractiveLayerIds
+  interactiveLayerIds: getInteractiveLayerIds,
+  basemap: getBasemap
 });
