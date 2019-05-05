@@ -13,9 +13,11 @@ import basemaps from './basemaps';
 const selectMapUrlState = state =>
   state.location && state.location.query && state.location.query.map;
 const selectMapLoading = state => state.map && state.map.loading;
+const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
+const selectLatestLoading = state => state.latest && state.latest.loading;
+const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
 const selectGeostore = state => state.geostore && state.geostore.data;
 const selectMapData = state => state.map && state.map.data;
-
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLatest = state => state.latest && state.latest.data;
 
@@ -89,6 +91,17 @@ export const getGeostoreBbox = createSelector(
 export const getDataBbox = createSelector(
   [selectMapData],
   mapData => mapData && mapData.bbox
+);
+
+export const getMapLoading = createSelector(
+  [
+    selectMapLoading,
+    selectGeostoreLoading,
+    selectLatestLoading,
+    selectDatasetsLoading
+  ],
+  (mapLoading, geostoreLoading, latestLoading, datasetsLoading) =>
+    mapLoading || geostoreLoading || latestLoading || datasetsLoading
 );
 
 export const getActiveDatasetsFromState = createSelector(
@@ -345,12 +358,12 @@ export const getInteractionsData = createSelector(
   interactionData => interactionData && interactionData.interactions
 );
 
-export const getInteractionSelected = createSelector(
+export const getInteractionSelectedId = createSelector(
   [getInteractionsState],
   interactionData => interactionData && interactionData.selected
 );
 
-export const filterInteractions = createSelector(
+export const getInteractions = createSelector(
   [getInteractionsData, getActiveLayers],
   (interactions, activeLayers) => {
     if (isEmpty(interactions)) return null;
@@ -369,27 +382,29 @@ export const filterInteractions = createSelector(
   }
 );
 
-export const getSelectedInteraction = createSelector(
-  [filterInteractions, getInteractionSelected, getActiveLayers],
-  (options, selected, layers) => {
-    if (isEmpty(options)) return null;
+export const getInteractionSelected = createSelector(
+  [getInteractions, getInteractionSelectedId, getActiveLayers],
+  (interactions, selected, layers) => {
+    if (isEmpty(interactions)) return null;
     const layersWithoutBoundaries = layers.filter(
       l => !l.isBoundary && !isEmpty(l.interactionConfig)
     );
     // if there is an article (icon layer) then choose that
-    let selectedData = options.find(o => o.data.cluster);
-    selectedData = options.find(o => o.article);
+    let selectedData = interactions.find(o => o.data.cluster);
+    selectedData = interactions.find(o => o.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
-      selectedData = options.find(
+      selectedData = interactions.find(
         o => o.layer && o.layer.id === layersWithoutBoundaries[0].id
       );
     }
     // if only one layer then get that
-    if (!selectedData && options.length === 1) selectedData = options[0];
+    if (!selectedData && interactions.length === 1) {
+      selectedData = interactions[0];
+    }
     // otherwise get based on selected
     if (!selectedData) {
-      selectedData = options.find(o => o.layer && o.layer.id === selected);
+      selectedData = interactions.find(o => o.layer && o.layer.id === selected);
     }
 
     return selectedData;
@@ -398,7 +413,7 @@ export const getSelectedInteraction = createSelector(
 
 export const getMapProps = createStructuredSelector({
   viewport: getMapViewport,
-  loading: selectMapLoading,
+  loading: getMapLoading,
   minZoom: getMapMinZoom,
   maxZoom: getMapMaxZoom,
   mapStyle: getMapStyle,
@@ -408,6 +423,6 @@ export const getMapProps = createStructuredSelector({
   canBound: getCanBound,
   geostoreBbox: getGeostoreBbox,
   dataBbox: getDataBbox,
-  selectedInteraction: getSelectedInteraction,
+  interaction: getInteractionSelected,
   interactiveLayerIds: getInteractiveLayerIds
 });

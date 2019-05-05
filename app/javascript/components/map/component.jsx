@@ -4,16 +4,16 @@ import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 import { handleMapLatLonTrack } from 'app/analytics';
 
-// import Loader from 'components/ui/loader';
+import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Map from 'components/mapbox-map';
 
 import iconCrosshair from 'assets/icons/crosshair.svg';
 
-// import MapScale from './components/scale';
+import Scale from './components/scale';
 import Popup from './components/popup';
 import Draw from './components/draw';
-// import MapAttributions from './components/attributions';
+import Attributions from './components/attributions';
 
 // Components
 import LayerManager from './components/layer-manager';
@@ -37,11 +37,13 @@ class MapComponent extends Component {
     canBound: PropTypes.bool,
     dataBbox: PropTypes.array,
     geostoreBbox: PropTypes.array,
-    selectedInteraction: PropTypes.object,
+    interaction: PropTypes.object,
     minZoom: PropTypes.number.isRequired,
     maxZoom: PropTypes.number.isRequired,
     onDrawComplete: PropTypes.func,
-    drawing: PropTypes.bool
+    drawing: PropTypes.bool,
+    loading: PropTypes.bool,
+    loadingMessage: PropTypes.string
   };
 
   static defaultProps = {
@@ -60,7 +62,7 @@ class MapComponent extends Component {
       canBound,
       dataBbox,
       geostoreBbox,
-      selectedInteraction,
+      interaction,
       viewport
     } = this.props;
     const {
@@ -68,7 +70,7 @@ class MapComponent extends Component {
       mapRoads: prevMapRoads,
       dataBbox: prevDataBbox,
       geostoreBbox: prevGeostoreBbox,
-      selectedInteraction: prevSelectInteraction
+      interaction: prevInteraction
     } = prevProps;
 
     if (mapLabels !== prevMapLabels) {
@@ -100,11 +102,11 @@ class MapComponent extends Component {
 
     // fit bounds on cluster if clicked
     if (
-      selectedInteraction &&
-      !isEqual(selectedInteraction, prevSelectInteraction) &&
-      selectedInteraction.data.cluster
+      interaction &&
+      !isEqual(interaction, prevInteraction) &&
+      interaction.data.cluster
     ) {
-      const { data, layer, geometry } = selectedInteraction;
+      const { data, layer, geometry } = interaction;
       this.map
         .getSource(layer.id)
         .getClusterExpansionZoom(data.cluster_id, (err, newZoom) => {
@@ -231,10 +233,9 @@ class MapComponent extends Component {
       maxZoom,
       interactiveLayerIds,
       onDrawComplete,
-      drawing
-      // loading,
-      // loadingMessage,
-      // smallView
+      drawing,
+      loading,
+      loadingMessage
     } = this.props;
 
     return (
@@ -265,19 +266,20 @@ class MapComponent extends Component {
                   onDrawComplete={onDrawComplete}
                 />
               )}
+              {/* SCALE */}
+              <Scale className="map-scale" map={map} viewport={viewport} />
             </Fragment>
           )}
         </Map>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
-        {/* <MapAttributions className="map-attributions" smallView={smallView} />
-        <MapScale className="map-scale" map={this.map} viewport={viewport} />
+        <Attributions className="map-attributions" />
         {loading && (
           <Loader
             className="map-loader"
             theme="theme-loader-light"
             message={loadingMessage}
           />
-        )} */}
+        )}
       </div>
     );
   }

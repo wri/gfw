@@ -1,13 +1,11 @@
 import { createStructuredSelector, createSelector } from 'reselect';
 
 export const selectMap = (state, { map }) => map;
-export const selectLat = (state, { lat }) => lat;
-export const selectLng = (state, { lng }) => lng;
-export const selectZoom = (state, { zoom }) => zoom;
+export const selectViewport = (state, { viewport }) => viewport;
 export const selectOptions = (state, { options }) => options;
 
 export const getScales = createSelector(
-  [selectMap, selectOptions, selectZoom, selectLng, selectLat],
+  [selectMap, selectOptions, selectViewport],
   (map, options) => {
     if (map) {
       // A horizontal scale is imagined to be present at center of the map
@@ -82,7 +80,7 @@ export const getDistance = (latlng1, latlng2) => {
 };
 
 export const getRoundNum = num => {
-  const pow10 = Math.pow(10, `${Math.floor(num)}`.length - 1);
+  const pow10 = 10 ** (`${Math.floor(num)}`.length - 1);
   let d = num / pow10;
 
   if (d >= 10) {

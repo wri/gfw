@@ -7,8 +7,8 @@ import lineString from 'turf-linestring';
 
 import {
   getActiveDatasetsFromState,
-  filterInteractions,
-  getSelectedInteraction,
+  getInteractions,
+  getInteractionSelected,
   getInteractionsLatLng
 } from 'components/map/selectors';
 
@@ -16,13 +16,13 @@ const getSearch = state => state.location && state.location.search;
 const getMap = (state, { map }) => map;
 
 export const getIsBoundary = createSelector(
-  getSelectedInteraction,
+  getInteractionSelected,
   interaction =>
     interaction && interaction.layer && interaction.layer.isBoundary
 );
 
 export const getButtonState = createSelector(
-  [getSelectedInteraction, getMap],
+  [getInteractionSelected, getMap],
   (selected, map) => {
     if (!selected) return null;
 
@@ -57,7 +57,7 @@ export const getButtonState = createSelector(
 );
 
 export const getCardData = createSelector(
-  [getSelectedInteraction],
+  [getInteractionSelected],
   interaction => {
     if (isEmpty(interaction) || !interaction.article) {
       return null;
@@ -113,7 +113,7 @@ export const getCardData = createSelector(
 );
 
 export const getTableData = createSelector(
-  [getSelectedInteraction, getIsBoundary],
+  [getInteractionSelected, getIsBoundary],
   (interaction, isBoundary) => {
     if (isEmpty(interaction) || interaction.article) return null;
     const { data, layer } = interaction;
@@ -141,8 +141,8 @@ export const getTableData = createSelector(
 );
 
 export const getPopupProps = createStructuredSelector({
-  interactions: filterInteractions,
-  selected: getSelectedInteraction,
+  interactions: getInteractions,
+  selected: getInteractionSelected,
   tableData: getTableData,
   cardData: getCardData,
   latlng: getInteractionsLatLng,
