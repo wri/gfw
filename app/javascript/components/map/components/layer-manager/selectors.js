@@ -1,18 +1,15 @@
 import { createStructuredSelector } from 'reselect';
 
 import {
-  getActiveLayersWithWidgetSettings,
-  getDraw,
-  getLabel,
-  getBasemap
-} from 'components/maps/map/selectors';
-
-export const selectGeostore = state => state.geostore && state.geostore.data;
+  getActiveLayersWithDates,
+  getDrawing,
+  getBasemap,
+  selectGeostore
+} from 'components/map/selectors';
 
 export const getLayerManagerProps = createStructuredSelector({
-  layers: getActiveLayersWithWidgetSettings,
+  layers: getActiveLayersWithDates,
   geostore: selectGeostore,
-  labels: getLabel,
   basemap: getBasemap,
-  drawing: getDraw
+  drawing: getDrawing
 });

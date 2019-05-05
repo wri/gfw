@@ -16,10 +16,10 @@ const selectMapLoading = state => state.map && state.map.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
 const selectLatestLoading = state => state.latest && state.latest.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
-const selectGeostore = state => state.geostore && state.geostore.data;
 const selectMapData = state => state.map && state.map.data;
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLatest = state => state.latest && state.latest.data;
+export const selectGeostore = state => state.geostore && state.geostore.data;
 
 // CONSTS
 export const getBasemaps = () => basemaps;
