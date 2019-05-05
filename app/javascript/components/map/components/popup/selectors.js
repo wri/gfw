@@ -8,11 +8,11 @@ import lineString from 'turf-linestring';
 import {
   getActiveDatasetsFromState,
   filterInteractions,
-  getSelectedInteraction
-} from 'components/maps/map/selectors';
+  getSelectedInteraction,
+  getInteractionsLatLng
+} from 'components/map/selectors';
 
 const getSearch = state => state.location && state.location.search;
-const getLatLng = state => state.popup && state.popup.latlng;
 const getMap = (state, { map }) => map;
 
 export const getIsBoundary = createSelector(
@@ -145,7 +145,7 @@ export const getPopupProps = createStructuredSelector({
   selected: getSelectedInteraction,
   tableData: getTableData,
   cardData: getCardData,
-  latlng: getLatLng,
+  latlng: getInteractionsLatLng,
   activeDatasets: getActiveDatasetsFromState,
   search: getSearch,
   isBoundary: getIsBoundary,

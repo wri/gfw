@@ -121,7 +121,7 @@ const clearMapInteractions = state => ({
   ...state,
   data: {
     ...state.data,
-    interaction: {
+    interactions: {
       interactions: {},
       latlng: null,
       selected: ''

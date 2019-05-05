@@ -62,7 +62,7 @@ class Popup extends Component {
       setInteractionSelected,
       setMainMapAnalysisView,
       setMapSettings,
-      clearInteractions,
+      clearMapInteractions,
       isBoundary,
       buttonState
     } = this.props;
@@ -77,7 +77,7 @@ class Popup extends Component {
           <Button
             className="close-btn"
             theme="theme-button-clear theme-button-small square"
-            onClick={clearInteractions}
+            onClick={clearMapInteractions}
           >
             <Icon icon={closeIcon} />
           </Button>
@@ -145,7 +145,7 @@ class Popup extends Component {
 }
 
 Popup.propTypes = {
-  clearInteractions: PropTypes.func,
+  clearMapInteractions: PropTypes.func,
   setInteractionSelected: PropTypes.func,
   latlng: PropTypes.object,
   selected: PropTypes.object,

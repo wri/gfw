@@ -304,23 +304,26 @@ export const getActiveLayersWithDates = createSelector(
   }
 );
 
-export const getInteractiveLayers = createSelector(getActiveLayers, layers => {
-  if (isEmpty(layers)) return [];
-  const interactiveLayers = layers.filter(
-    l => !isEmpty(l.interactionConfig) && l.layerConfig.body.vectorLayers
-  );
+export const getInteractiveLayerIds = createSelector(
+  getActiveLayers,
+  layers => {
+    if (isEmpty(layers)) return [];
+    const interactiveLayers = layers.filter(
+      l => !isEmpty(l.interactionConfig) && l.layerConfig.body.vectorLayers
+    );
 
-  return flatMap(
-    interactiveLayers.reduce((arr, layer) => {
-      const clickableLayers = layer.layerConfig.body.vectorLayers;
+    return flatMap(
+      interactiveLayers.reduce((arr, layer) => {
+        const clickableLayers = layer.layerConfig.body.vectorLayers;
 
-      return [
-        ...arr,
-        clickableLayers.map((l, i) => `${layer.id}-${l.type}-${i}`)
-      ];
-    }, [])
-  );
-});
+        return [
+          ...arr,
+          clickableLayers.map((l, i) => `${layer.id}-${l.type}-${i}`)
+        ];
+      }, [])
+    );
+  }
+);
 
 export const getInteractionsState = createSelector(
   [selectMapData],
@@ -400,5 +403,5 @@ export const getMapProps = createStructuredSelector({
   geostoreBbox: getGeostoreBbox,
   dataBbox: getDataBbox,
   selectedInteraction: getSelectedInteraction,
-  interactiveLayers: getInteractiveLayers
+  interactiveLayerIds: getInteractiveLayerIds
 });

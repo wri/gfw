@@ -11,7 +11,7 @@ import Map from 'components/mapbox-map';
 import iconCrosshair from 'assets/icons/crosshair.svg';
 
 // import MapScale from './components/scale';
-// import Popup from './components/popup';
+import Popup from './components/popup';
 // import MapDraw from './components/draw';
 // import MapAttributions from './components/map-attributions';
 
@@ -28,6 +28,7 @@ class MapComponent extends Component {
     mapStyle: PropTypes.string.isRequired,
     setMapSettings: PropTypes.func.isRequired,
     setMapInteractions: PropTypes.func.isRequired,
+    clearMapInteractions: PropTypes.func.isRequired,
     mapLabels: PropTypes.array,
     mapRoads: PropTypes.array,
     location: PropTypes.object,
@@ -152,11 +153,13 @@ class MapComponent extends Component {
   };
 
   onClick = e => {
-    const { draw } = this.props;
+    const { draw, clearMapInteractions } = this.props;
     if (!draw && e.features && e.features.length) {
       const { features, lngLat } = e;
       const { setMapInteractions } = this.props;
       setMapInteractions({ features, lngLat });
+    } else {
+      clearMapInteractions();
     }
   };
 
@@ -247,7 +250,7 @@ class MapComponent extends Component {
           {map => (
             <Fragment>
               {/* POPUP */}
-
+              <Popup map={this.map} />
               {/* LAYER MANAGER */}
               <LayerManager map={map} />
             </Fragment>
