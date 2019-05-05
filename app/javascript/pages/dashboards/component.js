@@ -10,8 +10,8 @@ import GeostoreProvider from 'providers/geostore-provider';
 
 import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
-import Map from 'components/map';
-import MapControls from 'components/map/components/map-controls';
+// import Map from 'components/map';
+// import MapControls from 'components/map/components/map-controls';
 import SubNavMenu from 'components/subnav-menu';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -78,11 +78,11 @@ class Page extends PureComponent {
             bottomBoundary=".l-country"
           >
             <div className="map-container">
-              <Map miniLegend />
+              {/* <Map miniLegend /> */}
             </div>
           </Sticky>
         </div>
-        <MapControls
+        {/* <MapControls
           className="map-controls"
           stickyOptions={{
             enabled: true,
@@ -90,7 +90,7 @@ class Page extends PureComponent {
           }}
           handleZoomIn={() => setMapZoom({ sum: 1 })}
           handleZoomOut={() => setMapZoom({ sum: -1 })}
-        />
+        /> */}
         <Share />
         <ModalMeta />
         <ModalTCL />

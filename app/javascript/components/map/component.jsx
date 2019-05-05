@@ -1,16 +1,20 @@
-import React, { Component, Fragment } from './node_modules/react';
-import PropTypes from './node_modules/prop-types';
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 
-import debounce from './node_modules/lodash/debounce';
-import isEmpty from './node_modules/lodash/isEmpty';
-import isEqual from './node_modules/lodash/isEqual';
+import Loader from 'components/ui/loader';
+import Icon from 'components/ui/icon';
+import Map from 'components/mapbox-map';
 
-import { Popup } from './node_modules/react-map-gl';
+import iconCrosshair from 'assets/icons/crosshair.svg';
+
+import MapScale from './components/scale';
+// import Popup from './components/popup';
+// import MapDraw from './components/draw';
+import MapAttributions from './components/map-attributions';
 
 // Components
-import { Map } from '../mapbox-map';
-import LayerManager from './layer-manager';
-import Legend from './legend';
+import LayerManager from './components/layer-manager';
 
 // Styles
 import './styles.scss';
@@ -19,37 +23,26 @@ class MapComponent extends Component {
   static propTypes = {
     viewport: PropTypes.shape().isRequired,
     bounds: PropTypes.shape(),
-    interactions: PropTypes.shape(),
     mapStyle: PropTypes.string.isRequired,
-    setMapViewport: PropTypes.func.isRequired,
+    setMapSettings: PropTypes.func.isRequired,
     setMapInteractions: PropTypes.func.isRequired,
     mapLabels: PropTypes.array,
     mapRoads: PropTypes.array,
-    setFullscreen: PropTypes.func,
-    setMapHoverInteractions: PropTypes.func
+    interactiveLayerIds: PropTypes.array
   };
 
   static defaultProps = {
     bounds: {}
   };
 
-  state = {
-    popup: {}
-  };
-
   componentDidUpdate(prevProps) {
     const {
       mapLabels,
-      mapRoads,
-      interactions,
-      viewport,
-      setMapViewport,
-      setFullscreen
+      mapRoads
     } = this.props;
     const {
       mapLabels: prevMapLabels,
-      mapRoads: prevMapRoads,
-      interactions: prevInteractions
+      mapRoads: prevMapRoads
     } = prevProps;
 
     if (mapLabels !== prevMapLabels) {
@@ -59,55 +52,26 @@ class MapComponent extends Component {
     if (mapRoads !== prevMapRoads) {
       this.setRoads();
     }
-
-    if (!isEqual(interactions, prevInteractions)) {
-      Object.keys(interactions).map(k => {
-        const { data, geometry } = interactions[k];
-
-        if (data && (data.type === 'photo' || data.type === '360')) {
-          setFullscreen({
-            open: true,
-            data: {
-              ...data,
-              files: JSON.parse(data.files)
-            }
-          });
-        }
-
-        if (data && data.type === 'video') {
-          setFullscreen({
-            open: true,
-            data
-          });
-        }
-
-        if (data && data.cluster) {
-          const { zoom } = viewport;
-
-          this.map
-            .getSource(k)
-            .getClusterExpansionZoom(data.cluster_id, (err, newZoom) => {
-              if (err) return;
-              const { coordinates } = geometry;
-              const difference = Math.abs(zoom - newZoom);
-
-              setMapViewport({
-                latitude: coordinates[1],
-                longitude: coordinates[0],
-                zoom: newZoom,
-                transitionDuration: 400 + difference * 100
-              });
-            });
-        }
-
-        return true;
-      });
-    }
   }
 
   onViewportChange = debounce(viewport => {
-    const { setMapViewport } = this.props;
-    setMapViewport(viewport);
+    const { setMapSettings } = this.props;
+    const {
+      latitude,
+      longitude,
+      bearing,
+      pitch,
+      zoom
+    } = viewport;
+    setMapSettings({
+      viewport: {
+        latitude,
+        longitude,
+        bearing,
+        pitch,
+        zoom
+      }
+    });
   }, 250);
 
   onStyleLoad = () => {
@@ -133,17 +97,6 @@ class MapComponent extends Component {
       setMapInteractions({ features, lngLat });
     }
   };
-
-  onHover = debounce(e => {
-    const { setMapHoverInteractions } = this.props;
-
-    if (e.features && e.features.length) {
-      const { features, lngLat } = e;
-      setMapHoverInteractions({ features, lngLat });
-    } else {
-      setMapHoverInteractions({});
-    }
-  }, 50);
 
   setLabels = () => {
     const LABELS_GROUP = ['labels'];
@@ -204,8 +157,7 @@ class MapComponent extends Component {
   };
 
   render() {
-    const { mapStyle, viewport, bounds } = this.props;
-    const { popup } = this.state;
+    const { mapStyle, viewport, minZoom, maxZoom, bounds, interactiveLayerIds, loading, loadingMessage, smallView } = this.props;
 
     return (
       <div className="c-map">
@@ -213,36 +165,37 @@ class MapComponent extends Component {
           mapStyle={mapStyle}
           viewport={viewport}
           bounds={bounds}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           onViewportChange={this.onViewportChange}
           onClick={this.onClick}
-          onHover={this.onHover}
           onLoad={this.onLoad}
-          // interactiveLayerIds={['media']}
+          interactiveLayerIds={interactiveLayerIds}
+          attributionControl={false}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
         >
           {map => (
             <Fragment>
               {/* POPUP */}
-              {!isEmpty(popup) && (
-                <Popup
-                  {...popup}
-                  closeButton
-                  closeOnClick={false}
-                  onClose={() => this.setState({ popup: {} })}
-                >
-                  <div>
-                    You are lat: {popup.latitude} - lng: {popup.longitude}
-                  </div>
-                </Popup>
-              )}
 
               {/* LAYER MANAGER */}
               <LayerManager map={map} />
             </Fragment>
           )}
         </Map>
-
-        <Legend />
+        <Icon className="map-icon-crosshair" icon={iconCrosshair} />
+        <MapAttributions className="map-attributions" smallView={smallView} />
+        <MapScale
+          className="map-scale"
+          map={this.map}
+          viewport={viewport}
+        />
+        {loading && (
+          <Loader
+            className="map-loader"
+            theme="theme-loader-light"
+            message={loadingMessage}
+          />
+        )}
       </div>
     );
   }

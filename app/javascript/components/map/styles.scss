@@ -2,8 +2,6 @@
 
 .c-map {
   position: relative;
-  width: calc(100% - #{$c-sidebar-width});
+  width: 100%;
   height: 100%;
-  left: $c-sidebar-width;
-  z-index: $z-index-1;
 }
