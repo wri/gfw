@@ -1,13 +1,9 @@
-@import '~styles/settings.scss';
+@import '~styles/settings';
 
 .c-map {
   position: relative;
-  width: 100%;
+  width: calc(100% - #{$c-sidebar-width});
   height: 100%;
-  background-color: #b3e2ff;
-}
-
-.map-loader {
-  z-index: 10;
-  background-color: rgba($slate, 0.2);
+  left: $c-sidebar-width;
+  z-index: $z-index-1;
 }
