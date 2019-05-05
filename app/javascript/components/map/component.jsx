@@ -12,8 +12,8 @@ import iconCrosshair from 'assets/icons/crosshair.svg';
 
 // import MapScale from './components/scale';
 import Popup from './components/popup';
-// import MapDraw from './components/draw';
-// import MapAttributions from './components/map-attributions';
+import Draw from './components/draw';
+// import MapAttributions from './components/attributions';
 
 // Components
 import LayerManager from './components/layer-manager';
@@ -39,7 +39,9 @@ class MapComponent extends Component {
     geostoreBbox: PropTypes.array,
     selectedInteraction: PropTypes.object,
     minZoom: PropTypes.number.isRequired,
-    maxZoom: PropTypes.number.isRequired
+    maxZoom: PropTypes.number.isRequired,
+    onDrawComplete: PropTypes.func,
+    drawing: PropTypes.bool
   };
 
   static defaultProps = {
@@ -227,7 +229,9 @@ class MapComponent extends Component {
       viewport,
       minZoom,
       maxZoom,
-      interactiveLayerIds
+      interactiveLayerIds,
+      onDrawComplete,
+      drawing
       // loading,
       // loadingMessage,
       // smallView
@@ -253,6 +257,14 @@ class MapComponent extends Component {
               <Popup map={map} />
               {/* LAYER MANAGER */}
               <LayerManager map={map} />
+              {/* DRAWING */}
+              {onDrawComplete && (
+                <Draw
+                  map={map}
+                  drawing={drawing}
+                  onDrawComplete={onDrawComplete}
+                />
+              )}
             </Fragment>
           )}
         </Map>

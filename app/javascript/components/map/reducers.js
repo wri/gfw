@@ -26,7 +26,7 @@ export const initialState = {
     labels: [],
     roads: [],
     canBound: true,
-    draw: false,
+    drawing: false,
     datasets: [
       // admin boundaries
       {
