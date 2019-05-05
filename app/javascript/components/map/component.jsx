@@ -250,7 +250,7 @@ class MapComponent extends Component {
           {map => (
             <Fragment>
               {/* POPUP */}
-              <Popup map={this.map} />
+              <Popup map={map} />
               {/* LAYER MANAGER */}
               <LayerManager map={map} />
             </Fragment>
