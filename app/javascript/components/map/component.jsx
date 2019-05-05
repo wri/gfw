@@ -268,11 +268,16 @@ class MapComponent extends Component {
               )}
               {/* SCALE */}
               <Scale className="map-scale" map={map} viewport={viewport} />
+              {/* ATTRIBUTIONS */}
+              <Attributions
+                className="map-attributions"
+                map={map}
+                viewport={viewport}
+              />
             </Fragment>
           )}
         </Map>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
-        <Attributions className="map-attributions" />
         {loading && (
           <Loader
             className="map-loader"

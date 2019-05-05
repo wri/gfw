@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
@@ -15,8 +16,9 @@ import './styles.scss';
 class MapAttributions extends PureComponent {
   render() {
     const { className, smallView, setModalAttributions } = this.props;
+
     return (
-      <div className={`c-map-attributions ${className || ''}`}>
+      <div className={cx('c-map-attributions', className)}>
         <div className="logos">
           <a
             href="https://www.mapbox.com/about/maps/"
