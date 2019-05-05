@@ -3,7 +3,7 @@ import { createStructuredSelector, createSelector } from 'reselect';
 import {
   getActiveDatasetsFromState,
   getLayerGroups
-} from 'components/maps/map/selectors';
+} from 'components/map/selectors';
 
 const selectLatestLoading = state => state.latest && state.latest.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
