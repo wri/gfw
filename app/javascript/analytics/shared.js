@@ -29,5 +29,16 @@ export default {
     category: 'Refetch data',
     action: 'Data failed to fetch, user clicks to refetch',
     label: '[source]'
+  },
+  // prompts
+  userPrompt: {
+    category: 'User prompts',
+    action: 'User prompt is changed',
+    label: '[promptKey][promptStepIndex]'
+  },
+  userPromptShowHide: {
+    category: 'User prompts',
+    action: 'User prompt is hidden/shown',
+    label: '[status]'
   }
 };

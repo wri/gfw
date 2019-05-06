@@ -1,0 +1,134 @@
+@import '~styles/settings.scss';
+
+.l-topics-page {
+  .last {
+    margin-bottom: rem(150px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
+  }
+
+  .topic-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+  }
+
+  .topic-intro-image {
+    padding: rem(30px) 0;
+  }
+
+  .related-tools-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $white;
+    padding: rem(15px);
+    z-index: 1;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  // overwrite library styles
+  .fp-tableCell {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .row {
+      width: 100%;
+    }
+  }
+
+  .topic-header {
+    z-index: 10;
+
+    .fp-tableCell {
+      justify-content: space-between;
+    }
+  }
+
+  .topic-slides {
+    z-index: 5;
+  }
+
+  // custom dots styles
+  .fp-slidesNav {
+    bottom: calc(50% - 50px) !important;
+    left: unset !important;
+    right: rem(20px) !important;
+
+    li {
+      display: block;
+      margin: rem(25px) 0;
+
+      a {
+        span {
+          background-color: $grey-dark;
+          width: 8px;
+          height: 8px;
+          margin: -2px 0 0 -4px;
+        }
+
+        &.active {
+          span {
+            background-color: $green-gfw;
+            width: 12px;
+            height: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  // custom slides animations
+  .fp-slidesContainer {
+    transform: none !important;
+    width: 100% !important;
+
+    .slide {
+      width: 100% !important;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      opacity: 0;
+      position: absolute;
+      transition: opacity 0.7s ease-in;
+
+      .topic-text {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition:
+          transform 0.7s ease-in-out,
+          opacity 0.7s ease-in-out;
+
+        &.leaving {
+          opacity: 1;
+          transform: translateY(20px);
+          transition:
+            transform 0.7s ease-in-out,
+            opacity 0.7s ease-in-out;
+        }
+      }
+
+      &.active {
+        opacity: 1;
+
+        .topic-text {
+          opacity: 1;
+          transform: translateY(0);
+          transition:
+            transform 0.7s ease-in-out,
+            opacity 0.7s ease-in-out;
+        }
+      }
+    }
+  }
+}

@@ -46,6 +46,11 @@ export const getShowBasemaps = createSelector(
   settings => settings.showBasemaps
 );
 
+export const getShowRecentImagery = createSelector(
+  getMainMapSettings,
+  settings => settings.showRecentImagery
+);
+
 export const getHideLegend = createSelector(
   getMainMapSettings,
   settings => settings.hideLegend
@@ -67,11 +72,13 @@ export const getOneClickAnalysis = createSelector(
 
 export const getMapProps = createStructuredSelector({
   analysisActive: getShowAnalysis,
+  recentActive: getShowRecentImagery,
   oneClickAnalysis: getOneClickAnalysis,
   hidePanels: getHidePanels,
   menuSection: selectMenuSection,
   activeDatasets: getActiveDatasetsFromState,
   embed: getEmbed,
   geostoreId: getDrawGeostoreId,
-  selectedInteraction: getSelectedInteraction
+  selectedInteraction: getSelectedInteraction,
+  location: selectLocationPayload
 });

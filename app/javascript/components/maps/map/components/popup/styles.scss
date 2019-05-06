@@ -43,8 +43,9 @@
     .nav-footer {
       margin-top: rem(20px);
 
-      .footer-action-btn {
-        width: 100%;
+      .popup-action-btn {
+        min-width: rem(200px);
+        margin: auto;
       }
     }
   }

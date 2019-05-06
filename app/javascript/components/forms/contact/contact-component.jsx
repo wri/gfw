@@ -68,11 +68,6 @@ const topics = [
     placeholder: 'How can we help you?'
   },
   {
-    key: 'gfw-water-inquiry',
-    name: 'GFW Water inquiry',
-    placeholder: 'How can we help you?'
-  },
-  {
     key: 'general-inquiry',
     name: 'General inquiry',
     placeholder: 'How can we help you?'

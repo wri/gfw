@@ -118,18 +118,14 @@ class Footer extends PureComponent {
                     <Icon icon={wri} />
                   </a>
                 </div>
-                <div
-                  id="my-gfw-slider"
-                  className="footer-logos slider js_slider"
-                >
+                <div className="footer-logos">
                   <p>Partners</p>
                   <Carousel
-                    className="timeline"
+                    className="partners-slide"
                     settings={{
                       slidesToShow: isDesktop ? 4 : 1,
                       slidesToScroll: isDesktop ? 4 : 1,
-                      centerMode: false,
-                      dots: false,
+                      infinite: true,
                       nextArrow: (
                         <Button theme="theme-button-clear square">
                           <Icon icon={arrowIcon} />
@@ -143,7 +139,7 @@ class Footer extends PureComponent {
                     }}
                   >
                     {partners.map((p, i) => (
-                      <li className="slide" key={`${p.name}${i}`}>
+                      <li className="carousel-slide" key={`${p.name}${i}`}>
                         <a
                           target="_blank"
                           hrel="noopener noreferrer"
@@ -162,7 +158,7 @@ class Footer extends PureComponent {
                                 ''
                               );
                             }}
-                            src={`assets/logos/${p.name}.png`}
+                            src={`/assets/logos/${p.name}.png`}
                             alt={p.name}
                           />
                         </a>

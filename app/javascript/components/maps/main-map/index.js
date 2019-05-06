@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import { track } from 'app/analytics';
 
+import { setMapPromptsSettings } from 'components/maps/main-map/components/map-prompts/actions';
 import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
 import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
 import * as ownActions from './actions';
@@ -15,6 +16,7 @@ import MapComponent from './component';
 const actions = {
   setRecentImagerySettings,
   setMenuSettings,
+  setMapPromptsSettings,
   ...ownActions
 };
 
@@ -65,6 +67,13 @@ class MainMapContainer extends PureComponent {
     if (this.props.menuSection) {
       this.props.setMenuSettings({ menuSection: '' });
     }
+    if (this.props.location.type) {
+      this.props.setMapPromptsSettings({
+        open: true,
+        stepsKey: 'subscribeToArea',
+        stepIndex: 0
+      });
+    }
   };
 
   render() {
@@ -83,9 +92,11 @@ MainMapContainer.propTypes = {
   selectedInteraction: PropTypes.object,
   setMenuSettings: PropTypes.func,
   setMainMapSettings: PropTypes.func,
+  setMapPromptsSettings: PropTypes.func,
   activeDatasets: PropTypes.array,
   menuSection: PropTypes.string,
   analysisActive: PropTypes.bool,
+  location: PropTypes.object,
   geostoreId: PropTypes.string
 };
 

@@ -56,6 +56,7 @@ class SectionProjectsModal extends PureComponent {
               settings={{
                 slidesToShow: 1,
                 arrows: false,
+                dots: true,
                 infinite: false
               }}
             >
