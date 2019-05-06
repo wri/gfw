@@ -8,8 +8,6 @@ import { Popup as MapPopup } from 'react-map-gl';
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown/dropdown-component';
 import Card from 'components/ui/card';
-import closeIcon from 'assets/icons/close.svg';
-import Icon from 'components/ui/icon';
 
 import DataTable from './components/data-table';
 import BoundarySentence from './components/boundary-sentence';
@@ -76,16 +74,9 @@ class Popup extends Component {
       <MapPopup
         latitude={latlng.lat}
         longitude={latlng.lng}
-        closeButton={false}
+        onClose={clearMapInteractions}
       >
         <div className="c-popup">
-          <Button
-            className="close-btn"
-            theme="theme-button-clear theme-button-small square"
-            onClick={clearMapInteractions}
-          >
-            <Icon icon={closeIcon} />
-          </Button>
           {cardData ? (
             <Card
               className="popup-card"
