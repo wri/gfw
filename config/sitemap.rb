@@ -19,7 +19,7 @@ SitemapGenerator::Sitemap.create do
   add '/search', :changefreq => 'weekly', :priority => 0.8
   add '/stories', :changefreq => 'weekly', :priority => 0.8
 
-  add '/sitemap', :changefreq => 'weekly', :priority => 0.4
+  # add '/sitemap', :changefreq => 'weekly', :priority => 0.4
   add '/terms', :changefreq => 'weekly', :priority => 0.4
   add '/privacy-policy', :changefreq => 'weekly', :priority => 0.4
 
