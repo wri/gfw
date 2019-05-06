@@ -2,15 +2,9 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
 
-import {
-  getActiveLayers,
-  getMapZoom,
-  getWidgetsWithLayerParams
-} from 'components/maps/map/selectors';
-import {
-  getWidgetLayers,
-  getLoading
-} from 'components/maps/components/analysis/selectors';
+import { getActiveLayers, getMapZoom } from 'components/map/selectors';
+import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { getWidgetLayers, getLoading } from 'components/analysis/selectors';
 
 const gainID = '3b22a574-2507-4b4a-a247-80057c1a1ad4';
 const lossID = 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6';
@@ -166,6 +160,6 @@ export const getShowAnalysisProps = createStructuredSelector({
   downloadUrls: getDownloadLinks,
   error: selectError,
   showAnalysisDisclaimer,
-  widgets: getWidgetsWithLayerParams,
+  widgets: parseWidgetsWithOptions,
   zoomLevel: getMapZoom
 });

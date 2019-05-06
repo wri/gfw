@@ -11,6 +11,12 @@ import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import uploadFileConfig from './upload-config.json';
 
+// store actions
+export const setAnalysisData = createAction('setAnalysisData');
+export const setAnalysisLoading = createAction('setAnalysisLoading');
+export const clearAnalysisError = createAction('clearAnalysisError');
+export const clearAnalysisData = createAction('clearAnalysisData');
+
 // url action
 export const setAnalysisSettings = createThunkAction(
   'setAnalysisSettings',
@@ -24,12 +30,6 @@ export const setAnalysisSettings = createThunkAction(
     );
   }
 );
-
-// store actions
-export const setAnalysisData = createAction('setAnalysisData');
-export const setAnalysisLoading = createAction('setAnalysisLoading');
-export const clearAnalysisError = createAction('clearAnalysisError');
-export const clearAnalysisData = createAction('clearAnalysisData');
 
 export const getAnalysis = createThunkAction(
   'getAnalysis',

@@ -1,12 +1,14 @@
 import { createStructuredSelector } from 'reselect';
 
 import {
-  getAllBoundaries,
-  getActiveBoundaryDatasets,
   getActiveDatasetsFromState,
-  getDraw
-} from 'components/maps/map/selectors';
-import { getShowDraw } from 'components/maps/components/analysis/selectors';
+  getDrawing
+} from 'components/map/selectors';
+import {
+  getShowDraw,
+  getAllBoundaries,
+  getActiveBoundaryDatasets
+} from 'components/analysis/selectors';
 
 export const selectError = state => state.analysis && state.analysis.error;
 export const selectErrorMessage = state =>
@@ -19,5 +21,5 @@ export const getChooseAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   activeDatasets: getActiveDatasetsFromState,
-  draw: getDraw
+  drawing: getDrawing
 });

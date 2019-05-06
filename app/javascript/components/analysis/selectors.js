@@ -1,17 +1,15 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import compact from 'lodash/compact';
+import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
 import flatMap from 'lodash/flatMap';
 
 import {
-  getAllBoundaries,
-  getActiveBoundaryDatasets,
   getAllLayers,
-  getWidgetsWithLayerParams
+  selectDatasets,
+  getActiveDatasets
 } from 'components/map/selectors';
-
-import layersIcon from 'assets/icons/layers.svg';
-import analysisIcon from 'assets/icons/analysis.svg';
+import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 
 import { initialState } from './reducers';
 
@@ -43,23 +41,43 @@ export const getAnalysisSettings = createSelector(
   })
 );
 
-export const getShowAnalysis = createSelector(
-  getAnalysisSettings,
-  settings => settings.showAnalysis
-);
-
-export const getHidden = createSelector(
-  getAnalysisSettings,
-  settings => settings.hidden
-);
-
 export const getShowDraw = createSelector(
   getAnalysisSettings,
   settings => settings.showDraw
 );
 
+export const getBoundaryDatasets = createSelector(
+  [selectDatasets],
+  datasets => {
+    if (isEmpty(datasets)) return null;
+    return datasets.filter(d => d.isBoundary).map(d => ({
+      name: d.name,
+      dataset: d.id,
+      layers: d.layers.map(l => l.id),
+      id: d.id,
+      label: d.name,
+      value: d.layer
+    }));
+  }
+);
+
+export const getAllBoundaries = createSelector(
+  [getBoundaryDatasets],
+  boundaries =>
+    [{ label: 'No boundaries', value: 'no-boundaries' }].concat(boundaries)
+);
+
+export const getActiveBoundaryDatasets = createSelector(
+  [getBoundaryDatasets, getActiveDatasets],
+  (datasets, activeDatasets) => {
+    if (isEmpty(datasets) || isEmpty(activeDatasets)) return null;
+    const datasetIds = activeDatasets.map(d => d.dataset);
+    return datasets.find(d => datasetIds.includes(d.dataset));
+  }
+);
+
 export const getWidgetLayers = createSelector(
-  getWidgetsWithLayerParams,
+  parseWidgetsWithOptions,
   widgets => {
     const activeWidgets =
       widgets &&
@@ -138,32 +156,14 @@ export const getLayerEndpoints = createSelector(
   }
 );
 
-export const getMenuLinks = createSelector([getShowAnalysis], showAnalysis => [
-  {
-    label: 'DATA',
-    icon: layersIcon,
-    active: !showAnalysis,
-    showAnalysis: false
-  },
-  {
-    label: 'ANALYSIS',
-    icon: analysisIcon,
-    active: showAnalysis,
-    showAnalysis: true
-  }
-]);
-
 export const getAnalysisProps = createStructuredSelector({
-  showAnalysis: getShowAnalysis,
-  endpoints: getLayerEndpoints,
   loading: getLoading,
   error: selectError,
-  links: getMenuLinks,
+  embed: selectEmbed,
+  location: selectLocation,
+  endpoints: getLayerEndpoints,
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
-  location: selectLocation,
-  hidden: getHidden,
-  embed: selectEmbed,
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation
 });

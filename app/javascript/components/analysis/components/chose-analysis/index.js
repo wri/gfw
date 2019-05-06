@@ -6,10 +6,10 @@ import * as ownActions from 'components/maps/components/analysis/actions';
 import * as modalActions from 'components/modals/sources/actions';
 import * as mapActions from 'components/maps/map/actions';
 import * as menuActions from 'components/maps/components/menu/menu-actions';
+import uploadConfig from 'components/analysis/upload-config.json';
 
 import Component from './component';
 import { getChooseAnalysisProps } from './selectors';
-import uploadConfig from '../../upload-config.json';
 
 const actions = {
   ...mapActions,

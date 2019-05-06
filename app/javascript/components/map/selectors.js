@@ -35,6 +35,11 @@ export const getMapViewport = createSelector(
   settings => settings.viewport
 );
 
+export const getMapZoom = createSelector(
+  [getMapViewport],
+  viewport => viewport.zoom
+);
+
 export const getMapMinZoom = createSelector(
   [getMapSettings],
   settings => settings.minZoom
