@@ -6,6 +6,7 @@ import { checkLocationInsideBbox } from 'utils/geoms';
 
 import {
   getMapViewport,
+  getMapZoom,
   getActiveDatasetsFromState
 } from 'components/map/selectors';
 
@@ -36,14 +37,9 @@ export const getRecentImagerySettings = createSelector(
   })
 );
 
-export const getMapZoom = createSelector(
-  getMapViewport,
-  viewport => viewport.zoom
-);
-
 export const getPosition = createSelector([getMapViewport], viewport => ({
-  lat: viewport.longitude,
-  lng: viewport.latitude
+  lat: viewport.lat,
+  lng: viewport.lng
 }));
 
 export const getFilteredTiles = createSelector(

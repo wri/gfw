@@ -11,13 +11,11 @@ export const initialState = {
     bbox: null
   },
   settings: {
-    viewport: {
-      latitude: 27,
-      longitude: 12,
-      bearing: 0,
-      pitch: 0,
-      zoom: 2
-    },
+    lat: 27,
+    lng: 12,
+    bearing: 0,
+    pitch: 0,
+    zoom: 2,
     minZoom: 2,
     maxZoom: 19,
     basemap: {

@@ -30,14 +30,20 @@ export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
   ...urlState
 }));
 
-export const getMapViewport = createSelector(
-  [getMapSettings],
-  settings => settings.viewport
-);
+export const getMapViewport = createSelector([getMapSettings], settings => {
+  const { zoom, lat, lng, bearing, pitch } = settings;
+  return {
+    zoom,
+    lat,
+    lng,
+    bearing,
+    pitch
+  };
+});
 
 export const getMapZoom = createSelector(
-  [getMapViewport],
-  viewport => viewport.zoom
+  [getMapSettings],
+  settings => settings.zoom
 );
 
 export const getMapMinZoom = createSelector(

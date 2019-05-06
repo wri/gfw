@@ -76,7 +76,7 @@ class MapControlsButtons extends PureComponent {
       setMapSettings,
       recentImageryDataset,
       showRecentImagery,
-      mapSettings: { datasets, viewport: { zoom } }
+      mapSettings: { datasets, zoom }
     } = this.props;
     const newDatasets = showRecentImagery
       ? datasets.filter(d => !d.isRecentImagery)
@@ -211,7 +211,7 @@ class MapControlsButtons extends PureComponent {
 
   renderZoomButtons = () => {
     const { mapSettings, setMapSettings } = this.props;
-    const { minZoom, maxZoom, viewport: { zoom } } = mapSettings || {};
+    const { minZoom, maxZoom, zoom } = mapSettings || {};
 
     return (
       <Fragment>
@@ -313,15 +313,13 @@ class MapControlsButtons extends PureComponent {
   );
 
   renderMapPosition = () => {
-    const {
-      mapSettings: { viewport: { zoom, latitude, longitude } }
-    } = this.props;
+    const { mapSettings: { zoom, lat, lng } } = this.props;
 
     return (
       <div className="map-position">
         <span className="notranslate">zoom: {format('.2f')(zoom)}</span>
         <span className="notranslate">
-          lat,lon: {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
+          lat,lon: {`${format('.5f')(lat)}, ${format('.5f')(lng)}`}
         </span>
       </div>
     );
