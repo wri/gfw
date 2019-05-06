@@ -6,18 +6,21 @@ import satelliteImage from './images/satellite.png';
 export default {
   default: {
     label: 'default',
+    value: 'default',
     backgroundColor: '#A2DFFF',
     image: defaultImage,
     mapStyle: 'mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc'
   },
   dark: {
     label: 'dark matter',
+    value: 'dark',
     color: '#31312F',
     image: darkImage,
     mapStyle: 'mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc'
   },
   satellite: {
     label: 'Satellite',
+    value: 'satellite',
     color: '#131620',
     image: satelliteImage,
     mapStyle: 'mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc',
@@ -25,6 +28,7 @@ export default {
   },
   landsat: {
     label: 'landsat',
+    value: 'landsat',
     color: '#0C0045',
     image: landsatImage,
     mapStyle: 'mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc',
@@ -35,6 +39,7 @@ export default {
   },
   planet: {
     label: 'Planet',
+    value: 'planet',
     color: '#131620',
     image: satelliteImage,
     mapStyle: 'mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc',

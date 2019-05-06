@@ -57,10 +57,22 @@ export const getBasemapFromState = createSelector(
 
 export const getBasemap = createSelector(
   [getBasemapFromState],
-  basemapState => ({
-    ...basemaps[basemapState.value],
-    ...basemapState
-  })
+  basemapState => {
+    const basemap = {
+      ...basemaps[basemapState.value],
+      ...basemapState
+    };
+    let url = basemap && basemap.url;
+    if (url) {
+      Object.keys(basemap).forEach(key => {
+        if (url.includes(`{${key}}`)) {
+          url = url.replace(`{${key}}`, basemap[key]);
+        }
+      });
+    }
+
+    return { ...basemap, url };
+  }
 );
 
 export const getMapStyle = createSelector(

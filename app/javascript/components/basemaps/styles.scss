@@ -1,0 +1,201 @@
+@import '~styles/settings.scss';
+$item-size: 55px;
+$top-section-height: 125px;
+
+.c-basemaps {
+  width: 100%;
+  background-color: $white;
+
+  .basemaps-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 rem(15px);
+  }
+
+  .basemaps-actions {
+    display: flex;
+
+    .basemaps-action-button {
+      cursor: pointer;
+      margin-left: rem(8px);
+
+      svg {
+        height: 11px;
+        width: 11px;
+        fill: $warm-grey;
+      }
+    }
+  }
+
+  .basemaps-title {
+    font-size: rem(13px);
+    font-weight: 500;
+    line-height: 1.62;
+    color: $slate;
+    text-transform: uppercase;
+  }
+
+  .basemaps-top-section {
+    padding: 15px 20px 25px;
+  }
+
+  .basemaps-bottom-section {
+    height: calc(100% - #{$top-section-height});
+    padding: 25px 20px 5px;
+    border-top: 1px solid rgba($hot-grey, 0.3);
+
+    @media screen and (min-width: $screen-m) {
+      padding: 25px 20px;
+    }
+  }
+
+  .basemaps-options-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .basemaps-options-wrapper {
+    z-index: 5;
+    width: 48%;
+
+    &:first-child {
+      margin-right: rem(10px);
+    }
+
+    &:last-child {
+      margin-left: rem(10px);
+    }
+  }
+
+  .basemap-list-scroll-wrapper {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .basemaps-list {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .basemaps-list-item-image {
+    width: $item-size;
+    height: $item-size;
+    border: 3px solid transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: auto;
+  }
+
+  .basemaps-list-item {
+    display: inline-block;
+    width: calc(100% / 3);
+    margin-bottom: rem(15px);
+
+    &:hover .basemaps-list-item-image,
+    &.-active .basemaps-list-item-image {
+      border: 3px solid $green-gfw;
+    }
+  }
+
+  .basemaps-list-item-button {
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .basemaps-list-item-name {
+    display: inline-block;
+    text-align: center;
+    font-size: rem(10px);
+    text-transform: uppercase;
+    color: $slate-light;
+    margin: rem(6px) 0 0;
+  }
+
+  .basemaps-list-item-selectors {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: rem(4px);
+
+    .planet-label {
+      display: flex;
+      align-items: center;
+      height: rem(10px);
+      font-size: rem(10px);
+      cursor: pointer;
+
+      .arrow-icon {
+        right: 0;
+        width: rem(6px);
+        height: auto;
+        fill: $green-gfw;
+        margin-left: rem(3px);
+      }
+    }
+
+    .basemaps-tooltip {
+      display: flex;
+      height: auto;
+      position: relative;
+
+      span {
+        bottom: -7px;
+        position: absolute;
+      }
+
+      button {
+        font-size: rem(10px);
+      }
+    }
+  }
+
+  .landsat-selector {
+    margin-bottom: rem(5px);
+    height: rem(10px);
+
+    .select-wrapper {
+      height: auto;
+    }
+  }
+}
+
+.c-basemaps-tooltip {
+  padding: 20px;
+  min-width: 200px;
+
+  .date-selectors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: rem(10px);
+    font-size: 13px;
+
+    > div {
+      width: 45%;
+
+      .select-wrapper {
+        width: 100%;
+      }
+    }
+  }
+
+  .planet-tooltip-close {
+    cursor: pointer;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
+  }
+}

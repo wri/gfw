@@ -7,7 +7,7 @@ import cx from 'classnames';
 import { isParent } from 'utils/dom';
 import { track } from 'app/analytics';
 
-import Basemaps from 'components/maps/components/basemaps';
+import Basemaps from 'components/basemaps';
 import RecentImagerySettings from 'components/maps/main-map/components/recent-imagery/components/recent-imagery-settings';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';

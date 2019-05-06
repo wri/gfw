@@ -8,7 +8,7 @@ import { handleMapLatLonTrack } from 'app/analytics';
 
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
-import Map from 'components/mapbox-map';
+import Map from 'components/ui/map';
 
 import iconCrosshair from 'assets/icons/crosshair.svg';
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import bbox from 'turf-bbox';
 import { Popup as MapPopup } from 'react-map-gl';
@@ -15,9 +16,13 @@ import BoundarySentence from './components/boundary-sentence';
 
 class Popup extends Component {
   componentDidUpdate(prevProps) {
-    const { activeDatasets, clearInteractions } = prevProps;
-    if (!isEqual(activeDatasets.length, this.props.activeDatasets.length)) {
-      clearInteractions();
+    const { interactions } = this.props;
+    const { activeDatasets, clearMapInteractions } = prevProps;
+    if (
+      isEmpty(interactions) &&
+      !isEqual(activeDatasets.length, this.props.activeDatasets.length)
+    ) {
+      clearMapInteractions();
     }
   }
 

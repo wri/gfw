@@ -4,11 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
 import flatMap from 'lodash/flatMap';
 
-import {
-  getAllLayers,
-  selectDatasets,
-  getActiveDatasets
-} from 'components/map/selectors';
+import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 
 import { initialState } from './reducers';
@@ -26,6 +22,7 @@ const selectEmbed = state =>
   state.location.pathname &&
   state.location.pathname.includes('/embed');
 const selectError = state => state.analysis && state.analysis.error;
+const selectDatasets = state => state.datasets && state.datasets.data;
 
 export const getLoading = createSelector(
   [selectAnalysisLoading, selectDatasetsLoading, selectGeostoreLoading],
