@@ -43,11 +43,12 @@ class MapComponent extends Component {
     interaction: PropTypes.object,
     minZoom: PropTypes.number.isRequired,
     maxZoom: PropTypes.number.isRequired,
-    onDrawComplete: PropTypes.func,
     drawing: PropTypes.bool,
     loading: PropTypes.bool,
     loadingMessage: PropTypes.string,
-    basemap: PropTypes.object
+    basemap: PropTypes.object,
+    setDrawnGeostore: PropTypes.func.isRequired,
+    getGeostoreId: PropTypes.func
   };
 
   static defaultProps = {
@@ -171,6 +172,11 @@ class MapComponent extends Component {
     }
   };
 
+  onDrawComplete = geojson => {
+    const { setDrawnGeostore, getGeostoreId } = this.props;
+    getGeostoreId({ geojson, callback: setDrawnGeostore });
+  };
+
   setLabels = () => {
     const LABELS_GROUP = ['labels'];
 
@@ -237,7 +243,6 @@ class MapComponent extends Component {
       minZoom,
       maxZoom,
       interactiveLayerIds,
-      onDrawComplete,
       drawing,
       loading,
       loadingMessage,
@@ -268,13 +273,11 @@ class MapComponent extends Component {
               {/* LAYER MANAGER */}
               <LayerManager map={map} />
               {/* DRAWING */}
-              {onDrawComplete && (
-                <Draw
-                  map={map}
-                  drawing={drawing}
-                  onDrawComplete={onDrawComplete}
-                />
-              )}
+              <Draw
+                map={map}
+                drawing={drawing}
+                onDrawComplete={this.onDrawComplete}
+              />
               {/* SCALE */}
               <Scale className="map-scale" map={map} viewport={viewport} />
               {/* ATTRIBUTIONS */}
