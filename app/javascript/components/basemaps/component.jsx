@@ -160,12 +160,12 @@ class Basemaps extends React.PureComponent {
               open={planetTooltipOpen}
               html={
                 <div className="c-basemaps-tooltip">
-                  <button
+                  <span
                     className="planet-tooltip-close"
                     onClick={() => this.setState({ planetTooltipOpen: false })}
                   >
                     <Icon icon={closeIcon} />
-                  </button>
+                  </span>
                   <Switch
                     theme="theme-switch-light"
                     label="Interval"
@@ -229,7 +229,7 @@ class Basemaps extends React.PureComponent {
               trigger="click"
               position="top"
             >
-              <button
+              <span
                 className="planet-label"
                 onClick={() => {
                   this.setState({ planetTooltipOpen: !planetTooltipOpen });
@@ -237,7 +237,7 @@ class Basemaps extends React.PureComponent {
               >
                 {planetBasemapSelected && planetBasemapSelected.label}
                 <Icon icon={arrowIcon} className="arrow-icon" />
-              </button>
+              </span>
             </Tooltip>
           </div>
         </span>

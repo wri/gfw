@@ -1,0 +1,74 @@
+@import '~styles/settings.scss';
+
+.c-datasets-locations {
+  h5 {
+    margin-bottom: rem(15px);
+    font-size: rem(12px);
+    color: $medium-grey;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .search-container {
+    position: relative;
+    min-height: calc(80vh - 285px);
+
+    @media screen and (min-width: $screen-m) {
+      min-height: rem(300px);
+    }
+  }
+
+  .search-results {
+    position: relative;
+    min-height: rem(200px);
+  }
+
+  .datasets-search {
+    margin-bottom: rem(20px);
+
+    > div {
+      margin-bottom: rem(15px);
+    }
+
+    &.show-border {
+      padding-bottom: rem(20px);
+      border-bottom: solid 1px $border;
+    }
+  }
+
+  .locations-search {
+    position: relative;
+
+    .location {
+      font-size: rem(14px);
+      color: $slate;
+      margin-bottom: rem(15px);
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      text-align: left;
+      line-height: 1.4;
+
+      &:hover {
+        p {
+          color: darken($slate, 20%);
+        }
+      }
+
+      &.active {
+        p {
+          color: $green-gfw;
+        }
+      }
+    }
+
+    .location-icon {
+      fill: $green-gfw;
+      height: rem(20px);
+      width: rem(20px);
+      min-height: rem(20px);
+      min-width: rem(20px);
+      margin-right: rem(5px);
+    }
+  }
+}

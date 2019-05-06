@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import MapLegend from 'components/maps/components/legend';
-import Analysis from 'components/maps/components/analysis';
+import MapLegend from 'components/map/components/legend';
+import Analysis from 'components/analysis';
 import SubNavMenu from 'components/subnav-menu';
 
 import './styles.scss';

@@ -6,9 +6,10 @@ import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import { track } from 'app/analytics';
 
-import { setMapPromptsSettings } from 'components/maps/main-map/components/map-prompts/actions';
-import { setRecentImagerySettings } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
-import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
+import { setMapPromptsSettings } from 'components/map-prompts/actions';
+import { setRecentImagerySettings } from 'components/recent-imagery/actions';
+import { setMenuSettings } from 'components/map-menu/actions';
+
 import * as ownActions from './actions';
 import { getMapProps } from './selectors';
 import MapComponent from './component';

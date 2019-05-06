@@ -1,0 +1,52 @@
+@import '~styles/settings';
+
+.c-dataset-section {
+  position: relative;
+
+  .dataset-header {
+    margin-bottom: rem(20px);
+  }
+
+  .title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: $greyish-brown;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    letter-spacing: -0.3px;
+    color: $hot-grey;
+  }
+
+  .text {
+    font-size: 12px;
+    line-height: 1.33;
+    letter-spacing: -0.3px;
+
+    b {
+      font-weight: 500;
+    }
+
+    a {
+      color: $green-gfw;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: rem(20px);
+    padding-bottom: rem(20px);
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: rem(-20px);
+      width: calc(100% + #{rem(20px)});
+      height: rem(1px);
+      background-color: rgba($hot-grey, 0.3);
+    }
+  }
+}

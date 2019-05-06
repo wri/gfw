@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 
-import { clearAnalysisError } from 'components/maps/components/analysis/actions';
-import { setMainMapSettings } from 'components/maps/main-map/actions';
-import { setMapSettings } from 'components/maps/map/actions';
+import { clearAnalysisError } from 'components/analysis/actions';
+import { setMainMapSettings } from 'pages/map/actions';
+import { setMapSettings } from 'components/map/actions';
+
 import { getDataAnalysisMenuProps } from './selectors';
 import Component from './component';
 

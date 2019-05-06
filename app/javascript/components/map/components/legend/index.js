@@ -7,8 +7,8 @@ import { track } from 'app/analytics';
 import * as modalActions from 'components/modals/meta/meta-actions';
 import * as mapActions from 'components/map/actions';
 
-import Component from './legend-component';
-import { getLegendProps } from './legend-selectors';
+import Component from './component';
+import { getLegendProps } from './selectors';
 
 const actions = {
   ...mapActions,

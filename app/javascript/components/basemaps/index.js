@@ -84,7 +84,7 @@ class BasemapsContainer extends React.Component {
 BasemapsContainer.propTypes = {
   activeLabels: PropTypes.object,
   basemaps: PropTypes.object,
-  labels: PropTypes.object,
+  labels: PropTypes.array,
   getPlanetBasemaps: PropTypes.func
 };
 

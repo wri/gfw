@@ -15,12 +15,12 @@ import Map from 'components/map';
 import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
-
 import Tip from 'components/ui/tip';
 import SubscribeModal from 'components/modals/subscribe';
-import MapPrompts from 'components/maps/main-map/components/map-prompts';
+import MapPrompts from 'components/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
-import RecentImagery from './components/recent-imagery';
+import RecentImagery from 'components/recent-imagery';
+
 import DataAnalysisMenu from './components/data-analysis-menu';
 import MapControlButtons from './components/map-controls';
 

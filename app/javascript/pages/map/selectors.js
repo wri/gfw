@@ -6,7 +6,7 @@ import {
   getActiveDatasetsFromState,
   getInteractionSelected
 } from 'components/map/selectors';
-import { getShowDraw } from 'components/maps/components/analysis/selectors';
+import { getShowDraw } from 'components/analysis/selectors';
 
 import initialState from './initial-state';
 

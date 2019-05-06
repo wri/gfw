@@ -23,8 +23,8 @@ export const initialState = {
     basemap: {
       value: 'default'
     },
-    labels: [],
-    roads: [],
+    labels: true,
+    roads: true,
     canBound: true,
     drawing: false,
     datasets: [
