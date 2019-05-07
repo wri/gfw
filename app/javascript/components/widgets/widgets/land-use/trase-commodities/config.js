@@ -20,6 +20,6 @@ export default {
   sentence:
     'From {startYear} to {endYear}, the top sourcing country for {commodity} was {source}, with a trade volume of {volume}, representing {percentage} of total {location} exports.',
   whitelists: {
-    adm0: ['BRA']
+    adm0: ['BRA', 'PRY', 'COL', 'PER', 'IDN', 'ECU', 'BOL']
   }
 };
