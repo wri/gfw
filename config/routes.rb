@@ -33,10 +33,6 @@ Gfw::Application.routes.draw do
   get '/sources' => redirect("http://data.globalforestwatch.org/")
   get '/sources/*all' => redirect("http://data.globalforestwatch.org/")
 
-  # stories
-  get '/stayinformed/crowdsourced-stories' => redirect('/stories')
-  get '/stories/crowdsourcedstories' => redirect('/stories')
-
   # stayinformed
   get '/stayinformed' => redirect("/")
   get '/stayinformed(/:section)' => redirect("/")
@@ -132,11 +128,6 @@ Gfw::Application.routes.draw do
   # connect
   get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
-
-  # stories #
-  get '/stories' => 'stories#index'
-  get '/stories/new' => 'stories#index', as: 'new_story'
-  get '/stories/*all' => 'stories#index'
 
   # static #
   get '/notsupportedbrowser' => 'static#browser_support', :as => 'notsupportedbrowser'
