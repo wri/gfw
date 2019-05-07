@@ -1,14 +1,17 @@
+/* eslint-disable */
 /**
  * The Header view.
  */
-define(['jquery', 'backbone', 'underscore', 'mps', 'views/ShareView'], (
+define(['jquery', 'backbone', 'underscore', 'mps', 'views/ShareView'], function(
   $,
   Backbone,
   _,
   mps,
   ShareView
-) => {
-  const HeaderView = Backbone.View.extend({
+) {
+  'use strict';
+
+  var HeaderView = Backbone.View.extend({
     el: '#headerView',
 
     events: {
@@ -18,7 +21,7 @@ define(['jquery', 'backbone', 'underscore', 'mps', 'views/ShareView'], (
       'click .menu-section-link': 'menuOpen'
     },
 
-    initialize() {
+    initialize: function() {
       // CACHE
       this.$htmlbody = $('html,body');
       this.$window = $(window);
@@ -37,7 +40,7 @@ define(['jquery', 'backbone', 'underscore', 'mps', 'views/ShareView'], (
       this.welcome();
     },
 
-    toggleMenu(e) {
+    toggleMenu: function(e) {
       $(e.currentTarget).toggleClass('active');
       if ($(e.currentTarget).hasClass('active')) {
         this.scrollTop = this.$document.scrollTop();
@@ -53,7 +56,7 @@ define(['jquery', 'backbone', 'underscore', 'mps', 'views/ShareView'], (
       }
     },
 
-    toggleAppMenu(e) {
+    toggleAppMenu: function(e) {
       if (this.mobile) {
         e && e.preventDefault();
         $(e.currentTarget).toggleClass('active');
@@ -78,7 +81,7 @@ define(['jquery', 'backbone', 'underscore', 'mps', 'views/ShareView'], (
       }
     },
 
-    createMenu() {
+    createMenu: function() {
       if (this.$window.width() > 850) {
         this.mobile = false;
         this.$translate.appendTo($('#google_translate_element_box1'));
@@ -89,17 +92,17 @@ define(['jquery', 'backbone', 'underscore', 'mps', 'views/ShareView'], (
       }
     },
 
-    shareOpen(event) {
-      const shareView = new ShareView().share(event);
+    shareOpen: function(event) {
+      var shareView = new ShareView().share(event);
       this.$el.append(shareView.el);
     },
 
-    menuOpen(e) {
+    menuOpen: function(e) {
       $(e.currentTarget).toggleClass('active');
       $('#menu-section-dropdown').toggleClass('active');
     },
 
-    welcome() {
+    welcome: function() {
       if (window.location.hostname === 'localhost') {
         return;
       }
