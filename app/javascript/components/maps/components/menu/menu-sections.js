@@ -3,6 +3,7 @@ import landCoverIcon from 'assets/icons/land-cover.svg';
 import landUseIcon from 'assets/icons/land-use.svg';
 import climateIcon from 'assets/icons/climate.svg';
 import biodiversityIcon from 'assets/icons/biodiversity.svg';
+import sandboxIcon from 'assets/icons/sandbox.svg';
 import exploreIcon from 'assets/icons/explore.svg';
 import layersIcon from 'assets/icons/layers.svg';
 import globeIcon from 'assets/icons/globe.svg';
@@ -174,6 +175,14 @@ export const datasetsSections = [
         title: 'Biodiversity'
       }
     ]
+  },
+  {
+    label: 'layers',
+    slug: 'datasets',
+    category: 'sandbox',
+    icon: sandboxIcon,
+    Component: Datasets,
+    subCategories: []
   },
   {
     label: 'layers',
