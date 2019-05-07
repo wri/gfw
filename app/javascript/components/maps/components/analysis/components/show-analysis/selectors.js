@@ -12,6 +12,9 @@ import {
   getLoading
 } from 'components/maps/components/analysis/selectors';
 
+const gainID = '3b22a574-2507-4b4a-a247-80057c1a1ad4';
+const lossID = 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6';
+
 const selectLocation = state => state.location && state.location.payload;
 const selectData = state => state.analysis && state.analysis.data;
 const selectError = state => state.analysis && state.analysis.error;
@@ -146,6 +149,14 @@ export const getDownloadLinks = createSelector(
     })
 );
 
+export const showAnalysisDisclaimer = createSelector(
+  [getActiveLayers],
+  layers => {
+    const layersIDs = layers.map(l => l.id);
+    return layersIDs.includes(gainID) && layersIDs.includes(lossID);
+  }
+);
+
 export const getShowAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
   loading: getLoading,
@@ -154,6 +165,7 @@ export const getShowAnalysisProps = createStructuredSelector({
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,
+  showAnalysisDisclaimer,
   widgets: getWidgetsWithLayerParams,
   zoomLevel: getMapZoom
 });

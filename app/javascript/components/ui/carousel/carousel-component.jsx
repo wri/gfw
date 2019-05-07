@@ -5,22 +5,16 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
 import arrowIcon from 'assets/icons/arrow-down.svg';
-import { SCREEN_M, SCREEN_XL } from 'utils/constants';
+import { SCREEN_M } from 'utils/constants';
 
 import './carousel-styles.scss';
 
 const defaultSettings = {
-  dots: true,
-  infinite: true,
+  dots: false,
   speed: 500,
+  infinite: false,
   slidesToShow: 2,
   slidesToScroll: 1,
-  centerMode: true,
-  centerPadding: `${
-    window.innerWidth > SCREEN_XL
-      ? (window.innerWidth - SCREEN_XL) / 2 - 20
-      : '0'
-  }px`,
   customPaging: () => <button />,
   nextArrow: (
     <Button theme="square">

@@ -101,13 +101,6 @@ class LandingController < ApplicationController
         "description" => "Identify deforestation risk in commodity supply chains",
         "background" => "/assets/home/commodities@2x.jpg",
         "link" => "http://commodities.globalforestwatch.org"
-      },
-      {
-        "key" => "water",
-        "title" => "Water",
-        "description" => "View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions",
-        "background" => "/assets/home/water@2x.jpg",
-        "link" => "http://water.globalforestwatch.org/"
       }
     ]
   end
