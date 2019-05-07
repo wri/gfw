@@ -5,7 +5,7 @@ import remove from 'lodash/remove';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
-import LayerToggle from 'components/maps/components/legend/components/layer-toggle';
+import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';

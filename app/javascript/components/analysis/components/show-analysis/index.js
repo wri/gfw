@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import * as modalMetaActions from 'components/modals/meta/meta-actions';
 import * as modalShareActions from 'components/modals/share/share-actions';
 import * as modalSourcesActions from 'components/modals/sources/actions';
-import { setMenuSettings } from 'components/maps/components/menu/menu-actions';
-import * as dataAnalysisActions from 'components/maps/components/analysis/actions';
+import { setMenuSettings } from 'components/map-menu/actions';
+import * as dataAnalysisActions from 'components/analysis/actions';
 
 import { getShowAnalysisProps } from './selectors';
 import Component from './component';

@@ -6,7 +6,7 @@ import reducerRegistry from 'app/registry';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
-import * as mapActions from 'components/maps/map/actions';
+import * as mapActions from 'components/map/actions';
 
 import reducers, { initialState } from './reducers';
 import * as ownActions from './actions';

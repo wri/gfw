@@ -4,9 +4,8 @@ import lineString from 'turf-linestring';
 
 import {
   getActiveDatasetsFromState,
-  getBasemap,
-  getLabel
-} from 'components/maps/map/selectors';
+  getBasemap
+} from 'components/map/selectors';
 
 import { descriptions, topics, stories } from './sections';
 
@@ -109,11 +108,10 @@ const getDescription = createSelector(
 );
 
 const getCurrentMapPayload = createSelector(
-  [getActiveDatasetsFromState, getBasemap, getLabel],
-  (datasets, basemap, label) => ({
+  [getActiveDatasetsFromState, getBasemap],
+  (datasets, basemap) => ({
     datasets,
-    basemap,
-    label
+    basemap
   })
 );
 

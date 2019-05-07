@@ -4,8 +4,8 @@ import cx from 'classnames';
 
 import Button from 'components/ui/button/button-component';
 import Loader from 'components/ui/loader';
-import ChoseAnalysis from 'components/maps/components/analysis/components/chose-analysis';
-import ShowAnalysis from 'components/maps/components/analysis/components/show-analysis';
+import ChoseAnalysis from 'components/analysis/components/chose-analysis';
+import ShowAnalysis from 'components/analysis/components/show-analysis';
 
 import './styles.scss';
 

@@ -2,10 +2,10 @@ import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as ownActions from 'components/maps/components/analysis/actions';
+import * as ownActions from 'components/analysis/actions';
 import * as modalActions from 'components/modals/sources/actions';
-import * as mapActions from 'components/maps/map/actions';
-import * as menuActions from 'components/maps/components/menu/menu-actions';
+import * as mapActions from 'components/map/actions';
+import * as menuActions from 'components/map-menu/actions';
 import uploadConfig from 'components/analysis/upload-config.json';
 
 import Component from './component';

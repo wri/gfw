@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import NoContent from 'components/ui/no-content';
-import LayerToggle from 'components/maps/components/legend/components/layer-toggle';
+import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import Pill from 'components/ui/pill';
 import Dropdown from 'components/ui/dropdown';
 
