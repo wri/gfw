@@ -36,7 +36,6 @@ class MapComponent extends Component {
     mapRoads: PropTypes.bool,
     location: PropTypes.object,
     interactiveLayerIds: PropTypes.array,
-    draw: PropTypes.bool,
     canBound: PropTypes.bool,
     dataBbox: PropTypes.array,
     geostoreBbox: PropTypes.array,
@@ -162,8 +161,8 @@ class MapComponent extends Component {
   };
 
   onClick = e => {
-    const { draw, clearMapInteractions } = this.props;
-    if (!draw && e.features && e.features.length) {
+    const { drawing, clearMapInteractions } = this.props;
+    if (!drawing && e.features && e.features.length) {
       const { features, lngLat } = e;
       const { setMapInteractions } = this.props;
       setMapInteractions({ features, lngLat });

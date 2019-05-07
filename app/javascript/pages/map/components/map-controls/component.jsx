@@ -76,7 +76,8 @@ class MapControlsButtons extends PureComponent {
       setMapSettings,
       recentImageryDataset,
       showRecentImagery,
-      mapSettings: { datasets, zoom }
+      datasets,
+      viewport: { zoom }
     } = this.props;
     const newDatasets = showRecentImagery
       ? datasets.filter(d => !d.isRecentImagery)
@@ -210,8 +211,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderZoomButtons = () => {
-    const { mapSettings, setMapSettings } = this.props;
-    const { minZoom, maxZoom, zoom } = mapSettings || {};
+    const { viewport: { zoom }, setMapSettings, maxZoom, minZoom } = this.props;
 
     return (
       <Fragment>
@@ -313,13 +313,13 @@ class MapControlsButtons extends PureComponent {
   );
 
   renderMapPosition = () => {
-    const { mapSettings: { zoom, lat, lng } } = this.props;
+    const { viewport: { zoom, latitude, longitude } } = this.props;
 
     return (
       <div className="map-position">
         <span className="notranslate">zoom: {format('.2f')(zoom)}</span>
         <span className="notranslate">
-          lat,lon: {`${format('.5f')(lat)}, ${format('.5f')(lng)}`}
+          lat,lon: {`${format('.5f')(latitude)}, ${format('.5f')(longitude)}`}
         </span>
       </div>
     );
@@ -365,7 +365,7 @@ MapControlsButtons.propTypes = {
   setMapSettings: PropTypes.func,
   setMainMapSettings: PropTypes.func,
   setShareModal: PropTypes.func,
-  mapSettings: PropTypes.object,
+  viewport: PropTypes.object,
   setMenuSettings: PropTypes.func,
   setModalWelcomeOpen: PropTypes.func,
   mapTourOpen: PropTypes.bool,
@@ -374,7 +374,10 @@ MapControlsButtons.propTypes = {
   recentImageryDataset: PropTypes.object,
   showRecentImagery: PropTypes.bool,
   datasetsLoading: PropTypes.bool,
-  isDesktop: PropTypes.bool
+  isDesktop: PropTypes.bool,
+  datasets: PropTypes.array,
+  minZoom: PropTypes.number,
+  maxZoom: PropTypes.number
 };
 
 export default connect()(MapControlsButtons);

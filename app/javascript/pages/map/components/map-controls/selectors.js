@@ -5,7 +5,12 @@ import {
   getRecentImageryLoading,
   getRecentImageryDataset
 } from 'components/recent-imagery/selectors';
-import { getMapSettings } from 'components/map/selectors';
+import {
+  getMapViewport,
+  getActiveDatasetsFromState,
+  getMapMinZoom,
+  getMapMaxZoom
+} from 'components/map/selectors';
 import {
   getHidePanels,
   getShowBasemaps,
@@ -19,7 +24,10 @@ export const getMapControlsProps = createStructuredSelector({
   recentLoading: getRecentImageryLoading,
   datasetsLoading: getDatasetsLoading,
   hidePanels: getHidePanels,
-  mapSettings: getMapSettings,
+  viewport: getMapViewport,
+  datasets: getActiveDatasetsFromState,
+  minZoom: getMapMinZoom,
+  maxZoom: getMapMaxZoom,
   showBasemaps: getShowBasemaps,
   showRecentImagery: getShowRecentImagery,
   recentSettings: getRecentImagerySettings,

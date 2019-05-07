@@ -75,8 +75,6 @@ LayerManagerComponent.propTypes = {
   basemap: PropTypes.object,
   geostore: PropTypes.object,
   setMapLoading: PropTypes.func,
-  handleMapInteraction: PropTypes.func,
-  draw: PropTypes.bool,
   map: PropTypes.object
 };
 
