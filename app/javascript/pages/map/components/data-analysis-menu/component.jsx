@@ -28,7 +28,7 @@ class DataAnalysisMenu extends PureComponent {
             (showAnalysis && l.active && !hidden) ||
             (!showAnalysis && l.active && !hidden)
         });
-        setMapSettings({ draw: false });
+        setMapSettings({ drawing: false });
         clearAnalysisError();
       }
     }));

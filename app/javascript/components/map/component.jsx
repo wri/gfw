@@ -119,8 +119,10 @@ class MapComponent extends Component {
           const { coordinates } = geometry;
           const difference = Math.abs(viewport.zoom - newZoom);
           setMapSettings({
-            lat: coordinates[1],
-            lng: coordinates[0],
+            center: {
+              lat: coordinates[1],
+              lng: coordinates[0]
+            },
             zoom: newZoom,
             transitionDuration: 400 + difference * 100
           });
@@ -132,8 +134,10 @@ class MapComponent extends Component {
     const { setMapSettings, location } = this.props;
     const { latitude, longitude, bearing, pitch, zoom } = viewport;
     setMapSettings({
-      lat: latitude,
-      lng: longitude,
+      center: {
+        lat: latitude,
+        lng: longitude
+      },
       bearing,
       pitch,
       zoom

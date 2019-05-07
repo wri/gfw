@@ -31,13 +31,12 @@ export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
 }));
 
 export const getMapViewport = createSelector([getMapSettings], settings => {
-  const { zoom, lat, lng, bearing, pitch } = settings;
+  const { zoom, bearing, pitch, center } = settings;
   return {
     zoom,
-    lat,
-    lng,
     bearing,
-    pitch
+    pitch,
+    ...center
   };
 });
 
