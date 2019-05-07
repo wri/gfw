@@ -2,47 +2,36 @@
 $input-button-width: rem(100px);
 
 .c-share {
-  padding: rem(20px) rem(20px);
-  min-width: rem(320px);
-
   @media screen and (min-width: $screen-m) {
     width: rem(430px);
-  }
-
-  .title {
-    padding: rem(5px) 0;
-    font-size: 21px;
-    font-weight: 300;
-    text-align: center;
+    min-width: rem(320px);
   }
 
   .subtitle {
     font-size: 13px;
-    text-align: center;
+    text-align: left;
     border-bottom: solid 1px $border;
     padding-bottom: rem(15px);
     margin-bottom: rem(20px);
     opacity: 0.5;
   }
 
-  .actions {
-    @media screen and (min-width: $screen-m) {
-      padding: 0 rem(40px);
-    }
+  .share-switch-tab {
+    max-width: rem(225px);
+    margin-bottom: rem(30px);
   }
 
   .info {
-    text-align: center;
-    font-size: rem(13px);
+    text-align: left;
+    color: #555;
+    font-size: rem(16px);
+    line-height: rem(30px);
     width: 100%;
     margin-bottom: rem(10px);
   }
 
   .input-container {
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
+    width: calc(100% + (#{$input-button-width} / 2));
 
     .input,
     .input-button {
@@ -51,17 +40,21 @@ $input-button-width: rem(100px);
 
     .input {
       width: calc(100% - #{$input-button-width});
-      border: 1px solid $border;
-      border-right: 0;
+      max-width: rem(300px);
+      border: 0;
       font-size: rem(13px);
       position: relative;
       display: inline-block;
 
       > input {
-        padding: 0 rem(10px);
+        background: none;
+        padding-left: rem(10px);
+        padding-right: calc((#{$input-button-width} / 2) + #{rem(10px)});
         width: 100%;
         height: 100%;
-        border: 0;
+        border: 1px solid #dededd;
+        border-right: 0;
+        border-radius: 4px;
 
         &:focus {
           outline: none;
@@ -70,7 +63,10 @@ $input-button-width: rem(100px);
     }
 
     .input-button {
-      border-radius: 0;
+      position: relative;
+      z-index: 1;
+      right: calc(#{$input-button-width} / 2);
+      border-radius: rem(22.5px);
       width: $input-button-width;
       display: inline-block;
     }
@@ -104,21 +100,11 @@ $input-button-width: rem(100px);
     font-size: 14px;
     font-weight: 500;
     color: $slate;
-
-    &.-selected {
-      background-color: $green-gfw;
-      border: 0;
-      color: $white;
-
-      &:hover {
-        background-color: darken($green-gfw, 10%);
-      }
-    }
   }
 
   .social-container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     margin-top: rem(25px);
   }
 
@@ -126,39 +112,16 @@ $input-button-width: rem(100px);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: rem(44px);
-    height: rem(44px);
+    width: rem(50px);
+    height: rem(50px);
     margin: 0 rem(8px);
-    border-radius: 0;
+    border: 1px solid #aaa;
+    border-radius: rem(25px);
 
-    .c-icon {
-      width: rem(20px);
-      height: rem(20px);
-      fill: $white;
-    }
-
-    &.-googleplus {
-      background-color: $googleplus;
-
-      &:hover {
-        background-color: darken($googleplus, 10%);
-      }
-    }
-
-    &.-twitter {
-      background-color: $twitter;
-
-      &:hover {
-        background-color: darken($twitter, 10%);
-      }
-    }
-
-    &.-facebook {
-      background-color: $facebook;
-
-      &:hover {
-        background-color: darken($facebook, 10%);
-      }
+    svg {
+      fill: #555;
+      height: 20px;
+      width: 20px;
     }
   }
 }

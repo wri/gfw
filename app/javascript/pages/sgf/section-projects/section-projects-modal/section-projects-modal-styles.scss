@@ -1,7 +1,6 @@
 @import '~styles/settings.scss';
 
 .c-sgf-projects-modal {
-  max-width: calc((#{$max-width} - 2 * #{$desktop-gutter}) / 12 * 10);
   width: 100%;
   color: $slate;
   font-weight: 300;
@@ -9,8 +8,7 @@
   line-height: 1.67;
 
   .header {
-    max-width: rem(600px);
-    padding: rem(30px) rem(40px) 0;
+    padding: 0;
     margin: auto;
 
     > h1 {
@@ -42,12 +40,16 @@
   }
 
   .image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     margin-top: rem(20px);
     width: 100%;
+    height: rem(250px);
     position: relative;
 
-    > img {
-      width: 100%;
+    @media screen and (min-width: $screen-m) {
+      height: rem(400px);
     }
 
     > span {
@@ -75,10 +77,10 @@
   }
 
   .content {
-    padding: rem(30px) rem(15px);
+    padding: rem(30px) 0;
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(30px) calc(50% - 260px) rem(40px);
+      padding: rem(30px) 0;
     }
 
     .description {

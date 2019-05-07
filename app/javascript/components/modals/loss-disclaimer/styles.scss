@@ -4,13 +4,6 @@ $desktop-padding: rem(40px);
 
 .c-modal-tcl-disclaimer {
   max-width: rem(450px);
-  padding: $mobile-padding;
-  padding-top: rem(40px);
-  padding-bottom: rem(30px);
-
-  @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding;
-  }
 
   h3 {
     font-size: rem(30px);
