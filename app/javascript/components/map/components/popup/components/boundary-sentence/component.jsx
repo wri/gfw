@@ -6,8 +6,8 @@ import './styles.scss';
 
 class BoundarySentence extends Component {
   handleSetAnalysisView = () => {
-    const { setMainMapAnalysisView, selected, data } = this.props;
-    setMainMapAnalysisView({
+    const { onSelectBoundary, selected, data } = this.props;
+    onSelectBoundary({
       ...selected,
       data: { ...data, level: data.level - 1 }
     });
@@ -43,7 +43,7 @@ class BoundarySentence extends Component {
 
 BoundarySentence.propTypes = {
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  setMainMapAnalysisView: PropTypes.func,
+  onSelectBoundary: PropTypes.func,
   selected: PropTypes.object
 };
 

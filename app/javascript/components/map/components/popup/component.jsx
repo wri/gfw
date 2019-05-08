@@ -24,21 +24,15 @@ class Popup extends Component {
     }
   }
 
-  handleClickAction = selected => {
-    if (this.props.buttonState === 'ZOOM') {
-      this.handleClickZoom(selected);
-    } else {
-      this.handleClickAnalysis(selected);
-    }
-  };
-
   handleClickZoom = selected => {
-    const { setMapSettings } = this.props;
+    const { setMapSettings, setMapBbox, clearMapInteractions } = this.props;
     const newBbox = bbox(selected.geometry);
-    setMapSettings({ bbox: newBbox, canBound: true });
+    setMapSettings({ canBound: true });
+    setMapBbox(newBbox);
+    clearMapInteractions();
   };
 
-  handleClickAnalysis = selected => {
+  handleClickAction = (selected, handleAction) => {
     const { data, layer, geometry } = selected;
     const { cartodb_id, wdpaid } = data || {};
     const { analysisEndpoint, tableName } = layer || {};
@@ -47,12 +41,16 @@ class Popup extends Component {
     const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
     const isUse = cartodb_id && tableName;
 
-    const { getGeostoreId, setMainMapAnalysisView } = this.props;
-    if (isAdmin || isWdpa || isUse) {
-      setMainMapAnalysisView(selected);
-    } else {
-      getGeostoreId(geometry);
-    }
+    handleAction({
+      data,
+      layer,
+      geometry,
+      isUse,
+      isAdmin,
+      isWdpa
+    });
+
+    this.props.clearMapInteractions();
   };
 
   render() {
@@ -62,12 +60,13 @@ class Popup extends Component {
       latlng,
       interactions,
       selected,
-      setInteractionSelected,
-      setMainMapAnalysisView,
-      setMapSettings,
+      setMapInteractionSelected,
       clearMapInteractions,
+      onSelectBoundary,
+      setMapSettings,
       isBoundary,
-      buttonState
+      zoomToShape,
+      buttons
     } = this.props;
 
     return latlng && latlng.lat && selected && !selected.data.cluster ? (
@@ -75,6 +74,7 @@ class Popup extends Component {
         latitude={latlng.lat}
         longitude={latlng.lng}
         onClose={clearMapInteractions}
+        closeOnClick={false}
       >
         <div className="c-popup">
           {cardData ? (
@@ -107,7 +107,7 @@ class Popup extends Component {
                     theme="theme-dropdown-native"
                     value={selected}
                     options={interactions}
-                    onChange={setInteractionSelected}
+                    onChange={setMapInteractionSelected}
                     native
                   />
                 )}
@@ -119,18 +119,27 @@ class Popup extends Component {
                 <BoundarySentence
                   selected={selected}
                   data={tableData}
-                  setMainMapAnalysisView={setMainMapAnalysisView}
+                  onSelectBoundary={onSelectBoundary}
                 />
               ) : (
                 <DataTable data={tableData} />
               )}
-              <div className="nav-footer">
-                <Button
-                  className="popup-action-btn"
-                  onClick={() => this.handleClickAction(selected)}
-                >
-                  {buttonState}
-                </Button>
+              <div className="popup-footer">
+                {zoomToShape ? (
+                  <Button onClick={() => this.handleClickZoom(selected)}>
+                    Zoom
+                  </Button>
+                ) : (
+                  buttons &&
+                  buttons.map(p => (
+                    <Button
+                      key={p.label}
+                      onClick={() => this.handleClickAction(selected, p.action)}
+                    >
+                      {p.label}
+                    </Button>
+                  ))
+                )}
               </div>
             </div>
           )}
@@ -142,7 +151,7 @@ class Popup extends Component {
 
 Popup.propTypes = {
   clearMapInteractions: PropTypes.func,
-  setInteractionSelected: PropTypes.func,
+  setMapInteractionSelected: PropTypes.func,
   latlng: PropTypes.object,
   selected: PropTypes.object,
   interactions: PropTypes.array,
@@ -150,10 +159,11 @@ Popup.propTypes = {
   isBoundary: PropTypes.bool,
   cardData: PropTypes.object,
   activeDatasets: PropTypes.array,
-  setMainMapAnalysisView: PropTypes.func,
+  onSelectBoundary: PropTypes.func,
   setMapSettings: PropTypes.func,
-  buttonState: PropTypes.string,
-  getGeostoreId: PropTypes.func
+  setMapBbox: PropTypes.func,
+  zoomToShape: PropTypes.bool,
+  buttons: PropTypes.array
 };
 
 export default Popup;

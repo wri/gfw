@@ -47,7 +47,9 @@ class MapComponent extends Component {
     loadingMessage: PropTypes.string,
     basemap: PropTypes.object,
     setDrawnGeostore: PropTypes.func.isRequired,
-    getGeostoreId: PropTypes.func
+    getGeostoreId: PropTypes.func,
+    popupActions: PropTypes.array,
+    onSelectBoundary: PropTypes.func
   };
 
   static defaultProps = {
@@ -245,7 +247,9 @@ class MapComponent extends Component {
       drawing,
       loading,
       loadingMessage,
-      basemap
+      basemap,
+      popupActions,
+      onSelectBoundary
     } = this.props;
 
     return (
@@ -268,7 +272,11 @@ class MapComponent extends Component {
           {map => (
             <Fragment>
               {/* POPUP */}
-              <Popup map={map} />
+              <Popup
+                map={this.map}
+                buttons={popupActions}
+                onSelectBoundary={onSelectBoundary}
+              />
               {/* LAYER MANAGER */}
               <LayerManager map={map} />
               {/* DRAWING */}

@@ -42,7 +42,8 @@ class MainMapComponent extends PureComponent {
       tooltipData,
       handleClickMap,
       handleShowTooltip,
-      recentActive
+      recentActive,
+      setMainMapAnalysisView
     } = this.props;
 
     return (
@@ -76,7 +77,16 @@ class MainMapComponent extends PureComponent {
                 open={showTooltip}
                 disabled={!isDesktop}
               >
-                <Map className="main-map" smallView={!isDesktop} />
+                <Map
+                  className="main-map"
+                  onSelectBoundary={setMainMapAnalysisView}
+                  popupActions={[
+                    {
+                      label: 'Analyze',
+                      action: setMainMapAnalysisView
+                    }
+                  ]}
+                />
               </Tooltip>
             </div>
             {isDesktop &&
@@ -124,7 +134,8 @@ MainMapComponent.propTypes = {
   embed: PropTypes.bool,
   recentActive: PropTypes.bool,
   tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  showTooltip: PropTypes.bool
+  showTooltip: PropTypes.bool,
+  setMainMapAnalysisView: PropTypes.func
 };
 
 export default MainMapComponent;

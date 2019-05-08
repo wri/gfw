@@ -40,10 +40,10 @@
       }
     }
 
-    .nav-footer {
+    .popup-footer {
       margin-top: rem(20px);
 
-      .popup-action-btn {
+      > button {
         min-width: rem(200px);
         margin: auto;
       }

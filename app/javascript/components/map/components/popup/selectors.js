@@ -8,11 +8,15 @@ import lineString from 'turf-linestring';
 import {
   getActiveDatasetsFromState,
   getInteractions,
-  getInteractionSelected,
-  getInteractionsLatLng
+  getInteractionSelected
 } from 'components/map/selectors';
 
 const getSearch = state => state.location && state.location.search;
+const getLatLng = state =>
+  state.map &&
+  state.map.data &&
+  state.map.data.interactions &&
+  state.map.data.interactions.latlng;
 const getMap = (state, { map }) => map;
 
 export const getIsBoundary = createSelector(
@@ -21,10 +25,11 @@ export const getIsBoundary = createSelector(
     interaction && interaction.layer && interaction.layer.isBoundary
 );
 
-export const getButtonState = createSelector(
+export const getShouldZoomToShape = createSelector(
   [getInteractionSelected, getMap],
   (selected, map) => {
     if (!selected) return null;
+    if (map.getZoom() > 12) return false;
 
     const { data, layer, geometry } = selected;
     const { cartodb_id, wdpaid } = data || {};
@@ -34,7 +39,7 @@ export const getButtonState = createSelector(
     const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
     const isUse = cartodb_id && tableName;
 
-    if (isAdmin || isWdpa || isUse) return 'ANALYZE';
+    if (isAdmin || isWdpa || isUse) return false;
 
     // get bbox of geometry
     const shapeBbox = bbox(geometry);
@@ -52,7 +57,7 @@ export const getButtonState = createSelector(
     const mapArea = area(mapPolygon);
     const ratio = shapeArea / mapArea;
 
-    return ratio > 0.25 || map.getZoom() > 12 ? 'ANALYZE' : 'ZOOM';
+    return ratio < 0.25;
   }
 );
 
@@ -145,9 +150,9 @@ export const getPopupProps = createStructuredSelector({
   selected: getInteractionSelected,
   tableData: getTableData,
   cardData: getCardData,
-  latlng: getInteractionsLatLng,
+  latlng: getLatLng,
   activeDatasets: getActiveDatasetsFromState,
   search: getSearch,
   isBoundary: getIsBoundary,
-  buttonState: getButtonState
+  zoomToShape: getShouldZoomToShape
 });

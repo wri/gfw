@@ -71,6 +71,7 @@ const setMapLoading = (state, { payload }) => ({
 const setMapBbox = (state, { payload }) => ({
   ...state,
   data: {
+    ...state.data,
     bbox: payload
   }
 });
