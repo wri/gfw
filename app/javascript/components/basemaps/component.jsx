@@ -51,7 +51,7 @@ class Basemaps extends React.PureComponent {
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(item)}
+        onClick={() => selectBasemap({ value: item.value })}
       >
         <div
           className="basemaps-list-item-image"
@@ -125,19 +125,12 @@ class Basemaps extends React.PureComponent {
       planetPeriodSelected
     } = this.props;
     const { planetTooltipOpen } = this.state;
-    const { url, interval, year, period } = planetBasemapSelected || {};
-    const basemap = {
-      value: 'planet',
-      url,
-      interval,
-      planetYear: year,
-      period
-    };
+    const { url } = planetBasemapSelected || {};
 
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() => selectBasemap(basemap)}
+        onClick={() => selectBasemap({ value: 'planet', url })}
       >
         <div
           className="basemaps-list-item-image"
@@ -178,10 +171,7 @@ class Basemaps extends React.PureComponent {
                         f => f.value === selected
                       );
                       selectBasemap({
-                        ...basemap,
-                        interval: selected,
-                        planetYear:
-                          (selectedInvertal && selectedInvertal.year) || null,
+                        value: 'planet',
                         url: (selectedInvertal && selectedInvertal.url) || ''
                       });
                     }}
@@ -198,8 +188,7 @@ class Basemaps extends React.PureComponent {
                           f => f.value === parseInt(selected, 10)
                         );
                         selectBasemap({
-                          ...basemap,
-                          planetYear: parseInt(selected, 10),
+                          value: 'planet',
                           url: (selectedYear && selectedYear.url) || ''
                         });
                       }}
@@ -216,8 +205,7 @@ class Basemaps extends React.PureComponent {
                           f => f.value === selected
                         );
                         selectBasemap({
-                          ...basemap,
-                          period: selected,
+                          value: 'planet',
                           url: (selectedPeriod && selectedPeriod.url) || ''
                         });
                       }}
