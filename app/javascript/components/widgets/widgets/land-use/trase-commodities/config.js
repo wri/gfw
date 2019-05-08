@@ -6,8 +6,8 @@ export default {
   types: ['country'],
   admins: ['adm0'],
   options: {
-    // startYears: true,
-    // endYears: true,
+    startYears: true,
+    endYears: true,
     units: ['t', '%'],
     commodities: true
   },
