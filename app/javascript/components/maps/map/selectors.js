@@ -17,6 +17,7 @@ const selectMapUrlState = state =>
   state.location && state.location.query && state.location.query.map;
 const selectMapLoading = state => state.map && state.map.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
+const selectBasemapsLoading = state => state.basemaps && state.basemaps.loading;
 const selectLatestLoading = state => state.latest && state.latest.loading;
 const selectRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
@@ -127,7 +128,8 @@ export const getMapLoading = createSelector(
     selectLatestLoading,
     selectDatasetsLoading,
     selectDrawLoading,
-    selectRecentImageryLoading
+    selectRecentImageryLoading,
+    selectBasemapsLoading
   ],
   (
     mapLoading,
@@ -135,14 +137,16 @@ export const getMapLoading = createSelector(
     latestLoading,
     datasetsLoading,
     drawLoading,
-    recentImageryLoading
+    recentImageryLoading,
+    basemapsLoading
   ) =>
     mapLoading ||
     geostoreLoading ||
     latestLoading ||
     datasetsLoading ||
     drawLoading ||
-    recentImageryLoading
+    recentImageryLoading ||
+    basemapsLoading
 );
 
 export const getLoadingMessage = createSelector(
@@ -444,17 +448,25 @@ export const getWidgetsWithLayerParams = createSelector(
         (params && params.endDate) || (decodeParams && decodeParams.endDate);
       const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
 
+      // fix for 2018 data not being ready. please remove once active
+      const newSettings = {
+        ...params,
+        ...decodeParams,
+        ...(startYear && {
+          startYear
+        }),
+        ...(endYear && {
+          endYear
+        })
+      };
+
       return {
         ...w,
         settings: {
           ...w.settings,
-          ...params,
-          ...decodeParams,
-          ...(startYear && {
-            startYear
-          }),
-          ...(endYear && {
-            endYear
+          ...newSettings,
+          ...(newSettings.endYear > w.settings.endYear && {
+            endYear: w.settings.endYear
           })
         }
       };

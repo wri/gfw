@@ -109,6 +109,7 @@ class Datasets extends PureComponent {
                           onToggle={onToggleLayer}
                           onInfoClick={setModalMetaSettings}
                           showSubtitle
+                          category={datasetCategory}
                         />
                       ))
                     ) : (
@@ -128,6 +129,7 @@ class Datasets extends PureComponent {
                       data={{ ...d, dataset: d.id }}
                       onToggle={onToggleLayer}
                       onInfoClick={setModalMetaSettings}
+                      category={datasetCategory}
                     />
                   ))}
             </Fragment>

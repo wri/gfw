@@ -1,7 +1,7 @@
 export default {
   period: 'week',
   weeks: 13,
-  dataset: 'MODIS',
+  dataset: 'VIIRS',
   layerStartDate: null,
   layerEndDate: null
 };

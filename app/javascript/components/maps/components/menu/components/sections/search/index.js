@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { CancelToken } from 'axios';
 import { track } from 'app/analytics';
+import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 
 import Component from './component';
 
@@ -53,4 +54,6 @@ SearchMenu.propTypes = {
   locations: PropTypes.array
 };
 
-export default connect(mapStateToProps, null)(SearchMenu);
+export default connect(mapStateToProps, { onInfoClick: setModalMetaSettings })(
+  SearchMenu
+);

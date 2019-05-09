@@ -1,0 +1,21 @@
+@import '~styles/settings.scss';
+
+.c-checkbox {
+  width: rem(16px);
+  height: rem(16px);
+  border: solid 1px $slate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $white;
+  cursor: pointer;
+
+  .green-square {
+    width: rem(8px);
+    height: rem(8px);
+
+    &.checked {
+      background-color: $green-gfw;
+    }
+  }
+}

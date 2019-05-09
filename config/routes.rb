@@ -118,6 +118,10 @@ Gfw::Application.routes.draw do
   get '/about' => 'about#index'
   get '/about(/:section)' => 'about#index'
 
+  # topics
+  get '/topics' => redirect('/topics/biodiversity')
+  get '/topics/:tab' => 'topics#index'
+
   # thank you
   get '/thank-you' => 'thankyou#index'
 
@@ -157,9 +161,6 @@ Gfw::Application.routes.draw do
   get '/cache/keys' => 'cache#keys'
   post '/cache/add' => 'cache#add'
   get '/cache/*id' => 'cache#index'
-
-  # sitemap
-  get '/sitemap' => 'sitemap#index'
 
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false
