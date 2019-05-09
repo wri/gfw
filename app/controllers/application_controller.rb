@@ -50,9 +50,18 @@ class ApplicationController < ActionController::Base
         title: 'Thank You'
       },
       types: {
-        use: 'Shape',
-        geostore: 'Custom Area',
-        wdpa: 'Protected Area'
+        use: {
+          title: 'Area of Interest',
+          desc: 'Explore the status of forests within your area of interest by layering data to create custom maps of forest change, cover and use.'
+        },
+        geostore: {
+          title: 'Custom Area',
+          desc: 'Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use.'
+        },
+        wdpa: {
+          title: 'Protected Area',
+          desc: 'Explore the status of forests in protected areas by layering data to create custom maps of forest change, cover and use.'
+        }
       }
     }
 
@@ -92,11 +101,11 @@ class ApplicationController < ActionController::Base
       @location_title = params[:type] ? (@typeKey || params[:type].capitalize) : nil
     else
       if params[:adm2]
-        @location_title = "#{@location['adm2']}, #{@location['adm1']}, #{@location['name']} | #{params[:type].capitalize}"
+        @location_title = "#{@location['adm2']}, #{@location['adm1']}, #{@location['name']}"
       elsif params[:adm1]
-        @location_title = "#{@location['adm1']}, #{@location['name']} | #{params[:type].capitalize}"
+        @location_title = "#{@location['adm1']}, #{@location['name']}"
       elsif params[:adm0]
-        @location_title = "#{@location['name']} | #{params[:type].capitalize}"
+        @location_title = "#{@location['name']}"
       else
         @location_title = params[:type] ? (@typeKey || params[:type].capitalize) : nil
       end
