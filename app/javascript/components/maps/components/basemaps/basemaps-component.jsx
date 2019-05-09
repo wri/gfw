@@ -30,6 +30,9 @@ class Basemaps extends React.PureComponent {
     isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func,
+    activeRoads: PropTypes.object.isRequired,
+    selectRoads: PropTypes.func.isRequired,
+    roads: PropTypes.object.isRequired,
     setMapSettings: PropTypes.func,
     planetInvertalOptions: PropTypes.array,
     planetIntervalSelected: PropTypes.object,
@@ -259,6 +262,9 @@ class Basemaps extends React.PureComponent {
       labels,
       isDesktop,
       setModalMetaSettings
+      // activeRoads,
+      // selectRoads,
+      // roads
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -308,6 +314,15 @@ class Basemaps extends React.PureComponent {
                 onChange={this.props.selectLabels}
               />
             </li>
+            {/* <li className="basemaps-options-wrapper">
+              <Dropdown
+                className="theme-dropdown-button"
+                label="roads"
+                value={activeRoads}
+                options={Object.values(roads)}
+                onChange={selectRoads}
+              />
+            </li> */}
           </ul>
         </div>
         <div className="basemaps-bottom-section">
