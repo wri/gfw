@@ -124,7 +124,7 @@ class MapPromptsContainer extends PureComponent {
             placement: 'right',
             disableBeacon: true,
             content:
-              'Explore data related to important forest topics, and Places to Watch (high priority areas with recent forest loss), and stories about forests.',
+              'Explore data related to important forest topics, Places to Watch (high priority areas with recent forest loss), and stories about forests.',
             actions: {
               next: () => {
                 this.props.setMenuSettings({
