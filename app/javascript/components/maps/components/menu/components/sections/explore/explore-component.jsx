@@ -39,6 +39,14 @@ class Explore extends PureComponent {
           setMenuSettings({ exploreType: 'placesToWatch' });
           track('mapMenuExploreCategory', { label: 'Places to watch' });
         }
+      },
+      {
+        label: 'Stories',
+        active: section === 'stories',
+        onClick: () => {
+          setMenuSettings({ exploreType: 'stories' });
+          track('mapMenuExploreCategory', { label: 'Stories' });
+        }
       }
     ];
 

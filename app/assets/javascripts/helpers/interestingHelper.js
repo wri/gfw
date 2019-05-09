@@ -1,5 +1,5 @@
 /* eslint-disable */
-define([], () => {
+define([], function() {
   var interestingHelper = {
     stories_on_the_map: {
       title: 'User stories on the map',
