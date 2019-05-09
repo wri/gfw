@@ -162,9 +162,6 @@ Gfw::Application.routes.draw do
   post '/cache/add' => 'cache#add'
   get '/cache/*id' => 'cache#index'
 
-  # sitemap
-  get '/sitemap' => 'sitemap#index'
-
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false
   get '/robots.:format' => 'robots#index'

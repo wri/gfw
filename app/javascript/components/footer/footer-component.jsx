@@ -95,10 +95,7 @@ class Footer extends PureComponent {
                     </li>
                   </ul>
                 </div>
-                <div className="footer-links -links-contact-sitemap">
-                  <a className="text-button" href="/sitemap">
-                    SITEMAP
-                  </a>
+                <div className="footer-links -links-contact">
                   <button
                     onClick={() => this.props.setModalContactUsOpen(true)}
                     className="text-button footer-links__contact"
