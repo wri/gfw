@@ -30,6 +30,10 @@ class MapComponent extends PureComponent {
       this.setLabelStyles();
     }
 
+    // if (mapReady && roads.value !== prevProps.roads.value) {
+    //   this.setRoadsLayout();
+    // }
+
     if (mapReady && basemap.value !== prevProps.basemap.value) {
       this.setBasemapStyles();
     }
@@ -85,6 +89,23 @@ class MapComponent extends PureComponent {
           });
         }
       });
+    }
+  };
+
+  setRoadsLayout = () => {
+    const { roads } = this.props;
+    if (this.map && roads) {
+      const { layout } = roads || {};
+      const allLayers = this.map.getStyle().layers;
+      const roadsLayer = allLayers.find(
+        l => l.id.includes('roads') && l.type === 'line'
+      );
+      const layoutOptions = layout && Object.entries(layout);
+      if (layoutOptions && roadsLayer) {
+        layoutOptions.forEach(opt => {
+          this.map.setLayoutProperty(roadsLayer.id, opt[0], opt[1]);
+        });
+      }
     }
   };
 
@@ -183,7 +204,8 @@ MapComponent.propTypes = {
   lat: PropTypes.number,
   lng: PropTypes.number,
   zoom: PropTypes.number,
-  smallView: PropTypes.bool
+  smallView: PropTypes.bool,
+  roads: PropTypes.object
 };
 
 export default MapComponent;
