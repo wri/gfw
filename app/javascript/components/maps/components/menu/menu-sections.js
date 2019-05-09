@@ -181,7 +181,12 @@ export const datasetsSections = [
     category: 'sandbox',
     icon: layersIcon,
     Component: Datasets,
-    subCategories: []
+    subCategories: [
+      {
+        slug: 'sandbox',
+        title: 'Sandbox layers'
+      }
+    ]
   }),
   {
     label: 'layers',
