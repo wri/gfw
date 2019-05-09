@@ -8,9 +8,10 @@ import './themes/switch-light.scss';
 
 class Switch extends PureComponent {
   render() {
-    const { theme, label, value, options, onChange } = this.props;
+    const { theme, label, value, options, onChange, className } = this.props;
+
     return (
-      <div className={`c-switch ${theme || ''}`}>
+      <div className={`c-switch ${theme || ''} ${className || ''}`}>
         {label && <div className="label">{label}</div>}
         <Toggle
           icons={{
@@ -35,7 +36,8 @@ Switch.propTypes = {
   label: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default Switch;

@@ -154,9 +154,10 @@ export const getLocationObject = createSelector(
       return locationTypes[location.type];
     }
 
-    const locationObject = location.adm0
-      ? adms.find(a => a.value === location[adminLevel])
-      : { label: location.type, value: location.type };
+    const locationObject =
+      location.adm0 && adms
+        ? adms.find(a => a.value === location[adminLevel])
+        : { label: location.type, value: location.type };
     let parentObject = {};
 
     if (adminLevel === 'adm0') {

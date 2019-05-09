@@ -54,13 +54,13 @@ class ModalSubscribe extends PureComponent {
         isOpen={open}
         contentLabel="Subscribe"
         onRequestClose={this.handleCloseModal}
+        title={
+          saved
+            ? 'Subscription saved'
+            : `Subscribe to forest change alerts for ${locationName}`
+        }
       >
         <div className="c-modal-subscribe">
-          <h3>
-            {saved
-              ? 'Subscription saved'
-              : `Subscribe to forest change alerts for ${locationName}`}
-          </h3>
           <div className="subscribe-body">
             {loading && <Loader />}
             {!loading && isEmpty(userData) && this.renderUserLoginForm()}

@@ -34,25 +34,4 @@
       }
     }
   }
-
-  .timeline {
-    .slick-dots {
-      @media screen and (min-width: $screen-m) {
-        margin-top: rem(50px);
-      }
-
-      @media screen and (min-width: $screen-xl) {
-        visibility: hidden;
-      }
-    }
-
-    .slick-prev {
-      background-color: transparent;
-      border: $green-gfw 1px solid;
-
-      svg {
-        fill: $slate;
-      }
-    }
-  }
 }

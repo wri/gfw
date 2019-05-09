@@ -15,6 +15,7 @@ export const selectWidget = (state, { widget }) => widget;
 export const selectLocationName = (state, { locationName }) => locationName;
 export const selectWidgetMetaKey = (state, { config, widget, whitelist }) =>
   (widget === 'treeCover' &&
+  whitelist &&
   whitelist.length &&
   whitelist.includes('plantations')
     ? 'widget_natural_vs_planted'
