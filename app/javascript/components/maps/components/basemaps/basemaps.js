@@ -46,6 +46,13 @@ class BasemapsContainer extends React.Component {
     });
   };
 
+  selectRoads = roads => {
+    this.props.setMapSettings({ roads: roads.value });
+    track('roadsChanged', {
+      roads: roads.label
+    });
+  };
+
   selectBoundaries = item => {
     const { activeDatasets, activeBoundaries } = this.props;
     const filteredLayers = activeBoundaries
@@ -77,6 +84,7 @@ class BasemapsContainer extends React.Component {
         selectBasemap={this.selectBasemap}
         selectLabels={this.selectLabels}
         selectBoundaries={this.selectBoundaries}
+        selectRoads={this.selectRoads}
       />
     );
   }
