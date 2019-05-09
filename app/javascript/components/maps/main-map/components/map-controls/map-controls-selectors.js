@@ -4,12 +4,12 @@ import {
   getRecentImagerySettings,
   getRecentImageryLoading,
   getMapSettings,
-  getActive,
   getRecentImageryDataset
 } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
 import {
   getHidePanels,
-  getShowBasemaps
+  getShowBasemaps,
+  getShowRecentImagery
 } from 'components/maps/main-map/selectors';
 import { getBasemap } from 'components/maps/map/selectors';
 
@@ -23,8 +23,8 @@ export const getMapControlsProps = createStructuredSelector({
   mapSettings: getMapSettings,
   showBasemaps: getShowBasemaps,
   activeBasemap: getBasemap,
+  showRecentImagery: getShowRecentImagery,
   recentSettings: getRecentImagerySettings,
-  recentActive: getActive,
   recentImageryDataset: getRecentImageryDataset,
   mapTourOpen: getMapTourOpen
 });

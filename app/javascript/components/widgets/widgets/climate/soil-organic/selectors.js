@@ -33,7 +33,7 @@ export const parseData = createSelector(
     getSettings
   ],
   (data, colors, location, locationsDict, locationObj, settings) => {
-    if (isEmpty(data)) return null;
+    if (isEmpty(data) || !locationsDict) return null;
 
     let dataTrimmed = data.map((d, i) => ({
       ...d,

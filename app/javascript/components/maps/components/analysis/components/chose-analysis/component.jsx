@@ -38,7 +38,7 @@ class ChoseAnalysis extends PureComponent {
                 : 'Analysis on shape or:'}
             </div>
             <Dropdown
-              className="boundary-selector"
+              className="boundary-selector analysis-boundary-menu"
               options={boundaries}
               value={selectedBoundaries && selectedBoundaries.value}
               onChange={selectBoundaries}
@@ -93,8 +93,8 @@ class ChoseAnalysis extends PureComponent {
           Draw in the map the area you want to analyze or subscribe to
         </div>
         <Button
-          theme={draw ? 'theme-button-light' : ''}
           className="draw-menu-button"
+          theme={draw ? 'theme-button-light wide' : 'wide'}
           onClick={() => {
             setMapSettings({ draw: !draw });
             if (!draw) {
@@ -174,7 +174,7 @@ class ChoseAnalysis extends PureComponent {
             </div>
           </button>
           <button
-            className={cx({ selected: showDraw })}
+            className={cx('draw-upload-tab', { selected: showDraw })}
             onClick={() => setAnalysisSettings({ showDraw: true })}
           >
             <div className="button-wrapper">
