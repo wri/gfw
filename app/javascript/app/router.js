@@ -15,6 +15,7 @@ export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 export const TOPICS = 'location/TOPICS';
 export const THANKYOU = 'location/THANKYOU';
+export const STORIES = 'location/STORIES';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -151,7 +152,8 @@ export const routes = {
         component: 'water',
         path: '/topics/water'
       }
-    }
+    },
+    header: true
   },
   [DASHBOARDS]: {
     controller: 'dashboards',
@@ -167,7 +169,16 @@ export const routes = {
   [THANKYOU]: {
     path: '/thank-you',
     component: 'thankyou',
-    controller: 'thankyou'
+    controller: 'thankyou',
+    footer: true,
+    header: true
+  },
+  [STORIES]: {
+    path: '/stories',
+    component: 'stories',
+    controller: 'stories',
+    footer: true,
+    header: true
   },
   [NOT_FOUND]: {
     path: '/404',

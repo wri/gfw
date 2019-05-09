@@ -26,7 +26,6 @@ Gfw::Application.routes.draw do
   # howto
   get '/howto/video' => redirect("/howto")
   get '/howto/analyze-forest-change' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
-  get '/howto/subscribe-to-alerts-and-user-stories' => redirect("/howto/analyze-and-subscribe-to-forest-change-data")
   get '/howto/*all' => redirect("/howto/faqs")
 
   # sources
@@ -120,6 +119,10 @@ Gfw::Application.routes.draw do
 
   # thank you
   get '/thank-you' => 'thankyou#index'
+
+  # stories
+  get '/stories' => 'stories#index'
+  get '/stories/*all' => 'stories#index'
 
   # Small Grunts Fund
   get '/grants-and-fellowships' => 'grants_and_fellowships#index'

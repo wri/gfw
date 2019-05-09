@@ -45,6 +45,9 @@ class ApplicationController < ActionController::Base
       thankyou: {
         title: 'Thank You'
       },
+      stories: {
+        title: 'Stories'
+      },
       types: {
         use: 'Shape',
         geostore: 'Custom Area',

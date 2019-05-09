@@ -6,7 +6,6 @@ import { track } from 'app/analytics';
 import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
 
-import Header from 'components/header';
 import Button from 'components/ui/button';
 
 import TopicsHeader from './components/topics-header';
@@ -124,7 +123,6 @@ class TopicsPage extends PureComponent {
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div className="l-topics-page">
-            <Header isMobile={!isDesktop} />
             {!isDesktop &&
               this.state.showRelated && (
                 <div className="related-tools-btn">
