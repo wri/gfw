@@ -261,10 +261,10 @@ class Basemaps extends React.PureComponent {
       basemaps,
       labels,
       isDesktop,
-      setModalMetaSettings,
-      activeRoads,
-      selectRoads,
-      roads
+      setModalMetaSettings
+      // activeRoads,
+      // selectRoads,
+      // roads
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -314,7 +314,7 @@ class Basemaps extends React.PureComponent {
                 onChange={this.props.selectLabels}
               />
             </li>
-            <li className="basemaps-options-wrapper">
+            {/* <li className="basemaps-options-wrapper">
               <Dropdown
                 className="theme-dropdown-button"
                 label="roads"
@@ -322,7 +322,7 @@ class Basemaps extends React.PureComponent {
                 options={Object.values(roads)}
                 onChange={selectRoads}
               />
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="basemaps-bottom-section">

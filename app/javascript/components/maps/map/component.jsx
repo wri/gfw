@@ -23,16 +23,16 @@ class MapComponent extends PureComponent {
   };
 
   componentDidUpdate(prevProps) {
-    const { label, basemap, roads } = this.props;
+    const { label, basemap } = this.props;
     const { mapReady } = this.state;
 
     if (mapReady && label.value !== prevProps.label.value) {
       this.setLabelStyles();
     }
 
-    if (mapReady && roads.value !== prevProps.roads.value) {
-      this.setRoadsLayout();
-    }
+    // if (mapReady && roads.value !== prevProps.roads.value) {
+    //   this.setRoadsLayout();
+    // }
 
     if (mapReady && basemap.value !== prevProps.basemap.value) {
       this.setBasemapStyles();
@@ -147,7 +147,7 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
-          mapStyle="mapbox://styles/resourcewatch/cju8idqwd3js31fo32b0f9y1f"
+          mapStyle="mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc"
           mapOptions={mapOptions}
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}
