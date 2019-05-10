@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
         desc: 'Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world.',
         keywords: 'GFW, about, global forest watch, about gfw, history, staff, world resources institute, wri, about gfw commodities, about gfw fires'
       },
-      map_v2: {
+      map: {
         title: 'Interactive Map',
         description: 'Explore the status of forests worldwide by layering data to create custom maps of forest change, cover, and use.',
         keywords: 'GFW, map, forest map, visualization, data, forest data, geospatial, gis, geo, spatial, analysis, local data, global data, forest analysis, explore, layer, terrain, alerts, tree, cover, loss, search, country, deforestation'
@@ -44,6 +44,9 @@ class ApplicationController < ActionController::Base
       },
       thankyou: {
         title: 'Thank You'
+      },
+      stories: {
+        title: 'Stories'
       },
       types: {
         use: 'Shape',
