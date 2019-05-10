@@ -11,6 +11,6 @@ describe StaticController, type: :controller do
 
   describe 'GET browser_support' do
     subject { get :browser_support }
-    it_behaves_like 'assigns title', "Oops, your browser isn't supported."
+    it_behaves_like 'assigns title', "Browser Not Supported"
   end
 end
