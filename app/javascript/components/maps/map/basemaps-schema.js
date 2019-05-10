@@ -27,9 +27,26 @@ export const labels = {
     }
   },
   noLabels: {
-    label: 'No Labels',
     value: 'noLabels',
+    label: 'No Labels',
     url: '',
+    layout: {
+      visibility: 'none'
+    }
+  }
+};
+
+export const roads = {
+  default: {
+    value: 'default',
+    label: 'Roads',
+    layout: {
+      visibility: 'visible'
+    }
+  },
+  noRoads: {
+    value: 'noRoads',
+    label: 'No roads',
     layout: {
       visibility: 'none'
     }
@@ -64,6 +81,14 @@ export default {
         id: 'water',
         'fill-color': '#aedffd'
       }
+      // {
+      //   id: 'roads',
+      //   'line-color': '#ffc107'
+      // },
+      // {
+      //   id: 'roads-outline',
+      //   'line-color': '#ffffff'
+      // }
     ]
   },
   dark: {
@@ -93,6 +118,14 @@ export default {
         id: 'water',
         'fill-color': '#20201d'
       }
+      // {
+      //   id: 'roads',
+      //   'line-color': '#ffc107'
+      // },
+      // {
+      //   id: 'roads-outline',
+      //   'line-color': '#ffffff'
+      // }
     ]
   },
   satellite: {
@@ -123,6 +156,14 @@ export default {
         id: 'water',
         'fill-color': '#131620'
       }
+      // {
+      //   id: 'roads',
+      //   'line-color': '#ffc107'
+      // },
+      // {
+      //   id: 'roads-outline',
+      //   'line-color': '#ffffff'
+      // }
     ]
   },
   landsat: {
@@ -156,6 +197,14 @@ export default {
         id: 'water',
         'fill-color': '#0C0045'
       }
+      // {
+      //   id: 'roads',
+      //   'line-color': '#ffc107'
+      // },
+      // {
+      //   id: 'roads-outline',
+      //   'line-color': '#ffffff'
+      // }
     ]
   },
   planet: {
