@@ -4,7 +4,7 @@ class MapV2Controller < ApplicationController
   layout 'application_react_spa'
 
   def index
-    @title = @location_title ? "#{@location_title} | #{@title }" : @title
+    @title = @location_title ? "#{@location_title} | #{@title}" : @title
   end
 
 end

@@ -49,19 +49,21 @@ class ApplicationController < ActionController::Base
       thankyou: {
         title: 'Thank You'
       },
-      types: {
-        use: {
-          title: 'Area of Interest',
-          desc: 'Explore the status of forests within your area of interest by layering data to create custom maps of forest change, cover and use.'
-        },
-        geostore: {
-          title: 'Custom Area',
-          desc: 'Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use.'
-        },
-        wdpa: {
-          title: 'Protected Area',
-          desc: 'Explore the status of forests in protected areas by layering data to create custom maps of forest change, cover and use.'
-        }
+      use: {
+        title: 'Area of Interest',
+        desc: 'Explore the status of forests within your area of interest by layering data to create custom maps of forest change, cover and use.'
+      },
+      geostore: {
+        title: 'Custom Area',
+        desc: 'Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use.'
+      },
+      wdpa: {
+        title: 'Protected Area',
+        desc: 'Explore the status of forests in protected areas by layering data to create custom maps of forest change, cover and use.'
+      },
+      global: {
+        title: 'Global',
+        desc: 'Analyze and investigate global data trends in forest change, cover and use with just a few clicks.'
       }
     }
 
@@ -96,9 +98,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_title
-    @typeKey = params[:type] ? @metadata[:types][params[:type].to_sym] : nil
+    @meta = params[:type] ? @metadata[params[:type].to_sym] : nil;
+
     if !@location
-      @location_title = params[:type] ? (@typeKey || params[:type].capitalize) : nil
+      @location_title = params[:type] ? (@meta[:title] || params[:type].capitalize) : nil
+      @location_desc = params[:type] ? @meta[:description] : nil
     else
       if params[:adm2]
         @location_title = "#{@location['adm2']}, #{@location['adm1']}, #{@location['name']}"
@@ -107,7 +111,7 @@ class ApplicationController < ActionController::Base
       elsif params[:adm0]
         @location_title = "#{@location['name']}"
       else
-        @location_title = params[:type] ? (@typeKey || params[:type].capitalize) : nil
+        @location_title = params[:type] ? (@meta[:title] || params[:type].capitalize) : nil
       end
     end
   end
