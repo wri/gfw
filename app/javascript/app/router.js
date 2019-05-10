@@ -106,7 +106,7 @@ export const routes = {
     }
   },
   [MAP]: {
-    controller: 'map_v2',
+    controller: 'map',
     path: '/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     headerOptions: {
@@ -118,7 +118,7 @@ export const routes = {
     }
   },
   [MAP_EMBED]: {
-    controller: 'map_v2',
+    controller: 'map',
     path: '/embed/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     embed: true
