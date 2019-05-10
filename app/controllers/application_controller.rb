@@ -64,6 +64,10 @@ class ApplicationController < ActionController::Base
       global: {
         title: 'Global',
         desc: 'Analyze and investigate global data trends in forest change, cover and use with just a few clicks.'
+      },
+      country: {
+        title: '',
+        desc: 'Analyze and investigate data trends in forest change, cover and use with just a few clicks.'
       }
     }
 
@@ -99,10 +103,10 @@ class ApplicationController < ActionController::Base
 
   def set_title
     @meta = params[:type] ? @metadata[params[:type].to_sym] : nil;
-
+    @desc = params[:type] ? @meta[:desc] : nil
     if !@location
       @location_title = params[:type] ? (@meta[:title] || params[:type].capitalize) : nil
-      @location_desc = params[:type] ? @meta[:description] : nil
+      @desc = params[:type] ? @meta[:desc] : nil
     else
       if params[:adm2]
         @location_title = "#{@location['adm2']}, #{@location['adm1']}, #{@location['name']}"
