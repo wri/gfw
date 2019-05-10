@@ -10,7 +10,6 @@ import howto from 'assets/icons/howto.svg';
 import sgf from 'assets/icons/sgf.svg';
 import openData from 'assets/icons/open-data.svg';
 import blog from 'assets/icons/blog.svg';
-import stories from 'assets/icons/stories.svg';
 import forum from 'assets/icons/forum.svg';
 
 export default {
@@ -61,10 +60,6 @@ export default {
     {
       label: 'My subscriptions',
       path: '/my_gfw/subscriptions'
-    },
-    {
-      label: 'My stories',
-      path: '/my_gfw/stories'
     },
     {
       label: 'My profile',
@@ -135,11 +130,6 @@ export default {
       label: 'Blog',
       path: 'https://blog.globalforestwatch.org',
       icon: blog
-    },
-    {
-      label: 'Stories',
-      path: '/stories',
-      icon: stories
     },
     {
       label: 'Discussion Forum',
