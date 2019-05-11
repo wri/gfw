@@ -1,7 +1,5 @@
-define([
-  'underscore'
-], function(_) {
-
+/* eslint-disable */
+define(['underscore'], function(_) {
   // APP INFO
   // name: name of the app
   // svg: svg-id linked to svg icon definitions
@@ -26,12 +24,14 @@ define([
       link_text: 'Open map',
       classname: 'btn green medium',
       source: 'World Resources Institute',
-      tags: 'data, fires, global-forest-watch, maps, mining, mobile, palm-oil, satellite-imagery'
+      tags:
+        'data, fires, global-forest-watch, maps, mining, mobile, palm-oil, satellite-imagery'
     },
     {
       name: 'Countries',
       svg: '#shape-country',
-      content: 'View country-specific data, analyze forest change within a country or subnational jurisdiction, or view country rankings based on forest statistics.',
+      content:
+        'View country-specific data, analyze forest change within a country or subnational jurisdiction, or view country rankings based on forest statistics.',
       href: '/countries',
       link_text: 'View countries',
       classname: 'btn green medium',
@@ -41,12 +41,14 @@ define([
     {
       name: 'Open Data Portal',
       svg: '#shape-download',
-      content: 'Browse, learn more about, and download the data displayed on Global Forest Watch.',
+      content:
+        'Browse, learn more about, and download the data displayed on Global Forest Watch.',
       href: 'http://data.globalforestwatch.org',
       link_text: 'Browse data',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute',
-      tags: 'data, fires, global-forest-watch, maps, mining, palm-oil, satellite-imagery'
+      tags:
+        'data, fires, global-forest-watch, maps, mining, palm-oil, satellite-imagery'
     },
     {
       name: 'Fires',
@@ -56,7 +58,8 @@ define([
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute',
-      tags: 'asia, data, fires, global-forest-watch, maps, palm-oil, satellite-imagery'
+      tags:
+        'asia, data, fires, global-forest-watch, maps, palm-oil, satellite-imagery'
     },
     {
       name: 'Commodities',
@@ -66,7 +69,8 @@ define([
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute',
-      tags: 'asia, commodities, data, fires, global-forest-watch, maps, mining, palm-oil'
+      tags:
+        'asia, commodities, data, fires, global-forest-watch, maps, mining, palm-oil'
     },
     {
       name: 'Climate',
@@ -81,19 +85,22 @@ define([
     {
       name: 'Global Forest Watch: Sumatra campaign on Tomnod',
       svg: '#shape-tomnod',
-      content: 'Help Global Forest Watch Fires track illegal fires and preserve the health of people and forests in Southeast Asia.',
+      content:
+        'Help Global Forest Watch Fires track illegal fires and preserve the health of people and forests in Southeast Asia.',
       href: 'http://www.tomnod.com/campaign/gfw2_2014/map/2qwx1oy6u',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'Digital Globe',
       mobile_friendly: 'other',
-      tags: 'asia, crowdsourcing, data, fires, maps, palm-oil, satellite-imagery'
+      tags:
+        'asia, crowdsourcing, data, fires, maps, palm-oil, satellite-imagery'
     },
     {
       name: 'Open Landscape Partnership Platform',
       svg: '#shape-landscape',
-      content: 'View and analyze ultra-high-resolution satellite imagery (up to 50 centimeters) for select forest landscapes.',
+      content:
+        'View and analyze ultra-high-resolution satellite imagery (up to 50 centimeters) for select forest landscapes.',
       href: 'http://www.openlandscape.info/',
       target: true,
       link_text: 'Launch App',
@@ -105,7 +112,8 @@ define([
     {
       name: 'Sustainable Palm Oil Transparency Toolkit (SPOTT)',
       svg: '#shape-spott',
-      content: 'Assess oil palm growers on the information that they make publicly available about the sustainability of their operations.',
+      content:
+        'Assess oil palm growers on the information that they make publicly available about the sustainability of their operations.',
       href: 'http://www.sustainablepalmoil.org/spott',
       target: true,
       link_text: 'Launch App',
@@ -117,7 +125,8 @@ define([
     {
       name: 'Monitoring of the Andean Amazon Project (MAAP)',
       svg: '#shape-aca',
-      content: 'View information, maps and analysis from a new deforestation monitoring system for the Andean Amazon.',
+      content:
+        'View information, maps and analysis from a new deforestation monitoring system for the Andean Amazon.',
       href: 'http://maaproject.org/en/',
       target: true,
       link_text: 'Launch App',
@@ -134,19 +143,22 @@ define([
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute and Ministry of Forest and Wildlife of Cameroon',
+      source:
+        'World Resources Institute and Ministry of Forest and Wildlife of Cameroon',
       mobile_friendly: 'other',
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       name: 'Central African Republic Forest Atlas',
       svg: '#shape-CAF',
-      content: 'View an interactive map with land-use data for the Central African Republic.',
+      content:
+        'View an interactive map with land-use data for the Central African Republic.',
       href: 'http://caf.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute and Ministry of Water, Forests, Hunting, and Fishing of the Central African Republic',
+      source:
+        'World Resources Institute and Ministry of Water, Forests, Hunting, and Fishing of the Central African Republic',
       mobile_friendly: 'other',
       tags: 'africa, data, global-forest-watch, maps'
     },
@@ -158,31 +170,36 @@ define([
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute and Ministry of Economy and Sustainable Forestry Development of the Congo',
+      source:
+        'World Resources Institute and Ministry of Economy and Sustainable Forestry Development of the Congo',
       mobile_friendly: 'other',
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       name: 'Democratic Republic of Congo Forest Atlas',
       svg: '#shape-COD',
-      content: 'View an interactive map with land-use data for the Democratic Republic of the Congo.',
+      content:
+        'View an interactive map with land-use data for the Democratic Republic of the Congo.',
       href: 'http://cod.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute and Ministry of Environment, Nature Conservation, and Tourism of the Democratic Republic of the Congo',
+      source:
+        'World Resources Institute and Ministry of Environment, Nature Conservation, and Tourism of the Democratic Republic of the Congo',
       mobile_friendly: 'other',
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       name: 'Equatorial Guinea Forest Atlas',
       svg: '#shape-GNQ',
-      content: 'View an interactive map with land-use data for Equatorial Guinea.',
+      content:
+        'View an interactive map with land-use data for Equatorial Guinea.',
       href: 'http://gnq.forest-atlas.org',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute and Ministry of Agriculture and Forestry of Equatorial Guinea',
+      source:
+        'World Resources Institute and Ministry of Agriculture and Forestry of Equatorial Guinea',
       mobile_friendly: 'other',
       tags: 'africa, data, global-forest-watch, maps'
     },
@@ -194,58 +211,57 @@ define([
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'World Resources Institute and Ministry of the Forest, Environment, and Protection of Natural Resources of Gabon',
+      source:
+        'World Resources Institute and Ministry of the Forest, Environment, and Protection of Natural Resources of Gabon',
       mobile_friendly: 'other',
       tags: 'africa, data, global-forest-watch, maps, mining'
     },
     {
       name: 'Open Foris',
       svg: '#shape-open-foris',
-      content: 'A set of free and open-source software tools that facilitates flexible and efficient data collection, analysis, and reporting.',
+      content:
+        'A set of free and open-source software tools that facilitates flexible and efficient data collection, analysis, and reporting.',
       href: 'http://www.openforis.org/',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
-      source: 'Forestry Department of the Food and Agriculture Organization of the United Nations',
+      source:
+        'Forestry Department of the Food and Agriculture Organization of the United Nations',
       mobile_friendly: 'other',
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
     {
       name: 'Forest Watcher Mobile App',
       svg: '#shape-globe-mobile',
-      content: 'This easy-to-use app enables anyone with limited Internet connectivity to find GFW alerts in their forests and upload observations like photos and other data from the field. The Jane Goodall Institute, in partnership with Global Forest Watch, Google, and TouchLab, is currently piloting this app in Uganda to improve local forest monitoring. The beta version is now live!.',
+      content:
+        'This easy-to-use app enables anyone with limited Internet connectivity to find GFW alerts in their forests and upload observations like photos and other data from the field. The Jane Goodall Institute, in partnership with Global Forest Watch, Google, and TouchLab, is currently piloting this app in Uganda to improve local forest monitoring. The beta version is now live!.',
       href: 'mailto:gfw@wri.org',
-      target: true,      
+      target: true,
       link_text: 'Contact us to become a beta tester',
       classname: 'btn green medium mobile-friendly',
-      source: 'Jane Goodall Institute, Google, TouchLab, and World Resources Institute',
+      source:
+        'Jane Goodall Institute, Google, TouchLab, and World Resources Institute',
       tags: 'crowdsourcing, data, maps, mobile, satellite-imagery'
     },
     {
       name: 'Logging Roads',
       svg: '#shape-logging-roads',
-      content: 'View and help document the spread of logging roads across the Congo Basin region of Central Africa',
+      content:
+        'View and help document the spread of logging roads across the Congo Basin region of Central Africa',
       href: 'http://loggingroads.org/',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'World Resources Institute and Moabi',
       mobile_friendly: 'other',
-      tags: 'crowdsourcing, maps, satellite imagery, Africa, data, Global Forest Watch, logging'
-    },
-    {
-      name: 'Water',
-      svg: '#shape-water',
-      content: 'View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions.',
-      link_text: 'Coming soon',
-      classname: 'btn soon',
-      source: 'World Resources Institute and Aqueduct',
-      tags: 'data, global-forest-watch, maps'
+      tags:
+        'crowdsourcing, maps, satellite imagery, Africa, data, Global Forest Watch, logging'
     },
     {
       name: 'Develop your own app',
       svg: '#shape-develop',
-      content: 'Learn how to develop your own application with Global Forest Watch data.',
+      content:
+        'Learn how to develop your own application with Global Forest Watch data.',
       href: '/developers-corner/',
       link_text: 'Read more',
       classname: 'btn gray medium'
@@ -253,31 +269,29 @@ define([
     {
       name: 'Protecting forests & peatlands in Indonesia',
       svg: '#shape-GAB',
-      content: 'Explore the relationship between company concessions, peatlands, fire hotspots, and deforestation alerts in Indonesia.',
-      href: 'http://www.greenpeace.org/seasia/id/Global/seasia/Indonesia/Code/Forest-Map/en/',
+      content:
+        'Explore the relationship between company concessions, peatlands, fire hotspots, and deforestation alerts in Indonesia.',
+      href:
+        'http://www.greenpeace.org/seasia/id/Global/seasia/Indonesia/Code/Forest-Map/en/',
       target: true,
       link_text: 'Launch App',
       classname: 'btn green medium mobile-friendly',
       source: 'Greenpeace',
       mobile_friendly: 'other',
       tags: 'asia, commodities, palm oil, mining, fires, maps'
-    },
-
-  ]
+    }
+  ];
 
   function tagged(arr) {
-    return _.map(arr, function(app){
+    return _.map(arr, function(app) {
       if (app.tags) {
-        app.tags = _.map(app.tags.split(","), function(t){
+        app.tags = _.map(app.tags.split(','), function(t) {
           return t.trim();
         });
       }
       return app;
-    })
+    });
   }
 
-
   return tagged(applicationsHelper);
-
 });
-

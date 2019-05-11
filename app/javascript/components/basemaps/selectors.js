@@ -9,7 +9,8 @@ import {
   getMapLabels,
   getBasemap,
   getActiveDatasetsFromState,
-  getMapZoom
+  getMapZoom,
+  getMapRoads
 } from 'components/map/selectors';
 import {
   getActiveBoundaryDatasets,
@@ -194,6 +195,8 @@ export const getBasemapsProps = createStructuredSelector({
   labelSelected: getLabelSelected,
   labels: getLabelsOptions,
   landsatYears: getLandsatYears,
+  roads: getMapRoads,
+  // activeRoads: getActiveRoads,
   planetInvertalOptions: selectPlanetBasemapsIntervalOptions,
   planetIntervalSelected: getPlanetBasemapsInvertalSelected,
   planetBasemapSelected: getPlanetBasemapSelected,
