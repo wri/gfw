@@ -13,7 +13,7 @@ export default {
   },
   dataType: 'trase',
   colors: 'extent',
-  metaKey: 'trase',
+  metaKey: 'widget_trase',
   sortOrder: {
     landUse: 1
   },

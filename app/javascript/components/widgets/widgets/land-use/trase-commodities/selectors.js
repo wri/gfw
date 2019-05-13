@@ -22,7 +22,8 @@ export const parseData = createSelector(
       label: capitalize(l.name),
       value: settings.unit === 't' ? l.value : l.height * 100,
       id: l.id,
-      percentage: l.height,
+      volume: l.value,
+      percentage: l.height * 100,
       unit: settings.unit,
       iso: l.geo_id,
       color: colors.main
@@ -45,7 +46,7 @@ export const parseSentence = createSelector(
       endYear,
       commodity: `${locationName} ${commodity.toLowerCase()}`,
       source: topLocation.label,
-      volume: formatNumber({ num: topLocation.value, unit: 't' }),
+      volume: formatNumber({ num: topLocation.volume, unit: 't' }),
       percentage: formatNumber({ num: topLocation.percentage, unit: '%' }),
       location: locationName
     };
