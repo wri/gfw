@@ -292,10 +292,7 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
     flatten(layerGroups.map(d => d.layers))
       .filter(l => l.active && (!l.isRecentImagery || l.params.url))
       .map((l, i) => {
-        let zIndex =
-          l.interactionConfig && l.interactionConfig.article
-            ? 1100 + i
-            : 1000 - i;
+        let zIndex = 1000 - i;
         if (l.isRecentImagery) zIndex = 500;
         if (l.isBoundary) zIndex = 1050 - i;
         return {
