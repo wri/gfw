@@ -158,7 +158,14 @@ class MapControlsButtons extends PureComponent {
               src={activeBasemap.image}
               alt={activeBasemap.value}
             />
-            <span className="basemaps-btn-label">{activeBasemap.label}</span>
+            <div className="basemaps-btn-label-wrapper">
+              <span className="basemaps-btn-label">{activeBasemap.label}</span>
+              {activeBasemap.year && (
+                <span className="basemaps-btn-label-small">
+                  {activeBasemap.year}
+                </span>
+              )}
+            </div>
           </div>
         ) : (
           <Icon

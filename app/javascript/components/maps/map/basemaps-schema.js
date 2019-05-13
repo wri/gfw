@@ -93,7 +93,7 @@ export default {
   },
   dark: {
     value: 'dark',
-    label: 'dark matter',
+    label: 'dark',
     labelsKey: 'lightLabels',
     color: '#31312F',
     image: darkImage,

@@ -48,9 +48,23 @@
         width: rem(38px);
       }
 
-      .basemaps-btn-label {
-        margin-left: 5px;
-        text-transform: uppercase;
+      .basemaps-btn-label-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: rem(10px);
+
+        span {
+          text-align: left;
+          text-transform: uppercase;
+          max-width: 42px;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+        }
+
+        .basemaps-btn-label-small {
+          font-weight: 400;
+        }
       }
     }
   }

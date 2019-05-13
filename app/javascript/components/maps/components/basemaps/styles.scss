@@ -14,6 +14,19 @@ $top-section-height: 125px;
     margin: 0 0 rem(15px);
   }
 
+  .planet-tooltip-close {
+    cursor: pointer;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
+  }
+
   .basemaps-actions {
     display: flex;
 
@@ -42,10 +55,10 @@ $top-section-height: 125px;
   }
 
   .basemaps-top-section {
-    padding: rem(20px) rem(20px) 0;
+    padding: 0 0 rem(20px);
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(15px) rem(20px) rem(25px);
+      padding: rem(15px) rem(20px) 0;
     }
   }
 
@@ -53,7 +66,6 @@ $top-section-height: 125px;
     position: relative;
     height: calc(100% - #{$top-section-height});
     padding: rem(25px) 0 rem(5px);
-    border-top: 1px solid rgba($hot-grey, 0.3);
     border-bottom: 1px solid rgba($hot-grey, 0.3);
     background: $white-tree;
 
@@ -88,7 +100,7 @@ $top-section-height: 125px;
   }
 
   .basemaps-options-wrapper {
-    height: calc(#{$item-size} + #{rem(40px)});
+    height: calc(#{$item-size} + #{rem(15px)});
     width: 48%;
     z-index: 5;
 
@@ -117,61 +129,64 @@ $top-section-height: 125px;
   .basemaps-list {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-  }
 
-  .basemaps-list-item-image {
-    width: $item-size-small;
-    height: $item-size-small;
-    border: 3px solid $white-tree;
-    border-radius: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin: auto;
+    .basemaps-list-item {
+      display: flex;
+      width: $item-size-small;
+      margin-bottom: rem(15px);
 
-    @media screen and (min-width: $screen-m) {
-      width: $item-size;
-      height: $item-size;
-      // margin: initial;
-      border: 3px solid transparent;
-      border-radius: 0;
-    }
-  }
+      @media screen and (min-width: $screen-m) {
+        width: $item-size;
+      }
 
-  .basemaps-list-item {
-    display: inline-block;
-    width: calc(100% / 3);
-    margin-bottom: rem(15px);
+      .basemaps-list-item-button {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
 
-    &:hover .basemaps-list-item-image,
-    &.-active .basemaps-list-item-image {
-      border: 3px solid $green-gfw;
-    }
-  }
+        .basemaps-list-item-image {
+          height: $item-size-small;
+          width: 100%;
+          border: 3px solid $white-tree;
+          border-radius: 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          margin: auto;
 
-  .basemaps-list-item-button {
-    cursor: pointer;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+          @media screen and (min-width: $screen-m) {
+            width: $item-size;
+            height: $item-size;
+            border: 3px solid transparent;
+            border-radius: 0;
+          }
+        }
 
-  .basemaps-list-item-name {
-    display: inline-block;
-    text-align: center;
-    font-size: rem(10px);
-    text-transform: uppercase;
-    color: $slate-light;
-    margin: rem(6px) auto 0;
+        .basemaps-list-item-name {
+          display: inline-block;
+          text-align: center;
+          font-size: rem(10px);
+          text-transform: uppercase;
+          color: $slate-light;
+          margin: rem(6px) auto 0;
 
-    @media screen and (min-width: $screen-m) {
-      text-align: center;
-      width: $item-size;
-      // padding-left: rem(3px);
+          @media screen and (min-width: $screen-m) {
+            text-align: center;
+            width: $item-size;
+            // padding-left: rem(3px);
+          }
+        }
+      }
+
+      &:hover .basemaps-list-item-image,
+      &.-active .basemaps-list-item-image {
+        border: 3px solid $green-gfw;
+      }
     }
   }
 
@@ -240,19 +255,6 @@ $top-section-height: 125px;
       .select-wrapper {
         width: 100%;
       }
-    }
-  }
-
-  .planet-tooltip-close {
-    cursor: pointer;
-    position: absolute;
-    top: rem(15px);
-    right: rem(15px);
-
-    svg {
-      height: 11px;
-      width: 11px;
-      fill: $warm-grey;
     }
   }
 }
