@@ -80,15 +80,15 @@ export default {
       {
         id: 'water',
         'fill-color': '#aedffd'
+      },
+      {
+        id: 'roads',
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
-      // {
-      //   id: 'roads',
-      //   'line-color': '#ffc107'
-      // },
-      // {
-      //   id: 'roads-outline',
-      //   'line-color': '#ffffff'
-      // }
     ]
   },
   dark: {
@@ -117,15 +117,15 @@ export default {
       {
         id: 'water',
         'fill-color': '#20201d'
+      },
+      {
+        id: 'roads',
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
-      // {
-      //   id: 'roads',
-      //   'line-color': '#ffc107'
-      // },
-      // {
-      //   id: 'roads-outline',
-      //   'line-color': '#ffffff'
-      // }
     ]
   },
   satellite: {
@@ -155,15 +155,15 @@ export default {
       {
         id: 'water',
         'fill-color': '#131620'
+      },
+      {
+        id: 'roads',
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
-      // {
-      //   id: 'roads',
-      //   'line-color': '#ffc107'
-      // },
-      // {
-      //   id: 'roads-outline',
-      //   'line-color': '#ffffff'
-      // }
     ]
   },
   landsat: {
@@ -196,15 +196,15 @@ export default {
       {
         id: 'water',
         'fill-color': '#0C0045'
+      },
+      {
+        id: 'roads',
+        'line-color': '#ffc107'
+      },
+      {
+        id: 'roads-outline',
+        'line-color': '#ffffff'
       }
-      // {
-      //   id: 'roads',
-      //   'line-color': '#ffc107'
-      // },
-      // {
-      //   id: 'roads-outline',
-      //   'line-color': '#ffffff'
-      // }
     ]
   },
   planet: {
