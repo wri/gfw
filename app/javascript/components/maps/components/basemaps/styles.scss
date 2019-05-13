@@ -11,7 +11,10 @@ $top-section-height: 125px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(15px);
+    }
   }
 
   .planet-tooltip-close {
@@ -55,7 +58,7 @@ $top-section-height: 125px;
   }
 
   .basemaps-top-section {
-    padding: 0 0 rem(20px);
+    padding: rem(20px) rem(20px) rem(10px);
 
     @media screen and (min-width: $screen-m) {
       padding: rem(15px) rem(20px) 0;
@@ -65,13 +68,15 @@ $top-section-height: 125px;
   .basemaps-bottom-section {
     position: relative;
     height: calc(100% - #{$top-section-height});
-    padding: rem(25px) 0 rem(5px);
+    padding: rem(25px) rem(20px) rem(5px);
     border-bottom: 1px solid rgba($hot-grey, 0.3);
     background: $white-tree;
+    margin-bottom: rem(10px);
 
     @media screen and (min-width: $screen-m) {
       padding: rem(15px) rem(20px) rem(10px);
       background: #fff;
+      margin-bottom: initial;
     }
 
     .menu-arrow {
@@ -101,15 +106,31 @@ $top-section-height: 125px;
 
   .basemaps-options-wrapper {
     height: calc(#{$item-size} + #{rem(15px)});
-    width: 48%;
+    width: calc(100% / 3);
+    margin: rem(20px);
+    margin-left: 0;
     z-index: 5;
 
-    &:first-child {
-      margin-right: rem(10px);
+    @media screen and (min-width: $screen-m) {
+      margin: initial;
+
+      &:first-child {
+        margin-right: rem(10px);
+      }
+
+      &:last-child {
+        margin-left: rem(10px);
+      }
     }
 
-    &:last-child {
-      margin-left: rem(10px);
+    button {
+      margin: initial;
+
+      .value {
+        font-weight: 400;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
     }
 
     & .basemaps-roads {
@@ -148,6 +169,7 @@ $top-section-height: 125px;
         cursor: pointer;
         display: flex;
         flex-direction: column;
+        width: $item-size-small;
 
         .basemaps-list-item-image {
           height: $item-size-small;
@@ -180,6 +202,10 @@ $top-section-height: 125px;
             width: $item-size;
             // padding-left: rem(3px);
           }
+        }
+
+        @media screen and (min-width: $screen-m) {
+          width: $item-size;
         }
       }
 

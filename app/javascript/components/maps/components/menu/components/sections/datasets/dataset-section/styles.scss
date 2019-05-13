@@ -2,6 +2,11 @@
 
 .c-dataset-section {
   position: relative;
+  padding: 0 rem(20px);
+
+  @media screen and (min-width: $screen-m) {
+    padding: initial;
+  }
 
   .dataset-header {
     margin-bottom: rem(20px);
@@ -35,10 +40,10 @@
     }
   }
 
-  &:not(:last-child) {
-    margin-bottom: rem(20px);
-    padding-bottom: rem(20px);
+  margin-bottom: rem(20px);
+  padding-bottom: rem(20px);
 
+  &:not(:last-child) {
     &::before {
       content: '';
       position: absolute;

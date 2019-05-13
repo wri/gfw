@@ -14,9 +14,9 @@ $margin: rem(6px);
 
       .value {
         top: calc(#{$icon-size} + #{$margin});
-        left: rem(-10px);
+        left: 0;
         height: rem(40px);
-        width: rem(70px);
+        width: 100%;
         white-space: initial;
         font-size: rem(11px);
         text-transform: uppercase;
