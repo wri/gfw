@@ -6,11 +6,11 @@ import moment from 'moment';
 
 import {
   getBasemaps,
-  getMapLabels,
   getBasemap,
-  getActiveDatasetsFromState,
+  getMapLabels,
   getMapZoom,
-  getMapRoads
+  getMapRoads,
+  getActiveDatasetsFromState
 } from 'components/map/selectors';
 import {
   getActiveBoundaryDatasets,

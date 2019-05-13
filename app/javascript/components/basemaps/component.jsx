@@ -31,9 +31,9 @@ class Basemaps extends React.PureComponent {
     isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func,
-    activeRoads: PropTypes.object.isRequired,
+    // activeRoads: PropTypes.object.isRequired,
     selectRoads: PropTypes.func.isRequired,
-    roads: PropTypes.object.isRequired,
+    roads: PropTypes.bool.isRequired,
     setMapSettings: PropTypes.func,
     planetInvertalOptions: PropTypes.array,
     planetIntervalSelected: PropTypes.object,
@@ -305,7 +305,7 @@ class Basemaps extends React.PureComponent {
               <Dropdown
                 className="theme-dropdown-button"
                 label="roads"
-                value={activeRoads}
+                // value={activeRoads}
                 options={Object.values(roads)}
                 onChange={selectRoads}
               />
