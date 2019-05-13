@@ -29,6 +29,11 @@ $margin: rem(6px);
       }
     }
 
+    &.is-open .menu-arrow,
+    .c-selector-menu {
+      top: 40px;
+    }
+
     .arrow-btn {
       display: none;
     }

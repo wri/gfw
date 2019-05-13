@@ -4,10 +4,6 @@
   position: relative;
   padding: 0 rem(20px);
 
-  @media screen and (min-width: $screen-m) {
-    padding: initial;
-  }
-
   .dataset-header {
     margin-bottom: rem(20px);
   }
@@ -48,8 +44,9 @@
       content: '';
       position: absolute;
       bottom: 0;
-      right: rem(-20px);
-      width: calc(100% + #{rem(20px)});
+      // right: rem(-20px);
+      left: rem(20px);
+      width: calc(100% - #{rem(20px)});
       height: rem(1px);
       background-color: rgba($hot-grey, 0.3);
     }

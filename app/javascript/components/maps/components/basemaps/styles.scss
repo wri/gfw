@@ -17,19 +17,6 @@ $top-section-height: 125px;
     }
   }
 
-  .planet-tooltip-close {
-    cursor: pointer;
-    position: absolute;
-    top: rem(15px);
-    right: rem(15px);
-
-    svg {
-      height: 11px;
-      width: 11px;
-      fill: $warm-grey;
-    }
-  }
-
   .basemaps-actions {
     display: flex;
 
@@ -68,7 +55,7 @@ $top-section-height: 125px;
   .basemaps-bottom-section {
     position: relative;
     height: calc(100% - #{$top-section-height});
-    padding: rem(25px) rem(20px) rem(5px);
+    padding: rem(25px) 0 rem(5px);
     border-bottom: 1px solid rgba($hot-grey, 0.3);
     background: $white-tree;
     margin-bottom: rem(10px);
@@ -140,6 +127,15 @@ $top-section-height: 125px;
         margin-left: rem(2px);
       }
     }
+
+    .c-selector-menu {
+      left: rem(-20px);
+
+      .c-selector-item {
+        width: rem(90px);
+        padding: rem(5px) rem(10px);
+      }
+    }
   }
 
   .basemap-list-scroll-wrapper {
@@ -161,8 +157,24 @@ $top-section-height: 125px;
       width: $item-size-small;
       margin-bottom: rem(15px);
 
+      &:first-child {
+        margin-left: rem(20px);
+      }
+
+      &:last-child {
+        margin-right: rem(20px);
+      }
+
       @media screen and (min-width: $screen-m) {
         width: $item-size;
+
+        &:first-child {
+          margin-left: initial;
+        }
+
+        &:last-child {
+          margin-right: initial;
+        }
       }
 
       .basemaps-list-item-button {
@@ -173,7 +185,11 @@ $top-section-height: 125px;
 
         .basemaps-list-item-image {
           height: $item-size-small;
+          min-height: $item-size-small;
+          max-height: $item-size-small;
           width: 100%;
+          min-width: $item-size-small;
+          max-width: $item-size-small;
           border: 3px solid $white-tree;
           border-radius: 100%;
           background-position: center;
@@ -182,8 +198,12 @@ $top-section-height: 125px;
           margin: auto;
 
           @media screen and (min-width: $screen-m) {
-            width: $item-size;
             height: $item-size;
+            min-height: $item-size;
+            max-height: $item-size;
+            width: $item-size;
+            min-width: $item-size;
+            max-width: $item-size;
             border: 3px solid transparent;
             border-radius: 0;
           }
@@ -267,6 +287,19 @@ $top-section-height: 125px;
 .c-basemaps-tooltip {
   padding: 20px;
   min-width: 200px;
+
+  .planet-tooltip-close {
+    cursor: pointer;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
+  }
 
   .date-selectors {
     display: flex;

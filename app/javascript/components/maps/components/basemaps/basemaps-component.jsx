@@ -81,7 +81,13 @@ class Basemaps extends React.PureComponent {
   }
 
   renderLandsatBasemap(item) {
-    const { selectBasemap, activeBasemap, landsatYears, basemaps } = this.props;
+    const {
+      selectBasemap,
+      activeBasemap,
+      landsatYears,
+      basemaps,
+      isDesktop
+    } = this.props;
     const year = activeBasemap.year || landsatYears[0].value;
     const basemap = basemaps[item.value]
       ? basemaps[item.value]
@@ -90,13 +96,16 @@ class Basemaps extends React.PureComponent {
     return (
       <button
         className="basemaps-list-item-button"
-        onClick={() =>
+        onClick={() => {
           selectBasemap({
             value: 'landsat',
             url: basemap.url.replace('{year}', basemap.defaultYear),
             year: basemap.defaultYear
-          })
-        }
+          });
+          if (!isDesktop) {
+            this.setState({ showBasemaps: !this.state.showBasemaps });
+          }
+        }}
       >
         <div
           className="basemaps-list-item-image"
@@ -122,6 +131,9 @@ class Basemaps extends React.PureComponent {
                   url: basemap.url.replace('{year}', selectedYear),
                   year: selectedYear
                 });
+                if (!isDesktop) {
+                  this.setState({ showBasemaps: !this.state.showBasemaps });
+                }
               }}
               native
             />
