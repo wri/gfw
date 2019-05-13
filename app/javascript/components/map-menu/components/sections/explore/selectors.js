@@ -65,10 +65,10 @@ const selectPTWData = state => {
                   'dd5df87f-39c2-4aeb-a462-3ef969b20b66'
                 ],
                 opacity: 1,
-                visibility: true,
-                bbox: reverseBbox
+                visibility: true
               }
             ],
+            bbox: reverseBbox,
             basemap: {
               value: 'default'
             },

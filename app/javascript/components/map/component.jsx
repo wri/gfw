@@ -37,7 +37,7 @@ class MapComponent extends Component {
     location: PropTypes.object,
     interactiveLayerIds: PropTypes.array,
     canBound: PropTypes.bool,
-    dataBbox: PropTypes.array,
+    stateBbox: PropTypes.array,
     geostoreBbox: PropTypes.array,
     interaction: PropTypes.object,
     minZoom: PropTypes.number.isRequired,
@@ -66,7 +66,7 @@ class MapComponent extends Component {
       mapRoads,
       setMapSettings,
       canBound,
-      dataBbox,
+      stateBbox,
       geostoreBbox,
       interaction,
       viewport
@@ -74,7 +74,7 @@ class MapComponent extends Component {
     const {
       mapLabels: prevMapLabels,
       mapRoads: prevMapRoads,
-      dataBbox: prevDataBbox,
+      stateBbox: prevStateBbox,
       geostoreBbox: prevGeostoreBbox,
       interaction: prevInteraction
     } = prevProps;
@@ -88,9 +88,9 @@ class MapComponent extends Component {
     }
 
     // if bbox is change by action fit bounds
-    if (canBound && dataBbox !== prevDataBbox) {
+    if (canBound && stateBbox !== prevStateBbox) {
       // eslint-disable-next-line
-      this.setState({ bounds: { bbox: dataBbox, options: { padding: 50 } } });
+      this.setState({ bounds: { bbox: stateBbox, options: { padding: 50 } } });
     }
 
     // if geostore changes
@@ -102,8 +102,8 @@ class MapComponent extends Component {
     }
 
     // reset canBound after fitting bounds
-    if (this.state.bounds && this.state.bounds !== prevState.bounds) {
-      setMapSettings({ canBound: false });
+    if (this.state.bounds && !isEqual(this.state.bounds, prevState.bounds)) {
+      setMapSettings({ canBound: false, bbox: [] });
     }
 
     // fit bounds on cluster if clicked

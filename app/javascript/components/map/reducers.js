@@ -7,8 +7,7 @@ export const initialState = {
       latlng: {},
       interactions: {},
       selected: ''
-    },
-    bbox: null
+    }
   },
   settings: {
     center: {
@@ -25,6 +24,7 @@ export const initialState = {
     },
     labels: true,
     roads: true,
+    bbox: [],
     canBound: true,
     drawing: false,
     datasets: [
@@ -66,14 +66,6 @@ export const initialState = {
 const setMapLoading = (state, { payload }) => ({
   ...state,
   loading: payload
-});
-
-const setMapBbox = (state, { payload }) => ({
-  ...state,
-  data: {
-    ...state.data,
-    bbox: payload
-  }
 });
 
 const setMapInteractions = (state, { payload }) => {
@@ -134,6 +126,5 @@ export default {
   [actions.setMapLoading]: setMapLoading,
   [actions.setMapInteractions]: setMapInteractions,
   [actions.setMapInteractionSelected]: setMapInteractionSelected,
-  [actions.clearMapInteractions]: clearMapInteractions,
-  [actions.setMapBbox]: setMapBbox
+  [actions.clearMapInteractions]: clearMapInteractions
 };

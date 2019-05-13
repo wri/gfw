@@ -25,10 +25,9 @@ class Popup extends Component {
   }
 
   handleClickZoom = selected => {
-    const { setMapSettings, setMapBbox, clearMapInteractions } = this.props;
+    const { setMapSettings, clearMapInteractions } = this.props;
     const newBbox = bbox(selected.geometry);
-    setMapSettings({ canBound: true });
-    setMapBbox(newBbox);
+    setMapSettings({ canBound: true, bbox: newBbox });
     clearMapInteractions();
   };
 
@@ -161,7 +160,6 @@ Popup.propTypes = {
   activeDatasets: PropTypes.array,
   onSelectBoundary: PropTypes.func,
   setMapSettings: PropTypes.func,
-  setMapBbox: PropTypes.func,
   zoomToShape: PropTypes.bool,
   buttons: PropTypes.array
 };

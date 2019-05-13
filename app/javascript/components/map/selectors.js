@@ -111,9 +111,9 @@ export const getGeostoreBbox = createSelector(
   geostore => geostore && geostore.bbox
 );
 
-export const getDataBbox = createSelector(
-  [selectMapData],
-  mapData => mapData && mapData.bbox
+export const getStateBbox = createSelector(
+  [getMapSettings],
+  settings => settings && settings.bbox
 );
 
 export const getMapLoading = createSelector(
@@ -445,7 +445,7 @@ export const getMapProps = createStructuredSelector({
   drawing: getDrawing,
   canBound: getCanBound,
   geostoreBbox: getGeostoreBbox,
-  dataBbox: getDataBbox,
+  stateBbox: getStateBbox,
   interaction: getInteractionSelected,
   interactiveLayerIds: getInteractiveLayerIds,
   basemap: getBasemap

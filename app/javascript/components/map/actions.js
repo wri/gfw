@@ -8,7 +8,6 @@ export const setMapInteractionSelected = createAction(
   'setMapInteractionSelected'
 );
 export const clearMapInteractions = createAction('clearMapInteractions');
-export const setMapBbox = createAction('setMapBbox');
 
 export const setMapSettings = createThunkAction(
   'setMapSettings',

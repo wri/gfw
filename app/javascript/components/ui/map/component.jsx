@@ -176,7 +176,10 @@ class Map extends Component {
     this.setState({ flying: true });
 
     requestAnimationFrame(() => {
-      this.map.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], options);
+      this.map.fitBounds([[bbox[0], bbox[1]], [bbox[2], bbox[3]]], {
+        ...options,
+        linear: true
+      });
 
       this.map.once('moveend', this.onMoveEnd);
     });
