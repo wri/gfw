@@ -132,7 +132,7 @@ export default {
       title: 'Commodities',
       subtitle: 'Recovery state',
       text:
-        'Deforestation-free commodity production is possible. Improved forest monitoring can help companies make more sustainable purchasing decisions, faciliate action against illegal clearing and enable policymakers to create more informed land use allocations.',
+        'Deforestation-free commodity production is possible. Improved forest monitoring can help companies make more sustainable purchasing decisions, facilitate action against illegal clearing and enable policymakers to create more informed land use allocations.',
       img1x: commodities4,
       img2x: commodities4Large,
       prompts: [

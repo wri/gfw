@@ -2,7 +2,6 @@ import climate from 'assets/images/climate.jpg';
 import biodiversity from 'assets/images/biodiversity.jpg';
 import water from 'assets/images/water.jpg';
 import commodities from 'assets/images/commodities.jpg';
-import userStories from 'assets/images/user-stories.jpg';
 import mongabay from 'assets/images/mongabay.jpg';
 import earthJournalism from 'assets/images/earth-journalism.jpg';
 
@@ -13,51 +12,6 @@ export const descriptions = {
 };
 
 export const stories = {
-  user: {
-    slug: 'user',
-    title: 'User stories',
-    summary: 'Stories submitted by GFW users.',
-    image: userStories,
-    buttons: [
-      {
-        text: 'READ MORE',
-        theme: 'theme-button-light theme-button-small',
-        extLink: '/stories'
-      },
-      {
-        text: 'VIEW ON MAP',
-        theme: 'theme-button-small'
-      }
-    ],
-    payload: {
-      mergeQuery: true,
-      map: {
-        center: {
-          lat: 27,
-          lng: 12
-        },
-        zoom: 2,
-        datasets: [
-          // admin boundaries
-          {
-            dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-            layers: [
-              '6f6798e6-39ec-4163-979e-182a74ca65ee',
-              'c5d1e010-383a-4713-9aaa-44f728c0571c'
-            ],
-            opacity: 1,
-            visibility: true
-          },
-          {
-            dataset: 'd7b12b17-9ed4-43ab-b8e4-efa2668c47f8',
-            layers: ['ecddc53a-f7b9-42a8-9e7a-94a30aeef134'],
-            opacity: 1,
-            visibility: true
-          }
-        ]
-      }
-    }
-  },
   monga: {
     slug: 'monga',
     title: 'Mongabay stories',
