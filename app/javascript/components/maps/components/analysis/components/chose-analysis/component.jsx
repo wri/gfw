@@ -68,17 +68,6 @@ class ChoseAnalysis extends PureComponent {
               >
                 biodiversity
               </button>{' '}
-              and{' '}
-              <button
-                onClick={() =>
-                  setMenuSettings({
-                    menuSection: 'datasets',
-                    datasetCategory: 'sandbox'
-                  })
-                }
-              >
-                biodiversity
-              </button>{' '}
               tabs.
             </div>
           </div>
