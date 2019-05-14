@@ -7616,10 +7616,10 @@ layer-manager@^1.10.0:
     reselect "^3.0.1"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^1.16.6-mapbox:
-  version "1.16.6-mapbox"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.16.6-mapbox.tgz#6fd63a39ff760b14e41272eb2e64712eb9eebc5d"
-  integrity sha512-5+HSFsdbFoM8jbZ5TEU6BvZojFCQ66FotoqsAW7a2+eQpPzn9DPr3Ga/82lP5q+3T3qgKvyOD/T400LPGN9cKQ==
+layer-manager@^1.16.7-mapbox:
+  version "1.16.7-mapbox"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.16.7-mapbox.tgz#9a8d2ab42dac13e222346153a3fef62398ec0409"
+  integrity sha512-/CXItOcaj29LoOtOQNg4shZgduvnBaH13fs20ROs4nOaf/c/ba90mcxTN3b5LepHH/jO7d2w3HFhMx6TnzA4Fw==
   dependencies:
     axios "^0.18.0"
     lodash "^4.17.11"
