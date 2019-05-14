@@ -58,19 +58,7 @@ export const parseSentence = createSelector(
     const intactPercentage = intactData && intactData / totalExtent * 100;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label.toLowerCase() : null;
-    // switch (indicator && indicator.value) {
-    //   case 'ifl__mining':
-    //     indicatorLabel = 'mining concessions';
-    //     break;
-    //   case 'ifl__wdpa':
-    //     indicatorLabel = 'protected areas';
-    //     break;
-    //   case 'ifl__landmark':
-    //     indicatorLabel = 'indigenous lands';
-    //     break;
-    //   default:
-    //     indicatorLabel = 'intact forest';
-    // }
+
     const params = {
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
       indicator: indicatorLabel,
