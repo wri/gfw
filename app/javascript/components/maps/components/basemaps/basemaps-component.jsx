@@ -328,12 +328,13 @@ class Basemaps extends React.PureComponent {
       activeBoundaries,
       selectBoundaries,
       boundaries,
+      selectLabels,
       labels,
       isDesktop,
-      setModalMetaSettings
-      // activeRoads,
-      // selectRoads,
-      // roads
+      setModalMetaSettings,
+      activeRoads,
+      selectRoads,
+      roads
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -401,7 +402,7 @@ class Basemaps extends React.PureComponent {
                 })}
                 value={activeLabels}
                 options={Object.values(labels)}
-                onChange={this.props.selectLabels}
+                onChange={selectLabels}
                 selectorIcon={labelsIcon}
               />
             </li>
@@ -412,12 +413,9 @@ class Basemaps extends React.PureComponent {
                   'theme-dropdown-dark-squared': isDesktop
                 })}
                 className="basemaps-roads"
-                value={'roads'}
-                options={[
-                  { label: 'Roads', value: 'roads' },
-                  { label: 'No roads', value: 'noroads' }
-                ]}
-                onChange={() => {}}
+                value={activeRoads && activeRoads.value}
+                options={Object.values(roads)}
+                onChange={selectRoads}
                 selectorIcon={roadsIcon}
               />
             </li>
