@@ -1,0 +1,106 @@
+@import '~styles/settings.scss';
+
+.c-prompt-tooltip {
+  font-size: rem(14px);
+  color: $white;
+  background-color: #333;
+  padding: rem(30px);
+  max-width: rem(300px);
+  position: relative;
+
+  .step-close {
+    position: absolute;
+    top: rem(10px);
+    right: rem(10px);
+    cursor: pointer;
+
+    .step-close-btn {
+      fill: #aaa;
+      width: rem(10px);
+      height: rem(10px);
+    }
+  }
+
+  .step-title {
+    font-size: rem(14px);
+    text-transform: uppercase;
+    margin-bottom: rem(15px);
+    color: #aaa;
+    font-weight: 500;
+  }
+
+  .step-content {
+    margin-bottom: rem(20px);
+    font-size: rem(12px);
+    line-height: rem(18px);
+    color: $white;
+  }
+
+  .step-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .step-btns {
+    display: flex;
+    justify-content: space-between;
+    min-width: rem(90px);
+    width: 100%;
+
+    &.align-left {
+      justify-content: flex-start;
+
+      > button {
+        margin-right: rem(35px);
+      }
+    }
+  }
+
+  .step-nav-btn {
+    font-size: rem(14px);
+    font-weight: 500;
+    color: $green-gfw;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .tour-exit-actions {
+    .intro {
+      margin-bottom: rem(15px);
+    }
+
+    .guide-btn {
+      text-align: left;
+      margin-bottom: rem(15px);
+      height: auto;
+      padding: rem(15px);
+
+      .guide-btn-icon {
+        width: rem(40px);
+        min-width: rem(40px);
+        height: rem(40px);
+        min-height: rem(40px);
+        margin-right: rem(15px);
+        fill: $green-gfw;
+      }
+
+      p {
+        font-size: rem(12px);
+      }
+    }
+  }
+
+  .show-prompts-btn {
+    display: flex;
+    align-items: center;
+    color: #aaa;
+    height: 100%;
+    font-size: rem(13px);
+    cursor: pointer;
+
+    .prompts-checkbox {
+      margin-top: -1px;
+      margin-right: rem(10px);
+    }
+  }
+}

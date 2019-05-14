@@ -1,8 +1,6 @@
 modules:
-  - name: 'map'
   - name: 'static'
   - name: 'landing'
-  - name: 'stories'
   - name: 'connect'
 
 waitSeconds: 200
@@ -52,16 +50,6 @@ paths:
   store: "store"
   Class: "Class.js/Class"
   jasmine: "jasmine"
-
-  # Map
-  # router: "map/router"
-  utils: "map/utils"
-  # views: "map/views"
-  # templates: "map/templates"
-  # services: "map/services"
-  # presenters: "map/presenters"
-  # models: "map/models"
-  # cartocss: "map/cartocss"
 
   # General
   abstract: "abstract"

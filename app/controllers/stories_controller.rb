@@ -1,4 +1,3 @@
 class StoriesController < ApplicationController
-  def index
-  end
+  layout 'application_react_spa'
 end

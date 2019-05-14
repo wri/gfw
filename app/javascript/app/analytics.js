@@ -4,6 +4,7 @@ import { decodeUrlForState } from 'utils/stateToUrl';
 import mapEvents from 'analytics/map';
 import sharedEvents from 'analytics/shared';
 import dashboardsEvents from 'analytics/dashboards';
+import topicsEvents from 'analytics/topics';
 
 const { ANALYTICS_PROPERTY_ID } = process.env;
 let gaInitialized = false;
@@ -22,7 +23,8 @@ export const initGA = () => {
 const events = {
   ...mapEvents,
   ...dashboardsEvents,
-  ...sharedEvents
+  ...sharedEvents,
+  ...topicsEvents
 };
 
 export const handlePageTrack = () => {

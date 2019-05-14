@@ -10,13 +10,14 @@ import { getDayRange } from 'utils/dates';
 
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { initialState } from './reducers';
-import basemaps, { labels } from './basemaps-schema';
+import basemaps, { labels, roads } from './basemaps-schema';
 
 // map state
 const selectMapUrlState = state =>
   state.location && state.location.query && state.location.query.map;
 const selectMapLoading = state => state.map && state.map.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
+const selectBasemapsLoading = state => state.basemaps && state.basemaps.loading;
 const selectLatestLoading = state => state.latest && state.latest.loading;
 const selectRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
@@ -39,6 +40,7 @@ const selectInteractions = state => state.popup && state.popup.interactions;
 // CONSTS
 export const getBasemaps = () => basemaps;
 export const getLabels = () => labels;
+export const getRoads = () => roads;
 
 // SELECTORS
 export const getMapSettings = createSelector([selectMapUrlState], urlState => ({
@@ -67,6 +69,16 @@ export const getLabelKey = createSelector(
 export const getLabel = createSelector(
   [getLabelKey],
   labelsKey => labels[labelsKey] || labels[labelsKey.id]
+);
+
+export const getRoadsKey = createSelector(
+  getMapSettings,
+  settings => settings.roads
+);
+
+export const getActiveRoads = createSelector(
+  [getRoadsKey],
+  roadsKey => roads[roadsKey] || roads[roadsKey.id]
 );
 
 export const getMapZoom = createSelector(
@@ -116,7 +128,8 @@ export const getMapLoading = createSelector(
     selectLatestLoading,
     selectDatasetsLoading,
     selectDrawLoading,
-    selectRecentImageryLoading
+    selectRecentImageryLoading,
+    selectBasemapsLoading
   ],
   (
     mapLoading,
@@ -124,14 +137,16 @@ export const getMapLoading = createSelector(
     latestLoading,
     datasetsLoading,
     drawLoading,
-    recentImageryLoading
+    recentImageryLoading,
+    basemapsLoading
   ) =>
     mapLoading ||
     geostoreLoading ||
     latestLoading ||
     datasetsLoading ||
     drawLoading ||
-    recentImageryLoading
+    recentImageryLoading ||
+    basemapsLoading
 );
 
 export const getLoadingMessage = createSelector(
@@ -433,17 +448,25 @@ export const getWidgetsWithLayerParams = createSelector(
         (params && params.endDate) || (decodeParams && decodeParams.endDate);
       const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
 
+      // fix for 2018 data not being ready. please remove once active
+      const newSettings = {
+        ...params,
+        ...decodeParams,
+        ...(startYear && {
+          startYear
+        }),
+        ...(endYear && {
+          endYear
+        })
+      };
+
       return {
         ...w,
         settings: {
           ...w.settings,
-          ...params,
-          ...decodeParams,
-          ...(startYear && {
-            startYear
-          }),
-          ...(endYear && {
-            endYear
+          ...newSettings,
+          ...(newSettings.endYear > w.settings.endYear && {
+            endYear: w.settings.endYear
           })
         }
       };
@@ -560,5 +583,6 @@ export const getMapProps = createStructuredSelector({
   lng: getMapLng,
   zoom: getMapZoom,
   selectedInteraction: getSelectedInteraction,
-  interactiveLayers: getInteractiveLayers
+  interactiveLayers: getInteractiveLayers,
+  roads: getActiveRoads
 });

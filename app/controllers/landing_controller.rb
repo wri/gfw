@@ -2,7 +2,7 @@ class LandingController < ApplicationController
 
   def index
     require 'open-uri'
-    @title = 'Forest monitoring designed for action'
+    @title = 'Forest Monitoring Designed for Action'
     @desc = 'Global Forest Watch offers the latest data, technology and tools that empower people everywhere to better protect forests.'
     @keywords = 'forests, forest data, forest monitoring, forest landscapes, maps, gis, visualize, geospatial, forest analysis, forest news, forest alerts, conservation, forest updates, forest watch, analysis, deforestation, deforesting, tree cover loss, explore forests, mapping, trees, forest loss'
     @summary = [
@@ -101,13 +101,6 @@ class LandingController < ApplicationController
         "description" => "Identify deforestation risk in commodity supply chains",
         "background" => "/assets/home/commodities@2x.jpg",
         "link" => "http://commodities.globalforestwatch.org"
-      },
-      {
-        "key" => "water",
-        "title" => "Water",
-        "description" => "View critical watershed information, understand type and severity of threats such as forest changes to watershed health, and screen for cost-effective, sustainable solutions",
-        "background" => "/assets/home/water@2x.jpg",
-        "link" => "http://water.globalforestwatch.org/"
       }
     ]
   end

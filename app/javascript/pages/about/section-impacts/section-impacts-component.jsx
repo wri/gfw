@@ -22,26 +22,30 @@ class SectionImpacts extends PureComponent {
             <h3>Impacts</h3>
           </div>
         </div>
-        <Carousel>
-          {data &&
-            data.map(c => (
-              <div key={c.id}>
-                <Card
-                  key={c.title}
-                  data={{
-                    ...c,
-                    buttons: [
-                      {
-                        className: 'read-more',
-                        text: 'READ MORE',
-                        extLink: c.extLink
-                      }
-                    ]
-                  }}
-                />
-              </div>
-            ))}
-        </Carousel>
+        <div className="row">
+          <div className="column small-12">
+            <Carousel>
+              {data &&
+                data.map(c => (
+                  <div key={c.id}>
+                    <Card
+                      key={c.title}
+                      data={{
+                        ...c,
+                        buttons: [
+                          {
+                            className: 'read-more',
+                            text: 'READ MORE',
+                            extLink: c.extLink
+                          }
+                        ]
+                      }}
+                    />
+                  </div>
+                ))}
+            </Carousel>
+          </div>
+        </div>
         <div className="row awards">
           <div className="column small-12">
             <h3>Awards</h3>

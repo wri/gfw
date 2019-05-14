@@ -1,0 +1,20 @@
+@import '~styles/settings.scss';
+
+.c-topics-footer {
+  padding-bottom: rem(55px);
+
+  .footer-title {
+    padding: rem(40px) 0 0;
+    text-transform: uppercase;
+    color: #999;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(80px) 0 0;
+    }
+  }
+
+  .fp-tableCell {
+    display: block !important;
+  }
+}
+
