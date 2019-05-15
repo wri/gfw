@@ -1,0 +1,17 @@
+@import '~styles/settings.scss';
+
+.c-dashboard-map {
+  height: 100%;
+
+  .map-controls {
+    display: none;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+    z-index: 999;
+
+    @media screen and (min-width: $screen-m) {
+      display: block;
+    }
+  }
+}
