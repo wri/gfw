@@ -10,7 +10,7 @@ export default {
   dataType: 'fao',
   metaKey: 'widget_forestry_employment',
   sortOrder: {
-    landUse: 2
+    landUse: 3
   },
   colors: 'employment',
   sentences: {
