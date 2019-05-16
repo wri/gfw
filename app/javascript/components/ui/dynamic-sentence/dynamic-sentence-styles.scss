@@ -9,8 +9,13 @@
 
   strong,
   b,
-  span {
+  span,
+  a {
     font-weight: 500;
+  }
+
+  a {
+    color: $green-gfw;
   }
 
   .c-widgets.minimalist & {
