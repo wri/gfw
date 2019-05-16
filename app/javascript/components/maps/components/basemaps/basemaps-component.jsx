@@ -419,15 +419,6 @@ class Basemaps extends React.PureComponent {
                 selectorIcon={roadsIcon}
               />
             </li>
-            {/* <li className="basemaps-options-wrapper">
-              <Dropdown
-                className="theme-dropdown-button"
-                label="roads"
-                value={activeRoads}
-                options={Object.values(roads)}
-                onChange={selectRoads}
-              />
-            </li> */}
           </ul>
         </div>
         {(isDesktop || this.state.showBasemaps) &&

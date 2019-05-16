@@ -97,13 +97,15 @@ class MapComponent extends PureComponent {
     if (this.map && roads) {
       const { layout } = roads || {};
       const allLayers = this.map.getStyle().layers;
-      const roadsLayer = allLayers.find(
+      const roadsLayers = allLayers.filter(
         l => l.id.includes('roads') && l.type === 'line'
       );
       const layoutOptions = layout && Object.entries(layout);
-      if (layoutOptions && roadsLayer) {
-        layoutOptions.forEach(opt => {
-          this.map.setLayoutProperty(roadsLayer.id, opt[0], opt[1]);
+      if (layoutOptions) {
+        roadsLayers.forEach(layer => {
+          layoutOptions.forEach(opt => {
+            this.map.setLayoutProperty(layer.id, opt[0], opt[1]);
+          });
         });
       }
     }
