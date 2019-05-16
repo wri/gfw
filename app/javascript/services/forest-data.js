@@ -217,10 +217,7 @@ export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
     NEW_SQL_QUERIES.gainGrouped
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
-    .replace(
-      '{WHERE}',
-      getWHEREQuery({ iso: adm0, adm1, adm2, ...params, threshold: 0 })
-    );
+    .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
   return request.get(url);
 };
 
