@@ -108,17 +108,26 @@ export const parseData = createSelector(
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-    return dataTrimmed.map(d => ({
-      ...d,
-      color: colors.main,
-      path: getAdminPath({
-        ...location,
-        country: location.region && location.country,
-        query,
-        id: d.id
-      }),
-      value: settings.unit === 'ha' ? d.loss : d.percentage
-    }));
+    return dataTrimmed.map(d => {
+      let value;
+      if (settings.unit === 'ha') {
+        value = d.loss;
+      } else if (d.percentage <= 100) {
+        value = d.percentage;
+      } else value = 100;
+
+      return {
+        ...d,
+        color: colors.main,
+        path: getAdminPath({
+          ...location,
+          country: location.region && location.country,
+          query,
+          id: d.id
+        }),
+        value
+      };
+    });
   }
 );
 
