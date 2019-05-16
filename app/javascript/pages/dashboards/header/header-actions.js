@@ -139,7 +139,8 @@ export const handleLocationChange = createThunkAction(
       },
       query: {
         ...newQuery,
-        widget: undefined
+        widget: undefined,
+        traseCommodities: undefined
       }
     });
   }

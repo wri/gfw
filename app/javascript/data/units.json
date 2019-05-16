@@ -12,6 +12,10 @@
     "value": "net_usd"
   },
   {
+    "label": "Tonnes (t)",
+    "value": "t"
+  },
+  {
     "label": "% of the country's GDP",
     "value": "net_perc"
   },
