@@ -17,9 +17,8 @@ class SubNavMenu extends PureComponent {
     return (
       <div className={`c-subnav-menu ${theme || ''} ${className || ''}`}>
         <ul className="buttons">
-          {links &&
-            links.length &&
-            links.map(link => {
+          {links && links.length
+            ? links.map(link => {
               let LinkComponent = '';
               if (link.anchor) {
                 LinkComponent = (
@@ -66,7 +65,8 @@ class SubNavMenu extends PureComponent {
                 );
               }
               return <li key={link.label}>{LinkComponent}</li>;
-            })}
+            })
+            : ''}
         </ul>
       </div>
     );

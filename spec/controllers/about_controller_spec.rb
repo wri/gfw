@@ -10,6 +10,6 @@ describe AboutController, type: :controller do
   describe 'GET index' do
     subject { get :index }
     it_behaves_like 'renders index'
-    it_behaves_like 'assigns title', 'About'
+    it_behaves_like 'assigns title', 'About GFW'
   end
 end

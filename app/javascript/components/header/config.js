@@ -3,7 +3,6 @@ import axios from 'axios';
 import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwCommodities from 'assets/logos/gfw-commodities.png';
-import gfwWater from 'assets/logos/gfw-water.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
 
 import developer from 'assets/icons/developer.svg';
@@ -11,7 +10,6 @@ import howto from 'assets/icons/howto.svg';
 import sgf from 'assets/icons/sgf.svg';
 import openData from 'assets/icons/open-data.svg';
 import blog from 'assets/icons/blog.svg';
-import stories from 'assets/icons/stories.svg';
 import forum from 'assets/icons/forum.svg';
 
 export default {
@@ -24,6 +22,28 @@ export default {
     {
       label: 'Dashboard',
       path: '/dashboards/global'
+    },
+    {
+      label: 'Topics',
+      path: '/topics',
+      submenu: [
+        {
+          label: 'Biodiversity',
+          path: '/topics/biodiversity'
+        },
+        {
+          label: 'Climate',
+          path: '/topics/climate'
+        },
+        {
+          label: 'Commodities',
+          path: '/topics/commodities'
+        },
+        {
+          label: 'Water',
+          path: '/topics/water'
+        }
+      ]
     },
     {
       label: 'Blog',
@@ -40,10 +60,6 @@ export default {
     {
       label: 'My subscriptions',
       path: '/my_gfw/subscriptions'
-    },
-    {
-      label: 'My stories',
-      path: '/my_gfw/stories'
     },
     {
       label: 'My profile',
@@ -84,11 +100,6 @@ export default {
       image: gfwCommodities
     },
     {
-      label: 'GFW Water',
-      path: 'http://water.globalforestwatch.org',
-      image: gfwWater
-    },
-    {
       label: 'Forest Watcher',
       path: 'http://forestwatcher.globalforestwatch.org',
       image: forestWatcher
@@ -119,11 +130,6 @@ export default {
       label: 'Blog',
       path: 'https://blog.globalforestwatch.org',
       icon: blog
-    },
-    {
-      label: 'Stories',
-      path: '/stories',
-      icon: stories
     },
     {
       label: 'Discussion Forum',

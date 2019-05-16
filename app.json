@@ -1,9 +1,4 @@
 {
-  "addons": [
-    "heroku-redis",
-    "newrelic",
-    "heroku-postgresql"
-  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
@@ -168,6 +163,9 @@
     },
     "SPARKPOST_SMTP_USERNAME": {
       "required": true
+    },
+    "TRASE_API": {
+      "required": true
     }
   },
   "formation": {
@@ -175,8 +173,5 @@
       "quantity": 1
     }
   },
-  "name": "gfw",
-  "scripts": {
-  },
-  "stack": "cedar-14"
+  "name": "gfw"
 }

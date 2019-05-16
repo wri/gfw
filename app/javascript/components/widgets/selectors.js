@@ -142,23 +142,26 @@ export const getLocationObject = createSelector(
       return locationTypes[location.type];
     }
 
-    const locationObject = location.adm0
-      ? adms.find(a => a.value === location[adminLevel])
-      : { label: location.type, value: location.type };
+    const locationObject =
+      location.adm0 && adms
+        ? adms.find(a => a.value === location[adminLevel])
+        : { label: location.type, value: location.type };
     let parentObject = {};
 
     if (adminLevel === 'adm0') {
       parentObject = { label: 'global', value: 'global' };
     } else if (adminLevel === 'adm1') {
-      parentObject = parent.find(a => a.value === location.adm0) || {
-        label: location.type,
-        value: location.type
-      };
+      parentObject = (parent &&
+        parent.find(a => a.value === location.adm0)) || {
+          label: location.type,
+          value: location.type
+        };
     } else if (adminLevel === 'adm2') {
-      parentObject = parent.find(a => a.value === location.adm1) || {
-        label: location.type,
-        value: location.type
-      };
+      parentObject = (parent &&
+        parent.find(a => a.value === location.adm1)) || {
+          label: location.type,
+          value: location.type
+        };
     }
 
     const returnObject = {

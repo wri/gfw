@@ -30,11 +30,10 @@ class ModalSources extends PureComponent {
   }
 
   getContent() {
-    const { data: { title, body } } = this.props;
+    const { data: { body } } = this.props;
 
     return (
       <div className="c-modal-sources">
-        <h3>{title}</h3>
         <div className="body">{this.parseContent(body)}</div>
       </div>
     );
@@ -47,6 +46,7 @@ class ModalSources extends PureComponent {
         isOpen={open}
         contentLabel={`Sources: ${data && data.title}`}
         onRequestClose={() => setModalSources({ open: false })}
+        title={data && data.title}
       >
         {this.getContent()}
       </Modal>

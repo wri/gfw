@@ -1,0 +1,70 @@
+@import '~styles/settings.scss';
+
+.c-topics-intro {
+  position: relative;
+
+  .titleRow {
+    padding-top: 30px;
+
+    @media screen and (min-width: $screen-m) {
+      margin-top: 70px;
+      padding: 0 $desktop-gutter;
+    }
+  }
+
+  .titleCol {
+    position: relative;
+
+    @media screen and (min-width: $screen-m) {
+      background-color: #e5e5df;
+    }
+  }
+
+  .citation-link {
+    position: absolute;
+    top: rem(10px);
+    right: rem(10px);
+
+    .citation-icon {
+      fill: $slate;
+      opacity: 0.8;
+    }
+  }
+
+  .intro-img {
+    width: 100%;
+    padding: rem(15px);
+
+    img {
+      width: 100%;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      position: absolute;
+      display: initial;
+      padding: 0 rem(80px) 0 0;
+    }
+  }
+
+  .intro-title {
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 40px;
+    color: $slate-light;
+    max-width: 400px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: 36px;
+      padding: rem(30px) 0;
+    }
+  }
+
+  .intro-text {
+    color: $slate-light;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 20px;
+    max-width: 400px;
+    margin-bottom: 30px;
+  }
+}

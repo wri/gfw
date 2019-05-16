@@ -2,13 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'app/analytics';
+import reducerRegistry from 'app/registry';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import * as mapActions from 'components/maps/map/actions';
 
-import * as actions from 'components/maps/map/actions';
+import reducers, { initialState } from './basemaps-reducers';
+import * as ownActions from './basemaps-actions';
 import { getBasemapsProps } from './basemaps-selectors';
 import BasemapsComponent from './basemaps-component';
+
+const actions = {
+  setModalMetaSettings,
+  ...mapActions,
+  ...ownActions
+};
 
 class BasemapsContainer extends React.Component {
   static propTypes = {
@@ -17,21 +26,14 @@ class BasemapsContainer extends React.Component {
     setMapSettings: PropTypes.func.isRequired
   };
 
-  selectBasemap = (basemap, year) => {
+  componentDidMount() {
+    this.props.getPlanetBasemaps();
+  }
+
+  selectBasemap = basemap => {
     const { labels, setMapSettings } = this.props;
     const label = labels[basemap.labelsKey] || labels.default;
-    if (basemap.value === 'landsat') {
-      setMapSettings({
-        basemap: {
-          value: basemap.value,
-          year,
-          url: basemap.url.replace('{year}', year)
-        },
-        label: label.value
-      });
-    } else {
-      setMapSettings({ basemap: { value: basemap.value }, label: label.value });
-    }
+    setMapSettings({ basemap, label: label.value });
     track('basemapChanged', {
       label: basemap.label
     });
@@ -41,6 +43,13 @@ class BasemapsContainer extends React.Component {
     this.props.setMapSettings({ label: label.value });
     track('labelChanged', {
       label: label.label
+    });
+  };
+
+  selectRoads = roads => {
+    this.props.setMapSettings({ roads: roads.value });
+    track('roadsChanged', {
+      roads: roads.label
     });
   };
 
@@ -75,6 +84,7 @@ class BasemapsContainer extends React.Component {
         selectBasemap={this.selectBasemap}
         selectLabels={this.selectLabels}
         selectBoundaries={this.selectBoundaries}
+        selectRoads={this.selectRoads}
       />
     );
   }
@@ -83,11 +93,16 @@ class BasemapsContainer extends React.Component {
 BasemapsContainer.propTypes = {
   activeLabels: PropTypes.object,
   basemaps: PropTypes.object,
-  labels: PropTypes.object
+  labels: PropTypes.object,
+  getPlanetBasemaps: PropTypes.func
 };
 
+reducerRegistry.registerModule('basemaps', {
+  actions: ownActions,
+  reducers,
+  initialState
+});
+
 export default withTooltipEvt(
-  connect(getBasemapsProps, { setModalMetaSettings, ...actions })(
-    BasemapsContainer
-  )
+  connect(getBasemapsProps, actions)(BasemapsContainer)
 );

@@ -13,7 +13,9 @@ export const MAP = 'location/MAP';
 export const MAP_EMBED = 'location/MAP_EMBED';
 export const DASHBOARDS = 'location/DASHBOARDS';
 export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
+export const TOPICS = 'location/TOPICS';
 export const THANKYOU = 'location/THANKYOU';
+export const STORIES = 'location/STORIES';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -104,7 +106,7 @@ export const routes = {
     }
   },
   [MAP]: {
-    controller: 'map_v2',
+    controller: 'map',
     path: '/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     headerOptions: {
@@ -116,10 +118,42 @@ export const routes = {
     }
   },
   [MAP_EMBED]: {
-    controller: 'map_v2',
+    controller: 'map',
     path: '/embed/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
     embed: true
+  },
+  [TOPICS]: {
+    controller: 'topics',
+    path: '/topics/:tab',
+    component: 'topics',
+    sections: {
+      biodiversity: {
+        label: 'Biodiversity',
+        submenu: true,
+        component: 'biodiversity',
+        path: '/topics/biodiversity'
+      },
+      climate: {
+        label: 'Climate',
+        submenu: true,
+        component: 'climate',
+        path: '/topics/climate'
+      },
+      commodities: {
+        label: 'Commodities',
+        submenu: true,
+        component: 'commodities',
+        path: '/topics/commodities'
+      },
+      water: {
+        label: 'Water',
+        submenu: true,
+        component: 'water',
+        path: '/topics/water'
+      }
+    },
+    header: true
   },
   [DASHBOARDS]: {
     controller: 'dashboards',
@@ -135,7 +169,16 @@ export const routes = {
   [THANKYOU]: {
     path: '/thank-you',
     component: 'thankyou',
-    controller: 'thankyou'
+    controller: 'thankyou',
+    footer: true,
+    header: true
+  },
+  [STORIES]: {
+    path: '/stories',
+    component: 'stories',
+    controller: 'stories',
+    footer: true,
+    header: true
   },
   [NOT_FOUND]: {
     path: '/404',
