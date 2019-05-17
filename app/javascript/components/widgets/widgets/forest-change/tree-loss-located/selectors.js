@@ -4,6 +4,7 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getLoss = state => (state.data && state.data.lossByRegion) || null;
@@ -37,7 +38,10 @@ export const mapData = createSelector(
         label: (region && region.label) || '',
         loss,
         percentage,
-        value: settings.unit === 'ha' ? loss : percentage,
+        value:
+          settings.unit === 'ha'
+            ? formatNumber({ num: loss, unit: settings.unit })
+            : percentage,
         path: {
           type,
           payload: {
