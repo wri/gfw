@@ -3646,9 +3646,32 @@ d3-format@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.2.1.tgz#4e19ecdb081a341dafaf5f555ee956bcfdbf167f"
 
+d3-geo-projection@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/d3-geo-projection/-/d3-geo-projection-1.2.2.tgz#ef0e6cdcfa0df236d0e23f2ca7750462ca331f72"
+  integrity sha1-7w5s3PoN8jbQ4j8sp3UEYsozH3I=
+  dependencies:
+    commander "2"
+    d3-array "1"
+    d3-geo "^1.1.0"
+
+d3-geo@1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.6.3.tgz#21683a43a061eaba21a7f254b51d5937eb640756"
+  integrity sha1-IWg6Q6Bh6rohp/JUtR1ZN+tkB1Y=
+  dependencies:
+    d3-array "1"
+
 d3-geo@1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.8.1.tgz#50615c33454487e350db71059f84f71cda2dd983"
+  dependencies:
+    d3-array "1"
+
+d3-geo@^1.1.0:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.11.3.tgz#5bb08388f45e4b281491faa72d3abd43215dbd1c"
+  integrity sha512-n30yN9qSKREvV2fxcrhmHUdXP9TNH7ZZj3C/qnaoU0cVf/Ea85+yT7HY7i8ySPwkwjCNYtmKqQFTvLFngfkItQ==
   dependencies:
     d3-array "1"
 
@@ -11568,6 +11591,15 @@ react-scroll@1.5.4:
     object-assign "^4.1.1"
     prop-types "^15.5.8"
 
+react-simple-maps@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/react-simple-maps/-/react-simple-maps-0.12.1.tgz#afc732362bb8eb2e5609a61d33bf6567d0fdd02a"
+  integrity sha512-htW2qQCnppGAUvWttf8ugZsVD896AfAjJNz3sgQT5zpdLNC+n2xegiNtn5inkD0aLuQWZ43i5cTlhPe0n6hvNQ==
+  dependencies:
+    d3-geo "1.6.3"
+    d3-geo-projection "1.2.2"
+    topojson-client "2.1.0"
+
 react-slick@^0.23.2:
   version "0.23.2"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.23.2.tgz#8d8bdbc77a6678e8ad36f50c32578c7c0f1c54f6"
@@ -13843,6 +13875,13 @@ topo@2.x.x:
   resolved "https://registry.yarnpkg.com/topo/-/topo-2.0.2.tgz#cd5615752539057c0dc0491a621c3bc6fbe1d182"
   dependencies:
     hoek "4.x.x"
+
+topojson-client@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/topojson-client/-/topojson-client-2.1.0.tgz#ff9f7bf38991185e0b4284c2b06ae834f0eac6c8"
+  integrity sha1-/59784mRGF4LQoTCsGroNPDqxsg=
+  dependencies:
+    commander "2"
 
 toposort@^1.0.0:
   version "1.0.7"

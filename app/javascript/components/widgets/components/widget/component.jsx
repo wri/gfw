@@ -101,8 +101,8 @@ class Widget extends PureComponent {
           ...(active &&
             !simple &&
             !embed && {
-              borderColor: colors.main,
-              boxShadow: `0 0px 0px 1px ${colors.main}`
+              borderColor: colors && colors.main,
+              boxShadow: `0 0px 0px 1px ${colors && colors.main}`
             })
         }}
       >

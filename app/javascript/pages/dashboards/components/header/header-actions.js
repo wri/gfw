@@ -143,7 +143,8 @@ export const handleLocationChange = createThunkAction(
           ...(query && query.map),
           canBound: true
         },
-        widget: undefined
+        widget: undefined,
+        traseCommodities: undefined
       }
     });
   }
