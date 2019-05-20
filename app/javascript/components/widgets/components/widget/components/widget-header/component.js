@@ -45,9 +45,9 @@ class WidgetHeader extends PureComponent {
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
         onClick={() => {
           setActiveWidget(widget);
-          if (isDeviceTouch) {
-            setShowMapMobile(true);
-          }
+          // if (isDeviceTouch) {
+          //   setShowMapMobile(true);
+          // }
           track('viewWidgetOnMap', {
             label: `${widget} in ${locationName || ''}`
           });

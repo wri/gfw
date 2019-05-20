@@ -56,7 +56,15 @@ export const getActiveWidget = createSelector(
   (widgets, query) => {
     if (!widgets || !widgets.length) return null;
     if (query && query.widget) return query.widget;
-    return widgets[0].widget;
+    return widgets[0];
+  }
+);
+
+export const getActiveWidgetSlug = createSelector(
+  [getActiveWidget],
+  (widget) => {
+    if (!widget) return null;
+    return widget.widget;
   }
 );
 
@@ -66,6 +74,7 @@ export const getDashboardsProps = createStructuredSelector({
   links: getLinks,
   widgets: getWidgets,
   activeWidget: getActiveWidget,
+  activeWidgetSlug: getActiveWidgetSlug,
   widgetAnchor: getWidgetAnchor,
   noWidgetsMessage: getNoWidgetsMessage
 });

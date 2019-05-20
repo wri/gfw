@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
 import { track } from 'app/analytics';
@@ -36,7 +37,7 @@ class Page extends PureComponent {
       handleCategoryChange,
       noWidgetsMessage,
       widgets,
-      activeWidget
+      activeWidgetSlug
     } = this.props;
 
     return (
@@ -45,7 +46,7 @@ class Page extends PureComponent {
           <Button
             theme="square theme-button-light"
             className="close-map-button"
-            onClick={() => setShowMapMobile(!showMapMobile)}
+            // onClick={() => setShowMapMobile(!showMapMobile)}
           >
             <Icon icon={closeIcon} />
           </Button>
@@ -70,7 +71,7 @@ class Page extends PureComponent {
             className="dashboard-widgets"
             noWidgetsMessage={noWidgetsMessage}
             widgets={widgets}
-            activeWidget={activeWidget}
+            activeWidget={activeWidgetSlug}
           />
         </div>
         <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
@@ -105,7 +106,7 @@ Page.propTypes = {
   noWidgetsMessage: PropTypes.string,
   handleCategoryChange: PropTypes.func,
   widgets: PropTypes.array,
-  activeWidget: PropTypes.string
+  activeWidgetSlug: PropTypes.string
 };
 
 export default Page;
