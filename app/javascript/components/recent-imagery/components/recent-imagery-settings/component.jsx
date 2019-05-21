@@ -38,10 +38,10 @@ class RecentImagerySettings extends PureComponent {
       activeTile,
       tiles,
       loading,
-      moreTilesLoading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
       setRecentImageryLoading,
+      resetRecentImageryData,
       setModalMetaSettings,
       onClickClose,
       error
@@ -145,8 +145,9 @@ class RecentImagerySettings extends PureComponent {
                     value={bands}
                     options={BANDS}
                     onChange={option => {
+                      resetRecentImageryData();
                       setRecentImagerySettings({
-                        bands: option,
+                        bands: option === '0' ? 0 : option,
                         selected: null,
                         selectedIndex: 0
                       });
@@ -157,6 +158,7 @@ class RecentImagerySettings extends PureComponent {
                 </div>
                 <div className="thumbnail-grid">
                   {tiles &&
+                    !error &&
                     !!tiles.length &&
                     tiles.map((tile, i) => (
                       <RecentImageryThumbnail
@@ -201,7 +203,9 @@ class RecentImagerySettings extends PureComponent {
                 message="We can't find additional images for the selection"
               />
             )}
-          {loading && !moreTilesLoading && <Loader className="placeholder" />}
+          {loading &&
+            !error &&
+            (!tiles || !tiles.length) && <Loader className="placeholder" />}
         </div>
       </div>
     );
@@ -215,8 +219,8 @@ RecentImagerySettings.propTypes = {
   setRecentImagerySettings: PropTypes.func,
   setRecentImageryLoading: PropTypes.func,
   setModalMetaSettings: PropTypes.func,
+  resetRecentImageryData: PropTypes.func,
   loading: PropTypes.bool,
-  moreTilesLoading: PropTypes.bool,
   onClickClose: PropTypes.func,
   error: PropTypes.bool
 };

@@ -15,7 +15,7 @@ import { initialState } from './reducers';
 const getData = state => state.recentImagery && state.recentImagery.data;
 export const getRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
-export const getMoreTilesLoading = state =>
+export const getLoadingMoreTiles = state =>
   state.recentImagery && state.recentImagery.loadingMoreTiles;
 const getError = state => state.recentImagery && state.recentImagery.error;
 const getLocation = state => state.location && state.location.query;
@@ -38,7 +38,7 @@ export const getRecentImagerySettings = createSelector(
 );
 
 export const getPosition = createSelector([getMapViewport], viewport => ({
-  lat: viewport.latitiude,
+  lat: viewport.latitude,
   lng: viewport.longitude
 }));
 
@@ -126,7 +126,7 @@ export const getRecentImageryDataset = createSelector(
 export const getRecentImageryProps = createStructuredSelector({
   // settings
   loading: getRecentImageryLoading,
-  moreTilesLoading: getMoreTilesLoading,
+  loadingMoreTiles: getLoadingMoreTiles,
   error: getError,
   active: getActive,
   dates: getDates,

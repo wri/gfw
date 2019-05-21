@@ -56,20 +56,9 @@ export const parseSentence = createSelector(
       .reduce((sum, d) => sum + d);
     const intactData = parsedData.find(d => d.label === 'Intact Forest').value;
     const intactPercentage = intactData && intactData / totalExtent * 100;
-    let indicatorLabel = indicator && indicator.label;
-    switch (indicator && indicator.value) {
-      case 'ifl__mining':
-        indicatorLabel = 'mining concessions';
-        break;
-      case 'ifl__wdpa':
-        indicatorLabel = 'protected areas';
-        break;
-      case 'ifl__landmark':
-        indicatorLabel = 'indigenous lands';
-        break;
-      default:
-        indicatorLabel = 'intact forest';
-    }
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label.toLowerCase() : null;
+
     const params = {
       location: locationName !== 'global' ? `${locationName}'s` : locationName,
       indicator: indicatorLabel,
@@ -79,13 +68,9 @@ export const parseSentence = createSelector(
           : `${format('.2r')(intactPercentage)}%`
     };
 
-    let sentence =
-      indicator && indicator.value === 'ifl' ? initial : withIndicator;
+    let sentence = indicator ? withIndicator : initial;
     if (intactPercentage === 0) {
-      sentence =
-        indicator && indicator.value === 'ifl'
-          ? noIntact
-          : noIntactWithIndicator;
+      sentence = indicator ? noIntactWithIndicator : noIntact;
     }
 
     return {
