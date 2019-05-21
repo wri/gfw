@@ -60,13 +60,10 @@ export const getActiveWidget = createSelector(
   }
 );
 
-export const getActiveWidgetSlug = createSelector(
-  [getActiveWidget],
-  (widget) => {
-    if (!widget) return null;
-    return widget.widget;
-  }
-);
+export const getActiveWidgetSlug = createSelector([getActiveWidget], widget => {
+  if (!widget) return null;
+  return widget.widget;
+});
 
 export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
