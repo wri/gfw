@@ -16,7 +16,7 @@ export const getRecentTiles = ({ lat, lng, start, end, bands, token }) => {
     .replace('{lng}', lng)
     .replace('{start}', start)
     .replace('{end}', end)
-    .replace('{bands}', bands !== 'classified' && bands ? bands : '');
+    .replace('{bands}', !bands || bands === 'classified' ? '' : bands);
   return axios.get(url, { cancelToken: token });
 };
 
@@ -31,11 +31,11 @@ export const getRecentClassifiedImage = ({ imgId, token }) => {
 export const getTiles = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.tiles}`, {
     source_data: sources,
-    bands: bands === 'classified' ? '' : bands
+    bands: !bands || bands === 'classified' ? '' : bands
   });
 
 export const getThumbs = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.thumbs}`, {
     source_data: sources,
-    bands: bands === 'classified' ? '' : bands
+    bands: !bands || bands === 'classified' ? '' : bands
   });
