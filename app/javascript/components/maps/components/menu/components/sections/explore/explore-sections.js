@@ -8,7 +8,7 @@ import earthJournalism from 'assets/images/earth-journalism.jpg';
 export const descriptions = {
   topics: 'Explore data related to the drivers and impacts of forest change.',
   placesToWatch:
-    'Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated quarterly. Sign up <a href="http://connect.wri.org/l/120942/2017-12-07/3mtt5w" target="_blank" rel="noopener nofollower">here</a> to receive an email when new Places to Watch are identified.'
+    'Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated monthly. Sign up <a href="http://connect.wri.org/l/120942/2017-12-07/3mtt5w" target="_blank" rel="noopener nofollower">here</a> to receive an email when new Places to Watch are identified.'
 };
 
 export const stories = {
