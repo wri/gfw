@@ -42,6 +42,7 @@ class RecentImagerySettings extends PureComponent {
       settings: { date, weeks, bands },
       setRecentImagerySettings,
       setRecentImageryLoading,
+      resetRecentImageryData,
       setModalMetaSettings,
       onClickClose,
       error
@@ -145,6 +146,7 @@ class RecentImagerySettings extends PureComponent {
                     value={bands}
                     options={BANDS}
                     onChange={option => {
+                      resetRecentImageryData();
                       setRecentImagerySettings({
                         bands: option,
                         selected: null,
@@ -216,6 +218,7 @@ RecentImagerySettings.propTypes = {
   setRecentImagerySettings: PropTypes.func,
   setRecentImageryLoading: PropTypes.func,
   setModalMetaSettings: PropTypes.func,
+  resetRecentImageryData: PropTypes.func,
   loading: PropTypes.bool,
   moreTilesLoading: PropTypes.bool,
   onClickClose: PropTypes.func,
