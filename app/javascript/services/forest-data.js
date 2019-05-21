@@ -6,7 +6,6 @@ const ADM0_DATASET = process.env.GADM36_ADM0_DATASET;
 const ADM1_DATASET = process.env.GADM36_ADM1_DATASET;
 const ADM2_DATASET = process.env.GADM36_ADM2_DATASET;
 
-const REQUEST_URL = 'https://api.resourcewatch.org/query/{dataset}?sql=';
 const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const NEW_SQL_QUERIES = {
@@ -88,8 +87,15 @@ const buildPolynameSelects = () => {
   return polyString;
 };
 
-const getRequestUrl = (adm0, adm1, adm2, grouped) =>
-  REQUEST_URL.replace('{dataset}', getAdmDatasetId(adm0, adm1, adm2, grouped));
+const getRequestUrl = (adm0, adm1, adm2, grouped) => {
+  const REQUEST_URL = `${
+    adm1 ? process.env.RESOURCE_WATCH_API : process.env.GFW_API
+  }/query/{dataset}?sql=`;
+  return REQUEST_URL.replace(
+    '{dataset}',
+    getAdmDatasetId(adm0, adm1, adm2, grouped)
+  );
+};
 
 const getWHEREQuery = params => {
   const paramKeys = params && Object.keys(params);
@@ -123,7 +129,6 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-
   return request.get(url);
 };
 
