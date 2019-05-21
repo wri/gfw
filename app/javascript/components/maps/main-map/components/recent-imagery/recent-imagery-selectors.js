@@ -10,7 +10,7 @@ import { initialState } from './recent-imagery-reducers';
 const getData = state => state.recentImagery && state.recentImagery.data;
 export const getRecentImageryLoading = state =>
   state.recentImagery && state.recentImagery.loading;
-export const getMoreTilesLoading = state =>
+export const getLoadingMoreTiles = state =>
   state.recentImagery && state.recentImagery.loadingMoreTiles;
 const getError = state => state.recentImagery && state.recentImagery.error;
 const getLocation = state => state.location && state.location.query;
@@ -55,14 +55,6 @@ export const getActiveDatasetsFromState = createSelector(
   getMapSettings,
   settings => settings.datasets
 );
-
-// export const getActive = createSelector(
-//   [getActiveDatasetsFromState, getActive],
-//   (datasets, active) => {
-//     if (isEmpty(datasets)) return null;
-//     return active && !!datasets.find(d => d.isRecentImagery);
-//   }
-// );
 
 export const getFilteredTiles = createSelector(
   [getData, getRecentImagerySettings],
@@ -148,7 +140,7 @@ export const getRecentImageryDataset = createSelector(
 export const getRecentImageryProps = createStructuredSelector({
   // settings
   loading: getRecentImageryLoading,
-  moreTilesLoading: getMoreTilesLoading,
+  loadingMoreTiles: getLoadingMoreTiles,
   error: getError,
   active: getActive,
   dates: getDates,

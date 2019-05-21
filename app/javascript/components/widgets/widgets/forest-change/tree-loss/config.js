@@ -31,6 +31,6 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    co2Emissions: 'and {emissions} of CO\u2082 of emissions'
+    co2Emissions: 'and {emissions} of CO\u2082 emissions'
   }
 };
