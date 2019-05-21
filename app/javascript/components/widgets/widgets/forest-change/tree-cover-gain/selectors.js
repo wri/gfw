@@ -4,7 +4,6 @@ import sumBy from 'lodash/sumBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = state => state.data || null;
@@ -124,10 +123,7 @@ export const parseData = createSelector(
         },
         query
       },
-      value:
-        settings.unit === 'ha'
-          ? formatNumber({ num: d.gain, unit: settings.unit })
-          : d.percentage
+      value: settings.unit === 'ha' ? d.gain : d.percentage
     }));
   }
 );

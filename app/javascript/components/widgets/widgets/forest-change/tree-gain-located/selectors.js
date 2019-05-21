@@ -4,7 +4,6 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-import { formatNumber } from 'utils/format';
 
 // get list data
 const getGain = state => (state.data && state.data.gain) || null;
@@ -34,10 +33,7 @@ export const getSortedData = createSelector(
           label: (region && region.label) || '',
           gain: d.gain,
           percentage,
-          value:
-            settings.unit === 'ha'
-              ? formatNumber({ num: d.gain, unit: settings.unit })
-              : percentage,
+          value: settings.unit === 'ha' ? d.gain : percentage,
           path: {
             type,
             payload: {
