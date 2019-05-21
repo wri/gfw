@@ -33,8 +33,9 @@ export const getSummedByYearsData = createSelector(
     const groupedByIso = groupBy(filteredByYears, 'iso');
     const isos = Object.keys(groupedByIso);
     const mappedData = isos.map(i => {
-      const isoLoss = sumBy(groupedByIso[i], 'loss') || 0;
-      const isoExtent = extent.find(e => e.iso === i).value;
+      const isoLoss = Math.round(sumBy(groupedByIso[i], 'loss')) || 0;
+      const isoExtent = Math.round(extent.find(e => e.iso === i).value) || 1;
+
       return {
         id: i,
         loss: isoLoss,
@@ -108,26 +109,17 @@ export const parseData = createSelector(
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-    return dataTrimmed.map(d => {
-      let value;
-      if (settings.unit === 'ha') {
-        value = d.loss;
-      } else if (d.percentage <= 100) {
-        value = d.percentage;
-      } else value = 100;
-
-      return {
-        ...d,
-        color: colors.main,
-        path: getAdminPath({
-          ...location,
-          country: location.region && location.country,
-          query,
-          id: d.id
-        }),
-        value
-      };
-    });
+    return dataTrimmed.map(d => ({
+      ...d,
+      color: colors.main,
+      path: getAdminPath({
+        ...location,
+        country: location.region && location.country,
+        query,
+        id: d.id
+      }),
+      value: settings.unit === 'ha' ? d.loss : d.percentage
+    }));
   }
 );
 
