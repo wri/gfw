@@ -157,6 +157,7 @@ class RecentImagerySettings extends PureComponent {
                 </div>
                 <div className="thumbnail-grid">
                   {tiles &&
+                    !error &&
                     !!tiles.length &&
                     tiles.map((tile, i) => (
                       <RecentImageryThumbnail
