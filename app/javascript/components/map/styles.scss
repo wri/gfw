@@ -27,7 +27,7 @@
 
   .map-scale {
     position: absolute;
-    right: rem(10px);
+    left: rem(10px);
     bottom: rem(40px);
   }
 
@@ -35,6 +35,7 @@
     position: absolute;
     bottom: rem(10px);
     right: rem(10px);
+    left: rem(10px);
     z-index: 5;
   }
 

@@ -13,7 +13,6 @@ export const setHeaderData = createAction('setHeaderData');
 export const getHeaderData = createThunkAction(
   'getHeaderData',
   params => dispatch => {
-    console.log(params);
     dispatch(setHeaderLoading({ loading: true, error: false }));
     axios
       .all([

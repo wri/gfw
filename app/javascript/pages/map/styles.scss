@@ -12,10 +12,6 @@
     }
 
     .map-attributions {
-      position: absolute;
-      bottom: rem(10px);
-      right: rem(10px);
-      left: rem(10px);
       z-index: 5;
 
       @media screen and (min-width: $screen-m) {

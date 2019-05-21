@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
 import { track } from 'app/analytics';
@@ -24,6 +23,7 @@ import closeIcon from 'assets/icons/close.svg';
 
 import Map from './components/map';
 import Header from './components/header';
+import MapControls from './components/map-controls';
 
 import './styles.scss';
 
@@ -46,7 +46,7 @@ class Page extends PureComponent {
           <Button
             theme="square theme-button-light"
             className="close-map-button"
-            // onClick={() => setShowMapMobile(!showMapMobile)}
+            onClick={() => setShowMapMobile(!showMapMobile)}
           >
             <Icon icon={closeIcon} />
           </Button>
@@ -84,6 +84,7 @@ class Page extends PureComponent {
             </div>
           </Sticky>
         </div>
+        <MapControls className="map-controls" />
         <Share />
         <ModalMeta />
         <ModalTCL />

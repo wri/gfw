@@ -14,4 +14,11 @@
       display: block;
     }
   }
+
+  .mini-legend {
+    position: absolute;
+    left: rem(10px);
+    right: rem(10px);
+    bottom: rem(40px);
+  }
 }
