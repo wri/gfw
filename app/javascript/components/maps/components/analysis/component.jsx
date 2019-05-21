@@ -87,7 +87,7 @@ class AnalysisComponent extends PureComponent {
                 </Button>
               )}
               <Button
-                className="analysis-action-btn"
+                className="analysis-action-btn subscribe-btn"
                 onClick={() => setSubscribeSettings({ open: true })}
               >
                 SUBSCRIBE

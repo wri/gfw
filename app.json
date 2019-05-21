@@ -1,9 +1,4 @@
 {
-  "addons": [
-    "heroku-redis",
-    "newrelic",
-    "heroku-postgresql"
-  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
@@ -112,6 +107,9 @@
     "MAPBOX_TOKEN": {
       "required": true
     },
+    "MapboxAccessToken": {
+      "required": true
+    },
     "NODE_ENV": {
       "required": true
     },
@@ -156,6 +154,9 @@
     },
     "SPARKPOST_SMTP_USERNAME": {
       "required": true
+    },
+    "TRASE_API": {
+      "required": true
     }
   },
   "formation": {
@@ -163,8 +164,5 @@
       "quantity": 1
     }
   },
-  "name": "gfw",
-  "scripts": {
-  },
-  "stack": "cedar-14"
+  "name": "gfw"
 }

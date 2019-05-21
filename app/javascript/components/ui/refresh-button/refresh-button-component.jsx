@@ -8,7 +8,7 @@ import './refresh-button-styles.scss';
 
 const RefreshButton = ({ refetchFn }) => (
   <NoContent className="c-refresh-button">
-    <p>An error occured while fetching data.</p>
+    <span>An error occured while fetching data.</span>
     <Button
       className="refresh-btn"
       onClick={refetchFn}

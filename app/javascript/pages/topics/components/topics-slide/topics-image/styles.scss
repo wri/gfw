@@ -1,0 +1,89 @@
+@import '~styles/settings.scss';
+
+.c-topics-image {
+  position: relative;
+
+  img {
+    width: 100%;
+    z-index: 1;
+    position: relative;
+  }
+
+  .image-info {
+    position: absolute;
+    z-index: 3;
+    border: solid 15px rgba($white, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      .info-btn {
+        background-color: darken($green-gfw, 10%);
+      }
+    }
+  }
+
+  .svg-animation,
+  .gif-animation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+  }
+
+  .co2-arrows {
+    position: absolute;
+    z-index: 2;
+    animation: up 1.5s infinite;
+
+    &.small {
+      width: 10%;
+    }
+
+    &.medium {
+      width: 11%;
+    }
+
+    &.large {
+      width: 13%;
+    }
+
+    &.down {
+      transform: rotate(180deg);
+      animation: down 1.5s infinite;
+    }
+  }
+
+  @keyframes up {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes down {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(20px) rotate(180deg);
+      opacity: 0;
+    }
+  }
+}
+
+.c-topics-info-tooltip {
+  padding: rem(20px);
+  text-align: left;
+
+  p {
+    margin-bottom: rem(15px);
+  }
+}

@@ -30,6 +30,8 @@
   }
 
   .map-tool-btn {
+    width: 100%;
+
     &.active {
       box-shadow: $tooltip-box-shadow;
     }

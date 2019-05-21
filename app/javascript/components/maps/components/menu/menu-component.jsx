@@ -13,8 +13,9 @@ import './menu-styles.scss';
 
 class MapMenu extends PureComponent {
   onToggleLayer = (data, enable) => {
-    const { activeDatasets } = this.props;
-    const { dataset, layer, iso } = data;
+    const { activeDatasets, recentActive, zoom } = this.props;
+    const { dataset, layer, iso, category } = data;
+
     let newActiveDatasets = [...activeDatasets];
     if (!enable) {
       newActiveDatasets = remove(newActiveDatasets, l => l.dataset !== dataset);
@@ -36,6 +37,31 @@ class MapMenu extends PureComponent {
       datasets: newActiveDatasets || [],
       ...(enable && { canBound: true })
     });
+
+    // show recent imagery prompt
+    if (!recentActive && enable && category === 'forestChange') {
+      this.props.setMapPromptsSettings({
+        stepsKey: 'recentImagery',
+        stepsIndex: 0,
+        open: true
+      });
+    }
+
+    // show analysis prompts
+    if (
+      enable &&
+      zoom > 3 &&
+      (category === 'landUse' ||
+        category === 'biodiversity' ||
+        dataset === 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b')
+    ) {
+      this.props.setMapPromptsSettings({
+        stepsKey: 'analyzeAnArea',
+        stepsIndex: 0,
+        open: true
+      });
+    }
+
     track(enable ? 'mapAddLayer' : 'mapRemoveLayer', {
       label: layer
     });
@@ -160,6 +186,7 @@ MapMenu.propTypes = {
   activeSection: PropTypes.object,
   setMenuSettings: PropTypes.func,
   layers: PropTypes.array,
+  zoom: PropTypes.number,
   loading: PropTypes.bool,
   analysisLoading: PropTypes.bool,
   countries: PropTypes.array,
@@ -176,7 +203,8 @@ MapMenu.propTypes = {
   location: PropTypes.object,
   isDesktop: PropTypes.bool,
   embed: PropTypes.bool,
-  recentActive: PropTypes.bool
+  recentActive: PropTypes.bool,
+  setMapPromptsSettings: PropTypes.func
 };
 
 export default MapMenu;

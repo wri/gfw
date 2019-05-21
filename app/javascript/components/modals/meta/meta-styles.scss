@@ -1,171 +1,181 @@
 @import '~styles/settings.scss';
-$mobile-padding: rem(30px);
+$mobile-padding: rem(40px);
 $desktop-padding: rem(50px);
+$mobile-margin: rem(10px);
 
 .c-modal-meta {
-  padding: $mobile-padding;
-  min-width: rem(320px);
-  min-height: rem(320px);
-  width: 100%;
-  max-width: rem(800px);
-  color: $slate;
-  word-break: break-word;
+  margin-top: $mobile-margin !important;
+
+  .modal-content {
+    padding-top: 0;
+  }
 
   @media screen and (min-width: $screen-m) {
-    padding: $desktop-padding;
-    padding-top: rem(40px);
-  }
-
-  .title {
-    font-weight: 500;
-    font-size: rem(16px);
-    text-transform: uppercase;
-    color: $slate;
-    line-height: 1.25;
-  }
-
-  .subtitle {
-    margin-top: rem(5px);
-    font-size: rem(13px);
-    line-height: 1.2;
-    color: $warm-grey;
-    margin-bottom: rem(30px);
-  }
-
-  .meta-table {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    border-top: solid 1px $border;
-    margin: 0 rem(-30px);
     width: auto;
-    margin-bottom: rem(30px);
-
-    @media screen and (min-width: $screen-m) {
-      margin: 0 rem(-50px);
-      margin-bottom: rem(30px);
-    }
+    margin-top: auto !important;
   }
 
-  .table-row {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: solid 1px $border;
+  .modal-meta-content {
+    padding-top: 0;
+    min-height: rem(320px);
     width: 100%;
+    max-width: rem(800px);
+    color: $slate;
 
     @media screen and (min-width: $screen-m) {
-      flex-direction: row;
+      min-width: rem(320px);
+      padding-top: 0;
     }
 
-    &:nth-child(even) {
-      background-color: $grey-light;
-    }
+    p {
+      margin-bottom: rem(10px);
 
-    .title-column {
-      font-weight: 500;
-      font-size: rem(11px);
-      text-transform: uppercase;
-      padding: rem(15px) rem(5px) rem(2px) $mobile-padding;
-      color: $slate;
-      width: rem(150px);
+      a {
+        color: $green-gfw;
 
-      @media screen and (min-width: $screen-m) {
-        padding: rem(15px) $desktop-padding;
-        padding-right: rem(5px);
+        &:hover {
+          color: darken($green-gfw, 10%);
+        }
       }
     }
 
-    .description-column {
-      font-weight: 300;
-      font-size: rem(13px);
-      line-height: 1.5;
-      color: $slate;
-      width: calc(100% - 100px);
-      width: 100%;
-      padding: 0 $mobile-padding rem(15px) $mobile-padding;
+    .ext-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-top: solid 1px $border;
+      margin: 0 rem(-30px) rem(-45px);
+      margin-left: -$horizontal-modal-padding-mobile;
+      width: calc(100% + (2 * #{$horizontal-modal-padding-mobile}));
+      padding: rem(20px) rem(30px) rem(10px);
 
-      @media screen and (min-width: $screen-m) {
-        padding: rem(13px) $desktop-padding rem(3px);
-      }
-
-      p {
+      > a {
+        max-width: rem(150px);
+        margin: 0 rem(10px);
         margin-bottom: rem(10px);
       }
-    }
-  }
 
-  .overview {
-    margin-bottom: rem(30px);
-
-    h4 {
-      font-size: rem(16px);
-      font-weight: 500;
-      margin-bottom: rem(10px);
-    }
-
-    .body {
-      font-size: rem(13px);
-      font-weight: 300;
-    }
-  }
-
-  .citation {
-    margin-bottom: rem(30px);
-
-    h5 {
-      font-size: rem(12px);
-      font-weight: 500;
-      margin-bottom: rem(10px);
-    }
-
-    .body {
-      font-size: rem(12px);
-      color: #aaa;
-      font-weight: 300;
-    }
-  }
-
-  .ext-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-top: solid 1px $border;
-    margin: 0 rem(-30px) rem(-45px);
-    width: auto;
-    padding: rem(20px) rem(30px) rem(10px);
-
-    > a {
-      max-width: rem(150px);
-      margin: 0 rem(10px);
-      margin-bottom: rem(10px);
-    }
-
-    @media screen and (min-width: $screen-m) {
-      margin: 0 rem(-50px) rem(-45px);
-      padding: rem(20px) rem(50px) rem(10px);
-      flex-direction: row;
-    }
-  }
-
-  p {
-    margin-bottom: rem(10px);
-
-    a {
-      color: $green-gfw;
-
-      &:hover {
-        color: darken($green-gfw, 10%);
+      @media screen and (min-width: $screen-m) {
+        margin-left: -$horizontal-modal-padding-desktop;
+        width: calc(100% + (2 * #{$horizontal-modal-padding-desktop}));
+        padding: rem(20px) rem(50px) rem(10px);
+        flex-direction: row;
       }
     }
-  }
 
-  ul,
-  ol {
-    list-style: disc;
-    margin-left: rem(15px);
+    .subtitle {
+      margin-top: rem(5px);
+      margin-bottom: $vertical-modal-padding-mobile;
+      font-size: rem(13px);
+      line-height: 1.2;
+      color: $warm-grey;
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: $vertical-modal-padding-desktop;
+      }
+    }
+
+    .meta-table {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      border-top: solid 1px $border;
+      margin-bottom: rem(30px);
+
+      @media screen and (min-width: $screen-m) {
+        margin-bottom: rem(30px);
+      }
+    }
+
+    .table-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: solid 1px $border;
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        flex-direction: row;
+      }
+
+      &:nth-child(even) {
+        background-color: $grey-light;
+      }
+
+      .title-column {
+        font-weight: 500;
+        font-size: rem(11px);
+        text-transform: uppercase;
+        padding: rem(15px) rem(5px) rem(2px) $horizontal-modal-padding-mobile;
+        color: $slate;
+        width: rem(150px);
+
+        @media screen and (min-width: $screen-m) {
+          padding: rem(15px) $horizontal-modal-padding-desktop;
+          padding-right: rem(5px);
+        }
+      }
+
+      .description-column {
+        font-weight: 300;
+        font-size: rem(13px);
+        line-height: 1.5;
+        color: $slate;
+        width: calc(100% - 100px);
+        width: 100%;
+        padding: 0 $horizontal-modal-padding-mobile rem(15px) $horizontal-modal-padding-mobile;
+        word-break: break-word;
+
+        @media screen and (min-width: $screen-m) {
+          padding: rem(13px) $horizontal-modal-padding-desktop rem(3px);
+        }
+
+        p {
+          margin-bottom: rem(10px);
+        }
+      }
+    }
+
+    .overview {
+      margin-bottom: rem(30px);
+
+      h4 {
+        font-size: rem(16px);
+        font-weight: 500;
+        margin-bottom: rem(10px);
+      }
+
+      .body {
+        font-size: rem(13px);
+        font-weight: 300;
+      }
+    }
+
+    .citation {
+      margin-bottom: rem(30px);
+      padding: 0;
+      word-break: break-word;
+
+      h5 {
+        font-size: rem(12px);
+        font-weight: 500;
+        margin-bottom: rem(10px);
+      }
+
+      .body {
+        font-size: rem(12px);
+        color: #aaa;
+        font-weight: 300;
+      }
+    }
+
+    ul,
+    ol {
+      list-style: disc;
+      margin-left: rem(15px);
+    }
   }
 }

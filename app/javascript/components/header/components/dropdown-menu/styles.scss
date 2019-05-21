@@ -3,7 +3,6 @@
 .c-dropdown-menu {
   background-color: $white;
   width: rem(200px);
-  padding: rem(15px) rem(20px);
   border: solid 1px $border;
 
   &.-plain {
@@ -18,14 +17,14 @@
       display: block;
       text-transform: uppercase;
       font-size: rem(14px);
-      padding: rem(15px) 0;
+      padding: rem(15px) rem(20px);
       width: 100%;
       color: $slate;
       cursor: pointer;
       text-align: left;
 
       &:hover {
-        color: darken($slate, 30%);
+        background-color: #f7f7f7;
       }
     }
 

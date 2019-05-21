@@ -22,7 +22,8 @@ class LayerToggle extends PureComponent {
       onToggle,
       small,
       tabIndex,
-      showSubtitle
+      showSubtitle,
+      category
     } = this.props;
     const {
       name,
@@ -43,7 +44,7 @@ class LayerToggle extends PureComponent {
         <Toggle
           theme={!small ? 'toggle-large' : ''}
           value={active}
-          onToggle={value => onToggle({ dataset, layer, iso }, value)}
+          onToggle={value => onToggle({ dataset, layer, iso, category }, value)}
           color={color}
         />
         <div className="content">
@@ -108,7 +109,8 @@ LayerToggle.propTypes = {
   onInfoClick: PropTypes.func,
   onToggle: PropTypes.func,
   small: PropTypes.bool,
-  tabIndex: PropTypes.number
+  tabIndex: PropTypes.number,
+  category: PropTypes.string
 };
 
 export default LayerToggle;
