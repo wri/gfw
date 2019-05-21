@@ -78,11 +78,14 @@ export const getMoreTiles = createThunkAction(
   'getMoreTiles',
   params => (dispatch, getState) => {
     const { recentImagery } = getState();
-    if (recentImagery && !recentImagery.loadingMoreTiles) {
+    if (
+      recentImagery &&
+      !recentImagery.loadingMoreTiles &&
+      !recentImagery.loading
+    ) {
       dispatch(
         setRecentImageryLoadingMoreTiles({
-          loadingMoreTiles: true,
-          error: false
+          loadingMoreTiles: true
         })
       );
       const { sources, dataStatus, bands } = params;
@@ -129,8 +132,7 @@ export const getMoreTiles = createThunkAction(
               );
               dispatch(
                 setRecentImageryLoadingMoreTiles({
-                  loadingMoreTiles: false,
-                  error: false
+                  loadingMoreTiles: false
                 })
               );
             }
@@ -146,8 +148,7 @@ export const getMoreTiles = createThunkAction(
           );
           dispatch(
             setRecentImageryLoadingMoreTiles({
-              loadingMoreTiles: false,
-              error: true
+              loadingMoreTiles: false
             })
           );
         });

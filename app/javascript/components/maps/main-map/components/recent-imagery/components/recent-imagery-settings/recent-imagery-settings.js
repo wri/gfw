@@ -4,7 +4,8 @@ import * as mapActions from 'components/maps/map/actions';
 import { getRecentImageryProps } from 'components/maps/main-map/components/recent-imagery/recent-imagery-selectors';
 import {
   setRecentImagerySettings,
-  setRecentImageryLoading
+  setRecentImageryLoading,
+  resetRecentImageryData
 } from 'components/maps/main-map/components/recent-imagery/recent-imagery-actions';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 
@@ -14,7 +15,8 @@ const actions = {
   ...mapActions,
   setRecentImagerySettings,
   setRecentImageryLoading,
-  setModalMetaSettings
+  setModalMetaSettings,
+  resetRecentImageryData
 };
 
 export default connect(getRecentImageryProps, actions)(Component);
