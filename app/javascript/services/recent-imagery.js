@@ -15,18 +15,18 @@ export const getRecentTiles = ({ lat, lng, start, end, bands, token }) => {
     .replace('{lng}', lng)
     .replace('{start}', start)
     .replace('{end}', end)
-    .replace('{bands}', !bands || bands === '0' ? '' : bands);
+    .replace('{bands}', !bands ? '' : bands);
   return axios.get(url, { cancelToken: token });
 };
 
 export const getTiles = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.tiles}`, {
     source_data: sources,
-    bands: !bands || bands === '0' ? '' : bands
+    bands: !bands ? '' : bands
   });
 
 export const getThumbs = ({ sources, bands }) =>
   axios.post(`${REQUEST_URL}${QUERIES.thumbs}`, {
     source_data: sources,
-    bands: !bands || bands === '0' ? '' : bands
+    bands: !bands ? '' : bands
   });

@@ -147,7 +147,7 @@ class RecentImagerySettings extends PureComponent {
                     onChange={option => {
                       resetRecentImageryData();
                       setRecentImagerySettings({
-                        bands: option,
+                        bands: option === '0' ? 0 : option,
                         selected: null,
                         selectedIndex: 0
                       });
