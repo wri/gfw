@@ -38,7 +38,6 @@ class RecentImagerySettings extends PureComponent {
       activeTile,
       tiles,
       loading,
-      moreTilesLoading,
       settings: { date, weeks, bands },
       setRecentImagerySettings,
       setRecentImageryLoading,
@@ -204,7 +203,9 @@ class RecentImagerySettings extends PureComponent {
                 message="We can't find additional images for the selection"
               />
             )}
-          {loading && !moreTilesLoading && <Loader className="placeholder" />}
+          {loading &&
+            !error &&
+            (!tiles || !tiles.length) && <Loader className="placeholder" />}
         </div>
       </div>
     );
@@ -220,7 +221,6 @@ RecentImagerySettings.propTypes = {
   setModalMetaSettings: PropTypes.func,
   resetRecentImageryData: PropTypes.func,
   loading: PropTypes.bool,
-  moreTilesLoading: PropTypes.bool,
   onClickClose: PropTypes.func,
   error: PropTypes.bool
 };
