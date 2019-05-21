@@ -6,6 +6,7 @@ import cx from 'classnames';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
+import { track } from 'app/analytics';
 
 import './button-styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line
@@ -29,14 +30,21 @@ const Button = props => {
     disabled,
     active,
     onClick,
-    tooltip
+    tooltip,
+    trackingData
   } = props;
-  const isDeviceTouch = isTouch();
+
   const handleClick = e => {
     if (onClick) {
       onClick(e);
     }
+    if (trackingData) {
+      const { event, label } = trackingData;
+      track(event, { label });
+    }
   };
+
+  const isDeviceTouch = isTouch();
   let button = null;
   if (extLink) {
     button = (

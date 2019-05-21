@@ -37,8 +37,8 @@ class MiniLegend extends PureComponent {
             theme="theme-button-small square"
             extLink={`/map/3/15.00/27.00/ALL/grayscale/${layersKeys}`}
             trackingData={{
-              title: 'view-full-map',
-              layers: layersKeys
+              event: 'view-full-map',
+              label: layersKeys
             }}
             tooltip={{
               theme: 'tip',
