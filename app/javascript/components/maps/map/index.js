@@ -5,7 +5,7 @@ import reducerRegistry from 'app/registry';
 import WebMercatorViewport from 'viewport-mercator-project';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
-import { handleMapLatLonTrack } from 'app/analytics';
+import { handleMapLatLonTrack, track } from 'app/analytics';
 
 import {
   setInteraction,
@@ -203,9 +203,15 @@ class MapContainer extends PureComponent {
   }, 300);
 
   handleMapInteraction = e => {
-    const { draw, menuSection } = this.props;
+    const { draw, menuSection, selectedInteraction } = this.props;
     if (!draw && !menuSection && e.features && e.features.length) {
       this.props.setInteraction(e);
+      track('mapInteraction', {
+        label:
+          selectedInteraction &&
+          selectedInteraction.data &&
+          selectedInteraction.data.name_0
+      });
     }
   };
 
