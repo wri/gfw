@@ -30,7 +30,7 @@ class Widget extends PureComponent {
       if (
         config &&
         config.datasets &&
-        intersection(mapSyncKeys, Object.keys(settings)) &&
+        intersection(mapSyncKeys, Object.keys(settings).length) &&
         settings !== prevProps.settings
       ) {
         this.syncWidgetWithMap();
@@ -43,10 +43,13 @@ class Widget extends PureComponent {
   syncWidgetWithMap = () => {
     // if active widget settings change, send them to the layer
     const { setMapSettings, settings, config } = this.props;
-    const { startYear, endYear, threshold } = settings || {};
+    const { startYear, endYear, threshold, extentYear } = settings || {};
 
-    const datasets = config.datasets.map(d => ({
+    const widgetDatasets = config.datasets.map(d => ({
       ...d,
+      opacity: 1,
+      visibility: true,
+      layers: extentYear && !Array.isArray(d.layers) ? [d.layers[extentYear]] : d.layers,
       ...(startYear &&
         endYear && {
           timelineParams: {
@@ -62,6 +65,19 @@ class Widget extends PureComponent {
         }
       })
     }));
+
+    const datasets = [
+      {
+        dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+        layers: [
+          '6f6798e6-39ec-4163-979e-182a74ca65ee',
+          'c5d1e010-383a-4713-9aaa-44f728c0571c'
+        ],
+        opacity: 1,
+        visibility: true
+      },
+      ...widgetDatasets
+    ];
 
     setMapSettings({
       datasets

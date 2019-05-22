@@ -174,7 +174,7 @@ class WidgetHeader extends PureComponent {
         <div className="options">
           {!embed &&
             !simple &&
-            config.layers &&
+            (config.layers || config.datasets) &&
             !config.hideLayers &&
             this.renderMapButton()}
           {!embed &&

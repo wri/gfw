@@ -8,7 +8,13 @@ export default {
     types: true
   },
   colors: 'plantations',
-  layers: ['plantations_by_type', 'plantations_by_species'],
+  datasets: [
+    {
+      // global plantations
+      dataset: 'bb1dced4-3ae8-4908-9f36-6514ae69713f',
+      layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4']
+    }
+  ],
   metaKey: 'widget_plantation_extent',
   sortOrder: {
     landCover: 100
