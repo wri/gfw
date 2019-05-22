@@ -9,7 +9,8 @@ export default {
     value: 'default',
     backgroundColor: '#A2DFFF',
     image: defaultImage,
-    mapStyle: 'mapbox://styles/resourcewatch/cjvf9sa9k0bpn1fpdppzsj0d3'
+    mapStyle:
+      'mapbox://styles/resourcewatch/cjvxtcxgg09br1cnvrl7yhu4c?fresh=true'
   },
   dark: {
     label: 'dark matter',
