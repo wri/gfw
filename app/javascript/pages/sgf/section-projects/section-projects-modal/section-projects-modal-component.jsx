@@ -62,15 +62,13 @@ class SectionProjectsModal extends PureComponent {
             >
               {data.images &&
                 data.images.map(c => (
-                  <div
-                    key={c}
-                    className="image"
-                    src={c}
-                    alt={data.title}
-                    style={{
-                      backgroundImage: `url(${c})`
-                    }}
-                  />
+                  <div key={c} className="image">
+                    <div
+                      style={{
+                        backgroundImage: `url(${c})`
+                      }}
+                    />
+                  </div>
                 ))}
             </Carousel>
           )}
