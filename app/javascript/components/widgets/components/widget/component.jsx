@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import intersection from 'lodash/intersection';
 import cx from 'classnames';
 import { track } from 'app/analytics';
 
@@ -15,18 +16,31 @@ import WidgetFooter from './components/widget-footer';
 import './styles.scss';
 
 class Widget extends PureComponent {
+  componentDidMount() {
+    if (this.props.active) {
+      this.syncWidgetWithMap();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { active, settings } = this.props;
-
-    if (active && settings !== prevProps.settings) {
-      this.syncWidgetWithMap();
+    if (active) {
+      const mapSyncKeys = ['startYear', 'endYear', 'threshold', 'extentYear'];
+      if (
+        active &&
+        mapSyncKeys &&
+        intersection(mapSyncKeys, Object.keys(settings)) &&
+        settings !== prevProps.settings
+      ) {
+        this.syncWidgetWithMap();
+      }
     }
   }
 
   syncWidgetWithMap = () => {
     // if active widget settings change, send them to the layer
     const { setMapSettings, settings, config } = this.props;
-    const { startYear, endYear } = settings || {};
+    const { startYear, endYear, threshold } = settings || {};
 
     const datasets =
       config && config.datasets
@@ -39,7 +53,13 @@ class Widget extends PureComponent {
                 endDate: `${endYear}-12-31`,
                 trimEndDate: `${endYear}-12-31`
               }
-            })
+            }),
+          ...(threshold && {
+            params: {
+              thresh: threshold,
+              visibility: true
+            }
+          })
         }))
         : [
           {
@@ -177,6 +197,7 @@ Widget.propTypes = {
   setWidgetsSettings: PropTypes.func,
   setWidgetLoading: PropTypes.func,
   handleDataHighlight: PropTypes.func,
+  setMapSettings: PropTypes.func,
   setWidgetSettings: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])

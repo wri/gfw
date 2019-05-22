@@ -158,7 +158,9 @@ export const routes = {
   [DASHBOARDS]: {
     controller: 'dashboards',
     path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
-    component: 'dashboards'
+    component: 'dashboards',
+    footer: true,
+    header: true
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',

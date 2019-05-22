@@ -44,6 +44,25 @@ export default {
     'c05c32fd-289c-4b20-8d73-dc2458234e04',
     '78747ea1-34a9-4aa7-b099-bdb8948200f4'
   ],
+  datasets: [
+    // admin boundaries
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      opacity: 1,
+      visibility: true
+    },
+    // tree cover 2000
+    {
+      dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
+      layers: ['78747ea1-34a9-4aa7-b099-bdb8948200f4'],
+      opacity: 1,
+      visibility: true
+    }
+  ],
   // position
   sortOrder: {
     summary: 4,
