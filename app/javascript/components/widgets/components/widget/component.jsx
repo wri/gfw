@@ -49,7 +49,10 @@ class Widget extends PureComponent {
       ...d,
       opacity: 1,
       visibility: true,
-      layers: extentYear && !Array.isArray(d.layers) ? [d.layers[extentYear]] : d.layers,
+      layers:
+        extentYear && !Array.isArray(d.layers)
+          ? [d.layers[extentYear]]
+          : d.layers,
       ...(startYear &&
         endYear && {
           timelineParams: {

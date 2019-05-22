@@ -13,7 +13,13 @@ export default {
     endYears: true,
     yearsRange: [2001, 2015]
   },
-  layers: ['loss_by_driver', 'fd05bc2c-6ade-408c-862e-7318557dd4fc'],
+  datasets: [
+    // loss tsc
+    {
+      dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
+      layers: ['fd05bc2c-6ade-408c-862e-7318557dd4fc']
+    }
+  ],
   metaKey: 'widget_tsc_drivers',
   sortOrder: {
     summary: 1,
