@@ -10,7 +10,13 @@ export default {
   analysis: true,
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
-  layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3'],
+  datasets: [
+    // fires
+    {
+      dataset: '0f0ea013-20ac-4f4b-af56-c57e99f39e08',
+      layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3']
+    }
+  ],
   hideLayers: true,
   dataType: 'fires',
   colors: 'fires',

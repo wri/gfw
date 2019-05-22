@@ -13,7 +13,13 @@ export default {
   },
   colors: 'gain',
   metaKey: 'widget_tree_cover_gain',
-  layers: ['forestgain'],
+  datasets: [
+    // gain
+    {
+      dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
+      layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4']
+    }
+  ],
   sortOrder: {
     summary: 3,
     forestChange: 7
