@@ -3,16 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import reducerRegistry from 'app/registry';
 
-// import { setShowMapMobile } from 'components/map/actions';
-import * as ownActions from './actions';
+import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
 import { getWidgetsProps } from './selectors';
-
-const actions = {
-  // setShowMapMobile,
-  ...ownActions
-};
 
 class WidgetsContainer extends PureComponent {
   componentDidMount() {
@@ -32,7 +26,7 @@ WidgetsContainer.propTypes = {
 };
 
 reducerRegistry.registerModule('widgets', {
-  actions: ownActions,
+  actions,
   reducers,
   initialState
 });

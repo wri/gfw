@@ -89,3 +89,18 @@ export const handleLocationChange = createThunkAction(
     });
   }
 );
+
+export const closeMobileMap = createThunkAction(
+  'setActiveWidget',
+  () => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
+    dispatch({
+      type,
+      payload,
+      query: {
+        ...query,
+        showMap: undefined
+      }
+    });
+  }
+);

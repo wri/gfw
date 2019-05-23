@@ -31,7 +31,7 @@ class Page extends PureComponent {
   render() {
     const {
       showMapMobile,
-      setShowMapMobile,
+      closeMobileMap,
       links,
       widgetAnchor,
       handleCategoryChange,
@@ -42,15 +42,6 @@ class Page extends PureComponent {
 
     return (
       <div className="l-country">
-        {showMapMobile && (
-          <Button
-            theme="square theme-button-light"
-            className="close-map-button"
-            onClick={() => setShowMapMobile(!showMapMobile)}
-          >
-            <Icon icon={closeIcon} />
-          </Button>
-        )}
         <div className="content-panel">
           <Header className="header" />
           <SubNavMenu
@@ -80,6 +71,15 @@ class Page extends PureComponent {
             bottomBoundary=".l-country"
           >
             <div className="map-container">
+              {showMapMobile && (
+                <Button
+                  theme="square theme-button-light"
+                  className="close-map-button"
+                  onClick={closeMobileMap}
+                >
+                  <Icon icon={closeIcon} />
+                </Button>
+              )}
               <Map />
             </div>
           </Sticky>
@@ -100,8 +100,8 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  showMapMobile: PropTypes.bool.isRequired,
-  setShowMapMobile: PropTypes.func.isRequired,
+  showMapMobile: PropTypes.bool,
+  closeMobileMap: PropTypes.func.isRequired,
   links: PropTypes.array.isRequired,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   noWidgetsMessage: PropTypes.string,
