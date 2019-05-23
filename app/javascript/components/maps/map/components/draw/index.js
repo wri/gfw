@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 import MapboxDraw from '@mapbox/mapbox-gl-draw';
-import { track } from 'app/analytics';
 
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import './styles.scss';
@@ -42,7 +41,6 @@ class MapDraw extends PureComponent {
 
   initDrawing = () => {
     const { map, getGeostoreId } = this.props;
-    track('analysisDrawStart');
 
     this.draw = new MapboxDraw(drawConfig);
     map.addControl(this.draw);
@@ -61,7 +59,6 @@ class MapDraw extends PureComponent {
 
   closeDrawing = () => {
     const { map } = this.props;
-    track('analysisDrawCancel');
     map.off('draw.create');
     map.removeControl(this.draw);
   };
