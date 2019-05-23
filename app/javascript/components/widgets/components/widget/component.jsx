@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import intersection from 'lodash/intersection';
 import cx from 'classnames';
 import { track } from 'app/analytics';
+import moment from 'moment';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
@@ -43,7 +44,8 @@ class Widget extends PureComponent {
   syncWidgetWithMap = () => {
     // if active widget settings change, send them to the layer
     const { setMapSettings, settings, config } = this.props;
-    const { startYear, endYear, threshold, extentYear } = settings || {};
+    const { startYear, endYear, threshold, extentYear, weeks, latestDate } =
+      settings || {};
 
     const widgetDatasets = config.datasets.map(d => ({
       ...d,
@@ -61,6 +63,15 @@ class Widget extends PureComponent {
             trimEndDate: `${endYear}-12-31`
           }
         }),
+      ...(weeks && {
+        timelineParams: {
+          startDate: moment(latestDate || null)
+            .subtract(weeks, 'weeks')
+            .format('YYYY-MM-DD'),
+          endDate: moment(latestDate || null).format('YYYY-MM-DD'),
+          trimEndDate: moment(latestDate || null).format('YYYY-MM-DD')
+        }
+      }),
       ...(threshold && {
         params: {
           thresh: threshold,

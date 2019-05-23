@@ -8,14 +8,16 @@ export default ({ params }) =>
       if (alerts && alerts.data && latest && latest.data) {
         const alertsData = alerts.data.data;
         const latestData = latest.data.data;
+        const latestDate =
+          latestData &&
+          latestData.attributes &&
+          latestData.attributes.updatedAt;
+
         data = {
           alerts: alertsData,
-          latest:
-            latestData &&
-            latestData.attributes &&
-            latestData.attributes.updatedAt
+          latest: latestDate
         };
       }
-      return data;
+      return { data, settings: { latestDate: data.latest } };
     })
   );

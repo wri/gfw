@@ -13,8 +13,9 @@ import {
 } from 'components/widgets/utils/data';
 
 // get list data
-const selectAlerts = state => (state.data && state.data.alerts) || null;
-const selectLatestDates = state => (state.data && state.data.latest) || null;
+const selectAlerts = state => (state.data && state.data.data.alerts) || null;
+const selectLatestDates = state =>
+  (state.data && state.data.data.latest) || null;
 const selectColors = state => state.colors || null;
 const selectActiveData = state => state.settings.activeData || null;
 const selectWeeks = state => (state.settings && state.settings.weeks) || null;
