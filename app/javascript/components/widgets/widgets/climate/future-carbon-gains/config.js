@@ -21,7 +21,7 @@ export default {
     // potential carbon gains
     {
       dataset: 'b7a34457-1d8a-456e-af46-876e0b42fb96',
-      layers: ['c9e48a9f-2dca-4233-9400-0b5e4e07674f']
+      layers: ['fffa76d3-5008-48b7-afeb-2c7054548f2e']
     }
   ],
   analysis: true,
