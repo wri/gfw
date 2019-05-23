@@ -28,7 +28,7 @@ export const getIsBoundary = createSelector(
 export const getShouldZoomToShape = createSelector(
   [getInteractionSelected, getMap],
   (selected, map) => {
-    if (!selected) return null;
+    if (!selected || !map) return null;
     if (map.getZoom() > 12) return false;
 
     const { data, layer, geometry } = selected;

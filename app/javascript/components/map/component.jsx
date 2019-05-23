@@ -180,60 +180,62 @@ class MapComponent extends Component {
 
   setLabels = () => {
     const LABELS_GROUP = ['labels'];
+    if (this.map) {
+      const { mapLabels } = this.props;
+      const { layers, metadata } = this.map.getStyle();
 
-    const { mapLabels } = this.props;
-    const { layers, metadata } = this.map.getStyle();
+      const groups = Object.keys(metadata['mapbox:groups']).filter(k => {
+        const { name } = metadata['mapbox:groups'][k];
+        const roadGroups = LABELS_GROUP.map(rgr =>
+          name.toLowerCase().includes(rgr)
+        );
 
-    const groups = Object.keys(metadata['mapbox:groups']).filter(k => {
-      const { name } = metadata['mapbox:groups'][k];
-      const roadGroups = LABELS_GROUP.map(rgr =>
-        name.toLowerCase().includes(rgr)
-      );
+        return roadGroups.some(bool => bool);
+      });
 
-      return roadGroups.some(bool => bool);
-    });
+      const labelLayers = layers.filter(l => {
+        const labelMetadata = l.metadata;
+        if (!labelMetadata) return false;
 
-    const labelLayers = layers.filter(l => {
-      const labelMetadata = l.metadata;
-      if (!labelMetadata) return false;
+        const gr = labelMetadata['mapbox:group'];
+        return groups.includes(gr);
+      });
 
-      const gr = labelMetadata['mapbox:group'];
-      return groups.includes(gr);
-    });
-
-    labelLayers.forEach(l => {
-      const visibility = mapLabels ? 'visible' : 'none';
-      this.map.setLayoutProperty(l.id, 'visibility', visibility);
-    });
+      labelLayers.forEach(l => {
+        const visibility = mapLabels ? 'visible' : 'none';
+        this.map.setLayoutProperty(l.id, 'visibility', visibility);
+      });
+    }
   };
 
   setRoads = () => {
     const ROADS_GROUP = ['roads', 'bridges', 'tunnels'];
+    if (this.map) {
+      const { mapRoads } = this.props;
+      const { layers, metadata } = this.map.getStyle();
 
-    const { mapRoads } = this.props;
-    const { layers, metadata } = this.map.getStyle();
+      const groups = Object.keys(metadata['mapbox:groups']).filter(k => {
+        const { name } = metadata['mapbox:groups'][k];
+        const roadGroups = ROADS_GROUP.map(rgr =>
+          name.toLowerCase().includes(rgr)
+        );
 
-    const groups = Object.keys(metadata['mapbox:groups']).filter(k => {
-      const { name } = metadata['mapbox:groups'][k];
-      const roadGroups = ROADS_GROUP.map(rgr =>
-        name.toLowerCase().includes(rgr)
-      );
+        return roadGroups.some(bool => bool);
+      });
 
-      return roadGroups.some(bool => bool);
-    });
+      const roadLayers = layers.filter(l => {
+        const roadMetadata = l.metadata;
+        if (!roadMetadata) return false;
 
-    const roadLayers = layers.filter(l => {
-      const roadMetadata = l.metadata;
-      if (!roadMetadata) return false;
+        const gr = roadMetadata['mapbox:group'];
+        return groups.includes(gr);
+      });
 
-      const gr = roadMetadata['mapbox:group'];
-      return groups.includes(gr);
-    });
-
-    roadLayers.forEach(l => {
-      const visibility = mapRoads ? 'visible' : 'none';
-      this.map.setLayoutProperty(l.id, 'visibility', visibility);
-    });
+      roadLayers.forEach(l => {
+        const visibility = mapRoads ? 'visible' : 'none';
+        this.map.setLayoutProperty(l.id, 'visibility', visibility);
+      });
+    }
   };
 
   render() {

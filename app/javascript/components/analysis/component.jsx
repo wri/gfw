@@ -28,6 +28,18 @@ class AnalysisComponent extends PureComponent {
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgets = widgetLayers && !!widgetLayers.length;
 
+    const linkProps = {
+      link: `/dashboards/${location.type}${
+        location.adm0 ? `/${location.adm0}` : ''
+      }${location.adm1 ? `/${location.adm1}` : ''}${
+        location.adm2 ? `/${location.adm2}` : ''
+      }`,
+      ...(embed && {
+        extLink: window.location.href.replace('embed/map', 'dashboards'),
+        target: '_blank'
+      })
+    };
+
     return (
       <Fragment>
         <div className={cx('c-analysis', className)}>
@@ -77,11 +89,7 @@ class AnalysisComponent extends PureComponent {
                 <Button
                   className="analysis-action-btn"
                   theme="theme-button-light"
-                  extLink={window.location.href.replace(
-                    embed ? 'embed/map' : 'map',
-                    'dashboards'
-                  )}
-                  target="_blank"
+                  {...linkProps}
                 >
                   DASHBOARD
                 </Button>
