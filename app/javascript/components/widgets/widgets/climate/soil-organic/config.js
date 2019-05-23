@@ -17,6 +17,7 @@ export default {
       layers: ['2c4fde29-1627-40eb-96b5-a9e388f7c7b7']
     }
   ],
+  analysis: true,
   colors: 'climate',
   metaKey: 'soil_organic_carbon',
   sortOrder: {

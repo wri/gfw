@@ -79,9 +79,21 @@ export const getWidgetLayers = createSelector(
     const activeWidgets =
       widgets &&
       widgets.filter(
-        w => w.config.analysis && w.config.layers && w.config.layers.length
+        w => w.config.analysis && w.config.datasets && w.config.datasets.length
       );
-    return activeWidgets && flatMap(activeWidgets.map(w => w.config.layers));
+    return (
+      activeWidgets &&
+      flatMap(
+        activeWidgets.map(w =>
+          flatMap(
+            w.config.datasets.map(
+              d =>
+                (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
+            )
+          )
+        )
+      )
+    );
   }
 );
 

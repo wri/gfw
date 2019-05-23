@@ -24,6 +24,7 @@ export default {
       layers: ['c9e48a9f-2dca-4233-9400-0b5e4e07674f']
     }
   ],
+  analysis: true,
   sentences: {
     initial:
       'In {location}, potential carbon sequestration may reach {amount} of {variable} by {maxYear}.'

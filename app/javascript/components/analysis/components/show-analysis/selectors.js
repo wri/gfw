@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
+import flatMap from 'lodash/flatMap';
 import intersection from 'lodash/intersection';
 
 import { buildLocationName, buildFullLocationName } from 'utils/format';
@@ -164,12 +165,20 @@ export const getWidgetsWithLayerParams = createSelector(
     if (!widgets || !widgets.length || !layers || !layers.length) return null;
     const layerIds = layers && layers.map(l => l.id);
     const filteredWidgets = widgets.filter(w => {
-      const layerIntersection = intersection(w.config.layers, layerIds);
+      const layerIntersection =
+        w.config.datasets &&
+        intersection(flatMap(w.config.datasets.map(d => d.layers)), layerIds);
       return w.config.analysis && layerIntersection && layerIntersection.length;
     });
     return filteredWidgets.map(w => {
       const widgetLayer =
-        layers && layers.find(l => w.config && w.config.layers.includes(l.id));
+        layers &&
+        layers.find(
+          l =>
+            w.config &&
+            w.config.datasets &&
+            flatMap(w.config.datasets.map(d => d.layers)).includes(l.id)
+        );
       const { params, decodeParams } = widgetLayer || {};
       const startDate =
         (params && params.startDate) ||
