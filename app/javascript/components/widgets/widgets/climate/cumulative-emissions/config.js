@@ -8,6 +8,13 @@ export default {
     variables: ['cumulative_emissions', 'cumulative_deforestation']
   },
   analysis: true,
+  datasets: [
+    // GLAD
+    {
+      dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
+      layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
+    }
+  ],
   types: ['country'],
   admins: ['adm0'],
   colors: 'fires',

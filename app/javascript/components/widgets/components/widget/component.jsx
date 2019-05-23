@@ -44,7 +44,15 @@ class Widget extends PureComponent {
   syncWidgetWithMap = () => {
     // if active widget settings change, send them to the layer
     const { setMapSettings, settings, config } = this.props;
-    const { startYear, endYear, threshold, extentYear, weeks, latestDate } =
+    const {
+      startYear,
+      endYear,
+      threshold,
+      extentYear,
+      weeks,
+      year,
+      latestDate
+    } =
       settings || {};
 
     const widgetDatasets = config.datasets.map(d => ({
@@ -55,14 +63,13 @@ class Widget extends PureComponent {
         extentYear && !Array.isArray(d.layers)
           ? [d.layers[extentYear]]
           : d.layers,
-      ...(startYear &&
-        endYear && {
-          timelineParams: {
-            startDate: `${startYear}-01-01`,
-            endDate: `${endYear}-12-31`,
-            trimEndDate: `${endYear}-12-31`
-          }
-        }),
+      ...(((startYear && endYear) || year) && {
+        timelineParams: {
+          startDate: `${startYear || year}-01-01`,
+          endDate: `${endYear || year}-12-31`,
+          trimEndDate: `${endYear || year}-12-31`
+        }
+      }),
       ...(weeks && {
         timelineParams: {
           startDate: moment(latestDate || null)
