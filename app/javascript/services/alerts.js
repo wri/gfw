@@ -18,7 +18,7 @@ const QUERIES = {
   viirsAlerts: '{location}?group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
-  gladLatest:
+  alertsLatest:
     'SELECT year, week FROM data GROUP BY year, week ORDER BY year DESC, week DESC LIMIT 1'
 };
 
@@ -82,21 +82,40 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
   } else if (adm1) {
     fires_summary_table = FIRES_ADM1_DATASET;
   }
-  const url = `${REQUEST_URL}/dataset/${fires_summary_table}`;
-  return request.get(url, 3600, 'firesRequest').catch(error => {
-    console.error('Error in firesRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
+
+  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
+    QUERIES.alertsLatest
+  }`;
+  return request
+    .get(url, 3600, 'firesRequest')
+    .then(response => {
+      const { week, year } = response.data.data[0];
+      const date = moment()
+        .year(year)
+        .day('Monday')
+        .week(week)
+        .format('YYYY-MM-DD');
+
+      return {
+        attributes: { updatedAt: date },
+        id: null,
+        type: 'glad-alerts'
+      };
+    })
+    .catch(error => {
+      console.error('Error in firesRequest:', error);
+      return new Promise(resolve =>
+        resolve({
           data: {
-            attributes: { updatedAt: lastFriday },
-            id: null,
-            type: 'fires-alerts'
+            data: {
+              attributes: { updatedAt: lastFriday },
+              id: null,
+              type: 'fires-alerts'
+            }
           }
-        }
-      })
-    );
-  });
+        })
+      );
+    });
 };
 
 export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
@@ -147,7 +166,7 @@ export const fetchGLADLatest = params => {
     glad_summary_table = GLAD_ADM1_DATASET;
   }
   const url = `${REQUEST_URL}/query/${glad_summary_table}?sql=${
-    QUERIES.gladLatest
+    QUERIES.alertsLatest
   }`;
   return request
     .get(url, 3600, 'gladRequestLatest')
