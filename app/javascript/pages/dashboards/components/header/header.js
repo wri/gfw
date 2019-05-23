@@ -38,6 +38,12 @@ HeaderContainer.propTypes = {
   settings: PropTypes.object.isRequired
 };
 
+HeaderContainer.defaultProps = {
+  settings: {
+    threshold: 30
+  }
+};
+
 reducerRegistry.registerModule('header', {
   actions: ownActions,
   reducers,

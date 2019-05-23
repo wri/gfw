@@ -15,9 +15,11 @@ export default ({ params }) =>
 
         data = {
           alerts: alertsData,
-          latest: latestDate
+          latest: latestDate,
+          settings: { latestDate }
         };
       }
-      return { data, settings: { latestDate: data.latest } };
+
+      return data;
     })
   );

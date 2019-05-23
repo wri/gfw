@@ -163,7 +163,7 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   className: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   locationNames: PropTypes.object.isRequired,
   adm0s: PropTypes.array,
   adm1s: PropTypes.array,

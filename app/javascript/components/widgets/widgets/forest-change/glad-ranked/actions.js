@@ -14,11 +14,17 @@ export default ({ params }) =>
         const { data } = alerts.data;
         const latestData = latest.data.data;
         const areas = extent.data.data;
+        const latestDate =
+          latestData.attributes && latestData.attributes.updatedAt;
+
         return data && extent && latest
           ? {
             alerts: data,
             extent: areas,
-            latest: latestData.attributes && latestData.attributes.updatedAt
+            latest: latestData.attributes && latestData.attributes.updatedAt,
+            settings: {
+              latestDate
+            }
           }
           : {};
       })
