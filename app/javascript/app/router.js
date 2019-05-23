@@ -52,6 +52,8 @@ export const routes = {
     controller: 'about',
     path: '/about',
     component: 'about',
+    header: true,
+    footer: true,
     sections: [
       {
         label: 'GFW in Action',
@@ -84,6 +86,8 @@ export const routes = {
     controller: 'grants_and_fellowships',
     path: '/grants-and-fellowships/:tab?',
     component: 'sgf',
+    header: true,
+    footer: true,
     sections: {
       projects: {
         label: 'Projects',
