@@ -5,12 +5,13 @@ import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 
 import * as shareActions from 'components/modals/share/share-actions';
+import { handleLocationChange } from 'pages/dashboards/actions';
 import * as ownActions from './header-actions';
 import { getHeaderProps } from './header-selectors';
 import reducers, { initialState } from './header-reducers';
 import HeaderComponent from './header-component';
 
-const actions = { ...ownActions, ...shareActions };
+const actions = { ...ownActions, ...shareActions, handleLocationChange };
 
 class HeaderContainer extends PureComponent {
   componentWillMount() {

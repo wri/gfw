@@ -1,3 +1,8 @@
-import PageComponent from './component';
+import { connect } from 'react-redux';
 
-export default PageComponent;
+import { handleLocationChange } from 'pages/dashboards/actions';
+import Component from './component';
+
+export default connect(null, {
+  handleLocationChange
+})(Component);

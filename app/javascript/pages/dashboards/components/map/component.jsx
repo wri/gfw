@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Map from 'components/map';
 import MiniLegend from '../mini-legend';
@@ -14,19 +14,19 @@ class MainMapComponent extends PureComponent {
   );
 
   render() {
-    // const { setMainMapAnalysisView } = this.props;
+    const { handleLocationChange } = this.props;
 
     return (
       <div className="c-dashboard-map">
         <Map
           className="dashboard-map"
-          // onSelectBoundary={setMainMapAnalysisView}
-          // popupActions={[
-          //   {
-          //     label: 'Analyze',
-          //     action: setMainMapAnalysisView
-          //   }
-          // ]}
+          onSelectBoundary={handleLocationChange}
+          popupActions={[
+            {
+              label: 'View dashboard',
+              action: handleLocationChange
+            }
+          ]}
         />
         <MiniLegend className="mini-legend" />
       </div>
@@ -34,8 +34,8 @@ class MainMapComponent extends PureComponent {
   }
 }
 
-// MainMapComponent.propTypes = {
-//   setMainMapAnalysisView: PropTypes.func
-// };
+MainMapComponent.propTypes = {
+  handleLocationChange: PropTypes.func
+};
 
 export default MainMapComponent;
