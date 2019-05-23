@@ -34,7 +34,7 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
   }
 
   .map-panel {
-    height: 100%;
+    height: calc(100% - 56px);
     position: fixed;
     right: -100%;
     width: 100%;

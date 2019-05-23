@@ -17,6 +17,14 @@ $full-screen-height: rem(75px);
     z-index: 1000;
   }
 
+  &.-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
   &.-toggle {
     width: rem(76px);
 

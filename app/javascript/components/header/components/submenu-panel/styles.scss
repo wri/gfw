@@ -3,6 +3,12 @@
 .c-submenu-panel {
   background-color: $white;
   padding: rem(40px) 0;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+
+  @media screen and (min-width: $screen-m) {
+    height: auto;
+  }
 
   &:focus {
     outline: none;

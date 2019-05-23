@@ -73,6 +73,7 @@ class Header extends PureComponent {
           { '-toggle': toggle },
           { '-open': showHeader },
           { '-small': isMap && isMobile },
+          { '-sticky': !isMap && isMobile },
           className
         )}
       >

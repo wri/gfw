@@ -1,9 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-footer {
-  font-family: Fira GFW Sans, Helvetica, serif;
-  font-feature-settings: "liga" 0;
-  -webkit-font-variant-ligatures: no-common-ligatures;
+  font-family: $font-family-1;
   background: #eceee8;
 
   .footer-subscribe {
