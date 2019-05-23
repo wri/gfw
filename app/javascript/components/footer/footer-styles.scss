@@ -116,7 +116,7 @@
     }
 
     .footer-logos {
-      width: 100%;
+      max-width: calc(100% - 30px);
     }
 
     .footer-info {
@@ -221,8 +221,13 @@
   }
 
   .partners-slide {
-    max-width: rem(730px);
-    margin-right: rem(15px);
+    max-width: calc(100% - 30px);
+    margin: 0;
+
+    @media screen and (min-width: $screen-m) {
+      margin: rem(15px) rem(15px) 0 0;
+      max-width: rem(730px);
+    }
   }
 
   .slick-list {
