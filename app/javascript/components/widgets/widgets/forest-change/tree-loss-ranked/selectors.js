@@ -138,8 +138,8 @@ export const parseSentence = createSelector(
       locationObject && data.find(l => l.id === locationObject.value);
 
     const loss = locationData && locationData.loss;
-    const globalLoss = sumBy(data, 'loss');
-    const globalExtent = sumBy(data, 'extent');
+    const globalLoss = sumBy(data, 'loss') || 0;
+    const globalExtent = sumBy(data, 'extent') || 0;
     const lossArea = locationObject.label === 'global' ? globalLoss : loss;
     const areaPercent =
       locationObject.label === 'global'

@@ -99,9 +99,9 @@ export const parseSentence = createSelector(
       noCover
     } = sentences;
     const topRegion = (data.length && data[0]) || {};
-    const totalExtent = sumBy(data, 'extent');
-    const avgExtent = sumBy(data, 'extent') / data.length;
-    const avgExtentPercentage = sumBy(data, 'percentage') / data.length;
+    const totalExtent = sumBy(data, 'extent') || 0;
+    const avgExtent = sumBy(data, 'extent') || 0 / data.length;
+    const avgExtentPercentage = sumBy(data, 'percentage') || 0 / data.length;
     let percentileExtent = 0;
     let percentileLength = 0;
     while (

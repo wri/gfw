@@ -22,7 +22,7 @@ export const parseData = createSelector(
       ...colors.types,
       ...colors.species
     };
-    const totalPlantations = sumBy(plantations, 'intersection_area');
+    const totalPlantations = sumBy(plantations, 'intersection_area') || 0;
     return sortByKey(
       plantations.filter(d => d.intersection_area).map(d => ({
         label: d.plantations,
@@ -43,9 +43,9 @@ export const parseSentence = createSelector(
     const { initialSpecies, singleSpecies, initialTypes } = sentences;
     const top =
       settings.type === 'bound2' ? data.slice(0, 2) : data.slice(0, 1);
-    const areaPerc = 100 * sumBy(top, 'value') / rawData.totalArea;
-    const topExtent = sumBy(top, 'value');
-    const otherExtent = sumBy(data.slice(2), 'value');
+    const areaPerc = 100 * (sumBy(top, 'value') || 0) / rawData.totalArea;
+    const topExtent = sumBy(top, 'value') || 0;
+    const otherExtent = sumBy(data.slice(2), 'value') || 0;
     const params = {
       location: locationName,
       firstSpecies: top[0].label.toLowerCase(),

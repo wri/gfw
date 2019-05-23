@@ -85,7 +85,7 @@ export const getDrivers = createSelector(
           return {
             driver: k,
             position: cat && cat.position,
-            area: sumBy(groupedLoss[k], 'area'),
+            area: sumBy(groupedLoss[k], 'area') || 0,
             permanent: permCats.includes(k)
           };
         }),
@@ -107,7 +107,7 @@ export const parseData = createSelector([getFilteredData], data => {
   const x = Object.keys(groupedData).map(y => {
     const groupedByBound = groupBy(groupedData[y], 'bound1');
     const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
-      const areaSum = sumBy(value, 'area');
+      const areaSum = sumBy(value, 'area') || 0;
       return {
         ...acc,
         [`class_${key}`]: areaSum

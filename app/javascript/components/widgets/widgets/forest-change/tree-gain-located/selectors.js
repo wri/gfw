@@ -80,10 +80,10 @@ export const parseSentence = createSelector(
       initialPercent,
       withIndicatorPercent
     } = sentences;
-    const totalGain = sumBy(data, 'gain');
+    const totalGain = sumBy(data, 'gain') || 0;
     const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
-    const avgGainPercentage = sumBy(data, 'percentage') / data.length;
-    const avgGain = sumBy(data, 'gain') / data.length;
+    const avgGainPercentage = sumBy(data, 'percentage') || 0 / data.length;
+    const avgGain = sumBy(data, 'gain') || 0 / data.length;
     let percentileGain = 0;
     let percentileLength = 0;
 

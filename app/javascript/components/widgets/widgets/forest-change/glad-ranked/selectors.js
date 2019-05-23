@@ -56,8 +56,8 @@ export const parseList = createSelector(
         const region = meta.find(l => parseInt(k, 10) === l.value);
         const regionExtent = extent.find(a => a[groupKey] === parseInt(k, 10));
         const regionData = groupedAlerts[k];
-        const countsArea = sumBy(regionData, 'area_ha');
-        const counts = sumBy(regionData, 'alerts');
+        const countsArea = sumBy(regionData, 'area_ha') || 0;
+        const counts = sumBy(regionData, 'alerts') || 0;
         const countsAreaPerc =
           countsArea && regionExtent
             ? countsArea / regionExtent.extent * 100
@@ -112,7 +112,7 @@ export const parseSentence = createSelector(
   (data, sortedList, settings, options, indicator, locationName, sentences) => {
     if (!data || !options || !locationName) return '';
     const { initial, withInd } = sentences;
-    const totalCount = sumBy(data, 'count');
+    const totalCount = sumBy(data, 'count') || 0;
     let percentileCount = 0;
     let percentileLength = 0;
     while (
@@ -124,7 +124,7 @@ export const parseSentence = createSelector(
       percentileLength += 1;
     }
     const topCount = percentileCount / totalCount * 100;
-    const countArea = sumBy(data, 'area');
+    const countArea = sumBy(data, 'area') || 0;
     const formatType = countArea < 1 ? '.3r' : '.3s';
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,

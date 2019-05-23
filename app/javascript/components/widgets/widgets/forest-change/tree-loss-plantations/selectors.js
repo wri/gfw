@@ -28,9 +28,9 @@ export const parseData = createSelector(
         .map(d => {
           const groupedPlantations = groupBy(lossPlantations, 'year')[d.year];
           const summedPlatationsLoss =
-            groupedPlantations && sumBy(groupedPlantations, 'area');
+            (groupedPlantations && sumBy(groupedPlantations, 'area')) || 0;
           const summedPlatationsEmissions =
-            groupedPlantations && sumBy(groupedPlantations, 'emissions');
+            (groupedPlantations && sumBy(groupedPlantations, 'emissions')) || 0;
           const totalLossForYear =
             (totalLossByYear[d.year] && totalLossByYear[d.year][0]) || {};
 
