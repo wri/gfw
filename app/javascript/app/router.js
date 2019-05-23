@@ -161,6 +161,9 @@ export const routes = {
         component: 'water',
         path: '/topics/water'
       }
+    },
+    headerOptions: {
+      useNavLinks: true
     }
   },
   [DASHBOARDS]: {

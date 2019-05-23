@@ -1,6 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
+import { NavLink } from 'redux-first-router-link';
 
 import './styles.scss';
 
@@ -25,7 +27,10 @@ class DropdownMenu extends PureComponent {
                   {l.label}
                 </button>
               ) : (
-                <a href={l.path}>{l.label}</a>
+                <Fragment>
+                  {l.navLink && <NavLink to={l.path}>{l.label}</NavLink>}
+                  {!l.navLink && <a href={l.path}>{l.label}</a>}
+                </Fragment>
               )}
             </li>
           ))}

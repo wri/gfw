@@ -21,7 +21,8 @@ export default {
     },
     {
       label: 'Dashboard',
-      path: '/dashboards'
+      path: '/dashboards',
+      navLink: true
     },
     {
       label: 'Topics',
@@ -29,19 +30,23 @@ export default {
       submenu: [
         {
           label: 'Biodiversity',
-          path: '/topics/biodiversity'
+          path: '/topics/biodiversity',
+          navLink: true
         },
         {
           label: 'Climate',
-          path: '/topics/climate'
+          path: '/topics/climate',
+          navLink: true
         },
         {
           label: 'Commodities',
-          path: '/topics/commodities'
+          path: '/topics/commodities',
+          navLink: true
         },
         {
           label: 'Water',
-          path: '/topics/water'
+          path: '/topics/water',
+          navLink: true
         }
       ]
     },
@@ -53,7 +58,8 @@ export default {
     },
     {
       label: 'About',
-      path: '/about'
+      path: '/about',
+      navLink: true
     }
   ],
   myGfwLinks: [

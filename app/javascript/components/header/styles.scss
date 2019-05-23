@@ -107,6 +107,13 @@ $full-screen-height: rem(75px);
             background-color: $green-gfw;
           }
         }
+
+        &.-hidden {
+          position: absolute;
+          z-index: 0;
+          right: 0;
+          left: 0;
+        }
       }
 
       svg {

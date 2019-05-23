@@ -116,7 +116,7 @@ class Header extends PureComponent {
                               }
                             }}
                           >
-                            {useNavLinks ? (
+                            {useNavLinks && item.navLink ? (
                               <NavLink
                                 to={item.path}
                                 className="nav-link"
@@ -128,8 +128,13 @@ class Header extends PureComponent {
                               <Fragment>
                                 {item.submenu && (
                                   <Fragment>
+                                    <NavLink
+                                      to={item.path}
+                                      className="nav-link -hidden"
+                                      activeClassName="-active"
+                                    />
                                     <button
-                                      className="nav-link"
+                                      className={cx('nav-link')}
                                       onClick={() =>
                                         setActiveNavItem(
                                           item.label === activeNavItem
