@@ -52,8 +52,10 @@ export const routes = {
     controller: 'about',
     path: '/about',
     component: 'about',
-    header: true,
     footer: true,
+    headerOptions: {
+      useNavLinks: true
+    },
     sections: [
       {
         label: 'GFW in Action',
@@ -86,8 +88,10 @@ export const routes = {
     controller: 'grants_and_fellowships',
     path: '/grants-and-fellowships/:tab?',
     component: 'sgf',
-    header: true,
     footer: true,
+    headerOptions: {
+      useNavLinks: true
+    },
     sections: {
       projects: {
         label: 'Projects',
@@ -118,7 +122,8 @@ export const routes = {
       fullScreen: true,
       showPanel: true,
       fixed: true,
-      toggle: true
+      toggle: true,
+      useNavLinks: true
     }
   },
   [MAP_EMBED]: {
@@ -156,15 +161,16 @@ export const routes = {
         component: 'water',
         path: '/topics/water'
       }
-    },
-    header: true
+    }
   },
   [DASHBOARDS]: {
     controller: 'dashboards',
     path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
     component: 'dashboards',
     footer: true,
-    header: true
+    headerOptions: {
+      useNavLinks: true
+    }
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',
@@ -177,14 +183,18 @@ export const routes = {
     component: 'thankyou',
     controller: 'thankyou',
     footer: true,
-    header: true
+    headerOptions: {
+      useNavLinks: true
+    }
   },
   [STORIES]: {
     path: '/stories',
     component: 'stories',
     controller: 'stories',
     footer: true,
-    header: true
+    headerOptions: {
+      useNavLinks: true
+    }
   },
   [NOT_FOUND]: {
     path: '/404',

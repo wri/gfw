@@ -21,7 +21,7 @@ export default {
     },
     {
       label: 'Dashboard',
-      path: '/dashboards/global'
+      path: '/dashboards'
     },
     {
       label: 'Topics',

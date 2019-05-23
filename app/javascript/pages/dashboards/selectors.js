@@ -44,6 +44,7 @@ export const getNoWidgetsMessage = createSelector(
 export const getWidgets = createSelector(
   [parseWidgetsWithOptions, selectCategory, getEmbed, selectQuery],
   (widgets, category, embed, query) => {
+    if (!widgets) return null;
     if (embed) return widgets.filter(w => query && w.widget === query.widget);
     return sortBy(
       widgets.filter(w => w.config.categories.includes(category)),
