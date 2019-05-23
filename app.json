@@ -71,6 +71,9 @@
     "GADM36_ADM2_DATASET": {
       "required": true
     },
+    "FULLPAGE_LICENSE": {
+      "required": true
+    },
     "GFW_API": {
       "required": true
     },
