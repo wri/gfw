@@ -12,12 +12,11 @@ export const formatNumber = ({ num, unit }) => {
   if (unit === 'counts') numFormat = ',.0f';
   const thres = unit === '%' ? 0.1 : 1;
   let formattedNum =
-    num < thres && num > 0 ? `<${thres}` : format(numFormat)(num);
+    num < thres && num > 0 ? `< ${thres}` : format(numFormat)(num);
   if (unit !== '%' && num < thres && num > 0.01) {
     formattedNum = format('.3r')(num);
   } else if (unit === 'ha' && num < 1000) {
-    const rounded = Math.round(num);
-    formattedNum = format('.3s')(rounded);
+    formattedNum = Math.round(num);
   } else if (num > 0 && num < 0.01 && unit !== '%') {
     formattedNum = '<0.01';
   }
