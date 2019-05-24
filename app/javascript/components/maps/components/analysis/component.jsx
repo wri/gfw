@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { track } from 'app/analytics';
 
 import Button from 'components/ui/button/button-component';
 import Loader from 'components/ui/loader';
@@ -81,6 +82,11 @@ class AnalysisComponent extends PureComponent {
                     embed ? 'embed/map' : 'map',
                     'dashboards'
                   )}
+                  onClick={() =>
+                    track('analysisViewDashboards', {
+                      label: location.adm0
+                    })
+                  }
                   target="_blank"
                 >
                   DASHBOARD
