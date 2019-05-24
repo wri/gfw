@@ -94,6 +94,19 @@ class MapContainer extends PureComponent {
           this.setMapPosition(coordinates[1], coordinates[0], newZoom);
         });
     }
+
+    // track interaction
+    if (
+      selectedInteraction &&
+      !isEqual(selectedInteraction, prevProps.selectedInteraction)
+    ) {
+      track('mapInteraction', {
+        label:
+          selectedInteraction &&
+          selectedInteraction.layer &&
+          selectedInteraction.layer.name
+      });
+    }
   }
 
   setMapPosition = (lat, lng, zoom) => {
@@ -206,9 +219,6 @@ class MapContainer extends PureComponent {
     const { draw, menuSection } = this.props;
     if (!draw && !menuSection && e.features && e.features.length) {
       this.props.setInteraction(e);
-      track('mapInteraction', {
-        label: e.target && e.target.textContent
-      });
     }
   };
 
