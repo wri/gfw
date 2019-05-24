@@ -40,13 +40,13 @@
   }
 
   .image {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     margin-top: rem(20px);
     width: 100%;
     height: rem(250px);
     position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
     @media screen and (min-width: $screen-m) {
       height: rem(400px);
@@ -57,6 +57,14 @@
       bottom: 10px;
       right: 10px;
     }
+
+    > div {
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
   }
 
   .modal-image-slider {
@@ -65,6 +73,14 @@
 
     .slick-dots {
       margin-bottom: 0;
+    }
+
+    .slick-list {
+      overflow: hidden;
+    }
+
+    .slick-slide {
+      padding: 0;
     }
   }
 
