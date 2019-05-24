@@ -45,7 +45,7 @@ $top-section-height: 125px;
   }
 
   .basemaps-top-section {
-    padding: rem(20px) rem(20px) rem(10px);
+    padding: rem(20px) rem(15px) rem(10px);
 
     @media screen and (min-width: $screen-m) {
       padding: rem(15px) rem(20px) 0;
@@ -78,7 +78,7 @@ $top-section-height: 125px;
       transform-origin: 0 0;
       transform: rotate(-45deg);
       top: 0;
-      left: calc(15% - #{rem(5px)});
+      left: rem(28px);
       border-bottom-color: $white-tree;
       box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
       z-index: 3;
@@ -87,19 +87,28 @@ $top-section-height: 125px;
 
   .basemaps-options-container {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
+
+    @media screen and (min-width: $screen-m) {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
   }
 
   .basemaps-options-wrapper {
     height: calc(#{$item-size} + #{rem(15px)});
-    width: calc(100% / 3);
     margin: rem(20px);
     margin-left: 0;
     z-index: 5;
+    width: rem(50px);
+    display: flex;
+    justify-content: center;
 
     @media screen and (min-width: $screen-m) {
       margin: initial;
+      width: calc(100% / 3);
+      display: block;
 
       &:first-child {
         margin-right: rem(10px);
@@ -131,6 +140,10 @@ $top-section-height: 125px;
     .c-selector-menu {
       left: rem(-20px);
 
+      @media screen and (min-width: $screen-m) {
+        left: rem(-9px);
+      }
+
       .c-selector-item {
         width: rem(90px);
         padding: rem(5px) rem(10px);
@@ -138,42 +151,34 @@ $top-section-height: 125px;
     }
   }
 
-  .basemap-list-scroll-wrapper {
-    height: 100%;
-    overflow: hidden;
-  }
-
   .basemaps-list {
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
     flex-wrap: wrap;
     height: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: 0 rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: 0;
+      align-items: flex-start;
+    }
 
     .basemaps-list-item {
       display: flex;
-      width: $item-size-small;
+      width: rem(50px);
       margin-bottom: rem(15px);
-
-      &:first-child {
-        margin-left: rem(20px);
-      }
-
-      &:last-child {
-        margin-right: rem(20px);
-      }
+      margin-right: rem(20px);
+      align-items: flex-start;
 
       @media screen and (min-width: $screen-m) {
         width: $item-size;
+        margin-right: rem(10px);
 
         &:first-child {
           margin-left: initial;
         }
 
-        &:last-child {
-          margin-right: initial;
+        &:nth-child(4) {
+          margin-right: 0;
         }
       }
 
