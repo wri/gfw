@@ -19,6 +19,7 @@ import './themes/button-grey-filled.scss'; // eslint-disable-line
 import './themes/button-clear.scss'; // eslint-disable-line
 import './themes/button-map-control.scss'; // eslint-disable-line
 import './themes/button-dashed.scss'; // eslint-disable-line
+import './themes/button-dark-round.scss'; // eslint-disable-line
 
 const Button = props => {
   const {
@@ -31,6 +32,7 @@ const Button = props => {
     active,
     onClick,
     tooltip,
+    background,
     trackingData
   } = props;
 
@@ -94,6 +96,7 @@ const Button = props => {
         )}
         onClick={handleClick}
         disabled={disabled}
+        style={background && { background }}
       >
         <div className="button-wrapper">{children}</div>
       </button>
@@ -129,7 +132,8 @@ Button.propTypes = {
   extLink: PropTypes.string,
   tooltip: PropTypes.object,
   trackingData: PropTypes.object,
-  buttonClicked: PropTypes.func
+  buttonClicked: PropTypes.func,
+  background: PropTypes.string
 };
 
 export default Button;

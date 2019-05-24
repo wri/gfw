@@ -11,6 +11,7 @@ import {
   getShowBasemaps,
   getShowRecentImagery
 } from 'components/maps/main-map/selectors';
+import { getBasemap } from 'components/maps/map/selectors';
 
 const getDatasetsLoading = state => state.datasets && state.datasets.loading;
 const getMapTourOpen = state => state.mapTour && state.mapTour.open;
@@ -21,6 +22,7 @@ export const getMapControlsProps = createStructuredSelector({
   hidePanels: getHidePanels,
   mapSettings: getMapSettings,
   showBasemaps: getShowBasemaps,
+  activeBasemap: getBasemap,
   showRecentImagery: getShowRecentImagery,
   recentSettings: getRecentImagerySettings,
   recentImageryDataset: getRecentImageryDataset,

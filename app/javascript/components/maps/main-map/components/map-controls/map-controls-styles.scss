@@ -35,6 +35,35 @@
     &.active {
       box-shadow: $tooltip-box-shadow;
     }
+
+    .basemaps-btn-content {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+
+      .basemaps-btn-img {
+        height: 100%;
+        float: left;
+        width: rem(38px);
+      }
+
+      .basemaps-btn-label-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: rem(10px);
+
+        span {
+          text-align: left;
+          text-transform: uppercase;
+        }
+
+        .basemaps-btn-label-small {
+          font-weight: 400;
+        }
+      }
+    }
   }
 
   .recent-imagery-btn {

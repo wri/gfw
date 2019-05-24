@@ -82,7 +82,8 @@ export const selectPlanetBasemapsIntervalOptions = createSelector(
     return intervalOptions.map(f => ({
       ...f,
       year: planetBasemaps[f.value][0].year,
-      url: planetBasemaps[f.value][0].url
+      url: planetBasemaps[f.value][0].url,
+      period: planetBasemaps[f.value][0].period
     }));
   }
 );
@@ -122,7 +123,8 @@ export const getPlanetYears = createSelector(
     return Object.keys(groupByYears).map(y => ({
       label: y,
       value: parseInt(y, 10),
-      url: groupByYears[y] && groupByYears[y][0].url
+      url: groupByYears[y] && groupByYears[y][0].url,
+      period: groupByYears[y] && groupByYears[y][0].period
     }));
   }
 );

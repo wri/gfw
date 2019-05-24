@@ -2,6 +2,7 @@
 
 .c-dataset-section {
   position: relative;
+  padding: 0 rem(20px);
 
   .dataset-header {
     margin-bottom: rem(20px);
@@ -35,16 +36,17 @@
     }
   }
 
-  &:not(:last-child) {
-    margin-bottom: rem(20px);
-    padding-bottom: rem(20px);
+  margin-bottom: rem(20px);
+  padding-bottom: rem(20px);
 
+  &:not(:last-child) {
     &::before {
       content: '';
       position: absolute;
       bottom: 0;
-      right: rem(-20px);
-      width: calc(100% + #{rem(20px)});
+      // right: rem(-20px);
+      left: rem(20px);
+      width: calc(100% - #{rem(20px)});
       height: rem(1px);
       background-color: rgba($hot-grey, 0.3);
     }

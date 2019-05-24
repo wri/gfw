@@ -11,24 +11,29 @@ class CategoriesMenu extends PureComponent {
     const { categories, onSelectCategory } = this.props;
 
     return (
-      <ul className="c-categories-menu">
-        {categories.map(c => (
-          <li key={c.category}>
-            <button
-              className={cx({ active: c.active })}
-              onClick={() => onSelectCategory({ datasetCategory: c.category })}
-            >
-              <div className="category-button">
-                {!!c.layerCount && (
-                  <span className="btn-layer-count">{c.layerCount}</span>
-                )}
-                <Icon icon={c.icon} />
-              </div>
-              {c.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="c-categories-menu">
+        <h2 className="categories-title">DATASETS</h2>
+        <ul className="categories-wrapper">
+          {categories.map(c => (
+            <li key={c.category}>
+              <button
+                className={cx({ active: c.active })}
+                onClick={() =>
+                  onSelectCategory({ datasetCategory: c.category })
+                }
+              >
+                <div className="category-button">
+                  {!!c.layerCount && (
+                    <span className="btn-layer-count">{c.layerCount}</span>
+                  )}
+                  <Icon icon={c.icon} />
+                </div>
+                {c.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
 }

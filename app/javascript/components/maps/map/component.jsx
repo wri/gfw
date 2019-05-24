@@ -23,16 +23,16 @@ class MapComponent extends PureComponent {
   };
 
   componentDidUpdate(prevProps) {
-    const { label, basemap } = this.props;
+    const { label, basemap, roads } = this.props;
     const { mapReady } = this.state;
 
     if (mapReady && label.value !== prevProps.label.value) {
       this.setLabelStyles();
     }
 
-    // if (mapReady && roads.value !== prevProps.roads.value) {
-    //   this.setRoadsLayout();
-    // }
+    if (mapReady && roads.value !== prevProps.roads.value) {
+      this.setRoadsLayout();
+    }
 
     if (mapReady && basemap.value !== prevProps.basemap.value) {
       this.setBasemapStyles();
@@ -97,13 +97,15 @@ class MapComponent extends PureComponent {
     if (this.map && roads) {
       const { layout } = roads || {};
       const allLayers = this.map.getStyle().layers;
-      const roadsLayer = allLayers.find(
+      const roadsLayers = allLayers.filter(
         l => l.id.includes('roads') && l.type === 'line'
       );
       const layoutOptions = layout && Object.entries(layout);
-      if (layoutOptions && roadsLayer) {
-        layoutOptions.forEach(opt => {
-          this.map.setLayoutProperty(roadsLayer.id, opt[0], opt[1]);
+      if (layoutOptions) {
+        roadsLayers.forEach(layer => {
+          layoutOptions.forEach(opt => {
+            this.map.setLayoutProperty(layer.id, opt[0], opt[1]);
+          });
         });
       }
     }
@@ -147,7 +149,7 @@ class MapComponent extends PureComponent {
           latitude={lat}
           longitude={lng}
           zoom={zoom}
-          mapStyle="mapbox://styles/resourcewatch/cjt46ozf40a5j1fswk8fqxgyc"
+          mapStyle="mapbox://styles/resourcewatch/cjvf9sa9k0bpn1fpdppzsj0d3"
           mapOptions={mapOptions}
           onViewportChange={handleMapMove}
           onClick={handleMapInteraction}

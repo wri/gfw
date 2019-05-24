@@ -1,5 +1,6 @@
 @import '~styles/settings.scss';
 $item-size: 55px;
+$item-size-small: 45px;
 $top-section-height: 125px;
 
 .c-basemaps {
@@ -10,7 +11,10 @@ $top-section-height: 125px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(15px);
+    }
   }
 
   .basemaps-actions {
@@ -32,90 +36,208 @@ $top-section-height: 125px;
     font-size: rem(13px);
     font-weight: 500;
     line-height: 1.62;
-    color: $slate;
+    color: #aaa;
     text-transform: uppercase;
+
+    @media screen and (min-width: $screen-m) {
+      color: $slate;
+    }
   }
 
   .basemaps-top-section {
-    padding: 15px 20px 25px;
+    padding: rem(20px) rem(15px) rem(10px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(15px) rem(20px) 0;
+    }
   }
 
   .basemaps-bottom-section {
+    position: relative;
     height: calc(100% - #{$top-section-height});
-    padding: 25px 20px 5px;
-    border-top: 1px solid rgba($hot-grey, 0.3);
+    padding: rem(25px) 0 rem(5px);
+    border-bottom: 1px solid rgba($hot-grey, 0.3);
+    background: $white-tree;
+    margin-bottom: rem(10px);
 
     @media screen and (min-width: $screen-m) {
-      padding: 25px 20px;
+      padding: rem(15px) rem(20px) rem(10px);
+      background: #fff;
+      margin-bottom: initial;
+    }
+
+    .menu-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      margin: 0 9px;
+      border-bottom: 7px solid $white-tree;
+      border-left: 7px solid transparent;
+      border-left-color: $white-tree;
+      border-right: none;
+      transform-origin: 0 0;
+      transform: rotate(-45deg);
+      top: 0;
+      left: rem(28px);
+      border-bottom-color: $white-tree;
+      box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
+      z-index: 3;
     }
   }
 
   .basemaps-options-container {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
+
+    @media screen and (min-width: $screen-m) {
+      flex-wrap: nowrap;
+    }
   }
 
   .basemaps-options-wrapper {
+    height: calc(#{$item-size} + #{rem(15px)});
+    margin: rem(20px);
+    margin-left: 0;
     z-index: 5;
-    width: 48%;
+    width: rem(50px);
+    display: flex;
+    justify-content: center;
 
-    &:first-child {
-      margin-right: rem(10px);
+    @media screen and (min-width: $screen-m) {
+      margin: initial;
+      width: calc(100% / 3);
+      display: block;
+
+      &:first-child {
+        margin-right: rem(10px);
+      }
+
+      &:last-child {
+        margin-left: 0;
+      }
     }
 
-    &:last-child {
-      margin-left: rem(10px);
-    }
-  }
+    button {
+      margin: initial;
 
-  .basemap-list-scroll-wrapper {
-    height: 100%;
-    overflow: hidden;
+      .value {
+        font-weight: 400;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    & .basemaps-roads {
+      .selector-btn .c-icon {
+        width: rem(26px);
+        height: rem(26px);
+        margin-left: rem(2px);
+      }
+    }
+
+    .c-selector-menu {
+      left: rem(-20px);
+
+      @media screen and (min-width: $screen-m) {
+        left: rem(-9px);
+      }
+
+      .c-selector-item {
+        width: rem(90px);
+        padding: rem(5px) rem(10px);
+      }
+    }
   }
 
   .basemaps-list {
     display: flex;
-    align-items: flex-start;
     flex-wrap: wrap;
     height: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+    padding: 0 rem(15px);
 
-  .basemaps-list-item-image {
-    width: $item-size;
-    height: $item-size;
-    border: 3px solid transparent;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin: auto;
-  }
-
-  .basemaps-list-item {
-    display: inline-block;
-    width: calc(100% / 3);
-    margin-bottom: rem(15px);
-
-    &:hover .basemaps-list-item-image,
-    &.-active .basemaps-list-item-image {
-      border: 3px solid $green-gfw;
+    @media screen and (min-width: $screen-m) {
+      padding: 0;
+      align-items: flex-start;
     }
-  }
 
-  .basemaps-list-item-button {
-    cursor: pointer;
-    width: 100%;
-  }
+    .basemaps-list-item {
+      display: flex;
+      width: rem(50px);
+      margin-bottom: rem(15px);
+      margin-right: rem(20px);
+      align-items: flex-start;
 
-  .basemaps-list-item-name {
-    display: inline-block;
-    text-align: center;
-    font-size: rem(10px);
-    text-transform: uppercase;
-    color: $slate-light;
-    margin: rem(6px) 0 0;
+      @media screen and (min-width: $screen-m) {
+        width: $item-size;
+        margin-right: rem(10px);
+
+        &:first-child {
+          margin-left: initial;
+        }
+
+        &:nth-child(4) {
+          margin-right: 0;
+        }
+      }
+
+      .basemaps-list-item-button {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        width: $item-size-small;
+
+        .basemaps-list-item-image {
+          height: $item-size-small;
+          min-height: $item-size-small;
+          max-height: $item-size-small;
+          width: 100%;
+          min-width: $item-size-small;
+          max-width: $item-size-small;
+          border: 3px solid $white-tree;
+          border-radius: 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          margin: auto;
+
+          @media screen and (min-width: $screen-m) {
+            height: $item-size;
+            min-height: $item-size;
+            max-height: $item-size;
+            width: $item-size;
+            min-width: $item-size;
+            max-width: $item-size;
+            border: 3px solid transparent;
+            border-radius: 0;
+          }
+        }
+
+        .basemaps-list-item-name {
+          display: inline-block;
+          text-align: center;
+          font-size: rem(10px);
+          text-transform: uppercase;
+          color: $slate-light;
+          margin: rem(6px) auto 0;
+
+          @media screen and (min-width: $screen-m) {
+            text-align: center;
+            width: $item-size;
+            // padding-left: rem(3px);
+          }
+        }
+
+        @media screen and (min-width: $screen-m) {
+          width: $item-size;
+        }
+      }
+
+      &:hover .basemaps-list-item-image,
+      &.-active .basemaps-list-item-image {
+        border: 3px solid $green-gfw;
+      }
+    }
   }
 
   .basemaps-list-item-selectors {
@@ -170,6 +292,19 @@ $top-section-height: 125px;
   padding: 20px;
   min-width: 200px;
 
+  .planet-tooltip-close {
+    cursor: pointer;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
+  }
+
   .date-selectors {
     display: flex;
     justify-content: space-between;
@@ -183,19 +318,6 @@ $top-section-height: 125px;
       .select-wrapper {
         width: 100%;
       }
-    }
-  }
-
-  .planet-tooltip-close {
-    cursor: pointer;
-    position: absolute;
-    top: rem(15px);
-    right: rem(15px);
-
-    svg {
-      height: 11px;
-      width: 11px;
-      fill: $warm-grey;
     }
   }
 }
