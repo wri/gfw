@@ -5,7 +5,7 @@ import reducerRegistry from 'app/registry';
 import WebMercatorViewport from 'viewport-mercator-project';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
-import { handleMapLatLonTrack } from 'app/analytics';
+import { handleMapLatLonTrack, track } from 'app/analytics';
 
 import {
   setInteraction,
@@ -93,6 +93,19 @@ class MapContainer extends PureComponent {
           const { coordinates } = geometry;
           this.setMapPosition(coordinates[1], coordinates[0], newZoom);
         });
+    }
+
+    // track interaction
+    if (
+      selectedInteraction &&
+      !isEqual(selectedInteraction, prevProps.selectedInteraction)
+    ) {
+      track('mapInteraction', {
+        label:
+          selectedInteraction &&
+          selectedInteraction.layer &&
+          selectedInteraction.layer.name
+      });
     }
   }
 

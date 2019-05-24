@@ -130,7 +130,8 @@ class WidgetSettings extends PureComponent {
       datasets,
       extentYears,
       types,
-      weeks
+      weeks,
+      commodities
     } = this.props.options;
     const hasExtraOptions =
       units ||
@@ -144,7 +145,8 @@ class WidgetSettings extends PureComponent {
       datasets ||
       types ||
       weeks ||
-      datasets;
+      datasets ||
+      commodities;
 
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
@@ -246,6 +248,21 @@ class WidgetSettings extends PureComponent {
                 disabled={loading}
                 onChange={option =>
                   onSettingsChange({ value: { dataset: option.value }, widget })
+                }
+              />
+            )}
+            {commodities && (
+              <Dropdown
+                theme="theme-select-light"
+                label="COMMODITY"
+                value={settings.commodity}
+                options={commodities}
+                disabled={loading}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { commodity: option.value },
+                    widget
+                  })
                 }
               />
             )}

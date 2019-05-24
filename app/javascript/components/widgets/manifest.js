@@ -40,6 +40,8 @@ import * as cumulativeEmissions from './widgets/climate/cumulative-emissions';
 import * as economicImpact from './widgets/land-use/economic-impact';
 import * as forestryEmployment from './widgets/land-use/forestry-employment';
 
+import * as traseCommodities from './widgets/land-use/trase-commodities';
+
 export default {
   // forest change
   gladAlerts,
@@ -77,5 +79,6 @@ export default {
   // gladBiodiversity,
   // land use
   economicImpact,
-  forestryEmployment
+  forestryEmployment,
+  traseCommodities
 };

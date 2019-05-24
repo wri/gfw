@@ -39,9 +39,9 @@ class Glad extends Canvas {
   getLayer() {
     return fetchGLADLatest()
       .then(result => {
-        const { attributes } = result.data.data;
+        const { attributes } = result;
         if (!attributes || !attributes.length) return this;
-        this.endDate = attributes[0].date;
+        this.endDate = attributes.updatedAt;
 
         return this;
       })
