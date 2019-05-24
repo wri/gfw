@@ -92,7 +92,6 @@ $top-section-height: 125px;
 
     @media screen and (min-width: $screen-m) {
       flex-wrap: nowrap;
-      justify-content: space-between;
     }
   }
 
@@ -115,7 +114,7 @@ $top-section-height: 125px;
       }
 
       &:last-child {
-        margin-left: rem(10px);
+        margin-left: 0;
       }
     }
 
