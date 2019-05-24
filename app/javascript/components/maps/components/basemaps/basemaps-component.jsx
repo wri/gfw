@@ -14,7 +14,7 @@ import arrowIcon from 'assets/icons/arrow-down.svg';
 
 import boundariesIcon from 'assets/icons/boundaries.svg';
 import labelsIcon from 'assets/icons/labels.svg';
-import roadsIcon from 'assets/icons/roads.svg';
+// import roadsIcon from 'assets/icons/roads.svg';
 
 import './styles.scss';
 
@@ -334,10 +334,10 @@ class Basemaps extends React.PureComponent {
       selectLabels,
       labels,
       isDesktop,
-      setModalMetaSettings,
-      activeRoads,
-      selectRoads,
-      roads
+      setModalMetaSettings
+      // activeRoads,
+      // selectRoads,
+      // roads
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -409,7 +409,7 @@ class Basemaps extends React.PureComponent {
                 selectorIcon={labelsIcon}
               />
             </li>
-            <li className="basemaps-options-wrapper">
+            {/* <li className="basemaps-options-wrapper">
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
@@ -421,7 +421,7 @@ class Basemaps extends React.PureComponent {
                 onChange={selectRoads}
                 selectorIcon={roadsIcon}
               />
-            </li>
+            </li> */}
           </ul>
         </div>
         {(isDesktop || this.state.showBasemaps) &&
