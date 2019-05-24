@@ -59,7 +59,7 @@ const getAdmDatasetId = (adm0, adm1, adm2, grouped) => {
   return ADM0_DATASET;
 };
 
-const getExtentYear = year => `extent_${year}`;
+const getExtentYear = year => `extent_${year || 2010}`;
 
 const getLocationSelect = ({ adm1, adm2 }) =>
   `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;

@@ -1,5 +1,6 @@
 export default {
-  threshold: 0,
+  threshold: 10,
   type: 'bound2',
-  layers: ['plantations_by_species']
+  layers: ['plantations_by_species'],
+  extentYear: 2010
 };
