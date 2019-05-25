@@ -63,3 +63,30 @@ export const setMainMapAnalysisView = createThunkAction(
     }
   }
 );
+
+export const setDrawnGeostore = createThunkAction(
+  'setDrawnGeostore',
+  geostoreId => (dispatch, getState) => {
+    const { query, type } = getState().location || {};
+    const { map, mainMap } = query || {};
+    dispatch({
+      type,
+      payload: {
+        type: 'geostore',
+        adm0: geostoreId
+      },
+      query: {
+        ...query,
+        map: {
+          ...map,
+          canBound: true,
+          drawing: false
+        },
+        mainMap: {
+          ...mainMap,
+          showAnalysis: true
+        }
+      }
+    });
+  }
+);

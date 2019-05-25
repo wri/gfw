@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import { track } from 'app/analytics';
 
+import { getGeostoreId } from 'providers/geostore-provider/actions';
 import { setMapPromptsSettings } from 'components/map-prompts/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
@@ -18,6 +19,7 @@ const actions = {
   setRecentImagerySettings,
   setMenuSettings,
   setMapPromptsSettings,
+  getGeostoreId,
   ...ownActions
 };
 
@@ -77,12 +79,36 @@ class MainMapContainer extends PureComponent {
     }
   };
 
+  handleClickAnalysis = selected => {
+    const { data, layer, geometry } = selected;
+    const { cartodb_id, wdpaid } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+
+    const isAdmin = analysisEndpoint === 'admin';
+    const isWdpa = analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid);
+    const isUse = cartodb_id && tableName;
+
+    const { setMainMapAnalysisView } = this.props;
+    if (isAdmin || isWdpa || isUse) {
+      setMainMapAnalysisView(selected);
+    } else {
+      this.onDrawComplete(geometry);
+    }
+  };
+
+  onDrawComplete = geojson => {
+    const { setDrawnGeostore } = this.props;
+    this.props.getGeostoreId({ geojson, callback: setDrawnGeostore });
+  };
+
   render() {
     return createElement(MapComponent, {
       ...this.props,
       ...this.state,
       handleShowTooltip: this.handleShowTooltip,
-      handleClickMap: this.handleClickMap
+      handleClickAnalysis: this.handleClickAnalysis,
+      handleClickMap: this.handleClickMap,
+      onDrawComplete: this.onDrawComplete
     });
   }
 }
@@ -90,10 +116,12 @@ class MainMapContainer extends PureComponent {
 MainMapContainer.propTypes = {
   oneClickAnalysis: PropTypes.bool,
   setMainMapAnalysisView: PropTypes.func,
+  getGeostoreId: PropTypes.func,
   selectedInteraction: PropTypes.object,
   setMenuSettings: PropTypes.func,
   setMainMapSettings: PropTypes.func,
   setMapPromptsSettings: PropTypes.func,
+  setDrawnGeostore: PropTypes.func,
   activeDatasets: PropTypes.array,
   menuSection: PropTypes.string,
   analysisActive: PropTypes.bool,

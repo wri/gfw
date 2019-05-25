@@ -46,10 +46,9 @@ class MapComponent extends Component {
     loading: PropTypes.bool,
     loadingMessage: PropTypes.string,
     basemap: PropTypes.object,
-    setDrawnGeostore: PropTypes.func.isRequired,
-    getGeostoreId: PropTypes.func,
     popupActions: PropTypes.array,
-    onSelectBoundary: PropTypes.func
+    onSelectBoundary: PropTypes.func,
+    onDrawComplete: PropTypes.func
   };
 
   static defaultProps = {
@@ -173,11 +172,6 @@ class MapComponent extends Component {
     }
   };
 
-  onDrawComplete = geojson => {
-    const { setDrawnGeostore, getGeostoreId } = this.props;
-    getGeostoreId({ geojson, callback: setDrawnGeostore });
-  };
-
   setLabels = () => {
     const LABELS_GROUP = ['labels'];
     if (this.map) {
@@ -251,7 +245,8 @@ class MapComponent extends Component {
       loadingMessage,
       basemap,
       popupActions,
-      onSelectBoundary
+      onSelectBoundary,
+      onDrawComplete
     } = this.props;
 
     return (
@@ -285,7 +280,7 @@ class MapComponent extends Component {
               <Draw
                 map={map}
                 drawing={drawing}
-                onDrawComplete={this.onDrawComplete}
+                onDrawComplete={onDrawComplete}
               />
               {/* SCALE */}
               <Scale className="map-scale" map={map} viewport={viewport} />
