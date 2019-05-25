@@ -79,11 +79,12 @@ class ShowAnalysis extends PureComponent {
       showDownloads,
       downloadUrls,
       hasLayers,
-      hasWidgets,
+      hasWidgetLayers,
       zoomLevel,
       widgets,
       showAnalysisDisclaimer
     } = this.props;
+    const hasWidgets = hasWidgetLayers && widgets && !!widgets.length;
 
     return (
       <div className={cx('c-show-analysis')}>
@@ -169,7 +170,10 @@ class ShowAnalysis extends PureComponent {
                 <ul className="draw-stats">
                   {data && data.map(d => this.renderStatItem(d))}
                 </ul>
-                <Widgets simple analysis widgets={widgets} />
+                {widgets &&
+                  !!widgets.length && (
+                    <Widgets simple analysis widgets={widgets} />
+                  )}
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>
@@ -221,7 +225,7 @@ ShowAnalysis.propTypes = {
   setMenuSettings: PropTypes.func,
   showDownloads: PropTypes.bool,
   hasLayers: PropTypes.bool,
-  hasWidgets: PropTypes.bool,
+  hasWidgetLayers: PropTypes.bool,
   downloadUrls: PropTypes.array,
   widgets: PropTypes.array,
   zoomLevel: PropTypes.number,

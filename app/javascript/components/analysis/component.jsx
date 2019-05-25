@@ -27,7 +27,7 @@ class AnalysisComponent extends PureComponent {
       embed
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
-    const hasWidgets = widgetLayers && !!widgetLayers.length;
+    const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
 
     const linkProps = {
       link: `/dashboards/${location.type}${
@@ -74,7 +74,7 @@ class AnalysisComponent extends PureComponent {
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
               hasLayers={hasLayers}
-              hasWidgets={hasWidgets}
+              hasWidgetLayers={hasWidgetLayers}
               analysis
             />
           ) : (
