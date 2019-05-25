@@ -28,6 +28,12 @@ const routeChangeThunk = (dispatch, getState) => {
 
 const redirectThunk = (dispatch, getState) => {
   const { location } = getState() || {};
+
+  if (location.pathname === '/dashboards') {
+    dispatch(redirect({ type: DASHBOARDS, payload: { type: 'global' } }));
+    return;
+  }
+
   const routeSlugs = location.pathname && location.pathname.split('/');
   const isOldMap = routeSlugs.includes('map');
   if (isOldMap) {
@@ -168,7 +174,7 @@ export const routes = {
   },
   [DASHBOARDS]: {
     controller: 'dashboards',
-    path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
+    path: '/dashboards/:type/:adm0?/:adm1?/:adm2?',
     component: 'dashboards',
     footer: true,
     headerOptions: {
