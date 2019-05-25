@@ -14,21 +14,21 @@ import BoundarySentence from './components/boundary-sentence';
 
 class Popup extends Component {
   componentDidUpdate(prevProps) {
-    const { interactions } = this.props;
-    const { activeDatasets, clearMapInteractions } = prevProps;
+    const { interactions, activeDatasets } = this.props;
     if (
       isEmpty(interactions) &&
-      !isEqual(activeDatasets.length, this.props.activeDatasets.length)
+      !isEqual(activeDatasets.length, prevProps.activeDatasets.length)
     ) {
-      clearMapInteractions();
+      this.handleClose();
     }
   }
 
   handleClickZoom = selected => {
-    const { setMapSettings, clearMapInteractions } = this.props;
+    const { setMapSettings } = this.props;
     const newBbox = bbox(selected.geometry);
     setMapSettings({ canBound: true, bbox: newBbox });
-    clearMapInteractions();
+    this.setState({ open: false });
+    this.handleClose();
   };
 
   handleClickAction = (selected, handleAction) => {
@@ -49,7 +49,13 @@ class Popup extends Component {
       isWdpa
     });
 
-    this.props.clearMapInteractions();
+    this.handleClose();
+  };
+
+  // when clicking popup action the map triggers the interaction event
+  // causing the popup to open again. this stops it for now.
+  handleClose = () => {
+    setTimeout(() => this.props.clearMapInteractions(), 300);
   };
 
   render() {
@@ -133,7 +139,9 @@ class Popup extends Component {
                   buttons.map(p => (
                     <Button
                       key={p.label}
-                      onClick={() => this.handleClickAction(selected, p.action)}
+                      onClick={() => {
+                        this.handleClickAction(selected, p.action);
+                      }}
                     >
                       {p.label}
                     </Button>
