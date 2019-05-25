@@ -35,6 +35,7 @@ class MapPromptsContainer extends PureComponent {
       // if map zooms past 9
       (mapZoom > 3 &&
         prevProps.mapZoom <= 3 &&
+        activeCategories &&
         (activeCategories.includes('landUse') ||
           activeCategories.includes('biodiversity') ||
           datasetIds.includes('a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b')));
