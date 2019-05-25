@@ -1,9 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import OutsideClickHandler from 'react-outside-click-handler';
-
-import { NavLink } from 'redux-first-router-link';
 
 import Icon from 'components/ui/icon';
 
@@ -18,6 +15,7 @@ import ContactUs from 'components/modals/contact-us';
 import MyGFWLogin from 'components/mygfw-login';
 import DropdownMenu from './components/dropdown-menu';
 import SubmenuPanel from './components/submenu-panel';
+import NavMenu from './components/nav-menu';
 
 import './styles.scss';
 
@@ -28,8 +26,6 @@ class Header extends PureComponent {
       setShowPanel,
       setShowMyGfw,
       setShowLangSelector,
-      setActiveNavItem,
-      activeNavItem,
       showPanel,
       showMyGfw,
       showLangSelector,
@@ -46,7 +42,6 @@ class Header extends PureComponent {
       loggedIn,
       fixed,
       toggle,
-      useNavLinks,
       isMobile,
       isMap,
       setModalContactUsOpen
@@ -98,79 +93,7 @@ class Header extends PureComponent {
                   </a>
                 )}
                 <div className="nav">
-                  {!isMobile && (
-                    <ul
-                      className="nav-main"
-                      onClick={() => {
-                        setShowMyGfw(false);
-                        setShowLangSelector(false);
-                      }}
-                      role="button" // eslint-disable-line
-                    >
-                      {navMain.map(item => (
-                        <li key={item.label}>
-                          <OutsideClickHandler
-                            onOutsideClick={() => {
-                              if (activeNavItem === item.label) {
-                                setActiveNavItem(null);
-                              }
-                            }}
-                          >
-                            {useNavLinks && item.navLink ? (
-                              <NavLink
-                                to={item.path}
-                                className="nav-link"
-                                activeClassName="-active"
-                              >
-                                {item.label}
-                              </NavLink>
-                            ) : (
-                              <Fragment>
-                                {item.submenu && (
-                                  <Fragment>
-                                    <NavLink
-                                      to={item.path}
-                                      className="nav-link -hidden"
-                                      activeClassName="-active"
-                                    />
-                                    <button
-                                      className={cx('nav-link')}
-                                      onClick={() =>
-                                        setActiveNavItem(
-                                          item.label === activeNavItem
-                                            ? null
-                                            : item.label
-                                        )
-                                      }
-                                    >
-                                      {item.label}
-                                      <Icon
-                                        className={cx('icon-arrow', {
-                                          active: activeNavItem === item.label
-                                        })}
-                                        icon={arrowIcon}
-                                      />
-                                    </button>
-                                    {activeNavItem === item.label && (
-                                      <DropdownMenu
-                                        className="sub-menu"
-                                        options={item.submenu}
-                                      />
-                                    )}
-                                  </Fragment>
-                                )}
-                                {!item.submenu && (
-                                  <a href={item.path} className="nav-link">
-                                    {item.label}
-                                  </a>
-                                )}
-                              </Fragment>
-                            )}
-                          </OutsideClickHandler>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  {!isMobile && <NavMenu menuItems={navMain} />}
                   <ul className={cx('nav-alt', { '-mobile': isMobile })}>
                     {!isMobile && (
                       <li>
@@ -291,11 +214,8 @@ Header.propTypes = {
   loggedIn: PropTypes.bool,
   fixed: PropTypes.bool,
   toggle: PropTypes.bool,
-  useNavLinks: PropTypes.bool,
   isMobile: PropTypes.bool,
-  isMap: PropTypes.bool,
-  setActiveNavItem: PropTypes.func,
-  activeNavItem: PropTypes.string
+  isMap: PropTypes.bool
 };
 
 export default Header;

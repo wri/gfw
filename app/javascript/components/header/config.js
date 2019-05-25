@@ -16,13 +16,11 @@ export default {
   navMain: [
     {
       label: 'Map',
-      path: '/map',
-      navLink: true
+      path: '/map'
     },
     {
       label: 'Dashboard',
-      path: '/dashboards',
-      navLink: true
+      path: '/dashboards'
     },
     {
       label: 'Topics',
@@ -52,14 +50,13 @@ export default {
     },
     {
       label: 'Blog',
-      path: 'http://blog.globalforestwatch.org',
+      extLink: 'http://blog.globalforestwatch.org',
       target: '_blank',
       rel: 'noopener nofollower'
     },
     {
       label: 'About',
-      path: '/about',
-      navLink: true
+      path: '/about'
     }
   ],
   myGfwLinks: [

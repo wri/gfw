@@ -8,7 +8,7 @@ import './styles.scss';
 
 class DropdownMenu extends PureComponent {
   render() {
-    const { className, options, handleSelect, selected } = this.props;
+    const { className, options, handleSelect, hideMenu, selected } = this.props;
 
     return (
       <ul className={`c-dropdown-menu ${className || ''}`}>
@@ -28,7 +28,11 @@ class DropdownMenu extends PureComponent {
                 </button>
               ) : (
                 <Fragment>
-                  {l.navLink && <NavLink to={l.path}>{l.label}</NavLink>}
+                  {l.navLink && (
+                    <NavLink to={l.path} onClick={hideMenu}>
+                      {l.label}
+                    </NavLink>
+                  )}
                   {!l.navLink && <a href={l.path}>{l.label}</a>}
                 </Fragment>
               )}
@@ -43,6 +47,7 @@ DropdownMenu.propTypes = {
   className: PropTypes.string,
   options: PropTypes.array,
   handleSelect: PropTypes.func,
+  hideMenu: PropTypes.func,
   selected: PropTypes.object
 };
 

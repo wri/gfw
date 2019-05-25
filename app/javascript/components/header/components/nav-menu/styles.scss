@@ -1,0 +1,73 @@
+@import '~styles/settings.scss';
+
+.c-nav-menu {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-start;
+  padding-left: rem(100px);
+  flex: 1;
+  z-index: 1;
+
+  .nav-item {
+    .nav-link {
+      padding: 0 rem(10px);
+      margin: 0 rem(5px);
+      position: relative;
+
+      &.hidden {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      &.with-submenu {
+        padding-right: rem(20px);
+      }
+    }
+
+    .icon-arrow {
+      height: rem(10px);
+      margin-left: rem(5px);
+
+      &.active {
+        transform: rotate(180deg);
+      }
+    }
+
+    .submenu {
+      position: absolute;
+      top: 55px;
+      left: -70%;
+
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+
+      &::before {
+        top: -12px;
+        border-color: transparent transparent $border transparent;
+        border-width: 6px;
+        right: 45%;
+      }
+
+      &::after {
+        top: -10px;
+        border-color: transparent transparent $white transparent;
+        border-width: 5px;
+        right: calc(45% + 1px);
+      }
+    }
+  }
+}
