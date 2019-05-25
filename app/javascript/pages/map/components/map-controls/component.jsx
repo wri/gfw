@@ -139,7 +139,7 @@ class MapControlsButtons extends PureComponent {
   };
 
   renderBasemapsBtn = () => {
-    const { showBasemaps } = this.props;
+    const { showBasemaps, activeBasemap } = this.props;
 
     return (
       <Button
@@ -147,13 +147,37 @@ class MapControlsButtons extends PureComponent {
         theme="theme-button-map-control wide"
         onClick={this.toggleBasemaps}
         tooltip={
-          !showBasemaps ? { text: 'Basemaps', hideOnClick: false } : undefined
+          !showBasemaps
+            ? { text: 'Map Settings', hideOnClick: false }
+            : undefined
         }
       >
-        <Icon
-          icon={globeIcon}
-          className={cx('globe-icon', { '-active': showBasemaps })}
-        />
+        {activeBasemap ? (
+          <div className="basemaps-btn-content">
+            <img
+              className="basemaps-btn-img"
+              src={activeBasemap.image}
+              alt={activeBasemap.value}
+            />
+            <div className="basemaps-btn-label-wrapper">
+              <span className="basemaps-btn-label">{activeBasemap.label}</span>
+              {(activeBasemap.year || // satellite
+                activeBasemap.planetYear) && ( // planet imagery
+                  <span className="basemaps-btn-label-small">
+                    {activeBasemap.year ||
+                    (activeBasemap.period // YYYY
+                      ? `${activeBasemap.planetYear}/${activeBasemap.period}` // YYYY/mmm
+                      : activeBasemap.planetYear)}
+                  </span>
+                )}
+            </div>
+          </div>
+        ) : (
+          <Icon
+            icon={globeIcon}
+            className={cx('globe-icon', { '-active': showBasemaps })}
+          />
+        )}
       </Button>
     );
   };
@@ -377,7 +401,8 @@ MapControlsButtons.propTypes = {
   isDesktop: PropTypes.bool,
   datasets: PropTypes.array,
   minZoom: PropTypes.number,
-  maxZoom: PropTypes.number
+  maxZoom: PropTypes.number,
+  activeBasemap: PropTypes.object
 };
 
 export default connect()(MapControlsButtons);

@@ -5,16 +5,12 @@ export default ({ params }) =>
   axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
     axios.spread((alerts, latest) => {
       let data = {};
-      if (alerts && alerts.data && latest && latest.data) {
-        const alertsData = alerts.data.data;
-        const latestData = latest.data.data;
+      if (alerts && alerts.data && latest) {
         const latestDate =
-          latestData &&
-          latestData.attributes &&
-          latestData.attributes.updatedAt;
+          latest && latest.attributes && latest.attributes.updatedAt;
 
         data = {
-          alerts: alertsData,
+          alerts: alerts.data.data,
           latest: latestDate,
           settings: { latestDate }
         };

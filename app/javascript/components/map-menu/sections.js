@@ -10,7 +10,6 @@ import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
 
 import RecentImagerySettings from 'components/recent-imagery/components/recent-imagery-settings';
-import Basemaps from 'components/basemaps';
 import Analysis from 'components/analysis';
 import Legend from 'components/map/components/legend';
 
@@ -175,13 +174,5 @@ export const datasetsSections = [
         title: 'Biodiversity'
       }
     ]
-  },
-  {
-    label: 'layers',
-    slug: 'datasets',
-    category: 'basemaps',
-    icon: globeIcon,
-    Component: Basemaps,
-    hiddenMobile: true
   }
 ];

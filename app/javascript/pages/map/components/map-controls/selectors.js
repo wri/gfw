@@ -9,7 +9,8 @@ import {
   getMapViewport,
   getActiveDatasetsFromState,
   getMapMinZoom,
-  getMapMaxZoom
+  getMapMaxZoom,
+  getBasemap
 } from 'components/map/selectors';
 import {
   getHidePanels,
@@ -29,6 +30,7 @@ export const getMapControlsProps = createStructuredSelector({
   minZoom: getMapMinZoom,
   maxZoom: getMapMaxZoom,
   showBasemaps: getShowBasemaps,
+  activeBasemap: getBasemap,
   showRecentImagery: getShowRecentImagery,
   recentSettings: getRecentImagerySettings,
   recentImageryDataset: getRecentImageryDataset,

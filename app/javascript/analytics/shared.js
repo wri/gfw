@@ -40,5 +40,11 @@ export default {
     category: 'User prompts',
     action: 'User prompt is hidden/shown',
     label: '[status]'
+  },
+  // cookies
+  acceptCookies: {
+    category: 'Cookies banner',
+    action: 'User accepts cookies',
+    label: 'cookies'
   }
 };

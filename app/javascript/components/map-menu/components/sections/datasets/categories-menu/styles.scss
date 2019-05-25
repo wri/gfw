@@ -1,70 +1,99 @@
 @import '~styles/settings';
 
 .c-categories-menu {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  font-size: rem(10px);
-  background-color: $white;
-  color: $slate;
-  width: 100%;
-  z-index: 5;
+  padding: rem(15px);
 
-  li {
-    width: calc(100% / 3);
-    margin: rem(20px) 0;
+  .categories-title {
+    font-size: rem(13px);
+    font-weight: 500;
+    line-height: 1.62;
+    color: #aaa;
+    text-transform: uppercase;
+
+    @media screen and (min-width: $screen-m) {
+      color: $slate;
+      margin-left: 0;
+    }
   }
 
-  button {
+  .categories-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    font-size: rem(10px);
+    background-color: $white;
+    color: $slate;
     width: 100%;
-    text-transform: uppercase;
-    font-size: rem(12px);
+    z-index: 5;
 
-    .category-button {
-      width: rem(60px);
-      height: rem(60px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $green-gfw;
-      border-radius: rem(35px);
-      margin-bottom: rem(10px);
-      position: relative;
+    li {
+      margin: rem(20px);
+      margin-left: 0;
+      width: rem(50px);
 
-      span {
-        position: absolute;
-        top: rem(6px);
-        right: rem(2px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: rem(14px);
-        height: rem(14px);
-        background-color: $slate;
-        border-radius: 100%;
-        font-size: 9px;
-        font-weight: 500;
-        letter-spacing: -0.3px;
-        color: $white;
+      @media screen and (min-width: $screen-m) {
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
 
-    svg {
-      width: rem(30px);
-      height: rem(30px);
-      fill: $white;
-    }
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      text-transform: uppercase;
+      font-size: rem(11px);
+      color: $slate-light;
 
-    &.active {
-      color: $green-gfw;
+      .category-button {
+        width: rem(48px);
+        height: rem(48px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $green-gfw;
+        border-radius: rem(35px);
+        margin-bottom: rem(10px);
+        position: relative;
+
+        span {
+          position: absolute;
+          top: rem(6px);
+          right: rem(2px);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: rem(14px);
+          height: rem(14px);
+          background-color: $slate;
+          border-radius: 100%;
+          font-size: 9px;
+          font-weight: 500;
+          letter-spacing: -0.3px;
+          color: $white;
+        }
+      }
 
       svg {
-        fill: $green-gfw;
+        width: rem(30px);
+        height: rem(30px);
+        fill: $white;
+      }
+
+      &.active {
+        color: $green-gfw;
+
+        svg {
+          fill: $green-gfw;
+        }
       }
     }
   }

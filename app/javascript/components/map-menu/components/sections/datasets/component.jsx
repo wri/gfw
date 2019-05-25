@@ -6,6 +6,7 @@ import NoContent from 'components/ui/no-content';
 import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import Pill from 'components/ui/pill';
 import Dropdown from 'components/ui/dropdown';
+import Basemaps from 'components/basemaps';
 
 import DatasetSection from './dataset-section';
 import CategoriesMenu from './categories-menu';
@@ -38,10 +39,13 @@ class Datasets extends PureComponent {
           !datasetCategory &&
           datasetCategories &&
           datasetCategories.length && (
-            <CategoriesMenu
-              categories={datasetCategories}
-              onSelectCategory={setMenuSettings}
-            />
+            <div>
+              <Basemaps />
+              <CategoriesMenu
+                categories={datasetCategories}
+                onSelectCategory={setMenuSettings}
+              />
+            </div>
           )}
         {menuSection &&
           datasetCategory && (
