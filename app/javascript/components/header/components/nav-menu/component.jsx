@@ -20,11 +20,13 @@ class NavMenu extends PureComponent {
   };
 
   render() {
-    const { className, menuItems } = this.props;
+    const { className, menuItems, fullScreen } = this.props;
     const { activeSubmenu } = this.state;
 
     return menuItems ? (
-      <ul className={cx('c-nav-menu', className)}>
+      <ul
+        className={cx('c-nav-menu', className, { 'full-screen': fullScreen })}
+      >
         {menuItems.map(item => (
           <li key={item.path || item.label} className="nav-item">
             {item.path && (
@@ -83,6 +85,7 @@ class NavMenu extends PureComponent {
 
 NavMenu.propTypes = {
   className: PropTypes.string,
+  fullScreen: PropTypes.bool,
   menuItems: PropTypes.array
 };
 

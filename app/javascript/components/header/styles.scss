@@ -2,7 +2,7 @@
 
 $header-height: rem(56px);
 $header-height-small: rem(60px);
-$full-screen-height: rem(75px);
+$full-screen-height: rem(76px);
 
 .c-header {
   height: $header-height;
@@ -43,6 +43,24 @@ $full-screen-height: rem(75px);
     position: relative;
     font-size: rem(14px);
 
+    .nav-link {
+      &::after {
+        content: '';
+        height: rem(5px);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: transparent;
+      }
+
+      &.-active {
+        &::after {
+          background-color: $green-gfw;
+        }
+      }
+    }
+
     .nav-link,
     .menu-link {
       position: relative;
@@ -63,30 +81,34 @@ $full-screen-height: rem(75px);
       }
     }
 
-    .nav-link {
-      &::after {
-        content: '';
-        height: rem(5px);
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        background-color: transparent;
-      }
-
-      &.-active {
-        &::after {
-          background-color: $green-gfw;
-        }
-      }
-    }
-
     svg {
       fill: $slate;
 
       &:hover {
         color: darken($slate, 30%);
       }
+    }
+  }
+
+  &.full-screen {
+    height: 0;
+    border-bottom-width: 0;
+
+    @media screen and (min-width: $screen-mobile) {
+      .logo {
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
+      .nav {
+        height: $full-screen-height;
+      }
+    }
+
+    &.full-screen-open {
+      height: $full-screen-height;
+      border-bottom-width: 1px;
     }
   }
 }

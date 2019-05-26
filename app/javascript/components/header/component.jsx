@@ -13,6 +13,21 @@ import NavAlt from './components/nav-alt';
 import './styles.scss';
 
 class Header extends PureComponent {
+  state = {
+    fullScreenOpen: false
+  };
+
+  componentDidUpdate(prevProps) {
+    const { fullScreen } = this.props;
+    if (fullScreen && !prevProps.fullScreen) {
+      this.closeFullScreen();
+    }
+  }
+
+  closeFullScreen = () => {
+    this.setState({ fullScreenOpen: false });
+  };
+
   render() {
     const {
       className,
@@ -25,36 +40,68 @@ class Header extends PureComponent {
       loggedIn,
       fullScreen
     } = this.props;
+    const { fullScreenOpen } = this.state;
 
     return (
       <MediaQuery minWidth={SCREEN_MOBILE}>
         {isDesktop => (
-          <div className={cx('c-header', className)}>
+          <div
+            className={cx(
+              'c-header',
+              { 'full-screen': fullScreen },
+              { 'full-screen-open': fullScreenOpen },
+              className
+            )}
+          >
             <div className="row">
               <div className="column small-12">
-                <a className="logo" href="/">
-                  <img
-                    src={gfwLogo}
-                    alt="Global Forest Watch"
-                    width="76"
-                    height="76"
-                  />
-                </a>
-                <div className="nav">
-                  {isDesktop &&
-                    !hideMenu && (
-                      <NavMenu className="nav-menu" menuItems={navMain} />
-                    )}
-                  <NavAlt
-                    isDesktop={isDesktop}
-                    myGfwLinks={myGfwLinks}
-                    moreLinks={moreLinks}
-                    navMain={navMain}
-                    apps={apps}
-                    toggleContactUs={setModalContactUsOpen}
-                    loggedIn={loggedIn}
-                  />
-                </div>
+                {!fullScreen || fullScreenOpen ? (
+                  <a className="logo" href="/">
+                    <img
+                      src={gfwLogo}
+                      alt="Global Forest Watch"
+                      width="76"
+                      height="76"
+                    />
+                  </a>
+                ) : (
+                  <button
+                    className="logo"
+                    onClick={() => this.setState({ fullScreenOpen: true })}
+                  >
+                    <img
+                      src={gfwLogo}
+                      alt="Global Forest Watch"
+                      width="76"
+                      height="76"
+                    />
+                  </button>
+                )}
+                {(!fullScreen || fullScreenOpen) && (
+                  <div className="nav">
+                    {isDesktop &&
+                      !hideMenu && (
+                        <NavMenu
+                          className="nav-menu"
+                          menuItems={navMain}
+                          fullScreen={fullScreen}
+                        />
+                      )}
+                    <NavAlt
+                      showSubmenu={fullScreen && fullScreenOpen}
+                      closeSubMenu={() =>
+                        this.setState({ fullScreenOpen: false })
+                      }
+                      isDesktop={isDesktop}
+                      myGfwLinks={myGfwLinks}
+                      moreLinks={moreLinks}
+                      navMain={navMain}
+                      apps={apps}
+                      toggleContactUs={setModalContactUsOpen}
+                      loggedIn={loggedIn}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <ContactUs />

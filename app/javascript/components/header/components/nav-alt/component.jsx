@@ -46,13 +46,25 @@ class NavAlt extends PureComponent {
     this.setState({ lang, showLang: false, showMore: false });
   };
 
+  handleCloseSubmenu = () => {
+    this.setState({ showMore: false });
+    this.props.closeSubMenu();
+  };
+
   render() {
-    const { isDesktop, myGfwLinks, loggedIn } = this.props;
+    const { isDesktop, myGfwLinks, loggedIn, showSubmenu } = this.props;
     const { showLang, showMyGfw, showMore, languages, lang } = this.state;
     const activeLang = languages && languages.find(l => l.value === lang);
+    const showMorePanel = showMore || showSubmenu;
+    let moreMenuText = 'menu';
+    if (showSubmenu && isDesktop) {
+      moreMenuText = 'close';
+    } else if (isDesktop) {
+      moreMenuText = 'more';
+    }
 
     return (
-      <ul className="c-nav-alt">
+      <ul className={cx('c-nav-alt', { 'full-screen': showSubmenu })}>
         {isDesktop && (
           <Fragment>
             <li className="alt-link">
@@ -112,30 +124,36 @@ class NavAlt extends PureComponent {
           >
             <button
               className="menu-link"
-              onClick={() => this.setState({ showMore: !showMore })}
+              onClick={() => {
+                if (showSubmenu) {
+                  this.handleCloseSubmenu();
+                } else {
+                  this.setState({ showMore: !showMore });
+                }
+              }}
             >
-              {isDesktop ? 'More' : 'Menu'}
+              {moreMenuText}
               {isDesktop && (
                 <Icon
-                  className={showMore ? 'icon-close' : 'icon-more'}
-                  icon={showMore ? closeIcon : moreIcon}
+                  className={showMorePanel ? 'icon-close' : 'icon-more'}
+                  icon={showMorePanel ? closeIcon : moreIcon}
                 />
               )}
               {!isDesktop && (
                 <Icon
-                  className={showMore ? 'icon-close' : 'icon-menu'}
-                  icon={showMore ? closeIcon : menuIcon}
+                  className={showMorePanel ? 'icon-close' : 'icon-menu'}
+                  icon={showMorePanel ? closeIcon : menuIcon}
                 />
               )}
             </button>
-            {showMore && (
+            {showMorePanel && (
               <SubmenuPanel
                 className="submenu-panel"
                 isMobile={!isDesktop}
                 languages={languages}
                 activeLang={activeLang}
                 handleLangSelect={this.handleLangSelect}
-                hideMenu={() => this.setState({ showMore: false })}
+                hideMenu={this.handleCloseSubmenu}
                 {...this.props}
               />
             )}
@@ -149,7 +167,9 @@ class NavAlt extends PureComponent {
 NavAlt.propTypes = {
   isDesktop: PropTypes.bool,
   myGfwLinks: PropTypes.array,
-  loggedIn: PropTypes.bool
+  loggedIn: PropTypes.bool,
+  showSubmenu: PropTypes.bool,
+  closeSubMenu: PropTypes.func
 };
 
 export default NavAlt;

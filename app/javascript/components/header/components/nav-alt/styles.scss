@@ -102,5 +102,20 @@
       width: rem(320px);
     }
   }
+
+  &.full-screen {
+    @media screen and (min-width: $screen-mobile) {
+      .submenu-panel {
+        top: rem(76px);
+        position: fixed;
+        height: calc(100% - 76px);
+        right: 0;
+      }
+    }
+
+    .submenu {
+      top: rem(75px);
+    }
+  }
 }
 

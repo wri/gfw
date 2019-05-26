@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { SCREEN_M } from 'utils/constants';
+import { SCREEN_MOBILE } from 'utils/constants';
 import cx from 'classnames';
 import MediaQuery from 'react-responsive';
 import { Tooltip } from 'react-tippy';
@@ -49,7 +49,7 @@ class MainMapComponent extends PureComponent {
     } = this.props;
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_MOBILE}>
         {isDesktop => (
           <div className={cx('c-map-main', { embed })}>
             <div

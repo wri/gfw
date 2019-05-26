@@ -34,7 +34,7 @@
       background-color: $ocean;
       top: 0;
 
-      @media screen and (min-width: $screen-m) {
+      @media screen and (min-width: $screen-mobile) {
         width: calc(100% - 76px);
         right: 0;
         min-height: 100%;

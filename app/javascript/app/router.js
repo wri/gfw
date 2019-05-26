@@ -63,10 +63,6 @@ export const routes = {
     controller: 'about',
     path: '/about',
     component: 'about',
-    footer: true,
-    headerOptions: {
-      useNavLinks: true
-    },
     sections: [
       {
         label: 'GFW in Action',
@@ -99,10 +95,6 @@ export const routes = {
     controller: 'grants_and_fellowships',
     path: '/grants-and-fellowships/:tab?',
     component: 'sgf',
-    footer: true,
-    headerOptions: {
-      useNavLinks: true
-    },
     sections: {
       projects: {
         label: 'Projects',
@@ -128,14 +120,8 @@ export const routes = {
     controller: 'map',
     path: '/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
-    headerOptions: {
-      isMap: true,
-      fullScreen: true,
-      showPanel: true,
-      fixed: true,
-      toggle: true,
-      useNavLinks: true
-    }
+    fullScreen: true,
+    hideFooter: true
   },
   [MAP_EMBED]: {
     controller: 'map',
@@ -147,6 +133,7 @@ export const routes = {
     controller: 'topics',
     path: '/topics/:tab',
     component: 'topics',
+    hideFooter: true,
     sections: {
       biodiversity: {
         label: 'Biodiversity',
@@ -172,19 +159,12 @@ export const routes = {
         component: 'water',
         path: '/topics/water'
       }
-    },
-    headerOptions: {
-      useNavLinks: true
     }
   },
   [DASHBOARDS]: {
     controller: 'dashboards',
     path: '/dashboards/:type/:adm0?/:adm1?/:adm2?',
-    component: 'dashboards',
-    footer: true,
-    headerOptions: {
-      useNavLinks: true
-    }
+    component: 'dashboards'
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',
@@ -195,20 +175,12 @@ export const routes = {
   [THANKYOU]: {
     path: '/thank-you',
     component: 'thankyou',
-    controller: 'thankyou',
-    footer: true,
-    headerOptions: {
-      useNavLinks: true
-    }
+    controller: 'thankyou'
   },
   [STORIES]: {
     path: '/stories',
     component: 'stories',
-    controller: 'stories',
-    footer: true,
-    headerOptions: {
-      useNavLinks: true
-    }
+    controller: 'stories'
   },
   [NOT_FOUND]: {
     path: '/404',

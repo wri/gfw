@@ -37,7 +37,7 @@ class App extends PureComponent {
 
   render() {
     const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
-    const { component, embed } = route;
+    const { component, embed, fullScreen } = route;
     const isMapPage = component === 'map';
 
     return (
@@ -50,14 +50,13 @@ class App extends PureComponent {
               { '-embed': embed, '-trase': isTrase }
             )}
           >
-            {!embed &&
-              (route.headerOptions || route.header) && (
-                <Header
-                  className={cx('map-tour-main-menu')}
-                  loggedIn={loggedIn}
-                  // {...route.headerOptions}
-                />
-              )}
+            {!embed && (
+              <Header
+                className={cx('map-tour-main-menu')}
+                loggedIn={loggedIn}
+                fullScreen={fullScreen}
+              />
+            )}
             {embed && (
               <a className="page-logo" href="/" target="_blank">
                 <img src={gfwLogo} alt="Global Forest Watch" />
@@ -93,7 +92,7 @@ class App extends PureComponent {
               )}
             <Meta {...metadata} />
             <Cookies />
-            {route.footer && <Footer />}
+            {!route.hideFooter && <Footer />}
           </div>
         )}
       </MediaQuery>
