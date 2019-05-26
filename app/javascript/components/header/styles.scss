@@ -1,7 +1,6 @@
 @import '~styles/settings.scss';
 
 $header-height: rem(56px);
-$header-height-small: rem(60px);
 $full-screen-height: rem(76px);
 
 .c-header {
@@ -107,8 +106,12 @@ $full-screen-height: rem(76px);
     }
 
     &.full-screen-open {
-      height: $full-screen-height;
+      height: $header-height;
       border-bottom-width: 1px;
+
+      @media screen and (min-width: $screen-mobile) {
+        height: $full-screen-height;
+      }
     }
   }
 }
