@@ -92,7 +92,7 @@ class App extends PureComponent {
               )}
             <Meta {...metadata} />
             <Cookies />
-            {!route.hideFooter && <Footer />}
+            {!route.hideFooter && !embed && <Footer />}
           </div>
         )}
       </MediaQuery>

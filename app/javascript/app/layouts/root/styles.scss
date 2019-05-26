@@ -61,9 +61,38 @@
       min-height: rem(400px);
     }
 
-    &.-map {
+    .embed-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: rem(60px);
+      background: $white;
+      border-top: solid 1px $border;
+      z-index: 3;
+      position: relative;
+
+      p {
+        opacity: 0.7;
+      }
+    }
+
+    .embed-btn {
+      width: rem(160px);
+      margin-left: rem(10px);
+      margin-right: rem(10px);
+    }
+
+    &.-full-screen {
       .page {
-        min-height: calc(100vh - 60px);
+        position: fixed;
+        min-height: calc(100% - 60px);
+      }
+
+      .embed-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
     }
 
@@ -72,27 +101,6 @@
         display: none;
       }
     }
-  }
-
-  .embed-footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: rem(60px);
-    background: $white;
-    border-top: solid 1px $border;
-    z-index: 3;
-    position: relative;
-
-    p {
-      opacity: 0.7;
-    }
-  }
-
-  .embed-btn {
-    width: rem(160px);
-    margin-left: rem(10px);
-    margin-right: rem(10px);
   }
 }
 

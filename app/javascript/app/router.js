@@ -127,7 +127,8 @@ export const routes = {
     controller: 'map',
     path: '/embed/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
-    embed: true
+    embed: true,
+    fullScreen: true
   },
   [TOPICS]: {
     controller: 'topics',
