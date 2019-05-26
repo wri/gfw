@@ -15,12 +15,12 @@
     &.embed {
       bottom: rem(60px);
 
-      @media screen and (min-width: $screen-mobile) {
+      @media screen and (min-width: $screen-m) {
         display: none;
       }
     }
 
-    @media screen and (min-width: $screen-mobile) {
+    @media screen and (min-width: $screen-m) {
       width: rem(76px);
       top: 0;
       padding-top: rem(74px);
@@ -31,7 +31,7 @@
     padding-bottom: rem(50px);
     z-index: 3;
 
-    @media screen and (min-width: $screen-mobile) {
+    @media screen and (min-width: $screen-m) {
       padding-bottom: 0;
     }
   }

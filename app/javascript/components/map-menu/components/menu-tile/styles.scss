@@ -40,7 +40,7 @@ $map-menu-items-size: rem(76px);
       flex-direction: column;
       margin: auto;
 
-      @media screen and (min-width: $screen-mobile) {
+      @media screen and (min-width: $screen-m) {
         height: $map-menu-items-size;
         width: $map-menu-items-size;
       }
@@ -70,7 +70,7 @@ $map-menu-items-size: rem(76px);
     letter-spacing: -0.3px;
     color: $white;
 
-    @media screen and (min-width: $screen-mobile) {
+    @media screen and (min-width: $screen-m) {
       top: rem(13px);
     }
   }

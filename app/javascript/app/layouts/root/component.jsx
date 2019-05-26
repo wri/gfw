@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
-import { SCREEN_MOBILE } from 'utils/constants';
+import { SCREEN_M } from 'utils/constants';
 import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
 import cx from 'classnames';
@@ -41,7 +41,7 @@ class App extends PureComponent {
     const isMapPage = component === 'map';
 
     return (
-      <MediaQuery minWidth={SCREEN_MOBILE}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
             className={cx(

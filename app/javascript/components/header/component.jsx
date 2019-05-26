@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { SCREEN_MOBILE } from 'utils/constants';
+import { SCREEN_M } from 'utils/constants';
 import MediaQuery from 'react-responsive';
 
 import gfwLogo from 'assets/logos/gfw.png';
@@ -43,7 +43,7 @@ class Header extends PureComponent {
     const { fullScreenOpen } = this.state;
 
     return (
-      <MediaQuery minWidth={SCREEN_MOBILE}>
+      <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
             className={cx(

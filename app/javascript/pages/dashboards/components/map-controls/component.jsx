@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'app/analytics';
 import Sticky from 'react-stickynode';
-import { SCREEN_MOBILE } from 'utils/constants';
+import { SCREEN_M } from 'utils/constants';
 
 import plusIcon from 'assets/icons/plus.svg';
 import minusIcon from 'assets/icons/minus.svg';
@@ -50,7 +50,7 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <div className={`c-dashboard-map-controls ${className || ''}`}>
-        <Sticky top={window.innerWidth >= SCREEN_MOBILE ? 15 : 73}>
+        <Sticky top={window.innerWidth >= SCREEN_M ? 15 : 73}>
           {this.renderZoomButtons()}
         </Sticky>
       </div>

@@ -5,7 +5,7 @@
   padding: rem(40px) rem(16px) rem(20px);
   box-shadow: 0 3px 3px -3px rgba(0, 0, 0, 0.25);
 
-  @media screen and (min-width: $screen-mobile) {
+  @media screen and (min-width: $screen-m) {
     height: auto;
   }
 
@@ -20,7 +20,7 @@
   .menu-search {
     margin-bottom: rem(20px);
 
-    @media screen and (min-width: $screen-mobile) {
+    @media screen and (min-width: $screen-m) {
       margin-bottom: rem(40px);
     }
   }

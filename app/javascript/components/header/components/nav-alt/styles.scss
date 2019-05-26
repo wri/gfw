@@ -9,7 +9,7 @@
   padding-left: rem(10px);
   flex: 1;
 
-  @media screen and (min-width: $screen-mobile) {
+  @media screen and (min-width: $screen-m) {
     flex: none;
   }
 
@@ -70,7 +70,7 @@
     height: calc(100% - 56px);
     overflow-y: auto;
 
-    @media screen and (min-width: $screen-mobile) {
+    @media screen and (min-width: $screen-m) {
       right: rem(-20px);
       position: absolute;
       height: auto;
@@ -98,13 +98,13 @@
       text-align: left;
     }
 
-    @media screen and (min-width: $screen-mobile) {
+    @media screen and (min-width: $screen-m) {
       width: rem(320px);
     }
   }
 
   &.full-screen {
-    @media screen and (min-width: $screen-mobile) {
+    @media screen and (min-width: $screen-m) {
       .submenu-panel {
         top: rem(76px);
         position: fixed;

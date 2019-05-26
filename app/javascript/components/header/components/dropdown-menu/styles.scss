@@ -23,7 +23,7 @@
       cursor: pointer;
       text-align: left;
 
-      @media screen and (min-width: $screen-mobile) {
+      @media screen and (min-width: $screen-m) {
         padding: rem(15px) rem(20px);
       }
 
