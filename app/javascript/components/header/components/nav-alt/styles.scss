@@ -6,17 +6,24 @@
   align-items: center;
   height: 100%;
   border-left: solid 1px $border;
-  padding-left: rem(10px);
   flex: 1;
 
   @media screen and (min-width: $screen-m) {
     flex: none;
   }
 
+  @media screen and (min-width: 850px) {
+    padding-left: rem(10px);
+  }
+
   > li {
-    margin-left: rem(30px);
+    margin-left: rem(20px);
     position: relative;
     font-size: rem(12px);
+
+    @media screen and (min-width: 850px) {
+      margin-left: rem(30px);
+    }
 
     svg {
       margin-top: -1px;
@@ -27,6 +34,14 @@
   .alt-link {
     > div {
       height: 100%;
+    }
+
+    .lang-btn {
+      max-width: rem(90px);
+
+      @media screen and (min-width: 850px) {
+        max-width: 100%;
+      }
     }
   }
 

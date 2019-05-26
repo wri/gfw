@@ -73,7 +73,7 @@ class NavAlt extends PureComponent {
               >
                 <Fragment>
                   <button
-                    className="menu-link"
+                    className="menu-link lang-btn"
                     onClick={() => this.setState({ showLang: !showLang })}
                   >
                     {(activeLang && activeLang.label) || 'English'}

@@ -34,7 +34,11 @@ $full-screen-height: rem(76px);
   }
 
   .nav-menu {
-    padding-left: rem(100px);
+    padding-left: rem(70px);
+
+    @media screen and (min-width: 850px) {
+      padding-left: rem(100px);
+    }
   }
 
   li {
