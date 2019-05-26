@@ -28,7 +28,7 @@ class DropdownMenu extends PureComponent {
                 </button>
               ) : (
                 <Fragment>
-                  {l.navLink && (
+                  {l.path && (
                     <NavLink
                       to={l.path}
                       onClick={hideMenu}
@@ -37,7 +37,7 @@ class DropdownMenu extends PureComponent {
                       {l.label}
                     </NavLink>
                   )}
-                  {!l.navLink && <a href={l.extLink}>{l.label}</a>}
+                  {l.extLink && <a href={l.extLink}>{l.label}</a>}
                 </Fragment>
               )}
             </li>

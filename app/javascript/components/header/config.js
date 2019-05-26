@@ -16,38 +16,31 @@ export default {
   navMain: [
     {
       label: 'Map',
-      path: '/map',
-      navLink: true
+      path: '/map'
     },
     {
       label: 'Dashboard',
-      path: '/dashboards',
-      navLink: true
+      path: '/dashboards'
     },
     {
       label: 'Topics',
       path: '/topics',
-      navLink: true,
       submenu: [
         {
           label: 'Biodiversity',
-          path: '/topics/biodiversity',
-          navLink: true
+          path: '/topics/biodiversity'
         },
         {
           label: 'Climate',
-          path: '/topics/climate',
-          navLink: true
+          path: '/topics/climate'
         },
         {
           label: 'Commodities',
-          path: '/topics/commodities',
-          navLink: true
+          path: '/topics/commodities'
         },
         {
           label: 'Water',
-          path: '/topics/water',
-          navLink: true
+          path: '/topics/water'
         }
       ]
     },
@@ -57,8 +50,7 @@ export default {
     },
     {
       label: 'About',
-      path: '/about',
-      navLink: true
+      path: '/about'
     }
   ],
   myGfwLinks: [
@@ -91,34 +83,34 @@ export default {
   apps: [
     {
       label: 'GFW Climate',
-      path: 'http://climate.globalforestwatch.org',
+      extLink: 'http://climate.globalforestwatch.org',
       image: gfwClimate
     },
     {
       label: 'GFW Fires',
-      path: 'http://fires.globalforestwatch.org',
+      extLink: 'http://fires.globalforestwatch.org',
       image: gfwFires
     },
     {
       label: 'GFW Comodities',
-      path: 'http://commodities.globalforestwatch.org',
+      extLink: 'http://commodities.globalforestwatch.org',
       image: gfwCommodities
     },
     {
       label: 'Forest Watcher',
-      path: 'http://forestwatcher.globalforestwatch.org',
+      extLink: 'http://forestwatcher.globalforestwatch.org',
       image: forestWatcher
     }
   ],
   moreLinks: [
     {
       label: 'Developer Tools',
-      path: 'http://developers.globalforestwatch.org',
+      extLink: 'http://developers.globalforestwatch.org',
       icon: developer
     },
     {
       label: 'How to Portal',
-      path: 'http://www.globalforestwatch.org/howto',
+      extLink: 'http://www.globalforestwatch.org/howto',
       icon: howto
     },
     {
@@ -128,17 +120,17 @@ export default {
     },
     {
       label: 'Open data portal',
-      path: 'http://data.globalforestwatch.org/',
+      extLink: 'http://data.globalforestwatch.org/',
       icon: openData
     },
     {
       label: 'Blog',
-      path: 'https://blog.globalforestwatch.org',
+      extLink: 'https://blog.globalforestwatch.org',
       icon: blog
     },
     {
       label: 'Discussion Forum',
-      path: 'https://groups.google.com/forum/#!forum/globalforestwatch',
+      extLink: 'https://groups.google.com/forum/#!forum/globalforestwatch',
       icon: forum
     }
   ]

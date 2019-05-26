@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { NavLink } from 'redux-first-router-link';
 
 import Icon from 'components/ui/icon';
 import Search from 'components/ui/search';
@@ -41,7 +42,7 @@ class Header extends PureComponent {
       myGfwLinks,
       handleLangSelect,
       loggedIn,
-      handleShowContactUs,
+      toggleContactUs,
       hideMenu
     } = this.props;
 
@@ -139,10 +140,21 @@ class Header extends PureComponent {
                     key={m.label}
                     className="column small-12 medium-4 large-3"
                   >
-                    <a href={m.path} target="_blank" rel="noopener noreferrer">
-                      <Icon icon={m.icon} />
-                      {m.label}
-                    </a>
+                    {m.path ? (
+                      <NavLink to={m.path} onClick={hideMenu}>
+                        <Icon icon={m.icon} />
+                        {m.label}
+                      </NavLink>
+                    ) : (
+                      <a
+                        href={m.extLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon icon={m.icon} />
+                        {m.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -154,7 +166,7 @@ class Header extends PureComponent {
               <a className="title" href="/privacy-policy">
                 Privacy Policy
               </a>
-              <button className="title" onClick={handleShowContactUs}>
+              <button className="title" onClick={() => toggleContactUs(true)}>
                 Contact us
               </button>
             </div>
@@ -178,7 +190,7 @@ Header.propTypes = {
   myGfwLinks: PropTypes.array,
   hideMenu: PropTypes.func,
   handleLangSelect: PropTypes.func,
-  handleShowContactUs: PropTypes.func,
+  toggleContactUs: PropTypes.func,
   loggedIn: PropTypes.bool
 };
 

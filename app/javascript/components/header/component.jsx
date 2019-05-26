@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { SCREEN_MOBILE } from 'utils/constants';
@@ -16,64 +16,47 @@ class Header extends PureComponent {
   render() {
     const {
       className,
-      showHeader,
-      toggleMenu,
+      hideMenu,
       navMain,
       moreLinks,
-      fullScreen,
-      // fixed,
-      toggle,
       myGfwLinks,
-      apps
+      apps,
+      setModalContactUsOpen,
+      loggedIn,
+      fullScreen
     } = this.props;
 
     return (
       <MediaQuery minWidth={SCREEN_MOBILE}>
         {isDesktop => (
-          <div
-            className={cx(
-              'c-header',
-              { '-full-screen': fullScreen },
-              { '-fixed': !isDesktop },
-              { '-toggle': toggle },
-              { '-open': showHeader },
-              className
-            )}
-          >
-            {toggle &&
-              !showHeader && (
-                <button onClick={toggleMenu} className="logo">
-                  <img src={gfwLogo} alt="Global Forest Watch" />
-                </button>
-              )}
-            {(!toggle || (toggle && showHeader)) && (
-              <Fragment>
-                <div className="nav-menu">
-                  <div className={!fullScreen ? 'row column' : ''}>
-                    {(!toggle || (toggle && showHeader)) && (
-                      <a className="logo" href="/">
-                        <img
-                          src={gfwLogo}
-                          alt="Global Forest Watch"
-                          width="76"
-                          height="76"
-                        />
-                      </a>
+          <div className={cx('c-header', { '-fixed': !isDesktop }, className)}>
+            <div className="row">
+              <div className="column small-12">
+                <a className="logo" href="/">
+                  <img
+                    src={gfwLogo}
+                    alt="Global Forest Watch"
+                    width="76"
+                    height="76"
+                  />
+                </a>
+                <div className="nav">
+                  {isDesktop &&
+                    !hideMenu && (
+                      <NavMenu className="nav-menu" menuItems={navMain} />
                     )}
-                    <div className="nav">
-                      {isDesktop && <NavMenu menuItems={navMain} />}
-                      <NavAlt
-                        isDesktop={isDesktop}
-                        myGfwLinks={myGfwLinks}
-                        moreLinks={moreLinks}
-                        apps={apps}
-                        navMain={navMain}
-                      />
-                    </div>
-                  </div>
+                  <NavAlt
+                    isDesktop={isDesktop}
+                    myGfwLinks={myGfwLinks}
+                    moreLinks={moreLinks}
+                    navMain={navMain}
+                    apps={apps}
+                    toggleContactUs={setModalContactUsOpen}
+                    loggedIn={loggedIn}
+                  />
                 </div>
-              </Fragment>
-            )}
+              </div>
+            </div>
             <ContactUs />
           </div>
         )}
@@ -84,19 +67,14 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   className: PropTypes.string,
-  // setModalContactUsOpen: PropTypes.func,
+  setModalContactUsOpen: PropTypes.func,
   myGfwLinks: PropTypes.array,
   navMain: PropTypes.array,
   apps: PropTypes.array,
   moreLinks: PropTypes.array,
   fullScreen: PropTypes.bool,
-  showHeader: PropTypes.bool,
-  toggleMenu: PropTypes.func,
-  // loggedIn: PropTypes.bool,
-  // fixed: PropTypes.bool,
-  toggle: PropTypes.bool
-  // isDesktop: PropTypes.bool,
-  // isMap: PropTypes.bool
+  loggedIn: PropTypes.bool,
+  hideMenu: PropTypes.bool
 };
 
 export default Header;
