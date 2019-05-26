@@ -51,7 +51,6 @@ class Header extends PureComponent {
         className={cx(
           'c-submenu-panel',
           { '-full-screen': fullScreen },
-          { '-mobile': isMobile },
           className
         )}
         onClick={onClick}
@@ -97,7 +96,7 @@ class Header extends PureComponent {
                     options={myGfwLinks}
                   />
                 ) : (
-                  <MyGfwLogin className="my-gfw-login" plain />
+                  <MyGfwLogin plain />
                 )}
               </div>
             )}

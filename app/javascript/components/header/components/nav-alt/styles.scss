@@ -7,9 +7,10 @@
   height: 100%;
   border-left: solid 1px $border;
   padding-left: rem(10px);
+  flex: 1;
 
-  &.-mobile {
-    flex: 1;
+  @media screen and (min-width: $screen-mobile) {
+    flex: none;
   }
 
   > li {
@@ -61,16 +62,18 @@
   }
 
   .submenu-panel {
-    position: absolute;
+    position: fixed;
     top: rem(56px);
-    right: rem(-16px);
+    right: 0;
     width: 100vw;
     overflow: hidden;
-    height: calc(100vh - 56px);
+    height: calc(100% - 56px);
     overflow-y: auto;
 
-    @media screen and (min-width: $screen-m) {
+    @media screen and (min-width: $screen-mobile) {
       right: rem(-20px);
+      position: absolute;
+      height: auto;
     }
   }
 
@@ -90,7 +93,12 @@
     border: solid 1px $border;
     height: auto;
 
-    @media screen and (min-width: $screen-m) {
+    p {
+      text-transform: none;
+      text-align: left;
+    }
+
+    @media screen and (min-width: $screen-mobile) {
       width: rem(320px);
     }
   }

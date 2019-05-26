@@ -2,10 +2,10 @@
 
 .c-submenu-panel {
   background-color: $white;
-  padding: rem(40px) rem(16px);
+  padding: rem(40px) rem(16px) rem(20px);
   box-shadow: 0 3px 3px -3px rgba(0, 0, 0, 0.25);
 
-  @media screen and (min-width: $screen-m) {
+  @media screen and (min-width: $screen-mobile) {
     height: auto;
   }
 
@@ -18,7 +18,11 @@
   }
 
   .menu-search {
-    margin-bottom: rem(40px);
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-mobile) {
+      margin-bottom: rem(40px);
+    }
   }
 
   h4,
@@ -27,7 +31,6 @@
     color: #aaa;
     font-size: rem(14px);
     margin-bottom: rem(23px);
-    padding-left: rem(15px);
     text-align: left;
   }
 
@@ -41,15 +44,15 @@
       -webkit-overflow-scrolling: touch;
       display: flex;
       margin-left: rem(-16px);
-      width: calc(100% + 30px);
-      padding: 0 rem(31px);
+      width: calc(100% + 16px);
+      padding: 0 rem(16px);
     }
 
     .app-card {
-      padding-right: rem(15px);
+      padding-right: rem(16px);
 
       &:last-child {
-        padding-right: rem(31px);
+        padding-right: 0;
       }
 
       .app-image {
@@ -84,8 +87,6 @@
     }
 
     .more-links {
-      padding: 0 rem(10px);
-
       > li {
         margin-bottom: rem(20px);
 
@@ -108,10 +109,6 @@
         }
       }
     }
-
-    .my-gfw-login {
-      padding: 0 rem(15px);
-    }
   }
 
   .legal-section {
@@ -126,12 +123,6 @@
         margin-right: rem(30px);
         cursor: pointer;
       }
-    }
-  }
-
-  &.-mobile {
-    .menu-search {
-      margin-bottom: rem(30px);
     }
   }
 }

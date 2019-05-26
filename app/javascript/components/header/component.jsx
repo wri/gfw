@@ -29,7 +29,7 @@ class Header extends PureComponent {
     return (
       <MediaQuery minWidth={SCREEN_MOBILE}>
         {isDesktop => (
-          <div className={cx('c-header', { '-fixed': !isDesktop }, className)}>
+          <div className={cx('c-header', className)}>
             <div className="row">
               <div className="column small-12">
                 <a className="logo" href="/">

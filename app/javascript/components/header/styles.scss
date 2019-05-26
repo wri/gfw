@@ -6,17 +6,17 @@ $full-screen-height: rem(75px);
 
 .c-header {
   height: $header-height;
-  z-index: 5;
-  position: relative;
   border-bottom: solid 1px $border;
   background: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 
-  &.-fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+  @media screen and (min-width: $screen-mobile) {
+    position: relative;
+    z-index: 5;
   }
 
   .logo {

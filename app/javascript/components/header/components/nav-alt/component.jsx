@@ -52,7 +52,7 @@ class NavAlt extends PureComponent {
     const activeLang = languages && languages.find(l => l.value === lang);
 
     return (
-      <ul className={cx('c-nav-alt', { '-mobile': !isDesktop })}>
+      <ul className="c-nav-alt">
         {isDesktop && (
           <Fragment>
             <li className="alt-link">
