@@ -155,7 +155,14 @@ class Basemaps extends React.PureComponent {
       planetPeriodSelected
     } = this.props;
     const { planetTooltipOpen } = this.state;
-    const { url } = planetBasemapSelected || {};
+    const { url, interval, year, period } = planetBasemapSelected || {};
+    const basemap = {
+      value: 'planet',
+      url,
+      interval,
+      planetYear: year,
+      period
+    };
 
     return (
       <button
@@ -164,7 +171,7 @@ class Basemaps extends React.PureComponent {
           if (!isDesktop) {
             this.setState({ showBasemaps: !this.state.showBasemaps });
           }
-          selectBasemap({ value: 'planet', url });
+          selectBasemap(basemap);
         }}
       >
         <div
@@ -207,6 +214,11 @@ class Basemaps extends React.PureComponent {
                       );
                       selectBasemap({
                         value: 'planet',
+                        interval: selected,
+                        period:
+                          (selectedInvertal && selectedInvertal.period) || null,
+                        planetYear:
+                          (selectedInvertal && selectedInvertal.year) || null,
                         url: (selectedInvertal && selectedInvertal.url) || ''
                       });
                     }}
@@ -224,6 +236,10 @@ class Basemaps extends React.PureComponent {
                         );
                         selectBasemap({
                           value: 'planet',
+                          interval:
+                            (selectedYear && selectedYear.interval) || null,
+                          period: (selectedYear && selectedYear.period) || null,
+                          planetYear: parseInt(selected, 10),
                           url: (selectedYear && selectedYear.url) || ''
                         });
                       }}
@@ -241,6 +257,11 @@ class Basemaps extends React.PureComponent {
                         );
                         selectBasemap({
                           value: 'planet',
+                          period: selected,
+                          interval:
+                            (selectedPeriod && selectedPeriod.interval) || '',
+                          planetYear:
+                            (selectedPeriod && selectedPeriod.year) || '',
                           url: (selectedPeriod && selectedPeriod.url) || ''
                         });
                       }}

@@ -124,6 +124,7 @@ export const getPlanetYears = createSelector(
       label: y,
       value: parseInt(y, 10),
       url: groupByYears[y] && groupByYears[y][0].url,
+      interval: groupByYears[y] && groupByYears[y][0].interval,
       period: groupByYears[y] && groupByYears[y][0].period
     }));
   }
@@ -149,7 +150,9 @@ export const getPlanetPeriods = createSelector(
     return planetBasemaps.filter(p => p.year === yearSelected.value).map(p => ({
       ...p,
       value: p.period,
-      label: p.period
+      label: p.period,
+      interval: p.interval,
+      year: p.year
     }));
   }
 );
