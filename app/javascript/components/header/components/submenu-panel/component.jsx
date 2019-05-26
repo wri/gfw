@@ -39,11 +39,10 @@ class Header extends PureComponent {
       activeLang,
       languages,
       myGfwLinks,
-      setShowPanel,
       handleLangSelect,
-      toggleMenu,
       loggedIn,
-      handleShowContactUs
+      handleShowContactUs,
+      hideMenu
     } = this.props;
 
     return (
@@ -68,7 +67,11 @@ class Header extends PureComponent {
             />
             {isMobile && (
               <div className="menu-section">
-                <DropdownMenu className="sub-menu -plain" options={navMain} />
+                <DropdownMenu
+                  className="sub-menu -plain"
+                  options={navMain}
+                  hideMenu={hideMenu}
+                />
               </div>
             )}
             {isMobile && (
@@ -80,11 +83,6 @@ class Header extends PureComponent {
                   selected={activeLang}
                   handleSelect={lang => {
                     handleLangSelect(lang);
-                    if (fullScreen) {
-                      toggleMenu();
-                    } else {
-                      setShowPanel(false);
-                    }
                   }}
                 />
               </div>
@@ -98,7 +96,7 @@ class Header extends PureComponent {
                     options={myGfwLinks}
                   />
                 ) : (
-                  <MyGfwLogin plain />
+                  <MyGfwLogin className="my-gfw-login" plain />
                 )}
               </div>
             )}
@@ -178,9 +176,8 @@ Header.propTypes = {
   activeLang: PropTypes.object,
   languages: PropTypes.array,
   myGfwLinks: PropTypes.array,
-  setShowPanel: PropTypes.func,
+  hideMenu: PropTypes.func,
   handleLangSelect: PropTypes.func,
-  toggleMenu: PropTypes.func,
   handleShowContactUs: PropTypes.func,
   loggedIn: PropTypes.bool
 };

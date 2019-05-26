@@ -16,15 +16,18 @@ export default {
   navMain: [
     {
       label: 'Map',
-      path: '/map'
+      path: '/map',
+      navLink: true
     },
     {
       label: 'Dashboard',
-      path: '/dashboards'
+      path: '/dashboards',
+      navLink: true
     },
     {
       label: 'Topics',
       path: '/topics',
+      navLink: true,
       submenu: [
         {
           label: 'Biodiversity',
@@ -50,27 +53,26 @@ export default {
     },
     {
       label: 'Blog',
-      extLink: 'http://blog.globalforestwatch.org',
-      target: '_blank',
-      rel: 'noopener nofollower'
+      extLink: 'http://blog.globalforestwatch.org'
     },
     {
       label: 'About',
-      path: '/about'
+      path: '/about',
+      navLink: true
     }
   ],
   myGfwLinks: [
     {
       label: 'My subscriptions',
-      path: '/my_gfw/subscriptions'
+      extLink: '/my_gfw/subscriptions'
     },
     {
       label: 'My profile',
-      path: '/my_gfw'
+      extLink: '/my_gfw'
     },
     {
       label: 'Logout',
-      path: '/auth/logout',
+      extLink: '/auth/logout',
       onSelect: e => {
         e.preventDefault();
         axios

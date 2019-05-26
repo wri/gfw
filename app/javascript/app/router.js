@@ -34,6 +34,11 @@ const redirectThunk = (dispatch, getState) => {
     return;
   }
 
+  if (location.pathname === '/topics') {
+    dispatch(redirect({ type: TOPICS, payload: { tab: 'biodiversity' } }));
+    return;
+  }
+
   const routeSlugs = location.pathname && location.pathname.split('/');
   const isOldMap = routeSlugs.includes('map');
   if (isOldMap) {

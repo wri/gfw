@@ -17,7 +17,7 @@
       display: block;
       text-transform: uppercase;
       font-size: rem(14px);
-      padding: rem(15px) rem(20px);
+      padding: rem(15px) rem(15px);
       width: 100%;
       color: $slate;
       cursor: pointer;
@@ -25,6 +25,10 @@
 
       &:hover {
         background-color: #f7f7f7;
+      }
+
+      &.active {
+        color: $green-gfw;
       }
     }
 

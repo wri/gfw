@@ -10,7 +10,7 @@ $full-screen-height: rem(75px);
   position: relative;
 
   &.-fixed {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -40,15 +40,6 @@ $full-screen-height: rem(75px);
 
     > div {
       position: relative;
-    }
-  }
-
-  .mygfw-header {
-    padding: rem(25px) rem(30px) rem(30px);
-    border: solid 1px $border;
-
-    @media screen and (min-width: $screen-m) {
-      width: rem(320px);
     }
   }
 
@@ -107,13 +98,6 @@ $full-screen-height: rem(75px);
             background-color: $green-gfw;
           }
         }
-
-        &.-hidden {
-          position: absolute;
-          z-index: 0;
-          right: 0;
-          left: 0;
-        }
       }
 
       svg {
@@ -121,136 +105,6 @@ $full-screen-height: rem(75px);
 
         &:hover {
           color: darken($slate, 30%);
-        }
-      }
-    }
-
-    .nav-main {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      justify-content: flex-start;
-      padding-left: rem(100px);
-      flex: 1;
-      z-index: 1;
-
-      > li .nav-link {
-        padding: 0 rem(10px);
-        margin: 0 rem(5px);
-      }
-
-      > li {
-        div {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      .icon-arrow {
-        height: rem(10px);
-        margin-left: rem(5px);
-
-        &.active {
-          transform: rotate(180deg);
-        }
-      }
-
-      li {
-        position: relative;
-      }
-
-      .sub-menu {
-        position: absolute;
-        top: 55px;
-        left: -60%;
-
-        &::before,
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          width: 0;
-          height: 0;
-          border-style: solid;
-        }
-
-        &::before {
-          top: -12px;
-          border-color: transparent transparent $border transparent;
-          border-width: 6px;
-          right: 45%;
-        }
-
-        &::after {
-          top: -10px;
-          border-color: transparent transparent $white transparent;
-          border-width: 5px;
-          right: calc(45% + 1px);
-        }
-      }
-    }
-
-    .nav-alt {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      height: 100%;
-      border-left: solid 1px $border;
-      padding-left: rem(10px);
-
-      &.-mobile {
-        flex: 1;
-      }
-
-      > li {
-        margin-left: rem(30px);
-        position: relative;
-        font-size: rem(12px);
-
-        svg {
-          margin-top: -1px;
-          margin-left: rem(5px);
-        }
-      }
-
-      .sub-menu {
-        position: absolute;
-        right: -5px;
-        z-index: 1;
-
-        &::before,
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          width: 0;
-          height: 0;
-          border-style: solid;
-        }
-
-        &::before {
-          top: -12px;
-          border-color: transparent transparent $border transparent;
-          border-width: 6px;
-          right: 6px;
-        }
-
-        &::after {
-          top: -10px;
-          border-color: transparent transparent $white transparent;
-          border-width: 5px;
-          right: 7px;
-        }
-      }
-
-      .icon-close,
-      .icon-arrow {
-        height: rem(10px);
-      }
-
-      .icon-arrow {
-        &.active {
-          transform: rotate(180deg);
         }
       }
     }

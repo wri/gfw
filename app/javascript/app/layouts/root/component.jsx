@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
-import { SCREEN_M } from 'utils/constants';
+import { SCREEN_MOBILE } from 'utils/constants';
 import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
 import cx from 'classnames';
@@ -41,7 +41,7 @@ class App extends PureComponent {
     const isMapPage = component === 'map';
 
     return (
-      <MediaQuery minWidth={SCREEN_M}>
+      <MediaQuery minWidth={SCREEN_MOBILE}>
         {isDesktop => (
           <div
             className={cx(
@@ -54,9 +54,8 @@ class App extends PureComponent {
               (route.headerOptions || route.header) && (
                 <Header
                   className={cx('map-tour-main-menu')}
-                  isMobile={!isDesktop}
                   loggedIn={loggedIn}
-                  {...route.headerOptions}
+                  // {...route.headerOptions}
                 />
               )}
             {embed && (
@@ -71,7 +70,7 @@ class App extends PureComponent {
                 embed={embed}
               />
             )}
-            <div className="page">
+            <div className={cx('page', { mobile: !isDesktop && !isMapPage })}>
               <PageComponent
                 path={route.component}
                 sections={route.sections}

@@ -13,15 +13,14 @@
   .page {
     position: relative;
     min-height: calc(100vh - 60px);
-    margin-top: rem(56px);
     z-index: 0;
 
     .page-loader {
       z-index: 1;
     }
 
-    @media screen and (min-width: $screen-m) {
-      margin-top: 0;
+    &.mobile {
+      margin-top: rem(56px);
     }
   }
 

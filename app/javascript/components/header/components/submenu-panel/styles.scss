@@ -2,9 +2,8 @@
 
 .c-submenu-panel {
   background-color: $white;
-  padding: rem(40px) 0;
-  height: calc(100vh - 56px);
-  overflow-y: auto;
+  padding: rem(40px) rem(16px);
+  box-shadow: 0 3px 3px -3px rgba(0, 0, 0, 0.25);
 
   @media screen and (min-width: $screen-m) {
     height: auto;
@@ -25,9 +24,10 @@
   h4,
   .title {
     text-transform: uppercase;
-    color: $slate;
+    color: #aaa;
     font-size: rem(14px);
     margin-bottom: rem(23px);
+    padding-left: rem(15px);
     text-align: left;
   }
 
@@ -40,13 +40,17 @@
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       display: flex;
-      margin-left: rem(-15px);
+      margin-left: rem(-16px);
       width: calc(100% + 30px);
-      padding: 0 rem(15px);
+      padding: 0 rem(31px);
     }
 
     .app-card {
-      margin-right: rem(15px);
+      padding-right: rem(15px);
+
+      &:last-child {
+        padding-right: rem(31px);
+      }
 
       .app-image {
         width: rem(90px);
@@ -80,6 +84,8 @@
     }
 
     .more-links {
+      padding: 0 rem(10px);
+
       > li {
         margin-bottom: rem(20px);
 
@@ -91,7 +97,9 @@
           text-transform: uppercase;
 
           svg {
-            margin-right: rem(5px);
+            margin-right: rem(15px);
+            width: rem(20px);
+            height: rem(20px);
           }
 
           &:hover {
@@ -99,6 +107,10 @@
           }
         }
       }
+    }
+
+    .my-gfw-login {
+      padding: 0 rem(15px);
     }
   }
 

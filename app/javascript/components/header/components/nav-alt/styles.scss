@@ -1,0 +1,98 @@
+@import '~styles/settings.scss';
+
+.c-nav-alt {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  border-left: solid 1px $border;
+  padding-left: rem(10px);
+
+  &.-mobile {
+    flex: 1;
+  }
+
+  > li {
+    margin-left: rem(30px);
+    position: relative;
+    font-size: rem(12px);
+
+    svg {
+      margin-top: -1px;
+      margin-left: rem(5px);
+    }
+  }
+
+  .alt-link {
+    > div {
+      height: 100%;
+    }
+  }
+
+  .submenu {
+    position: absolute;
+    right: -5px;
+    top: rem(55px);
+    z-index: 1;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+
+    &::before {
+      top: -12px;
+      border-color: transparent transparent $border transparent;
+      border-width: 6px;
+      right: 6px;
+    }
+
+    &::after {
+      top: -10px;
+      border-color: transparent transparent $white transparent;
+      border-width: 5px;
+      right: 7px;
+    }
+  }
+
+  .submenu-panel {
+    position: absolute;
+    top: rem(56px);
+    right: rem(-16px);
+    width: 100vw;
+    overflow: hidden;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+
+    @media screen and (min-width: $screen-m) {
+      right: rem(-20px);
+    }
+  }
+
+  .icon-close,
+  .icon-arrow {
+    height: rem(10px);
+  }
+
+  .icon-arrow {
+    &.active {
+      transform: rotate(180deg);
+    }
+  }
+
+  .mygfw-header {
+    padding: rem(25px) rem(30px) rem(30px);
+    border: solid 1px $border;
+    height: auto;
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(320px);
+    }
+  }
+}
+
