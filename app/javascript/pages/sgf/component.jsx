@@ -33,7 +33,7 @@ class Page extends PureComponent {
           bgImage={bgImage}
         />
         <SubnavMenu links={this.props.links} />
-        <div className="l-main">
+        <div className="l-sgf-page">
           <SectionComponent />
         </div>
       </div>
