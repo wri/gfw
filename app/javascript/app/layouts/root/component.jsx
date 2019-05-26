@@ -44,11 +44,11 @@ class App extends PureComponent {
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
-            className={cx(
-              'l-root',
-              { '-map': isMapPage },
-              { '-embed': embed, '-trase': isTrase }
-            )}
+            className={cx('l-root', {
+              '-full-screen': fullScreen,
+              '-embed': embed,
+              '-trase': isTrase
+            })}
           >
             {!embed && (
               <Header
