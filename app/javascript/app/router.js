@@ -169,8 +169,8 @@ export const routes = {
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',
-    path: '/embed/dashboards/:type?/:adm0?/:adm1?/:adm2?',
-    component: 'dashboards/embed',
+    path: '/embed/dashboards/:type/:adm0?/:adm1?/:adm2?',
+    component: 'dashboards/components/embed',
     embed: true
   },
   [THANKYOU]: {
