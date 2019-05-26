@@ -43,9 +43,6 @@ class Map extends Component {
     /** A boolean that allows rotating */
     dragRotate: PropTypes.bool,
 
-    /** A boolean that allows rotating */
-    touchRotate: PropTypes.bool,
-
     /** A function that exposes when the map is loaded. It returns and object with the `this.map` and `this.mapContainer` reference. */
     onLoad: PropTypes.func,
 
@@ -63,7 +60,6 @@ class Map extends Component {
     bounds: {},
     dragPan: true,
     dragRotate: true,
-    touchRotate: true,
 
     onViewportChange: () => {},
     onLoad: () => {},
@@ -196,7 +192,6 @@ class Map extends Component {
       getCursor,
       dragPan,
       dragRotate,
-      touchRotate,
       ...mapboxProps
     } = this.props;
     const { viewport, flying, loaded } = this.state;
@@ -224,7 +219,6 @@ class Map extends Component {
           // INTERACTIVE
           dragPan={dragPan && !flying}
           dragRotate={dragRotate && !flying}
-          touchRotate={touchRotate}
           // DEFAULT FUC IMPLEMENTATIONS
           onViewportChange={!flying ? this.onViewportChange : null}
           onResize={this.onResize}

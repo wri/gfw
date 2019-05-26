@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
 import { track } from 'app/analytics';
+import MediaQuery from 'react-responsive';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
@@ -28,10 +29,28 @@ import MapControls from './components/map-controls';
 import './styles.scss';
 
 class Page extends PureComponent {
+  renderMap = () => {
+    const { showMapMobile, closeMobileMap } = this.props;
+
+    return (
+      <div className="map-container">
+        {showMapMobile && (
+          <Button
+            theme="square theme-button-light"
+            className="close-map-button"
+            onClick={closeMobileMap}
+          >
+            <Icon icon={closeIcon} />
+          </Button>
+        )}
+        <Map />
+      </div>
+    );
+  };
+
   render() {
     const {
       showMapMobile,
-      closeMobileMap,
       links,
       widgetAnchor,
       handleCategoryChange,
@@ -41,60 +60,52 @@ class Page extends PureComponent {
     } = this.props;
 
     return (
-      <div className="l-country">
-        <div className="content-panel">
-          <Header className="header" />
-          <SubNavMenu
-            className="nav"
-            theme="theme-subnav-dark"
-            links={links.map(l => ({
-              ...l,
-              onClick: () => {
-                handleCategoryChange(l.category);
-                track('selectDashboardCategory', {
-                  label: l.category
-                });
-              }
-            }))}
-            checkActive
-          />
-          <Widgets
-            className="dashboard-widgets"
-            noWidgetsMessage={noWidgetsMessage}
-            widgets={widgets}
-            activeWidget={activeWidgetSlug}
-          />
-        </div>
-        <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
-          <Sticky
-            enabled={window.innerWidth > SCREEN_M}
-            bottomBoundary=".l-country"
-          >
-            <div className="map-container">
-              {showMapMobile && (
-                <Button
-                  theme="square theme-button-light"
-                  className="close-map-button"
-                  onClick={closeMobileMap}
-                >
-                  <Icon icon={closeIcon} />
-                </Button>
-              )}
-              <Map />
+      <MediaQuery minWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className="l-country">
+            <div className="content-panel">
+              <Header className="header" />
+              <SubNavMenu
+                className="nav"
+                theme="theme-subnav-dark"
+                links={links.map(l => ({
+                  ...l,
+                  onClick: () => {
+                    handleCategoryChange(l.category);
+                    track('selectDashboardCategory', {
+                      label: l.category
+                    });
+                  }
+                }))}
+                checkActive
+              />
+              <Widgets
+                className="dashboard-widgets"
+                noWidgetsMessage={noWidgetsMessage}
+                widgets={widgets}
+                activeWidget={activeWidgetSlug}
+              />
             </div>
-          </Sticky>
-        </div>
-        <MapControls className="map-controls" />
-        <Share />
-        <ModalMeta />
-        <ModalTCL />
-        {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-        <CountryDataProvider />
-        <DatasetsProvider />
-        <LatestProvider />
-        <WhitelistsProvider />
-        <GeostoreProvider />
-      </div>
+            <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
+              {isDesktop ? (
+                <Sticky bottomBoundary=".l-country">{this.renderMap()}</Sticky>
+              ) : (
+                this.renderMap()
+              )}
+            </div>
+            <MapControls className="map-controls" />
+            <Share />
+            <ModalMeta />
+            <ModalTCL />
+            {widgetAnchor && <ScrollTo target={widgetAnchor} />}
+            <CountryDataProvider />
+            <DatasetsProvider />
+            <LatestProvider />
+            <WhitelistsProvider />
+            <GeostoreProvider />
+          </div>
+        )}
+      </MediaQuery>
     );
   }
 }

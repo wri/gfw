@@ -36,23 +36,27 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
   .map-panel {
     height: calc(100% - 56px);
     position: fixed;
-    right: -100vw;
-    width: 100vw;
-    top: 0;
+    right: -100%;
+    width: 100%;
+    top: rem(56px);
     transition: right 0.5s linear;
     background-color: #b3e2ff;
     z-index: 1001;
+
+    .map-container {
+      height: 100%;
+    }
 
     @media screen and (min-width: $screen-m) {
       margin-right: 0;
       position: unset;
       z-index: 200;
-      margin-top: -58px;
+      margin-top: -56px;
       width: $right-panel-width;
-    }
 
-    .map-container {
-      height: 100vh;
+      .map-container {
+        height: 100vh;
+      }
     }
 
     &.-open-mobile {
