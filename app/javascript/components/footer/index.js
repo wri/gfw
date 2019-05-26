@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 import { setModalNewsletterOpen } from 'components/modals/newsletter/actions';
-import Component from './footer-component';
+import Component from './component';
 
 const mapStateToProps = ({ modalContactus, modalNewsletter }) => ({
   openContactUs:
