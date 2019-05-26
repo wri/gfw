@@ -22,7 +22,7 @@ class SectionImpacts extends PureComponent {
             <h3>Impacts</h3>
           </div>
         </div>
-        <div className="row">
+        <div className="row hide-overflow">
           <div className="column small-12">
             <Carousel>
               {data &&
