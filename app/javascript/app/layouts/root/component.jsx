@@ -50,13 +50,7 @@ class App extends PureComponent {
               '-trase': isTrase
             })}
           >
-            {!embed && (
-              <Header
-                className={cx('map-tour-main-menu')}
-                loggedIn={loggedIn}
-                fullScreen={fullScreen}
-              />
-            )}
+            {!embed && <Header loggedIn={loggedIn} fullScreen={fullScreen} />}
             {embed && (
               <a className="page-logo" href="/" target="_blank">
                 <img src={gfwLogo} alt="Global Forest Watch" />

@@ -66,7 +66,7 @@ class Header extends PureComponent {
                   </a>
                 ) : (
                   <button
-                    className="logo"
+                    className="logo map-tour-main-menu"
                     onClick={() => this.setState({ fullScreenOpen: true })}
                   >
                     <img
