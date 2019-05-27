@@ -21,6 +21,8 @@ class Card extends PureComponent {
     const { className, theme, data, active } = this.props;
     const {
       image,
+      img1x,
+      img2x,
       imageCredit,
       title,
       summary,
@@ -53,7 +55,13 @@ class Card extends PureComponent {
             alt={title}
           />
         )}
-        <div className={cx('body', { 'no-image': !image }, { 'top-padding': tag && tagColor && !image })}>
+        <div
+          className={cx(
+            'body',
+            { 'no-image': !image },
+            { 'top-padding': tag && tagColor && !image }
+          )}
+        >
           <div className="text-content">
             {imageCredit && <span>{imageCredit}</span>}
             {title && <h3 className="title">{title}</h3>}
