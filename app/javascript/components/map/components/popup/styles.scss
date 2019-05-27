@@ -1,0 +1,79 @@
+@import '~styles/settings.scss';
+
+.c-popup {
+  font-family: $font-family-1;
+  border-radius: 2px;
+  max-width: rem(290px);
+  min-width: rem(200px);
+
+  .close-btn {
+    position: absolute;
+    top: rem(10px);
+    right: rem(10px);
+    z-index: 3;
+  }
+
+  .popup-card {
+    border: 0;
+    max-width: rem(240px);
+
+    .body {
+      background-color: $white;
+    }
+  }
+
+  .popup-table {
+    padding: rem(25px);
+
+    .popup-title {
+      font-size: rem(16px);
+      margin-bottom: rem(15px);
+      color: $slate;
+      font-weight: 400;
+    }
+
+    .layer-selector {
+      margin-bottom: 20px;
+
+      select {
+        font-size: rem(14px);
+      }
+    }
+
+    .popup-footer {
+      margin-top: rem(20px);
+
+      > button {
+        min-width: rem(200px);
+        margin: auto;
+      }
+    }
+  }
+
+  .theme-button-small {
+    color: $white;
+  }
+
+  .theme-button-light {
+    color: $slate;
+  }
+}
+
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+  border-radius: 0 !important;
+}
+
+.mapboxgl-popup-close-button {
+  top: 5px;
+  right: 12px;
+  font-size: 30px;
+  font-weight: 300;
+  color: #555;
+
+  &:hover {
+    background-color: transparent;
+    color: darken($slate, 10%);
+  }
+}

@@ -1,0 +1,312 @@
+@import '~styles/settings.scss';
+$item-size: 55px;
+$item-size-small: 45px;
+$top-section-height: 125px;
+
+.c-basemaps {
+  width: 100%;
+  background-color: $white;
+
+  .basemaps-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(15px);
+    }
+  }
+
+  .basemaps-actions {
+    display: flex;
+
+    .basemaps-action-button {
+      cursor: pointer;
+      margin-left: rem(8px);
+
+      svg {
+        height: 11px;
+        width: 11px;
+        fill: $warm-grey;
+      }
+    }
+  }
+
+  .basemaps-title {
+    font-size: rem(13px);
+    font-weight: 500;
+    line-height: 1.62;
+    color: #aaa;
+    text-transform: uppercase;
+
+    @media screen and (min-width: $screen-m) {
+      color: $slate;
+    }
+  }
+
+  .basemaps-top-section {
+    padding: rem(20px) rem(15px) rem(10px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(15px) rem(20px) 0;
+    }
+  }
+
+  .basemaps-bottom-section {
+    position: relative;
+    height: calc(100% - #{$top-section-height});
+    padding: rem(25px) 0 rem(5px);
+    border-bottom: 1px solid rgba($hot-grey, 0.3);
+    background: $white-tree;
+    margin-bottom: rem(10px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(15px) rem(20px) rem(10px);
+      background: #fff;
+      margin-bottom: initial;
+    }
+
+    .menu-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      margin: 0 9px;
+      border-bottom: 7px solid $white-tree;
+      border-left: 7px solid transparent;
+      border-left-color: $white-tree;
+      border-right: none;
+      transform-origin: 0 0;
+      transform: rotate(-45deg);
+      top: 0;
+      left: rem(25px);
+      border-bottom-color: $white-tree;
+      box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
+      z-index: 3;
+    }
+  }
+
+  .basemaps-options-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media screen and (min-width: $screen-m) {
+      justify-content: flex-start;
+    }
+  }
+
+  .basemaps-options-wrapper {
+    height: calc(#{$item-size} + #{rem(15px)});
+    margin: rem(20px) 0;
+    z-index: 5;
+    width: rem(50px);
+    display: flex;
+    justify-content: center;
+
+    @media screen and (min-width: $screen-m) {
+      margin: initial;
+      width: calc(100% / 3);
+      display: block;
+
+      &:first-child {
+        margin-right: rem(10px);
+      }
+
+      &:last-child {
+        margin-left: 0;
+      }
+    }
+
+    button {
+      margin: initial;
+
+      .value {
+        font-weight: 400;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    & .basemaps-roads {
+      .selector-btn .c-icon {
+        width: rem(26px);
+        height: rem(26px);
+        margin-left: rem(2px);
+      }
+    }
+
+    .c-selector-menu {
+      left: rem(-20px);
+
+      @media screen and (min-width: $screen-m) {
+        left: rem(-9px);
+      }
+
+      .c-selector-item {
+        width: rem(90px);
+        padding: rem(5px) rem(10px);
+      }
+    }
+  }
+
+  .basemaps-list {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: 0;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .basemaps-list-item {
+      display: flex;
+      width: rem(50px);
+      margin-bottom: rem(15px);
+      align-items: flex-start;
+
+      @media screen and (min-width: $screen-m) {
+        width: $item-size;
+      }
+
+      .basemaps-list-item-button {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        width: $item-size-small;
+
+        .basemaps-list-item-image {
+          height: $item-size-small;
+          min-height: $item-size-small;
+          max-height: $item-size-small;
+          width: 100%;
+          min-width: $item-size-small;
+          max-width: $item-size-small;
+          border: 3px solid $white-tree;
+          border-radius: 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          margin: auto;
+
+          @media screen and (min-width: $screen-m) {
+            height: $item-size;
+            min-height: $item-size;
+            max-height: $item-size;
+            width: $item-size;
+            min-width: $item-size;
+            max-width: $item-size;
+            border: 3px solid transparent;
+            border-radius: 0;
+          }
+        }
+
+        .basemaps-list-item-name {
+          display: inline-block;
+          text-align: center;
+          font-size: rem(10px);
+          text-transform: uppercase;
+          color: $slate-light;
+          margin: rem(6px) auto 0;
+
+          @media screen and (min-width: $screen-m) {
+            text-align: center;
+            width: $item-size;
+          }
+        }
+
+        @media screen and (min-width: $screen-m) {
+          width: $item-size;
+        }
+      }
+
+      &:hover .basemaps-list-item-image,
+      &.-active .basemaps-list-item-image {
+        border: 3px solid $green-gfw;
+      }
+    }
+  }
+
+  .basemaps-list-item-selectors {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: rem(4px);
+
+    .planet-label {
+      display: flex;
+      align-items: center;
+      height: rem(10px);
+      font-size: rem(10px);
+      cursor: pointer;
+
+      .arrow-icon {
+        right: 0;
+        width: rem(6px);
+        height: auto;
+        fill: $green-gfw;
+        margin-left: rem(3px);
+      }
+    }
+
+    .basemaps-tooltip {
+      display: flex;
+      height: auto;
+      position: relative;
+
+      span {
+        bottom: -7px;
+        position: absolute;
+      }
+
+      button {
+        font-size: rem(10px);
+      }
+    }
+  }
+
+  .landsat-selector {
+    margin-bottom: rem(5px);
+    height: rem(10px);
+
+    .select-wrapper {
+      height: auto;
+    }
+  }
+}
+
+.c-basemaps-tooltip {
+  padding: 20px;
+  min-width: 200px;
+
+  .planet-tooltip-close {
+    cursor: pointer;
+    position: absolute;
+    top: rem(15px);
+    right: rem(15px);
+
+    svg {
+      height: 11px;
+      width: 11px;
+      fill: $warm-grey;
+    }
+  }
+
+  .date-selectors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: rem(10px);
+    font-size: 13px;
+
+    > div {
+      width: 45%;
+
+      .select-wrapper {
+        width: 100%;
+      }
+    }
+  }
+}

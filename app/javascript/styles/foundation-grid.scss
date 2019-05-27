@@ -576,6 +576,7 @@ textarea {
 .row .row {
   margin-right: -$mobile-gutter;
   margin-left: -$mobile-gutter;
+  max-width: $max-width;
 }
 @media print, screen and (min-width: $screen-m) {
   .row .row {

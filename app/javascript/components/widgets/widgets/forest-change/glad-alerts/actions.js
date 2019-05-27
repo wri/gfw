@@ -6,11 +6,16 @@ export default ({ params }) =>
     axios.spread((alerts, latest) => {
       let data = {};
       if (alerts && alerts.data && latest) {
+        const latestDate =
+          latest && latest.attributes && latest.attributes.updatedAt;
+
         data = {
           alerts: alerts.data.data,
-          latest: latest && latest.attributes && latest.attributes.updatedAt
+          latest: latestDate,
+          settings: { latestDate }
         };
       }
+
       return data;
     })
   );
