@@ -88,6 +88,7 @@ class NavAlt extends PureComponent {
                     <DropdownMenu
                       className="submenu"
                       options={languages}
+                      selected={activeLang}
                       handleSelect={this.handleLangSelect}
                       hideMenu={() => this.setState({ showLang: false })}
                     />

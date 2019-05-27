@@ -50,30 +50,6 @@
     right: -5px;
     top: rem(55px);
     z-index: 1;
-
-    &::before,
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-
-    &::before {
-      top: -12px;
-      border-color: transparent transparent $border transparent;
-      border-width: 6px;
-      right: 6px;
-    }
-
-    &::after {
-      top: -10px;
-      border-color: transparent transparent $white transparent;
-      border-width: 5px;
-      right: 7px;
-    }
   }
 
   .submenu-panel {

@@ -42,30 +42,6 @@
     position: absolute;
     top: 55px;
     left: -70%;
-
-    &::before,
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-
-    &::before {
-      top: -12px;
-      border-color: transparent transparent $border transparent;
-      border-width: 6px;
-      right: 45%;
-    }
-
-    &::after {
-      top: -10px;
-      border-color: transparent transparent $white transparent;
-      border-width: 5px;
-      right: calc(45% + 1px);
-    }
   }
 
   &.full-screen {
