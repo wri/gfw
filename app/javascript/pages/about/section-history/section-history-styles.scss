@@ -4,6 +4,7 @@
   padding: rem(30px) 0 rem(30px);
   background-color: $grey-light;
   border-bottom: solid 1px $border;
+  overflow: hidden;
 
   @media screen and (min-width: $screen-l) {
     padding: rem(60px) 0;
@@ -31,27 +32,6 @@
       h4 {
         font-size: rem(30px);
         margin-bottom: rem(10px);
-      }
-    }
-  }
-
-  .timeline {
-    .slick-dots {
-      @media screen and (min-width: $screen-m) {
-        margin-top: rem(50px);
-      }
-
-      @media screen and (min-width: $screen-xl) {
-        visibility: hidden;
-      }
-    }
-
-    .slick-prev {
-      background-color: transparent;
-      border: $green-gfw 1px solid;
-
-      svg {
-        fill: $slate;
       }
     }
   }

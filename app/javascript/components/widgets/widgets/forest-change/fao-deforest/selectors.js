@@ -40,7 +40,7 @@ export const parseData = createSelector(
       color: colors.main,
       path: {
         type,
-        payload: { adm0: d.iso },
+        payload: { type: 'country', adm0: d.iso },
         query
       },
       value: d.deforest

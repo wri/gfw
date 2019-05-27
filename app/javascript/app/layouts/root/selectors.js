@@ -36,23 +36,28 @@ export const getMetadata = createSelector(
   (route, location, adm0s, adm1s, adm2s) => {
     const { type, adm0, adm1, adm2 } = location;
     const metadata = window.metadata[route && route.controller];
-    const metadataTypes = window.metadata.types;
 
     if (!type) return metadata;
     if (
-      (adm0 && (!adm0s || !adm0s.length)) ||
-      (adm1 && (!adm1s || !adm1s.length)) ||
-      (adm2 && (!adm2s || !adm2s.length))
+      type === 'country' &&
+      ((adm0 && (!adm0s || !adm0s.length)) ||
+        (adm1 && (!adm1s || !adm1s.length)) ||
+        (adm2 && (!adm2s || !adm2s.length)))
     ) {
       return null;
     }
-    let title = `${upperFirst(
-      (metadataTypes && metadataTypes[type]) || type
-    )} | ${metadata && metadata.title}`;
+    const metadataByType = window.metadata[type];
+    let title = '';
     if (location.type && location.type === 'country') {
-      title = `${buildFullLocationName(location, { adm0s, adm1s, adm2s })} | ${
-        title
-      }`;
+      title = `${buildFullLocationName(location, {
+        adm0s,
+        adm1s,
+        adm2s
+      })} | ${metadata && metadata.title}`;
+    } else {
+      title = `${upperFirst(
+        (metadataByType && metadataByType.title) || type
+      )} | ${metadata && metadata.title}`;
     }
 
     return {

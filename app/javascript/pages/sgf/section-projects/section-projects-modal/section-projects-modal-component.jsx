@@ -52,22 +52,34 @@ class SectionProjectsModal extends PureComponent {
         {data.images &&
           data.images.length > 1 && (
             <Carousel
-              className="modal-image-slider"
+              className="modal-image-slider element-fullwidth"
               settings={{
                 slidesToShow: 1,
                 arrows: false,
+                dots: true,
                 infinite: false
               }}
             >
               {data.images &&
-                data.images.map(c => <img src={c} alt={data.title} />)}
+                data.images.map(c => (
+                  <div key={c} className="image">
+                    <div
+                      style={{
+                        backgroundImage: `url(${c})`
+                      }}
+                    />
+                  </div>
+                ))}
             </Carousel>
           )}
         {data.image &&
           data.images.length === 1 && (
-            <div className="image">
-              <img src={data.image} alt="SGF project detail" />
-            </div>
+            <div
+              className="image element-fullwidth"
+              style={{
+                backgroundImage: `url(${data.image})`
+              }}
+            />
           )}
         <div className="content">
           {data.description &&

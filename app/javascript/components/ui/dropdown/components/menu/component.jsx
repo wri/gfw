@@ -24,21 +24,24 @@ const Menu = props => {
   return !isOpen ? null : (
     <div className={`c-selector-menu ${className || ''}`}>
       {items && items.length ? (
-        items.map((item, index) => (
-          <Item
-            key={item.value}
-            index={index}
-            item={item}
-            showGroup={showGroup}
-            highlightedIndex={highlightedIndex}
-            getItemProps={getItemProps}
-            handleSelectGroup={handleSelectGroup}
-            optionsAction={optionsAction}
-            optionsActionKey={optionsActionKey}
-            activeValue={activeValue}
-            activeLabel={activeLabel}
-          />
-        ))
+        items.map(
+          (item, index) =>
+            item && (
+              <Item
+                key={item.value}
+                index={index}
+                item={item}
+                showGroup={showGroup}
+                highlightedIndex={highlightedIndex}
+                getItemProps={getItemProps}
+                handleSelectGroup={handleSelectGroup}
+                optionsAction={optionsAction}
+                optionsActionKey={optionsActionKey}
+                activeValue={activeValue}
+                activeLabel={activeLabel}
+              />
+            )
+        )
       ) : (
         <div className="item not-found">
           {noItemsFound || 'No results found'}

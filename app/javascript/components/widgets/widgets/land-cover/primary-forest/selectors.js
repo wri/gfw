@@ -54,20 +54,8 @@ export const parseSentence = createSelector(
       .value;
     const primaryPercentage = primaryData && primaryData / totalExtent * 100;
 
-    let indicatorLabel = indicator && indicator.label;
-    switch (indicator && indicator.value) {
-      case 'primary_forest__mining':
-        indicatorLabel = 'mining concessions';
-        break;
-      case 'primary_forest__landmark':
-        indicatorLabel = 'indigenous lands';
-        break;
-      case 'primary_forest__wdpa':
-        indicatorLabel = 'protected areas';
-        break;
-      default:
-        indicatorLabel = 'primary forests';
-    }
+    const indicatorLabel =
+      indicator && indicator.label ? indicator.label.toLowerCase() : null;
 
     const params = {
       location: `${locationName}'s`,
@@ -78,11 +66,7 @@ export const parseSentence = createSelector(
           : `${format('.2r')(primaryPercentage)}%`,
       extentYear: settings.extentYear
     };
-
-    const sentence =
-      indicator && indicator.value === 'primary_forest'
-        ? initial
-        : withIndicator;
+    const sentence = indicator ? withIndicator : initial;
 
     return {
       sentence,

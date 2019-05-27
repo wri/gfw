@@ -9,6 +9,7 @@ $summary-color: #aaa;
 
   .body {
     padding: rem(20px);
+    height: calc(100% - 120px);
 
     .title {
       font-size: 14px;
@@ -23,6 +24,12 @@ $summary-color: #aaa;
       font-size: 12px;
       line-height: 1.5;
       color: $summary-color;
+    }
+
+    .buttons {
+      * {
+        min-width: 45%;
+      }
     }
   }
 }

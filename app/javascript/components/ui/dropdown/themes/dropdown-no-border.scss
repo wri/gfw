@@ -1,0 +1,9 @@
+@import '~styles/settings.scss';
+
+.theme-dropdown-no-border {
+  .container {
+    .c-selector {
+      border: none;
+    }
+  }
+}

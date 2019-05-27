@@ -9,8 +9,10 @@ import { handlePageTrack } from 'app/analytics';
 
 import Meta from 'components/meta';
 import Header from 'components/header';
+import Footer from 'components/footer';
+import Cookies from 'components/cookies';
 import Button from 'components/ui/button';
-import MapMenu from 'components/maps/components/menu';
+import MapMenu from 'components/map-menu';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
 
@@ -35,28 +37,20 @@ class App extends PureComponent {
 
   render() {
     const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
-    const { component, embed } = route;
+    const { component, embed, fullScreen } = route;
     const isMapPage = component === 'map';
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
           <div
-            className={cx(
-              'l-root',
-              { '-map': isMapPage },
-              { '-embed': embed, '-trase': isTrase }
-            )}
+            className={cx('l-root', {
+              '-full-screen': fullScreen,
+              '-embed': embed,
+              '-trase': isTrase
+            })}
           >
-            {!embed &&
-              route.headerOptions && (
-                <Header
-                  className={cx('map-tour-main-menu')}
-                  isMobile={!isDesktop}
-                  loggedIn={loggedIn}
-                  {...route.headerOptions}
-                />
-              )}
+            {!embed && <Header loggedIn={loggedIn} fullScreen={fullScreen} />}
             {embed && (
               <a className="page-logo" href="/" target="_blank">
                 <img src={gfwLogo} alt="Global Forest Watch" />
@@ -69,7 +63,7 @@ class App extends PureComponent {
                 embed={embed}
               />
             )}
-            <div className="page">
+            <div className={cx('page', { mobile: !isDesktop && !isMapPage })}>
               <PageComponent
                 path={route.component}
                 sections={route.sections}
@@ -91,6 +85,8 @@ class App extends PureComponent {
                 </div>
               )}
             <Meta {...metadata} />
+            <Cookies />
+            {!route.hideFooter && !embed && <Footer />}
           </div>
         )}
       </MediaQuery>

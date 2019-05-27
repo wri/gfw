@@ -8,8 +8,9 @@ $summary-color: #aaa;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: $grey-light;
+  background-color: $white;
   border: solid 1px $border;
+  height: 100%;
 
   &.active {
     border-color: $green-gfw;
@@ -41,8 +42,12 @@ $summary-color: #aaa;
   }
 
   .body {
-    padding: rem(20px) rem(15px) rem(15px);
+    height: calc(100% - #{rem(220px)});
+    padding: rem(15px) rem(20px) rem(20px);
     border-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     z-index: 2;
 
     &.top-padding {
@@ -50,7 +55,11 @@ $summary-color: #aaa;
     }
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(30px) rem(25px) rem(25px);
+      padding: rem(20px) rem(40px) rem(40px);
+    }
+
+    &.no-image {
+      height: 100%;
     }
 
     span {
@@ -62,10 +71,12 @@ $summary-color: #aaa;
 
     .title {
       margin-bottom: rem(15px);
-      font-size: rem(28px);
-      line-height: 1.25;
-      letter-spacing: -0.4px;
+      font-size: rem(26px);
       font-weight: 300;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: rem(30px);
+      }
     }
 
     .summary {
@@ -85,6 +96,23 @@ $summary-color: #aaa;
     .buttons {
       display: flex;
       justify-content: space-between;
+
+      * {
+        min-width: rem(130px);
+      }
+    }
+
+    .selector-btn {
+      display: flex;
+
+      .card-selector {
+        max-width: rem(160px);
+        margin-right: rem(10px);
+      }
+
+      .selector-btn-link {
+        transform: rotate(-90deg);
+      }
     }
 
     .read-more {

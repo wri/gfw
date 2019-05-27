@@ -32,7 +32,7 @@ class Page extends PureComponent {
   render() {
     const { sections, setModalVideoData } = this.props;
     return (
-      <div className="l-main">
+      <div className="l-about-page">
         <Cover
           title="About"
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."

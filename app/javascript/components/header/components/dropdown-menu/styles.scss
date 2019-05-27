@@ -3,7 +3,6 @@
 .c-dropdown-menu {
   background-color: $white;
   width: rem(200px);
-  padding: rem(15px) rem(20px);
   border: solid 1px $border;
 
   &.-plain {
@@ -24,8 +23,16 @@
       cursor: pointer;
       text-align: left;
 
+      @media screen and (min-width: $screen-m) {
+        padding: rem(15px) rem(20px);
+      }
+
       &:hover {
-        color: darken($slate, 30%);
+        background-color: #f7f7f7;
+      }
+
+      &.active {
+        color: $green-gfw;
       }
     }
 

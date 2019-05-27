@@ -6,6 +6,7 @@ import cx from 'classnames';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
+import { track } from 'app/analytics';
 
 import './button-styles.scss';
 import './themes/button-light.scss'; // eslint-disable-line
@@ -18,6 +19,7 @@ import './themes/button-grey-filled.scss'; // eslint-disable-line
 import './themes/button-clear.scss'; // eslint-disable-line
 import './themes/button-map-control.scss'; // eslint-disable-line
 import './themes/button-dashed.scss'; // eslint-disable-line
+import './themes/button-dark-round.scss'; // eslint-disable-line
 
 const Button = props => {
   const {
@@ -29,14 +31,22 @@ const Button = props => {
     disabled,
     active,
     onClick,
-    tooltip
+    tooltip,
+    background,
+    trackingData
   } = props;
-  const isDeviceTouch = isTouch();
+
   const handleClick = e => {
     if (onClick) {
       onClick(e);
     }
+    if (trackingData) {
+      const { event, label } = trackingData;
+      track(event, { label });
+    }
   };
+
+  const isDeviceTouch = isTouch();
   let button = null;
   if (extLink) {
     button = (
@@ -86,6 +96,7 @@ const Button = props => {
         )}
         onClick={handleClick}
         disabled={disabled}
+        style={background && { background }}
       >
         <div className="button-wrapper">{children}</div>
       </button>
@@ -121,7 +132,8 @@ Button.propTypes = {
   extLink: PropTypes.string,
   tooltip: PropTypes.object,
   trackingData: PropTypes.object,
-  buttonClicked: PropTypes.func
+  buttonClicked: PropTypes.func,
+  background: PropTypes.string
 };
 
 export default Button;

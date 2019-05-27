@@ -3,12 +3,14 @@ import * as actions from './actions';
 const hideModal = JSON.parse(localStorage.getItem('welcomeModalHidden'));
 
 export const initialState = {
-  open: !hideModal
+  open: !hideModal,
+  hideModal
 };
 
 const setModalWelcomeOpen = (state, { payload }) => ({
   ...state,
-  open: payload
+  open: payload,
+  hideModal: true
 });
 
 export default {
