@@ -19,27 +19,16 @@
   .categories-wrapper {
     display: flex;
     align-items: flex-start;
-    flex-wrap: wrap;
+    justify-content: space-between;
     font-size: rem(10px);
     background-color: $white;
     color: $slate;
     width: 100%;
     z-index: 5;
+    margin: rem(20px) 0;
 
     li {
-      margin: rem(20px);
-      margin-left: 0;
       width: rem(50px);
-
-      @media screen and (min-width: $screen-m) {
-        &:first-child {
-          margin-left: 0;
-        }
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
     }
 
     button {
