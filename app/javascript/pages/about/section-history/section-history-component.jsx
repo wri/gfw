@@ -82,7 +82,7 @@ class SectionHistory extends PureComponent {
             <h3>History</h3>
           </div>
         </div>
-        <div className="row hide-overflow">
+        <div className="row">
           <div className="column small-12">
             <Carousel
               className="timeline"

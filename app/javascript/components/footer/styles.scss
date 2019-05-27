@@ -5,9 +5,12 @@
   background: #eceee8;
 
   .footer-subscribe {
+    background-color: #fff;
+  }
+
+  .footer-subscribe-wrapper {
     width: 100%;
     height: rem(110px);
-    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,7 +119,7 @@
         flex-direction: column;
 
         @media screen and (min-width: $screen-m) {
-          align-content: flex-start;
+          align-items: flex-start;
         }
 
         .wri-logo {

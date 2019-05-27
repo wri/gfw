@@ -29,12 +29,14 @@ class Footer extends PureComponent {
             <div className="footer-subscribe">
               <div className="row">
                 <div className="column small-12">
-                  <Button
-                    onClick={() => this.props.setModalNewsletterOpen(true)}
-                    className="footer-subscribe-button"
-                  >
-                    STAY UPDATED
-                  </Button>
+                  <div className="footer-subscribe-wrapper">
+                    <Button
+                      onClick={() => this.props.setModalNewsletterOpen(true)}
+                      className="footer-subscribe-button"
+                    >
+                      STAY UPDATED
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
