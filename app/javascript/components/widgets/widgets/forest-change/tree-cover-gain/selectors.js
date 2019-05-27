@@ -121,7 +121,13 @@ export const parseData = createSelector(
             adm2: d.id
           })
         },
-        query
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map),
+            canBound: true
+          }
+        }
       },
       value: settings.unit === 'ha' ? d.gain : d.percentage
     }));

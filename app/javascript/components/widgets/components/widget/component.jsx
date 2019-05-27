@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import intersection from 'lodash/intersection';
 import cx from 'classnames';
 import { track } from 'app/analytics';
+import moment from 'moment';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
@@ -15,6 +17,111 @@ import WidgetFooter from './components/widget-footer';
 import './styles.scss';
 
 class Widget extends PureComponent {
+  componentDidMount() {
+    const { active, config } = this.props;
+    if (active && config && config.datasets) {
+      this.syncWidgetWithMap();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { active, settings, config } = this.props;
+    if (active) {
+      const mapSyncKeys = ['startYear', 'endYear', 'threshold', 'extentYear'];
+      if (
+        config &&
+        config.datasets &&
+        intersection(mapSyncKeys, Object.keys(settings).length) &&
+        settings !== prevProps.settings
+      ) {
+        this.syncWidgetWithMap();
+      } else {
+        this.clearMap();
+      }
+    }
+  }
+
+  syncWidgetWithMap = () => {
+    // if active widget settings change, send them to the layer
+    const { setMapSettings, settings, config } = this.props;
+    const {
+      startYear,
+      endYear,
+      threshold,
+      extentYear,
+      weeks,
+      year,
+      latestDate
+    } =
+      settings || {};
+
+    const widgetDatasets = config.datasets.map(d => ({
+      ...d,
+      opacity: 1,
+      visibility: true,
+      layers:
+        extentYear && !Array.isArray(d.layers)
+          ? [d.layers[extentYear]]
+          : d.layers,
+      ...(((startYear && endYear) || year) && {
+        timelineParams: {
+          startDate: `${startYear || year}-01-01`,
+          endDate: `${endYear || year}-12-31`,
+          trimEndDate: `${endYear || year}-12-31`
+        }
+      }),
+      ...(weeks && {
+        timelineParams: {
+          startDate: moment(latestDate || null)
+            .subtract(weeks, 'weeks')
+            .format('YYYY-MM-DD'),
+          endDate: moment(latestDate || null).format('YYYY-MM-DD'),
+          trimEndDate: moment(latestDate || null).format('YYYY-MM-DD')
+        }
+      }),
+      ...(threshold && {
+        params: {
+          thresh: threshold,
+          visibility: true
+        }
+      })
+    }));
+
+    const datasets = [
+      {
+        dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+        layers: [
+          '6f6798e6-39ec-4163-979e-182a74ca65ee',
+          'c5d1e010-383a-4713-9aaa-44f728c0571c'
+        ],
+        opacity: 1,
+        visibility: true
+      },
+      ...widgetDatasets
+    ];
+
+    setMapSettings({
+      datasets
+    });
+  };
+
+  clearMap = () => {
+    const { setMapSettings } = this.props;
+    setMapSettings({
+      datasets: [
+        {
+          dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+          layers: [
+            '6f6798e6-39ec-4163-979e-182a74ca65ee',
+            'c5d1e010-383a-4713-9aaa-44f728c0571c'
+          ],
+          opacity: 1,
+          visibility: true
+        }
+      ]
+    });
+  };
+
   renderWidgetBody = () => {
     const {
       widget,
@@ -134,6 +241,7 @@ Widget.propTypes = {
   setWidgetsSettings: PropTypes.func,
   setWidgetLoading: PropTypes.func,
   handleDataHighlight: PropTypes.func,
+  setMapSettings: PropTypes.func,
   setWidgetSettings: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])

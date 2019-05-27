@@ -73,8 +73,8 @@ class SectionProjects extends PureComponent {
 
 SectionProjects.propTypes = {
   projects: PropTypes.array,
-  categories: PropTypes.array.isRequired,
-  categorySelected: PropTypes.string.isRequired,
+  categories: PropTypes.array,
+  categorySelected: PropTypes.string,
   setCategorySelected: PropTypes.func.isRequired,
   handleGlobeClick: PropTypes.func.isRequired
 };

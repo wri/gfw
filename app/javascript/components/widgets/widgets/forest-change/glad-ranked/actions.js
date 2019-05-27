@@ -12,13 +12,15 @@ export default ({ params }) =>
     .then(
       axios.spread((alerts, latest, extent) => {
         const { data } = alerts.data;
-        const latestData = latest.data.data;
         const areas = extent.data.data;
+        const latestDate = latest.attributes && latest.attributes.updatedAt;
+
         return data && extent && latest
           ? {
             alerts: data,
             extent: areas,
-            latest: latestData.attributes && latestData.attributes.updatedAt
+            latest: latestDate,
+            settings: { latestDate }
           }
           : {};
       })

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { track } from 'app/analytics';
 import Button from 'components/ui/button';
 
 import './styles.scss';
@@ -31,7 +32,10 @@ class Cookies extends PureComponent {
             <Button
               className="cookies-btn"
               theme="theme-button-grey theme-button-small"
-              onClick={agreeCookies}
+              onClick={() => {
+                agreeCookies();
+                track('acceptCookies');
+              }}
             >
               I agree
             </Button>

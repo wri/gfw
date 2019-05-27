@@ -12,7 +12,7 @@
     <script src="https://cdn.optimizely.com/js/7988050790.js"></script>
     <%= render 'shared/cache_keys' %>
     <%= render 'shared/tracking' %>
-    <%= render 'shared/leaflet' %>
+
     <%= javascript_entrypoint_pack_tag 'app' %>
     <% if @is_production %>
       <%= stylesheet_entrypoint_pack_tag 'app' %>

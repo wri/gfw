@@ -33,8 +33,9 @@ export const getSummedByYearsData = createSelector(
     const groupedByIso = groupBy(filteredByYears, 'iso');
     const isos = Object.keys(groupedByIso);
     const mappedData = isos.map(i => {
-      const isoLoss = sumBy(groupedByIso[i], 'loss') || 0;
-      const isoExtent = extent.find(e => e.iso === i).extent;
+      const isoLoss = Math.round(sumBy(groupedByIso[i], 'loss')) || 0;
+      const isoExtent = Math.round(extent.find(e => e.iso === i).extent) || 1;
+
       return {
         id: i,
         loss: isoLoss,

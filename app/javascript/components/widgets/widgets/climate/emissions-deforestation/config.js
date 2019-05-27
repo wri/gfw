@@ -10,8 +10,14 @@ export default {
     thresholds: true,
     units: ['co2LossByYear', 'cLossByYear']
   },
+  datasets: [
+    // biomass loss
+    {
+      dataset: 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b',
+      layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe']
+    }
+  ],
   analysis: true,
-  layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
   dataType: 'loss',
   colors: 'climate',

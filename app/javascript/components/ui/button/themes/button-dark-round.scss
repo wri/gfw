@@ -1,0 +1,27 @@
+@import '~styles/settings';
+
+$icon-size: rem(50px);
+$margin: rem(5px);
+
+.theme-button-dark-round {
+  width: $icon-size;
+  height: $icon-size;
+  border-radius: $icon-size;
+  margin: auto;
+
+  .button-wrapper {
+    position: relative;
+    top: calc(#{$icon-size});
+    height: auto;
+    width: auto;
+
+    .value {
+      height: rem(40px);
+      width: 100%;
+      color: $slate-light;
+      white-space: initial;
+      font-size: rem(11px);
+      text-transform: uppercase;
+    }
+  }
+}

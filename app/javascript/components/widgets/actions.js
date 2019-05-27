@@ -95,7 +95,8 @@ export const setActiveWidget = createThunkAction(
       payload,
       query: {
         ...query,
-        widget
+        widget,
+        showMap: true
       }
     });
   }

@@ -4,7 +4,6 @@ export default {
   endYear: 2018,
   unit: '%',
   extentYear: 2000,
-  layers: ['loss'],
   pageSize: 5,
   page: 0
 };
