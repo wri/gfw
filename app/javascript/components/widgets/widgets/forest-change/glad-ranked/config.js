@@ -14,7 +14,13 @@ export default {
   },
   metaKey: 'widget_deforestation_alert_location',
   colors: 'loss',
-  layers: ['umd_as_it_happens'],
+  datasets: [
+    // GLAD
+    {
+      dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
+      layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
+    }
+  ],
   sortOrder: {
     summary: 6,
     forestChange: 10

@@ -10,7 +10,16 @@ export default {
   },
   colors: 'extent',
   metaKey: 'widget_primary_forest',
-  layers: ['forest2000'],
+  datasets: [
+    // tree cover
+    {
+      dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
+      layers: {
+        2010: '78747ea1-34a9-4aa7-b099-bdb8948200f4',
+        2000: 'c05c32fd-289c-4b20-8d73-dc2458234e04'
+      }
+    }
+  ],
   sortOrder: {
     landCover: 4
   },

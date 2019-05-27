@@ -137,6 +137,7 @@ class TopicsPage extends PureComponent {
                 </div>
               )}
             <ReactFullpage
+              licenseKey={process.env.FULLPAGE_LICENSE}
               pluginWrapper={pluginWrapper}
               scrollOverflow
               anchors={anchors}

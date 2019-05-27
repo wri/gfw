@@ -28,6 +28,17 @@ const routeChangeThunk = (dispatch, getState) => {
 
 const redirectThunk = (dispatch, getState) => {
   const { location } = getState() || {};
+
+  if (location.pathname === '/dashboards') {
+    dispatch(redirect({ type: DASHBOARDS, payload: { type: 'global' } }));
+    return;
+  }
+
+  if (location.pathname === '/topics') {
+    dispatch(redirect({ type: TOPICS, payload: { tab: 'biodiversity' } }));
+    return;
+  }
+
   const routeSlugs = location.pathname && location.pathname.split('/');
   const isOldMap = routeSlugs.includes('map');
   if (isOldMap) {
@@ -109,24 +120,21 @@ export const routes = {
     controller: 'map',
     path: '/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
-    headerOptions: {
-      isMap: true,
-      fullScreen: true,
-      showPanel: true,
-      fixed: true,
-      toggle: true
-    }
+    fullScreen: true,
+    hideFooter: true
   },
   [MAP_EMBED]: {
     controller: 'map',
     path: '/embed/map/:type?/:adm0?/:adm1?/:adm2?',
     component: 'map',
-    embed: true
+    embed: true,
+    fullScreen: true
   },
   [TOPICS]: {
     controller: 'topics',
     path: '/topics/:tab',
     component: 'topics',
+    hideFooter: true,
     sections: {
       biodiversity: {
         label: 'Biodiversity',
@@ -152,33 +160,28 @@ export const routes = {
         component: 'water',
         path: '/topics/water'
       }
-    },
-    header: true
+    }
   },
   [DASHBOARDS]: {
     controller: 'dashboards',
-    path: '/dashboards/:type?/:adm0?/:adm1?/:adm2?',
+    path: '/dashboards/:type/:adm0?/:adm1?/:adm2?',
     component: 'dashboards'
   },
   [DASHBOARDS_EMBED]: {
     controller: 'dashboards',
-    path: '/embed/dashboards/:type?/:adm0?/:adm1?/:adm2?',
-    component: 'dashboards/embed',
+    path: '/embed/dashboards/:type/:adm0?/:adm1?/:adm2?',
+    component: 'dashboards/components/embed',
     embed: true
   },
   [THANKYOU]: {
     path: '/thank-you',
     component: 'thankyou',
-    controller: 'thankyou',
-    footer: true,
-    header: true
+    controller: 'thankyou'
   },
   [STORIES]: {
     path: '/stories',
     component: 'stories',
-    controller: 'stories',
-    footer: true,
-    header: true
+    controller: 'stories'
   },
   [NOT_FOUND]: {
     path: '/404',

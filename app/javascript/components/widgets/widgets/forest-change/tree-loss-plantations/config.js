@@ -13,7 +13,18 @@ export default {
   },
   colors: 'loss',
   metaKey: 'widget_plantations_tree_cover_loss',
-  layers: ['loss', 'plantations_by_type'],
+  datasets: [
+    {
+      // global plantations
+      dataset: 'bb1dced4-3ae8-4908-9f36-6514ae69713f',
+      layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4']
+    },
+    // loss
+    {
+      dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
+      layers: ['c3075c5a-5567-4b09-bc0d-96ed1673f8b6']
+    }
+  ],
   sortOrder: {
     forestChange: 2
   },

@@ -1,0 +1,41 @@
+@import '~styles/settings.scss';
+
+$icon-size: rem(50px);
+$margin: rem(6px);
+
+.theme-dropdown-dark-round {
+  .container {
+    .c-selector {
+      background: $border;
+      border: 1px solid #aaa;
+      margin: auto;
+      width: $icon-size;
+      height: $icon-size;
+
+      .value {
+        top: calc(#{$icon-size} + #{$margin});
+        left: 0;
+        height: rem(40px);
+        width: 100%;
+        white-space: initial;
+        font-size: rem(11px);
+        text-transform: uppercase;
+      }
+
+      .selector-btn .c-icon {
+        width: rem(18px);
+        height: rem(18px);
+        margin-left: $margin;
+      }
+    }
+
+    &.is-open .menu-arrow,
+    .c-selector-menu {
+      top: 40px;
+    }
+
+    .arrow-btn {
+      display: none;
+    }
+  }
+}

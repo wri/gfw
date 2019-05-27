@@ -60,17 +60,9 @@ class WidgetSettings extends PureComponent {
           value={settings.extentYear}
           options={extentYears}
           onChange={option => {
-            const layers = [...settings.layers];
-            if (layers.length) {
-              const activeIndex = settings.layers.indexOf(
-                `forest${settings.extentYear}`
-              );
-              layers[activeIndex] = `forest${option}`;
-            }
             onSettingsChange({
               value: {
-                extentYear: option,
-                layers
+                extentYear: option
               },
               widget
             });
@@ -87,17 +79,9 @@ class WidgetSettings extends PureComponent {
         options={extentYears}
         disabled={loading}
         onChange={option => {
-          const layers = [...settings.layers];
-          if (layers.length) {
-            const activeIndex = settings.layers.indexOf(
-              `forest${settings.extentYear}`
-            );
-            layers[activeIndex] = `forest${option.value}`;
-          }
           onSettingsChange({
             value: {
-              extentYear: option.value,
-              layers
+              extentYear: option.value
             },
             widget
           });
