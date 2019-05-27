@@ -42,8 +42,8 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  section: PropTypes.object.isRequired,
-  links: PropTypes.array.isRequired
+  section: PropTypes.object,
+  links: PropTypes.array
 };
 
 export default Page;
