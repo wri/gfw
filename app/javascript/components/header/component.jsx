@@ -53,7 +53,7 @@ class Header extends PureComponent {
               className
             )}
           >
-            <div className="row">
+            <div className={cx('row', { expanded: fullScreen })}>
               <div className="column small-12">
                 {!fullScreen || fullScreenOpen ? (
                   <a className="logo" href="/">

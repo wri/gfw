@@ -33,7 +33,7 @@ class Header extends PureComponent {
       className,
       apps,
       moreLinks,
-      fullScreen,
+      showSubmenu,
       onClick,
       isMobile,
       navMain,
@@ -50,125 +50,120 @@ class Header extends PureComponent {
       <div
         className={cx(
           'c-submenu-panel',
-          { '-full-screen': fullScreen },
+          { 'full-screen': showSubmenu },
           className
         )}
         onClick={onClick}
         role="button"
         tabIndex={0}
       >
-        <div className="row">
-          <div className="column small-12 medium-10 medium-offset-1">
-            <Search
-              className="menu-search"
-              placeholder="Search"
-              onChange={this.handleSearchChange}
-              onSubmit={this.handleSubmit}
-            />
-            {isMobile && (
-              <div className="menu-section">
-                <DropdownMenu
-                  className="sub-menu -plain"
-                  options={navMain}
-                  hideMenu={hideMenu}
-                />
-              </div>
-            )}
-            {isMobile && (
-              <div className="menu-section">
-                <h4>Select a language</h4>
-                <DropdownMenu
-                  className="sub-menu -plain"
-                  options={languages}
-                  selected={activeLang}
-                  handleSelect={lang => {
-                    handleLangSelect(lang);
-                  }}
-                />
-              </div>
-            )}
-            {isMobile && (
-              <div className="menu-section">
-                <h4>My GFW</h4>
-                {loggedIn ? (
-                  <DropdownMenu
-                    className="sub-menu -plain"
-                    options={myGfwLinks}
-                  />
-                ) : (
-                  <MyGfwLogin plain />
-                )}
-              </div>
-            )}
+        <div className="submenu-wrapper">
+          <Search
+            className="menu-search"
+            placeholder="Search"
+            onChange={this.handleSearchChange}
+            onSubmit={this.handleSubmit}
+          />
+          {isMobile && (
             <div className="menu-section">
-              <h4>Other applications</h4>
-              <div className="apps-slider">
-                {apps &&
-                  apps.map(d => (
-                    <a
-                      key={d.label}
-                      href={d.path}
-                      target="_blank"
-                      rel="noopener nofollower"
-                      className="app-card"
-                    >
-                      <div
-                        className="app-image"
-                        style={{ backgroundImage: `url('${d.image}')` }}
-                      />
-                    </a>
-                  ))}
-                <a
-                  href="https://developers.globalforestwatch.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="app-card"
-                >
-                  <div className="all-apps">
-                    <Icon className="icon-more" icon={moreIcon} />
-                    Explore all apps
-                  </div>
-                </a>
-              </div>
+              <DropdownMenu
+                className="sub-menu -plain"
+                options={navMain}
+                hideMenu={hideMenu}
+              />
             </div>
+          )}
+          {isMobile && (
             <div className="menu-section">
-              <h4>More in GFW</h4>
-              <ul className="more-links row">
-                {moreLinks.map(m => (
-                  <li
-                    key={m.label}
-                    className="column small-12 medium-4 large-3"
+              <h4>Select a language</h4>
+              <DropdownMenu
+                className="sub-menu -plain"
+                options={languages}
+                selected={activeLang}
+                handleSelect={lang => {
+                  handleLangSelect(lang);
+                }}
+              />
+            </div>
+          )}
+          {isMobile && (
+            <div className="menu-section">
+              <h4>My GFW</h4>
+              {loggedIn ? (
+                <DropdownMenu
+                  className="sub-menu -plain"
+                  options={myGfwLinks}
+                />
+              ) : (
+                <MyGfwLogin plain />
+              )}
+            </div>
+          )}
+          <div className="menu-section">
+            <h4>Other applications</h4>
+            <div className="apps-slider">
+              {apps &&
+                apps.map(d => (
+                  <a
+                    key={d.label}
+                    href={d.path}
+                    target="_blank"
+                    rel="noopener nofollower"
+                    className="app-card"
                   >
-                    {m.path ? (
-                      <NavLink to={m.path} onClick={hideMenu}>
-                        <Icon icon={m.icon} />
-                        {m.label}
-                      </NavLink>
-                    ) : (
-                      <a
-                        href={m.extLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Icon icon={m.icon} />
-                        {m.label}
-                      </a>
-                    )}
-                  </li>
+                    <div
+                      className="app-image"
+                      style={{ backgroundImage: `url('${d.image}')` }}
+                    />
+                  </a>
                 ))}
-              </ul>
-            </div>
-            <div className="legal-section">
-              <a className="title" href="/terms">
-                Terms
+              <a
+                href="https://developers.globalforestwatch.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="app-card"
+              >
+                <div className="all-apps">
+                  <Icon className="icon-more" icon={moreIcon} />
+                  Explore all apps
+                </div>
               </a>
-              <a className="title" href="/privacy-policy">
-                Privacy Policy
-              </a>
-              <button className="title" onClick={() => toggleContactUs(true)}>
-                Contact us
-              </button>
             </div>
+          </div>
+          <div className="menu-section">
+            <h4>More in GFW</h4>
+            <ul className="row more-links">
+              {moreLinks.map(m => (
+                <li key={m.label} className="column small-12 medium-4 large-3">
+                  {m.path ? (
+                    <NavLink to={m.path} onClick={hideMenu}>
+                      <Icon icon={m.icon} />
+                      {m.label}
+                    </NavLink>
+                  ) : (
+                    <a
+                      href={m.extLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon icon={m.icon} />
+                      {m.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="legal-section">
+            <a className="title" href="/terms">
+              Terms
+            </a>
+            <a className="title" href="/privacy-policy">
+              Privacy Policy
+            </a>
+            <button className="title" onClick={() => toggleContactUs(true)}>
+              Contact us
+            </button>
           </div>
         </div>
       </div>
@@ -180,7 +175,7 @@ Header.propTypes = {
   className: PropTypes.string,
   apps: PropTypes.array,
   moreLinks: PropTypes.array,
-  fullScreen: PropTypes.bool,
+  showSubmenu: PropTypes.bool,
   onClick: PropTypes.func,
   isMobile: PropTypes.bool,
   navMain: PropTypes.array,

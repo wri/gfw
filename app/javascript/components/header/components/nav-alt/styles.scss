@@ -90,6 +90,10 @@
       position: absolute;
       height: auto;
     }
+
+    @media screen and (min-width: $screen-xl) {
+      right: calc(-50vw + #{$screen-xl / 2} - #{$desktop-gutter});
+    }
   }
 
   .icon-close,

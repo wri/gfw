@@ -13,8 +13,9 @@
     outline: none;
   }
 
-  &.-full-screen {
-    min-height: calc(100vh - 76px);
+  .submenu-wrapper {
+    max-width: rem(800px);
+    margin: auto;
   }
 
   .menu-search {
@@ -122,6 +123,18 @@
       button {
         margin-right: rem(30px);
         cursor: pointer;
+      }
+    }
+  }
+
+  &.full-screen {
+    .more-links {
+      margin-left: rem(-16px) !important;
+      margin-right: rem(-16px) !important;
+
+      @media screen and (min-width: $screen-m) {
+        margin-left: rem(-20px) !important;
+        margin-right: rem(-20px) !important;
       }
     }
   }

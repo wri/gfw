@@ -97,6 +97,10 @@ $full-screen-height: rem(76px);
     height: 0;
     border-bottom-width: 0;
 
+    .nav-menu {
+      padding-left: rem(80px);
+    }
+
     @media screen and (min-width: $screen-m) {
       .logo {
         position: fixed;
