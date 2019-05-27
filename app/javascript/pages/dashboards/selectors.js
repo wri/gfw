@@ -47,7 +47,10 @@ export const getWidgets = createSelector(
     if (!widgets) return null;
     if (embed) return widgets.filter(w => query && w.widget === query.widget);
     return sortBy(
-      widgets.filter(w => w.config.categories.includes(category)),
+      widgets.filter(
+        w =>
+          w.config.categories.includes(category) && !w.config.hideFromDashboard
+      ),
       `config.sortOrder[${camelCase(category)}]`
     );
   }
