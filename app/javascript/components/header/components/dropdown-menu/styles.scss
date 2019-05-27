@@ -17,14 +17,22 @@
       display: block;
       text-transform: uppercase;
       font-size: rem(14px);
-      padding: rem(15px) rem(20px);
+      padding: rem(15px) 0;
       width: 100%;
       color: $slate;
       cursor: pointer;
       text-align: left;
 
+      @media screen and (min-width: $screen-m) {
+        padding: rem(15px) rem(20px);
+      }
+
       &:hover {
         background-color: #f7f7f7;
+      }
+
+      &.active {
+        color: $green-gfw;
       }
     }
 

@@ -59,8 +59,8 @@ class SectionProjects extends PureComponent {
               <p className="text -paragraph -color-2 -light -spaced">
                 With financial and technical support from GFW, organizations and
                 individuals around the world are using Global Forest Watch to
-                monitor largescale land use projects, enforce community land
-                rights, defend critical habitat, and infuence forest policy.
+                monitor large-scale land-use projects, enforce community land
+                rights, defend critical habitat, and influence forest policy.
               </p>
               {hasCategories && (
                 <ItemsList

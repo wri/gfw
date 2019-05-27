@@ -4,9 +4,15 @@ import PropTypes from 'prop-types';
 
 import isEqual from 'lodash/isEqual';
 
-import * as actions from 'components/widgets/actions';
+import { setMapSettings } from 'components/map/actions';
+import * as ownActions from 'components/widgets/actions';
 import WidgetComponent from './component';
 import { getWidgetProps } from './selectors';
+
+const actions = {
+  ...ownActions,
+  setMapSettings
+};
 
 const makeMapStateToProps = () => {
   const getWidgetPropsObject = getWidgetProps();

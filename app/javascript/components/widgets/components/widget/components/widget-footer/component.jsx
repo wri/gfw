@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { track } from 'app/analytics';
 
 import './styles.scss';
 
@@ -24,6 +25,11 @@ class WidgetFooter extends PureComponent {
               href={`https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${location.adm0 ||
                 'global'}.xlsx`}
               target="_blank"
+              onClick={() =>
+                track('downloadDashboardPage', {
+                  label: `download ${type} ${location.adm0}`
+                })
+              }
             >
               here
             </a>.

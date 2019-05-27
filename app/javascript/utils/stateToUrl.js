@@ -36,7 +36,7 @@ export const setComponentStateToUrl = ({ key, subKey, change, state }) => {
     };
   }
 
-  // if a false value if sent we should remove the key from the url
+  // if a false value is sent we should remove the key from the url
   const cleanLocationQuery =
     !change && query ? omit(query, [subKey || key]) : query;
 

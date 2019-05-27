@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PageComponent from './component';
 
 const mapStateToProps = ({ location }, { sections }) => ({
-  section: location && sections[location.payload.tab || 'projects'],
+  section: location && sections && sections[location.payload.tab || 'projects'],
   links:
     sections &&
     Object.values(sections)

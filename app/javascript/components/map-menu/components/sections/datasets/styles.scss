@@ -1,0 +1,97 @@
+@import '~styles/settings.scss';
+
+.c-datasets {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .datasets-header {
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(20px);
+    font-size: 14px;
+    font-weight: 500;
+
+    button {
+      height: fit-content;
+    }
+
+    .icon-return {
+      transform: rotate(90deg);
+      width: rem(10px);
+      height: rem(10px);
+      margin-right: rem(10px);
+    }
+  }
+
+  .countries-selection {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: rem(20px);
+    padding: rem(20px) rem(20px) 0;
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+
+      > * {
+        margin-bottom: rem(5px);
+        margin-right: rem(5px);
+      }
+    }
+
+    .sub-title {
+      text-transform: uppercase;
+      font-size: rem(11px);
+      color: $slate;
+      margin-bottom: rem(5px);
+      font-weight: 500;
+    }
+
+    .country-dropdown {
+      width: rem(110px);
+    }
+  }
+
+  .dataset-toggle {
+    margin-bottom: rem(20px);
+
+    &:last-child {
+      margin-bottom: rem(5px);
+    }
+  }
+
+  .no-datasets-legend {
+    padding: 0 rem(20px) 0;
+    display: flex;
+
+    .legend-dot {
+      background-color: #d4d4d4;
+      height: rem(10px);
+      min-height: rem(10px);
+      width: rem(10px);
+      min-width: rem(10px);
+      border-radius: 50%;
+      display: block;
+      margin-right: rem(5px);
+      margin-top: rem(4px);
+    }
+
+    .no-datasets-message {
+      font-size: rem(12px);
+      color: $slate;
+      margin-bottom: rem(25px);
+
+      strong {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .no-datasets {
+    position: relative;
+    font-size: rem(13px);
+    margin-bottom: rem(10px);
+  }
+}
