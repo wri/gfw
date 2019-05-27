@@ -5,7 +5,6 @@ import lowerCase from 'lodash/lowerCase';
 import ReactHtmlParser from 'react-html-parser';
 import { track } from 'app/analytics';
 
-import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
 import Modal from '../modal';
@@ -38,7 +37,6 @@ class ModalMeta extends PureComponent {
   getContent() {
     const { metaData, tableData, loading, error } = this.props;
     const {
-      title,
       subtitle,
       overview,
       citation,
@@ -50,8 +48,7 @@ class ModalMeta extends PureComponent {
       metaData || {};
 
     return (
-      <div className="c-modal-meta">
-        {loading && <Loader />}
+      <div className="modal-meta-content">
         {error &&
           !loading && (
             <NoContent message="There was a problem finding this info. Please try again later." />
@@ -65,12 +62,11 @@ class ModalMeta extends PureComponent {
           !error &&
           !isEmpty(metaData) && (
             <div>
-              <h3 className="title">{title}</h3>
               <p
                 className="subtitle"
                 dangerouslySetInnerHTML={{ __html: subtitle }} // eslint-disable-line
               />
-              <div className="meta-table">
+              <div className="meta-table element-fullwidth">
                 {tableData &&
                   Object.keys(tableData).map(
                     key =>
@@ -150,7 +146,8 @@ class ModalMeta extends PureComponent {
   }
 
   render() {
-    const { metakey, setModalMetaSettings } = this.props;
+    const { metakey, setModalMetaSettings, metaData, loading } = this.props;
+    const { title } = metaData || {};
     return (
       <Modal
         isOpen={!!metakey}
@@ -163,6 +160,9 @@ class ModalMeta extends PureComponent {
             citation: ''
           })
         }
+        className="c-modal-meta"
+        title={title}
+        loading={loading}
       >
         {this.getContent()}
       </Modal>

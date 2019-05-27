@@ -82,29 +82,33 @@ class SectionHistory extends PureComponent {
             <h3>History</h3>
           </div>
         </div>
-        <Carousel
-          className="timeline"
-          settings={{
-            slidesToShow: 1
-          }}
-        >
-          {data &&
-            data.map(d => (
-              <div className="year-card" key={d.title}>
-                <div className="row">
-                  <div className="columns small-12 medium-6">
-                    <img className="image" src={d.img} alt={d.title} />
-                  </div>
-                  <div className="columns small-12 medium-6">
-                    <div className="description">
-                      <h4>{d.title}</h4>
-                      <p>{d.paragraph}</p>
+        <div className="row">
+          <div className="column small-12">
+            <Carousel
+              className="timeline"
+              settings={{
+                slidesToShow: 1
+              }}
+            >
+              {data &&
+                data.map(d => (
+                  <div className="year-card" key={d.title}>
+                    <div className="row">
+                      <div className="columns small-12 medium-6">
+                        <img className="image" src={d.img} alt={d.title} />
+                      </div>
+                      <div className="columns small-12 medium-6">
+                        <div className="description">
+                          <h4>{d.title}</h4>
+                          <p>{d.paragraph}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
-        </Carousel>
+                ))}
+            </Carousel>
+          </div>
+        </div>
       </section>
     );
   }

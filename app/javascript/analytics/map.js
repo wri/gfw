@@ -127,6 +127,11 @@ export default {
     action: 'User drawn shape',
     label: 'Cancel'
   },
+  analysisViewDashboards: {
+    category: 'Map analysis',
+    action: 'User goes to dashboards',
+    label: '[dashboards]'
+  },
   // basemaps
   basemapsInitial: {
     category: 'Map data',

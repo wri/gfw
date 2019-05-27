@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { track } from 'app/analytics';
+import cx from 'classnames';
 
+import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 
 import closeIcon from 'assets/icons/close.svg';
@@ -23,7 +25,10 @@ class CustomModal extends PureComponent {
       customStyles,
       contentLabel,
       closeClass,
-      children
+      children,
+      title,
+      className,
+      loading
     } = this.props;
     return (
       <Modal
@@ -32,6 +37,7 @@ class CustomModal extends PureComponent {
         style={customStyles}
         contentLabel={contentLabel}
         onAfterOpen={this.trackModalOpen}
+        className={cx('c-modal', className)}
       >
         <button
           onClick={onRequestClose}
@@ -39,7 +45,9 @@ class CustomModal extends PureComponent {
         >
           <Icon icon={closeIcon} />
         </button>
-        {children}
+        {loading && <Loader />}
+        {!loading && title && <p className="modal-title">{title}</p>}
+        {!loading && <div className="modal-content">{children}</div>}
       </Modal>
     );
   }
@@ -47,12 +55,15 @@ class CustomModal extends PureComponent {
 
 CustomModal.propTypes = {
   isOpen: PropTypes.bool,
+  loading: PropTypes.bool,
   track: PropTypes.bool,
   onRequestClose: PropTypes.func.isRequired,
   contentLabel: PropTypes.string,
   customStyles: PropTypes.object,
   closeClass: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
+  title: PropTypes.string,
+  className: PropTypes.string
 };
 
 CustomModal.defaultProps = {

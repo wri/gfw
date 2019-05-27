@@ -15,6 +15,8 @@ import * as treeLossTsc from './widgets/forest-change/tree-loss-tsc';
 
 // land cover
 import * as treeCover from './widgets/land-cover/tree-cover';
+import * as treeCover2000 from './widgets/land-cover/tree-cover-2000';
+import * as treeCover2010 from './widgets/land-cover/tree-cover-2010';
 import * as treeCoverRanked from './widgets/land-cover/tree-cover-ranked';
 import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantations';
 import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
@@ -41,6 +43,8 @@ import * as intactness from './widgets/biodiversity/intactness';
 import * as economicImpact from './widgets/land-use/economic-impact';
 import * as forestryEmployment from './widgets/land-use/forestry-employment';
 
+import * as traseCommodities from './widgets/land-use/trase-commodities';
+
 export default {
   // forest change
   gladAlerts,
@@ -58,6 +62,8 @@ export default {
   treeLossTsc,
   // land cover
   treeCover,
+  treeCover2000,
+  treeCover2010,
   treeCoverRanked,
   rankedPlantations,
   treeCoverPlantations,
@@ -79,5 +85,6 @@ export default {
   // gladBiodiversity,
   // land use
   economicImpact,
-  forestryEmployment
+  forestryEmployment,
+  traseCommodities
 };

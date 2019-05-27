@@ -1,0 +1,38 @@
+@import '~styles/settings.scss';
+
+.c-mini-legend {
+  background-color: $white;
+  box-shadow: 0 1px 3px 0 rgba($black, 0.25);
+  padding: rem(10px);
+  padding-bottom: rem(5px);
+  max-width: rem(400px);
+
+  ul {
+    font-size: rem(13px);
+    font-weight: 400;
+    color: $slate;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: rem(5px);
+
+      span {
+        height: rem(10px);
+        width: rem(10px);
+        min-height: rem(10px);
+        min-width: rem(10px);
+        border-radius: 50%;
+        margin-right: rem(10px);
+      }
+    }
+  }
+
+  .link-to-map {
+    position: absolute;
+    top: rem(10px);
+    right: rem(10px);
+  }
+}

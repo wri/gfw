@@ -5,7 +5,8 @@
   color: $slate;
   border: $green-gfw 1px dashed;
   border-radius: 5px;
-  padding: rem(20px);
+  padding: rem(15px) rem(20px);
+  text-transform: none;
 
   &:hover {
     background-color: $grey-light;

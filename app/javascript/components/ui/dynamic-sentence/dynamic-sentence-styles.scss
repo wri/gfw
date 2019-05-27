@@ -13,6 +13,10 @@
     font-weight: 500;
   }
 
+  a {
+    color: $green-gfw;
+  }
+
   .c-widgets.minimalist & {
     font-size: 12px;
     font-weight: normal;

@@ -1,0 +1,64 @@
+@import 'styles/settings';
+
+.c-world-map {
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+
+  .world-map-geography {
+    fill: rgba($warm-grey, 0.3);
+    stroke: $white;
+    stroke-width: 0.2px;
+    outline: 0;
+    pointer-events: visibleFill;
+
+    &.-dark {
+      fill: rgba($warm-grey, 0.8);
+    }
+
+    &.-pink {
+      fill: $green-gfw;
+    }
+  }
+
+  .world-map-arc {
+    fill: transparent;
+    stroke: rgba($warm-grey, 0.7);
+    stroke-linecap: round;
+    outline: 0;
+    pointer-events: visibleStroke;
+  }
+
+  .world-map-annotation-text {
+    fill: $warm-grey;
+    font-family: $font-family-1;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 0.64;
+    letter-spacing: -0.7px;
+    pointer-events: none;
+
+    + path {
+      stroke: $warm-grey;
+    }
+
+    &.-label {
+      transform: translateY(3px);
+    }
+  }
+}
+
+.c-world-map-tooltip {
+  background-color: $slate;
+  padding: rem(10px) rem(15px);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+
+  p {
+    color: $white;
+    text-transform: capitalize;
+    font-size: rem(14px);
+  }
+}

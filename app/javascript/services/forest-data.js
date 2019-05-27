@@ -85,7 +85,7 @@ export const getLocations = ({
     )
     .replace('{extent}', adm1 ? 'area_admin' : 'sum(area_admin)')
     .replace('{iso}', adm0)
-    .replace('{threshold}', threshold)
+    .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{grouping}', adm1 ? `AND adm1 = '${adm1}'` : 'GROUP BY adm1');
   return request.get(url);
@@ -104,7 +104,7 @@ export const getLocationsLoss = ({
     .replace('{order}', adm1 ? 'adm2' : 'adm1')
     .replace('{iso}', adm0)
     .replace('{adm1}', adm1 ? `AND adm1 = ${adm1}` : '')
-    .replace('{threshold}', threshold)
+    .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
@@ -118,7 +118,7 @@ export const fetchLossRanked = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.lossRanked}`
     .replace('{extent_year}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicator(forestType, landCategory))
-    .replace('{threshold}', threshold);
+    .replace('{threshold}', threshold || 30);
   return request.get(url);
 };
 
@@ -131,7 +131,7 @@ export const fetchExtentRanked = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.rankedExtent}`
     .replace('{extent_year}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicator(forestType, landCategory))
-    .replace('{threshold}', threshold);
+    .replace('{threshold}', threshold || 30);
   return request.get(url);
 };
 
@@ -146,7 +146,7 @@ export const getExtent = ({
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
-    .replace('{threshold}', threshold)
+    .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
   return request.get(url);
@@ -162,7 +162,7 @@ export const getPlantationsExtent = ({
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
-    .replace('{threshold}', threshold)
+    .replace('{threshold}', threshold || 30)
     .replace('{admin}', adm1 ? 'adm2' : 'adm1')
     .replace('{bound}', type)
     .replace(
@@ -184,7 +184,7 @@ export const getMultiRegionExtent = ({
   const url = `${REQUEST_URL}${SQL_QUERIES.multiRegionExtent}`
     .replace(/{adm1}/g, adm1 ? 'adm2' : 'adm1')
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
-    .replace('{threshold}', threshold)
+    .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
   return request.get(url);
@@ -218,7 +218,7 @@ export const getLoss = ({
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.loss}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
-    .replace('{threshold}', threshold)
+    .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
@@ -305,7 +305,7 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
 export const getAdmin = ({ adm0, adm1, adm2, threshold, indicator }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.admin}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
-    .replace('{threshold}', threshold)
+    .replace('{threshold}', threshold || 30)
     .replace('{dataset}', DATASET)
     .replace('{indicator}', getIndicator(indicator))
     .replace(

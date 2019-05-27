@@ -62,8 +62,8 @@ class SectionProjects extends PureComponent {
         </div>
         <div className="visitors" style={{ backgroundImage: `url(${growth})` }}>
           <h4>
-            Since its launch in 2014, over 1.5 million people have visited Global
-            Forest Watch from every single country in the world.
+            Since its launch in 2014, over 1.5 million people have visited
+            Global Forest Watch from every single country in the world.
           </h4>
         </div>
       </div>
@@ -73,8 +73,8 @@ class SectionProjects extends PureComponent {
 
 SectionProjects.propTypes = {
   projects: PropTypes.array,
-  categories: PropTypes.array.isRequired,
-  categorySelected: PropTypes.string.isRequired,
+  categories: PropTypes.array,
+  categorySelected: PropTypes.string,
   setCategorySelected: PropTypes.func.isRequired,
   handleGlobeClick: PropTypes.func.isRequired
 };
