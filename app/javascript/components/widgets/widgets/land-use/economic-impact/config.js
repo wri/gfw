@@ -13,7 +13,7 @@ export default {
   colors: 'employment',
   metaKey: 'widget_economic_impact',
   sortOrder: {
-    landUse: 1
+    landUse: 2
   },
   sentence:
     'According to the FAO, the forestry sector contributed a net {value} to the economy in {year}, which is approximately {percentage} of {location} GDP.',

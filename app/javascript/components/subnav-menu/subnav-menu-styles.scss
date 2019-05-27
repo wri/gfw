@@ -7,10 +7,10 @@ $subnav-height: rem(60px);
   width: 100%;
 
   .buttons {
+    height: $subnav-height;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;

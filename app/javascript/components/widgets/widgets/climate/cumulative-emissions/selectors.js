@@ -95,7 +95,7 @@ export const getStdDev = createSelector(
       if (n === 1) {
         means.push(means[means.length - 1]);
         stdevs.push(stdevs[stdevs.length - 1]);
-      } else {
+      } else if (n !== 0) {
         const sum = years.reduce(
           (acc, y) => (!data[y][weeknum] ? acc : acc + data[y][weeknum].count),
           0

@@ -24,9 +24,9 @@ class SectionImpacts extends PureComponent {
         </div>
         <div className="row">
           <div className="column small-12">
-            <Carousel>
-              {data &&
-                data.map(c => (
+            {data && (
+              <Carousel>
+                {data.map(c => (
                   <div key={c.id}>
                     <Card
                       key={c.title}
@@ -43,7 +43,8 @@ class SectionImpacts extends PureComponent {
                     />
                   </div>
                 ))}
-            </Carousel>
+              </Carousel>
+            )}
           </div>
         </div>
         <div className="row awards">
@@ -67,7 +68,7 @@ class SectionImpacts extends PureComponent {
 }
 
 SectionImpacts.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
   awards: PropTypes.array.isRequired,
   fetchImpactProjects: PropTypes.func.isRequired
 };

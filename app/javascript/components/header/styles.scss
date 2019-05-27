@@ -1,53 +1,27 @@
 @import '~styles/settings.scss';
 
-$header-height: rem(55px);
-$header-height-small: rem(60px);
-$full-screen-height: rem(75px);
+$header-height: rem(56px);
+$full-screen-height: rem(76px);
 
 .c-header {
   height: $header-height;
-  z-index: 5;
-  position: relative;
+  border-bottom: solid 1px $border;
+  background: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 
-  &.-fixed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-  }
-
-  &.-toggle {
-    width: rem(76px);
-
-    &.-open {
-      width: 100%;
-    }
-  }
-
-  .nav-menu {
-    border-bottom: solid 1px $border;
+  @media screen and (min-width: $screen-m) {
     position: relative;
-    background: $white;
-
-    > div {
-      position: relative;
-    }
-  }
-
-  .mygfw-header {
-    padding: rem(25px) rem(30px) rem(30px);
-    border: solid 1px $border;
-
-    @media screen and (min-width: $screen-m) {
-      width: rem(320px);
-    }
+    z-index: 5;
   }
 
   .logo {
     position: absolute;
     top: 0;
-    z-index: 1;
+    z-index: 2;
     cursor: pointer;
     width: rem(76px);
   }
@@ -57,225 +31,95 @@ $full-screen-height: rem(75px);
     justify-content: space-between;
     position: relative;
     height: $header-height;
+  }
 
-    li {
-      height: 100%;
-      position: relative;
-      font-size: rem(14px);
+  .nav-menu {
+    padding-left: rem(80px);
 
-      .nav-link,
-      .menu-link {
-        position: relative;
-        font-family: $font-family-1;
-        color: $slate;
-        height: 100%;
-        text-transform: uppercase;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-
-        &:hover {
-          color: darken($slate, 30%);
-        }
-
-        &:focus {
-          outline: none;
-        }
-      }
-
-      .nav-link {
-        &::after {
-          content: '';
-          height: rem(5px);
-          position: absolute;
-          bottom: -1px;
-          right: 0;
-          left: 0;
-          background-color: transparent;
-        }
-
-        &.-active {
-          &::after {
-            background-color: $green-gfw;
-          }
-        }
-      }
-
-      svg {
-        fill: $slate;
-
-        &:hover {
-          color: darken($slate, 30%);
-        }
-      }
-    }
-
-    .nav-main {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      justify-content: flex-start;
+    @media screen and (min-width: 850px) {
       padding-left: rem(100px);
-      flex: 1;
-      z-index: 1;
+    }
+  }
 
-      > li .nav-link {
-        padding: 0 rem(10px);
-        margin: 0 rem(5px);
-      }
+  li {
+    height: 100%;
+    position: relative;
+    font-size: rem(14px);
 
-      > li {
-        div {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      .icon-arrow {
-        height: rem(10px);
-        margin-left: rem(5px);
-
-        &.active {
-          transform: rotate(180deg);
-        }
-      }
-
-      li {
-        position: relative;
-      }
-
-      .sub-menu {
+    .nav-link {
+      &::after {
+        content: '';
+        height: rem(5px);
         position: absolute;
-        top: 55px;
-        left: -60%;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: transparent;
+      }
 
-        &::before,
+      &.-active {
         &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          width: 0;
-          height: 0;
-          border-style: solid;
-        }
-
-        &::before {
-          top: -12px;
-          border-color: transparent transparent $border transparent;
-          border-width: 6px;
-          right: 45%;
-        }
-
-        &::after {
-          top: -10px;
-          border-color: transparent transparent $white transparent;
-          border-width: 5px;
-          right: calc(45% + 1px);
+          background-color: $green-gfw;
         }
       }
     }
 
-    .nav-alt {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
+    .nav-link,
+    .menu-link {
+      position: relative;
+      font-family: $font-family-1;
+      color: $slate;
       height: 100%;
-      border-left: solid 1px $border;
-      padding-left: rem(10px);
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
 
-      &.-mobile {
-        flex: 1;
+      &:hover {
+        color: darken($slate, 30%);
       }
 
-      > li {
-        margin-left: rem(30px);
-        position: relative;
-        font-size: rem(12px);
-
-        svg {
-          margin-top: -1px;
-          margin-left: rem(5px);
-        }
+      &:focus {
+        outline: none;
       }
+    }
 
-      .sub-menu {
-        position: absolute;
-        right: -5px;
-        z-index: 1;
+    svg {
+      fill: $slate;
 
-        &::before,
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          width: 0;
-          height: 0;
-          border-style: solid;
-        }
-
-        &::before {
-          top: -12px;
-          border-color: transparent transparent $border transparent;
-          border-width: 6px;
-          right: 6px;
-        }
-
-        &::after {
-          top: -10px;
-          border-color: transparent transparent $white transparent;
-          border-width: 5px;
-          right: 7px;
-        }
-      }
-
-      .icon-close,
-      .icon-arrow {
-        height: rem(10px);
-      }
-
-      .icon-arrow {
-        &.active {
-          transform: rotate(180deg);
-        }
+      &:hover {
+        color: darken($slate, 30%);
       }
     }
   }
 
-  &.-full-screen {
-    height: $full-screen-height;
+  &.full-screen {
+    height: 0;
+    border-bottom-width: 0;
 
-    .nav {
-      height: $full-screen-height;
-      padding-right: rem(15px);
+    .nav-menu {
+      padding-left: rem(80px);
     }
 
-    .nav-main {
-      .sub-menu {
-        top: 75px;
-      }
-    }
-
-    .logo {
-      left: 0;
-    }
-
-    &.-small {
+    @media screen and (min-width: $screen-m) {
       .logo {
-        left: rem(15px);
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
+      .nav {
+        height: $full-screen-height;
       }
     }
-  }
 
-  &.-small {
-    height: $header-height-small;
+    &.full-screen-open {
+      height: $header-height;
+      border-bottom-width: 1px;
 
-    .nav {
-      height: $header-height-small;
-    }
-
-    .logo {
-      height: $header-height-small;
-      width: $header-height-small;
+      @media screen and (min-width: $screen-m) {
+        height: $full-screen-height;
+      }
     }
   }
 }

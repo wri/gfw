@@ -12,8 +12,15 @@ export default {
     thresholds: true,
     units: ['co2LossByYear', 'cLossByYear']
   },
+  datasets: [
+    // biomass loss
+    {
+      dataset: 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b',
+      layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe']
+    }
+  ],
+  analysis: true,
   colors: 'climate',
-  // layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe'],
   metaKey: 'tree_biomass_loss',
   sortOrder: {
     climate: 3

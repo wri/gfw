@@ -1,28 +1,21 @@
-import { createAction, createThunkAction } from 'redux-tools';
+import { createThunkAction, createAction } from 'redux-tools';
+import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-import { fetchLayerSpec } from 'services/layer-spec';
+export const setMapLoading = createAction('setMapLoading');
+export const setMapInteractions = createAction('setMapInteractions');
+export const setMapInteractionSelected = createAction(
+  'setMapInteractionSelected'
+);
+export const clearMapInteractions = createAction('clearMapInteractions');
 
-export const setLayerSpecLoading = createAction('setLayerSpecLoading');
-export const setLayerSpec = createAction('setLayerSpec');
-export const setMapOptions = createAction('setMapOptions');
-export const setMapZoom = createAction('setMapZoom');
-export const setShowMapMobile = createAction('setShowMapMobile');
-
-export const getLayerSpec = createThunkAction(
-  'getLayerSpec',
-  () => dispatch => {
-    dispatch(setLayerSpecLoading({ loading: true, error: false }));
-    fetchLayerSpec()
-      .then(response => {
-        const layerSpec = {};
-        (response.data.rows || []).forEach(layer => {
-          layerSpec[layer.slug] = layer;
-        });
-        dispatch(setLayerSpec(layerSpec));
+export const setMapSettings = createThunkAction(
+  'setMapSettings',
+  change => (dispatch, state) =>
+    dispatch(
+      setComponentStateToUrl({
+        key: 'map',
+        change,
+        state
       })
-      .catch(error => {
-        console.info(error);
-        dispatch(setLayerSpecLoading({ loading: false, error: true }));
-      });
-  }
+    )
 );

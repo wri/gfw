@@ -2,7 +2,7 @@ class LandingController < ApplicationController
 
   def index
     require 'open-uri'
-    @title = 'Forest monitoring designed for action'
+    @title = 'Forest Monitoring Designed for Action'
     @desc = 'Global Forest Watch offers the latest data, technology and tools that empower people everywhere to better protect forests.'
     @keywords = 'forests, forest data, forest monitoring, forest landscapes, maps, gis, visualize, geospatial, forest analysis, forest news, forest alerts, conservation, forest updates, forest watch, analysis, deforestation, deforesting, tree cover loss, explore forests, mapping, trees, forest loss'
     @summary = [

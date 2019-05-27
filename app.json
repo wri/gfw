@@ -1,9 +1,4 @@
 {
-  "addons": [
-    "heroku-redis",
-    "newrelic",
-    "heroku-postgresql"
-  ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
@@ -65,6 +60,9 @@
       "required": true
     },
     "FIRES_ISO_DATASET": {
+      "required": true
+    },
+    "FULLPAGE_LICENSE": {
       "required": true
     },
     "GFW_API": {
@@ -159,6 +157,9 @@
     },
     "SPARKPOST_SMTP_USERNAME": {
       "required": true
+    },
+    "TRASE_API": {
+      "required": true
     }
   },
   "formation": {
@@ -166,8 +167,5 @@
       "quantity": 1
     }
   },
-  "name": "gfw",
-  "scripts": {
-  },
-  "stack": "cedar-14"
+  "name": "gfw"
 }

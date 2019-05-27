@@ -1,12 +1,14 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
+import { NavLink } from 'redux-first-router-link';
 
 import './styles.scss';
 
 class DropdownMenu extends PureComponent {
   render() {
-    const { className, options, handleSelect, selected } = this.props;
+    const { className, options, handleSelect, hideMenu, selected } = this.props;
 
     return (
       <ul className={`c-dropdown-menu ${className || ''}`}>
@@ -25,7 +27,18 @@ class DropdownMenu extends PureComponent {
                   {l.label}
                 </button>
               ) : (
-                <a href={l.path}>{l.label}</a>
+                <Fragment>
+                  {l.path && (
+                    <NavLink
+                      to={l.path}
+                      onClick={hideMenu}
+                      activeClassName="active"
+                    >
+                      {l.label}
+                    </NavLink>
+                  )}
+                  {l.extLink && <a href={l.extLink}>{l.label}</a>}
+                </Fragment>
               )}
             </li>
           ))}
@@ -38,6 +51,7 @@ DropdownMenu.propTypes = {
   className: PropTypes.string,
   options: PropTypes.array,
   handleSelect: PropTypes.func,
+  hideMenu: PropTypes.func,
   selected: PropTypes.object
 };
 

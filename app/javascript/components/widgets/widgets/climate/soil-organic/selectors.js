@@ -73,7 +73,13 @@ export const parseData = createSelector(
       path: {
         type,
         payload: { type: 'country', adm0: d.iso },
-        query
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map),
+            canBound: true
+          }
+        }
       },
       value: d[settings.variable],
       unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha'

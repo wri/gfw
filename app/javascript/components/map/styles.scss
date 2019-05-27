@@ -1,13 +1,46 @@
-@import '~styles/settings.scss';
+@import '~styles/settings';
 
 .c-map {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #b3e2ff;
-}
 
-.map-loader {
-  z-index: 10;
-  background-color: rgba($slate, 0.2);
+  &.no-pointer-events {
+    .overlays {
+      pointer-events: none;
+    }
+  }
+
+  .map-icon-crosshair {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    fill: $slate;
+    width: rem(12px);
+    height: rem(12px);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .map-scale {
+    position: absolute;
+    left: rem(10px);
+    bottom: rem(40px);
+  }
+
+  .map-attributions {
+    position: absolute;
+    bottom: rem(10px);
+    right: rem(10px);
+    left: rem(10px);
+    z-index: 5;
+  }
+
+  .map-loader {
+    background-color: rgba($slate, 0.2);
+    z-index: 4;
+  }
 }
