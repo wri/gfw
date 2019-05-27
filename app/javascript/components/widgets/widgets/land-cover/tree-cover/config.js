@@ -23,8 +23,6 @@ export default {
   metaKey: 'widget_tree_cover',
   // full width or not
   large: false,
-  // show on analysis
-  analysis: true,
   // internal category for colors and filters
   colors: 'extent',
   // data source for filtering
