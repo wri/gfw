@@ -53,7 +53,7 @@ class SectionProjectsModal extends PureComponent {
 
 SectionProjectsModal.propTypes = {
   data: PropTypes.object,
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
   setSectionProjectsModal: PropTypes.func.isRequired
 };
 
