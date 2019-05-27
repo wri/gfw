@@ -136,8 +136,8 @@ class Footer extends PureComponent {
                       <Carousel
                         className="partners-slide"
                         settings={{
-                          slidesToShow: isDesktop ? 4 : 2,
-                          slidesToScroll: isDesktop ? 4 : 2,
+                          slidesToShow: isDesktop ? 4 : 1,
+                          slidesToScroll: isDesktop ? 4 : 1,
                           infinite: true,
                           nextArrow: (
                             <Button theme="theme-button-clear square">
