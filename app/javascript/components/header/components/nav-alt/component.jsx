@@ -33,7 +33,7 @@ class NavAlt extends PureComponent {
     this.state = {
       showHeader: false,
       languages,
-      lang: txLang,
+      lang: txLang || 'en',
       showLang: false,
       showMyGfw: false,
       showMore: false
