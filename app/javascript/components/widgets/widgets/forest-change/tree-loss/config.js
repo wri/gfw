@@ -17,7 +17,13 @@ export default {
   colors: 'loss',
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss',
-  layers: ['loss', 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6'],
+  datasets: [
+    // loss
+    {
+      dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
+      layers: ['c3075c5a-5567-4b09-bc0d-96ed1673f8b6']
+    }
+  ],
   sortOrder: {
     summary: 0,
     forestChange: 0
@@ -31,6 +37,6 @@ export default {
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
-    co2Emissions: 'and {emissions} of CO\u2082 of emissions'
+    co2Emissions: 'and {emissions} of CO\u2082 emissions'
   }
 };

@@ -10,6 +10,6 @@ describe LandingController, type: :controller do
   describe 'GET index' do
     subject { get :index }
     it_behaves_like 'renders index'
-    it_behaves_like 'assigns title', 'Forest monitoring designed for action'
+    it_behaves_like 'assigns title', 'Forest Monitoring Designed for Action'
   end
 end

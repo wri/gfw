@@ -60,17 +60,9 @@ class WidgetSettings extends PureComponent {
           value={settings.extentYear}
           options={extentYears}
           onChange={option => {
-            const layers = [...settings.layers];
-            if (layers.length) {
-              const activeIndex = settings.layers.indexOf(
-                `forest${settings.extentYear}`
-              );
-              layers[activeIndex] = `forest${option}`;
-            }
             onSettingsChange({
               value: {
-                extentYear: option,
-                layers
+                extentYear: option
               },
               widget
             });
@@ -87,17 +79,9 @@ class WidgetSettings extends PureComponent {
         options={extentYears}
         disabled={loading}
         onChange={option => {
-          const layers = [...settings.layers];
-          if (layers.length) {
-            const activeIndex = settings.layers.indexOf(
-              `forest${settings.extentYear}`
-            );
-            layers[activeIndex] = `forest${option.value}`;
-          }
           onSettingsChange({
             value: {
-              extentYear: option.value,
-              layers
+              extentYear: option.value
             },
             widget
           });
@@ -130,7 +114,8 @@ class WidgetSettings extends PureComponent {
       datasets,
       extentYears,
       types,
-      weeks
+      weeks,
+      commodities
     } = this.props.options;
     const hasExtraOptions =
       units ||
@@ -144,7 +129,8 @@ class WidgetSettings extends PureComponent {
       datasets ||
       types ||
       weeks ||
-      datasets;
+      datasets ||
+      commodities;
 
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
@@ -246,6 +232,21 @@ class WidgetSettings extends PureComponent {
                 disabled={loading}
                 onChange={option =>
                   onSettingsChange({ value: { dataset: option.value }, widget })
+                }
+              />
+            )}
+            {commodities && (
+              <Dropdown
+                theme="theme-select-light"
+                label="COMMODITY"
+                value={settings.commodity}
+                options={commodities}
+                disabled={loading}
+                onChange={option =>
+                  onSettingsChange({
+                    value: { commodity: option.value },
+                    widget
+                  })
                 }
               />
             )}

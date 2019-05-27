@@ -23,8 +23,6 @@ export default {
   metaKey: 'widget_tree_cover',
   // full width or not
   large: false,
-  // show on analysis
-  analysis: true,
   // internal category for colors and filters
   colors: 'extent',
   // data source for filtering
@@ -37,12 +35,15 @@ export default {
   types: ['global', 'country'],
   // levels of that type you can see the widget
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  // layers to show on map
-  layers: [
-    'forest2000',
-    'forest2010',
-    'c05c32fd-289c-4b20-8d73-dc2458234e04',
-    '78747ea1-34a9-4aa7-b099-bdb8948200f4'
+  datasets: [
+    // tree cover
+    {
+      dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
+      layers: {
+        2010: '78747ea1-34a9-4aa7-b099-bdb8948200f4',
+        2000: 'c05c32fd-289c-4b20-8d73-dc2458234e04'
+      }
+    }
   ],
   // position
   sortOrder: {

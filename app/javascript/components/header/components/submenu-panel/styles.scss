@@ -2,24 +2,34 @@
 
 .c-submenu-panel {
   background-color: $white;
-  padding: rem(40px) 0;
+  padding: rem(40px) rem(16px) rem(20px);
+  box-shadow: 0 3px 3px -3px rgba(0, 0, 0, 0.25);
+
+  @media screen and (min-width: $screen-m) {
+    height: auto;
+  }
 
   &:focus {
     outline: none;
   }
 
-  &.-full-screen {
-    min-height: calc(100vh - 76px);
+  .submenu-wrapper {
+    max-width: rem(800px);
+    margin: auto;
   }
 
   .menu-search {
-    margin-bottom: rem(40px);
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(40px);
+    }
   }
 
   h4,
   .title {
     text-transform: uppercase;
-    color: $slate;
+    color: #aaa;
     font-size: rem(14px);
     margin-bottom: rem(23px);
     text-align: left;
@@ -34,13 +44,17 @@
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       display: flex;
-      margin-left: rem(-15px);
-      width: calc(100% + 30px);
-      padding: 0 rem(15px);
+      margin-left: rem(-16px);
+      width: calc(100% + 16px);
+      padding: 0 rem(16px);
     }
 
     .app-card {
-      margin-right: rem(15px);
+      padding-right: rem(16px);
+
+      &:last-child {
+        padding-right: 0;
+      }
 
       .app-image {
         width: rem(90px);
@@ -85,7 +99,9 @@
           text-transform: uppercase;
 
           svg {
-            margin-right: rem(5px);
+            margin-right: rem(15px);
+            width: rem(20px);
+            height: rem(20px);
           }
 
           &:hover {
@@ -111,9 +127,15 @@
     }
   }
 
-  &.-mobile {
-    .menu-search {
-      margin-bottom: rem(30px);
+  &.full-screen {
+    .more-links {
+      margin-left: rem(-16px) !important;
+      margin-right: rem(-16px) !important;
+
+      @media screen and (min-width: $screen-m) {
+        margin-left: rem(-20px) !important;
+        margin-right: rem(-20px) !important;
+      }
     }
   }
 }

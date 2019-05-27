@@ -33,7 +33,7 @@ class Page extends PureComponent {
           bgImage={bgImage}
         />
         <SubnavMenu links={this.props.links} />
-        <div className="l-main">
+        <div className="l-sgf-page">
           <SectionComponent />
         </div>
       </div>
@@ -42,8 +42,8 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  section: PropTypes.object.isRequired,
-  links: PropTypes.array.isRequired
+  section: PropTypes.object,
+  links: PropTypes.array
 };
 
 export default Page;

@@ -4,8 +4,8 @@ import reducerRegistry from 'app/registry';
 import {
   setMapPromptsSettings,
   setShowMapPrompts
-} from 'components/maps/main-map/components/map-prompts/actions';
-import { selectShowMapPrompts } from 'components/maps/main-map/components/map-prompts/selectors';
+} from 'components/map-prompts/actions';
+import { selectShowMapPrompts } from 'components/map-prompts/selectors';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';

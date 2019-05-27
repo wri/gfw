@@ -43,7 +43,7 @@ export const parseData = createSelector([getSortedData], sortedData => {
     chartData.push({
       year: item.year,
       e1Value,
-      e1Percentage: e1Value / totalEmissions * 100,
+      e1Percentage: totalEmissions > 0 ? e1Value / totalEmissions * 100 : 100,
       total: totalEmissions
     });
   });
@@ -110,7 +110,10 @@ export const parseSentence = createSelector(
     );
     const startYear = data[0].emissions[0].year;
     const endYear = data[0].emissions[data[0].emissions.length - 1].year;
-    const emissionFraction = emissionsCount / totalEmissionsCount * 100;
+    const emissionFraction =
+      totalEmissionsCount > 0
+        ? emissionsCount / totalEmissionsCount * 100
+        : 100;
     const params = {
       location: locationName,
       location_alt: `${locationName}'s`,
