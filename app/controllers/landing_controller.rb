@@ -96,11 +96,11 @@ class LandingController < ApplicationController
         "link" => "http://climate.globalforestwatch.org"
       },
       {
-        "key" => "commodities",
-        "title" => "Commodities",
-        "description" => "Identify deforestation risk in commodity supply chains",
+        "key" => "pro",
+        "title" => "GFW Pro",
+        "description" => "Securely manage deforestation risk in commodity supply chains.",
         "background" => "/assets/home/commodities@2x.jpg",
-        "link" => "http://commodities.globalforestwatch.org"
+        "link" => "https://pro.globalforestwatch.org"
       }
     ]
   end
