@@ -106,7 +106,7 @@ class Header extends PureComponent {
                 apps.map(d => (
                   <a
                     key={d.label}
-                    href={d.path}
+                    href={d.extLink}
                     target="_blank"
                     rel="noopener nofollower"
                     className="app-card"
