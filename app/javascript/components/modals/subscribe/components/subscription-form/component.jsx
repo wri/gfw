@@ -55,6 +55,12 @@ class SubscriptionForm extends PureComponent {
     });
   };
 
+  validateEmail = email => {
+    // eslint-disable-next-line
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   render() {
     const {
       datasets,
@@ -68,7 +74,11 @@ class SubscriptionForm extends PureComponent {
     } = this.props;
     const { lang, name, email } = this.state;
     const canSubmit =
-      activeDatasets && activeDatasets.length && email && name && lang;
+      activeDatasets &&
+      activeDatasets.length &&
+      this.validateEmail(email) &&
+      name &&
+      lang;
 
     return (
       <div className="c-form c-subscription-form">
