@@ -18,7 +18,9 @@ class SubscriptionForm extends PureComponent {
     this.state = {
       lang: props.lang,
       name: props.locationName,
-      email: props.email
+      email: props.email,
+      emailError: false,
+      nameError: false
     };
   }
 
@@ -72,7 +74,7 @@ class SubscriptionForm extends PureComponent {
       error,
       location
     } = this.props;
-    const { lang, name, email } = this.state;
+    const { lang, name, email, emailError, nameError } = this.state;
     const canSubmit =
       activeDatasets &&
       activeDatasets.length &&
@@ -82,11 +84,16 @@ class SubscriptionForm extends PureComponent {
 
     return (
       <div className="c-form c-subscription-form">
-        <div className="field">
+        <div className={cx('field', { error: nameError })}>
           <span>Name*</span>
           <input
             value={name}
-            onChange={e => this.setState({ name: e.target.value })}
+            onChange={e =>
+              this.setState({
+                name: e.target.value,
+                nameError: !e.target.value
+              })
+            }
           />
         </div>
         <div className="field">
@@ -106,11 +113,16 @@ class SubscriptionForm extends PureComponent {
               ))}
           </div>
         </div>
-        <div className="field">
+        <div className={cx('field', { error: emailError })}>
           <span>Email*</span>
           <input
             value={email}
-            onChange={e => this.setState({ email: e.target.value })}
+            onChange={e =>
+              this.setState({
+                email: e.target.value,
+                emailError: !this.validateEmail(e.target.value)
+              })
+            }
           />
         </div>
         <div className="field">
