@@ -6,10 +6,7 @@ export const initialState = {
   closing: false,
   data: {},
   settings: {
-    metakey: '',
-    metaWhitelist: [],
-    tableWhitelist: [],
-    citation: ''
+    metakey: ''
   }
 };
 

@@ -134,13 +134,7 @@ class WidgetHeader extends PureComponent {
         theme={cx('theme-button-small square', {
           'theme-button-grey-filled theme-button-xsmall': simple
         })}
-        onClick={() =>
-          setModalMetaSettings({
-            metakey,
-            metaWhitelist: ['title', 'citation'],
-            tableWhitelist: ['function', 'source']
-          })
-        }
+        onClick={() => setModalMetaSettings(metakey)}
         tooltip={{ text: 'Learn more about the data' }}
       >
         <Icon icon={infoIcon} />

@@ -361,9 +361,7 @@ class Basemaps extends React.PureComponent {
                 <Button
                   className="info-btn"
                   theme="theme-button-tiny theme-button-grey-filled square"
-                  onClick={() =>
-                    setModalMetaSettings({ metakey: 'flagship_basemaps' })
-                  }
+                  onClick={() => setModalMetaSettings('flagship_basemaps')}
                 >
                   <Icon icon={infoIcon} />
                 </Button>
