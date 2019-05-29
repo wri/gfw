@@ -1,17 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import './cover-styles.scss';
 
 class Cover extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { bgImage } = this.props;
+    const { bgImage, large } = this.props;
     const bgStyle = bgImage ? { backgroundImage: `url('${bgImage}'` } : {};
     return (
-      <div className="c-cover" style={bgStyle}>
+      <div className={cx('c-cover', { large })} style={bgStyle}>
         <div className="row">
-          <div className="small-12 columns">
+          <div className="columns small-12 medium-8">
             <div className="cover-texts">
               <h1 className="text -title-biggest -color-1">
                 {this.props.title}
@@ -31,6 +32,7 @@ class Cover extends PureComponent {
 Cover.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  large: PropTypes.bool,
   bgImage: PropTypes.string,
   children: PropTypes.node
 };

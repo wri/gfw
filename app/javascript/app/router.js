@@ -7,6 +7,7 @@ import { getNewMapRedirect } from './utils';
 
 const history = createHistory();
 
+export const HOME = 'location/HOME';
 export const ABOUT = 'location/ABOUT';
 export const SGF = 'location/SGF';
 export const MAP = 'location/MAP';
@@ -59,6 +60,11 @@ const redirectThunk = (dispatch, getState) => {
 };
 
 export const routes = {
+  [HOME]: {
+    controller: 'home',
+    path: '/',
+    component: 'home'
+  },
   [ABOUT]: {
     controller: 'about',
     path: '/about',

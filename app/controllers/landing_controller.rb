@@ -1,4 +1,5 @@
 class LandingController < ApplicationController
+  layout 'application_react_spa'
 
   def index
     require 'open-uri'

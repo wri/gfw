@@ -31,4 +31,12 @@
       max-width: rem(768px);
     }
   }
+
+  &.large {
+    padding: rem(200px) 0 rem(180px);
+
+    h1 {
+      font-size: rem(60px);
+    }
+  }
 }

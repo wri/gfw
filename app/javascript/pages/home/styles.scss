@@ -1,0 +1,10 @@
+@import '~styles/settings.scss';
+
+.l-home-page {
+
+  .scroll-to-btn {
+    position: absolute;
+    bottom: rem(-20px);
+    left: calc(50% - 20px);
+  }
+}
