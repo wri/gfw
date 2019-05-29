@@ -1,10 +1,124 @@
 @import '~styles/settings.scss';
 
 .l-home-page {
+  overflow: hidden;
 
   .scroll-to-btn {
     position: absolute;
     bottom: rem(-20px);
     left: calc(50% - 20px);
+  }
+
+  .summary-card {
+    background-color: $grey-light;
+    border: 0;
+  }
+
+  .section-summary {
+    padding: rem(40px) 0 rem(20px);
+  }
+
+  .section-uses {
+    height: rem(600px);
+    display: flex;
+    align-items: center;
+  }
+
+  .uses {
+    background-color: $grey-light;
+
+    .slick-dots {
+      align-items: flex-start;
+    }
+
+    .use-user {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: rem(14px);
+
+      .icon-user {
+        width: rem(50px);
+        height: rem(50px);
+        margin-bottom: rem(10px);
+      }
+    }
+
+    .use-card {
+      position: relative;
+      opacity: 0;
+
+      .use-image {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: -30px;
+        height: calc(100% + 30px + 200px);
+        width: calc(100% + 100px);
+        margin-left: 40px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        .use-credit {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          color: $white;
+          background-color: rgba(0, 0, 0, 0.2);
+          padding: rem(2px) rem(5px);
+          font-size: rem(10px);
+        }
+      }
+    }
+
+    .use-example {
+      font-size: rem(18px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.7;
+
+      span {
+        font-size: rem(36px);
+        color: $green-gfw;
+        font-weight: 500;
+        line-height: 0;
+        position: absolute;
+        top: rem(16px);
+        left: rem(-20px);
+
+        &:last-child {
+          position: relative;
+          top: rem(8px);
+          left: rem(3px);
+        }
+      }
+    }
+
+    .slick-dots {
+      li {
+        .icon-user {
+          fill: $grey-dark;
+        }
+
+        &.slick-active {
+          .icon-user {
+            fill: $green-gfw;
+          }
+        }
+      }
+    }
+
+    .slick-active {
+      .use-card {
+        opacity: 1;
+      }
+
+      .use-image {
+        display: block;
+      }
+    }
   }
 }
