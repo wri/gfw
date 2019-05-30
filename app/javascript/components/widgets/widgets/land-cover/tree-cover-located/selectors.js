@@ -37,14 +37,28 @@ export const parseList = createSelector(
             type,
             payload: {
               ...payload,
+              type: 'country',
+              ...(!payload.adm0 && {
+                adm0: d.id
+              }),
               ...(payload.adm1 && {
                 adm2: d.id
               }),
-              ...(!payload.adm1 && {
-                adm1: d.id
-              })
+              ...(payload.adm0 &&
+                !payload.adm1 && {
+                  adm1: d.id
+                })
             },
-            query
+            query: {
+              ...(query && query),
+              map: {
+                ...(query &&
+                  query.map && {
+                    ...query.map,
+                    canBound: true
+                  })
+              }
+            }
           },
           color: colors.main
         });
