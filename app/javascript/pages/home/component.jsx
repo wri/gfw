@@ -49,49 +49,63 @@ class Page extends PureComponent {
               {summary && (
                 <Carousel settings={{ dots: true }}>
                   {summary.map(c => (
-                    <Card
-                      className="summary-card"
-                      key={c.title}
-                      data={c}
-                    />
+                    <Card className="summary-card" key={c.title} data={c} />
                   ))}
                 </Carousel>
               )}
             </div>
           </div>
         </div>
-        <div className="row expanded uses">
-          <div className="column small-12 medium-6">
-            <div className="section-uses">
-              {uses && (
-                <Carousel
-                  settings={{
-                    slidesToShow: 1,
-                    dots: true,
-                    arrows: false,
-                    speed: 0,
-                    customPaging: i => (
-                      <li className="use-user">
-                        <Icon className="icon-user" icon={profileIcon} />
-                        {uses[i].profile}
-                      </li>
-                    )
-                  }}
-                >
-                  {uses.map(c => (
-                    <div className="use-card">
-                      <div className="use-image" style={{ backgroundImage: `url(${c.img})` }}>
-                        <a className="use-credit" href={c.credit.extLink} targe="_blank" rel="noopener nofollower">{c.credit.name}</a>
-                      </div>
-                      <p className="use-example">
-                        <i><span>“</span>{c.example}<span>”</span></i>
-                      </p>
-                    </div>)
-                  )}
-                </Carousel>
-              )}
-            </div>
-          </div>
+        <div className="section-uses">
+          {uses && (
+            <Carousel
+              className="uses-carousel"
+              settings={{
+                slidesToShow: 1,
+                dots: true,
+                arrows: false,
+                speed: 0,
+                customPaging: i => (
+                  <li className="use-user">
+                    <Icon className="icon-user" icon={profileIcon} />
+                    {uses[i].profile}
+                  </li>
+                )
+              }}
+            >
+              {uses.map(c => (
+                <div className="row expanded uses">
+                  <div className="column small-12 medium-6">
+                    <p className="use-example">
+                      <i>
+                        <span>“</span>
+                        {c.example}
+                        <span>”</span>
+                      </i>
+                    </p>
+                  </div>
+                  <div className="column small-12 medium-6">
+                    <div
+                      className="use-image"
+                      style={{ backgroundImage: `url(${c.img})` }}
+                    >
+                      <a
+                        className="use-credit"
+                        href={c.credit.extLink}
+                        target="_blank"
+                        rel="noopener nofollower"
+                      >
+                        {c.credit.name}
+                      </a>
+                    </div>
+                    {/* <div className="use-card">
+
+                    </div> */}
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          )}
         </div>
       </div>
     );

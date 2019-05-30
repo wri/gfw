@@ -19,58 +19,36 @@
   }
 
   .section-uses {
-    height: rem(600px);
-    display: flex;
-    align-items: center;
-  }
-
-  .uses {
     background-color: $grey-light;
 
-    .slick-dots {
-      align-items: flex-start;
+    .uses-carousel {
+      margin: 0;
+      width: 100%;
     }
 
-    .use-user {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: rem(14px);
-
-      .icon-user {
-        width: rem(50px);
-        height: rem(50px);
-        margin-bottom: rem(10px);
-      }
+    .uses {
+      display: flex !important;
+      height: 100%;
     }
 
-    .use-card {
+    .use-image {
+      display: none;
+      background-position: center;
+      background-repeat: no-repeat;
       position: relative;
-      opacity: 0;
+      background-size: cover;
+      height: 100%;
+      width: calc(100% + #{$desktop-gutter * 2});
+      margin-left: -$desktop-gutter;
 
-      .use-image {
-        display: none;
+      .use-credit {
         position: absolute;
-        left: 100%;
-        top: -30px;
-        height: calc(100% + 30px + 200px);
-        width: calc(100% + 100px);
-        margin-left: 40px;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        .use-credit {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          color: $white;
-          background-color: rgba(0, 0, 0, 0.2);
-          padding: rem(2px) rem(5px);
-          font-size: rem(10px);
-        }
+        bottom: 0;
+        right: 0;
+        color: $white;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: rem(2px) rem(5px);
+        font-size: rem(10px);
       }
     }
 
@@ -79,15 +57,18 @@
       font-style: italic;
       font-weight: 300;
       line-height: 1.7;
+      padding: rem(40px) 0 rem(20px);
+
+      @media screen and (min-width: $screen-m) {
+        padding: rem(100px) 0 rem(200px);
+        padding-left: calc(100% - (#{$screen-xl} / 2) + (#{$desktop-gutter} * 2));
+      }
 
       span {
         font-size: rem(36px);
         color: $green-gfw;
         font-weight: 500;
         line-height: 0;
-        position: absolute;
-        top: rem(16px);
-        left: rem(-20px);
 
         &:last-child {
           position: relative;
@@ -97,7 +78,47 @@
       }
     }
 
+    .use-user {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: rem(14px);
+      width: rem(70px);
+
+      .icon-user {
+        width: rem(50px);
+        height: rem(50px);
+        margin-bottom: rem(10px);
+      }
+    }
+
+    .slick-slide {
+      padding: 0;
+    }
+
     .slick-dots {
+      align-items: flex-start;
+      margin: rem(20px) 0;
+      overflow-x: auto;
+      justify-content: space-around;
+      padding-bottom: rem(40px);
+
+      @media screen and (min-width: $screen-m) {
+        position: absolute;
+        width: calc(50% - #{$desktop-gutter * 2});
+        left: $mobile-gutter;
+        bottom: 0;
+        left: $desktop-gutter;
+        bottom: rem(40px);
+        padding-bottom: 0;
+      }
+
+      @media screen and (min-width: $screen-xl) {
+        left: calc((100% - #{$screen-xl}) / 2);
+      }
+
       li {
         .icon-user {
           fill: $grey-dark;
@@ -117,7 +138,9 @@
       }
 
       .use-image {
-        display: block;
+        @media screen and (min-width: $screen-m) {
+          display: block;
+        }
       }
     }
   }
