@@ -99,7 +99,7 @@ class LandingController < ApplicationController
         "key" => "pro",
         "title" => "GFW Pro",
         "description" => "Securely manage deforestation risk in commodity supply chains.",
-        "background" => "/assets/home/commodities@2x.jpg",
+        "background" => "/assets/home/pro@2x.png",
         "link" => "https://pro.globalforestwatch.org"
       }
     ]
