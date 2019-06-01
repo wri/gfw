@@ -1,5 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import YouTube from 'react-youtube';
+import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
 
@@ -20,29 +22,60 @@ import './styles.scss';
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
+  state = {
+    showVideo: false
+  };
+
   render() {
-    const { summary, uses, apps, news, newsLoading } = this.props;
+    const { summary, uses, apps, news, newsLoading, isDesktop } = this.props;
     return (
       <div className="l-home-page">
         <Cover
+          className="home-cover"
           title="Forest Monitoring Designed for Action"
           description="Global Forest Watch offers the latest data, technology and tools that empower people everywhere to better protect forests."
           bgImage={bgImage}
           large
         >
-          <Button
-            className="scroll-to-btn"
-            theme="square"
-            onClick={() => {
-              window.scrollTo({
-                behavior: 'smooth',
-                left: 0,
-                top: this.uses.offsetTop
-              });
-            }}
-          >
-            <Icon icon={arrowIcon} />
-          </Button>
+          {isDesktop && (
+            <Fragment>
+              <div className={cx('home-video', { show: this.state.showVideo })}>
+                <YouTube
+                  videoId="0XsJNU75Si0"
+                  opts={{
+                    height: '100%',
+                    width: '100%',
+                    playerVars: {
+                      autoplay: 1,
+                      autohide: 1,
+                      loop: 1,
+                      modestbranding: 1,
+                      rel: 0,
+                      showinfo: 0,
+                      controls: 0,
+                      disablekb: 1,
+                      enablejsapi: 0,
+                      iv_load_policy: 3
+                    }
+                  }}
+                  onReady={() =>
+                    setTimeout(() => this.setState({ showVideo: true }), 800)
+                  }
+                  onEnd={() => this.setState({ showVideo: false })}
+                />
+              </div>
+              {this.state.showVideo && (
+                <Button
+                  className="stop-video-btn"
+                  onClick={() => {
+                    this.setState({ showVideo: false });
+                  }}
+                >
+                  STOP VIDEO
+                </Button>
+              )}
+            </Fragment>
+          )}
         </Cover>
         <div
           className="row"
@@ -52,6 +85,19 @@ class Page extends PureComponent {
         >
           <div className="column">
             <div className="section-summary">
+              <Button
+                className="scroll-to-btn"
+                theme="square"
+                onClick={() => {
+                  window.scrollTo({
+                    behavior: 'smooth',
+                    left: 0,
+                    top: this.uses.offsetTop
+                  });
+                }}
+              >
+                <Icon icon={arrowIcon} />
+              </Button>
               {summary && (
                 <Carousel settings={{ dots: true }}>
                   {summary.map(c => (
@@ -208,7 +254,8 @@ Page.propTypes = {
   apps: PropTypes.array.isRequired,
   news: PropTypes.array,
   newsLoading: PropTypes.bool,
-  uses: PropTypes.array.isRequired
+  uses: PropTypes.array.isRequired,
+  isDesktop: PropTypes.bool
 };
 
 export default Page;

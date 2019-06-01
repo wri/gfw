@@ -68,6 +68,7 @@ class App extends PureComponent {
                 path={route.component}
                 sections={route.sections}
                 isTrase={isTrase}
+                isDesktop={isDesktop}
               />
             </div>
             {!embed && <MyGFWProvider />}

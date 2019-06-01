@@ -7,10 +7,10 @@ import './cover-styles.scss';
 class Cover extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { bgImage, large } = this.props;
+    const { bgImage, large, className } = this.props;
     const bgStyle = bgImage ? { backgroundImage: `url('${bgImage}'` } : {};
     return (
-      <div className={cx('c-cover', { large })} style={bgStyle}>
+      <div className={cx('c-cover', { large }, className)} style={bgStyle}>
         <div className="row">
           <div className="columns small-12 medium-8">
             <div className="cover-texts">
@@ -20,8 +20,8 @@ class Cover extends PureComponent {
               <p className="description text -paragraph -color-1">
                 {this.props.description}
               </p>
-              {this.props.children}
             </div>
+            {this.props.children}
           </div>
         </div>
       </div>
@@ -30,6 +30,7 @@ class Cover extends PureComponent {
 }
 
 Cover.propTypes = {
+  className: PropTypes.string,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   large: PropTypes.bool,

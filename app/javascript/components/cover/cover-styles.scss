@@ -15,6 +15,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    z-index: 1;
+    position: relative;
 
     h1 {
       margin-bottom: rem(5px);
@@ -33,10 +35,26 @@
   }
 
   &.large {
-    padding: rem(200px) 0 rem(180px);
+    padding: rem(60px) 0 rem(80px);
 
     h1 {
-      font-size: rem(60px);
+      font-size: rem(40px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(100px) 0 rem(120px);
+
+      h1 {
+        font-size: rem(50px);
+      }
+    }
+
+    @media screen and (min-width: $screen-l) {
+      padding: rem(160px) 0 rem(180px);
+
+      h1 {
+        font-size: rem(60px);
+      }
     }
   }
 }
