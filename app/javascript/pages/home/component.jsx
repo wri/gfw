@@ -101,7 +101,11 @@ class Page extends PureComponent {
               {summary && (
                 <Carousel settings={{ dots: true }}>
                   {summary.map(c => (
-                    <Card className="summary-card" key={c.title} data={c} />
+                    <Card
+                      className="summary-card"
+                      key={c.title}
+                      data={{ ...c, fullSummary: true }}
+                    />
                   ))}
                 </Carousel>
               )}
