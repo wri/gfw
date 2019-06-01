@@ -7653,17 +7653,6 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
-layer-manager@1.16.8-mapbox:
-  version "1.16.8-mapbox"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.16.8-mapbox.tgz#152d393c95ef4691524825a914c5f2c36070368d"
-  integrity sha512-HFzo8igpz8htfmKQ3+Z4CytHhQi44FuKBu9AZYaXwWhazNUFnJkvqYt2OX/+rwS0hC3B4+I/30B1ePW78pRkvA==
-  dependencies:
-    axios "^0.18.0"
-    lodash "^4.17.11"
-    prop-types "^15.6.2"
-    supercluster "^4.1.1"
-    wri-json-api-serializer "^1.0.1"
-
 layer-manager@^1.10.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.12.1.tgz#daadbf1ccdfb79735b8e5ebda619e17b45fbb087"
@@ -7672,6 +7661,17 @@ layer-manager@^1.10.0:
     lodash "^4.17.10"
     prop-types "^15.6.2"
     reselect "^3.0.1"
+    wri-json-api-serializer "^1.0.1"
+
+layer-manager@^1.16.9-mapbox:
+  version "1.16.9-mapbox"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.16.9-mapbox.tgz#590a49caa183842afb97aab69755a31ca0b337c1"
+  integrity sha512-0+K5uSEEpkgNGBQ1xTtH7FCvVPPAU+pB9DUNOuv6G4idT/xK3Nxbr1YUKQoLpSAQ46Xazwgtc9LFFmhPG2T2oQ==
+  dependencies:
+    axios "^0.18.0"
+    lodash "^4.17.11"
+    prop-types "^15.6.2"
+    supercluster "^4.1.1"
     wri-json-api-serializer "^1.0.1"
 
 lazy-ass@1.6.0:
