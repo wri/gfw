@@ -12,6 +12,24 @@
   .summary-card {
     background-color: $grey-light;
     border: 0;
+    overflow: hidden;
+
+    .body {
+      height: 100%;
+    }
+
+    .image {
+      position: absolute;
+      bottom: rem(-150px);
+      left: rem(-100px);
+      height: 100%;
+      width: 110%;
+      background-size: contain;
+    }
+
+    .summary {
+      margin-bottom: rem(180px);
+    }
   }
 
   .section-summary {

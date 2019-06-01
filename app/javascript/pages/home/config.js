@@ -3,6 +3,12 @@ import policyMakers from './assets/policy-makers.jpg';
 import journalists from './assets/journalists.jpg';
 import company from './assets/company.jpg';
 
+import card1 from './assets/card-0.png';
+import card2 from './assets/card-1.png';
+import card3 from './assets/card-2.png';
+import card4 from './assets/card-3.png';
+import card5 from './assets/card-4.png';
+
 import forestWatcherImage from './assets/forestwatcher@2x.jpg';
 import climateImage from './assets/climate@2x.jpg';
 import firesImage from './assets/fires@2x.jpg';
@@ -20,7 +26,8 @@ export default {
           path:
             '/map?menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D'
         }
-      ]
+      ],
+      image: card1
     },
     {
       title: 'Be the first to see new tropical deforestation',
@@ -32,7 +39,8 @@ export default {
           path:
             '/map?analysis=eyJzaG93QW5hbHlzaXMiOnRydWUsImhpZGRlbiI6ZmFsc2V9&map=eyJ6b29tIjozLCJjZW50ZXIiOnsibGF0IjotNC4yMTQ5NDMxNDEzOTA2MzksImxuZyI6LTUuODAwNzgxMjUwMDAwMDAxfSwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImU2NjNlYjA5LTA0ZGUtNGYzOS1iODcxLTM1YzZjMmVkMTBiNSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZDVkZjg3Zi0zOWMyLTRhZWItYTQ2Mi0zZWY5NjliMjBiNjYiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9'
         }
-      ]
+      ],
+      image: card2
     },
     {
       title: 'Quick global and country stats',
@@ -43,7 +51,8 @@ export default {
           text: 'EXPLORE THE DASHBOARDS',
           path: '/dashboards/global'
         }
-      ]
+      ],
+      image: card3
     },
     {
       title: 'Forest insights',
@@ -54,7 +63,8 @@ export default {
           text: 'START LEARNING',
           extLink: 'https://blog.globalforestwatch.org/'
         }
-      ]
+      ],
+      image: card4
     },
     {
       title: 'A suite of tools',
@@ -65,7 +75,8 @@ export default {
           text: 'BROWSE OUR APPS',
           extLink: 'https://developers.globalforestwatch.org'
         }
-      ]
+      ],
+      image: card5
     }
   ],
   uses: [
