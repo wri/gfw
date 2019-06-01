@@ -186,6 +186,10 @@
         @media screen and (min-width: $screen-m) {
           right: $desktop-gutter;
         }
+
+        @media screen and (min-width: $screen-xl) {
+          right: calc(((100% - #{$screen-xl}) / 2) + #{$desktop-gutter});
+        }
       }
 
       .slick-prev {
@@ -193,6 +197,10 @@
 
         @media screen and (min-width: $screen-m) {
           left: $desktop-gutter;
+        }
+
+        @media screen and (min-width: $screen-xl) {
+          left: calc(((100% - #{$screen-xl}) / 2) + #{$desktop-gutter});
         }
       }
     }
