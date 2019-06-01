@@ -174,6 +174,10 @@
       .slick-slide {
         padding: 0;
         opacity: 1;
+
+        a {
+          height: 100%;
+        }
       }
 
       .slick-arrow {
@@ -211,6 +215,7 @@
       padding: rem(150px) 0 0;
       text-align: center;
       color: $white;
+      height: 100%;
 
       h4 {
         font-size: rem(35px);
@@ -221,8 +226,15 @@
       p {
         color: $white;
         margin: auto;
+        margin-bottom: rem(350px);
         font-size: rem(18px);
         max-width: rem(700px);
+      }
+
+      .app-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .app-image {
@@ -230,6 +242,8 @@
         max-width: rem(900px);
         margin: auto;
         height: rem(350px);
+        position: absolute;
+        bottom: 0;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

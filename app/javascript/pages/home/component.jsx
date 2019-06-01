@@ -30,11 +30,26 @@ class Page extends PureComponent {
           bgImage={bgImage}
           large
         >
-          <Button className="scroll-to-btn" theme="square">
+          <Button
+            className="scroll-to-btn"
+            theme="square"
+            onClick={() => {
+              window.scrollTo({
+                behavior: 'smooth',
+                left: 0,
+                top: this.uses.offsetTop
+              });
+            }}
+          >
             <Icon icon={arrowIcon} />
           </Button>
         </Cover>
-        <div className="row">
+        <div
+          className="row"
+          ref={ref => {
+            this.uses = ref;
+          }}
+        >
           <div className="column">
             <div className="section-summary">
               {summary && (
@@ -118,16 +133,18 @@ class Page extends PureComponent {
                       backgroundColor: app.color
                     }}
                   >
-                    <div className="row apps">
+                    <div className="row">
                       <div className="column small-12">
-                        <h4>{app.title}</h4>
-                        <p>{app.description}</p>
-                        <div
-                          className="app-image"
-                          style={{
-                            backgroundImage: `url(${app.background})`
-                          }}
-                        />
+                        <div className="app-content">
+                          <h4>{app.title}</h4>
+                          <p>{app.description}</p>
+                          <div
+                            className="app-image"
+                            style={{
+                              backgroundImage: `url(${app.background})`
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
