@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import NewsProvider from 'providers/news-provider';
+
 import Cover from 'components/cover';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -126,6 +128,7 @@ class Page extends PureComponent {
             </Carousel>
           )}
         </div>
+        <NewsProvider />
       </div>
     );
   }
