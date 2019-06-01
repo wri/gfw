@@ -228,4 +228,34 @@
       }
     }
   }
+
+  .section-news {
+    min-height: rem(400px);
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    background-size: cover;
+    padding: rem(40px) 0 rem(40px);
+
+    .section-title {
+      font-size: rem(35px);
+      font-weight: 300;
+      color: $white;
+      text-align: center;
+      margin-bottom: rem(20px);
+    }
+
+    .my-gfw-btn {
+      min-width: rem(120px);
+      margin: auto;
+    }
+
+    .news-carousel {
+      min-height: rem(300px);
+    }
+
+    .no-news {
+      color: $white;
+    }
+  }
 }

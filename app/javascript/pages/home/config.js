@@ -3,6 +3,11 @@ import policyMakers from './assets/policy-makers.jpg';
 import journalists from './assets/journalists.jpg';
 import company from './assets/company.jpg';
 
+import forestWatcherImage from './assets/forestwatcher@2x.jpg';
+import climateImage from './assets/climate@2x.jpg';
+import firesImage from './assets/fires@2x.jpg';
+import commoditiesImage from './assets/commodities@2x.jpg';
+
 export default {
   summary: [
     {
@@ -110,7 +115,7 @@ export default {
       title: 'Forest Watcher',
       description:
         "Access GFW's forest monitoring and alert system offline and collect data from the field, all from your mobile device",
-      background: '/assets/home/forestwatcher@2x.jpg',
+      background: forestWatcherImage,
       extLink: 'http://forestwatcher.globalforestwatch.org/',
       color: '#97be32'
     },
@@ -118,21 +123,21 @@ export default {
       title: 'Fires',
       description:
         'Track fires and haze, view the latest data on fire locations and air quality, and do your own analysis',
-      background: '/assets/home/fires@2x.jpg',
+      background: firesImage,
       extLink: 'http://fires.globalforestwatch.org',
       color: '#F71949'
     },
     {
       title: 'Climate',
       description: 'Track carbon emissions and removals in forest landscapes',
-      background: '/assets/home/climate@2x.jpg',
+      background: climateImage,
       extLink: 'http://climate.globalforestwatch.org',
       color: '#5B80A0'
     },
     {
       title: 'Commodities',
       description: 'Identify deforestation risk in commodity supply chains',
-      background: '/assets/home/commodities@2x.jpg',
+      background: commoditiesImage,
       extLink: 'http://commodities.globalforestwatch.org',
       color: '#F49315'
     }

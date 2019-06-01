@@ -8,17 +8,20 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Card from 'components/ui/card';
+import Loader from 'components/ui/loader';
+import NoContent from 'components/ui/no-content';
 
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import profileIcon from 'assets/icons/profile.svg';
 
+import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
 import './styles.scss';
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { summary, uses, apps } = this.props;
+    const { summary, uses, apps, news, newsLoading } = this.props;
     return (
       <div className="l-home-page">
         <Cover
@@ -103,7 +106,12 @@ class Page extends PureComponent {
               }}
             >
               {apps.map(app => (
-                <a href={app.extLink} target="_blank" rel="noopener nofollower">
+                <a
+                  key={app.title}
+                  href={app.extLink}
+                  target="_blank"
+                  rel="noopener nofollower"
+                >
                   <div
                     className="app-slide"
                     style={{
@@ -128,6 +136,49 @@ class Page extends PureComponent {
             </Carousel>
           )}
         </div>
+        <div
+          className="section-news"
+          style={{
+            backgroundImage: `url(${newsImage})`
+          }}
+        >
+          <div className="row">
+            <div className="column small-12">
+              <h3 className="section-title">New on Global Forest Watch</h3>
+              {newsLoading && <Loader className="news-loader" />}
+              <div className="news-carousel">
+                {!newsLoading && news ? (
+                  <Carousel
+                    settings={{
+                      slidesToShow: 3
+                    }}
+                  >
+                    {news.map(item => (
+                      <Card
+                        key={item.name}
+                        className="news-card"
+                        data={{
+                          title: item.name,
+                          summary: item.description,
+                          extLink: item.link
+                        }}
+                      />
+                    ))}
+                  </Carousel>
+                ) : (
+                  <NoContent className="no-news" message="No news available" />
+                )}
+              </div>
+              <Button
+                className="my-gfw-btn"
+                theme="theme-button-light"
+                extLink="/my_gfw"
+              >
+                My GFW
+              </Button>
+            </div>
+          </div>
+        </div>
         <NewsProvider />
       </div>
     );
@@ -137,6 +188,8 @@ class Page extends PureComponent {
 Page.propTypes = {
   summary: PropTypes.array.isRequired,
   apps: PropTypes.array.isRequired,
+  news: PropTypes.array,
+  newsLoading: PropTypes.bool,
   uses: PropTypes.array.isRequired
 };
 

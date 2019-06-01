@@ -25,7 +25,7 @@ class NewsProvider extends PureComponent {
 }
 
 NewsProvider.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
   getNews: PropTypes.func.isRequired
 };
 
