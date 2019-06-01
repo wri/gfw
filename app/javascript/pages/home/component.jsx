@@ -10,27 +10,13 @@ import Card from 'components/ui/card';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import profileIcon from 'assets/icons/profile.svg';
 
-import HistorySection from 'pages/about/section-history';
-import Impacts from 'pages/about/section-impacts';
-import Partners from 'pages/about/section-partners';
-import How from 'pages/about/section-how';
-import Contact from 'pages/about/section-contact';
-
 import bgImage from './assets/home-bg.jpg';
 import './styles.scss';
-
-const sectionComponents = {
-  history: HistorySection,
-  impacts: Impacts,
-  partners: Partners,
-  how: How,
-  contact: Contact
-};
 
 class Page extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
-    const { sections, summary, uses } = this.props;
+    const { summary, uses, apps } = this.props;
     return (
       <div className="l-home-page">
         <Cover
@@ -98,11 +84,44 @@ class Page extends PureComponent {
                         {c.credit.name}
                       </a>
                     </div>
-                    {/* <div className="use-card">
-
-                    </div> */}
                   </div>
                 </div>
+              ))}
+            </Carousel>
+          )}
+        </div>
+        <div className="section-apps">
+          <h3>BROWSE APPLICATIONS</h3>
+          {apps && (
+            <Carousel
+              className="apps-carousel"
+              settings={{
+                slidesToShow: 1,
+                infinite: true
+              }}
+            >
+              {apps.map(app => (
+                <a href={app.extLink} target="_blank" rel="noopener nofollower">
+                  <div
+                    className="app-slide"
+                    style={{
+                      backgroundColor: app.color
+                    }}
+                  >
+                    <div className="row apps">
+                      <div className="column small-12">
+                        <h4>{app.title}</h4>
+                        <p>{app.description}</p>
+                        <div
+                          className="app-image"
+                          style={{
+                            backgroundImage: `url(${app.background})`
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </a>
               ))}
             </Carousel>
           )}
@@ -113,7 +132,9 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  sections: PropTypes.array.isRequired
+  summary: PropTypes.array.isRequired,
+  apps: PropTypes.array.isRequired,
+  uses: PropTypes.array.isRequired
 };
 
 export default Page;

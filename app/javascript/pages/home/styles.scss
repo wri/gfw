@@ -102,14 +102,16 @@
       align-items: flex-start;
       margin: rem(20px) 0;
       overflow-x: auto;
-      justify-content: space-around;
       padding-bottom: rem(40px);
+      justify-content: flex-start;
+
+      @media screen and (min-width: 460px) {
+        justify-content: space-around;
+      }
 
       @media screen and (min-width: $screen-m) {
         position: absolute;
         width: calc(50% - #{$desktop-gutter * 2});
-        left: $mobile-gutter;
-        bottom: 0;
         left: $desktop-gutter;
         bottom: rem(40px);
         padding-bottom: 0;
@@ -117,6 +119,7 @@
 
       @media screen and (min-width: $screen-xl) {
         left: calc((100% - #{$screen-xl}) / 2);
+        width: calc(50% - ((100% - #{$screen-xl}) / 2));
       }
 
       li {
@@ -141,6 +144,87 @@
         @media screen and (min-width: $screen-m) {
           display: block;
         }
+      }
+    }
+  }
+
+  .section-apps {
+    position: relative;
+
+    h3 {
+      position: absolute;
+      top: rem(50px);
+      z-index: 1;
+      left: $mobile-gutter;
+      color: $white;
+
+      @media screen and (min-width: $screen-m) {
+        left: $desktop-gutter;
+      }
+
+      @media screen and (min-width: $screen-xl) {
+        left: calc(((100% - #{$screen-xl}) / 2) + #{$desktop-gutter});
+      }
+    }
+
+    .apps-carousel {
+      margin: 0;
+      width: 100%;
+
+      .slick-slide {
+        padding: 0;
+        opacity: 1;
+      }
+
+      .slick-arrow {
+        background-color: rgba($white, 0.5);
+      }
+
+      .slick-next {
+        right: rem(5px);
+
+        @media screen and (min-width: $screen-m) {
+          right: $desktop-gutter;
+        }
+      }
+
+      .slick-prev {
+        left: rem(5px);
+
+        @media screen and (min-width: $screen-m) {
+          left: $desktop-gutter;
+        }
+      }
+    }
+
+    .app-slide {
+      cursor: pointer;
+      display: block;
+      padding: rem(150px) 0 0;
+      text-align: center;
+      color: $white;
+
+      h4 {
+        font-size: rem(35px);
+        font-weight: 300;
+        margin-bottom: rem(10px);
+      }
+
+      p {
+        color: $white;
+        margin: auto;
+        font-size: rem(18px);
+        max-width: rem(700px);
+      }
+
+      .app-image {
+        width: 100%;
+        max-width: rem(900px);
+        margin: auto;
+        height: rem(350px);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
       }
     }
   }
