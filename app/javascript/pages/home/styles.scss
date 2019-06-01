@@ -262,8 +262,9 @@
       min-height: rem(300px);
     }
 
-    .no-news {
+    .no-news p {
       color: $white;
+      font-size: rem(18px);
     }
   }
 }

@@ -65,7 +65,7 @@ class Page extends PureComponent {
               }}
             >
               {uses.map(c => (
-                <div className="row expanded uses">
+                <div className="row expanded uses" key={c.example}>
                   <div className="column small-12 medium-6">
                     <p className="use-example">
                       <i>
