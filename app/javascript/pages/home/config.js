@@ -1,3 +1,7 @@
+import climateIcon from 'assets/icons/climate-leaf.svg';
+import firesIcon from 'assets/icons/fires-flame.svg';
+import commoditiesIcon from 'assets/icons/commodities-truck.svg';
+
 import conservationOrgs from './assets/conservation-orgs.jpg';
 import policyMakers from './assets/policy-makers.jpg';
 import journalists from './assets/journalists.jpg';
@@ -128,7 +132,8 @@ export default {
         "Access GFW's forest monitoring and alert system offline and collect data from the field, all from your mobile device",
       background: forestWatcherImage,
       extLink: 'http://forestwatcher.globalforestwatch.org/',
-      color: '#97be32'
+      color: '#97be32',
+      icon: climateIcon
     },
     {
       title: 'Fires',
@@ -136,21 +141,24 @@ export default {
         'Track fires and haze, view the latest data on fire locations and air quality, and do your own analysis',
       background: firesImage,
       extLink: 'http://fires.globalforestwatch.org',
-      color: '#F71949'
+      color: '#F71949',
+      icon: firesIcon
     },
     {
       title: 'Climate',
       description: 'Track carbon emissions and removals in forest landscapes',
       background: climateImage,
       extLink: 'http://climate.globalforestwatch.org',
-      color: '#5B80A0'
+      color: '#5B80A0',
+      icon: climateIcon
     },
     {
       title: 'Commodities',
       description: 'Identify deforestation risk in commodity supply chains',
       background: commoditiesImage,
       extLink: 'http://commodities.globalforestwatch.org',
-      color: '#F49315'
+      color: '#F49315',
+      icon: commoditiesIcon
     }
   ]
 };
