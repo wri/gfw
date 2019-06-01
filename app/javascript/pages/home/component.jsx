@@ -179,7 +179,7 @@ class Page extends PureComponent {
                       backgroundColor: app.color
                     }}
                   >
-                    <div className="row">
+                    <div className="row apps">
                       <div className="column small-12">
                         <div className="app-content">
                           <Icon className="app-icon" icon={app.icon} />

@@ -221,6 +221,10 @@
   .section-apps {
     position: relative;
 
+    .apps {
+      height: 100%;
+    }
+
     h3 {
       position: absolute;
       top: rem(50px);
@@ -305,15 +309,18 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        position: relative;
       }
 
       .app-image {
         width: 100%;
-        max-width: rem(900px);
+        max-width: rem(800px);
         margin: auto;
         height: rem(350px);
         position: absolute;
         bottom: 0;
+        left: 0;
+        right: 0;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
