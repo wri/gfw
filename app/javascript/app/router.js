@@ -18,6 +18,7 @@ export const TOPICS = 'location/TOPICS';
 export const THANKYOU = 'location/THANKYOU';
 export const STORIES = 'location/STORIES';
 export const TERMS = 'location/TERMS';
+export const PRIVACY = 'location/PRIVACY';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -194,6 +195,11 @@ export const routes = {
     path: '/terms',
     component: 'terms',
     controller: 'terms'
+  },
+  [PRIVACY]: {
+    path: '/privacy-policy',
+    component: 'privacy',
+    controller: 'privacy'
   },
   [NOT_FOUND]: {
     path: '/404',
