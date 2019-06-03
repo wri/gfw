@@ -152,14 +152,7 @@ class ModalMeta extends PureComponent {
       <Modal
         isOpen={!!metakey}
         track={false}
-        onRequestClose={() =>
-          setModalMetaSettings({
-            metakey: '',
-            metaWhitelist: [],
-            tableWhitelist: [],
-            citation: ''
-          })
-        }
+        onRequestClose={() => setModalMetaSettings('')}
         className="c-modal-meta"
         title={title}
         loading={loading}

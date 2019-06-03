@@ -96,7 +96,7 @@ class Legend extends PureComponent {
   onChangeInfo = metadata => {
     const { setModalMetaSettings } = this.props;
     if (metadata && typeof metadata === 'string') {
-      setModalMetaSettings({ metakey: metadata });
+      setModalMetaSettings(metadata);
     }
   };
 

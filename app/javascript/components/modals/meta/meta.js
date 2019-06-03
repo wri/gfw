@@ -6,7 +6,7 @@ import * as actions from './meta-actions';
 import reducers, { initialState } from './meta-reducers';
 import ModalMetaComponent from './meta-component';
 
-const MASTER_META_FIELDS = [
+const META_FIELDS = [
   'title',
   'subtitle',
   'citation',
@@ -16,7 +16,7 @@ const MASTER_META_FIELDS = [
   'map_service',
   'amazon_link'
 ];
-const MASTER_TABLE_FIELDS = [
+const TABLE_FIELDS = [
   'function',
   'resolution',
   'geographic_coverage',
@@ -28,22 +28,13 @@ const MASTER_TABLE_FIELDS = [
 ];
 
 const mapStateToProps = ({ modalMeta, location }) => {
-  const urlState = location && location.query && location.query.modalMeta;
-  const { settings, data } = modalMeta || {};
-  const allSettings = {
-    ...settings,
-    ...urlState
-  };
-  const { tableWhitelist, metaWhitelist, metakey } = allSettings;
+  const metakey = location && location.query && location.query.modalMeta;
+  const { data } = modalMeta || {};
 
   return {
     metakey,
-    metaData:
-      data &&
-      pick(data, metaWhitelist.length ? metaWhitelist : MASTER_META_FIELDS),
-    tableData:
-      data &&
-      pick(data, tableWhitelist.length ? tableWhitelist : MASTER_TABLE_FIELDS),
+    metaData: data && pick(data, META_FIELDS),
+    tableData: data && pick(data, TABLE_FIELDS),
     loading: modalMeta && modalMeta.loading
   };
 };
