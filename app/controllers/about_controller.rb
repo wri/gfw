@@ -1,3 +1,3 @@
 class AboutController < ApplicationController
-  layout 'application_react_spa'
+  layout 'application_react'
 end
