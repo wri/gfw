@@ -3,6 +3,8 @@ class StaticController < ApplicationController
   respond_to :html
   respond_to :json, :only => :keepstories
 
+  layout 'application_react_spa'
+
   def terms
     @title = 'Terms of Service'
     @desc = 'Welcome to the WRI family of environmental data platforms. By using the Services, you agree to be bound by these Terms of Service and any future updates.'

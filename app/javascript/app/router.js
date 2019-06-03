@@ -17,6 +17,7 @@ export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 export const TOPICS = 'location/TOPICS';
 export const THANKYOU = 'location/THANKYOU';
 export const STORIES = 'location/STORIES';
+export const TERMS = 'location/TERMS';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -188,6 +189,11 @@ export const routes = {
     path: '/stories',
     component: 'stories',
     controller: 'stories'
+  },
+  [TERMS]: {
+    path: '/terms',
+    component: 'terms',
+    controller: 'terms'
   },
   [NOT_FOUND]: {
     path: '/404',
