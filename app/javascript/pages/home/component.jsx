@@ -58,8 +58,8 @@ class Page extends PureComponent {
                       iv_load_policy: 3
                     }
                   }}
-                  onReady={() =>
-                    setTimeout(() => this.setState({ showVideo: true }), 800)
+                  onPlay={() =>
+                    setTimeout(() => this.setState({ showVideo: true }), 300)
                   }
                   onEnd={() => this.setState({ showVideo: false })}
                 />
