@@ -1,3 +1,4 @@
+import forestWatcherIcon from 'assets/icons/forest-watcher.svg';
 import climateIcon from 'assets/icons/climate-leaf.svg';
 import firesIcon from 'assets/icons/fires-flame.svg';
 import commoditiesIcon from 'assets/icons/commodities-truck.svg';
@@ -133,7 +134,7 @@ export default {
       background: forestWatcherImage,
       extLink: 'http://forestwatcher.globalforestwatch.org/',
       color: '#97be32',
-      icon: climateIcon
+      icon: forestWatcherIcon
     },
     {
       title: 'Fires',

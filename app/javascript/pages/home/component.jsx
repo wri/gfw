@@ -122,10 +122,10 @@ class Page extends PureComponent {
                 arrows: false,
                 speed: 0,
                 customPaging: i => (
-                  <li className="use-user">
+                  <div className="use-user">
                     <Icon className="icon-user" icon={profileIcon} />
                     {uses[i].profile}
-                  </li>
+                  </div>
                 )
               }}
             >
