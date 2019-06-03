@@ -107,7 +107,7 @@
     "@rails/webpacker": "3.0.1",
     "add": "^2.0.6",
     "aws-sdk": "^2.291.0",
-    "axios": "0.16.2",
+    "axios": "0.18.1",
     "babel-polyfill": "6.26.0",
     "bluebird": "^3.5.1",
     "bower": "1.8.8",
