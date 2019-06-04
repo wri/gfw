@@ -91,6 +91,15 @@
 
   .section-uses {
     background-color: $grey-light;
+    position: relative;
+
+    .uses-title {
+      position: absolute;
+      top: rem(30px);
+      font-size: rem(18px);
+      text-transform: uppercase;
+      color: rgba($slate, 0.5);
+    }
 
     .uses-carousel {
       margin: 0;
@@ -128,10 +137,10 @@
       font-style: italic;
       font-weight: 300;
       line-height: 1.7;
-      padding: rem(40px) 0 rem(20px);
+      padding: rem(130px) 0 rem(20px);
 
       @media screen and (min-width: $screen-m) {
-        padding: rem(100px) 0 rem(200px);
+        padding: rem(160px) 0 rem(200px);
         padding-left: calc(100% - (#{$screen-xl} / 2) + (#{$desktop-gutter} * 2));
       }
 
@@ -219,6 +228,23 @@
     }
   }
 
+  .section-title {
+    position: absolute;
+    top: rem(50px);
+    z-index: 1;
+    left: $mobile-gutter;
+    color: rgba($slate, 0.5);
+    text-transform: uppercase;
+
+    @media screen and (min-width: $screen-m) {
+      left: $desktop-gutter;
+    }
+
+    @media screen and (min-width: $screen-xl) {
+      left: calc(((100% - #{$screen-xl}) / 2) + #{$desktop-gutter});
+    }
+  }
+
   .section-apps {
     position: relative;
 
@@ -226,20 +252,8 @@
       height: 100%;
     }
 
-    h3 {
-      position: absolute;
-      top: rem(50px);
-      z-index: 1;
-      left: $mobile-gutter;
+    .section-title {
       color: $white;
-
-      @media screen and (min-width: $screen-m) {
-        left: $desktop-gutter;
-      }
-
-      @media screen and (min-width: $screen-xl) {
-        left: calc(((100% - #{$screen-xl}) / 2) + #{$desktop-gutter});
-      }
     }
 
     .apps-carousel {
@@ -343,7 +357,7 @@
     background-size: cover;
     padding: rem(40px) 0 rem(40px);
 
-    .section-title {
+    .news-title {
       font-size: rem(35px);
       font-weight: 300;
       color: $white;
