@@ -59,14 +59,15 @@ class Page extends PureComponent {
         </Cover>
         <SubnavMenu className="about-links" links={sections} />
         <Projects />
-        {sections.map(s => {
-          const PageComponent = sectionComponents[s.component];
-          return PageComponent ? (
-            <div id={s.anchor} className={s.anchor} key={s.anchor}>
-              <PageComponent />
-            </div>
-          ) : null;
-        })}
+        {sections &&
+          sections.map(s => {
+            const PageComponent = sectionComponents[s.component];
+            return PageComponent ? (
+              <div id={s.anchor} className={s.anchor} key={s.anchor}>
+                <PageComponent />
+              </div>
+            ) : null;
+          })}
         <Join />
         <ModalVideo />
       </div>
