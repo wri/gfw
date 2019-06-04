@@ -3,6 +3,7 @@ SitemapGenerator::Sitemap.default_host = "https://www.globalforestwatch.org"
 SitemapGenerator::Sitemap.compress = false
 
 SitemapGenerator::Sitemap.create do
+  add '/', :changefreq => 'weekly', :priority => 1
   add '/map', :changefreq => 'weekly', :priority => 0.8
   add '/dashboards/global', :changefreq => 'weekly', :priority => 0.8
 
@@ -17,7 +18,6 @@ SitemapGenerator::Sitemap.create do
   add '/about', :changefreq => 'weekly', :priority => 0.8
   add '/grants-and-fellowships', :changefreq => 'weekly', :priority => 0.8
   add '/search', :changefreq => 'weekly', :priority => 0.8
-  add '/stories', :changefreq => 'weekly', :priority => 0.8
 
   add '/terms', :changefreq => 'weekly', :priority => 0.4
   add '/privacy-policy', :changefreq => 'weekly', :priority => 0.4
