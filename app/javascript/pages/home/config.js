@@ -1,7 +1,7 @@
 import forestWatcherIcon from 'assets/icons/forest-watcher.svg';
 import climateIcon from 'assets/icons/climate-leaf.svg';
 import firesIcon from 'assets/icons/fires-flame.svg';
-import commoditiesIcon from 'assets/icons/commodities-truck.svg';
+import proIcon from 'assets/icons/gfw-pro.svg';
 
 import conservationOrgs from './assets/conservation-orgs.jpg';
 import policyMakers from './assets/policy-makers.jpg';
@@ -17,7 +17,7 @@ import card5 from './assets/card-4.png';
 import forestWatcherImage from './assets/forestwatcher@2x.jpg';
 import climateImage from './assets/climate@2x.jpg';
 import firesImage from './assets/fires@2x.jpg';
-import commoditiesImage from './assets/commodities@2x.jpg';
+import proImage from './assets/pro-bg@2x.png';
 
 export default {
   summary: [
@@ -154,12 +154,14 @@ export default {
       icon: climateIcon
     },
     {
-      title: 'Commodities',
-      description: 'Identify deforestation risk in commodity supply chains',
-      background: commoditiesImage,
-      extLink: 'http://commodities.globalforestwatch.org',
-      color: '#F49315',
-      icon: commoditiesIcon
+      title: 'GFW Pro',
+      description:
+        'Securely manage deforestation risk in commodity supply chains',
+      background: proImage,
+      extLink: 'http://pro.globalforestwatch.org',
+      color: '#404042',
+      icon: proIcon,
+      className: 'pro'
     }
   ]
 };
