@@ -345,6 +345,11 @@
       .app-icon {
         height: rem(40px);
         width: auto;
+
+        &.pro {
+          width: rem(75px);
+          height: rem(75px);
+        }
       }
     }
   }
