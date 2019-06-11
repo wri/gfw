@@ -7,7 +7,7 @@ import flatMap from 'lodash/flatMap';
 import { track } from 'app/analytics';
 
 import { getGeostoreId } from 'providers/geostore-provider/actions';
-import { setMapPromptsSettings } from 'components/map-prompts/actions';
+import { setMapPromptsSettings } from 'components/prompts/map-prompts/actions';
 import { setRecentImagerySettings } from 'components/recent-imagery/actions';
 import { setMenuSettings } from 'components/map-menu/actions';
 
