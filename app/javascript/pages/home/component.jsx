@@ -189,7 +189,10 @@ class Page extends PureComponent {
                     <div className="row apps">
                       <div className="column small-12">
                         <div className="app-content">
-                          <Icon className="app-icon" icon={app.icon} />
+                          <Icon
+                            className={cx('app-icon', app.className)}
+                            icon={app.icon}
+                          />
                           <h4>{app.title}</h4>
                           <p>{app.description}</p>
                           <div
