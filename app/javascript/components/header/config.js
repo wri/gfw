@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
-import gfwCommodities from 'assets/logos/gfw-commodities.png';
+import gfwPro from 'assets/logos/gfw-pro.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
 
 import developer from 'assets/icons/developer.svg';
@@ -92,9 +92,9 @@ export default {
       image: gfwFires
     },
     {
-      label: 'GFW Comodities',
-      extLink: 'http://commodities.globalforestwatch.org',
-      image: gfwCommodities
+      label: 'GFW Pro',
+      extLink: 'https://pro.globalforestwatch.org',
+      image: gfwPro
     },
     {
       label: 'Forest Watcher',

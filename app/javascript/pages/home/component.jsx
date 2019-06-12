@@ -113,6 +113,9 @@ class Page extends PureComponent {
           </div>
         </div>
         <div className="section-uses">
+          <h3 className="section-title">
+            What can you do with Global Forest Watch?
+          </h3>
           {uses && (
             <Carousel
               className="uses-carousel"
@@ -161,7 +164,7 @@ class Page extends PureComponent {
           )}
         </div>
         <div className="section-apps">
-          <h3>BROWSE APPLICATIONS</h3>
+          <h3 className="section-title">BROWSE APPLICATIONS</h3>
           {apps && (
             <Carousel
               className="apps-carousel"
@@ -186,7 +189,10 @@ class Page extends PureComponent {
                     <div className="row apps">
                       <div className="column small-12">
                         <div className="app-content">
-                          <Icon className="app-icon" icon={app.icon} />
+                          <Icon
+                            className={cx('app-icon', app.className)}
+                            icon={app.icon}
+                          />
                           <h4>{app.title}</h4>
                           <p>{app.description}</p>
                           <div
@@ -212,7 +218,7 @@ class Page extends PureComponent {
         >
           <div className="row">
             <div className="column small-12">
-              <h3 className="section-title">New on Global Forest Watch</h3>
+              <h3 className="news-title">New on Global Forest Watch</h3>
               {newsLoading && <Loader className="news-loader" />}
               <div className="news-carousel">
                 {!newsLoading && news ? (
