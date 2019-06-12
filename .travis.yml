@@ -10,13 +10,13 @@ services:
   - redis-server
 
 cache:
+  yarn: true
   bundler: true
   directories:
-    - ~/.npm
     - node_modules
 
 install:
-  - bundle install && npm install
+  - bundle install && yarn install
 
 script:
-  - npm run ci
+  - yarn ci
