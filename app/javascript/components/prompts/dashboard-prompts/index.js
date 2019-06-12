@@ -13,13 +13,12 @@ class DashboardPromptsContainer extends PureComponent {
     const { stepsKey } = this.props;
 
     const allSteps = {
-      recentImagery: {
-        title: 'Recent Satellite Imagery',
+      dashboard: {
+        title: 'Select a country or subnational area',
         steps: [
           {
-            target: '.recent-imagery-btn',
-            content:
-              'Display recent satellite imagery over an area, filtered by date and cloud cover.',
+            target: '.select-container',
+            content: 'View dashboards for countries and subnational areas.',
             disableBeacon: true,
             actions: {
               learnHow: () => {}
@@ -29,6 +28,61 @@ class DashboardPromptsContainer extends PureComponent {
         settings: {
           disableOverlay: true
         }
+      },
+      analyses: {
+        title: 'Explore analyses',
+        steps: [
+          {
+            target: '.select-container',
+            content: 'Explore available analyses for different topics.',
+            disableBeacon: true,
+            actions: {
+              learnHow: () => {}
+            }
+          }
+        ]
+      },
+      settings: {
+        title: 'Change widget settings',
+        steps: [
+          {
+            target: '.select-container',
+            content:
+              'Customize analyses by filtering data, selecting the time range and more.',
+            disableBeacon: true,
+            actions: {
+              learnHow: () => {}
+            }
+          }
+        ]
+      },
+      share: {
+        title: 'Share widget',
+        steps: [
+          {
+            target: '.select-container',
+            content:
+              'Share this analysis by copying a link or embedding your map view in another website.',
+            disableBeacon: true,
+            actions: {
+              learnHow: () => {}
+            }
+          }
+        ]
+      },
+      stats: {
+        title: 'Download stats',
+        steps: [
+          {
+            target: '.select-container',
+            content:
+              'Download tree cover, tree cover loss and tree cover gain statistics.',
+            disableBeacon: true,
+            actions: {
+              learnHow: () => {}
+            }
+          }
+        ]
       }
     };
 
