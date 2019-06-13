@@ -33,7 +33,7 @@ Gfw::Application.routes.draw do
   ########### /LEGACY #############
 
   ########### ACTIVE ROUTES #############
-  root 'landing#index'
+  root 'home#index'
 
   # map
   get '/map' => 'map#index'

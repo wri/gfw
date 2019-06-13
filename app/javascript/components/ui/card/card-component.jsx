@@ -26,7 +26,7 @@ class Card extends PureComponent {
       imageCredit,
       title,
       summary,
-      showFullSummary,
+      fullSummary,
       meta,
       buttons,
       tag,
@@ -67,7 +67,7 @@ class Card extends PureComponent {
             {title && <h3 className="title">{title}</h3>}
             {summary && (
               <div className="summary">
-                {showFullSummary ? (
+                {fullSummary ? (
                   summary
                 ) : (
                   <Dotdotdot clamp={3}>{summary}</Dotdotdot>

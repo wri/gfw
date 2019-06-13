@@ -40,6 +40,15 @@ class NavAlt extends PureComponent {
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { showMore } = this.state;
+    if (prevState.showMore && !showMore) {
+      document.body.classList.remove('Header__no-scroll');
+    } else if (!prevState.showMore && showMore) {
+      document.body.classList.add('Header__no-scroll');
+    }
+  }
+
   handleLangSelect = lang => {
     localStorage.setItem('txlive:selectedlang', `"${lang}"`);
     window.Transifex.live.translateTo(lang);
