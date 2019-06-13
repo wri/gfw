@@ -6,6 +6,12 @@ node_js:
 rvm:
   - 2.4.0
 
+cache:
+  yarn: true
+  bundler: true
+  directories:
+    - node_modules
+
 install:
   - bundle install
 
