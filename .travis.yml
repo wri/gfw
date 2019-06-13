@@ -13,10 +13,11 @@ cache:
   yarn: true
   bundler: true
   directories:
+    - ~/.npm
     - node_modules
 
 install:
   - bundle install && yarn install
 
 script:
-  - yarn ci
+  - yarn run ci
