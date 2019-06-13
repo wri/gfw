@@ -1,20 +1,10 @@
 language: ruby
 
 node_js:
-  - 10.15.2
+  - 10.16.0
 
 rvm:
   - 2.4.0
-
-services:
-  - redis-server
-
-cache:
-  yarn: true
-  bundler: true
-  directories:
-    - ~/.npm
-    - node_modules
 
 install:
   - bundle install && yarn install
