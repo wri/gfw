@@ -7,7 +7,7 @@ rvm:
   - 2.4.0
 
 install:
-  - bundle install && yarn install
+  - bundle install
 
 script:
   - yarn ci
