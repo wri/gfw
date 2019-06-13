@@ -13,14 +13,13 @@
     "start:prod": "RAILS_ENV=production_local NODE_ENV=production yarn prod-server",
     "redis": "redis-server /usr/local/etc/redis.conf",
     "prod-server": "bundle exec foreman start -f Procfile",
-    "ci": "start-server-and-test prod-server http://localhost:5000 test-ci",
+    "ci": "yarn test-ci",
     "lint": "eslint --ext js --ext jsx",
     "precommit": "lint-staged",
     "generate": "plop --plopfile app/javascript/generators/plopfile.js component",
     "generate:page": "plop --plopfile app/javascript/generators/plopfile.js page",
-    "test": "bundle exec rspec && $(npm bin)/cypress run",
-    "test:open": "npx cypress open",
-    "test-ci": "bundle exec rake && $(npm bin)/cypress run --record"
+    "test": "bundle exec rspec",
+    "test-ci": "bundle exec rake"
   },
   "repository": {
     "type": "git",
@@ -49,7 +48,6 @@
     "babel-preset-stage-3": "6.24.1",
     "compression-webpack-plugin": "1.0.0",
     "css-loader": "^1.0.0",
-    "cypress": "2.1.0",
     "directory-named-webpack-plugin": "^4.0.0",
     "eslint": "4.6.1",
     "eslint-config-prettier": "2.4.0",
