@@ -99,3 +99,11 @@ export const buildLocationName = (
 
 export const buildLocationFromNames = (name_0, name_1, name_2) =>
   `${name_2 ? `${name_2}, ` : ''}${name_1 ? `${name_1}, ` : ''}${name_0}`;
+
+export const locationLevelToStr = location => {
+  const { type, adm0, adm1, adm2 } = location;
+  if (adm2) return 'adm2';
+  else if (adm1) return 'adm1';
+  else if (adm0 && type === 'country') return 'adm0';
+  return type || 'global';
+};

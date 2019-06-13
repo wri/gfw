@@ -6,6 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { locationLevelToStr } from 'utils/format';
 
 import { initialState } from './reducers';
 
@@ -105,12 +106,15 @@ export const getLayerEndpoints = createSelector(
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
+
+    const admLevel = locationLevelToStr(location);
     const endpoints = compact(
       layers
         .filter(
           l =>
             l.analysisConfig &&
-            (!hasWidgetLayers || !widgetLayers.includes(l.id))
+            (!hasWidgetLayers || !widgetLayers.includes(l.id)) &&
+            (!l.admLevels || l.admLevels.includes(admLevel))
         )
         .map(l => {
           const analysisConfig =
