@@ -1,7 +1,7 @@
 language: ruby
 
 node_js:
-  - 10.16.0
+  - 10.15.2
 
 rvm:
   - 2.4.0
@@ -10,4 +10,4 @@ install:
   - bundle install && yarn install
 
 script:
-  - yarn run ci
+  - yarn ci
