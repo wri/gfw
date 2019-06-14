@@ -18,7 +18,7 @@ export default {
     landUse: 1
   },
   sentence:
-    '<a href="https://trase.earth" target="_blank" rel="noopener noreferrer">According to TRASE</a>, from {startYear} to {endYear}, the top sourcing country for {commodity} was {source}, with a trade volume of {volume}, representing {percentage} of total {location} exports.',
+    '<a href="https://trase.earth" target="_blank" rel="noopener noreferrer">According to TRASE</a>, from {startYear} to {endYear}, the top sourcing country for {commodity}, including domestic markets, was {source}. The total trade volume was {volume}, which represented {percentage} of total {location} trade.',
   whitelists: {
     adm0: ['BRA', 'PRY', 'COL', 'PER', 'IDN', 'ECU', 'BOL']
   }

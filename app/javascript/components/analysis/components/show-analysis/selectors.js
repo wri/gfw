@@ -3,7 +3,11 @@ import moment from 'moment';
 import flatMap from 'lodash/flatMap';
 import intersection from 'lodash/intersection';
 
-import { buildLocationName, buildFullLocationName } from 'utils/format';
+import {
+  buildLocationName,
+  buildFullLocationName,
+  locationLevelToStr
+} from 'utils/format';
 
 import {
   getActiveLayers,
@@ -67,6 +71,7 @@ export const getDataFromLayers = createSelector(
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const { areaHa } = geostore;
+    const admLevel = locationLevelToStr(location);
 
     return [
       {
@@ -84,7 +89,8 @@ export const getDataFromLayers = createSelector(
             !l.isBoundary &&
             !l.isRecentImagery &&
             l.analysisConfig &&
-            !widgetLayers.includes(l.id)
+            !widgetLayers.includes(l.id) &&
+            (!l.admLevels || l.admLevels.includes(admLevel))
         )
         .map(l => {
           let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
