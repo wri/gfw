@@ -19,6 +19,7 @@ export const THANKYOU = 'location/THANKYOU';
 export const STORIES = 'location/STORIES';
 export const TERMS = 'location/TERMS';
 export const PRIVACY = 'location/PRIVACY';
+export const BROWSER_SUPPORT = 'location/BROWSER_SUPPORT';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -200,6 +201,11 @@ export const routes = {
     path: '/privacy-policy',
     component: 'privacy',
     controller: 'privacy'
+  },
+  [BROWSER_SUPPORT]: {
+    path: '/notsupportedbrowser',
+    component: 'browser-support',
+    controller: 'browser_support'
   },
   [NOT_FOUND]: {
     path: '/404',
