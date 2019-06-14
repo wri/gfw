@@ -27,7 +27,14 @@ class Widget extends PureComponent {
   componentDidUpdate(prevProps) {
     const { active, settings, config } = this.props;
     if (active) {
-      const mapSyncKeys = ['startYear', 'endYear', 'threshold', 'extentYear'];
+      const mapSyncKeys = [
+        'startYear',
+        'endYear',
+        'threshold',
+        'extentYear',
+        'forestType',
+        'landCategory'
+      ];
       if (
         config &&
         config.datasets &&
@@ -51,7 +58,9 @@ class Widget extends PureComponent {
       extentYear,
       weeks,
       year,
-      latestDate
+      latestDate,
+      forestType,
+      landCategory
     } =
       settings || {};
 
@@ -87,6 +96,23 @@ class Widget extends PureComponent {
       })
     }));
 
+    const polynameDatasets = [
+      ...(forestType &&
+        forestType.datasets &&
+        forestType.datasets.map(d => ({
+          opacity: 0.5,
+          visibility: 1,
+          ...d
+        }))),
+      ...(landCategory &&
+        landCategory.datasets &&
+        landCategory.datasets.map(d => ({
+          opacity: 0.5,
+          visibility: 1,
+          ...d
+        })))
+    ];
+
     const datasets = [
       {
         dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
@@ -97,7 +123,8 @@ class Widget extends PureComponent {
         opacity: 1,
         visibility: true
       },
-      ...widgetDatasets
+      ...widgetDatasets,
+      ...polynameDatasets // polyname = land category or forest type
     ];
 
     setMapSettings({

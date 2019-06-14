@@ -3,24 +3,56 @@
     "label": "Plantations",
     "value": "plantations",
     "metaKey": "gfw_plantations",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "bb1dced4-3ae8-4908-9f36-6514ae69713f",
+        "layers": ["b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4"]
+      }
+    ]
   },
   {
     "label": "Intact Forest Landscapes",
     "value": "ifl",
     "metaKey": "intact_forest_landscapes_change",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
+        "layers": ["fd44b976-62e6-4072-8218-8abf6e254ed8"]
+      }
+    ]
   },
   {
     "label": "Primary Forests",
     "value": "primary_forest",
     "metaKey": "primary_forest",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "714339c1-c775-4303-aad4-16d975b2f023",
+        "layers": ["079fae08-5696-4926-9417-794bd3a7e8dc"]
+      }
+    ]
   },
   {
     "label": "Mangrove forests",
     "value": "mangroves",
     "metaKey": "mangrove_2010_gmw",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "b3b8ca9d-a071-4383-b898-d7f64573b51f",
+        "layers": [
+          "49e3f955-2bab-4f73-8589-c9c039b8da29",
+          "2a7db8fd-c3f5-4f2b-a10d-a375e7dba2d8",
+          "1811af6f-30f4-4957-afab-382a817be27c",
+          "2e799cee-746a-410e-b370-412dd4edab10",
+          "9d4f2d65-71bc-4930-baf2-efa63dcd0ab9",
+          "06e91cb3-8e1d-4920-97fd-f92eb5995546",
+          "90ca1154-72e1-4667-852b-03bad0a4c013"
+        ]
+      }
+    ]
   }
 ]
