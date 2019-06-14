@@ -3,34 +3,9 @@
 .l-privacy-page {
   padding: rem(50px) 0;
 
-  h1,
-  h2 {
-    span {
-      display: block;
-      text-align: center;
-      font-weight: 500;
-    }
-  }
-
-  h1 {
-    font-size: rem(28px);
-    margin-bottom: rem(20px);
-  }
-
-  h2 {
-    font-size: rem(18px);
-    margin-bottom: rem(40px);
-  }
-
-  .alpha-list {
-    list-style: lower-alpha;
-    padding-left: rem(15px);
-    margin-bottom: rem(40px);
-  }
-
-  p,
-  li {
-    font-size: rem(16px);
-    margin-bottom: rem(20px);
+  .privacy-container {
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
   }
 }
