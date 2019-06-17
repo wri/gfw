@@ -58,7 +58,5 @@ export const getStatement = createSelector(
 
 export const getWidgetFooterProps = createStructuredSelector({
   statement: getStatement,
-  showAttributionLink: getIsTrase,
-  type: getType,
-  location: getLocation
+  showAttributionLink: getIsTrase
 });
