@@ -84,6 +84,10 @@ class ApplicationController < ActionController::Base
         desc: 'This Privacy Policy tells you how WRI handles information collected about you through our websites and applications.',
         keywords: 'terms of service, wri, world resources institute, data, global forest watch, data platform, services, terms, forest watcher'
       },
+      stories: {
+        title: "Stories",
+        desc: "Due to limited use, the user stories feature is no longer available on GFW."
+      },
       browser_support: {
         title: "Browser Not Supported",
         desc: "Oops, your browser isn’t supported. Please upgrade to a supported browser and try loading the website again."
