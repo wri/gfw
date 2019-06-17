@@ -1,3 +1,3 @@
 class StoriesController < ApplicationController
-  layout 'application_react'
+  layout 'application_old'
 end

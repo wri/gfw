@@ -1,6 +1,5 @@
 class DashboardsController < ApplicationController
 
-  layout 'application_react'
   before_action :check_location, only: [:index, :embed]
 
   def index
@@ -9,7 +8,7 @@ class DashboardsController < ApplicationController
 
   def embed
     @title = @location_title ? "#{@location_title} | #{@title}" : @title
-    render layout: 'application_react_embed'
+    render layout: 'application_embed'
   end
 
 end
