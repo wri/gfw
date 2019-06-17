@@ -89,11 +89,7 @@ const buildPolynameSelects = () => {
 
 const getRequestUrl = (adm0, adm1, adm2, grouped) => {
   const dataset = getAdmDatasetId(adm0, adm1, adm2, grouped);
-  const REQUEST_URL = `${
-    dataset === 'a77b9bc9-73a4-46db-a096-9969e7acb102'
-      ? process.env.GFW_API
-      : process.env.RESOURCE_WATCH_API
-  }/query/{dataset}?sql=`;
+  const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
 
