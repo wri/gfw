@@ -50,7 +50,7 @@ class Widget extends PureComponent {
 
   syncWidgetWithMap = () => {
     // if active widget settings change, send them to the layer
-    const { setMapSettings, settings, config } = this.props;
+    const { setMapSettings, settings, config, polynames } = this.props;
     const {
       startYear,
       endYear,
@@ -58,9 +58,7 @@ class Widget extends PureComponent {
       extentYear,
       weeks,
       year,
-      latestDate,
-      forestType,
-      landCategory
+      latestDate
     } =
       settings || {};
 
@@ -96,24 +94,21 @@ class Widget extends PureComponent {
       })
     }));
 
-    const polynameDatasets = [
-      ...((forestType &&
-        forestType.datasets &&
-        forestType.datasets.map(d => ({
-          opacity: 0.5,
-          visibility: 1,
-          ...d
-        }))) ||
-        []),
-      ...((landCategory &&
-        landCategory.datasets &&
-        landCategory.datasets.map(d => ({
-          opacity: 0.5,
-          visibility: 1,
-          ...d
-        }))) ||
-        [])
-    ];
+    const polynameDatasets =
+      (polynames &&
+        polynames.length &&
+        polynames
+          .map(
+            polyname =>
+              polyname.datasets &&
+              polyname.datasets.map(d => ({
+                opacity: 0.7,
+                visibility: 1,
+                ...d
+              }))
+          )
+          .flat(1)) ||
+      [];
 
     const datasets = [
       {
@@ -273,7 +268,8 @@ Widget.propTypes = {
   setMapSettings: PropTypes.func,
   setWidgetSettings: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  polynames: PropTypes.array
 };
 
 export default Widget;

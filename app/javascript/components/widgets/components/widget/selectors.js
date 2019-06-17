@@ -6,6 +6,9 @@ import uniq from 'lodash/uniq';
 import sortBy from 'lodash/sortBy';
 import range from 'lodash/range';
 
+import landCategories from 'data/land-categories.json';
+import forestTypes from 'data/forest-types.json';
+
 export const selectAllPropsAndState = (state, ownProps) => ownProps;
 export const selectWidgetSettings = (state, { settings }) => settings;
 export const selectWidgetConfig = (state, { config }) => config;
@@ -139,6 +142,21 @@ export const getLandCategory = createSelector(
   selected => selected && selected.landCategory
 );
 
+export const getPolynames = createSelector(
+  [getForestType, getLandCategory],
+  (forestType, landCategory) => {
+    if (!forestType && !landCategory) return null;
+    return [
+      ...((forestType &&
+        forestTypes.filter(f => f.value === forestType.value)) ||
+        []),
+      ...((landCategory &&
+        landCategories.filter(l => l.value === landCategory.value)) ||
+        [])
+    ];
+  }
+);
+
 export const getIndicator = createSelector(
   [getForestType, getLandCategory],
   (forestType, landCategory) => {
@@ -229,6 +247,7 @@ export const getWidgetProps = () =>
     optionsSelected: getOptionsSelected,
     forestTypes: getForestType,
     landCategory: getLandCategory,
+    polynames: getPolynames,
     indicator: getIndicator,
     options: getOptionsWithYears,
     active: selectWidgetActive
