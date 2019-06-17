@@ -21,22 +21,10 @@ export const getWidgetsData = createThunkAction(
       dispatch(setWidgetsLoading({ loading: true, error: false }));
       getNonGlobalDatasets()
         .then(response => {
-          const { data } = response.data;
-          const nonGlobalDatasets = {};
-          data.forEach(el => {
-            const items = Object.entries(el);
-            items.forEach(item => {
-              const key = item[0];
-              const value = item[1];
-              if (key !== 'iso' && value > 0) {
-                if (!nonGlobalDatasets[key]) nonGlobalDatasets[key] = 0;
-                nonGlobalDatasets[key] += 1;
-              }
-            });
-          });
+          const { rows } = response.data;
           dispatch(
             setWidgetsData({
-              nonGlobalDatasets
+              nonGlobalDatasets: rows && rows[0]
             })
           );
         })
