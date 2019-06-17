@@ -50,8 +50,6 @@ const ALLOWED_PARAMS = [
   'landCategory'
 ];
 
-const CATEGORIZED_POLYNAMES = ['plantations', 'tcs', 'wdpa', 'ifl'];
-
 // quyery building helpers
 const getAdmDatasetId = (adm0, adm1, adm2, grouped) => {
   if (adm2 || (adm1 && grouped)) return ADM2_DATASET;
@@ -80,10 +78,6 @@ const buildPolynameSelects = () => {
     polyString = polyString.concat(
       `count(${p.value}) as ${p.value}${isLast ? '' : ', '}`
     );
-    //   p.categories
-    //     ? `count(${p.value}) as ${p.value}${isLast ? '' : ', '}`
-    //     : `max(${p.value}) as ${p.value}${isLast ? '' : ', '}`
-    // );
   });
 
   return polyString;
@@ -106,15 +100,11 @@ const getWHEREQuery = params => {
       const isLast = paramKeysFiltered.length - 1 === i;
       const isPolyname = ['forestType', 'landCategory'].includes(p);
       const value = isPolyname ? 1 : params[p];
-      let appendString = '';
-      if (!CATEGORIZED_POLYNAMES.includes(params[p])) {
-        appendString = `${isPolyname ? params[p] : p} = ${
-          typeof value === 'number' ? value : `'${value}'`
-        }${isLast ? '' : ' AND '}`;
-      } else {
-        appendString = `${params[p]} is not null${isLast ? '' : ' AND '}`;
-      }
-      paramString = paramString.concat(appendString);
+      const polynameString = `${isPolyname ? params[p] : p} = ${
+        typeof value === 'number' ? value : `'${value}'`
+      }${isLast ? '' : ' AND '}`;
+
+      paramString = paramString.concat(polynameString);
     });
     return paramString;
   }
