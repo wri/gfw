@@ -38,7 +38,7 @@ const NEW_SQL_QUERIES = {
     'SELECT iso, count(plantations) as plantations, count(ifl) as ifl, max(primary_forest) as primary_forest, max(mangroves) as mangroves, max(mining) as mining, count(wdpa) as wdpa, max(kba) as kba, max(tiger_cl) as tiger_cl, max(aze) as aze, max(landmark) as landmark, max(idn_mys_peatlands) as idn_mys_peatlands, max(idn_forest_moratorium) as idn_forest_moratorium, max(oil_palm) as oil_palm, max(wood_fiber) as wood_fiber, max(managed_forests) as managed_forests FROM data GROUP BY iso',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM data {WHERE} GROUP BY {location}'
+    'SELECT {location}, {polynames} FROM adm2_whitelist {WHERE} GROUP BY {location}'
 };
 
 const ALLOWED_PARAMS = [
@@ -76,7 +76,7 @@ const buildPolynameSelects = () => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `count(${p.value}) as ${p.value}${isLast ? '' : ', '}`
+      `sum(${p.value}) as ${p.value}${isLast ? '' : ', '}`
     );
   });
 
@@ -300,7 +300,7 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
 };
 
 export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2)}${
+  const url = `${CARTO_REQUEST_URL}${
     NEW_SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
