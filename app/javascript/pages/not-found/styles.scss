@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
-.l-browser-support-page {
-  .browser-message {
+.l-not-found-page {
+  .not-found-message {
     padding: rem(60px) 0;
     display: flex;
     justify-content: center;
@@ -12,9 +12,11 @@
       padding: rem(200px) 0;
     }
 
-    img {
-      max-width: rem(200px);
+    .error-tree {
+      width: 100%;
+      height: rem(200px);
       margin-bottom: rem(20px);
+      padding-right: rem(10px);
     }
 
     h1 {
