@@ -97,20 +97,22 @@ class Widget extends PureComponent {
     }));
 
     const polynameDatasets = [
-      ...(forestType &&
+      ...((forestType &&
         forestType.datasets &&
         forestType.datasets.map(d => ({
           opacity: 0.5,
           visibility: 1,
           ...d
-        }))),
-      ...(landCategory &&
+        }))) ||
+        []),
+      ...((landCategory &&
         landCategory.datasets &&
         landCategory.datasets.map(d => ({
           opacity: 0.5,
           visibility: 1,
           ...d
-        })))
+        }))) ||
+        [])
     ];
 
     const datasets = [
@@ -124,7 +126,7 @@ class Widget extends PureComponent {
         visibility: true
       },
       ...widgetDatasets,
-      ...polynameDatasets // polyname = land category or forest type
+      ...polynameDatasets
     ];
 
     setMapSettings({
