@@ -38,7 +38,7 @@ const NEW_SQL_QUERIES = {
     'SELECT iso, count(plantations) as plantations, count(ifl) as ifl, max(primary_forest) as primary_forest, max(mangroves) as mangroves, max(mining) as mining, count(wdpa) as wdpa, max(kba) as kba, max(tiger_cl) as tiger_cl, max(aze) as aze, max(landmark) as landmark, max(idn_mys_peatlands) as idn_mys_peatlands, max(idn_forest_moratorium) as idn_forest_moratorium, max(oil_palm) as oil_palm, max(wood_fiber) as wood_fiber, max(managed_forests) as managed_forests FROM data GROUP BY iso',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM adm2_whitelist {WHERE} GROUP BY {location}'
+    'SELECT {location}, {polynames} FROM polyname_whitelist {WHERE} GROUP BY {location}'
 };
 
 const ALLOWED_PARAMS = [
