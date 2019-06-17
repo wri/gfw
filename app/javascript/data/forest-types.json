@@ -11,7 +11,8 @@
     "value": "ifl",
     "metaKey": "intact_forest_landscapes_change",
     "global": true,
-    "categories": [2016, 2013, 2000, 0]
+    "default": "2013",
+    "categories": [2016, 2013, 2000]
   },
   {
     "label": "Primary Forests",

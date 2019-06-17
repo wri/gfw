@@ -49,7 +49,8 @@
       "Fruit Mix": "#fefe97",
       "Other Mix": "#e1efc8",
       "Unknown": "#dcd9d9",
-      "Recently Cleared": "#d5a6ea"
+      "Recently Cleared": "#d5a6ea",
+      "Unknown Mix": "#a0c746"
     },
     "types": {
       "Large industrial plantation": "#fdada9",
