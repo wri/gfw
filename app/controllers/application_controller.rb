@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
 
   def check_browser
     unless UserAgentValidator.user_agent_supported? request.user_agent
-      redirect_to "/notsupportedbrowser"
+      redirect_to "/browser-support"
     end
   end
 

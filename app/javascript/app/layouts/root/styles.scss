@@ -12,11 +12,12 @@
 
   .page {
     position: relative;
-    min-height: calc(100vh - 60px);
+    // min-height: calc(100vh - 60px);
     z-index: 0;
 
     .page-loader {
       z-index: 1;
+      min-height: calc(100vh - 60px);
     }
 
     &.mobile {

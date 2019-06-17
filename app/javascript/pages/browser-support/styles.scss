@@ -9,12 +9,14 @@
     flex-direction: column;
 
     @media screen and (min-width: $screen-m) {
-      padding: rem(200px) 0;
+      padding: rem(160px) 0;
     }
 
-    img {
-      max-width: rem(200px);
+    .error-tree {
+      width: 100%;
+      height: rem(200px);
       margin-bottom: rem(20px);
+      padding-right: rem(10px);
     }
 
     h1 {
@@ -33,6 +35,10 @@
       line-height: rem(30px);
       color: $slate;
       text-align: center;
+
+      &.small {
+        color: $hot-grey;
+      }
     }
   }
 }

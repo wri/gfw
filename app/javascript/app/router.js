@@ -203,7 +203,7 @@ export const routes = {
     controller: 'privacy'
   },
   [BROWSER_SUPPORT]: {
-    path: '/notsupportedbrowser',
+    path: '/browser-support',
     component: 'browser-support',
     controller: 'browser_support'
   },

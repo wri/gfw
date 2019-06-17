@@ -72,7 +72,7 @@ Gfw::Application.routes.draw do
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
   # static #
-  get '/notsupportedbrowser' => 'browser_support#index', :as => 'notsupportedbrowser'
+  get '/browser-support' => 'browser_support#index'
   get '/terms' => 'terms#index'
   get '/privacy-policy' => 'privacy#index'
 
