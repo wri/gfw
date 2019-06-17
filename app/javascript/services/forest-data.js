@@ -78,10 +78,12 @@ const buildPolynameSelects = () => {
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      p.categories
-        ? `count(${p.value}) as ${p.value}${isLast ? '' : ', '}`
-        : `max(${p.value}) as ${p.value}${isLast ? '' : ', '}`
+      `count(${p.value}) as ${p.value}${isLast ? '' : ', '}`
     );
+    //   p.categories
+    //     ? `count(${p.value}) as ${p.value}${isLast ? '' : ', '}`
+    //     : `max(${p.value}) as ${p.value}${isLast ? '' : ', '}`
+    // );
   });
 
   return polyString;
