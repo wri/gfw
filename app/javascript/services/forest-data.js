@@ -107,21 +107,18 @@ const getWHEREQuery = params => {
       );
 
       const polynameString = `
-        ${isPolyname ? `${params[p]} is not "0"` : ''}
-        ${
+        ${isPolyname ? `${params[p]} is not "0"` : ''}${
   isPolyname &&
-          polynameMeta &&
-          polynameMeta.default &&
-          polynameMeta.categories
+        polynameMeta &&
+        polynameMeta.default &&
+        polynameMeta.categories
     ? ` AND ${params[p]} = '${polynameMeta.default}'`
     : ''
-}
-        ${
+}${
   !isPolyname
     ? `${p} = ${typeof value === 'number' ? value : `'${value}'`}`
     : ''
-}
-        ${isLast ? '' : ' AND '}`;
+}${isLast ? '' : ' AND '}`;
 
       paramString = paramString.concat(polynameString);
     });

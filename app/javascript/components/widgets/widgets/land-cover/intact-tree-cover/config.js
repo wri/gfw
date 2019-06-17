@@ -33,12 +33,12 @@ export default {
   },
   sentences: {
     initial:
-      'As of 2013, {percentage} of {location} tree cover was <b>intact forest</b>.',
+      'As of 2016, {percentage} of {location} tree cover was <b>intact forest</b>.',
     withIndicator:
-      'As of 2013, {percentage} of {location} tree cover in {indicator} was <b>intact forest</b>.',
+      'As of 2016, {percentage} of {location} tree cover in {indicator} was <b>intact forest</b>.',
     noIntact:
-      'As of 2013, <b>none</b> of {location} tree cover was <b>intact forest</b>.',
+      'As of 2016, <b>none</b> of {location} tree cover was <b>intact forest</b>.',
     noIntactwithIndicator:
-      'As of 2013, <b>none</b> of {location} tree cover in {indicator} was <b>intact forest</b>.'
+      'As of 2016, <b>none</b> of {location} tree cover in {indicator} was <b>intact forest</b>.'
   }
 };

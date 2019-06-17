@@ -6,11 +6,7 @@ export default ({ params }) =>
     .all([
       getExtent({ ...params, forestType: '' }),
       getExtent({ ...params }),
-      getExtent({
-        ...params,
-        forestType:
-          params.forestType === 'ifl' ? 'plantations' : params.forestType
-      })
+      getExtent({ ...params, forestType: 'plantations' })
     ])
     .then(
       axios.spread((gadm28Response, iflResponse, plantationsResponse) => {
