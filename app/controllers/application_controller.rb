@@ -87,6 +87,9 @@ class ApplicationController < ActionController::Base
       browser_support: {
         title: "Browser Not Supported",
         desc: "Oops, your browser isn’t supported. Please upgrade to a supported browser and try loading the website again."
+      },
+      not_found: {
+        title: 'Page Not Found'
       }
     }
 

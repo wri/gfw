@@ -92,6 +92,8 @@ Gfw::Application.routes.draw do
   get '/robots', to: redirect('/robots.txt'), format: false
   get '/robots.:format' => 'robots#index'
 
+  get '/*all' => 'not_found#index'
+
   ########### /ACTIVE ROUTES #############
 
 end

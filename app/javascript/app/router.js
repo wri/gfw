@@ -208,8 +208,9 @@ export const routes = {
     controller: 'browser_support'
   },
   [NOT_FOUND]: {
-    path: '/404',
-    thunk: redirectThunk
+    thunk: redirectThunk,
+    controller: 'not_found',
+    component: 'not-found'
   }
 };
 
