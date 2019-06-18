@@ -57,7 +57,10 @@ class Page extends PureComponent {
             <p className="video-msg">GFW in 2&#39;</p>
           </div>
         </Cover>
-        <SubnavMenu className="about-links" links={Object.values(sections)} />
+        <SubnavMenu
+          className="about-links"
+          links={Object.values(sections || {})}
+        />
         <Projects />
         {sections &&
           Object.keys(sections).map(s => {
