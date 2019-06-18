@@ -120,8 +120,8 @@ class Widget extends PureComponent {
         opacity: 1,
         visibility: true
       },
-      ...widgetDatasets,
-      ...polynameDatasets
+      ...polynameDatasets,
+      ...widgetDatasets
     ];
 
     setMapSettings({
