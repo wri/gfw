@@ -1,4 +1,5 @@
 class ConnectController < ApplicationController
+  layout 'application_old'
 
   def index
     @title = 'My GFW'

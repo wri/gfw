@@ -2,23 +2,18 @@
 <html>
   <head>
     <%= render 'shared/meta' %>
-    <%= render 'shared/links' %>
-
-    <%= stylesheet_link_tag controller_name, :media => 'all' %>
-
-    <%= render 'shared/google_analytics' %>
-    <%= render 'shared/tracking' %>
     <%= render 'shared/favicons' %>
 
+    <!-- render react app pack -->
+    <%= render 'shared/tracking' %>
+    <%= javascript_entrypoint_pack_tag 'app' %>
+    <% if @is_production %>
+      <%= stylesheet_entrypoint_pack_tag 'app' %>
+    <% end %>
+
     <%= yield :head %>
-    <%= yield :js %>
   </head>
-  <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
+  <body>
     <%= yield %>
-
-    <%= render 'shared/icons/svg_icons' %>
-    <%= render 'shared/js_config' %>
-
-    <%= requirejs_include_tag controller_name %>
   </body>
 </html>
