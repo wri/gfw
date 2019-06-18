@@ -47,6 +47,7 @@ const selectPTWData = state => {
       const locationFromGridId = `${splitGridId[0]}${
         splitGridId[2] ? `, ${splitGridId[2]}` : ''
       }`;
+      const locationName = locationFromGridId.toUpperCase();
 
       return {
         tag: meta.label,
@@ -58,7 +59,9 @@ const selectPTWData = state => {
         title: d.name || `Place to Watch: ${meta.label}`,
         summary:
           d.description ||
-          `FOREST CLEARING IN ${locationFromGridId.toUpperCase()}: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+          `FOREST CLEARING IN ${
+            locationName === 'SEA' ? 'SE Asia' : locationName
+          }: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
             meta.label
           }.`,
         showFullSummary: true,

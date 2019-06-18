@@ -114,6 +114,7 @@ export const getCardData = createSelector(
       splitGridId &&
       `${splitGridId[0]}${splitGridId[2] ? `, ${splitGridId[2]}` : ''}`;
     const meta = customMeta && customMeta[data.type];
+    const locationName = locationFromGridId.toUpperCase();
 
     return {
       ...articleData,
@@ -129,7 +130,9 @@ export const getCardData = createSelector(
       ...(!articleData.summary &&
         locationFromGridId &&
         meta && {
-          summary: `FOREST CLEARING IN ${locationFromGridId.toUpperCase()}: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
+          summary: `FOREST CLEARING IN ${
+            locationName === 'SEA' ? 'SE Asia' : locationName
+          }: This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${
             meta.label
           }.`,
           showFullSummary: true
