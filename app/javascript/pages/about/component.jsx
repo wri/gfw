@@ -57,13 +57,18 @@ class Page extends PureComponent {
             <p className="video-msg">GFW in 2&#39;</p>
           </div>
         </Cover>
-        <SubnavMenu className="about-links" links={sections} />
+        <SubnavMenu className="about-links" links={Object.values(sections)} />
         <Projects />
         {sections &&
-          sections.map(s => {
-            const PageComponent = sectionComponents[s.component];
+          Object.keys(sections).map(s => {
+            const section = sections[s];
+            const PageComponent = sectionComponents[section.component];
             return PageComponent ? (
-              <div id={s.anchor} className={s.anchor} key={s.anchor}>
+              <div
+                id={section.anchor}
+                className={section.anchor}
+                key={section.anchor}
+              >
                 <PageComponent />
               </div>
             ) : null;
@@ -76,7 +81,7 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  sections: PropTypes.array.isRequired,
+  sections: PropTypes.object.isRequired,
   setModalVideoData: PropTypes.func.isRequired
 };
 

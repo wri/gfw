@@ -74,33 +74,33 @@ export const routes = {
     controller: 'about',
     path: '/about',
     component: 'about',
-    sections: [
-      {
+    sections: {
+      how: {
         label: 'GFW in Action',
         anchor: 'gfw-in-action',
         component: 'how'
       },
-      {
+      impacts: {
         label: 'Impacts',
         anchor: 'impacts',
         component: 'impacts'
       },
-      {
+      history: {
         label: 'History',
         anchor: 'history',
         component: 'history'
       },
-      {
+      contact: {
         label: 'Contact Us',
         anchor: 'contact',
         component: 'contact'
       },
-      {
+      partners: {
         label: 'Partnership',
         anchor: 'partnership',
         component: 'partners'
       }
-    ]
+    }
   },
   [SGF]: {
     controller: 'grants_and_fellowships',
