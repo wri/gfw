@@ -1,22 +1,26 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 import Icon from 'components/ui/icon';
 import treeImage from 'assets/icons/error.svg';
 
 import './styles.scss';
 
-class BrowserSupportPage extends PureComponent {
+class ErrorPage extends PureComponent {
+  static propTypes = {
+    metadata: PropTypes.object.isRequired
+  };
+
   render() {
+    const { metadata } = this.props;
     return (
-      <div className="l-not-found-page">
+      <div className="l-error-page">
         <div className="row">
           <div className="column small-12 medium-8 medium-offset-2">
-            <div className="not-found-message">
+            <div className="error-message">
               <Icon icon={treeImage} className="error-tree" />
-              <h1>Page Not Found</h1>
-              <p>
-                You may have mistyped the address or the page may have moved.
-              </p>
+              <h1>{metadata && metadata.title}</h1>
+              <p>{metadata && metadata.desc}</p>
             </div>
           </div>
         </div>
@@ -25,4 +29,4 @@ class BrowserSupportPage extends PureComponent {
   }
 }
 
-export default BrowserSupportPage;
+export default ErrorPage;

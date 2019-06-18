@@ -7,10 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :cache_keys, if: proc { Rails.env.production? }
   before_action :set_metadata
 
-  def not_found
-    raise ActionController::RoutingError.new('Not Found')
-  end
-
   def cache_keys
     @cache_keys = $redis.keys('*')
   end
@@ -95,6 +91,14 @@ class ApplicationController < ActionController::Base
       not_found: {
         title: 'Page Not Found',
         desc: 'You may have mistyped the address or the page may have moved.'
+      },
+      unacceptable: {
+        title: "The change you wanted was rejected",
+        desc: "Maybe you tried to change something you didn't have access to."
+      },
+      internal_error: {
+        title: "We're sorry, something went wrong.",
+        desc: "Maybe you tried to change something you didn't have access to."
       }
     }
 

@@ -20,6 +20,8 @@ export const STORIES = 'location/STORIES';
 export const TERMS = 'location/TERMS';
 export const PRIVACY = 'location/PRIVACY';
 export const BROWSER_SUPPORT = 'location/BROWSER_SUPPORT';
+export const UNACCEPTABLE = 'location/UNACCEPTABLE';
+export const INTERNAL_ERROR = 'location/INTERNAL_ERROR';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -207,11 +209,21 @@ export const routes = {
     component: 'browser-support',
     controller: 'browser_support'
   },
+  [UNACCEPTABLE]: {
+    path: '/422',
+    controller: 'unacceptable',
+    component: 'error'
+  },
+  [INTERNAL_ERROR]: {
+    path: '/500',
+    controller: 'internal_error',
+    component: 'error'
+  },
   [NOT_FOUND]: {
-    path: '404',
+    path: '/404',
     thunk: redirectThunk,
     controller: 'not_found',
-    component: 'not-found'
+    component: 'error'
   }
 };
 

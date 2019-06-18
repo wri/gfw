@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
-.l-not-found-page {
-  .not-found-message {
+.l-error-page {
+  .error-message {
     padding: rem(60px) 0;
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@
       width: 100%;
       height: rem(200px);
       margin-bottom: rem(20px);
-      padding-right: rem(10px);
+      padding-right: rem(15px);
     }
 
     h1 {
