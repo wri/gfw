@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { fetchLossRanked, fetchExtentRanked } from 'services/forest-data';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios.all([fetchLossRanked(params), fetchExtentRanked(params)]).then(
     axios.spread((lossResponse, extentResponse) => {
       const { data } = lossResponse.data;
@@ -21,3 +21,10 @@ export default ({ params }) =>
       };
     })
   );
+
+export const getDataURL = ({ params }) => [
+  fetchLossRanked({ ...params, download: true }),
+  fetchExtentRanked({ ...params, download: true })
+];
+
+export default getData;

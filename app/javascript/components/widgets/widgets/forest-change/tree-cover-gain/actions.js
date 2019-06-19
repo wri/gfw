@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { getGainRanked } from 'services/forest-data';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios.all([getGainRanked(params)]).then(
     axios.spread(gainResponse => {
       const gainData = gainResponse.data.data;
@@ -22,3 +22,9 @@ export default ({ params }) =>
       return mappedData;
     })
   );
+
+export const getDataURL = ({ params }) => [
+  getGainRanked({ ...params, download: true })
+];
+
+export default getData;

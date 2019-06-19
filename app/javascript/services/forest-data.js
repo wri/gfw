@@ -75,7 +75,8 @@ export const getLocations = ({
   forestType,
   landCategory,
   threshold,
-  extentYear
+  extentYear,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locations}`
     .replace('{location}', adm1 ? 'adm2' : 'adm1')
@@ -88,6 +89,7 @@ export const getLocations = ({
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{grouping}', adm1 ? `AND adm1 = '${adm1}'` : 'GROUP BY adm1');
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
@@ -96,7 +98,8 @@ export const getLocationsLoss = ({
   adm1,
   forestType,
   landCategory,
-  threshold
+  threshold,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.locationsLoss}`
     .replace('{select}', adm1 ? 'adm2' : 'adm1')
@@ -106,6 +109,7 @@ export const getLocationsLoss = ({
     .replace('{adm1}', adm1 ? `AND adm1 = ${adm1}` : '')
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory));
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
@@ -113,12 +117,14 @@ export const fetchLossRanked = ({
   extentYear,
   forestType,
   landCategory,
-  threshold
+  threshold,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.lossRanked}`
     .replace('{extent_year}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicator(forestType, landCategory))
     .replace('{threshold}', threshold || 30);
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
@@ -126,12 +132,14 @@ export const fetchExtentRanked = ({
   extentYear,
   forestType,
   landCategory,
-  threshold
+  threshold,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.rankedExtent}`
     .replace('{extent_year}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicator(forestType, landCategory))
     .replace('{threshold}', threshold || 30);
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
@@ -142,13 +150,15 @@ export const getExtent = ({
   forestType,
   landCategory,
   threshold,
-  extentYear
+  extentYear,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.extent}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
@@ -200,13 +210,20 @@ export const getGain = ({ adm0, adm1, adm2, forestType, landCategory }) => {
   return request.get(url);
 };
 
-export const getGainLocations = ({ adm0, adm1, forestType, landCategory }) => {
+export const getGainLocations = ({
+  adm0,
+  adm1,
+  forestType,
+  landCategory,
+  download
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.gainLocations}`
     .replace('{location}', getLocationQuery(adm0, adm1))
     .replace('{admin}', adm1 ? 'adm2' : 'adm1')
     .replace('{calc}', adm1 ? 'area_gain' : 'SUM(area_gain)')
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{grouping}', !adm1 ? 'GROUP BY adm1 ORDER BY adm1' : '');
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
@@ -216,12 +233,14 @@ export const getLoss = ({
   adm2,
   forestType,
   landCategory,
-  threshold
+  threshold,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.loss}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory));
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
@@ -267,7 +286,8 @@ export const getGainRanked = ({
   adm2,
   forestType,
   landCategory,
-  extentYear
+  extentYear,
+  download
 }) => {
   let regionValue = 'iso';
   if (adm2) {
@@ -285,6 +305,7 @@ export const getGainRanked = ({
     .replace('{location}', location)
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{polyname}', getIndicator(forestType, landCategory));
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 

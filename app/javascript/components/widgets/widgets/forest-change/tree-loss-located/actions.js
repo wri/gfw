@@ -2,7 +2,7 @@ import { getLocations, getLocationsLoss } from 'services/forest-data';
 import groupBy from 'lodash/groupBy';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([getLocations({ ...params }), getLocationsLoss({ ...params })])
     .then(
@@ -34,3 +34,10 @@ export default ({ params }) =>
         };
       })
     );
+
+export const getDataURL = ({ params }) => [
+  getLocations({ ...params, download: true }),
+  getLocationsLoss({ ...params, download: true })
+];
+
+export default getData;

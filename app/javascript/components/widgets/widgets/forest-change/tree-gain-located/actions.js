@@ -1,7 +1,7 @@
 import { getLocations, getGainLocations } from 'services/forest-data';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([getLocations({ ...params }), getGainLocations({ ...params })])
     .then(
@@ -30,3 +30,10 @@ export default ({ params }) =>
         };
       })
     );
+
+export const getDataURL = ({ params }) => [
+  getLocations({ ...params, download: true }),
+  getGainLocations({ ...params, download: true })
+];
+
+export default getData;

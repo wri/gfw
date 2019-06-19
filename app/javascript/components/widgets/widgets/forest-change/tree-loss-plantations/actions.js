@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getLoss } from 'services/forest-data';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getLoss({ ...params, forestType: 'plantations' }),
@@ -27,3 +27,10 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = ({ params }) => [
+  getLoss({ ...params, forestType: 'plantations', download: true }),
+  getLoss({ ...params, forestType: '', download: true })
+];
+
+export default getData;
