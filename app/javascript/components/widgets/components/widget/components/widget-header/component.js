@@ -173,7 +173,15 @@ class WidgetHeader extends PureComponent {
 
     const zip = new JSZip();
     urls.forEach((url, index) => {
-      const filename = `file ${index}.csv`; // TODO: change this
+      let filename;
+      try {
+        filename = url
+          .split('?')[0]
+          .split('/')
+          .pop();
+      } catch (error) {
+        filename = `file ${index + 1}.csv`;
+      }
       zip.file(filename, urlToPromise(url), { binary: true });
     });
     zip.generateAsync({ type: 'blob' }).then(content => {
@@ -183,11 +191,12 @@ class WidgetHeader extends PureComponent {
 
   renderDownloadButton = () => {
     const params = { ...this.props.location, ...this.props.settings };
-    const url = this.props.getDataURL(params);
+    const urls = this.props.getDataURL(params);
     return (
       <Button
         className="theme-button-small square"
-        extLink={encodeURI(url)}
+        extLink={urls.length === 1 ? encodeURI(urls[0]) : null}
+        onClick={urls.length > 1 && (() => this.generateZipFromURL(urls))}
         tooltip={{ text: 'Download data for this widget' }}
       >
         <Icon icon={downloadIcon} />

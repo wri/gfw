@@ -25,5 +25,8 @@ export const getData = ({ params }) =>
       })
     );
 
-export const getDataURL = ({ params }) =>
-  getAdmin({ ...params, indicator: 'plantations', download: true });
+export const getDataURL = ({ params }) => [
+  getAdmin({ ...params, indicator: 'plantations', download: true })
+];
+
+export default getData;
