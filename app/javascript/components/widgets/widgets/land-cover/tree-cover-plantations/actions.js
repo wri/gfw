@@ -1,7 +1,7 @@
 import { getExtent, getPlantationsExtent } from 'services/forest-data';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getExtent({ ...params, forestType: '' }),
@@ -25,3 +25,10 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = ({ params }) => [
+  getExtent({ ...params, forestType: '', download: true }),
+  getPlantationsExtent({ ...params, download: true })
+];
+
+export default getData;

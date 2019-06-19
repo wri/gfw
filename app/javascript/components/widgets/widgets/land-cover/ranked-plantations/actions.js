@@ -4,7 +4,7 @@ import {
 } from 'services/forest-data';
 import axios from 'axios';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getMultiRegionExtent(params),
@@ -26,3 +26,10 @@ export default ({ params }) =>
         return data;
       })
     );
+
+export const getDataURL = ({ params }) => [
+  getMultiRegionExtent({ ...params, download: true }),
+  getPlantationsExtent({ ...params, groupByRegion: true, download: true })
+];
+
+export default getData;

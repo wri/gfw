@@ -1,6 +1,6 @@
 import { fetchExtentRanked } from 'services/forest-data';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   fetchExtentRanked(params).then(response => {
     const { data } = response.data;
     let mappedData = [];
@@ -18,3 +18,9 @@ export default ({ params }) =>
     }
     return mappedData;
   });
+
+export const getDataURL = ({ params }) => [
+  fetchExtentRanked({ ...params, download: true })
+];
+
+export default getData;

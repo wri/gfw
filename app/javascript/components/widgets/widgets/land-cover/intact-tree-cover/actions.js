@@ -1,7 +1,7 @@
 import { getExtent } from 'services/forest-data';
 import axios from 'axios';
 
-export default ({ params }) => {
+export const getData = ({ params }) => {
   let polyname = 'plantations';
   switch (params.indicator) {
     case 'ifl__wdpa':
@@ -46,3 +46,24 @@ export default ({ params }) => {
       })
     );
 };
+
+export const getDataURL = ({ params }) => {
+  let polyname = 'plantations';
+  switch (params.indicator) {
+    case 'ifl__wdpa':
+      polyname = 'plantations__wdpa';
+      break;
+    case 'ifl__mining':
+      polyname = 'plantations__mining';
+      break;
+    default:
+      break;
+  }
+  return [
+    getExtent({ ...params, forestType: '', download: true }),
+    getExtent({ ...params, download: true }),
+    getExtent({ ...params, indicator: polyname, download: true })
+  ];
+};
+
+export default getData;

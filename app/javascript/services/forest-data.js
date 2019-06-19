@@ -168,7 +168,8 @@ export const getPlantationsExtent = ({
   adm2,
   threshold,
   type,
-  groupByRegion
+  groupByRegion,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.plantationsExtent}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
@@ -179,6 +180,7 @@ export const getPlantationsExtent = ({
       '{type}',
       groupByRegion ? `${adm1 ? 'adm2' : 'adm1'}, ${type}` : type
     );
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 
