@@ -155,12 +155,12 @@ class Header extends PureComponent {
             </ul>
           </div>
           <div className="legal-section">
-            <a className="title" href="/terms">
+            <NavLink className="title" to="/terms" onClick={hideMenu}>
               Terms
-            </a>
-            <a className="title" href="/privacy-policy">
+            </NavLink>
+            <NavLink className="title" to="/privacy-policy" onClick={hideMenu}>
               Privacy Policy
-            </a>
+            </NavLink>
             <button className="title" onClick={() => toggleContactUs(true)}>
               Contact us
             </button>

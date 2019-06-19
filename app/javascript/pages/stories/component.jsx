@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import treeImage from './assets/tree.png';
+import treeImage from 'assets/icons/tree-success.png';
 
 import './styles.scss';
 

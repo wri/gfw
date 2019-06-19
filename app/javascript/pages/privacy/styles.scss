@@ -1,0 +1,11 @@
+@import '~styles/settings.scss';
+
+.l-privacy-page {
+  padding: rem(50px) 0;
+
+  .privacy-container {
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+  }
+}

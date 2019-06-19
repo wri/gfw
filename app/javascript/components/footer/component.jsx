@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
+import { NavLink } from 'redux-first-router-link';
 
 import MediaQuery from 'react-responsive';
 import Icon from 'components/ui/icon';
@@ -185,13 +186,13 @@ class Footer extends PureComponent {
               <div className="row">
                 <div className="column small-12">
                   <div className="footer-terms">
-                    <a className="terms" href="/terms">
+                    <NavLink className="terms" to="/terms">
                       Terms of Service
-                    </a>
+                    </NavLink>
                     {' · '}
-                    <a className="terms" href="/privacy-policy">
+                    <NavLink className="terms" to="/privacy-policy">
                       Privacy Policy
-                    </a>
+                    </NavLink>
                     {' · '}
                     <a
                       className="terms"
