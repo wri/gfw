@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { isParent } from 'utils/dom';
 import cx from 'classnames';
+import JSZip from 'jszip';
+import JSZipUtils from 'jszip-utils';
+import { saveAs } from 'file-saver';
 import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
@@ -156,13 +159,35 @@ class WidgetHeader extends PureComponent {
     );
   };
 
+  generateZipFromURL = urls => {
+    const urlToPromise = url =>
+      new Promise((resolve, reject) => {
+        JSZipUtils.getBinaryContent(url, (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+
+    const zip = new JSZip();
+    urls.forEach((url, index) => {
+      const filename = `file ${index}.csv`; // TODO: change this
+      zip.file(filename, urlToPromise(url), { binary: true });
+    });
+    zip.generateAsync({ type: 'blob' }).then(content => {
+      saveAs(content, 'data.zip');
+    });
+  };
+
   renderDownloadButton = () => {
     const params = { ...this.props.location, ...this.props.settings };
     const url = this.props.getDataURL(params);
     return (
       <Button
         className="theme-button-small square"
-        link={encodeURI(url)}
+        extLink={encodeURI(url)}
         tooltip={{ text: 'Download data for this widget' }}
       >
         <Icon icon={downloadIcon} />
