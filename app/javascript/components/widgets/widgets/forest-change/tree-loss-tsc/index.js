@@ -1,5 +1,5 @@
 import * as ParentWidget from '../tree-loss';
-import getData from './actions';
+import { getData, getDataURL } from './actions';
 import getProps, { parsePayload } from './selectors';
 import childConfig from './config';
 import childSettings from './settings';
@@ -18,4 +18,12 @@ const settings = {
   ...childSettings
 };
 
-export { Component, getProps, getData, config, settings, parsePayload };
+export {
+  getData,
+  getDataURL,
+  getProps,
+  Component,
+  config,
+  settings,
+  parsePayload
+};
