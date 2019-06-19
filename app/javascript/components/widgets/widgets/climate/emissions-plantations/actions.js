@@ -3,7 +3,7 @@ import axios from 'axios';
 import maxBy from 'lodash/maxBy';
 import range from 'lodash/range';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios
     .all([
       getAdmin({ ...params }),
@@ -24,3 +24,6 @@ export default ({ params }) =>
         return { adminData, plantData, years: range(2013, maxYear + 1) };
       })
     );
+
+export const getDataURL = ({ params }) =>
+  getAdmin({ ...params, indicator: 'plantations', download: true });

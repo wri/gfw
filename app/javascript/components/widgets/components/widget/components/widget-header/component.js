@@ -12,6 +12,7 @@ import settingsIcon from 'assets/icons/settings.svg';
 import shareIcon from 'assets/icons/share.svg';
 import infoIcon from 'assets/icons/info.svg';
 import mapIcon from 'assets/icons/map-button.svg';
+import downloadIcon from 'assets/icons/download.svg';
 
 import WidgetSettings from './components/widget-settings';
 
@@ -155,8 +156,30 @@ class WidgetHeader extends PureComponent {
     );
   };
 
+  renderDownloadButton = () => {
+    const params = { ...this.props.location, ...this.props.settings };
+    const url = this.props.getDataURL(params);
+    return (
+      <Button
+        className="theme-button-small square"
+        link={encodeURI(url)}
+        tooltip={{ text: 'Download data for this widget' }}
+      >
+        <Icon icon={downloadIcon} />
+      </Button>
+    );
+  };
+
   render() {
-    const { title, settings, options, embed, config, simple } = this.props;
+    const {
+      title,
+      settings,
+      options,
+      embed,
+      config,
+      simple,
+      getDataURL
+    } = this.props;
 
     return (
       <div className={cx('c-widget-header', { simple })}>
@@ -175,6 +198,7 @@ class WidgetHeader extends PureComponent {
             this.renderSettingsButton()}
           <div className="small-options">
             {this.renderMetadataButton()}
+            {getDataURL && this.renderDownloadButton()}
             {!simple && this.renderShareButton()}
           </div>
         </div>
@@ -187,6 +211,7 @@ WidgetHeader.propTypes = {
   widget: PropTypes.string,
   title: PropTypes.string.isRequired,
   settings: PropTypes.object,
+  location: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   options: PropTypes.object,
   setShareModal: PropTypes.func.isRequired,
   shareData: PropTypes.object.isRequired,
@@ -201,7 +226,8 @@ WidgetHeader.propTypes = {
   simple: PropTypes.bool,
   setWidgetSettings: PropTypes.func,
   setActiveWidget: PropTypes.func,
-  metakey: PropTypes.string
+  metakey: PropTypes.string,
+  getDataURL: PropTypes.func
 };
 
 export default WidgetHeader;

@@ -302,7 +302,14 @@ export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
   return request.get(url);
 };
 
-export const getAdmin = ({ adm0, adm1, adm2, threshold, indicator }) => {
+export const getAdmin = ({
+  adm0,
+  adm1,
+  adm2,
+  threshold,
+  indicator,
+  download
+}) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.admin}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold || 30)
@@ -314,5 +321,6 @@ export const getAdmin = ({ adm0, adm1, adm2, threshold, indicator }) => {
         ? 'polyname, iso, nested(year_data.year)'
         : 'bound1, polyname, iso, nested(year_data.year)'
     );
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
