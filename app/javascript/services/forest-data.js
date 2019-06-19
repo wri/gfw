@@ -179,7 +179,8 @@ export const getMultiRegionExtent = ({
   forestType,
   landCategory,
   threshold,
-  extentYear
+  extentYear,
+  download
 }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.multiRegionExtent}`
     .replace(/{adm1}/g, adm1 ? 'adm2' : 'adm1')
@@ -187,6 +188,7 @@ export const getMultiRegionExtent = ({
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYear(extentYear));
+  if (download) return url.replace('query', 'download');
   return request.get(url);
 };
 

@@ -49,13 +49,15 @@ export const fetchGladIntersectionAlerts = ({
   adm0,
   adm1,
   forestType,
-  landCategory
+  landCategory,
+  download
 }) => {
   const url = `${REQUEST_URL}/query/${
     adm1 ? GLAD_ADM2_DATASET : GLAD_ADM1_DATASET
   }?sql=${QUERIES.gladIntersectionAlerts}`
     .replace('{location}', getLocation(adm0, adm1))
     .replace('{polyname}', getIndicator(forestType, landCategory));
+  if (download) return url.replace('query', 'download');
   return request.get(url, 3600, 'gladRequest');
 };
 

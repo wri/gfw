@@ -196,7 +196,7 @@ class WidgetHeader extends PureComponent {
       <Button
         className="theme-button-small square"
         extLink={urls.length === 1 ? encodeURI(urls[0]) : null}
-        onClick={urls.length > 1 && (() => this.generateZipFromURL(urls))}
+        onClick={urls.length > 1 ? () => this.generateZipFromURL(urls) : null}
         tooltip={{ text: 'Download data for this widget' }}
       >
         <Icon icon={downloadIcon} />
