@@ -97,17 +97,15 @@ class Widget extends PureComponent {
     const polynameDatasets =
       (polynames &&
         polynames.length &&
-        polynames
-          .map(
-            polyname =>
-              polyname.datasets &&
-              polyname.datasets.map(d => ({
-                opacity: 0.7,
-                visibility: 1,
-                ...d
-              }))
-          )
-          .flat(1)) ||
+        polynames.flatMap(
+          polyname =>
+            polyname.datasets &&
+            polyname.datasets.map(d => ({
+              opacity: 0.7,
+              visibility: 1,
+              ...d
+            }))
+        )) ||
       [];
 
     const datasets = [
