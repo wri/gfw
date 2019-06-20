@@ -44,13 +44,7 @@
       {
         "dataset": "b3b8ca9d-a071-4383-b898-d7f64573b51f",
         "layers": [
-          "49e3f955-2bab-4f73-8589-c9c039b8da29",
-          "2a7db8fd-c3f5-4f2b-a10d-a375e7dba2d8",
-          "1811af6f-30f4-4957-afab-382a817be27c",
-          "2e799cee-746a-410e-b370-412dd4edab10",
-          "9d4f2d65-71bc-4930-baf2-efa63dcd0ab9",
-          "06e91cb3-8e1d-4920-97fd-f92eb5995546",
-          "90ca1154-72e1-4667-852b-03bad0a4c013"
+          "9d4f2d65-71bc-4930-baf2-efa63dcd0ab9"
         ]
       }
     ]
