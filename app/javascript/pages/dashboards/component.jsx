@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
 import { SCREEN_M } from 'utils/constants';
@@ -10,6 +10,7 @@ import WhitelistsProvider from 'providers/whitelists-provider';
 import GeostoreProvider from 'providers/geostore-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
+import AreasProvider from 'providers/areas-provider';
 
 import Widgets from 'components/widgets';
 import Share from 'components/modals/share';
@@ -56,7 +57,8 @@ class Page extends PureComponent {
       handleCategoryChange,
       noWidgetsMessage,
       widgets,
-      activeWidgetSlug
+      activeWidgetSlug,
+      locationType
     } = this.props;
 
     return (
@@ -65,20 +67,23 @@ class Page extends PureComponent {
           <div className="l-country">
             <div className="content-panel">
               <Header className="header" />
-              <SubNavMenu
-                className="nav"
-                theme="theme-subnav-dark"
-                links={links.map(l => ({
-                  ...l,
-                  onClick: () => {
-                    handleCategoryChange(l.category);
-                    track('selectDashboardCategory', {
-                      label: l.category
-                    });
-                  }
-                }))}
-                checkActive
-              />
+              {links &&
+                !!links.length && (
+                  <SubNavMenu
+                    className="nav"
+                    theme="theme-subnav-dark"
+                    links={links.map(l => ({
+                      ...l,
+                      onClick: () => {
+                        handleCategoryChange(l.category);
+                        track('selectDashboardCategory', {
+                          label: l.category
+                        });
+                      }
+                    }))}
+                    checkActive
+                  />
+                )}
               <Widgets
                 className="dashboard-widgets"
                 noWidgetsMessage={noWidgetsMessage}
@@ -98,10 +103,16 @@ class Page extends PureComponent {
             <ModalMeta />
             <ModalTCL />
             {widgetAnchor && <ScrollTo target={widgetAnchor} />}
-            <CountryDataProvider />
             <DatasetsProvider />
             <LatestProvider />
-            <WhitelistsProvider />
+            <AreasProvider />
+            {locationType === 'country' ||
+              (locationType === 'global' && (
+                <Fragment>
+                  <CountryDataProvider />
+                  <WhitelistsProvider />
+                </Fragment>
+              ))}
             <GeostoreProvider />
           </div>
         )}
@@ -118,7 +129,8 @@ Page.propTypes = {
   noWidgetsMessage: PropTypes.string,
   handleCategoryChange: PropTypes.func,
   widgets: PropTypes.array,
-  activeWidgetSlug: PropTypes.string
+  activeWidgetSlug: PropTypes.string,
+  locationType: PropTypes.string
 };
 
 export default Page;

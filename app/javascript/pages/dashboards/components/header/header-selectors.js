@@ -28,19 +28,39 @@ export const selectData = state => state.header && state.header.data;
 export const selectSettings = state => state.header && state.header.settings;
 export const selectSentences = state =>
   (state.header && state.header.config.sentences) || null;
+export const selectAreas = state => state && state.areas && state.areas.data;
+
+export const getAreasOptions = createSelector([selectAreas], areas => {
+  if (!areas) return null;
+  return {
+    adm0: areas.map(a => ({
+      label: a.name,
+      value: a.id
+    }))
+  };
+});
+
+export const getAdminMetadata = createSelector(
+  [selectLocation, selectCountryData, getAreasOptions],
+  (location, countries, areas) => {
+    if (!countries || !areas) return null;
+    if (location.type === 'aoi') return areas;
+    return countries;
+  }
+);
 
 export const getAdm0Data = createSelector(
-  [selectCountryData],
+  [getAdminMetadata],
   data => data && data.adm0
 );
 
 export const getAdm1Data = createSelector(
-  [selectCountryData],
+  [getAdminMetadata],
   data => data && data.adm1
 );
 
 export const getAdm2Data = createSelector(
-  [selectCountryData],
+  [getAdminMetadata],
   data => data && data.adm2
 );
 
