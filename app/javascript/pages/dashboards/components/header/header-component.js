@@ -78,7 +78,7 @@ class Header extends PureComponent {
                     delay: 1000
                   }}
                   arrowPosition="left"
-                  clearable
+                  clearable={location.type !== 'aoi'}
                 />
               )}
               {location.adm0 &&

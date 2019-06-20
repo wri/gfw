@@ -106,13 +106,12 @@ class Page extends PureComponent {
             <DatasetsProvider />
             <LatestProvider />
             <AreasProvider />
-            {locationType === 'country' ||
-              (locationType === 'global' && (
-                <Fragment>
-                  <CountryDataProvider />
-                  <WhitelistsProvider />
-                </Fragment>
-              ))}
+            {(locationType === 'country' || locationType === 'global') && (
+              <Fragment>
+                <CountryDataProvider />
+                <WhitelistsProvider />
+              </Fragment>
+            )}
             <GeostoreProvider />
           </div>
         )}

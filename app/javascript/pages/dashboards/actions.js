@@ -71,7 +71,10 @@ export const handleLocationChange = createThunkAction(
     } else {
       const newAdminType = !location.adm0 ? 'global' : 'country';
       newPayload = {
-        type: payload.type === 'global' ? newAdminType : payload.type,
+        type:
+          payload.type === 'global' || !location.adm0
+            ? newAdminType
+            : payload.type,
         ...location
       };
     }
