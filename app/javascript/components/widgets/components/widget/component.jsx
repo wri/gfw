@@ -50,7 +50,7 @@ class Widget extends PureComponent {
 
   syncWidgetWithMap = () => {
     // if active widget settings change, send them to the layer
-    const { setMapSettings, settings, config, polynames } = this.props;
+    const { setMapSettings, settings, config, polynames, options } = this.props;
     const {
       startYear,
       endYear,
@@ -59,7 +59,7 @@ class Widget extends PureComponent {
       weeks,
       year,
       latestDate,
-      IFLYear
+      ifl
     } =
       settings || {};
 
@@ -95,6 +95,9 @@ class Widget extends PureComponent {
       })
     }));
 
+    const iflYear =
+      options && options.ifl && options.ifl.find(opt => opt.value === ifl);
+
     const polynameDatasets =
       (polynames &&
         polynames.length &&
@@ -105,10 +108,11 @@ class Widget extends PureComponent {
               opacity: 0.7,
               visibility: 1,
               ...d,
-              layers:
-                IFLYear && !Array.isArray(d.layers)
-                  ? [d.layers[IFLYear]]
-                  : d.layers
+              sqlParams: iflYear && {
+                where: {
+                  class: iflYear.layerValue
+                }
+              }
             }))
         )) ||
       [];

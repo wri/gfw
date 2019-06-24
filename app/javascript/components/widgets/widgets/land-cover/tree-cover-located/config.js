@@ -12,7 +12,8 @@ export default {
     forestTypes: true,
     landCategories: true,
     thresholds: true,
-    extentYears: true
+    extentYears: true,
+    ifl: true
   },
   colors: 'extent',
   metaKey: 'widget_forest_location',

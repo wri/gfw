@@ -4,5 +4,5 @@ export default {
   unit: '%',
   pageSize: 5,
   page: 0,
-  IFLYear: 2010
+  ifl: 2016
 };
