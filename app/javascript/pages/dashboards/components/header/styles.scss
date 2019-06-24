@@ -22,6 +22,17 @@
 
     > * {
       margin-left: rem(5px);
+
+      svg {
+        fill: $white;
+        margin-top: rem(-5px);
+        width: rem(15px);
+        height: rem(15px);
+
+        &:hover {
+          fill: darken($white, 20%);
+        }
+      }
     }
   }
 
@@ -41,10 +52,6 @@
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: rem(20px);
-
-    @media screen and (min-width: $screen-l) {
-      margin-bottom: 0;
-    }
 
     h3 {
       font-size: 42px;
