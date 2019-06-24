@@ -3,11 +3,11 @@
 .c-dashboards-header {
   position: relative;
   background-color: $slate-light;
-  padding: rem(50px) 0 rem(30px);
+  padding: rem(50px) 0;
   width: 100%;
 
   @media screen and(min-width: $screen-l) {
-    padding: rem(70px) rem(30px) rem(80px) 0;
+    padding: rem(70px) rem(30px) rem(50px) 0;
     min-height: rem(350px);
   }
 

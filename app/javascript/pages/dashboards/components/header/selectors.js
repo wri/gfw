@@ -29,6 +29,8 @@ export const selectSettings = state => state.header && state.header.settings;
 export const selectSentences = state =>
   (state.header && state.header.config.sentences) || null;
 export const selectAreas = state => state && state.areas && state.areas.data;
+export const selectGeodescriber = state =>
+  state && state.geostore && state.geostore.data.geodescriber;
 
 export const getAreasOptions = createSelector([selectAreas], areas => {
   if (!areas) return null;
@@ -118,8 +120,20 @@ export const getShareData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getAdminsSelected, selectData, selectSentences, selectError, selectLocation],
-  (locationNames, data, sentences, error, locationObj) => {
+  [
+    getAdminsSelected,
+    selectData,
+    selectSentences,
+    selectLocation,
+    selectGeodescriber
+  ],
+  (locationNames, data, sentences, locationObj, geoDescriber) => {
+    if (geoDescriber) {
+      return {
+        sentence: geoDescriber.description,
+        params: {}
+      };
+    }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
     const {
       withLoss,

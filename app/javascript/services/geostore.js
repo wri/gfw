@@ -37,3 +37,8 @@ export const getGeostoreKey = geojson => {
     url
   });
 };
+
+export const getGeoDescriber = geojson =>
+  axios.post(`${REQUEST_URL}/geodescriber/geom`, {
+    geojson
+  });
