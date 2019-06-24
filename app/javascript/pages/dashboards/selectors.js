@@ -70,6 +70,7 @@ export const getActiveWidgetSlug = createSelector([getActiveWidget], widget => {
 export const getLinks = createSelector(
   [parseWidgetsWithOptions, selectCategory],
   (widgets, activeCategory) => {
+    if (!widgets) return null;
     const widgetCats = flatMap(widgets.map(w => w.config.categories));
     return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
       category => ({

@@ -9,33 +9,15 @@
   padding: rem(20px) $mobile-gutter rem(30px) $mobile-gutter;
   min-width: 100%;
 
-  @supports not (display: grid) {
-    > div {
-      width: 100%;
-      margin-bottom: rem(30px);
-
-      @media screen and (min-width: $screen-l) {
-        width: calc(50% - 15px);
-        margin-bottom: rem(30px);
-
-        &.large {
-          width: 100%;
-        }
-      }
-    }
-  }
-
-  @supports (display: grid) {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 30px;
-    grid-auto-flow: dense;
+  > div {
+    width: 100%;
+    margin-bottom: rem(30px);
 
     @media screen and (min-width: $screen-l) {
-      grid-template-columns: 1fr 1fr;
+      width: calc(50% - 15px);
 
-      .large {
-        grid-column-end: span 2;
+      &.large {
+        width: 100%;
       }
     }
   }

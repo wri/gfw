@@ -60,11 +60,13 @@ class Page extends PureComponent {
       activeWidgetSlug,
       locationType
     } = this.props;
+    const isCountryDashboard =
+      locationType === 'country' || locationType === 'global';
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
         {isDesktop => (
-          <div className="l-country">
+          <div className="l-dashboards-page">
             <div className="content-panel">
               <Header className="header" />
               {links &&
@@ -93,7 +95,9 @@ class Page extends PureComponent {
             </div>
             <div className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}>
               {isDesktop ? (
-                <Sticky bottomBoundary=".l-country">{this.renderMap()}</Sticky>
+                <Sticky bottomBoundary=".l-dashboards-page">
+                  {this.renderMap()}
+                </Sticky>
               ) : (
                 this.renderMap()
               )}
@@ -106,7 +110,7 @@ class Page extends PureComponent {
             <DatasetsProvider />
             <LatestProvider />
             <AreasProvider />
-            {(locationType === 'country' || locationType === 'global') && (
+            {isCountryDashboard && (
               <Fragment>
                 <CountryDataProvider />
                 <WhitelistsProvider />
