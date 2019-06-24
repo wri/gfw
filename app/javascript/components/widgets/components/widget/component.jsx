@@ -58,7 +58,8 @@ class Widget extends PureComponent {
       extentYear,
       weeks,
       year,
-      latestDate
+      latestDate,
+      IFLYear
     } =
       settings || {};
 
@@ -103,7 +104,11 @@ class Widget extends PureComponent {
             polyname.datasets.map(d => ({
               opacity: 0.7,
               visibility: 1,
-              ...d
+              ...d,
+              layers:
+                IFLYear && !Array.isArray(d.layers)
+                  ? [d.layers[IFLYear]]
+                  : d.layers
             }))
         )) ||
       [];

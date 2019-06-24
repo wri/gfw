@@ -4,5 +4,6 @@ export default {
   unit: '%',
   weeks: 4,
   pageSize: 5,
-  page: 0
+  page: 0,
+  IFLYear: 2010
 };

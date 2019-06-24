@@ -3,5 +3,6 @@ export default {
   extentYear: 2010,
   unit: '%',
   pageSize: 5,
-  page: 0
+  page: 0,
+  IFLYear: 2010
 };

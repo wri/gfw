@@ -132,6 +132,14 @@ class WidgetSettings extends PureComponent {
       datasets ||
       commodities;
 
+    const IFLYears = [
+      { label: '2010', value: 2010 },
+      { label: '2011', value: 2011 },
+      { label: '2012', value: 2012 },
+      { label: '2013', value: 2013 },
+      { label: '2014', value: 2014 }
+    ];
+
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
         {(!isEmpty(forestTypes) || !isEmpty(landCategories)) && (
@@ -164,6 +172,24 @@ class WidgetSettings extends PureComponent {
                 noSelectedValue="All tree cover"
               />
             )}
+            {settings.forestType &&
+              settings.forestType === 'ifl' && (
+                <Dropdown
+                  theme="theme-select-light"
+                  label="IFL Year"
+                  value={settings.IFLYear || 2010}
+                  options={IFLYears}
+                  onChange={option =>
+                    onSettingsChange({
+                      value: { IFLYear: (option && option.value) || '' },
+                      widget
+                    })
+                  }
+                  disabled={loading}
+                  optionsAction={setModalMetaSettings}
+                  optionsActionKey="metaKey"
+                />
+              )}
             {!isEmpty(landCategories) && (
               <Dropdown
                 theme="theme-select-light"
