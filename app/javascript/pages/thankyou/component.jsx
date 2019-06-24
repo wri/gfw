@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 
-import treeImage from './assets/tree.png';
+import { NavLink } from 'redux-first-router-link';
+import treeImage from 'assets/icons/tree-success.png';
 
 import './styles.scss';
 
@@ -19,8 +20,8 @@ class ThankyouPage extends PureComponent {
               </p>
               <p>
                 You may wish to read our{' '}
-                <a href="/privacy-policy">privacy policy</a>, which provides
-                further information about how we use personal data.
+                <NavLink to="/privacy-policy">privacy policy</NavLink>, which
+                provides further information about how we use personal data.
               </p>
             </div>
           </div>
