@@ -120,9 +120,9 @@ export const getShareData = createSelector(
 export const getSentence = createSelector(
   [getAdminsSelected, selectData, selectSentences, selectError, selectLocation],
   (locationNames, data, sentences, error, locationObj) => {
-    if (error) {
-      return 'An error occured while fetching data. Please try again later.';
-    }
+    // if (error) {
+    //   return 'An error occured while fetching data. Please try again later.';
+    // }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
     const {
       withLoss,
