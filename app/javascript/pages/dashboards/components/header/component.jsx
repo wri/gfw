@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -9,7 +10,7 @@ import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
-import './header-styles.scss';
+import './styles.scss';
 
 class Header extends PureComponent {
   render() {
@@ -30,7 +31,7 @@ class Header extends PureComponent {
     } = this.props;
 
     return (
-      <div className={`${className} c-header-menu`}>
+      <div className={cx('c-dashboards-header', className)}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="share-buttons">
           <Button
