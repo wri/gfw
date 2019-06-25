@@ -16,12 +16,17 @@ const actions = { ...ownActions, ...shareActions, handleLocationChange };
 class HeaderContainer extends PureComponent {
   componentWillMount() {
     const { location, settings, getHeaderData } = this.props;
-    getHeaderData({ ...location, ...settings });
+    if (['global', 'country'].includes(location.type)) {
+      getHeaderData({ ...location, ...settings });
+    }
   }
 
   componentDidUpdate(prevProps) {
     const { location, settings, getHeaderData } = this.props;
-    if (!isEqual(location, prevProps.location)) {
+    if (
+      ['global', 'country'].includes(location.type) &&
+      !isEqual(location, prevProps.location)
+    ) {
       getHeaderData({ ...location, ...settings });
     }
   }
