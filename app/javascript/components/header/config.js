@@ -46,7 +46,7 @@ export default {
     },
     {
       label: 'Blog',
-      extLink: 'http://blog.globalforestwatch.org'
+      extLink: 'https://blog.globalforestwatch.org'
     },
     {
       label: 'About',
@@ -83,7 +83,7 @@ export default {
   apps: [
     {
       label: 'GFW Climate',
-      extLink: 'http://climate.globalforestwatch.org',
+      extLink: 'https://climate.globalforestwatch.org',
       image: gfwClimate
     },
     {
@@ -110,7 +110,7 @@ export default {
     },
     {
       label: 'How to Portal',
-      extLink: 'http://www.globalforestwatch.org/howto',
+      extLink: 'https://www.globalforestwatch.org/howto',
       icon: howto
     },
     {
@@ -120,7 +120,7 @@ export default {
     },
     {
       label: 'Open data portal',
-      extLink: 'http://data.globalforestwatch.org/',
+      extLink: 'https://data.globalforestwatch.org/',
       icon: openData
     },
     {
