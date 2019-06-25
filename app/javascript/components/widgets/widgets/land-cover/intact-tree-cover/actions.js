@@ -48,6 +48,7 @@ export const getData = ({ params }) => {
 };
 
 export const getDataURL = ({ params }) => {
+  if (!params) return null;
   let polyname = 'plantations';
   switch (params.indicator) {
     case 'ifl__wdpa':
