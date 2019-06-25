@@ -22,7 +22,7 @@ export const getData = ({ params }) =>
     })
   );
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   fetchLossRanked({ ...params, download: true }),
   fetchExtentRanked({ ...params, download: true })
 ];

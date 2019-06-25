@@ -27,7 +27,7 @@ export const getData = ({ params }) =>
       })
     );
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   getMultiRegionExtent({ ...params, download: true }),
   getPlantationsExtent({ ...params, groupByRegion: true, download: true })
 ];

@@ -23,7 +23,7 @@ export const getData = ({ params }) =>
     })
   );
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   getGainRanked({ ...params, download: true })
 ];
 

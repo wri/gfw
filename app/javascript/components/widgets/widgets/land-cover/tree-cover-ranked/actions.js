@@ -19,7 +19,7 @@ export const getData = ({ params }) =>
     return mappedData;
   });
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   fetchExtentRanked({ ...params, download: true })
 ];
 

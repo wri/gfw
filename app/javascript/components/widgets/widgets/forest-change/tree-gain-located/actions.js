@@ -31,7 +31,7 @@ export const getData = ({ params }) =>
       })
     );
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   getLocations({ ...params, download: true }),
   getGainLocations({ ...params, download: true })
 ];

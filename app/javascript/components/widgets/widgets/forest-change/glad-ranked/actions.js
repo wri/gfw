@@ -26,7 +26,7 @@ export const getData = ({ params }) =>
       })
     );
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   fetchGladIntersectionAlerts({ ...params, download: true }),
   getMultiRegionExtent({ ...params, download: true })
 ];

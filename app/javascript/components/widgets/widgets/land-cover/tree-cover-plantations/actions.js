@@ -26,7 +26,7 @@ export const getData = ({ params }) =>
       })
     );
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   getExtent({ ...params, forestType: '', download: true }),
   getPlantationsExtent({ ...params, download: true })
 ];

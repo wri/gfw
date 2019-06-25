@@ -178,7 +178,8 @@ class WidgetHeader extends PureComponent {
         filename = url
           .split('?')[0]
           .split('/')
-          .pop();
+          .pop()
+          .concat('.csv');
       } catch (error) {
         filename = `file ${index + 1}.csv`;
       }

@@ -28,7 +28,7 @@ export const getData = ({ params }) =>
       })
     );
 
-export const getDataURL = ({ params }) => [
+export const getDataURL = params => [
   getLoss({ ...params, forestType: 'plantations', download: true }),
   getLoss({ ...params, forestType: '', download: true })
 ];
