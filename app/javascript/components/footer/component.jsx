@@ -196,7 +196,7 @@ class Footer extends PureComponent {
                     {' · '}
                     <a
                       className="terms"
-                      href="https://stats.pingdom.com/ghabapk9rihc"
+                      href="http://stats.pingdom.com/ghabapk9rihc"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
