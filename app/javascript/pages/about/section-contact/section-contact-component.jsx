@@ -29,7 +29,7 @@ class SectionContact extends PureComponent {
             <p>Global Forest Watch, 10 G Street NE Suite 800</p>
             <p>Washington, DC 20002, USA</p>
             <a
-              href="http://www.wri.org/our-work/project/global-forest-watch"
+              href="https://www.wri.org/our-work/project/global-forest-watch"
               target="_blank"
               rel="noopener noreferrer"
             >
