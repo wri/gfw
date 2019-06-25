@@ -132,7 +132,7 @@ export const getSentence = createSelector(
     selectGeodescriber
   ],
   (locationNames, data, sentences, locationObj, geoDescriber) => {
-    if (geoDescriber) {
+    if (locationObj && locationObj.type === 'aoi' && geoDescriber) {
       return {
         sentence: geoDescriber.description,
         params: {}
