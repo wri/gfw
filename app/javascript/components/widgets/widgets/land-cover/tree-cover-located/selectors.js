@@ -46,17 +46,17 @@ export const parseList = createSelector(
               }),
               ...(payload.adm0 &&
                 !payload.adm1 && {
-                  adm1: d.id
-                })
+                adm1: d.id
+              })
             },
             query: {
               ...(query && query),
               map: {
                 ...(query &&
                   query.map && {
-                    ...query.map,
-                    canBound: true
-                  })
+                  ...query.map,
+                  canBound: true
+                })
               }
             }
           },
@@ -115,7 +115,7 @@ export const parseSentence = createSelector(
     const topRegion = (data.length && data[0]) || {};
     const totalExtent = sumBy(data, 'extent') || 0;
     const avgExtent = sumBy(data, 'extent') || 0 / data.length;
-    const avgExtentPercentage = sumBy(data, 'percentage') || 0 / data.length;
+    const avgExtentPercentage = (sumBy(data, 'percentage') || 0) / data.length;
     let percentileExtent = 0;
     let percentileLength = 0;
     while (
