@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
-import Loader from 'components/ui/loader';
 import universal from 'react-universal-component';
 import cx from 'classnames';
 import { handlePageTrack } from 'app/analytics';
 
+import Loader from 'components/ui/loader';
 import Meta from 'components/meta';
 import Header from 'components/header';
 import Footer from 'components/footer';
@@ -68,6 +68,8 @@ class App extends PureComponent {
                 path={route.component}
                 sections={route.sections}
                 isTrase={isTrase}
+                isDesktop={isDesktop}
+                metadata={metadata}
               />
             </div>
             {!embed && <MyGFWProvider />}

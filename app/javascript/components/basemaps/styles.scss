@@ -107,13 +107,11 @@ $top-section-height: 125px;
       margin: initial;
       width: calc(100% / 3);
       display: block;
-
-      &:first-child {
-        margin-right: rem(10px);
-      }
+      margin-right: rem(10px);
 
       &:last-child {
         margin-left: 0;
+        margin-right: 0;
       }
     }
 

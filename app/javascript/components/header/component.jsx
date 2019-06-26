@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { SCREEN_M } from 'utils/constants';
 import MediaQuery from 'react-responsive';
+import { NavLink } from 'redux-first-router-link';
 
 import gfwLogo from 'assets/logos/gfw.png';
 import ContactUs from 'components/modals/contact-us';
@@ -56,14 +57,14 @@ class Header extends PureComponent {
             <div className={cx('row', { expanded: fullScreen })}>
               <div className="column small-12">
                 {!fullScreen || fullScreenOpen ? (
-                  <a className="logo" href="/">
+                  <NavLink to="/" className="logo">
                     <img
                       src={gfwLogo}
                       alt="Global Forest Watch"
                       width="76"
                       height="76"
                     />
-                  </a>
+                  </NavLink>
                 ) : (
                   <button
                     className="logo map-tour-main-menu"

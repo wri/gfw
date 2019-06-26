@@ -6,6 +6,7 @@ import lowerCase from 'lodash/lowerCase';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
+import { locationLevelToStr } from 'utils/format';
 import allOptions from './options';
 import allWidgets from './manifest';
 
@@ -78,13 +79,9 @@ export const getOptions = createSelector([], () => {
   return optionsMeta;
 });
 
-export const getAdminLevel = createSelector([selectLocation], location => {
-  const { type, adm0, adm1, adm2 } = location;
-  if (adm2) return 'adm2';
-  if (adm1) return 'adm1';
-  if (adm0) return 'adm0';
-  return type || 'global';
-});
+export const getAdminLevel = createSelector([selectLocation], location =>
+  locationLevelToStr(location)
+);
 
 export const getActiveWhitelist = createSelector(
   [selectWhitelists, getAdminLevel],

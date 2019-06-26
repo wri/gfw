@@ -221,7 +221,7 @@ class WidgetSettings extends PureComponent {
                   });
                 }}
                 infoAction={() =>
-                  setModalMetaSettings({ metakey: 'widget_tree_cover_extent' })
+                  setModalMetaSettings('widget_tree_cover_extent')
                 }
               />
             )}
@@ -387,9 +387,7 @@ class WidgetSettings extends PureComponent {
               onSettingsChange({ value: { threshold: option.value }, widget })
             }
             disabled={loading}
-            infoAction={() =>
-              setModalMetaSettings({ metakey: 'widget_canopy_density' })
-            }
+            infoAction={() => setModalMetaSettings('widget_canopy_density')}
           />
         )}
       </div>

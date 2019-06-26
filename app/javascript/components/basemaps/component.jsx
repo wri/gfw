@@ -15,7 +15,7 @@ import arrowIcon from 'assets/icons/arrow-down.svg';
 
 import boundariesIcon from 'assets/icons/boundaries.svg';
 import labelsIcon from 'assets/icons/labels.svg';
-// import roadsIcon from 'assets/icons/roads.svg';
+import roadsIcon from 'assets/icons/roads.svg';
 
 import './styles.scss';
 
@@ -40,9 +40,9 @@ class Basemaps extends React.PureComponent {
     isDesktop: PropTypes.bool,
     getTooltipContentProps: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func,
-    // activeRoads: PropTypes.object.isRequired,
+    roadsSelected: PropTypes.object.isRequired,
     selectRoads: PropTypes.func.isRequired,
-    roads: PropTypes.bool.isRequired,
+    roads: PropTypes.array.isRequired,
     setMapSettings: PropTypes.func,
     planetInvertalOptions: PropTypes.array,
     planetIntervalSelected: PropTypes.object,
@@ -339,10 +339,10 @@ class Basemaps extends React.PureComponent {
       selectLabels,
       labels,
       isDesktop,
-      setModalMetaSettings
-      // activeRoads,
-      // selectRoads,
-      // roads
+      setModalMetaSettings,
+      roadsSelected,
+      selectRoads,
+      roads
     } = this.props;
 
     const selectedBoundaries = activeBoundaries
@@ -361,9 +361,7 @@ class Basemaps extends React.PureComponent {
                 <Button
                   className="info-btn"
                   theme="theme-button-tiny theme-button-grey-filled square"
-                  onClick={() =>
-                    setModalMetaSettings({ metakey: 'flagship_basemaps' })
-                  }
+                  onClick={() => setModalMetaSettings('flagship_basemaps')}
                 >
                   <Icon icon={infoIcon} />
                 </Button>
@@ -414,19 +412,19 @@ class Basemaps extends React.PureComponent {
                 selectorIcon={labelsIcon}
               />
             </li>
-            {/* <li className="basemaps-options-wrapper">
+            <li className="basemaps-options-wrapper">
               <Dropdown
                 theme={cx('theme-dropdown-button', {
                   'theme-dropdown-dark-round theme-dropdown-no-border': !isDesktop,
                   'theme-dropdown-dark-squared': isDesktop
                 })}
                 className="basemaps-roads"
-                value={activeRoads}
+                value={roadsSelected}
                 options={roads}
                 onChange={selectRoads}
                 selectorIcon={roadsIcon}
               />
-            </li> */}
+            </li>
           </ul>
         </div>
         {(isDesktop || this.state.showBasemaps) &&

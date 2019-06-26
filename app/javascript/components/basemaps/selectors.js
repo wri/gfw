@@ -190,6 +190,22 @@ export const getLabelSelected = createSelector(
   (options, labelsActive) => (labelsActive ? options[0] : options[1])
 );
 
+export const getRoadsOptions = createSelector([], () => [
+  {
+    label: 'Hide Roads',
+    value: false
+  },
+  {
+    label: 'Show Roads',
+    value: true
+  }
+]);
+
+export const getRoadsSelected = createSelector(
+  [getRoadsOptions, getMapRoads],
+  (options, showRoads) => options.find(o => showRoads === o.value)
+);
+
 export const getBasemapsProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   mapZoom: getMapZoom,
@@ -200,8 +216,8 @@ export const getBasemapsProps = createStructuredSelector({
   labelSelected: getLabelSelected,
   labels: getLabelsOptions,
   landsatYears: getLandsatYears,
-  roads: getMapRoads,
-  // activeRoads: getActiveRoads,
+  roads: getRoadsOptions,
+  roadsSelected: getRoadsSelected,
   planetInvertalOptions: selectPlanetBasemapsIntervalOptions,
   planetIntervalSelected: getPlanetBasemapsInvertalSelected,
   planetBasemapSelected: getPlanetBasemapSelected,

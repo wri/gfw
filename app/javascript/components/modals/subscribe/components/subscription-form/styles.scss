@@ -11,6 +11,10 @@ $desktop-padding: rem(50px);
     span {
       margin-bottom: rem(10px);
     }
+
+    &.error {
+      color: $error;
+    }
   }
 
   input {
