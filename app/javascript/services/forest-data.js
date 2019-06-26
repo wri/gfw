@@ -34,7 +34,8 @@ const NEW_SQL_QUERIES = {
     'WITH mytable AS (SELECT fao.country as iso, fao.name, fao.deforest * 1000 AS deforest, fao.humdef FROM table_1_forest_area_and_characteristics as fao WHERE fao.year = {year} AND deforest is not null), rank AS (SELECT deforest, iso, name from mytable ORDER BY mytable.deforest DESC) SELECT row_number() over () as rank, iso, name, deforest from rank',
   faoEcoLive:
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
-  nonGlobalDatasets: 'SELECT {polynames} FROM iso_whitelist',
+  nonGlobalDatasets:
+    'SELECT {polynames} FROM polyname_whitelist WHERE adm1 is null AND adm2 is null',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   getLocationPolynameWhitelist:
     'SELECT {location}, {polynames} FROM polyname_whitelist {WHERE} GROUP BY {location}'
