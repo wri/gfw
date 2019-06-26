@@ -28,6 +28,7 @@ class Page extends PureComponent {
 
   render() {
     const { summary, uses, apps, news, newsLoading, isDesktop } = this.props;
+
     return (
       <div className="l-home-page">
         <Cover
@@ -228,15 +229,20 @@ class Page extends PureComponent {
                     }}
                   >
                     {news.map(item => (
-                      <Card
+                      <a
                         key={item.name}
-                        className="news-card"
-                        data={{
-                          title: item.name,
-                          summary: item.description,
-                          extLink: item.link
-                        }}
-                      />
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener nofollower"
+                      >
+                        <Card
+                          className="news-card"
+                          data={{
+                            title: item.name,
+                            summary: item.description
+                          }}
+                        />
+                      </a>
                     ))}
                   </Carousel>
                 ) : (
