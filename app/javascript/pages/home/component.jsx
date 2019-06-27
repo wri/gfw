@@ -233,10 +233,10 @@ class Page extends PureComponent {
                         key={item.name}
                         href={item.link}
                         target="_blank"
+                        className="news-card"
                         rel="noopener nofollower"
                       >
                         <Card
-                          className="news-card"
                           data={{
                             title: item.name,
                             summary: item.description
