@@ -22,7 +22,9 @@ export default {
   analysis: true,
   colors: 'climate',
   metaKey: 'tree_biomass_loss',
-  sortOrder: {},
+  sortOrder: {
+    climate: 3
+  },
   sentences: {
     initial:
       'From {startYear} to {endYear}, a total of {emissions} of {variable} emissions were released from tree cover loss in {location} natural forests.'

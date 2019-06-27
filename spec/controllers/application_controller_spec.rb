@@ -30,8 +30,8 @@ describe ApplicationController, type: :controller do
         allow(controller.request).to receive(:host).and_return("www.globalforestwatch.org")
       end
 
-      it "does not redirect to /notsupportedbrowser" do
-        is_expected.to_not redirect_to("/notsupportedbrowser")
+      it "does not redirect to /browser-support" do
+        is_expected.to_not redirect_to("/browser-support")
       end
     end
   end

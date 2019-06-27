@@ -7,6 +7,7 @@ import { getNewMapRedirect } from './utils';
 
 const history = createHistory();
 
+export const HOME = 'location/HOME';
 export const ABOUT = 'location/ABOUT';
 export const SGF = 'location/SGF';
 export const MAP = 'location/MAP';
@@ -16,6 +17,11 @@ export const DASHBOARDS_EMBED = 'location/DASHBOARDS_EMBED';
 export const TOPICS = 'location/TOPICS';
 export const THANKYOU = 'location/THANKYOU';
 export const STORIES = 'location/STORIES';
+export const TERMS = 'location/TERMS';
+export const PRIVACY = 'location/PRIVACY';
+export const BROWSER_SUPPORT = 'location/BROWSER_SUPPORT';
+export const UNACCEPTABLE = 'location/UNACCEPTABLE';
+export const INTERNAL_ERROR = 'location/INTERNAL_ERROR';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -59,37 +65,42 @@ const redirectThunk = (dispatch, getState) => {
 };
 
 export const routes = {
+  [HOME]: {
+    controller: 'home',
+    path: '/',
+    component: 'home'
+  },
   [ABOUT]: {
     controller: 'about',
     path: '/about',
     component: 'about',
-    sections: [
-      {
+    sections: {
+      how: {
         label: 'GFW in Action',
         anchor: 'gfw-in-action',
         component: 'how'
       },
-      {
+      impacts: {
         label: 'Impacts',
         anchor: 'impacts',
         component: 'impacts'
       },
-      {
+      history: {
         label: 'History',
         anchor: 'history',
         component: 'history'
       },
-      {
+      contact: {
         label: 'Contact Us',
         anchor: 'contact',
         component: 'contact'
       },
-      {
+      partners: {
         label: 'Partnership',
         anchor: 'partnership',
         component: 'partners'
       }
-    ]
+    }
   },
   [SGF]: {
     controller: 'grants_and_fellowships',
@@ -183,9 +194,36 @@ export const routes = {
     component: 'stories',
     controller: 'stories'
   },
+  [TERMS]: {
+    path: '/terms',
+    component: 'terms',
+    controller: 'terms'
+  },
+  [PRIVACY]: {
+    path: '/privacy-policy',
+    component: 'privacy',
+    controller: 'privacy'
+  },
+  [BROWSER_SUPPORT]: {
+    path: '/browser-support',
+    component: 'browser-support',
+    controller: 'browser_support'
+  },
+  [UNACCEPTABLE]: {
+    path: '/422',
+    controller: 'unacceptable',
+    component: 'error'
+  },
+  [INTERNAL_ERROR]: {
+    path: '/500',
+    controller: 'internal_error',
+    component: 'error'
+  },
   [NOT_FOUND]: {
     path: '/404',
-    thunk: redirectThunk
+    thunk: redirectThunk,
+    controller: 'not_found',
+    component: 'error'
   }
 };
 

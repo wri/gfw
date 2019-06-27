@@ -15,6 +15,8 @@ import commodities4Large from 'pages/topics/assets/commodities/slides/commoditie
 // cards
 import investigate from 'pages/topics/assets/commodities/cards/investigate.png';
 import investigateLarge from 'pages/topics/assets/commodities/cards/investigate@2x.png';
+import pro from 'pages/topics/assets/commodities/cards/pro.png';
+import proLarge from 'pages/topics/assets/commodities/cards/pro@2x.png';
 import explore from 'pages/topics/assets/commodities/cards/explore.png';
 import exploreLarge from 'pages/topics/assets/commodities/cards/explore@2x.png';
 import learn from 'pages/topics/assets/commodities/cards/learn.png';
@@ -184,6 +186,16 @@ export default {
       img1x: investigate,
       img2x: investigateLarge,
       btnText: 'view on map'
+    },
+    {
+      id: 'pro',
+      title: 'Utilize GFW Pro',
+      summary:
+        'A new application for companies and financial institutions to securely manage deforestation risk in commodity supply chains.',
+      extLink: 'https://pro.globalforestwatch.org',
+      img1x: pro,
+      img2x: proLarge,
+      btnText: 'go to pro'
     },
     {
       id: 'learn',

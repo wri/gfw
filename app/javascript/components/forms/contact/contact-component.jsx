@@ -53,11 +53,6 @@ const topics = [
     placeholder: 'How can we help you?'
   },
   {
-    key: 'gfw-commodities-inquiry',
-    name: 'GFW Commodities inquiry',
-    placeholder: 'How can we help you?'
-  },
-  {
     key: 'gfw-fires-inquiry',
     name: 'GFW Fires inquiry',
     placeholder: 'How can we help you?'

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
-import gfwCommodities from 'assets/logos/gfw-commodities.png';
+import gfwPro from 'assets/logos/gfw-pro.png';
 import forestWatcher from 'assets/logos/gfw-watcher.png';
 
 import developer from 'assets/icons/developer.svg';
@@ -46,7 +46,7 @@ export default {
     },
     {
       label: 'Blog',
-      extLink: 'http://blog.globalforestwatch.org'
+      extLink: 'https://blog.globalforestwatch.org'
     },
     {
       label: 'About',
@@ -83,7 +83,7 @@ export default {
   apps: [
     {
       label: 'GFW Climate',
-      extLink: 'http://climate.globalforestwatch.org',
+      extLink: 'https://climate.globalforestwatch.org',
       image: gfwClimate
     },
     {
@@ -92,9 +92,9 @@ export default {
       image: gfwFires
     },
     {
-      label: 'GFW Comodities',
-      extLink: 'http://commodities.globalforestwatch.org',
-      image: gfwCommodities
+      label: 'GFW Pro',
+      extLink: 'https://pro.globalforestwatch.org',
+      image: gfwPro
     },
     {
       label: 'Forest Watcher',
@@ -110,7 +110,7 @@ export default {
     },
     {
       label: 'How to Portal',
-      extLink: 'http://www.globalforestwatch.org/howto',
+      extLink: 'https://www.globalforestwatch.org/howto',
       icon: howto
     },
     {
@@ -120,7 +120,7 @@ export default {
     },
     {
       label: 'Open data portal',
-      extLink: 'http://data.globalforestwatch.org/',
+      extLink: 'https://data.globalforestwatch.org/',
       icon: openData
     },
     {

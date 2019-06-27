@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { SCREEN_M } from 'utils/constants';
+import { NavLink } from 'redux-first-router-link';
 
 import MediaQuery from 'react-responsive';
 import Icon from 'components/ui/icon';
@@ -45,13 +46,13 @@ class Footer extends PureComponent {
                 <div className="column small-12 medium-6">
                   <ul className="footer-links-texts">
                     <li>
-                      <a href="http://www.globalforestwatch.org/">GFW</a>
+                      <a href="https://www.globalforestwatch.org/">GFW</a>
                     </li>
                     <li>
-                      <a href="http://blog.globalforestwatch.org/">Blog</a>
+                      <a href="https://blog.globalforestwatch.org/">Blog</a>
                     </li>
                     <li>
-                      <a href="http://www.globalforestwatch.org/howto/">
+                      <a href="https://www.globalforestwatch.org/howto/">
                         How to portal
                       </a>
                     </li>
@@ -121,7 +122,7 @@ class Footer extends PureComponent {
                   <div className="footer-wri">
                     <p>A partnership convened by</p>
                     <a
-                      href="http://www.wri.org/"
+                      href="https://www.wri.org/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -185,13 +186,13 @@ class Footer extends PureComponent {
               <div className="row">
                 <div className="column small-12">
                   <div className="footer-terms">
-                    <a className="terms" href="/terms">
+                    <NavLink className="terms" to="/terms">
                       Terms of Service
-                    </a>
+                    </NavLink>
                     {' · '}
-                    <a className="terms" href="/privacy-policy">
+                    <NavLink className="terms" to="/privacy-policy">
                       Privacy Policy
-                    </a>
+                    </NavLink>
                     {' · '}
                     <a
                       className="terms"

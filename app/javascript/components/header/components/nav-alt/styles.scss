@@ -1,5 +1,9 @@
 @import '~styles/settings.scss';
 
+.Header__no-scroll {
+  overflow: hidden;
+}
+
 .c-nav-alt {
   display: flex;
   justify-content: flex-end;

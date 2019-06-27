@@ -6,17 +6,14 @@ node_js:
 rvm:
   - 2.4.0
 
-services:
-  - redis-server
-
 cache:
+  yarn: true
   bundler: true
   directories:
-    - ~/.npm
     - node_modules
 
 install:
-  - bundle install && npm install
+  - bundle install
 
 script:
-  - npm run ci
+  - yarn ci
