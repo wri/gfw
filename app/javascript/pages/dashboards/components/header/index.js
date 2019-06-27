@@ -6,22 +6,27 @@ import reducerRegistry from 'app/registry';
 
 import * as shareActions from 'components/modals/share/share-actions';
 import { handleLocationChange } from 'pages/dashboards/actions';
-import * as ownActions from './header-actions';
-import { getHeaderProps } from './header-selectors';
-import reducers, { initialState } from './header-reducers';
-import HeaderComponent from './header-component';
+import * as ownActions from './actions';
+import { getHeaderProps } from './selectors';
+import reducers, { initialState } from './reducers';
+import HeaderComponent from './component';
 
 const actions = { ...ownActions, ...shareActions, handleLocationChange };
 
 class HeaderContainer extends PureComponent {
   componentWillMount() {
     const { location, settings, getHeaderData } = this.props;
-    getHeaderData({ ...location, ...settings });
+    if (['global', 'country'].includes(location.type)) {
+      getHeaderData({ ...location, ...settings });
+    }
   }
 
   componentDidUpdate(prevProps) {
     const { location, settings, getHeaderData } = this.props;
-    if (!isEqual(location, prevProps.location)) {
+    if (
+      ['global', 'country'].includes(location.type) &&
+      !isEqual(location, prevProps.location)
+    ) {
       getHeaderData({ ...location, ...settings });
     }
   }

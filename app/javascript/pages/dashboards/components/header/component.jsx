@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -7,9 +8,8 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 
-import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
-import './header-styles.scss';
+import './styles.scss';
 
 class Header extends PureComponent {
   render() {
@@ -26,15 +26,28 @@ class Header extends PureComponent {
       location,
       forestAtlasLink,
       sentence,
-      downloadLink
+      downloadLink,
+      selectorMeta
     } = this.props;
+    const isCountryDashboard =
+      location.type === 'country' || location.type === 'global';
 
     return (
-      <div className={`${className} c-header-menu`}>
+      <div className={cx('c-dashboards-header', className)}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
         <div className="share-buttons">
           <Button
-            className="theme-button-small theme-button-grey square"
+            className="theme-button-small"
+            onClick={() => setShareModal(shareData)}
+            tooltip={{
+              text: 'Share this page',
+              position: 'bottom'
+            }}
+          >
+            SHARE
+          </Button>
+          <Button
+            className="theme-button-medium theme-button-clear square"
             extLink={downloadLink}
             tooltip={{
               text: `Download the data${
@@ -45,27 +58,17 @@ class Header extends PureComponent {
           >
             <Icon icon={downloadIcon} />
           </Button>
-          <Button
-            className="theme-button-small theme-button-grey square"
-            onClick={() => setShareModal(shareData)}
-            tooltip={{
-              text: 'Share this page',
-              position: 'bottom'
-            }}
-          >
-            <Icon icon={shareIcon} />
-          </Button>
         </div>
         <div className="row">
-          <div className="columns small-12 large-6">
+          <div className="columns small-12 medium-10">
             <div className="select-container">
               {!location.adm0 && <h3>{location.type || 'Global'}</h3>}
               {adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
-                  placeholder="Select a country"
-                  noItemsFound="No country found"
-                  noSelectedValue="Select a country"
+                  placeholder={`Select ${selectorMeta.typeVerb}`}
+                  noItemsFound={`No ${selectorMeta.typeName} found`}
+                  noSelectedValue={`Select a ${selectorMeta.typeName}`}
                   value={locationNames.adm0}
                   options={adm0s}
                   onChange={adm0 =>
@@ -74,14 +77,17 @@ class Header extends PureComponent {
                   searchable
                   disabled={loading}
                   tooltip={{
-                    text: 'Choose the country you want to explore',
+                    text: `Choose the ${
+                      selectorMeta.typeName
+                    } you want to explore`,
                     delay: 1000
                   }}
                   arrowPosition="left"
-                  clearable
+                  clearable={isCountryDashboard}
                 />
               )}
-              {location.adm0 &&
+              {isCountryDashboard &&
+                location.adm0 &&
                 adm0s &&
                 adm1s &&
                 adm1s.length > 1 && (
@@ -108,7 +114,8 @@ class Header extends PureComponent {
                     clearable
                   />
                 )}
-              {location.adm1 &&
+              {isCountryDashboard &&
+                location.adm1 &&
                 adm1s &&
                 adm2s &&
                 adm2s.length > 1 && (
@@ -138,19 +145,20 @@ class Header extends PureComponent {
                 )}
             </div>
           </div>
-          <div className="columns small-12 large-6">
+          <div className="columns small-12 medium-10">
             <div className="description text -title-xs">
               {!loading && (
                 <div>
                   <DynamicSentence className="sentence" sentence={sentence} />
-                  {forestAtlasLink && (
-                    <Button
-                      className="forest-atlas-btn"
-                      extLink={forestAtlasLink.url}
-                    >
-                      EXPLORE FOREST ATLAS
-                    </Button>
-                  )}
+                  {forestAtlasLink &&
+                    isCountryDashboard && (
+                      <Button
+                        className="forest-atlas-btn"
+                        extLink={forestAtlasLink.url}
+                      >
+                        EXPLORE FOREST ATLAS
+                      </Button>
+                    )}
                 </div>
               )}
             </div>
@@ -174,7 +182,8 @@ Header.propTypes = {
   location: PropTypes.object.isRequired,
   forestAtlasLink: PropTypes.object,
   sentence: PropTypes.object,
-  downloadLink: PropTypes.string
+  downloadLink: PropTypes.string,
+  selectorMeta: PropTypes.object
 };
 
 export default Header;

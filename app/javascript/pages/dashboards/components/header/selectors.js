@@ -12,7 +12,11 @@ export const selectLocation = state =>
 export const selectLoading = state =>
   state.header &&
   state.countryData &&
+  state.areas &&
+  state.geostore &&
   (state.header.loading ||
+    state.areas.loading ||
+    state.geostore.loading ||
     state.countryData.isCountriesLoading ||
     state.countryData.isRegionsLoading ||
     state.countryData.isSubRegionsLoading);
@@ -28,19 +32,41 @@ export const selectData = state => state.header && state.header.data;
 export const selectSettings = state => state.header && state.header.settings;
 export const selectSentences = state =>
   (state.header && state.header.config.sentences) || null;
+export const selectAreas = state => state && state.areas && state.areas.data;
+export const selectGeodescriber = state =>
+  state && state.geostore && state.geostore.data.geodescriber;
+
+export const getAreasOptions = createSelector([selectAreas], areas => {
+  if (!areas) return null;
+  return {
+    adm0: areas.map(a => ({
+      label: a.name,
+      value: a.id
+    }))
+  };
+});
+
+export const getAdminMetadata = createSelector(
+  [selectLocation, selectCountryData, getAreasOptions],
+  (location, countries, areas) => {
+    if (!countries || !areas) return null;
+    if (location.type === 'aoi') return areas;
+    return countries;
+  }
+);
 
 export const getAdm0Data = createSelector(
-  [selectCountryData],
+  [getAdminMetadata],
   data => data && data.adm0
 );
 
 export const getAdm1Data = createSelector(
-  [selectCountryData],
+  [getAdminMetadata],
   data => data && data.adm1
 );
 
 export const getAdm2Data = createSelector(
-  [selectCountryData],
+  [getAdminMetadata],
   data => data && data.adm2
 );
 
@@ -98,10 +124,19 @@ export const getShareData = createSelector(
 );
 
 export const getSentence = createSelector(
-  [getAdminsSelected, selectData, selectSentences, selectError, selectLocation],
-  (locationNames, data, sentences, error, locationObj) => {
-    if (error) {
-      return 'An error occured while fetching data. Please try again later.';
+  [
+    getAdminsSelected,
+    selectData,
+    selectSentences,
+    selectLocation,
+    selectGeodescriber
+  ],
+  (locationNames, data, sentences, locationObj, geoDescriber) => {
+    if (locationObj && locationObj.type === 'aoi' && geoDescriber) {
+      return {
+        sentence: geoDescriber.description,
+        params: {}
+      };
     }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
     const {
@@ -171,6 +206,21 @@ export const getSentence = createSelector(
   }
 );
 
+export const getSelectorMeta = createSelector([selectLocation], location => {
+  const { type } = location || {};
+  const newType = type === 'global' ? 'country' : type;
+  if (type === 'aoi') {
+    return {
+      typeVerb: 'an area of interest',
+      typeName: 'area of interest'
+    };
+  }
+  return {
+    typeVerb: `a ${newType}`,
+    typeName: newType
+  };
+});
+
 export const getHeaderProps = createStructuredSelector({
   loading: selectLoading,
   error: selectError,
@@ -183,5 +233,6 @@ export const getHeaderProps = createStructuredSelector({
   forestAtlasLink: getForestAtlasLink,
   shareData: getShareData,
   sentence: getSentence,
-  locationNames: getAdminsSelected
+  locationNames: getAdminsSelected,
+  selectorMeta: getSelectorMeta
 });
