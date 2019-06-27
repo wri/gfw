@@ -362,6 +362,11 @@
     background-size: cover;
     padding: rem(40px) 0 rem(40px);
 
+    .news-card {
+      color: $slate;
+      height: 100%;
+    }
+
     .news-title {
       font-size: rem(35px);
       font-weight: 300;

@@ -8,6 +8,9 @@ export default {
   dataType: 'loss',
   colors: 'emissions',
   hideSettings: true,
+  sortOrder: {
+    climate: 1
+  },
   sentences: {
     positive:
       'In {location}, the land-use change and forestry sector is a {type} of CO\u2082, emitting an average of {value} from {startYear} to {endYear}. This represents {percentage} of {location_alt} total greenhouse gas emissions over the same period.',

@@ -15,6 +15,7 @@
 
     @media screen and (min-width: $screen-l) {
       width: calc(50% - 15px);
+      margin-bottom: rem(30px);
 
       &.large {
         width: 100%;
