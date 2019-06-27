@@ -33,7 +33,7 @@ Gfw::Application.routes.draw do
   ########### /LEGACY #############
 
   ########### ACTIVE ROUTES #############
-  root 'landing#index'
+  root 'home#index'
 
   # map
   get '/map' => 'map#index'
@@ -72,9 +72,9 @@ Gfw::Application.routes.draw do
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
   # static #
-  get '/notsupportedbrowser' => 'static#browser_support', :as => 'notsupportedbrowser'
-  get '/terms' => 'static#terms'
-  get '/privacy-policy' => 'static#privacy'
+  get '/browser-support' => 'browser_support#index'
+  get '/terms' => 'terms#index'
+  get '/privacy-policy' => 'privacy#index'
 
   # search
   get '/search(/:query)(/:page)' => 'search#index'
@@ -91,6 +91,10 @@ Gfw::Application.routes.draw do
   # robots
   get '/robots', to: redirect('/robots.txt'), format: false
   get '/robots.:format' => 'robots#index'
+
+  get '/404' => 'not_found#index'
+  get '/422' => 'unacceptable#index'
+  get '/500' => 'internal_error#index'
 
   ########### /ACTIVE ROUTES #############
 

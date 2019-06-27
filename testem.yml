@@ -1,9 +1,0 @@
-framework: jasmine2
-test_page: jstest/SpecRunner.html
-src_files:
-- app/assets/javascripts/map/**
-- vendor/assets/javascripts/**
-- jstest/**
-launch_in_dev:
-- Chrome
-- Firefox

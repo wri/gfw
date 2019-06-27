@@ -7,10 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :cache_keys, if: proc { Rails.env.production? }
   before_action :set_metadata
 
-  def not_found
-    raise ActionController::RoutingError.new('Not Found')
-  end
-
   def cache_keys
     @cache_keys = $redis.keys('*')
   end
@@ -21,6 +17,11 @@ class ApplicationController < ActionController::Base
 
   def set_metadata
     @metadata = {
+      home: {
+        title: 'Forest Monitoring Designed for Action',
+        desc: 'Global Forest Watch offers the latest data, technology and tools that empower people everywhere to better protect forests.',
+        keywords: 'forests, forest data, forest monitoring, forest landscapes, maps, gis, visualize, geospatial, forest analysis, forest news, forest alerts, conservation, forest updates, forest watch, analysis, deforestation, deforesting, tree cover loss, explore forests, mapping, trees, forest loss'
+      },
       about: {
         title: 'About GFW',
         desc: 'Global Forest Watch is an online platform that provides data and tools for monitoring forests.',
@@ -68,6 +69,36 @@ class ApplicationController < ActionController::Base
       country: {
         title: '',
         desc: 'Analyze and investigate data trends in forest change, cover and use with just a few clicks.'
+      },
+      terms: {
+        title: 'Terms of Service',
+        desc: 'Welcome to the WRI family of environmental data platforms. By using the Services, you agree to be bound by these Terms of Service and any future updates.',
+        keywords: 'terms of service, wri, world resources institute, data, global forest watch, data platform, services, terms, forest watcher',
+      },
+      privacy: {
+        title: 'Privacy Policy',
+        desc: 'This Privacy Policy tells you how WRI handles information collected about you through our websites and applications.',
+        keywords: 'terms of service, wri, world resources institute, data, global forest watch, data platform, services, terms, forest watcher'
+      },
+      stories: {
+        title: "Stories",
+        desc: "Due to limited use, the user stories feature is no longer available on GFW."
+      },
+      browser_support: {
+        title: "Browser Not Supported",
+        desc: "Oops, your browser isn’t supported. Please upgrade to a supported browser and try loading the website again."
+      },
+      not_found: {
+        title: 'Page Not Found',
+        desc: 'You may have mistyped the address or the page may have moved.'
+      },
+      unacceptable: {
+        title: "The change you wanted was rejected",
+        desc: "Maybe you tried to change something you didn't have access to."
+      },
+      internal_error: {
+        title: "We're sorry, something went wrong.",
+        desc: "Maybe you tried to change something you didn't have access to."
       }
     }
 
@@ -82,7 +113,7 @@ class ApplicationController < ActionController::Base
 
   def check_browser
     unless UserAgentValidator.user_agent_supported? request.user_agent
-      redirect_to "/notsupportedbrowser"
+      redirect_to "/browser-support"
     end
   end
 

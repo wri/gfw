@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  layout 'application_old'
 
   # GET /search/:query/:page
   def index

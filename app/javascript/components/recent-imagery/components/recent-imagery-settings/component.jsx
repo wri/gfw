@@ -57,9 +57,7 @@ class RecentImagerySettings extends PureComponent {
               <Button
                 className="info-btn"
                 theme="theme-button-tiny theme-button-grey-filled square"
-                onClick={() =>
-                  setModalMetaSettings({ metakey: 'recent_satellite_imagery' })
-                }
+                onClick={() => setModalMetaSettings('recent_satellite_imagery')}
               >
                 <Icon icon={infoIcon} />
               </Button>
