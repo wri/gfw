@@ -132,7 +132,7 @@ export default {
       description:
         "Access GFW's forest monitoring and alert system offline and collect data from the field, all from your mobile device",
       background: forestWatcherImage,
-      extLink: 'http://forestwatcher.globalforestwatch.org/',
+      extLink: 'https://forestwatcher.globalforestwatch.org/',
       color: '#97be32',
       icon: forestWatcherIcon
     },
@@ -141,7 +141,7 @@ export default {
       description:
         'Track fires and haze, view the latest data on fire locations and air quality, and do your own analysis',
       background: firesImage,
-      extLink: 'http://fires.globalforestwatch.org',
+      extLink: 'https://fires.globalforestwatch.org',
       color: '#F71949',
       icon: firesIcon
     },
@@ -158,7 +158,7 @@ export default {
       description:
         'Securely manage deforestation risk in commodity supply chains',
       background: proImage,
-      extLink: 'http://pro.globalforestwatch.org',
+      extLink: 'https://pro.globalforestwatch.org',
       color: '#404042',
       icon: proIcon,
       className: 'pro'
