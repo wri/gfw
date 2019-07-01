@@ -29,7 +29,9 @@ class MyGFWPage extends PureComponent {
               </div>
             )}
             {loggedIn &&
-              !myGfwLoading && <div className="column small-12">hello</div>}
+              !myGfwLoading && (
+              <div className="column small-12">Areas of interest</div>
+            )}
           </div>
         </div>
       </div>
