@@ -3,7 +3,7 @@ $black-tabs: #404040;
 $left-panel-width: calc((#{$max-width} * 0.7) + ((100vw - #{$max-width}) / 2));
 $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
 
-.l-country {
+.l-dashboards-page {
   border-bottom: solid 1px $border;
   display: flex;
 

@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import replace from 'lodash/replace';
 import upperFirst from 'lodash/upperFirst';
+import flatMap from 'lodash/flatMap';
 import camelCase from 'lodash/camelCase';
 import sortBy from 'lodash/sortBy';
 
@@ -12,6 +13,8 @@ import CATEGORIES from 'data/categories.json';
 const selectShowMap = state =>
   state.location && state.location.query && !!state.location.query.showMap;
 const selectLocation = state => state.location;
+const selectLocationType = state =>
+  state.location && state.location.payload && state.location.payload.type;
 const selectCategory = state =>
   (state.location && state.location.query && state.location.query.category) ||
   'summary';
@@ -20,14 +23,6 @@ export const selectQuery = state => state.location && state.location.query;
 export const getEmbed = createSelector(
   [selectLocation],
   location => location && location.routesMap[location.type].embed
-);
-
-export const getLinks = createSelector([selectCategory], activeCategory =>
-  CATEGORIES.map(category => ({
-    label: category.label,
-    category: category.value,
-    active: activeCategory === category.value
-  }))
 );
 
 export const getWidgetAnchor = () => {
@@ -72,6 +67,21 @@ export const getActiveWidgetSlug = createSelector([getActiveWidget], widget => {
   return widget.widget;
 });
 
+export const getLinks = createSelector(
+  [parseWidgetsWithOptions, selectCategory],
+  (widgets, activeCategory) => {
+    if (!widgets) return null;
+    const widgetCats = flatMap(widgets.map(w => w.config.categories));
+    return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
+      category => ({
+        label: category.label,
+        category: category.value,
+        active: activeCategory === category.value
+      })
+    );
+  }
+);
+
 export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
   category: selectCategory,
@@ -80,5 +90,6 @@ export const getDashboardsProps = createStructuredSelector({
   activeWidget: getActiveWidget,
   activeWidgetSlug: getActiveWidgetSlug,
   widgetAnchor: getWidgetAnchor,
-  noWidgetsMessage: getNoWidgetsMessage
+  noWidgetsMessage: getNoWidgetsMessage,
+  locationType: selectLocationType
 });
