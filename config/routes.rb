@@ -68,6 +68,9 @@ Gfw::Application.routes.draw do
   get '/grants-and-fellowships/*all' => 'grants_and_fellowships#index'
 
   # connect
+  get '/my-gfw' => 'mygfw#index'
+
+  # connect
   get '/my_gfw/' => 'connect#index', as: 'user_index'
   get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
 
