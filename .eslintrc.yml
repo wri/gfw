@@ -34,6 +34,7 @@ rules:
   react/forbid-prop-types: 0
   react/prefer-stateless-function: 0
   jsx-a11y/href-no-hash: 0
+  react/jsx-indent: "off"
   react/jsx-filename-extension: 0
   react/sort-comp: 0
   react/no-find-dom-node: 0
