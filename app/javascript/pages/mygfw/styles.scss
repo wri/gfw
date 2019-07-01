@@ -1,4 +1,23 @@
 @import '~styles/settings.scss';
 
 .l-mygfw-page {
+  .header-banner {
+    background-color: $slate-light;
+    padding: rem(70px) 0 rem(80px);
+
+    h1 {
+      font-size: rem(48px);
+      font-weight: 300;
+      color: $white;
+    }
+  }
+
+  .my-gfw-container {
+    padding: rem(80px);
+    position: relative;
+
+    .mygfw-loader {
+      min-height: rem(300px);
+    }
+  }
 }

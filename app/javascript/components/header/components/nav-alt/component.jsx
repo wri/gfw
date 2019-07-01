@@ -2,10 +2,10 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { NavLink } from 'redux-first-router-link';
 
 import Icon from 'components/ui/icon';
 import DropdownMenu from 'components/header/components/dropdown-menu';
-import MyGFWLogin from 'components/mygfw-login';
 import SubmenuPanel from 'components/header/components/submenu-panel';
 
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -35,7 +35,6 @@ class NavAlt extends PureComponent {
       languages,
       lang: txLang || 'en',
       showLang: false,
-      showMyGfw: false,
       showMore: false
     };
   }
@@ -61,8 +60,8 @@ class NavAlt extends PureComponent {
   };
 
   render() {
-    const { isDesktop, myGfwLinks, loggedIn, showSubmenu } = this.props;
-    const { showLang, showMyGfw, showMore, languages, lang } = this.state;
+    const { isDesktop, showSubmenu } = this.props;
+    const { showLang, showMore, languages, lang } = this.state;
     const activeLang = languages && languages.find(l => l.value === lang);
     const showMorePanel = showMore || showSubmenu;
     let moreMenuText = 'menu';
@@ -106,25 +105,14 @@ class NavAlt extends PureComponent {
               </OutsideClickHandler>
             </li>
             <li className="alt-link">
-              <OutsideClickHandler
-                onOutsideClick={() => this.setState({ showMyGfw: false })}
+              <NavLink
+                className="nav-link"
+                to="/my-gfw"
+                activeClassName="-active"
               >
-                <button
-                  className="menu-link"
-                  onClick={() => this.setState({ showMyGfw: !showMyGfw })}
-                >
-                  My GFW
-                  <Icon icon={myGfwIcon} />
-                  {showMyGfw &&
-                    loggedIn && (
-                      <DropdownMenu className="submenu" options={myGfwLinks} />
-                    )}
-                  {showMyGfw &&
-                    !loggedIn && (
-                      <MyGFWLogin className="mygfw-header submenu" />
-                    )}
-                </button>
-              </OutsideClickHandler>
+                My GFW
+                <Icon icon={myGfwIcon} />
+              </NavLink>
             </li>
           </Fragment>
         )}
@@ -176,7 +164,6 @@ class NavAlt extends PureComponent {
 
 NavAlt.propTypes = {
   isDesktop: PropTypes.bool,
-  myGfwLinks: PropTypes.array,
   loggedIn: PropTypes.bool,
   showSubmenu: PropTypes.bool,
   closeSubMenu: PropTypes.func

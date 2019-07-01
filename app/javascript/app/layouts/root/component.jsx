@@ -36,7 +36,14 @@ class App extends PureComponent {
   }
 
   render() {
-    const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
+    const {
+      route,
+      loggedIn,
+      metadata,
+      isGFW,
+      isTrase,
+      myGfwLoading
+    } = this.props;
     const { component, embed, fullScreen } = route;
     const isMapPage = component === 'map';
 
@@ -70,22 +77,24 @@ class App extends PureComponent {
                 isTrase={isTrase}
                 isDesktop={isDesktop}
                 metadata={metadata}
+                loggedIn={loggedIn}
+                myGfwLoading={myGfwLoading}
               />
             </div>
             {!embed && <MyGFWProvider />}
             {embed &&
               !isGFW &&
               !isTrase && (
-                <div className="embed-footer">
-                  <p>For more info</p>
-                  <Button
-                    className="embed-btn"
-                    extLink={window.location.href.replace('/embed', '')}
-                  >
+              <div className="embed-footer">
+                <p>For more info</p>
+                <Button
+                  className="embed-btn"
+                  extLink={window.location.href.replace('/embed', '')}
+                >
                     EXPLORE ON GFW
-                  </Button>
-                </div>
-              )}
+                </Button>
+              </div>
+            )}
             <Meta {...metadata} />
             <Cookies />
             {!route.hideFooter && !embed && <Footer />}
@@ -100,6 +109,7 @@ App.propTypes = {
   route: PropTypes.object.isRequired,
   loggedIn: PropTypes.bool,
   isGFW: PropTypes.bool,
+  myGfwLoading: PropTypes.bool,
   isTrase: PropTypes.bool,
   metadata: PropTypes.object
 };

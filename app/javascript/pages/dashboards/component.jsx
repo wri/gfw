@@ -71,21 +71,21 @@ class Page extends PureComponent {
               <Header className="header" />
               {links &&
                 !!links.length && (
-                  <SubNavMenu
-                    className="nav"
-                    theme="theme-subnav-dark"
-                    links={links.map(l => ({
-                      ...l,
-                      onClick: () => {
-                        handleCategoryChange(l.category);
-                        track('selectDashboardCategory', {
-                          label: l.category
-                        });
-                      }
-                    }))}
-                    checkActive
-                  />
-                )}
+                <SubNavMenu
+                  className="nav"
+                  theme="theme-subnav-dark"
+                  links={links.map(l => ({
+                    ...l,
+                    onClick: () => {
+                      handleCategoryChange(l.category);
+                      track('selectDashboardCategory', {
+                        label: l.category
+                      });
+                    }
+                  }))}
+                  checkActive
+                />
+              )}
               <Widgets
                 className="dashboard-widgets"
                 noWidgetsMessage={noWidgetsMessage}

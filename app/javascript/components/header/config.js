@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import gfwClimate from 'assets/logos/gfw-climate.png';
 import gfwFires from 'assets/logos/gfw-fires.png';
 import gfwPro from 'assets/logos/gfw-pro.png';
@@ -51,33 +49,6 @@ export default {
     {
       label: 'About',
       path: '/about'
-    }
-  ],
-  myGfwLinks: [
-    {
-      label: 'My subscriptions',
-      extLink: '/my_gfw/subscriptions'
-    },
-    {
-      label: 'My profile',
-      extLink: '/my_gfw'
-    },
-    {
-      label: 'Logout',
-      extLink: '/auth/logout',
-      onSelect: e => {
-        e.preventDefault();
-        axios
-          .get(`${process.env.GFW_API}/auth/logout`, { withCredentials: true })
-          .then(response => {
-            if (response.status < 400) {
-              localStorage.removeItem('mygfw_token');
-              window.location.reload();
-            } else {
-              console.warn('Failed to logout');
-            }
-          });
-      }
     }
   ],
   apps: [
