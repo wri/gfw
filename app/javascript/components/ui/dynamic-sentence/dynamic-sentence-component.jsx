@@ -28,13 +28,18 @@ class WidgetDynamicSentence extends PureComponent {
                 formattedSentence &&
                 formattedSentence.replace(
                   `{${p}}`,
-                  `<b style="color: ${param.color};">${param.value}</b>`
+                  `<b class="notranslate" style="color: ${param.color};">${
+                    param.value
+                  }</b>`
                 );
             }
           } else {
             formattedSentence =
               formattedSentence &&
-              formattedSentence.replace(`{${p}}`, `<b>${param}</b>`);
+              formattedSentence.replace(
+                `{${p}}`,
+                `<b class="notranslate">${param}</b>`
+              );
           }
         }
       });
