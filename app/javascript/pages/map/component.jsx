@@ -17,6 +17,7 @@ import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import Tip from 'components/ui/tip';
 import SubscribeModal from 'components/modals/subscribe';
+import SaveAOIModal from 'components/modals/save-aoi';
 import MapPrompts from 'components/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
 import RecentImagery from 'components/recent-imagery';
@@ -94,11 +95,11 @@ class MainMapComponent extends PureComponent {
             </div>
             {isDesktop &&
               !hidePanels && (
-                <DataAnalysisMenu
-                  className="data-analysis-menu"
-                  embed={embed}
-                />
-              )}
+              <DataAnalysisMenu
+                className="data-analysis-menu"
+                embed={embed}
+              />
+            )}
             {!embed && (
               <MapControlButtons
                 className="main-map-controls"
@@ -109,13 +110,14 @@ class MainMapComponent extends PureComponent {
             <SubscribeModal />
             {!embed &&
               isDesktop && (
-                <Fragment>
-                  <MapPrompts />
-                  <ModalWelcome />
-                </Fragment>
-              )}
+              <Fragment>
+                <MapPrompts />
+                <ModalWelcome />
+              </Fragment>
+            )}
             <Share />
             <ModalMeta />
+            <SaveAOIModal />
             <ModalSource />
             <CountryDataProvider />
             <WhitelistsProvider />
