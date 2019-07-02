@@ -3,58 +3,24 @@
 .c-map-menu-my-gfw {
   padding: rem(20px);
 
-  h3 {
+  h3.title-login {
     text-transform: uppercase;
     color: $slate;
     font-size: rem(14px);
     font-weight: 500;
-  }
-
-  .side-menu-search {
-    margin-bottom: rem(30px);
-  }
-
-  .search-type {
-    display: inline-block;
-    font-size: rem(12px);
-    margin-bottom: rem(20px);
-  }
-
-  .search-type-select {
-    width: rem(135px);
-    display: inline-block;
-    margin-left: rem(5px);
-  }
-
-  .empty-search {
-    position: relative;
-    min-height: rem(120px);
-  }
-
-  .label {
-    font-size: rem(12px);
-    width: rem(60px);
-    margin-right: rem(5px);
-  }
-
-  .coord-input {
-    border: 0;
-    border-bottom: solid 1px $border;
-    width: calc(100% - 51px);
     margin-bottom: rem(10px);
-
-    &.error {
-      color: $error;
-    }
-
-    &:focus {
-      outline: none;
-    }
   }
 
-  .error-message {
-    text-align: center;
-    font-size: rem(11px);
-    margin-top: rem(5px);
+  h2.title-create-aois {
+    font-size: rem(18px);
+    max-width: 80%;
+  }
+
+  p {
+    margin: rem(10px) 0;
+  }
+
+  .mygfw-login {
+    margin: rem(40px) 0;
   }
 }

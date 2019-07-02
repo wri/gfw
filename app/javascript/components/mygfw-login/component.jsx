@@ -23,14 +23,17 @@ const socialButtons = [
 
 class MyGFWLogin extends PureComponent {
   render() {
-    const { className, plain } = this.props;
+    const { className, plain, simple } = this.props;
 
     return (
       <div className={cx('c-my-gfw', { '-plain': plain }, className)}>
-        <p>
-          Log in is required so you can view, manage, and delete your
-          subscriptions. Questions? <a href="mailto:gfw@wri.org">Contact us</a>
-        </p>
+        {!simple && (
+          <p>
+            Log in is required so you can view, manage, and delete your
+            subscriptions. Questions?{' '}
+            <a href="mailto:gfw@wri.org">Contact us</a>
+          </p>
+        )}
         <div className="social-btns">
           {socialButtons.map(s => (
             <a
@@ -51,7 +54,8 @@ class MyGFWLogin extends PureComponent {
 
 MyGFWLogin.propTypes = {
   className: PropTypes.string,
-  plain: PropTypes.bool
+  plain: PropTypes.bool,
+  simple: PropTypes.bool
 };
 
 export default MyGFWLogin;
