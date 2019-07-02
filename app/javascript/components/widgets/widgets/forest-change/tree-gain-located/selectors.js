@@ -88,6 +88,7 @@ export const parseSentence = createSelector(
     let percentileLength = 0;
 
     while (
+      sortedData &&
       percentileLength < sortedData.length &&
       percentileGain / totalGain < 0.5 &&
       percentileLength !== 10

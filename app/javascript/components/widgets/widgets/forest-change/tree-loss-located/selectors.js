@@ -30,7 +30,11 @@ export const mapData = createSelector(
           'area'
         ) || 0;
       const locationExtent = extent.filter(l => l.id === d.id);
-      const percentage = loss / locationExtent[0].extent * 100 || 0;
+      const percentage =
+        (locationExtent &&
+          !!locationExtent.length &&
+          loss / locationExtent[0].extent * 100) ||
+        0;
       const { payload, query, type } = location;
 
       return {
@@ -99,6 +103,8 @@ export const parseSentence = createSelector(
     let percentileLength = 0;
 
     while (
+      data &&
+      sortedData &&
       percentileLength < data.length &&
       percentileLoss / totalLoss < 0.5 &&
       percentileLength !== 10
