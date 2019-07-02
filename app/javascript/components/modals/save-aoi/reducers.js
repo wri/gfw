@@ -11,28 +11,28 @@ export const initialState = {
   datasets: []
 };
 
-const setSubscribeSaving = (state, { payload }) => ({
+const setSaveAOISaving = (state, { payload }) => ({
   ...state,
   ...payload
 });
 
-const clearSubscribeError = (state, { payload }) => ({
+const clearSaveAOIError = (state, { payload }) => ({
   ...state,
   error: payload
 });
 
-const resetSubscribe = () => ({
+const resetSaveAOI = () => ({
   ...initialState
 });
 
-const setSubscribeSaved = state => ({
+const setSaveAOISaved = state => ({
   ...state,
   saved: true
 });
 
 export default {
-  [actions.setSubscribeSaving]: setSubscribeSaving,
-  [actions.setSubscribeSaved]: setSubscribeSaved,
-  [actions.resetSubscribe]: resetSubscribe,
-  [actions.clearSubscribeError]: clearSubscribeError
+  [actions.setSaveAOISaving]: setSaveAOISaving,
+  [actions.setSaveAOISaved]: setSaveAOISaved,
+  [actions.resetSaveAOI]: resetSaveAOI,
+  [actions.clearSaveAOIError]: clearSaveAOIError
 };
