@@ -117,12 +117,12 @@ class NavAlt extends PureComponent {
                   <Icon icon={myGfwIcon} />
                   {showMyGfw &&
                     loggedIn && (
-                      <DropdownMenu className="submenu" options={myGfwLinks} />
-                    )}
+                    <DropdownMenu className="submenu" options={myGfwLinks} />
+                  )}
                   {showMyGfw &&
                     !loggedIn && (
-                      <MyGFWLogin className="mygfw-header submenu" />
-                    )}
+                    <MyGFWLogin className="mygfw-header submenu" />
+                  )}
                 </button>
               </OutsideClickHandler>
             </li>

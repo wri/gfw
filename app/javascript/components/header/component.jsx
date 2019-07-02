@@ -39,7 +39,8 @@ class Header extends PureComponent {
       apps,
       setModalContactUsOpen,
       loggedIn,
-      fullScreen
+      fullScreen,
+      setQueryToUrl
     } = this.props;
     const { fullScreenOpen } = this.state;
 
@@ -82,12 +83,12 @@ class Header extends PureComponent {
                   <div className="nav">
                     {isDesktop &&
                       !hideMenu && (
-                        <NavMenu
-                          className="nav-menu"
-                          menuItems={navMain}
-                          fullScreen={fullScreen}
-                        />
-                      )}
+                      <NavMenu
+                        className="nav-menu"
+                        menuItems={navMain}
+                        fullScreen={fullScreen}
+                      />
+                    )}
                     <NavAlt
                       showSubmenu={fullScreen && fullScreenOpen}
                       closeSubMenu={() =>
@@ -100,6 +101,7 @@ class Header extends PureComponent {
                       apps={apps}
                       toggleContactUs={setModalContactUsOpen}
                       loggedIn={loggedIn}
+                      setQueryToUrl={setQueryToUrl}
                     />
                   </div>
                 )}
@@ -122,7 +124,8 @@ Header.propTypes = {
   moreLinks: PropTypes.array,
   fullScreen: PropTypes.bool,
   loggedIn: PropTypes.bool,
-  hideMenu: PropTypes.bool
+  hideMenu: PropTypes.bool,
+  setQueryToUrl: PropTypes.func
 };
 
 export default Header;
