@@ -10,6 +10,11 @@
       font-weight: 300;
       color: $white;
     }
+
+    .user-profile {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   .my-gfw-container {
