@@ -57,5 +57,24 @@
       background-repeat: no-repeat;
       margin-left: 30px;
     }
+
+    .no-results {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: rem(300px);
+
+      .error-tree {
+        width: 100%;
+        height: rem(200px);
+        padding-right: rem(20px);
+        margin-bottom: rem(40px);
+      }
+
+      p {
+        font-size: rem(18px);
+      }
+    }
   }
 }

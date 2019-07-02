@@ -1,6 +1,6 @@
 import { createThunkAction, createAction } from 'redux-tools';
 import axios from 'axios';
-// import { setComponentStateToUrl } from 'utils/stateToUrl';
+import { SEARCH } from 'router';
 
 export const setSearchData = createAction('setSearchData');
 export const setSearchLoading = createAction('setSearchLoading');
@@ -9,6 +9,7 @@ export const getSearch = createThunkAction(
   'getSearch',
   ({ query, page }) => (dispatch, getState) => {
     const { search } = getState() || {};
+    dispatch(setQueryToUrl({ query }));
     if (query && search && !search.loading) {
       dispatch(setSearchLoading(true));
       axios
@@ -30,5 +31,20 @@ export const getSearch = createThunkAction(
           console.error(error);
         });
     }
+  }
+);
+
+export const setQueryToUrl = createThunkAction(
+  'setQueryToUrl',
+  ({ query }) => (dispatch, getState) => {
+    const { location } = getState();
+    const { query: oldQuery } = location || {};
+    dispatch({
+      type: SEARCH,
+      query: {
+        ...oldQuery,
+        query
+      }
+    });
   }
 );

@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
-// import treeImage from 'assets/icons/tree-success.png';
-
+import treeImage from 'assets/icons/error.svg';
 import Search from 'components/ui/search';
 import Button from 'components/ui/button';
 import Loader from 'components/ui/loader';
+import Icon from 'components/ui/icon';
 
 import './styles.scss';
 
@@ -29,7 +29,7 @@ class SearchPage extends PureComponent {
 
   fetchSearchResults = debounce(
     query => this.props.getSearch({ query, page: 1 }),
-    600
+    300
   );
 
   render() {
@@ -82,6 +82,19 @@ class SearchPage extends PureComponent {
                       )}
                     </div>
                   ))}
+                {!loading &&
+                  (!data || data.length === 0) && (
+                  <div className="no-results">
+                    {this.state.search && (
+                      <Icon icon={treeImage} className="error-tree" />
+                    )}
+                    <p>
+                      {this.state.search
+                        ? 'No search results.'
+                        : 'Enter a search'}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
