@@ -70,21 +70,13 @@ Gfw::Application.routes.draw do
   # connect
   get '/my-gfw' => 'mygfw#index'
 
-  # connect
-  get '/my_gfw/' => 'connect#index', as: 'user_index'
-  get '/my_gfw/*all' => 'connect#index', as: 'user_profile'
-
-  # static #
+  # static
   get '/browser-support' => 'browser_support#index'
   get '/terms' => 'terms#index'
   get '/privacy-policy' => 'privacy#index'
 
   # search
   get '/search(/:query)(/:page)' => 'search#index'
-
-  # media
-  post 'media/upload' => 'media#upload'
-  get  'media/show' => 'media#show'
 
   #cache
   get '/cache/keys' => 'cache#keys'
