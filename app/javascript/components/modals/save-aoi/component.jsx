@@ -20,14 +20,14 @@ class ModalSaveAOI extends PureComponent {
   renderUserLoginForm = () => <MyGFWLogin className="mygfw-save-aoi" />;
 
   render() {
-    const { open, userData, loading, locationName, saved } = this.props;
+    const { open, userData, loading, saved } = this.props;
 
     return (
       <Modal
         isOpen={open}
         contentLabel="Save Area of Interest"
         onRequestClose={this.handleCloseModal}
-        title={saved ? 'Subscription saved' : `Save ${locationName} to GFW`}
+        title={saved ? 'Subscription saved' : 'Save Area of Interest'}
       >
         <div className="c-modal-save-aoi">
           <div className="save-aoi-body">

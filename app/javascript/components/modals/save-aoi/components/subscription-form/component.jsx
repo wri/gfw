@@ -5,7 +5,6 @@ import remove from 'lodash/remove';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
-import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
@@ -18,6 +17,7 @@ class SubscriptionForm extends PureComponent {
     this.state = {
       lang: props.lang,
       name: props.locationName,
+      tags: [],
       email: props.email,
       emailError: false,
       nameError: false
@@ -65,16 +65,16 @@ class SubscriptionForm extends PureComponent {
 
   render() {
     const {
-      datasets,
+      // datasets,
       activeDatasets,
-      setModalMetaSettings,
+      // setModalMetaSettings,
       saveSubscription,
       userData,
       saving,
       error,
       location
     } = this.props;
-    const { lang, name, email, emailError, nameError } = this.state;
+    const { lang, name, tags, email, emailError, nameError } = this.state;
     const canSubmit =
       activeDatasets &&
       activeDatasets.length &&
@@ -85,7 +85,7 @@ class SubscriptionForm extends PureComponent {
     return (
       <div className="c-form c-subscription-form">
         <div className={cx('field', { error: nameError })}>
-          <span>Name*</span>
+          <span>Name this area for later reference</span>
           <input
             value={name}
             onChange={e =>
@@ -96,22 +96,17 @@ class SubscriptionForm extends PureComponent {
             }
           />
         </div>
-        <div className="field">
-          <span>
-            Select the forest change alerts you would like to receive*
-          </span>
-          <div className="datasets">
-            {datasets &&
-              datasets.map(d => (
-                <LayerToggle
-                  key={d.id}
-                  data={d}
-                  onInfoClick={setModalMetaSettings}
-                  onToggle={() => this.onToggleLayer(d.subscriptionKey)}
-                  showSubtitle
-                />
-              ))}
-          </div>
+        <div className={cx('field', { error: nameError })}>
+          <span>Assign tags to organize and group areas</span>
+          <input
+            value={tags}
+            onChange={e =>
+              this.setState({
+                name: e.target.value,
+                nameError: !e.target.value
+              })
+            }
+          />
         </div>
         <div className={cx('field', { error: emailError })}>
           <span>Email*</span>
@@ -166,9 +161,7 @@ class SubscriptionForm extends PureComponent {
 SubscriptionForm.propTypes = {
   setSaveAOISettings: PropTypes.func,
   saveSubscription: PropTypes.func,
-  datasets: PropTypes.array,
   userData: PropTypes.object,
-  setModalMetaSettings: PropTypes.func,
   activeDatasets: PropTypes.array,
   lang: PropTypes.string,
   locationName: PropTypes.string,
