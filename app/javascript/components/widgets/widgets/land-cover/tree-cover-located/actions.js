@@ -10,7 +10,7 @@ export default ({ params }) =>
       if (params.adm1) groupKey = 'adm2';
 
       mappedData = data.map(d => ({
-        id: d[groupKey],
+        id: parseInt(d[groupKey], 10),
         extent: d.extent || 0,
         percentage: d.extent ? d.extent / d.total_area * 100 : 0
       }));
