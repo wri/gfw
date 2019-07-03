@@ -46,7 +46,9 @@ export const parseData = createSelector(
         meta && meta.find(region => region.value === regionId);
       const totalRegionPlantations =
         sumBy(groupedByRegion[regionId], 'intersection_area') || 0;
-      const regionExtent = extent.find(e => e[groupKey] === regionId);
+      const regionExtent = extent.find(
+        e => parseInt(e[groupKey], 10) === regionId
+      );
       const totalArea = regionExtent && regionExtent.total_area;
       plantationKeys.forEach(key => {
         const labelFromKey = groupedByRegion[regionId].find(
@@ -80,6 +82,7 @@ export const parseData = createSelector(
       };
     });
     const dataParsed = sortByKey(regionData, 'total', true);
+
     return dataParsed;
   }
 );
