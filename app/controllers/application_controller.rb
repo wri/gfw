@@ -107,6 +107,11 @@ class ApplicationController < ActionController::Base
       internal_error: {
         title: "We're sorry, something went wrong.",
         desc: "Maybe you tried to change something you didn't have access to."
+      },
+      search: {
+        title: 'Search',
+        desc: 'Search forest information, including forest data, news, updates and more.',
+        keywords: 'GFW, forests, forest data, data, forest news, forest alerts, conservation, forest updates, forest watch, deforestation, deforesting, tree cover loss, forest loss'
       }
     }
 
