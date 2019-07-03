@@ -69,7 +69,7 @@ class WidgetContainer extends Component {
       changedSetting &&
       !settingsUpdateBlackList.includes(changedSetting);
     const hasLocationChanged = !isEqual(location, prevProps.location);
-    const hasErrorChanged = !error && !isEqual(error, prevProps.error);
+    const hasErrorChanged = !isEqual(error, prevProps.error);
     const params = { ...location, ...settings };
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       getWidgetData({ widget, getData, params });
