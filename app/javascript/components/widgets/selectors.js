@@ -150,15 +150,15 @@ export const getLocationObject = createSelector(
     } else if (adminLevel === 'adm1') {
       parentObject = (parent &&
         parent.find(a => a.value === location.adm0)) || {
-          label: location.type,
-          value: location.type
-        };
+        label: location.type,
+        value: location.type
+      };
     } else if (adminLevel === 'adm2') {
       parentObject = (parent &&
         parent.find(a => a.value === location.adm1)) || {
-          label: location.type,
-          value: location.type
-        };
+        label: location.type,
+        value: location.type
+      };
     }
 
     const returnObject = {
@@ -257,7 +257,6 @@ export const filterWidgetsByIndicatorWhitelist = createSelector(
   [filterWidgetsByLocationWhitelist, selectWhitelists],
   (widgets, indicatorWhitelist) => {
     if (!widgets) return null;
-    if (!indicatorWhitelist || !indicatorWhitelist.length) return widgets;
 
     return widgets.filter(w => {
       const { indicators } = w.config.whitelists || {};

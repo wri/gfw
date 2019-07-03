@@ -21,7 +21,10 @@ export default ({ params }) => {
           const gain = item.gain || 0;
           const extent = item.extent || 0;
           return {
-            id: item[groupKey],
+            id:
+              groupKey !== 'iso'
+                ? parseInt(item[groupKey], 10)
+                : item[groupKey],
             gain,
             extent,
             percentage: extent ? 100 * gain / extent : 0

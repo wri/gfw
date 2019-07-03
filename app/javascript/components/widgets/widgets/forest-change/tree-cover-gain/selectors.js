@@ -19,9 +19,7 @@ const getTitle = state => state.config.title;
 const getAllLocation = state => state.allLocation || null;
 
 const haveData = (data, locationObject) =>
-  locationObject &&
-  data &&
-  data.filter(item => item.id === locationObject.value).length;
+  locationObject && data && data.find(item => item.id === locationObject.value);
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -68,6 +66,7 @@ export const parseData = createSelector(
     ) {
       return null;
     }
+    // console.log(currentLabel, locationObject, data);
 
     let dataTrimmed = [];
     data.forEach(d => {

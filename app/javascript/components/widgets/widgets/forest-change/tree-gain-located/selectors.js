@@ -23,9 +23,9 @@ export const getSortedData = createSelector(
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
-      const region = meta.find(l => d.id === l.value);
+      const region = meta.find(l => parseInt(d.id, 10) === l.value);
       if (region) {
-        const locationExtent = extent.find(l => l.id === d.id);
+        const locationExtent = extent.find(l => l.id === parseInt(d.id, 10));
         const percentage = locationExtent
           ? d.gain / locationExtent.extent * 100
           : 0;
