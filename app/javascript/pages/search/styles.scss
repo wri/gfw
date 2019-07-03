@@ -29,9 +29,15 @@
     }
 
     .item-meta {
-      h3 {
+      h3,
+      a {
         margin-bottom: rem(10px);
         word-break: break-word;
+        color: $slate-light;
+
+        &:hover {
+          color: darken($slate-light, 20%);
+        }
       }
 
       p {

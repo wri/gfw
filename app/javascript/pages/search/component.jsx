@@ -64,7 +64,13 @@ class SearchPage extends PureComponent {
                       className="search-item"
                     >
                       <div className="item-meta">
-                        <h3>{item.title}</h3>
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener nofollower"
+                        >
+                          <h3>{item.title}</h3>
+                        </a>
                         <p>{item.snippet}</p>
                         <Button theme="theme-button-light" extLink={item.link}>
                           MORE
