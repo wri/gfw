@@ -55,12 +55,12 @@ export const getWidgetOptions = createSelector(
 
 export const getWidgetError = createSelector(
   [selectWidgetFromState],
-  props => (props && props.error) || false
+  props => props && props.error
 );
 
 export const getWidgetLoading = createSelector(
   [selectWidgetFromState],
-  props => (props && props.loading) || false
+  props => props && props.loading
 );
 
 export const getRangeYears = createSelector(
