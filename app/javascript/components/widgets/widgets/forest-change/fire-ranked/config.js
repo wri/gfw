@@ -1,24 +1,19 @@
 export default {
-  widget: 'gladRanked',
-  title: 'Location of deforestation Alerts in {location}',
+  widget: 'fireRanked',
+  title: 'Location of fire Alerts in {location}',
   categories: ['forest-change'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
   options: {
-    forestTypes: true,
-    landCategories: ['mining', 'wdpa', 'landmark'],
-    thresholds: true,
-    units: ['%', 'ha'],
-    extentYears: true,
+    units: ['%', 'counts ha-1'],
     weeks: true
   },
-  metaKey: 'widget_deforestation_alert_location',
+  metaKey: 'widget_fire_alert_ranking_location',
   colors: 'loss',
   datasets: [
-    // GLAD
+    // FIRES
     {
-      dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
-      layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
+      dataset: '0f24299d-2aaa-4afc-945c-b614028c12d1'
     }
   ],
   sortOrder: {
@@ -27,33 +22,11 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, {count} GLAD alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.',
+      'In the last {timeframe} in {location}, {count} fire alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all fire alerts.',
     withInd:
-      'In the last {timeframe} in {location}, {count} GLAD alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all GLAD alerts.'
+      'In the last {timeframe} in {location}, {count} fire alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all fire alerts.'
   },
   whitelists: {
-    adm0: [
-      'BRA',
-      'COL',
-      'ECU',
-      'GUF',
-      'GUY',
-      'PER',
-      'SUR',
-      'BDI',
-      'CMR',
-      'CAF',
-      'GNQ',
-      'GAB',
-      'RWA',
-      'UGA',
-      'IDN',
-      'MYS',
-      'PNG',
-      'VEN',
-      'TLS',
-      'COD',
-      'COG'
-    ]
-  }
+   
+}
 };
