@@ -25,7 +25,7 @@ export const parseList = createSelector(
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
-      const regionMeta = meta.find(l => d.id === l.value);
+      const regionMeta = meta.find(l => parseInt(d.id, 10) === l.value);
       if (regionMeta) {
         const { payload, query, type } = location;
         dataMapped.push({
