@@ -8,6 +8,7 @@ import cx from 'classnames';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
+import InputTags from 'components/input-tags';
 
 import './styles.scss';
 
@@ -74,7 +75,7 @@ class SubscriptionForm extends PureComponent {
       error,
       location
     } = this.props;
-    const { lang, name, tags, email, emailError, nameError } = this.state;
+    const { lang, name, email, emailError, nameError } = this.state;
     const canSubmit =
       activeDatasets &&
       activeDatasets.length &&
@@ -98,15 +99,7 @@ class SubscriptionForm extends PureComponent {
         </div>
         <div className={cx('field', { error: nameError })}>
           <span>Assign tags to organize and group areas</span>
-          <input
-            value={tags}
-            onChange={e =>
-              this.setState({
-                name: e.target.value,
-                nameError: !e.target.value
-              })
-            }
-          />
+          <InputTags />
         </div>
         <div className={cx('field', { error: emailError })}>
           <span>Email*</span>
