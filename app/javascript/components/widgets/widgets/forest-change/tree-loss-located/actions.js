@@ -13,7 +13,7 @@ export default ({ params }) =>
       let extentMappedData = {};
       if (extentData && extentData.length) {
         extentMappedData = extentData.map(d => ({
-          id: d[groupKey],
+          id: groupKey === 'iso' ? d[groupKey] : parseInt(d[groupKey], 10),
           extent: d.extent || 0,
           percentage: d.extent ? d.extent / d.total * 100 : 0
         }));
@@ -25,7 +25,7 @@ export default ({ params }) =>
         lossMappedData = Object.keys(lossByRegion).map(d => {
           const regionLoss = lossByRegion[d];
           return {
-            id: parseInt(d, 10),
+            id: groupKey === 'iso' ? d : parseInt(d, 10),
             loss: regionLoss
           };
         });
