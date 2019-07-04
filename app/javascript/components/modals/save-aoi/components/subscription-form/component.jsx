@@ -6,6 +6,7 @@ import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
 import Toggle from 'components/ui/toggle';
+// import Checkbox from 'components/ui/checkbox';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
@@ -26,7 +27,9 @@ class SubscriptionForm extends PureComponent {
       email: props.email,
       emailError: false,
       nameError: false,
-      receiveAlerts: false
+      receiveAlerts: false,
+      changesEmail: true,
+      monthlyEmail: true
     };
   }
 
@@ -86,7 +89,9 @@ class SubscriptionForm extends PureComponent {
       email,
       emailError,
       nameError,
-      receiveAlerts
+      receiveAlerts,
+      changesEmail,
+      monthlyEmail
     } = this.state;
     const canSubmit =
       activeDatasets &&
@@ -157,6 +162,23 @@ class SubscriptionForm extends PureComponent {
             onChange={newLang => this.setState({ lang: newLang })}
             native
           />
+        </div>
+        <div className="field">
+          <input
+            id="a"
+            type="checkbox"
+            className="prompts-checkbox"
+            checked={changesEmail}
+            onChange={() => this.setState({ changesEmail: !changesEmail })}
+          />
+          <p>Change summary</p>
+          <input
+            type="checkbox"
+            className="prompts-checkbox"
+            checked={monthlyEmail}
+            onChange={() => this.setState({ monthlyEmail: !monthlyEmail })}
+          />
+          <p>Monthly summary</p>
         </div>
         <div className="save-subscription">
           {error ? (
