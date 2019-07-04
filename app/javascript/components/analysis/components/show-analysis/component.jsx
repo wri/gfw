@@ -12,6 +12,7 @@ import Button from 'components/ui/button';
 import Widgets from 'components/widgets';
 import DownloadData from 'components/analysis/components/download-data';
 
+import screensImg from 'assets/images/aois/double@2x.png';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
@@ -221,6 +222,7 @@ class ShowAnalysis extends PureComponent {
               change.
             </p>
           </div>
+          <img src={screensImg} alt="aoi screenshots" />
         </div>
       </div>
     );

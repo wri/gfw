@@ -13,20 +13,25 @@
 
   .save-aois-disclaimer {
     background-color: $border;
-    padding: rem(20px);
+    padding: 0;
     padding-bottom: rem(60px);
 
-    h3 {
-      text-transform: uppercase;
-      font-weight: 500;
-      font-size: rem(12px);
-      color: $slate-light;
-    }
+    .content {
+      padding: rem(20px);
+      padding-bottom: 0;
 
-    p {
-      font-size: rem(12px);
-      color: $slate-light;
-      margin: rem(10px) 0;
+      h3 {
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: rem(12px);
+        color: $slate-light;
+      }
+
+      p {
+        font-size: rem(12px);
+        color: $slate-light;
+        margin: rem(10px) 0;
+      }
     }
   }
 

@@ -5,10 +5,14 @@ import remove from 'lodash/remove';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
+import Toggle from 'components/ui/toggle';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import InputTags from 'components/input-tags';
+
+import screenImg1x from 'assets/images/aois/single.png';
+import screenImg2x from 'assets/images/aois/single @2x.png';
 
 import './styles.scss';
 
@@ -21,7 +25,8 @@ class SubscriptionForm extends PureComponent {
       tags: [],
       email: props.email,
       emailError: false,
-      nameError: false
+      nameError: false,
+      receiveAlerts: false
     };
   }
 
@@ -75,7 +80,14 @@ class SubscriptionForm extends PureComponent {
       error,
       location
     } = this.props;
-    const { lang, name, email, emailError, nameError } = this.state;
+    const {
+      lang,
+      name,
+      email,
+      emailError,
+      nameError,
+      receiveAlerts
+    } = this.state;
     const canSubmit =
       activeDatasets &&
       activeDatasets.length &&
@@ -100,6 +112,29 @@ class SubscriptionForm extends PureComponent {
         <div className={cx('field', { error: nameError })}>
           <span>Assign tags to organize and group areas</span>
           <InputTags />
+        </div>
+        <div className={cx('field')}>
+          <span>
+            <Toggle
+              onToggle={() => {
+                this.setState({ receiveAlerts: !receiveAlerts });
+              }}
+              value={receiveAlerts}
+              theme="toggle-large"
+            />
+            <p>Receive alert emails about deforestation in this area</p>
+          </span>
+        </div>
+        <div className={cx('field', 'image')}>
+          <img
+            src={screenImg1x}
+            srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
+            alt="aoi screenshot"
+          />
+          <p>
+            We will send you email updates about alerts and forest cover change
+            in your selected area.
+          </p>
         </div>
         <div className={cx('field', { error: emailError })}>
           <span>Email*</span>
