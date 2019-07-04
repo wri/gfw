@@ -6,7 +6,7 @@ import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
 import Toggle from 'components/ui/toggle';
-// import Checkbox from 'components/ui/checkbox';
+import Checkbox from 'components/ui/checkbox-v2';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
@@ -165,7 +165,6 @@ class SubscriptionForm extends PureComponent {
         </div>
         <div className="field">
           <input
-            id="a"
             type="checkbox"
             className="prompts-checkbox"
             checked={changesEmail}
@@ -179,6 +178,11 @@ class SubscriptionForm extends PureComponent {
             onChange={() => this.setState({ monthlyEmail: !monthlyEmail })}
           />
           <p>Monthly summary</p>
+          <Checkbox
+            option={{ value: 'changesEmail', name: 'Changes email ?' }}
+            onChange={() => this.setState({ changesEmail: !changesEmail })}
+            checked={changesEmail}
+          />
         </div>
         <div className="save-subscription">
           {error ? (

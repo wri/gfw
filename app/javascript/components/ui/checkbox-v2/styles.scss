@@ -1,0 +1,25 @@
+@import '~styles/settings.scss';
+
+.c-checkbox-v2 {
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"] + span {
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    width: 12px;
+    height: 12px;
+    margin: -1px 0 0 0;
+    margin-right: 4px;
+    vertical-align: middle;
+    background: white left top no-repeat;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:checked + span {
+    background: $green-gfw -19px top no-repeat;
+  }
+}
