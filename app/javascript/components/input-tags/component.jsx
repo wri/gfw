@@ -13,7 +13,11 @@ function InputTags() {
 
   const inputKeyDown = e => {
     const val = e.target.value;
-    if (e.key === 'Enter' && val) {
+
+    if ((e.key === 'Enter' || e.key === ',') && val) {
+      if (e.key === ',' && val) {
+        e.preventDefault();
+      }
       if (tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
         return;
       }

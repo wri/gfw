@@ -1,12 +1,16 @@
 @import '~styles/settings.scss';
 
+$padding: rem(5px);
+
 .input-tag {
-  background: white;
-  border: 1px solid #d6d6d6;
-  border-radius: 2px;
+  background: $white;
+  border: solid 1px $border;
+  border-radius: rem(4px);
   display: flex;
   flex-wrap: wrap;
-  padding: 5px 5px 0;
+  align-items: center;
+  padding: $padding calc(#{$padding} * 2);
+  min-height: rem(40px);
 }
 
 .input-tag input {
@@ -24,15 +28,20 @@
 
 .input-tag__tags li {
   align-items: center;
-  background: #85a3bf;
-  border-radius: 2px;
-  color: white;
+  color: $white;
   display: flex;
   font-weight: 300;
   list-style: none;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  padding: 5px 10px;
+  margin:
+    calc(#{$padding} / 2)
+    $padding
+    calc(#{$padding} / 2)
+    0;
+  padding: $padding calc(#{$padding} * 2);
+  font-size: rem(14px);
+  height: rem(20px);
+  border-radius: 100px;
+  background-color: $slate-light;
 }
 
 .input-tag__tags li button {
@@ -44,8 +53,8 @@
   color: white;
   cursor: pointer;
   display: inline-flex;
-  font-size: 12px;
-  height: 15px;
+  font-size: rem(20px);
+  height: rem(15px);
   justify-content: center;
   line-height: 0;
   margin-left: 8px;
@@ -57,4 +66,9 @@
   background: none;
   flex-grow: 1;
   padding: 0;
+
+  input {
+    border: none;
+    padding: 0;
+  }
 }
