@@ -103,8 +103,9 @@ class SubscriptionForm extends PureComponent {
     return (
       <div className="c-form c-subscription-form">
         <div className={cx('field', { error: nameError })}>
-          <span>Name this area for later reference</span>
+          <span className="form-title">Name this area for later reference</span>
           <input
+            className="text-input"
             value={name}
             onChange={e =>
               this.setState({
@@ -115,11 +116,13 @@ class SubscriptionForm extends PureComponent {
           />
         </div>
         <div className={cx('field', { error: nameError })}>
-          <span>Assign tags to organize and group areas</span>
+          <span className="form-title">
+            Assign tags to organize and group areas
+          </span>
           <InputTags />
         </div>
         <div className={cx('field')}>
-          <span>
+          <span className="form-toggle">
             <Toggle
               onToggle={() => {
                 this.setState({ receiveAlerts: !receiveAlerts });
@@ -127,10 +130,12 @@ class SubscriptionForm extends PureComponent {
               value={receiveAlerts}
               theme="toggle-large"
             />
-            <p>Receive alert emails about deforestation in this area</p>
+            <p className="form-title">
+              Receive alert emails about deforestation in this area
+            </p>
           </span>
         </div>
-        <div className={cx('field', 'image')}>
+        <div className={cx('field', 'field-image')}>
           <img
             src={screenImg1x}
             srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
@@ -142,8 +147,9 @@ class SubscriptionForm extends PureComponent {
           </p>
         </div>
         <div className={cx('field', { error: emailError })}>
-          <span>Email*</span>
+          <span className="form-title">Email</span>
           <input
+            className="text-input"
             value={email}
             onChange={e =>
               this.setState({
@@ -154,8 +160,9 @@ class SubscriptionForm extends PureComponent {
           />
         </div>
         <div className="field">
-          <span>Language*</span>
+          <span className="form-title">Language*</span>
           <Dropdown
+            className="dropdown-input"
             theme="theme-dropdown-native-form"
             options={getLanguages()}
             value={lang}
@@ -165,12 +172,14 @@ class SubscriptionForm extends PureComponent {
         </div>
         <div className="field">
           <Checkbox
+            className="form-checkbox"
             option={{ value: 'changesEmail', name: 'Changes email ?' }}
             onChange={() => this.setState({ changesEmail: !changesEmail })}
             checked={changesEmail}
             label={'As soon as forest change is detected'}
           />
           <Checkbox
+            className="form-checkbox"
             option={{ value: 'changesEmail', name: 'Changes email ?' }}
             onChange={() => this.setState({ monthlyEmail: !monthlyEmail })}
             checked={monthlyEmail}

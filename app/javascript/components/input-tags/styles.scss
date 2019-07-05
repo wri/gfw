@@ -11,6 +11,7 @@ $padding: rem(5px);
   align-items: center;
   padding: $padding calc(#{$padding} * 2);
   min-height: rem(40px);
+  max-width: rem(400px);
 }
 
 .input-tag input {

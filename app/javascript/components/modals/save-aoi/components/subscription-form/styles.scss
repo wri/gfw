@@ -17,6 +17,22 @@ $desktop-padding: rem(50px);
     }
   }
 
+  .field-image {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    background: $border;
+
+    img {
+      width: rem(300px);
+    }
+
+    p {
+      margin: 0 rem(30px) 0 rem(15px);
+    }
+  }
+
   input {
     height: rem(40px);
     border: solid 1px $border;
@@ -26,6 +42,39 @@ $desktop-padding: rem(50px);
 
     &:focus {
       outline: none;
+    }
+  }
+
+  .text-input,
+  .dropdown-input .select-wrapper {
+    min-width: rem(400px);
+    width: rem(400px);
+  }
+
+  .form-title {
+    color: $slate-light;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    text-transform: uppercase;
+  }
+
+  .form-toggle {
+    display: flex;
+    align-items: center;
+
+    button {
+      margin-right: rem(5px);
+    }
+  }
+
+  .form-checkbox {
+    label {
+      color: $slate;
+      font-size: 12px;
+      line-height: 12px;
+      display: flex;
+      align-items: center;
     }
   }
 
