@@ -164,24 +164,17 @@ class SubscriptionForm extends PureComponent {
           />
         </div>
         <div className="field">
-          <input
-            type="checkbox"
-            className="prompts-checkbox"
-            checked={changesEmail}
-            onChange={() => this.setState({ changesEmail: !changesEmail })}
-          />
-          <p>Change summary</p>
-          <input
-            type="checkbox"
-            className="prompts-checkbox"
-            checked={monthlyEmail}
-            onChange={() => this.setState({ monthlyEmail: !monthlyEmail })}
-          />
-          <p>Monthly summary</p>
           <Checkbox
             option={{ value: 'changesEmail', name: 'Changes email ?' }}
             onChange={() => this.setState({ changesEmail: !changesEmail })}
             checked={changesEmail}
+            label={'As soon as forest change is detected'}
+          />
+          <Checkbox
+            option={{ value: 'changesEmail', name: 'Changes email ?' }}
+            onChange={() => this.setState({ monthlyEmail: !monthlyEmail })}
+            checked={monthlyEmail}
+            label={'Monthly summary'}
           />
         </div>
         <div className="save-subscription">

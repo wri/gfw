@@ -1,27 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import cx from 'classnames';
+import cx from 'classnames';
 
 import './styles.scss';
 
-const Checkbox = ({ checked, onChange }) => (
-  <div className="c-checkbox-v2">
-    {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus */}
-    <span role="button" onClick={onChange}>
-      <input type="checkbox" checked={checked} />
-      <span />
-    </span>
+const Checkbox = ({ className, checked, onChange, label }) => (
+  <div className={cx('c-checkbox-v2', className)}>
+    {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+    <label>
+      <input
+        type="checkbox"
+        name="fruit-1"
+        value="cherry"
+        checked={checked}
+        onChange={onChange}
+      />
+      {label || 'Texto'}
+    </label>
   </div>
 );
 
 export default Checkbox;
 
 Checkbox.propTypes = {
-  // options: PropTypes.array,
-  // option: PropTypes.object,
   onChange: PropTypes.func,
-  checked: PropTypes.bool
-  // theme: PropTypes.string
+  checked: PropTypes.bool,
+  label: PropTypes.string,
+  className: PropTypes.string
 };
 
 Checkbox.defaultProps = {
