@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import AreasProvider from 'providers/areas-provider';
 import MyGFWLogin from 'components/mygfw-login';
 import Button from 'components/ui/button/button-component';
+import Pill from 'components/ui/pill';
 
 import './styles.scss';
 
@@ -28,23 +30,63 @@ class MapMenuSearch extends PureComponent {
     );
   }
 
-  renderMyGFW() {
+  renderNoAreas() {
     const { isDesktop } = this.props;
     return (
-      <div className="content">
-        <div className="row">
+      <div className="row">
+        {isDesktop && (
+          <h2 className="title-create-aois">
+            You haven&apos;t created any Areas of Interest yet
+          </h2>
+        )}
+        <p>
+          Creating an Area of Interest lets you customize and perform an
+          in-depth analysis of the area, as well as receiving email
+          notifications when new deforestation alerts are available.
+        </p>
+        <Button theme="theme-button-small">Learn how</Button>
+      </div>
+    );
+  }
+
+  renderAreas() {
+    const { isDesktop, areas } = this.props;
+    return (
+      <div className="row">
+        <div className="column">
           {isDesktop && (
-            <h2 className="title-create-aois">
-              You haven&apos;t created any Areas of Interest yet
-            </h2>
+            <h2 className="title-create-aois">Areas of interest</h2>
           )}
-          <p>
-            Creating an Area of Interest lets you customize and perform an
-            in-depth analysis of the area, as well as receiving email
-            notifications when new deforestation alerts are available.
-          </p>
-          <Button theme="theme-button-small">Learn how</Button>
+          <div className="aoi-tags">
+            <Pill
+              key={'all'}
+              active
+              label={'all'}
+              // TODO: onRemove={() => remove(tag)}
+            >
+              all
+            </Pill>
+          </div>
+          <div className="aoi-items">
+            {areas.map(area => (
+              <div className="aoi-item">
+                <img src={area.image} alt={area.name} />
+                <p className="aoi-title">{area.name}</p>
+                {area.tags.map(tag => <span>{tag}</span>)}
+              </div>
+            ))}
+          </div>
         </div>
+      </div>
+    );
+  }
+
+  renderMyGFW() {
+    const { areas } = this.props;
+
+    return (
+      <div className="content">
+        {areas && areas.length > 0 ? this.renderAreas() : this.renderNoAreas()}
       </div>
     );
   }
@@ -55,6 +97,7 @@ class MapMenuSearch extends PureComponent {
     return (
       <div className="c-map-menu-my-gfw">
         {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}
+        <AreasProvider />
       </div>
     );
   }
@@ -62,7 +105,8 @@ class MapMenuSearch extends PureComponent {
 
 MapMenuSearch.propTypes = {
   isDesktop: PropTypes.bool,
-  loggedIn: PropTypes.bool
+  loggedIn: PropTypes.bool,
+  areas: PropTypes.array
 };
 
 export default MapMenuSearch;

@@ -23,4 +23,22 @@
   .mygfw-login {
     margin: rem(40px) 0;
   }
+
+  .aoi-tags {
+    margin: rem(15px) 0;
+  }
+
+  .aoi-items {
+    .aoi-item {
+      margin: rem(15px) 0;
+      display: flex;
+
+      img {
+        width: rem(76px);
+        height: rem(76px);
+        background: $border;
+        margin-right: rem(15px);
+      }
+    }
+  }
 }
