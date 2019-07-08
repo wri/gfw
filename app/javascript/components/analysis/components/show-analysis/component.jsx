@@ -213,17 +213,21 @@ class ShowAnalysis extends PureComponent {
             />
           )}
         </div>
-        <div className="save-aois-disclaimer">
-          <div className="content">
-            <h3>Interested in this particular area?</h3>
-            <p>
-              Save this area to create a <a>dashboard</a> with a more in-depth
-              analysis and receive <a>email alerts</a> about forest cover
-              change.
-            </p>
+        {(hasLayers || hasWidgets) &&
+          !loading &&
+          !error && (
+          <div className="save-aois-disclaimer">
+            <div className="content">
+              <h3>Interested in this particular area?</h3>
+              <p>
+                  Save this area to create a <a>dashboard</a> with a more
+                  in-depth analysis and receive <a>email alerts</a> about forest
+                  cover change.
+              </p>
+            </div>
+            <img src={screensImg} alt="aoi screenshots" />
           </div>
-          <img src={screensImg} alt="aoi screenshots" />
-        </div>
+        )}
       </div>
     );
   }
