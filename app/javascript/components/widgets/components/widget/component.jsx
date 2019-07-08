@@ -27,7 +27,14 @@ class Widget extends PureComponent {
   componentDidUpdate(prevProps) {
     const { active, settings, config } = this.props;
     if (active) {
-      const mapSyncKeys = ['startYear', 'endYear', 'threshold', 'extentYear'];
+      const mapSyncKeys = [
+        'startYear',
+        'endYear',
+        'threshold',
+        'extentYear',
+        'forestType',
+        'landCategory'
+      ];
       if (
         config &&
         config.datasets &&
@@ -43,7 +50,7 @@ class Widget extends PureComponent {
 
   syncWidgetWithMap = () => {
     // if active widget settings change, send them to the layer
-    const { setMapSettings, settings, config } = this.props;
+    const { setMapSettings, settings, config, polynames } = this.props;
     const {
       startYear,
       endYear,
@@ -87,6 +94,20 @@ class Widget extends PureComponent {
       })
     }));
 
+    const polynameDatasets =
+      (polynames &&
+        polynames.length &&
+        polynames.flatMap(
+          polyname =>
+            polyname.datasets &&
+            polyname.datasets.map(d => ({
+              opacity: 0.7,
+              visibility: 1,
+              ...d
+            }))
+        )) ||
+      [];
+
     const datasets = [
       {
         dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
@@ -97,6 +118,7 @@ class Widget extends PureComponent {
         opacity: 1,
         visibility: true
       },
+      ...polynameDatasets,
       ...widgetDatasets
     ];
 
@@ -150,44 +172,44 @@ class Widget extends PureComponent {
           !error &&
           !hasData &&
           Component && (
-            <NoContent message={`No data in selection for ${locationName}`} />
-          )}
+          <NoContent message={`No data in selection for ${locationName}`} />
+        )}
         {!loading &&
           error && (
-            <RefreshButton
-              refetchFn={() => {
-                setWidgetLoading({ widget, loading: false, error: false });
-                track('refetchDataBtn', {
-                  label: `Widget: ${widget}`
-                });
-              }}
-            />
-          )}
+          <RefreshButton
+            refetchFn={() => {
+              setWidgetLoading({ widget, loading: false, error: false });
+              track('refetchDataBtn', {
+                label: `Widget: ${widget}`
+              });
+            }}
+          />
+        )}
         {!error &&
           sentence &&
           hasData && (
-            <DynamicSentence
-              className="sentence"
-              sentence={sentence}
-              handleMouseOver={() => handleDataHighlight(true, widget)}
-              handleMouseOut={() => handleDataHighlight(false, widget)}
-            />
-          )}
+          <DynamicSentence
+            className="sentence"
+            sentence={sentence}
+            handleMouseOver={() => handleDataHighlight(true, widget)}
+            handleMouseOut={() => handleDataHighlight(false, widget)}
+          />
+        )}
         {!error &&
           hasData &&
           Component && (
-            <Component
-              widget={widget}
-              data={data}
-              config={dataConfig}
-              settings={settings}
-              setWidgetsSettings={setWidgetsSettings}
-              setWidgetSettings={setWidgetSettings}
-              parsePayload={parsePayload}
-              simple={simple}
-              layers={config.layers}
-            />
-          )}
+          <Component
+            widget={widget}
+            data={data}
+            config={dataConfig}
+            settings={settings}
+            setWidgetsSettings={setWidgetsSettings}
+            setWidgetSettings={setWidgetSettings}
+            parsePayload={parsePayload}
+            simple={simple}
+            layers={config.layers}
+          />
+        )}
       </div>
     );
   };
@@ -208,9 +230,9 @@ class Widget extends PureComponent {
           ...(active &&
             !simple &&
             !embed && {
-              borderColor: colors && colors.main,
-              boxShadow: `0 0px 0px 1px ${colors && colors.main}`
-            })
+            borderColor: colors && colors.main,
+            boxShadow: `0 0px 0px 1px ${colors && colors.main}`
+          })
         }}
       >
         <WidgetHeader {...this.props} />
@@ -244,7 +266,8 @@ Widget.propTypes = {
   setMapSettings: PropTypes.func,
   setWidgetSettings: PropTypes.func,
   sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  polynames: PropTypes.array
 };
 
 export default Widget;
