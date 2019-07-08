@@ -68,7 +68,7 @@ export const parseData = createSelector(
     return dataTrimmed.map((d, i) => ({
       ...d,
       label: locationsDict[d[key]],
-      color: colors.density,
+      color: colors.carbon[0],
       key: `${d.iso}-${i}`,
       path: {
         type,
@@ -82,7 +82,7 @@ export const parseData = createSelector(
         }
       },
       value: d[settings.variable],
-      unit: settings.variable === 'totalbiomass' ? 't' : 't/ha'
+      unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha'
     }));
   }
 );
@@ -111,7 +111,7 @@ export const parseSentence = createSelector(
       const value =
         settings.variable === 'totalbiomass'
           ? formatNumber({ num: percent, unit: '%' })
-          : formatNumber({ num: avgBiomDensity, unit: 't/ha' });
+          : formatNumber({ num: avgBiomDensity, unit: 'tC/ha' });
 
       const labels = {
         biomassdensity: 'biomass density',
@@ -143,8 +143,8 @@ export const parseSentence = createSelector(
       sentence: sentences.initial,
       params: {
         location,
-        biomassDensity: formatNumber({ num: biomassdensity, unit: 't/ha' }),
-        totalBiomass: formatNumber({ num: totalbiomass, unit: 't' })
+        biomassDensity: formatNumber({ num: biomassdensity, unit: 'tC/ha' }),
+        totalBiomass: formatNumber({ num: totalbiomass, unit: 'tC' })
       }
     };
   }

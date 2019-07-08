@@ -19,9 +19,9 @@ class Header extends PureComponent {
   };
 
   handleSubmit = () => {
-    window.location.href = `${window.location.origin}/search?query=${
-      this.state.search
-    }`;
+    const { setQueryToUrl, hideMenu } = this.props;
+    setQueryToUrl({ query: this.state.search });
+    hideMenu();
   };
 
   handleSearchChange = search => {
@@ -155,12 +155,12 @@ class Header extends PureComponent {
             </ul>
           </div>
           <div className="legal-section">
-            <a className="title" href="/terms">
+            <NavLink className="title" to="/terms" onClick={hideMenu}>
               Terms
-            </a>
-            <a className="title" href="/privacy-policy">
+            </NavLink>
+            <NavLink className="title" to="/privacy-policy" onClick={hideMenu}>
               Privacy Policy
-            </a>
+            </NavLink>
             <button className="title" onClick={() => toggleContactUs(true)}>
               Contact us
             </button>
@@ -185,7 +185,8 @@ Header.propTypes = {
   hideMenu: PropTypes.func,
   handleLangSelect: PropTypes.func,
   toggleContactUs: PropTypes.func,
-  loggedIn: PropTypes.bool
+  loggedIn: PropTypes.bool,
+  setQueryToUrl: PropTypes.func
 };
 
 export default Header;

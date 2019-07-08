@@ -209,7 +209,7 @@ export default {
       title: 'Learn more',
       summary: 'Read about how forests can benefit water supply globally.',
       extLink:
-        'http://www.wri.org/our-work/project/natural-infrastructure-water/blog',
+        'https://www.wri.org/our-work/project/natural-infrastructure-water/blog',
       img1x: learn,
       img2x: learnLarge,
       btnText: 'view the blog'
