@@ -5,5 +5,6 @@ export default {
   unit: '%',
   extentYear: 2000,
   pageSize: 5,
-  page: 0
+  page: 0,
+  ifl: 2000
 };
