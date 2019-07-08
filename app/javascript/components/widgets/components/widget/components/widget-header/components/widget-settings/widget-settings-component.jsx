@@ -115,8 +115,7 @@ class WidgetSettings extends PureComponent {
       extentYears,
       types,
       weeks,
-      commodities,
-      ifl
+      commodities
     } = this.props.options;
     const hasExtraOptions =
       units ||
@@ -148,7 +147,8 @@ class WidgetSettings extends PureComponent {
                     value: {
                       forestType: (option && option.value) || '',
                       ...(!!(option && option.value === 'ifl') && {
-                        extentYear: 2010
+                        extentYear: 2010,
+                        ifl: settings.ifl === '2016' ? 2010 : 2000
                       })
                     },
                     widget
@@ -165,24 +165,6 @@ class WidgetSettings extends PureComponent {
                 noSelectedValue="All tree cover"
               />
             )}
-            {settings.forestType &&
-              settings.forestType === 'ifl' && (
-                <Dropdown
-                  theme="theme-select-light"
-                  label="IFL YEAR"
-                  value={settings.ifl || ''}
-                  options={ifl}
-                  onChange={option =>
-                    onSettingsChange({
-                      value: { ifl: (option && option.value) || '' },
-                      widget
-                    })
-                  }
-                  disabled={loading}
-                  optionsAction={setModalMetaSettings}
-                  optionsActionKey="metaKey"
-                />
-              )}
             {!isEmpty(landCategories) && (
               <Dropdown
                 theme="theme-select-light"
@@ -348,38 +330,38 @@ class WidgetSettings extends PureComponent {
             )}
             {startYears &&
               endYears && (
-                <div className="years-select">
-                  <span className="label">YEARS</span>
-                  <div className="select-container">
-                    <Dropdown
-                      className="years-dropdown"
-                      theme="theme-dropdown-button"
-                      value={settings.startYear}
-                      options={startYears}
-                      onChange={option =>
-                        onSettingsChange({
-                          value: { startYear: option.value },
-                          widget
-                        })
-                      }
-                      disabled={loading}
-                    />
-                    <span className="text-date">to</span>
-                    <Dropdown
-                      theme="theme-dropdown-button"
-                      value={settings.endYear}
-                      options={endYears}
-                      onChange={option =>
-                        onSettingsChange({
-                          value: { endYear: option.value },
-                          widget
-                        })
-                      }
-                      disabled={loading}
-                    />
-                  </div>
+              <div className="years-select">
+                <span className="label">YEARS</span>
+                <div className="select-container">
+                  <Dropdown
+                    className="years-dropdown"
+                    theme="theme-dropdown-button"
+                    value={settings.startYear}
+                    options={startYears}
+                    onChange={option =>
+                      onSettingsChange({
+                        value: { startYear: option.value },
+                        widget
+                      })
+                    }
+                    disabled={loading}
+                  />
+                  <span className="text-date">to</span>
+                  <Dropdown
+                    theme="theme-dropdown-button"
+                    value={settings.endYear}
+                    options={endYears}
+                    onChange={option =>
+                      onSettingsChange({
+                        value: { endYear: option.value },
+                        widget
+                      })
+                    }
+                    disabled={loading}
+                  />
                 </div>
-              )}
+              </div>
+            )}
           </div>
         )}
         {thresholds && (

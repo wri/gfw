@@ -6,5 +6,5 @@ export default {
   page: 0,
   startYear: 2001,
   endYear: 2017,
-  ifl: 2016
+  ifl: 2000
 };
