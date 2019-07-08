@@ -13,12 +13,12 @@
     ]
   },
   {
-    "label": "Intact Forest Landscapes",
+    "label": "Intact Forest Landscapes ({iflYear})",
     "value": "ifl",
     "metaKey": "intact_forest_landscapes_change",
     "global": true,
-    "default": "2016",
-    "categories": [2016, 2013, 2000],
+    "default": 2016,
+    "categories": [2016, 2000],
     "datasets": [
       {
         "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",

@@ -49,11 +49,25 @@ export const getWidgetOptionsFromData = createSelector(
 );
 
 export const getWidgetOptions = createSelector(
-  [selectWidgetOptions, getWidgetOptionsFromData],
-  (options, dataOptions) => ({
-    ...options,
-    ...dataOptions
-  })
+  [selectWidgetOptions, getWidgetOptionsFromData, getWidgetSettings],
+  (options, dataOptions, settings) => {
+    const { forestTypes: fTypes } = options || {};
+
+    return {
+      ...options,
+      ...dataOptions,
+      ...(fTypes &&
+        fTypes.length &&
+        fTypes.find(f => f.value === 'ifl') && {
+        forestTypes: fTypes.map(f => ({
+          ...f,
+          label: f.label.includes('{iflYear}')
+            ? f.label.replace('{iflYear}', settings.ifl)
+            : f.label
+        }))
+      })
+    };
+  }
 );
 
 export const getWidgetError = createSelector(
