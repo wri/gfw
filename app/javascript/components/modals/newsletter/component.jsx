@@ -28,7 +28,7 @@ class ModalNewsletter extends PureComponent {
                 <iframe
                   title="newsletter"
                   scrolling="no"
-                  src="http://connect.wri.org/l/120942/2016-02-08/2trw5q"
+                  src="https://connect.wri.org/l/120942/2016-02-08/2trw5q"
                   width={isDesktop ? 600 : 280}
                   height="800"
                   type="text/html"

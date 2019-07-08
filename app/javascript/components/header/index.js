@@ -5,6 +5,7 @@ import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 
 import config from './config';
 import Component from './component';
+import * as actions from './actions';
 
 class HeaderContainer extends PureComponent {
   toggleMenu = () => {
@@ -21,4 +22,6 @@ class HeaderContainer extends PureComponent {
   }
 }
 
-export default connect(null, { setModalContactUsOpen })(HeaderContainer);
+export default connect(null, { setModalContactUsOpen, ...actions })(
+  HeaderContainer
+);

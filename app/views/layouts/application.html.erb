@@ -2,26 +2,24 @@
 <html>
   <head>
     <%= render 'shared/meta' %>
-    <%= render 'shared/links' %>
-
-    <%= stylesheet_link_tag controller_name, :media => 'all' %>
-
-    <%= render 'shared/gfw_assets', page: controller_name %>
-    <%= render 'shared/google_analytics' %>
-    <%= render 'shared/tracking' %>
     <%= render 'shared/favicons' %>
+    <%= render 'shared/transifex' %>
 
     <%= yield :head %>
-    <%= yield :js %>
+
+    <!-- custom -->
+    <link rel="canonical" href="<%= request.original_url %>" />
+    <script src="https://cdn.optimizely.com/js/7988050790.js"></script>
+    <%= render 'shared/cache_keys' %>
+    <%= render 'shared/tracking' %>
+
+    <%= javascript_entrypoint_pack_tag 'app' %>
+    <% if @is_production %>
+      <%= stylesheet_entrypoint_pack_tag 'app' %>
+    <% end %>
+
   </head>
-  <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
-    <%= render "shared/header_landing" %>
+  <body>
     <%= yield %>
-    <%= render 'shared/footer_landing' %>
-
-    <%= render 'shared/icons/svg_icons' %>
-    <%= render 'shared/icons/svg_icons_map' %>
-
-    <%= requirejs_include_tag controller_name %>
   </body>
 </html>

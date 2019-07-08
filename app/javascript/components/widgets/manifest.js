@@ -34,6 +34,7 @@ import * as soilBiomass from './widgets/climate/soil-organic';
 import * as emissionsPlantations from './widgets/climate/emissions-plantations';
 import * as futureCarbonGains from './widgets/climate/future-carbon-gains';
 import * as cumulativeEmissions from './widgets/climate/cumulative-emissions';
+import * as carbonStock from './widgets/climate/carbon-stock';
 
 // Biodiversity
 // import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
@@ -79,6 +80,7 @@ export default {
   soilBiomass,
   futureCarbonGains,
   cumulativeEmissions,
+  carbonStock,
   // biodiversity
   // gladBiodiversity,
   // land use
