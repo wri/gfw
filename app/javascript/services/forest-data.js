@@ -112,7 +112,9 @@ const getWHEREQuery = params => {
         polynameMeta &&
         polynameMeta.default &&
         polynameMeta.categories
-    ? ` AND ${params[p]} = '${polynameMeta.default}'`
+    ? ` AND ${params[p]} ${polynameMeta.comparison || '='} '${
+      polynameMeta.default
+    }'`
     : ''
 }${
   !isPolyname

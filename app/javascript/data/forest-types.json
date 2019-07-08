@@ -18,6 +18,7 @@
     "metaKey": "intact_forest_landscapes_change",
     "global": true,
     "default": 2016,
+    "comparison": ">=",
     "categories": [2016, 2000],
     "datasets": [
       {
