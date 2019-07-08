@@ -162,10 +162,12 @@ export const getPolynames = createSelector(
     if (!forestType && !landCategory) return null;
     return [
       ...((forestType &&
-        forestTypes.filter(f => f.value === forestType.value)) ||
+        forestTypes.filter(f => f.value === forestType.value && !f.hidden)) ||
         []),
       ...((landCategory &&
-        landCategories.filter(l => l.value === landCategory.value)) ||
+        landCategories.filter(
+          l => l.value === landCategory.value && !l.hidden
+        )) ||
         [])
     ];
   }

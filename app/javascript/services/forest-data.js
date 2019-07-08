@@ -71,7 +71,9 @@ const getLocationQuery = (adm0, adm1, adm2) =>
   }`;
 
 const buildPolynameSelects = () => {
-  const allPolynames = forestTypes.concat(landCategories);
+  const allPolynames = forestTypes
+    .concat(landCategories)
+    .filter(p => !p.hidden);
   let polyString = '';
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
@@ -90,7 +92,9 @@ const getRequestUrl = (adm0, adm1, adm2, grouped) => {
 };
 
 const getWHEREQuery = params => {
-  const allPolynames = forestTypes.concat(landCategories);
+  const allPolynames = forestTypes
+    .concat(landCategories)
+    .filter(p => !p.hidden);
   const paramKeys = params && Object.keys(params);
   const paramKeysFiltered = paramKeys.filter(
     p => (params[p] || p === 'threshold') && ALLOWED_PARAMS.includes(p)

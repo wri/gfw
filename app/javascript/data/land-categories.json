@@ -82,7 +82,8 @@
         "dataset": "3103075e-64d4-4a52-83a3-1094cf9cf04a",
         "layers": ["19778494-b8ee-4436-9b8c-cea19873bcc5"]
       }
-    ]
+    ],
+    "hidden": true
   },
   {
     "label": "Indonesia forest moratorium",
