@@ -19,8 +19,19 @@ export const setSaveAOISettings = createThunkAction(
     )
 );
 
-export const saveAOISettings = createThunkAction(
-  'saveSubscription',
+/*
+
+  changesEmail: true
+  email: "daniel.fernandez@vizzuality.com"
+  lang: "en"
+  monthlyEmail: true
+  name: "Iceland"
+  receiveAlerts: false
+  tags: []
+*/
+
+export const saveAOI = createThunkAction(
+  'saveAOI',
   data => (dispatch, getState) => {
     const { modalSaveAOI } = getState();
     if (modalSaveAOI && !modalSaveAOI.saving) {
@@ -29,33 +40,40 @@ export const saveAOISettings = createThunkAction(
         name,
         userData,
         email,
-        datasets,
         type,
         adm0,
         adm1,
         adm2,
-        lang
+        lang,
+        changesEmail,
+        monthlyEmail,
+        receiveAlerts,
+        tags
       } = data;
       const isCountry = type === 'country';
       const isUse = type === 'use';
       const postData = {
         name,
+        application: 'gfw',
+        // image: '',
+        userId: '',
+        geostore: type === 'geostore' ? adm0 : null,
         resource: {
           type: 'EMAIL',
           content: email
         },
         language: lang,
-        datasets,
         params: {
           iso: {
             region: isCountry ? adm1 : null,
             subRegion: isCountry ? adm2 : null,
             country: isCountry ? adm0 : null
           },
-          geostore: type === 'geostore' ? adm0 : null,
           use: isUse ? adm0 : null,
-          useid: isUse ? adm1 : null,
-          wdpaid: type === 'wdpa' ? adm0 : null
+          changesEmail,
+          monthlyEmail,
+          receiveAlerts,
+          tags
         }
       };
 

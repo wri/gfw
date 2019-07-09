@@ -73,16 +73,7 @@ class SubscriptionForm extends PureComponent {
   };
 
   render() {
-    const {
-      // datasets,
-      activeDatasets,
-      // setModalMetaSettings,
-      saveSubscription,
-      userData,
-      saving,
-      error,
-      location
-    } = this.props;
+    const { activeDatasets, saveAOI, userData, saving, error } = this.props;
     const {
       lang,
       name,
@@ -197,11 +188,10 @@ class SubscriptionForm extends PureComponent {
           <Button
             className={cx('submit-btn', { error }, { saving })}
             onClick={() =>
-              saveSubscription({
+              saveAOI({
                 ...this.state,
-                datasets: activeDatasets,
-                userData,
-                ...location
+                userData
+                // ...location
               })
             }
             disabled={!canSubmit}
@@ -216,7 +206,7 @@ class SubscriptionForm extends PureComponent {
 
 SubscriptionForm.propTypes = {
   setSaveAOISettings: PropTypes.func,
-  saveSubscription: PropTypes.func,
+  saveAOI: PropTypes.func,
   userData: PropTypes.object,
   activeDatasets: PropTypes.array,
   lang: PropTypes.string,
@@ -224,7 +214,6 @@ SubscriptionForm.propTypes = {
   email: PropTypes.string,
   error: PropTypes.bool,
   saving: PropTypes.bool,
-  location: PropTypes.object,
   activeMapDatasets: PropTypes.array
 };
 
