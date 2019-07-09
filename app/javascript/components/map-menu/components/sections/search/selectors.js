@@ -14,10 +14,12 @@ const selectLocation = state => state.location && state.location.payload;
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLocations = state => state.mapMenu && state.mapMenu.locations;
 const selectLoading = state => state.mapMenu && state.mapMenu.loading;
+const selectActiveLang = () =>
+  JSON.parse(localStorage.getItem('txlive:selectedlang')) || 'en';
 
 const getDatasetWithUrlState = createSelector(
-  [getActiveDatasetsFromState, selectDatasets],
-  (datasetsState, datasets) => {
+  [getActiveDatasetsFromState, selectDatasets, selectActiveLang],
+  (datasetsState, datasets, lang) => {
     const datasetIds = datasetsState.map(d => d.dataset);
 
     return (
@@ -25,7 +27,11 @@ const getDatasetWithUrlState = createSelector(
       sortBy(
         datasets.map(d => ({
           ...d,
-          active: datasetIds.includes(d.id)
+          active: datasetIds.includes(d.id),
+          localeName:
+            lang === 'en'
+              ? d.name
+              : Transifex && Transifex.live.translateText(d.name)
         })),
         ['name']
       )
@@ -40,6 +46,7 @@ const getFilteredDatasets = createSelector(
       ? datasets.filter(
         d =>
           deburrUpper(d.name).includes(deburrUpper(search)) ||
+            deburrUpper(d.localeName).includes(deburrUpper(search)) ||
             deburrUpper(d.description).includes(deburrUpper(search))
       )
       : null)
