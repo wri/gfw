@@ -286,7 +286,8 @@ class Basemaps extends React.PureComponent {
                   this.setState({ planetTooltipOpen: !planetTooltipOpen });
                 }}
               >
-                {planetBasemapSelected && planetBasemapSelected.label}
+                {(planetBasemapSelected && planetBasemapSelected.label) ||
+                  'Select...'}
                 <Icon icon={arrowIcon} className="arrow-icon" />
               </span>
             </Tooltip>
