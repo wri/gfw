@@ -7,6 +7,12 @@ export const getAreasProvider = token =>
     headers: { Authorization: 'Bearer '.concat(token) }
   });
 
+export const postAreasProvider = (token, body) =>
+  axios.post(REQUEST_URL, {
+    headers: { Authorization: 'Bearer '.concat(token) },
+    ...body
+  });
+
 export default {
   getAreasProvider
 };
