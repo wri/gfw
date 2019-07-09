@@ -49,6 +49,10 @@ $desktop-padding: rem(50px);
   .dropdown-input .select-wrapper {
     min-width: rem(400px);
     width: rem(400px);
+
+    select {
+      min-width: 400px;
+    }
   }
 
   .form-title {
