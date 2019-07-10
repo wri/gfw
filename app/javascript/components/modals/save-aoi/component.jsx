@@ -12,9 +12,11 @@ import './styles.scss';
 
 class ModalSaveAOI extends PureComponent {
   handleCloseModal = () => {
-    const { setSaveAOISettings, resetSaveAOI } = this.props;
-    setSaveAOISettings({ open: false });
-    resetSaveAOI();
+    const { setSaveAOISettings, resetSaveAOI, saving } = this.props;
+    if (!saving) {
+      setSaveAOISettings({ open: false });
+      resetSaveAOI();
+    }
   };
 
   renderUserLoginForm = () => <MyGFWLogin className="mygfw-save-aoi" />;
@@ -55,7 +57,8 @@ ModalSaveAOI.propTypes = {
   userData: PropTypes.object,
   datasets: PropTypes.array,
   locationName: PropTypes.string,
-  activeDatasets: PropTypes.array
+  activeDatasets: PropTypes.array,
+  saving: PropTypes.bool
 };
 
 export default ModalSaveAOI;

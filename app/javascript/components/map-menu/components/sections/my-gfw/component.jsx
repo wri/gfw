@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import AreasProvider from 'providers/areas-provider';
 import MyGFWLogin from 'components/mygfw-login';
 import Button from 'components/ui/button/button-component';
 import Pill from 'components/ui/pill';
@@ -97,7 +96,6 @@ class MapMenuSearch extends PureComponent {
     return (
       <div className="c-map-menu-my-gfw">
         {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}
-        <AreasProvider />
       </div>
     );
   }

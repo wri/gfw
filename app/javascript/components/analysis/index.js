@@ -42,6 +42,7 @@ class AnalysisContainer extends PureComponent {
   componentDidUpdate(prevProps) {
     const { location, endpoints } = this.props;
     // get analysis if location changes
+    // TODO: if location is aoi and not geostore, find activeArea.geostore
     if (
       location.type &&
       location.adm0 &&

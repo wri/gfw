@@ -27,7 +27,8 @@ const resetSaveAOI = () => ({
 
 const setSaveAOISaved = state => ({
   ...state,
-  saved: true
+  saved: true,
+  saving: false
 });
 
 export default {
