@@ -34,7 +34,8 @@
         "dataset": "a684a9bb-63f2-4bea-bf62-fd5e80d23d75",
         "layers": ["dfd9deb6-8d39-4640-8571-4389d5d8898a"]
       }
-    ]
+    ],
+    "hidden": true
   },
   {
     "label": "Tiger Conservation Landscapes",
