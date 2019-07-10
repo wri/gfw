@@ -7,7 +7,7 @@ import Tip from 'components/ui/tip';
 
 import './dynamic-sentence-styles.scss';
 
-class WidgetDynamicSentence extends PureComponent {
+class DynamicSentence extends PureComponent {
   reduceSentence = (sentence, pattern, component) => {
     const split = sentence.split(pattern);
     return [split[0], component, split[1]];
@@ -81,11 +81,11 @@ class WidgetDynamicSentence extends PureComponent {
   }
 }
 
-WidgetDynamicSentence.propTypes = {
+DynamicSentence.propTypes = {
   className: PropTypes.string,
   sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   handleMouseOver: PropTypes.func,
   handleMouseOut: PropTypes.func
 };
 
-export default WidgetDynamicSentence;
+export default DynamicSentence;

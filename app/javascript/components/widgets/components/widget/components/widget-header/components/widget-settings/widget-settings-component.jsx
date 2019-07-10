@@ -147,8 +147,10 @@ class WidgetSettings extends PureComponent {
                     value: {
                       forestType: (option && option.value) || '',
                       ...(!!(option && option.value === 'ifl') && {
-                        extentYear: 2010,
-                        ifl: settings.ifl === '2016' ? 2010 : 2000
+                        extentYear: settings.ifl === '2016' ? 2010 : 2000
+                      }),
+                      ...(!!(option && option.value === 'primary_forest') && {
+                        extentYear: 2000
                       })
                     },
                     widget
@@ -280,6 +282,7 @@ class WidgetSettings extends PureComponent {
             )}
             {extentYears &&
               settings.forestType !== 'ifl' &&
+              settings.forestType !== 'primary_forest' &&
               (config.type !== 'loss' ||
                 !settings.unit ||
                 (settings.unit === '%' && config.type === 'loss')) &&
