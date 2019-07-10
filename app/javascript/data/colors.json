@@ -19,6 +19,13 @@
       "Forestry": "#2FBF71",
       "Wildfire": "#ad6824",
       "Urbanization": "#B235CC"
+    },
+    "lossDriversOld": {
+      "1": "#F41D36",
+      "2": "#efd31a",
+      "3": "#2FBF71",
+      "4": "#ad6824",
+      "5": "#B235CC"
     }
   },
   "gain": {

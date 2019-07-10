@@ -9,7 +9,7 @@ import moment from 'moment';
 import { sortByKey } from 'utils/data';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
-import tscLossCategories from 'data/tsc-loss-categories.json';
+import tscLossCategories from 'data/tsc-loss-categories-old.json';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
@@ -20,7 +20,7 @@ const getSentences = state => state.config && state.config.sentences;
 const getTitle = state => state.config.title;
 
 export const getPermCats = createSelector([], () =>
-  tscLossCategories.filter(x => x.permanent).map(el => el.value)
+  tscLossCategories.filter(x => x.permanent).map(el => el.value.toString())
 );
 
 export const mergeDataWithCetagories = createSelector(
@@ -39,8 +39,7 @@ export const getFilteredData = createSelector(
   (data, settings, permCats) => {
     if (isEmpty(data)) return null;
     const { startYear, endYear } = settings;
-    const filterUnknown = data.filter(d => d.tcs !== 'Unknown');
-    const filteredByYear = filterUnknown.filter(
+    const filteredByYear = data.filter(
       d => d.year >= startYear && d.year <= endYear
     );
     const permanentData = filteredByYear.filter(d =>
@@ -81,11 +80,11 @@ export const getDrivers = createSelector(
     const sortedLoss = !isEmpty(groupedLoss)
       ? sortByKey(
         Object.keys(groupedLoss).map(k => {
-          const cat = tscLossCategories.find(c => c.value === k);
+          const cat = tscLossCategories.find(c => c.value.toString() === k);
           return {
             driver: k,
             position: cat && cat.position,
-            area: sumBy(groupedLoss[k], 'area') || 0,
+            area: sumBy(groupedLoss[k], 'area'),
             permanent: permCats.includes(k)
           };
         }),
@@ -93,7 +92,7 @@ export const getDrivers = createSelector(
         true
       )
       : permCats.map(x => ({
-        driver: x,
+        driver: x.toString(),
         area: 0.0
       }));
     return sortedLoss;
@@ -107,7 +106,7 @@ export const parseData = createSelector([getFilteredData], data => {
   const x = Object.keys(groupedData).map(y => {
     const groupedByBound = groupBy(groupedData[y], 'bound1');
     const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
-      const areaSum = sumBy(value, 'area') || 0;
+      const areaSum = sumBy(value, 'area');
       return {
         ...acc,
         [`class_${key}`]: areaSum
@@ -127,7 +126,7 @@ export const parseConfig = createSelector(
     if (isEmpty(data)) return null;
     const { highlighted } = settings || {};
     const yKeys = {};
-    const categoryColors = colors.lossDrivers;
+    const categoryColors = colors.lossDriversOld;
     sortByKey(drivers, 'position').forEach(k => {
       yKeys[`class_${k.driver}`] = {
         fill: categoryColors[k.driver],
@@ -143,7 +142,9 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       drivers
         .map(d => {
-          const tscCat = tscLossCategories.find(c => c.value === d.driver);
+          const tscCat = tscLossCategories.find(
+            c => c.value === parseInt(d.driver, 10)
+          );
           const label = tscCat && tscCat.label;
           return {
             key: `class_${d.driver}`,
@@ -155,7 +156,7 @@ export const parseConfig = createSelector(
         })
         .reverse()
     );
-    const insertIndex = findIndex(tooltip, { key: 'class_Urbanization' });
+    const insertIndex = findIndex(tooltip, { key: 'class_5' });
     if (insertIndex > -1) {
       tooltip.splice(insertIndex, 0, {
         key: 'break',

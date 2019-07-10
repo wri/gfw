@@ -1,6 +1,7 @@
 import request from 'utils/request';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
+import { getIndicator } from 'utils/strings';
 
 const ADM0_DATASET = process.env.GADM36_ADM0_DATASET;
 const ADM1_DATASET = process.env.GADM36_ADM1_DATASET;
@@ -314,5 +315,53 @@ export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
     .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
     .replace('{polynames}', buildPolynameSelects())
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2 }));
+  return request.get(url);
+};
+
+// OLD TABLE FETCHES PRE 2018 DATA
+
+const REQUEST_URL_OLD = `https://production-api.globalforestwatch.org/query/${
+  process.env.COUNTRIES_PAGE_DATASET
+}?sql=`;
+
+const SQL_QUERIES_OLD = {
+  extent:
+    "SELECT SUM({extentYear}) as value, SUM(area_admin) as total_area FROM data WHERE {location} AND thresh = {threshold} AND polyname = '{indicator}'",
+  loss:
+    "SELECT bound1, polyname, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.emissions) as emissions FROM data WHERE {location} AND polyname = '{indicator}' AND thresh= {threshold} GROUP BY bound1, polyname, iso, nested(year_data.year)"
+};
+
+const getExtentYearOld = year =>
+  (year === 2000 ? 'area_extent_2000' : 'area_extent');
+
+export const getExtentOld = ({
+  adm0,
+  adm1,
+  adm2,
+  forestType,
+  landCategory,
+  threshold,
+  extentYear
+}) => {
+  const url = `${REQUEST_URL_OLD}${SQL_QUERIES_OLD.extent}`
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
+    .replace('{threshold}', threshold || 30)
+    .replace('{indicator}', getIndicator(forestType, landCategory))
+    .replace('{extentYear}', getExtentYearOld(extentYear));
+  return request.get(url);
+};
+
+export const getLossOld = ({
+  adm0,
+  adm1,
+  adm2,
+  forestType,
+  landCategory,
+  threshold
+}) => {
+  const url = `${REQUEST_URL_OLD}${SQL_QUERIES_OLD.loss}`
+    .replace('{location}', getLocationQuery(adm0, adm1, adm2))
+    .replace('{threshold}', threshold || 30)
+    .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
