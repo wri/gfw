@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
+import { translateText } from 'utils/transifex';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
@@ -17,7 +18,7 @@ class DynamicSentence extends PureComponent {
     const { className, handleMouseOver, handleMouseOut } = this.props;
     const { sentence, params } = this.props.sentence;
     const { component } = params || {};
-    let formattedSentence = sentence;
+    let formattedSentence = translateText(sentence);
     if (params) {
       Object.keys(params).forEach(p => {
         const param = params[p];
@@ -28,9 +29,9 @@ class DynamicSentence extends PureComponent {
                 formattedSentence &&
                 formattedSentence.replace(
                   `{${p}}`,
-                  `<b class="notranslate" style="color: ${param.color};">${
+                  `<b style="color: ${param.color};">${translateText(
                     param.value
-                  }</b>`
+                  )}</b>`
                 );
             }
           } else {
@@ -38,7 +39,7 @@ class DynamicSentence extends PureComponent {
               formattedSentence &&
               formattedSentence.replace(
                 `{${p}}`,
-                `<b class="notranslate">${param}</b>`
+                `<b>${translateText(param)}</b>`
               );
           }
         }
@@ -66,13 +67,15 @@ class DynamicSentence extends PureComponent {
           onHidden={handleMouseOut}
           duration={0}
         >
-          <span className="hover-text">{mappedComponent.key}</span>
+          <span className="hover-text">
+            {translateText(mappedComponent.key)}
+          </span>
         </Tooltip>
       );
     }
 
     return (
-      <div className={`c-dynamic-sentence ${className || ''}`}>
+      <div className={`c-dynamic-sentence notranslate ${className || ''}`}>
         {formattedSentence.map(
           s => (typeof s === 'string' ? ReactHtmlParser(s) : s)
         )}
