@@ -8,9 +8,11 @@ export const getAreasProvider = token =>
   });
 
 export const postAreasProvider = (token, body) =>
-  axios.post(REQUEST_URL, {
+  axios({
+    method: 'post',
+    url: REQUEST_URL,
     headers: { Authorization: 'Bearer '.concat(token) },
-    ...body
+    data: body
   });
 
 export default {

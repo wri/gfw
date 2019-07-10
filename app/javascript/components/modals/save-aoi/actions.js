@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { postSubscription } from 'services/subscriptions';
+import { postAreasProvider } from 'services/areas';
 
 export const setSaveAOISaving = createAction('setSaveAOISaving');
 export const setSaveAOISaved = createAction('setSaveAOISaved');
@@ -18,17 +18,6 @@ export const setSaveAOISettings = createThunkAction(
       })
     )
 );
-
-/*
-
-  changesEmail: true
-  email: "daniel.fernandez@vizzuality.com"
-  lang: "en"
-  monthlyEmail: true
-  name: "Iceland"
-  receiveAlerts: false
-  tags: []
-*/
 
 export const saveAOI = createThunkAction(
   'saveAOI',
@@ -51,33 +40,31 @@ export const saveAOI = createThunkAction(
         tags
       } = data;
       const isCountry = type === 'country';
-      const isUse = type === 'use';
       const postData = {
         name,
         application: 'gfw',
         // image: '',
-        userId: '',
-        geostore: type === 'geostore' ? adm0 : null,
+        // geostore: null,
         resource: {
           type: 'EMAIL',
           content: email
         },
         language: lang,
-        params: {
-          iso: {
-            region: isCountry ? adm1 : null,
-            subRegion: isCountry ? adm2 : null,
-            country: isCountry ? adm0 : null
-          },
-          use: isUse ? adm0 : null,
-          changesEmail,
-          monthlyEmail,
-          receiveAlerts,
-          tags
-        }
+        iso: {
+          region: isCountry ? adm1 : null,
+          subRegion: isCountry ? adm2 : null,
+          country: isCountry ? adm0 : null
+        },
+        use: {},
+        changesEmail,
+        monthlyEmail,
+        receiveAlerts,
+        tags
       };
 
-      postSubscription(JSON.stringify(postData), userData.token)
+      const token = userData.token || process.env.DEMO_USER_TOKEN;
+
+      postAreasProvider(token, postData)
         .then(() => {
           dispatch(setSaveAOISaved());
         })
