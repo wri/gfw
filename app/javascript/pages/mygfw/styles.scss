@@ -24,5 +24,31 @@
     .mygfw-loader {
       min-height: rem(300px);
     }
+
+    .no-areas {
+      padding: rem(30px) 0 rem(100px);
+
+      .areas-image {
+        width: 100%;
+      }
+
+      h4 {
+        font-size: rem(30px);
+        color: $slate-light;
+        margin-bottom: rem(20px);
+        max-width: rem(400px);
+      }
+
+      p {
+        font-size: rem(18px);
+        line-height: 30px;
+        color: $slate;
+        margin-bottom: rem(40px);
+      }
+
+      .learn-btn {
+        width: rem(200px);
+      }
+    }
   }
 }
