@@ -19,12 +19,12 @@ export const reduceParams = params => {
       [key]: paramValue,
       ...(key === 'endDate' &&
         param.url && {
-          latestUrl: param.url
-        }),
+        latestUrl: param.url
+      }),
       ...(key === 'date' &&
         param.format && {
-          latestFormat: param.format
-        })
+        latestFormat: param.format
+      })
     };
     return newObj;
   }, {});
@@ -38,7 +38,7 @@ export const reduceSqlParams = params => {
       [param.key]: param.key_params.reduce((subObj, item) => {
         const keyValues = {
           ...subObj,
-          [item.key]: item.value
+          [item.key]: item.value || item.default
         };
         return keyValues;
       }, {})

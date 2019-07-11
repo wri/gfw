@@ -158,6 +158,9 @@
     "SPARKPOST_SMTP_USERNAME": {
       "required": true
     },
+    "TRANSIFEX_RESOURCE_API_TOKEN": {
+      "required": true
+    },
     "TRASE_API": {
       "required": true
     }
