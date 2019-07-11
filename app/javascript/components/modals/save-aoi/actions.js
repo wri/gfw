@@ -21,15 +21,37 @@ export const setSaveAOISettings = createThunkAction(
     )
 );
 
+export const goToAOI = createThunkAction(
+  'goToAOI',
+  area => (dispatch, getState) => {
+    const { id } = area;
+    const { location } = getState();
+    if (id && location) {
+      const { query, payload } = location;
+      const { mainMap } = query || {};
+      dispatch({
+        type: MAP,
+        payload: {
+          ...payload,
+          type: 'aoi',
+          adm0: id
+        },
+        query: {
+          ...query,
+          mainMap: {
+            ...mainMap,
+            showAnalysis: true
+          }
+        }
+      });
+    }
+  }
+);
+
 export const saveAOI = createThunkAction(
   'saveAOI',
   data => (dispatch, getState) => {
-    const { modalSaveAOI, geostore, location } = getState();
-    const { query, payload } = location;
-    const { mainMap } = query || {};
-
-    // TODO: check redirect
-    // console.log(query, payload);
+    const { modalSaveAOI, geostore } = getState();
 
     if (modalSaveAOI && !modalSaveAOI.saving) {
       dispatch(setSaveAOISaving({ saving: true, error: false }));
@@ -74,22 +96,7 @@ export const saveAOI = createThunkAction(
       postAreasProvider(token, postData)
         .then(response => {
           dispatch(setSaveAOISaved());
-          // dispatch action to change URL to /map/aoi/response.aoi-id
-          dispatch({
-            type: MAP,
-            payload: {
-              type: 'aoi',
-              adm0: response.data.data.id,
-              ...payload
-            },
-            query: {
-              ...query,
-              mainMap: {
-                ...mainMap,
-                showAnalysis: true
-              }
-            }
-          });
+          dispatch(goToAOI(response.data.data));
           // save AOI in the store => for analysis AND the myGFW menu
           // async await ? or thunkaction
         })

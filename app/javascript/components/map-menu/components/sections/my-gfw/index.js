@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { goToAOI } from 'components/modals/save-aoi/actions';
 
 import Component from './component';
 
@@ -16,6 +17,7 @@ class MyGFWMenu extends PureComponent {
 
 MyGFWMenu.propTypes = {};
 
-export default connect(mapStateToProps, { onInfoClick: setModalMetaSettings })(
-  MyGFWMenu
-);
+export default connect(mapStateToProps, {
+  onInfoClick: setModalMetaSettings,
+  goToAOI
+})(MyGFWMenu);

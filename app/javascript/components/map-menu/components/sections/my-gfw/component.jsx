@@ -7,7 +7,7 @@ import Pill from 'components/ui/pill';
 
 import './styles.scss';
 
-class MapMenuSearch extends PureComponent {
+class MapMenuMyGFW extends PureComponent {
   renderLoginWindow() {
     const { isDesktop } = this.props;
     return (
@@ -49,7 +49,7 @@ class MapMenuSearch extends PureComponent {
   }
 
   renderAreas() {
-    const { isDesktop, areas } = this.props;
+    const { isDesktop, areas, goToAOI } = this.props;
     return (
       <div className="row">
         <div className="column">
@@ -68,10 +68,16 @@ class MapMenuSearch extends PureComponent {
           </div>
           <div className="aoi-items">
             {areas.map(area => (
-              <div className="aoi-item">
+              <div
+                className="aoi-item"
+                key={area.name}
+                onClick={() => goToAOI(area)}
+                role="button"
+                tabIndex={0}
+              >
                 <img src={area.image} alt={area.name} />
                 <p className="aoi-title">{area.name}</p>
-                {area.tags.map(tag => <span>{tag}</span>)}
+                {area.tags.map(tag => <span key={tag}>{tag}</span>)}
               </div>
             ))}
           </div>
@@ -101,10 +107,11 @@ class MapMenuSearch extends PureComponent {
   }
 }
 
-MapMenuSearch.propTypes = {
+MapMenuMyGFW.propTypes = {
   isDesktop: PropTypes.bool,
   loggedIn: PropTypes.bool,
-  areas: PropTypes.array
+  areas: PropTypes.array,
+  goToAOI: PropTypes.func
 };
 
-export default MapMenuSearch;
+export default MapMenuMyGFW;
