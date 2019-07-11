@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
+import { formatNumber } from 'utils/format';
 import { format } from 'd3-format';
 
 // get list data
@@ -123,9 +124,6 @@ export const parseSentence = createSelector(
       sentence = noLoss;
     }
 
-    const valueFormat = topRegion.loss < 1 ? '.3r' : '.3s';
-    const aveFormat = avgLoss < 1 ? '.3r' : '.3s';
-
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
       location: locationName,
@@ -136,12 +134,12 @@ export const parseSentence = createSelector(
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
         topRegion.percentage > 0 && settings.unit === '%'
-          ? `${format('.2r')(topRegion.percentage)}%`
-          : `${format(valueFormat)(topRegion.loss)}ha`,
+          ? formatNumber({ num: topRegion.percentage, unit: '%' })
+          : formatNumber({ num: topRegion.loss, unit: 'ha' }),
       average:
         topRegion.percentage > 0 && settings.unit === '%'
-          ? `${format('.2r')(avgLossPercentage)}%`
-          : `${format(aveFormat)(avgLoss)}ha`
+          ? formatNumber({ num: avgLossPercentage, unit: '%' })
+          : formatNumber({ num: avgLoss, unit: 'ha' })
     };
 
     return {

@@ -109,7 +109,7 @@ export const parseData = createSelector([getFilteredData], data => {
       const areaSum = sumBy(value, 'area');
       return {
         ...acc,
-        [`class_${key}`]: areaSum
+        [`class_${key}`]: areaSum < 1000 ? Math.round(areaSum) : areaSum
       };
     }, {});
     return {
@@ -151,7 +151,8 @@ export const parseConfig = createSelector(
             label,
             unit: 'ha',
             color: categoryColors[d.driver],
-            unitFormat: value => format('.3s')(value || 0)
+            unitFormat: value =>
+              (value < 1000 ? Math.round(value) : format('.3s')(value))
           };
         })
         .reverse()

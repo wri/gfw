@@ -6,6 +6,7 @@ import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 import { getAdminPath } from 'components/widgets/utils/strings';
 
@@ -164,14 +165,9 @@ export const parseSentence = createSelector(
       indicator_alt: indicatorName,
       startYear,
       endYear,
-      loss:
-        lossArea < 1
-          ? `${format('.3r')(lossArea)}ha`
-          : `${format('.3s')(lossArea)}ha`,
-      localPercent:
-        areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '< 0.1%',
-      globalPercent:
-        lossPercent >= 0.1 ? `${format('.2r')(lossPercent)}%` : '< 0.1%',
+      loss: formatNumber({ num: lossArea, unit: 'ha' }),
+      localPercent: formatNumber({ num: areaPercent, unit: '%' }),
+      globalPercent: formatNumber({ num: lossPercent, unit: '%' }),
       extentYear: settings.extentYear
     };
 

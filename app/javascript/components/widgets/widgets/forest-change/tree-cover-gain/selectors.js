@@ -3,7 +3,7 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = state => state.data || null;
@@ -167,11 +167,10 @@ export const parseSentence = createSelector(
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
-      gain: gain < 1 ? `${format('.3r')(gain)}ha` : `${format('.3s')(gain)}ha`,
+      gain: formatNumber({ num: gain, unit: 'ha' }),
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
-      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '< 0.1%',
-      gainPercent:
-        gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '< 0.1%',
+      percent: formatNumber({ num: areaPercent, unit: '%' }),
+      gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
       parent: locationObject.parentLabel || null
     };
 
