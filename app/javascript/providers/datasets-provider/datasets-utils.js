@@ -38,7 +38,7 @@ export const reduceSqlParams = params => {
       [param.key]: param.key_params.reduce((subObj, item) => {
         const keyValues = {
           ...subObj,
-          [item.key]: item.value
+          [item.key]: item.value || item.default
         };
         return keyValues;
       }, {})

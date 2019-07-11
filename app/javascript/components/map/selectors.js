@@ -344,21 +344,21 @@ export const getActiveLayersWithDates = createSelector(
         ...l,
         ...(decodeFunction &&
           decodeParams && {
-            decodeParams: {
-              ...decodeParams,
-              ...(startDate && {
-                startYear: moment(startDate).year(),
-                startMonth: moment(startDate).month(),
-                startDay: moment(startDate).month()
-              }),
-              ...(endDate && {
-                endYear: moment(endDate).year(),
-                endMonth: moment(endDate).month(),
-                endDay: moment(endDate).month()
-              }),
-              ...getDayRange(decodeParams)
-            }
-          })
+          decodeParams: {
+            ...decodeParams,
+            ...(startDate && {
+              startYear: moment(startDate).year(),
+              startMonth: moment(startDate).month(),
+              startDay: moment(startDate).month()
+            }),
+            ...(endDate && {
+              endYear: moment(endDate).year(),
+              endMonth: moment(endDate).month(),
+              endDay: moment(endDate).month()
+            }),
+            ...getDayRange(decodeParams)
+          }
+        })
       };
     });
   }
@@ -431,14 +431,18 @@ export const getInteractionSelected = createSelector(
     const layersWithoutBoundaries = layers.filter(
       l => !l.isBoundary && !isEmpty(l.interactionConfig)
     );
+    const layersWithoutBoundariesIds =
+      layersWithoutBoundaries &&
+      layersWithoutBoundaries.length &&
+      layersWithoutBoundaries.map(l => l.id);
     // if there is an article (icon layer) then choose that
     let selectedData = interactions.find(o => o.data.cluster);
     selectedData = interactions.find(o => o.article);
     // if there is nothing selected get the top layer
     if (!selected && !!layersWithoutBoundaries.length) {
-      selectedData = interactions.find(
-        o => o.layer && o.layer.id === layersWithoutBoundaries[0].id
-      );
+      selectedData = interactions
+        .reverse()
+        .find(o => o.layer && layersWithoutBoundariesIds.includes(o.layer.id));
     }
     // if only one layer then get that
     if (!selectedData && interactions.length === 1) {

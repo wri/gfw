@@ -6,6 +6,11 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
 .l-dashboards-page {
   border-bottom: solid 1px $border;
   display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: $screen-m) {
+    flex-direction: row;
+  }
 
   .content-panel {
     display: flex;
