@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
 import intersection from 'lodash/intersection';
 import cx from 'classnames';
@@ -127,7 +128,7 @@ class Widget extends PureComponent {
         opacity: 1,
         visibility: true
       },
-      ...polynameDatasets,
+      ...compact(polynameDatasets),
       ...widgetDatasets
     ];
 
