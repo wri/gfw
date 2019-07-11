@@ -135,7 +135,7 @@ export const getSentence = createSelector(
     if (locationObj && locationObj.type === 'aoi' && geoDescriber) {
       return {
         sentence: geoDescriber.description,
-        params: {}
+        params: geoDescriber.description_params
       };
     }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
