@@ -91,58 +91,58 @@ class Header extends PureComponent {
                 adm0s &&
                 adm1s &&
                 adm1s.length > 1 && (
-                  <Dropdown
-                    theme="theme-dropdown-dark"
-                    placeholder="Select a region"
-                    noItemsFound="No region found"
-                    noSelectedValue="Select a region"
-                    value={locationNames.adm1}
-                    options={adm1s}
-                    onChange={adm1 =>
-                      handleLocationChange({
-                        adm0: location.adm0,
-                        adm1: adm1 && adm1.value
-                      })
-                    }
-                    searchable
-                    disabled={loading}
-                    tooltip={{
-                      text: 'Choose the region you want to explore',
-                      delay: 1000
-                    }}
-                    arrowPosition="left"
-                    clearable
-                  />
-                )}
+                <Dropdown
+                  theme="theme-dropdown-dark"
+                  placeholder="Select a region"
+                  noItemsFound="No region found"
+                  noSelectedValue="Select a region"
+                  value={locationNames.adm1}
+                  options={adm1s}
+                  onChange={adm1 =>
+                    handleLocationChange({
+                      adm0: location.adm0,
+                      adm1: adm1 && adm1.value
+                    })
+                  }
+                  searchable
+                  disabled={loading}
+                  tooltip={{
+                    text: 'Choose the region you want to explore',
+                    delay: 1000
+                  }}
+                  arrowPosition="left"
+                  clearable
+                />
+              )}
               {isCountryDashboard &&
                 location.adm1 &&
                 adm1s &&
                 adm2s &&
                 adm2s.length > 1 && (
-                  <Dropdown
-                    theme="theme-dropdown-dark"
-                    placeholder="Select a region"
-                    noItemsFound="No region found"
-                    noSelectedValue="Select a region"
-                    value={locationNames.adm2}
-                    options={adm2s}
-                    onChange={adm2 =>
-                      handleLocationChange({
-                        adm0: location.adm0,
-                        adm1: location.adm1,
-                        adm2: adm2 && adm2.value
-                      })
-                    }
-                    searchable
-                    disabled={loading}
-                    tooltip={{
-                      text: 'Choose the region you want to explore',
-                      delay: 1000
-                    }}
-                    arrowPosition="left"
-                    clearable
-                  />
-                )}
+                <Dropdown
+                  theme="theme-dropdown-dark"
+                  placeholder="Select a region"
+                  noItemsFound="No region found"
+                  noSelectedValue="Select a region"
+                  value={locationNames.adm2}
+                  options={adm2s}
+                  onChange={adm2 =>
+                    handleLocationChange({
+                      adm0: location.adm0,
+                      adm1: location.adm1,
+                      adm2: adm2 && adm2.value
+                    })
+                  }
+                  searchable
+                  disabled={loading}
+                  tooltip={{
+                    text: 'Choose the region you want to explore',
+                    delay: 1000
+                  }}
+                  arrowPosition="left"
+                  clearable
+                />
+              )}
             </div>
           </div>
           <div className="columns small-12 medium-10">
@@ -152,13 +152,13 @@ class Header extends PureComponent {
                   <DynamicSentence className="sentence" sentence={sentence} />
                   {forestAtlasLink &&
                     isCountryDashboard && (
-                      <Button
-                        className="forest-atlas-btn"
-                        extLink={forestAtlasLink.url}
-                      >
+                    <Button
+                      className="forest-atlas-btn"
+                      extLink={forestAtlasLink.url}
+                    >
                         EXPLORE FOREST ATLAS
-                      </Button>
-                    )}
+                    </Button>
+                  )}
                 </div>
               )}
             </div>
