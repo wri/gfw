@@ -1,37 +1,22 @@
 import * as actions from './whitelists-provider-actions';
 
 export const initialState = {
-  countriesLoading: false,
-  regionsLoading: false,
-  countries: [],
-  regions: []
+  loading: false,
+  data: []
 };
 
-const setCountryWhitelistLoading = (state, { payload }) => ({
+const setWhitelistLoading = (state, { payload }) => ({
   ...state,
-  countriesLoading: payload
+  loading: payload
 });
 
-const setRegionWhitelistLoading = (state, { payload }) => ({
+const setWhitelist = (state, { payload }) => ({
   ...state,
-  regionsLoading: payload
-});
-
-const setCountryWhitelist = (state, { payload }) => ({
-  ...state,
-  countriesLoading: false,
-  countries: payload
-});
-
-const setRegionWhitelist = (state, { payload }) => ({
-  ...state,
-  regionsLoading: false,
-  regions: payload
+  loading: false,
+  data: payload
 });
 
 export default {
-  [actions.setCountryWhitelistLoading]: setCountryWhitelistLoading,
-  [actions.setRegionWhitelistLoading]: setRegionWhitelistLoading,
-  [actions.setCountryWhitelist]: setCountryWhitelist,
-  [actions.setRegionWhitelist]: setRegionWhitelist
+  [actions.setWhitelistLoading]: setWhitelistLoading,
+  [actions.setWhitelist]: setWhitelist
 };

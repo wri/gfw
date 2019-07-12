@@ -3,5 +3,6 @@ export default {
   unit: 'ha',
   pageSize: 5,
   page: 0,
+  extentYear: 2000,
   ifl: 2000
 };

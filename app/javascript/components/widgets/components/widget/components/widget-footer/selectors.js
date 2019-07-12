@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { getIsTrase } from 'app/layouts/root/selectors';
 import compact from 'lodash/compact';
+import { translateText } from 'utils/transifex';
 
 // get list data
 const getSettings = (state, { settings }) => settings || null;
@@ -34,31 +35,40 @@ export const getNonGlobalIndicator = createSelector(
 );
 
 // get lists selected
-export const getStatement = createSelector(
+export const getStatements = createSelector(
   [getSettings, getType, getNonGlobalDatasets, getNonGlobalIndicator],
   (settings, type, datasets, indicator) => {
     if (!settings) return '';
     const { extentYear, threshold } = settings;
+
     const statements = compact([
-      extentYear ? `${extentYear} tree cover extent` : null,
-      threshold || threshold === 0 ? `>${threshold}% tree canopy` : null,
+      extentYear
+        ? translateText('{extentYear} tree cover extent', { extentYear })
+        : null,
+      threshold || threshold === 0
+        ? translateText('>{threshold}% tree canopy', { threshold })
+        : null,
       type === 'loss'
-        ? 'these estimates do not take tree cover gain into account'
+        ? translateText(
+          'these estimates do not take tree cover gain into account'
+        )
         : null,
       datasets && indicator
-        ? `*${indicator.label.toLowerCase()} are available in ${
-          datasets[indicator.value]
-        } countries only`
+        ? translateText(
+          '*{indicator} are available in {datasetsCount} countries only',
+          {
+            indicator: indicator.label.toLowerCase(),
+            datasetsCount: datasets[indicator.value]
+          }
+        )
         : null
     ]);
 
-    return statements.join(' | ');
+    return statements;
   }
 );
 
 export const getWidgetFooterProps = createStructuredSelector({
-  statement: getStatement,
-  showAttributionLink: getIsTrase,
-  type: getType,
-  location: getLocation
+  statements: getStatements,
+  showAttributionLink: getIsTrase
 });

@@ -26,19 +26,20 @@ export const parseData = createSelector(
     keys.forEach((k, i) => {
       dataGrouped[i] = {
         key: k,
-        value: sumBy(data, k)
+        value: sumBy(data, k) || 0
       };
     });
-    const total = sumBy(dataGrouped, 'value');
+    const total = sumBy(dataGrouped, 'value') || 0;
     const dataFiltered = dataGrouped.filter(d => d.value);
     const dataMerged = [];
     globalLandCoverCategories.forEach((d, i) => {
       dataMerged[i] = {
         ...d,
-        value: sumBy(
-          dataFiltered.filter(o => d.classes.indexOf(o.key) > -1),
-          'value'
-        )
+        value:
+          sumBy(
+            dataFiltered.filter(o => d.classes.indexOf(o.key) > -1),
+            'value'
+          ) || 0
       };
     });
     const dataParsed = dataMerged.filter(el => el.value !== 0).map(el => ({
