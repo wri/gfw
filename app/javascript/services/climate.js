@@ -47,25 +47,25 @@ WHERE indicator_id = {indicator} AND value IS NOT NULL AND thresh = ${' '}
 
 export const getEmissions = ({ threshold, adm0, download }) =>
   INDICATORS.map(indicator => {
-    const url = `${process.env.CARTO_API}/sql?q=`;
-    const query = SQL_QUERIES.emissions
+    const url = `${process.env.CARTO_API}/sql?q=${SQL_QUERIES.emissions}`;
+    const newUrl = url
       .replace('{indicator}', indicator)
       .replace('{threshold}', threshold || 0)
       .replace('{adm0}', adm0);
 
-    if (download) return url.concat('&format=csv');
-    return request.get(encodeURI(`${url}${query}`));
+    if (download) return newUrl.concat('&format=csv');
+    return request.get(encodeURI(newUrl));
   });
 
 export const getCumulative = ({ download, ...params }) =>
   range(2015, 2019).map(year => {
-    const url = 'https://production-api.globalforestwatch.org/v1/query/?sql=';
-    const query = SQL_QUERIES.cummulative
-      .replace('{iso}', params.adm0)
-      .replace('{year}', year);
+    const url = `https://production-api.globalforestwatch.org/v1/query/?sql=${
+      SQL_QUERIES.cummulative
+    }`;
+    const newUrl = url.replace('{iso}', params.adm0).replace('{year}', year);
 
-    if (download) return url.replace('query', 'download');
-    return request.get(encodeURI(`${url}${query}`));
+    if (download) return encodeURI(newUrl.replace('query', 'download'));
+    return request.get(encodeURI(newUrl));
   });
 
 export const getBiomassRanking = ({

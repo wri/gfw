@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getEmissions } from 'services/climate';
 
 export const getData = ({ params }) =>
-  axios.all([...getEmissions({ ...params })]).then(
+  axios.all(getEmissions(params)).then(
     axios.spread(
       (
         cYSF,
@@ -33,8 +33,6 @@ export const getData = ({ params }) =>
     )
   );
 
-export const getDataURL = params => [
-  ...getEmissions({ ...params, download: true })
-];
+export const getDataURL = params => getEmissions({ ...params, download: true });
 
 export default getData;

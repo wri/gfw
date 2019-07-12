@@ -316,7 +316,8 @@ export const getFAODeforestRank = ({ period, download }) => {
   return request.get(url);
 };
 
-export const getFAOEcoLive = ({ download }) => {
+export const getFAOEcoLive = params => {
+  const { download } = params || {};
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoEcoLive}`;
 
   if (download) return url.concat('&format=csv');
