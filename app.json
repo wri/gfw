@@ -62,6 +62,15 @@
     "FIRES_ISO_DATASET": {
       "required": true
     },
+    "GADM36_ADM0_DATASET": {
+      "required": true
+    },
+    "GADM36_ADM1_DATASET": {
+      "required": true
+    },
+    "GADM36_ADM2_DATASET": {
+      "required": true
+    },
     "FULLPAGE_LICENSE": {
       "required": true
     },

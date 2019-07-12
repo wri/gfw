@@ -82,7 +82,7 @@ class NavAlt extends PureComponent {
               >
                 <Fragment>
                   <button
-                    className="menu-link lang-btn"
+                    className="menu-link lang-btn notranslate"
                     onClick={() => this.setState({ showLang: !showLang })}
                   >
                     {(activeLang && activeLang.label) || 'English'}
@@ -95,7 +95,7 @@ class NavAlt extends PureComponent {
                   </button>
                   {showLang && (
                     <DropdownMenu
-                      className="submenu"
+                      className="submenu notranslate"
                       options={languages}
                       selected={activeLang}
                       handleSelect={this.handleLangSelect}
