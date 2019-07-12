@@ -6,7 +6,7 @@ import { format } from 'd3-format';
 const getData = state => state.data;
 const getSettings = state => state.settings;
 const getIndicator = state => state.indicator || null;
-const getWhitelist = state => state.whitelists && state.whitelists.adm0;
+const getWhitelist = state => state.whitelists && state.whitelists;
 const getColors = state => state.colors;
 const getSentence = state => state.config.sentence;
 const getTitle = state => state.config.title;
@@ -16,8 +16,7 @@ export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
   (whitelist, name) => {
     const hasPlantations =
-      (name !== 'global' && isEmpty(whitelist)) ||
-      (whitelist && whitelist.includes('plantations'));
+      name === 'global' ? true : whitelist && whitelist.includes('plantations');
     return hasPlantations;
   }
 );

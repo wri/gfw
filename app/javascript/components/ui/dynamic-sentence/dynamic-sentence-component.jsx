@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
+import { translateText } from 'utils/transifex';
 
 import { Tooltip } from 'react-tippy';
 import Tip from 'components/ui/tip';
 
 import './dynamic-sentence-styles.scss';
 
-class WidgetDynamicSentence extends PureComponent {
+class DynamicSentence extends PureComponent {
   reduceSentence = (sentence, pattern, component) => {
     const split = sentence.split(pattern);
     return [split[0], component, split[1]];
@@ -17,7 +18,7 @@ class WidgetDynamicSentence extends PureComponent {
     const { className, handleMouseOver, handleMouseOut } = this.props;
     const { sentence, params } = this.props.sentence;
     const { component } = params || {};
-    let formattedSentence = sentence;
+    let formattedSentence = translateText(sentence);
     if (params) {
       Object.keys(params).forEach(p => {
         const param = params[p];
@@ -28,13 +29,18 @@ class WidgetDynamicSentence extends PureComponent {
                 formattedSentence &&
                 formattedSentence.replace(
                   `{${p}}`,
-                  `<b style="color: ${param.color};">${param.value}</b>`
+                  `<b style="color: ${param.color};">${translateText(
+                    param.value
+                  )}</b>`
                 );
             }
           } else {
             formattedSentence =
               formattedSentence &&
-              formattedSentence.replace(`{${p}}`, `<b>${param}</b>`);
+              formattedSentence.replace(
+                `{${p}}`,
+                `<b>${translateText(param)}</b>`
+              );
           }
         }
       });
@@ -61,13 +67,15 @@ class WidgetDynamicSentence extends PureComponent {
           onHidden={handleMouseOut}
           duration={0}
         >
-          <span className="hover-text">{mappedComponent.key}</span>
+          <span className="hover-text">
+            {translateText(mappedComponent.key)}
+          </span>
         </Tooltip>
       );
     }
 
     return (
-      <div className={`c-dynamic-sentence ${className || ''}`}>
+      <div className={`c-dynamic-sentence notranslate ${className || ''}`}>
         {formattedSentence.map(
           s => (typeof s === 'string' ? ReactHtmlParser(s) : s)
         )}
@@ -76,11 +84,11 @@ class WidgetDynamicSentence extends PureComponent {
   }
 }
 
-WidgetDynamicSentence.propTypes = {
+DynamicSentence.propTypes = {
   className: PropTypes.string,
   sentence: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   handleMouseOver: PropTypes.func,
   handleMouseOut: PropTypes.func
 };
 
-export default WidgetDynamicSentence;
+export default DynamicSentence;

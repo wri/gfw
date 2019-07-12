@@ -39,6 +39,6 @@ export const getGeostoreKey = geojson => {
 };
 
 export const getGeoDescriber = geojson =>
-  axios.post(`${REQUEST_URL}/geodescriber/geom`, {
+  axios.post(`${REQUEST_URL}/geodescriber/geom?lang=en&template=true&app=gfw`, {
     geojson
   });

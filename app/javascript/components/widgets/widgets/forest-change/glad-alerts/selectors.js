@@ -187,7 +187,7 @@ export const parseSentence = createSelector(
     const params = {
       date: formattedDate,
       count: {
-        value: format(',')(lastDate.count),
+        value: lastDate.count ? format(',')(lastDate.count) : 0,
         color: colors.main
       },
       status: {

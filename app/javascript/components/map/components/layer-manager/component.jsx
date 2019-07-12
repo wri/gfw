@@ -5,7 +5,7 @@ import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   render() {
-    const { layers, geostore, setMapLoading, basemap, map } = this.props;
+    const { layers, geostore, setMapLoading, basemap, map, isAoI } = this.props;
 
     return (
       <LayerManager
@@ -15,55 +15,65 @@ class LayerManagerComponent extends PureComponent {
       >
         {geostore &&
           geostore.id && (
-            <Layer
-              id={geostore.id}
-              name="Geojson"
-              provider="geojson"
-              params={{
-                id: geostore.id
-              }}
-              layerConfig={{
-                data: geostore.geojson,
-                body: {
-                  vectorLayers: [
-                    {
-                      id: `${geostore.id}-fill`,
-                      type: 'fill',
-                      source: geostore.id,
-                      paint: {
-                        'fill-color': 'transparent'
-                      }
-                    },
-                    {
-                      id: `${geostore.id}-line`,
-                      type: 'line',
-                      source: geostore.id,
-                      paint: {
-                        'line-color': '#000',
-                        'line-width': 2
-                      }
+          <Layer
+            id={geostore.id}
+            name="Geojson"
+            provider="geojson"
+            params={{
+              id: geostore.id
+            }}
+            layerConfig={{
+              data: geostore.geojson,
+              body: {
+                vectorLayers: [
+                  {
+                    id: `${geostore.id}-fill`,
+                    type: 'fill',
+                    source: geostore.id,
+                    paint: {
+                      'fill-color': 'transparent'
                     }
-                  ]
-                }
-              }}
-              zIndex={1060}
-            />
-          )}
+                  },
+                  {
+                    id: `${geostore.id}-line-1`,
+                    type: 'line',
+                    source: geostore.id,
+                    paint: {
+                      'line-color': '#C0FF24',
+                      'line-width': isAoI ? 3 : 1,
+                      'line-offset': isAoI ? 2 : 0
+                    }
+                  },
+                  {
+                    id: `${geostore.id}-line-0`,
+                    type: 'line',
+                    source: geostore.id,
+                    paint: {
+                      'line-color': '#000',
+                      'line-width': 2
+                    }
+                  }
+                ]
+              }
+            }}
+            zIndex={1060}
+          />
+        )}
         {layers && layers.map(l => <Layer key={l.id} {...l} />)}
         {basemap &&
           basemap.url && (
-            <Layer
-              id="basemap"
-              name="Basemap"
-              provider="leaflet"
-              layerConfig={{
-                body: {
-                  url: basemap.url
-                }
-              }}
-              zIndex={100}
-            />
-          )}
+          <Layer
+            id="basemap"
+            name="Basemap"
+            provider="leaflet"
+            layerConfig={{
+              body: {
+                url: basemap.url
+              }
+            }}
+            zIndex={100}
+          />
+        )}
       </LayerManager>
     );
   }
@@ -72,6 +82,7 @@ class LayerManagerComponent extends PureComponent {
 LayerManagerComponent.propTypes = {
   loading: PropTypes.bool,
   layers: PropTypes.array,
+  isAoI: PropTypes.bool,
   basemap: PropTypes.object,
   geostore: PropTypes.object,
   setMapLoading: PropTypes.func,

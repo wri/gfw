@@ -23,7 +23,8 @@ export const initialState = {
     }
   },
   settings: {
-    threshold: 30
+    threshold: 30,
+    extentYear: 2010
   }
 };
 

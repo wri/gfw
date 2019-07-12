@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { getExtent, getLoss } from 'services/forest-data';
+import { getExtentOld, getLossOld } from 'services/forest-data';
 
 export default ({ params }) =>
   axios
     .all([
-      getLoss({ ...params, landCategory: 'tsc' }),
-      getExtent({ ...params })
+      getLossOld({ ...params, landCategory: 'tsc' }),
+      getExtentOld({ ...params })
     ])
     .then(
       axios.spread((loss, extent) => {

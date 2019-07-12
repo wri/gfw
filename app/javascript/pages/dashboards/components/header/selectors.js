@@ -1,5 +1,4 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { biomassToCO2 } from 'utils/calculations';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import upperFirst from 'lodash/upperFirst';
@@ -135,7 +134,7 @@ export const getSentence = createSelector(
     if (locationObj && locationObj.type === 'aoi' && geoDescriber) {
       return {
         sentence: geoDescriber.description,
-        params: {}
+        params: geoDescriber.description_params
       };
     }
     if (isEmpty(data) || isEmpty(locationNames)) return {};
@@ -161,11 +160,9 @@ export const getSentence = createSelector(
       data.totalLoss.area - (data.plantationsLoss.area || 0)
     );
     const emissionsWithoutPlantations = format('.3s')(
-      biomassToCO2(
-        data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
-      )
+      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
     );
-    const emissions = format('.3s')(biomassToCO2(data.totalLoss.emissions));
+    const emissions = format('.3s')(data.totalLoss.emissions);
     const primaryLoss = format('.3s')(data.primaryLoss.area || 0);
     const loss = format('.3s')(data.totalLoss.area || 0);
     const location = locationNames && locationNames.label;

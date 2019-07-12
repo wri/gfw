@@ -5,9 +5,9 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1'],
   metaKey: 'widget_plantations_ranked',
-  options: {
-    types: true
-  },
+  // options: {
+  //   types: true
+  // },
   colors: 'plantations',
   dataTypes: 'plantations',
   layers: ['plantations_by_type', 'plantations_by_species'],
