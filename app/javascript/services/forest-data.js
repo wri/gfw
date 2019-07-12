@@ -320,8 +320,9 @@ export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
 
 // OLD TABLE FETCHES PRE 2018 DATA
 
-const REQUEST_URL_OLD =
-  'https://production-api.globalforestwatch.org/query/a20e9c0e-8d7d-422f-90f5-3b9bca355aaf?sql=';
+const REQUEST_URL_OLD = `${process.env.GFW_API}/query/${
+  process.env.COUNTRIES_PAGE_DATASET
+}?sql=`;
 
 const SQL_QUERIES_OLD = {
   extent:
