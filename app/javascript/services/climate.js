@@ -45,7 +45,7 @@ WHERE indicator_id = {indicator} AND value IS NOT NULL AND thresh = ${' '}
 {threshold} AND values.iso = UPPER('{adm0}') AND values.sub_nat_id IS NULL AND values.boundary_code = 'admin' ORDER BY year`
 };
 
-export const getEmissions = ({ threshold, adm0 }) =>
+export const getEmissions = ({ threshold, adm0, download }) =>
   INDICATORS.map(indicator => {
     const url = `${process.env.CARTO_API}/sql?q=`;
     const query = SQL_QUERIES.emissions
@@ -53,19 +53,28 @@ export const getEmissions = ({ threshold, adm0 }) =>
       .replace('{threshold}', threshold || 0)
       .replace('{adm0}', adm0);
 
+    if (download) return url.concat('&format=csv');
     return request.get(encodeURI(`${url}${query}`));
   });
 
-export const getCumulative = params =>
+export const getCumulative = ({ download, ...params }) =>
   range(2015, 2019).map(year => {
     const url = 'https://production-api.globalforestwatch.org/v1/query/?sql=';
     const query = SQL_QUERIES.cummulative
       .replace('{iso}', params.adm0)
       .replace('{year}', year);
+
+    if (download) return url.replace('query', 'download');
     return request.get(encodeURI(`${url}${query}`));
   });
 
-export const getBiomassRanking = ({ adm0, adm1, adm2, threshold }) => {
+export const getBiomassRanking = ({
+  adm0,
+  adm1,
+  adm2,
+  threshold,
+  download
+}) => {
   let query;
 
   if (!adm1) {
@@ -84,10 +93,12 @@ export const getBiomassRanking = ({ adm0, adm1, adm2, threshold }) => {
       .replace('{threshold}', threshold);
   }
   const url = `${process.env.CARTO_API}/sql?q=${query}`;
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };
 
-export const getSoilOrganicCarbon = ({ adm0, adm1, adm2 }) => {
+export const getSoilOrganicCarbon = ({ adm0, adm1, adm2, download }) => {
   let query;
 
   if (!adm1) {
@@ -100,5 +111,7 @@ export const getSoilOrganicCarbon = ({ adm0, adm1, adm2 }) => {
       .replace('{adm1}', adm1);
   }
   const url = `${process.env.CARTO_API}/sql?q=${query}`;
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };

@@ -330,11 +330,13 @@ export const getNonGlobalDatasets = () => {
   return request.get(url);
 };
 
-export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
+export const getGlobalLandCover = ({ adm0, adm1, adm2, download }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.globalLandCover}`.replace(
     '{location}',
     getLocationQuery(adm0, adm1, adm2)
   );
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };
 
