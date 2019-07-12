@@ -1,6 +1,7 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { postAreasProvider } from 'services/areas';
+import { setArea } from 'providers/areas-provider/actions';
 
 import { MAP } from 'router';
 
@@ -23,8 +24,7 @@ export const setSaveAOISettings = createThunkAction(
 
 export const goToAOI = createThunkAction(
   'goToAOI',
-  area => (dispatch, getState) => {
-    const { id } = area;
+  id => (dispatch, getState) => {
     const { location } = getState();
     if (id && location) {
       const { query, payload } = location;
@@ -95,10 +95,11 @@ export const saveAOI = createThunkAction(
 
       postAreasProvider(token, postData)
         .then(response => {
+          const { id, attributes } = response.data.data;
+
           dispatch(setSaveAOISaved());
-          dispatch(goToAOI(response.data.data));
-          // save AOI in the store => for analysis AND the myGFW menu
-          // async await ? or thunkaction
+          dispatch(goToAOI(id));
+          dispatch(setArea({ id, ...attributes }));
         })
         .catch(error => {
           dispatch(
