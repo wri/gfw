@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { biomassToCO2 } from 'utils/calculations';
+import { formatNumber } from 'utils/format';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
@@ -41,7 +41,6 @@ export const parseData = createSelector(
   (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear } = settings;
-
     return data
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
@@ -75,12 +74,14 @@ export const parseConfig = createSelector([getColors], colors => ({
     {
       key: 'area',
       unit: 'ha',
-      unitFormat: value => format('.3s')(value)
+      unitFormat: value =>
+        (value < 1000 ? Math.round(value) : format('.3s')(value))
     },
     {
       key: 'percentage',
       unit: '%',
-      unitFormat: value => format('.2r')(value)
+      unitFormat: value =>
+        (value < 1000 ? Math.round(value) : format('.2r')(value))
     }
   ]
 }));
@@ -107,7 +108,7 @@ export const parseSentence = createSelector(
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
-      (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
+      (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
     let sentence = indicator ? withIndicator : initial;
@@ -124,10 +125,7 @@ export const parseSentence = createSelector(
       location: locationName,
       startYear,
       endYear,
-      loss:
-        totalLoss < 1 && totalLoss > 0
-          ? `${format('.3r')(totalLoss)}ha`
-          : `${format('.3s')(totalLoss)}ha`,
+      loss: formatNumber({ num: totalLoss, unit: 'ha' }),
       percent: `${format('.2r')(percentageLoss)}%`,
       emissions: `${format('.3s')(totalEmissions)}t`,
       extentYear

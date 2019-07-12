@@ -20,7 +20,7 @@ export default ({ params }) =>
         if (fao.length > 1) {
           faoData = {};
           Object.keys(omit(faoTotal[0], ['iso', 'name'])).forEach(k => {
-            faoData[k] = sumBy(faoTotal, k);
+            faoData[k] = sumBy(faoTotal, k) || 0;
           });
         }
         data = {

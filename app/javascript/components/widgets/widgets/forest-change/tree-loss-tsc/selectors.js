@@ -9,7 +9,7 @@ import moment from 'moment';
 import { sortByKey } from 'utils/data';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
-import tscLossCategories from 'data/tsc-loss-categories.json';
+import tscLossCategories from 'data/tsc-loss-categories-old.json';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
@@ -109,7 +109,7 @@ export const parseData = createSelector([getFilteredData], data => {
       const areaSum = sumBy(value, 'area');
       return {
         ...acc,
-        [`class_${key}`]: areaSum
+        [`class_${key}`]: areaSum < 1000 ? Math.round(areaSum) : areaSum
       };
     }, {});
     return {
@@ -126,7 +126,7 @@ export const parseConfig = createSelector(
     if (isEmpty(data)) return null;
     const { highlighted } = settings || {};
     const yKeys = {};
-    const categoryColors = colors.lossDrivers;
+    const categoryColors = colors.lossDriversOld;
     sortByKey(drivers, 'position').forEach(k => {
       yKeys[`class_${k.driver}`] = {
         fill: categoryColors[k.driver],
@@ -151,7 +151,8 @@ export const parseConfig = createSelector(
             label,
             unit: 'ha',
             color: categoryColors[d.driver],
-            unitFormat: value => format('.3s')(value || 0)
+            unitFormat: value =>
+              (value < 1000 ? Math.round(value) : format('.3s')(value))
           };
         })
         .reverse()

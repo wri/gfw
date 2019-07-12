@@ -9,10 +9,11 @@ import tscDriverGroups from 'data/tsc-loss-groups.json';
 import types from 'data/types.json';
 import weeks from 'data/weeks.json';
 import datasets from 'data/datasets.json';
+import ifl from 'data/ifl.json';
 
 export default {
-  forestTypes,
-  landCategories,
+  forestTypes: forestTypes.filter(f => !f.hidden),
+  landCategories: landCategories.filter(l => !l.hidden),
   thresholds,
   units,
   periods,
@@ -21,5 +22,6 @@ export default {
   types,
   weeks,
   datasets,
-  variables
+  variables,
+  ifl
 };

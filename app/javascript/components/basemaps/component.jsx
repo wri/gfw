@@ -223,51 +223,58 @@ class Basemaps extends React.PureComponent {
                       });
                     }}
                   />
-                  <div className="date-selectors">
-                    <Dropdown
-                      className="year-selector"
-                      label="Year"
-                      theme="theme-dropdown-native"
-                      value={planetYearSelected}
-                      options={planetYears}
-                      onChange={selected => {
-                        const selectedYear = planetYears.find(
-                          f => f.value === parseInt(selected, 10)
-                        );
-                        selectBasemap({
-                          value: 'planet',
-                          interval:
-                            (selectedYear && selectedYear.interval) || null,
-                          period: (selectedYear && selectedYear.period) || null,
-                          planetYear: parseInt(selected, 10),
-                          url: (selectedYear && selectedYear.url) || ''
-                        });
-                      }}
-                      native
-                    />
-                    <Dropdown
-                      className="period-selector"
-                      label="Period"
-                      theme="theme-dropdown-native"
-                      value={planetPeriodSelected}
-                      options={planetPeriods}
-                      onChange={selected => {
-                        const selectedPeriod = planetPeriods.find(
-                          f => f.value === selected
-                        );
-                        selectBasemap({
-                          value: 'planet',
-                          period: selected,
-                          interval:
-                            (selectedPeriod && selectedPeriod.interval) || '',
-                          planetYear:
-                            (selectedPeriod && selectedPeriod.year) || '',
-                          url: (selectedPeriod && selectedPeriod.url) || ''
-                        });
-                      }}
-                      native
-                    />
-                  </div>
+                  {planetYears && planetPeriods ? (
+                    <div className="date-selectors">
+                      <Dropdown
+                        className="year-selector"
+                        label="Year"
+                        theme="theme-dropdown-native"
+                        value={planetYearSelected}
+                        options={planetYears}
+                        onChange={selected => {
+                          const selectedYear = planetYears.find(
+                            f => f.value === parseInt(selected, 10)
+                          );
+                          selectBasemap({
+                            value: 'planet',
+                            interval:
+                              (selectedYear && selectedYear.interval) || null,
+                            period:
+                              (selectedYear && selectedYear.period) || null,
+                            planetYear: parseInt(selected, 10),
+                            url: (selectedYear && selectedYear.url) || ''
+                          });
+                        }}
+                        native
+                      />
+                      <Dropdown
+                        className="period-selector"
+                        label="Period"
+                        theme="theme-dropdown-native"
+                        value={planetPeriodSelected}
+                        options={planetPeriods}
+                        onChange={selected => {
+                          const selectedPeriod = planetPeriods.find(
+                            f => f.value === selected
+                          );
+                          selectBasemap({
+                            value: 'planet',
+                            period: selected,
+                            interval:
+                              (selectedPeriod && selectedPeriod.interval) || '',
+                            planetYear:
+                              (selectedPeriod && selectedPeriod.year) || '',
+                            url: (selectedPeriod && selectedPeriod.url) || ''
+                          });
+                        }}
+                        native
+                      />
+                    </div>
+                  ) : (
+                    <div className="date-selectors">
+                      <p>There was an error retrieving the data.</p>
+                    </div>
+                  )}
                 </div>
               }
               trigger="click"
@@ -279,7 +286,8 @@ class Basemaps extends React.PureComponent {
                   this.setState({ planetTooltipOpen: !planetTooltipOpen });
                 }}
               >
-                {planetBasemapSelected && planetBasemapSelected.label}
+                {(planetBasemapSelected && planetBasemapSelected.label) ||
+                  'Select...'}
                 <Icon icon={arrowIcon} className="arrow-icon" />
               </span>
             </Tooltip>
