@@ -29,7 +29,11 @@ export const getData = ({ params }) =>
 
 export const getDataURL = params => [
   getExtentGrouped({ ...params, download: true }),
-  getAreaIntersectionGrouped({ ...params, download: true })
+  getAreaIntersectionGrouped({
+    ...params,
+    forestType: 'plantations',
+    download: true
+  })
 ];
 
 export default getData;

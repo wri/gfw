@@ -28,8 +28,8 @@ export const getData = ({ params }) =>
     );
 
 export const getDataURL = params => [
-  getExtent({ ...params, forestType: '', download: true }),
-  getAreaIntersection({ ...params, download: true })
+  getExtent({ ...params, download: true }),
+  getAreaIntersection({ ...params, forestType: 'plantations', download: true })
 ];
 
 export default getData;
