@@ -1,7 +1,7 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { postAreasProvider } from 'services/areas';
-import { setArea } from 'providers/areas-provider/actions';
+import { setArea, setActiveArea } from 'providers/areas-provider/actions';
 
 import { MAP } from 'router';
 
@@ -24,11 +24,13 @@ export const setSaveAOISettings = createThunkAction(
 
 export const goToAOI = createThunkAction(
   'goToAOI',
-  id => (dispatch, getState) => {
+  area => (dispatch, getState) => {
+    const { id } = area;
     const { location } = getState();
     if (id && location) {
       const { query, payload } = location;
-      const { mainMap } = query || {};
+      const { mainMap, map } = query || {};
+      dispatch(setActiveArea(area));
       dispatch({
         type: MAP,
         payload: {
@@ -41,6 +43,10 @@ export const goToAOI = createThunkAction(
           mainMap: {
             ...mainMap,
             showAnalysis: true
+          },
+          map: {
+            ...map,
+            canBound: true
           }
         }
       });
@@ -95,11 +101,14 @@ export const saveAOI = createThunkAction(
 
       postAreasProvider(token, postData)
         .then(response => {
-          const { id, attributes } = response.data.data;
+          if (response.data && response.data.data) {
+            const area = response.data.data;
+            const { id, attributes } = area;
 
-          dispatch(setSaveAOISaved());
-          dispatch(goToAOI(id));
-          dispatch(setArea({ id, ...attributes }));
+            dispatch(setSaveAOISaved()); // shows saved modal
+            dispatch(goToAOI(area)); // moves to AOI in the map
+            dispatch(setArea({ id, ...attributes })); // saves AOI in the store
+          }
         })
         .catch(error => {
           dispatch(

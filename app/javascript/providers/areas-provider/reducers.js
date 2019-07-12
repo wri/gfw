@@ -12,7 +12,12 @@ const setAreas = (state, { payload }) => ({
 
 const setArea = (state, { payload }) => ({
   ...state,
-  data: [payload, ...state.data]
+  data: [...state.data, payload]
+});
+
+const setActiveArea = (state, { payload }) => ({
+  ...state,
+  activeArea: payload
 });
 
 const setAreasLoading = (state, { payload }) => ({
@@ -23,5 +28,6 @@ const setAreasLoading = (state, { payload }) => ({
 export default {
   [actions.setAreas]: setAreas,
   [actions.setArea]: setArea,
+  [actions.setActiveArea]: setActiveArea,
   [actions.setAreasLoading]: setAreasLoading
 };

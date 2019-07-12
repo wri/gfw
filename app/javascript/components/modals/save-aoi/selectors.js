@@ -15,6 +15,7 @@ const selectSaving = state => state.modalSaveAOI && state.modalSaveAOI.saving;
 const selectSaved = state => state.modalSaveAOI && state.modalSaveAOI.saved;
 const selectError = state => state.modalSaveAOI && state.modalSaveAOI.error;
 const selectLocation = state => state.location && state.location.payload;
+const getActiveArea = state => state.areas && state.areas.activeArea;
 
 export const getSaveAOISettings = createSelector(
   [selectSaveAOIUrlState],
@@ -79,6 +80,7 @@ export const getModalAOIProps = createStructuredSelector({
   datasets: getSubscriptionDatasets,
   activeMapDatasets: getActiveMapDatasets,
   activeDatasets: getActiveSubscriptionDatasets,
+  activeArea: getActiveArea,
   locationName: getFullLocationName,
   saving: selectSaving,
   saved: selectSaved,

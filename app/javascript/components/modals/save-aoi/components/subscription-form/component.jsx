@@ -73,7 +73,14 @@ class SubscriptionForm extends PureComponent {
   };
 
   render() {
-    const { activeDatasets, saveAOI, userData, saving, error } = this.props;
+    const {
+      activeDatasets,
+      activeArea,
+      saveAOI,
+      userData,
+      saving,
+      error
+    } = this.props;
     const {
       lang,
       name,
@@ -83,7 +90,8 @@ class SubscriptionForm extends PureComponent {
       receiveAlerts,
       changesEmail,
       monthlyEmail
-    } = this.state;
+    } =
+      activeArea || this.state;
     const canSubmit =
       activeDatasets &&
       activeDatasets.length &&
@@ -214,7 +222,8 @@ SubscriptionForm.propTypes = {
   email: PropTypes.string,
   error: PropTypes.bool,
   saving: PropTypes.bool,
-  activeMapDatasets: PropTypes.array
+  activeMapDatasets: PropTypes.array,
+  activeArea: PropTypes.object
 };
 
 export default SubscriptionForm;

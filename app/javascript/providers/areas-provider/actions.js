@@ -5,6 +5,7 @@ import { getAreasProvider } from 'services/areas';
 export const setAreasLoading = createAction('setAreasLoading');
 export const setAreas = createAction('setAreas');
 export const setArea = createAction('setArea');
+export const setActiveArea = createAction('setActiveArea');
 
 export const getAreas = createThunkAction(
   'getAreas',
