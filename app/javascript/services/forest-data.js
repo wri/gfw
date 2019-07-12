@@ -277,39 +277,49 @@ export const getGainGrouped = ({ adm0, adm1, adm2, download, ...params }) => {
   return request.get(url);
 };
 
-export const getFAO = ({ adm0 }) => {
+export const getFAO = ({ adm0, download }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.fao}`.replace(
     '{location}',
     adm0 ? `country = '${adm0}'` : '1 = 1'
   );
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };
 
-export const getFAOExtent = ({ period }) => {
+export const getFAOExtent = ({ period, download }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoExtent}`.replace(
     '{period}',
     period
   );
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };
 
-export const getFAODeforest = ({ adm0 }) => {
+export const getFAODeforest = ({ adm0, download }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforest}`.replace(
     '{location}',
     adm0 ? `WHERE fao.country = '${adm0}'` : ''
   );
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };
-export const getFAODeforestRank = ({ period }) => {
+export const getFAODeforestRank = ({ period, download }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
     '{year}',
     period
   );
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };
 
-export const getFAOEcoLive = () => {
+export const getFAOEcoLive = ({ download }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoEcoLive}`;
+
+  if (download) return url.concat('&format=csv');
   return request.get(url);
 };
 

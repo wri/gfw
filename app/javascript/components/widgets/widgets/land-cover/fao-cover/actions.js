@@ -5,7 +5,7 @@ import omit from 'lodash/omit';
 import { getFAO } from 'services/forest-data';
 import { getRanking } from 'services/country';
 
-export default ({ params }) =>
+export const getData = ({ params }) =>
   axios.all([getFAO({ ...params }), getRanking({ ...params })]).then(
     axios.spread((getFAOResponse, getRankingResponse) => {
       let data = {};
@@ -31,3 +31,7 @@ export default ({ params }) =>
       return data;
     })
   );
+
+export const getDataURL = params => [[getFAO({ ...params, download: true })]];
+
+export default getData;
