@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 
 import * as actions from './whitelists-provider-actions';
@@ -12,37 +13,23 @@ const mapStateToProps = ({ location }) => ({
 
 class WhitelistProvider extends PureComponent {
   componentDidMount() {
-    const {
-      location: { type, adm0, adm1, adm2 },
-      getCountryWhitelist,
-      getRegionWhitelist
-    } = this.props;
-    const isCountry = type === 'country';
-    if (adm0 && isCountry) {
-      getCountryWhitelist(adm0);
-    }
-    if (adm1 && isCountry) {
-      getRegionWhitelist({ adm0, adm1, adm2 });
+    const { location: { adm0, adm1, adm2 }, getWhitelist } = this.props;
+    if (adm0) {
+      getWhitelist({ adm0, adm1, adm2 });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { location: { type, adm0, adm1, adm2 } } = this.props;
+    const { location } = this.props;
+    const { type, adm0, adm1, adm2 } = location;
     const isCountry = type === 'country';
 
     if (isCountry) {
-      const { getCountryWhitelist, getRegionWhitelist } = prevProps;
-      const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
-      const hasRegionChanged = adm0 && adm1 !== prevProps.location.adm1;
-      const hasSubRegionChanged =
-        adm0 && adm1 && adm2 !== prevProps.location.adm2;
+      const { getWhitelist } = prevProps;
+      const hasLocationChanged = adm0 && !isEqual(location, prevProps.location);
 
-      if (hasCountryChanged) {
-        getCountryWhitelist(adm0);
-      }
-
-      if (hasRegionChanged || hasSubRegionChanged) {
-        getRegionWhitelist({ adm0, adm1, adm2 });
+      if (hasLocationChanged) {
+        getWhitelist({ adm0, adm1, adm2 });
       }
     }
   }
@@ -54,8 +41,7 @@ class WhitelistProvider extends PureComponent {
 
 WhitelistProvider.propTypes = {
   location: PropTypes.object.isRequired,
-  getCountryWhitelist: PropTypes.func.isRequired,
-  getRegionWhitelist: PropTypes.func.isRequired
+  getWhitelist: PropTypes.func.isRequired
 };
 
 reducerRegistry.registerModule('whitelists', {

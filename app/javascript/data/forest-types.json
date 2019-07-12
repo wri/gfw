@@ -4,6 +4,7 @@
     "value": "plantations",
     "metaKey": "gfw_plantations",
     "global": true,
+    "categories": ["Unknown", "Wood fiber / Timber", "Oil Palm ", "Fruit", "Rubber", "Other", "Fruit Mix", "Unknown Mix", "Oil Palm Mix", "Rubber Mix", "Wood fiber / Timber Mix", "Recently Cleared"],
     "datasets": [
       {
         "dataset": "bb1dced4-3ae8-4908-9f36-6514ae69713f",
@@ -12,10 +13,13 @@
     ]
   },
   {
-    "label": "Intact Forest Landscapes",
+    "label": "Intact Forest Landscapes ({iflYear})",
     "value": "ifl",
     "metaKey": "intact_forest_landscapes_change",
     "global": true,
+    "default": 2016,
+    "comparison": ">=",
+    "categories": [2016, 2000],
     "datasets": [
       {
         "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
@@ -24,7 +28,7 @@
     ]
   },
   {
-    "label": "Primary Forests",
+    "label": "Primary Forests (2001)",
     "value": "primary_forest",
     "metaKey": "primary_forest",
     "global": true,
@@ -37,7 +41,7 @@
   },
   {
     "label": "Mangrove forests",
-    "value": "mangroves",
+    "value": "mangroves_2016",
     "metaKey": "mangrove_2010_gmw",
     "global": true,
     "datasets": [
@@ -47,6 +51,7 @@
           "9d4f2d65-71bc-4930-baf2-efa63dcd0ab9"
         ]
       }
-    ]
+    ],
+    "hidden": true
   }
 ]

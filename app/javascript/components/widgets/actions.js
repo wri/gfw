@@ -1,5 +1,4 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import groupBy from 'lodash/groupBy';
 import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
@@ -22,15 +21,10 @@ export const getWidgetsData = createThunkAction(
       dispatch(setWidgetsLoading({ loading: true, error: false }));
       getNonGlobalDatasets()
         .then(response => {
-          const { data } = response.data;
-          const groupedData = groupBy(data, 'polyname');
-          const nonGlobalDatasets = {};
-          Object.keys(groupedData).forEach(d => {
-            nonGlobalDatasets[d] = groupedData[d].length;
-          });
+          const { rows } = response.data;
           dispatch(
             setWidgetsData({
-              nonGlobalDatasets
+              nonGlobalDatasets: rows && rows[0]
             })
           );
         })
