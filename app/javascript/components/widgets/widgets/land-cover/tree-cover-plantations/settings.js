@@ -1,4 +1,5 @@
 export default {
-  threshold: 0,
-  type: 'bound2'
+  threshold: 10,
+  type: 'bound2',
+  extentYear: 2010
 };

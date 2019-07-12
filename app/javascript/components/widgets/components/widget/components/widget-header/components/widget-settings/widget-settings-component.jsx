@@ -149,7 +149,10 @@ class WidgetSettings extends PureComponent {
                     value: {
                       forestType: (option && option.value) || '',
                       ...(!!(option && option.value === 'ifl') && {
-                        extentYear: 2010
+                        extentYear: settings.ifl === '2016' ? 2010 : 2000
+                      }),
+                      ...(!!(option && option.value === 'primary_forest') && {
+                        extentYear: 2000
                       })
                     },
                     widget
@@ -245,7 +248,8 @@ class WidgetSettings extends PureComponent {
                 options={bioTypes}
                 disabled={loading}
                 onChange={option =>
-                  onSettingsChange({ value: { bType: option.value }, widget })}
+                  onSettingsChange({ value: { bType: option.value }, widget })
+                }
               />
             )}
             {commodities && (
@@ -292,6 +296,7 @@ class WidgetSettings extends PureComponent {
             )}
             {extentYears &&
               settings.forestType !== 'ifl' &&
+              settings.forestType !== 'primary_forest' &&
               (config.type !== 'loss' ||
                 !settings.unit ||
                 (settings.unit === '%' && config.type === 'loss')) &&
@@ -342,38 +347,38 @@ class WidgetSettings extends PureComponent {
             )}
             {startYears &&
               endYears && (
-                <div className="years-select">
-                  <span className="label">YEARS</span>
-                  <div className="select-container">
-                    <Dropdown
-                      className="years-dropdown"
-                      theme="theme-dropdown-button"
-                      value={settings.startYear}
-                      options={startYears}
-                      onChange={option =>
-                        onSettingsChange({
-                          value: { startYear: option.value },
-                          widget
-                        })
-                      }
-                      disabled={loading}
-                    />
-                    <span className="text-date">to</span>
-                    <Dropdown
-                      theme="theme-dropdown-button"
-                      value={settings.endYear}
-                      options={endYears}
-                      onChange={option =>
-                        onSettingsChange({
-                          value: { endYear: option.value },
-                          widget
-                        })
-                      }
-                      disabled={loading}
-                    />
-                  </div>
+              <div className="years-select">
+                <span className="label">YEARS</span>
+                <div className="select-container">
+                  <Dropdown
+                    className="years-dropdown"
+                    theme="theme-dropdown-button"
+                    value={settings.startYear}
+                    options={startYears}
+                    onChange={option =>
+                      onSettingsChange({
+                        value: { startYear: option.value },
+                        widget
+                      })
+                    }
+                    disabled={loading}
+                  />
+                  <span className="text-date">to</span>
+                  <Dropdown
+                    theme="theme-dropdown-button"
+                    value={settings.endYear}
+                    options={endYears}
+                    onChange={option =>
+                      onSettingsChange({
+                        value: { endYear: option.value },
+                        widget
+                      })
+                    }
+                    disabled={loading}
+                  />
                 </div>
-              )}
+              </div>
+            )}
           </div>
         )}
         {thresholds && (

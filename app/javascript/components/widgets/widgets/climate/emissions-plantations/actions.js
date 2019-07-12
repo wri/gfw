@@ -1,14 +1,11 @@
-import { getAdmin } from 'services/forest-data';
+import { getLoss } from 'services/forest-data';
 import axios from 'axios';
 import maxBy from 'lodash/maxBy';
 import range from 'lodash/range';
 
 export default ({ params }) =>
   axios
-    .all([
-      getAdmin({ ...params }),
-      getAdmin({ ...params, indicator: 'plantations' })
-    ])
+    .all([getLoss(params), getLoss({ ...params, forestType: 'plantations' })])
     .then(
       axios.spread((admin, plantations) => {
         const adminData = admin.data && admin.data.data;

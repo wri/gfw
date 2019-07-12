@@ -1,0 +1,86 @@
+@import '~styles/settings.scss';
+
+.l-search-page {
+  .search-header {
+    background-color: $slate-light;
+    padding: rem(80px);
+
+    h1 {
+      font-weight: rem(48px);
+      font-weight: 300;
+      color: $white;
+    }
+  }
+
+  .search-container {
+    padding: rem(40px) 0;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(80px) 0;
+    }
+
+    .search-input {
+      margin-bottom: rem(50px);
+    }
+
+    .search-results {
+      position: relative;
+      min-height: rem(300px);
+    }
+
+    .item-meta {
+      h3,
+      a {
+        margin-bottom: rem(10px);
+        word-break: break-word;
+        color: $slate-light;
+
+        &:hover {
+          color: darken($slate-light, 20%);
+        }
+      }
+
+      p {
+        margin-bottom: rem(20px);
+      }
+    }
+
+    .search-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: rem(30px);
+      padding-bottom: rem(30px);
+      border-bottom: solid 1px $border;
+    }
+
+    .item-image {
+      width: rem(100px);
+      height: rem(100px);
+      min-width: rem(100px);
+      border-radius: rem(50px);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin-left: 30px;
+    }
+
+    .no-results {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: rem(300px);
+
+      .error-tree {
+        width: 100%;
+        height: rem(200px);
+        padding-right: rem(20px);
+        margin-bottom: rem(40px);
+      }
+
+      p {
+        font-size: rem(18px);
+      }
+    }
+  }
+}

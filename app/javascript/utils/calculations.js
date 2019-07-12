@@ -2,7 +2,11 @@ export const tonsToTonnes = value => value * 0.907185;
 
 export const biomassToCO2 = value => (value + 0.489 * value ** 0.89) * 0.47;
 
+export const carbonToCO2 = value => value * 12 / 44;
+
 export const biomassToC = value => value + 0.489 * value ** 0.89;
+
+export const aboveGroundToBelowGround = value => 0.489 * value ** 0.89;
 
 export function ordinalSuffixOf(i) {
   const j = i % 10;

@@ -11,7 +11,7 @@ class DataTable extends Component {
     return data ? (
       <div className="c-data-table">
         {data.map(d => (
-          <div key={d.label} className="wrapper">
+          <div key={`${d.label}-${d.value}`} className="wrapper">
             <div className="label">{d.label}:</div>
             <div className="value">
               {d.type === 'number'
