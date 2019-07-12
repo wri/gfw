@@ -6,7 +6,7 @@ export default {
   admins: ['adm0', 'adm1'],
   options: {
     units: ['ha', '%'],
-    forestTypes: true,
+    forestTypes: ['ifl', 'primary_forest', 'mangroves_2016'],
     landCategories: true,
     thresholds: true,
     startYears: true,
