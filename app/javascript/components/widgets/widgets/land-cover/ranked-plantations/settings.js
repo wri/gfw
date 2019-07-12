@@ -1,6 +1,6 @@
 export default {
-  threshold: 0,
-  type: 'bound2',
+  threshold: 10,
   pageSize: 5,
-  page: 0
+  page: 0,
+  extentYear: 2000
 };
