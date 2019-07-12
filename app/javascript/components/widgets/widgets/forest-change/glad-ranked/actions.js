@@ -1,13 +1,13 @@
 import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
-import { getMultiRegionExtent } from 'services/forest-data';
+import { getExtentGrouped } from 'services/forest-data';
 import axios from 'axios';
 
 export const getData = ({ params }) =>
   axios
     .all([
-      fetchGladIntersectionAlerts({ ...params }),
+      fetchGladIntersectionAlerts(params),
       fetchGLADLatest(params),
-      getMultiRegionExtent({ ...params })
+      getExtentGrouped(params)
     ])
     .then(
       axios.spread((alerts, latest, extent) => {
@@ -28,7 +28,7 @@ export const getData = ({ params }) =>
 
 export const getDataURL = params => [
   fetchGladIntersectionAlerts({ ...params, download: true }),
-  getMultiRegionExtent({ ...params, download: true })
+  getExtentGrouped({ ...params, download: true })
 ];
 
 export default getData;

@@ -1,20 +1,19 @@
 import {
-  getMultiRegionExtent,
-  getPlantationsExtent
+  getExtentGrouped,
+  getAreaIntersectionGrouped
 } from 'services/forest-data';
 import axios from 'axios';
 
 export const getData = ({ params }) =>
   axios
     .all([
-      getMultiRegionExtent(params),
-      getPlantationsExtent({ ...params, groupByRegion: true })
+      getExtentGrouped(params),
+      getAreaIntersectionGrouped({ ...params, forestType: 'plantations' })
     ])
     .then(
-      axios.spread((multiRegionExtentResponse, plantationsExtentResponse) => {
+      axios.spread((extentGrouped, plantationsExtentResponse) => {
         let data = {};
-        const extent =
-          multiRegionExtentResponse.data && multiRegionExtentResponse.data.data;
+        const extent = extentGrouped.data && extentGrouped.data.data;
         const plantationsExtent =
           plantationsExtentResponse.data && plantationsExtentResponse.data.data;
         if (extent.length && plantationsExtent.length) {
@@ -23,13 +22,14 @@ export const getData = ({ params }) =>
             plantations: plantationsExtent
           };
         }
+
         return data;
       })
     );
 
 export const getDataURL = params => [
-  getMultiRegionExtent({ ...params, download: true }),
-  getPlantationsExtent({ ...params, groupByRegion: true, download: true })
+  getExtentGrouped({ ...params, download: true }),
+  getAreaIntersectionGrouped({ ...params, download: true })
 ];
 
 export default getData;

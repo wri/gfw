@@ -1,39 +1,42 @@
-import { getLocations, getGainLocations } from 'services/forest-data';
+import { getExtentGrouped, getGainGrouped } from 'services/forest-data';
 import axios from 'axios';
 
 export const getData = ({ params }) =>
-  axios
-    .all([getLocations({ ...params }), getGainLocations({ ...params })])
-    .then(
-      axios.spread((getLocationsResponse, getGainLocationsResponse) => {
-        const extentData = getLocationsResponse.data.data;
-        let extentMappedData = {};
-        if (extentData && extentData.length) {
-          extentMappedData = extentData.map(d => ({
-            id: d.region,
-            extent: d.extent || 0,
-            percentage: d.extent ? d.extent / d.total * 100 : 0
-          }));
-        }
+  axios.all([getExtentGrouped(params), getGainGrouped(params)]).then(
+    axios.spread((extentGrouped, gainGrouped) => {
+      let groupKey = 'iso';
+      if (params.adm0) groupKey = 'adm1';
+      if (params.adm1) groupKey = 'adm2';
 
-        const gainData = getGainLocationsResponse.data.data;
-        let gainMappedData = {};
-        if (gainData && gainData.length) {
-          gainMappedData = gainData.map(d => ({
-            id: d.region,
-            gain: d.gain || 0
-          }));
-        }
-        return {
-          gain: gainMappedData,
-          extent: extentMappedData
-        };
-      })
-    );
+      const extentData = extentGrouped.data.data;
+      let extentMappedData = {};
+      if (extentData && extentData.length) {
+        extentMappedData = extentData.map(d => ({
+          id: d[groupKey],
+          extent: d.extent || 0,
+          percentage: d.extent ? d.extent / d.total_area * 100 : 0
+        }));
+      }
+
+      const gainData = gainGrouped.data.data;
+      let gainMappedData = {};
+      if (gainData && gainData.length) {
+        gainMappedData = gainData.map(d => ({
+          id: d[groupKey],
+          gain: d.gain || 0
+        }));
+      }
+
+      return {
+        gain: gainMappedData,
+        extent: extentMappedData
+      };
+    })
+  );
 
 export const getDataURL = params => [
-  getLocations({ ...params, download: true }),
-  getGainLocations({ ...params, download: true })
+  getExtentGrouped({ ...params, download: true }),
+  getGainGrouped({ ...params, download: true })
 ];
 
 export default getData;

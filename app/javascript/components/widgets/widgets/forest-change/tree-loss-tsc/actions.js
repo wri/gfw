@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { getExtent, getLoss } from 'services/forest-data';
+import { getExtentOld, getLossOld } from 'services/forest-data';
 
 export const getData = ({ params }) =>
   axios
     .all([
-      getLoss({ ...params, landCategory: 'tsc' }),
-      getExtent({ ...params })
+      getLossOld({ ...params, landCategory: 'tsc' }),
+      getExtentOld({ ...params })
     ])
     .then(
       axios.spread((loss, extent) => {
@@ -21,8 +21,8 @@ export const getData = ({ params }) =>
     );
 
 export const getDataURL = params => [
-  getLoss({ ...params, landCategory: 'tsc', download: true }),
-  getExtent({ ...params, download: true })
+  getLossOld({ ...params, landCategory: 'tsc', download: true }),
+  getExtentOld({ ...params, download: true })
 ];
 
 export default getData;

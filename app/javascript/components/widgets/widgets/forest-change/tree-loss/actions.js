@@ -1,23 +1,41 @@
 import axios from 'axios';
-import { getExtent, getLoss } from 'services/forest-data';
+import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
 
-export const getData = ({ params }) =>
-  axios.all([getLoss(params), getExtent(params)]).then(
+const getGlobalLocation = params => ({
+  adm0: params.type === 'global' ? null : params.adm0,
+  adm1: params.type === 'global' ? null : params.adm1,
+  adm2: params.type === 'global' ? null : params.adm2
+});
+
+export const getData = ({ params }) => {
+  const { adm0, adm1, adm2, ...rest } = params || {};
+  const globalLocation = getGlobalLocation(params);
+  const lossFetch =
+    params.type === 'global'
+      ? getLossGrouped({ ...rest, ...globalLocation })
+      : getLoss({ ...rest, ...globalLocation });
+  return axios.all([lossFetch, getExtent({ ...rest, ...globalLocation })]).then(
     axios.spread((loss, extent) => {
       let data = {};
       if (loss && loss.data && extent && extent.data) {
         data = {
           loss: loss.data.data,
-          extent: (loss.data.data && extent.data.data[0].value) || 0
+          extent: (loss.data.data && extent.data.data[0].extent) || 0
         };
       }
       return data;
     })
   );
+};
 
-export const getDataURL = params => [
-  getLoss({ ...params, landCategory: 'tsc', download: true }),
-  getExtent({ ...params, download: true })
-];
+export const getDataURL = params => {
+  const globalLocation = getGlobalLocation(params);
+  return [
+    params.type === 'global'
+      ? getLossGrouped({ ...params, ...globalLocation, download: true })
+      : getLoss({ ...params, ...globalLocation, download: true }),
+    getExtent({ ...params, download: true })
+  ];
+};
 
 export default getData;

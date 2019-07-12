@@ -1,43 +1,45 @@
-import { getLocations, getLocationsLoss } from 'services/forest-data';
+import { getExtentGrouped, getLossGrouped } from 'services/forest-data';
 import groupBy from 'lodash/groupBy';
 import axios from 'axios';
 
 export const getData = ({ params }) =>
-  axios
-    .all([getLocations({ ...params }), getLocationsLoss({ ...params })])
-    .then(
-      axios.spread((getLocationsResponse, getLocationsLossResponse) => {
-        const extentData = getLocationsResponse.data.data;
-        let extentMappedData = {};
-        if (extentData && extentData.length) {
-          extentMappedData = extentData.map(d => ({
-            id: d.region,
-            extent: d.extent || 0,
-            percentage: d.extent ? d.extent / d.total * 100 : 0
-          }));
-        }
-        const lossData = getLocationsLossResponse.data.data;
-        let lossMappedData = {};
-        if (lossData && lossData.length) {
-          const lossByRegion = groupBy(lossData, 'region');
-          lossMappedData = Object.keys(lossByRegion).map(d => {
-            const regionLoss = lossByRegion[d];
-            return {
-              id: parseInt(d, 10),
-              loss: regionLoss
-            };
-          });
-        }
-        return {
-          lossByRegion: lossMappedData,
-          extent: extentMappedData
-        };
-      })
-    );
+  axios.all([getExtentGrouped(params), getLossGrouped(params)]).then(
+    axios.spread((extentGrouped, lossGrouped) => {
+      let groupKey = 'iso';
+      if (params.adm0) groupKey = 'adm1';
+      if (params.adm1) groupKey = 'adm2';
+
+      const extentData = extentGrouped.data.data;
+      let extentMappedData = {};
+      if (extentData && extentData.length) {
+        extentMappedData = extentData.map(d => ({
+          id: groupKey === 'iso' ? d[groupKey] : parseInt(d[groupKey], 10),
+          extent: d.extent || 0,
+          percentage: d.extent ? d.extent / d.total * 100 : 0
+        }));
+      }
+      const lossData = lossGrouped.data.data;
+      let lossMappedData = {};
+      if (lossData && lossData.length) {
+        const lossByRegion = groupBy(lossData, groupKey);
+        lossMappedData = Object.keys(lossByRegion).map(d => {
+          const regionLoss = lossByRegion[d];
+          return {
+            id: groupKey === 'iso' ? d : parseInt(d, 10),
+            loss: regionLoss
+          };
+        });
+      }
+      return {
+        lossByRegion: lossMappedData,
+        extent: extentMappedData
+      };
+    })
+  );
 
 export const getDataURL = params => [
-  getLocations({ ...params, download: true }),
-  getLocationsLoss({ ...params, download: true })
+  getExtentGrouped({ ...params, download: true }),
+  getLossGrouped({ ...params, download: true })
 ];
 
 export default getData;

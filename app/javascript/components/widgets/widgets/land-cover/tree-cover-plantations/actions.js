@@ -1,11 +1,11 @@
-import { getExtent, getPlantationsExtent } from 'services/forest-data';
+import { getExtent, getAreaIntersection } from 'services/forest-data';
 import axios from 'axios';
 
 export const getData = ({ params }) =>
   axios
     .all([
-      getExtent({ ...params, forestType: '' }),
-      getPlantationsExtent(params)
+      getExtent(params),
+      getAreaIntersection({ ...params, forestType: 'plantations' })
     ])
     .then(
       axios.spread((gadmResponse, plantationsResponse) => {
@@ -15,20 +15,21 @@ export const getData = ({ params }) =>
         let data = {};
         if (gadmExtent.length && plantationsExtent.length) {
           const totalArea = gadmExtent[0].total_area;
-          const totalExtent = gadmExtent[0].value;
+          const totalExtent = gadmExtent[0].extent;
           data = {
             totalArea,
             totalExtent,
             plantations: plantationsExtent
           };
         }
+
         return data;
       })
     );
 
 export const getDataURL = params => [
   getExtent({ ...params, forestType: '', download: true }),
-  getPlantationsExtent({ ...params, download: true })
+  getAreaIntersection({ ...params, download: true })
 ];
 
 export default getData;

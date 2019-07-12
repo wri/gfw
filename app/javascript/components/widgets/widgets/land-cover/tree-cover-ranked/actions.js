@@ -1,13 +1,19 @@
-import { fetchExtentRanked } from 'services/forest-data';
+import { getExtentGrouped } from 'services/forest-data';
 
-export const getData = ({ params }) =>
-  fetchExtentRanked(params).then(response => {
+export const getData = ({ params }) => {
+  const { adm0, adm1, adm2, ...rest } = params || {};
+  const parentLocation = {
+    adm0: adm0 && !adm1 ? null : adm0,
+    adm1: adm1 && !adm2 ? null : adm1,
+    adm2: null
+  };
+  return getExtentGrouped({ ...rest, ...parentLocation }).then(response => {
     const { data } = response.data;
     let mappedData = [];
     if (data && data.length) {
       mappedData = data.map(item => {
         const area = item.total_area || 0;
-        const extent = item.value || 0;
+        const extent = item.extent || 0;
         return {
           id: item.iso,
           extent,
@@ -18,9 +24,16 @@ export const getData = ({ params }) =>
     }
     return mappedData;
   });
+};
 
-export const getDataURL = params => [
-  fetchExtentRanked({ ...params, download: true })
-];
+export const getDataURL = params => {
+  const { adm0, adm1, adm2, ...rest } = params || {};
+  const parentLocation = {
+    adm0: adm0 && !adm1 ? null : adm0,
+    adm1: adm1 && !adm2 ? null : adm1,
+    adm2: null
+  };
+  return [getExtentGrouped({ ...rest, ...parentLocation, download: true })];
+};
 
 export default getData;
