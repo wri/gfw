@@ -53,7 +53,9 @@ class NavAlt extends PureComponent {
     localStorage.setItem('txlive:selectedlang', `"${lang}"`);
     window.Transifex.live.translateTo(lang);
     this.setState({ lang, showLang: false, showMore: false });
-    this.props.setLangToUrl(lang);
+    window.Transifex.live.onTranslatePage(newLang => {
+      this.props.setLangToUrl(newLang);
+    });
   };
 
   handleCloseSubmenu = () => {
