@@ -28,7 +28,7 @@ export default {
       buttons: [
         {
           text: 'EXPLORE OUR DATA',
-          path:
+          link:
             '/map?menu=eyJkYXRhc2V0Q2F0ZWdvcnkiOiJmb3Jlc3RDaGFuZ2UiLCJtZW51U2VjdGlvbiI6ImRhdGFzZXRzIn0%3D'
         }
       ],
@@ -41,7 +41,7 @@ export default {
       buttons: [
         {
           text: 'VIEW GLAD ALERTS',
-          path:
+          link:
             '/map?analysis=eyJzaG93QW5hbHlzaXMiOnRydWUsImhpZGRlbiI6ZmFsc2V9&map=eyJ6b29tIjozLCJjZW50ZXIiOnsibGF0IjotNC4yMTQ5NDMxNDEzOTA2MzksImxuZyI6LTUuODAwNzgxMjUwMDAwMDAxfSwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsLCJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImU2NjNlYjA5LTA0ZGUtNGYzOS1iODcxLTM1YzZjMmVkMTBiNSIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyJkZDVkZjg3Zi0zOWMyLTRhZWItYTQ2Mi0zZWY5NjliMjBiNjYiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV19&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9'
         }
       ],
@@ -54,7 +54,7 @@ export default {
       buttons: [
         {
           text: 'EXPLORE THE DASHBOARDS',
-          path: '/dashboards/global'
+          link: '/dashboards/global'
         }
       ],
       image: card3
@@ -132,7 +132,7 @@ export default {
       description:
         "Access GFW's forest monitoring and alert system offline and collect data from the field, all from your mobile device",
       background: forestWatcherImage,
-      extLink: 'http://forestwatcher.globalforestwatch.org/',
+      extLink: 'https://forestwatcher.globalforestwatch.org/',
       color: '#97be32',
       icon: forestWatcherIcon
     },
@@ -141,7 +141,7 @@ export default {
       description:
         'Track fires and haze, view the latest data on fire locations and air quality, and do your own analysis',
       background: firesImage,
-      extLink: 'http://fires.globalforestwatch.org',
+      extLink: 'https://fires.globalforestwatch.org',
       color: '#F71949',
       icon: firesIcon
     },
@@ -158,7 +158,7 @@ export default {
       description:
         'Securely manage deforestation risk in commodity supply chains',
       background: proImage,
-      extLink: 'http://pro.globalforestwatch.org',
+      extLink: 'https://pro.globalforestwatch.org',
       color: '#404042',
       icon: proIcon,
       className: 'pro'

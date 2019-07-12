@@ -4,7 +4,7 @@ import sumBy from 'lodash/sumBy';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { biomassToCO2 } from 'utils/calculations';
+import {} from 'utils/calculations';
 import { sortByKey, getColorPalette } from 'utils/data';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
@@ -60,7 +60,7 @@ export const getTopIsos = createSelector([getFilteredData], data => {
   const sortedLoss = sortByKey(
     Object.keys(groupedLoss).map(k => ({
       iso: k,
-      area: sumBy(groupedLoss[k], 'area')
+      area: sumBy(groupedLoss[k], 'area') || 0
     })),
     'area',
     true
@@ -161,7 +161,7 @@ export const parseSentence = createSelector(
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
-      (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
+      (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
 

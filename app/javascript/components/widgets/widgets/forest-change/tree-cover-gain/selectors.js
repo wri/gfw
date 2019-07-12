@@ -3,7 +3,7 @@ import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
-import { format } from 'd3-format';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = state => state.data || null;
@@ -19,9 +19,7 @@ const getTitle = state => state.config.title;
 const getAllLocation = state => state.allLocation || null;
 
 const haveData = (data, locationObject) =>
-  locationObject &&
-  data &&
-  data.filter(item => item.id === locationObject.value).length;
+  locationObject && data && data.find(item => item.id === locationObject.value);
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -68,6 +66,7 @@ export const parseData = createSelector(
     ) {
       return null;
     }
+    // console.log(currentLabel, locationObject, data);
 
     let dataTrimmed = [];
     data.forEach(d => {
@@ -160,19 +159,18 @@ export const parseSentence = createSelector(
     } = sentences;
     const locationData =
       locationObject && data.find(l => l.id === locationObject.value);
-    const gain = locationData ? locationData.gain : sumBy(data, 'gain');
-    const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
+    const gain = locationData ? locationData.gain : sumBy(data, 'gain') || 0;
+    const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') || 0 : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
 
     const adminLevel = locationObject.adminLevel || 'global';
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
-      gain: gain < 1 ? `${format('.3r')(gain)}ha` : `${format('.3s')(gain)}ha`,
+      gain: formatNumber({ num: gain, unit: 'ha' }),
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
-      percent: areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '< 0.1%',
-      gainPercent:
-        gainPercent >= 0.1 ? `${format('.2r')(gainPercent)}%` : '< 0.1%',
+      percent: formatNumber({ num: areaPercent, unit: '%' }),
+      gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
       parent: locationObject.parentLabel || null
     };
 

@@ -6,6 +6,9 @@ import uniq from 'lodash/uniq';
 import sortBy from 'lodash/sortBy';
 import range from 'lodash/range';
 
+import landCategories from 'data/land-categories.json';
+import forestTypes from 'data/forest-types.json';
+
 export const selectAllPropsAndState = (state, ownProps) => ownProps;
 export const selectWidgetSettings = (state, { settings }) => settings;
 export const selectWidgetConfig = (state, { config }) => config;
@@ -46,11 +49,25 @@ export const getWidgetOptionsFromData = createSelector(
 );
 
 export const getWidgetOptions = createSelector(
-  [selectWidgetOptions, getWidgetOptionsFromData],
-  (options, dataOptions) => ({
-    ...options,
-    ...dataOptions
-  })
+  [selectWidgetOptions, getWidgetOptionsFromData, getWidgetSettings],
+  (options, dataOptions, settings) => {
+    const { forestTypes: fTypes } = options || {};
+
+    return {
+      ...options,
+      ...dataOptions,
+      ...(fTypes &&
+        fTypes.length &&
+        fTypes.find(f => f.value === 'ifl') && {
+        forestTypes: fTypes.map(f => ({
+          ...f,
+          label: f.label.includes('{iflYear}')
+            ? f.label.replace('{iflYear}', settings.ifl)
+            : f.label
+        }))
+      })
+    };
+  }
 );
 
 export const getWidgetError = createSelector(
@@ -137,6 +154,23 @@ export const getForestType = createSelector(
 export const getLandCategory = createSelector(
   [getOptionsSelected],
   selected => selected && selected.landCategory
+);
+
+export const getPolynames = createSelector(
+  [getForestType, getLandCategory],
+  (forestType, landCategory) => {
+    if (!forestType && !landCategory) return null;
+    return [
+      ...((forestType &&
+        forestTypes.filter(f => f.value === forestType.value && !f.hidden)) ||
+        []),
+      ...((landCategory &&
+        landCategories.filter(
+          l => l.value === landCategory.value && !l.hidden
+        )) ||
+        [])
+    ];
+  }
 );
 
 export const getIndicator = createSelector(
@@ -229,6 +263,7 @@ export const getWidgetProps = () =>
     optionsSelected: getOptionsSelected,
     forestTypes: getForestType,
     landCategory: getLandCategory,
+    polynames: getPolynames,
     indicator: getIndicator,
     options: getOptionsWithYears,
     active: selectWidgetActive

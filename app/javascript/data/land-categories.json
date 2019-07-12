@@ -3,13 +3,26 @@
     "label": "Mining concessions",
     "value": "mining",
     "metaKey": "gfw_mining",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "7a4d9a64-ecb1-45ec-a01e-658f1364fb2e",
+        "layers": ["fcd10026-e892-4fb8-8d79-8d76e3b94005"]
+      }
+    ]
   },
   {
     "label": "Protected Areas",
     "value": "wdpa",
     "metaKey": "wdpa_protected_areas",
-    "global": true
+    "global": true,
+    "categories": ["Category Ia/b or II", "Other Category", "Unkown"],
+    "datasets": [
+      {
+        "dataset": "3b12cc5f-4bf8-4857-909e-a8791125bbf1",
+        "layers": ["fdfd426b-11d0-45fc-91f4-3706ebb0e798"]
+      }
+    ]
   },
   {
     "label": "Key Biodiversity Areas",
@@ -21,48 +34,97 @@
     "label": "Tiger Conservation Landscapes",
     "value": "tiger_cl",
     "metaKey": "tiger_conservation_landscapes",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "c7c76cc1-5178-474a-8b6a-60b895e02260",
+        "layers": ["42427a55-c8b5-4fac-8db3-a9d59e1b26f7"]
+      }
+    ]
   },
   {
     "label": "Alliance for Zero Extinction",
     "value": "aze",
     "metaKey": "alliance_for_zero_extinction_sites",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "3a638102-ab50-4717-a0fe-b27bd79d18c2",
+        "layers": ["3c44da8f-159a-41f2-9fdb-448e4cd0923d"]
+      }
+    ]
   },
   {
     "label": "Indigenous Lands",
     "value": "landmark",
     "metaKey": "gfw_land_rights",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "37198e19-651f-4f79-96fb-3beb2746acd2",
+        "layers": ["d3e870f0-3387-4fbd-b635-80ca554f8a79"]
+      }
+    ]
   },
   {
     "label": "Indonesia peat lands",
     "value": "idn_mys_peatlands",
     "metaKey": "idn_peat_lands",
-    "global": false
+    "global": false,
+    "datasets": [
+      {
+        "dataset": "3103075e-64d4-4a52-83a3-1094cf9cf04a",
+        "layers": ["19778494-b8ee-4436-9b8c-cea19873bcc5"]
+      }
+    ],
+    "hidden": true
   },
   {
     "label": "Indonesia forest moratorium",
     "value": "idn_forest_moratorium",
     "metaKey": "idn_forest_moratorium",
-    "global": false
+    "global": false,
+    "datasets": [
+      {
+        "dataset": "853ba748-f980-40d7-b0d8-d9b0fb5d748c",
+        "layers": ["f58ad702-ea23-4bf3-bfd8-68d2eed8a357"]
+      }
+    ]
   },
   {
     "label": "Oil palm concessions",
     "value": "oil_palm",
     "metaKey": "gfw_oil_palm",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "c4d4e07c-c5b4-4e2c-9db1-5c3bec185f0e",
+        "layers": ["0911abc4-d861-4d7a-84d6-0fa07b51d7d8"]
+      }
+    ]
   },
   {
     "label": "Wood fiber concessions",
     "value": "wood_fiber",
     "metaKey": "gfw_wood_fiber",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "93e67a77-1a31-4d04-a75d-86a4d6e35d54",
+        "layers": ["557dc2cf-0ba7-4410-813c-99d692725fe7"]
+      }
+    ]
   },
   {
     "label": "Managed forests",
     "value": "managed_forests",
     "metaKey": "gfw_logging",
-    "global": true
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "4fc24a03-cb3e-4df3-a2ee-e2a8dca342b3",
+        "layers": ["c26db41a-b586-461c-b648-93205eafea0b"]
+      }
+    ]
   }
 ]

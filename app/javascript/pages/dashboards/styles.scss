@@ -6,14 +6,10 @@ $right-panel-width: calc((#{$max-width} * 0.3) + ((100vw - #{$max-width}) / 2));
 .l-country {
   border-bottom: solid 1px $border;
   display: flex;
+  flex-direction: column;
 
-  @supports (display: grid) {
-    display: grid;
-    grid-template-columns: 100%;
-
-    @media screen and (min-width: $screen-m) {
-      grid-template-columns: $left-panel-width $right-panel-width;
-    }
+  @media screen and (min-width: $screen-m) {
+    flex-direction: row;
   }
 
   .content-panel {

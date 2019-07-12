@@ -19,9 +19,9 @@ class Header extends PureComponent {
   };
 
   handleSubmit = () => {
-    window.location.href = `${window.location.origin}/search?query=${
-      this.state.search
-    }`;
+    const { setQueryToUrl, hideMenu } = this.props;
+    setQueryToUrl({ query: this.state.search });
+    hideMenu();
   };
 
   handleSearchChange = search => {
@@ -185,7 +185,8 @@ Header.propTypes = {
   hideMenu: PropTypes.func,
   handleLangSelect: PropTypes.func,
   toggleContactUs: PropTypes.func,
-  loggedIn: PropTypes.bool
+  loggedIn: PropTypes.bool,
+  setQueryToUrl: PropTypes.func
 };
 
 export default Header;

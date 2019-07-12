@@ -1,10 +1,12 @@
 [
   {
     "label": "Total",
-    "value": "totalbiomass"
+    "value": "totalbiomass",
+    "unit": "tC"
   },{
     "label": "Density",
-    "value": "biomassdensity"
+    "value": "biomassdensity",
+    "unit": "tC/ha"
   },
   {
     "label": "Emissions",
