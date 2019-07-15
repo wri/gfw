@@ -24,14 +24,25 @@ class ModalSaveAOI extends PureComponent {
   renderSaved = () => <h1>Subscription saved!</h1>;
 
   render() {
-    const { open, userData, loading, saved } = this.props;
+    const { open, userData, loading, saved, activeArea } = this.props;
+
+    let title;
+    if (saved) {
+      title = 'Area saved';
+    } else if (activeArea) {
+      title = 'Edit Area of Interest';
+    } else {
+      title = 'Save Area of Interest';
+    }
 
     return (
       <Modal
         isOpen={open}
-        contentLabel="Save Area of Interest"
+        contentLabel={
+          activeArea ? 'Edit Area of Interest' : 'Save Area of Interest'
+        }
         onRequestClose={this.handleCloseModal}
-        title={saved ? 'Subscription saved' : 'Save Area of Interest'}
+        title={title}
       >
         <div className="c-modal-save-aoi">
           <div className="save-aoi-body">
@@ -56,6 +67,7 @@ ModalSaveAOI.propTypes = {
   resetSaveAOI: PropTypes.func,
   userData: PropTypes.object,
   datasets: PropTypes.array,
+  activeArea: PropTypes.object,
   locationName: PropTypes.string,
   activeDatasets: PropTypes.array,
   saving: PropTypes.bool

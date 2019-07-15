@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Button from 'components/ui/button/button-component';
+import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
+import editIcon from 'assets/icons/edit.svg';
 
 import './styles.scss';
 
@@ -49,7 +52,7 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   renderAreas() {
-    const { isDesktop, areas, goToAOI } = this.props;
+    const { isDesktop, areas, activeArea, goToAOI, onEditClick } = this.props;
     return (
       <div className="row">
         <div className="column">
@@ -67,19 +70,35 @@ class MapMenuMyGFW extends PureComponent {
             </Pill>
           </div>
           <div className="aoi-items">
-            {areas.map(area => (
-              <div
-                className="aoi-item"
-                key={area.name}
-                onClick={() => goToAOI(area)}
-                role="button"
-                tabIndex={0}
-              >
-                <img src={area.image} alt={area.name} />
-                <p className="aoi-title">{area.name}</p>
-                {area.tags.map(tag => <span key={tag}>{tag}</span>)}
-              </div>
-            ))}
+            {areas.map(area => {
+              const active = activeArea && activeArea.id === area.id;
+              return (
+                <div
+                  className={cx('aoi-item', active && '--active')}
+                  key={area.name}
+                  onClick={() => goToAOI(area)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <img src={area.image} alt={area.name} />
+                  <p className="aoi-title">{area.name}</p>
+                  {area.tags.map(tag => <span key={tag}>{tag}</span>)}
+                  {active && (
+                    <Button
+                      className="info-button"
+                      theme="theme-button-tiny square"
+                      onClick={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onEditClick({ open: true });
+                      }}
+                    >
+                      <Icon icon={editIcon} className="info-icon" />
+                    </Button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -111,7 +130,9 @@ MapMenuMyGFW.propTypes = {
   isDesktop: PropTypes.bool,
   loggedIn: PropTypes.bool,
   areas: PropTypes.array,
-  goToAOI: PropTypes.func
+  activeArea: PropTypes.object,
+  goToAOI: PropTypes.func,
+  onEditClick: PropTypes.func
 };
 
 export default MapMenuMyGFW;
