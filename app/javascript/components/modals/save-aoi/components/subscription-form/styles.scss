@@ -82,9 +82,9 @@ $desktop-padding: rem(50px);
     }
   }
 
-  .save-subscription {
+  .save-aoi {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-top: rem(30px);
 
@@ -104,6 +104,11 @@ $desktop-padding: rem(50px);
       &.error {
         background-color: $error;
       }
+    }
+
+    .delete-aoi {
+      margin: 0;
+      color: $error;
     }
   }
 

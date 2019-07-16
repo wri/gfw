@@ -1,38 +1,56 @@
 @import '~styles/settings.scss';
 
 .c-map-menu-my-gfw {
-  padding: rem(20px);
+  position: relative;
+  height: 100%;
 
-  h3.title-login {
-    text-transform: uppercase;
-    color: $slate;
-    font-size: rem(14px);
-    font-weight: 500;
-    margin-bottom: rem(10px);
-  }
+  .column {
+    padding: rem(20px);
 
-  h2.title-create-aois {
-    font-size: rem(18px);
-    max-width: 80%;
-  }
+    h3.title-login {
+      text-transform: uppercase;
+      color: $slate;
+      font-size: rem(14px);
+      font-weight: 500;
+      margin-bottom: rem(10px);
+    }
 
-  p {
-    margin: rem(10px) 0;
-  }
+    h2.title-create-aois {
+      font-size: rem(18px);
+      max-width: 80%;
+    }
 
-  .mygfw-login {
-    margin: rem(40px) 0;
-  }
+    p {
+      margin: rem(10px) 0;
+    }
 
-  .aoi-tags {
-    margin: rem(15px) 0;
+    .mygfw-login {
+      margin: rem(40px) 0;
+    }
+
+    .aoi-tags {
+      margin: rem(15px) 0;
+    }
   }
 
   .aoi-items {
     .aoi-item {
-      margin: rem(15px) 0;
       display: flex;
+      position: relative;
       cursor: pointer;
+      outline: none;
+      padding: rem(15px);
+
+      &.--active {
+        background-color: #f6f6f4;
+        border: 1px solid $green-gfw;
+      }
+
+      .edit-button {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
 
       img {
         width: rem(76px);
@@ -41,5 +59,10 @@
         margin-right: rem(15px);
       }
     }
+  }
+
+  .my-gfw-login-image {
+    position: absolute;
+    bottom: 0;
   }
 }

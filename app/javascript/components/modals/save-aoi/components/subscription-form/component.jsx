@@ -68,6 +68,41 @@ function SubscriptionForm(props) {
     return re.test(String(email).toLowerCase());
   };
 
+  const renderSaveAOI = () => {
+    const disclaimer = error ? (
+      <p className="error-message">
+        This service is currently unavailable. Please try again later.
+      </p>
+    ) : (
+      <p>You can always change these settings in MyGFW</p>
+    );
+    return (
+      <div className="save-aoi">
+        {activeArea ? (
+          // TODO: add DELETE endpoint and trash icon
+          <Button className="delete-aoi" theme="theme-button-clear">
+            Delete Area
+          </Button>
+        ) : (
+          disclaimer
+        )}
+        <Button
+          className={cx('submit-btn', { error }, { saving })}
+          onClick={() =>
+            saveAOI({
+              ...form,
+              userData
+              // ...location
+            })
+          }
+          disabled={!canSubmit}
+        >
+          {saving ? <Loader className="saving-btn-loader" /> : 'SAVE'}
+        </Button>
+      </div>
+    );
+  };
+
   const {
     lang,
     name,
@@ -186,28 +221,7 @@ function SubscriptionForm(props) {
           label={'Monthly summary'}
         />
       </div>
-      <div className="save-subscription">
-        {error ? (
-          <p className="error-message">
-            This service is currently unavailable. Please try again later.
-          </p>
-        ) : (
-          <p>You can always change these settings in MyGFW</p>
-        )}
-        <Button
-          className={cx('submit-btn', { error }, { saving })}
-          onClick={() =>
-            saveAOI({
-              ...form,
-              userData
-              // ...location
-            })
-          }
-          disabled={!canSubmit}
-        >
-          {saving ? <Loader className="saving-btn-loader" /> : 'SAVE'}
-        </Button>
-      </div>
+      {renderSaveAOI()}
     </div>
   );
 }
