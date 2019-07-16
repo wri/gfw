@@ -47,7 +47,13 @@ export const getSortedData = createSelector(
                 adm1: d.id
               })
             },
-            query
+            query: {
+              ...query,
+              map: {
+                ...(query && query.map),
+                canBound: true
+              }
+            }
           },
           color: colors.main
         });
