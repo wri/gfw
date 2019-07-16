@@ -1,6 +1,6 @@
 export default {
   widget: 'fireRanked',
-  title: 'Location of fire Alerts in {location}',
+  title: 'Regions with the most fire Alerts in {location}',
   categories: ['forest-change'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
