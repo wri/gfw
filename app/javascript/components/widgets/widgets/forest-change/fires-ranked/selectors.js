@@ -55,10 +55,35 @@ export const parseList = createSelector(
       const regionData = groupedAlerts[k];
       const counts = sumBy(regionData, 'count');
       const countsPerc = counts && totalCounts ? counts / totalCounts * 100 : 0;
+      const colorBuckets = [
+        {
+          limit: 5,
+          color: colors.ramp[8]
+        },
+        {
+          limit: 10,
+          color: colors.ramp[6]
+        },
+        {
+          limit: 15,
+          color: colors.ramp[4]
+        },
+        {
+          limit: 20,
+          color: colors.ramp[2]
+        },
+        {
+          limit: 25,
+          color: colors.ramp[0]
+        }
+      ];
+
+      const colorBucket =
+        colorBuckets.find(c => countsPerc <= c.limit) || colorBuckets[4];
 
       return {
         id: k,
-        color: colors.main,
+        color: colorBucket.color,
         percentage: `${format('.2r')(countsPerc)}%`,
         count: counts,
         value: countsPerc,
