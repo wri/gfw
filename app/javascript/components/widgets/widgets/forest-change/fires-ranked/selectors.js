@@ -29,6 +29,7 @@ export const parseList = createSelector(
   ],
   (data, latest, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
+    const { payload, query, type } = location;
     const latestWeek = moment(latest)
       .subtract(1, 'weeks')
       .week();
@@ -46,10 +47,7 @@ export const parseList = createSelector(
             .subtract(settings.weeks, 'weeks')
         )
     );
-    const groupedAlerts = groupBy(
-      alertsByDate,
-      location.adm1 ? 'adm2' : 'adm1'
-    );
+    const groupedAlerts = groupBy(alertsByDate, payload.adm1 ? 'adm2' : 'adm1');
 
     const totalCounts = sumBy(alertsByDate, 'count');
     const mappedData = Object.keys(groupedAlerts).map(k => {
@@ -57,7 +55,6 @@ export const parseList = createSelector(
       const regionData = groupedAlerts[k];
       const counts = sumBy(regionData, 'count');
       const countsPerc = counts && totalCounts ? counts / totalCounts * 100 : 0;
-      const { payload, query, type } = location;
 
       return {
         id: k,
