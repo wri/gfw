@@ -79,12 +79,16 @@ export const selectPlanetBasemapsIntervalOptions = createSelector(
   [getPlanetBasemapsByInvertal],
   planetBasemaps => {
     if (isEmpty(planetBasemaps)) return intervalOptions;
-    return intervalOptions.map(f => ({
-      ...f,
-      year: planetBasemaps[f.value][0].year,
-      url: planetBasemaps[f.value][0].url,
-      period: planetBasemaps[f.value][0].period
-    }));
+    return intervalOptions.map(
+      f =>
+        (planetBasemaps[f.value][0] && {
+          ...f,
+          year: planetBasemaps[f.value][0].year,
+          url: planetBasemaps[f.value][0].url,
+          period: planetBasemaps[f.value][0].period
+        }) ||
+        intervalOptions.find(interval => interval.value === f.value)
+    );
   }
 );
 
