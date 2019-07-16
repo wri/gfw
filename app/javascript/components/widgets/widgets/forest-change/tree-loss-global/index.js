@@ -4,6 +4,7 @@ import childConfig from './config';
 
 const Component = ParentWidget.Component;
 const getData = ParentWidget.getData;
+const getDataURL = ParentWidget.getDataURL;
 const parsePayload = ParentWidget.parsePayload;
 const parentConfig = ParentWidget.config;
 const settings = ParentWidget.settings;
@@ -13,4 +14,12 @@ const config = {
   ...childConfig
 };
 
-export { Component, getProps, parsePayload, getData, config, settings };
+export {
+  Component,
+  getProps,
+  parsePayload,
+  getData,
+  getDataURL,
+  config,
+  settings
+};

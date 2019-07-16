@@ -160,6 +160,7 @@ class WidgetHeader extends PureComponent {
   };
 
   generateZipFromURL = urls => {
+    const { title } = this.props;
     const urlToPromise = url =>
       new Promise((resolve, reject) => {
         JSZipUtils.getBinaryContent(url, (err, data) => {
@@ -186,7 +187,7 @@ class WidgetHeader extends PureComponent {
       zip.file(filename, urlToPromise(url), { binary: true });
     });
     zip.generateAsync({ type: 'blob' }).then(content => {
-      saveAs(content, 'data.zip');
+      saveAs(content, `${title} data.zip`);
     });
   };
 
