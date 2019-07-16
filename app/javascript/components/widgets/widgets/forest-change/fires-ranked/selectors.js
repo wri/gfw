@@ -9,7 +9,6 @@ import moment from 'moment';
 // get list data
 const getData = state => (state.data && state.data.alerts) || null;
 const getLatestDates = state => (state.data && state.data.latest) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
@@ -23,13 +22,12 @@ export const parseList = createSelector(
   [
     getData,
     getLatestDates,
-    getExtent,
     getSettings,
     getLocation,
     getLocationsMeta,
     getColors
   ],
-  (data, latest, extent, settings, location, meta, colors) => {
+  (data, latest, settings, location, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const latestWeek = moment(latest)
       .subtract(1, 'weeks')
@@ -50,28 +48,23 @@ export const parseList = createSelector(
     );
     const groupedAlerts = groupBy(
       alertsByDate,
-      location.region ? 'adm2' : 'adm1'
+      location.adm1 ? 'adm2' : 'adm1'
     );
+
+    const totalCounts = sumBy(alertsByDate, 'count');
     const mappedData = Object.keys(groupedAlerts).map(k => {
       const region = meta.find(l => parseInt(k, 10) === l.value);
-      const regionExtent = extent.find(a => a.region === parseInt(k, 10));
       const regionData = groupedAlerts[k];
-      const countsArea = sumBy(regionData, 'area_ha');
       const counts = sumBy(regionData, 'count');
-      const countsAreaPerc =
-        countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
-      const countsPerHa =
-        counts && regionExtent ? counts / regionExtent.extent : 0;
+      const countsPerc = counts && totalCounts ? counts / totalCounts * 100 : 0;
       const { payload, query, type } = location;
 
       return {
         id: k,
         color: colors.main,
-        percentage: `${format('.2r')(countsAreaPerc)}%`,
-        countsPerHa,
+        percentage: `${format('.2r')(countsPerc)}%`,
         count: counts,
-        area: countsArea,
-        value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
+        value: countsPerc,
         label: (region && region.label) || '',
         path: {
           type,
@@ -100,39 +93,24 @@ export const parseData = createSelector([parseList], data => {
 export const parseSentence = createSelector(
   [
     parseData,
-    parseList,
     getSettings,
     getOptions,
     getIndicator,
     getLocationName,
     getSentences
   ],
-  (data, sortedList, settings, options, indicator, locationName, sentences) => {
+  (data, settings, options, indicator, locationName, sentences) => {
     if (!data || !options || !locationName) return '';
     const { initial, withInd } = sentences;
-    const totalCount = sumBy(data, 'count');
-    let percentileCount = 0;
-    let percentileLength = 0;
-    while (
-      percentileLength < sortedList.length &&
-      percentileCount / totalCount < 0.5 &&
-      percentileLength !== 10
-    ) {
-      percentileCount += sortedList[percentileLength].count;
-      percentileLength += 1;
-    }
-    const topCount = percentileCount / totalCount * 100;
-    const countArea = sumBy(data, 'area');
-    const formatType = countArea < 1 ? '.3r' : '.3s';
+    const topRegion = data[0].label;
+    const topRegionCount = data[0].count;
+    const topRegionPerc = data[0].value;
+
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,
-      count: format(',')(totalCount),
-      area: `${format(formatType)(countArea)}ha`,
-      topPercent: `${format('.2r')(topCount)}%`,
-      topRegions:
-        percentileLength === 1
-          ? `${percentileLength} region`
-          : `${percentileLength} regions`,
+      topRegion,
+      topRegionCount: format(',')(topRegionCount),
+      topRegionPerc: `${format('.2r')(topRegionPerc)}%`,
       location: locationName,
       indicator: `${indicator ? `${indicator.label.toLowerCase()}` : ''}`
     };
