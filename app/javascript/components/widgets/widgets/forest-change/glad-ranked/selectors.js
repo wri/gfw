@@ -80,13 +80,19 @@ export const parseList = createSelector(
             payload: {
               ...payload,
               ...(payload.adm1 && {
-                adm2: k
+                adm2: parseInt(k, 10)
               }),
               ...(!payload.adm1 && {
-                adm1: k
+                adm1: parseInt(k, 10)
               })
             },
-            query
+            query: {
+              ...query,
+              map: {
+                ...(query && query.map),
+                canBound: true
+              }
+            }
           }
         };
       });
