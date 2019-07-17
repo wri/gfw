@@ -64,7 +64,7 @@ export const deleteAOI = createThunkAction(
   'deleteAOI',
   data => (dispatch, getState) => {
     const { areas } = getState();
-    const { activeArea } = areas || {};
+    const { activeArea, data: aois } = areas || {};
     const { id: AoiId, geostore } = activeArea;
     const { userData } = data;
     const token = userData.token || process.env.DEMO_USER_TOKEN;
@@ -76,11 +76,9 @@ export const deleteAOI = createThunkAction(
           response.status >= 200 &&
           response.status < 300
         ) {
-          const index = areas.indexOf(activeArea);
           dispatch(setSaveAOIDeleted()); // show deleted message
           dispatch(setDrawnGeostore(geostore)); // goto geostore view
-          // TODO: fix state deletion
-          dispatch(setAreas(areas.splice(1, index))); // delete area from state.areas
+          dispatch(setAreas(aois.filter(a => a.id !== activeArea.id))); // delete area from state.areas
         }
       })
       .catch(error => {

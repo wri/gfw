@@ -102,6 +102,7 @@ class AnalysisComponent extends PureComponent {
             )}
             <Button
               className="analysis-action-btn subscribe-btn"
+              // TODO: delete activeArea from state
               onClick={() => setSaveAOISettings({ open: true })}
             >
                 SAVE IN MY GFW
