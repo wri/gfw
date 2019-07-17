@@ -349,12 +349,12 @@ export const getActiveLayersWithDates = createSelector(
             ...(startDate && {
               startYear: moment(startDate).year(),
               startMonth: moment(startDate).month(),
-              startDay: moment(startDate).month()
+              startDay: moment(startDate).dayOfYear()
             }),
             ...(endDate && {
               endYear: moment(endDate).year(),
               endMonth: moment(endDate).month(),
-              endDay: moment(endDate).month()
+              endDay: moment(endDate).dayOfYear()
             }),
             ...getDayRange(decodeParams)
           }

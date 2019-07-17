@@ -5,7 +5,7 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1'],
   options: {
-    forestTypes: true,
+    forestTypes: ['ifl', 'primary_forest', 'mangroves_2016'],
     landCategories: true
   },
   colors: 'gain',

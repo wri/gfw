@@ -76,7 +76,13 @@ export const parseData = createSelector(
               adm1: regionId
             })
           },
-          query
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map),
+              canBound: true
+            }
+          }
         },
         extLink: embed
       };
