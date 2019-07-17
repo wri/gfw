@@ -6,7 +6,7 @@ import {
   setAreas,
   setActiveArea
 } from 'providers/areas-provider/actions';
-import setDrawnGeostore from 'pages/map/actions';
+import { setDrawnGeostore } from 'pages/map/actions';
 
 import { MAP } from 'router';
 

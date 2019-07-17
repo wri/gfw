@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
@@ -15,6 +15,71 @@ import screenImg2x from 'assets/images/aois/single @2x.png';
 
 import './styles.scss';
 
+function validateEmail(email) {
+  // eslint-disable-next-line
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
+function reducer(state, action) {
+  const { payload } = action;
+  switch (action.type) {
+    case 'name': {
+      return {
+        ...state,
+        name: payload,
+        nameError: !payload
+      };
+    }
+    case 'email': {
+      return {
+        ...state,
+        email: payload,
+        emailError: !validateEmail(payload)
+      };
+    }
+    case 'receiveAlerts': {
+      return {
+        ...state,
+        receiveAlerts: !state.receiveAlerts
+      };
+    }
+    case 'lang': {
+      return {
+        ...state,
+        lang: payload
+      };
+    }
+    case 'changesEmail': {
+      return {
+        ...state,
+        changesEmail: !state.changesEmail
+      };
+    }
+    case 'monthlyEmail': {
+      return {
+        ...state,
+        monthlyEmail: !state.monthlyEmail
+      };
+    }
+    case 'activeArea': {
+      const { activeArea, email, lang } = payload;
+      return {
+        ...state,
+        name: activeArea.name,
+        tags: activeArea.tags,
+        email,
+        receiveAlerts: activeArea.receiveAlerts,
+        lang,
+        changesEmail: activeArea.changesEmail,
+        monthlyEmail: activeArea.monthlyEmail
+      };
+    }
+    default:
+      return state;
+  }
+}
+
 function SaveAOIForm(props) {
   const {
     activeArea,
@@ -26,7 +91,7 @@ function SaveAOIForm(props) {
     setSaveAOISettings
   } = props;
 
-  const [form, setForm] = useState({
+  const [form, dispatch] = useReducer(reducer, {
     name: props.locationName,
     tags: [],
     email: props.email,
@@ -48,26 +113,11 @@ function SaveAOIForm(props) {
   useEffect(
     () => {
       if (activeArea) {
-        setForm(state => ({
-          ...state,
-          name: props.activeArea.name,
-          tags: props.activeArea.tags,
-          email: props.email,
-          receiveAlerts: props.activeArea.receiveAlerts,
-          lang: props.lang,
-          changesEmail: props.activeArea.changesEmail,
-          monthlyEmail: props.activeArea.monthlyEmail
-        }));
+        dispatch({ type: 'activeArea', payload: { activeArea, lang, email } });
       }
     },
-    [props.activeArea, props.lang, props.email, activeArea]
+    [activeArea, lang, email]
   );
-
-  const validateEmail = email => {
-    // eslint-disable-next-line
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  };
 
   const renderSaveAOI = () => {
     const disclaimer = error ? (
@@ -80,7 +130,7 @@ function SaveAOIForm(props) {
     return (
       <div className="save-aoi">
         {activeArea ? (
-          // TODO: add DELETE endpoint and trash icon
+          // TODO: add trash icon
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
@@ -131,13 +181,7 @@ function SaveAOIForm(props) {
         <input
           className="text-input"
           value={name}
-          onChange={e =>
-            setForm(state => ({
-              ...state,
-              name: e.target.value,
-              nameError: !e.target.value
-            }))
-          }
+          onChange={e => dispatch({ type: 'name', payload: e.target.value })}
         />
       </div>
       <div className={cx('field', { error: nameError })}>
@@ -149,12 +193,7 @@ function SaveAOIForm(props) {
       <div className={cx('field')}>
         <span className="form-toggle">
           <Toggle
-            onToggle={() =>
-              setForm(state => ({
-                ...state,
-                receiveAlerts: !receiveAlerts
-              }))
-            }
+            onToggle={() => dispatch({ type: 'receiveAlerts' })}
             value={receiveAlerts}
             theme="toggle-large"
           />
@@ -179,13 +218,7 @@ function SaveAOIForm(props) {
         <input
           className="text-input"
           value={email}
-          onChange={e =>
-            setForm(state => ({
-              ...state,
-              email: e.target.value,
-              emailError: !validateEmail(e.target.value)
-            }))
-          }
+          onChange={e => dispatch({ type: 'email', payload: e })}
         />
       </div>
       <div className="field">
@@ -195,37 +228,22 @@ function SaveAOIForm(props) {
           theme="theme-dropdown-native-form"
           options={getLanguages()}
           value={lang}
-          onChange={newLang =>
-            setForm(state => ({
-              ...state,
-              lang: newLang
-            }))
-          }
+          onChange={newLang => reducer({ type: 'lang', payload: newLang })}
           native
         />
       </div>
       <div className="field">
         <Checkbox
           className="form-checkbox"
-          option={{ value: 'changesEmail', name: 'Changes email ?' }}
-          onChange={() =>
-            setForm(state => ({
-              ...state,
-              changesEmail: !changesEmail
-            }))
-          }
+          // option={{ value: 'changesEmail', name: 'Changes email' }}
+          onChange={() => reducer({ type: 'changesEmail' })}
           checked={changesEmail}
           label={'As soon as forest change is detected'}
         />
         <Checkbox
           className="form-checkbox"
-          option={{ value: 'changesEmail', name: 'Changes email ?' }}
-          onChange={() =>
-            setForm(state => ({
-              ...state,
-              monthlyEmail: !monthlyEmail
-            }))
-          }
+          // option={{ value: 'monthlyEmail', name: 'Montly email' }}
+          onChange={() => reducer({ type: 'monthlyEmail' })}
           checked={monthlyEmail}
           label={'Monthly summary'}
         />
