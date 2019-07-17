@@ -51,8 +51,9 @@ export const parseList = createSelector(
 
     const totalCounts = sumBy(alertsByDate, 'count');
     const mappedData = Object.keys(groupedAlerts).map(k => {
-      const region = meta.find(l => parseInt(k, 10) === l.value);
-      const regionData = groupedAlerts[k];
+      const locationId = parseInt(k, 10);
+      const region = meta.find(l => locationId === l.value);
+      const regionData = groupedAlerts[locationId];
       const counts = sumBy(regionData, 'count');
       const countsPerc = counts && totalCounts ? counts / totalCounts * 100 : 0;
       const colorBuckets = [
@@ -93,13 +94,19 @@ export const parseList = createSelector(
           payload: {
             ...payload,
             ...(payload.adm1 && {
-              adm2: k
+              adm2: locationId
             }),
             ...(!payload.adm1 && {
-              adm1: k
+              adm1: locationId
             })
           },
-          query
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map),
+              canBound: true
+            }
+          }
         }
       };
     });
