@@ -15,8 +15,8 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, the region with the most fires burning was {topRegion}, with {topRegionCount} fire alerts, representing {topRegionPerc}, of total alerts detected.',
+      'In the last {timeframe} in {location}, the region with the most fires burning was {topRegion}, with {topRegionCount} fire alerts, representing {topRegionPerc} of total alerts detected.',
     withInd:
-      'In the last {timeframe} in {location}, the region with the most fires burning within {indicator} was {topRegion}, with {topRegionCount} fire alerts, representing {topRegionPerc}, of total alerts detected.'
+      'In the last {timeframe} in {location}, the region with the most fires burning within {indicator} was {topRegion}, with {topRegionCount} fire alerts, representing {topRegionPerc} of total alerts detected.'
   }
 };
