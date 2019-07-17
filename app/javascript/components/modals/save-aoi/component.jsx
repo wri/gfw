@@ -21,7 +21,7 @@ class ModalSaveAOI extends PureComponent {
 
   renderUserLoginForm = () => <MyGFWLogin className="mygfw-save-aoi" />;
 
-  renderSaved = () => <h1>Subscription saved!</h1>;
+  renderSaved = () => <p>You can now close this modal.</p>;
 
   render() {
     const { open, userData, loading, saved, activeArea } = this.props;

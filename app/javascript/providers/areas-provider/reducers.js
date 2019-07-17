@@ -12,7 +12,7 @@ const setAreas = (state, { payload }) => ({
 
 const setArea = (state, { payload }) => ({
   ...state,
-  data: [...state.data, payload]
+  data: [...state.data.filter(area => area.id !== payload.id), payload]
 });
 
 const setActiveArea = (state, { payload }) => ({

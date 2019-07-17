@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { postAreasProvider } from 'services/areas';
+import { setAreasProvider } from 'services/areas';
 import { setArea, setActiveArea } from 'providers/areas-provider/actions';
 
 import { MAP } from 'router';
@@ -57,7 +57,8 @@ export const goToAOI = createThunkAction(
 export const saveAOI = createThunkAction(
   'saveAOI',
   data => (dispatch, getState) => {
-    const { modalSaveAOI, geostore } = getState();
+    const { modalSaveAOI, geostore, areas } = getState();
+    const { activeArea } = areas || {};
 
     if (modalSaveAOI && !modalSaveAOI.saving) {
       dispatch(setSaveAOISaving({ saving: true, error: false }));
@@ -78,6 +79,7 @@ export const saveAOI = createThunkAction(
       const isCountry = type === 'country';
       const postData = {
         name,
+        id: activeArea && activeArea.id,
         application: 'gfw',
         geostore: geostore && geostore.data && geostore.data.id,
         resource: {
@@ -98,8 +100,9 @@ export const saveAOI = createThunkAction(
       };
 
       const token = userData.token || process.env.DEMO_USER_TOKEN;
+      const method = areas && areas.activeArea ? 'patch' : 'post';
 
-      postAreasProvider(token, postData)
+      setAreasProvider(token, postData, method)
         .then(response => {
           if (response.data && response.data.data) {
             const area = response.data.data;
