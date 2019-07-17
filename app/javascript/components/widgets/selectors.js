@@ -28,15 +28,9 @@ export const selectLoading = state =>
   (state.countryData.countriesLoading ||
     state.countryData.regionsLoading ||
     state.countryData.subRegionsLoading ||
-    state.whitelists.countriesLoading ||
-    state.whitelists.regionsLoading);
+    state.whitelists.loading);
 export const selectWhitelists = state =>
-  (state.whitelists
-    ? {
-      adm0: state.whitelists.countries,
-      adm1: state.whitelists.regions
-    }
-    : {});
+  state.whitelists && state.whitelists.data;
 export const selectCountryData = state =>
   (state.countryData
     ? {
@@ -81,12 +75,6 @@ export const getOptions = createSelector([], () => {
 
 export const getAdminLevel = createSelector([selectLocation], location =>
   locationLevelToStr(location)
-);
-
-export const getActiveWhitelist = createSelector(
-  [selectWhitelists, getAdminLevel],
-  (whitelists, adminLevel) =>
-    whitelists[adminLevel === 'adm0' ? 'adm0' : 'adm1']
 );
 
 export const getLocationData = createSelector(
@@ -162,15 +150,15 @@ export const getLocationObject = createSelector(
     } else if (adminLevel === 'adm1') {
       parentObject = (parent &&
         parent.find(a => a.value === location.adm0)) || {
-          label: location.type,
-          value: location.type
-        };
+        label: location.type,
+        value: location.type
+      };
     } else if (adminLevel === 'adm2') {
       parentObject = (parent &&
         parent.find(a => a.value === location.adm1)) || {
-          label: location.type,
-          value: location.type
-        };
+        label: location.type,
+        value: location.type
+      };
     }
 
     const returnObject = {
@@ -266,10 +254,10 @@ export const filterWidgetsByLocationWhitelist = createSelector(
 );
 
 export const filterWidgetsByIndicatorWhitelist = createSelector(
-  [filterWidgetsByLocationWhitelist, getActiveWhitelist],
+  [filterWidgetsByLocationWhitelist, selectWhitelists],
   (widgets, indicatorWhitelist) => {
     if (!widgets) return null;
-    if (!indicatorWhitelist || !indicatorWhitelist.length) return widgets;
+
     return widgets.filter(w => {
       const { indicators } = w.config.whitelists || {};
       if (!indicators) return true;
@@ -286,7 +274,7 @@ export const parseWidgetsWithOptions = createSelector(
   [
     filterWidgetsByIndicatorWhitelist,
     getOptions,
-    getActiveWhitelist,
+    selectWhitelists,
     selectLocation
   ],
   (widgets, options, polynameWhitelist, location) => {
@@ -348,7 +336,7 @@ export const parseWidgetsWithOptions = createSelector(
 export const getWidgetsProps = createStructuredSelector({
   loading: selectLoading,
   whitelists: selectWhitelists,
-  whitelist: getActiveWhitelist,
+  whitelist: selectWhitelists,
   allLocation: selectAllLocation,
   location: selectLocation,
   locationType: selectLocationType,

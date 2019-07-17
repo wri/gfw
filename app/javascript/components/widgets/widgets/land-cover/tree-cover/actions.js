@@ -5,7 +5,7 @@ export default ({ params }) =>
   axios
     .all([
       getExtent(params),
-      getExtent({ ...params, forestType: null, landCategory: null }),
+      getExtent({ ...params, forestType: '', landCategory: '' }),
       getExtent({ ...params, forestType: 'plantations' })
     ])
     .then(
@@ -19,8 +19,8 @@ export default ({ params }) =>
         let data = {};
         if (extent && extent.length) {
           totalArea = adminExtent[0].total_area;
-          cover = extent[0].value;
-          totalCover = adminExtent[0].value;
+          cover = extent[0].extent;
+          totalCover = adminExtent[0].extent;
           data = {
             totalArea,
             totalCover,
@@ -36,7 +36,7 @@ export default ({ params }) =>
           plantationsResponse.data && plantationsResponse.data.data;
         plantations =
           plantationsData && plantationsData.length
-            ? plantationsData[0].value
+            ? plantationsData[0].extent
             : 0;
         if (extent && extent.length) {
           data = {
@@ -44,6 +44,7 @@ export default ({ params }) =>
             plantations
           };
         }
+
         return data;
       })
     );

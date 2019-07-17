@@ -6,17 +6,15 @@ import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
-
-import { getAdminPath } from 'components/widgets/utils/strings';
+import { formatNumber } from 'utils/format';
 
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
-const getQuery = state => state.query || null;
 const getLocationObject = state => state.locationObject || null;
 const getSentences = state => state.config && state.config.sentence;
 const getTitle = state => state.config.title;
@@ -34,7 +32,7 @@ export const getSummedByYearsData = createSelector(
     const isos = Object.keys(groupedByIso);
     const mappedData = isos.map(i => {
       const isoLoss = Math.round(sumBy(groupedByIso[i], 'loss')) || 0;
-      const isoExtent = Math.round(extent.find(e => e.iso === i).value) || 1;
+      const isoExtent = Math.round(extent.find(e => e.iso === i).extent) || 1;
 
       return {
         id: i,
@@ -73,12 +71,13 @@ export const parseData = createSelector(
     getLocation,
     getLocationObject,
     getLocationsMeta,
-    getColors,
-    getQuery
+    getColors
   ],
-  (data, settings, location, locationObject, meta, colors, query) => {
+  (data, settings, location, locationObject, meta, colors) => {
     if (!data || !data.length) return null;
     let dataTrimmed = [];
+    const { type, query, payload } = location || {};
+
     data.forEach(d => {
       const locationMeta = meta && meta.find(l => d.id === l.value);
       if (locationMeta) {
@@ -92,7 +91,7 @@ export const parseData = createSelector(
       ...d,
       rank: i + 1
     }));
-    if (location.country) {
+    if (payload.adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
         d => d.id === locationObject.value
@@ -112,12 +111,21 @@ export const parseData = createSelector(
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: getAdminPath({
-        ...location,
-        country: location.region && location.country,
-        query,
-        id: d.id
-      }),
+      path: {
+        type,
+        payload: {
+          ...payload,
+          type: 'country',
+          adm0: d.id
+        },
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map),
+            canBound: true
+          }
+        }
+      },
       value: settings.unit === 'ha' ? d.loss : d.percentage
     }));
   }
@@ -139,8 +147,8 @@ export const parseSentence = createSelector(
       locationObject && data.find(l => l.id === locationObject.value);
 
     const loss = locationData && locationData.loss;
-    const globalLoss = sumBy(data, 'loss');
-    const globalExtent = sumBy(data, 'extent');
+    const globalLoss = sumBy(data, 'loss') || 0;
+    const globalExtent = sumBy(data, 'extent') || 0;
     const lossArea = locationObject.label === 'global' ? globalLoss : loss;
     const areaPercent =
       locationObject.label === 'global'
@@ -164,14 +172,9 @@ export const parseSentence = createSelector(
       indicator_alt: indicatorName,
       startYear,
       endYear,
-      loss:
-        lossArea < 1
-          ? `${format('.3r')(lossArea)}ha`
-          : `${format('.3s')(lossArea)}ha`,
-      localPercent:
-        areaPercent >= 0.1 ? `${format('.2r')(areaPercent)}%` : '< 0.1%',
-      globalPercent:
-        lossPercent >= 0.1 ? `${format('.2r')(lossPercent)}%` : '< 0.1%',
+      loss: formatNumber({ num: lossArea, unit: 'ha' }),
+      localPercent: formatNumber({ num: areaPercent, unit: '%' }),
+      globalPercent: formatNumber({ num: lossPercent, unit: '%' }),
       extentYear: settings.extentYear
     };
 

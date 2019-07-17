@@ -23,10 +23,12 @@ export const getSortedData = createSelector(
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
-      const region = meta.find(l => d.id === l.value);
+      const region = meta.find(l => parseInt(d.id, 10) === l.value);
       if (region) {
-        const locationExtent = extent.filter(l => l.id === d.id);
-        const percentage = d.gain / locationExtent[0].extent * 100;
+        const locationExtent = extent.find(l => l.id === parseInt(d.id, 10));
+        const percentage = locationExtent
+          ? d.gain / locationExtent.extent * 100
+          : 0;
         const { payload, query, type } = location;
 
         dataMapped.push({
@@ -45,7 +47,13 @@ export const getSortedData = createSelector(
                 adm1: d.id
               })
             },
-            query
+            query: {
+              ...query,
+              map: {
+                ...(query && query.map),
+                canBound: true
+              }
+            }
           },
           color: colors.main
         });
@@ -78,14 +86,15 @@ export const parseSentence = createSelector(
       initialPercent,
       withIndicatorPercent
     } = sentences;
-    const totalGain = sumBy(data, 'gain');
+    const totalGain = sumBy(data, 'gain') || 0;
     const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
-    const avgGainPercentage = sumBy(data, 'percentage') / data.length;
-    const avgGain = sumBy(data, 'gain') / data.length;
+    const avgGainPercentage = sumBy(data, 'percentage') || 0 / data.length;
+    const avgGain = sumBy(data, 'gain') || 0 / data.length;
     let percentileGain = 0;
     let percentileLength = 0;
 
     while (
+      sortedData &&
       percentileLength < sortedData.length &&
       percentileGain / totalGain < 0.5 &&
       percentileLength !== 10
@@ -94,7 +103,7 @@ export const parseSentence = createSelector(
       percentileLength += 1;
     }
 
-    const topGain = percentileGain / totalGain * 100;
+    const topGain = percentileGain / totalGain * 100 || 0;
     let sentence = !indicator ? initialPercent : withIndicatorPercent;
     if (settings.unit !== '%') {
       sentence = !indicator ? initial : withIndicator;
@@ -107,7 +116,7 @@ export const parseSentence = createSelector(
       indicator: indicator && indicator.label.toLowerCase(),
       location: locationName,
       topGain: `${format('.2r')(topGain)}%`,
-      percentileLength,
+      percentileLength: percentileLength || '0',
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
         topRegion.percentage > 0 && settings.unit === '%'

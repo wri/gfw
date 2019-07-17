@@ -48,46 +48,54 @@ export const parseList = createSelector(
             .subtract(settings.weeks, 'weeks')
         )
     );
-    const groupedAlerts = groupBy(
-      alertsByDate,
-      location.region ? 'adm2' : 'adm1'
-    );
-    const mappedData = Object.keys(groupedAlerts).map(k => {
-      const region = meta.find(l => parseInt(k, 10) === l.value);
-      const regionExtent = extent.find(a => a.region === parseInt(k, 10));
-      const regionData = groupedAlerts[k];
-      const countsArea = sumBy(regionData, 'area_ha');
-      const counts = sumBy(regionData, 'count');
-      const countsAreaPerc =
-        countsArea && regionExtent ? countsArea / regionExtent.extent * 100 : 0;
-      const countsPerHa =
-        counts && regionExtent ? counts / regionExtent.extent : 0;
-      const { payload, query, type } = location;
+    const groupKey = location.payload.adm1 ? 'adm2' : 'adm1';
+    const groupedAlerts = groupBy(alertsByDate, groupKey);
+    const mappedData =
+      groupedAlerts &&
+      Object.keys(groupedAlerts).map(k => {
+        const region = meta.find(l => parseInt(k, 10) === l.value);
+        const regionExtent = extent.find(a => a[groupKey] === parseInt(k, 10));
+        const regionData = groupedAlerts[k];
+        const countsArea = sumBy(regionData, 'area_ha') || 0;
+        const counts = sumBy(regionData, 'alerts') || 0;
+        const countsAreaPerc =
+          countsArea && regionExtent
+            ? countsArea / regionExtent.extent * 100
+            : 0;
+        const countsPerHa =
+          counts && regionExtent ? counts / regionExtent.extent : 0;
+        const { payload, query, type } = location;
 
-      return {
-        id: k,
-        color: colors.main,
-        percentage: `${format('.2r')(countsAreaPerc)}%`,
-        countsPerHa,
-        count: counts,
-        area: countsArea,
-        value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
-        label: (region && region.label) || '',
-        path: {
-          type,
-          payload: {
-            ...payload,
-            ...(payload.adm1 && {
-              adm2: k
-            }),
-            ...(!payload.adm1 && {
-              adm1: k
-            })
-          },
-          query
-        }
-      };
-    });
+        return {
+          id: k,
+          color: colors.main,
+          percentage: `${format('.2r')(countsAreaPerc)}%`,
+          countsPerHa,
+          count: counts,
+          area: countsArea,
+          value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
+          label: (region && region.label) || '',
+          path: {
+            type,
+            payload: {
+              ...payload,
+              ...(payload.adm1 && {
+                adm2: parseInt(k, 10)
+              }),
+              ...(!payload.adm1 && {
+                adm1: parseInt(k, 10)
+              })
+            },
+            query: {
+              ...query,
+              map: {
+                ...(query && query.map),
+                canBound: true
+              }
+            }
+          }
+        };
+      });
     return sortBy(mappedData, 'area').reverse();
   }
 );
@@ -110,7 +118,7 @@ export const parseSentence = createSelector(
   (data, sortedList, settings, options, indicator, locationName, sentences) => {
     if (!data || !options || !locationName) return '';
     const { initial, withInd } = sentences;
-    const totalCount = sumBy(data, 'count');
+    const totalCount = sumBy(data, 'count') || 0;
     let percentileCount = 0;
     let percentileLength = 0;
     while (
@@ -122,7 +130,7 @@ export const parseSentence = createSelector(
       percentileLength += 1;
     }
     const topCount = percentileCount / totalCount * 100;
-    const countArea = sumBy(data, 'area');
+    const countArea = sumBy(data, 'area') || 0;
     const formatType = countArea < 1 ? '.3r' : '.3s';
     const params = {
       timeframe: options.weeks.find(w => w.value === settings.weeks).label,

@@ -49,11 +49,25 @@ export const getWidgetOptionsFromData = createSelector(
 );
 
 export const getWidgetOptions = createSelector(
-  [selectWidgetOptions, getWidgetOptionsFromData],
-  (options, dataOptions) => ({
-    ...options,
-    ...dataOptions
-  })
+  [selectWidgetOptions, getWidgetOptionsFromData, getWidgetSettings],
+  (options, dataOptions, settings) => {
+    const { forestTypes: fTypes } = options || {};
+
+    return {
+      ...options,
+      ...dataOptions,
+      ...(fTypes &&
+        fTypes.length &&
+        fTypes.find(f => f.value === 'ifl') && {
+        forestTypes: fTypes.map(f => ({
+          ...f,
+          label: f.label.includes('{iflYear}')
+            ? f.label.replace('{iflYear}', settings.ifl)
+            : f.label
+        }))
+      })
+    };
+  }
 );
 
 export const getWidgetError = createSelector(
@@ -148,10 +162,12 @@ export const getPolynames = createSelector(
     if (!forestType && !landCategory) return null;
     return [
       ...((forestType &&
-        forestTypes.filter(f => f.value === forestType.value)) ||
+        forestTypes.filter(f => f.value === forestType.value && !f.hidden)) ||
         []),
       ...((landCategory &&
-        landCategories.filter(l => l.value === landCategory.value)) ||
+        landCategories.filter(
+          l => l.value === landCategory.value && !l.hidden
+        )) ||
         [])
     ];
   }

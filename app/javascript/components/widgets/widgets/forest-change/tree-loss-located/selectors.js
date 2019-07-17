@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import uniqBy from 'lodash/uniqBy';
 import sumBy from 'lodash/sumBy';
 import { sortByKey } from 'utils/data';
+import { formatNumber } from 'utils/format';
 import { format } from 'd3-format';
 
 // get list data
@@ -27,10 +28,14 @@ export const mapData = createSelector(
       const loss =
         sumBy(
           d.loss.filter(l => l.year >= startYear && l.year <= endYear),
-          'area_loss'
+          'area'
         ) || 0;
       const locationExtent = extent.filter(l => l.id === d.id);
-      const percentage = loss / locationExtent[0].extent * 100 || 0;
+      const percentage =
+        (locationExtent &&
+          !!locationExtent.length &&
+          loss / locationExtent[0].extent * 100) ||
+        0;
       const { payload, query, type } = location;
 
       return {
@@ -49,7 +54,13 @@ export const mapData = createSelector(
               adm1: d.id
             })
           },
-          query
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map),
+              canBound: true
+            }
+          }
         }
       };
     });
@@ -91,20 +102,25 @@ export const parseSentence = createSelector(
       noLoss
     } = sentences;
     const { startYear, endYear } = settings;
-    const totalLoss = sumBy(data, 'loss');
+    const totalLoss = sumBy(data, 'loss') || 0;
     const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
-    const avgLossPercentage = sumBy(data, 'percentage') / data.length;
-    const avgLoss = sumBy(data, 'loss') / data.length;
+    const avgLossPercentage = sumBy(data, 'percentage') || 0 / data.length;
+    const avgLoss = sumBy(data, 'loss') || 0 / data.length;
     let percentileLoss = 0;
     let percentileLength = 0;
 
     while (
+      data &&
+      sortedData &&
       percentileLength < data.length &&
       percentileLoss / totalLoss < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileLoss += sortedData[percentileLength].loss;
-      percentileLength += 1;
+      const percentile = sortedData[percentileLength];
+      if (percentile) {
+        percentileLoss += percentile.loss;
+        percentileLength += 1;
+      }
     }
 
     const topLoss = percentileLoss / totalLoss * 100 || 0;
@@ -117,9 +133,6 @@ export const parseSentence = createSelector(
       sentence = noLoss;
     }
 
-    const valueFormat = topRegion.loss < 1 ? '.3r' : '.3s';
-    const aveFormat = avgLoss < 1 ? '.3r' : '.3s';
-
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
       location: locationName,
@@ -130,12 +143,12 @@ export const parseSentence = createSelector(
       region: percentileLength > 1 ? topRegion.label : 'This region',
       value:
         topRegion.percentage > 0 && settings.unit === '%'
-          ? `${format('.2r')(topRegion.percentage)}%`
-          : `${format(valueFormat)(topRegion.loss)}ha`,
+          ? formatNumber({ num: topRegion.percentage, unit: '%' })
+          : formatNumber({ num: topRegion.loss, unit: 'ha' }),
       average:
         topRegion.percentage > 0 && settings.unit === '%'
-          ? `${format('.2r')(avgLossPercentage)}%`
-          : `${format(aveFormat)(avgLoss)}ha`
+          ? formatNumber({ num: avgLossPercentage, unit: '%' })
+          : formatNumber({ num: avgLoss, unit: 'ha' })
     };
 
     return {
