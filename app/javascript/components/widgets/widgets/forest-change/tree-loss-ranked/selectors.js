@@ -8,16 +8,13 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 
-import { getAdminPath } from 'components/widgets/utils/strings';
-
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.location || null;
+const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
-const getQuery = state => state.query || null;
 const getLocationObject = state => state.locationObject || null;
 const getSentences = state => state.config && state.config.sentence;
 const getTitle = state => state.config.title;
@@ -74,12 +71,13 @@ export const parseData = createSelector(
     getLocation,
     getLocationObject,
     getLocationsMeta,
-    getColors,
-    getQuery
+    getColors
   ],
-  (data, settings, location, locationObject, meta, colors, query) => {
+  (data, settings, location, locationObject, meta, colors) => {
     if (!data || !data.length) return null;
     let dataTrimmed = [];
+    const { type, query, payload } = location || {};
+
     data.forEach(d => {
       const locationMeta = meta && meta.find(l => d.id === l.value);
       if (locationMeta) {
@@ -93,7 +91,7 @@ export const parseData = createSelector(
       ...d,
       rank: i + 1
     }));
-    if (location.adm0) {
+    if (payload.adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
         d => d.id === locationObject.value
@@ -113,12 +111,21 @@ export const parseData = createSelector(
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: getAdminPath({
-        ...location,
-        adm0: location.adm1 && location.adm0,
-        query,
-        id: d.id
-      }),
+      path: {
+        type,
+        payload: {
+          ...payload,
+          type: 'country',
+          adm0: d.id
+        },
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map),
+            canBound: true
+          }
+        }
+      },
       value: settings.unit === 'ha' ? d.loss : d.percentage
     }));
   }
