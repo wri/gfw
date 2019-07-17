@@ -12,8 +12,8 @@ const sharedConfig = require('./shared.js');
 
 module.exports = merge(sharedConfig, {
   output: {
-    filename: '[name]-[hash].js',
-    chunkFilename: '[name].[hash].js'
+    filename: '[name]-[contenthash].js',
+    chunkFilename: '[name].[contenthash].js'
   },
   stats: 'normal',
   mode: 'production',
@@ -26,8 +26,8 @@ module.exports = merge(sharedConfig, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name]-[hash].css',
-      chunkFilename: '[name]-[hash].css'
+      filename: '[name]-[contenthash].css',
+      chunkFilename: '[name]-[contenthash].css'
     }),
     new webpack.EnvironmentPlugin(['GOOGLE_ANALYTICS_ID']),
     new CompressionPlugin({

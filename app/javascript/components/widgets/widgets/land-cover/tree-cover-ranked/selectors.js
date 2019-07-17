@@ -4,13 +4,11 @@ import findIndex from 'lodash/findIndex';
 import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 import sumBy from 'lodash/sumBy';
-import { getAdminPath } from 'components/widgets/utils/strings';
 
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.location || null;
-const getQuery = state => state.query || null;
+const getLocation = state => state.allLocation || null;
 const getLocationData = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
@@ -41,10 +39,9 @@ export const parseData = createSelector(
     getLocation,
     getLocationObject,
     getLocationData,
-    getColors,
-    getQuery
+    getColors
   ],
-  (data, settings, location, locationObject, meta, colors, query) => {
+  (data, settings, location, locationObject, meta, colors) => {
     if (!data || !data.length || !locationObject || !meta) return null;
     const locationIndex = findIndex(
       data,
@@ -61,6 +58,7 @@ export const parseData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
+    const { query, payload, type } = location;
     return dataTrimmed.map(d => {
       const locationData = meta && meta.find(l => d.id === l.value);
 
@@ -68,7 +66,20 @@ export const parseData = createSelector(
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        path: getAdminPath({ ...location, query, id: d.id }),
+        path: {
+          type,
+          payload: {
+            ...payload,
+            adm0: locationData && locationData.value
+          },
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map),
+              canBound: true
+            }
+          }
+        },
         value: settings.unit === 'ha' ? d.extent : d.percentage
       };
     });
