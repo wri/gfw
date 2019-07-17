@@ -7,7 +7,7 @@ export default {
   large: true,
   analysis: true,
   options: {
-    forestTypes: ['ifl', 'primary_forest', 'mangrove_2010_gmw'],
+    forestTypes: ['ifl', 'primary_forest', 'mangroves_2016'],
     landCategories: true,
     startYears: true,
     endYears: true,

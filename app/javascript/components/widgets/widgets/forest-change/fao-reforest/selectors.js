@@ -52,7 +52,13 @@ export const parseData = createSelector(
           type: 'country',
           adm0: d.iso
         },
-        query
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map),
+            canBound: true
+          }
+        }
       },
       value: d.rate
     }));

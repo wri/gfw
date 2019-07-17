@@ -54,7 +54,13 @@ export const mapData = createSelector(
               adm1: d.id
             })
           },
-          query
+          query: {
+            ...query,
+            map: {
+              ...(query && query.map),
+              canBound: true
+            }
+          }
         }
       };
     });
@@ -110,8 +116,11 @@ export const parseSentence = createSelector(
       percentileLoss / totalLoss < 0.5 &&
       percentileLength !== 10
     ) {
-      percentileLoss += sortedData[percentileLength].loss;
-      percentileLength += 1;
+      const percentile = sortedData[percentileLength];
+      if (percentile) {
+        percentileLoss += percentile.loss;
+        percentileLength += 1;
+      }
     }
 
     const topLoss = percentileLoss / totalLoss * 100 || 0;
