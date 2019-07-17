@@ -126,34 +126,59 @@ export const getDataFromLayers = createSelector(
   }
 );
 
-export const getDownloadLinks = createSelector(
-  [getDataFromLayers],
-  data =>
-    data &&
-    data.filter(d => d.downloadUrls && d.value).map(d => {
-      const { downloadUrls } = d || {};
-      let downloads = [];
-      if (downloadUrls) {
-        Object.keys(downloadUrls).forEach(key => {
-          const downloadUrlsFirstKey =
-            downloadUrls && downloadUrls[key] && downloadUrls[key][0];
-          if (downloadUrls[key]) {
-            downloads = downloads.concat({
-              url:
-                downloadUrlsFirstKey === '/'
-                  ? `${process.env.GFW_API}${downloadUrls[key]}`
-                  : downloadUrls[key],
-              label: key
-            });
-          }
-        });
-      }
+export const getCountryDownloadLink = createSelector(
+  [selectLocation],
+  location =>
+    (location.type === 'country'
+      ? `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${location.adm0 ||
+          'global'}.xlsx`
+      : null)
+);
 
-      return {
-        label: d.label,
-        urls: downloads
-      };
-    })
+export const getDownloadLinks = createSelector(
+  [getDataFromLayers, getCountryDownloadLink],
+  (data, countryUrl) => {
+    const layerLinks =
+      data &&
+      data.filter(d => d.downloadUrls && d.value).map(d => {
+        const { downloadUrls } = d || {};
+        let downloads = [];
+        if (downloadUrls) {
+          Object.keys(downloadUrls).forEach(key => {
+            const downloadUrlsFirstKey =
+              downloadUrls && downloadUrls[key] && downloadUrls[key][0];
+            if (downloadUrls[key]) {
+              downloads = downloads.concat({
+                url:
+                  downloadUrlsFirstKey === '/'
+                    ? `${process.env.GFW_API}${downloadUrls[key]}`
+                    : downloadUrls[key],
+                label: key
+              });
+            }
+          });
+        }
+
+        return {
+          label: d.label,
+          urls: downloads
+        };
+      });
+
+    return countryUrl
+      ? [
+        {
+          label: 'National Data',
+          urls: [
+            {
+              label: 'xlxs',
+              url: countryUrl
+            }
+          ]
+        }
+      ].concat(layerLinks)
+      : layerLinks;
+  }
 );
 
 export const showAnalysisDisclaimer = createSelector(
