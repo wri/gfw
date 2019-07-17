@@ -58,6 +58,16 @@
         background: $border;
         margin-right: rem(15px);
       }
+
+      .aoi-item-body {
+        display: flex;
+        flex-direction: column;
+
+        .c-pill {
+          display: inline-block;
+          margin-right: rem(5px);
+        }
+      }
     }
   }
 

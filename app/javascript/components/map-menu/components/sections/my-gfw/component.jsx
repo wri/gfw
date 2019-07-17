@@ -84,8 +84,19 @@ class MapMenuMyGFW extends PureComponent {
                 tabIndex={0}
               >
                 <img src={area.image} alt={area.name} />
-                <p className="aoi-title">{area.name}</p>
-                {area.tags.map(tag => <span key={tag}>{tag}</span>)}
+                <div className="aoi-item-body">
+                  <p className="aoi-title">{area.name}</p>
+                  <div className="aoi-tags">
+                    {area.tags.map(tag => (
+                      <Pill
+                        key={tag}
+                        active
+                        label={tag}
+                        // TODO: onRemove={() => remove(tag)}
+                      />
+                    ))}
+                  </div>
+                </div>
                 {active && (
                   <Button
                     className="edit-button"
