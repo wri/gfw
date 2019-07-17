@@ -18,7 +18,6 @@ import SubNavMenu from 'components/subnav-menu';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
-import ModalTCL from 'components/modals/loss-disclaimer';
 import ScrollTo from 'components/scroll-to';
 
 import closeIcon from 'assets/icons/close.svg';
@@ -105,7 +104,6 @@ class Page extends PureComponent {
             <MapControls className="map-controls" />
             <Share />
             <ModalMeta />
-            <ModalTCL />
             {widgetAnchor && <ScrollTo target={widgetAnchor} />}
             <DatasetsProvider />
             <LatestProvider />

@@ -9,7 +9,7 @@ import moment from 'moment';
 import { sortByKey } from 'utils/data';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
-import tscLossCategories from 'data/tsc-loss-categories.json';
+import tscLossCategories from 'data/tsc-loss-categories-old.json';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;
@@ -126,7 +126,7 @@ export const parseConfig = createSelector(
     if (isEmpty(data)) return null;
     const { highlighted } = settings || {};
     const yKeys = {};
-    const categoryColors = colors.lossDrivers;
+    const categoryColors = colors.lossDriversOld;
     sortByKey(drivers, 'position').forEach(k => {
       yKeys[`class_${k.driver}`] = {
         fill: categoryColors[k.driver],

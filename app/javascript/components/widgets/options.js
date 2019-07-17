@@ -12,8 +12,8 @@ import datasets from 'data/datasets.json';
 import ifl from 'data/ifl.json';
 
 export default {
-  forestTypes,
-  landCategories,
+  forestTypes: forestTypes.filter(f => !f.hidden),
+  landCategories: landCategories.filter(l => !l.hidden),
   thresholds,
   units,
   periods,

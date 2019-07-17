@@ -3,7 +3,6 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import { biomassToCO2 } from 'utils/calculations';
 import { formatNumber } from 'utils/format';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
@@ -42,7 +41,6 @@ export const parseData = createSelector(
   (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear } = settings;
-
     return data
       .filter(d => d.year >= startYear && d.year <= endYear)
       .map(d => ({
@@ -110,7 +108,7 @@ export const parseSentence = createSelector(
     const { startYear, endYear, extentYear } = settings;
     const totalLoss = (data && data.length && sumBy(data, 'area')) || 0;
     const totalEmissions =
-      (data && data.length && biomassToCO2(sumBy(data, 'emissions'))) || 0;
+      (data && data.length && sumBy(data, 'emissions')) || 0;
     const percentageLoss =
       (totalLoss && extent && totalLoss / extent * 100) || 0;
     let sentence = indicator ? withIndicator : initial;

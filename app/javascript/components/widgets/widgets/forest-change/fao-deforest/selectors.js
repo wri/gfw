@@ -41,7 +41,13 @@ export const parseData = createSelector(
       path: {
         type,
         payload: { type: 'country', adm0: d.iso },
-        query
+        query: {
+          ...query,
+          map: {
+            ...(query && query.map),
+            canBound: true
+          }
+        }
       },
       value: d.deforest
     }));
@@ -61,7 +67,7 @@ export const parseSentence = createSelector(
     } = sentences;
     const topFao = data.fao.filter(d => d.year === settings.period);
     const { deforest, humdef } = topFao[0] || {};
-    const totalDeforest = sumBy(data.rank, 'deforest');
+    const totalDeforest = sumBy(data.rank, 'deforest') || 0;
     const rate = currentLabel === 'global' ? totalDeforest : deforest;
 
     let sentence = humdef ? humanDeforest : initial;

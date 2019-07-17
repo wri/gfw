@@ -19,9 +19,7 @@ const getTitle = state => state.config.title;
 const getAllLocation = state => state.allLocation || null;
 
 const haveData = (data, locationObject) =>
-  locationObject &&
-  data &&
-  data.filter(item => item.id === locationObject.value).length;
+  locationObject && data && data.find(item => item.id === locationObject.value);
 
 export const getSortedData = createSelector(
   [getData, getSettings],
@@ -68,6 +66,7 @@ export const parseData = createSelector(
     ) {
       return null;
     }
+    // console.log(currentLabel, locationObject, data);
 
     let dataTrimmed = [];
     data.forEach(d => {
@@ -160,8 +159,8 @@ export const parseSentence = createSelector(
     } = sentences;
     const locationData =
       locationObject && data.find(l => l.id === locationObject.value);
-    const gain = locationData ? locationData.gain : sumBy(data, 'gain');
-    const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') : 0;
+    const gain = locationData ? locationData.gain : sumBy(data, 'gain') || 0;
+    const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') || 0 : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
 
     const adminLevel = locationObject.adminLevel || 'global';

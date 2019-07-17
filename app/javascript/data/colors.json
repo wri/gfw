@@ -14,6 +14,13 @@
     "ramp": ["#510626", "#7a1e41", "#a4355c", "#d04d7a", "#fe6598", "#ff84ac", "#ffa0c0", "#ffbad4", "#ffd4e9"],
     "noLoss": "#e7e5a4",
     "lossDrivers": {
+      "Commodity driven deforestation": "#F41D36",
+      "Shifting agriculture": "#efd31a",
+      "Forestry": "#2FBF71",
+      "Wildfire": "#ad6824",
+      "Urbanization": "#B235CC"
+    },
+    "lossDriversOld": {
       "1": "#F41D36",
       "2": "#efd31a",
       "3": "#2FBF71",
@@ -38,18 +45,19 @@
   "plantations": {
     "main": "#d67828",
     "species": {
-      "Oil palm": "#fdada9",
-      "Wood fiber / timber": "#98a7c4",
+      "Oil Palm ": "#fdada9",
+      "Wood fiber / Timber": "#98a7c4",
       "Rubber": "#9993a3",
       "Fruit": "#dada95",
       "Other": "#d1e6ab",
-      "Wood fiber / timber mix": "#9ebbf2",
-      "Oil palm mix": "#fcc4c1",
-      "Rubber mix": "#a4fdff",
-      "Fruit mix": "#fefe97",
-      "Other mix": "#e1efc8",
+      "Wood fiber / Timber Mix": "#9ebbf2",
+      "Oil Palm Mix": "#fcc4c1",
+      "Rubber Mix": "#a4fdff",
+      "Fruit Mix": "#fefe97",
+      "Other Mix": "#e1efc8",
       "Unknown": "#dcd9d9",
-      "Recently cleared": "#d5a6ea"
+      "Recently Cleared": "#d5a6ea",
+      "Unknown Mix": "#a0c746"
     },
     "types": {
       "Large industrial plantation": "#fdada9",

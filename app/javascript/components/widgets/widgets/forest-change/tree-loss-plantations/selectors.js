@@ -5,7 +5,6 @@ import uniqBy from 'lodash/uniqBy';
 import { format } from 'd3-format';
 import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
-import { biomassToCO2 } from 'utils/calculations';
 
 // get list data
 const getLossPlantations = state =>
@@ -29,9 +28,9 @@ export const parseData = createSelector(
         .map(d => {
           const groupedPlantations = groupBy(lossPlantations, 'year')[d.year];
           const summedPlatationsLoss =
-            groupedPlantations && sumBy(groupedPlantations, 'area');
+            (groupedPlantations && sumBy(groupedPlantations, 'area')) || 0;
           const summedPlatationsEmissions =
-            groupedPlantations && sumBy(groupedPlantations, 'emissions');
+            (groupedPlantations && sumBy(groupedPlantations, 'emissions')) || 0;
           const totalLossForYear =
             (totalLossByYear[d.year] && totalLossByYear[d.year][0]) || {};
 
@@ -109,7 +108,7 @@ export const parseSentence = createSelector(
       startYear,
       endYear,
       lossPhrase,
-      value: `${format('.3s')(biomassToCO2(outsideEmissions))}t`,
+      value: `${format('.3s')(outsideEmissions)}t`,
       percentage: formatNumber({ num: percentage, unit: '%' })
     };
 
