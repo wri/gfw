@@ -15,13 +15,14 @@ import screenImg2x from 'assets/images/aois/single @2x.png';
 
 import './styles.scss';
 
-function SubscriptionForm(props) {
+function SaveAOIForm(props) {
   const {
     activeArea,
-    saveAOI,
     userData,
     saving,
     error,
+    saveAOI,
+    deleteAOI,
     setSaveAOISettings
   } = props;
 
@@ -80,7 +81,15 @@ function SubscriptionForm(props) {
       <div className="save-aoi">
         {activeArea ? (
           // TODO: add DELETE endpoint and trash icon
-          <Button className="delete-aoi" theme="theme-button-clear">
+          <Button
+            className="delete-aoi"
+            theme="theme-button-clear"
+            onClick={() =>
+              deleteAOI({
+                userData
+              })
+            }
+          >
             Delete Area
           </Button>
         ) : (
@@ -226,9 +235,10 @@ function SubscriptionForm(props) {
   );
 }
 
-SubscriptionForm.propTypes = {
+SaveAOIForm.propTypes = {
   setSaveAOISettings: PropTypes.func,
   saveAOI: PropTypes.func,
+  deleteAOI: PropTypes.func,
   userData: PropTypes.object,
   lang: PropTypes.string,
   locationName: PropTypes.string,
@@ -238,4 +248,4 @@ SubscriptionForm.propTypes = {
   activeArea: PropTypes.object
 };
 
-export default SubscriptionForm;
+export default SaveAOIForm;

@@ -1,12 +1,18 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { setAreasProvider } from 'services/areas';
-import { setArea, setActiveArea } from 'providers/areas-provider/actions';
+import { setAreasProvider, deleteAreaProvider } from 'services/areas';
+import {
+  setArea,
+  setAreas,
+  setActiveArea
+} from 'providers/areas-provider/actions';
+import setDrawnGeostore from 'pages/map/actions';
 
 import { MAP } from 'router';
 
 export const setSaveAOISaving = createAction('setSaveAOISaving');
 export const setSaveAOISaved = createAction('setSaveAOISaved');
+export const setSaveAOIDeleted = createAction('setSaveAOIDeleted');
 export const resetSaveAOI = createAction('resetSaveAOI');
 export const clearSaveAOIError = createAction('clearSaveAOIError');
 
@@ -51,6 +57,41 @@ export const goToAOI = createThunkAction(
         }
       });
     }
+  }
+);
+
+export const deleteAOI = createThunkAction(
+  'deleteAOI',
+  data => (dispatch, getState) => {
+    const { areas } = getState();
+    const { activeArea } = areas || {};
+    const { id: AoiId, geostore } = activeArea;
+    const { userData } = data;
+    const token = userData.token || process.env.DEMO_USER_TOKEN;
+
+    deleteAreaProvider(token, AoiId)
+      .then(response => {
+        if (
+          response.status &&
+          response.status >= 200 &&
+          response.status < 300
+        ) {
+          const index = areas.indexOf(activeArea);
+          dispatch(setSaveAOIDeleted()); // show deleted message
+          dispatch(setDrawnGeostore(geostore)); // goto geostore view
+          // TODO: fix state deletion
+          dispatch(setAreas(areas.splice(1, index))); // delete area from state.areas
+        }
+      })
+      .catch(error => {
+        dispatch(
+          setSaveAOISaving({
+            saving: false,
+            error: true
+          })
+        );
+        console.info(error);
+      });
   }
 );
 

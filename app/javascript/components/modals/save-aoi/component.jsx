@@ -6,7 +6,7 @@ import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
 
 import Modal from '../modal';
-import SubscriptionForm from './components/subscription-form';
+import SaveAOIForm from './components/subscription-form';
 
 import './styles.scss';
 
@@ -21,10 +21,10 @@ class ModalSaveAOI extends PureComponent {
 
   renderUserLoginForm = () => <MyGFWLogin className="mygfw-save-aoi" />;
 
-  renderSaved = () => <p>You can now close this modal.</p>;
+  renderMessage = message => <p>{message}</p>;
 
   render() {
-    const { open, userData, loading, saved, activeArea } = this.props;
+    const { open, userData, loading, saved, deleted, activeArea } = this.props;
 
     let title;
     if (saved) {
@@ -50,8 +50,13 @@ class ModalSaveAOI extends PureComponent {
             {!loading && isEmpty(userData) && this.renderUserLoginForm()}
             {!loading &&
               !isEmpty(userData) &&
-              !saved && <SubscriptionForm {...this.props} />}
-            {!loading && !isEmpty(userData) && saved && this.renderSaved()}
+              !saved &&
+              !deleted && <SaveAOIForm {...this.props} />}
+            {!loading &&
+              !isEmpty(userData) &&
+              saved &&
+              this.renderMessage('Area saved, you can now close this modal.')}
+            {!loading && deleted && this.renderMessage('Area deleted.')}
           </div>
         </div>
       </Modal>
@@ -61,6 +66,7 @@ class ModalSaveAOI extends PureComponent {
 
 ModalSaveAOI.propTypes = {
   saved: PropTypes.bool,
+  deleted: PropTypes.bool,
   open: PropTypes.bool,
   loading: PropTypes.bool,
   setSaveAOISettings: PropTypes.func,
