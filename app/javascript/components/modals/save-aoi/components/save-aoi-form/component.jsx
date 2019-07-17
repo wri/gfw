@@ -175,7 +175,7 @@ function SaveAOIForm(props) {
   const canSubmit = validateEmail(email) && name && lang;
 
   return (
-    <div className="c-form c-subscription-form">
+    <div className="c-form c-save-aoi-form">
       <div className={cx('field', { error: nameError })}>
         <span className="form-title">Name this area for later reference</span>
         <input
