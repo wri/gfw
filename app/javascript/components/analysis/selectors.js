@@ -24,6 +24,7 @@ const selectEmbed = state =>
   state.location.pathname.includes('/embed');
 const selectError = state => state.analysis && state.analysis.error;
 const selectDatasets = state => state.datasets && state.datasets.data;
+const selectAreas = state => state.areas && state.areas.data;
 
 export const getLoading = createSelector(
   [selectAnalysisLoading, selectDatasetsLoading, selectGeostoreLoading],
@@ -133,8 +134,8 @@ export const getLayerEndpoints = createSelector(
             params: {
               ...(analysisConfig.service === 'umd-loss-gain' &&
                 lossLayer && {
-                  ...lossLayer.decodeParams
-                }),
+                ...lossLayer.decodeParams
+              }),
               ...decodeParams,
               ...params,
               query: analysisConfig.query
@@ -178,5 +179,6 @@ export const getAnalysisProps = createStructuredSelector({
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
-  analysisLocation: selectAnalysisLocation
+  analysisLocation: selectAnalysisLocation,
+  aois: selectAreas
 });

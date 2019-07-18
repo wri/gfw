@@ -19,7 +19,8 @@ class AnalysisContainer extends PureComponent {
     endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
     setAnalysisLoading: PropTypes.func,
-    analysisLocation: PropTypes.object
+    analysisLocation: PropTypes.object,
+    aois: PropTypes.array
   };
 
   componentDidMount() {
@@ -40,18 +41,27 @@ class AnalysisContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, endpoints } = this.props;
+    const { location, endpoints, aois } = this.props;
+    const activeArea = aois.find(a => a.id === location.adm0);
+    const parsedLocation =
+      location.type === 'aoi'
+        ? {
+          ...location,
+          type: 'geostore',
+          adm0: activeArea && activeArea.geostore
+        }
+        : location;
+
     // get analysis if location changes
-    // TODO: if location is aoi and not geostore, find activeArea.geostore to trigger analysis by geostore
     if (
-      location.type &&
-      location.adm0 &&
+      parsedLocation.type &&
+      parsedLocation.adm0 &&
       endpoints &&
       endpoints.length &&
       (!isEqual(endpoints, prevProps.endpoints) ||
-        !isEqual(location, prevProps.location))
+        !isEqual(parsedLocation, prevProps.location))
     ) {
-      this.handleFetchAnalysis(location, endpoints);
+      this.handleFetchAnalysis(parsedLocation, endpoints);
     }
   }
 
