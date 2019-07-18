@@ -149,7 +149,6 @@ export const saveAOI = createThunkAction(
 
             dispatch(setSaveAOISaved()); // shows saved modal
             dispatch(goToAOI(area)); // moves to AOI in the map
-            // TODO: dispatch different actions if it's a patch or a post
             dispatch(setArea({ id, ...attributes })); // saves AOI in the store
           }
         })

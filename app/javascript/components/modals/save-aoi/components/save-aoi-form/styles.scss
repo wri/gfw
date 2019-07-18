@@ -109,6 +109,12 @@ $desktop-padding: rem(50px);
     .delete-aoi {
       padding: 0;
       color: $error;
+
+      .delete-icon {
+        margin-right: rem(5px);
+        position: relative;
+        bottom: rem(2px);
+      }
     }
   }
 

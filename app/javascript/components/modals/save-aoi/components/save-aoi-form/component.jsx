@@ -8,8 +8,10 @@ import Checkbox from 'components/ui/checkbox-v2';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
+import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 
+import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/single.png';
 import screenImg2x from 'assets/images/aois/single @2x.png';
 
@@ -140,6 +142,7 @@ function SaveAOIForm(props) {
               })
             }
           >
+            <Icon icon={deleteIcon} className="delete-icon" />
             Delete Area
           </Button>
         ) : (

@@ -88,12 +88,7 @@ class MapMenuMyGFW extends PureComponent {
                   <p className="aoi-title">{area.name}</p>
                   <div className="aoi-tags">
                     {area.tags.map(tag => (
-                      <Pill
-                        key={tag}
-                        active
-                        label={tag}
-                        // TODO: onRemove={() => remove(tag)}
-                      />
+                      <Pill key={tag} active label={tag} />
                     ))}
                   </div>
                 </div>
