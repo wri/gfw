@@ -47,7 +47,7 @@ export const getLocationFromSearch = createThunkAction(
       const searchLower = search && search.toLowerCase();
       let nameString = 'name_0';
       let nameStringSimple = 'simple_name_0';
-      if (lang !== 'en') nameString = `name_${lang}`;
+      if (lang !== 'en') nameString = `name_${lang.toLowerCase()}`;
       if (lang !== 'en') nameStringSimple = nameString;
       const whereStatement = getSearchSQL(
         searchLower,
