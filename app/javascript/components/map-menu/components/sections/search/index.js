@@ -18,6 +18,13 @@ class SearchMenu extends PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { search, lang } = this.props;
+    if (search && lang !== prevProps.lang) {
+      this.handleGetLocations(search);
+    }
+  }
+
   handleGetLocations = debounce(search => {
     if (this.searchFetch) {
       this.searchFetch.cancel();
