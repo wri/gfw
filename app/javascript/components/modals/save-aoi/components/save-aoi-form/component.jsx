@@ -132,7 +132,6 @@ function SaveAOIForm(props) {
     return (
       <div className="save-aoi">
         {activeArea ? (
-          // TODO: add trash icon
           <Button
             className="delete-aoi"
             theme="theme-button-clear"

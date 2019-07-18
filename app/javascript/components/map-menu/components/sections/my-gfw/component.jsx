@@ -13,6 +13,30 @@ import screenImg2x from 'assets/images/aois/single @2x.png';
 import './styles.scss';
 
 class MapMenuMyGFW extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      activeTags: {}
+    };
+  }
+
+  setTags() {
+    const { areas } = this.props;
+    const tags = {};
+    areas.forEach(area =>
+      area.tags.forEach(tag => {
+        if (tags[tag] === undefined) {
+          tags[tag] = false;
+        }
+      })
+    );
+    this.setState({ activeTags: tags });
+  }
+
+  componentDidMount() {
+    this.setTags();
+  }
+
   renderLoginWindow() {
     const { isDesktop } = this.props;
     return (
@@ -55,6 +79,16 @@ class MapMenuMyGFW extends PureComponent {
 
   renderAreas() {
     const { isDesktop, areas, activeArea, goToAOI, onEditClick } = this.props;
+    const activeTags = Object.keys(this.state.activeTags).filter(
+      tag => this.state.activeTags[tag]
+    );
+    const activeAreas =
+      activeTags.length > 0
+        ? areas.filter(
+          area =>
+            area.tags.filter(tag => activeTags.indexOf(tag) > -1).length > 0 // is any of the area.tags in activeTags?
+        )
+        : areas;
     return (
       <div className="row">
         <div className="column">
@@ -62,18 +96,26 @@ class MapMenuMyGFW extends PureComponent {
             <h2 className="title-create-aois">Areas of interest</h2>
           )}
           <div className="aoi-tags">
-            <Pill
-              key={'all'}
-              active
-              label={'all'}
-              // TODO: onRemove={() => remove(tag)}
-            >
-              all
-            </Pill>
+            {Object.keys(this.state.activeTags).map(tag => (
+              <Pill
+                className="clickable-tag"
+                key={tag}
+                active={this.state.activeTags[tag]}
+                label={tag}
+                onClick={() =>
+                  this.setState({
+                    activeTags: {
+                      ...this.state.activeTags,
+                      [tag]: !this.state.activeTags[tag]
+                    }
+                  })
+                }
+              />
+            ))}
           </div>
         </div>
         <div className="aoi-items">
-          {areas.map(area => {
+          {activeAreas.map(area => {
             const active = activeArea && activeArea.id === area.id;
             return (
               <div
@@ -88,7 +130,11 @@ class MapMenuMyGFW extends PureComponent {
                   <p className="aoi-title">{area.name}</p>
                   <div className="aoi-tags">
                     {area.tags.map(tag => (
-                      <Pill key={tag} active label={tag} />
+                      <Pill
+                        key={tag}
+                        active={this.state.activeTags[tag]}
+                        label={tag}
+                      />
                     ))}
                   </div>
                 </div>
