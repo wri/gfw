@@ -74,5 +74,6 @@ export const mapStateToProps = createStructuredSelector({
   datasets: getFilteredDatasets,
   search: selectSearch,
   locations: getLocations,
-  loading: selectLoading
+  loading: selectLoading,
+  lang: selectActiveLang
 });
