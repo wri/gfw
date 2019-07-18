@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
+import { getColorBuckets, getColorBucket } from 'utils/data';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
 import moment from 'moment';
@@ -57,51 +58,8 @@ export const parseList = createSelector(
       const counts = sumBy(regionData, 'count');
       const countsPerc = counts && totalCounts ? counts / totalCounts * 100 : 0;
 
-      const colorBuckets = [
-        {
-          limit: 10,
-          color: colors.ramp[8]
-        },
-        {
-          limit: 20,
-          color: colors.ramp[7]
-        },
-        {
-          limit: 30,
-          color: colors.ramp[6]
-        },
-        {
-          limit: 40,
-          color: colors.ramp[5]
-        },
-        {
-          limit: 50,
-          color: colors.ramp[4]
-        },
-        {
-          limit: 60,
-          color: colors.ramp[3]
-        },
-        {
-          limit: 70,
-          color: colors.ramp[2]
-        },
-        {
-          limit: 80,
-          color: colors.ramp[1]
-        },
-        {
-          limit: 90,
-          color: colors.ramp[0]
-        },
-        {
-          limit: 100,
-          color: colors.ramp[0]
-        }
-      ];
-
-      const colorBucket =
-        colorBuckets.find(c => countsPerc <= c.limit) || colorBuckets[9];
+      const buckets = colors && getColorBuckets(colors);
+      const colorBucket = buckets && getColorBucket(buckets, countsPerc);
 
       return {
         id: k,
