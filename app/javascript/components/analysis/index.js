@@ -7,6 +7,7 @@ import reducerRegistry from 'app/registry';
 
 import { setSubscribeSettings } from 'components/modals/subscribe/actions';
 import { setSaveAOISettings } from 'components/modals/save-aoi/actions';
+import { clearActiveArea } from 'providers/areas-provider/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getAnalysisProps } from './selectors';
@@ -110,5 +111,6 @@ reducerRegistry.registerModule('analysis', {
 export default connect(getAnalysisProps, {
   ...actions,
   setSubscribeSettings,
-  setSaveAOISettings
+  setSaveAOISettings,
+  clearActiveArea
 })(AnalysisContainer);

@@ -22,6 +22,7 @@ class AnalysisComponent extends PureComponent {
       handleCancelAnalysis,
       handleFetchAnalysis,
       setSaveAOISettings,
+      clearActiveArea,
       endpoints,
       widgetLayers,
       embed
@@ -103,7 +104,10 @@ class AnalysisComponent extends PureComponent {
             <Button
               className="analysis-action-btn subscribe-btn"
               // TODO: delete activeArea from state
-              onClick={() => setSaveAOISettings({ open: true })}
+              onClick={() => {
+                clearActiveArea();
+                setSaveAOISettings({ open: true });
+              }}
             >
                 SAVE IN MY GFW
             </Button>
@@ -127,7 +131,8 @@ AnalysisComponent.propTypes = {
   handleFetchAnalysis: PropTypes.func,
   embed: PropTypes.bool,
   setSubscribeSettings: PropTypes.func,
-  setSaveAOISettings: PropTypes.func
+  setSaveAOISettings: PropTypes.func,
+  clearActiveArea: PropTypes.func
 };
 
 export default AnalysisComponent;
