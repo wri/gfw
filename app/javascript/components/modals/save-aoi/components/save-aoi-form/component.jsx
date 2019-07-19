@@ -204,50 +204,54 @@ function SaveAOIForm(props) {
           </p>
         </span>
       </div>
-      <div className={cx('field', 'field-image')}>
-        <img
-          src={screenImg1x}
-          srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
-          alt="aoi screenshot"
-        />
-        <p>
-          We will send you email updates about alerts and forest cover change in
-          your selected area.
-        </p>
-      </div>
-      <div className={cx('field', { error: emailError })}>
-        <span className="form-title">Email</span>
-        <input
-          className="text-input"
-          value={email}
-          onChange={e => dispatch({ type: 'email', payload: e })}
-        />
-      </div>
-      <div className="field">
-        <span className="form-title">Language*</span>
-        <Dropdown
-          className="dropdown-input"
-          theme="theme-dropdown-native-form"
-          options={getLanguages()}
-          value={lang}
-          onChange={newLang => reducer({ type: 'lang', payload: newLang })}
-          native
-        />
-      </div>
-      <div className="field">
-        <Checkbox
-          className="form-checkbox"
-          onChange={() => dispatch({ type: 'changesEmail' })}
-          checked={changesEmail}
-          label={'As soon as forest change is detected'}
-        />
-        <Checkbox
-          className="form-checkbox"
-          onChange={() => dispatch({ type: 'monthlyEmail' })}
-          checked={monthlyEmail}
-          label={'Monthly summary'}
-        />
-      </div>
+      {receiveAlerts && (
+        <div>
+          <div className={cx('field', 'field-image')}>
+            <img
+              src={screenImg1x}
+              srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
+              alt="aoi screenshot"
+            />
+            <p>
+              We will send you email updates about alerts and forest cover
+              change in your selected area.
+            </p>
+          </div>
+          <div className={cx('field', { error: emailError })}>
+            <span className="form-title">Email</span>
+            <input
+              className="text-input"
+              value={email}
+              onChange={e => dispatch({ type: 'email', payload: e })}
+            />
+          </div>
+          <div className="field">
+            <span className="form-title">Language*</span>
+            <Dropdown
+              className="dropdown-input"
+              theme="theme-dropdown-native-form"
+              options={getLanguages()}
+              value={lang}
+              onChange={newLang => reducer({ type: 'lang', payload: newLang })}
+              native
+            />
+          </div>
+          <div className="field">
+            <Checkbox
+              className="form-checkbox"
+              onChange={() => dispatch({ type: 'changesEmail' })}
+              checked={changesEmail}
+              label={'As soon as forest change is detected'}
+            />
+            <Checkbox
+              className="form-checkbox"
+              onChange={() => dispatch({ type: 'monthlyEmail' })}
+              checked={monthlyEmail}
+              label={'Monthly summary'}
+            />
+          </div>
+        </div>
+      )}
       {renderSaveAOI()}
     </div>
   );
