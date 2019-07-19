@@ -81,8 +81,8 @@ export const parseSentence = createSelector(
     const params = {
       location: currentLabel,
       year: period,
-      rate: `${format(rateFormat)(rate)}ha/yr`,
-      human: `${format(humanFormat)(humdef)}ha/yr`
+      rate: `${format(rateFormat)(rate)}ha`,
+      human: `${format(humanFormat)(humdef)}ha`
     };
 
     return {

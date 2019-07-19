@@ -18,12 +18,23 @@ class SearchMenu extends PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { search, lang } = this.props;
+    if (search && lang !== prevProps.lang) {
+      this.handleGetLocations(search);
+    }
+  }
+
   handleGetLocations = debounce(search => {
     if (this.searchFetch) {
       this.searchFetch.cancel();
     }
     this.searchFetch = CancelToken.source();
-    this.props.getLocationFromSearch({ search, token: this.searchFetch.token });
+    this.props.getLocationFromSearch({
+      search,
+      lang: this.props.lang,
+      token: this.searchFetch.token
+    });
     track('mapMenuSarch', {
       label: search
     });
@@ -51,7 +62,8 @@ SearchMenu.propTypes = {
   setMenuSettings: PropTypes.func,
   setMenuLoading: PropTypes.func,
   search: PropTypes.string,
-  locations: PropTypes.array
+  locations: PropTypes.array,
+  lang: PropTypes.string
 };
 
 export default connect(mapStateToProps, { onInfoClick: setModalMetaSettings })(

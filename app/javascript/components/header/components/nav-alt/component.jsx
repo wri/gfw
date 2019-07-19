@@ -53,6 +53,9 @@ class NavAlt extends PureComponent {
     localStorage.setItem('txlive:selectedlang', `"${lang}"`);
     window.Transifex.live.translateTo(lang);
     this.setState({ lang, showLang: false, showMore: false });
+    window.Transifex.live.onTranslatePage(newLang => {
+      this.props.setLangToUrl(newLang);
+    });
   };
 
   handleCloseSubmenu = () => {
@@ -179,7 +182,8 @@ NavAlt.propTypes = {
   myGfwLinks: PropTypes.array,
   loggedIn: PropTypes.bool,
   showSubmenu: PropTypes.bool,
-  closeSubMenu: PropTypes.func
+  closeSubMenu: PropTypes.func,
+  setLangToUrl: PropTypes.func
 };
 
 export default NavAlt;
