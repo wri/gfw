@@ -6,6 +6,12 @@
 
   .aoi-header {
     padding: rem(20px);
+    padding-bottom: rem(5px);
+
+    h2.title-no-aois {
+      font-size: rem(18px);
+      max-width: 80%;
+    }
 
     h3.title-login {
       text-transform: uppercase;
@@ -15,9 +21,12 @@
       margin-bottom: rem(10px);
     }
 
-    h2.title-create-aois {
-      font-size: rem(18px);
+    h3.title-create-aois {
+      font-size: rem(14px);
+      font-weight: 500;
+      text-transform: uppercase;
       max-width: 80%;
+      color: $slate;
     }
 
     p {
@@ -44,11 +53,12 @@
       position: relative;
       cursor: pointer;
       outline: none;
-      padding: rem(15px);
+      padding: rem(20px);
 
       &.--active {
         background-color: #f6f6f4;
-        border: 1px solid $green-gfw;
+        border-top: 1px solid $green-gfw;
+        border-bottom: 1px solid $green-gfw;
       }
 
       .edit-button {
@@ -74,6 +84,11 @@
   .c-pill {
     display: inline-block;
     margin-right: rem(5px);
+    color: $slate;
+
+    &.-active {
+      color: $white;
+    }
   }
 
   .my-gfw-login-image {

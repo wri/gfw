@@ -12,8 +12,8 @@ import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 
 import deleteIcon from 'assets/icons/delete.svg';
-import screenImg1x from 'assets/images/aois/single.png';
-import screenImg2x from 'assets/images/aois/single @2x.png';
+import screenImg1x from 'assets/images/aois/single B.png';
+import screenImg2x from 'assets/images/aois/single B @2x.png';
 
 import './styles.scss';
 
@@ -237,15 +237,13 @@ function SaveAOIForm(props) {
       <div className="field">
         <Checkbox
           className="form-checkbox"
-          // option={{ value: 'changesEmail', name: 'Changes email' }}
-          onChange={() => reducer({ type: 'changesEmail' })}
+          onChange={() => dispatch({ type: 'changesEmail' })}
           checked={changesEmail}
           label={'As soon as forest change is detected'}
         />
         <Checkbox
           className="form-checkbox"
-          // option={{ value: 'monthlyEmail', name: 'Montly email' }}
-          onChange={() => reducer({ type: 'monthlyEmail' })}
+          onChange={() => dispatch({ type: 'monthlyEmail' })}
           checked={monthlyEmail}
           label={'Monthly summary'}
         />

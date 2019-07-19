@@ -7,8 +7,8 @@ import Button from 'components/ui/button/button-component';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
-import screenImg1x from 'assets/images/aois/single.png';
-import screenImg2x from 'assets/images/aois/single @2x.png';
+import screenImg1x from 'assets/images/aois/single A.png';
+import screenImg2x from 'assets/images/aois/single A @2x.png';
 
 import './styles.scss';
 
@@ -40,20 +40,18 @@ class MapMenuMyGFW extends PureComponent {
   renderLoginWindow() {
     const { isDesktop } = this.props;
     return (
-      <div className="column">
-        <div className="row">
-          {isDesktop && <h3 className="title-login">Please log in</h3>}
-          <p>
-            Log in is required so you can view, manage, and delete your Areas of
-            Interest.
-          </p>
-          <p>
-            Creating an Area of Interest lets you customize and perform an
-            in-depth analysis of the area, as well as receiving email
-            notifications when new deforestation alerts are available.
-          </p>
-          <MyGFWLogin className="mygfw-login" simple />
-        </div>
+      <div className="aoi-header">
+        {isDesktop && <h3 className="title-login">Please log in</h3>}
+        <p>
+          Log in is required so you can view, manage, and delete your Areas of
+          Interest.
+        </p>
+        <p>
+          Creating an Area of Interest lets you customize and perform an
+          in-depth analysis of the area, as well as receiving email
+          notifications when new deforestation alerts are available.
+        </p>
+        <MyGFWLogin className="mygfw-login" simple />
       </div>
     );
   }
@@ -61,9 +59,9 @@ class MapMenuMyGFW extends PureComponent {
   renderNoAreas() {
     const { isDesktop } = this.props;
     return (
-      <div className="column">
+      <div className="aoi-header">
         {isDesktop && (
-          <h2 className="title-create-aois">
+          <h2 className="title-no-aois">
             You haven&apos;t created any Areas of Interest yet
           </h2>
         )}
@@ -93,7 +91,7 @@ class MapMenuMyGFW extends PureComponent {
       <div>
         <div className="aoi-header">
           {isDesktop && (
-            <h2 className="title-create-aois">Areas of interest</h2>
+            <h3 className="title-create-aois">Areas of interest</h3>
           )}
           <div className="aoi-tags">
             {Object.keys(this.state.activeTags).map(tag => (
@@ -126,6 +124,7 @@ class MapMenuMyGFW extends PureComponent {
                 tabIndex={0}
               >
                 <img src={area.image} alt={area.name} />
+                {/* TODO: vertically align body with img */}
                 <div className="aoi-item-body">
                   <p className="aoi-title">{area.name}</p>
                   <div className="aoi-tags">

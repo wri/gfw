@@ -109,6 +109,7 @@ class AnalysisComponent extends PureComponent {
                 setSaveAOISettings({ open: true });
               }}
             >
+              {/* TODO: if activeArea, edit in my gfw AND DONT CLEAR  ???? */}
                 SAVE IN MY GFW
             </Button>
           </div>
