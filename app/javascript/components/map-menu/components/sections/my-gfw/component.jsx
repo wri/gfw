@@ -90,8 +90,8 @@ class MapMenuMyGFW extends PureComponent {
         )
         : areas;
     return (
-      <div className="row">
-        <div className="column">
+      <div>
+        <div className="aoi-header">
           {isDesktop && (
             <h2 className="title-create-aois">Areas of interest</h2>
           )}
