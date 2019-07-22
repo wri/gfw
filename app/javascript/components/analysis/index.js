@@ -20,8 +20,7 @@ class AnalysisContainer extends PureComponent {
     endpoints: PropTypes.array,
     clearAnalysis: PropTypes.func,
     setAnalysisLoading: PropTypes.func,
-    analysisLocation: PropTypes.object,
-    aois: PropTypes.array
+    analysisLocation: PropTypes.object
   };
 
   componentDidMount() {
@@ -42,27 +41,17 @@ class AnalysisContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, endpoints, aois } = this.props;
-    const activeArea = aois.find(a => a.id === location.adm0);
-    const parsedLocation =
-      location.type === 'aoi'
-        ? {
-          ...location,
-          type: 'geostore',
-          adm0: activeArea && activeArea.geostore
-        }
-        : location;
-
     // get analysis if location changes
+    const { location, endpoints } = this.props;
     if (
-      parsedLocation.type &&
-      parsedLocation.adm0 &&
+      location.type &&
+      location.adm0 &&
       endpoints &&
       endpoints.length &&
       (!isEqual(endpoints, prevProps.endpoints) ||
-        !isEqual(parsedLocation, prevProps.location))
+        !isEqual(location, prevProps.location))
     ) {
-      this.handleFetchAnalysis(parsedLocation, endpoints);
+      this.handleFetchAnalysis(endpoints);
     }
   }
 
@@ -72,14 +61,14 @@ class AnalysisContainer extends PureComponent {
     }
   }
 
-  handleFetchAnalysis = (location, endpoints) => {
+  handleFetchAnalysis = endpoints => {
     if (this.analysisFetch) {
       this.analysisFetch.cancel();
     }
     this.analysisFetch = CancelToken.source();
     this.props.getAnalysis({
       endpoints,
-      ...location,
+      ...this.props.location,
       token: this.analysisFetch.token
     });
   };

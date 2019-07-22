@@ -23,13 +23,15 @@ class MapMenuMyGFW extends PureComponent {
   setTags() {
     const { areas } = this.props;
     const tags = {};
-    areas.forEach(area =>
-      area.tags.forEach(tag => {
-        if (tags[tag] === undefined) {
-          tags[tag] = false;
-        }
-      })
-    );
+    if (areas) {
+      areas.forEach(area =>
+        area.tags.forEach(tag => {
+          if (tags[tag] === undefined) {
+            tags[tag] = false;
+          }
+        })
+      );
+    }
     this.setState({ activeTags: tags });
   }
 
