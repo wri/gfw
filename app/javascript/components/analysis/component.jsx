@@ -56,7 +56,7 @@ class AnalysisComponent extends PureComponent {
                   error && (
                 <Button
                   className="refresh-analysis-btn"
-                  onClick={() => handleFetchAnalysis(location, endpoints)}
+                  onClick={() => handleFetchAnalysis(endpoints)}
                 >
                       REFRESH ANALYSIS
                 </Button>
@@ -103,7 +103,6 @@ class AnalysisComponent extends PureComponent {
             )}
             <Button
               className="analysis-action-btn subscribe-btn"
-              // TODO: delete activeArea from state
               onClick={() => {
                 clearActiveArea();
                 setSaveAOISettings({ open: true });

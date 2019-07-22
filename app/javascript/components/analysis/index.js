@@ -36,7 +36,7 @@ class AnalysisContainer extends PureComponent {
       endpoints &&
       endpoints.length
     ) {
-      this.handleFetchAnalysis(location, endpoints);
+      this.handleFetchAnalysis(endpoints);
     }
   }
 
