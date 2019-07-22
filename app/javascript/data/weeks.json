@@ -1,5 +1,9 @@
 [
   {
+    "label": "Last week",
+    "value": 1
+  },
+  {
     "label": "4 weeks",
     "value": 4
   },
