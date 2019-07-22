@@ -22,6 +22,13 @@ const selectMapData = state => state.map && state.map.data;
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLatest = state => state.latest && state.latest.data;
 export const selectGeostore = state => state.geostore && state.geostore.data;
+const selectActiveLang = state =>
+  (state.location &&
+    state.location &&
+    state.location.query &&
+    state.location.query.lang) ||
+  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
+  'en';
 
 // CONSTS
 export const getBasemaps = () => basemaps;
@@ -457,6 +464,13 @@ export const getInteractionSelected = createSelector(
   }
 );
 
+export const getActiveMapLang = createSelector(selectActiveLang, lang => {
+  if (lang === 'pt_BR') return 'pt';
+  if (lang === 'es_MX') return 'es';
+  if (lang === 'id') return 'en';
+  return lang;
+});
+
 export const getMapProps = createStructuredSelector({
   viewport: getMapViewport,
   loading: getMapLoading,
@@ -472,5 +486,6 @@ export const getMapProps = createStructuredSelector({
   stateBbox: getStateBbox,
   interaction: getInteractionSelected,
   interactiveLayerIds: getInteractiveLayerIds,
-  basemap: getBasemap
+  basemap: getBasemap,
+  lang: getActiveMapLang
 });
