@@ -81,6 +81,46 @@
     }
   }
 
+  .my-gfw {
+    position: relative;
+
+    .my-gfw-footer {
+      position: fixed;
+      bottom: 0;
+      height: rem(76px);
+      width: 100%;
+      padding-right: rem(20px);
+      background: $white;
+      border-top: 1px solid rgba($hot-grey, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      a,
+      .logout-button {
+        color: $slate;
+        font-size: 12px;
+        line-height: 14px;
+        text-transform: initial;
+        font-weight: 400;
+
+        &.edit-button {
+          margin-left: rem(30px);
+        }
+
+        .c-icon {
+          transform: scale(0.9);
+          position: relative;
+          left: rem(4px);
+
+          &.edit-icon {
+            top: rem(2px);
+          }
+        }
+      }
+    }
+  }
+
   .c-pill {
     display: inline-block;
     margin-right: rem(5px);
@@ -93,6 +133,6 @@
 
   .my-gfw-login-image {
     position: absolute;
-    bottom: 0;
+    bottom: rem(76px);
   }
 }

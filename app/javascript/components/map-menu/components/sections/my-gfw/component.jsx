@@ -7,6 +7,7 @@ import Button from 'components/ui/button/button-component';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
+import logoutIcon from 'assets/icons/logout.svg';
 import screenImg1x from 'assets/images/aois/single A.png';
 import screenImg2x from 'assets/images/aois/single A @2x.png';
 
@@ -164,8 +165,26 @@ class MapMenuMyGFW extends PureComponent {
     const { areas } = this.props;
 
     return (
-      <div className="my-gfw-aois">
-        {areas && areas.length > 0 ? this.renderAreas() : this.renderNoAreas()}
+      <div className="my-gfw">
+        <div className="my-gfw-aois">
+          {areas && areas.length > 0
+            ? this.renderAreas()
+            : this.renderNoAreas()}
+        </div>
+        <div className="my-gfw-footer">
+          <a href="/my_gfw" className="edit-button">
+            Update profile
+            <Icon icon={editIcon} className="edit-icon" />
+          </a>
+          <Button
+            theme="theme-button-clear"
+            className="logout-button"
+            // onClick={} TODO: import logout from pages/mygfw/components/user-profile
+          >
+            Log out
+            <Icon icon={logoutIcon} className="logout-icon" />
+          </Button>
+        </div>
       </div>
     );
   }
