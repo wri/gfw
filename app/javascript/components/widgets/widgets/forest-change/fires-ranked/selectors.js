@@ -113,9 +113,11 @@ export const parseSentence = createSelector(
     const topRegion = data[0].label;
     const topRegionCount = data[0].count;
     const topRegionPerc = data[0].value;
+    const timeFrame =
+      options.weeks && options.weeks.find(w => w.value === settings.weeks);
 
     const params = {
-      timeframe: options.weeks.find(w => w.value === settings.weeks).label,
+      timeframe: timeFrame && timeFrame.label,
       topRegion,
       topRegionCount: format(',')(topRegionCount),
       topRegionPerc: `${format('.2r')(topRegionPerc)}%`,
