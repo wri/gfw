@@ -40,7 +40,7 @@ class TimelineContainer extends PureComponent {
     step: 1,
     speed: 200,
     count: 2,
-    pushable: true
+    pushable: 0
   };
 
   constructor(props) {
