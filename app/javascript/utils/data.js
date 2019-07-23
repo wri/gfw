@@ -25,6 +25,32 @@ export const getColorPalette = (colorRange, quantity) => {
     .colors(quantity);
 };
 
+export const getColorBuckets = colors => [
+  {
+    limit: 20,
+    color: colors.ramp[8]
+  },
+  {
+    limit: 40,
+    color: colors.ramp[6]
+  },
+  {
+    limit: 60,
+    color: colors.ramp[4]
+  },
+  {
+    limit: 80,
+    color: colors.ramp[2]
+  },
+  {
+    limit: 100,
+    color: colors.ramp[0]
+  }
+];
+
+export const getColorBucket = (buckets, value) =>
+  buckets.find(c => value <= c.limit) || buckets[4];
+
 export const flattenObj = (target, opts = {}) => {
   const delimiter = opts.delimiter || '.';
   const maxDepth = opts.maxDepth;
