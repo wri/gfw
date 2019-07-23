@@ -16,6 +16,7 @@ class AnalysisComponent extends PureComponent {
       className,
       loading,
       location,
+      activeArea,
       clearAnalysis,
       goToDashboard,
       error,
@@ -101,16 +102,38 @@ class AnalysisComponent extends PureComponent {
                   DASHBOARD
               </Button>
             )}
-            <Button
-              className="analysis-action-btn subscribe-btn"
-              onClick={() => {
-                clearActiveArea();
-                setSaveAOISettings({ open: true });
-              }}
-            >
-              {/* TODO: if activeArea, edit in my gfw AND DONT CLEAR  ???? */}
-                SAVE IN MY GFW
-            </Button>
+            {activeArea ? (
+            /* TODO: if activeArea, edit in my gfw AND DONT CLEAR  ???? */
+              <div className="analysis-buttons">
+                <Button
+                  className="analysis-action-btn dashboard"
+                  // onClick={() => console.log(activeArea)}
+                  theme="theme-button-light"
+                  // link={location && `/aois/${location.adm0}`}
+                  target="_blank"
+                  tooltip={{ text: 'Go to Areas of Interest dashboard' }}
+                >
+                    DASHBOARD
+                </Button>
+                <Button
+                  className="analysis-action-btn dashboard"
+                  // onClick={() => setShareModal && setShareModal(shareData)}
+                  tooltip={{ text: 'Share or embed this area' }}
+                >
+                    Share area
+                </Button>
+              </div>
+            ) : (
+              <Button
+                className="analysis-action-btn subscribe-btn"
+                onClick={() => {
+                  clearActiveArea();
+                  setSaveAOISettings({ open: true });
+                }}
+              >
+                  SAVE IN MY GFW
+              </Button>
+            )}
           </div>
         )}
       </Fragment>
@@ -125,6 +148,7 @@ AnalysisComponent.propTypes = {
   widgetLayers: PropTypes.array,
   loading: PropTypes.bool,
   location: PropTypes.object,
+  activeArea: PropTypes.object,
   goToDashboard: PropTypes.func,
   error: PropTypes.string,
   handleCancelAnalysis: PropTypes.func,

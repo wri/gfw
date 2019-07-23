@@ -83,6 +83,12 @@
     }
   }
 
+  .analysis-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
   @media screen and (min-width: $screen-m) {
     bottom: 0;
   }

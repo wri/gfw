@@ -200,5 +200,6 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation,
-  aois: selectAreas
+  aois: selectAreas,
+  activeArea: getActiveArea
 });
