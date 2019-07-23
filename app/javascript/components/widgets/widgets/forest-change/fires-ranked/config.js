@@ -7,7 +7,7 @@ export default {
   options: {
     weeks: true
   },
-  metaKey: 'widget_fire_alert_ranking_location',
+  metaKey: 'widget_fire_ranking',
   colors: 'fires',
   sortOrder: {
     summary: 6,
