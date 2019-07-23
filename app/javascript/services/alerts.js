@@ -15,6 +15,8 @@ const QUERIES = {
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}'",
   firesIntersectionAlerts:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
+  firesGrouped:
+    "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   viirsAlerts: '{location}?group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
@@ -76,6 +78,20 @@ export const fetchFiresAlerts = ({ adm0, adm1, adm2, dataset, download }) => {
     .replace('{dataset}', dataset);
 
   if (download) return url.replace('query', 'download');
+  return request.get(url, 3600, 'firesRequest');
+};
+
+export const fetchFiresAlertsGrouped = ({ adm0, adm1, adm2, dataset }) => {
+  let fires_summary_table = FIRES_ADM1_DATASET;
+  if (adm1) {
+    fires_summary_table = FIRES_ADM2_DATASET;
+  }
+  const url = `${REQUEST_URL}/query/${fires_summary_table}?sql=${
+    QUERIES.firesIntersectionAlerts
+  }`
+    .replace('{location}', getLocation(adm0, adm1, adm2))
+    .replace('{polyname}', 'admin')
+    .replace('{dataset}', dataset);
   return request.get(url, 3600, 'firesRequest');
 };
 

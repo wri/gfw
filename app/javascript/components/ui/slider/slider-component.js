@@ -91,7 +91,7 @@ Slider.defaultProps = {
   },
   railStyle: { backgroundColor: '#d6d6d9' },
   dotStyle: { visibility: 'hidden', border: '0px' },
-  pushable: true
+  pushable: 0
 };
 
 Slider.propTypes = {
