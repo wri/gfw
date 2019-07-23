@@ -10,6 +10,12 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: rem(10px);
+
+    &.-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: rem(20px);
+    }
   }
 
   a {
@@ -50,5 +56,34 @@
     font-weight: 500;
     border-radius: 50%;
     margin-right: rem(10px);
+  }
+
+  .item-value {
+    min-width: rem(35px);
+    text-align: right;
+  }
+
+  .item-bar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .item-bar {
+    width: calc(100% - 50px);
+    height: rem(12px);
+    background: $grey-dark;
+    margin-right: rem(10px);
+    margin-left: rem(35px);
+    position: relative;
+
+    &.-data {
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }
