@@ -31,9 +31,16 @@ const setSaveAOISaved = state => ({
   saving: false
 });
 
+const setSaveAOIDeleted = state => ({
+  ...state,
+  deleted: true,
+  saving: false
+});
+
 export default {
   [actions.setSaveAOISaving]: setSaveAOISaving,
   [actions.setSaveAOISaved]: setSaveAOISaved,
+  [actions.setSaveAOIDeleted]: setSaveAOIDeleted,
   [actions.resetSaveAOI]: resetSaveAOI,
   [actions.clearSaveAOIError]: clearSaveAOIError
 };

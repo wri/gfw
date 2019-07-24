@@ -2,7 +2,7 @@
 $mobile-padding: rem(30px);
 $desktop-padding: rem(50px);
 
-.c-subscription-form {
+.c-save-aoi-form {
   .field {
     display: flex;
     flex-direction: column;
@@ -107,8 +107,14 @@ $desktop-padding: rem(50px);
     }
 
     .delete-aoi {
-      margin: 0;
+      padding: 0;
       color: $error;
+
+      .delete-icon {
+        margin-right: rem(5px);
+        position: relative;
+        bottom: rem(2px);
+      }
     }
   }
 

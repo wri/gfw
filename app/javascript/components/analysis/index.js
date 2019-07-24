@@ -7,6 +7,7 @@ import reducerRegistry from 'app/registry';
 
 import { setSubscribeSettings } from 'components/modals/subscribe/actions';
 import { setSaveAOISettings } from 'components/modals/save-aoi/actions';
+import { clearActiveArea } from 'providers/areas-provider/actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getAnalysisProps } from './selectors';
@@ -35,14 +36,13 @@ class AnalysisContainer extends PureComponent {
       endpoints &&
       endpoints.length
     ) {
-      this.handleFetchAnalysis(location, endpoints);
+      this.handleFetchAnalysis(endpoints);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { location, endpoints } = this.props;
     // get analysis if location changes
-    // TODO: if location is aoi and not geostore, find activeArea.geostore to trigger analysis by geostore
+    const { location, endpoints } = this.props;
     if (
       location.type &&
       location.adm0 &&
@@ -51,7 +51,7 @@ class AnalysisContainer extends PureComponent {
       (!isEqual(endpoints, prevProps.endpoints) ||
         !isEqual(location, prevProps.location))
     ) {
-      this.handleFetchAnalysis(location, endpoints);
+      this.handleFetchAnalysis(endpoints);
     }
   }
 
@@ -61,14 +61,14 @@ class AnalysisContainer extends PureComponent {
     }
   }
 
-  handleFetchAnalysis = (location, endpoints) => {
+  handleFetchAnalysis = endpoints => {
     if (this.analysisFetch) {
       this.analysisFetch.cancel();
     }
     this.analysisFetch = CancelToken.source();
     this.props.getAnalysis({
       endpoints,
-      ...location,
+      ...this.props.location,
       token: this.analysisFetch.token
     });
   };
@@ -100,5 +100,6 @@ reducerRegistry.registerModule('analysis', {
 export default connect(getAnalysisProps, {
   ...actions,
   setSubscribeSettings,
-  setSaveAOISettings
+  setSaveAOISettings,
+  clearActiveArea
 })(AnalysisContainer);

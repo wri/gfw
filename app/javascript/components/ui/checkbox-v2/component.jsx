@@ -8,13 +8,7 @@ const Checkbox = ({ className, checked, onChange, label }) => (
   <div className={cx('c-checkbox-v2', className)}>
     {/* eslint-disable-next-line jsx-a11y/label-has-for */}
     <label>
-      <input
-        type="checkbox"
-        name="fruit-1"
-        value="cherry"
-        checked={checked}
-        onChange={onChange}
-      />
+      <input type="checkbox" checked={checked} onChange={onChange} />
       {label && <p>{label}</p>}
     </label>
   </div>

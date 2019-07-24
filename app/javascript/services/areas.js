@@ -19,6 +19,11 @@ export const setAreasProvider = (token, body, method) => {
   });
 };
 
+export const deleteAreaProvider = (token, id) =>
+  axios.delete(REQUEST_URL.concat(`/${id}`), {
+    headers: { Authorization: 'Bearer '.concat(token) }
+  });
+
 export default {
   getAreasProvider
 };

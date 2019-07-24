@@ -4,8 +4,14 @@
   position: relative;
   height: 100%;
 
-  .column {
+  .aoi-header {
     padding: rem(20px);
+    padding-bottom: rem(5px);
+
+    h2.title-no-aois {
+      font-size: rem(18px);
+      max-width: 80%;
+    }
 
     h3.title-login {
       text-transform: uppercase;
@@ -15,9 +21,12 @@
       margin-bottom: rem(10px);
     }
 
-    h2.title-create-aois {
-      font-size: rem(18px);
+    h3.title-create-aois {
+      font-size: rem(14px);
+      font-weight: 500;
+      text-transform: uppercase;
       max-width: 80%;
+      color: $slate;
     }
 
     p {
@@ -30,20 +39,28 @@
 
     .aoi-tags {
       margin: rem(15px) 0;
+
+      .clickable-tag {
+        outline: none;
+        cursor: pointer;
+      }
     }
   }
 
   .aoi-items {
+    padding-bottom: rem(76px);
+
     .aoi-item {
       display: flex;
       position: relative;
       cursor: pointer;
       outline: none;
-      padding: rem(15px);
+      padding: rem(20px);
 
       &.--active {
         background-color: #f6f6f4;
-        border: 1px solid $green-gfw;
+        border-top: 1px solid $green-gfw;
+        border-bottom: 1px solid $green-gfw;
       }
 
       .edit-button {
@@ -58,11 +75,71 @@
         background: $border;
         margin-right: rem(15px);
       }
+
+      .aoi-item-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+  }
+
+  .my-gfw {
+    position: relative;
+
+    .my-gfw-footer {
+      position: fixed;
+      bottom: 0;
+      height: rem(76px);
+      width: 100%;
+      padding-right: rem(20px);
+      background: $white;
+      border-top: 1px solid rgba($hot-grey, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      a,
+      .logout-button {
+        color: $slate;
+        font-size: 12px;
+        line-height: 14px;
+        text-transform: initial;
+        font-weight: 400;
+
+        &.edit-button {
+          margin-left: rem(30px);
+        }
+
+        .c-icon {
+          transform: scale(0.9);
+          position: relative;
+          left: rem(4px);
+
+          &.edit-icon {
+            top: rem(2px);
+          }
+        }
+      }
+    }
+  }
+
+  .c-pill {
+    display: inline-block;
+    margin-right: rem(5px);
+    color: $slate;
+
+    &.-active {
+      color: $white;
     }
   }
 
   .my-gfw-login-image {
     position: absolute;
-    bottom: 0;
+    bottom: rem(76px);
+
+    &.--login {
+      bottom: 0;
+    }
   }
 }

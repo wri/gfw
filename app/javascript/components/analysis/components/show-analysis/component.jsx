@@ -12,7 +12,8 @@ import Button from 'components/ui/button';
 import Widgets from 'components/widgets';
 import DownloadData from 'components/analysis/components/download-data';
 
-import screensImg from 'assets/images/aois/double@2x.png';
+import screensImg1x from 'assets/images/aois/double.png';
+import screensImg2x from 'assets/images/aois/double @2x.png';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
@@ -83,7 +84,8 @@ class ShowAnalysis extends PureComponent {
       hasWidgetLayers,
       zoomLevel,
       widgets,
-      showAnalysisDisclaimer
+      showAnalysisDisclaimer,
+      activeArea
     } = this.props;
     const hasWidgets = hasWidgetLayers && widgets && !!widgets.length;
 
@@ -217,15 +219,31 @@ class ShowAnalysis extends PureComponent {
           !loading &&
           !error && (
           <div className="save-aois-disclaimer">
-            <div className="content">
-              <h3>Interested in this particular area?</h3>
-              <p>
-                  Save this area to create a <a>dashboard</a> with a more
-                  in-depth analysis and receive <a>email alerts</a> about forest
-                  cover change.
-              </p>
-            </div>
-            <img src={screensImg} alt="aoi screenshots" />
+            {activeArea ? (
+              <div className="content">
+                <p>
+                    To perform an in-depth analysis of this area please visit
+                    the{' '}
+                  <a href={`/dashboards/aoi/${activeArea.id}`}>
+                      area dashboard
+                  </a>.
+                </p>
+              </div>
+            ) : (
+              <div className="content">
+                <h3>Interested in this particular area?</h3>
+                <p>
+                    Save this area to create a <a>dashboard</a> with a more
+                    in-depth analysis and receive <a>email alerts</a> about
+                    forest cover change.
+                </p>
+              </div>
+            )}
+            <img
+              src={screensImg1x}
+              srcSet={`${screensImg1x} 1x, ${screensImg2x} 2x`}
+              alt="aoi screenshots"
+            />
           </div>
         )}
       </div>
@@ -249,7 +267,8 @@ ShowAnalysis.propTypes = {
   downloadUrls: PropTypes.array,
   widgets: PropTypes.array,
   zoomLevel: PropTypes.number,
-  showAnalysisDisclaimer: PropTypes.bool
+  showAnalysisDisclaimer: PropTypes.bool,
+  activeArea: PropTypes.object
 };
 
 export default ShowAnalysis;

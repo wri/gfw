@@ -16,12 +16,14 @@ class AnalysisComponent extends PureComponent {
       className,
       loading,
       location,
+      activeArea,
       clearAnalysis,
       goToDashboard,
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
       setSaveAOISettings,
+      clearActiveArea,
       endpoints,
       widgetLayers,
       embed
@@ -55,7 +57,7 @@ class AnalysisComponent extends PureComponent {
                   error && (
                 <Button
                   className="refresh-analysis-btn"
-                  onClick={() => handleFetchAnalysis(location, endpoints)}
+                  onClick={() => handleFetchAnalysis(endpoints)}
                 >
                       REFRESH ANALYSIS
                 </Button>
@@ -74,6 +76,7 @@ class AnalysisComponent extends PureComponent {
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
               hasLayers={hasLayers}
+              activeArea={activeArea}
               hasWidgetLayers={hasWidgetLayers}
               analysis
             />
@@ -100,12 +103,37 @@ class AnalysisComponent extends PureComponent {
                   DASHBOARD
               </Button>
             )}
-            <Button
-              className="analysis-action-btn subscribe-btn"
-              onClick={() => setSaveAOISettings({ open: true })}
-            >
-                SAVE IN MY GFW
-            </Button>
+            {activeArea ? (
+            /* TODO: if activeArea, edit in my gfw AND DONT CLEAR  ???? */
+              <div className="analysis-buttons">
+                <Button
+                  className="analysis-btn dashboard"
+                  theme="theme-button-light"
+                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
+                  target="_blank"
+                  tooltip={{ text: 'Go to Areas of Interest dashboard' }}
+                >
+                    DASHBOARD
+                </Button>
+                <Button
+                  className="analysis-btn dashboard"
+                  // onClick={() => setShareModal && setShareModal(shareData)}
+                  tooltip={{ text: 'Share or embed this area' }}
+                >
+                    Share area
+                </Button>
+              </div>
+            ) : (
+              <Button
+                className="analysis-action-btn subscribe-btn"
+                onClick={() => {
+                  clearActiveArea();
+                  setSaveAOISettings({ open: true });
+                }}
+              >
+                  SAVE IN MY GFW
+              </Button>
+            )}
           </div>
         )}
       </Fragment>
@@ -120,13 +148,15 @@ AnalysisComponent.propTypes = {
   widgetLayers: PropTypes.array,
   loading: PropTypes.bool,
   location: PropTypes.object,
+  activeArea: PropTypes.object,
   goToDashboard: PropTypes.func,
   error: PropTypes.string,
   handleCancelAnalysis: PropTypes.func,
   handleFetchAnalysis: PropTypes.func,
   embed: PropTypes.bool,
   setSubscribeSettings: PropTypes.func,
-  setSaveAOISettings: PropTypes.func
+  setSaveAOISettings: PropTypes.func,
+  clearActiveArea: PropTypes.func
 };
 
 export default AnalysisComponent;
