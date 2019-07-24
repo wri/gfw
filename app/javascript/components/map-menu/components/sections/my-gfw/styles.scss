@@ -136,5 +136,9 @@
   .my-gfw-login-image {
     position: absolute;
     bottom: rem(76px);
+
+    &.--login {
+      bottom: 0;
+    }
   }
 }

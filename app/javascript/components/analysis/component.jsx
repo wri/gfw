@@ -106,7 +106,7 @@ class AnalysisComponent extends PureComponent {
             /* TODO: if activeArea, edit in my gfw AND DONT CLEAR  ???? */
               <div className="analysis-buttons">
                 <Button
-                  className="analysis-action-btn dashboard"
+                  className="analysis-btn dashboard"
                   // onClick={() => console.log(activeArea)}
                   theme="theme-button-light"
                   // link={location && `/aois/${location.adm0}`}
@@ -116,7 +116,7 @@ class AnalysisComponent extends PureComponent {
                     DASHBOARD
                 </Button>
                 <Button
-                  className="analysis-action-btn dashboard"
+                  className="analysis-btn dashboard"
                   // onClick={() => setShareModal && setShareModal(shareData)}
                   tooltip={{ text: 'Share or embed this area' }}
                 >

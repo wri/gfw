@@ -87,6 +87,13 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+
+    .analysis-btn {
+      font-size: rem(14px);
+      font-weight: 500;
+      height: rem(30px);
+      min-width: rem(120px);
+    }
   }
 
   @media screen and (min-width: $screen-m) {

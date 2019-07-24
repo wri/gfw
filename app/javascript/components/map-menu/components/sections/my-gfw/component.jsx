@@ -197,7 +197,7 @@ class MapMenuMyGFW extends PureComponent {
         {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}
         {(!loggedIn || !(areas && areas.length > 0)) && (
           <img
-            className="my-gfw-login-image"
+            className={cx('my-gfw-login-image', { '--login': !loggedIn })}
             src={screenImg1x}
             srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
             alt="aoi screenshot"
