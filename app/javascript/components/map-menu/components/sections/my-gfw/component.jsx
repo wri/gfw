@@ -4,9 +4,11 @@ import cx from 'classnames';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Button from 'components/ui/button/button-component';
+import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
+import tagIcon from 'assets/icons/tag.svg';
 import logoutIcon from 'assets/icons/logout.svg';
 import screenImg1x from 'assets/images/aois/single A.png';
 import screenImg2x from 'assets/images/aois/single A @2x.png';
@@ -97,13 +99,13 @@ class MapMenuMyGFW extends PureComponent {
             <h3 className="title-create-aois">Areas of interest</h3>
           )}
           <div className="aoi-tags">
-            {Object.keys(this.state.activeTags).map(tag => (
+            {activeTags.map(tag => (
               <Pill
-                className="clickable-tag"
+                className="aoi-tag"
                 key={tag}
-                active={this.state.activeTags[tag]}
+                active
                 label={tag}
-                onClick={() =>
+                onRemove={() =>
                   this.setState({
                     activeTags: {
                       ...this.state.activeTags,
@@ -113,6 +115,30 @@ class MapMenuMyGFW extends PureComponent {
                 }
               />
             ))}
+            <Dropdown
+              className="country-dropdown"
+              theme="theme-dropdown-button theme-dropdown-button-small"
+              placeholder={
+                activeTags.length > 0 ? 'Add more tags' : 'Filter by tags'
+              }
+              noItemsFound="No tags found"
+              noSelectedValue={
+                activeTags.length > 0 ? 'Add more tags' : 'Filter by tags'
+              }
+              options={Object.keys(this.state.activeTags).map(tag => ({
+                label: tag,
+                value: tag
+              }))}
+              onChange={tag =>
+                tag.value &&
+                this.setState({
+                  activeTags: {
+                    ...this.state.activeTags,
+                    [tag.value]: !this.state.activeTags[tag.value]
+                  }
+                })
+              }
+            />
           </div>
         </div>
         <div className="aoi-items">
@@ -130,15 +156,13 @@ class MapMenuMyGFW extends PureComponent {
                 {/* TODO: vertically align body with img */}
                 <div className="aoi-item-body">
                   <p className="aoi-title">{area.name}</p>
-                  <div className="aoi-tags">
-                    {area.tags.map(tag => (
-                      <Pill
-                        key={tag}
-                        active={this.state.activeTags[tag]}
-                        label={tag}
-                      />
-                    ))}
-                  </div>
+                  {area.tags &&
+                    area.tags.length > 0 && (
+                    <div className="aoi-tags">
+                      <Icon icon={tagIcon} className="tag-icon" />
+                      <p>{area.tags.join(', ')}</p>
+                    </div>
+                  )}
                 </div>
                 {active && (
                   <Button

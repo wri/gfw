@@ -39,11 +39,13 @@
     }
 
     .aoi-tags {
+      display: flex;
+      flex-wrap: wrap;
       margin: rem(15px) 0;
 
-      .clickable-tag {
-        outline: none;
-        cursor: pointer;
+      .aoi-tag {
+        margin-bottom: 0.3125rem;
+        margin-right: 0.3125rem;
       }
     }
   }
@@ -81,6 +83,22 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+
+        .aoi-tags {
+          display: flex;
+          align-items: center;
+
+          p {
+            max-width: rem(120px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          svg {
+            margin-right: rem(4px);
+          }
+        }
       }
     }
   }
