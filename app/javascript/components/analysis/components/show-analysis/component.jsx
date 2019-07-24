@@ -84,7 +84,8 @@ class ShowAnalysis extends PureComponent {
       hasWidgetLayers,
       zoomLevel,
       widgets,
-      showAnalysisDisclaimer
+      showAnalysisDisclaimer,
+      activeArea
     } = this.props;
     const hasWidgets = hasWidgetLayers && widgets && !!widgets.length;
 
@@ -218,14 +219,26 @@ class ShowAnalysis extends PureComponent {
           !loading &&
           !error && (
           <div className="save-aois-disclaimer">
-            <div className="content">
-              <h3>Interested in this particular area?</h3>
-              <p>
-                  Save this area to create a <a>dashboard</a> with a more
-                  in-depth analysis and receive <a>email alerts</a> about forest
-                  cover change.
-              </p>
-            </div>
+            {activeArea ? (
+              <div className="content">
+                <p>
+                    To perform an in-depth analysis of this area please visit
+                    the{' '}
+                  <a href={`/dashboards/aoi/${activeArea.id}`}>
+                      area dashboard
+                  </a>.
+                </p>
+              </div>
+            ) : (
+              <div className="content">
+                <h3>Interested in this particular area?</h3>
+                <p>
+                    Save this area to create a <a>dashboard</a> with a more
+                    in-depth analysis and receive <a>email alerts</a> about
+                    forest cover change.
+                </p>
+              </div>
+            )}
             <img
               src={screensImg1x}
               srcSet={`${screensImg1x} 1x, ${screensImg2x} 2x`}
@@ -254,7 +267,8 @@ ShowAnalysis.propTypes = {
   downloadUrls: PropTypes.array,
   widgets: PropTypes.array,
   zoomLevel: PropTypes.number,
-  showAnalysisDisclaimer: PropTypes.bool
+  showAnalysisDisclaimer: PropTypes.bool,
+  activeArea: PropTypes.object
 };
 
 export default ShowAnalysis;

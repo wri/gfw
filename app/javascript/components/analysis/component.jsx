@@ -76,6 +76,7 @@ class AnalysisComponent extends PureComponent {
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
               hasLayers={hasLayers}
+              activeArea={activeArea}
               hasWidgetLayers={hasWidgetLayers}
               analysis
             />
@@ -107,9 +108,8 @@ class AnalysisComponent extends PureComponent {
               <div className="analysis-buttons">
                 <Button
                   className="analysis-btn dashboard"
-                  // onClick={() => console.log(activeArea)}
                   theme="theme-button-light"
-                  // link={location && `/aois/${location.adm0}`}
+                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
                   target="_blank"
                   tooltip={{ text: 'Go to Areas of Interest dashboard' }}
                 >
