@@ -38,7 +38,7 @@ $padding: rem(5px);
     $padding
     calc(#{$padding} / 2)
     0;
-  padding: $padding calc(#{$padding} * 2);
+  padding: $padding rem(2px) $padding calc(#{$padding} * 2);
   font-size: rem(14px);
   height: rem(20px);
   border-radius: 100px;

@@ -222,7 +222,9 @@ function SaveAOIForm(props) {
             <input
               className="text-input"
               value={email}
-              onChange={e => dispatch({ type: 'email', payload: e })}
+              onChange={e =>
+                dispatch({ type: 'email', payload: e.target.value })
+              }
             />
           </div>
           <div className="field">
