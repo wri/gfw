@@ -6,6 +6,7 @@ import * as treeLossRanked from './widgets/forest-change/tree-loss-ranked';
 import * as faoDeforest from './widgets/forest-change/fao-deforest';
 import * as faoReforest from './widgets/forest-change/fao-reforest';
 import * as firesAlerts from './widgets/forest-change/fires-alerts';
+import * as firesRanked from './widgets/forest-change/fires-ranked';
 import * as gladRanked from './widgets/forest-change/glad-ranked';
 import * as treeCoverGain from './widgets/forest-change/tree-cover-gain';
 import * as treeGainLocated from './widgets/forest-change/tree-gain-located';
@@ -51,6 +52,7 @@ export default {
   treeLossGlobal,
   treeLossRanked,
   firesAlerts,
+  firesRanked,
   faoDeforest,
   faoReforest,
   gladRanked,
