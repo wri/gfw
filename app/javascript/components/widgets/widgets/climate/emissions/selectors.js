@@ -123,7 +123,7 @@ export const parseSentence = createSelector(
           : `${format('.2r')(Math.abs(emissionFraction))}%`,
       value: `${format('.3s')(
         Math.abs(emissionsCount / (endYear - startYear))
-      )}tCO₂e/yr`,
+      )}tCO₂e`,
       startYear,
       endYear,
       type: emissionsCount >= 0 ? 'net source' : 'net sink'

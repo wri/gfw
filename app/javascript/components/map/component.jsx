@@ -48,7 +48,8 @@ class MapComponent extends Component {
     basemap: PropTypes.object,
     popupActions: PropTypes.array,
     onSelectBoundary: PropTypes.func,
-    onDrawComplete: PropTypes.func
+    onDrawComplete: PropTypes.func,
+    lang: PropTypes.string
   };
 
   static defaultProps = {
@@ -68,17 +69,19 @@ class MapComponent extends Component {
       stateBbox,
       geostoreBbox,
       interaction,
-      viewport
+      viewport,
+      lang
     } = this.props;
     const {
       mapLabels: prevMapLabels,
       mapRoads: prevMapRoads,
       stateBbox: prevStateBbox,
       geostoreBbox: prevGeostoreBbox,
-      interaction: prevInteraction
+      interaction: prevInteraction,
+      lang: prevLang
     } = prevProps;
 
-    if (mapLabels !== prevMapLabels) {
+    if (mapLabels !== prevMapLabels || lang !== prevLang) {
       this.setLabels();
     }
 
@@ -173,6 +176,7 @@ class MapComponent extends Component {
   };
 
   setLabels = () => {
+    const { lang } = this.props;
     const LABELS_GROUP = ['labels'];
     if (this.map) {
       const { mapLabels } = this.props;
@@ -198,6 +202,7 @@ class MapComponent extends Component {
       labelLayers.forEach(l => {
         const visibility = mapLabels ? 'visible' : 'none';
         this.map.setLayoutProperty(l.id, 'visibility', visibility);
+        this.map.setLayoutProperty(l.id, 'text-field', ['get', `name_${lang}`]);
       });
     }
   };

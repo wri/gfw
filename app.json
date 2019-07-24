@@ -47,6 +47,9 @@
     "COUNTRIES_PAGE_DATASET": {
       "required": true
     },
+    "DEMO_USER_TOKEN": {
+      "required": true
+    },
     "FEATURE_ENV": {
       "required": true
     },
