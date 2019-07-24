@@ -132,8 +132,11 @@ export const parseSentence = createSelector(
     const topCount = percentileCount / totalCount * 100;
     const countArea = sumBy(data, 'area') || 0;
     const formatType = countArea < 1 ? '.3r' : '.3s';
+    const timeFrame =
+      options.weeks && options.weeks.find(w => w.value === settings.weeks);
+
     const params = {
-      timeframe: options.weeks.find(w => w.value === settings.weeks).label,
+      timeframe: timeFrame && timeFrame.label,
       count: format(',')(totalCount),
       area: `${format(formatType)(countArea)}ha`,
       topPercent: `${format('.2r')(topCount)}%`,
