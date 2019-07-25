@@ -47,10 +47,10 @@ export const mobileSections = [
     Component: Explore
   },
   {
-    label: 'search',
-    slug: 'search',
-    icon: searchIcon,
-    Component: Search
+    label: 'my gfw',
+    slug: 'my-gfw',
+    icon: myGFWIcon,
+    Component: MyGFW
   },
   {
     label: 'Recent Satellite Imagery',
