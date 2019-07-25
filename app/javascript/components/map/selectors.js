@@ -272,7 +272,7 @@ export const getDatasetsWithConfig = createSelector(
               }
             }),
             ...((l.hasParamsTimeline || l.hasDecodeTimeline) && {
-              timelineConfig: {
+              timelineParams: {
                 ...timelineConfig,
                 ...(l.hasParamsTimeline && {
                   ...l.params
