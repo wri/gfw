@@ -75,6 +75,7 @@ class MapMenuMyGFW extends PureComponent {
           in-depth analysis of the area, as well as receiving email
           notifications when new deforestation alerts are available.
         </p>
+        {/* TODO: implement saveToAOIs prompts */}
         <Button theme="theme-button-small">Learn how</Button>
       </div>
     );
@@ -146,7 +147,10 @@ class MapMenuMyGFW extends PureComponent {
             const active = activeArea && activeArea.id === area.id;
             return (
               <div
-                className={cx('aoi-item', active && '--active')}
+                className={cx('aoi-item', {
+                  '--active': active,
+                  '--inactive': activeArea && !active
+                })}
                 key={area.name}
                 onClick={() => goToAOI(area)}
                 role="button"
@@ -161,6 +165,12 @@ class MapMenuMyGFW extends PureComponent {
                     <div className="aoi-tags">
                       <Icon icon={tagIcon} className="tag-icon" />
                       <p>{area.tags.join(', ')}</p>
+                    </div>
+                  )}
+                  {Math.random() < 0.4 && ( // TODO: get subscribed status from API
+                    <div className="aoi-subscribed">
+                      <Icon icon={tagIcon} className="subscribed-icon" />
+                      <p>Subscribed</p>
                     </div>
                   )}
                 </div>
@@ -197,6 +207,7 @@ class MapMenuMyGFW extends PureComponent {
         </div>
         <div className="my-gfw-footer">
           <a href="/my_gfw" className="edit-button">
+            {/* TODO: define text, update profile / user email (review design) */}
             Update profile
             <Icon icon={editIcon} className="edit-icon" />
           </a>

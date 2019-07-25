@@ -66,6 +66,10 @@
         border-bottom: 1px solid $green-gfw;
       }
 
+      &.--inactive {
+        opacity: 0.6;
+      }
+
       .edit-button {
         position: absolute;
         right: 10px;
@@ -84,7 +88,8 @@
         flex-direction: column;
         justify-content: center;
 
-        .aoi-tags {
+        .aoi-tags,
+        .aoi-subscribed {
           display: flex;
           align-items: center;
 
