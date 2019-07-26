@@ -229,6 +229,7 @@ class WidgetHeader extends PureComponent {
             !simple &&
             settings &&
             options &&
+            config.options &&
             !config.hideSettings &&
             this.renderSettingsButton()}
           <div className="small-options">
