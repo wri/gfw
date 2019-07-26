@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
 
-import { handleMapLatLonTrack } from 'app/analytics';
+import { handleMapLatLonTrack, track } from 'app/analytics';
 
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
@@ -109,27 +109,29 @@ class MapComponent extends Component {
     }
 
     // fit bounds on cluster if clicked
-    if (
-      interaction &&
-      !isEqual(interaction, prevInteraction) &&
-      interaction.data.cluster
-    ) {
-      const { data, layer, geometry } = interaction;
-      this.map
-        .getSource(layer.id)
-        .getClusterExpansionZoom(data.cluster_id, (err, newZoom) => {
-          if (err) return;
-          const { coordinates } = geometry;
-          const difference = Math.abs(viewport.zoom - newZoom);
-          setMapSettings({
-            center: {
-              lat: coordinates[1],
-              lng: coordinates[0]
-            },
-            zoom: newZoom,
-            transitionDuration: 400 + difference * 100
+    if (interaction && !isEqual(interaction, prevInteraction)) {
+      track('mapInteraction', {
+        label: interaction.label
+      });
+
+      if (interaction.data.cluster) {
+        const { data, layer, geometry } = interaction;
+        this.map
+          .getSource(layer.id)
+          .getClusterExpansionZoom(data.cluster_id, (err, newZoom) => {
+            if (err) return;
+            const { coordinates } = geometry;
+            const difference = Math.abs(viewport.zoom - newZoom);
+            setMapSettings({
+              center: {
+                lat: coordinates[1],
+                lng: coordinates[0]
+              },
+              zoom: newZoom,
+              transitionDuration: 400 + difference * 100
+            });
           });
-        });
+      }
     }
   }
 
