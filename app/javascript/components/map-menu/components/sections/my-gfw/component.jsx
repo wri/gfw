@@ -9,6 +9,7 @@ import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
 import tagIcon from 'assets/icons/tag.svg';
+import subscribedIcon from 'assets/icons/subscribed.svg';
 import logoutIcon from 'assets/icons/logout.svg';
 import screenImg1x from 'assets/images/aois/single A.png';
 import screenImg2x from 'assets/images/aois/single A @2x.png';
@@ -169,7 +170,7 @@ class MapMenuMyGFW extends PureComponent {
                   )}
                   {Math.random() < 0.4 && ( // TODO: get subscribed status from API
                     <div className="aoi-subscribed">
-                      <Icon icon={tagIcon} className="subscribed-icon" />
+                      <Icon icon={subscribedIcon} className="subscribed-icon" />
                       <p>Subscribed</p>
                     </div>
                   )}
