@@ -23,30 +23,21 @@ const socialButtons = [
 
 class MyGFWLogin extends PureComponent {
   render() {
-    const { className, plain, simple } = this.props;
+    const { className, plain } = this.props;
 
     return (
       <div className={cx('c-my-gfw', { '-plain': plain }, className)}>
-        {!simple && (
-          <p>
-            Log in is required so you can view, manage, and delete your
-            subscriptions. Questions?{' '}
-            <a href="mailto:gfw@wri.org">Contact us</a>
-          </p>
-        )}
-        <div className="social-btns">
-          {socialButtons.map(s => (
-            <a
-              key={s.value}
-              className={`social-btn -${s.value}`}
-              href={`${AUTH_URL}/${s.value}?applications=gfw&callbackUrl=${
-                window.location.href
-              }`}
-            >
-              Login with {s.label}
-            </a>
-          ))}
-        </div>
+        {socialButtons.map(s => (
+          <a
+            key={s.value}
+            className={`social-btn -${s.value}`}
+            href={`${AUTH_URL}/${s.value}?applications=gfw&callbackUrl=${
+              window.location.href
+            }`}
+          >
+            Login with {s.label}
+          </a>
+        ))}
       </div>
     );
   }
@@ -54,8 +45,7 @@ class MyGFWLogin extends PureComponent {
 
 MyGFWLogin.propTypes = {
   className: PropTypes.string,
-  plain: PropTypes.bool,
-  simple: PropTypes.bool
+  plain: PropTypes.bool
 };
 
 export default MyGFWLogin;

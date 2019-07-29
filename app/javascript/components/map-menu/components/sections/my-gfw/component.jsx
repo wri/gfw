@@ -57,7 +57,7 @@ class MapMenuMyGFW extends PureComponent {
           in-depth analysis of the area, as well as receiving email
           notifications when new deforestation alerts are available.
         </p>
-        <MyGFWLogin className="mygfw-login" simple />
+        <MyGFWLogin className="mygfw-login" />
       </div>
     );
   }
@@ -90,8 +90,7 @@ class MapMenuMyGFW extends PureComponent {
     const activeAreas =
       activeTags.length > 0
         ? areas.filter(
-          area =>
-            area.tags.filter(tag => activeTags.indexOf(tag) > -1).length > 0 // is any of the area.tags in activeTags?
+          area => area.tags.filter(tag => activeTags.includes(tag)).length > 0 // is any of the area.tags in activeTags?
         )
         : areas;
     return (
@@ -101,22 +100,23 @@ class MapMenuMyGFW extends PureComponent {
             <h3 className="title-create-aois">Areas of interest</h3>
           )}
           <div className="aoi-tags">
-            {activeTags.map(tag => (
-              <Pill
-                className="aoi-tag"
-                key={tag}
-                active
-                label={tag}
-                onRemove={() =>
-                  this.setState({
-                    activeTags: {
-                      ...this.state.activeTags,
-                      [tag]: !this.state.activeTags[tag]
-                    }
-                  })
-                }
-              />
-            ))}
+            {activeTags &&
+              activeTags.map(tag => (
+                <Pill
+                  className="aoi-tag"
+                  key={tag}
+                  active
+                  label={tag}
+                  onRemove={() =>
+                    this.setState({
+                      activeTags: {
+                        ...this.state.activeTags,
+                        [tag]: !this.state.activeTags[tag]
+                      }
+                    })
+                  }
+                />
+              ))}
             <Dropdown
               className="country-dropdown"
               theme="theme-dropdown-button theme-dropdown-button-small"
