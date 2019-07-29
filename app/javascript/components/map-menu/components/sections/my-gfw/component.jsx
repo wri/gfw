@@ -9,6 +9,7 @@ import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
 import tagIcon from 'assets/icons/tag.svg';
+import subscribedIcon from 'assets/icons/subscribed.svg';
 import logoutIcon from 'assets/icons/logout.svg';
 import screenImg1x from 'assets/images/aois/single A.png';
 import screenImg2x from 'assets/images/aois/single A @2x.png';
@@ -75,6 +76,7 @@ class MapMenuMyGFW extends PureComponent {
           in-depth analysis of the area, as well as receiving email
           notifications when new deforestation alerts are available.
         </p>
+        {/* TODO: implement saveToAOIs prompts */}
         <Button theme="theme-button-small">Learn how</Button>
       </div>
     );
@@ -151,14 +153,16 @@ class MapMenuMyGFW extends PureComponent {
               const active = activeArea && activeArea.id === area.id;
               return (
                 <div
-                  className={cx('aoi-item', active && '--active')}
+                  className={cx('aoi-item', {
+                    '--active': active,
+                    '--inactive': activeArea && !active
+                  })}
                   key={area.name}
                   onClick={() => goToAOI(area)}
                   role="button"
                   tabIndex={0}
                 >
                   <img src={area.image} alt={area.name} />
-                  {/* TODO: vertically align body with img */}
                   <div className="aoi-item-body">
                     <p className="aoi-title">{area.name}</p>
                     {area.tags &&
@@ -182,6 +186,12 @@ class MapMenuMyGFW extends PureComponent {
                       <Icon icon={editIcon} className="info-icon" />
                     </Button>
                   )}
+                  {Math.random() < 0.4 && ( // TODO: get subscribed status from API
+                    <div className="aoi-subscribed">
+                      <Icon icon={subscribedIcon} className="subscribed-icon" />
+                      <p>Subscribed</p>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -202,6 +212,7 @@ class MapMenuMyGFW extends PureComponent {
         </div>
         <div className="my-gfw-footer">
           <a href="/my-gfw" className="edit-button">
+            {/* TODO: define text, update profile / user email (review design) */}
             Update profile
             <Icon icon={editIcon} className="edit-icon" />
           </a>

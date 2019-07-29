@@ -4,16 +4,6 @@
   position: relative;
   height: 100%;
 
-  .aoi-tag {
-    display: inline-block;
-    margin-right: rem(5px);
-    color: $slate;
-
-    &.-active {
-      color: $white;
-    }
-  }
-
   .aoi-header {
     padding: rem(20px);
     padding-bottom: rem(5px);
@@ -76,6 +66,10 @@
         border-bottom: 1px solid $green-gfw;
       }
 
+      &.--inactive {
+        opacity: 0.6;
+      }
+
       .edit-button {
         position: absolute;
         right: 10px;
@@ -94,7 +88,8 @@
         flex-direction: column;
         justify-content: center;
 
-        .aoi-tags {
+        .aoi-tags,
+        .aoi-subscribed {
           display: flex;
           align-items: center;
 
@@ -150,6 +145,16 @@
           }
         }
       }
+    }
+  }
+
+  .c-pill {
+    display: inline-block;
+    margin-right: rem(5px);
+    color: $slate;
+
+    &.-active {
+      color: $white;
     }
   }
 
