@@ -172,6 +172,15 @@ class MapMenuMyGFW extends PureComponent {
                         <p>{area.tags.join(', ')}</p>
                       </div>
                     )}
+                    {Math.random() < 0.4 && ( // TODO: get subscribed status from API
+                      <div className="aoi-subscribed">
+                        <Icon
+                          icon={subscribedIcon}
+                          className="subscribed-icon"
+                        />
+                        <p>Subscribed</p>
+                      </div>
+                    )}
                   </div>
                   {active && (
                     <Button
@@ -185,12 +194,6 @@ class MapMenuMyGFW extends PureComponent {
                     >
                       <Icon icon={editIcon} className="info-icon" />
                     </Button>
-                  )}
-                  {Math.random() < 0.4 && ( // TODO: get subscribed status from API
-                    <div className="aoi-subscribed">
-                      <Icon icon={subscribedIcon} className="subscribed-icon" />
-                      <p>Subscribed</p>
-                    </div>
                   )}
                 </div>
               );
