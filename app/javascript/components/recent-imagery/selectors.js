@@ -38,8 +38,8 @@ export const getRecentImagerySettings = createSelector(
 );
 
 export const getPosition = createSelector([getMapViewport], viewport => ({
-  lat: viewport.longitude,
-  lng: viewport.latitude
+  lat: viewport.latitude,
+  lng: viewport.longitude
 }));
 
 export const getFilteredTiles = createSelector(
