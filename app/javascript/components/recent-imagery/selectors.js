@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import { checkLocationInsideBbox } from 'utils/geoms';
 
@@ -59,11 +58,6 @@ export const getFilteredTiles = createSelector(
     }));
   }
 );
-
-export const getTiles = createSelector([getFilteredTiles], data => {
-  if (!data || isEmpty(data)) return [];
-  return sortBy(data, d => new Date(d.dateTime)).reverse();
-});
 
 export const getActiveTile = createSelector(
   [getFilteredTiles, getRecentImagerySettings],
@@ -136,7 +130,7 @@ export const getRecentImageryProps = createStructuredSelector({
   zoom: getMapZoom,
   // data
   dataStatus: getDataStatus,
-  tiles: getTiles,
+  tiles: getFilteredTiles,
   activeTile: getActiveTile,
   positionInsideTile: getPositionInsideTile,
   location: getLocation,
