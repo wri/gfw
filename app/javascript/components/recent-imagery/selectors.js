@@ -87,7 +87,7 @@ export const getPositionInsideTile = createSelector(
   [getTileBounds, getPosition],
   (bounds, position) =>
     (bounds
-      ? checkLocationInsideBbox([position.lat, position.lng], bounds)
+      ? checkLocationInsideBbox([position.lng, position.lat], bounds)
       : true)
 );
 
