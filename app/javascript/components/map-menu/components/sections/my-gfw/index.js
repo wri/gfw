@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { clearActiveArea } from 'providers/areas-provider/actions';
 import {
   goToAOI,
   setSaveAOISettings
@@ -23,5 +24,6 @@ MyGFWMenu.propTypes = {};
 export default connect(mapStateToProps, {
   onInfoClick: setModalMetaSettings,
   onEditClick: setSaveAOISettings,
-  goToAOI
+  goToAOI,
+  clearActiveArea
 })(MyGFWMenu);

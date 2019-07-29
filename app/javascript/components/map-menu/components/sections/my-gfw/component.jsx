@@ -43,6 +43,15 @@ class MapMenuMyGFW extends PureComponent {
     this.setTags();
   }
 
+  componentDidUpdate(prevProps) {
+    const { location, clearActiveArea } = this.props;
+    const { location: prevLocation } = prevProps;
+
+    if (location.type !== 'aoi' && prevLocation.type === 'aoi') {
+      clearActiveArea();
+    }
+  }
+
   renderLoginWindow() {
     const { isDesktop } = this.props;
     return (
@@ -149,7 +158,7 @@ class MapMenuMyGFW extends PureComponent {
         </div>
         <div className="aoi-items">
           {activeAreas &&
-            activeAreas.map(area => {
+            activeAreas.map((area, i) => {
               const active = activeArea && activeArea.id === area.id;
               return (
                 <div
@@ -172,7 +181,7 @@ class MapMenuMyGFW extends PureComponent {
                         <p>{area.tags.join(', ')}</p>
                       </div>
                     )}
-                    {Math.random() < 0.4 && ( // TODO: get subscribed status from API
+                    {(i + 1) % 3 === 0 && ( // TODO: get subscribed status from API
                       <div className="aoi-subscribed">
                         <Icon
                           icon={subscribedIcon}
@@ -257,7 +266,9 @@ MapMenuMyGFW.propTypes = {
   areas: PropTypes.array,
   activeArea: PropTypes.object,
   goToAOI: PropTypes.func,
-  onEditClick: PropTypes.func
+  onEditClick: PropTypes.func,
+  clearActiveArea: PropTypes.func,
+  location: PropTypes.obj
 };
 
 export default MapMenuMyGFW;
