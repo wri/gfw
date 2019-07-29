@@ -65,11 +65,11 @@ export const deleteAOI = createThunkAction(
   data => (dispatch, getState) => {
     const { areas } = getState();
     const { activeArea, data: aois } = areas || {};
-    const { id: AoiId, geostore } = activeArea;
+    const { id, geostore } = activeArea;
     const { userData } = data;
     const token = userData.token || process.env.DEMO_USER_TOKEN;
 
-    deleteAreaProvider(token, AoiId)
+    deleteAreaProvider(token, id)
       .then(response => {
         if (
           response.status &&

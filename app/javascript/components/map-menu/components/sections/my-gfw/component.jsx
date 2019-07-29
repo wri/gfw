@@ -119,11 +119,15 @@ class MapMenuMyGFW extends PureComponent {
               className="country-dropdown"
               theme="theme-dropdown-button theme-dropdown-button-small"
               placeholder={
-                activeTags.length > 0 ? 'Add more tags' : 'Filter by tags'
+                activeTags && activeTags.length > 0
+                  ? 'Add more tags'
+                  : 'Filter by tags'
               }
               noItemsFound="No tags found"
               noSelectedValue={
-                activeTags.length > 0 ? 'Add more tags' : 'Filter by tags'
+                activeTags && activeTags.length > 0
+                  ? 'Add more tags'
+                  : 'Filter by tags'
               }
               options={Object.keys(this.state.activeTags).map(tag => ({
                 label: tag,
@@ -142,44 +146,45 @@ class MapMenuMyGFW extends PureComponent {
           </div>
         </div>
         <div className="aoi-items">
-          {activeAreas.map(area => {
-            const active = activeArea && activeArea.id === area.id;
-            return (
-              <div
-                className={cx('aoi-item', active && '--active')}
-                key={area.name}
-                onClick={() => goToAOI(area)}
-                role="button"
-                tabIndex={0}
-              >
-                <img src={area.image} alt={area.name} />
-                {/* TODO: vertically align body with img */}
-                <div className="aoi-item-body">
-                  <p className="aoi-title">{area.name}</p>
-                  {area.tags &&
-                    area.tags.length > 0 && (
-                    <div className="aoi-tags">
-                      <Icon icon={tagIcon} className="tag-icon" />
-                      <p>{area.tags.join(', ')}</p>
-                    </div>
+          {activeAreas &&
+            activeAreas.map(area => {
+              const active = activeArea && activeArea.id === area.id;
+              return (
+                <div
+                  className={cx('aoi-item', active && '--active')}
+                  key={area.name}
+                  onClick={() => goToAOI(area)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <img src={area.image} alt={area.name} />
+                  {/* TODO: vertically align body with img */}
+                  <div className="aoi-item-body">
+                    <p className="aoi-title">{area.name}</p>
+                    {area.tags &&
+                      area.tags.length > 0 && (
+                      <div className="aoi-tags">
+                        <Icon icon={tagIcon} className="tag-icon" />
+                        <p>{area.tags.join(', ')}</p>
+                      </div>
+                    )}
+                  </div>
+                  {active && (
+                    <Button
+                      className="edit-button"
+                      theme="theme-button-small square theme-button-clear"
+                      onClick={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onEditClick({ open: true });
+                      }}
+                    >
+                      <Icon icon={editIcon} className="info-icon" />
+                    </Button>
                   )}
                 </div>
-                {active && (
-                  <Button
-                    className="edit-button"
-                    theme="theme-button-small square theme-button-clear"
-                    onClick={e => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onEditClick({ open: true });
-                    }}
-                  >
-                    <Icon icon={editIcon} className="info-icon" />
-                  </Button>
-                )}
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     );
@@ -196,7 +201,7 @@ class MapMenuMyGFW extends PureComponent {
             : this.renderNoAreas()}
         </div>
         <div className="my-gfw-footer">
-          <a href="/my_gfw" className="edit-button">
+          <a href="/my-gfw" className="edit-button">
             Update profile
             <Icon icon={editIcon} className="edit-icon" />
           </a>
@@ -215,7 +220,7 @@ class MapMenuMyGFW extends PureComponent {
 
   render() {
     const { loggedIn, areas } = this.props;
-
+    // TODO; componentize
     return (
       <div className="c-map-menu-my-gfw">
         {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}

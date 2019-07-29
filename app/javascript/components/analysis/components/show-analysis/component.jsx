@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
-import cx from 'classnames';
 import { track } from 'app/analytics';
 
 import Icon from 'components/ui/icon';
@@ -91,7 +90,7 @@ class ShowAnalysis extends PureComponent {
 
     return (
       <div className="c-show-analysis">
-        <div className={cx('c-show-analysis-body')}>
+        <div className="show-analysis-body">
           <div className="draw-title">
             <Button
               className="title-btn left"

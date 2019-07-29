@@ -4,6 +4,16 @@
   position: relative;
   height: 100%;
 
+  .aoi-tag {
+    display: inline-block;
+    margin-right: rem(5px);
+    color: $slate;
+
+    &.-active {
+      color: $white;
+    }
+  }
+
   .aoi-header {
     padding: rem(20px);
     padding-bottom: rem(5px);
@@ -140,16 +150,6 @@
           }
         }
       }
-    }
-  }
-
-  .c-pill {
-    display: inline-block;
-    margin-right: rem(5px);
-    color: $slate;
-
-    &.-active {
-      color: $white;
     }
   }
 

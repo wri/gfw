@@ -26,7 +26,8 @@ class AnalysisComponent extends PureComponent {
       clearActiveArea,
       endpoints,
       widgetLayers,
-      embed
+      embed,
+      setShareModal
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -110,14 +111,27 @@ class AnalysisComponent extends PureComponent {
                   className="analysis-btn dashboard"
                   theme="theme-button-light"
                   link={activeArea && `/dashboards/aoi/${activeArea.id}`}
-                  target="_blank"
                   tooltip={{ text: 'Go to Areas of Interest dashboard' }}
                 >
                     DASHBOARD
                 </Button>
                 <Button
                   className="analysis-btn dashboard"
-                  // onClick={() => setShareModal && setShareModal(shareData)}
+                  onClick={() =>
+                    setShareModal({
+                      title: 'Share this view',
+                      shareUrl: window.location.href.includes('embed')
+                        ? window.location.href.replace('/embed', '')
+                        : window.location.href,
+                      embedUrl: window.location.href.includes('embed')
+                        ? window.location.href
+                        : window.location.href.replace('/map', '/embed/map'),
+                      embedSettings: {
+                        width: 670,
+                        height: 490
+                      }
+                    })
+                  }
                   tooltip={{ text: 'Share or embed this area' }}
                 >
                     Share area
@@ -156,7 +170,8 @@ AnalysisComponent.propTypes = {
   embed: PropTypes.bool,
   setSubscribeSettings: PropTypes.func,
   setSaveAOISettings: PropTypes.func,
-  clearActiveArea: PropTypes.func
+  clearActiveArea: PropTypes.func,
+  setShareModal: PropTypes.func
 };
 
 export default AnalysisComponent;

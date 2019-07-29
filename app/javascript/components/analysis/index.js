@@ -8,6 +8,7 @@ import reducerRegistry from 'app/registry';
 import { setSubscribeSettings } from 'components/modals/subscribe/actions';
 import { setSaveAOISettings } from 'components/modals/save-aoi/actions';
 import { clearActiveArea } from 'providers/areas-provider/actions';
+import { setShareModal } from 'components/modals/share/share-actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getAnalysisProps } from './selectors';
@@ -41,8 +42,8 @@ class AnalysisContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    // get analysis if location changes
     const { location, endpoints } = this.props;
+    // get analysis if location changes
     if (
       location.type &&
       location.adm0 &&
@@ -101,5 +102,6 @@ export default connect(getAnalysisProps, {
   ...actions,
   setSubscribeSettings,
   setSaveAOISettings,
-  clearActiveArea
+  clearActiveArea,
+  setShareModal
 })(AnalysisContainer);

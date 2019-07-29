@@ -8,8 +8,6 @@ import Loader from 'components/ui/loader';
 import Modal from '../modal';
 import SaveAOIForm from './components/save-aoi-form';
 
-import './styles.scss';
-
 class ModalSaveAOI extends PureComponent {
   handleCloseModal = () => {
     const { setSaveAOISettings, resetSaveAOI, saving } = this.props;

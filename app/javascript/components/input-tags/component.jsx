@@ -32,8 +32,8 @@ function InputTags() {
   };
 
   return (
-    <div className="input-tag">
-      <ul className="input-tag__tags">
+    <div className="c-input-tags">
+      <ul className="tags">
         {tags.map((tag, i) => (
           <li key={tag}>
             {tag}
@@ -47,7 +47,7 @@ function InputTags() {
             </button>
           </li>
         ))}
-        <li className="input-tag__tags__input">
+        <li className="tags-input">
           <input type="text" onKeyDown={inputKeyDown} ref={inputRef} />
         </li>
       </ul>
