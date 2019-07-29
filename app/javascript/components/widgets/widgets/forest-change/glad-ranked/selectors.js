@@ -54,7 +54,9 @@ export const parseList = createSelector(
       groupedAlerts &&
       Object.keys(groupedAlerts).map(k => {
         const region = meta.find(l => parseInt(k, 10) === l.value);
-        const regionExtent = extent.find(a => a[groupKey] === parseInt(k, 10));
+        const regionExtent = extent.find(
+          a => parseInt(a[groupKey], 10) === parseInt(k, 10)
+        );
         const regionData = groupedAlerts[k];
         const countsArea = sumBy(regionData, 'area_ha') || 0;
         const counts = sumBy(regionData, 'alerts') || 0;

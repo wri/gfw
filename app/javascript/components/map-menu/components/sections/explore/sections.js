@@ -150,8 +150,8 @@ export const topics = {
           },
           // biodiversity intactness
           {
-            dataset: 'fee5fc38-7a62-49b8-8874-dfa31cbb1ef6',
-            layers: ['43a205fe-aad3-4db1-8807-c399a3264349'],
+            dataset: '6a1afe78-0813-45c4-822f-b52fe10f93f2',
+            layers: ['647998c2-cdf6-43fd-bbff-15358f111fe9'],
             opacity: 1,
             visibility: true
           }
