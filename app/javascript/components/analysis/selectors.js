@@ -135,6 +135,7 @@ export const getLayerEndpoints = createSelector(
         .filter(
           l =>
             l.analysisConfig &&
+            !l.analysisDisabled &&
             (!hasWidgetLayers || !widgetLayers.includes(l.id)) &&
             (!l.admLevels || l.admLevels.includes(admLevel))
         )
