@@ -110,7 +110,7 @@ const setMapInteractionSelected = (state, { payload }) => ({
   }
 });
 
-const clearMapInteractions = state => ({
+const clearMapInteractions = (state, payload) => ({
   ...state,
   data: {
     ...state.data,
@@ -118,7 +118,8 @@ const clearMapInteractions = state => ({
       interactions: {},
       latlng: null,
       selected: ''
-    }
+    },
+    clicks: payload
   }
 });
 
