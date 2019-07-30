@@ -17,8 +17,7 @@ class Timeline extends Component {
       trimEndDate,
       handleOnDateChange,
       dateFormat,
-      interval,
-      canPlay
+      interval
     } = this.props;
 
     return (
@@ -65,7 +64,6 @@ class Timeline extends Component {
         )}
         <div className="range-slider">
           <LegendItemTimeStep
-            className={`range ${canPlay ? 'can-play' : ''}`}
             {...this.props}
             handleStyle={{
               backgroundColor: 'white',

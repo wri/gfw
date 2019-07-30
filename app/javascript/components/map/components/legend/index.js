@@ -111,7 +111,6 @@ class Legend extends PureComponent {
           };
           dataset.timelineParams.startDate = dates[0];
           dataset.timelineParams.endDate = dates[1];
-          // dataset.timelineParams.trimEndDate = dates[2];
         }
         return dataset;
       })

@@ -24,7 +24,7 @@ import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
 
 import './styles.scss';
-import './themes/wri-api-legend.scss';
+import './themes/vizzuality-legend.scss';
 
 class MapLegend extends Component {
   render() {
@@ -73,7 +73,12 @@ class MapLegend extends Component {
 
               const activeLayer =
                   (layers && layers.find(l => l.active)) || [];
-              const { params, moreInfo, paramsSelectorConfig } =
+              const {
+                params,
+                moreInfo,
+                paramsSelectorConfig,
+                timelineParams
+              } =
                   activeLayer || {};
 
               return (
@@ -142,8 +147,8 @@ class MapLegend extends Component {
                           ) : null)
                       )}
                   {(isSelectorLayer || isMultiSelectorLayer) &&
-                    selectorLayerConfig && (
-                    <LayerSelectorMenu
+                      selectorLayerConfig && (
+                      <LayerSelectorMenu
                       className="layer-selector"
                       layerGroup={lg}
                       name={name}
@@ -158,7 +163,12 @@ class MapLegend extends Component {
                       {...statementConfig}
                     />
                   )}
-                  <Timeline handleChange={onChangeTimeline} />
+                  {timelineParams && (
+                    <Timeline
+                      {...timelineParams}
+                      handleChange={onChangeTimeline}
+                    />
+                  )}
                   {isMultiLayer && (
                     <LayerListMenu
                       className="sub-layer-menu"
