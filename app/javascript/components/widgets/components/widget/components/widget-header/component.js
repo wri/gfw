@@ -171,7 +171,7 @@ class WidgetHeader extends PureComponent {
           }
         });
       });
-
+    const filenames = [];
     const zip = new JSZip();
     urls.forEach((url, index) => {
       let filename;
@@ -179,8 +179,13 @@ class WidgetHeader extends PureComponent {
         filename = url
           .split('?')[0]
           .split('/')
-          .pop()
-          .concat('.csv');
+          .pop();
+        if (filenames.includes(filename)) {
+          filename = filename.concat(`-${index}.csv`);
+        } else {
+          filenames.push(filename);
+          filename = filename.concat('.csv');
+        }
       } catch (error) {
         filename = `file ${index + 1}.csv`;
       }
