@@ -307,7 +307,7 @@ export const getLayerGroups = createSelector(
         (dataset && dataset.layers.find(l => l.active)) || {};
       return {
         ...dataset,
-        metadata: metadata || dataset.metadata
+        metadata: metadata || (dataset && dataset.metadata)
       };
     });
   }
@@ -319,7 +319,7 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
 
   return sortBy(
     flatten(layerGroups.map(d => d.layers))
-      .filter(l => l.active && (!l.isRecentImagery || l.params.url))
+      .filter(l => l && l.active && (!l.isRecentImagery || l.params.url))
       .map((l, i) => {
         let zIndex = 1000 - i;
         if (l.isRecentImagery) zIndex = 500;

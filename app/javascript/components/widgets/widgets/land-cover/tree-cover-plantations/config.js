@@ -4,9 +4,6 @@ export default {
   categories: ['land-cover'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
-  // options: {
-  //   types: true
-  // },
   colors: 'plantations',
   datasets: [
     {
