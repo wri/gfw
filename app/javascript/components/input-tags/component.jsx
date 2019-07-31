@@ -34,19 +34,20 @@ function InputTags(props) {
   return (
     <div className="c-input-tags">
       <ul className="tags">
-        {tags.map((tag, i) => (
-          <li key={tag}>
-            {tag}
-            <button
-              type="button"
-              onClick={() => {
-                removeTag(i);
-              }}
-            >
-              +
-            </button>
-          </li>
-        ))}
+        {tags &&
+          tags.map((tag, i) => (
+            <li key={tag}>
+              {tag}
+              <button
+                type="button"
+                onClick={() => {
+                  removeTag(i);
+                }}
+              >
+                +
+              </button>
+            </li>
+          ))}
         <li className="tags-input">
           <input type="text" onKeyDown={inputKeyDown} ref={inputRef} />
         </li>

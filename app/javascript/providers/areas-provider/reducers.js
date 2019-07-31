@@ -1,3 +1,4 @@
+import findIndex from 'lodash/findIndex';
 import * as actions from './actions';
 
 export const initialState = {
@@ -10,10 +11,20 @@ const setAreas = (state, { payload }) => ({
   data: payload
 });
 
-const setArea = (state, { payload }) => ({
-  ...state,
-  data: [...state.data.filter(area => area.id !== payload.id), payload]
-});
+const setArea = (state, { payload }) => {
+  const { data: areas } = state;
+  const index = findIndex(areas, ['id', payload.id]);
+  const data = [...areas];
+  if (index > -1) {
+    data.splice(index, 1, payload); // substitution
+  } else {
+    data.push(payload); // addition
+  }
+  return {
+    ...state,
+    data
+  };
+};
 
 const setActiveArea = (state, { payload }) => ({
   ...state,
