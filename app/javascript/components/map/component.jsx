@@ -73,7 +73,9 @@ class MapComponent extends Component {
       geostoreBbox,
       interaction,
       viewport,
-      lang
+      lang,
+      drawing,
+      clearMapInteractions
     } = this.props;
     const {
       mapLabels: prevMapLabels,
@@ -81,8 +83,17 @@ class MapComponent extends Component {
       stateBbox: prevStateBbox,
       geostoreBbox: prevGeostoreBbox,
       interaction: prevInteraction,
-      lang: prevLang
+      lang: prevLang,
+      drawing: prevDrawing
     } = prevProps;
+
+    if (!drawing && prevDrawing) {
+      this.resetClicks();
+    }
+
+    if (drawing && !prevDrawing) {
+      clearMapInteractions();
+    }
 
     if (mapLabels !== prevMapLabels || lang !== prevLang) {
       this.setLabels();
@@ -95,17 +106,13 @@ class MapComponent extends Component {
     // if bbox is change by action fit bounds
     if (canBound && stateBbox !== prevStateBbox) {
       // eslint-disable-next-line
-      this.setState({
-        ...this.state,
-        bounds: { bbox: stateBbox, options: { padding: 50 } }
-      });
+      this.setState({ bounds: { bbox: stateBbox, options: { padding: 50 } } });
     }
 
     // if geostore changes
     if (canBound && geostoreBbox && geostoreBbox !== prevGeostoreBbox) {
       // eslint-disable-next-line
       this.setState({
-        ...this.state,
         bounds: { bbox: geostoreBbox, options: { padding: 50 } }
       });
     }
@@ -179,12 +186,10 @@ class MapComponent extends Component {
       const { features, lngLat } = e;
       const { setMapInteractions } = this.props;
       setMapInteractions({ features, lngLat });
+    } else if (drawing) {
+      this.setState({ clicks: this.state.clicks + 1 });
     } else {
-      clearMapInteractions(this.state.clicks);
-      this.setState({
-        ...this.state,
-        clicks: this.state.clicks + 1
-      });
+      clearMapInteractions();
     }
   };
 
@@ -251,19 +256,7 @@ class MapComponent extends Component {
   };
 
   resetClicks() {
-    this.props.clearMapInteractions(0);
-    this.setState({
-      ...this.state,
-      clicks: 0
-    });
-  }
-
-  componentWillUpdate(prevProps) {
-    const { drawing } = this.props;
-    const { drawing: prevDrawing } = prevProps;
-    if (!drawing && prevDrawing) {
-      this.resetClicks();
-    }
+    this.setState({ clicks: 0 });
   }
 
   render() {
@@ -290,7 +283,8 @@ class MapComponent extends Component {
       >
         <Tooltip
           theme="tip"
-          hideOnClick
+          title="GFW Interactive Map"
+          hideOnClick={false}
           html={
             <Tip
               text={
@@ -304,8 +298,7 @@ class MapComponent extends Component {
           position="top"
           followCursor
           animateFill={false}
-          // disabled={false}
-          open={drawing}
+          disabled={!drawing}
         >
           <Map
             mapStyle={mapStyle}
@@ -318,6 +311,12 @@ class MapComponent extends Component {
             attributionControl={false}
             minZoom={minZoom}
             maxZoom={maxZoom}
+            getCursor={({ isHovering, isDragging }) => {
+              if (drawing) return 'crosshair';
+              else if (isDragging) return 'grabbing';
+              else if (isHovering) return 'pointer';
+              return 'grab';
+            }}
           >
             {map => (
               <Fragment>
