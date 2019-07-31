@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import './styles.scss';
 
-function InputTags() {
-  const [tags, setTags] = useState([]);
+function InputTags(props) {
+  const { tags, onChange: setTags } = props;
   const inputRef = useRef(null);
 
   const removeTag = i => {
@@ -22,7 +23,6 @@ function InputTags() {
         return;
       }
       setTags([...tags, val]);
-      // this.tagInput.value = null;
       if (inputRef.current) {
         inputRef.current.value = '';
       }
@@ -54,5 +54,10 @@ function InputTags() {
     </div>
   );
 }
+
+InputTags.propTypes = {
+  tags: PropTypes.array,
+  onChange: PropTypes.func
+};
 
 export default InputTags;

@@ -33,6 +33,12 @@ function reducer(state, action) {
         nameError: !payload
       };
     }
+    case 'tags': {
+      return {
+        ...state,
+        tags: payload
+      };
+    }
     case 'email': {
       return {
         ...state,
@@ -168,6 +174,7 @@ function SaveAOIForm(props) {
     lang,
     name,
     email,
+    tags,
     emailError,
     nameError,
     receiveAlerts,
@@ -190,7 +197,10 @@ function SaveAOIForm(props) {
         <span className="form-title">
           Assign tags to organize and group areas
         </span>
-        <InputTags />
+        <InputTags
+          tags={tags}
+          onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
+        />
       </div>
       <div className={cx('field')}>
         <span className="form-toggle">
@@ -234,7 +244,7 @@ function SaveAOIForm(props) {
               theme="theme-dropdown-native-form"
               options={getLanguages()}
               value={lang}
-              onChange={newLang => reducer({ type: 'lang', payload: newLang })}
+              onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
               native
             />
           </div>
