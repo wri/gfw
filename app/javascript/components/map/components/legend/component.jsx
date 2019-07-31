@@ -105,14 +105,12 @@ class MapLegend extends Component {
                     >
                       <LegendItemButtonOpacity
                         className="-plain"
-                        handleStyle={[
-                          {
-                            backgroundColor: '#fff',
-                            borderRadius: '4px',
-                            border: 0,
-                            boxShadow: 'rgba(0, 0, 0, 0.29) 0px 1px 2px 0px'
-                          }
-                        ]}
+                        handleStyle={{
+                          backgroundColor: '#fff',
+                          borderRadius: '4px',
+                          border: 0,
+                          boxShadow: 'rgba(0, 0, 0, 0.29) 0px 1px 2px 0px'
+                        }}
                         trackStyle={[
                           { backgroundColor: color || '#97be32' },
                           { backgroundColor: '#d6d6d9' }

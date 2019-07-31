@@ -121,6 +121,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       decode_config.map(p => p.key).includes('startDate');
                     const timelineConfig = timeline_config && {
                       ...timeline_config,
+                      interval: 'days',
                       railStyle: {
                         background: '#d6d6d9',
                         borderRadius: '0px'
