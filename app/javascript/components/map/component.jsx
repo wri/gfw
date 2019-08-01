@@ -6,6 +6,8 @@ import cx from 'classnames';
 
 import { handleMapLatLonTrack, track } from 'app/analytics';
 
+import { Tooltip } from 'react-tippy';
+import Tip from 'components/ui/tip';
 import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Map from 'components/ui/map';
@@ -57,7 +59,8 @@ class MapComponent extends Component {
   };
 
   state = {
-    bounds: {}
+    bounds: {},
+    drawClicks: 0
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -70,7 +73,9 @@ class MapComponent extends Component {
       geostoreBbox,
       interaction,
       viewport,
-      lang
+      lang,
+      drawing,
+      clearMapInteractions
     } = this.props;
     const {
       mapLabels: prevMapLabels,
@@ -78,8 +83,17 @@ class MapComponent extends Component {
       stateBbox: prevStateBbox,
       geostoreBbox: prevGeostoreBbox,
       interaction: prevInteraction,
-      lang: prevLang
+      lang: prevLang,
+      drawing: prevDrawing
     } = prevProps;
+
+    if (!drawing && prevDrawing) {
+      this.resetClicks();
+    }
+
+    if (drawing && !prevDrawing) {
+      clearMapInteractions();
+    }
 
     if (mapLabels !== prevMapLabels || lang !== prevLang) {
       this.setLabels();
@@ -106,6 +120,8 @@ class MapComponent extends Component {
     // reset canBound after fitting bounds
     if (this.state.bounds && !isEqual(this.state.bounds, prevState.bounds)) {
       setMapSettings({ canBound: false, bbox: [] });
+      // eslint-disable-next-line
+      this.setState({ bounds: {} });
     }
 
     // fit bounds on cluster if clicked
@@ -172,6 +188,8 @@ class MapComponent extends Component {
       const { features, lngLat } = e;
       const { setMapInteractions } = this.props;
       setMapInteractions({ features, lngLat });
+    } else if (drawing) {
+      this.setState({ drawClicks: this.state.drawClicks + 1 });
     } else {
       clearMapInteractions();
     }
@@ -239,6 +257,10 @@ class MapComponent extends Component {
     }
   };
 
+  resetClicks() {
+    this.setState({ drawClicks: 0 });
+  }
+
   render() {
     const {
       className,
@@ -256,50 +278,76 @@ class MapComponent extends Component {
       onDrawComplete
     } = this.props;
 
+    let tipText;
+    if (this.state.drawClicks <= 0) {
+      tipText = 'Click an origin point to start drawing.';
+    } else if (this.state.drawClicks < 3) {
+      tipText = 'Click to add another point.';
+    } else {
+      tipText = 'Click to add a point or close shape.';
+    }
+
     return (
       <div
         className={cx('c-map', { 'no-pointer-events': drawing }, className)}
         style={{ backgroundColor: basemap && basemap.color }}
       >
-        <Map
-          mapStyle={mapStyle}
-          viewport={viewport}
-          bounds={this.state.bounds}
-          onViewportChange={this.onViewportChange}
-          onClick={this.onClick}
-          onLoad={this.onLoad}
-          interactiveLayerIds={interactiveLayerIds}
-          attributionControl={false}
-          minZoom={minZoom}
-          maxZoom={maxZoom}
+        <Tooltip
+          theme="tip"
+          title="GFW Interactive Map"
+          hideOnClick={false}
+          html={<Tip text={tipText} className="tooltip-dark" />}
+          position="top"
+          followCursor
+          animateFill={false}
+          disabled={!drawing}
         >
-          {map => (
-            <Fragment>
-              {/* POPUP */}
-              <Popup
-                map={this.map}
-                buttons={popupActions}
-                onSelectBoundary={onSelectBoundary}
-              />
-              {/* LAYER MANAGER */}
-              <LayerManager map={map} />
-              {/* DRAWING */}
-              <Draw
-                map={map}
-                drawing={drawing}
-                onDrawComplete={onDrawComplete}
-              />
-              {/* SCALE */}
-              <Scale className="map-scale" map={map} viewport={viewport} />
-              {/* ATTRIBUTIONS */}
-              <Attributions
-                className="map-attributions"
-                map={map}
-                viewport={viewport}
-              />
-            </Fragment>
-          )}
-        </Map>
+          <Map
+            mapStyle={mapStyle}
+            viewport={viewport}
+            bounds={this.state.bounds}
+            onViewportChange={this.onViewportChange}
+            onClick={this.onClick}
+            onLoad={this.onLoad}
+            interactiveLayerIds={interactiveLayerIds}
+            attributionControl={false}
+            minZoom={minZoom}
+            maxZoom={maxZoom}
+            getCursor={({ isHovering, isDragging }) => {
+              if (drawing) return 'crosshair';
+              else if (isDragging) return 'grabbing';
+              else if (isHovering) return 'pointer';
+              return 'grab';
+            }}
+          >
+            {map => (
+              <Fragment>
+                {/* POPUP */}
+                <Popup
+                  map={this.map}
+                  buttons={popupActions}
+                  onSelectBoundary={onSelectBoundary}
+                />
+                {/* LAYER MANAGER */}
+                <LayerManager map={map} />
+                {/* DRAWING */}
+                <Draw
+                  map={map}
+                  drawing={drawing}
+                  onDrawComplete={onDrawComplete}
+                />
+                {/* SCALE */}
+                <Scale className="map-scale" map={map} viewport={viewport} />
+                {/* ATTRIBUTIONS */}
+                <Attributions
+                  className="map-attributions"
+                  map={map}
+                  viewport={viewport}
+                />
+              </Fragment>
+            )}
+          </Map>
+        </Tooltip>
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         {loading && (
           <Loader
