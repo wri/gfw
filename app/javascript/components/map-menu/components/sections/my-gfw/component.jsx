@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import sortBy from 'lodash/sortBy';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Button from 'components/ui/button/button-component';
@@ -96,12 +97,14 @@ class MapMenuMyGFW extends PureComponent {
     const activeTags = Object.keys(this.state.activeTags).filter(
       tag => this.state.activeTags[tag]
     );
-    const activeAreas =
+    const activeAreas = sortBy(
       activeTags.length > 0
         ? areas.filter(
           area => area.tags.filter(tag => activeTags.includes(tag)).length > 0 // is any of the area.tags in activeTags?
         )
-        : areas;
+        : areas,
+      area => area.name.toLowerCase()
+    );
     return (
       <div>
         <div className="aoi-header">

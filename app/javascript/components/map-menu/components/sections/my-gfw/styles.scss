@@ -59,6 +59,8 @@
       cursor: pointer;
       outline: none;
       padding: rem(20px);
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
 
       &.--active {
         background-color: #f6f6f4;
