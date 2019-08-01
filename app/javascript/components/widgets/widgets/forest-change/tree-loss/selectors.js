@@ -41,14 +41,16 @@ export const parseData = createSelector(
   (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear } = settings;
-    return data
-      .filter(d => d.year >= startYear && d.year <= endYear)
-      .map(d => ({
+    return data.filter(d => d.year >= startYear && d.year <= endYear).map(d => {
+      const percentageLoss = (d.area && d.area && d.area / extent * 100) || 0;
+
+      return {
         ...d,
         area: d.area || 0,
         emissions: d.emissions || 0,
-        percentage: (d.area && d.area && d.area / extent * 100) || 0
-      }));
+        percentage: percentageLoss > 100 ? 100 : percentageLoss
+      };
+    });
   }
 );
 
