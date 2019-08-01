@@ -72,15 +72,17 @@ function reducer(state, action) {
     }
     case 'activeArea': {
       const { activeArea, email, lang } = payload;
+      const { name, tags, receiveAlerts, changesEmail, monthlyEmail } =
+        activeArea.attributes || activeArea || {};
       return {
         ...state,
-        name: activeArea.name,
-        tags: activeArea.tags,
+        name,
+        tags,
         email,
-        receiveAlerts: activeArea.receiveAlerts,
+        receiveAlerts,
         lang,
-        changesEmail: activeArea.changesEmail,
-        monthlyEmail: activeArea.monthlyEmail
+        changesEmail,
+        monthlyEmail
       };
     }
     default:
