@@ -97,7 +97,8 @@ export const getDataFromLayers = createSelector(
           if (!analysisConfig) {
             analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
           }
-          const { subKey, key, keys, service, unit } = analysisConfig || {};
+          const { subKey, key, keys, service, unit, dateFormat } =
+            analysisConfig || {};
           const dataByService = data[service] || {};
           const value = subKey
             ? dataByService[key] && dataByService[key][subKey]
@@ -117,6 +118,7 @@ export const getDataFromLayers = createSelector(
             value: keysValue || value || 0,
             downloadUrls: dataByService && dataByService.downloadUrls,
             unit,
+            dateFormat,
             color: l.color,
             ...params,
             ...decodeParams

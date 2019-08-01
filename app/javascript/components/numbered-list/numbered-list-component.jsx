@@ -45,7 +45,7 @@ class NumberedList extends PureComponent {
                         <div
                           className="item-bar -data"
                           style={{
-                            width: `${item.value}%`,
+                            width: `${item.value > 100 ? 100 : item.value}%`,
                             backgroundColor: item.color
                           }}
                         />

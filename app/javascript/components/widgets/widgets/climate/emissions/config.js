@@ -7,7 +7,6 @@ export default {
   metaKey: 'widget_historical_emissions',
   dataType: 'loss',
   colors: 'emissions',
-  hideSettings: true,
   sortOrder: {
     climate: 1
   },

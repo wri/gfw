@@ -8,7 +8,7 @@ export default {
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   options: {
-    forestTypes: ['ifl'],
+    forestTypes: ['ifl', 'primary_forest'],
     landCategories: true
   },
   colors: 'gain',
