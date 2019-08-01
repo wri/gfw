@@ -120,6 +120,8 @@ class MapComponent extends Component {
     // reset canBound after fitting bounds
     if (this.state.bounds && !isEqual(this.state.bounds, prevState.bounds)) {
       setMapSettings({ canBound: false, bbox: [] });
+      // eslint-disable-next-line
+      this.setState({ bounds: {} });
     }
 
     // fit bounds on cluster if clicked
