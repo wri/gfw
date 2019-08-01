@@ -60,7 +60,7 @@ class MapComponent extends Component {
 
   state = {
     bounds: {},
-    clicks: 0
+    drawClicks: 0
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -187,7 +187,7 @@ class MapComponent extends Component {
       const { setMapInteractions } = this.props;
       setMapInteractions({ features, lngLat });
     } else if (drawing) {
-      this.setState({ clicks: this.state.clicks + 1 });
+      this.setState({ drawClicks: this.state.drawClicks + 1 });
     } else {
       clearMapInteractions();
     }
@@ -256,7 +256,7 @@ class MapComponent extends Component {
   };
 
   resetClicks() {
-    this.setState({ clicks: 0 });
+    this.setState({ drawClicks: 0 });
   }
 
   render() {
@@ -276,6 +276,15 @@ class MapComponent extends Component {
       onDrawComplete
     } = this.props;
 
+    let tipText;
+    if (this.state.drawClicks <= 0) {
+      tipText = 'Click an origin point to start drawing.';
+    } else if (this.state.drawClicks < 3) {
+      tipText = 'Click to add another point.';
+    } else {
+      tipText = 'Click to add a point or close shape.';
+    }
+
     return (
       <div
         className={cx('c-map', { 'no-pointer-events': drawing }, className)}
@@ -285,16 +294,7 @@ class MapComponent extends Component {
           theme="tip"
           title="GFW Interactive Map"
           hideOnClick={false}
-          html={
-            <Tip
-              text={
-                this.state.clicks > 0
-                  ? 'Click to add a point or close shape.'
-                  : 'Click an origin point to start drawing.'
-              }
-              className="tooltip-dark"
-            />
-          }
+          html={<Tip text={tipText} className="tooltip-dark" />}
           position="top"
           followCursor
           animateFill={false}
