@@ -37,14 +37,15 @@ export const mapData = createSelector(
         locationExtentById[0].extent;
       const percentage =
         loss && locationExtent ? loss / locationExtent * 100 : 0;
+      const normalPercentage = percentage > 100 ? 100 : percentage;
 
       const { payload, query, type } = location;
 
       return {
         label: (region && region.label) || '',
         loss,
-        percentage: percentage > 100 ? 100 : percentage,
-        value: settings.unit === 'ha' ? loss : percentage,
+        percentage: normalPercentage,
+        value: settings.unit === 'ha' ? loss : normalPercentage,
         path: {
           type,
           payload: {
