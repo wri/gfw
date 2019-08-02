@@ -91,15 +91,7 @@ function reducer(state, action) {
 }
 
 function SaveAOIForm(props) {
-  const {
-    activeArea,
-    userData,
-    saving,
-    error,
-    saveAOI,
-    deleteAOI,
-    setSaveAOISettings
-  } = props;
+  const { activeArea, userData, saving, error, saveAOI, deleteAOI } = props;
 
   const [form, dispatch] = useReducer(reducer, {
     name: props.locationName,
@@ -112,13 +104,6 @@ function SaveAOIForm(props) {
     changesEmail: true,
     monthlyEmail: true
   });
-
-  useEffect(
-    () => {
-      setSaveAOISettings(form);
-    },
-    [form, setSaveAOISettings]
-  );
 
   useEffect(
     () => {
@@ -272,7 +257,6 @@ function SaveAOIForm(props) {
 }
 
 SaveAOIForm.propTypes = {
-  setSaveAOISettings: PropTypes.func,
   saveAOI: PropTypes.func,
   deleteAOI: PropTypes.func,
   userData: PropTypes.object,
