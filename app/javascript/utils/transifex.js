@@ -1,6 +1,6 @@
 export function translateText(str, params) {
   if (!str || typeof str !== 'string') {
-    return false;
+    return str;
   }
 
   const { Transifex } = window;
