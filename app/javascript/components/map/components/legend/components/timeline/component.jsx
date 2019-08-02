@@ -17,7 +17,8 @@ class Timeline extends Component {
       trimEndDate,
       handleOnDateChange,
       dateFormat,
-      interval
+      interval,
+      activeLayer
     } = this.props;
 
     return (
@@ -65,12 +66,19 @@ class Timeline extends Component {
         <div className="range-slider">
           <LegendItemTimeStep
             {...this.props}
-            handleStyle={{
-              backgroundColor: 'white',
-              borderRadius: '2px',
-              boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
-              border: '0px',
-              zIndex: 2
+            activeLayer={{
+              ...activeLayer,
+              timelineParams: {
+                ...activeLayer.timelineParams,
+                marks: this.props.marks,
+                handleStyle: {
+                  backgroundColor: 'white',
+                  borderRadius: '2px',
+                  boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
+                  border: '0px',
+                  zIndex: 2
+                }
+              }
             }}
           />
         </div>
@@ -101,7 +109,8 @@ Timeline.propTypes = {
   trimEndDate: PropTypes.string,
   handleOnDateChange: PropTypes.func,
   dateFormat: PropTypes.string,
-  interval: PropTypes.string
+  interval: PropTypes.string,
+  activeLayer: PropTypes.object
 };
 
 export default Timeline;

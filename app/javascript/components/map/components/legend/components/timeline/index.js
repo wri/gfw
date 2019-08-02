@@ -1,7 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { track } from 'app/analytics';
+import { track } from 'app/analytics';
 
 import TimelineComponent from './component';
 import { getTicks } from './selectors';
@@ -33,10 +33,10 @@ class TimelineContainer extends PureComponent {
     }
     handleChange(newRange, this.props.activeLayer);
 
-    // track('legendTimelineChange', {
-    //   action: `User changes date range for ${dataset}`,
-    //   label: `${formattedRange[0]}:${formattedRange[2]}`
-    // });
+    track('legendTimelineChange', {
+      action: `User changes date range for ${this.props.activeLayer.id}`,
+      label: `${newRange[0]}:${newRange[2]}`
+    });
   };
 
   render() {
