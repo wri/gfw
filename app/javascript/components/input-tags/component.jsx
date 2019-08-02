@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import './styles.scss';
 
 function InputTags(props) {
-  const { tags, onChange: setTags } = props;
+  const { tags, onChange: setTags, className } = props;
   const inputRef = useRef(null);
 
   const removeTag = i => {
@@ -32,7 +33,7 @@ function InputTags(props) {
   };
 
   return (
-    <div className="c-input-tags">
+    <div className={cx('c-input-tags', className)}>
       <ul className="tags">
         {tags &&
           tags.map((tag, i) => (
@@ -58,7 +59,8 @@ function InputTags(props) {
 
 InputTags.propTypes = {
   tags: PropTypes.array,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default InputTags;

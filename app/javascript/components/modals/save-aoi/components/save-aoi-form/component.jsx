@@ -186,6 +186,7 @@ function SaveAOIForm(props) {
         </span>
         <InputTags
           tags={tags}
+          className="aoi-tags-input"
           onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
         />
       </div>

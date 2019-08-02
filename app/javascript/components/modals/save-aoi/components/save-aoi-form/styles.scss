@@ -6,7 +6,7 @@ $desktop-padding: rem(50px);
   .field {
     display: flex;
     flex-direction: column;
-    margin-bottom: rem(30px);
+    margin-bottom: rem(20px);
 
     span {
       margin-bottom: rem(10px);
@@ -15,21 +15,33 @@ $desktop-padding: rem(50px);
     &.error {
       color: $error;
     }
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: rem(30px);
+    }
   }
 
   .field-image {
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
     align-items: center;
     width: 100%;
     background: $border;
 
     img {
-      width: rem(300px);
+      width: 100%;
     }
 
     p {
-      margin: 0 rem(30px) 0 rem(15px);
+      margin: rem(20px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+
+      p {
+        margin: 0 rem(30px) 0 rem(15px);
+      }
     }
   }
 
@@ -46,12 +58,15 @@ $desktop-padding: rem(50px);
   }
 
   .text-input,
+  .aoi-tags-input,
   .dropdown-input .select-wrapper {
-    min-width: rem(400px);
-    width: rem(400px);
+    @media screen and (min-width: $screen-m) {
+      min-width: rem(400px);
+      width: rem(400px);
 
-    select {
-      min-width: 400px;
+      select {
+        min-width: 400px;
+      }
     }
   }
 
@@ -68,6 +83,7 @@ $desktop-padding: rem(50px);
     align-items: center;
 
     button {
+      min-width: rem(22px);
       margin-right: rem(5px);
     }
   }
