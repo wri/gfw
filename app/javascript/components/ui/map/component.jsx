@@ -64,8 +64,8 @@ class Map extends Component {
     onViewportChange: () => {},
     onLoad: () => {},
     getCursor: ({ isHovering, isDragging }) => {
-      if (isHovering) return 'pointer';
       if (isDragging) return 'grabbing';
+      if (isHovering) return 'pointer';
       return 'grab';
     }
   };

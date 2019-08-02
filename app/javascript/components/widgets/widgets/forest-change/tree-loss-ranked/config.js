@@ -6,9 +6,9 @@ export default {
   },
   categories: ['forest-change'],
   types: ['global', 'country'],
-  admins: ['global', 'adm0'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   options: {
-    forestTypes: ['ifl'],
+    forestTypes: ['ifl', 'primary_forest'],
     landCategories: true,
     units: ['ha', '%'],
     thresholds: true,
