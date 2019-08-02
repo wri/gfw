@@ -124,7 +124,7 @@
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",
-    "layer-manager": "^1.17.4-mapbox",
+    "layer-manager": "^1.17.6-mapbox",
     "leaflet-draw": "^1.0.3",
     "lodash": "^4.17.14",
     "lodash-math": "0.0.7",
@@ -193,7 +193,7 @@
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
     "util": "^0.12.1",
-    "vizzuality-components": "^1.0.0",
+    "vizzuality-components": "1.0.0",
     "wri-json-api-serializer": "^1.0.1"
   },
   "resolutions": {

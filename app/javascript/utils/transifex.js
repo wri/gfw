@@ -1,13 +1,14 @@
 export function translateText(str, params) {
+  if (!str || typeof str !== 'string') {
+    return str;
+  }
+
   const { Transifex } = window;
-  if (typeof Transifex !== 'undefined' && str) {
+  if (typeof Transifex !== 'undefined') {
     return Transifex.live.translateText(str, params);
   }
-  if (str !== 0) {
-    console.warn(
-      'Attempted translation before transifex finished loading:',
-      str
-    );
-  }
+
+  console.warn('Attempted translation before transifex finished loading:', str);
+
   return str;
 }

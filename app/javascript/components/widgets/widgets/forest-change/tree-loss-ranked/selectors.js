@@ -37,12 +37,14 @@ export const getSummedByYearsData = createSelector(
       const isoLoss = Math.round(sumBy(groupedByRegion[i], 'loss')) || 0;
       const regionExtent = extent.find(e => e[regionKey] === i);
       const isoExtent = (regionExtent && regionExtent.extent) || 1;
+      const percentageLoss =
+        isoExtent && isoLoss ? 100 * isoLoss / isoExtent : 0;
 
       return {
         id: location && location.payload.adm1 ? parseInt(i, 10) : i,
         loss: isoLoss,
         extent: isoExtent,
-        percentage: isoExtent ? 100 * isoLoss / isoExtent : 0
+        percentage: percentageLoss > 100 ? 100 : percentageLoss
       };
     });
     return sortByKey(
