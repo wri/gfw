@@ -36,26 +36,14 @@ export const initialState = {
           'c5d1e010-383a-4713-9aaa-44f728c0571c'
         ],
         opacity: 1,
-        visibility: true
+        visibility: true,
+        showBoth: true
       },
-      // gain
+      // projected carbon storage
       {
-        dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
-        layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4'],
-        opacity: 1,
-        visibility: true
-      },
-      // loss
-      {
-        dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
-        layers: ['c3075c5a-5567-4b09-bc0d-96ed1673f8b6'],
-        opacity: 1,
-        visibility: true
-      },
-      // extent
-      {
-        dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
-        layers: ['78747ea1-34a9-4aa7-b099-bdb8948200f4'],
+        dataset: 'b7a34457-1d8a-456e-af46-876e0b42fb96',
+        layers: ['4d0234b1-6f26-4385-8221-46bb0444d5d8'],
+        compareLayers: ['c9e48a9f-2dca-4233-9400-0b5e4e07674f'],
         opacity: 1,
         visibility: true
       }

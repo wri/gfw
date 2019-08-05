@@ -11,12 +11,30 @@
     height: 100%;
     display: flex;
     align-items: center;
+    z-index: 4;
 
     .rc-slider-handle {
       &::after {
         background-color: $white;
+        width: 4px;
       }
     }
+
+    .rc-slider-rail {
+      background-color: transparent !important;
+    }
+  }
+
+  .slider-bar {
+    height: 100%;
+    width: 3px;
+    background-color: $white;
+    border: solid 1px $slate;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    margin-right: -2px;
   }
 
   .map-compare {

@@ -192,6 +192,8 @@ export const getDatasetsWithConfig = createSelector(
         decodeParams,
         timelineParams,
         layers,
+        compareLayers,
+        showBoth,
         visibility,
         opacity,
         bbox
@@ -228,7 +230,11 @@ export const getDatasetsWithConfig = createSelector(
             opacity,
             bbox,
             color: d.color,
-            active: layers && layers.includes(l.id),
+            active:
+              (layers && layers.includes(l.id)) ||
+              (compareLayers && compareLayers.includes(l.id)),
+            compare: compareLayers && compareLayers.includes(l.id),
+            showBoth,
             ...(!isEmpty(l.params) && {
               params: {
                 ...l.params,
@@ -368,6 +374,22 @@ export const getActiveLayersWithDates = createSelector(
         })
       };
     });
+  }
+);
+
+export const getActiveLayersForCompare = createSelector(
+  getActiveLayersWithDates,
+  layers => {
+    if (isEmpty(layers)) return [];
+    return layers.filter(l => l.compare || l.showBoth);
+  }
+);
+
+export const getActiveLayersForLeftCompare = createSelector(
+  getActiveLayersWithDates,
+  layers => {
+    if (isEmpty(layers)) return [];
+    return layers.filter(l => !l.compare || l.showBoth);
   }
 );
 

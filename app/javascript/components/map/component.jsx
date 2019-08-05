@@ -158,7 +158,7 @@ class MapComponent extends Component {
     this.setState({ viewport });
 
     this.onViewportChange(viewport);
-  }
+  };
 
   onViewportChange = debounce(viewport => {
     const { setMapSettings, location } = this.props;
@@ -270,7 +270,7 @@ class MapComponent extends Component {
     this.setState({ drawClicks: 0 });
   }
 
-  renderMap(mapStyles) {
+  renderMap({ compare }) {
     const {
       mapStyle,
       minZoom,
@@ -286,7 +286,7 @@ class MapComponent extends Component {
 
     return (
       <Map
-        mapStyle={mapStyles || mapStyle}
+        mapStyle={mapStyle}
         viewport={viewport}
         bounds={this.state.bounds}
         onViewportChange={this.onViewportStateChange}
@@ -312,7 +312,7 @@ class MapComponent extends Component {
               onSelectBoundary={onSelectBoundary}
             />
             {/* LAYER MANAGER */}
-            <LayerManager map={map} />
+            <LayerManager map={map} compare={compare} />
             {/* DRAWING */}
             <Draw map={map} drawing={drawing} onDrawComplete={onDrawComplete} />
             {/* SCALE */}
@@ -357,15 +357,17 @@ class MapComponent extends Component {
           disabled={!drawing}
         >
           <div className="map-compare">
-            <div className="map-compare-left">{this.renderMap()}</div>
+            <div className="map-compare-left">{this.renderMap({})}</div>
             <div
               className="map-compare-right"
               style={{ width: `${100 - this.state.mapWidth}%` }}
             >
-              {this.renderMap(
-                'mapbox://styles/resourcewatch/cjww836hy1kep1co5xp717jek?fresh=true'
-              )}
+              {this.renderMap({ compare: true })}
             </div>
+            <div
+              className="slider-bar"
+              style={{ right: `${100 - this.state.mapWidth}%` }}
+            />
             <Slider
               customClass="map-slider"
               min={0}
@@ -381,6 +383,9 @@ class MapComponent extends Component {
                 backgroundColor: '#97be32',
                 marginLeft: '-25px',
                 marginTop: '-24px'
+              }}
+              trackStyle={{
+                backgroundColor: 'transparent'
               }}
             />
           </div>

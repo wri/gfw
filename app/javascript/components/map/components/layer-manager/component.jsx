@@ -5,8 +5,18 @@ import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
   render() {
-    const { layers, geostore, setMapLoading, basemap, map } = this.props;
+    const {
+      layers,
+      geostore,
+      setMapLoading,
+      basemap,
+      map,
+      compare,
+      compareLayers,
+      leftCompareLayers
+    } = this.props;
 
+    const renderLayers = compare ? compareLayers : leftCompareLayers;
     return (
       <LayerManager
         map={map}
@@ -49,7 +59,7 @@ class LayerManagerComponent extends PureComponent {
             zIndex={1060}
           />
         )}
-        {layers && layers.map(l => <Layer key={l.id} {...l} />)}
+        {renderLayers && renderLayers.map(l => <Layer key={l.id} {...l} />)}
         {basemap &&
           basemap.url && (
           <Layer
