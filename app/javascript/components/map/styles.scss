@@ -5,6 +5,51 @@
   width: 100%;
   height: 100%;
 
+  .map-slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .rc-slider-handle {
+      &::after {
+        background-color: $white;
+      }
+    }
+  }
+
+  .map-compare {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .map-compare-left,
+    .map-compare-right {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .map-compare-left {
+      z-index: 1;
+    }
+
+    .map-compare-right {
+      width: 50%;
+      z-index: 2;
+      right: 0;
+      overflow: hidden;
+
+      > div {
+        width: calc(100vw - 76px);
+        height: 100%;
+        right: 0;
+        position: absolute;
+      }
+    }
+  }
+
   &.no-pointer-events {
     .overlays {
       pointer-events: none;

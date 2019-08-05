@@ -1,7 +1,12 @@
 @import '~styles/settings.scss';
+// @import '~mapbox-gl-compare/dist/mapbox-gl-compare.css';
 
 .c-map-main {
   height: 100%;
+
+  .main-map-compare {
+    opacity: 0.3;
+  }
 
   .main-map-container {
     width: 100%;

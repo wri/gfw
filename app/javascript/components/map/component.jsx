@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import debounce from 'lodash/debounce';
 import cx from 'classnames';
+import { Slider } from 'vizzuality-components';
 
 import { handleMapLatLonTrack, track } from 'app/analytics';
 
@@ -60,7 +61,9 @@ class MapComponent extends Component {
 
   state = {
     bounds: {},
-    drawClicks: 0
+    drawClicks: 0,
+    mapWidth: 50,
+    viewport: this.props.viewport || {}
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -149,6 +152,12 @@ class MapComponent extends Component {
           });
       }
     }
+  }
+
+  onViewportStateChange = viewport => {
+    this.setState({ viewport });
+
+    this.onViewportChange(viewport);
   }
 
   onViewportChange = debounce(viewport => {
@@ -261,22 +270,67 @@ class MapComponent extends Component {
     this.setState({ drawClicks: 0 });
   }
 
-  render() {
+  renderMap(mapStyles) {
     const {
-      className,
       mapStyle,
-      viewport,
       minZoom,
       maxZoom,
       interactiveLayerIds,
       drawing,
-      loading,
-      loadingMessage,
-      basemap,
       popupActions,
       onSelectBoundary,
       onDrawComplete
     } = this.props;
+
+    const { viewport } = this.state;
+
+    return (
+      <Map
+        mapStyle={mapStyles || mapStyle}
+        viewport={viewport}
+        bounds={this.state.bounds}
+        onViewportChange={this.onViewportStateChange}
+        onClick={this.onClick}
+        onLoad={this.onLoad}
+        interactiveLayerIds={interactiveLayerIds}
+        attributionControl={false}
+        minZoom={minZoom}
+        maxZoom={maxZoom}
+        getCursor={({ isHovering, isDragging }) => {
+          if (drawing) return 'crosshair';
+          else if (isDragging) return 'grabbing';
+          else if (isHovering) return 'pointer';
+          return 'grab';
+        }}
+      >
+        {map => (
+          <Fragment>
+            {/* POPUP */}
+            <Popup
+              map={this.map}
+              buttons={popupActions}
+              onSelectBoundary={onSelectBoundary}
+            />
+            {/* LAYER MANAGER */}
+            <LayerManager map={map} />
+            {/* DRAWING */}
+            <Draw map={map} drawing={drawing} onDrawComplete={onDrawComplete} />
+            {/* SCALE */}
+            <Scale className="map-scale" map={map} viewport={viewport} />
+            {/* ATTRIBUTIONS */}
+            <Attributions
+              className="map-attributions"
+              map={map}
+              viewport={viewport}
+            />
+          </Fragment>
+        )}
+      </Map>
+    );
+  }
+
+  render() {
+    const { className, drawing, loading, loadingMessage, basemap } = this.props;
 
     let tipText;
     if (this.state.drawClicks <= 0) {
@@ -302,53 +356,36 @@ class MapComponent extends Component {
           animateFill={false}
           disabled={!drawing}
         >
-          <Map
-            mapStyle={mapStyle}
-            viewport={viewport}
-            bounds={this.state.bounds}
-            onViewportChange={this.onViewportChange}
-            onClick={this.onClick}
-            onLoad={this.onLoad}
-            interactiveLayerIds={interactiveLayerIds}
-            attributionControl={false}
-            minZoom={minZoom}
-            maxZoom={maxZoom}
-            getCursor={({ isHovering, isDragging }) => {
-              if (drawing) return 'crosshair';
-              else if (isDragging) return 'grabbing';
-              else if (isHovering) return 'pointer';
-              return 'grab';
-            }}
-          >
-            {map => (
-              <Fragment>
-                {/* POPUP */}
-                <Popup
-                  map={this.map}
-                  buttons={popupActions}
-                  onSelectBoundary={onSelectBoundary}
-                />
-                {/* LAYER MANAGER */}
-                <LayerManager map={map} />
-                {/* DRAWING */}
-                <Draw
-                  map={map}
-                  drawing={drawing}
-                  onDrawComplete={onDrawComplete}
-                />
-                {/* SCALE */}
-                <Scale className="map-scale" map={map} viewport={viewport} />
-                {/* ATTRIBUTIONS */}
-                <Attributions
-                  className="map-attributions"
-                  map={map}
-                  viewport={viewport}
-                />
-              </Fragment>
-            )}
-          </Map>
+          <div className="map-compare">
+            <div className="map-compare-left">{this.renderMap()}</div>
+            <div
+              className="map-compare-right"
+              style={{ width: `${100 - this.state.mapWidth}%` }}
+            >
+              {this.renderMap(
+                'mapbox://styles/resourcewatch/cjww836hy1kep1co5xp717jek?fresh=true'
+              )}
+            </div>
+            <Slider
+              customClass="map-slider"
+              min={0}
+              max={100}
+              showTooltip={false}
+              value={this.state.mapWidth}
+              onChange={value => {
+                this.setState({ mapWidth: value });
+              }}
+              handleStyle={{
+                height: '50px',
+                width: '50px',
+                backgroundColor: '#97be32',
+                marginLeft: '-25px',
+                marginTop: '-24px'
+              }}
+            />
+          </div>
         </Tooltip>
-        <Icon className="map-icon-crosshair" icon={iconCrosshair} />
+        {/* <Icon className="map-icon-crosshair" icon={iconCrosshair} /> */}
         {loading && (
           <Loader
             className="map-loader"
