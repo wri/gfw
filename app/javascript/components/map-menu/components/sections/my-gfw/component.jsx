@@ -245,12 +245,13 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   render() {
-    const { loggedIn, areas } = this.props;
+    const { loggedIn, areas, isDesktop } = this.props;
     // TODO; componentize
     return (
       <div className="c-map-menu-my-gfw">
         {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}
-        {(!loggedIn || !(areas && areas.length > 0)) && (
+        {(!loggedIn || !(areas && areas.length > 0)) &&
+          isDesktop && (
           <img
             className={cx('my-gfw-login-image', { '--login': !loggedIn })}
             src={screenImg1x}
