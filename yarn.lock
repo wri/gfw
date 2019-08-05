@@ -14749,10 +14749,10 @@ viewport-mercator-project@^6.1.0:
     "@babel/runtime" "^7.0.0"
     gl-matrix "^3.0.0-0"
 
-vizzuality-components@^3.0.0-beta.3:
-  version "3.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/vizzuality-components/-/vizzuality-components-3.0.0-beta.3.tgz#442b146d2c59c0d81a02bbca06583355637f5ab3"
-  integrity sha512-zimt0LkKF/YABZmFTNeg+m4PwnTtfypKFqy/FhVxulazOZDxaSEKd04RPw4LqDe96oUp4MR04fRDlyFkMgaKFQ==
+vizzuality-components@^3.0.0-beta.4:
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/vizzuality-components/-/vizzuality-components-3.0.0-beta.4.tgz#e5e3af9d18687eace180d85a78cedb3bb610dbf5"
+  integrity sha512-hTvX+fM1I+vbzaYNPhfjRc3XVAJYWTYby8udViYmkWsaPjFVZy95X7kGmde3kVYr1TphsxTe9t83esWgqgvacw==
   dependencies:
     array-move "^2.1.0"
     axios "^0.19.0"
