@@ -177,7 +177,7 @@ class MapMenuMyGFW extends PureComponent {
                   tabIndex={0}
                   key={area.id}
                 >
-                  <AoICard index={i} {...area} />
+                  <AoICard index={i} {...area} simple />
                   {active && (
                     <Button
                       className="edit-button"
