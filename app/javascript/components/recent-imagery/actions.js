@@ -1,5 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import axios from 'axios';
+import minBy from 'lodash/minBy';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { getRecentTiles, getTiles, getThumbs } from 'services/recent-imagery';
@@ -46,7 +47,9 @@ export const getRecentImageryData = createThunkAction(
           );
           if (serializedResponse && !!serializedResponse.length) {
             const clouds = 25;
-            const cloudScore = Math.round(serializedResponse[0].cloud_score);
+            const minCloudScore = Math.ceil(
+              minBy(serializedResponse, 'cloud_score')
+            );
             dispatch(
               setRecentImageryData({
                 data: serializedResponse,
@@ -58,7 +61,7 @@ export const getRecentImageryData = createThunkAction(
             );
             dispatch(
               setRecentImagerySettings({
-                clouds: cloudScore > clouds ? cloudScore : clouds,
+                clouds: minCloudScore > clouds ? minCloudScore : clouds,
                 selected: null,
                 selectedIndex: 0
               })
@@ -113,8 +116,8 @@ export const getMoreTiles = createThunkAction(
                   ...d,
                   ...(tile &&
                     i > 0 && {
-                      tile_url: tile.tile_url
-                    }),
+                    tile_url: tile.tile_url
+                  }),
                   ...(thumb && {
                     thumbnail_url: thumb.thumbnail_url
                   })

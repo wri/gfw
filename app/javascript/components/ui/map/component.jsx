@@ -102,7 +102,7 @@ class Map extends Component {
       });
     }
 
-    if (!isEqual(bounds, prevBounds)) {
+    if (!isEqual(bounds, prevBounds) && !!bounds.bbox) {
       this.fitBounds();
     }
   }
