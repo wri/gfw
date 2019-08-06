@@ -100,9 +100,15 @@ $desktop-padding: rem(50px);
 
   .save-aoi {
     display: flex;
+    flex-direction: column-reverse;
     justify-content: space-between;
     align-items: center;
-    margin-top: rem(30px);
+    height: rem(100px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-top: rem(30px);
+      flex-direction: row;
+    }
 
     p {
       color: $warm-grey;
@@ -113,9 +119,14 @@ $desktop-padding: rem(50px);
     }
 
     .submit-btn {
-      margin-left: rem(15px);
       max-width: rem(290px);
       position: relative;
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        margin-left: rem(15px);
+        width: auto;
+      }
 
       &.error {
         background-color: $error;
@@ -125,6 +136,11 @@ $desktop-padding: rem(50px);
     .delete-aoi {
       padding: 0;
       color: $error;
+      width: 100%;
+
+      @media screen and (min-width: $screen-m) {
+        width: auto;
+      }
 
       .delete-icon {
         margin-right: rem(5px);
