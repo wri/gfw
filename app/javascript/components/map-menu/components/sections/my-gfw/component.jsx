@@ -147,7 +147,8 @@ class MapMenuMyGFW extends PureComponent {
                   : 'Filter by tags'
               }
               options={Object.keys(this.state.activeTags).map(tag => ({
-                label: tag,
+                label:
+                  tag.length > 15 ? tag.substring(0, 15).concat('...') : tag,
                 value: tag
               }))}
               onChange={tag =>

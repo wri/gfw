@@ -15,11 +15,11 @@
   }
 
   .aoi-header {
-    padding: rem(5px) rem(15px);
-    padding-bottom: rem(5px);
+    padding: rem(5px) rem(15px) rem(15px);
 
     @media screen and (min-width: $screen-m) {
       padding: rem(20px);
+      padding-bottom: rem(5px);
     }
 
     h2.title-no-aois {
@@ -65,7 +65,9 @@
   }
 
   .aoi-items {
-    padding-bottom: rem(76px);
+    @media screen and (min-width: $screen-m) {
+      padding-bottom: rem(76px);
+    }
 
     .aoi-item {
       display: flex;
@@ -141,7 +143,6 @@
     position: relative;
 
     .my-gfw-footer {
-      position: fixed;
       bottom: rem(50px);
       height: rem(76px);
       width: 100%;
@@ -153,6 +154,7 @@
       align-items: center;
 
       @media screen and (min-width: $screen-m) {
+        position: fixed;
         bottom: 0;
       }
 
