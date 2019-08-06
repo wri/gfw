@@ -1,0 +1,14 @@
+@import '~styles/settings.scss';
+
+.c-areas-table {
+  display: block;
+
+  .area-row {
+    padding: rem(40px) 0;
+    border-top: 1px solid $border;
+
+    &:last-child {
+      border-bottom: solid 1px $border;
+    }
+  }
+}

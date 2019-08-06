@@ -7,6 +7,7 @@ import Button from 'components/ui/button';
 import AreasProvider from 'providers/areas-provider';
 
 import UserProfile from './components/user-profile';
+import AreasTable from './components/areas-table';
 import NoAreasImage from './assets/no-areas@2x.png';
 import './styles.scss';
 
@@ -39,7 +40,11 @@ class MyGFWPage extends PureComponent {
               !loading && (
               <div className="column small-12">
                 {areas && !!areas.length ? (
-                  <div className="areas-table">Look at them</div>
+                  <div className="row">
+                    <div className="column small-12">
+                      <AreasTable areas={areas} />
+                    </div>
+                  </div>
                 ) : (
                   <div className="row no-areas">
                     <div className="column small-12 medium-5">

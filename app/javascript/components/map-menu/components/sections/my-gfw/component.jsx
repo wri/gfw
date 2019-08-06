@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import sortBy from 'lodash/sortBy';
 
+import AoICard from 'components/aoi-card';
 import MyGFWLogin from 'components/mygfw-login';
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
-import tagIcon from 'assets/icons/tag.svg';
-import subscribedIcon from 'assets/icons/subscribed.svg';
 import logoutIcon from 'assets/icons/logout.svg';
 import screenImg1x from 'assets/images/aois/single A.png';
 import screenImg2x from 'assets/images/aois/single A @2x.png';
@@ -173,31 +172,12 @@ class MapMenuMyGFW extends PureComponent {
                     '--active': active,
                     '--inactive': activeArea && !active
                   })}
-                  key={area.name}
                   onClick={() => goToAOI(area)}
                   role="button"
                   tabIndex={0}
+                  key={area.id}
                 >
-                  <img src={area.image} alt={area.name} />
-                  <div className="aoi-item-body">
-                    <p className="aoi-title">{area.name}</p>
-                    {area.tags &&
-                      area.tags.length > 0 && (
-                      <div className="aoi-tags">
-                        <Icon icon={tagIcon} className="tag-icon" />
-                        <p>{area.tags.join(', ')}</p>
-                      </div>
-                    )}
-                    {(i + 1) % 3 === 0 && ( // TODO: get subscribed status from API
-                      <div className="aoi-subscribed">
-                        <Icon
-                          icon={subscribedIcon}
-                          className="subscribed-icon"
-                        />
-                        <p>Subscribed</p>
-                      </div>
-                    )}
-                  </div>
+                  <AoICard index={i} {...area} />
                   {active && (
                     <Button
                       className="edit-button"
