@@ -64,6 +64,55 @@
     }
   }
 
+  .my-gfw {
+    position: relative;
+
+    .my-gfw-footer {
+      bottom: rem(50px);
+      height: rem(76px);
+      width: 100%;
+      padding-right: rem(20px);
+      background: $white;
+      border-top: 1px solid rgba($hot-grey, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media screen and (min-width: $screen-m) {
+        position: fixed;
+        bottom: 0;
+      }
+
+      .edit-button,
+      .logout-button {
+        color: $slate;
+        font-size: 12px;
+        line-height: 14px;
+        text-transform: initial;
+        font-weight: 400;
+
+        &.edit-button {
+          margin-left: rem(15px);
+
+          @media screen and (min-width: $screen-m) {
+            margin-left: rem(20px);
+          }
+        }
+
+        svg {
+          position: relative;
+          width: rem(16px);
+          height: rem(16px);
+          left: rem(4px);
+
+          &.edit-icon {
+            top: rem(2px);
+          }
+        }
+      }
+    }
+  }
+
   .aoi-items {
     @media screen and (min-width: $screen-m) {
       padding-bottom: rem(76px);
@@ -94,8 +143,10 @@
 
       .edit-button {
         position: absolute;
-        right: 10px;
-        top: 10px;
+        right: rem(10px);
+        top: rem(10px);
+        width: rem(16px);
+        height: rem(16px);
       }
 
       img {
@@ -133,54 +184,7 @@
 
           svg {
             margin-right: rem(4px);
-          }
-        }
-      }
-    }
-  }
-
-  .my-gfw {
-    position: relative;
-
-    .my-gfw-footer {
-      bottom: rem(50px);
-      height: rem(76px);
-      width: 100%;
-      padding-right: rem(20px);
-      background: $white;
-      border-top: 1px solid rgba($hot-grey, 0.3);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      @media screen and (min-width: $screen-m) {
-        position: fixed;
-        bottom: 0;
-      }
-
-      a,
-      .logout-button {
-        color: $slate;
-        font-size: 12px;
-        line-height: 14px;
-        text-transform: initial;
-        font-weight: 400;
-
-        &.edit-button {
-          margin-left: rem(15px);
-
-          @media screen and (min-width: $screen-m) {
-            margin-left: rem(30px);
-          }
-        }
-
-        .c-icon {
-          transform: scale(0.9);
-          position: relative;
-          left: rem(4px);
-
-          &.edit-icon {
-            top: rem(2px);
+            opacity: 0.4;
           }
         }
       }

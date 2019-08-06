@@ -201,7 +201,7 @@ class MapMenuMyGFW extends PureComponent {
                   {active && (
                     <Button
                       className="edit-button"
-                      theme="theme-button-small square theme-button-clear"
+                      theme="square theme-button-clear"
                       onClick={e => {
                         e.preventDefault();
                         e.stopPropagation();
