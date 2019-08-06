@@ -7,6 +7,23 @@ export const getAreasProvider = token =>
     headers: { Authorization: 'Bearer '.concat(token) }
   });
 
+export const setAreasProvider = (token, body, method) => {
+  const url =
+    method === 'post' ? REQUEST_URL : REQUEST_URL.concat(`/${body.id}`);
+
+  return axios({
+    method,
+    url,
+    headers: { Authorization: 'Bearer '.concat(token) },
+    data: body
+  });
+};
+
+export const deleteAreaProvider = (token, id) =>
+  axios.delete(REQUEST_URL.concat(`/${id}`), {
+    headers: { Authorization: 'Bearer '.concat(token) }
+  });
+
 export default {
   getAreasProvider
 };
