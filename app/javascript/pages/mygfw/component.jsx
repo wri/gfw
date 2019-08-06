@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
+import AreasProvider from 'providers/areas-provider';
 
 import UserProfile from './components/user-profile';
 import NoAreasImage from './assets/no-areas@2x.png';
@@ -11,7 +12,8 @@ import './styles.scss';
 
 class MyGFWPage extends PureComponent {
   render() {
-    const { loggedIn, myGfwLoading, areas } = this.props;
+    const { loggedIn, loading, areas } = this.props;
+
     return (
       <div className="l-mygfw-page">
         <div className="header-banner">
@@ -26,15 +28,15 @@ class MyGFWPage extends PureComponent {
         </div>
         <div className="my-gfw-container">
           <div className="row">
-            {myGfwLoading && <Loader className="mygfw-loader" />}
+            {loading && <Loader className="mygfw-loader" />}
             {!loggedIn &&
-              !myGfwLoading && (
+              !loading && (
               <div className="column small-12 medium-6 medium-offset-3">
                 <MyGFWLogin />
               </div>
             )}
             {loggedIn &&
-              !myGfwLoading && (
+              !loading && (
               <div className="column small-12">
                 {areas && !!areas.length ? (
                   <div className="areas-table">Look at them</div>
@@ -66,6 +68,7 @@ class MyGFWPage extends PureComponent {
             )}
           </div>
         </div>
+        <AreasProvider />
       </div>
     );
   }
@@ -73,7 +76,7 @@ class MyGFWPage extends PureComponent {
 
 MyGFWPage.propTypes = {
   loggedIn: PropTypes.bool,
-  myGfwLoading: PropTypes.bool,
+  loading: PropTypes.bool,
   areas: PropTypes.array
 };
 

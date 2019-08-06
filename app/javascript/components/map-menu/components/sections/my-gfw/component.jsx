@@ -276,7 +276,7 @@ MapMenuMyGFW.propTypes = {
   goToAOI: PropTypes.func,
   onEditClick: PropTypes.func,
   clearActiveArea: PropTypes.func,
-  location: PropTypes.obj
+  location: PropTypes.object
 };
 
 export default MapMenuMyGFW;
