@@ -45,8 +45,11 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, clearActiveArea } = this.props;
-    const { location: prevLocation } = prevProps;
+    const { location, clearActiveArea, areas } = this.props;
+    const { location: prevLocation, areas: prevAreas } = prevProps;
+    if (areas !== prevAreas) {
+      this.setTags();
+    }
 
     if (location.type !== 'aoi' && prevLocation.type === 'aoi') {
       clearActiveArea();
