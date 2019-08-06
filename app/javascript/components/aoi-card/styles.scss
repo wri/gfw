@@ -58,6 +58,7 @@
 
     .activity {
       display: flex;
+      align-items: center;
       font-size: rem(12px);
       color: $slate;
 
@@ -71,6 +72,11 @@
 
       .viirs {
         color: $fires;
+      }
+
+      .activity-data {
+        font-size: rem(16px);
+        font-weight: 500;
       }
     }
   }

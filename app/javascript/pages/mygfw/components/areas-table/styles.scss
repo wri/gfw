@@ -6,9 +6,33 @@
   .area-row {
     padding: rem(40px) 0;
     border-top: 1px solid $border;
+    display: flex;
+    justify-content: space-between;
 
     &:last-child {
       border-bottom: solid 1px $border;
+    }
+
+    .area-links {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+
+      .area-link {
+        font-size: rem(14px);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: rem(30px);
+
+        .link-icon {
+          width: rem(12px);
+          height: rem(12px);
+          margin-top: -2px;
+          margin-right: rem(10px);
+        }
+      }
     }
   }
 }

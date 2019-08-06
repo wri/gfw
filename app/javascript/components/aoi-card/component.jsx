@@ -78,14 +78,24 @@ class AoICard extends PureComponent {
           {!simple && (
             <div className="activity">
               <span>Last weeks activity:</span>
-              <span className="glad">{`${formatNumber({
-                num: counts.GLAD,
-                unit: 'counts'
-              })} GLAD alerts`}</span>
-              <span className="viirs">{`${formatNumber({
-                num: counts.Fires,
-                unit: 'counts'
-              })} VIIRS alerts`}</span>
+              <span className="glad">
+                <span className="activity-data">
+                  {formatNumber({
+                    num: counts.GLAD,
+                    unit: 'counts'
+                  })}
+                </span>{' '}
+                GLAD alerts
+              </span>
+              <span className="viirs">
+                <span className="activity-data">
+                  {formatNumber({
+                    num: counts.Fires,
+                    unit: 'counts'
+                  })}
+                </span>{' '}
+                VIIRS alerts
+              </span>
             </div>
           )}
         </div>

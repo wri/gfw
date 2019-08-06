@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
+
 import AreasProvider from 'providers/areas-provider';
+import GeostoreProvider from 'providers/geostore-provider';
 
 import UserProfile from './components/user-profile';
 import AreasTable from './components/areas-table';
@@ -12,8 +14,15 @@ import NoAreasImage from './assets/no-areas@2x.png';
 import './styles.scss';
 
 class MyGFWPage extends PureComponent {
+  static propTypes = {
+    loggedIn: PropTypes.bool,
+    loading: PropTypes.bool,
+    areas: PropTypes.array,
+    goToAOI: PropTypes.func
+  };
+
   render() {
-    const { loggedIn, loading, areas } = this.props;
+    const { loggedIn, loading, areas, goToAOI } = this.props;
 
     return (
       <div className="l-mygfw-page">
@@ -42,7 +51,7 @@ class MyGFWPage extends PureComponent {
                 {areas && !!areas.length ? (
                   <div className="row">
                     <div className="column small-12">
-                      <AreasTable areas={areas} />
+                      <AreasTable areas={areas} onClickViewMap={goToAOI} />
                     </div>
                   </div>
                 ) : (
@@ -74,15 +83,10 @@ class MyGFWPage extends PureComponent {
           </div>
         </div>
         <AreasProvider />
+        <GeostoreProvider />
       </div>
     );
   }
 }
-
-MyGFWPage.propTypes = {
-  loggedIn: PropTypes.bool,
-  loading: PropTypes.bool,
-  areas: PropTypes.array
-};
 
 export default MyGFWPage;
