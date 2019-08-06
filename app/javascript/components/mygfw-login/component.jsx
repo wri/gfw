@@ -27,23 +27,17 @@ class MyGFWLogin extends PureComponent {
 
     return (
       <div className={cx('c-my-gfw', { '-plain': plain }, className)}>
-        <p>
-          Log in is required so you can view, manage, and delete your areas of
-          interest. Questions? <a href="mailto:gfw@wri.org">Contact us</a>
-        </p>
-        <div className="social-btns">
-          {socialButtons.map(s => (
-            <a
-              key={s.value}
-              className={`social-btn -${s.value}`}
-              href={`${AUTH_URL}/${s.value}?applications=gfw&callbackUrl=${
-                window.location.href
-              }`}
-            >
-              Login with {s.label}
-            </a>
-          ))}
-        </div>
+        {socialButtons.map(s => (
+          <a
+            key={s.value}
+            className={`social-btn -${s.value}`}
+            href={`${AUTH_URL}/${s.value}?applications=gfw&callbackUrl=${
+              window.location.href
+            }`}
+          >
+            Login with {s.label}
+          </a>
+        ))}
       </div>
     );
   }

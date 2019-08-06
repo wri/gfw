@@ -24,6 +24,7 @@ const selectEmbed = state =>
   state.location.pathname.includes('/embed');
 const selectError = state => state.analysis && state.analysis.error;
 const selectDatasets = state => state.datasets && state.datasets.data;
+const selectAreas = state => state.areas && state.areas.data;
 
 export const getLoading = createSelector(
   [selectAnalysisLoading, selectDatasetsLoading, selectGeostoreLoading],
@@ -98,10 +99,31 @@ export const getWidgetLayers = createSelector(
   }
 );
 
+export const getActiveArea = createSelector(
+  [selectAreas, selectLocation],
+  (aois, location) => {
+    if (!aois) return null;
+    return aois.find(a => a.id === location.adm0);
+  }
+);
+
+export const parseLocation = createSelector(
+  [getActiveArea, selectLocation],
+  (activeArea, location) =>
+    (location.type === 'aoi' && activeArea
+      ? {
+        ...location,
+        type: 'geostore',
+        adm0: activeArea.geostore
+      }
+      : location)
+);
+
 export const getLayerEndpoints = createSelector(
-  [getAllLayers, selectLocation, getWidgetLayers],
+  [getAllLayers, parseLocation, getWidgetLayers],
   (layers, location, widgetLayers) => {
     if (!layers || !layers.length) return null;
+
     const { type, adm2 } = location;
     const routeType = type === 'country' ? 'admin' : type;
     const lossLayer = layers.find(l => l.metadata === 'tree_cover_loss');
@@ -126,7 +148,6 @@ export const getLayerEndpoints = createSelector(
                   a.type === 'geostore')
             ) || {};
           const { params, decodeParams } = l;
-
           return {
             name: l.name,
             version: analysisConfig.version || 'v1',
@@ -174,10 +195,12 @@ export const getAnalysisProps = createStructuredSelector({
   loading: getLoading,
   error: selectError,
   embed: selectEmbed,
-  location: selectLocation,
+  location: parseLocation,
   endpoints: getLayerEndpoints,
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
-  analysisLocation: selectAnalysisLocation
+  analysisLocation: selectAnalysisLocation,
+  aois: selectAreas,
+  activeArea: getActiveArea
 });

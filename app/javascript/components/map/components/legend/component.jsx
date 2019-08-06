@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import Legend, {
+import {
+  Legend,
+  LegendListItem,
+  LegendItemTypes,
   LegendItemToolbar,
   LegendItemButtonOpacity,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
-  LegendItemTypes,
-  LegendListItem
-} from 'vizzuality-components/dist/legend';
-
-import Icons from 'vizzuality-components/dist/icons';
+  Icons
+} from 'vizzuality-components';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -24,7 +24,7 @@ import LayerStatement from './components/layer-statement';
 import LayerMoreInfo from './components/layer-more-info';
 
 import './styles.scss';
-import './themes/wri-api-legend.scss';
+import './themes/vizzuality-legend.scss';
 
 class MapLegend extends Component {
   render() {
@@ -51,81 +51,78 @@ class MapLegend extends Component {
         {!loading &&
           layerGroups &&
           !!layerGroups.length && (
-            <Legend
-              layerGroups={layerGroups}
-              collapsable={false}
-              onChangeOrder={onChangeOrder}
-            >
-              {layerGroups.map((lg, i) => {
-                const {
-                  isSelectorLayer,
-                  isMultiLayer,
-                  isMultiSelectorLayer,
-                  selectorLayerConfig,
-                  color,
-                  metadata,
-                  id,
-                  layers,
-                  statementConfig,
-                  name
-                } =
+          <Legend
+            layerGroups={layerGroups}
+            collapsable={false}
+            onChangeOrder={onChangeOrder}
+          >
+            {layerGroups.map((lg, i) => {
+              const {
+                isSelectorLayer,
+                isMultiLayer,
+                isMultiSelectorLayer,
+                selectorLayerConfig,
+                color,
+                metadata,
+                id,
+                layers,
+                statementConfig,
+                name
+              } =
                   lg || {};
 
-                const activeLayer =
+              const activeLayer =
                   (layers && layers.find(l => l.active)) || [];
-                const {
-                  legendConfig,
-                  params,
-                  timelineConfig,
-                  moreInfo,
-                  paramsSelectorConfig
-                } =
+              const {
+                params,
+                moreInfo,
+                paramsSelectorConfig,
+                timelineParams
+              } =
                   activeLayer || {};
 
-                return (
-                  <LegendListItem
-                    index={i}
-                    key={id}
-                    layerGroup={lg}
-                    toolbar={
-                      <LegendItemToolbar
-                        {...rest}
-                        enabledStyle={{
-                          fill: color || '#97be32'
+              return (
+                <LegendListItem
+                  index={i}
+                  key={id}
+                  layerGroup={lg}
+                  toolbar={
+                    <LegendItemToolbar
+                      {...rest}
+                      enabledStyle={{
+                        fill: color || '#97be32'
+                      }}
+                      defaultStyle={{
+                        fill: '#999'
+                      }}
+                      disabledStyle={{
+                        fill: '#d6d6d9'
+                      }}
+                      focusStyle={{
+                        fill: '#676867'
+                      }}
+                      onChangeInfo={() => onChangeInfo(metadata)}
+                    >
+                      <LegendItemButtonOpacity
+                        className="-plain"
+                        handleStyle={{
+                          backgroundColor: '#fff',
+                          borderRadius: '4px',
+                          border: 0,
+                          boxShadow: 'rgba(0, 0, 0, 0.29) 0px 1px 2px 0px'
                         }}
-                        defaultStyle={{
-                          fill: '#999'
-                        }}
-                        disabledStyle={{
-                          fill: '#d6d6d9'
-                        }}
-                        focusStyle={{
-                          fill: '#676867'
-                        }}
-                        onChangeInfo={() => onChangeInfo(metadata)}
-                      >
-                        <LegendItemButtonOpacity
-                          className="-plain"
-                          handleStyle={[
-                            {
-                              backgroundColor: '#fff',
-                              borderRadius: '4px',
-                              border: 0,
-                              boxShadow: 'rgba(0, 0, 0, 0.29) 0px 1px 2px 0px'
-                            }
-                          ]}
-                          trackStyle={[
-                            { backgroundColor: color || '#97be32' },
-                            { backgroundColor: '#d6d6d9' }
-                          ]}
-                        />
-                        {metadata && <LegendItemButtonInfo />}
-                        <LegendItemButtonRemove />
-                      </LegendItemToolbar>
-                    }
-                  >
-                    <LegendItemTypes />
-                    {activeLayer &&
+                        trackStyle={[
+                          { backgroundColor: color || '#97be32' },
+                          { backgroundColor: '#d6d6d9' }
+                        ]}
+                      />
+                      {metadata && <LegendItemButtonInfo />}
+                      <LegendItemButtonRemove />
+                    </LegendItemToolbar>
+                  }
+                >
+                  <LegendItemTypes />
+                  {activeLayer &&
                       paramsSelectorConfig &&
                       params &&
                       paramsSelectorConfig.map(
@@ -147,54 +144,45 @@ class MapLegend extends Component {
                             />
                           ) : null)
                       )}
-                    {(isSelectorLayer || isMultiSelectorLayer) &&
+                  {(isSelectorLayer || isMultiSelectorLayer) &&
                       selectorLayerConfig && (
-                        <LayerSelectorMenu
-                          className="layer-selector"
-                          layerGroup={lg}
-                          name={name}
-                          multi={isMultiSelectorLayer}
-                          onChange={onChangeLayer}
-                          {...selectorLayerConfig}
-                        />
-                      )}
-                    {statementConfig && (
-                      <LayerStatement
-                        className="layer-statement"
-                        {...statementConfig}
-                      />
-                    )}
-                    {timelineConfig && (
-                      <Timeline
-                        className="timeline"
-                        handleChange={range =>
-                          onChangeTimeline(activeLayer, range)
-                        }
-                        {...timelineConfig}
-                        customColor={
-                          legendConfig &&
-                          legendConfig.items &&
-                          legendConfig.items[0].color
-                        }
-                        dataset={id}
-                      />
-                    )}
-                    {isMultiLayer && (
-                      <LayerListMenu
-                        className="sub-layer-menu"
-                        layers={lg.layers}
-                        onToggle={onToggleLayer}
-                        onInfoClick={onChangeInfo}
-                      />
-                    )}
-                    {moreInfo && (
-                      <LayerMoreInfo className="more-info" {...moreInfo} />
-                    )}
-                  </LegendListItem>
-                );
-              })}
-            </Legend>
-          )}
+                    <LayerSelectorMenu
+                      className="layer-selector"
+                      layerGroup={lg}
+                      name={name}
+                      multi={isMultiSelectorLayer}
+                      onChange={onChangeLayer}
+                      {...selectorLayerConfig}
+                    />
+                  )}
+                  {statementConfig && (
+                    <LayerStatement
+                      className="layer-statement"
+                      {...statementConfig}
+                    />
+                  )}
+                  {timelineParams && (
+                    <Timeline
+                      {...timelineParams}
+                      handleChange={onChangeTimeline}
+                    />
+                  )}
+                  {isMultiLayer && (
+                    <LayerListMenu
+                      className="sub-layer-menu"
+                      layers={lg.layers}
+                      onToggle={onToggleLayer}
+                      onInfoClick={onChangeInfo}
+                    />
+                  )}
+                  {moreInfo && (
+                    <LayerMoreInfo className="more-info" {...moreInfo} />
+                  )}
+                </LegendListItem>
+              );
+            })}
+          </Legend>
+        )}
       </div>
     );
   }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
-import cx from 'classnames';
 import { track } from 'app/analytics';
 
 import Icon from 'components/ui/icon';
@@ -12,6 +11,8 @@ import Button from 'components/ui/button';
 import Widgets from 'components/widgets';
 import DownloadData from 'components/analysis/components/download-data';
 
+import screensImg1x from 'assets/images/aois/double.png';
+import screensImg2x from 'assets/images/aois/double @2x.png';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';
@@ -82,74 +83,78 @@ class ShowAnalysis extends PureComponent {
       hasWidgetLayers,
       zoomLevel,
       widgets,
-      showAnalysisDisclaimer
+      showAnalysisDisclaimer,
+      activeArea
     } = this.props;
     const hasWidgets = hasWidgetLayers && widgets && !!widgets.length;
 
     return (
-      <div className={cx('c-show-analysis')}>
-        <div className="draw-title">
-          <Button
-            className="title-btn left"
-            theme="theme-button-clear"
-            onClick={clearAnalysis}
-          >
-            <Icon icon={arrowDownIcon} className="icon-arrow" />
-            <span>{fullLocationName}</span>
-          </Button>
-          <div className="title-controls">
+      <div className="c-show-analysis">
+        <div className="show-analysis-body">
+          <div className="draw-title">
             <Button
-              className="title-btn title-action"
+              className="title-btn left"
               theme="theme-button-clear"
-              onClick={() =>
-                setShareModal({
-                  title: 'Share this view',
-                  shareUrl: window.location.href.includes('embed')
-                    ? window.location.href.replace('/embed', '')
-                    : window.location.href,
-                  embedUrl: window.location.href.includes('embed')
-                    ? window.location.href
-                    : window.location.href.replace('/map', '/embed/map'),
-                  embedSettings: {
-                    width: 670,
-                    height: 490
-                  }
-                })
-              }
-              tooltip={{ text: 'Share analysis' }}
+              onClick={clearAnalysis}
             >
-              <Icon icon={shareIcon} className="icon-share" />
+              <Icon icon={arrowDownIcon} className="icon-arrow" />
+              <span>{fullLocationName}</span>
             </Button>
-            <Button
-              className="title-btn title-action"
-              theme="theme-button-clear"
-              disabled={!downloadUrls || !downloadUrls.length}
-              onClick={() => {
-                handleShowDownloads(true);
-                track('analysisDownload', {
-                  label:
-                    downloadUrls &&
-                    downloadUrls.length &&
-                    downloadUrls.map(d => d.label).join(', ')
-                });
-              }}
-              tooltip={{ text: 'Download data' }}
-            >
-              <Icon icon={downloadIcon} className="icon-download" />
-            </Button>
+            <div className="title-controls">
+              <Button
+                className="title-btn title-action"
+                theme="theme-button-clear"
+                onClick={() =>
+                  setShareModal({
+                    title: 'Share this view',
+                    shareUrl: window.location.href.includes('embed')
+                      ? window.location.href.replace('/embed', '')
+                      : window.location.href,
+                    embedUrl: window.location.href.includes('embed')
+                      ? window.location.href
+                      : window.location.href.replace('/map', '/embed/map'),
+                    embedSettings: {
+                      width: 670,
+                      height: 490
+                    }
+                  })
+                }
+                tooltip={{ text: 'Share analysis' }}
+              >
+                <Icon icon={shareIcon} className="icon-share" />
+              </Button>
+              <Button
+                className="title-btn title-action"
+                theme="theme-button-clear"
+                disabled={!downloadUrls || !downloadUrls.length}
+                onClick={() => {
+                  handleShowDownloads(true);
+                  track('analysisDownload', {
+                    label:
+                      downloadUrls &&
+                      downloadUrls.length &&
+                      downloadUrls.map(d => d.label).join(', ')
+                  });
+                }}
+                tooltip={{ text: 'Download data' }}
+              >
+                <Icon icon={downloadIcon} className="icon-download" />
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="results">
-          {hasLayers &&
-            !hasWidgets &&
-            !loading &&
-            !error &&
-            isEmpty(data) && <NoContent message="No analysis data available" />}
-          {!hasLayers &&
-            !hasWidgets &&
-            !loading && (
+          <div className="results">
+            {hasLayers &&
+              !hasWidgets &&
+              !loading &&
+              !error &&
+              isEmpty(data) && (
+              <NoContent message="No analysis data available" />
+            )}
+            {!hasLayers &&
+              !hasWidgets &&
+              !loading && (
               <NoContent>
-                Select a{' '}
+                  Select a{' '}
                 <button
                   onClick={() =>
                     setMenuSettings({
@@ -158,34 +163,34 @@ class ShowAnalysis extends PureComponent {
                     })
                   }
                 >
-                  forest change
+                    forest change
                 </button>{' '}
-                data layer to analyze.
+                  data layer to analyze.
               </NoContent>
             )}
-          {(hasLayers || hasWidgets) &&
-            !loading &&
-            !error && (
+            {(hasLayers || hasWidgets) &&
+              !loading &&
+              !error && (
               <Fragment>
                 <ul className="draw-stats">
                   {data && data.map(d => this.renderStatItem(d))}
                 </ul>
                 {widgets &&
-                  !!widgets.length && (
-                    <Widgets simple analysis widgets={widgets} />
-                  )}
+                    !!widgets.length && (
+                  <Widgets simple analysis widgets={widgets} />
+                )}
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>
-                      This algorithm approximates the results by sampling the
-                      selected area. Results are more accurate at closer zoom
-                      levels.
+                        This algorithm approximates the results by sampling the
+                        selected area. Results are more accurate at closer zoom
+                        levels.
                     </p>
                   )}
                   {showAnalysisDisclaimer && (
                     <p>
-                      <b>NOTE:</b> tree cover loss and gain statistics cannot be
-                      compared against each other.{' '}
+                      <b>NOTE:</b> tree cover loss and gain statistics cannot
+                        be compared against each other.{' '}
                       <button
                         onClick={() =>
                           setModalSources({
@@ -194,19 +199,51 @@ class ShowAnalysis extends PureComponent {
                           })
                         }
                       >
-                        Learn more.
+                          Learn more.
                       </button>
                     </p>
                   )}
                 </div>
               </Fragment>
             )}
+          </div>
+          {showDownloads && (
+            <DownloadData
+              downloadUrls={downloadUrls}
+              onClose={() => handleShowDownloads(false)}
+            />
+          )}
         </div>
-        {showDownloads && (
-          <DownloadData
-            downloadUrls={downloadUrls}
-            onClose={() => handleShowDownloads(false)}
-          />
+        {(hasLayers || hasWidgets) &&
+          !loading &&
+          !error && (
+          <div className="save-aois-disclaimer">
+            {activeArea ? (
+              <div className="content">
+                <p>
+                    To perform an in-depth analysis of this area please visit
+                    the{' '}
+                  <a href={`/dashboards/aoi/${activeArea.id}`}>
+                      area dashboard
+                  </a>.
+                </p>
+              </div>
+            ) : (
+              <div className="content">
+                <h3>Interested in this particular area?</h3>
+                <p>
+                    Save this area to create a <a>dashboard</a> with a more
+                    in-depth analysis and receive <a>email alerts</a> about
+                    forest cover change.
+                </p>
+              </div>
+            )}
+            <img
+              src={screensImg1x}
+              srcSet={`${screensImg1x} 1x, ${screensImg2x} 2x`}
+              alt="aoi screenshots"
+            />
+          </div>
         )}
       </div>
     );
@@ -229,7 +266,8 @@ ShowAnalysis.propTypes = {
   downloadUrls: PropTypes.array,
   widgets: PropTypes.array,
   zoomLevel: PropTypes.number,
-  showAnalysisDisclaimer: PropTypes.bool
+  showAnalysisDisclaimer: PropTypes.bool,
+  activeArea: PropTypes.object
 };
 
 export default ShowAnalysis;

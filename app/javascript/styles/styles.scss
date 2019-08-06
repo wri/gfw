@@ -1,8 +1,6 @@
 // modules styles
-@import '~vizzuality-components/dist/legend.css';
+@import '~vizzuality-components/dist/bundle.css';
 @import '~react-tippy/dist/tippy.css';
-@import '~vizzuality-components/dist/map.css';
-@import '~vizzuality-components/dist/tooltip.css';
 
 // base styles
 @import './reset.scss';
@@ -13,4 +11,5 @@
 @import './text.scss';
 @import './tippy.scss';
 @import './rc-tooltip.scss';
+@import './rc-slider.scss';
 @import './semantic-styles.scss';
