@@ -8,6 +8,9 @@ import layersIcon from 'assets/icons/layers.svg';
 import globeIcon from 'assets/icons/globe.svg';
 import analysisIcon from 'assets/icons/analysis.svg';
 import searchIcon from 'assets/icons/search.svg';
+
+// TODO: leave only one, refactor icon styles
+import userIcon from 'assets/icons/user.svg';
 import myGFWIcon from 'assets/icons/mygfw.svg';
 
 import RecentImagerySettings from 'components/recent-imagery/components/recent-imagery-settings';
@@ -84,7 +87,7 @@ export const searchSections = [
   {
     label: 'my gfw',
     slug: 'my-gfw',
-    icon: myGFWIcon,
+    icon: userIcon,
     Component: MyGFW
   }
 ];
