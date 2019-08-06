@@ -18,9 +18,9 @@ const mapStateToProps = ({ location, areas }) => ({
 
 class GeostoreProvider extends PureComponent {
   componentDidMount() {
-    const { location: { adm0, type } } = this.props;
+    const { location: { adm0, type }, activeArea } = this.props;
 
-    if (adm0 && type !== 'aoi') {
+    if ((adm0 && type !== 'aoi') || (type === 'aoi' && activeArea)) {
       this.handleGetGeostore();
     }
   }
