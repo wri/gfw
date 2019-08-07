@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
+import { logout } from 'utils/auth';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -9,18 +9,6 @@ import pencilIcon from 'assets/icons/pencil.svg';
 import logoutIcon from 'assets/icons/logout.svg';
 
 import './styles.scss';
-
-const logout = () =>
-  axios
-    .get(`${process.env.GFW_API}/auth/logout`, { withCredentials: true })
-    .then(response => {
-      if (response.status < 400) {
-        localStorage.removeItem('mygfw_token');
-        window.location.reload();
-      } else {
-        console.warn('Failed to logout');
-      }
-    });
 
 class UserProfile extends PureComponent {
   render() {

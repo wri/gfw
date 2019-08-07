@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import sortBy from 'lodash/sortBy';
+import { logout } from 'utils/auth';
 
 import AoICard from 'components/aoi-card';
 import MyGFWLogin from 'components/mygfw-login';
@@ -215,7 +216,7 @@ class MapMenuMyGFW extends PureComponent {
           <Button
             theme="theme-button-clear"
             className="logout-button"
-            // onClick={} TODO: import logout from pages/mygfw/components/user-profile
+            onClick={logout}
           >
             Log out
             <Icon icon={logoutIcon} className="logout-icon" />
@@ -227,7 +228,7 @@ class MapMenuMyGFW extends PureComponent {
 
   render() {
     const { loggedIn, areas, isDesktop } = this.props;
-    // TODO; componentize
+
     return (
       <div className="c-map-menu-my-gfw">
         {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}
