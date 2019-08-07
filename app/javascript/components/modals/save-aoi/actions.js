@@ -2,7 +2,7 @@ import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { setAreasProvider, deleteAreaProvider } from 'services/areas';
-import { setArea, setAreas } from 'providers/areas-provider/actions';
+import { setArea, setAreas, viewArea } from 'providers/areas-provider/actions';
 
 export const setSaveAOISaving = createAction('setSaveAOISaving');
 export const resetSaveAOI = createAction('resetSaveAOI');
@@ -29,7 +29,8 @@ export const saveAOI = createThunkAction(
     changesEmail,
     monthlyEmail,
     receiveAlerts,
-    activeAreaId
+    activeAreaId,
+    viewAfterSave
   }) => (dispatch, getState) => {
     const { modalSaveAOI, location, geostore, myGfw } = getState();
     if (modalSaveAOI && !modalSaveAOI.loading) {
@@ -73,6 +74,9 @@ export const saveAOI = createThunkAction(
             const { id, attributes } = area || {};
             dispatch(setArea({ id, ...attributes }));
             dispatch(setSaveAOISaving({ saving: false, error: false }));
+            if (viewAfterSave) {
+              dispatch(viewArea(id));
+            }
           }
         })
         .catch(error => {

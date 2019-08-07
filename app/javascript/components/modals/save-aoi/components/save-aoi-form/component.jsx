@@ -91,7 +91,15 @@ function reducer(state, action) {
 }
 
 function SaveAOIForm(props) {
-  const { activeArea, userData, saving, error, saveAOI, deleteAOI } = props;
+  const {
+    activeArea,
+    userData,
+    saving,
+    error,
+    saveAOI,
+    deleteAOI,
+    viewAfterSave
+  } = props;
 
   const [form, dispatch] = useReducer(reducer, {
     name: props.locationName,
@@ -144,7 +152,8 @@ function SaveAOIForm(props) {
               ...(activeArea && {
                 activeAreaId: activeArea.id
               }),
-              userData
+              userData,
+              viewAfterSave
             })
           }
           disabled={!canSubmit}
@@ -264,7 +273,8 @@ SaveAOIForm.propTypes = {
   email: PropTypes.string,
   error: PropTypes.bool,
   saving: PropTypes.bool,
-  activeArea: PropTypes.object
+  activeArea: PropTypes.object,
+  viewAfterSave: PropTypes.bool
 };
 
 export default SaveAOIForm;
