@@ -15,6 +15,7 @@ const Button = props => {
       className={cx('c-pill', {
         '-removable': onRemove,
         '-active': active,
+        '-clickable': onClick,
         [className]: className
       })}
       onClick={onClick}

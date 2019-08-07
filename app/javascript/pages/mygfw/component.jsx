@@ -51,7 +51,7 @@ class MyGFWPage extends PureComponent {
                 {areas && !!areas.length ? (
                   <div className="row">
                     <div className="column small-12">
-                      <AreasTable areas={areas} />
+                      <AreasTable />
                     </div>
                   </div>
                 ) : (

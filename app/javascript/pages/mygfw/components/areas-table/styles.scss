@@ -35,4 +35,26 @@
       }
     }
   }
+
+  .filter-row {
+    margin-bottom: rem(30px);
+  }
+
+  .filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    .filter-tag {
+      margin-bottom: rem(5px);
+      margin-right: rem(5px);
+    }
+  }
+
+  .filter-title {
+    font-size: rem(12px);
+    margin-bottom: rem(10px);
+    display: block;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
 }

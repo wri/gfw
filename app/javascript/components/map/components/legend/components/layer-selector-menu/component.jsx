@@ -25,28 +25,28 @@ class LayerSelectorMenu extends PureComponent {
       <div className={`c-layer-selector-menu ${className || ''}`}>
         {groups &&
           !!groups.length && (
-            <div className="menu-wrapper -group">
-              <SentenceSelector
-                options={groups}
-                value={selectedGroup && selectedGroup.value}
-                onChange={e => onChange(layerGroup, e)}
-                name={optionName}
-                sentence={groupSentence}
-              />
-            </div>
-          )}
+          <div className="menu-wrapper -group">
+            <SentenceSelector
+              options={groups}
+              value={selectedGroup && selectedGroup.value}
+              onChange={e => onChange(layerGroup, e)}
+              name={optionName}
+              sentence={groupSentence}
+            />
+          </div>
+        )}
         {options &&
           !!options.length && (
-            <div className="menu-wrapper">
-              <SentenceSelector
-                options={options}
-                value={selected}
-                onChange={e => onChange(layerGroup, e)}
-                name={optionName}
-                sentence={sentence}
-              />
-            </div>
-          )}
+          <div className="menu-wrapper">
+            <SentenceSelector
+              options={options}
+              value={selected}
+              onChange={e => onChange(layerGroup, e)}
+              name={optionName}
+              sentence={sentence}
+            />
+          </div>
+        )}
       </div>
     );
   }
