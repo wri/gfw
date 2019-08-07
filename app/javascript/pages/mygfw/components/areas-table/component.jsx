@@ -15,11 +15,12 @@ class AreasTable extends PureComponent {
   static propTypes = {
     areas: PropTypes.array,
     viewArea: PropTypes.func,
-    setSaveAOISettings: PropTypes.func
+    setSaveAOISettings: PropTypes.func,
+    setShareModal: PropTypes.func
   };
 
   render() {
-    const { areas, viewArea, setSaveAOISettings } = this.props;
+    const { areas, viewArea, setSaveAOISettings, setShareModal } = this.props;
 
     return (
       <div className="c-areas-table">
@@ -50,7 +51,18 @@ class AreasTable extends PureComponent {
                     <Icon className="link-icon" icon={editIcon} />
                     edit
                   </Button>
-                  <Button className="area-link" theme="theme-button-clear">
+                  <Button
+                    className="area-link"
+                    theme="theme-button-clear"
+                    onClick={() =>
+                      setShareModal({
+                        title: 'Share your area',
+                        shareUrl: `${window.location.host}/dashboards/aoi/${
+                          area.id
+                        }`
+                      })
+                    }
+                  >
                     <Icon className="link-icon" icon={shareIcon} />
                     share
                   </Button>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
+import ShareModal from 'components/modals/share';
 
 import AreasProvider from 'providers/areas-provider';
 
@@ -83,6 +84,7 @@ class MyGFWPage extends PureComponent {
         </div>
         <AreasProvider />
         <SaveAOIModal />
+        <ShareModal />
       </div>
     );
   }
