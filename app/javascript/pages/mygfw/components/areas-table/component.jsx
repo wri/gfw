@@ -14,11 +14,12 @@ import './styles.scss';
 class AreasTable extends PureComponent {
   static propTypes = {
     areas: PropTypes.array,
-    onClickViewMap: PropTypes.func
+    viewArea: PropTypes.func,
+    setSaveAOISettings: PropTypes.func
   };
 
   render() {
-    const { areas, onClickViewMap } = this.props;
+    const { areas, viewArea, setSaveAOISettings } = this.props;
 
     return (
       <div className="c-areas-table">
@@ -34,7 +35,7 @@ class AreasTable extends PureComponent {
                   <Button
                     className="area-link"
                     theme="theme-button-clear"
-                    onClick={() => onClickViewMap(area)}
+                    onClick={() => viewArea(area.id)}
                   >
                     <Icon className="link-icon" icon={mapIcon} />
                     view on map
@@ -42,7 +43,9 @@ class AreasTable extends PureComponent {
                   <Button
                     className="area-link"
                     theme="theme-button-clear"
-                    onClick={() => onClickViewMap(area)}
+                    onClick={() =>
+                      setSaveAOISettings({ open: true, activeAreaId: area.id })
+                    }
                   >
                     <Icon className="link-icon" icon={editIcon} />
                     edit

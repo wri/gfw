@@ -1,26 +1,24 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-
+import isEmpty from 'lodash/isEmpty';
 import { getFullLocationName } from 'components/analysis/components/show-analysis/selectors';
-import { getActiveDatasetIds } from 'components/map/selectors';
+
 import { initialState } from './reducers';
 
 const selectSaveAOIUrlState = state =>
   state.location && state.location.query && state.location.query.saveAOI;
-const selectUserData = state => (state.myGfw && state.myGfw.data) || {};
 const selectLoading = state =>
   (state.datasets && state.datasets.loading) ||
   (state.myGfw && state.myGfw.loading);
-const selectDatasets = state => state.datasets && state.datasets.data;
 const selectSaving = state => state.modalSaveAOI && state.modalSaveAOI.saving;
-const selectSaved = state => state.modalSaveAOI && state.modalSaveAOI.saved;
 const selectError = state => state.modalSaveAOI && state.modalSaveAOI.error;
+const selectAreas = state => state.areas && state.areas.data;
+const selectUserData = state => (state.myGfw && state.myGfw.data) || {};
 const selectLocation = state => state.location && state.location.payload;
-const getActiveArea = state => state.areas && state.areas.activeArea;
 
 export const getSaveAOISettings = createSelector(
   [selectSaveAOIUrlState],
   urlState => ({
-    ...initialState,
+    ...initialState.settings,
     ...urlState
   })
 );
@@ -30,60 +28,36 @@ export const getOpen = createSelector(
   settings => settings.open
 );
 
-export const getName = createSelector(
-  [getSaveAOISettings],
-  settings => settings.name
+export const getActiveArea = createSelector(
+  [selectLocation, getSaveAOISettings, selectAreas],
+  (location, settings, areas) => {
+    if (isEmpty(areas)) return null;
+    let activeAreaId = '';
+    if (location.type === 'aoi') {
+      activeAreaId = location.adm0;
+    } else {
+      activeAreaId = settings.activeAreaId;
+    }
+
+    return areas.find(a => a.id === activeAreaId);
+  }
 );
 
-export const getLang = createSelector(
-  [getSaveAOISettings],
-  settings => settings.lang
-);
-
-export const getEmail = createSelector(
-  [selectUserData],
-  settings => settings.email
-);
-
-export const getActiveSubscriptionDatasets = createSelector(
-  [getSaveAOISettings],
-  settings => settings.datasets
-);
-
-export const getSubscriptionDatasets = createSelector(
-  [selectDatasets, getActiveSubscriptionDatasets],
-  (datasets, activeDatasets) =>
-    datasets &&
-    datasets.filter(d => d.subscriptionKey).map(d => ({
-      ...d,
-      active: activeDatasets.includes(d.subscriptionKey)
-    }))
-);
-
-export const getActiveMapDatasets = createSelector(
-  [getSubscriptionDatasets, getActiveDatasetIds],
-  (datasets, activeDatasetIds) =>
-    datasets &&
-    activeDatasetIds &&
-    datasets
-      .filter(d => activeDatasetIds.includes(d.id))
-      .map(d => d.subscriptionKey)
-);
+export const getModalTitle = createSelector([getActiveArea], activeArea => {
+  if (activeArea) {
+    return 'Edit Area of Interest';
+  }
+  return 'Save Area of Interest';
+});
 
 export const getModalAOIProps = createStructuredSelector({
-  open: getOpen,
-  name: getName,
-  lang: getLang,
-  email: getEmail,
-  loading: selectLoading,
-  userData: selectUserData,
-  datasets: getSubscriptionDatasets,
-  activeMapDatasets: getActiveMapDatasets,
-  activeDatasets: getActiveSubscriptionDatasets,
-  activeArea: getActiveArea,
-  locationName: getFullLocationName,
   saving: selectSaving,
-  saved: selectSaved,
+  loading: selectLoading,
+  activeArea: getActiveArea,
+  title: getModalTitle,
+  open: getOpen,
   error: selectError,
-  location: selectLocation
+  userData: selectUserData,
+  location: selectLocation,
+  locationName: getFullLocationName
 });

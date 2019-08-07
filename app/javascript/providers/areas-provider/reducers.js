@@ -26,25 +26,13 @@ const setArea = (state, { payload }) => {
   };
 };
 
-const setActiveArea = (state, { payload }) => ({
-  ...state,
-  activeArea: payload
-});
-
-const clearActiveArea = state => ({
-  ...state,
-  activeArea: null
-});
-
 const setAreasLoading = (state, { payload }) => ({
   ...state,
   loading: payload
 });
 
 export default {
-  [actions.setAreas]: setAreas,
   [actions.setArea]: setArea,
-  [actions.setActiveArea]: setActiveArea,
-  [actions.clearActiveArea]: clearActiveArea,
+  [actions.setAreas]: setAreas,
   [actions.setAreasLoading]: setAreasLoading
 };

@@ -9,72 +9,61 @@ import Modal from '../modal';
 import SaveAOIForm from './components/save-aoi-form';
 
 class ModalSaveAOI extends PureComponent {
+  static propTypes = {
+    open: PropTypes.bool,
+    title: PropTypes.string,
+    saving: PropTypes.bool,
+    loading: PropTypes.bool,
+    resetSaveAOI: PropTypes.func,
+    setSaveAOISettings: PropTypes.func,
+    onAfterSave: PropTypes.func,
+    onAferDelete: PropTypes.func,
+    userData: PropTypes.object
+  };
+
+  componentDidUpdate(prevProps) {
+    const { saving } = this.props;
+    if (!saving && saving !== prevProps.saving) {
+      this.handleCloseModal();
+    }
+  }
+
   handleCloseModal = () => {
     const { setSaveAOISettings, resetSaveAOI, saving } = this.props;
     if (!saving) {
-      setSaveAOISettings({ open: false });
+      setSaveAOISettings({ open: false, activeAreaId: null });
       resetSaveAOI();
     }
   };
 
-  renderUserLoginForm = () => <MyGFWLogin className="mygfw-save-aoi" />;
-
-  renderMessage = message => <p>{message}</p>;
-
   render() {
-    const { open, userData, loading, saved, deleted, activeArea } = this.props;
-
-    let title;
-    if (saved) {
-      title = 'Area saved';
-    } else if (activeArea) {
-      title = 'Edit Area of Interest';
-    } else {
-      title = 'Save Area of Interest';
-    }
+    const { title, open, userData, loading } = this.props;
+    const loggedIn = !isEmpty(userData);
 
     return (
       <Modal
         isOpen={open}
-        contentLabel={
-          activeArea ? 'Edit Area of Interest' : 'Save Area of Interest'
-        }
+        contentLabel={title}
         onRequestClose={this.handleCloseModal}
         title={title}
       >
         <div className="c-modal-save-aoi">
           <div className="save-aoi-body">
             {loading && <Loader />}
-            {!loading && isEmpty(userData) && this.renderUserLoginForm()}
+            {!loading && !loggedIn && <MyGFWLogin className="mygfw-save-aoi" />}
             {!loading &&
-              !isEmpty(userData) &&
-              !saved &&
-              !deleted && <SaveAOIForm {...this.props} />}
-            {!loading &&
-              !isEmpty(userData) &&
-              saved &&
-              this.renderMessage('Area saved, you can now close this modal.')}
-            {!loading && deleted && this.renderMessage('Area deleted.')}
+              loggedIn && (
+              <SaveAOIForm
+                {...this.props}
+                email={userData.email}
+                lang={userData.language}
+              />
+            )}
           </div>
         </div>
       </Modal>
     );
   }
 }
-
-ModalSaveAOI.propTypes = {
-  saved: PropTypes.bool,
-  deleted: PropTypes.bool,
-  open: PropTypes.bool,
-  loading: PropTypes.bool,
-  setSaveAOISettings: PropTypes.func,
-  resetSaveAOI: PropTypes.func,
-  userData: PropTypes.object,
-  datasets: PropTypes.array,
-  activeArea: PropTypes.object,
-  locationName: PropTypes.string,
-  activeDatasets: PropTypes.array,
-  saving: PropTypes.bool
-};
 
 export default ModalSaveAOI;

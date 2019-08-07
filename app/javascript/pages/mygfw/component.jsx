@@ -6,8 +6,8 @@ import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 
 import AreasProvider from 'providers/areas-provider';
-import GeostoreProvider from 'providers/geostore-provider';
 
+import SaveAOIModal from 'components/modals/save-aoi';
 import UserProfile from './components/user-profile';
 import AreasTable from './components/areas-table';
 import NoAreasImage from './assets/no-areas@2x.png';
@@ -17,12 +17,11 @@ class MyGFWPage extends PureComponent {
   static propTypes = {
     loggedIn: PropTypes.bool,
     loading: PropTypes.bool,
-    areas: PropTypes.array,
-    goToAOI: PropTypes.func
+    areas: PropTypes.array
   };
 
   render() {
-    const { loggedIn, loading, areas, goToAOI } = this.props;
+    const { loggedIn, loading, areas } = this.props;
 
     return (
       <div className="l-mygfw-page">
@@ -51,7 +50,7 @@ class MyGFWPage extends PureComponent {
                 {areas && !!areas.length ? (
                   <div className="row">
                     <div className="column small-12">
-                      <AreasTable areas={areas} onClickViewMap={goToAOI} />
+                      <AreasTable areas={areas} />
                     </div>
                   </div>
                 ) : (
@@ -83,7 +82,7 @@ class MyGFWPage extends PureComponent {
           </div>
         </div>
         <AreasProvider />
-        <GeostoreProvider />
+        <SaveAOIModal />
       </div>
     );
   }

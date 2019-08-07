@@ -145,7 +145,7 @@ $desktop-padding: rem(50px);
       .delete-icon {
         margin-right: rem(5px);
         position: relative;
-        bottom: rem(2px);
+        fill: $error;
       }
     }
   }

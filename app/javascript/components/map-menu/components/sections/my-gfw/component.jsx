@@ -44,14 +44,11 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { location, clearActiveArea, areas } = this.props;
-    const { location: prevLocation, areas: prevAreas } = prevProps;
+    const { areas } = this.props;
+    const { areas: prevAreas } = prevProps;
+
     if (areas !== prevAreas) {
       this.setTags();
-    }
-
-    if (location.type !== 'aoi' && prevLocation.type === 'aoi') {
-      clearActiveArea();
     }
   }
 
@@ -95,7 +92,7 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   renderAreas() {
-    const { isDesktop, areas, activeArea, goToAOI, onEditClick } = this.props;
+    const { isDesktop, areas, activeArea, viewArea, onEditClick } = this.props;
     const activeTags = Object.keys(this.state.activeTags).filter(
       tag => this.state.activeTags[tag]
     );
@@ -172,7 +169,7 @@ class MapMenuMyGFW extends PureComponent {
                     '--active': active,
                     '--inactive': activeArea && !active
                   })}
-                  onClick={() => goToAOI(area)}
+                  onClick={() => viewArea(area.id)}
                   role="button"
                   tabIndex={0}
                   key={area.id}
@@ -253,9 +250,9 @@ MapMenuMyGFW.propTypes = {
   loggedIn: PropTypes.bool,
   areas: PropTypes.array,
   activeArea: PropTypes.object,
-  goToAOI: PropTypes.func,
+  viewArea: PropTypes.func,
   onEditClick: PropTypes.func,
-  clearActiveArea: PropTypes.func,
+  clearArea: PropTypes.func,
   location: PropTypes.object
 };
 

@@ -23,7 +23,6 @@ class AnalysisComponent extends PureComponent {
       handleCancelAnalysis,
       handleFetchAnalysis,
       setSaveAOISettings,
-      clearActiveArea,
       endpoints,
       widgetLayers,
       embed,
@@ -105,7 +104,6 @@ class AnalysisComponent extends PureComponent {
               </Button>
             )}
             {activeArea ? (
-            /* TODO: if activeArea, edit in my gfw AND DONT CLEAR  ???? */
               <div className="analysis-buttons">
                 <Button
                   className="analysis-btn dashboard"
@@ -141,7 +139,6 @@ class AnalysisComponent extends PureComponent {
               <Button
                 className="analysis-action-btn subscribe-btn"
                 onClick={() => {
-                  clearActiveArea();
                   setSaveAOISettings({ open: true });
                 }}
               >
@@ -170,7 +167,6 @@ AnalysisComponent.propTypes = {
   embed: PropTypes.bool,
   setSubscribeSettings: PropTypes.func,
   setSaveAOISettings: PropTypes.func,
-  clearActiveArea: PropTypes.func,
   setShareModal: PropTypes.func
 };
 

@@ -128,11 +128,7 @@ function SaveAOIForm(props) {
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
-            onClick={() =>
-              deleteAOI({
-                userData
-              })
-            }
+            onClick={() => deleteAOI(activeArea.id)}
           >
             <Icon icon={deleteIcon} className="delete-icon" />
             Delete Area
@@ -145,8 +141,10 @@ function SaveAOIForm(props) {
           onClick={() =>
             saveAOI({
               ...form,
+              ...(activeArea && {
+                activeAreaId: activeArea.id
+              }),
               userData
-              // ...location
             })
           }
           disabled={!canSubmit}
