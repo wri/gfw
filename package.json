@@ -120,6 +120,7 @@
     "deck.gl": "^7.1.10",
     "dotenv": "4.0.0",
     "downshift": "1.30.0",
+    "eslint-plugin-react-hooks": "^1.6.1",
     "fbjs": "0.8.16",
     "glob": "7.1.2",
     "history": "4.7.2",

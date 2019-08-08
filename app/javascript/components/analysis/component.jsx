@@ -16,15 +16,18 @@ class AnalysisComponent extends PureComponent {
       className,
       loading,
       location,
+      activeArea,
       clearAnalysis,
       goToDashboard,
       error,
       handleCancelAnalysis,
       handleFetchAnalysis,
-      setSubscribeSettings,
+      setSaveAOISettings,
+      clearActiveArea,
       endpoints,
       widgetLayers,
-      embed
+      embed,
+      setShareModal
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -50,30 +53,31 @@ class AnalysisComponent extends PureComponent {
           {location.type &&
             location.adm0 &&
             (loading || (!loading && error)) && (
-              <div className={cx('cancel-analysis', { fetching: loading })}>
-                {!loading &&
+            <div className={cx('cancel-analysis', { fetching: loading })}>
+              {!loading &&
                   error && (
-                    <Button
-                      className="refresh-analysis-btn"
-                      onClick={() => handleFetchAnalysis(location, endpoints)}
-                    >
-                      REFRESH ANALYSIS
-                    </Button>
-                  )}
                 <Button
-                  className="cancel-analysis-btn"
-                  onClick={handleCancelAnalysis}
+                  className="refresh-analysis-btn"
+                  onClick={() => handleFetchAnalysis(endpoints)}
                 >
-                  CANCEL ANALYSIS
+                      REFRESH ANALYSIS
                 </Button>
-                {!loading && error && <p className="error-message">{error}</p>}
-              </div>
-            )}
+              )}
+              <Button
+                className="cancel-analysis-btn"
+                onClick={handleCancelAnalysis}
+              >
+                  CANCEL ANALYSIS
+              </Button>
+              {!loading && error && <p className="error-message">{error}</p>}
+            </div>
+          )}
           {location.type && location.adm0 ? (
             <ShowAnalysis
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
               hasLayers={hasLayers}
+              activeArea={activeArea}
               hasWidgetLayers={hasWidgetLayers}
               analysis
             />
@@ -85,29 +89,67 @@ class AnalysisComponent extends PureComponent {
           !error &&
           location.type &&
           location.adm0 && (
-            <div className="analysis-actions">
-              {location.type === 'country' && (
+          <div className="analysis-actions">
+            {location.type === 'country' && (
+              <Button
+                className="analysis-action-btn"
+                theme="theme-button-light"
+                {...linkProps}
+                onClick={() =>
+                  track('analysisViewDashboards', {
+                    label: location.adm0
+                  })
+                }
+              >
+                  DASHBOARD
+              </Button>
+            )}
+            {activeArea ? (
+            /* TODO: if activeArea, edit in my gfw AND DONT CLEAR  ???? */
+              <div className="analysis-buttons">
                 <Button
-                  className="analysis-action-btn"
+                  className="analysis-btn dashboard"
                   theme="theme-button-light"
-                  {...linkProps}
+                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
+                  tooltip={{ text: 'Go to Areas of Interest dashboard' }}
+                >
+                    DASHBOARD
+                </Button>
+                <Button
+                  className="analysis-btn dashboard"
                   onClick={() =>
-                    track('analysisViewDashboards', {
-                      label: location.adm0
+                    setShareModal({
+                      title: 'Share this view',
+                      shareUrl: window.location.href.includes('embed')
+                        ? window.location.href.replace('/embed', '')
+                        : window.location.href,
+                      embedUrl: window.location.href.includes('embed')
+                        ? window.location.href
+                        : window.location.href.replace('/map', '/embed/map'),
+                      embedSettings: {
+                        width: 670,
+                        height: 490
+                      }
                     })
                   }
+                  tooltip={{ text: 'Share or embed this area' }}
                 >
-                  DASHBOARD
+                    Share area
                 </Button>
-              )}
+              </div>
+            ) : (
               <Button
                 className="analysis-action-btn subscribe-btn"
-                onClick={() => setSubscribeSettings({ open: true })}
+                onClick={() => {
+                  clearActiveArea();
+                  setSaveAOISettings({ open: true });
+                }}
               >
-                SUBSCRIBE
+                  SAVE IN MY GFW
               </Button>
-            </div>
-          )}
+            )}
+          </div>
+        )}
       </Fragment>
     );
   }
@@ -120,12 +162,16 @@ AnalysisComponent.propTypes = {
   widgetLayers: PropTypes.array,
   loading: PropTypes.bool,
   location: PropTypes.object,
+  activeArea: PropTypes.object,
   goToDashboard: PropTypes.func,
   error: PropTypes.string,
   handleCancelAnalysis: PropTypes.func,
   handleFetchAnalysis: PropTypes.func,
   embed: PropTypes.bool,
-  setSubscribeSettings: PropTypes.func
+  setSubscribeSettings: PropTypes.func,
+  setSaveAOISettings: PropTypes.func,
+  clearActiveArea: PropTypes.func,
+  setShareModal: PropTypes.func
 };
 
 export default AnalysisComponent;
