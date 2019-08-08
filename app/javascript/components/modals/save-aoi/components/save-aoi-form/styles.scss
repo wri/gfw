@@ -3,6 +3,11 @@ $mobile-padding: rem(30px);
 $desktop-padding: rem(50px);
 
 .c-save-aoi-form {
+  .area-image {
+    width: 100%;
+    margin-bottom: rem(30px);
+  }
+
   .field {
     display: flex;
     flex-direction: column;
@@ -84,7 +89,7 @@ $desktop-padding: rem(50px);
 
     button {
       min-width: rem(22px);
-      margin-right: rem(5px);
+      margin-right: rem(10px);
     }
   }
 

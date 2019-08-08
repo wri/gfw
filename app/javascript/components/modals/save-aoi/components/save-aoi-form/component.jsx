@@ -15,6 +15,7 @@ import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/single B.png';
 import screenImg2x from 'assets/images/aois/single B @2x.png';
 
+import placeholderAreaBg from './aoi-placeholder-bg.png';
 import './styles.scss';
 
 function validateEmail(email) {
@@ -179,6 +180,11 @@ function SaveAOIForm(props) {
 
   return (
     <div className="c-form c-save-aoi-form">
+      <img
+        className="area-image"
+        src={placeholderAreaBg}
+        alt="aoi screenshot"
+      />
       <div className={cx('field', { error: nameError })}>
         <span className="form-title">Name this area for later reference</span>
         <input
