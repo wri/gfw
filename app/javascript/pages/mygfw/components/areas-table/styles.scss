@@ -45,16 +45,22 @@
     flex-wrap: wrap;
 
     .filter-tag {
-      margin-bottom: rem(5px);
+      margin-top: rem(5px);
       margin-right: rem(5px);
     }
   }
 
   .filter-title {
     font-size: rem(12px);
-    margin-bottom: rem(10px);
+    margin-bottom: rem(5px);
     display: block;
     font-weight: 500;
     text-transform: uppercase;
+  }
+
+  .filter-search {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
   }
 }

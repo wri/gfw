@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import debounce from 'lodash/debounce';
+import cx from 'classnames';
 
 import searchIcon from 'assets/icons/search.svg';
 import closeIcon from 'assets/icons/close.svg';
 import './search-styles.scss';
-import './themes/search-light.scss'; // eslint-disable-line
+import './themes/search-small.scss'; // eslint-disable-line
 
 class Search extends Component {
   constructor(props) {
@@ -47,10 +48,7 @@ class Search extends Component {
     const { search } = this.state;
     const { placeholder, onSubmit, disabled, className, theme } = this.props;
     return (
-      <div
-        className={`c-search ${theme || 'theme-search-light'} ${className ||
-          ''}`}
-      >
+      <div className={cx('c-search', theme, className)}>
         <input
           type="text"
           className="input text"

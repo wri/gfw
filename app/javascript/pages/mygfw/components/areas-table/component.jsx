@@ -142,12 +142,14 @@ class AreasTable extends PureComponent {
             </div>
           </div>
           <div className="column small-12 medium-3">
-            <Search
-              className="side-menu-search"
-              placeholder="Search"
-              input={search}
-              onChange={value => this.setState({ search: value })}
-            />
+            <div className="filter-search">
+              <Search
+                theme="theme-search-small"
+                placeholder="Search"
+                input={search}
+                onChange={value => this.setState({ search: value })}
+              />
+            </div>
           </div>
         </div>
         {sortedAreas &&
