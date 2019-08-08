@@ -2,14 +2,20 @@
 
 .c-aoi-card {
   display: flex;
+  flex-direction: column;
   position: relative;
 
+  @media screen and (min-width: $screen-m) {
+    flex-direction: row;
+  }
+
   img {
-    width: rem(75px);
-    min-width: rem(75px);
-    height: rem(75px);
+    width: 100%;
+    min-width: 100%;
+    height: rem(120px);
     background: $border;
     margin-right: rem(15px);
+    margin-bottom: rem(20px);
 
     @media screen and (min-width: $screen-m) {
       width: rem(140px);
@@ -91,6 +97,11 @@
     img {
       width: rem(76px);
       height: rem(76px);
+
+      @media screen and (min-width: $screen-m) {
+        width: rem(76px);
+        height: rem(76px);
+      }
     }
 
     .title {
