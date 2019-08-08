@@ -99,7 +99,8 @@ function SaveAOIForm(props) {
     error,
     saveAOI,
     deleteAOI,
-    viewAfterSave
+    viewAfterSave,
+    clearAfterDelete
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
@@ -137,7 +138,7 @@ function SaveAOIForm(props) {
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
-            onClick={() => deleteAOI(activeArea.id)}
+            onClick={() => deleteAOI({ id: activeArea.id, clearAfterDelete })}
           >
             <Icon icon={deleteIcon} className="delete-icon" />
             Delete Area
@@ -280,7 +281,8 @@ SaveAOIForm.propTypes = {
   error: PropTypes.bool,
   saving: PropTypes.bool,
   activeArea: PropTypes.object,
-  viewAfterSave: PropTypes.bool
+  viewAfterSave: PropTypes.bool,
+  clearAfterDelete: PropTypes.bool
 };
 
 export default SaveAOIForm;

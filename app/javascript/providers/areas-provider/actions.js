@@ -64,3 +64,16 @@ export const viewArea = createThunkAction(
     }
   }
 );
+
+export const clearArea = createThunkAction(
+  'clearArea',
+  () => (dispatch, getState) => {
+    const { location } = getState();
+    const { query, type } = location;
+    dispatch({
+      type,
+      payload: {},
+      query
+    });
+  }
+);

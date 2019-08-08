@@ -2,7 +2,12 @@ import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
 import { setAreasProvider, deleteAreaProvider } from 'services/areas';
-import { setArea, setAreas, viewArea } from 'providers/areas-provider/actions';
+import {
+  setArea,
+  setAreas,
+  viewArea,
+  clearArea
+} from 'providers/areas-provider/actions';
 
 export const setSaveAOISaving = createAction('setSaveAOISaving');
 export const resetSaveAOI = createAction('resetSaveAOI');
@@ -94,7 +99,7 @@ export const saveAOI = createThunkAction(
 
 export const deleteAOI = createThunkAction(
   'deleteAOI',
-  id => (dispatch, getState) => {
+  ({ id, clearAfterDelete }) => (dispatch, getState) => {
     const { data: userData } = getState().myGfw || {};
     const { data: areas } = getState().areas || {};
     const token = (userData && userData.token) || process.env.DEMO_USER_TOKEN;
@@ -109,6 +114,9 @@ export const deleteAOI = createThunkAction(
         ) {
           dispatch(setAreas(areas.filter(a => a.id !== id)));
           dispatch(setSaveAOISaving({ saving: false, error: false }));
+          if (clearAfterDelete) {
+            dispatch(clearArea());
+          }
         }
       })
       .catch(error => {
