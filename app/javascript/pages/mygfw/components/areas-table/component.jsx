@@ -62,7 +62,7 @@ class AreasTable extends PureComponent {
     return (
       <div className="c-areas-table">
         <div className="row filter-row">
-          <div className="column small-12 medium-5">
+          <div className="column small-12 medium-5 filter-group">
             <span className="filter-title">Filter by tag</span>
             <div className="filter-tags">
               {selectedTags &&
@@ -82,7 +82,7 @@ class AreasTable extends PureComponent {
               {unselectedTags &&
                 !!unselectedTags.length && (
                 <Dropdown
-                  className="country-dropdown"
+                  className="filter-tag"
                   theme="theme-dropdown-button theme-dropdown-button-small"
                   placeholder={
                     activeTags && activeTags.length > 0
@@ -106,7 +106,7 @@ class AreasTable extends PureComponent {
               )}
             </div>
           </div>
-          <div className="column small-12 medium-4">
+          <div className="column small-12 medium-4 filter-group">
             <span className="filter-title">Order by</span>
             <div className="filter-tags">
               <Pill

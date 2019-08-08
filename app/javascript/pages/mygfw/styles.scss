@@ -3,23 +3,26 @@
 .l-mygfw-page {
   .header-banner {
     background-color: $slate-light;
-    padding: rem(70px) 0 rem(80px);
+    padding: rem(30px) 0 rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(70px) 0 rem(80px);
+    }
 
     h1 {
       font-size: rem(48px);
       font-weight: 300;
       color: $white;
     }
-
-    .user-profile {
-      display: flex;
-      justify-content: space-between;
-    }
   }
 
   .my-gfw-container {
-    padding: rem(80px) 0;
+    padding: rem(30px) 0;
     position: relative;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(80px) 0;
+    }
 
     .mygfw-loader {
       min-height: rem(300px);

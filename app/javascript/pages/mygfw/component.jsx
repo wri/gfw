@@ -28,11 +28,11 @@ class MyGFWPage extends PureComponent {
       <div className="l-mygfw-page">
         <div className="header-banner">
           <div className="row">
-            <div className="column small-12">
-              <div className="user-profile">
-                <h1>My GFW</h1>
-                {loggedIn && <UserProfile />}
-              </div>
+            <div className="column small-12 medium-6">
+              <h1>My GFW</h1>
+            </div>
+            <div className="column small-12 medium-6">
+              {loggedIn && <UserProfile />}
             </div>
           </div>
         </div>

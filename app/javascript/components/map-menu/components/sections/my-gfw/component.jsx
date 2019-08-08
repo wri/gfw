@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import intersection from 'lodash/intersection';
 import { logout } from 'utils/auth';
+import Link from 'redux-first-router-link';
 
 import AoICard from 'components/aoi-card';
 import MyGFWLogin from 'components/mygfw-login';
@@ -186,11 +187,10 @@ class MapMenuMyGFW extends PureComponent {
             : this.renderNoAreas()}
         </div>
         <div className="my-gfw-footer">
-          <a href="/my-gfw" className="edit-button">
-            {/* TODO: define text, update profile / user email (review design) */}
+          <Link to="/my-gfw" className="edit-button">
             Update profile
             <Icon icon={editIcon} className="edit-icon" />
-          </a>
+          </Link>
           <Button
             theme="theme-button-clear"
             className="logout-button"

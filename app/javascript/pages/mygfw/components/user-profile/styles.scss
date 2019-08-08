@@ -3,7 +3,10 @@
 .c-user-profile {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+
+  @media screen and (min-width: $screen-m) {
+    align-items: flex-end;
+  }
 
   .name,
   .email {

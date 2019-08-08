@@ -5,10 +5,16 @@
   position: relative;
 
   img {
-    width: rem(140px);
-    height: rem(140px);
+    width: rem(75px);
+    min-width: rem(75px);
+    height: rem(75px);
     background: $border;
     margin-right: rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(140px);
+      height: rem(140px);
+    }
   }
 
   .item-body {
