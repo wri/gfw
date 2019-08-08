@@ -44,7 +44,7 @@
           color: $grey;
           line-height: rem(16px);
           padding: rem(2.5px) 0;
-          max-width: rem(120px);
+          max-width: rem(250px);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -96,6 +96,12 @@
     .meta {
       flex-direction: column;
       margin-bottom: 0;
+
+      .tags {
+        p {
+          max-width: rem(120px);
+        }
+      }
     }
   }
 }
