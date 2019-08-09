@@ -48,6 +48,10 @@
 
   .filter-group {
     margin-bottom: rem(30px);
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 0;
+    }
   }
 
   .filter-row {
