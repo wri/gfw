@@ -74,11 +74,26 @@
       .activity {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         font-size: rem(12px);
         color: $slate;
 
+        @media screen and (min-width: $screen-m) {
+          flex-wrap: nowrap;
+        }
+
         > span {
           margin-right: rem(20px);
+        }
+
+        .activity-intro {
+          width: 100%;
+          margin-bottom: rem(10px);
+
+          @media screen and (min-width: $screen-m) {
+            width: auto;
+            margin-bottom: 0;
+          }
         }
 
         .glad {

@@ -80,7 +80,7 @@ class AoICard extends PureComponent {
             </div>
             {!simple && (
               <div className="activity">
-                <span>Last weeks activity:</span>
+                <span className="activity-intro">Last weeks activity:</span>
                 <span className="glad">
                   <span className="activity-data">
                     {formatNumber({
