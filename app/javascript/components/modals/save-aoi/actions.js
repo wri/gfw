@@ -37,13 +37,12 @@ export const saveAOI = createThunkAction(
     activeAreaId,
     viewAfterSave
   }) => (dispatch, getState) => {
-    const { modalSaveAOI, location, geostore, myGfw } = getState();
+    const { modalSaveAOI, location, geostore } = getState();
     if (modalSaveAOI && !modalSaveAOI.saving) {
       dispatch(setSaveAOISaving({ saving: true, error: false }));
 
       const { data: geostoreData } = geostore || {};
       const { id: geostoreId } = geostoreData || {};
-      const { data: userData } = myGfw || {};
       const { payload: { type, adm0, adm1, adm2 } } = location || {};
       const isCountry = type === 'country';
 
@@ -69,10 +68,9 @@ export const saveAOI = createThunkAction(
         tags
       };
 
-      const token = userData.token || process.env.DEMO_USER_TOKEN;
       const method = activeAreaId ? 'patch' : 'post';
 
-      setAreasProvider(token, postData, method)
+      setAreasProvider(postData, method)
         .then(response => {
           if (response.data && response.data.data) {
             const area = response.data.data;
@@ -100,12 +98,10 @@ export const saveAOI = createThunkAction(
 export const deleteAOI = createThunkAction(
   'deleteAOI',
   ({ id, clearAfterDelete }) => (dispatch, getState) => {
-    const { data: userData } = getState().myGfw || {};
     const { data: areas } = getState().areas || {};
-    const token = (userData && userData.token) || process.env.DEMO_USER_TOKEN;
     dispatch(setSaveAOISaving({ saving: true, error: false }));
 
-    deleteAreaProvider(token, id)
+    deleteAreaProvider(id)
       .then(response => {
         if (
           response.status &&

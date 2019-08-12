@@ -13,7 +13,7 @@ export const getAreas = createThunkAction(
     const { areas } = getState();
     if (areas && !areas.loading) {
       dispatch(setAreasLoading(true));
-      getAreasProvider(process.env.DEMO_USER_TOKEN)
+      getAreasProvider()
         .then(response => {
           const { data } = response.data;
           if (data && !!data.length) {
