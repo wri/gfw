@@ -116,6 +116,7 @@
     "coffee-script": "1.12.7",
     "constants": "0.0.2",
     "d3": "4.11.0",
+    "d3-ease": "^1.0.5",
     "d3-format": "1.2.1",
     "deck.gl": "^7.1.10",
     "dotenv": "4.0.0",
@@ -194,6 +195,7 @@
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
     "util": "^0.12.1",
+    "viewport-mercator-project": "^6.1.1",
     "vizzuality-components": "^3.0.0-beta.5",
     "wri-json-api-serializer": "^1.0.1"
   },

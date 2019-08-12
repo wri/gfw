@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import intersection from 'lodash/intersection';
 import sortBy from 'lodash/sortBy';
 import { deburrUpper } from 'utils/data';
+import Link from 'redux-first-router-link';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
@@ -157,7 +158,9 @@ class AreasTable extends PureComponent {
           sortedAreas.map((area, i) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
-                <AoICard index={i} {...area} />
+                <Link to={`/dashboards/aoi/${area.id}`}>
+                  <AoICard index={i} {...area} />
+                </Link>
               </div>
               <div className="column small-12 medium-3">
                 <div className="area-links">
