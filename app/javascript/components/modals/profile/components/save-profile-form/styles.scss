@@ -12,6 +12,7 @@ $desktop-padding: rem(50px);
     display: flex;
     flex-direction: column;
     margin-bottom: rem(20px);
+    max-width: rem(500px);
 
     span {
       margin-bottom: rem(10px);
