@@ -13,8 +13,8 @@ import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
 import logoutIcon from 'assets/icons/logout.svg';
-import screenImg1x from 'assets/images/aois/single A.png';
-import screenImg2x from 'assets/images/aois/single A @2x.png';
+import screenImg1x from 'assets/images/aois/singleA.png';
+import screenImg2x from 'assets/images/aois/singleA@2x.png';
 
 import './styles.scss';
 

@@ -12,8 +12,8 @@ import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 
 import deleteIcon from 'assets/icons/delete.svg';
-import screenImg1x from 'assets/images/aois/single B.png';
-import screenImg2x from 'assets/images/aois/single B @2x.png';
+import screenImg1x from 'assets/images/aois/singleB.png';
+import screenImg2x from 'assets/images/aois/singleB@2x.png';
 
 import placeholderAreaBg from './aoi-placeholder-bg.png';
 import './styles.scss';
