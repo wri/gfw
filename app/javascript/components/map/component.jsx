@@ -183,7 +183,9 @@ class MapComponent extends Component {
     this.setRoads();
 
     // Listeners
-    this.map.on('style.load', this.onStyleLoad);
+    if (this.map) {
+      this.map.on('style.load', this.onStyleLoad);
+    }
   };
 
   onClick = e => {
