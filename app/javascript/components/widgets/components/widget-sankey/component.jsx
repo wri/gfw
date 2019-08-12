@@ -13,80 +13,74 @@ class WidgetTreeCover extends PureComponent {
     const testData = {
       nodes: [
         {
-          name: 'Germany',
+          name: 'Forest',
           color: '#00955f'
         },
         {
-          name: `France, in Western Europe, encompasses medieval cities, alpine villages and Mediterranean beaches. Paris, its capital, is
-            famed for its fashion houses, classical art museums including the Louvre and monuments like the Eiffel Tower`,
+          name: 'Forest',
+          color: '#00955f'
+        },
+        {
+          name: 'Wetlands',
           color: '#FFB400'
         },
         {
-          name: `Switzerland is a mountainous Central European country, home to numerous lakes, villages and the high peaks of the Alps. Its
-            cities contain medieval quarters, with landmarks like capital Bern’s Zytglogge`,
+          name: 'Wetlands',
+          color: '#FFB400'
+        },
+        {
+          name: 'Grassland',
           color: '#3498db'
         },
         {
-          name: 'Portugal',
+          name: 'Grassland',
+          color: '#3498db'
+        },
+        {
+          name: 'Cropland',
           color: '#ab0000'
         },
         {
-          name: `Grants 2 are made to fund a specific project and require some level of compliance and reporting. The grant writing process
-            involves an applicant submitting a proposal (or submission) to a potential funder, either on the applicants own initiative or
-            in response to a Request for Proposal from the funder.`,
+          name: 'Cropland',
+          color: '#ab0000'
+        },
+        {
+          name: 'Bare',
           color: '#00955f'
         },
         {
-          name: `Loans is the lending of money by one or more individuals, organizations, and/or other entities to other individuals,
-            organizations etc.`,
+          name: 'Bare',
+          color: '#00955f'
+        },
+        {
+          name: 'Settlement',
           color: '#FFB400'
         },
         {
-          name: 'Loans 2',
-          color: '#3498db'
-        },
-        {
-          name: 'Grants',
-          color: '#FF7800'
-        },
-        {
-          name: `Grants are made to fund a specific project and require some level of compliance and reporting. The grant writing process
-            involves an applicant submitting a proposal (or submission) to a potential funder`,
-          color: '#FF7800'
-        },
-        {
-          name: `Grants are non-repayable funds or products disbursed or given by one party (grant makers), often a government department,
-            corporation, foundation or trust`,
-          color: '#FF73D0'
-        },
-        {
-          name: 'Empty',
-          color: '#FF7800'
+          name: 'Settlement',
+          color: '#FFB400'
         }
       ],
       links: [
-        { source: 0, target: 6, value: 1000, timeframes: '2010-2014' },
-        { source: 0, target: 4, value: 940000, timeframes: '2012-2014' },
-        { source: 1, target: 4, value: 150000 },
-        { source: 2, target: 4, value: 5700000 },
-        { source: 1, target: 5, value: 1190000, timeframes: '2011-2014' },
-        { source: 0, target: 6, value: 5700000, timeframes: '2013-2014' },
-        { source: 1, target: 7, value: 11190000, timeframes: '2010-2014' },
-        { source: 0, target: 8, value: 5700000, timeframes: '2011-2014' },
-        { source: 1, target: 9, value: 10, timeframes: '2010-2014' },
-        { source: 3, target: 9, value: 9092312, timeframes: '2010-2014' }
+        { source: 0, target: 3, value: 5000, timeframes: '2001-2011' },
+        { source: 0, target: 5, value: 7000, timeframes: '2001-2011' },
+        { source: 2, target: 7, value: 2400, timeframes: '2001-2011' },
+        { source: 2, target: 5, value: 1400, timeframes: '2001-2011' },
+        { source: 6, target: 3, value: 7400, timeframes: '2001-2011' },
+        { source: 4, target: 3, value: 3700, timeframes: '2001-2011' },
+        { source: 4, target: 7, value: 1200, timeframes: '2001-2011' }
       ]
     };
 
     const config = {
       tooltip: {
-        scale: 1 / 100000,
+        scale: 1 / 1000,
         suffix: 'm',
-        unit: 'USD million'
+        unit: 'tpu'
       },
       node: {
-        scale: 1 / 100000,
-        suffix: 'm'
+        scale: 1 / 1000,
+        suffix: 'node'
       }
     };
 
@@ -99,7 +93,7 @@ class WidgetTreeCover extends PureComponent {
             // tooltipChildren={node => (
             <div>Tooltip Extra Info: extra info here</div>
           )}
-        />;
+        />
       </div>
     );
   }

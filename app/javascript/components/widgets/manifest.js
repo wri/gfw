@@ -21,6 +21,7 @@ import * as treeCover2010 from './widgets/land-cover/tree-cover-2010';
 import * as treeCoverRanked from './widgets/land-cover/tree-cover-ranked';
 import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantations';
 import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
+import * as sankeyTest from './widgets/land-cover/sankey-test';
 import * as faoCover from './widgets/land-cover/fao-cover';
 import * as globalLandCover from './widgets/land-cover/global-land-cover';
 import * as intactTreeCover from './widgets/land-cover/intact-tree-cover';
@@ -67,6 +68,7 @@ export default {
   treeCover2010,
   treeCoverRanked,
   rankedPlantations,
+  sankeyTest,
   treeCoverPlantations,
   faoCover,
   globalLandCover,
