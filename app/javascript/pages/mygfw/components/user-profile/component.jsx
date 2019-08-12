@@ -11,8 +11,13 @@ import logoutIcon from 'assets/icons/logout.svg';
 import './styles.scss';
 
 class UserProfile extends PureComponent {
+  static propTypes = {
+    userData: PropTypes.object,
+    setProfileSettings: PropTypes.func
+  };
+
   render() {
-    const { userData } = this.props;
+    const { userData, setProfileSettings } = this.props;
     const { fullName, email } = userData || {};
 
     return (
@@ -26,6 +31,7 @@ class UserProfile extends PureComponent {
         <Button
           className="user-btn"
           theme="theme-button-clear theme-button-small"
+          onClick={() => setProfileSettings({ open: true })}
         >
           Update profile
           <Icon className="user-btn-icon" icon={pencilIcon} />
@@ -42,9 +48,5 @@ class UserProfile extends PureComponent {
     );
   }
 }
-
-UserProfile.propTypes = {
-  userData: PropTypes.object
-};
 
 export default UserProfile;
