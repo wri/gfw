@@ -48,7 +48,10 @@ class ModalSaveAOI extends PureComponent {
           <div className="save-aoi-body">
             {loading && <Loader />}
             {!loading && !loggedIn && <MyGFWLogin className="mygfw-save-aoi" />}
-            {!loading && loggedIn && <SaveProfileForm userData={userData} />}
+            {!loading &&
+              loggedIn && (
+              <SaveProfileForm {...this.props} userData={userData} />
+            )}
           </div>
         </div>
       </Modal>

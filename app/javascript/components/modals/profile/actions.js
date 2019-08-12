@@ -1,7 +1,8 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-// import { updateUserProfile } from 'services/areas';
+import { updateUserProfile } from 'services/user';
+import { setMyGFW } from 'providers/mygfw-provider/actions';
 
 export const setProfileSaving = createAction('setProfileSaving');
 
@@ -19,34 +20,41 @@ export const setProfileSettings = createThunkAction(
 
 export const saveProfile = createThunkAction(
   'saveProfile',
-  ({ name, email, sector, lang }) => (dispatch, getState) => {
-    const { profile, myGfw } = getState();
-    if (profile && !profile.loading) {
+  ({ id, name, email, lang }) => (dispatch, getState) => {
+    const { profile } = getState();
+    if (profile && !profile.saving) {
       dispatch(setProfileSaving({ saving: true, error: false }));
 
       const postData = {
-        id: '',
-        name,
-        sector: '',
+        id,
+        fullName: name,
+        email,
         language: lang
       };
 
-      // updateUserProfile(postData, 'patch')
-      //   .then(response => {
-      //     if (response.data && response.data.data) {
-      //       setSomething();
-      //       dispatch(setProfileSaving({ saving: false, error: false }));
-      //     }
-      //   })
-      //   .catch(error => {
-      //     dispatch(
-      //       setProfileSaving({
-      //         saving: false,
-      //         error: true
-      //       })
-      //     );
-      //     console.info(error);
-      //   });
+      updateUserProfile(id, postData)
+        .then(response => {
+          if (response.data && response.data.data) {
+            const { attributes } = response.data.data;
+            dispatch(
+              setMyGFW({
+                loggedIn: true,
+                id: response.data.data.id,
+                ...attributes
+              })
+            );
+            dispatch(setProfileSaving({ saving: false, error: false }));
+          }
+        })
+        .catch(error => {
+          dispatch(
+            setProfileSaving({
+              saving: false,
+              error: true
+            })
+          );
+          console.info(error);
+        });
     }
   }
 );

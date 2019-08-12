@@ -6,7 +6,7 @@ import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getModalAOIProps } from './selectors';
 
-reducerRegistry.registerModule('modalProfile', {
+reducerRegistry.registerModule('profile', {
   actions,
   reducers,
   initialState

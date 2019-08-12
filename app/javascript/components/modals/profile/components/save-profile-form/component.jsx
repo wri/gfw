@@ -75,7 +75,7 @@ function SaveProfileForm(props) {
     <div className="save-aoi">
       <Button
         className={cx('submit-btn', { error }, { saving })}
-        onClick={() => saveProfile(form)}
+        onClick={() => saveProfile({ ...userData, ...form })}
         disabled={!canSubmit}
       >
         {saving ? <Loader className="saving-btn-loader" /> : 'SAVE'}

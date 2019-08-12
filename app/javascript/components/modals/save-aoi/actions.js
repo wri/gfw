@@ -38,7 +38,7 @@ export const saveAOI = createThunkAction(
     viewAfterSave
   }) => (dispatch, getState) => {
     const { modalSaveAOI, location, geostore, myGfw } = getState();
-    if (modalSaveAOI && !modalSaveAOI.loading) {
+    if (modalSaveAOI && !modalSaveAOI.saving) {
       dispatch(setSaveAOISaving({ saving: true, error: false }));
 
       const { data: geostoreData } = geostore || {};
