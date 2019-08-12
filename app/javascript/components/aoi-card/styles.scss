@@ -110,8 +110,10 @@
         }
       }
     }
+  }
 
-    &.simple {
+  &.simple {
+    a {
       img {
         width: rem(76px);
         height: rem(76px);
