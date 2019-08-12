@@ -7,6 +7,8 @@ import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 
+import formConfig from './config';
+
 import './styles.scss';
 
 function validateEmail(email) {
@@ -38,6 +40,18 @@ function reducer(state, action) {
         lang: payload
       };
     }
+    case 'sector': {
+      return {
+        ...state,
+        sector: payload
+      };
+    }
+    case 'primaryResponsibilities': {
+      return {
+        ...state,
+        primaryResponsibilities: payload
+      };
+    }
     case 'userData': {
       const { userData } = payload;
 
@@ -59,7 +73,9 @@ function SaveProfileForm(props) {
     email: props.userData.email,
     emailError: false,
     nameError: false,
-    lang: props.userData.language
+    lang: props.userData.language,
+    sector: props.userData.sector,
+    primaryResponsibilities: props.userData.primaryResponsibilities
   });
 
   useEffect(
@@ -83,8 +99,17 @@ function SaveProfileForm(props) {
     </div>
   );
 
-  const { lang, name, email, emailError, nameError } = form;
-  const canSubmit = validateEmail(email) && name && lang;
+  const {
+    lang,
+    name,
+    email,
+    sector,
+    primaryResponsibilities,
+    emailError,
+    nameError
+  } = form;
+  const canSubmit = validateEmail(email) && name && lang && sector;
+  const { sectors, responsibilities } = formConfig;
 
   return (
     <div className="c-form c-save-aoi-form">
@@ -113,6 +138,39 @@ function SaveProfileForm(props) {
           value={lang}
           onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
           native
+        />
+      </div>
+      <div className="field">
+        <span className="form-title">Sector*</span>
+        <Dropdown
+          className="dropdown-input"
+          theme="theme-dropdown-native-form"
+          options={sectors.map(s => ({ label: s, value: s }))}
+          value={sector}
+          onChange={newSector =>
+            dispatch({ type: 'sector', payload: newSector })
+          }
+          native
+        />
+      </div>
+      <div className="field">
+        <span className="form-title">
+          PRIMARY RESPONSIBILITIES (SELECT ALL THAT APPLY)*
+        </span>
+        <Dropdown
+          className="dropdown-input"
+          theme="theme-dropdown-native-form"
+          options={responsibilities.map(r => ({ label: r, value: r }))}
+          value={primaryResponsibilities}
+          onChange={newResponsibility => {
+            const hasResp = primaryResponsibilities.includes(newResponsibility);
+            const newResp = hasResp
+              ? primaryResponsibilities.filter(r => r !== newResponsibility)
+              : primaryResponsibilities.concat(newResponsibility);
+            dispatch({ type: 'primaryResponsibilities', payload: newResp });
+          }}
+          native
+          multiple
         />
       </div>
       {renderSaveProfile()}

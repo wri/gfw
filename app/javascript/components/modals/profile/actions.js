@@ -20,7 +20,10 @@ export const setProfileSettings = createThunkAction(
 
 export const saveProfile = createThunkAction(
   'saveProfile',
-  ({ id, name, email, lang }) => (dispatch, getState) => {
+  ({ id, name, email, lang, sector, primaryResponsibilities }) => (
+    dispatch,
+    getState
+  ) => {
     const { profile } = getState();
     if (profile && !profile.saving) {
       dispatch(setProfileSaving({ saving: true, error: false }));
@@ -29,7 +32,9 @@ export const saveProfile = createThunkAction(
         id,
         fullName: name,
         email,
-        language: lang
+        language: lang,
+        sector,
+        primaryResponsibilities
       };
 
       updateUserProfile(id, postData)

@@ -70,6 +70,7 @@ class Dropdown extends PureComponent {
     activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     highlightedIndex: PropTypes.number,
     native: PropTypes.bool,
+    multiple: PropTypes.bool,
     onChange: PropTypes.func,
     selectorIcon: PropTypes.object
   };
@@ -116,6 +117,7 @@ class Dropdown extends PureComponent {
       activeLabel,
       highlightedIndex,
       native,
+      multiple,
       value,
       onChange,
       options,
@@ -132,10 +134,11 @@ class Dropdown extends PureComponent {
       >
         {({ getInputProps, getItemProps, getRootProps }) =>
           (native ? (
-            <div className="select-wrapper">
+            <div className={cx('select-wrapper', { multiple })}>
               <select
                 value={(value && (value.value || value)) || ''}
                 onChange={e => onChange(e.target.value)}
+                multiple={multiple}
               >
                 {options &&
                   !!options.length &&
@@ -148,7 +151,7 @@ class Dropdown extends PureComponent {
                       )
                   )}
               </select>
-              <Icon icon={arrowIcon} className="arrow-icon" />
+              {!multiple && <Icon icon={arrowIcon} className="arrow-icon" />}
             </div>
           ) : (
             <Selector
