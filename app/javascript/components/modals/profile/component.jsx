@@ -16,6 +16,7 @@ class ModalSaveAOI extends PureComponent {
     saving: PropTypes.bool,
     loading: PropTypes.bool,
     userData: PropTypes.object,
+    countries: PropTypes.array,
     setProfileSettings: PropTypes.func
   };
 
@@ -34,7 +35,7 @@ class ModalSaveAOI extends PureComponent {
   };
 
   render() {
-    const { open, loading, userData } = this.props;
+    const { open, loading, userData, countries } = this.props;
     const loggedIn = !isEmpty(userData);
 
     return (
@@ -50,7 +51,11 @@ class ModalSaveAOI extends PureComponent {
             {!loading && !loggedIn && <MyGFWLogin className="mygfw-save-aoi" />}
             {!loading &&
               loggedIn && (
-              <SaveProfileForm {...this.props} userData={userData} />
+              <SaveProfileForm
+                {...this.props}
+                userData={userData}
+                countries={countries}
+              />
             )}
           </div>
         </div>

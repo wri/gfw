@@ -42,7 +42,8 @@ class Dropdown extends PureComponent {
     value: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.string,
-      PropTypes.number
+      PropTypes.number,
+      PropTypes.array
     ]),
     placeholder: PropTypes.string,
     searchable: PropTypes.bool,
@@ -66,7 +67,7 @@ class Dropdown extends PureComponent {
     buildInputProps: PropTypes.func,
     checkModalClosing: PropTypes.func,
     items: PropTypes.array,
-    activeValue: PropTypes.object,
+    activeValue: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     highlightedIndex: PropTypes.number,
     native: PropTypes.bool,

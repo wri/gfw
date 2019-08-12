@@ -155,23 +155,6 @@ $desktop-padding: rem(50px);
     }
   }
 
-  .datasets {
-    > * {
-      margin-bottom: rem(15px);
-    }
-
-    @media screen and (min-width: $screen-m) {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      > * {
-        width: 48%;
-        margin-bottom: rem(15px);
-      }
-    }
-  }
-
   .saving-btn-loader {
     > div {
       width: rem(20px);

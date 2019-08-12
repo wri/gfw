@@ -8,6 +8,7 @@ import ShareModal from 'components/modals/share';
 import ProfileModal from 'components/modals/profile';
 
 import AreasProvider from 'providers/areas-provider';
+import CountryDataProvider from 'providers/country-data-provider';
 
 import SaveAOIModal from 'components/modals/save-aoi';
 import UserProfile from './components/user-profile';
@@ -84,6 +85,7 @@ class MyGFWPage extends PureComponent {
           </div>
         </div>
         <AreasProvider />
+        <CountryDataProvider />
         <SaveAOIModal />
         <ShareModal />
         <ProfileModal />

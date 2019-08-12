@@ -2,7 +2,7 @@
 $mobile-padding: rem(30px);
 $desktop-padding: rem(50px);
 
-.c-save-aoi-form {
+.c-save-profile-form {
   .area-image {
     width: 100%;
     margin-bottom: rem(30px);
@@ -63,7 +63,6 @@ $desktop-padding: rem(50px);
   }
 
   .text-input,
-  .aoi-tags-input,
   .dropdown-input .select-wrapper {
     @media screen and (min-width: $screen-m) {
       min-width: rem(400px);
@@ -103,25 +102,8 @@ $desktop-padding: rem(50px);
     }
   }
 
-  .save-aoi {
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-between;
-    align-items: center;
-    height: rem(100px);
-
-    @media screen and (min-width: $screen-m) {
-      margin-top: rem(30px);
-      flex-direction: row;
-    }
-
-    p {
-      color: $warm-grey;
-    }
-
-    .error-message {
-      color: $error;
-    }
+  .save-profile {
+    margin-bottom: rem(40px);
 
     .submit-btn {
       max-width: rem(290px);
@@ -129,45 +111,11 @@ $desktop-padding: rem(50px);
       width: 100%;
 
       @media screen and (min-width: $screen-m) {
-        margin-left: rem(15px);
         width: auto;
       }
 
       &.error {
         background-color: $error;
-      }
-    }
-
-    .delete-aoi {
-      padding: 0;
-      color: $error;
-      width: 100%;
-
-      @media screen and (min-width: $screen-m) {
-        width: auto;
-      }
-
-      .delete-icon {
-        margin-right: rem(5px);
-        position: relative;
-        fill: $error;
-      }
-    }
-  }
-
-  .datasets {
-    > * {
-      margin-bottom: rem(15px);
-    }
-
-    @media screen and (min-width: $screen-m) {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      > * {
-        width: 48%;
-        margin-bottom: rem(15px);
       }
     }
   }
@@ -178,5 +126,9 @@ $desktop-padding: rem(50px);
       height: rem(20px);
       border-width: 2px;
     }
+  }
+
+  .delete-profile {
+    margin-bottom: rem(30px);
   }
 }

@@ -10,6 +10,8 @@ const selectLoading = state =>
 const selectSaving = state => state.profile && state.profile.saving;
 const selectError = state => state.profile && state.profile.error;
 const selectUserData = state => (state.myGfw && state.myGfw.data) || {};
+const selectCountries = state =>
+  state.countryData && state.countryData.countries;
 
 export const getProfileSettings = createSelector(
   [selectProfileUrlState],
@@ -29,5 +31,6 @@ export const getModalAOIProps = createStructuredSelector({
   loading: selectLoading,
   open: getOpen,
   error: selectError,
-  userData: selectUserData
+  userData: selectUserData,
+  countries: selectCountries
 });
