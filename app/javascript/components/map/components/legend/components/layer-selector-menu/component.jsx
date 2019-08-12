@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import sortBy from 'lodash/sortBy';
 
 import SentenceSelector from 'components/sentence-selector';
 
@@ -39,7 +40,7 @@ class LayerSelectorMenu extends PureComponent {
           !!options.length && (
           <div className="menu-wrapper">
             <SentenceSelector
-              options={options}
+              options={sortBy(options, 'position')}
               value={selected}
               onChange={e => onChange(layerGroup, e)}
               name={optionName}
