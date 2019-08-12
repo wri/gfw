@@ -365,3 +365,194 @@ export const getLossOld = ({
     .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
+
+export const getUSLandCover = () =>
+  // example data
+  [
+    {
+      area: 264597.5079113328,
+      end: 'forest',
+      perc_area: 62.262663899143405,
+      start: 'forest'
+    },
+    {
+      area: 50077.376769689494,
+      end: 'bare',
+      perc_area: 11.78374998076997,
+      start: 'bare'
+    },
+    {
+      area: 34909.6335643951,
+      end: 'grassland',
+      perc_area: 8.214615468678394,
+      start: 'forest'
+    },
+    {
+      area: 21756.6296452934,
+      end: 'grassland',
+      perc_area: 5.119570966015979,
+      start: 'bare'
+    },
+    {
+      area: 25595.3904281466,
+      end: 'settlements',
+      perc_area: 6.022873020138479,
+      start: 'settlements'
+    },
+    {
+      area: 11132.3076129296,
+      end: 'cropland',
+      perc_area: 2.619552741811838,
+      start: 'cropland'
+    },
+    {
+      area: 5289.8825873843,
+      end: 'grassland',
+      perc_area: 1.2447667561351703,
+      start: 'grassland'
+    },
+    {
+      area: 2830.4945615407,
+      end: 'bare',
+      perc_area: 0.6660460748278036,
+      start: 'grassland'
+    },
+    {
+      area: 5723.6313912819,
+      end: 'wetlands',
+      perc_area: 1.3468325548908469,
+      start: 'wetlands'
+    },
+    {
+      area: 2329.8856189617,
+      end: 'bare',
+      perc_area: 0.5482473601583261,
+      start: 'forest'
+    },
+    {
+      area: 486.6549281994,
+      end: 'forest',
+      perc_area: 0.11451518371629846,
+      start: 'bare'
+    },
+    {
+      area: 44.3811661784,
+      end: 'forest',
+      perc_area: 0.010443369837571314,
+      start: 'grassland'
+    },
+    {
+      area: 24.9396877441,
+      end: 'bare',
+      perc_area: 0.005868579065683548,
+      start: 'cropland'
+    },
+    {
+      area: 22.2146155579,
+      end: 'cropland',
+      perc_area: 0.005227340019368979,
+      start: 'bare'
+    },
+    {
+      area: 32.6848337036,
+      end: 'settlements',
+      perc_area: 0.007691095927360698,
+      start: 'bare'
+    },
+    {
+      area: 12.2222577248,
+      end: 'forest',
+      perc_area: 0.002876029826641229,
+      start: 'wetlands'
+    },
+    {
+      area: 23.2084466674,
+      end: 'settlements',
+      perc_area: 0.005461199260265711,
+      start: 'grassland'
+    },
+    {
+      area: 16.9701048401,
+      end: 'settlements',
+      perc_area: 0.0039932497563296915,
+      start: 'cropland'
+    },
+    {
+      area: 7.5481478882,
+      end: 'wetlands',
+      perc_area: 0.0017761610785144392,
+      start: 'cropland'
+    },
+    {
+      area: 6.9812792053,
+      end: 'forest',
+      perc_area: 0.001642770728178335,
+      start: 'cropland'
+    },
+    {
+      area: 10.176562341499999,
+      end: 'wetlands',
+      perc_area: 0.0023946555117587195,
+      start: 'bare'
+    },
+    {
+      area: 7.0213236127,
+      end: 'wetlands',
+      perc_area: 0.001652193611631274,
+      start: 'forest'
+    },
+    {
+      area: 6.6582304692,
+      end: 'wetlands',
+      perc_area: 0.00156675385622209,
+      start: 'grassland'
+    },
+    {
+      area: 5.6259919737,
+      end: 'grassland',
+      perc_area: 0.0013238569407658376,
+      start: 'wetlands'
+    },
+    {
+      area: 4.0054142761,
+      end: 'grassland',
+      perc_area: 0.0009425174288988975,
+      start: 'cropland'
+    },
+    {
+      area: 6.918871435599999,
+      end: 'settlements',
+      perc_area: 0.0016280855029840436,
+      start: 'forest'
+    },
+    {
+      area: 1.8573416247,
+      end: 'cropland',
+      perc_area: 0.0004370526322694517,
+      start: 'forest'
+    },
+    {
+      area: 3.6036583923000003,
+      end: 'bare',
+      perc_area: 0.0008479799112933839,
+      start: 'wetlands'
+    },
+    {
+      area: 0.7990448669,
+      end: 'cropland',
+      perc_area: 0.0001880239250204958,
+      start: 'grassland'
+    },
+    {
+      area: 2.5140436828,
+      end: 'settlements',
+      perc_area: 0.0005915817502801086,
+      start: 'wetlands'
+    },
+    {
+      area: 0.0573587769,
+      end: 'cropland',
+      perc_area: 1.3497142418240027e-5,
+      start: 'wetlands'
+    }
+  ];

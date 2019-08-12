@@ -5,31 +5,14 @@ import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 
-const getPlantations = state => (state.data && state.data.plantations) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
+const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.allLocation || null;
-const getLocationsMeta = state => state.childLocationData;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getEmbed = state => state.embed || null;
 const getSentences = state => state.config.sentence || null;
 
-const getPlanationKeys = createSelector(
-  [getPlantations],
-  plantations =>
-    (plantations ? Object.keys(groupBy(plantations, 'plantations')) : null)
-);
-
 export const parseData = createSelector(
-  [
-    getPlantations,
-    getExtent,
-    getPlanationKeys,
-    getLocationsMeta,
-    getLocation,
-    getEmbed
-  ],
+  [getData],
   (plantations, extent, plantationKeys, meta, location, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
     let groupKey = 'iso';
@@ -91,7 +74,7 @@ export const parseData = createSelector(
 );
 
 export const parseConfig = createSelector(
-  [getPlanationKeys, getColors, getSettings],
+  [getData, getColors, getSettings],
   (dataKeys, colors, settings) => {
     if (!dataKeys) return null;
     const colorsByType =
