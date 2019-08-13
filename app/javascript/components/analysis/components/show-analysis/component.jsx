@@ -9,6 +9,7 @@ import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
 import Button from 'components/ui/button';
 import Widgets from 'components/widgets';
+import DynamicSentence from 'components/ui/dynamic-sentence';
 import DownloadData from 'components/analysis/components/download-data';
 
 import screensImg1x from 'assets/images/aois/double.png';
@@ -84,10 +85,12 @@ class ShowAnalysis extends PureComponent {
       zoomLevel,
       widgets,
       showAnalysisDisclaimer,
-      activeArea
+      activeArea,
+      analysisTitle,
+      analysisDescription
     } = this.props;
     const hasWidgets = hasWidgetLayers && widgets && !!widgets.length;
-
+    console.log(analysisTitle);
     return (
       <div className="c-show-analysis">
         <div className="show-analysis-body">
@@ -98,7 +101,9 @@ class ShowAnalysis extends PureComponent {
               onClick={clearAnalysis}
             >
               <Icon icon={arrowDownIcon} className="icon-arrow" />
-              <span>{fullLocationName}</span>
+              {analysisTitle &&
+                <DynamicSentence className="analysis-title" sentence={analysisTitle} />
+              }
             </Button>
             <div className="title-controls">
               <Button
@@ -142,6 +147,9 @@ class ShowAnalysis extends PureComponent {
               </Button>
             </div>
           </div>
+          {analysisDescription &&
+            <DynamicSentence className="analysis-desc" sentence={analysisDescription} />
+          }
           <div className="results">
             {hasLayers &&
               !hasWidgets &&

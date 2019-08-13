@@ -68,6 +68,13 @@
         text-align: left;
       }
 
+      .analysis-title {
+        font-size: rem(14px);
+        font-weight: 500;
+        color: $slate-light;
+        line-height: 1.1;
+      }
+
       &.left {
         padding-left: 0;
       }
@@ -95,6 +102,15 @@
         padding-left: rem(8px);
       }
     }
+  }
+
+  .analysis-desc {
+    font-size: rem(13px);
+    color: $slate-light;
+    line-height: 1.6;
+    border-bottom: solid 1px $border;
+    padding-bottom: rem(15px);
+    margin-bottom: rem(15px);
   }
 
   .results {
@@ -167,13 +183,6 @@
         margin-left: rem(2px);
         letter-spacing: normal;
       }
-    }
-
-    &:first-child,
-    &:last-child {
-      border-bottom: solid 1px $border;
-      padding-bottom: rem(15px);
-      margin-bottom: rem(15px);
     }
   }
 }

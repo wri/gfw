@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
 import flatMap from 'lodash/flatMap';
+import isEmpty from 'lodash/isEmpty';
 import intersection from 'lodash/intersection';
 
 import {
@@ -27,7 +28,30 @@ const selectAdmins = state => state.countryData && state.countryData.countries;
 const selectAdmin1s = state => state.countryData && state.countryData.regions;
 const selectAdmin2s = state =>
   state.countryData && state.countryData.subRegions;
-const selectGeostore = state => state.geostore && state.geostore.data;
+const selectGeodescriber = state => state.geostore && state.geostore.data && state.geostore.data.geodescriber;
+
+export const getAnalysisTitle = createSelector(
+  [selectGeodescriber],
+  (geodescriber) => {
+    if (isEmpty(geodescriber)) return null;
+    return {
+      sentence: geodescriber.title,
+      params: geodescriber.title_params
+    };
+  }
+);
+
+export const getAnalysisDescription = createSelector(
+  [selectGeodescriber],
+  (geodescriber) => {
+    if (isEmpty(geodescriber)) return null;
+    return {
+      sentence: geodescriber.description,
+      params: geodescriber.description_params
+    };
+  }
+);
+
 
 export const getLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
@@ -60,71 +84,57 @@ export const getDataFromLayers = createSelector(
   [
     getActiveLayers,
     selectData,
-    getLocationName,
     selectLocation,
-    getWidgetLayers,
-    selectGeostore
+    getWidgetLayers
   ],
-  (layers, data, locationName, location, widgetLayers, geostore) => {
+  (layers, data, location, widgetLayers) => {
     if (!layers || !layers.length) return null;
 
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
-    const { areaHa } = geostore;
     const admLevel = locationLevelToStr(location);
 
-    return [
-      {
-        label:
-          location.type !== 'geostore'
-            ? `${locationName} total area`
-            : 'selected area',
-        value: areaHa || 0,
-        unit: 'ha'
-      }
-    ].concat(
-      layers
-        .filter(
-          l =>
-            !l.isBoundary &&
-            !l.isRecentImagery &&
-            l.analysisConfig &&
-            !widgetLayers.includes(l.id) &&
-            (!l.admLevels || l.admLevels.includes(admLevel))
-        )
-        .map(l => {
-          let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
-          if (!analysisConfig) {
-            analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
-          }
-          const { subKey, key, keys, service, unit, dateFormat } =
-            analysisConfig || {};
-          const dataByService = data[service] || {};
-          const value = subKey
-            ? dataByService[key] && dataByService[key][subKey]
-            : dataByService[key];
-          const { params, decodeParams } = l;
+    return layers
+      .filter(
+        l =>
+          !l.isBoundary &&
+          !l.isRecentImagery &&
+          l.analysisConfig &&
+          !widgetLayers.includes(l.id) &&
+          (!l.admLevels || l.admLevels.includes(admLevel))
+      )
+      .map(l => {
+        let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
+        if (!analysisConfig) {
+          analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
+        }
+        const { subKey, key, keys, service, unit, dateFormat } =
+          analysisConfig || {};
+        const dataByService = data[service] || {};
+        const value = subKey
+          ? dataByService[key] && dataByService[key][subKey]
+          : dataByService[key];
+        const { params, decodeParams } = l;
 
-          const keysValue =
-            keys &&
-            keys.map(k => ({
-              label: k.title,
-              value: dataByService[k.key],
-              unit: k.unit
-            }));
+        const keysValue =
+          keys &&
+          keys.map(k => ({
+            label: k.title,
+            value: dataByService[k.key],
+            unit: k.unit
+          }));
 
-          return {
-            label: l.name,
-            value: keysValue || value || 0,
-            downloadUrls: dataByService && dataByService.downloadUrls,
-            unit,
-            dateFormat,
-            color: l.color,
-            ...params,
-            ...decodeParams
-          };
-        })
-    );
+        return {
+          label: l.name,
+          value: keysValue || value || 0,
+          downloadUrls: dataByService && dataByService.downloadUrls,
+          unit,
+          dateFormat,
+          color: l.color,
+          ...params,
+          ...decodeParams
+        };
+      });
   }
 );
 
@@ -258,5 +268,7 @@ export const getShowAnalysisProps = createStructuredSelector({
   error: selectError,
   showAnalysisDisclaimer,
   widgets: getWidgetsWithLayerParams,
-  zoomLevel: getMapZoom
+  zoomLevel: getMapZoom,
+  analysisTitle: getAnalysisTitle,
+  analysisDescription: getAnalysisDescription
 });
