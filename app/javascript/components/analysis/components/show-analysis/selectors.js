@@ -1,14 +1,9 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
 import flatMap from 'lodash/flatMap';
-import isEmpty from 'lodash/isEmpty';
 import intersection from 'lodash/intersection';
 
-import {
-  buildLocationName,
-  buildFullLocationName,
-  locationLevelToStr
-} from 'utils/format';
+import { buildFullLocationName, locationLevelToStr } from 'utils/format';
 
 import {
   getActiveLayers,
@@ -17,6 +12,10 @@ import {
 } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { getWidgetLayers, getLoading } from 'components/analysis/selectors';
+import {
+  getGeodescriberTitle,
+  getGeodescriberDescription
+} from 'providers/geodescriber-provider/selectors';
 
 const gainID = '3b22a574-2507-4b4a-a247-80057c1a1ad4';
 const lossID = 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6';
@@ -28,41 +27,6 @@ const selectAdmins = state => state.countryData && state.countryData.countries;
 const selectAdmin1s = state => state.countryData && state.countryData.regions;
 const selectAdmin2s = state =>
   state.countryData && state.countryData.subRegions;
-const selectGeodescriber = state => state.geostore && state.geostore.data && state.geostore.data.geodescriber;
-
-export const getAnalysisTitle = createSelector(
-  [selectGeodescriber],
-  (geodescriber) => {
-    if (isEmpty(geodescriber)) return null;
-    return {
-      sentence: geodescriber.title,
-      params: geodescriber.title_params
-    };
-  }
-);
-
-export const getAnalysisDescription = createSelector(
-  [selectGeodescriber],
-  (geodescriber) => {
-    if (isEmpty(geodescriber)) return null;
-    return {
-      sentence: geodescriber.description,
-      params: geodescriber.description_params
-    };
-  }
-);
-
-
-export const getLocationName = createSelector(
-  [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
-  (location, adms, adm1s, adm2s) => {
-    if (location.type === 'geostore') return 'custom area analysis';
-    if (location.type === 'country') {
-      return buildLocationName(location, { adms, adm1s, adm2s });
-    }
-    return '';
-  }
-);
 
 export const getFullLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s, getActiveLayers],
@@ -81,12 +45,7 @@ export const getFullLocationName = createSelector(
 );
 
 export const getDataFromLayers = createSelector(
-  [
-    getActiveLayers,
-    selectData,
-    selectLocation,
-    getWidgetLayers
-  ],
+  [getActiveLayers, selectData, selectLocation, getWidgetLayers],
   (layers, data, location, widgetLayers) => {
     if (!layers || !layers.length) return null;
 
@@ -261,7 +220,6 @@ export const getWidgetsWithLayerParams = createSelector(
 export const getShowAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
   loading: getLoading,
-  locationName: getLocationName,
   fullLocationName: getFullLocationName,
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
@@ -269,6 +227,6 @@ export const getShowAnalysisProps = createStructuredSelector({
   showAnalysisDisclaimer,
   widgets: getWidgetsWithLayerParams,
   zoomLevel: getMapZoom,
-  analysisTitle: getAnalysisTitle,
-  analysisDescription: getAnalysisDescription
+  analysisTitle: getGeodescriberTitle,
+  analysisDescription: getGeodescriberDescription
 });

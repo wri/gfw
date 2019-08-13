@@ -11,22 +11,14 @@ const setGeostore = (state, { payload }) => ({
   data: {
     ...state.data,
     ...payload
-  }
+  },
+  loading: false,
+  error: false
 });
 
 const clearGeostore = state => ({
   ...state,
   data: {}
-});
-
-const setGeoDescriber = (state, { payload }) => ({
-  ...state,
-  data: {
-    ...state.data,
-    geodescriber: payload
-  },
-  loading: false,
-  error: false
 });
 
 const setGeostoreLoading = (state, { payload }) => ({
@@ -37,6 +29,5 @@ const setGeostoreLoading = (state, { payload }) => ({
 export default {
   [actions.setGeostore]: setGeostore,
   [actions.clearGeostore]: clearGeostore,
-  [actions.setGeoDescriber]: setGeoDescriber,
   [actions.setGeostoreLoading]: setGeostoreLoading
 };

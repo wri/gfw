@@ -7,6 +7,7 @@ import { Tooltip } from 'react-tippy';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
+import GeodescriberProvider from 'providers/geodescriber-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
@@ -125,6 +126,7 @@ class MainMapComponent extends PureComponent {
             <DatasetsProvider />
             <LatestProvider />
             <GeostoreProvider />
+            <GeodescriberProvider />
             <AreasProvider />
           </div>
         )}

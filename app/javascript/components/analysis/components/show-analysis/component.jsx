@@ -20,6 +20,27 @@ import downloadIcon from 'assets/icons/download.svg';
 import './styles.scss';
 
 class ShowAnalysis extends PureComponent {
+  static propTypes = {
+    data: PropTypes.array,
+    setShareModal: PropTypes.func,
+    clearAnalysis: PropTypes.func,
+    loading: PropTypes.bool,
+    error: PropTypes.string,
+    analysisTitle: PropTypes.string,
+    analysisDescription: PropTypes.string,
+    setModalSources: PropTypes.func,
+    handleShowDownloads: PropTypes.func,
+    setMenuSettings: PropTypes.func,
+    showDownloads: PropTypes.bool,
+    hasLayers: PropTypes.bool,
+    hasWidgetLayers: PropTypes.bool,
+    downloadUrls: PropTypes.array,
+    widgets: PropTypes.array,
+    zoomLevel: PropTypes.number,
+    showAnalysisDisclaimer: PropTypes.bool,
+    activeArea: PropTypes.object
+  };
+
   renderStatItem = ({
     color,
     value,
@@ -74,7 +95,6 @@ class ShowAnalysis extends PureComponent {
       clearAnalysis,
       data,
       loading,
-      fullLocationName,
       error,
       setModalSources,
       handleShowDownloads,
@@ -90,66 +110,78 @@ class ShowAnalysis extends PureComponent {
       analysisDescription
     } = this.props;
     const hasWidgets = hasWidgetLayers && widgets && !!widgets.length;
-    console.log(analysisTitle);
+
     return (
       <div className="c-show-analysis">
         <div className="show-analysis-body">
-          <div className="draw-title">
-            <Button
-              className="title-btn left"
-              theme="theme-button-clear"
-              onClick={clearAnalysis}
-            >
-              <Icon icon={arrowDownIcon} className="icon-arrow" />
-              {analysisTitle &&
-                <DynamicSentence className="analysis-title" sentence={analysisTitle} />
-              }
-            </Button>
-            <div className="title-controls">
+          {analysisTitle &&
+            !loading &&
+            !error && (
+            <div className="draw-title">
               <Button
-                className="title-btn title-action"
+                className="title-btn left"
                 theme="theme-button-clear"
-                onClick={() =>
-                  setShareModal({
-                    title: 'Share this view',
-                    shareUrl: window.location.href.includes('embed')
-                      ? window.location.href.replace('/embed', '')
-                      : window.location.href,
-                    embedUrl: window.location.href.includes('embed')
-                      ? window.location.href
-                      : window.location.href.replace('/map', '/embed/map'),
-                    embedSettings: {
-                      width: 670,
-                      height: 490
-                    }
-                  })
-                }
-                tooltip={{ text: 'Share analysis' }}
+                onClick={clearAnalysis}
               >
-                <Icon icon={shareIcon} className="icon-share" />
+                <Icon icon={arrowDownIcon} className="icon-arrow" />
+                {analysisTitle && (
+                  <DynamicSentence
+                    className="analysis-title"
+                    sentence={analysisTitle}
+                  />
+                )}
               </Button>
-              <Button
-                className="title-btn title-action"
-                theme="theme-button-clear"
-                disabled={!downloadUrls || !downloadUrls.length}
-                onClick={() => {
-                  handleShowDownloads(true);
-                  track('analysisDownload', {
-                    label:
-                      downloadUrls &&
-                      downloadUrls.length &&
-                      downloadUrls.map(d => d.label).join(', ')
-                  });
-                }}
-                tooltip={{ text: 'Download data' }}
-              >
-                <Icon icon={downloadIcon} className="icon-download" />
-              </Button>
+              <div className="title-controls">
+                <Button
+                  className="title-btn title-action"
+                  theme="theme-button-clear"
+                  onClick={() =>
+                    setShareModal({
+                      title: 'Share this view',
+                      shareUrl: window.location.href.includes('embed')
+                        ? window.location.href.replace('/embed', '')
+                        : window.location.href,
+                      embedUrl: window.location.href.includes('embed')
+                        ? window.location.href
+                        : window.location.href.replace('/map', '/embed/map'),
+                      embedSettings: {
+                        width: 670,
+                        height: 490
+                      }
+                    })
+                  }
+                  tooltip={{ text: 'Share analysis' }}
+                >
+                  <Icon icon={shareIcon} className="icon-share" />
+                </Button>
+                <Button
+                  className="title-btn title-action"
+                  theme="theme-button-clear"
+                  disabled={!downloadUrls || !downloadUrls.length}
+                  onClick={() => {
+                    handleShowDownloads(true);
+                    track('analysisDownload', {
+                      label:
+                          downloadUrls &&
+                          downloadUrls.length &&
+                          downloadUrls.map(d => d.label).join(', ')
+                    });
+                  }}
+                  tooltip={{ text: 'Download data' }}
+                >
+                  <Icon icon={downloadIcon} className="icon-download" />
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
           {analysisDescription &&
-            <DynamicSentence className="analysis-desc" sentence={analysisDescription} />
-          }
+            !loading &&
+            !error && (
+            <DynamicSentence
+              className="analysis-desc"
+              sentence={analysisDescription}
+            />
+          )}
           <div className="results">
             {hasLayers &&
               !hasWidgets &&
@@ -257,25 +289,5 @@ class ShowAnalysis extends PureComponent {
     );
   }
 }
-
-ShowAnalysis.propTypes = {
-  data: PropTypes.array,
-  setShareModal: PropTypes.func,
-  clearAnalysis: PropTypes.func,
-  loading: PropTypes.bool,
-  error: PropTypes.string,
-  fullLocationName: PropTypes.string,
-  setModalSources: PropTypes.func,
-  handleShowDownloads: PropTypes.func,
-  setMenuSettings: PropTypes.func,
-  showDownloads: PropTypes.bool,
-  hasLayers: PropTypes.bool,
-  hasWidgetLayers: PropTypes.bool,
-  downloadUrls: PropTypes.array,
-  widgets: PropTypes.array,
-  zoomLevel: PropTypes.number,
-  showAnalysisDisclaimer: PropTypes.bool,
-  activeArea: PropTypes.object
-};
 
 export default ShowAnalysis;
