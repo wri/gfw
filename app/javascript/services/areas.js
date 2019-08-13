@@ -2,26 +2,26 @@ import axios from 'axios';
 
 const REQUEST_URL = `${process.env.GFW_API}/v2/area`;
 
-export const getAreasProvider = token =>
+export const getAreasProvider = () =>
   axios.get(REQUEST_URL, {
-    headers: { Authorization: 'Bearer '.concat(token) }
+    withCredentials: true
   });
 
-export const setAreasProvider = (token, body, method) => {
+export const setAreasProvider = (body, method) => {
   const url =
     method === 'post' ? REQUEST_URL : REQUEST_URL.concat(`/${body.id}`);
 
   return axios({
     method,
     url,
-    headers: { Authorization: 'Bearer '.concat(token) },
-    data: body
+    data: body,
+    withCredentials: true
   });
 };
 
-export const deleteAreaProvider = (token, id) =>
+export const deleteAreaProvider = id =>
   axios.delete(REQUEST_URL.concat(`/${id}`), {
-    headers: { Authorization: 'Bearer '.concat(token) }
+    withCredentials: true
   });
 
 export default {

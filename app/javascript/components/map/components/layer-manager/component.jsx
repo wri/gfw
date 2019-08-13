@@ -19,25 +19,18 @@ class LayerManagerComponent extends PureComponent {
             id={geostore.id}
             name="Geojson"
             provider="geojson"
-            params={{
-              id: geostore.id
-            }}
             layerConfig={{
               data: geostore.geojson,
               body: {
                 vectorLayers: [
                   {
-                    id: `${geostore.id}-fill`,
                     type: 'fill',
-                    source: geostore.id,
                     paint: {
                       'fill-color': 'transparent'
                     }
                   },
                   {
-                    id: `${geostore.id}-line-1`,
                     type: 'line',
-                    source: geostore.id,
                     paint: {
                       'line-color': '#C0FF24',
                       'line-width': isAoI ? 3 : 1,
@@ -45,9 +38,7 @@ class LayerManagerComponent extends PureComponent {
                     }
                   },
                   {
-                    id: `${geostore.id}-line-0`,
                     type: 'line',
-                    source: geostore.id,
                     paint: {
                       'line-color': '#000',
                       'line-width': 2

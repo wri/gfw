@@ -1,60 +1,39 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import sortBy from 'lodash/sortBy';
+import intersection from 'lodash/intersection';
+import { logout } from 'utils/auth';
+import Link from 'redux-first-router-link';
 
+import AoICard from 'components/aoi-card';
 import MyGFWLogin from 'components/mygfw-login';
 import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import editIcon from 'assets/icons/edit.svg';
-import tagIcon from 'assets/icons/tag.svg';
-import subscribedIcon from 'assets/icons/subscribed.svg';
 import logoutIcon from 'assets/icons/logout.svg';
-import screenImg1x from 'assets/images/aois/single A.png';
-import screenImg2x from 'assets/images/aois/single A @2x.png';
+import screenImg1x from 'assets/images/aois/singleA.png';
+import screenImg2x from 'assets/images/aois/singleA@2x.png';
 
 import './styles.scss';
 
 class MapMenuMyGFW extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      activeTags: {}
-    };
-  }
+  static propTypes = {
+    isDesktop: PropTypes.bool,
+    loggedIn: PropTypes.bool,
+    areas: PropTypes.array,
+    activeArea: PropTypes.object,
+    viewArea: PropTypes.func,
+    onEditClick: PropTypes.func,
+    clearArea: PropTypes.func,
+    location: PropTypes.object,
+    tags: PropTypes.array
+  };
 
-  setTags() {
-    const { areas } = this.props;
-    const tags = {};
-    if (areas) {
-      areas.forEach(area =>
-        area.tags.forEach(tag => {
-          if (tags[tag] === undefined) {
-            tags[tag] = false;
-          }
-        })
-      );
-    }
-    this.setState({ activeTags: tags });
-  }
-
-  componentDidMount() {
-    this.setTags();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { location, clearActiveArea, areas } = this.props;
-    const { location: prevLocation, areas: prevAreas } = prevProps;
-    if (areas !== prevAreas) {
-      this.setTags();
-    }
-
-    if (location.type !== 'aoi' && prevLocation.type === 'aoi') {
-      clearActiveArea();
-    }
-  }
+  state = {
+    activeTags: []
+  };
 
   renderLoginWindow() {
     const { isDesktop } = this.props;
@@ -89,25 +68,29 @@ class MapMenuMyGFW extends PureComponent {
           in-depth analysis of the area, as well as receiving email
           notifications when new deforestation alerts are available.
         </p>
-        {/* TODO: implement saveToAOIs prompts */}
         <Button theme="theme-button-small">Learn how</Button>
       </div>
     );
   }
 
   renderAreas() {
-    const { isDesktop, areas, activeArea, goToAOI, onEditClick } = this.props;
-    const activeTags = Object.keys(this.state.activeTags).filter(
-      tag => this.state.activeTags[tag]
-    );
-    const activeAreas = sortBy(
-      activeTags.length > 0
-        ? areas.filter(
-          area => area.tags.filter(tag => activeTags.includes(tag)).length > 0 // is any of the area.tags in activeTags?
-        )
-        : areas,
-      area => area.name.toLowerCase()
-    );
+    const {
+      isDesktop,
+      areas,
+      activeArea,
+      viewArea,
+      onEditClick,
+      tags
+    } = this.props;
+    const { activeTags } = this.state;
+
+    const selectedTags = tags.filter(t => activeTags.includes(t.value));
+    const unselectedTags = tags.filter(t => !activeTags.includes(t.value));
+    const filteredAreas =
+      selectedTags && selectedTags.length && areas && areas.length
+        ? areas.filter(a => !!intersection(a.tags, activeTags).length)
+        : areas;
+
     return (
       <div>
         <div className="aoi-header">
@@ -115,57 +98,50 @@ class MapMenuMyGFW extends PureComponent {
             <h3 className="title-create-aois">Areas of interest</h3>
           )}
           <div className="aoi-tags">
-            {activeTags &&
-              activeTags.map(tag => (
+            {selectedTags &&
+              selectedTags.map(tag => (
                 <Pill
                   className="aoi-tag"
-                  key={tag}
+                  key={tag.value}
                   active
-                  label={tag}
+                  label={tag.label}
                   onRemove={() =>
                     this.setState({
-                      activeTags: {
-                        ...this.state.activeTags,
-                        [tag]: !this.state.activeTags[tag]
-                      }
+                      activeTags: activeTags.filter(t => t !== tag.value)
                     })
                   }
                 />
               ))}
-            <Dropdown
-              className="country-dropdown"
-              theme="theme-dropdown-button theme-dropdown-button-small"
-              placeholder={
-                activeTags && activeTags.length > 0
-                  ? 'Add more tags'
-                  : 'Filter by tags'
-              }
-              noItemsFound="No tags found"
-              noSelectedValue={
-                activeTags && activeTags.length > 0
-                  ? 'Add more tags'
-                  : 'Filter by tags'
-              }
-              options={Object.keys(this.state.activeTags).map(tag => ({
-                label:
-                  tag.length > 15 ? tag.substring(0, 15).concat('...') : tag,
-                value: tag
-              }))}
-              onChange={tag =>
-                tag.value &&
-                this.setState({
-                  activeTags: {
-                    ...this.state.activeTags,
-                    [tag.value]: !this.state.activeTags[tag.value]
-                  }
-                })
-              }
-            />
+            {unselectedTags &&
+              !!unselectedTags.length && (
+              <Dropdown
+                className="country-dropdown"
+                theme="theme-dropdown-button theme-dropdown-button-small"
+                placeholder={
+                  activeTags && activeTags.length > 0
+                    ? 'Add more tags'
+                    : 'Filter by tags'
+                }
+                noItemsFound="No tags found"
+                noSelectedValue={
+                  activeTags && activeTags.length > 0
+                    ? 'Add more tags'
+                    : 'Filter by tags'
+                }
+                options={unselectedTags}
+                onChange={tag =>
+                  tag.value &&
+                    this.setState({
+                      activeTags: [...activeTags, tag.value]
+                    })
+                }
+              />
+            )}
           </div>
         </div>
         <div className="aoi-items">
-          {activeAreas &&
-            activeAreas.map((area, i) => {
+          {filteredAreas &&
+            filteredAreas.map((area, i) => {
               const active = activeArea && activeArea.id === area.id;
               return (
                 <div
@@ -173,31 +149,12 @@ class MapMenuMyGFW extends PureComponent {
                     '--active': active,
                     '--inactive': activeArea && !active
                   })}
-                  key={area.name}
-                  onClick={() => goToAOI(area)}
+                  onClick={() => viewArea(area.id)}
                   role="button"
                   tabIndex={0}
+                  key={area.id}
                 >
-                  <img src={area.image} alt={area.name} />
-                  <div className="aoi-item-body">
-                    <p className="aoi-title">{area.name}</p>
-                    {area.tags &&
-                      area.tags.length > 0 && (
-                      <div className="aoi-tags">
-                        <Icon icon={tagIcon} className="tag-icon" />
-                        <p>{area.tags.join(', ')}</p>
-                      </div>
-                    )}
-                    {(i + 1) % 3 === 0 && ( // TODO: get subscribed status from API
-                      <div className="aoi-subscribed">
-                        <Icon
-                          icon={subscribedIcon}
-                          className="subscribed-icon"
-                        />
-                        <p>Subscribed</p>
-                      </div>
-                    )}
-                  </div>
+                  <AoICard index={i} {...area} simple />
                   {active && (
                     <Button
                       className="edit-button"
@@ -230,15 +187,14 @@ class MapMenuMyGFW extends PureComponent {
             : this.renderNoAreas()}
         </div>
         <div className="my-gfw-footer">
-          <a href="/my-gfw" className="edit-button">
-            {/* TODO: define text, update profile / user email (review design) */}
+          <Link to="/my-gfw" className="edit-button">
             Update profile
             <Icon icon={editIcon} className="edit-icon" />
-          </a>
+          </Link>
           <Button
             theme="theme-button-clear"
             className="logout-button"
-            // onClick={} TODO: import logout from pages/mygfw/components/user-profile
+            onClick={logout}
           >
             Log out
             <Icon icon={logoutIcon} className="logout-icon" />
@@ -250,7 +206,7 @@ class MapMenuMyGFW extends PureComponent {
 
   render() {
     const { loggedIn, areas, isDesktop } = this.props;
-    // TODO; componentize
+
     return (
       <div className="c-map-menu-my-gfw">
         {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}
@@ -267,16 +223,5 @@ class MapMenuMyGFW extends PureComponent {
     );
   }
 }
-
-MapMenuMyGFW.propTypes = {
-  isDesktop: PropTypes.bool,
-  loggedIn: PropTypes.bool,
-  areas: PropTypes.array,
-  activeArea: PropTypes.object,
-  goToAOI: PropTypes.func,
-  onEditClick: PropTypes.func,
-  clearActiveArea: PropTypes.func,
-  location: PropTypes.obj
-};
 
 export default MapMenuMyGFW;

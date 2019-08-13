@@ -18,9 +18,9 @@ const mapStateToProps = ({ location, areas }) => ({
 
 class GeostoreProvider extends PureComponent {
   componentDidMount() {
-    const { location: { adm0, type } } = this.props;
+    const { location: { adm0, type }, activeArea } = this.props;
 
-    if (adm0 && type !== 'aoi') {
+    if ((adm0 && type !== 'aoi') || (type === 'aoi' && activeArea)) {
       this.handleGetGeostore();
     }
   }
@@ -29,7 +29,7 @@ class GeostoreProvider extends PureComponent {
     const {
       location: { adm0, adm1, adm2 },
       activeArea,
-      setGeostore
+      clearGeostore
     } = this.props;
     const hasAdm0Changed = adm0 && adm0 !== prevProps.location.adm0;
     const hasAdm1Changed = adm0 && adm1 !== prevProps.location.adm1;
@@ -38,7 +38,7 @@ class GeostoreProvider extends PureComponent {
       activeArea && !isEqual(activeArea, prevProps.activeArea);
 
     if (!adm0 && adm0 !== prevProps.location.adm0) {
-      setGeostore({});
+      clearGeostore({});
       this.cancelGeostoreFetch();
     }
 
@@ -75,7 +75,7 @@ class GeostoreProvider extends PureComponent {
 GeostoreProvider.propTypes = {
   location: PropTypes.object.isRequired,
   getGeostore: PropTypes.func.isRequired,
-  setGeostore: PropTypes.func.isRequired,
+  clearGeostore: PropTypes.func.isRequired,
   activeArea: PropTypes.object
 };
 

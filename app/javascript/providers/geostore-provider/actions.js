@@ -8,6 +8,7 @@ import { getBoxBounds, getLeafletBbox } from 'utils/geoms';
 
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
+export const clearGeostore = createAction('clearGeostore');
 export const setGeoDescriber = createAction('setGeoDescriber');
 
 export const getGeostore = createThunkAction(

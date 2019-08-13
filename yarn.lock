@@ -3657,7 +3657,7 @@ d3-dsv@^1.0.8:
     iconv-lite "0.4"
     rw "1"
 
-d3-ease@1:
+d3-ease@1, d3-ease@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/d3-ease/-/d3-ease-1.0.5.tgz#8ce59276d81241b1b72042d6af2d40e76d936ffb"
 
@@ -7746,10 +7746,10 @@ layer-manager@^1.10.0:
     supercluster "^4.1.1"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^1.17.7-mapbox:
-  version "1.17.7-mapbox"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.17.7-mapbox.tgz#1896e057bb784268d0eb02bc199aba092f0e0219"
-  integrity sha512-RBKpgIg9x9Fag0Mn1QXHIphikKc8hjWfb/j3gQ/2iYyJdPuJ23zEn+bOk5QNUvjgNPB3rNFDAuzJoyABcZCV1Q==
+layer-manager@^1.17.8-mapbox:
+  version "1.17.8-mapbox"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-1.17.8-mapbox.tgz#e1cf525fc6fea58b044124adc35283b6be01315a"
+  integrity sha512-/kH1sEVP/jrf6cx12KExdP3tNkgE9ymhzIVkdUQB7AO66pK1pQpyjp93stLfrbYUPRy5Tkp4U9g6erngGVio7w==
   dependencies:
     axios "^0.18.0"
     lodash "^4.17.11"
@@ -14754,10 +14754,18 @@ viewport-mercator-project@^6.1.0:
     "@babel/runtime" "^7.0.0"
     gl-matrix "^3.0.0-0"
 
-vizzuality-components@^3.0.0-beta.5:
-  version "3.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/vizzuality-components/-/vizzuality-components-3.0.0-beta.5.tgz#71cab4db3f1e085b761473e186440019673a965c"
-  integrity sha512-zmSPRGBf7SahfJ7e6Tr5lWy2zHBjQOEyvXQ87e1PVm5nyVIWLxr6wRFQ5Lujr/gNnKa6F7WkHj4YsWyFUS7duQ==
+viewport-mercator-project@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/viewport-mercator-project/-/viewport-mercator-project-6.1.1.tgz#d7b2cb3cb772b819f1daab17cf4019102a9102a6"
+  integrity sha512-nI0GEmXnESwZxWSJuaQkdCnvOv6yckUfqqFbNB8KWVbQY3eUExVM4ZziqCVVs5mNznLjDF1auj6HLW5D5DKcng==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    gl-matrix "^3.0.0"
+
+vizzuality-components@^3.0.0-beta.8:
+  version "3.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/vizzuality-components/-/vizzuality-components-3.0.0-beta.8.tgz#e3ce59406eb38bc95bcc65bb41e01ca9e530a881"
+  integrity sha512-MDmPRJ8afSW5hUgoFRBIRpraVKpfn+qQbKaw5JEvbtHNp3uUgCN2XZCV1olbvJ7lo4PyWQtCio3xJYyWCZGUBw==
   dependencies:
     array-move "^2.1.0"
     axios "^0.19.0"

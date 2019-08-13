@@ -1,0 +1,143 @@
+@import '~styles/settings.scss';
+
+.c-aoi-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  @media screen and (min-width: $screen-m) {
+    flex-direction: row;
+  }
+
+  img {
+    width: 100%;
+    min-width: 100%;
+    height: rem(120px);
+    background: $border;
+    margin-right: rem(15px);
+    margin-bottom: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(140px);
+      min-width: rem(140px);
+      height: rem(140px);
+      margin-bottom: 0;
+    }
+  }
+
+  .item-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .title {
+      line-height: rem(16px);
+      margin-bottom: rem(10px);
+      font-size: rem(18px);
+      color: $slate-light;
+    }
+
+    .created {
+      font-size: rem(12px);
+      color: $grey;
+      margin-bottom: rem(5px);
+    }
+
+    .meta {
+      display: flex;
+      margin-bottom: rem(15px);
+
+      .tags,
+      .subscribed {
+        margin-right: rem(20px);
+        display: flex;
+        align-items: center;
+
+        p {
+          font-size: rem(12px);
+          color: $grey;
+          line-height: rem(16px);
+          padding: rem(2.5px) 0;
+          max-width: rem(250px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        svg {
+          margin-right: rem(4px);
+        }
+      }
+    }
+
+    .activity {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: rem(12px);
+      color: $slate;
+
+      @media screen and (min-width: $screen-m) {
+        flex-wrap: nowrap;
+      }
+
+      > span {
+        margin-right: rem(20px);
+      }
+
+      .activity-intro {
+        width: 100%;
+        margin-bottom: rem(10px);
+
+        @media screen and (min-width: $screen-m) {
+          width: auto;
+          margin-bottom: 0;
+        }
+      }
+
+      .glad {
+        color: $loss;
+      }
+
+      .viirs {
+        color: $fires;
+      }
+
+      .activity-data {
+        font-size: rem(16px);
+        font-weight: 500;
+      }
+    }
+  }
+
+  &.simple {
+    img {
+      width: rem(76px);
+      height: rem(76px);
+      min-width: rem(76px);
+
+      @media screen and (min-width: $screen-m) {
+        width: rem(76px);
+        height: rem(76px);
+        min-width: rem(76px);
+      }
+    }
+
+    .title {
+      font-size: rem(14px);
+      margin-bottom: 0;
+      padding: rem(3px) 0;
+    }
+
+    .meta {
+      flex-direction: column;
+      margin-bottom: 0;
+
+      .tags {
+        p {
+          max-width: rem(120px);
+        }
+      }
+    }
+  }
+}

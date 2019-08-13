@@ -84,7 +84,7 @@ class Page extends PureComponent {
 }
 
 Page.propTypes = {
-  sections: PropTypes.object.isRequired,
+  sections: PropTypes.object,
   setModalVideoData: PropTypes.func.isRequired
 };
 

@@ -12,7 +12,7 @@ import Widgets from 'components/widgets';
 import DownloadData from 'components/analysis/components/download-data';
 
 import screensImg1x from 'assets/images/aois/double.png';
-import screensImg2x from 'assets/images/aois/double @2x.png';
+import screensImg2x from 'assets/images/aois/double@2x.png';
 import arrowDownIcon from 'assets/icons/arrow-down.svg';
 import shareIcon from 'assets/icons/share.svg';
 import downloadIcon from 'assets/icons/download.svg';

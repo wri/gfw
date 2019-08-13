@@ -118,7 +118,7 @@ class MainMapComponent extends PureComponent {
             )}
             <Share />
             <ModalMeta />
-            <SaveAOIModal />
+            <SaveAOIModal viewAfterSave clearAfterDelete />
             <ModalSource />
             <CountryDataProvider />
             <WhitelistsProvider />

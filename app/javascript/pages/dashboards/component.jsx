@@ -61,6 +61,7 @@ class Page extends PureComponent {
     } = this.props;
     const isCountryDashboard =
       locationType === 'country' || locationType === 'global';
+    const isAreaDashboard = locationType === 'aoi';
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -70,21 +71,21 @@ class Page extends PureComponent {
               <Header className="header" />
               {links &&
                 !!links.length && (
-                  <SubNavMenu
-                    className="nav"
-                    theme="theme-subnav-dark"
-                    links={links.map(l => ({
-                      ...l,
-                      onClick: () => {
-                        handleCategoryChange(l.category);
-                        track('selectDashboardCategory', {
-                          label: l.category
-                        });
-                      }
-                    }))}
-                    checkActive
-                  />
-                )}
+                <SubNavMenu
+                  className="nav"
+                  theme="theme-subnav-dark"
+                  links={links.map(l => ({
+                    ...l,
+                    onClick: () => {
+                      handleCategoryChange(l.category);
+                      track('selectDashboardCategory', {
+                        label: l.category
+                      });
+                    }
+                  }))}
+                  checkActive
+                />
+              )}
               <Widgets
                 className="dashboard-widgets"
                 noWidgetsMessage={noWidgetsMessage}
@@ -107,7 +108,7 @@ class Page extends PureComponent {
             {widgetAnchor && <ScrollTo target={widgetAnchor} />}
             <DatasetsProvider />
             <LatestProvider />
-            <AreasProvider />
+            {isAreaDashboard && <AreasProvider />}
             {isCountryDashboard && (
               <Fragment>
                 <CountryDataProvider />
@@ -125,7 +126,7 @@ class Page extends PureComponent {
 Page.propTypes = {
   showMapMobile: PropTypes.bool,
   closeMobileMap: PropTypes.func.isRequired,
-  links: PropTypes.array.isRequired,
+  links: PropTypes.array,
   widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   noWidgetsMessage: PropTypes.string,
   handleCategoryChange: PropTypes.func,

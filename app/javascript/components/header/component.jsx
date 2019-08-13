@@ -35,7 +35,6 @@ class Header extends PureComponent {
       hideMenu,
       navMain,
       moreLinks,
-      myGfwLinks,
       apps,
       setModalContactUsOpen,
       loggedIn,
@@ -96,7 +95,6 @@ class Header extends PureComponent {
                         this.setState({ fullScreenOpen: false })
                       }
                       isDesktop={isDesktop}
-                      myGfwLinks={myGfwLinks}
                       moreLinks={moreLinks}
                       navMain={navMain}
                       apps={apps}
@@ -120,7 +118,6 @@ class Header extends PureComponent {
 Header.propTypes = {
   className: PropTypes.string,
   setModalContactUsOpen: PropTypes.func,
-  myGfwLinks: PropTypes.array,
   navMain: PropTypes.array,
   apps: PropTypes.array,
   moreLinks: PropTypes.array,

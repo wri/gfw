@@ -12,9 +12,10 @@ import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 
 import deleteIcon from 'assets/icons/delete.svg';
-import screenImg1x from 'assets/images/aois/single B.png';
-import screenImg2x from 'assets/images/aois/single B @2x.png';
+import screenImg1x from 'assets/images/aois/singleB.png';
+import screenImg2x from 'assets/images/aois/singleB@2x.png';
 
+import placeholderAreaBg from './aoi-placeholder-bg.png';
 import './styles.scss';
 
 function validateEmail(email) {
@@ -91,7 +92,16 @@ function reducer(state, action) {
 }
 
 function SaveAOIForm(props) {
-  const { activeArea, userData, saving, error, saveAOI, deleteAOI } = props;
+  const {
+    activeArea,
+    userData,
+    saving,
+    error,
+    saveAOI,
+    deleteAOI,
+    viewAfterSave,
+    clearAfterDelete
+  } = props;
 
   const [form, dispatch] = useReducer(reducer, {
     name: props.locationName,
@@ -128,11 +138,7 @@ function SaveAOIForm(props) {
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
-            onClick={() =>
-              deleteAOI({
-                userData
-              })
-            }
+            onClick={() => deleteAOI({ id: activeArea.id, clearAfterDelete })}
           >
             <Icon icon={deleteIcon} className="delete-icon" />
             Delete Area
@@ -145,8 +151,11 @@ function SaveAOIForm(props) {
           onClick={() =>
             saveAOI({
               ...form,
-              userData
-              // ...location
+              ...(activeArea && {
+                activeAreaId: activeArea.id
+              }),
+              userData,
+              viewAfterSave
             })
           }
           disabled={!canSubmit}
@@ -172,6 +181,11 @@ function SaveAOIForm(props) {
 
   return (
     <div className="c-form c-save-aoi-form">
+      <img
+        className="area-image"
+        src={placeholderAreaBg}
+        alt="aoi screenshot"
+      />
       <div className={cx('field', { error: nameError })}>
         <span className="form-title">Name this area for later reference</span>
         <input
@@ -266,7 +280,9 @@ SaveAOIForm.propTypes = {
   email: PropTypes.string,
   error: PropTypes.bool,
   saving: PropTypes.bool,
-  activeArea: PropTypes.object
+  activeArea: PropTypes.object,
+  viewAfterSave: PropTypes.bool,
+  clearAfterDelete: PropTypes.bool
 };
 
 export default SaveAOIForm;

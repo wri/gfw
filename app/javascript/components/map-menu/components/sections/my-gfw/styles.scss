@@ -119,7 +119,6 @@
     }
 
     .aoi-item {
-      display: flex;
       position: relative;
       cursor: pointer;
       outline: none;
@@ -147,45 +146,7 @@
         top: rem(10px);
         width: rem(16px);
         height: rem(16px);
-      }
-
-      img {
-        width: rem(76px);
-        height: rem(76px);
-        background: $border;
-        margin-right: rem(15px);
-      }
-
-      .aoi-item-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        .aoi-title {
-          line-height: rem(16px);
-          padding: rem(2.5px) 0;
-        }
-
-        .aoi-tags,
-        .aoi-subscribed {
-          display: flex;
-          align-items: center;
-
-          p {
-            font-size: rem(12px);
-            color: $grey;
-            line-height: rem(16px);
-            padding: rem(2.5px) 0;
-            max-width: rem(120px);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-
-          svg {
-            margin-right: rem(4px);
-          }
-        }
+        min-width: rem(16px);
       }
     }
   }

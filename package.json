@@ -116,6 +116,7 @@
     "coffee-script": "1.12.7",
     "constants": "0.0.2",
     "d3": "4.11.0",
+    "d3-ease": "^1.0.5",
     "d3-format": "1.2.1",
     "deck.gl": "^7.1.10",
     "dotenv": "4.0.0",
@@ -125,7 +126,7 @@
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",
-    "layer-manager": "^1.17.7-mapbox",
+    "layer-manager": "^1.17.8-mapbox",
     "leaflet-draw": "^1.0.3",
     "lodash": "^4.17.14",
     "lodash-math": "0.0.7",
@@ -194,7 +195,8 @@
     "turf-polygon": "^1.0.3",
     "turf-union": "^3.0.12",
     "util": "^0.12.1",
-    "vizzuality-components": "^3.0.0-beta.5",
+    "viewport-mercator-project": "^6.1.1",
+    "vizzuality-components": "^3.0.0-beta.8",
     "wri-json-api-serializer": "^1.0.1"
   },
   "resolutions": {

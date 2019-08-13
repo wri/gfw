@@ -146,7 +146,7 @@ class MapLegend extends Component {
                       )}
                   {(isSelectorLayer || isMultiSelectorLayer) &&
                       selectorLayerConfig && (
-                      <LayerSelectorMenu
+                    <LayerSelectorMenu
                       className="layer-selector"
                       layerGroup={lg}
                       name={name}

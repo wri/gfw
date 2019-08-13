@@ -34,6 +34,7 @@ class Footer extends PureComponent {
                     <Button
                       onClick={() => this.props.setModalNewsletterOpen(true)}
                       className="footer-subscribe-button"
+                      theme="theme-button-light"
                     >
                       STAY UPDATED
                     </Button>
