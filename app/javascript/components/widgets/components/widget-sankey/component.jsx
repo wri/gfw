@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 // import PropTypes from 'prop-types';
-// import { format } from 'd3-format';
 
 import { Sankey } from 'cw-components';
 
@@ -9,6 +8,7 @@ import './styles';
 class WidgetTreeCover extends PureComponent {
   render() {
     // const { data, settings, simple } = this.props;
+    // console.log('component data:', data);
 
     const testData = {
       nodes: [
@@ -99,10 +99,12 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
+/*
 WidgetTreeCover.propTypes = {
-  // data: PropTypes.array,
+  data: PropTypes.array
   // simple: PropTypes.bool,
   // settings: PropTypes.object.isRequired
 };
+*/
 
 export default WidgetTreeCover;
