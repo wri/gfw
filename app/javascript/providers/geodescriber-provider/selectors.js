@@ -37,37 +37,28 @@ export const selectCountryData = state =>
   };
 export const selectAreas = state => state && state.areas && state.areas.data;
 
-export const getAreasOptions = createSelector([selectAreas], areas => {
-  if (!areas) return null;
-  return {
-    adm0: areas.map(a => ({
-      label: a.name,
-      value: a.id
-    }))
-  };
-});
+export const getAreaName = createSelector(
+  [selectAreas, selectLocation],
+  (areas, location) => {
+    if (!areas || !areas.length || location.type !== 'aoi') return null;
+    const activeArea = areas.find(a => a.id === location.adm0);
 
-export const getAdminMetadata = createSelector(
-  [selectLocation, selectCountryData, getAreasOptions],
-  (location, countries, areas) => {
-    if (!countries || !areas) return null;
-    if (location.type === 'aoi') return areas;
-    return countries;
+    return activeArea && activeArea.name;
   }
 );
 
 export const getAdm0Data = createSelector(
-  [getAdminMetadata],
+  [selectCountryData],
   data => data && data.adm0
 );
 
 export const getAdm1Data = createSelector(
-  [getAdminMetadata],
+  [selectCountryData],
   data => data && data.adm1
 );
 
 export const getAdm2Data = createSelector(
-  [getAdminMetadata],
+  [selectCountryData],
   data => data && data.adm2
 );
 
@@ -100,9 +91,15 @@ export const getAdminLocationName = createSelector(
 );
 
 export const getGeodescriberTitle = createSelector(
-  [selectGeodescriber, selectLocation, getAdminLocationName],
-  (geodescriber, location, adminTitle) => {
-    if (isEmpty(geodescriber)) return null;
+  [selectGeodescriber, selectLocation, getAdminLocationName, getAreaName],
+  (geodescriber, location, adminTitle, areasName) => {
+    if (isEmpty(geodescriber)) return {};
+
+    if (location.type === 'aoi') {
+      return {
+        sentence: areasName
+      };
+    }
 
     // if not an admin we can use geodescriber
     if (location.type !== 'country') {
@@ -172,7 +169,7 @@ export const getAdminDescription = createSelector(
       loss: `${loss}ha`,
       emission: `${emissionsWithoutPlantations}t`,
       emissionsTreeCover: `${emissions}t`,
-      year: data.totalLoss.year,
+      year: data.totalLoss && data.totalLoss.year,
       treeCoverLoss: `${loss}ha`,
       primaryLoss: `${primaryLoss}ha`
     };
@@ -200,7 +197,7 @@ export const getAdminDescription = createSelector(
 export const getGeodescriberDescription = createSelector(
   [selectGeodescriber, selectLocation, getAdminDescription],
   (geodescriber, location, adminSentence) => {
-    if (isEmpty(geodescriber)) return null;
+    if (isEmpty(geodescriber)) return {};
 
     // if not an admin we can use geodescriber
     if (location.type !== 'country') {
