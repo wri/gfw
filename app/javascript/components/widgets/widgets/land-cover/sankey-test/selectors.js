@@ -1,37 +1,70 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
+import groupBy from 'lodash/groupBy';
+import findIndex from 'lodash/findIndex';
 
 const getData = state => state.data || null;
-const getSettings = state => state.settings || null;
+// const getSettings = state => state.settings || null;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentence || null;
 
-export const parseData = createSelector([getData], data => data);
-
-export const parseConfig = createSelector(
-  [parseData, getColors, getSettings],
-  (dataKeys, colors, settings) => {
-    if (isEmpty(dataKeys)) return null;
-    const colorsByType =
-      settings.type === 'bound1' ? colors.types : colors.species;
-    return {
-      colors: colorsByType,
-      unit: '%',
-      xKey: 'region',
-      yKeys: dataKeys,
-      yAxisDotFill: '#d4d4d4',
-      tooltip: dataKeys.map(item => ({
-        key: item,
-        label: item,
-        color: colorsByType[item],
-        unit: '%',
-        unitFormat: value => format('.1f')(value)
-      }))
+export const parseData = createSelector(
+  [getData, getColors],
+  (data, colors) => {
+    if (isEmpty(data)) return null;
+    const categories = {
+      forest: 'Forest',
+      bare: 'Bare',
+      settlements: 'Settlement',
+      cropland: 'Agriculture',
+      grassland: 'Grassland',
+      wetlands: 'Wetland'
     };
+    const nodes = [
+      ...Object.keys(groupBy(data, 'start')).map(node => ({
+        name: categories[node] ? categories[node] : 'Other',
+        key: `${node}-start`,
+        color: categories[node]
+          ? colors.categories[categories[node]]
+          : colors.categories.Other
+      })),
+      ...Object.keys(groupBy(data, 'end')).map(node => ({
+        name: categories[node] ? categories[node] : 'Other',
+        key: `${node}-end`,
+        color: categories[node]
+          ? colors.categories[categories[node]]
+          : colors.categories.Other
+      }))
+    ];
+    const links = data.map(d => ({
+      source: findIndex(nodes, { key: `${d.start}-start` }),
+      target: findIndex(nodes, { key: `${d.end}-end` }),
+      value: d.area
+    }));
+    return { nodes, links };
   }
 );
+
+export const parseConfig = createSelector([parseData], dataKeys => {
+  if (isEmpty(dataKeys)) return null;
+  // const colorsByType = settings.type === 'bound1' ? colors.types : colors.species;
+  // return {
+  //   colors: colorsByType,
+  //   unit: '%',
+  //   xKey: 'region',
+  //   yKeys: dataKeys,
+  //   yAxisDotFill: '#d4d4d4',
+  //   tooltip: dataKeys.map(item => ({
+  //     key: item,
+  //     label: item,
+  //     color: colorsByType[item],
+  //     unit: '%',
+  //     unitFormat: value => format('.1f')(value)
+  //   }))
+  // };
+  return {};
+});
 
 export const parseSentence = createSelector(
   [parseData, getLocationName, getSentences],
