@@ -28,10 +28,15 @@ class WidgetTreeCover extends PureComponent {
         <Sankey
           data={data}
           config={config}
-          tooltipChildren={() => (
-            // tooltipChildren={node => (
-            <div>Tooltip Extra Info: extra info here</div>
-          )}
+          tooltipChildren={node =>
+            node.payload &&
+            node.payload.payload && (
+              <div>
+                {node.payload.payload.abs_pct} percentage of land went to{' '}
+                {node.payload.payload.target.name}
+              </div>
+            )
+          }
         />
       </div>
     );

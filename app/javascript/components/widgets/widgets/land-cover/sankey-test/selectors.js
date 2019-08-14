@@ -9,8 +9,13 @@ const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentence || null;
 
+export const cleanData = createSelector([getData], data => {
+  if (isEmpty(data)) return null;
+  return data.filter(d => d.start !== d.end);
+});
+
 export const parseData = createSelector(
-  [getData, getColors],
+  [cleanData, getColors],
   (data, colors) => {
     if (isEmpty(data)) return null;
     const categories = {
@@ -40,7 +45,8 @@ export const parseData = createSelector(
     const links = data.map(d => ({
       source: findIndex(nodes, { key: `${d.start}-start` }),
       target: findIndex(nodes, { key: `${d.end}-end` }),
-      value: d.area
+      value: d.area,
+      abs_pct: d.perc_area
     }));
     return { nodes, links };
   }
