@@ -1,0 +1,72 @@
+@import '~styles/settings.scss';
+
+.tooltip {
+  background: $white;
+  // font-family: $font-family-2;
+  letter-spacing: -0.1px;
+  font-size: $font-size-xs;
+  min-width: 180px;
+  max-width: 300px;
+  padding: 15px;
+  box-shadow: 0 5px 15px 0 rgba(17, 55, 80, 0.15);
+  border-radius: 4px;
+}
+
+.tooltipHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.unit {
+  color: $grey-dark;
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.legend {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.labelDot {
+  border-radius: 50%;
+  width: 10px;
+  min-width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  margin-top: 3px;
+  display: block;
+}
+
+.labelName {
+  margin-right: 30px;
+  color: $green-gfw;
+}
+
+.labelValue {
+  color: $grey-dark;
+  text-align: right;
+  min-width: max-content;
+}
+
+.targetName {
+  color: $green-gfw;
+  padding-right: 16px;
+}
+
+.focus {
+  @extend .labelValue;
+
+  margin-top: 10px;
+}
+
+.tooltipChildren {
+  color: $grey-dark;
+}

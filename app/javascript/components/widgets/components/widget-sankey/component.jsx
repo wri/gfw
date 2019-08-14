@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 // import PropTypes from 'prop-types';
 
-import { Sankey } from 'cw-components';
+// import { Sankey } from 'cw-components';
+import Sankey from 'components/charts/sankey-chart/sankey';
 
 import './styles';
 

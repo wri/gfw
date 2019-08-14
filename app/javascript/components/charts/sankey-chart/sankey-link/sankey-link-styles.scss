@@ -1,0 +1,8 @@
+.link {
+  cursor: pointer;
+
+  &:hover {
+    stroke: #113750;
+    stroke-opacity: 0.3;
+  }
+}

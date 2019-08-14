@@ -1,0 +1,19 @@
+@import '~styles/settings.scss';
+
+.sankey > svg {
+  padding-bottom: 1em;
+}
+
+// .sankey * {
+// sankey-styles.scss
+//   $font-family-1: 'Lato', sans-serif;
+//   font-family: $font-family-1;
+// }
+
+.link {
+  cursor: pointer;
+
+  &:hover {
+    stroke-opacity: 0.3;
+  }
+}
