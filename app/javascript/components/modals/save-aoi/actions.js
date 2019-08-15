@@ -35,7 +35,8 @@ export const saveAOI = createThunkAction(
     monthlyEmail,
     receiveAlerts,
     activeAreaId,
-    viewAfterSave
+    viewAfterSave,
+    method
   }) => (dispatch, getState) => {
     const { modalSaveAOI, location, geostore } = getState();
     if (modalSaveAOI && !modalSaveAOI.saving) {
@@ -67,8 +68,6 @@ export const saveAOI = createThunkAction(
         receiveAlerts,
         tags
       };
-
-      const method = activeAreaId ? 'patch' : 'post';
 
       setAreasProvider(postData, method)
         .then(response => {

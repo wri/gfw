@@ -46,7 +46,7 @@ export const getActiveArea = createSelector(
 export const getModalTitle = createSelector(
   [getActiveArea, selectUserData],
   (activeArea, userData) => {
-    if (activeArea && !isEmpty(userData)) {
+    if (activeArea && !activeArea.notUserArea && !isEmpty(userData)) {
       return 'Edit Area of Interest';
     }
     return 'Save Area of Interest';

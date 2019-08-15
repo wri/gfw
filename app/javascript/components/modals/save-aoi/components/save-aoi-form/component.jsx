@@ -134,7 +134,7 @@ function SaveAOIForm(props) {
     );
     return (
       <div className="save-aoi">
-        {activeArea ? (
+        {activeArea && !activeArea.notUserArea ? (
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
@@ -155,7 +155,8 @@ function SaveAOIForm(props) {
                 activeAreaId: activeArea.id
               }),
               userData,
-              viewAfterSave
+              viewAfterSave,
+              method: activeArea && !activeArea.notUserArea ? 'patch' : 'post'
             })
           }
           disabled={!canSubmit}

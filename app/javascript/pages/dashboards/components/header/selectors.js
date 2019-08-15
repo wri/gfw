@@ -12,9 +12,11 @@ export const selectLoading = state =>
   state.countryData &&
   state.areas &&
   state.geostore &&
+  state.geodescriber &&
   (state.header.loading ||
     state.areas.loading ||
     state.geostore.loading ||
+    state.geodescriber.loading ||
     state.countryData.isCountriesLoading ||
     state.countryData.isRegionsLoading ||
     state.countryData.isSubRegionsLoading);
