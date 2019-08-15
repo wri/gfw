@@ -26,8 +26,7 @@ class AnalysisComponent extends PureComponent {
     embed: PropTypes.bool,
     setSubscribeSettings: PropTypes.func,
     setSaveAOISettings: PropTypes.func,
-    setShareModal: PropTypes.func,
-    loggedIn: PropTypes.bool
+    setShareModal: PropTypes.func
   };
 
   render() {
@@ -45,8 +44,7 @@ class AnalysisComponent extends PureComponent {
       endpoints,
       widgetLayers,
       embed,
-      setShareModal,
-      loggedIn
+      setShareModal
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -123,48 +121,50 @@ class AnalysisComponent extends PureComponent {
                   DASHBOARD
               </Button>
             )}
-            <div className="analysis-buttons">
+            {activeArea && (
               <Button
-                className="analysis-btn dashboard"
+                className="analysis-action-btn"
                 theme="theme-button-light"
                 link={activeArea && `/dashboards/aoi/${activeArea.id}`}
                 tooltip={{ text: 'Go to Areas of Interest dashboard' }}
               >
                   DASHBOARD
               </Button>
-              {loggedIn && activeArea ? (
-                <Button
-                  className="analysis-btn dashboard"
-                  onClick={() =>
-                    setShareModal({
-                      title: 'Share this view',
-                      shareUrl: window.location.href.includes('embed')
-                        ? window.location.href.replace('/embed', '')
-                        : window.location.href,
-                      embedUrl: window.location.href.includes('embed')
-                        ? window.location.href
-                        : window.location.href.replace('/map', '/embed/map'),
-                      embedSettings: {
-                        width: 670,
-                        height: 490
-                      }
-                    })
-                  }
-                  tooltip={{ text: 'Share or embed this area' }}
-                >
+            )}
+            {(!activeArea || (activeArea && activeArea.notUserArea)) && (
+              <Button
+                className="analysis-action-btn"
+                onClick={() => {
+                  setSaveAOISettings({ open: true });
+                }}
+              >
+                  SAVE IN MY GFW
+              </Button>
+            )}
+            {activeArea &&
+                !activeArea.notUserArea && (
+              <Button
+                className="analysis-action-btn"
+                onClick={() =>
+                  setShareModal({
+                    title: 'Share this view',
+                    shareUrl: window.location.href.includes('embed')
+                      ? window.location.href.replace('/embed', '')
+                      : window.location.href,
+                    embedUrl: window.location.href.includes('embed')
+                      ? window.location.href
+                      : window.location.href.replace('/map', '/embed/map'),
+                    embedSettings: {
+                      width: 670,
+                      height: 490
+                    }
+                  })
+                }
+                tooltip={{ text: 'Share or embed this area' }}
+              >
                     Share area
-                </Button>
-              ) : (
-                <Button
-                  className="analysis-action-btn subscribe-btn"
-                  onClick={() => {
-                    setSaveAOISettings({ open: true });
-                  }}
-                >
-                    SAVE IN MY GFW
-                </Button>
-              )}
-            </div>
+              </Button>
+            )}
           </div>
         )}
       </Fragment>

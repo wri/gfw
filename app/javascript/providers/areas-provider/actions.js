@@ -65,7 +65,8 @@ export const getArea = createThunkAction(
             dispatch(
               setArea({
                 id: data.id,
-                ...data.attributes
+                ...data.attributes,
+                notUserArea: true
               })
             );
           }
