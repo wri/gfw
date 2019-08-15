@@ -3,6 +3,7 @@ import axios from 'axios';
 import sortBy from 'lodash/sortBy';
 import groupBy from 'lodash/groupBy';
 import sumBy from 'lodash/sumBy';
+import isEmpty from 'lodash/isEmpty';
 import max from 'lodash/max';
 import reverse from 'lodash/reverse';
 
@@ -17,7 +18,7 @@ export const getGeodescriber = createThunkAction(
   'getGeodescriber',
   geojson => (dispatch, getState) => {
     const { geodescriber } = getState();
-    if (geodescriber && !geodescriber.loading) {
+    if (!isEmpty(geojson) && geodescriber && !geodescriber.loading) {
       dispatch(setGeodescriberLoading({ loading: true, error: false }));
       getGeodescriberService(geojson)
         .then(response => {

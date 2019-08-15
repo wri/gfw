@@ -18,8 +18,7 @@ class DataAnalysisMenu extends PureComponent {
     setMainMapSettings: PropTypes.func,
     setMapSettings: PropTypes.func,
     clearAnalysisError: PropTypes.func,
-    embed: PropTypes.bool,
-    loggedIn: PropTypes.bool
+    embed: PropTypes.bool
   };
 
   getLinks = () => {
@@ -48,14 +47,7 @@ class DataAnalysisMenu extends PureComponent {
   };
 
   render() {
-    const {
-      className,
-      showAnalysis,
-      menuSection,
-      hidden,
-      embed,
-      loggedIn
-    } = this.props;
+    const { className, showAnalysis, menuSection, hidden, embed } = this.props;
 
     return (
       <div
@@ -75,10 +67,7 @@ class DataAnalysisMenu extends PureComponent {
           checkActive
         />
         {!hidden && !showAnalysis && <MapLegend className="map-legend" />}
-        {!hidden &&
-          showAnalysis && (
-          <Analysis className="map-analysis" loggedIn={loggedIn} />
-        )}
+        {!hidden && showAnalysis && <Analysis className="map-analysis" />}
       </div>
     );
   }

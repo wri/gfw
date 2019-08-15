@@ -30,24 +30,36 @@ export const selectData = state => state.header && state.header.data;
 export const selectSettings = state => state.header && state.header.settings;
 export const selectSentences = state =>
   (state.header && state.header.config.sentences) || null;
-export const selectAreas = state =>
-  state &&
-  state.areas &&
-  state.areas.data &&
-  state.areas.data.filter(a => !a.notUserArea);
+export const selectAreas = state => state && state.areas && state.areas.data;
 export const selectGeodescriber = state =>
   state && state.geostore && state.geostore.data.geodescriber;
-export const selectLoggedIn = (state, { loggedIn }) => loggedIn;
 
 export const getAreasOptions = createSelector([selectAreas], areas => {
   if (!areas) return null;
   return {
-    adm0: areas.map(a => ({
+    adm0: areas.filter(a => !a.notUserArea).map(a => ({
       label: a.name,
       value: a.id
     }))
   };
 });
+
+export const getActiveArea = createSelector(
+  [selectAreas, selectLocation],
+  (aois, location) => {
+    if (!aois) return null;
+    return aois.find(a => a.id === location.adm0);
+  }
+);
+
+export const getDashboardTitle = createSelector(
+  [getActiveArea, selectLocation],
+  (area, location) => {
+    if (!location.adm0) return 'global';
+    if (!area || (area && !area.notUserArea)) return null;
+    return area.name;
+  }
+);
 
 export const getAdminMetadata = createSelector(
   [selectLocation, selectCountryData, getAreasOptions],
@@ -131,20 +143,20 @@ export const getSelectorMeta = createSelector([selectLocation], location => {
   const newType = type === 'global' ? 'country' : type;
   if (type === 'aoi') {
     return {
-      typeVerb: 'an area of interest',
+      typeVerb: 'area of interest',
       typeName: 'area of interest'
     };
   }
   return {
-    typeVerb: `a ${newType}`,
+    typeVerb: `${newType}`,
     typeName: newType
   };
 });
 
 export const getShareMeta = createSelector(
-  [selectLocation, selectLoggedIn],
-  (location, loggedIn) => {
-    if (location.type === 'aoi' && loggedIn) {
+  [selectLocation, getActiveArea],
+  (location, activeArea) => {
+    if (location.type === 'aoi' && activeArea && !activeArea.notUserArea) {
       return 'share this area';
     } else if (location.type === 'aoi') {
       return 'save to my gfw';
@@ -168,5 +180,7 @@ export const getHeaderProps = createStructuredSelector({
   sentence: getGeodescriberDescription,
   locationNames: getAdminsSelected,
   selectorMeta: getSelectorMeta,
-  shareMeta: getShareMeta
+  shareMeta: getShareMeta,
+  title: getDashboardTitle,
+  activeArea: getActiveArea
 });

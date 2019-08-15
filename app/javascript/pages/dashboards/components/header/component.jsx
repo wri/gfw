@@ -28,9 +28,10 @@ class Header extends PureComponent {
     sentence: PropTypes.object,
     downloadLink: PropTypes.string,
     selectorMeta: PropTypes.object,
-    loggedIn: PropTypes.bool,
     shareMeta: PropTypes.string,
-    setSaveAOISettings: PropTypes.func
+    setSaveAOISettings: PropTypes.func,
+    title: PropTypes.string,
+    activeArea: PropTypes.object
   };
 
   render() {
@@ -49,9 +50,10 @@ class Header extends PureComponent {
       sentence,
       downloadLink,
       selectorMeta,
-      loggedIn,
       shareMeta,
-      setSaveAOISettings
+      setSaveAOISettings,
+      title,
+      activeArea
     } = this.props;
     const isCountryDashboard =
       location.type === 'country' || location.type === 'global';
@@ -63,7 +65,7 @@ class Header extends PureComponent {
           <Button
             className="theme-button-small"
             onClick={() => {
-              if (location.type === 'aoi' && !loggedIn) {
+              if (activeArea && activeArea.notUserArea) {
                 setSaveAOISettings({ open: true });
               } else {
                 setShareModal(shareData);
@@ -88,13 +90,16 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 medium-10">
             <div className="select-container">
-              {!location.adm0 && <h3>{location.type || 'Global'}</h3>}
-              {loggedIn && adm0s ? (
+              {title && (
+                <h3 className={cx({ global: title === 'global' })}>{title}</h3>
+              )}
+              {(!activeArea || (activeArea && !activeArea.notUserArea)) &&
+                adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
                   placeholder={`Select ${selectorMeta.typeVerb}`}
                   noItemsFound={`No ${selectorMeta.typeName} found`}
-                  noSelectedValue={`Select a ${selectorMeta.typeName}`}
+                  noSelectedValue={`Select ${selectorMeta.typeName}`}
                   value={locationNames.adm0}
                   options={adm0s}
                   onChange={adm0 =>
@@ -111,8 +116,6 @@ class Header extends PureComponent {
                   arrowPosition="left"
                   clearable={isCountryDashboard}
                 />
-              ) : (
-                <h1>{locationNames.adm0 && locationNames.adm0.label}</h1>
               )}
               {isCountryDashboard &&
                 location.adm0 &&

@@ -41,8 +41,7 @@ class MainMapComponent extends PureComponent {
     recentActive: PropTypes.bool,
     tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     showTooltip: PropTypes.bool,
-    setMainMapAnalysisView: PropTypes.func,
-    loggedIn: PropTypes.bool
+    setMainMapAnalysisView: PropTypes.func
   };
 
   renderInfoTooltip = string => (
@@ -63,8 +62,7 @@ class MainMapComponent extends PureComponent {
       recentActive,
       handleClickAnalysis,
       setMainMapAnalysisView,
-      onDrawComplete,
-      loggedIn
+      onDrawComplete
     } = this.props;
 
     return (
@@ -116,7 +114,6 @@ class MainMapComponent extends PureComponent {
               <DataAnalysisMenu
                 className="data-analysis-menu"
                 embed={embed}
-                loggedIn={loggedIn}
               />
             )}
             {!embed && (

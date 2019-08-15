@@ -39,8 +39,7 @@ class DashboardsPage extends PureComponent {
     handleCategoryChange: PropTypes.func,
     widgets: PropTypes.array,
     activeWidgetSlug: PropTypes.string,
-    locationType: PropTypes.string,
-    loggedIn: PropTypes.bool
+    locationType: PropTypes.string
   };
 
   renderMap = () => {
@@ -71,8 +70,7 @@ class DashboardsPage extends PureComponent {
       noWidgetsMessage,
       widgets,
       activeWidgetSlug,
-      locationType,
-      loggedIn
+      locationType
     } = this.props;
     const isCountryDashboard =
       locationType === 'country' || locationType === 'global';
@@ -83,7 +81,7 @@ class DashboardsPage extends PureComponent {
         {isDesktop => (
           <div className="l-dashboards-page">
             <div className="content-panel">
-              <Header className="header" loggedIn={loggedIn} />
+              <Header className="header" />
               {links &&
                 !!links.length && (
                 <SubNavMenu
