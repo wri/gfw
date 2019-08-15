@@ -6,12 +6,18 @@ import reducerRegistry from 'app/registry';
 
 import * as shareActions from 'components/modals/share/share-actions';
 import { handleLocationChange } from 'pages/dashboards/actions';
+import { setSaveAOISettings } from 'components/modals/save-aoi/actions';
 import * as ownActions from './actions';
 import { getHeaderProps } from './selectors';
 import reducers, { initialState } from './reducers';
 import HeaderComponent from './component';
 
-const actions = { ...ownActions, ...shareActions, handleLocationChange };
+const actions = {
+  ...ownActions,
+  ...shareActions,
+  handleLocationChange,
+  setSaveAOISettings
+};
 
 class HeaderContainer extends PureComponent {
   componentWillMount() {

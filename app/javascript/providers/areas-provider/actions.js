@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
-import { getAreasProvider } from 'services/areas';
+import { getAreaProvider, getAreasProvider } from 'services/areas';
 import { MAP } from 'router';
 
 export const setAreasLoading = createAction('setAreasLoading');
@@ -10,11 +10,12 @@ export const setArea = createAction('setArea');
 export const getAreas = createThunkAction(
   'getAreas',
   () => (dispatch, getState) => {
-    const { areas } = getState();
+    const { areas, location } = getState();
     if (areas && !areas.loading) {
       dispatch(setAreasLoading(true));
       getAreasProvider()
         .then(response => {
+          const { type, adm0 } = location.payload || {};
           const { data } = response.data;
           if (data && !!data.length) {
             dispatch(
@@ -24,6 +25,48 @@ export const getAreas = createThunkAction(
                   ...d.attributes
                 }))
               )
+            );
+            if (type === 'aoi' && adm0 && !data.find(d => d.id === adm0)) {
+              getAreaProvider(adm0).then(area => {
+                const { data: areaData } = area.data;
+                dispatch(
+                  setArea({
+                    id: areaData.id,
+                    ...areaData.attributes,
+                    notUserArea: true
+                  })
+                );
+                dispatch(setAreasLoading(false));
+              });
+            } else {
+              dispatch(setAreasLoading(false));
+            }
+          }
+          dispatch(setAreasLoading(false));
+        })
+        .catch(error => {
+          dispatch(setAreasLoading(false));
+          console.info(error);
+        });
+    }
+  }
+);
+
+export const getArea = createThunkAction(
+  'getArea',
+  id => (dispatch, getState) => {
+    const { areas } = getState();
+    if (areas && !areas.loading) {
+      dispatch(setAreasLoading(true));
+      getAreaProvider(id)
+        .then(response => {
+          const { data } = response.data;
+          if (data) {
+            dispatch(
+              setArea({
+                id: data.id,
+                ...data.attributes
+              })
             );
           }
           dispatch(setAreasLoading(false));

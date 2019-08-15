@@ -43,12 +43,15 @@ export const getActiveArea = createSelector(
   }
 );
 
-export const getModalTitle = createSelector([getActiveArea], activeArea => {
-  if (activeArea) {
-    return 'Edit Area of Interest';
+export const getModalTitle = createSelector(
+  [getActiveArea, selectUserData],
+  (activeArea, userData) => {
+    if (activeArea && !isEmpty(userData)) {
+      return 'Edit Area of Interest';
+    }
+    return 'Save Area of Interest';
   }
-  return 'Save Area of Interest';
-});
+);
 
 export const getModalAOIProps = createStructuredSelector({
   saving: selectSaving,

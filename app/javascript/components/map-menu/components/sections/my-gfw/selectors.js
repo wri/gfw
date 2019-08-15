@@ -6,7 +6,8 @@ import sortBy from 'lodash/sortBy';
 
 const selectLoading = state => state.mapMenu && state.mapMenu.loading;
 const selectLoggedIn = state => state.myGfw && !isEmpty(state.myGfw.data);
-const selectAreas = state => state.areas && sortBy(state.areas.data, 'name');
+const selectAreas = state =>
+  state.areas && sortBy(state.areas.data.filter(a => !a.notUserArea), 'name');
 const selectLocation = state => state.location && state.location.payload;
 
 export const getActiveArea = createSelector(

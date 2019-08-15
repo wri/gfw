@@ -7,11 +7,32 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
+import SaveAOIModal from 'components/modals/save-aoi';
 
 import downloadIcon from 'assets/icons/download.svg';
 import './styles.scss';
 
 class Header extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    loading: PropTypes.bool,
+    locationNames: PropTypes.object.isRequired,
+    adm0s: PropTypes.array,
+    adm1s: PropTypes.array,
+    adm2s: PropTypes.array,
+    handleLocationChange: PropTypes.func.isRequired,
+    setShareModal: PropTypes.func.isRequired,
+    shareData: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    forestAtlasLink: PropTypes.object,
+    sentence: PropTypes.object,
+    downloadLink: PropTypes.string,
+    selectorMeta: PropTypes.object,
+    loggedIn: PropTypes.bool,
+    shareMeta: PropTypes.string,
+    setSaveAOISettings: PropTypes.func
+  };
+
   render() {
     const {
       className,
@@ -27,7 +48,10 @@ class Header extends PureComponent {
       forestAtlasLink,
       sentence,
       downloadLink,
-      selectorMeta
+      selectorMeta,
+      loggedIn,
+      shareMeta,
+      setSaveAOISettings
     } = this.props;
     const isCountryDashboard =
       location.type === 'country' || location.type === 'global';
@@ -38,13 +62,15 @@ class Header extends PureComponent {
         <div className="share-buttons">
           <Button
             className="theme-button-small"
-            onClick={() => setShareModal(shareData)}
-            tooltip={{
-              text: 'Share this page',
-              position: 'bottom'
+            onClick={() => {
+              if (location.type === 'aoi' && !loggedIn) {
+                setSaveAOISettings({ open: true });
+              } else {
+                setShareModal(shareData);
+              }
             }}
           >
-            SHARE
+            {shareMeta}
           </Button>
           <Button
             className="theme-button-medium theme-button-clear square"
@@ -63,7 +89,7 @@ class Header extends PureComponent {
           <div className="columns small-12 medium-10">
             <div className="select-container">
               {!location.adm0 && <h3>{location.type || 'Global'}</h3>}
-              {adm0s && (
+              {loggedIn && adm0s ? (
                 <Dropdown
                   theme="theme-dropdown-dark"
                   placeholder={`Select ${selectorMeta.typeVerb}`}
@@ -85,6 +111,8 @@ class Header extends PureComponent {
                   arrowPosition="left"
                   clearable={isCountryDashboard}
                 />
+              ) : (
+                <h1>{locationNames.adm0 && locationNames.adm0.label}</h1>
               )}
               {isCountryDashboard &&
                 location.adm0 &&
@@ -164,26 +192,10 @@ class Header extends PureComponent {
             </div>
           </div>
         </div>
+        <SaveAOIModal />
       </div>
     );
   }
 }
-
-Header.propTypes = {
-  className: PropTypes.string,
-  loading: PropTypes.bool,
-  locationNames: PropTypes.object.isRequired,
-  adm0s: PropTypes.array,
-  adm1s: PropTypes.array,
-  adm2s: PropTypes.array,
-  handleLocationChange: PropTypes.func.isRequired,
-  setShareModal: PropTypes.func.isRequired,
-  shareData: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  forestAtlasLink: PropTypes.object,
-  sentence: PropTypes.object,
-  downloadLink: PropTypes.string,
-  selectorMeta: PropTypes.object
-};
 
 export default Header;

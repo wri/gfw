@@ -30,6 +30,21 @@ import MapControlButtons from './components/map-controls';
 import './styles.scss';
 
 class MainMapComponent extends PureComponent {
+  static propTypes = {
+    handleShowTooltip: PropTypes.func,
+    onDrawComplete: PropTypes.func,
+    handleClickAnalysis: PropTypes.func,
+    handleClickMap: PropTypes.func,
+    oneClickAnalysis: PropTypes.bool,
+    hidePanels: PropTypes.bool,
+    embed: PropTypes.bool,
+    recentActive: PropTypes.bool,
+    tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    showTooltip: PropTypes.bool,
+    setMainMapAnalysisView: PropTypes.func,
+    loggedIn: PropTypes.bool
+  };
+
   renderInfoTooltip = string => (
     <div>
       <p className="tooltip-info">{string}</p>
@@ -48,7 +63,8 @@ class MainMapComponent extends PureComponent {
       recentActive,
       handleClickAnalysis,
       setMainMapAnalysisView,
-      onDrawComplete
+      onDrawComplete,
+      loggedIn
     } = this.props;
 
     return (
@@ -100,6 +116,7 @@ class MainMapComponent extends PureComponent {
               <DataAnalysisMenu
                 className="data-analysis-menu"
                 embed={embed}
+                loggedIn={loggedIn}
               />
             )}
             {!embed && (
@@ -134,19 +151,5 @@ class MainMapComponent extends PureComponent {
     );
   }
 }
-
-MainMapComponent.propTypes = {
-  handleShowTooltip: PropTypes.func,
-  onDrawComplete: PropTypes.func,
-  handleClickAnalysis: PropTypes.func,
-  handleClickMap: PropTypes.func,
-  oneClickAnalysis: PropTypes.bool,
-  hidePanels: PropTypes.bool,
-  embed: PropTypes.bool,
-  recentActive: PropTypes.bool,
-  tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  showTooltip: PropTypes.bool,
-  setMainMapAnalysisView: PropTypes.func
-};
 
 export default MainMapComponent;

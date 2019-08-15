@@ -1,10 +1,16 @@
 import axios from 'axios';
 
 const REQUEST_URL = `${process.env.GFW_API}/v2/area`;
+const ADMIN_TOKEN = process.env.DEMO_USER_TOKEN;
 
 export const getAreasProvider = () =>
   axios.get(REQUEST_URL, {
     withCredentials: true
+  });
+
+export const getAreaProvider = id =>
+  axios.get(`${REQUEST_URL}/${id}`, {
+    headers: { Authorization: 'Bearer '.concat(ADMIN_TOKEN) }
   });
 
 export const setAreasProvider = (body, method) => {

@@ -9,6 +9,19 @@ import SubNavMenu from 'components/subnav-menu';
 import './styles.scss';
 
 class DataAnalysisMenu extends PureComponent {
+  static propTypes = {
+    showAnalysis: PropTypes.bool,
+    hidden: PropTypes.bool,
+    className: PropTypes.string,
+    menuSection: PropTypes.object,
+    links: PropTypes.array,
+    setMainMapSettings: PropTypes.func,
+    setMapSettings: PropTypes.func,
+    clearAnalysisError: PropTypes.func,
+    embed: PropTypes.bool,
+    loggedIn: PropTypes.bool
+  };
+
   getLinks = () => {
     const {
       links,
@@ -35,7 +48,14 @@ class DataAnalysisMenu extends PureComponent {
   };
 
   render() {
-    const { className, showAnalysis, menuSection, hidden, embed } = this.props;
+    const {
+      className,
+      showAnalysis,
+      menuSection,
+      hidden,
+      embed,
+      loggedIn
+    } = this.props;
 
     return (
       <div
@@ -55,7 +75,10 @@ class DataAnalysisMenu extends PureComponent {
           checkActive
         />
         {!hidden && !showAnalysis && <MapLegend className="map-legend" />}
-        {!hidden && showAnalysis && <Analysis className="map-analysis" />}
+        {!hidden &&
+          showAnalysis && (
+          <Analysis className="map-analysis" loggedIn={loggedIn} />
+        )}
       </div>
     );
   }
@@ -63,18 +86,6 @@ class DataAnalysisMenu extends PureComponent {
 
 DataAnalysisMenu.defaultProps = {
   tab: 'data'
-};
-
-DataAnalysisMenu.propTypes = {
-  showAnalysis: PropTypes.bool,
-  hidden: PropTypes.bool,
-  className: PropTypes.string,
-  menuSection: PropTypes.object,
-  links: PropTypes.array,
-  setMainMapSettings: PropTypes.func,
-  setMapSettings: PropTypes.func,
-  clearAnalysisError: PropTypes.func,
-  embed: PropTypes.bool
 };
 
 export default DataAnalysisMenu;

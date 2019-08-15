@@ -11,6 +11,25 @@ import ShowAnalysis from 'components/analysis/components/show-analysis';
 import './styles.scss';
 
 class AnalysisComponent extends PureComponent {
+  static propTypes = {
+    clearAnalysis: PropTypes.func,
+    className: PropTypes.string,
+    endpoints: PropTypes.array,
+    widgetLayers: PropTypes.array,
+    loading: PropTypes.bool,
+    location: PropTypes.object,
+    activeArea: PropTypes.object,
+    goToDashboard: PropTypes.func,
+    error: PropTypes.string,
+    handleCancelAnalysis: PropTypes.func,
+    handleFetchAnalysis: PropTypes.func,
+    embed: PropTypes.bool,
+    setSubscribeSettings: PropTypes.func,
+    setSaveAOISettings: PropTypes.func,
+    setShareModal: PropTypes.func,
+    loggedIn: PropTypes.bool
+  };
+
   render() {
     const {
       className,
@@ -26,7 +45,8 @@ class AnalysisComponent extends PureComponent {
       endpoints,
       widgetLayers,
       embed,
-      setShareModal
+      setShareModal,
+      loggedIn
     } = this.props;
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
@@ -103,16 +123,16 @@ class AnalysisComponent extends PureComponent {
                   DASHBOARD
               </Button>
             )}
-            {activeArea ? (
-              <div className="analysis-buttons">
-                <Button
-                  className="analysis-btn dashboard"
-                  theme="theme-button-light"
-                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
-                  tooltip={{ text: 'Go to Areas of Interest dashboard' }}
-                >
-                    DASHBOARD
-                </Button>
+            <div className="analysis-buttons">
+              <Button
+                className="analysis-btn dashboard"
+                theme="theme-button-light"
+                link={activeArea && `/dashboards/aoi/${activeArea.id}`}
+                tooltip={{ text: 'Go to Areas of Interest dashboard' }}
+              >
+                  DASHBOARD
+              </Button>
+              {loggedIn && activeArea ? (
                 <Button
                   className="analysis-btn dashboard"
                   onClick={() =>
@@ -134,40 +154,22 @@ class AnalysisComponent extends PureComponent {
                 >
                     Share area
                 </Button>
-              </div>
-            ) : (
-              <Button
-                className="analysis-action-btn subscribe-btn"
-                onClick={() => {
-                  setSaveAOISettings({ open: true });
-                }}
-              >
-                  SAVE IN MY GFW
-              </Button>
-            )}
+              ) : (
+                <Button
+                  className="analysis-action-btn subscribe-btn"
+                  onClick={() => {
+                    setSaveAOISettings({ open: true });
+                  }}
+                >
+                    SAVE IN MY GFW
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </Fragment>
     );
   }
 }
-
-AnalysisComponent.propTypes = {
-  clearAnalysis: PropTypes.func,
-  className: PropTypes.string,
-  endpoints: PropTypes.array,
-  widgetLayers: PropTypes.array,
-  loading: PropTypes.bool,
-  location: PropTypes.object,
-  activeArea: PropTypes.object,
-  goToDashboard: PropTypes.func,
-  error: PropTypes.string,
-  handleCancelAnalysis: PropTypes.func,
-  handleFetchAnalysis: PropTypes.func,
-  embed: PropTypes.bool,
-  setSubscribeSettings: PropTypes.func,
-  setSaveAOISettings: PropTypes.func,
-  setShareModal: PropTypes.func
-};
 
 export default AnalysisComponent;

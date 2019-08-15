@@ -30,9 +30,14 @@ export const selectData = state => state.header && state.header.data;
 export const selectSettings = state => state.header && state.header.settings;
 export const selectSentences = state =>
   (state.header && state.header.config.sentences) || null;
-export const selectAreas = state => state && state.areas && state.areas.data;
+export const selectAreas = state =>
+  state &&
+  state.areas &&
+  state.areas.data &&
+  state.areas.data.filter(a => !a.notUserArea);
 export const selectGeodescriber = state =>
   state && state.geostore && state.geostore.data.geodescriber;
+export const selectLoggedIn = (state, { loggedIn }) => loggedIn;
 
 export const getAreasOptions = createSelector([selectAreas], areas => {
   if (!areas) return null;
@@ -136,6 +141,19 @@ export const getSelectorMeta = createSelector([selectLocation], location => {
   };
 });
 
+export const getShareMeta = createSelector(
+  [selectLocation, selectLoggedIn],
+  (location, loggedIn) => {
+    if (location.type === 'aoi' && loggedIn) {
+      return 'share this area';
+    } else if (location.type === 'aoi') {
+      return 'save to my gfw';
+    }
+
+    return 'share dashboard';
+  }
+);
+
 export const getHeaderProps = createStructuredSelector({
   loading: selectLoading,
   error: selectError,
@@ -149,5 +167,6 @@ export const getHeaderProps = createStructuredSelector({
   shareData: getShareData,
   sentence: getGeodescriberDescription,
   locationNames: getAdminsSelected,
-  selectorMeta: getSelectorMeta
+  selectorMeta: getSelectorMeta,
+  shareMeta: getShareMeta
 });
