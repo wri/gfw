@@ -18,7 +18,6 @@ import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import Tip from 'components/ui/tip';
-import SubscribeModal from 'components/modals/subscribe';
 import SaveAOIModal from 'components/modals/save-aoi';
 import MapPrompts from 'components/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
@@ -123,7 +122,6 @@ class MainMapComponent extends PureComponent {
               />
             )}
             <RecentImagery active={recentActive} />
-            <SubscribeModal />
             {!embed &&
               isDesktop && (
               <Fragment>
