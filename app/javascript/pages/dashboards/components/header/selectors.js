@@ -3,6 +3,7 @@ import upperFirst from 'lodash/upperFirst';
 import { deburrUpper } from 'utils/data';
 
 import { getGeodescriberDescription } from 'providers/geodescriber-provider/selectors';
+import { getAllAreas } from 'providers/areas-provider/selectors';
 
 // get list data
 export const selectLocation = state =>
@@ -27,11 +28,10 @@ export const selectCountryData = state =>
     adm2: state.countryData.subRegions,
     links: state.countryData.countryLinks
   };
-export const selectAreas = state => state && state.areas && state.areas.data;
 export const selectGeodescriber = state =>
   state && state.geostore && state.geostore.data.geodescriber;
 
-export const getAreasOptions = createSelector([selectAreas], areas => {
+export const getAreasOptions = createSelector([getAllAreas], areas => {
   if (!areas) return null;
   return {
     adm0: areas.filter(a => !a.notUserArea).map(a => ({
@@ -42,7 +42,7 @@ export const getAreasOptions = createSelector([selectAreas], areas => {
 });
 
 export const getActiveArea = createSelector(
-  [selectAreas, selectLocation],
+  [getAllAreas, selectLocation],
   (aois, location) => {
     if (!aois) return null;
     return aois.find(a => a.id === location.adm0);

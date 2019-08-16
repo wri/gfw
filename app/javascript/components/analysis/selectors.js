@@ -6,6 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { getAllAreas } from 'providers/areas-provider/selectors';
 import { locationLevelToStr } from 'utils/format';
 
 import { initialState } from './reducers';
@@ -26,7 +27,6 @@ const selectEmbed = state =>
   state.location.pathname.includes('/embed');
 const selectError = state => state.analysis && state.analysis.error;
 const selectDatasets = state => state.datasets && state.datasets.data;
-const selectAreas = state => state.areas && state.areas.data;
 
 export const getLoading = createSelector(
   [
@@ -107,7 +107,7 @@ export const getWidgetLayers = createSelector(
 );
 
 export const getActiveArea = createSelector(
-  [selectAreas, selectLocation],
+  [getAllAreas, selectLocation],
   (aois, location) => {
     if (!aois) return null;
     return aois.find(a => a.id === location.adm0);
@@ -208,6 +208,6 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation,
-  aois: selectAreas,
+  aois: getAllAreas,
   activeArea: getActiveArea
 });

@@ -22,7 +22,8 @@ export const getAreas = createThunkAction(
               setAreas(
                 data.map(d => ({
                   id: d.id,
-                  ...d.attributes
+                  ...d.attributes,
+                  userArea: true
                 }))
               )
             );
@@ -32,8 +33,7 @@ export const getAreas = createThunkAction(
                 dispatch(
                   setArea({
                     id: areaData.id,
-                    ...areaData.attributes,
-                    notUserArea: true
+                    ...areaData.attributes
                   })
                 );
                 dispatch(setAreasLoading(false));
@@ -55,8 +55,9 @@ export const getAreas = createThunkAction(
 export const getArea = createThunkAction(
   'getArea',
   id => (dispatch, getState) => {
-    const { areas } = getState();
+    const { areas, myGfw } = getState();
     if (areas && !areas.loading) {
+      const { data: userData } = myGfw || {};
       dispatch(setAreasLoading(true));
       getAreaProvider(id)
         .then(response => {
@@ -66,7 +67,7 @@ export const getArea = createThunkAction(
               setArea({
                 id: data.id,
                 ...data.attributes,
-                notUserArea: true
+                userArea: userData && userData.id === data.attributes.userId
               })
             );
           }

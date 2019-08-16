@@ -6,17 +6,11 @@ import reducerRegistry from 'app/registry';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
-
-const mapStateToProps = ({ areas, myGfw, location }) => ({
-  data: areas && areas.data,
-  loading: areas && areas.loading,
-  loggedIn: !!myGfw && !isEmpty(myGfw.data),
-  location: location && location.payload
-});
+import { getAreasProps } from './selectors';
 
 class AreasProvider extends PureComponent {
   static propTypes = {
-    data: PropTypes.array,
+    areas: PropTypes.array,
     getAreas: PropTypes.func.isRequired,
     getArea: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool,
@@ -25,8 +19,15 @@ class AreasProvider extends PureComponent {
   };
 
   componentDidMount() {
-    const { getAreas, getArea, data, loggedIn, location, loading } = this.props;
-    if (!loading && isEmpty(data) && loggedIn) {
+    const {
+      getAreas,
+      getArea,
+      areas,
+      loggedIn,
+      location,
+      loading
+    } = this.props;
+    if (!loading && isEmpty(areas) && loggedIn) {
       getAreas();
     }
 
@@ -46,4 +47,4 @@ reducerRegistry.registerModule('areas', {
   initialState
 });
 
-export default connect(mapStateToProps, actions)(AreasProvider);
+export default connect(getAreasProps, actions)(AreasProvider);

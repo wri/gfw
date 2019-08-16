@@ -4,14 +4,14 @@ import flatMap from 'lodash/flatMap';
 import uniq from 'lodash/uniq';
 import sortBy from 'lodash/sortBy';
 
+import { getUserAreas } from 'providers/areas-provider/selectors';
+
 const selectLoading = state => state.mapMenu && state.mapMenu.loading;
 const selectLoggedIn = state => state.myGfw && !isEmpty(state.myGfw.data);
-const selectAreas = state =>
-  state.areas && sortBy(state.areas.data.filter(a => !a.notUserArea), 'name');
 const selectLocation = state => state.location && state.location.payload;
 
 export const getActiveArea = createSelector(
-  [selectLocation, selectAreas],
+  [selectLocation, getUserAreas],
   (location, areas) => {
     if (isEmpty(areas)) return null;
 
@@ -19,7 +19,7 @@ export const getActiveArea = createSelector(
   }
 );
 
-export const getTags = createSelector([selectAreas], areas => {
+export const getTags = createSelector([getUserAreas], areas => {
   if (isEmpty(areas)) return null;
 
   return sortBy(
@@ -35,7 +35,7 @@ export const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
   loggedIn: selectLoggedIn,
   location: selectLocation,
-  areas: selectAreas,
+  areas: getUserAreas,
   tags: getTags,
   activeArea: getActiveArea
 });

@@ -4,6 +4,7 @@ import { format } from 'd3-format';
 
 import { buildFullLocationName } from 'utils/format';
 import tropicalIsos from 'data/tropical-isos.json';
+import { getAllAreas } from 'providers/areas-provider/selectors';
 
 const adminSentences = {
   default:
@@ -35,10 +36,9 @@ export const selectCountryData = state =>
     adm1: state.countryData.regions,
     adm2: state.countryData.subRegions
   };
-export const selectAreas = state => state && state.areas && state.areas.data;
 
 export const getAreaName = createSelector(
-  [selectAreas, selectLocation],
+  [getAllAreas, selectLocation],
   (areas, location) => {
     if (!areas || !areas.length || location.type !== 'aoi') return null;
     const activeArea = areas.find(a => a.id === location.adm0);
