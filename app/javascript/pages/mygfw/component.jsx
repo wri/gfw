@@ -43,7 +43,18 @@ class MyGFWPage extends PureComponent {
             {loading && <Loader className="mygfw-loader" />}
             {!loggedIn &&
               !loading && (
-              <div className="column small-12 medium-6 medium-offset-3">
+              <div className="column small-12 medium-4 medium-offset-4">
+                <p className="login-intro">
+                    Login to manage your profile and areas of interest.
+                    Questions?{' '}
+                  <a
+                    href="mailto:gfw@wri.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                      Contact us
+                  </a>.
+                </p>
                 <MyGFWLogin />
               </div>
             )}

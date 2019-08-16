@@ -2,4 +2,13 @@
 
 .c-modal-save-aoi {
   min-height: rem(200px);
+
+  .save-aoi-body {
+    margin-bottom: rem(20px);
+  }
+
+  .login-intro {
+    margin-bottom: rem(20px);
+    max-width: rem(300px);
+  }
 }

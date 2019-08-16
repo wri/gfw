@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -52,7 +52,23 @@ class ModalSaveAOI extends PureComponent {
         <div className="c-modal-save-aoi">
           <div className="save-aoi-body">
             {loading && <Loader />}
-            {!loading && !loggedIn && <MyGFWLogin className="mygfw-save-aoi" />}
+            {!loading &&
+              !loggedIn && (
+              <Fragment>
+                <p className="login-intro">
+                    Login to manage your profile and areas of interest.
+                    Questions?{' '}
+                  <a
+                    href="mailto:gfw@wri.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                      Contact us
+                  </a>.
+                </p>
+                <MyGFWLogin className="mygfw-save-aoi" />
+              </Fragment>
+            )}
             {!loading &&
               loggedIn && (
               <SaveAOIForm
