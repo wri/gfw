@@ -15,8 +15,7 @@ class GeodescriberProvider extends PureComponent {
     getAdminGeodescriber: PropTypes.func,
     geojson: PropTypes.object,
     location: PropTypes.object,
-    loading: PropTypes.bool,
-    lang: PropTypes.string
+    loading: PropTypes.bool
   };
 
   componentDidMount() {
@@ -32,17 +31,13 @@ class GeodescriberProvider extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { loading, geojson, location, lang } = this.props;
-    const {
-      geojson: prevGeojosn,
-      location: prevLocation,
-      lang: prevLang
-    } = prevProps;
+    const { loading, geojson, location } = this.props;
+    const { geojson: prevGeojosn, location: prevLocation } = prevProps;
 
     if (
       !loading &&
       !['global', 'country'].includes(location.type) &&
-      ((geojson && !isEqual(geojson, prevGeojosn)) || !isEqual(lang, prevLang))
+      (geojson && !isEqual(geojson, prevGeojosn))
     ) {
       this.handleGetGeodescriber();
     }
@@ -57,12 +52,16 @@ class GeodescriberProvider extends PureComponent {
   }
 
   handleGetGeodescriber = () => {
-    const { lang, geojson, getGeodescriber } = this.props;
+    const { geojson, getGeodescriber } = this.props;
     this.cancelGeodescriberFetch();
     this.geodescriberFetch = CancelToken.source();
 
     if (geojson) {
-      getGeodescriber({ geojson, token: this.geodescriberFetch.token, lang });
+      getGeodescriber({
+        geojson,
+        token: this.geodescriberFetch.token,
+        lang: 'en'
+      });
     }
   };
 

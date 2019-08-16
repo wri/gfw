@@ -41,6 +41,7 @@ export const getGeostoreKey = geojson => {
 };
 
 export const getGeodescriberService = ({ geojson, lang, token }) =>
+  // for now we are forcing english until API works
   axios.post(
     `${REQUEST_URL}/geodescriber/geom?lang=${getGoogleLangCode(
       lang
