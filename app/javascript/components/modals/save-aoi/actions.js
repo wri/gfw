@@ -34,9 +34,8 @@ export const saveAOI = createThunkAction(
     changesEmail,
     monthlyEmail,
     receiveAlerts,
-    activeAreaId,
-    viewAfterSave,
-    method
+    activeArea,
+    viewAfterSave
   }) => (dispatch, getState) => {
     const { modalSaveAOI, location, geostore } = getState();
     if (modalSaveAOI && !modalSaveAOI.saving) {
@@ -46,11 +45,13 @@ export const saveAOI = createThunkAction(
       const { id: geostoreId } = geostoreData || {};
       const { payload: { type, adm0, adm1, adm2 } } = location || {};
       const isCountry = type === 'country';
+      const { id: activeAreaId, application } = activeArea || {};
+      const method = activeArea && activeArea.userArea ? 'patch' : 'post';
 
       const postData = {
         name,
         id: activeAreaId,
-        application: 'gfw',
+        application: application || 'fw',
         geostore: geostoreId,
         resource: {
           type: 'EMAIL',

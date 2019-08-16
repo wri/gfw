@@ -105,9 +105,9 @@ function SaveAOIForm(props) {
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
-    name: props.locationName,
+    name: props.locationName || '',
     tags: [],
-    email: props.email,
+    email: props.email || '',
     emailError: false,
     nameError: false,
     receiveAlerts: false,
@@ -152,12 +152,9 @@ function SaveAOIForm(props) {
           onClick={() =>
             saveAOI({
               ...form,
-              ...(activeArea && {
-                activeAreaId: activeArea.id
-              }),
+              activeArea,
               userData,
-              viewAfterSave,
-              method: activeArea && activeArea.userArea ? 'patch' : 'post'
+              viewAfterSave
             })
           }
           disabled={!canSubmit}
