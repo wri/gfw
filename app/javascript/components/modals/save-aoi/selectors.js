@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { getFullLocationName } from 'components/analysis/components/show-analysis/selectors';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
 import { initialState } from './reducers';
 
@@ -62,5 +62,5 @@ export const getModalAOIProps = createStructuredSelector({
   error: selectError,
   userData: selectUserData,
   location: selectLocation,
-  locationName: getFullLocationName
+  locationName: getGeodescriberTitleFull
 });

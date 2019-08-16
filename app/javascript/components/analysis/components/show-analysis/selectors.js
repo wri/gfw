@@ -3,7 +3,7 @@ import moment from 'moment';
 import flatMap from 'lodash/flatMap';
 import intersection from 'lodash/intersection';
 
-import { buildFullLocationName, locationLevelToStr } from 'utils/format';
+import { locationLevelToStr } from 'utils/format';
 
 import {
   getActiveLayers,
@@ -23,26 +23,6 @@ const lossID = 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6';
 const selectLocation = state => state.location && state.location.payload;
 const selectData = state => state.analysis && state.analysis.data;
 const selectError = state => state.analysis && state.analysis.error;
-const selectAdmins = state => state.countryData && state.countryData.countries;
-const selectAdmin1s = state => state.countryData && state.countryData.regions;
-const selectAdmin2s = state =>
-  state.countryData && state.countryData.subRegions;
-
-export const getFullLocationName = createSelector(
-  [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s, getActiveLayers],
-  (location, adm0s, adm1s, adm2s, layers) => {
-    if (location.type === 'use') {
-      const analysisLayer = layers.find(l => l.tableName === location.adm0);
-      return (analysisLayer && analysisLayer.name) || 'Area analysis';
-    }
-    if (location.type === 'geostore') return 'custom area analysis';
-    if (location.type === 'wdpa') return 'protected area analysis';
-    if (location.type === 'country') {
-      return buildFullLocationName(location, { adm0s, adm1s, adm2s });
-    }
-    return 'area analysis';
-  }
-);
 
 export const getDataFromLayers = createSelector(
   [getActiveLayers, selectData, selectLocation, getWidgetLayers],
@@ -220,7 +200,6 @@ export const getWidgetsWithLayerParams = createSelector(
 export const getShowAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
   loading: getLoading,
-  fullLocationName: getFullLocationName,
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,

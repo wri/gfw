@@ -116,6 +116,21 @@ export const getGeodescriberTitle = createSelector(
   }
 );
 
+export const getGeodescriberTitleFull = createSelector(
+  [getGeodescriberTitle],
+  title => {
+    if (isEmpty(title)) return null;
+
+    let sentence = title.sentence;
+    if (title.params) {
+      Object.keys(title.params).forEach(p => {
+        sentence = sentence.replace(`{${p}}`, title.params[p]);
+      });
+    }
+    return sentence;
+  }
+);
+
 export const getAdminDescription = createSelector(
   [getAdminsSelected, selectGeodescriber, selectLocation],
   (locationNames, data, locationObj) => {
