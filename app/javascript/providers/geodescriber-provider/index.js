@@ -19,47 +19,47 @@ class GeodescriberProvider extends PureComponent {
   };
 
   componentDidMount() {
-    const {
-      location,
-      loading,
-      geojson,
-      getGeodescriber,
-      getAdminGeodescriber
-    } = this.props;
+    const { location, loading, geojson } = this.props;
 
-    if (geojson && !loading && location.type !== 'country') {
-      getGeodescriber(geojson);
-    }
-
-    if (geojson && !loading && location.type === 'country') {
-      getAdminGeodescriber(geojson);
+    if (
+      !loading &&
+      ((location.type !== 'country' && geojson) ||
+        ['global', 'country'].includes(location.type))
+    ) {
+      this.handleGetGeodescriber();
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { loading, geojson } = this.props;
-    const { geojson: prevGeojosn } = prevProps;
+    const { loading, geojson, location } = this.props;
+    const { geojson: prevGeojosn, location: prevLocation } = prevProps;
 
-    if (!loading && geojson && !isEqual(geojson, prevGeojosn)) {
-      this.handleGetGeodescriber(geojson);
+    if (
+      !loading &&
+      ((geojson && !isEqual(geojson, prevGeojosn)) ||
+        (['global', 'country'].includes(location.type) &&
+          !isEqual(location, prevLocation)))
+    ) {
+      this.handleGetGeodescriber();
     }
   }
 
-  handleGetGeodescriber = geojson => {
+  handleGetGeodescriber = () => {
     const {
       location: { type },
+      geojson,
       getGeodescriber,
       getAdminGeodescriber
     } = this.props;
     this.cancelGeodescriberFetch();
     this.geodescriberFetch = CancelToken.source();
 
-    if (type === 'country') {
+    if (type === 'country' || type === 'global') {
       getAdminGeodescriber({
         ...location,
         token: this.geodescriberFetch.token
       });
-    } else {
+    } else if (geojson) {
       getGeodescriber({ geojson, token: this.geodescriberFetch.token });
     }
   };

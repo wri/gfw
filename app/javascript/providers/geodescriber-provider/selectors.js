@@ -102,7 +102,7 @@ export const getGeodescriberTitle = createSelector(
     }
 
     // if not an admin we can use geodescriber
-    if (location.type !== 'country') {
+    if (!['global', 'country'].includes(location.type)) {
       return {
         sentence: geodescriber.title,
         params: geodescriber.title_params
@@ -135,7 +135,7 @@ export const getAdminDescription = createSelector(
   [getAdminsSelected, selectGeodescriber, selectLocation],
   (locationNames, data, locationObj) => {
     if (
-      locationObj.type !== 'country' ||
+      !['global', 'country'].includes(locationObj.type) ||
       isEmpty(data) ||
       isEmpty(locationNames)
     ) {
@@ -215,7 +215,7 @@ export const getGeodescriberDescription = createSelector(
     if (isEmpty(geodescriber)) return {};
 
     // if not an admin we can use geodescriber
-    if (location.type !== 'country') {
+    if (!['global', 'country'].includes(location.type)) {
       return {
         sentence: geodescriber.description,
         params: geodescriber.description_params

@@ -8,19 +8,18 @@ import { getGeodescriberDescription } from 'providers/geodescriber-provider/sele
 export const selectLocation = state =>
   (state.location && state.location.payload) || null;
 export const selectLoading = state =>
-  state.header &&
   state.countryData &&
   state.areas &&
   state.geostore &&
   state.geodescriber &&
-  (state.header.loading ||
-    state.areas.loading ||
+  (state.areas.loading ||
     state.geostore.loading ||
     state.geodescriber.loading ||
     state.countryData.isCountriesLoading ||
     state.countryData.isRegionsLoading ||
     state.countryData.isSubRegionsLoading);
-export const selectError = state => state.header && state.header.error;
+export const selectError = state =>
+  state.geodescriber && state.geodescriber.error;
 export const selectCountryData = state =>
   state.countryData && {
     adm0: state.countryData.countries,
@@ -28,10 +27,6 @@ export const selectCountryData = state =>
     adm2: state.countryData.subRegions,
     links: state.countryData.countryLinks
   };
-export const selectData = state => state.header && state.header.data;
-export const selectSettings = state => state.header && state.header.settings;
-export const selectSentences = state =>
-  (state.header && state.header.config.sentences) || null;
 export const selectAreas = state => state && state.areas && state.areas.data;
 export const selectGeodescriber = state =>
   state && state.geostore && state.geostore.data.geodescriber;
@@ -175,7 +170,6 @@ export const getHeaderProps = createStructuredSelector({
   adm0s: getAdm0Data,
   adm1s: getAdm1Data,
   adm2s: getAdm2Data,
-  settings: selectSettings,
   downloadLink: getDownloadLink,
   forestAtlasLink: getForestAtlasLink,
   shareData: getShareData,
