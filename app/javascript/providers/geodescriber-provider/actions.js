@@ -16,11 +16,11 @@ export const clearGeodescriber = createAction('clearGeodescriber');
 
 export const getGeodescriber = createThunkAction(
   'getGeodescriber',
-  geojson => (dispatch, getState) => {
+  params => (dispatch, getState) => {
     const { geodescriber } = getState();
-    if (!isEmpty(geojson) && geodescriber && !geodescriber.loading) {
+    if (!isEmpty(params) && geodescriber && !geodescriber.loading) {
       dispatch(setGeodescriberLoading({ loading: true, error: false }));
-      getGeodescriberService(geojson)
+      getGeodescriberService(params)
         .then(response => {
           dispatch(setGeodescriber(response.data.data));
         })

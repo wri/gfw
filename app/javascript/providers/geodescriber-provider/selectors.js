@@ -36,6 +36,13 @@ export const selectCountryData = state =>
     adm1: state.countryData.regions,
     adm2: state.countryData.subRegions
   };
+const selectActiveLang = state =>
+  (state.location &&
+    state.location &&
+    state.location.query &&
+    state.location.query.lang) ||
+  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
+  'en';
 
 export const getAreaName = createSelector(
   [getAllAreas, selectLocation],
@@ -230,5 +237,6 @@ export const getGeodescriberDescription = createSelector(
 export const getGeodescriberProps = createStructuredSelector({
   loading: selectLoading,
   location: selectLocation,
-  geojson: selectGeojson
+  geojson: selectGeojson,
+  lang: selectActiveLang
 });

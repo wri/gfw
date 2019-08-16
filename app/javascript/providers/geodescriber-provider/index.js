@@ -15,58 +15,77 @@ class GeodescriberProvider extends PureComponent {
     getAdminGeodescriber: PropTypes.func,
     geojson: PropTypes.object,
     location: PropTypes.object,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    lang: PropTypes.string
   };
 
   componentDidMount() {
     const { location, loading, geojson } = this.props;
 
-    if (
-      !loading &&
-      ((location.type !== 'country' && geojson) ||
-        ['global', 'country'].includes(location.type))
-    ) {
+    if (!loading && !['global', 'country'].includes(location.type) && geojson) {
       this.handleGetGeodescriber();
+    }
+
+    if (!loading && ['global', 'country'].includes(location.type)) {
+      this.handleGetAdminGeodescriber();
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { loading, geojson, location } = this.props;
-    const { geojson: prevGeojosn, location: prevLocation } = prevProps;
+    const { loading, geojson, location, lang } = this.props;
+    const {
+      geojson: prevGeojosn,
+      location: prevLocation,
+      lang: prevLang
+    } = prevProps;
 
     if (
       !loading &&
-      ((geojson && !isEqual(geojson, prevGeojosn)) ||
-        (['global', 'country'].includes(location.type) &&
-          !isEqual(location, prevLocation)))
+      !['global', 'country'].includes(location.type) &&
+      ((geojson && !isEqual(geojson, prevGeojosn)) || !isEqual(lang, prevLang))
     ) {
       this.handleGetGeodescriber();
+    }
+
+    if (
+      !loading &&
+      ['global', 'country'].includes(location.type) &&
+      !isEqual(location, prevLocation)
+    ) {
+      this.handleGetAdminGeodescriber();
     }
   }
 
   handleGetGeodescriber = () => {
-    const {
-      location: { type },
-      geojson,
-      getGeodescriber,
-      getAdminGeodescriber
-    } = this.props;
+    const { lang, geojson, getGeodescriber } = this.props;
     this.cancelGeodescriberFetch();
     this.geodescriberFetch = CancelToken.source();
 
-    if (type === 'country' || type === 'global') {
-      getAdminGeodescriber({
-        ...location,
-        token: this.geodescriberFetch.token
-      });
-    } else if (geojson) {
-      getGeodescriber({ geojson, token: this.geodescriberFetch.token });
+    if (geojson) {
+      getGeodescriber({ geojson, token: this.geodescriberFetch.token, lang });
     }
+  };
+
+  handleGetAdminGeodescriber = () => {
+    const { getAdminGeodescriber } = this.props;
+    this.cancelAdminGeodescriberFetch();
+    this.adminGeodescriberFetch = CancelToken.source();
+
+    getAdminGeodescriber({
+      ...location,
+      token: this.geodescriberFetch.token
+    });
   };
 
   cancelGeodescriberFetch = () => {
     if (this.geodescriberFetch) {
       this.geodescriberFetch.cancel();
+    }
+  };
+
+  cancelAdminGeodescriberFetch = () => {
+    if (this.adminGeodescriberFetch) {
+      this.adminGeodescriberFetch.cancel();
     }
   };
 
