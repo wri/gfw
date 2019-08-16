@@ -51,7 +51,7 @@ export const saveAOI = createThunkAction(
       const postData = {
         name,
         id: activeAreaId,
-        application: application || 'fw',
+        application: application || 'gfw',
         geostore: geostoreId,
         resource: {
           type: 'EMAIL',
