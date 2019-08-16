@@ -67,7 +67,8 @@ export const saveAOI = createThunkAction(
         changesEmail,
         monthlyEmail,
         receiveAlerts,
-        tags
+        tags,
+        public: true
       };
 
       setAreasProvider(postData, method)
