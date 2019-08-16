@@ -73,7 +73,7 @@ class GeodescriberProvider extends PureComponent {
 
     getAdminGeodescriber({
       ...location,
-      token: this.geodescriberFetch.token
+      token: this.adminGeodescriberFetch.token
     });
   };
 
