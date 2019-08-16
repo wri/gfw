@@ -27,6 +27,7 @@ class Widget extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const { active, settings, config } = this.props;
+
     if (active) {
       const mapSyncKeys = [
         'startYear',

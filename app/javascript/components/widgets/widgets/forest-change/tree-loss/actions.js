@@ -17,7 +17,7 @@ export const getDataAPI = ({ params }) =>
       lossData &&
       Object.keys(lossData).map(d => ({
         area: lossData[d],
-        year: d
+        year: parseInt(d, 10)
       }));
     const extent = data.attributes.treeExtent;
 
@@ -30,7 +30,9 @@ export const getDataAPI = ({ params }) =>
 export default ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};
 
-  if (params.type !== 'country' && params.type !== 'global') { return getDataAPI({ params }); }
+  if (params.type !== 'country' && params.type !== 'global') {
+    return getDataAPI({ params });
+  }
 
   const globalLocation = {
     adm0: params.type === 'global' ? null : adm0,
@@ -50,6 +52,7 @@ export default ({ params }) => {
           extent: (loss.data.data && extent.data.data[0].extent) || 0
         };
       }
+
       return data;
     })
   );
