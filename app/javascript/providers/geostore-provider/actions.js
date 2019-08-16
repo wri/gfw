@@ -1,19 +1,15 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import {
-  getGeostoreProvider,
-  getGeostoreKey,
-  getGeoDescriber
-} from 'services/geostore';
+import { getGeostoreProvider, getGeostoreKey } from 'services/geostore';
 import { getBoxBounds, getLeafletBbox } from 'utils/geoms';
 
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
 export const clearGeostore = createAction('clearGeostore');
-export const setGeoDescriber = createAction('setGeoDescriber');
 
 export const getGeostore = createThunkAction(
   'getGeostore',
-  ({ type, adm0, adm1, adm2, token }) => (dispatch, getState) => {
+  params => (dispatch, getState) => {
+    const { type, adm0, adm1, adm2, token } = params;
     const { geostore } = getState();
     if (geostore && !geostore.loading) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
@@ -30,13 +26,6 @@ export const getGeostore = createThunkAction(
                 bounds: getBoxBounds(bbox, adm0, adm1)
               })
             );
-            if (type === 'geostore') {
-              getGeoDescriber(rest.geojson).then(geodescriber => {
-                dispatch(setGeoDescriber(geodescriber.data.data));
-              });
-            } else {
-              dispatch(setGeostoreLoading({ loading: false, error: false }));
-            }
           }
         })
         .catch(error => {

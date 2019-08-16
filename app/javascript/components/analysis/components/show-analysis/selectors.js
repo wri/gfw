@@ -3,11 +3,7 @@ import moment from 'moment';
 import flatMap from 'lodash/flatMap';
 import intersection from 'lodash/intersection';
 
-import {
-  buildLocationName,
-  buildFullLocationName,
-  locationLevelToStr
-} from 'utils/format';
+import { buildFullLocationName, locationLevelToStr } from 'utils/format';
 
 import {
   getActiveLayers,
@@ -16,6 +12,10 @@ import {
 } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { getWidgetLayers, getLoading } from 'components/analysis/selectors';
+import {
+  getGeodescriberTitle,
+  getGeodescriberDescription
+} from 'providers/geodescriber-provider/selectors';
 
 const gainID = '3b22a574-2507-4b4a-a247-80057c1a1ad4';
 const lossID = 'c3075c5a-5567-4b09-bc0d-96ed1673f8b6';
@@ -27,18 +27,6 @@ const selectAdmins = state => state.countryData && state.countryData.countries;
 const selectAdmin1s = state => state.countryData && state.countryData.regions;
 const selectAdmin2s = state =>
   state.countryData && state.countryData.subRegions;
-const selectGeostore = state => state.geostore && state.geostore.data;
-
-export const getLocationName = createSelector(
-  [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s],
-  (location, adms, adm1s, adm2s) => {
-    if (location.type === 'geostore') return 'custom area analysis';
-    if (location.type === 'country') {
-      return buildLocationName(location, { adms, adm1s, adm2s });
-    }
-    return '';
-  }
-);
 
 export const getFullLocationName = createSelector(
   [selectLocation, selectAdmins, selectAdmin1s, selectAdmin2s, getActiveLayers],
@@ -57,74 +45,55 @@ export const getFullLocationName = createSelector(
 );
 
 export const getDataFromLayers = createSelector(
-  [
-    getActiveLayers,
-    selectData,
-    getLocationName,
-    selectLocation,
-    getWidgetLayers,
-    selectGeostore
-  ],
-  (layers, data, locationName, location, widgetLayers, geostore) => {
+  [getActiveLayers, selectData, selectLocation, getWidgetLayers],
+  (layers, data, location, widgetLayers) => {
     if (!layers || !layers.length) return null;
 
     const { type } = location;
     const routeType = type === 'country' ? 'admin' : type;
-    const { areaHa } = geostore;
     const admLevel = locationLevelToStr(location);
 
-    return [
-      {
-        label:
-          location.type !== 'geostore'
-            ? `${locationName} total area`
-            : 'selected area',
-        value: areaHa || 0,
-        unit: 'ha'
-      }
-    ].concat(
-      layers
-        .filter(
-          l =>
-            !l.isBoundary &&
-            !l.isRecentImagery &&
-            l.analysisConfig &&
-            !widgetLayers.includes(l.id) &&
-            (!l.admLevels || l.admLevels.includes(admLevel))
-        )
-        .map(l => {
-          let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
-          if (!analysisConfig) {
-            analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
-          }
-          const { subKey, key, keys, service, unit, dateFormat } =
-            analysisConfig || {};
-          const dataByService = data[service] || {};
-          const value = subKey
-            ? dataByService[key] && dataByService[key][subKey]
-            : dataByService[key];
-          const { params, decodeParams } = l;
+    return layers
+      .filter(
+        l =>
+          !l.isBoundary &&
+          !l.isRecentImagery &&
+          l.analysisConfig &&
+          !widgetLayers.includes(l.id) &&
+          (!l.admLevels || l.admLevels.includes(admLevel))
+      )
+      .map(l => {
+        let analysisConfig = l.analysisConfig.find(a => a.type === routeType);
+        if (!analysisConfig) {
+          analysisConfig = l.analysisConfig.find(a => a.type === 'geostore');
+        }
+        const { subKey, key, keys, service, unit, dateFormat } =
+          analysisConfig || {};
+        const dataByService = data[service] || {};
+        const value = subKey
+          ? dataByService[key] && dataByService[key][subKey]
+          : dataByService[key];
+        const { params, decodeParams } = l;
 
-          const keysValue =
-            keys &&
-            keys.map(k => ({
-              label: k.title,
-              value: dataByService[k.key],
-              unit: k.unit
-            }));
+        const keysValue =
+          keys &&
+          keys.map(k => ({
+            label: k.title,
+            value: dataByService[k.key],
+            unit: k.unit
+          }));
 
-          return {
-            label: l.name,
-            value: keysValue || value || 0,
-            downloadUrls: dataByService && dataByService.downloadUrls,
-            unit,
-            dateFormat,
-            color: l.color,
-            ...params,
-            ...decodeParams
-          };
-        })
-    );
+        return {
+          label: l.name,
+          value: keysValue || value || 0,
+          downloadUrls: dataByService && dataByService.downloadUrls,
+          unit,
+          dateFormat,
+          color: l.color,
+          ...params,
+          ...decodeParams
+        };
+      });
   }
 );
 
@@ -251,12 +220,13 @@ export const getWidgetsWithLayerParams = createSelector(
 export const getShowAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
   loading: getLoading,
-  locationName: getLocationName,
   fullLocationName: getFullLocationName,
   layers: getActiveLayers,
   downloadUrls: getDownloadLinks,
   error: selectError,
   showAnalysisDisclaimer,
   widgets: getWidgetsWithLayerParams,
-  zoomLevel: getMapZoom
+  zoomLevel: getMapZoom,
+  analysisTitle: getGeodescriberTitle,
+  analysisDescription: getGeodescriberDescription
 });

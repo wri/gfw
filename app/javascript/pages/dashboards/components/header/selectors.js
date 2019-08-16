@@ -1,25 +1,25 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
-import { format } from 'd3-format';
 import upperFirst from 'lodash/upperFirst';
 import { deburrUpper } from 'utils/data';
-import tropicalIsos from 'data/tropical-isos.json';
+
+import { getGeodescriberDescription } from 'providers/geodescriber-provider/selectors';
 
 // get list data
 export const selectLocation = state =>
   (state.location && state.location.payload) || null;
 export const selectLoading = state =>
-  state.header &&
   state.countryData &&
   state.areas &&
   state.geostore &&
-  (state.header.loading ||
-    state.areas.loading ||
+  state.geodescriber &&
+  (state.areas.loading ||
     state.geostore.loading ||
+    state.geodescriber.loading ||
     state.countryData.isCountriesLoading ||
     state.countryData.isRegionsLoading ||
     state.countryData.isSubRegionsLoading);
-export const selectError = state => state.header && state.header.error;
+export const selectError = state =>
+  state.geodescriber && state.geodescriber.error;
 export const selectCountryData = state =>
   state.countryData && {
     adm0: state.countryData.countries,
@@ -27,10 +27,6 @@ export const selectCountryData = state =>
     adm2: state.countryData.subRegions,
     links: state.countryData.countryLinks
   };
-export const selectData = state => state.header && state.header.data;
-export const selectSettings = state => state.header && state.header.settings;
-export const selectSentences = state =>
-  (state.header && state.header.config.sentences) || null;
 export const selectAreas = state => state && state.areas && state.areas.data;
 export const selectGeodescriber = state =>
   state && state.geostore && state.geostore.data.geodescriber;
@@ -122,87 +118,6 @@ export const getShareData = createSelector(
   })
 );
 
-export const getSentence = createSelector(
-  [
-    getAdminsSelected,
-    selectData,
-    selectSentences,
-    selectLocation,
-    selectGeodescriber
-  ],
-  (locationNames, data, sentences, locationObj, geoDescriber) => {
-    if (locationObj && locationObj.type === 'aoi' && geoDescriber) {
-      return {
-        sentence: geoDescriber.description,
-        params: geoDescriber.description_params
-      };
-    }
-    if (isEmpty(data) || isEmpty(locationNames)) return {};
-    const {
-      withLoss,
-      withPlantationLoss,
-      globalInitial,
-      countrySpecific,
-      co2Emissions,
-      end
-    } = sentences;
-    const extent =
-      data.extent < 1 ? format('.3r')(data.extent) : format('.3s')(data.extent);
-    const naturalForest =
-      data.extent - data.plantationsExtent < 1
-        ? format('.3r')(data.extent - data.plantationsExtent)
-        : format('.3s')(data.extent - data.plantationsExtent);
-    const percentageCover = format('.2r')(data.extent / data.totalArea * 100);
-    const percentageNatForest = format('.2r')(
-      (data.extent - data.plantationsExtent) / data.totalArea * 100
-    );
-    const lossWithoutPlantations = format('.3s')(
-      data.totalLoss.area - (data.plantationsLoss.area || 0)
-    );
-    const emissionsWithoutPlantations = format('.3s')(
-      data.totalLoss.emissions - (data.plantationsLoss.emissions || 0)
-    );
-    const emissions = format('.3s')(data.totalLoss.emissions);
-    const primaryLoss = format('.3s')(data.primaryLoss.area || 0);
-    const loss = format('.3s')(data.totalLoss.area || 0);
-    const location = locationNames && locationNames.label;
-    const { adm0 } = locationObj || {};
-
-    const params = {
-      extent: `${extent}ha`,
-      naturalForest: `${naturalForest}ha`,
-      location: location || 'the world',
-      percentage: `${percentageCover}%`,
-      percentageNatForest: `${percentageNatForest}%`,
-      naturalLoss: `${lossWithoutPlantations}ha`,
-      loss: `${loss}ha`,
-      emission: `${emissionsWithoutPlantations}t`,
-      emissionsTreeCover: `${emissions}t`,
-      year: data.totalLoss.year,
-      treeCoverLoss: `${loss}ha`,
-      primaryLoss: `${primaryLoss}ha`
-    };
-
-    let sentence = sentences.default;
-    if (data.extent > 0 && data.totalLoss.area) {
-      sentence =
-        data.plantationsLoss.area && location ? withPlantationLoss : withLoss;
-    }
-    sentence = tropicalIsos.includes(adm0)
-      ? sentence + co2Emissions
-      : sentence + end;
-    if (!location) sentence = globalInitial;
-    if (adm0 in countrySpecific) {
-      sentence = countrySpecific[adm0];
-    }
-
-    return {
-      sentence,
-      params
-    };
-  }
-);
-
 export const getSelectorMeta = createSelector([selectLocation], location => {
   const { type } = location || {};
   const newType = type === 'global' ? 'country' : type;
@@ -225,11 +140,10 @@ export const getHeaderProps = createStructuredSelector({
   adm0s: getAdm0Data,
   adm1s: getAdm1Data,
   adm2s: getAdm2Data,
-  settings: selectSettings,
   downloadLink: getDownloadLink,
   forestAtlasLink: getForestAtlasLink,
   shareData: getShareData,
-  sentence: getSentence,
+  sentence: getGeodescriberDescription,
   locationNames: getAdminsSelected,
   selectorMeta: getSelectorMeta
 });
