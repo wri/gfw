@@ -9,7 +9,10 @@ import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
 import SaveAOIModal from 'components/modals/save-aoi';
 
+import tagIcon from 'assets/icons/tag.svg';
 import downloadIcon from 'assets/icons/download.svg';
+import subscribedIcon from 'assets/icons/subscribed.svg';
+import pencilIcon from 'assets/icons/pencil.svg';
 import './styles.scss';
 
 class Header extends PureComponent {
@@ -57,43 +60,67 @@ class Header extends PureComponent {
     } = this.props;
     const isCountryDashboard =
       location.type === 'country' || location.type === 'global';
+    const isAreaDashboard = location.type === 'aoi';
+    const showMetaControls =
+      !loading && (!isAreaDashboard || (isAreaDashboard && activeArea));
+    const { tags } = activeArea || {};
 
     return (
       <div className={cx('c-dashboards-header', className)}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
-        <div className="share-buttons">
-          <Button
-            className="theme-button-small"
-            onClick={() => {
-              if (activeArea && activeArea.notUserArea) {
-                setSaveAOISettings({ open: true });
-              } else {
-                setShareModal(shareData);
-              }
-            }}
-          >
-            {shareMeta}
-          </Button>
-          <Button
-            className="theme-button-medium theme-button-clear square"
-            extLink={downloadLink}
-            tooltip={{
-              text: `Download the data${
-                locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
-              }`,
-              position: 'bottom'
-            }}
-          >
-            <Icon icon={downloadIcon} />
-          </Button>
-        </div>
+        {showMetaControls && (
+          <div className="share-buttons">
+            <Button
+              className="theme-button-small"
+              onClick={() => {
+                if (activeArea && !activeArea.userArea) {
+                  setSaveAOISettings({ open: true });
+                } else {
+                  setShareModal(shareData);
+                }
+              }}
+            >
+              {shareMeta}
+            </Button>
+            {activeArea &&
+              activeArea.userArea && (
+              <Button
+                className="theme-button-medium theme-button-clear square"
+                tooltip={{
+                  text: `Edit ${locationNames.adm0.label}`,
+                  position: 'bottom'
+                }}
+                onClick={() => setSaveAOISettings({ open: true })}
+              >
+                <Icon icon={pencilIcon} />
+              </Button>
+            )}
+            {isCountryDashboard && (
+              <Button
+                className="theme-button-medium theme-button-clear square"
+                extLink={downloadLink}
+                tooltip={{
+                  text: `Download the data${
+                    locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
+                  }`,
+                  position: 'bottom'
+                }}
+              >
+                <Icon icon={downloadIcon} />
+              </Button>
+            )}
+          </div>
+        )}
         <div className="row">
           <div className="columns small-12 medium-10">
             <div className="select-container">
               {title && (
                 <h3 className={cx({ global: title === 'global' })}>{title}</h3>
               )}
-              {(!activeArea || (activeArea && !activeArea.notUserArea)) &&
+              {isAreaDashboard &&
+                !activeArea &&
+                !loading && <h3>Area not found</h3>}
+              {!loading &&
                 adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
@@ -176,6 +203,25 @@ class Header extends PureComponent {
               )}
             </div>
           </div>
+          {!loading &&
+            activeArea &&
+            activeArea.userArea && (
+            <div className="columns small-12 medium-10">
+              <div className="metadata">
+                {tags &&
+                    !!tags.length && (
+                  <div className="tags">
+                    <Icon icon={tagIcon} className="tag-icon" />
+                    <p>{tags.join(', ')}</p>
+                  </div>
+                )}
+                <div className="subscribed">
+                  <Icon icon={subscribedIcon} className="subscribed-icon" />
+                  <p>Subscribed</p>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="columns small-12 medium-10">
             <div className="description text -title-xs">
               {!loading && (

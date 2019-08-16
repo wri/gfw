@@ -100,7 +100,8 @@ function SaveAOIForm(props) {
     saveAOI,
     deleteAOI,
     viewAfterSave,
-    clearAfterDelete
+    clearAfterDelete,
+    canDelete
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
@@ -134,7 +135,7 @@ function SaveAOIForm(props) {
     );
     return (
       <div className="save-aoi">
-        {activeArea && !activeArea.notUserArea ? (
+        {canDelete && activeArea && activeArea.userArea ? (
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
@@ -156,7 +157,7 @@ function SaveAOIForm(props) {
               }),
               userData,
               viewAfterSave,
-              method: activeArea && !activeArea.notUserArea ? 'patch' : 'post'
+              method: activeArea && activeArea.userArea ? 'patch' : 'post'
             })
           }
           disabled={!canSubmit}
@@ -283,7 +284,8 @@ SaveAOIForm.propTypes = {
   saving: PropTypes.bool,
   activeArea: PropTypes.object,
   viewAfterSave: PropTypes.bool,
-  clearAfterDelete: PropTypes.bool
+  clearAfterDelete: PropTypes.bool,
+  canDelete: PropTypes.bool
 };
 
 export default SaveAOIForm;

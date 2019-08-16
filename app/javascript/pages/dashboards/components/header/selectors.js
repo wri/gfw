@@ -3,11 +3,13 @@ import upperFirst from 'lodash/upperFirst';
 import { deburrUpper } from 'utils/data';
 
 import { getGeodescriberDescription } from 'providers/geodescriber-provider/selectors';
-import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
+import {
+  getUserAreas,
+  getActiveArea
+} from 'providers/areas-provider/selectors';
 
 // get list data
-export const selectLocation = state =>
-  (state.location && state.location.payload) || null;
+export const selectLocation = state => state.location && state.location.payload;
 export const selectLoading = state =>
   state.countryData &&
   state.areas &&
@@ -28,24 +30,26 @@ export const selectCountryData = state =>
     adm2: state.countryData.subRegions,
     links: state.countryData.countryLinks
   };
-export const selectGeodescriber = state =>
-  state && state.geostore && state.geostore.data.geodescriber;
 
-export const getAreasOptions = createSelector([getAllAreas], areas => {
-  if (!areas) return null;
-  return {
-    adm0: areas.filter(a => !a.notUserArea).map(a => ({
-      label: a.name,
-      value: a.id
-    }))
-  };
-});
+export const getAreasOptions = createSelector(
+  [getUserAreas, selectLocation],
+  (areas, location) => {
+    if (!areas || !areas.find(a => a.id === location.adm0)) return null;
+
+    return {
+      adm0: areas.map(a => ({
+        label: a.name,
+        value: a.id
+      }))
+    };
+  }
+);
 
 export const getDashboardTitle = createSelector(
   [getActiveArea, selectLocation],
   (area, location) => {
-    if (!location.adm0) return 'global';
-    if (!area || (area && !area.notUserArea)) return null;
+    if (!location.adm0) return location.type;
+    if (!area || (area && area.userArea)) return null;
     return area.name;
   }
 );
@@ -53,7 +57,6 @@ export const getDashboardTitle = createSelector(
 export const getAdminMetadata = createSelector(
   [selectLocation, selectCountryData, getAreasOptions],
   (location, countries, areas) => {
-    if (!countries || !areas) return null;
     if (location.type === 'aoi') return areas;
     return countries;
   }
@@ -145,8 +148,8 @@ export const getSelectorMeta = createSelector([selectLocation], location => {
 export const getShareMeta = createSelector(
   [selectLocation, getActiveArea],
   (location, activeArea) => {
-    if (location.type === 'aoi' && activeArea && !activeArea.notUserArea) {
-      return 'share this area';
+    if (location.type === 'aoi' && activeArea && activeArea.userArea) {
+      return 'share area';
     } else if (location.type === 'aoi') {
       return 'save to my gfw';
     }

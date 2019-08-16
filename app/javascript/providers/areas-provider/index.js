@@ -36,6 +36,15 @@ class AreasProvider extends PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { loggedIn, loading, getAreas } = this.props;
+    const { loggedIn: prevLoggedIn } = prevProps;
+
+    if (!loading && loggedIn && loggedIn !== prevLoggedIn) {
+      getAreas();
+    }
+  }
+
   render() {
     return null;
   }

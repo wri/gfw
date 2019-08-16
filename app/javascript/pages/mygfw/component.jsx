@@ -86,7 +86,7 @@ class MyGFWPage extends PureComponent {
         </div>
         <AreasProvider />
         <CountryDataProvider />
-        <SaveAOIModal />
+        <SaveAOIModal canDelete />
         <ShareModal />
         <ProfileModal />
       </div>

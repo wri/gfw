@@ -131,7 +131,7 @@ class AnalysisComponent extends PureComponent {
                   DASHBOARD
               </Button>
             )}
-            {(!activeArea || (activeArea && activeArea.notUserArea)) && (
+            {(!activeArea || (activeArea && !activeArea.userArea)) && (
               <Button
                 className="analysis-action-btn"
                 onClick={() => {
@@ -142,7 +142,7 @@ class AnalysisComponent extends PureComponent {
               </Button>
             )}
             {activeArea &&
-                !activeArea.notUserArea && (
+                activeArea.userArea && (
               <Button
                 className="analysis-action-btn"
                 onClick={() =>
