@@ -6,7 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
-import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
 import { locationLevelToStr } from 'utils/format';
 
 import { initialState } from './reducers';
@@ -103,14 +103,6 @@ export const getWidgetLayers = createSelector(
         )
       )
     );
-  }
-);
-
-export const getActiveArea = createSelector(
-  [getAllAreas, selectLocation],
-  (aois, location) => {
-    if (!aois) return null;
-    return aois.find(a => a.id === location.adm0);
   }
 );
 
