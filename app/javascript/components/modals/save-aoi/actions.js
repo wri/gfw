@@ -31,6 +31,7 @@ export const saveAOI = createThunkAction(
     email,
     lang,
     tags,
+    firesAlerts,
     deforestationAlerts,
     monthlySummary,
     activeArea,
@@ -63,6 +64,7 @@ export const saveAOI = createThunkAction(
           country: isCountry ? adm0 : null
         },
         use: {},
+        firesAlerts,
         deforestationAlerts,
         monthlySummary,
         tags
