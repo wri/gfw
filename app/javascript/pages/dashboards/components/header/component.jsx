@@ -120,8 +120,7 @@ class Header extends PureComponent {
               {isAreaDashboard &&
                 !activeArea &&
                 !loading && <h3>Area not found</h3>}
-              {!loading &&
-                adm0s && (
+              {adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
                   placeholder={`Select ${selectorMeta.typeVerb}`}
