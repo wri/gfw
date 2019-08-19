@@ -28,16 +28,28 @@ export const getAreas = createThunkAction(
               )
             );
             if (type === 'aoi' && adm0 && !data.find(d => d.id === adm0)) {
-              getAreaProvider(adm0).then(area => {
-                const { data: areaData } = area.data;
-                dispatch(
-                  setArea({
-                    id: areaData.id,
-                    ...areaData.attributes
-                  })
-                );
-                dispatch(setAreasLoading({ loading: false, error: false }));
-              });
+              getAreaProvider(adm0)
+                .then(area => {
+                  const { data: areaData } = area.data;
+                  dispatch(
+                    setArea({
+                      id: areaData.id,
+                      ...areaData.attributes
+                    })
+                  );
+                  dispatch(setAreasLoading({ loading: false, error: false }));
+                })
+                .catch(error => {
+                  dispatch(
+                    setAreasLoading({
+                      loading: false,
+                      error: error.response.status
+                    })
+                  );
+                  if (error.response.status !== 401) {
+                    console.info(error);
+                  }
+                });
             } else {
               dispatch(setAreasLoading({ loading: false, error: false }));
             }
@@ -46,7 +58,9 @@ export const getAreas = createThunkAction(
           }
         })
         .catch(error => {
-          dispatch(setAreasLoading({ loading: false, error: true }));
+          dispatch(
+            setAreasLoading({ loading: false, error: error.response.status })
+          );
           console.info(error);
         });
     }
@@ -75,8 +89,12 @@ export const getArea = createThunkAction(
           dispatch(setAreasLoading({ loading: false, error: false }));
         })
         .catch(error => {
-          dispatch(setAreasLoading({ loading: false, error: true }));
-          console.info(error);
+          dispatch(
+            setAreasLoading({ loading: false, error: error.response.status })
+          );
+          if (error.response.status !== 401) {
+            console.info(error);
+          }
         });
     }
   }
