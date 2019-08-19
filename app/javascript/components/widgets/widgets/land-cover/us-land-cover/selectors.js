@@ -4,20 +4,22 @@ import groupBy from 'lodash/groupBy';
 import findIndex from 'lodash/findIndex';
 
 const getData = state => state.data || null;
-// const getSettings = state => state.settings || null;
+const getSettings = state => state.settings || null;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentence || null;
 
 export const cleanData = createSelector([getData], data => {
   if (isEmpty(data)) return null;
-  return data.filter(d => d.start !== d.end);
+  // return data.filter(d => d.start !== d.end);
+  return data;
 });
 
 export const parseData = createSelector(
-  [cleanData, getColors],
-  (data, colors) => {
+  [cleanData, getColors, getSettings],
+  (data, colors, settings) => {
     if (isEmpty(data)) return null;
+    const { source } = settings;
     const categories = {
       forest: 'Forest',
       bare: 'Bare',
@@ -26,15 +28,23 @@ export const parseData = createSelector(
       grassland: 'Grassland',
       wetlands: 'Wetland'
     };
+    /*
+    obj has:
+      area: 97736.7208320633
+      from_class_ipcc: "forest_land"
+      from_class_nlcd: "deciduous_forest"
+      to_class_ipcc: "settlement"
+      to_class_nlcd: "developed_low_intensity"
+    */
     const nodes = [
-      ...Object.keys(groupBy(data, 'start')).map(node => ({
+      ...Object.keys(groupBy(data, `from_class_${source}`)).map(node => ({
         name: categories[node] ? categories[node] : 'Other',
         key: `${node}-start`,
         color: categories[node]
           ? colors.categories[categories[node]]
           : colors.categories.Other
       })),
-      ...Object.keys(groupBy(data, 'end')).map(node => ({
+      ...Object.keys(groupBy(data, `to_class_${source}`)).map(node => ({
         name: categories[node] ? categories[node] : 'Other',
         key: `${node}-end`,
         color: categories[node]
@@ -45,8 +55,8 @@ export const parseData = createSelector(
     const links = data.map(d => ({
       source: findIndex(nodes, { key: `${d.start}-start` }),
       target: findIndex(nodes, { key: `${d.end}-end` }),
-      value: d.area,
-      abs_pct: d.perc_area
+      value: d.area
+      // abs_pct: d.perc_area
     }));
     return { nodes, links };
   }
