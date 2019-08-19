@@ -12,7 +12,7 @@ export const getAreas = createThunkAction(
   () => (dispatch, getState) => {
     const { areas, location } = getState();
     if (areas && !areas.loading) {
-      dispatch(setAreasLoading(true));
+      dispatch(setAreasLoading({ loading: true, error: false }));
       getAreasProvider()
         .then(response => {
           const { type, adm0 } = location.payload || {};
@@ -36,16 +36,17 @@ export const getAreas = createThunkAction(
                     ...areaData.attributes
                   })
                 );
-                dispatch(setAreasLoading(false));
+                dispatch(setAreasLoading({ loading: false, error: false }));
               });
             } else {
-              dispatch(setAreasLoading(false));
+              dispatch(setAreasLoading({ loading: false, error: false }));
             }
+          } else {
+            dispatch(setAreasLoading({ loading: false, error: false }));
           }
-          dispatch(setAreasLoading(false));
         })
         .catch(error => {
-          dispatch(setAreasLoading(false));
+          dispatch(setAreasLoading({ loading: false, error: true }));
           console.info(error);
         });
     }
@@ -58,7 +59,7 @@ export const getArea = createThunkAction(
     const { areas, myGfw } = getState();
     if (areas && !areas.loading) {
       const { data: userData } = myGfw || {};
-      dispatch(setAreasLoading(true));
+      dispatch(setAreasLoading({ loading: true, error: false }));
       getAreaProvider(id)
         .then(response => {
           const { data } = response.data;
@@ -71,10 +72,10 @@ export const getArea = createThunkAction(
               })
             );
           }
-          dispatch(setAreasLoading(false));
+          dispatch(setAreasLoading({ loading: false, error: false }));
         })
         .catch(error => {
-          dispatch(setAreasLoading(false));
+          dispatch(setAreasLoading({ loading: false, error: true }));
           console.info(error);
         });
     }
