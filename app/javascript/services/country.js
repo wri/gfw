@@ -30,21 +30,21 @@ export const getFAOCountriesProvider = () => {
   return request.get(url);
 };
 
-export const getRegionsProvider = adm0 => {
+export const getRegionsProvider = ({ adm0, token }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getRegions}`.replace('{iso}', adm0);
-  return request.get(url);
+  return request.get(url, { cancelToken: token });
 };
 
-export const getSubRegionsProvider = (adm0, adm1) => {
+export const getSubRegionsProvider = (adm0, adm1, token) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getSubRegions}`
     .replace('{iso}', adm0)
     .replace('{adm1}', buildGadm36Id(adm0, adm1));
-  return request.get(url);
+  return request.get(url, { cancelToken: token });
 };
 
-export const getCountryLinksProvider = () => {
+export const getCountryLinksProvider = token => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getCountryLinks}`;
-  return request.get(url);
+  return request.get(url, { cancelToken: token });
 };
 
 export const getCountriesLatLng = () => {
@@ -52,7 +52,7 @@ export const getCountriesLatLng = () => {
   return request.get(url);
 };
 
-export const getRanking = ({ adm0 }) => {
+export const getRanking = ({ adm0, token }) => {
   const url = `${REQUEST_URL}${SQL_QUERIES.getRanking}`.replace('{adm0}', adm0);
-  return request.get(url);
+  return request.get(url, { cancelToken: token });
 };

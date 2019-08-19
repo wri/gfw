@@ -78,13 +78,15 @@ class GeodescriberProvider extends PureComponent {
 
   cancelGeodescriberFetch = () => {
     if (this.geodescriberFetch) {
-      this.geodescriberFetch.cancel();
+      this.geodescriberFetch.cancel('Cancelling geodescriber fetch');
     }
   };
 
   cancelAdminGeodescriberFetch = () => {
     if (this.adminGeodescriberFetch) {
-      this.adminGeodescriberFetch.cancel();
+      this.adminGeodescriberFetch.cancel(
+        'Cancelling admin geodescriber fetches'
+      );
     }
   };
 

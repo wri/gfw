@@ -34,7 +34,8 @@ class Header extends PureComponent {
     shareMeta: PropTypes.string,
     setSaveAOISettings: PropTypes.func,
     title: PropTypes.string,
-    activeArea: PropTypes.object
+    activeArea: PropTypes.object,
+    errorMsg: PropTypes.string
   };
 
   render() {
@@ -56,7 +57,8 @@ class Header extends PureComponent {
       shareMeta,
       setSaveAOISettings,
       title,
-      activeArea
+      activeArea,
+      errorMsg
     } = this.props;
     const isCountryDashboard =
       location.type === 'country' || location.type === 'global';
@@ -119,9 +121,8 @@ class Header extends PureComponent {
               )}
               {isAreaDashboard &&
                 !activeArea &&
-                !loading && <h3>Area not found</h3>}
-              {!loading &&
-                adm0s && (
+                !loading && <h3>{errorMsg}</h3>}
+              {adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
                   placeholder={`Select ${selectorMeta.typeVerb}`}

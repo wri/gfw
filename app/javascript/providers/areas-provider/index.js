@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import reducerRegistry from 'app/registry';
+import { CancelToken } from 'axios';
 
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
@@ -19,16 +20,9 @@ class AreasProvider extends PureComponent {
   };
 
   componentDidMount() {
-    const {
-      getAreas,
-      getArea,
-      areas,
-      loggedIn,
-      location,
-      loading
-    } = this.props;
+    const { getArea, areas, loggedIn, location, loading } = this.props;
     if (!loading && isEmpty(areas) && loggedIn) {
-      getAreas();
+      this.handleGetAreas();
     }
 
     if (!loading && !loggedIn && location.type === 'aoi') {
@@ -37,13 +31,27 @@ class AreasProvider extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { loggedIn, loading, getAreas } = this.props;
+    const { loggedIn, loading } = this.props;
     const { loggedIn: prevLoggedIn } = prevProps;
 
     if (!loading && loggedIn && loggedIn !== prevLoggedIn) {
-      getAreas();
+      this.handleGetAreas();
     }
   }
+
+  handleGetAreas = () => {
+    const { getAreas } = this.props;
+    this.cancelAreasFetch();
+    this.areasFetch = CancelToken.source();
+
+    getAreas(this.areasFetch.token);
+  };
+
+  cancelAreasFetch = () => {
+    if (this.areasFetch) {
+      this.areasFetch.cancel('Cancelling areas fetches');
+    }
+  };
 
   render() {
     return null;

@@ -4,7 +4,7 @@ import sortBy from 'lodash/sortBy';
 import { getFAOEcoLive } from 'services/forest-data';
 
 export default ({ params }) =>
-  getFAOEcoLive().then(response => {
+  getFAOEcoLive(params.token).then(response => {
     const { rows } = response.data;
     const { adm0, year } = params;
     const years = sortBy(
