@@ -33,7 +33,8 @@ class WidgetTreeCover extends PureComponent {
             node.payload.payload && (
               <div>
                 {node.payload.payload.abs_pct} percentage of land went to{' '}
-                {node.payload.payload.target.name}
+                {node.payload.payload.target &&
+                  node.payload.payload.target.name}
               </div>
             )
           }
