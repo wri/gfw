@@ -38,8 +38,8 @@ class GeostoreProvider extends PureComponent {
       activeArea && !isEqual(activeArea, prevProps.activeArea);
 
     if (!adm0 && adm0 !== prevProps.location.adm0) {
-      clearGeostore({});
       this.cancelGeostoreFetch();
+      clearGeostore({});
     }
 
     if (hasAdm0Changed || hasAdm1Changed || hasAdm2Changed || hasAoiChanged) {
@@ -63,7 +63,7 @@ class GeostoreProvider extends PureComponent {
 
   cancelGeostoreFetch = () => {
     if (this.geostoreFetch) {
-      this.geostoreFetch.cancel();
+      this.geostoreFetch.cancel('Cancelling geostore fetch');
     }
   };
 
