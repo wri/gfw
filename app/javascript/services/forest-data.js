@@ -39,7 +39,9 @@ const NEW_SQL_QUERIES = {
     'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   getLocationPolynameWhitelist:
-    'SELECT {location}, {polynames} FROM polyname_whitelist {WHERE} GROUP BY {location}'
+    'SELECT {location}, {polynames} FROM polyname_whitelist {WHERE} GROUP BY {location}',
+  getNLCDLandCover:
+    'SELECT {select} FROM nlcd_land_cover WHERE from_year = {from_year} AND to_year = {to_year} {adm} {groupby}'
 };
 
 const ALLOWED_PARAMS = [
@@ -365,6 +367,44 @@ export const getLossOld = ({
     .replace('{indicator}', getIndicator(forestType, landCategory));
   return request.get(url);
 };
+
+/*
+export const getUSLandCover = () => ({
+  adm1,
+  adm2,
+  from_year,
+  to_year
+}) => {
+  let admQuery;
+  if (adm1 && !adm2) { // adm1
+    admQuery = `AND adm1 = ${adm1}`;
+  } else if (adm1 && adm2) { // adm 2
+    admQuery = `AND adm1 = ${adm1} AND adm2 = ${adm2}`;
+  }
+  const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.fao}`
+    .replace(
+      '{select}',
+      adm2 ? '*' : 'SUM(class_area) as area, to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
+    )
+    .replace(
+      '{from_year}',
+      from_year
+    )
+    .replace(
+      '{to_year}',
+      to_year
+    )
+    .replace(
+      '{adm}',
+      admQuery
+    )
+    .replace(
+      'groupby',
+      adm2 ? '' : 'GROUP BY to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
+    );
+  return request.get(url);
+};
+*/
 
 export const getUSLandCover = () =>
   // example data

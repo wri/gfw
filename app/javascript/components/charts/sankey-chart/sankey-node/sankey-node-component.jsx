@@ -50,7 +50,6 @@ function SankeyNode({ x, y, width, height, index, payload, config }) {
       <Layer key={`CustomNode${index}`}>
         <text
           textAnchor={isOut ? 'start' : 'end'}
-          textLength={rectangleStart}
           className={styles.nodeText}
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: tSpans(payload.name) }}
