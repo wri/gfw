@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
-import Toggle from 'components/ui/toggle';
 import Checkbox from 'components/ui/checkbox-v2';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -47,43 +46,43 @@ function reducer(state, action) {
         emailError: !validateEmail(payload)
       };
     }
-    case 'receiveAlerts': {
-      return {
-        ...state,
-        receiveAlerts: !state.receiveAlerts
-      };
-    }
     case 'lang': {
       return {
         ...state,
         lang: payload
       };
     }
-    case 'changesEmail': {
+    case 'firesAlerts': {
       return {
         ...state,
-        changesEmail: !state.changesEmail
+        firesAlerts: !state.firesAlerts
       };
     }
-    case 'monthlyEmail': {
+    case 'deforestationAlerts': {
       return {
         ...state,
-        monthlyEmail: !state.monthlyEmail
+        deforestationAlerts: !state.deforestationAlerts
+      };
+    }
+    case 'monthlySummary': {
+      return {
+        ...state,
+        monthlySummary: !state.monthlySummary
       };
     }
     case 'activeArea': {
       const { activeArea, email, lang } = payload;
-      const { name, tags, receiveAlerts, changesEmail, monthlyEmail } =
+      const { name, tags, firesAlerts, deforestationAlerts, monthlySummary } =
         activeArea.attributes || activeArea || {};
       return {
         ...state,
         name,
         tags,
         email,
-        receiveAlerts,
         lang,
-        changesEmail,
-        monthlyEmail
+        firesAlerts,
+        deforestationAlerts,
+        monthlySummary
       };
     }
     default:
@@ -110,10 +109,10 @@ function SaveAOIForm(props) {
     email: props.email || '',
     emailError: false,
     nameError: false,
-    receiveAlerts: false,
     lang: props.lang,
-    changesEmail: true,
-    monthlyEmail: true
+    firesAlerts: props.firesAlerts || false,
+    deforestationAlerts: props.deforestationAlerts || false,
+    monthlySummary: props.monthlySummary || false
   });
 
   useEffect(
@@ -172,9 +171,9 @@ function SaveAOIForm(props) {
     tags,
     emailError,
     nameError,
-    receiveAlerts,
-    changesEmail,
-    monthlyEmail
+    firesAlerts,
+    deforestationAlerts,
+    monthlySummary
   } = form;
   const canSubmit = validateEmail(email) && name && lang;
 
@@ -203,68 +202,56 @@ function SaveAOIForm(props) {
           onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
         />
       </div>
-      <div className={cx('field')}>
-        <span className="form-toggle">
-          <Toggle
-            onToggle={() => dispatch({ type: 'receiveAlerts' })}
-            value={receiveAlerts}
-            theme="toggle-large"
-          />
-          <p className="form-title">
-            Receive alert emails about deforestation in this area
-          </p>
-        </span>
+      <div className={cx('field', 'field-image')}>
+        <img
+          src={screenImg1x}
+          srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
+          alt="aoi screenshot"
+        />
+        <p>
+          We will send you email updates about alerts and forest cover change in
+          your selected area.
+        </p>
       </div>
-      {receiveAlerts && (
-        <div>
-          <div className={cx('field', 'field-image')}>
-            <img
-              src={screenImg1x}
-              srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
-              alt="aoi screenshot"
-            />
-            <p>
-              We will send you email updates about alerts and forest cover
-              change in your selected area.
-            </p>
-          </div>
-          <div className={cx('field', { error: emailError })}>
-            <span className="form-title">Email</span>
-            <input
-              className="text-input"
-              value={email}
-              onChange={e =>
-                dispatch({ type: 'email', payload: e.target.value })
-              }
-            />
-          </div>
-          <div className="field">
-            <span className="form-title">Language*</span>
-            <Dropdown
-              className="dropdown-input"
-              theme="theme-dropdown-native-form"
-              options={getLanguages()}
-              value={lang}
-              onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
-              native
-            />
-          </div>
-          <div className="field">
-            <Checkbox
-              className="form-checkbox"
-              onChange={() => dispatch({ type: 'changesEmail' })}
-              checked={changesEmail}
-              label={'As soon as forest change is detected'}
-            />
-            <Checkbox
-              className="form-checkbox"
-              onChange={() => dispatch({ type: 'monthlyEmail' })}
-              checked={monthlyEmail}
-              label={'Monthly summary'}
-            />
-          </div>
-        </div>
-      )}
+      <div className={cx('field', { error: emailError })}>
+        <span className="form-title">Email</span>
+        <input
+          className="text-input"
+          value={email}
+          onChange={e => dispatch({ type: 'email', payload: e.target.value })}
+        />
+      </div>
+      <div className="field">
+        <span className="form-title">Language*</span>
+        <Dropdown
+          className="dropdown-input"
+          theme="theme-dropdown-native-form"
+          options={getLanguages()}
+          value={lang}
+          onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
+          native
+        />
+      </div>
+      <div className="field">
+        <Checkbox
+          className="form-checkbox"
+          onChange={() => dispatch({ type: 'firesAlerts' })}
+          checked={firesAlerts}
+          label={'As soon as fires are detected'}
+        />
+        <Checkbox
+          className="form-checkbox"
+          onChange={() => dispatch({ type: 'deforestationAlerts' })}
+          checked={deforestationAlerts}
+          label={'As soon as forest change is detected'}
+        />
+        <Checkbox
+          className="form-checkbox"
+          onChange={() => dispatch({ type: 'monthlySummary' })}
+          checked={monthlySummary}
+          label={'Monthly summary'}
+        />
+      </div>
       {renderSaveAOI()}
     </div>
   );
@@ -282,7 +269,10 @@ SaveAOIForm.propTypes = {
   activeArea: PropTypes.object,
   viewAfterSave: PropTypes.bool,
   clearAfterDelete: PropTypes.bool,
-  canDelete: PropTypes.bool
+  canDelete: PropTypes.bool,
+  firesAlerts: PropTypes.bool,
+  deforestationAlerts: PropTypes.bool,
+  monthlySummary: PropTypes.bool
 };
 
 export default SaveAOIForm;
