@@ -46,7 +46,8 @@ export const getMapViewport = createSelector([getMapSettings], settings => {
     bearing,
     pitch,
     latitude: center.lat,
-    longitude: center.lng
+    longitude: center.lng,
+    transitionDuration: 500
   };
 });
 
