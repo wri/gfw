@@ -21,12 +21,12 @@ class GeodescriberProvider extends PureComponent {
   componentDidMount() {
     const { location, loading, geojson } = this.props;
 
-    if (
-      !loading &&
-      ((location.type !== 'country' && geojson) ||
-        ['global', 'country'].includes(location.type))
-    ) {
+    if (!loading && !['global', 'country'].includes(location.type) && geojson) {
       this.handleGetGeodescriber();
+    }
+
+    if (!loading && ['global', 'country'].includes(location.type)) {
+      this.handleGetAdminGeodescriber();
     }
   }
 
@@ -36,37 +36,57 @@ class GeodescriberProvider extends PureComponent {
 
     if (
       !loading &&
-      ((geojson && !isEqual(geojson, prevGeojosn)) ||
-        (['global', 'country'].includes(location.type) &&
-          !isEqual(location, prevLocation)))
+      !['global', 'country'].includes(location.type) &&
+      (geojson && !isEqual(geojson, prevGeojosn))
     ) {
       this.handleGetGeodescriber();
+    }
+
+    if (
+      !loading &&
+      ['global', 'country'].includes(location.type) &&
+      !isEqual(location, prevLocation)
+    ) {
+      this.handleGetAdminGeodescriber();
     }
   }
 
   handleGetGeodescriber = () => {
-    const {
-      location: { type },
-      geojson,
-      getGeodescriber,
-      getAdminGeodescriber
-    } = this.props;
+    const { geojson, getGeodescriber } = this.props;
     this.cancelGeodescriberFetch();
     this.geodescriberFetch = CancelToken.source();
 
-    if (type === 'country' || type === 'global') {
-      getAdminGeodescriber({
-        ...location,
-        token: this.geodescriberFetch.token
+    if (geojson) {
+      getGeodescriber({
+        geojson,
+        token: this.geodescriberFetch.token,
+        lang: 'en'
       });
-    } else if (geojson) {
-      getGeodescriber({ geojson, token: this.geodescriberFetch.token });
     }
+  };
+
+  handleGetAdminGeodescriber = () => {
+    const { getAdminGeodescriber } = this.props;
+    this.cancelAdminGeodescriberFetch();
+    this.adminGeodescriberFetch = CancelToken.source();
+
+    getAdminGeodescriber({
+      ...location,
+      token: this.adminGeodescriberFetch.token
+    });
   };
 
   cancelGeodescriberFetch = () => {
     if (this.geodescriberFetch) {
-      this.geodescriberFetch.cancel();
+      this.geodescriberFetch.cancel('Cancelling geodescriber fetch');
+    }
+  };
+
+  cancelAdminGeodescriberFetch = () => {
+    if (this.adminGeodescriberFetch) {
+      this.adminGeodescriberFetch.cancel(
+        'Cancelling admin geodescriber fetches'
+      );
     }
   };
 

@@ -8,11 +8,11 @@ export const setWhitelist = createAction('setWhitelist');
 
 export const getWhitelist = createThunkAction(
   'getWhitelist',
-  ({ adm0, adm1, adm2 }) => (dispatch, getState) => {
+  params => (dispatch, getState) => {
     const { whitelists } = getState();
     if (whitelists && !whitelists.loading) {
       dispatch(setWhitelistLoading(true));
-      getLocationPolynameWhitelist({ adm0, adm1, adm2 })
+      getLocationPolynameWhitelist(params)
         .then(response => {
           const { rows } = (response && response.data) || {};
           const whitelistObject = rows && rows[0];

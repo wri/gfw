@@ -3,10 +3,13 @@ import upperFirst from 'lodash/upperFirst';
 import { deburrUpper } from 'utils/data';
 
 import { getGeodescriberDescription } from 'providers/geodescriber-provider/selectors';
+import {
+  getUserAreas,
+  getActiveArea
+} from 'providers/areas-provider/selectors';
 
 // get list data
-export const selectLocation = state =>
-  (state.location && state.location.payload) || null;
+export const selectLocation = state => state.location && state.location.payload;
 export const selectLoading = state =>
   state.countryData &&
   state.areas &&
@@ -18,8 +21,7 @@ export const selectLoading = state =>
     state.countryData.isCountriesLoading ||
     state.countryData.isRegionsLoading ||
     state.countryData.isSubRegionsLoading);
-export const selectError = state =>
-  state.geodescriber && state.geodescriber.error;
+export const selectError = state => state.areas && state.areas.error;
 export const selectCountryData = state =>
   state.countryData && {
     adm0: state.countryData.countries,
@@ -27,24 +29,33 @@ export const selectCountryData = state =>
     adm2: state.countryData.subRegions,
     links: state.countryData.countryLinks
   };
-export const selectAreas = state => state && state.areas && state.areas.data;
-export const selectGeodescriber = state =>
-  state && state.geostore && state.geostore.data.geodescriber;
 
-export const getAreasOptions = createSelector([selectAreas], areas => {
-  if (!areas) return null;
-  return {
-    adm0: areas.map(a => ({
-      label: a.name,
-      value: a.id
-    }))
-  };
-});
+export const getAreasOptions = createSelector(
+  [getUserAreas, selectLocation],
+  (areas, location) => {
+    if (!areas || !areas.find(a => a.id === location.adm0)) return null;
+
+    return {
+      adm0: areas.map(a => ({
+        label: a.name,
+        value: a.id
+      }))
+    };
+  }
+);
+
+export const getDashboardTitle = createSelector(
+  [getActiveArea, selectLocation],
+  (area, location) => {
+    if (!location.adm0) return location.type;
+    if (!area || (area && area.userArea)) return null;
+    return area.name;
+  }
+);
 
 export const getAdminMetadata = createSelector(
   [selectLocation, selectCountryData, getAreasOptions],
   (location, countries, areas) => {
-    if (!countries || !areas) return null;
     if (location.type === 'aoi') return areas;
     return countries;
   }
@@ -123,19 +134,37 @@ export const getSelectorMeta = createSelector([selectLocation], location => {
   const newType = type === 'global' ? 'country' : type;
   if (type === 'aoi') {
     return {
-      typeVerb: 'an area of interest',
+      typeVerb: 'area of interest',
       typeName: 'area of interest'
     };
   }
   return {
-    typeVerb: `a ${newType}`,
+    typeVerb: `${newType}`,
     typeName: newType
   };
 });
 
+export const getShareMeta = createSelector(
+  [selectLocation, getActiveArea],
+  (location, activeArea) => {
+    if (location.type === 'aoi' && activeArea && activeArea.userArea) {
+      return 'share area';
+    } else if (location.type === 'aoi') {
+      return 'save to my gfw';
+    }
+
+    return 'share dashboard';
+  }
+);
+
+export const getErrorMsg = createSelector(
+  selectError,
+  error => (error === 401 ? 'Area is private' : 'Area not found')
+);
+
 export const getHeaderProps = createStructuredSelector({
   loading: selectLoading,
-  error: selectError,
+  errorMsg: getErrorMsg,
   location: selectLocation,
   adm0s: getAdm0Data,
   adm1s: getAdm1Data,
@@ -145,5 +174,8 @@ export const getHeaderProps = createStructuredSelector({
   shareData: getShareData,
   sentence: getGeodescriberDescription,
   locationNames: getAdminsSelected,
-  selectorMeta: getSelectorMeta
+  selectorMeta: getSelectorMeta,
+  shareMeta: getShareMeta,
+  title: getDashboardTitle,
+  activeArea: getActiveArea
 });

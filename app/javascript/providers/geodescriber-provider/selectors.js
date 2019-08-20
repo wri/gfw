@@ -4,6 +4,7 @@ import { format } from 'd3-format';
 
 import { buildFullLocationName } from 'utils/format';
 import tropicalIsos from 'data/tropical-isos.json';
+import { getAllAreas } from 'providers/areas-provider/selectors';
 
 const adminSentences = {
   default:
@@ -35,10 +36,16 @@ export const selectCountryData = state =>
     adm1: state.countryData.regions,
     adm2: state.countryData.subRegions
   };
-export const selectAreas = state => state && state.areas && state.areas.data;
+const selectActiveLang = state =>
+  (state.location &&
+    state.location &&
+    state.location.query &&
+    state.location.query.lang) ||
+  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
+  'en';
 
 export const getAreaName = createSelector(
-  [selectAreas, selectLocation],
+  [getAllAreas, selectLocation],
   (areas, location) => {
     if (!areas || !areas.length || location.type !== 'aoi') return null;
     const activeArea = areas.find(a => a.id === location.adm0);
@@ -113,6 +120,21 @@ export const getGeodescriberTitle = createSelector(
     return {
       sentence: adminTitle
     };
+  }
+);
+
+export const getGeodescriberTitleFull = createSelector(
+  [getGeodescriberTitle],
+  title => {
+    if (isEmpty(title)) return null;
+
+    let sentence = title.sentence;
+    if (title.params) {
+      Object.keys(title.params).forEach(p => {
+        sentence = sentence.replace(`{${p}}`, title.params[p]);
+      });
+    }
+    return sentence;
   }
 );
 
@@ -215,5 +237,6 @@ export const getGeodescriberDescription = createSelector(
 export const getGeodescriberProps = createStructuredSelector({
   loading: selectLoading,
   location: selectLocation,
-  geojson: selectGeojson
+  geojson: selectGeojson,
+  lang: selectActiveLang
 });

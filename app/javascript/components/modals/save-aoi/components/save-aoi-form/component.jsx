@@ -100,13 +100,14 @@ function SaveAOIForm(props) {
     saveAOI,
     deleteAOI,
     viewAfterSave,
-    clearAfterDelete
+    clearAfterDelete,
+    canDelete
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
-    name: props.locationName,
+    name: props.locationName || '',
     tags: [],
-    email: props.email,
+    email: props.email || '',
     emailError: false,
     nameError: false,
     receiveAlerts: false,
@@ -134,7 +135,7 @@ function SaveAOIForm(props) {
     );
     return (
       <div className="save-aoi">
-        {activeArea ? (
+        {canDelete && activeArea && activeArea.userArea ? (
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
@@ -151,9 +152,7 @@ function SaveAOIForm(props) {
           onClick={() =>
             saveAOI({
               ...form,
-              ...(activeArea && {
-                activeAreaId: activeArea.id
-              }),
+              activeArea,
               userData,
               viewAfterSave
             })
@@ -282,7 +281,8 @@ SaveAOIForm.propTypes = {
   saving: PropTypes.bool,
   activeArea: PropTypes.object,
   viewAfterSave: PropTypes.bool,
-  clearAfterDelete: PropTypes.bool
+  clearAfterDelete: PropTypes.bool,
+  canDelete: PropTypes.bool
 };
 
 export default SaveAOIForm;

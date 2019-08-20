@@ -3,6 +3,7 @@ import * as actions from './actions';
 
 export const initialState = {
   loading: false,
+  error: false,
   data: []
 };
 
@@ -28,7 +29,8 @@ const setArea = (state, { payload }) => {
 
 const setAreasLoading = (state, { payload }) => ({
   ...state,
-  loading: payload
+  loading: payload.loading,
+  error: payload.error
 });
 
 export default {
