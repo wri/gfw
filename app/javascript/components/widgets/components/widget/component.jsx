@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import compact from 'lodash/compact';
+import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import intersection from 'lodash/intersection';
 import cx from 'classnames';
@@ -17,9 +18,19 @@ import WidgetFooter from './components/widget-footer';
 
 import './styles.scss';
 
+const mapSyncKeys = [
+  'startYear',
+  'endYear',
+  'threshold',
+  'extentYear',
+  'forestType',
+  'landCategory'
+];
+
 class Widget extends PureComponent {
   componentDidMount() {
     const { active, config } = this.props;
+
     if (active && config && config.datasets) {
       this.syncWidgetWithMap();
     }
@@ -27,25 +38,23 @@ class Widget extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const { active, settings, config } = this.props;
+    const { datasets } = config || {};
+
     if (active) {
-      const mapSyncKeys = [
-        'startYear',
-        'endYear',
-        'threshold',
-        'extentYear',
-        'forestType',
-        'landCategory'
-      ];
-      if (
-        config &&
-        config.datasets &&
-        intersection(mapSyncKeys, Object.keys(settings).length) &&
-        settings !== prevProps.settings
-      ) {
+      const settingsChanged =
+        settings &&
+        intersection(mapSyncKeys, Object.keys(settings)).length &&
+        !isEqual(settings, prevProps.settings);
+      const activeChanged = !isEqual(active && prevProps.active);
+      if (datasets && (settingsChanged || activeChanged)) {
         this.syncWidgetWithMap();
-      } else {
+      } else if (!datasets && activeChanged) {
         this.clearMap();
       }
+    }
+
+    if (!active && !isEqual(active, prevProps.active)) {
+      this.clearMap();
     }
   }
 

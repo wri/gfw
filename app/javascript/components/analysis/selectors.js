@@ -6,6 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { getActiveArea } from 'providers/areas-provider/selectors';
 import { locationLevelToStr } from 'utils/format';
 
 import { initialState } from './reducers';
@@ -15,6 +16,8 @@ const selectAnalysisUrlState = state =>
 const selectAnalysisLoading = state => state.analysis && state.analysis.loading;
 const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
+const selectGeodecriberLoading = state =>
+  state.geodescriber && state.geodescriber.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectAnalysisLocation = state =>
   state.analysis && state.analysis.location;
@@ -24,12 +27,16 @@ const selectEmbed = state =>
   state.location.pathname.includes('/embed');
 const selectError = state => state.analysis && state.analysis.error;
 const selectDatasets = state => state.datasets && state.datasets.data;
-const selectAreas = state => state.areas && state.areas.data;
 
 export const getLoading = createSelector(
-  [selectAnalysisLoading, selectDatasetsLoading, selectGeostoreLoading],
-  (analysisLoading, datasetsLoading, geostoreLoading) =>
-    analysisLoading || datasetsLoading || geostoreLoading
+  [
+    selectAnalysisLoading,
+    selectDatasetsLoading,
+    selectGeostoreLoading,
+    selectGeodecriberLoading
+  ],
+  (analysisLoading, datasetsLoading, geostoreLoading, geodescriberLoading) =>
+    analysisLoading || datasetsLoading || geostoreLoading || geodescriberLoading
 );
 
 export const getAnalysisSettings = createSelector(
@@ -96,14 +103,6 @@ export const getWidgetLayers = createSelector(
         )
       )
     );
-  }
-);
-
-export const getActiveArea = createSelector(
-  [selectAreas, selectLocation],
-  (aois, location) => {
-    if (!aois) return null;
-    return aois.find(a => a.id === location.adm0);
   }
 );
 
@@ -201,6 +200,5 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation,
-  aois: selectAreas,
   activeArea: getActiveArea
 });

@@ -8,6 +8,7 @@ import MediaQuery from 'react-responsive';
 import CountryDataProvider from 'providers/country-data-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import GeostoreProvider from 'providers/geostore-provider';
+import GeodescriberProvider from 'providers/geodescriber-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
 import AreasProvider from 'providers/areas-provider';
@@ -28,7 +29,19 @@ import MapControls from './components/map-controls';
 
 import './styles.scss';
 
-class Page extends PureComponent {
+class DashboardsPage extends PureComponent {
+  static propTypes = {
+    showMapMobile: PropTypes.bool,
+    closeMobileMap: PropTypes.func.isRequired,
+    links: PropTypes.array,
+    widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    noWidgetsMessage: PropTypes.string,
+    handleCategoryChange: PropTypes.func,
+    widgets: PropTypes.array,
+    activeWidgetSlug: PropTypes.string,
+    locationType: PropTypes.string
+  };
+
   renderMap = () => {
     const { showMapMobile, closeMobileMap } = this.props;
 
@@ -116,6 +129,7 @@ class Page extends PureComponent {
               </Fragment>
             )}
             <GeostoreProvider />
+            <GeodescriberProvider />
           </div>
         )}
       </MediaQuery>
@@ -123,16 +137,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  showMapMobile: PropTypes.bool,
-  closeMobileMap: PropTypes.func.isRequired,
-  links: PropTypes.array,
-  widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  noWidgetsMessage: PropTypes.string,
-  handleCategoryChange: PropTypes.func,
-  widgets: PropTypes.array,
-  activeWidgetSlug: PropTypes.string,
-  locationType: PropTypes.string
-};
-
-export default Page;
+export default DashboardsPage;

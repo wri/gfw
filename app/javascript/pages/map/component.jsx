@@ -7,6 +7,7 @@ import { Tooltip } from 'react-tippy';
 
 import CountryDataProvider from 'providers/country-data-provider';
 import GeostoreProvider from 'providers/geostore-provider';
+import GeodescriberProvider from 'providers/geodescriber-provider';
 import WhitelistsProvider from 'providers/whitelists-provider';
 import DatasetsProvider from 'providers/datasets-provider';
 import LatestProvider from 'providers/latest-provider';
@@ -17,7 +18,6 @@ import ModalMeta from 'components/modals/meta';
 import ModalSource from 'components/modals/sources';
 import Share from 'components/modals/share';
 import Tip from 'components/ui/tip';
-import SubscribeModal from 'components/modals/subscribe';
 import SaveAOIModal from 'components/modals/save-aoi';
 import MapPrompts from 'components/map-prompts';
 import ModalWelcome from 'components/modals/welcome';
@@ -29,6 +29,20 @@ import MapControlButtons from './components/map-controls';
 import './styles.scss';
 
 class MainMapComponent extends PureComponent {
+  static propTypes = {
+    handleShowTooltip: PropTypes.func,
+    onDrawComplete: PropTypes.func,
+    handleClickAnalysis: PropTypes.func,
+    handleClickMap: PropTypes.func,
+    oneClickAnalysis: PropTypes.bool,
+    hidePanels: PropTypes.bool,
+    embed: PropTypes.bool,
+    recentActive: PropTypes.bool,
+    tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    showTooltip: PropTypes.bool,
+    setMainMapAnalysisView: PropTypes.func
+  };
+
   renderInfoTooltip = string => (
     <div>
       <p className="tooltip-info">{string}</p>
@@ -108,7 +122,6 @@ class MainMapComponent extends PureComponent {
               />
             )}
             <RecentImagery active={recentActive} />
-            <SubscribeModal />
             {!embed &&
               isDesktop && (
               <Fragment>
@@ -118,13 +131,14 @@ class MainMapComponent extends PureComponent {
             )}
             <Share />
             <ModalMeta />
-            <SaveAOIModal viewAfterSave clearAfterDelete />
+            <SaveAOIModal viewAfterSave clearAfterDelete canDelete />
             <ModalSource />
             <CountryDataProvider />
             <WhitelistsProvider />
             <DatasetsProvider />
             <LatestProvider />
             <GeostoreProvider />
+            <GeodescriberProvider />
             <AreasProvider />
           </div>
         )}
@@ -132,19 +146,5 @@ class MainMapComponent extends PureComponent {
     );
   }
 }
-
-MainMapComponent.propTypes = {
-  handleShowTooltip: PropTypes.func,
-  onDrawComplete: PropTypes.func,
-  handleClickAnalysis: PropTypes.func,
-  handleClickMap: PropTypes.func,
-  oneClickAnalysis: PropTypes.bool,
-  hidePanels: PropTypes.bool,
-  embed: PropTypes.bool,
-  recentActive: PropTypes.bool,
-  tooltipData: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  showTooltip: PropTypes.bool,
-  setMainMapAnalysisView: PropTypes.func
-};
 
 export default MainMapComponent;

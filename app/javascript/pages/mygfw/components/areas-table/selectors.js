@@ -1,9 +1,8 @@
 import { createStructuredSelector } from 'reselect';
-import { getTags } from 'components/map-menu/components/sections/my-gfw/selectors';
 
-const selectAreas = state => state.areas && state.areas.data;
+import { getUserAreas, getAreaTags } from 'providers/areas-provider/selectors';
 
 export const getAreasTableProps = createStructuredSelector({
-  areas: selectAreas,
-  tags: getTags
+  areas: getUserAreas,
+  tags: getAreaTags
 });

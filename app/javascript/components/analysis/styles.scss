@@ -67,12 +67,8 @@
   display: flex;
   justify-content: space-between;
 
-  .analysis-action-btn {
-    font-size: rem(14px);
-    font-weight: 500;
-    height: rem(30px);
+  > * {
     width: 100%;
-    padding: 0;
 
     &:first-child {
       margin-right: rem(5px);
@@ -83,17 +79,12 @@
     }
   }
 
-  .analysis-buttons {
+  .analysis-action-btn {
+    font-size: rem(14px);
+    font-weight: 500;
+    height: rem(30px);
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    .analysis-btn {
-      font-size: rem(14px);
-      font-weight: 500;
-      height: rem(30px);
-      min-width: rem(120px);
-    }
+    padding: 0;
   }
 
   @media screen and (min-width: $screen-m) {

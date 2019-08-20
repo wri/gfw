@@ -1,6 +1,7 @@
 import { createElement, Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { CancelToken } from 'axios';
 
 import isEqual from 'lodash/isEqual';
 
@@ -24,29 +25,15 @@ const makeMapStateToProps = () => {
 
 class WidgetContainer extends Component {
   componentDidMount() {
-    const {
-      getData,
-      getWidgetData,
-      widget,
-      location,
-      settings,
-      data
-    } = this.props;
+    const { getData, widget, location, settings, data } = this.props;
     const params = { ...location, ...settings };
     if (!data || data.noContent) {
-      getWidgetData({ widget, getData, params });
+      this.handleGetWidgetData({ widget, getData, params });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      location,
-      settings,
-      getData,
-      getWidgetData,
-      widget,
-      error
-    } = this.props;
+    const { location, settings, getData, widget, error } = this.props;
     const settingsUpdateBlackList = [
       'year',
       'activeData',
@@ -75,7 +62,7 @@ class WidgetContainer extends Component {
       !isEqual(error, prevProps.error);
     const params = { ...location, ...settings };
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
-      getWidgetData({ widget, getData, params });
+      this.handleGetWidgetData({ widget, getData, params });
     }
   }
 
@@ -92,6 +79,21 @@ class WidgetContainer extends Component {
       },
       widget
     });
+  };
+
+  handleGetWidgetData = params => {
+    const { getWidgetData } = this.props;
+
+    this.cancelWidgetDataFetch();
+    this.widgetDataFetch = CancelToken.source();
+    getWidgetData({ ...params, token: this.widgetDataFetch.token });
+    this.cancelWidgetDataFetch();
+  };
+
+  cancelWidgetDataFetch = () => {
+    if (this.widgetDataFetch) {
+      this.widgetDataFetch.cancel(`Cancelling ${this.props.widget} fetch`);
+    }
   };
 
   render() {

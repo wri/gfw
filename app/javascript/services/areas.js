@@ -7,6 +7,11 @@ export const getAreasProvider = () =>
     withCredentials: true
   });
 
+export const getAreaProvider = id =>
+  axios.get(`${REQUEST_URL}/${id}`, {
+    withCredentials: true
+  });
+
 export const setAreasProvider = (body, method) => {
   const url =
     method === 'post' ? REQUEST_URL : REQUEST_URL.concat(`/${body.id}`);

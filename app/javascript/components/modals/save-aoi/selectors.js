@@ -1,6 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { getFullLocationName } from 'components/analysis/components/show-analysis/selectors';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
+
+import { getAllAreas } from 'providers/areas-provider/selectors';
 
 import { initialState } from './reducers';
 
@@ -11,7 +13,6 @@ const selectLoading = state =>
   (state.myGfw && state.myGfw.loading);
 const selectSaving = state => state.modalSaveAOI && state.modalSaveAOI.saving;
 const selectError = state => state.modalSaveAOI && state.modalSaveAOI.error;
-const selectAreas = state => state.areas && state.areas.data;
 const selectUserData = state => (state.myGfw && state.myGfw.data) || {};
 const selectLocation = state => state.location && state.location.payload;
 
@@ -29,7 +30,7 @@ export const getOpen = createSelector(
 );
 
 export const getActiveArea = createSelector(
-  [selectLocation, getSaveAOISettings, selectAreas],
+  [selectLocation, getSaveAOISettings, getAllAreas],
   (location, settings, areas) => {
     if (isEmpty(areas)) return null;
     let activeAreaId = '';
@@ -43,12 +44,15 @@ export const getActiveArea = createSelector(
   }
 );
 
-export const getModalTitle = createSelector([getActiveArea], activeArea => {
-  if (activeArea) {
-    return 'Edit Area of Interest';
+export const getModalTitle = createSelector(
+  [getActiveArea, selectUserData],
+  (activeArea, userData) => {
+    if (activeArea && activeArea.userArea && !isEmpty(userData)) {
+      return 'Edit Area of Interest';
+    }
+    return 'Save Area of Interest';
   }
-  return 'Save Area of Interest';
-});
+);
 
 export const getModalAOIProps = createStructuredSelector({
   saving: selectSaving,
@@ -59,5 +63,5 @@ export const getModalAOIProps = createStructuredSelector({
   error: selectError,
   userData: selectUserData,
   location: selectLocation,
-  locationName: getFullLocationName
+  locationName: getGeodescriberTitleFull
 });

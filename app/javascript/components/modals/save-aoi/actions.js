@@ -34,7 +34,7 @@ export const saveAOI = createThunkAction(
     changesEmail,
     monthlyEmail,
     receiveAlerts,
-    activeAreaId,
+    activeArea,
     viewAfterSave
   }) => (dispatch, getState) => {
     const { modalSaveAOI, location, geostore } = getState();
@@ -45,11 +45,13 @@ export const saveAOI = createThunkAction(
       const { id: geostoreId } = geostoreData || {};
       const { payload: { type, adm0, adm1, adm2 } } = location || {};
       const isCountry = type === 'country';
+      const { id: activeAreaId, application } = activeArea || {};
+      const method = activeArea && activeArea.userArea ? 'patch' : 'post';
 
       const postData = {
         name,
         id: activeAreaId,
-        application: 'gfw',
+        application: application || 'gfw',
         geostore: geostoreId,
         resource: {
           type: 'EMAIL',
@@ -65,17 +67,16 @@ export const saveAOI = createThunkAction(
         changesEmail,
         monthlyEmail,
         receiveAlerts,
-        tags
+        tags,
+        public: true
       };
-
-      const method = activeAreaId ? 'patch' : 'post';
 
       setAreasProvider(postData, method)
         .then(response => {
           if (response.data && response.data.data) {
             const area = response.data.data;
             const { id, attributes } = area || {};
-            dispatch(setArea({ id, ...attributes }));
+            dispatch(setArea({ id, ...attributes, userArea: true }));
             dispatch(setSaveAOISaving({ saving: false, error: false }));
             if (viewAfterSave) {
               dispatch(viewArea(id));

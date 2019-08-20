@@ -59,6 +59,8 @@ class AreasTable extends PureComponent {
       filterAreasBySearch,
       this.state.sortBy || 'name'
     );
+    const orderedAreas =
+      this.state.sortBy === 'createdAt' ? sortedAreas.reverse() : sortedAreas;
 
     return (
       <div className="c-areas-table">
@@ -153,9 +155,9 @@ class AreasTable extends PureComponent {
             </div>
           </div>
         </div>
-        {sortedAreas &&
-          !!sortedAreas.length &&
-          sortedAreas.map((area, i) => (
+        {orderedAreas &&
+          !!orderedAreas.length &&
+          orderedAreas.map((area, i) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
                 <Link to={`/dashboards/aoi/${area.id}`}>

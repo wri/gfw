@@ -11,6 +11,24 @@ import ShowAnalysis from 'components/analysis/components/show-analysis';
 import './styles.scss';
 
 class AnalysisComponent extends PureComponent {
+  static propTypes = {
+    clearAnalysis: PropTypes.func,
+    className: PropTypes.string,
+    endpoints: PropTypes.array,
+    widgetLayers: PropTypes.array,
+    loading: PropTypes.bool,
+    location: PropTypes.object,
+    activeArea: PropTypes.object,
+    goToDashboard: PropTypes.func,
+    error: PropTypes.string,
+    handleCancelAnalysis: PropTypes.func,
+    handleFetchAnalysis: PropTypes.func,
+    embed: PropTypes.bool,
+    setSubscribeSettings: PropTypes.func,
+    setSaveAOISettings: PropTypes.func,
+    setShareModal: PropTypes.func
+  };
+
   render() {
     const {
       className,
@@ -103,46 +121,48 @@ class AnalysisComponent extends PureComponent {
                   DASHBOARD
               </Button>
             )}
-            {activeArea ? (
-              <div className="analysis-buttons">
-                <Button
-                  className="analysis-btn dashboard"
-                  theme="theme-button-light"
-                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
-                  tooltip={{ text: 'Go to Areas of Interest dashboard' }}
-                >
-                    DASHBOARD
-                </Button>
-                <Button
-                  className="analysis-btn dashboard"
-                  onClick={() =>
-                    setShareModal({
-                      title: 'Share this view',
-                      shareUrl: window.location.href.includes('embed')
-                        ? window.location.href.replace('/embed', '')
-                        : window.location.href,
-                      embedUrl: window.location.href.includes('embed')
-                        ? window.location.href
-                        : window.location.href.replace('/map', '/embed/map'),
-                      embedSettings: {
-                        width: 670,
-                        height: 490
-                      }
-                    })
-                  }
-                  tooltip={{ text: 'Share or embed this area' }}
-                >
-                    Share area
-                </Button>
-              </div>
-            ) : (
+            {activeArea && (
               <Button
-                className="analysis-action-btn subscribe-btn"
+                className="analysis-action-btn"
+                theme="theme-button-light"
+                link={activeArea && `/dashboards/aoi/${activeArea.id}`}
+                tooltip={{ text: 'Go to Areas of Interest dashboard' }}
+              >
+                  DASHBOARD
+              </Button>
+            )}
+            {(!activeArea || (activeArea && !activeArea.userArea)) && (
+              <Button
+                className="analysis-action-btn"
                 onClick={() => {
                   setSaveAOISettings({ open: true });
                 }}
               >
                   SAVE IN MY GFW
+              </Button>
+            )}
+            {activeArea &&
+                activeArea.userArea && (
+              <Button
+                className="analysis-action-btn"
+                onClick={() =>
+                  setShareModal({
+                    title: 'Share this view',
+                    shareUrl: window.location.href.includes('embed')
+                      ? window.location.href.replace('/embed', '')
+                      : window.location.href,
+                    embedUrl: window.location.href.includes('embed')
+                      ? window.location.href
+                      : window.location.href.replace('/map', '/embed/map'),
+                    embedSettings: {
+                      width: 670,
+                      height: 490
+                    }
+                  })
+                }
+                tooltip={{ text: 'Share or embed this area' }}
+              >
+                    Share area
               </Button>
             )}
           </div>
@@ -151,23 +171,5 @@ class AnalysisComponent extends PureComponent {
     );
   }
 }
-
-AnalysisComponent.propTypes = {
-  clearAnalysis: PropTypes.func,
-  className: PropTypes.string,
-  endpoints: PropTypes.array,
-  widgetLayers: PropTypes.array,
-  loading: PropTypes.bool,
-  location: PropTypes.object,
-  activeArea: PropTypes.object,
-  goToDashboard: PropTypes.func,
-  error: PropTypes.string,
-  handleCancelAnalysis: PropTypes.func,
-  handleFetchAnalysis: PropTypes.func,
-  embed: PropTypes.bool,
-  setSubscribeSettings: PropTypes.func,
-  setSaveAOISettings: PropTypes.func,
-  setShareModal: PropTypes.func
-};
 
 export default AnalysisComponent;

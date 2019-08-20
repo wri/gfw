@@ -7,11 +7,37 @@ import Loader from 'components/ui/loader';
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
+import SaveAOIModal from 'components/modals/save-aoi';
 
+import tagIcon from 'assets/icons/tag.svg';
 import downloadIcon from 'assets/icons/download.svg';
+import subscribedIcon from 'assets/icons/subscribed.svg';
+import pencilIcon from 'assets/icons/pencil.svg';
 import './styles.scss';
 
 class Header extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    loading: PropTypes.bool,
+    locationNames: PropTypes.object.isRequired,
+    adm0s: PropTypes.array,
+    adm1s: PropTypes.array,
+    adm2s: PropTypes.array,
+    handleLocationChange: PropTypes.func.isRequired,
+    setShareModal: PropTypes.func.isRequired,
+    shareData: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    forestAtlasLink: PropTypes.object,
+    sentence: PropTypes.object,
+    downloadLink: PropTypes.string,
+    selectorMeta: PropTypes.object,
+    shareMeta: PropTypes.string,
+    setSaveAOISettings: PropTypes.func,
+    title: PropTypes.string,
+    activeArea: PropTypes.object,
+    errorMsg: PropTypes.string
+  };
+
   render() {
     const {
       className,
@@ -27,48 +53,81 @@ class Header extends PureComponent {
       forestAtlasLink,
       sentence,
       downloadLink,
-      selectorMeta
+      selectorMeta,
+      shareMeta,
+      setSaveAOISettings,
+      title,
+      activeArea,
+      errorMsg
     } = this.props;
     const isCountryDashboard =
       location.type === 'country' || location.type === 'global';
+    const isAreaDashboard = location.type === 'aoi';
+    const showMetaControls =
+      !loading && (!isAreaDashboard || (isAreaDashboard && activeArea));
+    const { tags } = activeArea || {};
 
     return (
       <div className={cx('c-dashboards-header', className)}>
         {loading && <Loader className="loader" theme="theme-loader-light" />}
-        <div className="share-buttons">
-          <Button
-            className="theme-button-small"
-            onClick={() => setShareModal(shareData)}
-            tooltip={{
-              text: 'Share this page',
-              position: 'bottom'
-            }}
-          >
-            SHARE
-          </Button>
-          <Button
-            className="theme-button-medium theme-button-clear square"
-            extLink={downloadLink}
-            tooltip={{
-              text: `Download the data${
-                locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
-              }`,
-              position: 'bottom'
-            }}
-          >
-            <Icon icon={downloadIcon} />
-          </Button>
-        </div>
+        {showMetaControls && (
+          <div className="share-buttons">
+            <Button
+              className="theme-button-small"
+              onClick={() => {
+                if (activeArea && !activeArea.userArea) {
+                  setSaveAOISettings({ open: true });
+                } else {
+                  setShareModal(shareData);
+                }
+              }}
+            >
+              {shareMeta}
+            </Button>
+            {activeArea &&
+              activeArea.userArea && (
+              <Button
+                className="theme-button-medium theme-button-clear square"
+                tooltip={{
+                  text: `Edit ${locationNames.adm0.label}`,
+                  position: 'bottom'
+                }}
+                onClick={() => setSaveAOISettings({ open: true })}
+              >
+                <Icon icon={pencilIcon} />
+              </Button>
+            )}
+            {isCountryDashboard && (
+              <Button
+                className="theme-button-medium theme-button-clear square"
+                extLink={downloadLink}
+                tooltip={{
+                  text: `Download the data${
+                    locationNames.adm0 ? ` for ${locationNames.adm0.label}` : ''
+                  }`,
+                  position: 'bottom'
+                }}
+              >
+                <Icon icon={downloadIcon} />
+              </Button>
+            )}
+          </div>
+        )}
         <div className="row">
           <div className="columns small-12 medium-10">
             <div className="select-container">
-              {!location.adm0 && <h3>{location.type || 'Global'}</h3>}
+              {title && (
+                <h3 className={cx({ global: title === 'global' })}>{title}</h3>
+              )}
+              {isAreaDashboard &&
+                !activeArea &&
+                !loading && <h3>{errorMsg}</h3>}
               {adm0s && (
                 <Dropdown
                   theme="theme-dropdown-dark"
                   placeholder={`Select ${selectorMeta.typeVerb}`}
                   noItemsFound={`No ${selectorMeta.typeName} found`}
-                  noSelectedValue={`Select a ${selectorMeta.typeName}`}
+                  noSelectedValue={`Select ${selectorMeta.typeName}`}
                   value={locationNames.adm0}
                   options={adm0s}
                   onChange={adm0 =>
@@ -145,6 +204,25 @@ class Header extends PureComponent {
               )}
             </div>
           </div>
+          {!loading &&
+            activeArea &&
+            activeArea.userArea && (
+            <div className="columns small-12 medium-10">
+              <div className="metadata">
+                {tags &&
+                    !!tags.length && (
+                  <div className="tags">
+                    <Icon icon={tagIcon} className="tag-icon" />
+                    <p>{tags.join(', ')}</p>
+                  </div>
+                )}
+                <div className="subscribed">
+                  <Icon icon={subscribedIcon} className="subscribed-icon" />
+                  <p>Subscribed</p>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="columns small-12 medium-10">
             <div className="description text -title-xs">
               {!loading && (
@@ -164,26 +242,10 @@ class Header extends PureComponent {
             </div>
           </div>
         </div>
+        <SaveAOIModal />
       </div>
     );
   }
 }
-
-Header.propTypes = {
-  className: PropTypes.string,
-  loading: PropTypes.bool,
-  locationNames: PropTypes.object.isRequired,
-  adm0s: PropTypes.array,
-  adm1s: PropTypes.array,
-  adm2s: PropTypes.array,
-  handleLocationChange: PropTypes.func.isRequired,
-  setShareModal: PropTypes.func.isRequired,
-  shareData: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  forestAtlasLink: PropTypes.object,
-  sentence: PropTypes.object,
-  downloadLink: PropTypes.string,
-  selectorMeta: PropTypes.object
-};
 
 export default Header;
