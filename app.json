@@ -134,6 +134,9 @@
     "NPM_CONFIG_PRODUCTION": {
       "required": true
     },
+    "PLANET_API_KEY": {
+      "required": true
+    },
     "RAILS_ENV": {
       "required": true
     },
