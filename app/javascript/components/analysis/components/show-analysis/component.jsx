@@ -4,6 +4,7 @@ import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import { track } from 'app/analytics';
+import Link from 'redux-first-router-link';
 
 import Icon from 'components/ui/icon';
 import NoContent from 'components/ui/no-content';
@@ -263,18 +264,17 @@ class ShowAnalysis extends PureComponent {
                 <p>
                     To perform an in-depth analysis of this area please visit
                     the{' '}
-                  <a href={`/dashboards/aoi/${activeArea.id}`}>
+                  <Link to={`/dashboards/aoi/${activeArea.id}`}>
                       area dashboard
-                  </a>.
+                  </Link>.
                 </p>
               </div>
             ) : (
               <div className="content">
                 <h3>Interested in this particular area?</h3>
                 <p>
-                    Save this area to create a <a>dashboard</a> with a more
-                    in-depth analysis and receive <a>email alerts</a> about
-                    forest cover change.
+                    Save this area to create a dashboard with a more in-depth
+                    analysis and receive email alerts about forest cover change.
                 </p>
               </div>
             )}
