@@ -41,6 +41,24 @@ export const selectCountryData = state =>
     }
     : {});
 
+export const getLocation = createSelector(
+  [selectLocation, selectGeostore],
+  (location, geostore) => {
+    if (location.type !== 'aoi' || !geostore) return location;
+
+    return {
+      ...location,
+      type: 'geostore',
+      adm0: geostore.id
+    };
+  }
+);
+
+export const getLocationType = createSelector(
+  [getLocation],
+  location => location.type
+);
+
 const locationTypes = {
   country: {
     label: 'country',
@@ -73,12 +91,12 @@ export const getOptions = createSelector([], () => {
   return optionsMeta;
 });
 
-export const getAdminLevel = createSelector([selectLocation], location =>
+export const getAdminLevel = createSelector([getLocation], location =>
   locationLevelToStr(location)
 );
 
 export const getLocationData = createSelector(
-  [selectLocationType, selectCountryData],
+  [getLocationType, selectCountryData],
   (type, countryData) => {
     if (type === 'country' || type === 'global') return countryData;
     return {};
@@ -86,7 +104,7 @@ export const getLocationData = createSelector(
 );
 
 export const getActiveLocationData = createSelector(
-  [getLocationData, selectLocation],
+  [getLocationData, getLocation],
   (locationData, location) => {
     if (location.adm2) return locationData.adm2;
     return locationData[location.adm1 ? 'adm1' : 'adm0'];
@@ -94,7 +112,7 @@ export const getActiveLocationData = createSelector(
 );
 
 export const getChildLocationData = createSelector(
-  [getLocationData, selectLocation],
+  [getLocationData, getLocation],
   (locationData, location) => {
     if (location.adm2) return null;
     if (!location.adm0) return locationData.adm0;
@@ -103,7 +121,7 @@ export const getChildLocationData = createSelector(
 );
 
 export const getParentLocationData = createSelector(
-  [getLocationData, selectLocation],
+  [getLocationData, getLocation],
   (locationData, location) => {
     if (!location.adm1 && !location.adm2) return null;
     return locationData[location.adm2 ? 'adm1' : 'adm0'];
@@ -111,7 +129,7 @@ export const getParentLocationData = createSelector(
 );
 
 export const getLocationDict = createSelector(
-  [getLocationData, selectLocation],
+  [getLocationData, getLocation],
   (locationData, location) => {
     let values;
     if (location.adm2) values = locationData.adm2;
@@ -133,7 +151,7 @@ export const getLocationDict = createSelector(
 );
 
 export const getLocationObject = createSelector(
-  [getAdminLevel, getActiveLocationData, selectLocation, getParentLocationData],
+  [getAdminLevel, getActiveLocationData, getLocation, getParentLocationData],
   (adminLevel, adms, location, parent) => {
     if (location.type !== 'country') {
       return locationTypes[location.type];
@@ -173,7 +191,7 @@ export const getLocationObject = createSelector(
 );
 
 export const getLocationName = createSelector(
-  [getLocationObject, selectLocationType],
+  [getLocationObject, getLocationType],
   (location, type) => (location && location.label) || type
 );
 
@@ -182,7 +200,7 @@ export const getFAOLocationData = createSelector(
   countryData => countryData.faoCountries
 );
 
-export const isTropicalLocation = createSelector([selectLocation], location =>
+export const isTropicalLocation = createSelector([getLocation], location =>
   tropicalIsos.includes(location && location.adm0)
 );
 
@@ -212,7 +230,7 @@ export const parseWidgets = createSelector(
 );
 
 export const filterWidgetsByLocation = createSelector(
-  [parseWidgets, selectLocationType, getAdminLevel],
+  [parseWidgets, getLocationType, getAdminLevel],
   (widgets, type, adminLevel) => {
     if (!widgets || !type) return null;
     return widgets.filter(w => {
@@ -225,7 +243,7 @@ export const filterWidgetsByLocation = createSelector(
 );
 
 export const filterWidgetsByLocationType = createSelector(
-  [filterWidgetsByLocation, selectLocation, getFAOLocationData],
+  [filterWidgetsByLocation, getLocation, getFAOLocationData],
   (widgets, location, faoCountries) => {
     if (!widgets) return null;
     const isFAOCountry =
@@ -240,7 +258,7 @@ export const filterWidgetsByLocationType = createSelector(
 );
 
 export const filterWidgetsByLocationWhitelist = createSelector(
-  [filterWidgetsByLocationType, selectLocation],
+  [filterWidgetsByLocationType, getLocation],
   (widgets, location) => {
     if (!widgets) return null;
     return widgets.filter(w => {
@@ -275,7 +293,7 @@ export const parseWidgetsWithOptions = createSelector(
     filterWidgetsByIndicatorWhitelist,
     getOptions,
     selectWhitelists,
-    selectLocation
+    getLocation
   ],
   (widgets, options, polynameWhitelist, location) => {
     if (!widgets) return null;
@@ -338,8 +356,8 @@ export const getWidgetsProps = createStructuredSelector({
   whitelists: selectWhitelists,
   whitelist: selectWhitelists,
   allLocation: selectAllLocation,
-  location: selectLocation,
-  locationType: selectLocationType,
+  location: getLocation,
+  locationType: getLocationType,
   locationData: getActiveLocationData,
   locationObject: getLocationObject,
   locationName: getLocationName,

@@ -6,7 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
-import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
+import { getActiveArea } from 'providers/areas-provider/selectors';
 import { locationLevelToStr } from 'utils/format';
 
 import { initialState } from './reducers';
@@ -200,6 +200,5 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation,
-  aois: getAllAreas,
   activeArea: getActiveArea
 });
