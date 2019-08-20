@@ -51,7 +51,7 @@ export const getPlanetBasemaps = createSelector(
         return {
           label: `${year}/${period}`,
           interval: p.interval,
-          url: p._links.tiles,
+          name: p.name,
           year,
           period
         };
@@ -84,7 +84,7 @@ export const selectPlanetBasemapsIntervalOptions = createSelector(
         (planetBasemaps[f.value][0] && {
           ...f,
           year: planetBasemaps[f.value][0].year,
-          url: planetBasemaps[f.value][0].url,
+          name: planetBasemaps[f.value][0].name,
           period: planetBasemaps[f.value][0].period
         }) ||
         intervalOptions.find(interval => interval.value === f.value)
@@ -114,7 +114,7 @@ export const getPlanetBasemapSelected = createSelector(
     if (isEmpty(planetBasemaps)) return null;
     if (basemap.value !== 'planet') return planetBasemaps[0];
 
-    return planetBasemaps.find(p => p.url === basemap.url);
+    return planetBasemaps.find(p => p.name === basemap.name);
   }
 );
 
@@ -127,7 +127,7 @@ export const getPlanetYears = createSelector(
     return Object.keys(groupByYears).map(y => ({
       label: y,
       value: parseInt(y, 10),
-      url: groupByYears[y] && groupByYears[y][0].url,
+      name: groupByYears[y] && groupByYears[y][0].name,
       interval: groupByYears[y] && groupByYears[y][0].interval,
       period: groupByYears[y] && groupByYears[y][0].period
     }));
