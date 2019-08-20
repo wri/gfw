@@ -62,13 +62,18 @@ class AreasTable extends PureComponent {
     const orderedAreas =
       this.state.sortBy === 'createdAt' ? sortedAreas.reverse() : sortedAreas;
 
+    const hasSelectedTags = selectedTags && !!selectedTags.length;
+    const hasUnselectedTags = unselectedTags && !!unselectedTags.length;
+
     return (
       <div className="c-areas-table">
         <div className="row filter-row">
           <div className="column small-12 medium-5 filter-group">
-            <span className="filter-title">Filter by tag</span>
+            {(hasSelectedTags || hasUnselectedTags) && (
+              <span className="filter-title">Filter by tag</span>
+            )}
             <div className="filter-tags">
-              {selectedTags &&
+              {hasSelectedTags &&
                 selectedTags.map(tag => (
                   <Pill
                     className="filter-tag"
@@ -82,8 +87,7 @@ class AreasTable extends PureComponent {
                     }
                   />
                 ))}
-              {unselectedTags &&
-                !!unselectedTags.length && (
+              {hasUnselectedTags && (
                 <Dropdown
                   className="filter-tag"
                   theme="theme-dropdown-button theme-dropdown-button-small"
@@ -101,9 +105,9 @@ class AreasTable extends PureComponent {
                   options={unselectedTags}
                   onChange={tag =>
                     tag.value &&
-                      this.setState({
-                        activeTags: [...activeTags, tag.value]
-                      })
+                    this.setState({
+                      activeTags: [...activeTags, tag.value]
+                    })
                   }
                 />
               )}
