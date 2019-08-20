@@ -52,10 +52,10 @@ function reducer(state, action) {
         lang: payload
       };
     }
-    case 'firesAlerts': {
+    case 'fireAlerts': {
       return {
         ...state,
-        firesAlerts: !state.firesAlerts
+        fireAlerts: !state.fireAlerts
       };
     }
     case 'deforestationAlerts': {
@@ -72,7 +72,7 @@ function reducer(state, action) {
     }
     case 'activeArea': {
       const { activeArea, email, lang } = payload;
-      const { name, tags, firesAlerts, deforestationAlerts, monthlySummary } =
+      const { name, tags, fireAlerts, deforestationAlerts, monthlySummary } =
         activeArea.attributes || activeArea || {};
       return {
         ...state,
@@ -80,7 +80,7 @@ function reducer(state, action) {
         tags,
         email,
         lang,
-        firesAlerts,
+        fireAlerts,
         deforestationAlerts,
         monthlySummary
       };
@@ -110,7 +110,7 @@ function SaveAOIForm(props) {
     emailError: false,
     nameError: false,
     lang: props.lang,
-    firesAlerts: props.firesAlerts || false,
+    fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
     monthlySummary: props.monthlySummary || false
   });
@@ -171,7 +171,7 @@ function SaveAOIForm(props) {
     tags,
     emailError,
     nameError,
-    firesAlerts,
+    fireAlerts,
     deforestationAlerts,
     monthlySummary
   } = form;
@@ -235,8 +235,8 @@ function SaveAOIForm(props) {
       <div className="field">
         <Checkbox
           className="form-checkbox"
-          onChange={() => dispatch({ type: 'firesAlerts' })}
-          checked={firesAlerts}
+          onChange={() => dispatch({ type: 'fireAlerts' })}
+          checked={fireAlerts}
           label={'As soon as fires are detected'}
         />
         <Checkbox
@@ -270,7 +270,7 @@ SaveAOIForm.propTypes = {
   viewAfterSave: PropTypes.bool,
   clearAfterDelete: PropTypes.bool,
   canDelete: PropTypes.bool,
-  firesAlerts: PropTypes.bool,
+  fireAlerts: PropTypes.bool,
   deforestationAlerts: PropTypes.bool,
   monthlySummary: PropTypes.bool
 };
