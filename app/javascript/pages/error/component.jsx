@@ -8,7 +8,7 @@ import './styles.scss';
 
 class ErrorPage extends PureComponent {
   static propTypes = {
-    metadata: PropTypes.object.isRequired
+    metadata: PropTypes.object
   };
 
   render() {
