@@ -22,7 +22,7 @@ class WidgetTreeCover extends PureComponent {
     };
 
     return (
-      <div className="c-sankey-chart-legend-widget">
+      <div className="c-sankey-chart-widget">
         <Sankey
           data={data}
           config={config}

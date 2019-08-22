@@ -1,8 +1,10 @@
-.link {
+.c-sankey-link {
   cursor: pointer;
+  stroke: #ddd;
+  stroke-opacity: 1;
 
   &:hover {
-    stroke: #113750;
+    stroke: #444;
     stroke-opacity: 0.3;
   }
 }

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { PropTypes } from 'prop-types';
-import styles from './sankey-link-styles.scss';
+
+import './sankey-link-styles.scss';
 
 class SankeyLink extends PureComponent {
   constructor() {
@@ -26,7 +27,7 @@ class SankeyLink extends PureComponent {
     const linkStart = config.titlePadding || 140;
     return (
       <path
-        className={styles.link}
+        className="c-sankey-link"
         d={`
           M${sourceX + linkStart},${sourceY}
           C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${targetX -
