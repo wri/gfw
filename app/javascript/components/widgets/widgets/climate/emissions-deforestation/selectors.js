@@ -5,7 +5,7 @@ import { formatNumber } from 'utils/format';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
-const getData = state => (state.data && state.data.loss) || null;
+const getData = state => state.data;
 const getSettings = state => state.settings || null;
 const getColors = state => state.colors;
 const getIndicator = state => state.indicator || null;
@@ -16,17 +16,14 @@ export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
-    const { startYear, endYear, unit } = settings;
-    const dataByUnit = data[unit];
-    const mappedData =
-      dataByUnit &&
-      Object.keys(dataByUnit).map(d => ({
-        year: d,
-        [unit]: dataByUnit[d]
-      }));
+    const { startYear, endYear } = settings;
     return (
-      mappedData &&
-      mappedData.filter(d => d.year >= startYear && d.year <= endYear)
+      data &&
+      data.filter(d => d.year >= startYear && d.year <= endYear).map(d => ({
+        ...d,
+        co2LossByYear: d.emissions,
+        cLossByYear: d.biomassLoss
+      }))
     );
   }
 );
