@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-// import { Sankey } from 'cw-components';
 import Sankey from 'components/charts/sankey-chart/sankey';
 
 import './styles';
@@ -9,7 +8,6 @@ import './styles';
 class WidgetTreeCover extends PureComponent {
   render() {
     const { data } = this.props;
-    // { source: 0, target: 3, value: 5000, timeframes: '2001-2011' },
 
     const config = {
       tooltip: {
@@ -24,7 +22,7 @@ class WidgetTreeCover extends PureComponent {
     };
 
     return (
-      <div className="c-pie-chart-legend-widget">
+      <div className="c-sankey-chart-legend-widget">
         <Sankey
           data={data}
           config={config}
