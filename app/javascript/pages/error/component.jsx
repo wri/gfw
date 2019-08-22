@@ -8,7 +8,7 @@ import './styles.scss';
 
 class ErrorPage extends PureComponent {
   static propTypes = {
-    metadata: PropTypes.object.isRequired
+    metadata: PropTypes.object
   };
 
   render() {
@@ -19,8 +19,13 @@ class ErrorPage extends PureComponent {
           <div className="column small-12 medium-8 medium-offset-2">
             <div className="error-message">
               <Icon icon={treeImage} className="error-tree" />
-              <h1>{metadata && metadata.title}</h1>
-              <p>{metadata && metadata.desc}</p>
+              <h1>
+                {(metadata && metadata.title) || 'Sorry, something went wrong.'}
+              </h1>
+              <p>
+                {(metadata && metadata.desc) ||
+                  'Try refreshing the page or check your connection.'}
+              </p>
             </div>
           </div>
         </div>
