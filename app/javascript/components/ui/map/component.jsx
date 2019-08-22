@@ -265,6 +265,7 @@ class Map extends Component {
           getCursor={getCursor}
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
+          preventStyleDiffing
         >
           {loaded &&
             !!this.map &&
