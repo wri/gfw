@@ -1,72 +1,75 @@
 @import '~styles/settings.scss';
 
-.tooltip {
-  background: $white;
+.c-sankey-tooltip {
+  background: $black;
+  opacity: 0.8;
   // font-family: $font-family-2;
   letter-spacing: -0.1px;
-  font-size: $font-size-xs;
+  font-size: $font-size-s;
   min-width: 180px;
   max-width: 300px;
   padding: 15px;
   box-shadow: 0 5px 15px 0 rgba(17, 55, 80, 0.15);
   border-radius: 4px;
-}
 
-.tooltipHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
+  .tp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: $white;
 
-.unit {
-  color: $grey-dark;
-}
+    .tp-targetName {
+      // color: $green-gfw;
+      padding-right: 16px;
+    }
 
-.label {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
+    .tp-unit {
+      color: $grey-dark;
+    }
+  }
 
-.legend {
-  display: flex;
-  justify-content: flex-start;
-}
+  .tp-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
 
-.labelDot {
-  border-radius: 50%;
-  width: 10px;
-  min-width: 10px;
-  height: 10px;
-  margin-right: 5px;
-  margin-top: 3px;
-  display: block;
-}
+    .tp-legend {
+      display: flex;
+      justify-content: flex-start;
 
-.labelName {
-  margin-right: 30px;
-  color: $green-gfw;
-}
+      .tp-label-dot {
+        border-radius: 50%;
+        width: 10px;
+        min-width: 10px;
+        height: 10px;
+        margin-right: 5px;
+        margin-top: 3px;
+        display: block;
+      }
 
-.labelValue {
-  color: $grey-dark;
-  text-align: right;
-  min-width: max-content;
-}
+      .tp-label-name {
+        margin-right: 30px;
+        // color: $green-gfw;
+        color: $white;
+      }
+    }
 
-.targetName {
-  color: $green-gfw;
-  padding-right: 16px;
-}
+    .tp-label-value {
+      color: $grey-dark;
+      text-align: right;
+      min-width: max-content;
+    }
+  }
 
-.focus {
-  @extend .labelValue;
+  .tooltip-children {
+    color: $grey-dark;
+  }
 
-  margin-top: 10px;
-}
+  .focus {
+    @extend .tp-label-value;
 
-.tooltipChildren {
-  color: $grey-dark;
+    margin-top: 10px;
+  }
 }

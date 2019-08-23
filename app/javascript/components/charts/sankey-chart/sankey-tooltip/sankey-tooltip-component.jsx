@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import styles from './sankey-tooltip-styles.scss';
+import './sankey-tooltip-styles.scss';
 
 class SankeyTooltip extends PureComponent {
   render() {
@@ -10,7 +10,7 @@ class SankeyTooltip extends PureComponent {
     const scale = config.scale || 1;
     const valueFormat = config.format || 'n';
     return (
-      <div className={styles.tooltip}>
+      <div className="c-sankey-tooltip">
         {content &&
           content.payload &&
           content.payload.length > 0 &&
@@ -18,8 +18,8 @@ class SankeyTooltip extends PureComponent {
             node =>
               (node.payload ? (
                 <div key={node.name}>
-                  <div className={styles.tooltipHeader}>
-                    <span className={styles.targetName}>
+                  <div className="tp-header">
+                    <span className="tp-target-name">
                       {node.payload.payload &&
                         node.payload.payload.target &&
                         `${node.payload.payload.target.name} 
@@ -30,13 +30,13 @@ class SankeyTooltip extends PureComponent {
                 }`}
                     </span>
                     {config.unit && (
-                      <span className={styles.unit}>{config.unit}</span>
+                      <span className="tp-unit">{config.unit}</span>
                     )}
                   </div>
-                  <div className={styles.label}>
-                    <div className={styles.legend}>
+                  <div className="tp-label">
+                    <div className="tp-legend">
                       <span
-                        className={styles.labelDot}
+                        className="tp-label-dot"
                         style={
                           node.payload.payload && {
                             backgroundColor: node.payload.payload.source
@@ -45,17 +45,17 @@ class SankeyTooltip extends PureComponent {
                           }
                         }
                       />
-                      <div className={styles.labelName}>
+                      <div className="tp-label-name">
                         {node.payload.payload && node.payload.payload.source
                           ? node.payload.payload.source.name
                           : node.payload.payload && node.payload.payload.name}
                       </div>
                     </div>
-                    <div className={styles.labelValue}>
+                    <div className="tp-label-value">
                       {`${format(valueFormat)(node.value * scale)}${suffix}`}
                     </div>
                   </div>
-                  <div className={styles.tooltipChildren}>
+                  <div className="tooltip-children">
                     {tooltipChildren && tooltipChildren(node)}
                   </div>
                 </div>

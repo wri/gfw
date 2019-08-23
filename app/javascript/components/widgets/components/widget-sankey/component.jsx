@@ -12,8 +12,8 @@ class WidgetTreeCover extends PureComponent {
     const config = {
       tooltip: {
         scale: 1 / 1000,
-        suffix: 'm',
-        unit: 'tpu'
+        suffix: 'm'
+        // unit: 'tpu'
       },
       node: {
         scale: 1 / 1000,
@@ -26,7 +26,7 @@ class WidgetTreeCover extends PureComponent {
         <Sankey
           data={data}
           config={config}
-          tooltipChildren={node =>
+          /* tooltipChildren={node =>
             node.payload &&
             node.payload.payload && (
               <div>
@@ -35,7 +35,7 @@ class WidgetTreeCover extends PureComponent {
                   node.payload.payload.target.name}
               </div>
             )
-          }
+          } */
         />
       </div>
     );
