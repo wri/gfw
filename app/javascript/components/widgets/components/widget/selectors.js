@@ -83,9 +83,11 @@ export const getWidgetLoading = createSelector(
 export const getRangeYears = createSelector(
   [getWidgetStateData, selectWidgetConfig],
   (data, config) => {
-    const { startYears, endYears, yearsRange } = config.options || {};
+    const { startYears, endYears, yearsRange, yearValues } =
+      config.options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
     let years =
+      yearValues ||
       data.years ||
       (yearsRange && range(yearsRange[0], yearsRange[1] + 1)) ||
       [];

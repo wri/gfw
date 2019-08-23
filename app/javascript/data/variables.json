@@ -15,5 +15,13 @@
   {
     "label": "Deforestation",
     "value": "cumulative_deforestation"
+  },
+  {
+    "label": "All data",
+    "value": "all_data"
+  },
+  {
+    "label": "Changes only",
+    "value": "changes_only"
   }
 ]

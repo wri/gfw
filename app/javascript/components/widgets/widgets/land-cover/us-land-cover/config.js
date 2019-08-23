@@ -16,7 +16,13 @@ export default {
       layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4']
     }
   ],
-  options: {},
+  options: {
+    startYears: true,
+    endYears: true,
+    yearValues: [2001, 2006, 2011],
+    variables: ['all_data', 'changes_only']
+    // TODO: 'custom' object processed in widget-settings-component with title and options
+  },
   sortOrder: {
     landCover: 101
   },

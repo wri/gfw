@@ -13,14 +13,15 @@ export const cleanData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (isEmpty(data)) return null;
-    // const { filter } = settings;
+    const { variable } = settings;
     let { source } = settings;
     if (!source) source = 'ipcc';
-    // if (filter)
-    return data.filter(
-      d => d[`from_class_${source}`] !== d[`to_class_${source}`]
-    );
-    // return data;
+    if (variable === 'changes_only') {
+      return data.filter(
+        d => d[`from_class_${source}`] !== d[`to_class_${source}`]
+      );
+    }
+    return data;
   }
 );
 
@@ -88,7 +89,7 @@ export const parseConfig = createSelector([parseData], dataKeys => {
 export const parseSentence = createSelector(
   [parseData, getLocationName, getSentences],
   (data, locationName, sentence) => {
-    if (!data || !data.length) return null;
+    if (isEmpty(data)) return null;
     const params = {
       fromYear: 2001,
       toYear: 2011,

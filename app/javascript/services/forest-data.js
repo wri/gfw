@@ -41,7 +41,7 @@ const NEW_SQL_QUERIES = {
   getLocationPolynameWhitelist:
     'SELECT {location}, {polynames} FROM polyname_whitelist {WHERE} GROUP BY {location}',
   getNLCDLandCover:
-    'SELECT {select} FROM nlcd_land_cover WHERE from_year = {from_year} AND to_year = {to_year} {adm} {groupby}'
+    'SELECT {select} FROM nlcd_land_cover WHERE from_year = {startYear} AND to_year = {endYear} {adm} {groupby}'
 };
 
 const ALLOWED_PARAMS = [
@@ -369,7 +369,7 @@ export const getLossOld = ({
 };
 
 export const getUSLandCover = params => {
-  const { adm1, adm2, from_year, to_year } = params;
+  const { adm1, adm2, startYear, endYear } = params;
   let admQuery = '';
   if (adm1 && !adm2) {
     // adm1
@@ -385,8 +385,8 @@ export const getUSLandCover = params => {
         ? '*'
         : 'SUM(class_area) as area, to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
     )
-    .replace('{from_year}', from_year)
-    .replace('{to_year}', to_year)
+    .replace('{startYear}', startYear)
+    .replace('{endYear}', endYear)
     .replace('{adm}', admQuery)
     .replace(
       '{groupby}',

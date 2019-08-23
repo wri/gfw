@@ -5,7 +5,7 @@ import SankeyChart from 'components/charts/sankey-chart/sankey';
 
 import './styles';
 
-class WidgetTreeCover extends PureComponent {
+class WidgetSankey extends PureComponent {
   render() {
     const { data } = this.props;
 
@@ -29,9 +29,9 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
-WidgetTreeCover.propTypes = {
-  data: PropTypes.array
+WidgetSankey.propTypes = {
+  data: PropTypes.object
   // settings: PropTypes.object.isRequired
 };
 
-export default WidgetTreeCover;
+export default WidgetSankey;
