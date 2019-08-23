@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Sankey from 'components/charts/sankey-chart/sankey';
+import SankeyChart from 'components/charts/sankey-chart/sankey';
 
 import './styles';
 
@@ -23,20 +23,7 @@ class WidgetTreeCover extends PureComponent {
 
     return (
       <div className="c-sankey-chart-widget">
-        <Sankey
-          data={data}
-          config={config}
-          /* tooltipChildren={node =>
-            node.payload &&
-            node.payload.payload && (
-              <div>
-                {node.payload.payload.abs_pct} percentage of land went to{' '}
-                {node.payload.payload.target &&
-                  node.payload.payload.target.name}
-              </div>
-            )
-          } */
-        />
+        <SankeyChart data={data} config={config} height={400} />
       </div>
     );
   }

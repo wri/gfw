@@ -2,7 +2,7 @@ import React from 'react';
 import { Rectangle, Layer } from 'recharts';
 import { PropTypes } from 'prop-types';
 import { splitSVGText } from 'utils/strings';
-import styles from './sankey-node-styles.scss';
+import './sankey-node-styles.scss';
 
 function SankeyNode({ x, y, height, index, payload, config }) {
   const width = 140;
@@ -59,7 +59,7 @@ function SankeyNode({ x, y, height, index, payload, config }) {
         />
         <text
           textAnchor={isEndNode ? 'end' : 'start'}
-          className={styles.nodeText}
+          className="sankey-node-text"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: tSpans(payload.name) }}
         />
