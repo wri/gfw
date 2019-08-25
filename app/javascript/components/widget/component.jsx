@@ -1,12 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import compact from 'lodash/compact';
-import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
-import intersection from 'lodash/intersection';
 import cx from 'classnames';
 import { track } from 'app/analytics';
-import moment from 'moment';
 
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
@@ -18,151 +14,7 @@ import WidgetFooter from './components/widget-footer';
 
 import './styles.scss';
 
-const mapSyncKeys = [
-  'startYear',
-  'endYear',
-  'threshold',
-  'extentYear',
-  'forestType',
-  'landCategory'
-];
-
 class Widget extends PureComponent {
-  componentDidMount() {
-    const { active, config } = this.props;
-
-    if (active && config && config.datasets) {
-      this.syncWidgetWithMap();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { active, settings, config } = this.props;
-    const { datasets } = config || {};
-
-    if (active) {
-      const settingsChanged =
-        settings &&
-        intersection(mapSyncKeys, Object.keys(settings)).length &&
-        !isEqual(settings, prevProps.settings);
-      const activeChanged = !isEqual(active && prevProps.active);
-      if (datasets && (settingsChanged || activeChanged)) {
-        this.syncWidgetWithMap();
-      } else if (!datasets && activeChanged) {
-        this.clearMap();
-      }
-    }
-
-    if (!active && !isEqual(active, prevProps.active)) {
-      this.clearMap();
-    }
-  }
-
-  syncWidgetWithMap = () => {
-    // if active widget settings change, send them to the layer
-    const { setMapSettings, settings, config, polynames, options } = this.props;
-    const {
-      startYear,
-      endYear,
-      threshold,
-      extentYear,
-      weeks,
-      year,
-      latestDate,
-      ifl
-    } =
-      settings || {};
-
-    const widgetDatasets = config.datasets.map(d => ({
-      ...d,
-      opacity: 1,
-      visibility: true,
-      layers:
-        extentYear && !Array.isArray(d.layers)
-          ? [d.layers[extentYear]]
-          : d.layers,
-      ...(((startYear && endYear) || year) && {
-        timelineParams: {
-          startDate: `${startYear || year}-01-01`,
-          endDate: `${endYear || year}-12-31`,
-          trimEndDate: `${endYear || year}-12-31`
-        }
-      }),
-      ...(weeks && {
-        timelineParams: {
-          startDate: moment(latestDate || null)
-            .subtract(weeks, 'weeks')
-            .format('YYYY-MM-DD'),
-          endDate: moment(latestDate || null).format('YYYY-MM-DD'),
-          trimEndDate: moment(latestDate || null).format('YYYY-MM-DD')
-        }
-      }),
-      ...(threshold && {
-        params: {
-          thresh: threshold,
-          visibility: true
-        }
-      })
-    }));
-
-    const iflYear =
-      options && options.ifl && options.ifl.find(opt => opt.value === ifl);
-
-    const polynameDatasets =
-      (polynames &&
-        polynames.length &&
-        polynames.flatMap(
-          polyname =>
-            polyname.datasets &&
-            polyname.datasets.map(d => ({
-              opacity: 0.7,
-              visibility: 1,
-              ...d,
-              sqlParams: iflYear && {
-                where: {
-                  class: iflYear.layerValue
-                }
-              }
-            }))
-        )) ||
-      [];
-
-    const datasets = [
-      {
-        dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-        layers: [
-          '6f6798e6-39ec-4163-979e-182a74ca65ee',
-          'c5d1e010-383a-4713-9aaa-44f728c0571c'
-        ],
-        opacity: 1,
-        visibility: true
-      },
-      ...compact(polynameDatasets),
-      ...widgetDatasets
-    ];
-
-    setMapSettings({
-      datasets
-    });
-  };
-
-  clearMap = () => {
-    const { setMapSettings } = this.props;
-    setMapSettings({
-      datasets: [
-        {
-          dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
-          layers: [
-            '6f6798e6-39ec-4163-979e-182a74ca65ee',
-            'c5d1e010-383a-4713-9aaa-44f728c0571c'
-          ],
-          opacity: 1,
-          visibility: true
-        }
-      ]
-    });
-  };
-
   renderWidgetBody = () => {
     const {
       widget,
@@ -194,7 +46,7 @@ class Widget extends PureComponent {
           <NoContent message={`No data in selection for ${locationName}`} />
         )}
         {!loading &&
-          error && (
+        error && (
           <RefreshButton
             refetchFn={() => {
               setWidgetLoading({ widget, loading: false, error: false });

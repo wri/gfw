@@ -14,10 +14,19 @@ export default {
     thresholds: true,
     extentYears: true
   },
+  refetchKeys: ['threshold', 'ifl', 'extentYear'],
   colors: 'loss',
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss',
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     // loss
     {
       dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
