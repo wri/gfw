@@ -10,6 +10,27 @@ import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import './widget-settings-styles.scss';
 
 class WidgetSettings extends PureComponent {
+  static propTypes = {
+    forestTypes: PropTypes.array,
+    landCategories: PropTypes.array,
+    datasets: PropTypes.array,
+    thresholds: PropTypes.array,
+    units: PropTypes.array,
+    periods: PropTypes.array,
+    years: PropTypes.array,
+    settings: PropTypes.object,
+    config: PropTypes.object,
+    startYears: PropTypes.array,
+    endYears: PropTypes.array,
+    tscDriverGroups: PropTypes.array,
+    loading: PropTypes.bool,
+    options: PropTypes.object,
+    onSettingsChange: PropTypes.func,
+    widget: PropTypes.string,
+    setModalMetaSettings: PropTypes.func,
+    getTooltipContentProps: PropTypes.func.isRequired
+  };
+
   componentDidMount() {
     track('openWidgetSettings', {
       label: `${this.props.widget}`
@@ -385,26 +406,5 @@ class WidgetSettings extends PureComponent {
     );
   }
 }
-
-WidgetSettings.propTypes = {
-  forestTypes: PropTypes.array,
-  landCategories: PropTypes.array,
-  datasets: PropTypes.array,
-  thresholds: PropTypes.array,
-  units: PropTypes.array,
-  periods: PropTypes.array,
-  years: PropTypes.array,
-  settings: PropTypes.object,
-  config: PropTypes.object,
-  startYears: PropTypes.array,
-  endYears: PropTypes.array,
-  tscDriverGroups: PropTypes.array,
-  loading: PropTypes.bool,
-  options: PropTypes.object,
-  onSettingsChange: PropTypes.func,
-  widget: PropTypes.string,
-  setModalMetaSettings: PropTypes.func,
-  getTooltipContentProps: PropTypes.func.isRequired
-};
 
 export default withTooltipEvt(WidgetSettings);

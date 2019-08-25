@@ -1,144 +1,46 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
-import { track } from 'app/analytics';
-
-import Loader from 'components/ui/loader/loader';
-import NoContent from 'components/ui/no-content';
-import RefreshButton from 'components/ui/refresh-button';
-import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import WidgetHeader from './components/widget-header';
+import WidgetBody from './components/widget-body';
 import WidgetFooter from './components/widget-footer';
 
 import './styles.scss';
 
 class Widget extends PureComponent {
-  renderWidgetBody = () => {
-    const {
-      widget,
-      loading,
-      error,
-      locationName,
-      setWidgetsSettings,
-      setWidgetSettings,
-      setWidgetLoading,
-      handleDataHighlight,
-      data,
-      dataConfig,
-      settings,
-      sentence,
-      Component,
-      parsePayload,
-      simple,
-      config
-    } = this.props;
-    const hasData = !isEmpty(data);
-
-    return (
-      <div className="container">
-        {loading && <Loader className="widget-loader" />}
-        {!loading &&
-          !error &&
-          !hasData &&
-          Component && (
-          <NoContent message={`No data in selection for ${locationName}`} />
-        )}
-        {!loading &&
-        error && (
-          <RefreshButton
-            refetchFn={() => {
-              setWidgetLoading({ widget, loading: false, error: false });
-              track('refetchDataBtn', {
-                label: `Widget: ${widget}`
-              });
-            }}
-          />
-        )}
-        {!error &&
-          sentence &&
-          hasData && (
-          <DynamicSentence
-            className="sentence"
-            sentence={sentence}
-            handleMouseOver={() => handleDataHighlight(true, widget)}
-            handleMouseOut={() => handleDataHighlight(false, widget)}
-          />
-        )}
-        {!error &&
-          hasData &&
-          Component && (
-          <Component
-            widget={widget}
-            data={data}
-            config={dataConfig}
-            settings={settings}
-            setWidgetsSettings={setWidgetsSettings}
-            setWidgetSettings={setWidgetSettings}
-            parsePayload={parsePayload}
-            simple={simple}
-            layers={config.layers}
-          />
-        )}
-      </div>
-    );
+  static propTypes = {
+    widget: PropTypes.string.isRequired,
+    colors: PropTypes.object.isRequired,
+    config: PropTypes.object.isRequired,
+    simple: PropTypes.bool,
+    embed: PropTypes.bool,
+    active: PropTypes.bool
   };
 
   render() {
-    const { widget, colors, active, config, embed, simple } = this.props;
+    const { widget, colors, active, config: large, embed, simple } = this.props;
+    const { main: mainColor } = colors || {};
 
     return (
       <div
         id={widget}
-        className={cx(
-          'c-widget',
-          { large: config.large },
-          { embed },
-          { simple }
-        )}
+        className={cx('c-widget', { large }, { embed }, { simple })}
         style={{
           ...(active &&
             !simple &&
             !embed && {
-            borderColor: colors && colors.main,
-            boxShadow: `0 0px 0px 1px ${colors && colors.main}`
+            borderColor: mainColor,
+            boxShadow: `0 0px 0px 1px ${mainColor}`
           })
         }}
       >
         <WidgetHeader {...this.props} />
-        {this.renderWidgetBody()}
+        <WidgetBody {...this.props} />
         <WidgetFooter {...this.props} />
       </div>
     );
   }
 }
-
-Widget.propTypes = {
-  settings: PropTypes.object,
-  simple: PropTypes.bool,
-  title: PropTypes.string,
-  widget: PropTypes.string,
-  colors: PropTypes.object,
-  options: PropTypes.object,
-  config: PropTypes.object,
-  locationName: PropTypes.string,
-  dataConfig: PropTypes.object,
-  embed: PropTypes.bool,
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
-  active: PropTypes.bool,
-  indicator: PropTypes.object,
-  Component: PropTypes.any,
-  parsePayload: PropTypes.func,
-  setWidgetsSettings: PropTypes.func,
-  setWidgetLoading: PropTypes.func,
-  handleDataHighlight: PropTypes.func,
-  setMapSettings: PropTypes.func,
-  setWidgetSettings: PropTypes.func,
-  sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  polynames: PropTypes.array
-};
 
 export default Widget;

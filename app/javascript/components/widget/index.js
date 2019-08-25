@@ -46,20 +46,20 @@ const makeMapStateToProps = () => {
 
 class WidgetContainer extends Component {
   static propTypes = {
+    widget: PropTypes.string.isRequired,
+    config: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
     active: PropTypes.bool,
-    widget: PropTypes.string,
     error: PropTypes.bool,
     settings: PropTypes.object,
-    config: PropTypes.object,
-    location: PropTypes.object,
     polynames: PropTypes.array,
     options: PropTypes.object,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    getData: PropTypes.func,
-    getWidgetData: PropTypes.func,
-    setWidgetData: PropTypes.func,
-    setWidgetSettings: PropTypes.func,
-    setMapSettings: PropTypes.func
+    getData: PropTypes.func.isRequired,
+    getWidgetData: PropTypes.func.isRequired,
+    setWidgetData: PropTypes.func.isRequired,
+    setWidgetSettings: PropTypes.func.isRequired,
+    setMapSettings: PropTypes.func.isRequired
   };
 
   componentDidMount() {
