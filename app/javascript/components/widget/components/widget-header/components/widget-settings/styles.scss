@@ -21,12 +21,7 @@ $settings-items-margin: rem(25px);
     }
   }
 
-  .title {
-    font-size: rem(14px);
-    color: $slate;
-  }
-
-  .years-select {
+  .widget-double-selector {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -44,12 +39,12 @@ $settings-items-margin: rem(25px);
       align-items: center;
     }
 
-    .text-date {
+    .text-separator {
       margin: 0 10px;
     }
   }
 
-  .canopy-select {
+  .widget-settings-selector {
     display: flex;
     justify-content: space-between;
     align-items: center;

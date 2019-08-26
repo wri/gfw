@@ -13,15 +13,32 @@ import './styles.scss';
 class WidgetHeader extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    settings: PropTypes.object,
-    options: PropTypes.object,
-    config: PropTypes.object,
+    config: PropTypes.object.isRequired,
     embed: PropTypes.bool,
-    simple: PropTypes.bool
+    simple: PropTypes.bool,
+    active: PropTypes.string,
+    handleShowInfo: PropTypes.func,
+    handleChangeSettings: PropTypes.func,
+    handleShowMap: PropTypes.func,
+    handleShowShare: PropTypes.func,
+    loading: PropTypes.bool,
+    settingsOptions: PropTypes.array
   };
 
   render() {
-    const { title, settings, options, embed, config, simple } = this.props;
+    const {
+      active,
+      handleShowMap,
+      title,
+      loading,
+      settingsOptions,
+      embed,
+      config: { large, datasets },
+      simple,
+      handleShowInfo,
+      handleChangeSettings,
+      handleShowShare
+    } = this.props;
 
     return (
       <div className={cx('c-widget-header', { simple })}>
@@ -29,15 +46,33 @@ class WidgetHeader extends PureComponent {
         <div className="options">
           {!embed &&
             !simple &&
-            config.datasets && <WidgetMapButton {...this.props} />}
+            datasets &&
+            <WidgetMapButton
+              active={active}
+              large={large}
+              handleShowMap={handleShowMap}
+            />
+          }
           {!embed &&
             !simple &&
-            settings &&
-            !isEmpty(options) &&
-            config.options && <WidgetSettingsButton {...this.props} />}
+            !isEmpty(settingsOptions) &&
+            <WidgetSettingsButton
+              settings={settingsOptions}
+              loading={loading}
+              handleChangeSettings={handleChangeSettings}
+              handleShowInfo={handleShowInfo}
+            />
+          }
           <div className="small-options">
-            <WidgetInfoButton {...this.props} />
-            {!simple && <WidgetShareButton {...this.props} />}
+            <WidgetInfoButton
+              square={simple}
+              handleOpenInfo={handleShowInfo}
+            />
+            {!simple &&
+              <WidgetShareButton
+                handleShowShare={handleShowShare}
+              />
+            }
           </div>
         </div>
       </div>

@@ -9,8 +9,7 @@ class WidgetHorizontalBarChart extends PureComponent {
       data,
       settings,
       config,
-      setWidgetSettings,
-      widget,
+      handleChangeSettings,
       simple
     } = this.props;
 
@@ -20,12 +19,7 @@ class WidgetHorizontalBarChart extends PureComponent {
         data={data}
         config={config}
         settings={settings}
-        handlePageChange={change =>
-          setWidgetSettings({
-            value: { page: settings.page + change },
-            widget
-          })
-        }
+        handlePageChange={change => handleChangeSettings({ page: change })}
         simple={simple}
       />
     );
@@ -35,9 +29,8 @@ class WidgetHorizontalBarChart extends PureComponent {
 WidgetHorizontalBarChart.propTypes = {
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  setWidgetSettings: PropTypes.func.isRequired,
+  handleChangeSettings: PropTypes.func.isRequired,
   config: PropTypes.object,
-  widget: PropTypes.string,
   simple: PropTypes.bool
 };
 

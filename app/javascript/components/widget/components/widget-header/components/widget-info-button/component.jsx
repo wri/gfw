@@ -11,18 +11,19 @@ import './styles.scss';
 
 class WidgetInfoButton extends PureComponent {
   static propTypes = {
-    widget: PropTypes.string.isRequired,
-    config: PropTypes.object.isRequired
+    square: PropTypes.bool,
+    handleOpenInfo: PropTypes.func.isRequired
   };
 
   render() {
-    const { metakey, setModalMetaSettings, simple } = this.props;
+    const { handleOpenInfo, square } = this.props;
     return (
       <Button
+        className="c-widget-info-button"
         theme={cx('theme-button-small square', {
-          'theme-button-grey-filled theme-button-xsmall': simple
+          'theme-button-grey-filled theme-button-xsmall': square
         })}
-        onClick={() => setModalMetaSettings(metakey)}
+        onClick={handleOpenInfo}
         tooltip={{ text: 'Learn more about the data' }}
       >
         <Icon icon={infoIcon} />

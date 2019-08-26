@@ -13,41 +13,33 @@ import './styles.scss';
 
 class WidgetMapButton extends PureComponent {
   static propTypes = {
-    widget: PropTypes.string.isRequired,
-    config: PropTypes.object.isRequired
+    active: PropTypes.bool,
+    large: PropTypes.bool,
+    handleShowMap: PropTypes.func.isRequired
   };
 
   render() {
     const {
-      widget,
       active,
-      config,
-      locationName,
-      isDeviceTouch,
-      setActiveWidget
+      large,
+      handleShowMap
     } = this.props;
-    const isSmall = !config.large;
 
     return (
       <Button
-        className={cx('map-button', { '-active': active })}
+        className={cx('c-widget-map-button', { '-active': active })}
         theme={cx(
           'theme-button-small',
-          { small: isSmall },
-          { square: isDeviceTouch || isSmall }
+          { small: !large },
+          { square: !large }
         )}
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
-        onClick={() => {
-          setActiveWidget(widget);
-          track('viewWidgetOnMap', {
-            label: `${widget} in ${locationName || ''}`
-          });
-        }}
+        onClick={handleShowMap}
       >
-        {isSmall || isDeviceTouch ? (
-          <Icon icon={mapIcon} className="map-icon" />
-        ) : (
+        {large ? (
           'SHOW ON MAP'
+        ) : (
+          <Icon icon={mapIcon} className="map-icon" />
         )}
       </Button>
     );

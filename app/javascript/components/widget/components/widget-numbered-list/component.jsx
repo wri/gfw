@@ -5,7 +5,7 @@ import NumberedList from 'components/numbered-list';
 
 class WidgetNumberedList extends PureComponent {
   render() {
-    const { data, settings, setWidgetSettings, embed, widget } = this.props;
+    const { data, settings, handleChangeSettings, embed } = this.props;
     return (
       <NumberedList
         className="locations-list"
@@ -14,12 +14,7 @@ class WidgetNumberedList extends PureComponent {
           ...settings,
           format: settings.unit === '%' ? '.2r' : '.3s'
         }}
-        handlePageChange={change =>
-          setWidgetSettings({
-            value: { page: settings.page + change },
-            widget
-          })
-        }
+        handlePageChange={change => handleChangeSettings({ page: change })}
         linksExt={embed}
       />
     );
@@ -29,9 +24,8 @@ class WidgetNumberedList extends PureComponent {
 WidgetNumberedList.propTypes = {
   data: PropTypes.array,
   settings: PropTypes.object.isRequired,
-  setWidgetSettings: PropTypes.func.isRequired,
-  embed: PropTypes.bool,
-  widget: PropTypes.string
+  handleChangeSettings: PropTypes.func.isRequired,
+  embed: PropTypes.bool
 };
 
 export default WidgetNumberedList;

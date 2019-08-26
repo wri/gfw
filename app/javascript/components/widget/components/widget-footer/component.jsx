@@ -10,9 +10,11 @@ class WidgetFooter extends PureComponent {
     const { statements, simple, showAttributionLink } = this.props;
     const statementsMapped = statements && statements.join(' | ');
 
-    return statementsMapped && !!statementsMapped.length ? (
+    return (
       <div className={cx('c-widget-footer', { simple })}>
-        <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
+        {statementsMapped && !!statementsMapped.length &&
+          <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
+        }
         {showAttributionLink && (
           <span>
             Source:{' '}
@@ -26,7 +28,7 @@ class WidgetFooter extends PureComponent {
           </span>
         )}
       </div>
-    ) : null;
+    );
   }
 }
 

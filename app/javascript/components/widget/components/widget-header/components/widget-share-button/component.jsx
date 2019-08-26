@@ -10,16 +10,15 @@ import './styles.scss';
 
 class WidgetShareButton extends PureComponent {
   static propTypes = {
-    widget: PropTypes.string.isRequired,
-    config: PropTypes.object.isRequired
+    handleShowShare: PropTypes.func.isRequired
   };
 
   renderShareButton() {
-    const { shareData, setShareModal } = this.props;
+    const { handleShowShare } = this.props;
     return (
       <Button
         className="theme-button-small square"
-        onClick={() => setShareModal(shareData)}
+        onClick={handleShowShare}
         tooltip={{ text: 'Share or embed this widget' }}
       >
         <Icon icon={shareIcon} />

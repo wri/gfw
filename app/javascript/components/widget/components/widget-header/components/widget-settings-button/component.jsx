@@ -13,11 +13,12 @@ import './styles.scss';
 
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
-    widget: PropTypes.string.isRequired,
     settings: PropTypes.object,
-    config: PropTypes.object.isRequired,
     loading: PropTypes.bool,
-    options: PropTypes.array
+    modalClosing: PropTypes.bool,
+    handleSetWidgetSettings: PropTypes.func.isRequired,
+    handleShowSettings: PropTypes.func.isRequired,
+    handleShowInfo: PropTypes.func.isRequired
   };
 
   state = {
@@ -26,22 +27,18 @@ class WidgetSettingsButton extends PureComponent {
 
   render() {
     const {
-      title,
-      locationName,
       settings,
-      config,
       loading,
-      widget,
-      options,
       modalClosing,
-      setWidgetSettings,
-      setModalMetaSettings
+      handleSetWidgetSettings,
+      handleShowSettings,
+      handleShowInfo
     } = this.props;
     const { tooltipOpen } = this.state;
     return (
       <Tooltip
-        className="widget-tooltip-theme"
-        theme="light"
+        className="c-widget-settings-button"
+        theme="widget-tooltip-theme light"
         position="bottom-right"
         offset={-95}
         trigger="click"
@@ -57,7 +54,10 @@ class WidgetSettingsButton extends PureComponent {
             this.setState({ tooltipOpen: false });
           }
         }}
-        onShow={() => this.setState({ tooltipOpen: true })}
+        onShow={() => {
+          this.setState({ tooltipOpen: true });
+          handleShowSettings();
+        }}
         arrow
         useContext
         open={tooltipOpen}
@@ -66,23 +66,16 @@ class WidgetSettingsButton extends PureComponent {
             ref={node => {
               this.widgetSettingsRef = node;
             }}
-            widget={widget}
             settings={settings}
-            config={config}
-            options={options}
             loading={loading}
-            onSettingsChange={setWidgetSettings}
-            setModalMetaSettings={setModalMetaSettings}
+            handleChangeSettings={handleSetWidgetSettings}
+            handleShowInfo={handleShowInfo}
           />
         }
       >
         <Button
-          className="theme-button-small square"
+          theme="theme-button-small square"
           tooltip={{ text: 'Filter and customize the data' }}
-          trackingData={{
-            event: 'open-settings',
-            label: `${title} in ${locationName || ''}`
-          }}
         >
           <Icon icon={settingsIcon} className="settings-icon" />
         </Button>

@@ -15,7 +15,9 @@ class Widget extends PureComponent {
     config: PropTypes.object.isRequired,
     simple: PropTypes.bool,
     embed: PropTypes.bool,
-    active: PropTypes.bool
+    active: PropTypes.bool,
+    statements: PropTypes.array,
+
   };
 
   render() {
@@ -37,7 +39,11 @@ class Widget extends PureComponent {
       >
         <WidgetHeader {...this.props} />
         <WidgetBody {...this.props} />
-        <WidgetFooter {...this.props} />
+        <WidgetFooter
+          simple={simple}
+          statements={statements}
+          showAttributionLink={showAttributionLink}
+        />
       </div>
     );
   }

@@ -23,24 +23,6 @@
     flex-direction: row;
     justify-content: flex-end;
 
-    .map-button {
-      position: relative;
-
-      &.-active {
-        cursor: default;
-
-        &:hover {
-          background-color: $green-gfw;
-        }
-      }
-
-      .map-icon {
-        width: rem(20px);
-        height: rem(20px);
-        margin-top: rem(1px);
-      }
-    }
-
     .small-options {
       display: flex;
       flex-direction: row;
@@ -54,11 +36,6 @@
       height: rem(15px);
       margin-left: rem(5px);
     }
-  }
-
-  .settings-icon {
-    width: rem(12px);
-    height: rem(12px);
   }
 
   button {

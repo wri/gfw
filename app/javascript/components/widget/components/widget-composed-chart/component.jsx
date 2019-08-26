@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
 
 import ComposedChart from 'components/charts/composed-chart';
 
 class WidgetAlerts extends Component {
-  shouldComponentUpdate = nextProps =>
-    (!isEqual(nextProps.settings, this.props.settings) &&
-      isEqual(nextProps.settings.activeData, this.props.settings.activeData)) ||
-    !isEqual(nextProps.data, this.props.data);
-
   handleMouseMove = debounce(data => {
-    const { parsePayload, setWidgetsSettings, widget, layers } = this.props;
+    const { parsePayload, handleMouseMove } = this.props;
     if (parsePayload) {
       const { activePayload } = data && data;
       const activeData = parsePayload(activePayload);
-      setWidgetsSettings({ widget, data: { ...activeData, layers } });
+      handleMouseMove(activeData);
     }
   }, 100);
 
   handleMouseLeave = debounce(() => {
-    const { setWidgetsSettings, widget } = this.props;
-    setWidgetsSettings({ widget, data: {} });
+    const { handleMouseLeave } = this.props;
+    handleMouseLeave();
   }, 100);
 
   render() {
@@ -47,13 +41,11 @@ class WidgetAlerts extends Component {
 WidgetAlerts.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
-  settings: PropTypes.object,
-  setWidgetsSettings: PropTypes.func,
+  handleMouseMove: PropTypes.func,
+  handleMouseLeave: PropTypes.func,
   parsePayload: PropTypes.func,
-  widget: PropTypes.string,
   active: PropTypes.bool,
-  simple: PropTypes.bool,
-  layers: PropTypes.array
+  simple: PropTypes.bool
 };
 
 export default WidgetAlerts;
