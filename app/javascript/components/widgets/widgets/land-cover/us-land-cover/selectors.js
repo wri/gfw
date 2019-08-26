@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
 import maxBy from 'lodash/maxBy';
 import sumBy from 'lodash/sumBy';
+import orderBy from 'lodash/orderBy';
 import findIndex from 'lodash/findIndex';
 
 import { formatNumber } from 'utils/format';
@@ -44,22 +45,28 @@ export const parseData = createSelector(
     };
 
     if (!source) source = 'ipcc';
+
+    // SANKEY NODES
+    const startNodes = orderBy(
+      Object.entries(groupBy(data, `from_class_${source}`)).map(
+        ([key, group]) => ({
+          name: categories[key] ? categories[key] : 'Other',
+          key: `${key}-start`,
+          color: categories[key]
+            ? colors.categories[categories[key]]
+            : colors.categories.Other,
+          value: sumBy(group, 'area')
+        })
+      ),
+      'value',
+      'desc'
+    );
     const nodes = [
-      ...Object.keys(groupBy(data, `from_class_${source}`)).map(node => ({
-        name: categories[node] ? categories[node] : 'Other',
-        key: `${node}-start`,
-        color: categories[node]
-          ? colors.categories[categories[node]]
-          : colors.categories.Other
-      })),
-      ...Object.keys(groupBy(data, `to_class_${source}`)).map(node => ({
-        name: categories[node] ? categories[node] : 'Other',
-        key: `${node}-end`,
-        color: categories[node]
-          ? colors.categories[categories[node]]
-          : colors.categories.Other
-      }))
+      ...startNodes,
+      ...startNodes.map(n => ({ ...n, key: n.key.replace('start', 'end') }))
     ];
+
+    // SANKEY LINKS
     const allLinks = data.map(d => {
       const sourceIndex = findIndex(nodes, {
         key: `${d[`from_class_${source}`]}-start`
@@ -82,6 +89,7 @@ export const parseData = createSelector(
         value: sumBy(group, 'value')
       };
     });
+
     return { nodes, links };
   }
 );
@@ -110,15 +118,23 @@ export const parseSentence = createSelector(
   [parseData, getLocationName, getSettings, getSentences],
   (data, locationName, settings, sentence) => {
     if (isEmpty(data)) return null;
-    const max = data.links && maxBy(data.links, 'value');
+
+    const getNodeName = index =>
+      (data.nodes && data.nodes[index] && data.nodes[index].name) || '';
+    // sentence has to avoid same category 'changes', even if that option is the active one (no filtering)
+    const max =
+      data.links &&
+      maxBy(
+        data.links.filter(d => getNodeName(d.source) !== getNodeName(d.target)),
+        'value'
+      );
     const { startYear, endYear } = settings;
-    const source = data.nodes[max.source];
-    const target = data.nodes[max.target];
+
     const params = {
       startYear,
       endYear,
-      firstCategory: source && source.name,
-      secondCategory: target && target.name,
+      firstCategory: getNodeName(max.source),
+      secondCategory: getNodeName(max.target),
       amount: formatNumber({ num: max.value, unit: 'ha' }),
       percentage: '7.3%'
     };

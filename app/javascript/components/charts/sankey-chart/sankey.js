@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Sankey, Tooltip, ResponsiveContainer } from 'recharts';
+import { Tooltip, ResponsiveContainer } from 'recharts';
+import Sankey from './sankey-component';
 import SankeyTooltip from './sankey-tooltip';
 import SankeyLink from './sankey-link';
 import SankeyNode from './sankey-node';
@@ -103,7 +104,7 @@ SankeyChart.defaultProps = {
   height: 500,
   data: {},
   nodeWidth: 10,
-  nodePadding: 60,
+  nodePadding: 10,
   containerWidth: 800,
   config: {},
   customTooltip: null,

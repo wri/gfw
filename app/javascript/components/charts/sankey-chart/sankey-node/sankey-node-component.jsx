@@ -12,8 +12,8 @@ function SankeyNode({ x, y, height, index, payload, config }) {
   const minHeight = 3;
 
   const tSpans = text => {
-    const fontSize = config.fontSize || 13;
-    const lineHeight = config.lineHeigth || 1.2;
+    const fontSize = config.fontSize || 12;
+    const lineHeight = config.lineHeigth || 1.1;
     const textHeight = config.textHeight || 20;
     const tspanLineHeight = config.tspanLineHeight || 10;
     const startX = isEndNode
