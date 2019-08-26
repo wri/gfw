@@ -1,7 +1,11 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import groupBy from 'lodash/groupBy';
+import maxBy from 'lodash/maxBy';
+import sumBy from 'lodash/sumBy';
 import findIndex from 'lodash/findIndex';
+
+import { formatNumber } from 'utils/format';
 
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
@@ -56,12 +60,28 @@ export const parseData = createSelector(
           : colors.categories.Other
       }))
     ];
-    const links = data.map(d => ({
-      source: findIndex(nodes, { key: `${d[`from_class_${source}`]}-start` }),
-      target: findIndex(nodes, { key: `${d[`to_class_${source}`]}-end` }),
-      value: d.area
-      // abs_pct: d.perc_area
-    }));
+    const allLinks = data.map(d => {
+      const sourceIndex = findIndex(nodes, {
+        key: `${d[`from_class_${source}`]}-start`
+      });
+      const targetIndex = findIndex(nodes, {
+        key: `${d[`to_class_${source}`]}-end`
+      });
+      return {
+        source: sourceIndex,
+        target: targetIndex,
+        value: d.area,
+        key: `${sourceIndex}_${targetIndex}`
+        // abs_pct: d.perc_area
+      };
+    });
+    const links = Object.values(groupBy(allLinks, 'key')).map(group => {
+      const link = group[0] || {};
+      return {
+        ...link,
+        value: sumBy(group, 'value')
+      };
+    });
     return { nodes, links };
   }
 );
@@ -87,15 +107,19 @@ export const parseConfig = createSelector([parseData], dataKeys => {
 });
 
 export const parseSentence = createSelector(
-  [parseData, getLocationName, getSentences],
-  (data, locationName, sentence) => {
+  [parseData, getLocationName, getSettings, getSentences],
+  (data, locationName, settings, sentence) => {
     if (isEmpty(data)) return null;
+    const max = data.links && maxBy(data.links, 'value');
+    const { startYear, endYear } = settings;
+    const source = data.nodes[max.source];
+    const target = data.nodes[max.target];
     const params = {
-      fromYear: 2001,
-      toYear: 2011,
-      firstCategory: 'Forest',
-      secondCategory: 'Wetlands',
-      amount: '232Mha',
+      startYear,
+      endYear,
+      firstCategory: source && source.name,
+      secondCategory: target && target.name,
+      amount: formatNumber({ num: max.value, unit: 'ha' }),
       percentage: '7.3%'
     };
     return {

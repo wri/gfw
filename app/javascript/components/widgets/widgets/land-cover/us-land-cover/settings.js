@@ -4,5 +4,6 @@ export default {
   page: 0,
   startYear: 2001,
   endYear: 2011,
-  variable: 'changes_only'
+  variable: 'changes_only',
+  unit: 'ha'
 };

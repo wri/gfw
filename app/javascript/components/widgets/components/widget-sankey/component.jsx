@@ -7,12 +7,12 @@ import './styles';
 
 class WidgetSankey extends PureComponent {
   render() {
-    const { data } = this.props;
+    const { data, settings } = this.props;
 
     const config = {
       tooltip: {
         scale: 1 / 1000,
-        suffix: 'm'
+        suffix: settings.unit || 'ha'
         // unit: 'tpu'
       },
       node: {
@@ -30,8 +30,8 @@ class WidgetSankey extends PureComponent {
 }
 
 WidgetSankey.propTypes = {
-  data: PropTypes.object
-  // settings: PropTypes.object.isRequired
+  data: PropTypes.object,
+  settings: PropTypes.object
 };
 
 export default WidgetSankey;

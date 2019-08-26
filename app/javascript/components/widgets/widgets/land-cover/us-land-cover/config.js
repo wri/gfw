@@ -26,8 +26,8 @@ export default {
   sortOrder: {
     landCover: 101
   },
-  sentence:
-    'From {fromYear} to {toYear}, the highest land cover change was found in areas converted from {firstCategory} to {secondCategory}, equivalent to {amount}, which represents {percentage} of all land cover.',
+  sentence: `From {startYear} to {endYear}, the highest land cover change was found in areas converted from {firstCategory} to {secondCategory},
+  equivalent to {amount}, which represents {percentage} of all land cover.`,
   whitelists: {
     indicators: ['plantations']
   }
