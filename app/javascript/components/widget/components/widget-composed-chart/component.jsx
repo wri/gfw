@@ -15,8 +15,8 @@ class WidgetAlerts extends Component {
   }, 100);
 
   handleMouseLeave = debounce(() => {
-    const { handleMouseLeave } = this.props;
-    handleMouseLeave();
+    const { handleMouseOut } = this.props;
+    handleMouseOut();
   }, 100);
 
   render() {
@@ -42,7 +42,7 @@ WidgetAlerts.propTypes = {
   data: PropTypes.array,
   config: PropTypes.object,
   handleMouseMove: PropTypes.func,
-  handleMouseLeave: PropTypes.func,
+  handleMouseOut: PropTypes.func,
   parsePayload: PropTypes.func,
   active: PropTypes.bool,
   simple: PropTypes.bool

@@ -16,7 +16,7 @@ class Widget extends PureComponent {
     simple: PropTypes.bool,
     embed: PropTypes.bool,
     active: PropTypes.bool,
-    statements: PropTypes.array,
+    statements: PropTypes.array
 
   };
 

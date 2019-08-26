@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
 
-import { track } from 'app/analytics';
-
 import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
 import RefreshButton from 'components/ui/refresh-button';
@@ -26,20 +24,20 @@ class Widget extends PureComponent {
     dataConfig: PropTypes.object,
     locationName: PropTypes.string,
     parsePayload: PropTypes.func,
-    setWidgetLoading: PropTypes.func,
-    handleDataHighlight: PropTypes.func
+    handleMouseOver: PropTypes.func,
+    handleMouseOut: PropTypes.func,
+    handleRefetchData: PropTypes.func
   };
 
   render() {
     const {
-      widget,
-      config,
       loading,
       error,
       simple,
       locationName,
-      setWidgetLoading,
-      handleDataHighlight,
+      handleRefetchData,
+      handleMouseOver,
+      handleMouseOut,
       data,
       dataConfig,
       sentence,
@@ -58,14 +56,7 @@ class Widget extends PureComponent {
         )}
         {!loading &&
           error && (
-          <RefreshButton
-            refetchFn={() => {
-              setWidgetLoading({ widget, loading: false, error: false });
-              track('refetchDataBtn', {
-                label: `Widget: ${widget}`
-              });
-            }}
-          />
+          <RefreshButton refetchFn={handleRefetchData} />
         )}
         {!error &&
           sentence &&
@@ -73,8 +64,8 @@ class Widget extends PureComponent {
           <DynamicSentence
             className="sentence"
             sentence={sentence}
-            handleMouseOver={() => handleDataHighlight(true, widget)}
-            handleMouseOut={() => handleDataHighlight(false, widget)}
+            handleMouseOver={handleMouseOver}
+            handleMouseOut={handleMouseOut}
           />
         )}
         {!error &&
@@ -83,7 +74,6 @@ class Widget extends PureComponent {
           <Component
             {...this.props}
             config={dataConfig}
-            layers={config.layers}
           />
         )}
       </div>
