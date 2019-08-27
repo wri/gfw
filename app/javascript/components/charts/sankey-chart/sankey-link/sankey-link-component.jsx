@@ -21,7 +21,6 @@ class SankeyLink extends PureComponent {
       linkWidth,
       config
     } = this.props;
-    const { hover } = this.state;
     const updatedLinkWidth =
       linkWidth < this.minLinkWidth ? this.minLinkWidth : linkWidth;
     const linkStart = config.linkPadding || 140;
@@ -35,7 +34,7 @@ class SankeyLink extends PureComponent {
         `}
         fill="none"
         stroke="#333"
-        strokeWidth={hover ? updatedLinkWidth + 2 : updatedLinkWidth}
+        strokeWidth={updatedLinkWidth}
         onMouseEnter={() => this.setState({ hover: true })}
         onMouseLeave={() => this.setState({ hover: false })}
         strokeOpacity="0.2"

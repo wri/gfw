@@ -42,7 +42,7 @@ function SankeyChart({
           nodePadding={nodePadding}
           margin={margin}
           link={
-            customLink || <SankeyLink config={{ linkPadding: nodeWidth }} />
+            customLink || <SankeyLink config={{ linkPadding: -nodeWidth }} />
           }
           node={
             customNode || (
