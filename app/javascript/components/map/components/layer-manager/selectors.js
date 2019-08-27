@@ -9,9 +9,9 @@ import {
 
 export const selectLocation = state => state.location && state.location.payload;
 
-export const getIsAoI = createSelector(
+export const getAoIId = createSelector(
   [selectLocation],
-  location => location.type === 'aoi'
+  location => location.type && location.adm0
 );
 
 export const getLayerManagerProps = createStructuredSelector({
@@ -19,5 +19,5 @@ export const getLayerManagerProps = createStructuredSelector({
   geostore: selectGeostore,
   basemap: getBasemap,
   drawing: getDrawing,
-  isAoI: getIsAoI
+  aoiId: getAoIId
 });

@@ -242,7 +242,7 @@ class Header extends PureComponent {
             </div>
           </div>
         </div>
-        <SaveAOIModal />
+        <SaveAOIModal viewAfterSave />
       </div>
     );
   }

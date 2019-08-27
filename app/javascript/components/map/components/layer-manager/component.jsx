@@ -4,10 +4,21 @@ import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
+  static propTypes = {
+    loading: PropTypes.bool,
+    layers: PropTypes.array,
+    aoiId: PropTypes.string,
+    basemap: PropTypes.object,
+    geostore: PropTypes.object,
+    setMapLoading: PropTypes.func,
+    map: PropTypes.object
+  };
+
   render() {
-    const { layers, geostore, setMapLoading, basemap, map, isAoI } = this.props;
+    const { layers, geostore, setMapLoading, basemap, map, aoiId } = this.props;
+
     const geostoreLayer =
-      geostore && geostore.id && !isAoI
+      geostore && geostore.id && !aoiId
         ? {
           id: geostore.id,
           name: 'Geojson',
@@ -37,9 +48,9 @@ class LayerManagerComponent extends PureComponent {
         : null;
 
     const aoiLayer =
-      geostore && geostore.id && isAoI
+      geostore && geostore.id && aoiId
         ? {
-          id: geostore.id,
+          id: aoiId,
           name: 'Geojson',
           provider: 'geojson',
           layerConfig: {
@@ -104,15 +115,5 @@ class LayerManagerComponent extends PureComponent {
     );
   }
 }
-
-LayerManagerComponent.propTypes = {
-  loading: PropTypes.bool,
-  layers: PropTypes.array,
-  isAoI: PropTypes.bool,
-  basemap: PropTypes.object,
-  geostore: PropTypes.object,
-  setMapLoading: PropTypes.func,
-  map: PropTypes.object
-};
 
 export default LayerManagerComponent;
