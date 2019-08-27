@@ -13,8 +13,7 @@ class WidgetSankey extends PureComponent {
     const config = {
       tooltip: {
         scale: 1 / 1000,
-        suffix: unit || 'ha'
-        // unit: 'tpu'
+        unit: unit || 'ha'
       },
       node: {
         scale: 1 / 1000,

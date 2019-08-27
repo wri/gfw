@@ -4,6 +4,12 @@
   .node-titles {
     display: flex;
     justify-content: space-between;
+
+    span {
+      text-align: center;
+      font-weight: 500;
+      font-size: rem(14px);
+    }
   }
 
   .sankey > svg {

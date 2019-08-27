@@ -1,8 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Tooltip, ResponsiveContainer } from 'recharts';
+import isEmpty from 'lodash/isEmpty';
+import { format } from 'd3-format';
 import Sankey from './sankey-component';
-import SankeyTooltip from './sankey-tooltip';
+import ChartToolTip from '../components/chart-tooltip';
 import SankeyLink from './sankey-link';
 import SankeyNode from './sankey-node';
 import styles from './sankey-styles.scss';
@@ -18,7 +20,7 @@ function SankeyChart({
   customTooltip,
   customLink,
   customNode,
-  tooltipChildren,
+  // tooltipChildren,
   margin
 }) {
   return (
@@ -31,7 +33,11 @@ function SankeyChart({
         }}
       >
         {config.nodeTitles &&
-          config.nodeTitles.map(t => <span key={t}>{t}</span>)}
+          config.nodeTitles.map(t => (
+            <span key={t} style={{ width: `${nodeWidth}px` }}>
+              {t}
+            </span>
+          ))}
       </div>
       <ResponsiveContainer width="100%" height={height}>
         <Sankey
@@ -59,13 +65,31 @@ function SankeyChart({
         >
           {customTooltip || (
             <Tooltip
-              content={content => (
-                <SankeyTooltip
-                  content={content}
-                  config={config.tooltip}
-                  tooltipChildren={tooltipChildren}
-                />
-              )}
+              content={content => {
+                const payloadData =
+                  content.payload &&
+                  content.payload.length > 0 &&
+                  content.payload[0];
+                return (
+                  !isEmpty(payloadData) && (
+                    <ChartToolTip
+                      payload={[payloadData.payload]}
+                      settings={[
+                        {
+                          label: `${payloadData.name &&
+                            payloadData.name.replace('-', '>')}`
+                        },
+                        {
+                          key: 'value',
+                          unit: config.tooltip && config.tooltip.unit,
+                          unitFormat: num => format('.2s')(num),
+                          label: ''
+                        }
+                      ]}
+                    />
+                  )
+                );
+              }}
             />
           )}
         </Sankey>
@@ -94,7 +118,7 @@ SankeyChart.propTypes = {
   /** Custom node component. Will replace the default */
   customNode: PropTypes.node,
   /** Function that takes the node info and returns the components to add at the bottom of the tooltip */
-  tooltipChildren: PropTypes.func,
+  // tooltipChildren: PropTypes.func,
   /** Configuration */
   config: PropTypes.shape({
     /** Configuration for the tooltip */
