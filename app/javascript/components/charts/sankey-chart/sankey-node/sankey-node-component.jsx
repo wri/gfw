@@ -5,7 +5,7 @@ import { splitSVGText } from 'utils/strings';
 import './sankey-node-styles.scss';
 
 function SankeyNode({ x, y, height, index, payload, config }) {
-  const width = 140;
+  const width = config.nodeWidth || 140;
   const isEndNode = x > width;
   const padding = config.padding || 10;
   const rectangleStart = config.titlePadding || 140;
@@ -52,7 +52,7 @@ function SankeyNode({ x, y, height, index, payload, config }) {
         <Rectangle
           x={isEndNode ? x - width : x} // negative direction
           y={y - 1} // fixes svg border
-          width={isEndNode ? width : width + 10} // start nodes have a 10px gap ??
+          width={width + 10} // fixes 10px gap
           height={height < minHeight ? minHeight : height + 2} // adds 2px to compensate the -1px dy
           fill={payload.color}
           fillOpacity="1"

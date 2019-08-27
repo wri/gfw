@@ -8,22 +8,30 @@ import './styles';
 class WidgetSankey extends PureComponent {
   render() {
     const { data, settings } = this.props;
+    const { unit, startYear, endYear } = settings;
 
     const config = {
       tooltip: {
         scale: 1 / 1000,
-        suffix: settings.unit || 'ha'
+        suffix: unit || 'ha'
         // unit: 'tpu'
       },
       node: {
         scale: 1 / 1000,
         suffix: 'node'
-      }
+      },
+      nodeTitles: [startYear, endYear]
     };
 
     return (
       <div className="c-sankey-chart-widget">
-        <SankeyChart data={data} config={config} height={400} />
+        <SankeyChart
+          data={data}
+          config={config}
+          height={300}
+          nodeWidth={50}
+          margin={{ top: 10, left: 50, right: 50, bottom: 50 }}
+        />
       </div>
     );
   }

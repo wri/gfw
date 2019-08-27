@@ -22,41 +22,55 @@ function SankeyChart({
   margin
 }) {
   return (
-    <ResponsiveContainer width="100%" height={height}>
-      <Sankey
-        width={width}
-        data={data}
-        className={styles.sankey}
-        nodeWidth={nodeWidth}
-        nodePadding={nodePadding}
-        margin={margin}
-        link={
-          customLink || (
-            <SankeyLink config={{ titlePadding: config.titlePadding }} />
-          )
-        }
-        node={
-          customNode || (
-            <SankeyNode
-              containerWidth={containerWidth}
-              config={{ ...config.node, titlePadding: config.titlePadding }}
-            />
-          )
-        }
+    <div className="c-sankey-chart" style={{ height, minWidth: '100%' }}>
+      <div
+        className="node-titles"
+        style={{
+          paddingLeft: margin.left || 0,
+          paddingRight: margin.right || 0
+        }}
       >
-        {customTooltip || (
-          <Tooltip
-            content={content => (
-              <SankeyTooltip
-                content={content}
-                config={config.tooltip}
-                tooltipChildren={tooltipChildren}
+        {config.nodeTitles &&
+          config.nodeTitles.map(t => <span key={t}>{t}</span>)}
+      </div>
+      <ResponsiveContainer width="100%" height={height}>
+        <Sankey
+          width={width}
+          data={data}
+          className={styles.sankey}
+          nodeWidth={nodeWidth}
+          nodePadding={nodePadding}
+          margin={margin}
+          link={
+            customLink || <SankeyLink config={{ linkPadding: nodeWidth }} />
+          }
+          node={
+            customNode || (
+              <SankeyNode
+                containerWidth={containerWidth}
+                config={{
+                  ...config.node,
+                  titlePadding: config.titlePadding,
+                  nodeWidth
+                }}
               />
-            )}
-          />
-        )}
-      </Sankey>
-    </ResponsiveContainer>
+            )
+          }
+        >
+          {customTooltip || (
+            <Tooltip
+              content={content => (
+                <SankeyTooltip
+                  content={content}
+                  config={config.tooltip}
+                  tooltipChildren={tooltipChildren}
+                />
+              )}
+            />
+          )}
+        </Sankey>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
@@ -103,7 +117,7 @@ SankeyChart.defaultProps = {
   width: 960,
   height: 500,
   data: {},
-  nodeWidth: 10,
+  nodeWidth: 140,
   nodePadding: 10,
   containerWidth: 800,
   config: {},

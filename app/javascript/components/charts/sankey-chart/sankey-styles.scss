@@ -1,19 +1,20 @@
 @import '~styles/settings.scss';
 
-.sankey > svg {
-  padding-bottom: 1em;
-}
+.c-sankey-chart {
+  .node-titles {
+    display: flex;
+    justify-content: space-between;
+  }
 
-// .sankey * {
-// sankey-styles.scss
-//   $font-family-1: 'Lato', sans-serif;
-//   font-family: $font-family-1;
-// }
+  .sankey > svg {
+    padding-bottom: 1em;
+  }
 
-.link {
-  cursor: pointer;
+  .link {
+    cursor: pointer;
 
-  &:hover {
-    stroke-opacity: 0.3;
+    &:hover {
+      stroke-opacity: 0.3;
+    }
   }
 }

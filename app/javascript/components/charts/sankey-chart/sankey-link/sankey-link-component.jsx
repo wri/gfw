@@ -24,7 +24,7 @@ class SankeyLink extends PureComponent {
     const { hover } = this.state;
     const updatedLinkWidth =
       linkWidth < this.minLinkWidth ? this.minLinkWidth : linkWidth;
-    const linkStart = config.titlePadding || 140;
+    const linkStart = config.linkPadding || 140;
     return (
       <path
         className="c-sankey-link"
