@@ -23,6 +23,7 @@ import ScrollTo from 'components/scroll-to';
 
 import closeIcon from 'assets/icons/close.svg';
 
+import PendingDashboard from './components/pending-dashboard';
 import Map from './components/map';
 import Header from './components/header';
 import MapControls from './components/map-controls';
@@ -99,6 +100,7 @@ class DashboardsPage extends PureComponent {
                   checkActive
                 />
               )}
+              <PendingDashboard className="pending-message" />
               <Widgets
                 className="dashboard-widgets"
                 noWidgetsMessage={noWidgetsMessage}

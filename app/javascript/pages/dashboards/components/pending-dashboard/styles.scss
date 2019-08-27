@@ -1,0 +1,40 @@
+@import '~styles/settings.scss';
+
+.c-pending-dashboard {
+  background-color: #f6f6f4;
+  padding: rem(70px);
+
+  .message {
+    display: flex;
+
+    .title {
+      font-size: rem(24px);
+      font-weight: 300;
+      margin-bottom: rem(30px);
+    }
+
+    p {
+      margin-bottom: rem(20px);
+      line-height: rem(20px);
+    }
+
+    span {
+      font-weight: 500;
+    }
+  }
+
+  .accept-btn {
+    margin: auto;
+    min-width: rem(150px);
+    margin-top: rem(40px);
+  }
+
+  .satellite-detailed {
+    width: rem(150px);
+    height: rem(140px);
+    min-width: rem(150px);
+    min-height: rem(140px);
+    margin-left: rem(80px);
+    margin-top: rem(40px);
+  }
+}
