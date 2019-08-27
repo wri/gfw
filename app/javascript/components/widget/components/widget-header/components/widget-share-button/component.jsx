@@ -6,8 +6,6 @@ import Icon from 'components/ui/icon';
 
 import shareIcon from 'assets/icons/share.svg';
 
-import './styles.scss';
-
 class WidgetShareButton extends PureComponent {
   static propTypes = {
     handleShowShare: PropTypes.func.isRequired

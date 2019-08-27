@@ -6,7 +6,7 @@ import Dropdown from 'components/ui/dropdown';
 import Switch from 'components/ui/switch';
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 
-import './widget-settings-styles.scss';
+import './styles.scss';
 
 class WidgetSettings extends PureComponent {
   static propTypes = {

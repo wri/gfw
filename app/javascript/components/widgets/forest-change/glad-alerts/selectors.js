@@ -10,7 +10,7 @@ import {
   getStdDevData,
   getDatesData,
   getChartConfig
-} from 'components/widgets/utils/data';
+} from 'components/widget/utils/data';
 
 // get list data
 const selectAlerts = state => (state.data && state.data.alerts) || null;

@@ -56,15 +56,11 @@ class WidgetContainer extends Component {
     options: PropTypes.object,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     getData: PropTypes.func.isRequired,
-    getWidgetData: PropTypes.func.isRequired,
-    setWidgetData: PropTypes.func.isRequired,
-    setWidgetSettings: PropTypes.func.isRequired,
-    setMapSettings: PropTypes.func.isRequired
+    handleSyncMap: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     const {
-      getData,
       widget,
       location,
       settings,
@@ -75,7 +71,7 @@ class WidgetContainer extends Component {
     const params = { ...location, ...settings };
 
     if (!data || data.noContent) {
-      this.handleGetWidgetData({ widget, getData, params });
+      this.handleGetWidgetData({ widget, params });
     }
 
     if (active && config && config.datasets) {
@@ -89,7 +85,6 @@ class WidgetContainer extends Component {
       location,
       settings,
       config,
-      getData,
       widget,
       error
     } = this.props;
@@ -117,7 +112,7 @@ class WidgetContainer extends Component {
     // refetch data if error, settings, or location changes
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       const params = { ...location, ...settings };
-      this.handleGetWidgetData({ widget, getData, params });
+      this.handleGetWidgetData({ widget, params });
     }
 
     // if widget is active and layers or params change push to map
@@ -142,12 +137,12 @@ class WidgetContainer extends Component {
   }
 
   componentWillUnmount = () => {
-    const { widget, setWidgetData } = this.props;
-    setWidgetData({ widget, data: {} });
+    const { handleSetWigetData } = this.props;
+    handleSetWigetData();
   };
 
   syncWidgetWithMap = () => {
-    const { setMapSettings, settings, config, polynames, options } = this.props;
+    const { handleSyncMap, settings, config, polynames, options } = this.props;
     const { datasets } = config || {};
 
     const widgetDatasets =
@@ -162,34 +157,24 @@ class WidgetContainer extends Component {
 
     const allDatasets = [...compact(polynameDatasets), ...widgetDatasets];
 
-    setMapSettings({
+    handleSyncMap({
       datasets: allDatasets
     });
   };
 
   clearMap = () => {
-    const { setMapSettings } = this.props;
-    setMapSettings({
+    const { handleSyncMap } = this.props;
+    handleSyncMap({
       datasets: [adminBoundaryLayer]
     });
   };
 
-  handleDataHighlight = (highlighted, widget) => {
-    const { setWidgetSettings } = this.props;
-    setWidgetSettings({
-      value: {
-        highlighted
-      },
-      widget
-    });
-  };
-
   handleGetWidgetData = params => {
-    const { getWidgetData } = this.props;
+    const { getData } = this.props;
 
     this.cancelWidgetDataFetch();
     this.widgetDataFetch = CancelToken.source();
-    getWidgetData({ ...params, token: this.widgetDataFetch.token });
+    getData({ ...params, token: this.widgetDataFetch.token });
     this.cancelWidgetDataFetch();
   };
 
@@ -201,8 +186,7 @@ class WidgetContainer extends Component {
 
   render() {
     return createElement(WidgetComponent, {
-      ...this.props,
-      handleDataHighlight: this.handleDataHighlight
+      ...this.props
     });
   }
 }

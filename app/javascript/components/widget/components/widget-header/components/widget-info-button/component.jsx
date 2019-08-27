@@ -7,8 +7,6 @@ import Icon from 'components/ui/icon';
 
 import infoIcon from 'assets/icons/info.svg';
 
-import './styles.scss';
-
 class WidgetInfoButton extends PureComponent {
   static propTypes = {
     square: PropTypes.bool,

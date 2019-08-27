@@ -1,6 +1,3 @@
-import { connect } from 'react-redux';
+import Component from './component';
 
-import { getWidgetHeaderProps } from './selectors';
-import WidgetHeaderComponent from './component';
-
-export default connect(getWidgetHeaderProps)(WidgetHeaderComponent);
+export default Component;

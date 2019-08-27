@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
+import { yearTicksFormatter } from 'components/widget/utils/data';
 import { formatNumber } from 'utils/format';
 
 const getData = state => state.data || null;

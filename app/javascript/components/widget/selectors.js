@@ -70,16 +70,6 @@ export const getWidgetOptions = createSelector(
   }
 );
 
-export const getWidgetError = createSelector(
-  [selectWidgetFromState],
-  props => props && props.error
-);
-
-export const getWidgetLoading = createSelector(
-  [selectWidgetFromState],
-  props => props && props.loading
-);
-
 export const getRangeYears = createSelector(
   [getWidgetStateData, selectWidgetConfig],
   (data, config) => {
@@ -231,6 +221,8 @@ export const getWidgetPropsFromState = createSelector(
   })
 );
 
+export const selectParseData = (state, { parseData }) => parseData;
+
 export const getWidgetTitle = createSelector(
   [getWidgetPropsFromState],
   props => props && props.title
@@ -242,8 +234,8 @@ export const getWidgetSentence = createSelector(
 );
 
 export const getWidgetData = createSelector(
-  [getWidgetPropsFromState],
-  props => props && props.data
+  [selectParseData, getProps],
+  (parseData, props) => parseData(props)
 );
 
 export const getWidgetDataConfig = createSelector(
@@ -251,165 +243,160 @@ export const getWidgetDataConfig = createSelector(
   props => props && props.dataConfig
 );
 
-import { getIsTrase } from 'app/layouts/root/selectors';
 
-export const getNonGlobalIndicator = createSelector(
-  [
-    getIndicator,
-    getForestType,
-    getLandCategory,
-    getLocation,
-    getNonGlobalDatasets
-  ],
-  (indicator, forestType, landCategory, location, datasets) => {
-    if (!datasets || location.type !== 'global' || !indicator) return null;
-    if (datasets[indicator.value]) {
-      return indicator;
-    } else if (datasets[forestType && forestType.value]) {
-      return forestType;
-    } else if (datasets[landCategory && landCategory.value]) {
-      return landCategory;
-    }
-    return null;
-  }
-);
 
-// get lists selected
-export const getStatements = createSelector(
-  [getSettings, getType, getNonGlobalDatasets, getNonGlobalIndicator],
-  (settings, type, datasets, indicator) => {
-    if (!settings) return '';
-    const { extentYear, threshold } = settings;
 
-    const statements = compact([
-      extentYear
-        ? translateText('{extentYear} tree cover extent', { extentYear })
-        : null,
-      threshold || threshold === 0
-        ? translateText('>{threshold}% tree canopy', { threshold })
-        : null,
-      type === 'loss'
-        ? translateText(
-          'these estimates do not take tree cover gain into account'
-        )
-        : null,
-      datasets && indicator
-        ? translateText(
-          '*{indicator} are available in {datasetsCount} countries only',
-          {
-            indicator: indicator.label.toLowerCase(),
-            datasetsCount: datasets[indicator.value]
-          }
-        )
-        : null
-    ]);
+// import { getIsTrase } from 'app/layouts/root/selectors';
 
-    return statements;
-  }
-);
+// export const getNonGlobalIndicator = createSelector(
+//   [
+//     getIndicator,
+//     getForestType,
+//     getLandCategory,
+//     getLocation,
+//     getNonGlobalDatasets
+//   ],
+//   (indicator, forestType, landCategory, location, datasets) => {
+//     if (!datasets || location.type !== 'global' || !indicator) return null;
+//     if (datasets[indicator.value]) {
+//       return indicator;
+//     } else if (datasets[forestType && forestType.value]) {
+//       return forestType;
+//     } else if (datasets[landCategory && landCategory.value]) {
+//       return landCategory;
+//     }
+//     return null;
+//   }
+// );
+
+// // get lists selected
+// export const getStatements = createSelector(
+//   [getSettings, getType, getNonGlobalDatasets, getNonGlobalIndicator],
+//   (settings, type, datasets, indicator) => {
+//     if (!settings) return '';
+//     const { extentYear, threshold } = settings;
+
+//     const statements = compact([
+//       extentYear
+//         ? translateText('{extentYear} tree cover extent', { extentYear })
+//         : null,
+//       threshold || threshold === 0
+//         ? translateText('>{threshold}% tree canopy', { threshold })
+//         : null,
+//       type === 'loss'
+//         ? translateText(
+//           'these estimates do not take tree cover gain into account'
+//         )
+//         : null,
+//       datasets && indicator
+//         ? translateText(
+//           '*{indicator} are available in {datasetsCount} countries only',
+//           {
+//             indicator: indicator.label.toLowerCase(),
+//             datasetsCount: datasets[indicator.value]
+//           }
+//         )
+//         : null
+//     ]);
+
+//     return statements;
+//   }
+// );
+
+
+//   // dsalkdsa;lkas
+
+//   import { createSelector, createStructuredSelector } from 'reselect';
+// import moment from 'moment';
+// import qs from 'query-string';
+// import { isTouch } from 'utils/browser';
+// import { SCREEN_L } from 'utils/constants';
+
+// export const selectModalOpen = state => state.modalMeta && state.modalMeta.open;
+// export const selectModalClosing = state =>
+//   state.modalMeta && state.modalMeta.closing;
+// export const selectLocation = state => state.location && state.location.payload;
+// export const selectSearch = state => state.location && state.location.search;
+// export const selectConfig = (state, { config }) => config;
+// export const selectTitle = (state, { config, title }) => title || config.title;
+// export const selectWidget = (state, { widget }) => widget;
+// export const selectLocationName = (state, { locationName }) => locationName;
+// export const selectWidgetMetaKey = (state, { config, widget, whitelist }) =>
+//   (widget === 'treeCover' &&
+//   whitelist &&
+//   whitelist.length &&
+//   whitelist.includes('plantations')
+//     ? 'widget_natural_vs_planted'
+//     : config.metaKey);
+
+// export const getParsedTitle = createSelector(
+//   [selectTitle, selectLocationName],
+//   (title, locationName) => {
+//     const titleString = typeof title === 'string' ? title : title.default;
+//     return titleString && titleString.replace('{location}', locationName || '');
+//   }
+// );
+
+// export const getShareData = createSelector(
+//   [getParsedTitle, selectConfig, selectSearch, selectLocation, selectWidget],
+//   (title, config, search, location, widget) => {
+//     const query = qs.parse(search);
+//     const { category } = query || {};
+//     const { type, adm0, adm1, adm2 } = location || {};
+//     const locationUrl = `dashboards/${type}/${adm0 || ''}${
+//       adm1 ? `/${adm1}` : ''
+//     }${adm2 ? `/${adm2}` : ''}`;
+//     const widgetQuery = `widget=${widget}`;
+//     const widgetState =
+//       query && query[widget] ? `&${widget}=${query[widget]}` : '';
+//     const categoryQuery = category ? `&category=${category}` : '';
+
+//     const shareUrl = `${window.location.origin}/${locationUrl}?${widgetQuery}${
+//       widgetState ? `${widgetState}` : ''
+//     }${categoryQuery}#${widget}`;
+//     const embedUrl = `${window.location.origin}/embed/${locationUrl}?${
+//       widgetQuery
+//     }${widgetState}`;
+//     return {
+//       title: 'Share this widget',
+//       subtitle: title,
+//       shareUrl,
+//       embedUrl,
+//       embedSettings:
+//         config.size === 'small'
+//           ? { width: 315, height: 460 }
+//           : { width: 670, height: 490 },
+//       socialText: title
+//     };
+//   }
+// );
+
+// export const getCitation = createSelector(
+//   [getParsedTitle],
+//   title =>
+//     (title
+//       ? `Global Forest Watch. “${title}”. Accessed on ${moment().format(
+//         'MMMM Do YYYY'
+//       )} from www.globalforestwatch.org.`
+//       : null)
+// );
+
+// export const getWidgetHeaderProps = createStructuredSelector({
+//   modalOpen: selectModalOpen,
+//   modalClosing: selectModalClosing,
+//   metakey: selectWidgetMetaKey,
+//   shareData: getShareData,
+//   title: getParsedTitle,
+//   citation: getCitation,
+//   isDeviceTouch: () => isTouch() || window.innerWidth < SCREEN_L
+// });
 
 export const getWidgetProps = () =>
   createStructuredSelector({
-    loading: getWidgetLoading,
-    error: getWidgetError,
     title: getWidgetTitle,
     sentence: getWidgetSentence,
     data: getWidgetData,
     dataConfig: getWidgetDataConfig,
     settings: getWidgetSettings,
-    optionsSelected: getOptionsSelected,
-    forestTypes: getForestType,
-    landCategory: getLandCategory,
-    polynames: getPolynames,
-    indicator: getIndicator,
-    options: getOptionsWithYears,
     active: selectWidgetActive
   });
-
-
-  // dsalkdsa;lkas
-
-  import { createSelector, createStructuredSelector } from 'reselect';
-import moment from 'moment';
-import qs from 'query-string';
-import { isTouch } from 'utils/browser';
-import { SCREEN_L } from 'utils/constants';
-
-export const selectModalOpen = state => state.modalMeta && state.modalMeta.open;
-export const selectModalClosing = state =>
-  state.modalMeta && state.modalMeta.closing;
-export const selectLocation = state => state.location && state.location.payload;
-export const selectSearch = state => state.location && state.location.search;
-export const selectConfig = (state, { config }) => config;
-export const selectTitle = (state, { config, title }) => title || config.title;
-export const selectWidget = (state, { widget }) => widget;
-export const selectLocationName = (state, { locationName }) => locationName;
-export const selectWidgetMetaKey = (state, { config, widget, whitelist }) =>
-  (widget === 'treeCover' &&
-  whitelist &&
-  whitelist.length &&
-  whitelist.includes('plantations')
-    ? 'widget_natural_vs_planted'
-    : config.metaKey);
-
-export const getParsedTitle = createSelector(
-  [selectTitle, selectLocationName],
-  (title, locationName) => {
-    const titleString = typeof title === 'string' ? title : title.default;
-    return titleString && titleString.replace('{location}', locationName || '');
-  }
-);
-
-export const getShareData = createSelector(
-  [getParsedTitle, selectConfig, selectSearch, selectLocation, selectWidget],
-  (title, config, search, location, widget) => {
-    const query = qs.parse(search);
-    const { category } = query || {};
-    const { type, adm0, adm1, adm2 } = location || {};
-    const locationUrl = `dashboards/${type}/${adm0 || ''}${
-      adm1 ? `/${adm1}` : ''
-    }${adm2 ? `/${adm2}` : ''}`;
-    const widgetQuery = `widget=${widget}`;
-    const widgetState =
-      query && query[widget] ? `&${widget}=${query[widget]}` : '';
-    const categoryQuery = category ? `&category=${category}` : '';
-
-    const shareUrl = `${window.location.origin}/${locationUrl}?${widgetQuery}${
-      widgetState ? `${widgetState}` : ''
-    }${categoryQuery}#${widget}`;
-    const embedUrl = `${window.location.origin}/embed/${locationUrl}?${
-      widgetQuery
-    }${widgetState}`;
-    return {
-      title: 'Share this widget',
-      subtitle: title,
-      shareUrl,
-      embedUrl,
-      embedSettings:
-        config.size === 'small'
-          ? { width: 315, height: 460 }
-          : { width: 670, height: 490 },
-      socialText: title
-    };
-  }
-);
-
-export const getCitation = createSelector(
-  [getParsedTitle],
-  title =>
-    (title
-      ? `Global Forest Watch. “${title}”. Accessed on ${moment().format(
-        'MMMM Do YYYY'
-      )} from www.globalforestwatch.org.`
-      : null)
-);
-
-export const getWidgetHeaderProps = createStructuredSelector({
-  modalOpen: selectModalOpen,
-  modalClosing: selectModalClosing,
-  metakey: selectWidgetMetaKey,
-  shareData: getShareData,
-  title: getParsedTitle,
-  citation: getCitation,
-  isDeviceTouch: () => isTouch() || window.innerWidth < SCREEN_L
-});

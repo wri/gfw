@@ -7,7 +7,7 @@ import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
 import moment from 'moment';
 import { sortByKey } from 'utils/data';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
+import { yearTicksFormatter } from 'components/widget/utils/data';
 
 import tscLossCategories from 'data/tsc-loss-categories-old.json';
 

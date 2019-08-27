@@ -11,18 +11,62 @@ import './styles.scss';
 class Widget extends PureComponent {
   static propTypes = {
     widget: PropTypes.string.isRequired,
-    colors: PropTypes.object.isRequired,
-    config: PropTypes.object.isRequired,
-    simple: PropTypes.bool,
-    embed: PropTypes.bool,
+    title: PropTypes.string.isRequired,
     active: PropTypes.bool,
-    statements: PropTypes.array
-
+    embed: PropTypes.bool,
+    large: PropTypes.bool,
+    colors: PropTypes.object.isRequired,
+    simple: PropTypes.bool,
+    datasets: PropTypes.array,
+    settings: PropTypes.array,
+    chartType: PropTypes.string,
+    loading: PropTypes.bool,
+    error: PropTypes.bool,
+    locationName: PropTypes.string,
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    dataConfig: PropTypes.object,
+    sentence: PropTypes.string,
+    statements: PropTypes.array,
+    showAttributionLink: PropTypes.bool,
+    handleShowMap: PropTypes.func,
+    handleShowInfo: PropTypes.func,
+    handleChangeSettings: PropTypes.func,
+    handleShowShare: PropTypes.func,
+    handleRefetchData: PropTypes.func,
+    handleMouseOver: PropTypes.func,
+    handleMouseOut: PropTypes.func
   };
 
   render() {
-    const { widget, colors, active, config: large, embed, simple } = this.props;
-    const { main: mainColor } = colors || {};
+    const {
+      title,
+      widget,
+      colors,
+      active,
+      large,
+      embed,
+      simple,
+      datasets,
+      settings,
+      settingsConfig,
+      chartType,
+      loading,
+      error,
+      locationName,
+      data,
+      dataConfig,
+      sentence,
+      statements,
+      showAttributionLink,
+      handleShowMap,
+      handleShowInfo,
+      handleChangeSettings,
+      handleShowShare,
+      handleRefetchData,
+      handleMouseOver,
+      handleMouseOut
+    } = this.props;
+    const { main } = colors || {};
 
     return (
       <div
@@ -32,16 +76,40 @@ class Widget extends PureComponent {
           ...(active &&
             !simple &&
             !embed && {
-            borderColor: mainColor,
-            boxShadow: `0 0px 0px 1px ${mainColor}`
+            borderColor: main,
+            boxShadow: `0 0px 0px 1px ${main}`
           })
         }}
       >
-        <WidgetHeader {...this.props} />
-        <WidgetBody {...this.props} />
-        <WidgetFooter
+        <WidgetHeader
+          title={title}
+          large={large}
+          datasets={datasets}
+          active={active}
+          embed={embed}
+          sentence={sentence}
+          settings={settingsConfig}
+          handleShowMap={handleShowMap}
+          handleShowInfo={handleShowInfo}
+          handleChangeSettings={handleChangeSettings}
+          handleShowShare={handleShowShare}
+        />
+        <WidgetBody
+          chartType={chartType}
+          loading={loading}
+          error={error}
           simple={simple}
+          locationName={locationName}
+          data={data}
+          settings={settings}
+          dataConfig={dataConfig}
+          handleRefetchData={handleRefetchData}
+          handleMouseOver={handleMouseOver}
+          handleMouseOut={handleMouseOut}
+        />
+        <WidgetFooter
           statements={statements}
+          simple={simple}
           showAttributionLink={showAttributionLink}
         />
       </div>

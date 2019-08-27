@@ -6,7 +6,7 @@ import { format } from 'd3-format';
 import moment from 'moment';
 import {} from 'utils/calculations';
 import { sortByKey, getColorPalette } from 'utils/data';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
+import { yearTicksFormatter } from 'components/widget/utils/data';
 
 // get list data
 const getLoss = state => (state.data && state.data.loss) || null;

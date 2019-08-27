@@ -5,7 +5,7 @@ import cx from 'classnames';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 
-import Widget from './components/widget';
+import Widget from 'components/widget';
 
 import './styles.scss';
 

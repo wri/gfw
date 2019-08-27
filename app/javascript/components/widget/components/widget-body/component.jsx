@@ -7,8 +7,19 @@ import Loader from 'components/ui/loader/loader';
 import NoContent from 'components/ui/no-content';
 import RefreshButton from 'components/ui/refresh-button';
 import DynamicSentence from 'components/ui/dynamic-sentence';
+import WidgetComposedChart from 'components/widget/components/widget-composed-chart';
+import WidgetHorizontalBarChart from 'components/widget/components/widget-horizontal-bar-chart';
+import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
+import WidgetPieChartLegend from 'components/widget/components/widget-pie-chart-legend';
 
 import './styles.scss';
+
+const chartOptions = {
+  composedChart: WidgetComposedChart,
+  horizontalBarChart: WidgetHorizontalBarChart,
+  rankedList: WidgetNumberedList,
+  pieChart: WidgetPieChartLegend
+};
 
 class Widget extends PureComponent {
   static propTypes = {
@@ -18,7 +29,7 @@ class Widget extends PureComponent {
     loading: PropTypes.bool,
     error: PropTypes.bool,
     simple: PropTypes.bool,
-    Component: PropTypes.any.isRequired,
+    chartType: PropTypes.string.isRequired,
     sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     dataConfig: PropTypes.object,
@@ -35,15 +46,16 @@ class Widget extends PureComponent {
       error,
       simple,
       locationName,
-      handleRefetchData,
-      handleMouseOver,
-      handleMouseOut,
+      sentence,
       data,
       dataConfig,
-      sentence,
-      Component
+      chartType,
+      handleRefetchData,
+      handleMouseOver,
+      handleMouseOut
     } = this.props;
     const hasData = !isEmpty(data);
+    const Component = chartOptions[chartType];
 
     return (
       <div className={cx('c-widget-body', { simple })}>

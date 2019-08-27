@@ -1,4 +1,4 @@
-import Component from 'components/widgets/components/widget-composed-chart';
+import Component from 'components/widget/components/widget-composed-chart';
 import getData from './actions';
 import getProps, { parsePayload } from './selectors';
 import config from './config';

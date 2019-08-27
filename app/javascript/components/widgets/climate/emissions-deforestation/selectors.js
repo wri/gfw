@@ -2,7 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
-import { yearTicksFormatter } from 'components/widgets/utils/data';
+import { yearTicksFormatter } from 'components/widget/utils/data';
 
 // get list data
 const getData = state => (state.data && state.data.loss) || null;

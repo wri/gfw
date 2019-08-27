@@ -13,28 +13,30 @@ import './styles.scss';
 class WidgetHeader extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    config: PropTypes.object.isRequired,
+    large: PropTypes.bool,
+    datasets: PropTypes.array,
+    loading: PropTypes.bool,
     embed: PropTypes.bool,
     simple: PropTypes.bool,
     active: PropTypes.string,
+    settingsOptions: PropTypes.array,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     handleShowMap: PropTypes.func,
-    handleShowShare: PropTypes.func,
-    loading: PropTypes.bool,
-    settingsOptions: PropTypes.array
+    handleShowShare: PropTypes.func
   };
 
   render() {
     const {
-      active,
-      handleShowMap,
       title,
       loading,
-      settingsOptions,
+      active,
       embed,
-      config: { large, datasets },
+      large,
+      datasets,
       simple,
+      settingsOptions,
+      handleShowMap,
       handleShowInfo,
       handleChangeSettings,
       handleShowShare
