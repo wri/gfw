@@ -2,10 +2,19 @@
 
 .c-pending-dashboard {
   background-color: #f6f6f4;
-  padding: rem(70px);
+  padding: rem(30px) $mobile-gutter;
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(50px) $desktop-gutter;
+  }
 
   .message {
     display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+    }
 
     .title {
       font-size: rem(24px);
