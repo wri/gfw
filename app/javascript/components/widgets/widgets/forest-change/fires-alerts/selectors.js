@@ -25,16 +25,22 @@ export const getData = createSelector(
   [getAlerts, getDataset],
   (data, dataset) => {
     if (!data || isEmpty(data)) return null;
-    const dataMaxYear = maxBy(data, 'year').year;
-    const dataMaxWeek = maxBy(
-      data.filter(el => el.year === dataMaxYear),
-      'week'
-    ).week;
+    const dataMaxYear = maxBy(data, 'year').year || null;
+    const dataMaxWeek =
+      maxBy(data.filter(el => el.year === dataMaxYear), 'week').week || null;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
     const lastWeek = {
-      isoWeek: dataMaxWeek,
-      year: dataMaxYear
+      isoWeek:
+        dataMaxWeek ||
+        moment()
+          .subtract(2, 'w')
+          .week(),
+      year:
+        dataMaxYear ||
+        moment()
+          .subtract(2, 'w')
+          .year()
     };
     const min_year = dataset === 'MODIS' ? 2001 : 2016;
     for (let i = min_year; i <= lastWeek.year; i += 1) {
