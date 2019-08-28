@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
+import { SCREEN_M } from 'utils/constants';
 
 import SankeyChart from 'components/charts/sankey-chart/sankey';
 
@@ -23,15 +25,24 @@ class WidgetSankey extends PureComponent {
     };
 
     return (
-      <div className="c-sankey-chart-widget">
-        <SankeyChart
-          data={data}
-          config={config}
-          height={300}
-          nodeWidth={50}
-          margin={{ top: 10, left: 50, right: 50, bottom: 50 }}
-        />
-      </div>
+      <MediaQuery minWidth={SCREEN_M}>
+        {isDesktop => (
+          <div className="c-sankey-chart-widget">
+            <SankeyChart
+              data={data}
+              config={config}
+              height={300}
+              nodeWidth={50}
+              margin={{
+                top: 10,
+                left: isDesktop ? 50 : 0,
+                right: isDesktop ? 50 : 0,
+                bottom: 50
+              }}
+            />
+          </div>
+        )}
+      </MediaQuery>
     );
   }
 }
