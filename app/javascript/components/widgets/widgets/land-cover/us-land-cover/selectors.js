@@ -14,6 +14,19 @@ const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.config.sentence || null;
 
+export const parsePayload = payload => {
+  if (payload) {
+    const { source, target, key } = payload;
+    return {
+      updateLayer: true,
+      source,
+      target,
+      key
+    };
+  }
+  return {};
+};
+
 export const cleanData = createSelector(
   [getData, getSettings],
   (data, settings) => {

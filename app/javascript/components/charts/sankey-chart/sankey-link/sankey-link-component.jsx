@@ -7,7 +7,6 @@ class SankeyLink extends PureComponent {
   constructor() {
     super();
     this.minLinkWidth = 2;
-    this.state = { hover: false };
   }
 
   render() {
@@ -19,7 +18,8 @@ class SankeyLink extends PureComponent {
       targetY,
       targetControlX,
       linkWidth,
-      config
+      config,
+      payload
     } = this.props;
     const updatedLinkWidth =
       linkWidth < this.minLinkWidth ? this.minLinkWidth : linkWidth;
@@ -33,11 +33,9 @@ class SankeyLink extends PureComponent {
           linkStart},${targetY}
         `}
         fill="none"
-        stroke="#333"
+        stroke={config.highlight && config.highlight(payload) ? '#444' : '#ddd'}
         strokeWidth={updatedLinkWidth}
-        onMouseEnter={() => this.setState({ hover: true })}
-        onMouseLeave={() => this.setState({ hover: false })}
-        strokeOpacity="0.2"
+        strokeOpacity="0.4"
       />
     );
   }
@@ -51,7 +49,8 @@ SankeyLink.propTypes = {
   sourceControlX: PropTypes.number,
   targetControlX: PropTypes.number,
   linkWidth: PropTypes.number,
-  config: PropTypes.object
+  config: PropTypes.object,
+  payload: PropTypes.object
 };
 
 SankeyLink.defaultProps = {

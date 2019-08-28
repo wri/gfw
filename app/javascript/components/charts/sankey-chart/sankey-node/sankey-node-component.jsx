@@ -56,6 +56,12 @@ function SankeyNode({ x, y, height, index, payload, config }) {
           height={height < minHeight ? minHeight : height}
           fill={payload.color}
           fillOpacity="1"
+          stroke={
+            config.highlight && config.highlight(payload)
+              ? '#333'
+              : payload.color
+          }
+          strokeWidth={2}
         />
         <text
           textAnchor={isEndNode ? 'end' : 'start'}

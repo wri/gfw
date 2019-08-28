@@ -17,11 +17,12 @@ function SankeyChart({
   containerWidth,
   data,
   config,
-  customTooltip,
   customLink,
   customNode,
-  // tooltipChildren,
-  margin
+  margin,
+  handleMouseOver,
+  handleMouseLeave,
+  handleOnClick
 }) {
   return (
     <div className="c-sankey-chart" style={{ height, minWidth: '100%' }}>
@@ -48,8 +49,15 @@ function SankeyChart({
           nodePadding={nodePadding}
           margin={margin}
           link={
-            customLink || <SankeyLink config={{ linkPadding: -nodeWidth }} />
+            customLink || (
+              <SankeyLink
+                config={{ ...config.link, linkPadding: -nodeWidth }}
+              />
+            )
           }
+          onMouseEnter={handleMouseOver}
+          onMouseLeave={handleMouseLeave}
+          onClick={handleOnClick}
           node={
             customNode || (
               <SankeyNode
@@ -63,35 +71,34 @@ function SankeyChart({
             )
           }
         >
-          {customTooltip || (
-            <Tooltip
-              content={content => {
-                const payloadData =
-                  content.payload &&
-                  content.payload.length > 0 &&
-                  content.payload[0];
-                return (
-                  !isEmpty(payloadData) && (
-                    <ChartToolTip
-                      payload={[payloadData.payload]}
-                      settings={[
-                        {
-                          label: `${payloadData.name &&
-                            payloadData.name.replace('-', '>')}`
-                        },
-                        {
-                          key: 'value',
-                          unit: config.tooltip && config.tooltip.unit,
-                          unitFormat: num => format('.2s')(num),
-                          label: ''
-                        }
-                      ]}
-                    />
-                  )
-                );
-              }}
-            />
-          )}
+          <Tooltip
+            content={content => {
+              const payloadData =
+                content.payload &&
+                content.payload.length > 0 &&
+                content.payload[0];
+              return (
+                !isEmpty(payloadData) && (
+                  <ChartToolTip
+                    payload={[payloadData.payload]}
+                    settings={[
+                      {
+                        key: payloadData.name,
+                        label: `${payloadData.name &&
+                          payloadData.name.replace('-', '>')}`
+                      },
+                      {
+                        key: 'value',
+                        unit: config.tooltip && config.tooltip.unit,
+                        unitFormat: num => format('.2s')(num),
+                        label: ''
+                      }
+                    ]}
+                  />
+                )
+              );
+            }}
+          />
         </Sankey>
       </ResponsiveContainer>
     </div>
@@ -111,8 +118,6 @@ SankeyChart.propTypes = {
   nodePadding: PropTypes.number,
   /** Width of the sankey container */
   containerWidth: PropTypes.number,
-  /** Custom tooltip component. Will replace the default */
-  customTooltip: PropTypes.node,
   /** Custom link component. Will replace the default */
   customLink: PropTypes.node,
   /** Custom node component. Will replace the default */
@@ -134,7 +139,10 @@ SankeyChart.propTypes = {
     right: PropTypes.number,
     bottom: PropTypes.number,
     left: PropTypes.number
-  })
+  }),
+  handleMouseOver: PropTypes.func,
+  handleMouseLeave: PropTypes.func,
+  handleOnClick: PropTypes.func
 };
 
 SankeyChart.defaultProps = {
