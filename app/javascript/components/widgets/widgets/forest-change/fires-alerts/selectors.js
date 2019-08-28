@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import maxBy from 'lodash/maxBy';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import moment from 'moment';
@@ -24,12 +25,16 @@ export const getData = createSelector(
   [getAlerts, getDataset],
   (data, dataset) => {
     if (!data || isEmpty(data)) return null;
+    const dataMaxYear = maxBy(data, 'year').year;
+    const dataMaxWeek = maxBy(
+      data.filter(el => el.year === dataMaxYear),
+      'week'
+    ).week;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
-    const latestFullWeek = moment().subtract(2, 'w');
     const lastWeek = {
-      isoWeek: latestFullWeek.isoWeek(),
-      year: latestFullWeek.year()
+      isoWeek: dataMaxWeek,
+      year: dataMaxYear
     };
     const min_year = dataset === 'MODIS' ? 2001 : 2016;
     for (let i = min_year; i <= lastWeek.year; i += 1) {
