@@ -35,7 +35,7 @@ export const getData = createSelector(
         dataMaxWeek ||
         moment()
           .subtract(2, 'w')
-          .week(),
+          .isoWeek(),
       year:
         dataMaxYear ||
         moment()
