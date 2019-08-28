@@ -25,9 +25,13 @@ export const getData = createSelector(
   [getAlerts, getDataset],
   (data, dataset) => {
     if (!data || isEmpty(data)) return null;
-    const dataMaxYear = maxBy(data, 'year').year || null;
-    const dataMaxWeek =
-      maxBy(data.filter(el => el.year === dataMaxYear), 'week').week || null;
+    const dataMax = maxBy(data, 'year');
+    const dataMaxYear = (dataMax && dataMax.year) || null;
+    const dataMaxFiltered = maxBy(
+      data.filter(el => el && el.year === dataMaxYear),
+      'week'
+    );
+    const dataMaxWeek = (dataMaxFiltered && dataMaxFiltered.week) || null;
     const groupedByYear = groupBy(data, 'year');
     const years = [];
     const lastWeek = {
@@ -35,7 +39,7 @@ export const getData = createSelector(
         dataMaxWeek ||
         moment()
           .subtract(2, 'w')
-          .week(),
+          .isoWeek(),
       year:
         dataMaxYear ||
         moment()
