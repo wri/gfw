@@ -113,26 +113,6 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector([parseData], dataKeys => {
-  if (isEmpty(dataKeys)) return null;
-  // const colorsByType = settings.type === 'bound1' ? colors.types : colors.species;
-  // return {
-  //   colors: colorsByType,
-  //   unit: '%',
-  //   xKey: 'region',
-  //   yKeys: dataKeys,
-  //   yAxisDotFill: '#d4d4d4',
-  //   tooltip: dataKeys.map(item => ({
-  //     key: item,
-  //     label: item,
-  //     color: colorsByType[item],
-  //     unit: '%',
-  //     unitFormat: value => format('.1f')(value)
-  //   }))
-  // };
-  return {};
-});
-
 export const parseSentence = createSelector(
   [parseData, getLocationName, getSettings, getSentences],
   (data, locationName, settings, sentence) => {
@@ -166,6 +146,5 @@ export const parseSentence = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
   sentence: parseSentence
 });

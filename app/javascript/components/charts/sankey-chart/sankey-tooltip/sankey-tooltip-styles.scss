@@ -3,7 +3,6 @@
 .c-sankey-tooltip {
   background: $black;
   opacity: 0.8;
-  // font-family: $font-family-2;
   letter-spacing: -0.1px;
   font-size: $font-size-s;
   min-width: 180px;
@@ -20,7 +19,6 @@
     color: $white;
 
     .tp-targetName {
-      // color: $green-gfw;
       padding-right: 16px;
     }
 
@@ -51,7 +49,6 @@
 
       .tp-label-name {
         margin-right: 30px;
-        // color: $green-gfw;
         color: $white;
       }
     }

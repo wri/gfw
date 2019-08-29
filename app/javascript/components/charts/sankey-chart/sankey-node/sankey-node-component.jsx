@@ -18,7 +18,7 @@ function SankeyNode({ x, y, height, index, payload, config }) {
     const tspanLineHeight = config.tspanLineHeight || 10;
     const startX = isEndNode
       ? x - width - padding // right text
-      : x + width + padding + 10; // left text, +10px to compensate the gap (see L55)
+      : x + width + padding; // left text
     const startY = y + height / 2 - fontSize || 0;
     const charactersPerLine = rectangleStart / 6 - 3; // -3 for the ellipsis
     const maxLines = 2;
