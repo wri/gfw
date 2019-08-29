@@ -79,13 +79,19 @@
   }
 
   .metadata {
-    display: flex;
     margin-bottom: rem(25px);
     margin-left: rem(30px);
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      flex-direction: row;
+    }
 
     .tags,
     .subscribed {
       margin-right: rem(20px);
+      margin-bottom: rem(10px);
       display: flex;
       align-items: center;
 

@@ -23,6 +23,7 @@ import ScrollTo from 'components/scroll-to';
 
 import closeIcon from 'assets/icons/close.svg';
 
+import PendingDashboard from './components/pending-dashboard';
 import Map from './components/map';
 import Header from './components/header';
 import MapControls from './components/map-controls';
@@ -39,7 +40,8 @@ class DashboardsPage extends PureComponent {
     handleCategoryChange: PropTypes.func,
     widgets: PropTypes.array,
     activeWidgetSlug: PropTypes.string,
-    locationType: PropTypes.string
+    locationType: PropTypes.string,
+    activeArea: PropTypes.object
   };
 
   renderMap = () => {
@@ -70,7 +72,8 @@ class DashboardsPage extends PureComponent {
       noWidgetsMessage,
       widgets,
       activeWidgetSlug,
-      locationType
+      locationType,
+      activeArea
     } = this.props;
     const isCountryDashboard =
       locationType === 'country' || locationType === 'global';
@@ -99,6 +102,10 @@ class DashboardsPage extends PureComponent {
                   checkActive
                 />
               )}
+              <PendingDashboard
+                className="pending-message"
+                isUserDashboard={activeArea && activeArea.userArea}
+              />
               <Widgets
                 className="dashboard-widgets"
                 noWidgetsMessage={noWidgetsMessage}
