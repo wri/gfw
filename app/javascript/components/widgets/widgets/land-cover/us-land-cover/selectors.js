@@ -102,8 +102,14 @@ export const parseData = createSelector(
         value: sumBy(group, 'value')
       };
     });
+    const biggestLink = maxBy(links, 'value');
+    const selectedElement = {
+      ...biggestLink,
+      source: nodes[biggestLink.source],
+      target: nodes[biggestLink.target]
+    };
 
-    return { nodes, links };
+    return { nodes, links, selectedElement };
   }
 );
 

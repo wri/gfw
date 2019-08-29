@@ -53,9 +53,7 @@ function SankeyChart({
             margin={margin}
             link={
               customLink || (
-                <SankeyLink
-                  config={{ ...config.link, linkPadding: -nodeWidth }}
-                />
+                <SankeyLink config={{ ...config.link, linkPadding: 1 }} />
               )
             }
             onMouseEnter={handleMouseOver}

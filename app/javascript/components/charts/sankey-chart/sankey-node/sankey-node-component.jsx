@@ -9,7 +9,7 @@ function SankeyNode({ x, y, height, index, payload, config }) {
   const isEndNode = x > width;
   const padding = config.padding || 10;
   const rectangleStart = config.titlePadding || 140;
-  const minHeight = 3;
+  const minHeight = 1;
 
   const tSpans = text => {
     const fontSize = config.fontSize || 12;

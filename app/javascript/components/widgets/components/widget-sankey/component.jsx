@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import MediaQuery from 'react-responsive';
 import { SCREEN_M } from 'utils/constants';
+import isEmpty from 'lodash/isEmpty';
 
 import SankeyChart from 'components/charts/sankey-chart/sankey';
 
@@ -24,10 +25,12 @@ class WidgetSankey extends PureComponent {
   }, 100);
 
   render() {
-    const { data, settings } = this.props;
+    const { data, dataConfig, settings } = this.props;
     const { unit, startYear, endYear } = settings;
-
-    const selected = settings.activeData;
+    const { selectedElement } = data;
+    const selected = !isEmpty(settings.activeData)
+      ? settings.activeData
+      : selectedElement;
     const shouldHighlight = item => {
       if (!selected) return false;
       if (selected.source && selected.target) {
@@ -58,7 +61,8 @@ class WidgetSankey extends PureComponent {
       link: {
         highlight: link => shouldHighlight(link)
       },
-      nodeTitles: [startYear, endYear]
+      nodeTitles: [startYear, endYear],
+      ...dataConfig
     };
 
     return (
@@ -76,8 +80,8 @@ class WidgetSankey extends PureComponent {
               handleOutsideClick={this.handleOutsideClick}
               margin={{
                 top: 10,
-                left: isDesktop ? 50 : 0,
-                right: isDesktop ? 50 : 0,
+                left: isDesktop ? 50 : 1,
+                right: isDesktop ? 50 : 1,
                 bottom: 50
               }}
             />
@@ -90,6 +94,7 @@ class WidgetSankey extends PureComponent {
 
 WidgetSankey.propTypes = {
   data: PropTypes.object,
+  dataConfig: PropTypes.object,
   settings: PropTypes.object,
   parsePayload: PropTypes.func,
   setWidgetsSettings: PropTypes.func,
