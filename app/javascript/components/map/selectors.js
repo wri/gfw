@@ -336,8 +336,9 @@ export const getActiveLayers = createSelector(
   (layers, geostore, location) => {
     if (isEmpty(layers)) return [];
     const filteredLayers = layers.filter(l => !l.confirmedOnly);
-    if (!geostore) return filteredLayers;
+    if (!geostore || !geostore.id) return filteredLayers;
     const { type, adm0 } = location || {};
+    const isAoI = type === 'aoi' && adm0;
 
     return filteredLayers.concat({
       id: geostore.id,
@@ -353,15 +354,14 @@ export const getActiveLayers = createSelector(
                 'fill-color': 'transparent'
               }
             },
-            ...(type === 'aoi' &&
-              adm0 && {
+            {
               type: 'line',
               paint: {
                 'line-color': '#C0FF24',
-                'line-width': 3,
-                'line-offset': 0
+                'line-width': isAoI ? 3 : 1,
+                'line-offset': isAoI ? 2 : 0
               }
-            }),
+            },
             {
               type: 'line',
               paint: {
