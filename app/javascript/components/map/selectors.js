@@ -336,7 +336,7 @@ export const getActiveLayers = createSelector(
   (layers, geostore, location) => {
     if (isEmpty(layers)) return [];
     const filteredLayers = layers.filter(l => !l.confirmedOnly);
-    if (!geostore) return filteredLayers;
+    if (!geostore || !geostore.id) return filteredLayers;
     const { type, adm0 } = location || {};
 
     return filteredLayers.concat({
