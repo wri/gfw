@@ -119,7 +119,7 @@
     "SMTP_USERNAME": {
       "required": true
     },
-    "TRANSIFEX_API_TOKEN": {
+    "TRANSIFEX_RESOURCE_API_TOKEN": {
       "required": true
     },
     "TRASE_API": {
