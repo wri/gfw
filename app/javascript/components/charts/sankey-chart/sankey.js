@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Tooltip, ResponsiveContainer } from 'recharts';
 import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
+import OutsideClickHandler from 'react-outside-click-handler';
 import Sankey from './sankey-component';
 import ChartToolTip from '../components/chart-tooltip';
 import SankeyLink from './sankey-link';
@@ -22,7 +23,8 @@ function SankeyChart({
   margin,
   handleMouseOver,
   handleMouseLeave,
-  handleOnClick
+  handleOnClick,
+  handleOutsideClick
 }) {
   return (
     <div className="c-sankey-chart" style={{ height, minWidth: '100%' }}>
@@ -40,67 +42,69 @@ function SankeyChart({
             </span>
           ))}
       </div>
-      <ResponsiveContainer width="100%" height={height}>
-        <Sankey
-          width={width}
-          data={data}
-          className={styles.sankey}
-          nodeWidth={nodeWidth}
-          nodePadding={nodePadding}
-          margin={margin}
-          link={
-            customLink || (
-              <SankeyLink
-                config={{ ...config.link, linkPadding: -nodeWidth }}
-              />
-            )
-          }
-          onMouseEnter={handleMouseOver}
-          onMouseLeave={handleMouseLeave}
-          onClick={handleOnClick}
-          node={
-            customNode || (
-              <SankeyNode
-                containerWidth={containerWidth}
-                config={{
-                  ...config.node,
-                  titlePadding: config.titlePadding,
-                  nodeWidth
-                }}
-              />
-            )
-          }
-        >
-          <Tooltip
-            content={content => {
-              const payloadData =
-                content.payload &&
-                content.payload.length > 0 &&
-                content.payload[0];
-              return (
-                !isEmpty(payloadData) && (
-                  <ChartToolTip
-                    payload={[payloadData.payload]}
-                    settings={[
-                      {
-                        key: payloadData.name,
-                        label: `${payloadData.name &&
-                          payloadData.name.replace('-', '>')}`
-                      },
-                      {
-                        key: 'value',
-                        unit: config.tooltip && config.tooltip.unit,
-                        unitFormat: num => format('.2s')(num),
-                        label: ''
-                      }
-                    ]}
-                  />
-                )
-              );
-            }}
-          />
-        </Sankey>
-      </ResponsiveContainer>
+      <OutsideClickHandler onOutsideClick={handleOutsideClick}>
+        <ResponsiveContainer width="100%" height={height}>
+          <Sankey
+            width={width}
+            data={data}
+            className={styles.sankey}
+            nodeWidth={nodeWidth}
+            nodePadding={nodePadding}
+            margin={margin}
+            link={
+              customLink || (
+                <SankeyLink
+                  config={{ ...config.link, linkPadding: -nodeWidth }}
+                />
+              )
+            }
+            onMouseEnter={handleMouseOver}
+            onMouseLeave={handleMouseLeave}
+            onClick={handleOnClick}
+            node={
+              customNode || (
+                <SankeyNode
+                  containerWidth={containerWidth}
+                  config={{
+                    ...config.node,
+                    titlePadding: config.titlePadding,
+                    nodeWidth
+                  }}
+                />
+              )
+            }
+          >
+            <Tooltip
+              content={content => {
+                const payloadData =
+                  content.payload &&
+                  content.payload.length > 0 &&
+                  content.payload[0];
+                return (
+                  !isEmpty(payloadData) && (
+                    <ChartToolTip
+                      payload={[payloadData.payload]}
+                      settings={[
+                        {
+                          key: payloadData.name,
+                          label: `${payloadData.name &&
+                            payloadData.name.replace('-', '>')}`
+                        },
+                        {
+                          key: 'value',
+                          unit: config.tooltip && config.tooltip.unit,
+                          unitFormat: num => format('.2s')(num),
+                          label: ''
+                        }
+                      ]}
+                    />
+                  )
+                );
+              }}
+            />
+          </Sankey>
+        </ResponsiveContainer>
+      </OutsideClickHandler>
     </div>
   );
 }
@@ -142,7 +146,8 @@ SankeyChart.propTypes = {
   }),
   handleMouseOver: PropTypes.func,
   handleMouseLeave: PropTypes.func,
-  handleOnClick: PropTypes.func
+  handleOnClick: PropTypes.func,
+  handleOutsideClick: PropTypes.func
 };
 
 SankeyChart.defaultProps = {

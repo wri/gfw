@@ -9,7 +9,7 @@ import SankeyChart from 'components/charts/sankey-chart/sankey';
 import './styles';
 
 class WidgetSankey extends PureComponent {
-  handleMouseMove = debounce(data => {
+  handleOnClick = debounce(data => {
     const { parsePayload, setWidgetsSettings, widget } = this.props;
     if (parsePayload) {
       const { payload } = data;
@@ -18,7 +18,7 @@ class WidgetSankey extends PureComponent {
     }
   }, 100);
 
-  handleMouseLeave = debounce(() => {
+  handleOutsideClick = debounce(() => {
     const { setWidgetsSettings, widget } = this.props;
     setWidgetsSettings({ widget, data: {} });
   }, 100);
@@ -70,9 +70,10 @@ class WidgetSankey extends PureComponent {
               config={config}
               height={300}
               nodeWidth={50}
-              handleMouseOver={this.handleMouseMove}
-              handleMouseLeave={this.handleMouseLeave}
-              // handleOnClick={(e) => console.log(e)}
+              // handleMouseOver={this.handleMouseMove}
+              // handleMouseLeave={this.handleMouseLeave}
+              handleOnClick={this.handleOnClick}
+              handleOutsideClick={this.handleOutsideClick}
               margin={{
                 top: 10,
                 left: isDesktop ? 50 : 0,
