@@ -27,8 +27,12 @@ const sectionComponents = {
   contact: Contact
 };
 
-class Page extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+class AboutPage extends PureComponent {
+  static propTypes = {
+    sections: PropTypes.object,
+    setModalVideoData: PropTypes.func.isRequired
+  };
+
   render() {
     const { sections, setModalVideoData } = this.props;
     return (
@@ -83,9 +87,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  sections: PropTypes.object,
-  setModalVideoData: PropTypes.func.isRequired
-};
-
-export default Page;
+export default AboutPage;
