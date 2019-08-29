@@ -8,9 +8,6 @@ use Rack::ReverseProxy do
   # Set :preserve_host to true globally (default is true already)
   reverse_proxy_options preserve_host: true
 
-  # Forward the path /gfw-assets* to ENV['GFW_ASSETS_URL']*
-  reverse_proxy(/^\/gfw-assets\/?(.*)$/, "#{ENV['GFW_ASSETS_URL']}$1")
-
   # Forward the path /howto/* to ENV['GFW_HOWTO_URL']/*
   reverse_proxy(/^\/howto(\/.*)$/, "#{ENV['GFW_HOWTO_URL']}$1")
 
