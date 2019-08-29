@@ -8,23 +8,21 @@ import './styles.scss';
 
 class ErrorPage extends PureComponent {
   static propTypes = {
-    metadata: PropTypes.object
+    title: PropTypes.string,
+    desc: PropTypes.string
   };
 
   render() {
-    const { metadata } = this.props;
+    const { title, desc } = this.props;
     return (
       <div className="l-error-page">
         <div className="row">
           <div className="column small-12 medium-8 medium-offset-2">
             <div className="error-message">
               <Icon icon={treeImage} className="error-tree" />
-              <h1>
-                {(metadata && metadata.title) || 'Sorry, something went wrong.'}
-              </h1>
+              <h1>{title || 'Sorry, something went wrong.'}</h1>
               <p>
-                {(metadata && metadata.desc) ||
-                  'Try refreshing the page or check your connection.'}
+                {desc || 'Try refreshing the page or check your connection.'}
               </p>
             </div>
           </div>

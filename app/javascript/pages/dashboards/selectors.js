@@ -6,7 +6,10 @@ import camelCase from 'lodash/camelCase';
 import sortBy from 'lodash/sortBy';
 
 import { parseWidgetsWithOptions } from 'components/widgets/selectors';
-import { getActiveArea } from 'providers/areas-provider/selectors';
+import {
+  getActiveArea,
+  selectAreaLoading
+} from 'providers/areas-provider/selectors';
 
 import CATEGORIES from 'data/categories.json';
 
@@ -93,5 +96,6 @@ export const getDashboardsProps = createStructuredSelector({
   widgetAnchor: getWidgetAnchor,
   noWidgetsMessage: getNoWidgetsMessage,
   locationType: selectLocationType,
-  activeArea: getActiveArea
+  activeArea: getActiveArea,
+  areaLoading: selectAreaLoading
 });

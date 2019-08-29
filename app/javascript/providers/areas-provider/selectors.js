@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import uniq from 'lodash/uniq';
 
-export const selectLoading = state => state.areas && state.areas.loading;
+export const selectAreaLoading = state => state.areas && state.areas.loading;
 export const selectLocation = state =>
   state && state.location && state.location.payload;
 export const selectLoggedIn = state =>
@@ -41,7 +41,7 @@ export const getAreaTags = createSelector([getUserAreas], areas => {
 
 export const getAreasProps = createStructuredSelector({
   areas: getAllAreas,
-  loading: selectLoading,
+  loading: selectAreaLoading,
   loggedIn: selectLoggedIn,
   location: selectLocation
 });
