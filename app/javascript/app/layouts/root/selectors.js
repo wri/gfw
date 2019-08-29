@@ -15,6 +15,13 @@ const selectedSubRegion = state =>
 const selectQuery = state => state.location && state.location.query;
 const selectPageLocation = state =>
   state.location && state.location.routesMap[state.location.type];
+export const selectActiveLang = state =>
+  (state.location &&
+    state.location &&
+    state.location.query &&
+    state.location.query.lang) ||
+  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
+  'en';
 
 export const getIsGFW = createSelector(
   selectQuery,

@@ -6,6 +6,8 @@ import flatMap from 'lodash/flatMap';
 import sortBy from 'lodash/sortBy';
 import { getDayRange } from 'utils/dates';
 
+import { selectActiveLang } from 'app/layouts/root/selectors';
+
 import { initialState } from './reducers';
 import basemaps from './basemaps';
 
@@ -22,13 +24,7 @@ const selectMapData = state => state.map && state.map.data;
 const selectDatasets = state => state.datasets && state.datasets.data;
 const selectLatest = state => state.latest && state.latest.data;
 export const selectGeostore = state => state.geostore && state.geostore.data;
-const selectActiveLang = state =>
-  (state.location &&
-    state.location &&
-    state.location.query &&
-    state.location.query.lang) ||
-  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
-  'en';
+const selectLocation = state => state.location && state.location.payload;
 
 // CONSTS
 export const getBasemaps = () => basemaps;
@@ -335,10 +331,51 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
 });
 
 // all layers for importing by other components
-export const getActiveLayers = createSelector(getAllLayers, layers => {
-  if (isEmpty(layers)) return [];
-  return layers.filter(l => !l.confirmedOnly);
-});
+export const getActiveLayers = createSelector(
+  [getAllLayers, selectGeostore, selectLocation],
+  (layers, geostore, location) => {
+    if (isEmpty(layers)) return [];
+    const filteredLayers = layers.filter(l => !l.confirmedOnly);
+    if (!geostore) return filteredLayers;
+    const { type, adm0 } = location || {};
+
+    return filteredLayers.concat({
+      id: geostore.id,
+      name: 'Geojson',
+      provider: 'geojson',
+      layerConfig: {
+        data: geostore.geojson,
+        body: {
+          vectorLayers: [
+            {
+              type: 'fill',
+              paint: {
+                'fill-color': 'transparent'
+              }
+            },
+            ...(type === 'aoi' &&
+              adm0 && {
+              type: 'line',
+              paint: {
+                'line-color': '#C0FF24',
+                'line-width': 3,
+                'line-offset': 0
+              }
+            }),
+            {
+              type: 'line',
+              paint: {
+                'line-color': '#000',
+                'line-width': 2
+              }
+            }
+          ]
+        }
+      },
+      zIndex: 1060
+    });
+  }
+);
 
 export const getActiveLayersWithDates = createSelector(
   getActiveLayers,
