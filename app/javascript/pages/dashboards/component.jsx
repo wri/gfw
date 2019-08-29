@@ -113,10 +113,12 @@ class DashboardsPage extends PureComponent {
                       checkActive
                     />
                   )}
-                  <PendingDashboard
-                    className="pending-message"
-                    isUserDashboard={activeArea && activeArea.userArea}
-                  />
+                  {activeArea && (
+                    <PendingDashboard
+                      className="pending-message"
+                      isUserDashboard={activeArea && activeArea.userArea}
+                    />
+                  )}
                   <Widgets
                     className="dashboard-widgets"
                     noWidgetsMessage={noWidgetsMessage}
