@@ -40,12 +40,12 @@ class Widgets extends PureComponent {
         {!loading &&
           noWidgetsMessage &&
           (!widgets || widgets.length === 0) && (
-            <NoContent
-              className="no-widgets-message large"
-              message={noWidgetsMessage}
-              icon
-            />
-          )}
+          <NoContent
+            className="no-widgets-message large"
+            message={noWidgetsMessage}
+            icon
+          />
+        )}
       </div>
     );
   }

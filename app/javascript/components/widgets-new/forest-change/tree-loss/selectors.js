@@ -2,7 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
-import moment from 'moment';
 import { formatNumber } from 'utils/format';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
@@ -16,27 +15,7 @@ const getColors = state => state.colors || null;
 const getSentences = state => state.config && state.config.sentence;
 const getIsTropical = state => state.isTropical || false;
 
-export const parsePayload = payload => {
-  const year = payload && payload[0].payload.year;
-  return {
-    updateLayer: true,
-    startDate:
-      year &&
-      moment()
-        .year(year)
-        .startOf('year')
-        .format('YYYY-MM-DD'),
-    endDate:
-      year &&
-      moment()
-        .year(year)
-        .endOf('year')
-        .format('YYYY-MM-DD')
-  };
-};
-
-// get lists selected
-export const parseData = createSelector(
+const parseData = createSelector(
   [getLoss, getExtent, getSettings],
   (data, extent, settings) => {
     if (!data || isEmpty(data)) return null;
@@ -54,7 +33,7 @@ export const parseData = createSelector(
   }
 );
 
-export const parseConfig = createSelector([getColors], colors => ({
+const parseConfig = createSelector([getColors], colors => ({
   height: 250,
   xKey: 'year',
   yKeys: {
@@ -88,7 +67,7 @@ export const parseConfig = createSelector([getColors], colors => ({
   ]
 }));
 
-export const parseSentence = createSelector(
+const parseSentence = createSelector(
   [
     parseData,
     getExtent,
@@ -142,6 +121,6 @@ export const parseSentence = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
+  config: parseConfig,
   sentence: parseSentence
 });

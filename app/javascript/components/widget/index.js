@@ -1,18 +1,24 @@
 import { createElement, Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
+
 import WidgetComponent from './component';
+
+const mapStateToProps = (state, props) => ({
+  ...props.parseData(props)
+});
 
 class WidgetContainer extends Component {
   static propTypes = {
     widget: PropTypes.string.isRequired,
-    config: PropTypes.object.isRequired,
+    refetchKeys: PropTypes.array,
     location: PropTypes.object.isRequired,
     error: PropTypes.bool,
     settings: PropTypes.object,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    getData: PropTypes.func.isRequired,
+    getWidgetData: PropTypes.func.isRequired,
     setWidgetData: PropTypes.func.isRequired
   };
 
@@ -38,10 +44,9 @@ class WidgetContainer extends Component {
     const {
       location,
       settings,
-      config
+      refetchKeys
     } = this.props;
     const { error } = this.state;
-    const { refetchKeys } = config || {};
 
     const hasLocationChanged = !isEqual(location, prevProps.location);
     const hasErrorChanged =
@@ -70,13 +75,13 @@ class WidgetContainer extends Component {
   }
 
   handleGetWidgetData = params => {
-    const { getData, setWidgetData } = this.props;
+    const { getWidgetData, setWidgetData } = this.props;
 
     this.cancelWidgetDataFetch();
     this.widgetDataFetch = CancelToken.source();
 
     this.setState({ loading: true, error: false });
-    getData({ ...params, token: this.widgetDataFetch.token })
+    getWidgetData({ ...params, token: this.widgetDataFetch.token })
       .then(data => {
         setWidgetData(data);
         this.setState({ loading: false, error: false });
@@ -101,4 +106,4 @@ class WidgetContainer extends Component {
   }
 }
 
-export default WidgetContainer;
+export default connect(mapStateToProps)(WidgetContainer);
