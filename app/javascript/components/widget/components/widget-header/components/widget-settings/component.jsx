@@ -19,7 +19,6 @@ class WidgetSettings extends PureComponent {
     handleChangeSettings: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     placeholder: PropTypes.string,
-    settings: PropTypes.isRequired,
     getTooltipContentProps: PropTypes.func.isRequired
   };
 
@@ -107,7 +106,7 @@ class WidgetSettings extends PureComponent {
 
   render() {
     const {
-      settings,
+      options,
       loading,
       handleChangeSettings,
       handleShowInfo,
@@ -116,9 +115,9 @@ class WidgetSettings extends PureComponent {
 
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
-        {settings && settings.map(setting => {
-          const { type } = settings;
-          const settingParams = { loading, handleChangeSettings, handleShowInfo, ...setting };
+        {options && options.map(option => {
+          const { type } = option;
+          const settingParams = { loading, handleChangeSettings, handleShowInfo, ...option };
 
           if (type === 'selector' || type === 'mini-selector') {
             return this.renderSettingsSelector(settingParams);

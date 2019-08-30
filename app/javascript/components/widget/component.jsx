@@ -19,6 +19,7 @@ class Widget extends PureComponent {
     simple: PropTypes.bool,
     datasets: PropTypes.array,
     settings: PropTypes.array,
+    options: PropTypes.array,
     chartType: PropTypes.string,
     loading: PropTypes.bool,
     error: PropTypes.bool,
@@ -48,7 +49,7 @@ class Widget extends PureComponent {
       simple,
       datasets,
       settings,
-      settingsConfig,
+      options,
       chartType,
       loading,
       error,
@@ -88,7 +89,7 @@ class Widget extends PureComponent {
           active={active}
           embed={embed}
           sentence={sentence}
-          settings={settingsConfig}
+          options={options}
           handleShowMap={handleShowMap}
           handleShowInfo={handleShowInfo}
           handleChangeSettings={handleChangeSettings}

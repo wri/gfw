@@ -11,7 +11,7 @@ import WidgetSettings from '../widget-settings';
 
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
-    settings: PropTypes.object,
+    options: PropTypes.object,
     loading: PropTypes.bool,
     modalClosing: PropTypes.bool,
     handleSetWidgetSettings: PropTypes.func.isRequired,
@@ -25,7 +25,7 @@ class WidgetSettingsButton extends PureComponent {
 
   render() {
     const {
-      settings,
+      options,
       loading,
       modalClosing,
       handleSetWidgetSettings,
@@ -64,7 +64,7 @@ class WidgetSettingsButton extends PureComponent {
             ref={node => {
               this.widgetSettingsRef = node;
             }}
-            settings={settings}
+            options={options}
             loading={loading}
             handleChangeSettings={handleSetWidgetSettings}
             handleShowInfo={handleShowInfo}
