@@ -4,75 +4,16 @@ import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
-  render() {
-    const { layers, geostore, setMapLoading, basemap, map, isAoI } = this.props;
-    const geostoreLayer =
-      geostore && geostore.id && !isAoI
-        ? {
-          id: geostore.id,
-          name: 'Geojson',
-          provider: 'geojson',
-          layerConfig: {
-            data: geostore.geojson,
-            body: {
-              vectorLayers: [
-                {
-                  type: 'fill',
-                  paint: {
-                    'fill-color': 'transparent'
-                  }
-                },
-                {
-                  type: 'line',
-                  paint: {
-                    'line-color': '#000',
-                    'line-width': 2
-                  }
-                }
-              ]
-            }
-          },
-          zIndex: 1060
-        }
-        : null;
+  static propTypes = {
+    loading: PropTypes.bool,
+    layers: PropTypes.array,
+    basemap: PropTypes.object,
+    setMapLoading: PropTypes.func,
+    map: PropTypes.object
+  };
 
-    const aoiLayer =
-      geostore && geostore.id && isAoI
-        ? {
-          id: geostore.id,
-          name: 'Geojson',
-          provider: 'geojson',
-          layerConfig: {
-            data: geostore.geojson,
-            body: {
-              vectorLayers: [
-                {
-                  type: 'fill',
-                  paint: {
-                    'fill-color': 'transparent'
-                  }
-                },
-                {
-                  type: 'line',
-                  paint: {
-                    'line-color': '#C0FF24',
-                    'line-width': 3,
-                    'line-offset': 0
-                  }
-                },
-                {
-                  type: 'line',
-                  paint: {
-                    'line-color': '#000',
-                    'line-width': 2
-                  }
-                }
-              ]
-            }
-          },
-          zIndex: 1060
-        }
-        : null;
+  render() {
+    const { layers, setMapLoading, basemap, map } = this.props;
 
     const basemapLayer =
       basemap && basemap.url
@@ -89,9 +30,7 @@ class LayerManagerComponent extends PureComponent {
         }
         : null;
 
-    const allLayers = [geostoreLayer, aoiLayer, basemapLayer]
-      .concat(layers)
-      .filter(l => l);
+    const allLayers = [basemapLayer].concat(layers).filter(l => l);
 
     return (
       <LayerManager
@@ -104,15 +43,5 @@ class LayerManagerComponent extends PureComponent {
     );
   }
 }
-
-LayerManagerComponent.propTypes = {
-  loading: PropTypes.bool,
-  layers: PropTypes.array,
-  isAoI: PropTypes.bool,
-  basemap: PropTypes.object,
-  geostore: PropTypes.object,
-  setMapLoading: PropTypes.func,
-  map: PropTypes.object
-};
 
 export default LayerManagerComponent;

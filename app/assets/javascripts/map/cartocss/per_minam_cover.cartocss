@@ -1,7 +1,0 @@
-#per_minam_cover {raster-opacity:1;
-  raster-scaling:near;
-  raster-colorizer-default-mode: exact;
-  raster-colorizer-default-color: transparent;
-  raster-colorizer-epsilon:0.41;
-  raster-colorizer-stops:
-    stop(1, #6e8e39)}

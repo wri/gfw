@@ -1,7 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 
 import { getAreaProvider, getAreasProvider } from 'services/areas';
-import { MAP } from 'router';
 
 export const setAreasLoading = createAction('setAreasLoading');
 export const setAreas = createAction('setAreas');
@@ -105,20 +104,23 @@ export const viewArea = createThunkAction(
   areaId => (dispatch, getState) => {
     const { location } = getState();
     if (areaId && location) {
-      const { query } = location;
+      const { query, type } = location;
       const { mainMap, map } = query || {};
+
       dispatch({
-        type: MAP,
+        type,
         payload: {
           type: 'aoi',
           adm0: areaId
         },
         query: {
           ...query,
-          mainMap: {
-            ...mainMap,
-            showAnalysis: true
-          },
+          ...(type === 'location/MAP' && {
+            mainMap: {
+              ...mainMap,
+              showAnalysis: true
+            }
+          }),
           map: {
             ...map,
             canBound: true

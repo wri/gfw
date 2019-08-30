@@ -20,12 +20,13 @@ class ModalSaveAOI extends PureComponent {
     setSaveAOISettings: PropTypes.func,
     onAfterSave: PropTypes.func,
     onAferDelete: PropTypes.func,
-    userData: PropTypes.object
+    userData: PropTypes.object,
+    error: PropTypes.bool
   };
 
   componentDidUpdate(prevProps) {
-    const { saving } = this.props;
-    if (!saving && saving !== prevProps.saving) {
+    const { saving, error } = this.props;
+    if (!saving && saving !== prevProps.saving && !error) {
       this.handleCloseModal();
     }
   }

@@ -1,4 +1,4 @@
-import { createStructuredSelector, createSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 
 import {
   getActiveLayersWithDates,
@@ -9,15 +9,9 @@ import {
 
 export const selectLocation = state => state.location && state.location.payload;
 
-export const getIsAoI = createSelector(
-  [selectLocation],
-  location => location.type === 'aoi'
-);
-
 export const getLayerManagerProps = createStructuredSelector({
   layers: getActiveLayersWithDates,
   geostore: selectGeostore,
   basemap: getBasemap,
-  drawing: getDrawing,
-  isAoI: getIsAoI
+  drawing: getDrawing
 });

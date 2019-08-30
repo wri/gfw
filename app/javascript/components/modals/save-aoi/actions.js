@@ -67,7 +67,7 @@ export const saveAOI = createThunkAction(
         fireAlerts,
         deforestationAlerts,
         monthlySummary,
-        tags,
+        tags: tags || [],
         public: true
       };
 
