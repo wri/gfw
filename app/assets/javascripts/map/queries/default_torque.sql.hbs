@@ -1,8 +1,0 @@
-SELECT cartodb_id, the_geom, the_geom_webmercator, {{column}}
-FROM {{table}}
-{{#if currentDate}}
-WHERE
-  {{column}} >= '{{startDate}}'
-  AND
-  {{column}} <= '{{endDate}}'
-{{/if}}

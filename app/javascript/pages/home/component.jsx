@@ -20,8 +20,16 @@ import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
 import './styles.scss';
 
-class Page extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+class HomePage extends PureComponent {
+  static propTypes = {
+    summary: PropTypes.array.isRequired,
+    apps: PropTypes.array.isRequired,
+    news: PropTypes.array,
+    newsLoading: PropTypes.bool,
+    uses: PropTypes.array.isRequired,
+    isDesktop: PropTypes.bool
+  };
+
   state = {
     showVideo: false
   };
@@ -265,13 +273,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  summary: PropTypes.array.isRequired,
-  apps: PropTypes.array.isRequired,
-  news: PropTypes.array,
-  newsLoading: PropTypes.bool,
-  uses: PropTypes.array.isRequired,
-  isDesktop: PropTypes.bool
-};
-
-export default Page;
+export default HomePage;
