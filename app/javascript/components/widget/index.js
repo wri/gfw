@@ -6,9 +6,20 @@ import isEqual from 'lodash/isEqual';
 
 import WidgetComponent from './component';
 
-const mapStateToProps = (state, props) => ({
-  ...props.parseData(props)
-});
+const mapStateToProps = (state, props) => {
+  const { settings, parseData } = props;
+  const parsedProps = parseData(props) || {};
+  const { data } = parsedProps;
+
+  return {
+    ...parsedProps,
+    options: () => props.options.map(o => ({
+      ...o,
+      options: typeof o.options === 'function' ? o.options({ settings, data }) : o.options,
+      value: o.options.find(opt => opt.value === props.settings[o.key])
+    }))
+  };
+};
 
 class WidgetContainer extends Component {
   static propTypes = {
@@ -18,7 +29,7 @@ class WidgetContainer extends Component {
     error: PropTypes.bool,
     settings: PropTypes.object,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    getWidgetData: PropTypes.func.isRequired,
+    getData: PropTypes.func.isRequired,
     setWidgetData: PropTypes.func.isRequired
   };
 
@@ -75,13 +86,13 @@ class WidgetContainer extends Component {
   }
 
   handleGetWidgetData = params => {
-    const { getWidgetData, setWidgetData } = this.props;
+    const { getData, setWidgetData } = this.props;
 
     this.cancelWidgetDataFetch();
     this.widgetDataFetch = CancelToken.source();
 
     this.setState({ loading: true, error: false });
-    getWidgetData({ ...params, token: this.widgetDataFetch.token })
+    getData({ ...params, token: this.widgetDataFetch.token })
       .then(data => {
         setWidgetData(data);
         this.setState({ loading: false, error: false });

@@ -10,7 +10,7 @@ import {
   getMapZoom,
   getActiveLayersWithDates
 } from 'components/map/selectors';
-import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { getWidgets } from 'components/widgets/selectors';
 import { getWidgetLayers, getLoading } from 'components/analysis/selectors';
 import {
   getGeodescriberTitle,
@@ -142,7 +142,7 @@ export const showAnalysisDisclaimer = createSelector(
 
 // get widgets related to map layers and use them to build the layers
 export const getWidgetsWithLayerParams = createSelector(
-  [parseWidgetsWithOptions, getActiveLayersWithDates],
+  [getWidgets, getActiveLayersWithDates],
   (widgets, layers) => {
     if (!widgets || !widgets.length || !layers || !layers.length) return null;
     const layerIds = layers && layers.map(l => l.id);

@@ -1,63 +1,16 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
-import uniq from 'lodash/uniq';
-import concat from 'lodash/concat';
-import lowerCase from 'lodash/lowerCase';
+import intersection from 'lodash/intersection';
+import isEmpty from 'lodash/isEmpty';
+
+import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
 import { locationLevelToStr } from 'utils/format';
-import allOptions from './options';
 import allWidgets from './manifest';
 
-export const selectLocation = state => state.location && state.location.payload;
-export const selectAnalysis = (state, { analysis }) => analysis;
-export const selectAllLocation = state => state.location;
-export const selectLocationType = state =>
-  state.location && state.location.payload && state.location.payload.type;
-export const selectWidgetFromQuery = state =>
-  state.location && state.location.query && state.location.query.widget;
-export const selectEmbed = (state, { embed }) => embed;
-export const selectGeostore = state => state.geostore && state.geostore.data;
-export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
-  noWidgetsMessage;
-export const selectWidgets = state => state.widgets && state.widgets.widgets;
-export const selectLoading = state =>
-  state.countryData &&
-  state.whitelists &&
-  (state.countryData.countriesLoading ||
-    state.countryData.regionsLoading ||
-    state.countryData.subRegionsLoading ||
-    state.whitelists.loading);
-export const selectWhitelists = state =>
-  state.whitelists && state.whitelists.data;
-export const selectCountryData = state =>
-  (state.countryData
-    ? {
-      adm0: state.countryData.countries,
-      adm1: state.countryData.regions,
-      adm2: state.countryData.subRegions,
-      fao: state.countryData.faoCountries
-    }
-    : {});
-
-export const getLocation = createSelector(
-  [selectLocation, selectGeostore],
-  (location, geostore) => {
-    if (location.type !== 'aoi' || !geostore) return location;
-
-    return {
-      ...location,
-      type: 'geostore',
-      adm0: geostore.id
-    };
-  }
-);
-
-export const getLocationType = createSelector(
-  [getLocation],
-  location => location.type
-);
 
 const locationTypes = {
   country: {
@@ -82,287 +35,146 @@ const locationTypes = {
   }
 };
 
-export const getOptions = createSelector([], () => {
-  const optionsMeta = {};
-  Object.keys(allOptions).forEach(oKey => {
-    optionsMeta[oKey] =
-      oKey === 'weeks' ? allOptions[oKey] : sortBy(allOptions[oKey], 'label');
-  });
-  return optionsMeta;
-});
+const buildLocationDict = (locations) => location &&
+  locations.length &&
+  locations.reduce(
+    (dict, next) => ({
+      ...dict,
+      [next.value]: next.label
+    }),
+    {}
+  );
 
-export const getAdminLevel = createSelector([getLocation], location =>
-  locationLevelToStr(location)
+export const selectLocation = state => state.location && state.location.payload;
+export const selectWidgetsData = state => state.widgets && state.widgets.data;
+export const selectGeostore = state => state.geostore && state.geostore.data;
+export const selectLoading = state =>
+  state.countryData &&
+  state.whitelists &&
+  (state.countryData.countriesLoading ||
+    state.countryData.regionsLoading ||
+    state.countryData.subRegionsLoading ||
+    state.whitelists.loading);
+export const selectCountryData = state => state.countryData;
+export const selectPolynameWhitelist = state => state.whitelists && state.whitelists.data;
+export const selectEmbed = (state, { embed }) => embed;
+export const selectWidgetFromQuery = state =>
+  state.location && state.location.query && state.location.query.widget;
+export const selectCategory = state =>
+  state.location && state.location.query && state.location.query.category;
+
+export const getLocation = createSelector(
+  [selectLocation, selectGeostore, getGeodescriberTitleFull],
+  (location, geostore, title) => {
+    const adminLevel = locationLevelToStr(location);
+
+    if (location.type !== 'aoi' || !geostore) {
+      return {
+        ...location,
+        adminLevel,
+        label: title
+      };
+    }
+
+    return {
+      ...location,
+      type: 'geostore',
+      adm0: geostore.id,
+      adminLevel: locationLevelToStr(location),
+      label: title,
+      tropical: location && tropicalIsos.includes(location.adm0)
+    };
+  }
 );
 
-export const getLocationData = createSelector(
-  [getLocationType, selectCountryData],
-  (type, countryData) => {
-    if (type === 'country' || type === 'global') return countryData;
+export const getAllLocationData = createSelector(
+  [getLocation, selectCountryData, getAllAreas],
+  (location, countryData, areas) => {
+    if (isEmpty(areas) && isEmpty(countryData)) return null;
+    const { type } = location;
+
+    if (type === 'global' || type === 'country') {
+      return {
+        adm0: countryData.countries,
+        adm1: countryData.regions,
+        adm2: countryData.subRegions
+      };
+    }
+
     return {};
   }
 );
 
-export const getActiveLocationData = createSelector(
-  [getLocationData, getLocation],
-  (locationData, location) => {
-    if (location.adm2) return locationData.adm2;
-    return locationData[location.adm1 ? 'adm1' : 'adm0'];
-  }
-);
+export const getLocationData = createSelector(
+  [getLocation, getAllLocationData],
+  (location, allLocationData) => {
+    if (isEmpty(allLocationData)) return null;
+    const { adminLevel, type } = location;
 
-export const getChildLocationData = createSelector(
-  [getLocationData, getLocation],
-  (locationData, location) => {
-    if (location.adm2) return null;
-    if (!location.adm0) return locationData.adm0;
-    return locationData[location.adm1 ? 'adm2' : 'adm1'];
-  }
-);
-
-export const getParentLocationData = createSelector(
-  [getLocationData, getLocation],
-  (locationData, location) => {
-    if (!location.adm1 && !location.adm2) return null;
-    return locationData[location.adm2 ? 'adm1' : 'adm0'];
-  }
-);
-
-export const getLocationDict = createSelector(
-  [getLocationData, getLocation],
-  (locationData, location) => {
-    let values;
-    if (location.adm2) values = locationData.adm2;
-    else if (location.adm1) values = locationData.adm1;
-    else values = locationData.adm0;
-
-    return (
-      values &&
-      values.length &&
-      values.reduce(
-        (dict, next) => ({
-          ...dict,
-          [next.value]: next.label
-        }),
-        {}
-      )
-    );
-  }
-);
-
-export const getLocationObject = createSelector(
-  [getAdminLevel, getActiveLocationData, getLocation, getParentLocationData],
-  (adminLevel, adms, location, parent) => {
-    if (location.type !== 'country') {
-      return locationTypes[location.type];
-    }
-
-    const locationObject =
-      location.adm0 && adms
-        ? adms.find(a => a.value === location[adminLevel])
-        : { label: location.type, value: location.type };
-    let parentObject = {};
-
+    let parent = {};
+    let parentData = [];
+    let children = [];
     if (adminLevel === 'adm0') {
-      parentObject = { label: 'global', value: 'global' };
+      parent = { label: 'global', value: 'global' };
+      children = allLocationData.adm1;
     } else if (adminLevel === 'adm1') {
-      parentObject = (parent &&
-        parent.find(a => a.value === location.adm0)) || {
-        label: location.type,
-        value: location.type
-      };
+      parent = allLocationData.adm0.find(d => d.value === location.adm0);
+      parentData = allLocationData.adm0;
+      children = allLocationData.adm2;
     } else if (adminLevel === 'adm2') {
-      parentObject = (parent &&
-        parent.find(a => a.value === location.adm1)) || {
-        label: location.type,
-        value: location.type
-      };
+      parent = allLocationData.adm1.find(d => d.value === location.adm1);
+      parentData = allLocationData.adm1;
     }
 
-    const returnObject = {
-      parentLabel: parentObject.label,
-      parentValue: parentObject.value,
-      ...locationObject,
-      adminLevel
+    const locationData = allLocationData[adminLevel];
+
+    return {
+      type: locationTypes[type],
+      parent,
+      parentLabel: parent && parent.label,
+      parentData: buildLocationDict(parentData),
+      location: locationData && locationData.find(d => d.value === location[adminLevel]),
+      locationData: locationData && buildLocationDict(locationData),
+      children: children && buildLocationDict(children)
     };
-
-    return returnObject;
   }
 );
 
-export const getLocationName = createSelector(
-  [getLocationObject, getLocationType],
-  (location, type) => (location && location.label) || type
-);
+export const filterWidgets = createSelector(
+  [selectLocation, selectPolynameWhitelist, selectEmbed, selectWidgetFromQuery, selectCategory],
+  (location, polynameWhitelist, embed, widget, category) => {
+    const { adminLevel, type } = location;
 
-export const getFAOLocationData = createSelector(
-  [selectCountryData],
-  countryData => countryData.faoCountries
-);
+    const widgets = Object.values(allWidgets).map(w => ({
+      ...w,
+      colors: colors[w.colors]
+    }));
 
-export const isTropicalLocation = createSelector([getLocation], location =>
-  tropicalIsos.includes(location && location.adm0)
-);
+    if (embed && widget) return widgets.filter(w => w.widget === widget);
 
-export const getNoWidgetsMessage = createSelector(
-  [getLocationName, selecteNoWidgetsMessage],
-  (locationName, message) =>
-    message && locationName && message.replace('{location}', locationName)
-);
+    return sortBy(widgets.filter(w => {
+      const { types, admins, whitelists, categories } = w || {};
 
-export const parseWidgets = createSelector(
-  [selectWidgetFromQuery, selectEmbed],
-  (widgetQuery, embed) => {
-    const widgets = Object.values(allWidgets);
-    const filteredWidgets = embed
-      ? widgets.filter(w => w.config.widget === widgetQuery)
-      : widgets;
-    return (
-      filteredWidgets &&
-      filteredWidgets.length &&
-      filteredWidgets.map(w => ({
-        ...w,
-        widget: w.config && w.config.widget,
-        colors: colors[w.config && w.config.colors]
-      }))
-    );
+      const hasLocation = types && types.includes(type) && admins && admins.includes(adminLevel);
+      const adminWhitelist = whitelists && whitelists[adminLevel];
+      const matchesAdminWhitelist = !adminWhitelist || adminWhitelist.includes(location[adminLevel]);
+      const matchesPolynameWhitelist = !whitelists || !whitelists.indicators || intersection(polynameWhitelist, whitelists.indicators);
+      const hasCategory = !category && categories.includes(category);
+
+      return (hasLocation && matchesAdminWhitelist && matchesPolynameWhitelist && hasCategory);
+    }), category ? `sortOrder[${category}]` : 'sortOrder.summary');
   }
 );
 
-export const filterWidgetsByLocation = createSelector(
-  [parseWidgets, getLocationType, getAdminLevel],
-  (widgets, type, adminLevel) => {
-    if (!widgets || !type) return null;
-    return widgets.filter(w => {
-      const { types, admins } = w.config || {};
-      return (
-        types && types.includes(type) && admins && admins.includes(adminLevel)
-      );
-    });
-  }
-);
-
-export const filterWidgetsByLocationType = createSelector(
-  [filterWidgetsByLocation, getLocation, getFAOLocationData],
-  (widgets, location, faoCountries) => {
-    if (!widgets) return null;
-    const isFAOCountry =
-      faoCountries && faoCountries.find(f => f.value === location.adm0);
-    return widgets.filter(w => {
-      const { source, types } = w.config || {};
-      const isFao = source === 'fao';
-      const hasType = types.includes(location.type);
-      return hasType && (!isFAOCountry || isFao);
-    });
-  }
-);
-
-export const filterWidgetsByLocationWhitelist = createSelector(
-  [filterWidgetsByLocationType, getLocation],
-  (widgets, location) => {
-    if (!widgets) return null;
-    return widgets.filter(w => {
-      const { whitelists } = w.config;
-      if (!whitelists) return true;
-      const whitelist = whitelists.adm0;
-      if (!whitelist) return true;
-      return whitelist.includes(location.adm0);
-    });
-  }
-);
-
-export const filterWidgetsByIndicatorWhitelist = createSelector(
-  [filterWidgetsByLocationWhitelist, selectWhitelists],
-  (widgets, indicatorWhitelist) => {
-    if (!widgets) return null;
-
-    return widgets.filter(w => {
-      const { indicators } = w.config.whitelists || {};
-      if (!indicators) return true;
-      const totalIndicators = concat(indicators, indicatorWhitelist).length;
-      const reducedIndicators = uniq(concat(indicators, indicatorWhitelist))
-        .length;
-      return totalIndicators !== reducedIndicators;
-    });
-  }
-);
-
-// once we know which widgets we can render, lets pass them all static props
-export const parseWidgetsWithOptions = createSelector(
-  [
-    filterWidgetsByIndicatorWhitelist,
-    getOptions,
-    selectWhitelists,
-    getLocation
-  ],
-  (widgets, options, polynameWhitelist, location) => {
-    if (!widgets) return null;
-
-    return widgets.map(w => {
-      const optionsConfig = w.config.options;
-      const optionKeys = optionsConfig && Object.keys(optionsConfig);
-      return {
-        ...w,
-        ...(optionsConfig && {
-          options: optionKeys.reduce((obj, optionKey) => {
-            const polynamesOptions = ['forestTypes', 'landCategories'];
-            const configWhitelist = optionsConfig[optionKey];
-            let filteredOptions = options[optionKey];
-            if (Array.isArray(configWhitelist)) {
-              filteredOptions = filteredOptions
-                ? filteredOptions.filter(o => configWhitelist.includes(o.value))
-                : optionsConfig[optionKey].map(o => ({
-                  label: o,
-                  value: o
-                }));
-            }
-
-            if (polynamesOptions.includes(optionKey)) {
-              // some horrible an inexcusable filters for forest types and land categories
-              filteredOptions =
-                location.type === 'global'
-                  ? filteredOptions.filter(o => o.global)
-                  : filteredOptions;
-              filteredOptions =
-                polynameWhitelist && polynameWhitelist.length
-                  ? filteredOptions.filter(o =>
-                    polynameWhitelist.includes(o.value)
-                  )
-                  : filteredOptions;
-              filteredOptions = filteredOptions.map(i => ({
-                ...i,
-                metaKey:
-                  i.metaKey === 'primary_forest'
-                    ? `${lowerCase(location.adm0)}_${i.metaKey}${
-                      location.adm0 === 'IDN' ? 's' : ''
-                    }`
-                    : i.metaKey
-              }));
-            }
-
-            return {
-              ...obj,
-              [optionKey]: filteredOptions
-            };
-          }, {})
-        })
-      };
-    });
-  }
+export const getWidgets = createSelector(
+  [filterWidgets],
+  (widgets) => widgets
 );
 
 export const getWidgetsProps = createStructuredSelector({
+  widgets: getWidgets,
   loading: selectLoading,
-  whitelists: selectWhitelists,
-  whitelist: selectWhitelists,
-  allLocation: selectAllLocation,
   location: getLocation,
-  locationType: getLocationType,
-  locationData: getActiveLocationData,
-  locationObject: getLocationObject,
-  locationName: getLocationName,
-  locationDict: getLocationDict,
-  childLocationData: getChildLocationData,
-  noWidgetsMessage: getNoWidgetsMessage,
-  isTropical: isTropicalLocation
+  locationData: getLocationData,
+  widgetsData: selectWidgetsData
 });

@@ -4,10 +4,20 @@ import debounce from 'lodash/debounce';
 
 import ComposedChart from 'components/charts/composed-chart';
 
-class WidgetAlerts extends Component {
+class WidgetComposedChart extends Component {
+  static propTypes = {
+    data: PropTypes.array,
+    config: PropTypes.object,
+    handleMouseMove: PropTypes.func,
+    handleMouseOut: PropTypes.func,
+    parsePayload: PropTypes.func,
+    active: PropTypes.bool,
+    simple: PropTypes.bool
+  };
+
   handleMouseMove = debounce(data => {
     const { parsePayload, handleMouseMove } = this.props;
-    if (parsePayload) {
+    if (parsePayload && handleMouseMove) {
       const { activePayload } = data && data;
       const activeData = parsePayload(activePayload);
       handleMouseMove(activeData);
@@ -16,7 +26,9 @@ class WidgetAlerts extends Component {
 
   handleMouseLeave = debounce(() => {
     const { handleMouseOut } = this.props;
-    handleMouseOut();
+    if (handleMouseOut) {
+      handleMouseOut();
+    }
   }, 100);
 
   render() {
@@ -38,14 +50,4 @@ class WidgetAlerts extends Component {
   }
 }
 
-WidgetAlerts.propTypes = {
-  data: PropTypes.array,
-  config: PropTypes.object,
-  handleMouseMove: PropTypes.func,
-  handleMouseOut: PropTypes.func,
-  parsePayload: PropTypes.func,
-  active: PropTypes.bool,
-  simple: PropTypes.bool
-};
-
-export default WidgetAlerts;
+export default WidgetComposedChart;

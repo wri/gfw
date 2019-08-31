@@ -5,7 +5,7 @@ import flatMap from 'lodash/flatMap';
 import camelCase from 'lodash/camelCase';
 import sortBy from 'lodash/sortBy';
 
-import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { getWidgets } from 'components/widgets/selectors';
 import {
   getActiveArea,
   selectAreaLoading
@@ -40,15 +40,15 @@ export const getNoWidgetsMessage = createSelector(
   category => `${upperFirst(category)} data for {location} coming soon`
 );
 
-export const getWidgets = createSelector(
-  [parseWidgetsWithOptions, selectCategory, getEmbed, selectQuery],
+export const getDashboardWidgets = createSelector(
+  [getWidgets, selectCategory, getEmbed, selectQuery],
   (widgets, category, embed, query) => {
     if (!widgets) return null;
     if (embed) return widgets.filter(w => query && w.widget === query.widget);
     return sortBy(
       widgets.filter(
         w =>
-          w.config.categories.includes(category) && !w.config.hideFromDashboard
+          w.categories.includes(category) && !w.hideFromDashboard
       ),
       `config.sortOrder[${camelCase(category)}]`
     );
@@ -56,7 +56,7 @@ export const getWidgets = createSelector(
 );
 
 export const getActiveWidget = createSelector(
-  [getWidgets, selectQuery],
+  [getDashboardWidgets, selectQuery],
   (widgets, query) => {
     if (!widgets || !widgets.length) return null;
     if (query && query.widget) {
@@ -72,7 +72,7 @@ export const getActiveWidgetSlug = createSelector([getActiveWidget], widget => {
 });
 
 export const getLinks = createSelector(
-  [parseWidgetsWithOptions, selectCategory],
+  [getDashboardWidgets, selectCategory],
   (widgets, activeCategory) => {
     if (!widgets) return null;
     const widgetCats = flatMap(widgets.map(w => w.config.categories));
@@ -90,7 +90,7 @@ export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
   category: selectCategory,
   links: getLinks,
-  widgets: getWidgets,
+  widgets: getDashboardWidgets,
   activeWidget: getActiveWidget,
   activeWidgetSlug: getActiveWidgetSlug,
   widgetAnchor: getWidgetAnchor,

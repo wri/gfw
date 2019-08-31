@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+import forestTypes from 'data/forest-types.json';
+
 export const getWidgetDatasets = ({
   datasets,
   extentYear,
@@ -69,3 +71,12 @@ export const getPolynameDatasets = ({ options, settings, polynames }) => {
     )
   );
 };
+
+export const getForestTypes = (filter, settings) => forestTypes
+  .filter(f => filter.includes(f.value))
+  .map(f => ({
+    ...f,
+    label: f.label.includes('{iflYear}')
+      ? f.label.replace('{iflYear}', settings.ifl)
+      : f.label
+  }));

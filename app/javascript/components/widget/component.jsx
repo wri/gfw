@@ -18,7 +18,7 @@ class Widget extends PureComponent {
     colors: PropTypes.object.isRequired,
     simple: PropTypes.bool,
     datasets: PropTypes.array,
-    settings: PropTypes.array,
+    settings: PropTypes.object,
     options: PropTypes.array,
     chartType: PropTypes.string,
     loading: PropTypes.bool,
@@ -26,7 +26,7 @@ class Widget extends PureComponent {
     locationName: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     dataConfig: PropTypes.object,
-    sentence: PropTypes.string,
+    sentence: PropTypes.object,
     statements: PropTypes.array,
     showAttributionLink: PropTypes.bool,
     handleShowMap: PropTypes.func,
@@ -55,6 +55,7 @@ class Widget extends PureComponent {
       error,
       locationName,
       data,
+      config,
       dataConfig,
       sentence,
       statements,
@@ -68,7 +69,7 @@ class Widget extends PureComponent {
       handleMouseOut
     } = this.props;
     const { main } = colors || {};
-
+    console.log(this.props);
     return (
       <div
         id={widget}
@@ -82,7 +83,7 @@ class Widget extends PureComponent {
           })
         }}
       >
-        <WidgetHeader
+        {/* <WidgetHeader
           title={title}
           large={large}
           datasets={datasets}
@@ -94,7 +95,7 @@ class Widget extends PureComponent {
           handleShowInfo={handleShowInfo}
           handleChangeSettings={handleChangeSettings}
           handleShowShare={handleShowShare}
-        />
+        /> */}
         <WidgetBody
           chartType={chartType}
           loading={loading}
@@ -103,16 +104,16 @@ class Widget extends PureComponent {
           locationName={locationName}
           data={data}
           settings={settings}
-          dataConfig={dataConfig}
+          config={config}
           handleRefetchData={handleRefetchData}
           handleMouseOver={handleMouseOver}
           handleMouseOut={handleMouseOut}
         />
-        <WidgetFooter
+        {/* <WidgetFooter
           statements={statements}
           simple={simple}
           showAttributionLink={showAttributionLink}
-        />
+        /> */}
       </div>
     );
   }

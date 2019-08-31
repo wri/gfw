@@ -9,10 +9,6 @@ export const setWidgetsData = createAction('setWidgetsData');
 export const setWidgetsSettings = createAction('setWidgetsSettings');
 export const setWidgetsLoading = createAction('setWidgetsLoading');
 
-// widget
-export const setWidgetData = createAction('setWidgetData');
-export const setWidgetLoading = createAction('setWidgetLoading');
-
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
   () => (dispatch, getState) => {
@@ -30,27 +26,6 @@ export const getWidgetsData = createThunkAction(
         })
         .catch(error => {
           dispatch(setWidgetsLoading({ error: true, loading: false }));
-          console.info(error);
-        });
-    }
-  }
-);
-
-export const getWidgetData = createThunkAction(
-  'getWidgetData',
-  ({ getData, widget, params }) => (dispatch, state) => {
-    const widgetState = state().widgets && state().widgets.widgets[widget];
-    if (!widgetState || (widgetState && !widgetState.loading)) {
-      dispatch(setWidgetLoading({ widget, loading: true, error: false }));
-      getData({ params })
-        .then(data => {
-          dispatch(setWidgetData({ widget, data }));
-          if (data.settings) {
-            dispatch(setWidgetSettings({ widget, value: data.settings }));
-          }
-        })
-        .catch(error => {
-          dispatch(setWidgetLoading({ widget, error: true, loading: false }));
           console.info(error);
         });
     }

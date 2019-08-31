@@ -5,7 +5,7 @@ import groupBy from 'lodash/groupBy';
 import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
-import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { getWidgets } from 'components/widgets/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 import { locationLevelToStr } from 'utils/format';
 
@@ -83,7 +83,7 @@ export const getActiveBoundaryDatasets = createSelector(
 );
 
 export const getWidgetLayers = createSelector(
-  parseWidgetsWithOptions,
+  getWidgets,
   widgets => {
     const activeWidgets =
       widgets &&

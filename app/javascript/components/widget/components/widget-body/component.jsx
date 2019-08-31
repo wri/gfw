@@ -32,7 +32,7 @@ class Widget extends PureComponent {
     chartType: PropTypes.string.isRequired,
     sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    dataConfig: PropTypes.object,
+    config: PropTypes.object,
     locationName: PropTypes.string,
     parsePayload: PropTypes.func,
     handleMouseOver: PropTypes.func,
@@ -48,7 +48,7 @@ class Widget extends PureComponent {
       locationName,
       sentence,
       data,
-      dataConfig,
+      config,
       chartType,
       handleRefetchData,
       handleMouseOver,
@@ -85,7 +85,7 @@ class Widget extends PureComponent {
           Component && (
           <Component
             {...this.props}
-            config={dataConfig}
+            config={config}
           />
         )}
       </div>

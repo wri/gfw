@@ -10,13 +10,30 @@ import Widget from 'components/widget';
 import './styles.scss';
 
 class Widgets extends PureComponent {
+  static propTypes = {
+    className: PropTypes.string,
+    loading: PropTypes.bool,
+    noWidgetsMessage: PropTypes.string,
+    widgets: PropTypes.array,
+    widgetsData: PropTypes.object,
+    simple: PropTypes.bool,
+    location: PropTypes.object,
+    locationData: PropTypes.object,
+    setWidgetsData: PropTypes.func.isRequired,
+    setActiveWidget: PropTypes.func.isRequired
+  };
+
   render() {
     const {
       className,
       noWidgetsMessage,
       loading,
       widgets,
-      ...rest
+      widgetsData,
+      location,
+      locationData,
+      setWidgetsData,
+      setActiveWidget
     } = this.props;
 
     return (
@@ -36,7 +53,17 @@ class Widgets extends PureComponent {
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
-          widgets.map(w => <Widget key={w.widget} {...w} {...rest} />)}
+          widgets.map(w =>
+            (<Widget
+              key={w.widget}
+              {...w}
+              data={widgetsData && widgetsData[w.widget]}
+              location={location}
+              locationData={locationData}
+              setWidgetData={data => setWidgetsData({ [w.widget]: data })}
+              handleShowMap={() => setActiveWidget(w.widget)}
+            />))
+        }
         {!loading &&
           noWidgetsMessage &&
           (!widgets || widgets.length === 0) && (
@@ -50,13 +77,5 @@ class Widgets extends PureComponent {
     );
   }
 }
-
-Widgets.propTypes = {
-  className: PropTypes.string,
-  loading: PropTypes.bool,
-  noWidgetsMessage: PropTypes.string,
-  widgets: PropTypes.array,
-  simple: PropTypes.bool
-};
 
 export default Widgets;
