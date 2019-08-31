@@ -72,11 +72,13 @@ export const getPolynameDatasets = ({ options, settings, polynames }) => {
   );
 };
 
-export const getForestTypes = ({ filter, settings }) => forestTypes
-  .filter(f => !filter || filter.includes(f.value))
-  .map(f => ({
-    ...f,
-    label: f.label.includes('{iflYear}')
-      ? f.label.replace('{iflYear}', settings.ifl)
-      : f.label
-  }));
+export const getForestTypes = ({ settings, locationType, polynames }) => forestTypes.filter(o => {
+  const isGlobal = locationType !== 'global' || o.global;
+  const hasPolyname = !polynames || polynames.includes(o.value);
+  return isGlobal && hasPolyname;
+}).map(f => ({
+  ...f,
+  label: f.label.includes('{iflYear}')
+    ? f.label.replace('{iflYear}', settings.ifl)
+    : f.label
+}));

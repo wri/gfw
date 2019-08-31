@@ -21,10 +21,9 @@ export default {
       key: 'forestType',
       label: 'Forest Type',
       options: getForestTypes,
+      whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
       type: 'selector'
     }
-    // forestType: true,
-    // landCategorie: true,
     // startYear: true,
     // endYear: true,
     // threshold: true,

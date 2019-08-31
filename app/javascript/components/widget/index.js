@@ -12,19 +12,32 @@ const mapStateToProps = (state, props) => {
     ...props,
     ...parseData(props)
   };
-  const { data, title, settings, location } = parsedProps;
+  const { settings, data } = parsedProps || {};
+  const { settings: dataSettings, options: dataOptions } = data || {};
+  const mergedProps = {
+    ...parsedProps,
+    settings: {
+      ...dataSettings,
+      ...settings
+    }
+  };
+  const { title, locationLabelFull } = mergedProps;
 
   return {
-    ...parsedProps,
-    options: props.options.map(o => {
-      const options = typeof o.options === 'function' ? o.options({ settings, data }) : o.options;
+    ...mergedProps,
+    options: mergedProps.options.map(o => {
+      const options = (dataOptions && dataOptions[o.key]) || o.options || [];
+      const parsedOptions = typeof o.options === 'function'
+        ? o.options(mergedProps)
+        : options;
+
       return {
         ...o,
-        options,
-        value: options.find(opt => opt.value === props.settings[o.key])
+        options: parsedOptions.filter(opt => !o.whitelist || o.whitelist.includes(opt.value)),
+        value: parsedOptions && parsedOptions.find(opt => opt.value === mergedProps.settings[o.key])
       };
     }),
-    title: title && title.replace('{location}', location.label || '...')
+    title: title && title.replace('{location}', locationLabelFull || '...')
   };
 };
 
@@ -43,14 +56,10 @@ class WidgetContainer extends Component {
   state = {
     loading: false,
     error: false
-  }
+  };
 
   componentDidMount() {
-    const {
-      location,
-      settings,
-      data
-    } = this.props;
+    const { location, settings, data } = this.props;
     const params = { ...location, ...settings };
 
     if (!data || data.noContent) {
@@ -59,11 +68,7 @@ class WidgetContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      location,
-      settings,
-      refetchKeys
-    } = this.props;
+    const { location, settings, refetchKeys } = this.props;
     const { error } = this.state;
 
     const hasLocationChanged = !isEqual(location, prevProps.location);

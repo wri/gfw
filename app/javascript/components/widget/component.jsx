@@ -88,7 +88,6 @@ class Widget extends PureComponent {
           datasets={datasets}
           active={active}
           embed={embed}
-          sentence={sentence}
           options={options}
           handleShowMap={handleShowMap}
           handleShowInfo={handleShowInfo}
@@ -103,6 +102,7 @@ class Widget extends PureComponent {
           locationName={locationName}
           data={data}
           settings={settings}
+          sentence={sentence}
           config={config}
           handleRefetchData={handleRefetchData}
           handleMouseOver={handleMouseOver}

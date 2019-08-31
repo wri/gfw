@@ -9,11 +9,11 @@ import { yearTicksFormatter } from 'components/widgets/utils/data';
 const getLoss = state => state.data && state.data.loss;
 const getExtent = state => state.data && state.data.extent;
 const getSettings = state => state.settings;
-const getLocationName = state => state.locationName;
+const getIsTropical = state => state.isTropical;
+const getLocationLabel = state => state.locationLabel;
 const getIndicator = state => state.indicator;
 const getColors = state => state.colors;
-const getSentences = state => state && state.sentence;
-const getIsTropical = state => state.isTropical;
+const getSentence = state => state && state.sentence;
 
 const parseData = createSelector(
   [getLoss, getExtent, getSettings],
@@ -72,12 +72,12 @@ const parseSentence = createSelector(
     parseData,
     getExtent,
     getSettings,
-    getLocationName,
+    getIsTropical,
+    getLocationLabel,
     getIndicator,
-    getSentences,
-    getIsTropical
+    getSentence
   ],
-  (data, extent, settings, locationName, indicator, sentences, isTropical) => {
+  (data, extent, settings, tropical, locationLabel, indicator, sentences) => {
     if (!data) return null;
     const {
       initial,
@@ -96,14 +96,14 @@ const parseSentence = createSelector(
     if (totalLoss === 0) {
       sentence = indicator ? noLossWithIndicator : noLoss;
     }
-    if (isTropical && totalLoss > 0) {
+    if (tropical && totalLoss > 0) {
       sentence = `${sentence}, ${co2Emissions}`;
     }
     sentence = `${sentence}.`;
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location: locationName,
+      location: locationLabel,
       startYear,
       endYear,
       loss: formatNumber({ num: totalLoss, unit: 'ha' }),
