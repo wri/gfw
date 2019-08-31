@@ -20,7 +20,7 @@ class Widgets extends PureComponent {
     location: PropTypes.object,
     locationData: PropTypes.object,
     setWidgetsData: PropTypes.func.isRequired,
-    setWidgetsSettings: PropTypes.func.isRequired,
+    setWidgetSettings: PropTypes.func.isRequired,
     setActiveWidget: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired
@@ -33,10 +33,11 @@ class Widgets extends PureComponent {
       loading,
       widgets,
       widgetsData,
+      query,
       location,
       locationData,
       setWidgetsData,
-      setWidgetsSettings,
+      setWidgetSettings,
       setActiveWidget,
       setModalMetaSettings,
       setShareModal
@@ -64,10 +65,14 @@ class Widgets extends PureComponent {
               key={w.widget}
               {...w}
               data={widgetsData && widgetsData[w.widget]}
+              settings={{
+                ...w.settings,
+                ...query && query[w.widget]
+              }}
               location={location}
               locationData={locationData}
               setWidgetData={data => setWidgetsData({ [w.widget]: data })}
-              handleSetWidgetSettings={settings => setWidgetsSettings({ [w.widget]: settings })}
+              handleChangeSettings={change => setWidgetSettings({ widget: w.widget, change })}
               handleShowMap={() => setActiveWidget(w.widget)}
               handleShowInfo={() => setModalMetaSettings(w.metaKey)}
               handleShowShare={() => setShareModal({

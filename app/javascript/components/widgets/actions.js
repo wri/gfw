@@ -34,12 +34,12 @@ export const getWidgetsData = createThunkAction(
 
 export const setWidgetSettings = createThunkAction(
   'setWidgetSettings',
-  ({ value, widget }) => (dispatch, state) => {
+  ({ change, widget }) => (dispatch, state) => {
     dispatch(
       setComponentStateToUrl({
         key: 'widget',
         subKey: widget,
-        change: value,
+        change,
         state
       })
     );

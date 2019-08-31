@@ -7,9 +7,12 @@ import isEqual from 'lodash/isEqual';
 import WidgetComponent from './component';
 
 const mapStateToProps = (state, props) => {
-  const { settings, parseData, title, location } = props;
-  const parsedProps = parseData(props) || {};
-  const { data } = parsedProps;
+  const { parseData } = props;
+  const parsedProps = {
+    ...props,
+    ...parseData(props)
+  };
+  const { data, title, settings, location } = parsedProps;
 
   return {
     ...parsedProps,

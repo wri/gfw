@@ -28,7 +28,7 @@ class WidgetSettingsButton extends PureComponent {
       options,
       loading,
       modalClosing,
-      handleSetWidgetSettings,
+      handleChangeSettings,
       handleShowSettings,
       handleShowInfo
     } = this.props;
@@ -66,7 +66,7 @@ class WidgetSettingsButton extends PureComponent {
             }}
             options={options}
             loading={loading}
-            handleChangeSettings={handleSetWidgetSettings}
+            handleChangeSettings={handleChangeSettings}
             handleShowInfo={handleShowInfo}
           />
         }

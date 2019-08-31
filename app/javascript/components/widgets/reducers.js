@@ -3,8 +3,7 @@ import * as actions from './actions';
 export const initialState = {
   loading: false,
   error: false,
-  data: {},
-  settings: {}
+  data: {}
 };
 
 // reducers for all widgets parent wrapper component

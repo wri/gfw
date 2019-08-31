@@ -46,6 +46,7 @@ const buildLocationDict = (locations) => location &&
   );
 
 export const selectLocation = state => state.location && state.location.payload;
+export const selectLocationQuery = state => state.location && state.location.query && state.location.query;
 export const selectWidgetsData = state => state.widgets && state.widgets.data;
 export const selectGeostore = state => state.geostore && state.geostore.data;
 export const selectLoading = state =>
@@ -58,10 +59,13 @@ export const selectLoading = state =>
 export const selectCountryData = state => state.countryData;
 export const selectPolynameWhitelist = state => state.whitelists && state.whitelists.data;
 export const selectEmbed = (state, { embed }) => embed;
-export const selectWidgetFromQuery = state =>
-  state.location && state.location.query && state.location.query.widget;
 export const selectCategory = state =>
   state.location && state.location.query && state.location.query.category;
+
+export const getWdigetFromQuery = createSelector(
+  selectLocationQuery,
+  query => query && query.widget
+);
 
 export const getLocation = createSelector(
   [selectLocation, selectGeostore, getGeodescriberTitleFull],
@@ -141,7 +145,7 @@ export const getLocationData = createSelector(
 );
 
 export const filterWidgets = createSelector(
-  [selectLocation, selectPolynameWhitelist, selectEmbed, selectWidgetFromQuery, selectCategory],
+  [selectLocation, selectPolynameWhitelist, selectEmbed, getWdigetFromQuery, selectCategory],
   (location, polynameWhitelist, embed, widget, category) => {
     const { adminLevel, type } = location;
 
@@ -176,5 +180,6 @@ export const getWidgetsProps = createStructuredSelector({
   loading: selectLoading,
   location: getLocation,
   locationData: getLocationData,
-  widgetsData: selectWidgetsData
+  widgetsData: selectWidgetsData,
+  query: selectLocationQuery
 });

@@ -15,6 +15,7 @@ class WidgetSettings extends PureComponent {
     options: PropTypes.array.isRequired,
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
     metakey: PropTypes.string,
+    key: PropTypes.string,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func.isRequired,
     loading: PropTypes.bool,
@@ -36,7 +37,7 @@ class WidgetSettings extends PureComponent {
   }
 
   renderSettingsSelector = props => {
-    const { type, label, options, value, metakey, handleShowInfo, handleChangeSettings, loading, placeholder } = props;
+    const { type, label, options, key, value, metakey, handleShowInfo, handleChangeSettings, loading, placeholder } = props;
 
     if (options.length <= 1) return null;
     if (options.length === 2) {
@@ -47,7 +48,7 @@ class WidgetSettings extends PureComponent {
         label={label}
         value={value}
         options={options}
-        onChange={handleChangeSettings}
+        onChange={change => handleChangeSettings({ [key]: change.value })}
         disabled={loading}
       />);
     }
@@ -60,7 +61,7 @@ class WidgetSettings extends PureComponent {
         label={label}
         value={value}
         options={options}
-        onChange={handleChangeSettings}
+        onChange={change => handleChangeSettings({ [key]: change.value })}
         disabled={loading}
         infoAction={() => handleShowInfo(metakey)}
         optionsAction={handleShowInfo}
@@ -71,8 +72,7 @@ class WidgetSettings extends PureComponent {
   }
 
   renderDoubleSelector = props => {
-    const { label, options, value, metakey, handleShowInfo, handleChangeSettings, loading, placeholder } = props;
-
+    const { label, options, key, value, metakey, handleShowInfo, handleChangeSettings, loading, placeholder } = props;
 
     return (
       <div key={value} className="widget-double-selector">
@@ -82,7 +82,7 @@ class WidgetSettings extends PureComponent {
           theme="theme-dropdown-button"
           value={value}
           options={options}
-          onChange={handleChangeSettings}
+          onChange={change => handleChangeSettings({ [key]: change.value })}
           disabled={loading}
           infoAction={() => handleShowInfo(metakey)}
           optionsAction={handleShowInfo}
@@ -95,7 +95,7 @@ class WidgetSettings extends PureComponent {
           theme="theme-dropdown-button"
           value={value}
           options={options}
-          onChange={handleChangeSettings}
+          onChange={change => handleChangeSettings({ [key]: change.value })}
           disabled={loading}
           infoAction={() => handleShowInfo(metakey)}
           optionsAction={handleShowInfo}

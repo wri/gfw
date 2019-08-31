@@ -25,7 +25,7 @@ class Widget extends PureComponent {
     error: PropTypes.bool,
     locationName: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    dataConfig: PropTypes.object,
+    config: PropTypes.object,
     sentence: PropTypes.object,
     statements: PropTypes.array,
     showAttributionLink: PropTypes.bool,
@@ -56,7 +56,6 @@ class Widget extends PureComponent {
       locationName,
       data,
       config,
-      dataConfig,
       sentence,
       statements,
       showAttributionLink,
@@ -109,11 +108,11 @@ class Widget extends PureComponent {
           handleMouseOver={handleMouseOver}
           handleMouseOut={handleMouseOut}
         />
-        {/* <WidgetFooter
+        <WidgetFooter
           statements={statements}
           simple={simple}
           showAttributionLink={showAttributionLink}
-        /> */}
+        />
       </div>
     );
   }
