@@ -68,7 +68,7 @@ class Widget extends PureComponent {
       handleMouseOut
     } = this.props;
     const { main } = colors || {};
-    console.log(widget);
+
     return (
       <div
         id={widget}

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
+import pick from 'lodash/pick';
 
 import WidgetComponent from './component';
 
@@ -27,14 +28,17 @@ const mapStateToProps = (state, props) => {
     ...mergedProps,
     options: mergedProps.options.map(o => {
       const options = (dataOptions && dataOptions[o.key]) || o.options || [];
-      const parsedOptions = typeof o.options === 'function'
-        ? o.options(mergedProps)
-        : options;
+      const parsedOptions =
+        typeof o.options === 'function' ? o.options(mergedProps) : options;
 
       return {
         ...o,
-        options: parsedOptions.filter(opt => !o.whitelist || o.whitelist.includes(opt.value)),
-        value: parsedOptions && parsedOptions.find(opt => opt.value === mergedProps.settings[o.key])
+        options: parsedOptions.filter(
+          opt => !o.whitelist || o.whitelist.includes(opt.value)
+        ),
+        value:
+          parsedOptions &&
+          parsedOptions.find(opt => opt.value === mergedProps.settings[o.key])
       };
     }),
     title: title && title.replace('{location}', locationLabelFull || '...')
@@ -58,7 +62,7 @@ class WidgetContainer extends Component {
     error: false
   };
 
-  _mounted = false
+  _mounted = false;
 
   componentDidMount() {
     this._mounted = true;
@@ -79,22 +83,11 @@ class WidgetContainer extends Component {
       !error &&
       prevState.error !== undefined &&
       !isEqual(error, prevState.error);
-    let changedSetting = '';
-    if (settings && prevProps.settings) {
-      Object.keys(settings).forEach(s => {
-        if (!isEqual(settings[s], prevProps.settings[s])) {
-          changedSetting = s;
-        }
-      });
-    }
-    const hasSettingsChanged =
-      settings &&
-      prevProps.settings &&
-      changedSetting &&
-      !refetchKeys.includes(changedSetting);
+    const refetchSettings = pick(settings, [refetchKeys]);
+    const refetchPrevSettings = pick(prevProps.settings, [refetchKeys]);
+    const hasSettingsChanged = !isEqual(refetchSettings, refetchPrevSettings);
 
     // refetch data if error, settings, or location changes
-    console.log(hasSettingsChanged, hasLocationChanged, hasErrorChanged);
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       const params = { ...location, ...settings };
       this.handleGetWidgetData(params);

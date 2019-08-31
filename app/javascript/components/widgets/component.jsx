@@ -63,7 +63,7 @@ class Widgets extends PureComponent {
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
-          widgets.map(w => console.log(w.widget) || (
+          widgets.map(w => (
             <Widget
               key={w.widget}
               {...w}
