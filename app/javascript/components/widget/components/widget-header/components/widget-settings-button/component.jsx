@@ -11,7 +11,7 @@ import WidgetSettings from '../widget-settings';
 
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
-    options: PropTypes.object,
+    options: PropTypes.array,
     loading: PropTypes.bool,
     modalClosing: PropTypes.bool,
     handleSetWidgetSettings: PropTypes.func.isRequired,
@@ -54,7 +54,7 @@ class WidgetSettingsButton extends PureComponent {
         }}
         onShow={() => {
           this.setState({ tooltipOpen: true });
-          handleShowSettings();
+          // handleShowSettings();
         }}
         arrow
         useContext

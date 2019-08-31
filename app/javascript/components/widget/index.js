@@ -7,17 +7,21 @@ import isEqual from 'lodash/isEqual';
 import WidgetComponent from './component';
 
 const mapStateToProps = (state, props) => {
-  const { settings, parseData } = props;
+  const { settings, parseData, title, location } = props;
   const parsedProps = parseData(props) || {};
   const { data } = parsedProps;
 
   return {
     ...parsedProps,
-    options: () => props.options.map(o => ({
-      ...o,
-      options: typeof o.options === 'function' ? o.options({ settings, data }) : o.options,
-      value: o.options.find(opt => opt.value === props.settings[o.key])
-    }))
+    options: props.options.map(o => {
+      const options = typeof o.options === 'function' ? o.options({ settings, data }) : o.options;
+      return {
+        ...o,
+        options,
+        value: options.find(opt => opt.value === props.settings[o.key])
+      };
+    }),
+    title: title && title.replace('{location}', location.label || '...')
   };
 };
 

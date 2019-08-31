@@ -41,6 +41,7 @@ class WidgetSettings extends PureComponent {
     if (options.length <= 1) return null;
     if (options.length === 2) {
       return (<Switch
+        key={value}
         className="widget-settings-switch"
         theme="theme-switch-light"
         label={label}
@@ -53,6 +54,7 @@ class WidgetSettings extends PureComponent {
 
     return options && !!options.length && (
       <Dropdown
+        key={value}
         className={cx('widget-settings-selector', { 'mini-selector': type === 'mini-selector' })}
         theme="theme-select-light"
         label={label}
@@ -73,7 +75,7 @@ class WidgetSettings extends PureComponent {
 
 
     return (
-      <div className="widget-double-selector">
+      <div key={value} className="widget-double-selector">
         <span>{label}</span>
         <Dropdown
           className="widget-settings-selector"

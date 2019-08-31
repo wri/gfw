@@ -72,8 +72,8 @@ export const getPolynameDatasets = ({ options, settings, polynames }) => {
   );
 };
 
-export const getForestTypes = (filter, settings) => forestTypes
-  .filter(f => filter.includes(f.value))
+export const getForestTypes = ({ filter, settings }) => forestTypes
+  .filter(f => !filter || filter.includes(f.value))
   .map(f => ({
     ...f,
     label: f.label.includes('{iflYear}')

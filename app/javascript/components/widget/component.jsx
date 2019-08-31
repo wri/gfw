@@ -83,7 +83,7 @@ class Widget extends PureComponent {
           })
         }}
       >
-        {/* <WidgetHeader
+        <WidgetHeader
           title={title}
           large={large}
           datasets={datasets}
@@ -95,7 +95,7 @@ class Widget extends PureComponent {
           handleShowInfo={handleShowInfo}
           handleChangeSettings={handleChangeSettings}
           handleShowShare={handleShowShare}
-        /> */}
+        />
         <WidgetBody
           chartType={chartType}
           loading={loading}

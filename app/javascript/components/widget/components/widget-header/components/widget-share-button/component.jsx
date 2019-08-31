@@ -11,7 +11,7 @@ class WidgetShareButton extends PureComponent {
     handleShowShare: PropTypes.func.isRequired
   };
 
-  renderShareButton() {
+  render() {
     const { handleShowShare } = this.props;
     return (
       <Button

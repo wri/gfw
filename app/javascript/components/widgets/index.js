@@ -5,20 +5,24 @@ import reducerRegistry from 'app/registry';
 // import compact from 'lodash/compact';
 // import intersection from 'lodash/intersection';
 
-// import { setMapSettings as setMapState } from 'components/map/actions';
+import { setMapSettings as setMapState } from 'components/map/actions';
+import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
+import { setShareModal } from 'components/modals/share/share-actions';
+
 // import * as ownActions from 'components/widgets/actions';
-import * as actions from './actions';
+import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
 import { getWidgetsProps } from './selectors';
 
 // import { getWidgetDatasets, getPolynameDatasets } from './utils';
 
-
-// const actions = {
-//   ...ownActions,
-//   setMapSettings: setMapState
-// };
+const actions = {
+  ...ownActions,
+  setMapSettings: setMapState,
+  setModalMetaSettings,
+  setShareModal
+};
 
 // const mapSyncKeys = [
 //   'startYear',
