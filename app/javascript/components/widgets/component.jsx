@@ -18,6 +18,7 @@ class Widgets extends PureComponent {
     widgetsData: PropTypes.object,
     simple: PropTypes.bool,
     location: PropTypes.object,
+    locationObj: PropTypes.object,
     locationData: PropTypes.object,
     setWidgetsData: PropTypes.func.isRequired,
     setWidgetSettings: PropTypes.func.isRequired,
@@ -36,6 +37,7 @@ class Widgets extends PureComponent {
       widgetsData,
       query,
       location,
+      locationObj,
       locationData,
       setWidgetsData,
       setWidgetSettings,
@@ -61,7 +63,7 @@ class Widgets extends PureComponent {
         {loading && <Loader className="widgets-loader large" />}
         {!loading &&
           widgets &&
-          widgets.map(w => (
+          widgets.map(w => console.log(w.widget) || (
             <Widget
               key={w.widget}
               {...w}
@@ -70,8 +72,9 @@ class Widgets extends PureComponent {
                 ...w.settings,
                 ...(query && query[w.widget])
               }}
-              {...location}
+              {...locationObj}
               {...locationData}
+              location={location}
               setWidgetData={data => setWidgetsData({ [w.widget]: data })}
               handleChangeSettings={change =>
                 setWidgetSettings({ widget: w.widget, change })

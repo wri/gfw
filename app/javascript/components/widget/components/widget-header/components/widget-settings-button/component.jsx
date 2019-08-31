@@ -14,8 +14,7 @@ class WidgetSettingsButton extends PureComponent {
     options: PropTypes.array,
     loading: PropTypes.bool,
     modalClosing: PropTypes.bool,
-    handleSetWidgetSettings: PropTypes.func.isRequired,
-    handleShowSettings: PropTypes.func.isRequired,
+    handleChangeSettings: PropTypes.func.isRequired,
     handleShowInfo: PropTypes.func.isRequired
   };
 
@@ -29,7 +28,6 @@ class WidgetSettingsButton extends PureComponent {
       loading,
       modalClosing,
       handleChangeSettings,
-      handleShowSettings,
       handleShowInfo
     } = this.props;
     const { tooltipOpen } = this.state;
@@ -54,7 +52,6 @@ class WidgetSettingsButton extends PureComponent {
         }}
         onShow={() => {
           this.setState({ tooltipOpen: true });
-          // handleShowSettings();
         }}
         arrow
         useContext

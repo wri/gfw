@@ -45,8 +45,10 @@ const actions = {
 
 class WidgetsContainer extends PureComponent {
   componentDidMount() {
-    const { getWidgetsData } = this.props;
-    getWidgetsData();
+    const { getWidgetsData, location } = this.props;
+    if (location.type === 'global') {
+      getWidgetsData();
+    }
   }
 
   // componentDidUpdate(prevProps) {

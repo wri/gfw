@@ -73,30 +73,32 @@ export const getWdigetFromQuery = createSelector(
 );
 
 export const getLocation = createSelector(
-  [selectLocation, selectGeostore, getGeodescriberTitleFull],
-  (location, geostore, title) => {
-    const { type, adm0, adm1, adm2 } = location;
+  [selectLocation, selectGeostore],
+  (location, geostore) => {
+    if (location.type === 'aoi' && geostore) {
+      return {
+        ...location,
+        type: 'geostore',
+        adm0: geostore.id
+      };
+    }
 
-    const locationObj = {
-      adm0,
-      adm1,
-      adm2,
-      locationType: type,
+    return location;
+  }
+);
+
+export const getLocationObj = createSelector(
+  [getLocation, getGeodescriberTitleFull],
+  (location, title) => {
+    const { type } = location;
+
+    return {
+      ...location,
       locationLabel: locationTypes[type] && locationTypes[type].label,
       adminLevel: locationLevelToStr(location),
       locationLabelFull: title,
       isTropical: location && tropicalIsos.includes(location.adm0)
     };
-
-    if (type === 'aoi' && geostore) {
-      return {
-        ...locationObj,
-        locationType: 'geostore',
-        adm0: geostore.id
-      };
-    }
-
-    return locationObj;
   }
 );
 
@@ -119,7 +121,7 @@ export const getAllLocationData = createSelector(
 );
 
 export const getLocationData = createSelector(
-  [getLocation, getAllLocationData, selectPolynameWhitelist],
+  [getLocationObj, getAllLocationData, selectPolynameWhitelist],
   (location, allLocationData, polynames) => {
     if (isEmpty(allLocationData)) return null;
     const { adminLevel } = location;
@@ -328,6 +330,7 @@ export const getWidgetsProps = createStructuredSelector({
   widgets: getWidgets,
   loading: selectLoading,
   location: getLocation,
+  locationObj: getLocationObj,
   locationData: getLocationData,
   widgetsData: selectWidgetsData,
   query: selectLocationQuery

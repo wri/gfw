@@ -58,7 +58,10 @@ class WidgetContainer extends Component {
     error: false
   };
 
+  _mounted = false
+
   componentDidMount() {
+    this._mounted = true;
     const { location, settings, data } = this.props;
     const params = { ...location, ...settings };
 
@@ -91,10 +94,16 @@ class WidgetContainer extends Component {
       !refetchKeys.includes(changedSetting);
 
     // refetch data if error, settings, or location changes
+    console.log(hasSettingsChanged, hasLocationChanged, hasErrorChanged);
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       const params = { ...location, ...settings };
       this.handleGetWidgetData(params);
     }
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+    this.cancelWidgetDataFetch();
   }
 
   handleGetWidgetData = params => {
@@ -107,11 +116,15 @@ class WidgetContainer extends Component {
     getData({ ...params, token: this.widgetDataFetch.token })
       .then(data => {
         setWidgetData(data);
-        this.setState({ loading: false, error: false });
+        if (this._mounted) {
+          this.setState({ loading: false, error: false });
+        }
       })
       .catch(error => {
-        this.setState({ error: true, loading: false });
         console.info(error);
+        if (this._mounted) {
+          this.setState({ error: true, loading: false });
+        }
       });
   };
 

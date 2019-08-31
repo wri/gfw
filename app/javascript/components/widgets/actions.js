@@ -6,7 +6,6 @@ import { getNonGlobalDatasets } from 'services/forest-data';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');
-export const setWidgetsSettings = createAction('setWidgetsSettings');
 export const setWidgetsLoading = createAction('setWidgetsLoading');
 
 export const getWidgetsData = createThunkAction(

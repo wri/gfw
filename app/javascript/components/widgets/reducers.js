@@ -17,17 +17,6 @@ const setWidgetsData = (state, { payload }) => ({
   error: false
 });
 
-const setWidgetsSettings = (state, { payload }) => ({
-  ...state,
-  settings: {
-    ...state.settings,
-    [payload.widget]: {
-      ...state.settings[payload.widget],
-      ...payload.settings
-    }
-  }
-});
-
 const setWidgetsLoading = (state, { payload }) => ({
   ...state,
   loading: payload.loading,
@@ -36,6 +25,5 @@ const setWidgetsLoading = (state, { payload }) => ({
 
 export default {
   [actions.setWidgetsData]: setWidgetsData,
-  [actions.setWidgetsLoading]: setWidgetsLoading,
-  [actions.setWidgetsSettings]: setWidgetsSettings
+  [actions.setWidgetsLoading]: setWidgetsLoading
 };
