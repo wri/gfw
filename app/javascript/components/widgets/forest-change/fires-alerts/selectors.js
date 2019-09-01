@@ -16,7 +16,7 @@ import {
 const getAlerts = state => (state.data && state.data.alerts) || null;
 const getLatest = state => (state.data && state.data.latest) || null;
 const getColors = state => state.colors || null;
-const getActiveData = state => state.settings.activeData || null;
+const getInteraction = state => state.settings.interaction || null;
 const getWeeks = state => state.settings.weeks || null;
 const getDataset = state => state.settings.dataset || null;
 const getSentences = state => state.config.sentence || null;
@@ -109,12 +109,12 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getColors, getActiveData, getSentences, getDataset],
-  (data, colors, activeData, sentence, dataset) => {
+  [parseData, getColors, getInteraction, getSentences, getDataset],
+  (data, colors, interaction, sentence, dataset) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
-    if (!isEmpty(activeData)) {
-      lastDate = activeData;
+    if (!isEmpty(interaction)) {
+      lastDate = interaction;
     }
     const colorRange = getColorPalette(colors.ramp, 5);
     let statusColor = colorRange[4];

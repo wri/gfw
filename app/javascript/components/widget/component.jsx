@@ -34,9 +34,8 @@ class Widget extends PureComponent {
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     handleShowShare: PropTypes.func,
-    handleRefetchData: PropTypes.func,
-    handleMouseOver: PropTypes.func,
-    handleMouseOut: PropTypes.func
+    parseInteraction: PropTypes.func,
+    handleRefetchData: PropTypes.func
   };
 
   render() {
@@ -66,8 +65,7 @@ class Widget extends PureComponent {
       handleChangeSettings,
       handleShowShare,
       handleRefetchData,
-      handleMouseOver,
-      handleMouseOut
+      parseInteraction
     } = this.props;
     const { main } = colors || {};
 
@@ -108,8 +106,8 @@ class Widget extends PureComponent {
           sentence={sentence}
           config={config}
           handleRefetchData={handleRefetchData}
-          handleMouseOver={handleMouseOver}
-          handleMouseOut={handleMouseOut}
+          handleChangeSettings={handleChangeSettings}
+          parseInteraction={parseInteraction}
         />
         <WidgetFooter
           statements={statements}

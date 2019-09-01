@@ -30,7 +30,6 @@ class WidgetBody extends PureComponent {
     chartType: PropTypes.string.isRequired,
     sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    config: PropTypes.object,
     locationName: PropTypes.string,
     parsePayload: PropTypes.func,
     handleMouseOver: PropTypes.func,
@@ -46,7 +45,6 @@ class WidgetBody extends PureComponent {
       locationName,
       sentence,
       data,
-      config,
       chartType,
       handleRefetchData,
       handleMouseOver,
@@ -77,9 +75,7 @@ class WidgetBody extends PureComponent {
             handleMouseOut={handleMouseOut}
           />
         )}
-        {!error &&
-          hasData &&
-          Component && <Component {...this.props} config={config} />}
+        {!error && hasData && Component && <Component {...this.props} />}
       </div>
     );
   }

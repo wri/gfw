@@ -8,26 +8,27 @@ class WidgetComposedChart extends Component {
   static propTypes = {
     data: PropTypes.array,
     config: PropTypes.object,
-    handleMouseMove: PropTypes.func,
-    handleMouseOut: PropTypes.func,
-    parsePayload: PropTypes.func,
+    handleChangeSettings: PropTypes.func,
+    parseInteraction: PropTypes.func,
     active: PropTypes.bool,
     simple: PropTypes.bool
   };
 
   handleMouseMove = debounce(data => {
-    const { parsePayload, handleMouseMove } = this.props;
-    if (parsePayload && handleMouseMove) {
+    const { parseInteraction, handleChangeSettings } = this.props;
+    if (parseInteraction && handleChangeSettings) {
       const { activePayload } = data && data;
-      const activeData = parsePayload(activePayload);
-      handleMouseMove(activeData);
+      if (activePayload && activePayload.length) {
+        const interaction = parseInteraction(activePayload[0].payload);
+        handleChangeSettings({ interaction });
+      }
     }
   }, 100);
 
   handleMouseLeave = debounce(() => {
-    const { handleMouseOut } = this.props;
-    if (handleMouseOut) {
-      handleMouseOut();
+    const { handleChangeSettings } = this.props;
+    if (handleChangeSettings) {
+      handleChangeSettings({ interaction: {} });
     }
   }, 100);
 

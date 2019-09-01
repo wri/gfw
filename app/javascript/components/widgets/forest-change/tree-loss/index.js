@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 import minBy from 'lodash/minBy';
 import maxBy from 'lodash/maxBy';
 
@@ -113,22 +112,13 @@ export default {
       );
   },
   parseData: getWidgetProps,
-  parseInteraction: payload => {
-    const year = payload && payload[0].payload.year;
+  parseInteraction: (payload = {}) => {
+    const { year } = payload;
+
     return {
       updateLayer: true,
-      startDate:
-        year &&
-        moment()
-          .year(year)
-          .startOf('year')
-          .format('YYYY-MM-DD'),
-      endDate:
-        year &&
-        moment()
-          .year(year)
-          .endOf('year')
-          .format('YYYY-MM-DD')
+      startYear: year,
+      endYear: year
     };
   }
 };

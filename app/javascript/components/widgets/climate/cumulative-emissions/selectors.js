@@ -9,7 +9,7 @@ import { getDatesData, getChartConfig } from 'components/widget/utils/data';
 
 const getAlerts = state => (state.data && state.data.data) || null;
 const getColors = state => state.colors || null;
-const getActiveData = state => state.settings.activeData || null;
+const getInteractionData = state => state.settings.interaction || null;
 const getSentences = state => state.config.sentences || null;
 const getSettings = state => state.settings;
 
@@ -148,12 +148,12 @@ export const parseConfig = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getActiveData, getSentences, getSettings],
-  (data, activeData, sentences, settings) => {
+  [parseData, getInteractionData, getSentences, getSettings],
+  (data, interaction, sentences, settings) => {
     if (!data) return null;
     let lastDate = data[data.length - 1] || {};
-    if (!isEmpty(activeData)) {
-      lastDate = activeData;
+    if (!isEmpty(interaction)) {
+      lastDate = interaction;
     }
 
     const { year, variable } = settings;

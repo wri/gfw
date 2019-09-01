@@ -134,6 +134,12 @@ class WidgetContainer extends Component {
       });
   };
 
+  handleRefetchData = () => {
+    const { settings, location } = this.props;
+    const params = { ...location, ...settings };
+    this.handleGetWidgetData(params);
+  };
+
   cancelWidgetDataFetch = () => {
     if (this.widgetDataFetch) {
       this.widgetDataFetch.cancel(`Cancelling ${this.props.widget} fetch`);
@@ -143,7 +149,8 @@ class WidgetContainer extends Component {
   render() {
     return createElement(WidgetComponent, {
       ...this.props,
-      ...this.state
+      ...this.state,
+      handleRefetchData: this.handleRefetchData
     });
   }
 }
