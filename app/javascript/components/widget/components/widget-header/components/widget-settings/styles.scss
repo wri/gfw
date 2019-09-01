@@ -7,17 +7,20 @@ $settings-items-margin: rem(25px);
   background-color: $white;
   padding: rem(20px) 0 rem(5px);
 
-  > div {
-    margin-bottom: $settings-items-margin;
-    border-bottom: 1px solid $border;
-    padding: 0 $settings-items-margin;
+  .settings-option {
+    padding: 0 $settings-items-margin $settings-items-margin $settings-items-margin;
 
-    > div {
-      margin-bottom: rem(20px);
+    &.border {
+      border-bottom: 1px solid $border;
     }
+  }
 
-    &:last-child {
-      border-bottom: 0;
+  .widget-settings-selector {
+    display: flex;
+    flex-direction: column;
+
+    .label {
+      text-transform: uppercase;
     }
   }
 
@@ -42,12 +45,6 @@ $settings-items-margin: rem(25px);
     .text-separator {
       margin: 0 10px;
     }
-  }
-
-  .widget-settings-selector {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
     .label {
       margin-bottom: 0;

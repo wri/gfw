@@ -21,6 +21,7 @@ class Widget extends PureComponent {
     settings: PropTypes.object,
     options: PropTypes.array,
     chartType: PropTypes.string,
+    metaKey: PropTypes.string,
     loading: PropTypes.bool,
     error: PropTypes.bool,
     locationName: PropTypes.string,
@@ -58,6 +59,7 @@ class Widget extends PureComponent {
       config,
       sentence,
       statements,
+      metaKey,
       showAttributionLink,
       handleShowMap,
       handleShowInfo,
@@ -89,6 +91,7 @@ class Widget extends PureComponent {
           active={active}
           embed={embed}
           options={options}
+          metaKey={metaKey}
           handleShowMap={handleShowMap}
           handleShowInfo={handleShowInfo}
           handleChangeSettings={handleChangeSettings}

@@ -19,6 +19,7 @@ class WidgetHeader extends PureComponent {
     embed: PropTypes.bool,
     simple: PropTypes.bool,
     active: PropTypes.string,
+    metaKey: PropTypes.string,
     options: PropTypes.array,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
@@ -36,6 +37,7 @@ class WidgetHeader extends PureComponent {
       datasets,
       simple,
       options,
+      metaKey,
       handleShowMap,
       handleShowInfo,
       handleChangeSettings,
@@ -68,7 +70,7 @@ class WidgetHeader extends PureComponent {
           <div className="small-options">
             <WidgetInfoButton
               square={simple}
-              handleOpenInfo={handleShowInfo}
+              handleOpenInfo={() => handleShowInfo(metaKey)}
             />
             {!simple &&
               <WidgetShareButton

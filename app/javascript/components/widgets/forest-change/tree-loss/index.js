@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
-import { getForestTypes } from 'components/widgets/utils';
+import { getForestTypes, getLandCategories } from 'components/widgets/utils';
 
 import getWidgetProps from './selectors';
 
@@ -22,14 +22,25 @@ export default {
       label: 'Forest Type',
       options: getForestTypes,
       whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
-      type: 'selector'
+      type: 'selector',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      options: getLandCategories,
+      type: 'selector',
+      placeholder: 'All land categories',
+      clearable: true,
+      border: true
     }
     // startYear: true,
     // endYear: true,
     // threshold: true,
     // extentYear: true
   ],
-  refetchKeys: ['threshold', 'ifl', 'extentYear'],
+  refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
   type: 'loss',
   metaKey: 'widget_tree_cover_loss',
   datasets: [
@@ -64,8 +75,6 @@ export default {
   },
   settings: {
     threshold: 30,
-    startYear: 2001,
-    endYear: 2018,
     extentYear: 2000,
     ifl: 2000
   },
@@ -79,19 +88,21 @@ export default {
       type === 'global'
         ? getLossGrouped({ ...rest, ...globalLocation })
         : getLoss({ ...rest, ...globalLocation });
-    return axios.all([lossFetch, getExtent({ ...rest, ...globalLocation })]).then(
-      axios.spread((loss, extent) => {
-        let data = {};
-        if (loss && loss.data && extent && extent.data) {
-          data = {
-            loss: loss.data.data,
-            extent: (loss.data.data && extent.data.data[0].extent) || 0
-          };
-        }
+    return axios
+      .all([lossFetch, getExtent({ ...rest, ...globalLocation })])
+      .then(
+        axios.spread((loss, extent) => {
+          let data = {};
+          if (loss && loss.data && extent && extent.data) {
+            data = {
+              loss: loss.data.data,
+              extent: (loss.data.data && extent.data.data[0].extent) || 0
+            };
+          }
 
-        return data;
-      })
-    );
+          return data;
+        })
+      );
   },
   parseData: getWidgetProps,
   parseInteraction: payload => {

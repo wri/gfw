@@ -1,6 +1,8 @@
 import moment from 'moment';
+import lowerCase from 'lodash/lowerCase';
 
 import forestTypes from 'data/forest-types.json';
+import landCategories from 'data/land-categories.json';
 
 export const getWidgetDatasets = ({
   datasets,
@@ -72,7 +74,7 @@ export const getPolynameDatasets = ({ options, settings, polynames }) => {
   );
 };
 
-export const getForestTypes = ({ settings, locationType, polynames }) => forestTypes.filter(o => {
+export const getForestTypes = ({ settings, locationType, polynames, adm0 }) => forestTypes.filter(o => {
   const isGlobal = locationType !== 'global' || o.global;
   const hasPolyname = !polynames || polynames.includes(o.value);
   return isGlobal && hasPolyname;
@@ -80,5 +82,16 @@ export const getForestTypes = ({ settings, locationType, polynames }) => forestT
   ...f,
   label: f.label.includes('{iflYear}')
     ? f.label.replace('{iflYear}', settings.ifl)
-    : f.label
+    : f.label,
+  metaKey: f.metaKey === 'primary_forest'
+    ? `${lowerCase(adm0)}_${f.metaKey}${
+      adm0 === 'IDN' ? 's' : ''
+    }`
+    : f.metaKey
 }));
+
+export const getLandCategories = ({ locationType, polynames }) => landCategories.filter(o => {
+  const isGlobal = locationType !== 'global' || o.global;
+  const hasPolyname = !polynames || polynames.includes(o.value);
+  return isGlobal && hasPolyname;
+});

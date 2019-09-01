@@ -80,7 +80,7 @@ class Widgets extends PureComponent {
                 setWidgetSettings({ widget: w.widget, change })
               }
               handleShowMap={() => setActiveWidget(w.widget)}
-              handleShowInfo={() => setModalMetaSettings(w.metaKey)}
+              handleShowInfo={setModalMetaSettings}
               handleShowShare={() =>
                 setShareModal({
                   title: 'Share this view',
