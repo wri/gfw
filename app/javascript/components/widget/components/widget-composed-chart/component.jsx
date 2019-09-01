@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
 import ComposedChart from 'components/charts/composed-chart';
 
@@ -13,6 +14,13 @@ class WidgetComposedChart extends Component {
     active: PropTypes.bool,
     simple: PropTypes.bool
   };
+
+  shouldComponentUpdate(nextProps) {
+    const { data, config } = this.props;
+    const { data: nextData, config: nextConfig } = nextProps;
+
+    return !isEqual(data, nextData) || !isEqual(config, nextConfig);
+  }
 
   handleMouseMove = debounce(data => {
     const { parseInteraction, handleChangeSettings } = this.props;
