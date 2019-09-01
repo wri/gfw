@@ -1,7 +1,7 @@
 import { createStructuredSelector } from 'reselect';
 
-import { getDashboardWidgets } from 'pages/dashboards/selectors';
+// import { getWidgets } from 'components/widgets/selectors';
 
 export const getEmbedDashboardsProps = createStructuredSelector({
-  widgets: getDashboardWidgets
+  // widgets: getWidgets
 });

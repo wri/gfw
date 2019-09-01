@@ -160,7 +160,7 @@ export const getLocationData = createSelector(
 
 export const filterWidgets = createSelector(
   [
-    selectLocation,
+    getLocationObj,
     selectPolynameWhitelist,
     selectEmbed,
     getWdigetFromQuery,
@@ -192,7 +192,7 @@ export const filterWidgets = createSelector(
           !whitelists ||
           !whitelists.indicators ||
           intersection(polynameWhitelist, whitelists.indicators);
-        const hasCategory = !category && categories.includes(category);
+        const hasCategory = !category || categories.includes(category);
 
         return (
           hasLocation &&

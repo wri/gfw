@@ -44,6 +44,11 @@ const actions = {
 // };
 
 class WidgetsContainer extends PureComponent {
+  static propTypes = {
+    getWidgetsData: PropTypes.func,
+    location: PropTypes.object
+  };
+
   componentDidMount() {
     const { getWidgetsData, location } = this.props;
     if (location.type === 'global') {
@@ -142,10 +147,6 @@ class WidgetsContainer extends PureComponent {
     });
   }
 }
-
-WidgetsContainer.propTypes = {
-  getWidgetsData: PropTypes.func
-};
 
 reducerRegistry.registerModule('widgets', {
   actions,

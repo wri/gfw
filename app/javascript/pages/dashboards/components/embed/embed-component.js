@@ -16,11 +16,11 @@ import './trase-embed-styles.scss';
 
 class Embed extends PureComponent {
   render() {
-    const { isTrase, widgets } = this.props;
+    const { isTrase } = this.props;
     return (
       <div className={cx('c-embed', { '-trase': isTrase })}>
         <div className="widget-wrapper">
-          <Widgets widgets={widgets} embed />
+          <Widgets embed />
         </div>
         <Share />
         <ModalMeta />
@@ -35,8 +35,7 @@ class Embed extends PureComponent {
 }
 
 Embed.propTypes = {
-  isTrase: PropTypes.bool,
-  widgets: PropTypes.array
+  isTrase: PropTypes.bool
 };
 
 export default Embed;

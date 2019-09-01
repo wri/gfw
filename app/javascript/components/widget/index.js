@@ -8,10 +8,10 @@ import pick from 'lodash/pick';
 import WidgetComponent from './component';
 
 const mapStateToProps = (state, props) => {
-  const { parseData } = props;
+  const { parseData, widget, ...rest } = props;
   const parsedProps = {
-    ...props,
-    ...parseData(props)
+    ...rest,
+    ...(parseData && parseData(rest))
   };
   const { settings, data } = parsedProps || {};
   const { settings: dataSettings, options: dataOptions } = data || {};
@@ -26,21 +26,23 @@ const mapStateToProps = (state, props) => {
 
   return {
     ...mergedProps,
-    options: mergedProps.options.map(o => {
-      const options = (dataOptions && dataOptions[o.key]) || o.options || [];
-      const parsedOptions =
-        typeof o.options === 'function' ? o.options(mergedProps) : options;
+    options:
+      mergedProps.options &&
+      mergedProps.options.map(o => {
+        const options = (dataOptions && dataOptions[o.key]) || o.options || [];
+        const parsedOptions =
+          typeof o.options === 'function' ? o.options(mergedProps) : options;
 
-      return {
-        ...o,
-        options: parsedOptions.filter(
-          opt => !o.whitelist || o.whitelist.includes(opt.value)
-        ),
-        value:
-          parsedOptions &&
-          parsedOptions.find(opt => opt.value === mergedProps.settings[o.key])
-      };
-    }),
+        return {
+          ...o,
+          options: parsedOptions.filter(
+            opt => !o.whitelist || o.whitelist.includes(opt.value)
+          ),
+          value:
+            parsedOptions &&
+            parsedOptions.find(opt => opt.value === mergedProps.settings[o.key])
+        };
+      }),
     title: title && title.replace('{location}', locationLabelFull || '...')
   };
 };
@@ -48,13 +50,20 @@ const mapStateToProps = (state, props) => {
 class WidgetContainer extends Component {
   static propTypes = {
     widget: PropTypes.string.isRequired,
-    refetchKeys: PropTypes.array,
     location: PropTypes.object.isRequired,
+    getData: PropTypes.func.isRequired,
+    setWidgetData: PropTypes.func.isRequired,
+    refetchKeys: PropTypes.array,
     error: PropTypes.bool,
     settings: PropTypes.object,
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    getData: PropTypes.func.isRequired,
-    setWidgetData: PropTypes.func.isRequired
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+  };
+
+  static defaultProps = {
+    widget: '',
+    location: {},
+    getData: fetch,
+    setWidgetData: () => {}
   };
 
   state = {
@@ -101,7 +110,6 @@ class WidgetContainer extends Component {
 
   handleGetWidgetData = params => {
     const { getData, setWidgetData } = this.props;
-
     this.cancelWidgetDataFetch();
     this.widgetDataFetch = CancelToken.source();
 

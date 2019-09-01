@@ -2,8 +2,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import replace from 'lodash/replace';
 import upperFirst from 'lodash/upperFirst';
 import flatMap from 'lodash/flatMap';
-import camelCase from 'lodash/camelCase';
-import sortBy from 'lodash/sortBy';
 
 import { getWidgets } from 'components/widgets/selectors';
 import {
@@ -40,23 +38,8 @@ export const getNoWidgetsMessage = createSelector(
   category => `${upperFirst(category)} data for {location} coming soon`
 );
 
-export const getDashboardWidgets = createSelector(
-  [getWidgets, selectCategory, getEmbed, selectQuery],
-  (widgets, category, embed, query) => {
-    if (!widgets) return null;
-    if (embed) return widgets.filter(w => query && w.widget === query.widget);
-    return sortBy(
-      widgets.filter(
-        w =>
-          w.categories.includes(category) && !w.hideFromDashboard
-      ),
-      `config.sortOrder[${camelCase(category)}]`
-    );
-  }
-);
-
 export const getActiveWidget = createSelector(
-  [getDashboardWidgets, selectQuery],
+  [getWidgets, selectQuery],
   (widgets, query) => {
     if (!widgets || !widgets.length) return null;
     if (query && query.widget) {
@@ -72,7 +55,7 @@ export const getActiveWidgetSlug = createSelector([getActiveWidget], widget => {
 });
 
 export const getLinks = createSelector(
-  [getDashboardWidgets, selectCategory],
+  [getWidgets, selectCategory],
   (widgets, activeCategory) => {
     if (!widgets) return null;
     const widgetCats = flatMap(widgets.map(w => w.config.categories));
@@ -90,7 +73,7 @@ export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
   category: selectCategory,
   links: getLinks,
-  widgets: getDashboardWidgets,
+  widgets: getWidgets,
   activeWidget: getActiveWidget,
   activeWidgetSlug: getActiveWidgetSlug,
   widgetAnchor: getWidgetAnchor,

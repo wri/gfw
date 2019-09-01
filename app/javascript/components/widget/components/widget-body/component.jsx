@@ -21,11 +21,9 @@ const chartOptions = {
   pieChart: WidgetPieChartLegend
 };
 
-class Widget extends PureComponent {
+class WidgetBody extends PureComponent {
   static propTypes = {
-    widget: PropTypes.string.isRequired,
     settings: PropTypes.object,
-    config: PropTypes.object.isRequired,
     loading: PropTypes.bool,
     error: PropTypes.bool,
     simple: PropTypes.bool,
@@ -66,10 +64,7 @@ class Widget extends PureComponent {
           Component && (
           <NoContent message={`No data in selection for ${locationName}`} />
         )}
-        {!loading &&
-          error && (
-          <RefreshButton refetchFn={handleRefetchData} />
-        )}
+        {!loading && error && <RefreshButton refetchFn={handleRefetchData} />}
         {!error &&
           sentence &&
           hasData && (
@@ -82,15 +77,10 @@ class Widget extends PureComponent {
         )}
         {!error &&
           hasData &&
-          Component && (
-          <Component
-            {...this.props}
-            config={config}
-          />
-        )}
+          Component && <Component {...this.props} config={config} />}
       </div>
     );
   }
 }
 
-export default Widget;
+export default WidgetBody;
