@@ -25,7 +25,8 @@ class Widgets extends PureComponent {
     setActiveWidget: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
-    query: PropTypes.object
+    query: PropTypes.object,
+    embed: PropTypes.bool
   };
 
   render() {
@@ -43,7 +44,8 @@ class Widgets extends PureComponent {
       setWidgetSettings,
       setActiveWidget,
       setModalMetaSettings,
-      setShareModal
+      setShareModal,
+      embed
     } = this.props;
 
     return (
@@ -67,6 +69,7 @@ class Widgets extends PureComponent {
             <Widget
               key={w.widget}
               {...w}
+              embed={embed}
               data={widgetsData && widgetsData[w.widget]}
               settings={{
                 ...w.settings,

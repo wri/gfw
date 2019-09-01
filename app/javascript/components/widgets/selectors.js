@@ -333,5 +333,6 @@ export const getWidgetsProps = createStructuredSelector({
   locationObj: getLocationObj,
   locationData: getLocationData,
   widgetsData: selectWidgetsData,
-  query: selectLocationQuery
+  query: selectLocationQuery,
+  emebd: selectEmbed
 });
