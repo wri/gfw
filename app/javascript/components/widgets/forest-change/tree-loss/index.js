@@ -1,5 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
+import minBy from 'lodash/minBy';
+import maxBy from 'lodash/maxBy';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
 import { getForestTypes, getLandCategories } from 'components/widgets/utils';
@@ -100,7 +102,13 @@ export default {
             };
           }
 
-          return data;
+          return {
+            ...data,
+            settings: {
+              startYear: minBy(data.loss, 'year').year,
+              endYear: maxBy(data.loss, 'year').year
+            }
+          };
         })
       );
   },

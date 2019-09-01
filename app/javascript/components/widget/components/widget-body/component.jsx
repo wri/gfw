@@ -62,7 +62,9 @@ class WidgetBody extends PureComponent {
           !error &&
           !hasData &&
           Component && (
-          <NoContent message={`No data in selection for ${locationName}`} />
+          <NoContent
+            message={`No data in selection for ${locationName || '...'}`}
+          />
         )}
         {!loading && error && <RefreshButton refetchFn={handleRefetchData} />}
         {!error &&

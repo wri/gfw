@@ -144,28 +144,31 @@ class WidgetSettings extends PureComponent {
       <div className="c-widget-settings" {...getTooltipContentProps()}>
         {options &&
           options.map(option => {
-            const { type, border, key } = option;
-            const settingParams = {
-              loading,
-              handleChangeSettings,
-              handleShowInfo,
-              ...option
-            };
-            let Component = null;
-            if (type === 'selector' || type === 'mini-selector') {
-              Component = this.renderSettingsSelector(settingParams);
-            } else if (type === 'double-selector') {
-              Component = this.renderDoubleSelector(settingParams);
+            const { type, border, key, options: settingOptions } = option;
+
+            if (settingOptions && settingOptions.length) {
+              const settingParams = {
+                loading,
+                handleChangeSettings,
+                handleShowInfo,
+                options: settingOptions,
+                ...option
+              };
+              let Component = null;
+              if (type === 'selector' || type === 'mini-selector') {
+                Component = this.renderSettingsSelector(settingParams);
+              } else if (type === 'double-selector') {
+                Component = this.renderDoubleSelector(settingParams);
+              }
+
+              return (
+                <div key={key} className={cx('settings-option', { border })}>
+                  {Component}
+                </div>
+              );
             }
 
-            return (
-              <div
-                key={key}
-                className={cx('settings-option', { border })}
-              >
-                {Component}
-              </div>
-            );
+            return null;
           })}
       </div>
     );

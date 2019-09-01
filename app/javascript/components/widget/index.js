@@ -8,30 +8,31 @@ import pick from 'lodash/pick';
 import WidgetComponent from './component';
 
 const mapStateToProps = (state, props) => {
-  const { parseData, widget, ...rest } = props;
-  const parsedProps = {
-    ...rest,
-    ...(parseData && parseData(rest))
+  const { parseData, widget, settings, data: rawData, ...rest } = props;
+  const { settings: dataSettings, options: dataOptions } = rawData || {};
+  const mergedSettings = {
+    ...dataSettings,
+    ...settings
   };
-  const { settings, data } = parsedProps || {};
-  const { settings: dataSettings, options: dataOptions } = data || {};
   const mergedProps = {
-    ...parsedProps,
-    settings: {
-      ...dataSettings,
-      ...settings
-    }
+    ...rest,
+    data: rawData,
+    settings: mergedSettings
   };
-  const { title, locationLabelFull } = mergedProps;
+  const parsedProps = {
+    ...mergedProps,
+    ...(parseData && parseData(mergedProps))
+  };
+  const { title, locationLabelFull } = parsedProps;
 
   return {
-    ...mergedProps,
+    ...parsedProps,
     options:
-      mergedProps.options &&
-      mergedProps.options.map(o => {
+      parsedProps.options &&
+      parsedProps.options.map(o => {
         const options = (dataOptions && dataOptions[o.key]) || o.options || [];
         const parsedOptions =
-          typeof o.options === 'function' ? o.options(mergedProps) : options;
+          typeof o.options === 'function' ? o.options(parsedProps) : options;
 
         return {
           ...o,
@@ -40,7 +41,7 @@ const mapStateToProps = (state, props) => {
           ),
           value:
             parsedOptions &&
-            parsedOptions.find(opt => opt.value === mergedProps.settings[o.key])
+            parsedOptions.find(opt => opt.value === parsedProps.settings[o.key])
         };
       }),
     title: title && title.replace('{location}', locationLabelFull || '...')
@@ -92,8 +93,12 @@ class WidgetContainer extends Component {
       !error &&
       prevState.error !== undefined &&
       !isEqual(error, prevState.error);
-    const refetchSettings = refetchKeys ? pick(settings, refetchKeys) : settings;
-    const refetchPrevSettings = refetchKeys ? pick(prevProps.settings, refetchKeys) : prevProps.settings;
+    const refetchSettings = refetchKeys
+      ? pick(settings, refetchKeys)
+      : settings;
+    const refetchPrevSettings = refetchKeys
+      ? pick(prevProps.settings, refetchKeys)
+      : prevProps.settings;
     const hasSettingsChanged = !isEqual(refetchSettings, refetchPrevSettings);
 
     // refetch data if error, settings, or location changes
