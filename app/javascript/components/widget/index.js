@@ -23,25 +23,42 @@ const mapStateToProps = (state, props) => {
     ...mergedProps,
     ...(parseData && parseData(mergedProps))
   };
-  const { title, locationLabelFull } = parsedProps;
+  const { title, locationLabelFull, settings: parsedSettings } = parsedProps;
 
   return {
     ...parsedProps,
     options:
       parsedProps.options &&
       parsedProps.options.map(o => {
-        const options = (dataOptions && dataOptions[o.key]) || o.options || [];
+        const { key, startKey, endKey, options, whitelist } = o || {};
+        const allOptions = (dataOptions && dataOptions[key]) || options || [];
         const parsedOptions =
-          typeof o.options === 'function' ? o.options(parsedProps) : options;
+          typeof allOptions === 'function'
+            ? allOptions(parsedProps)
+            : allOptions;
 
         return {
           ...o,
-          options: parsedOptions.filter(
-            opt => !o.whitelist || o.whitelist.includes(opt.value)
-          ),
+          options:
+            parsedOptions &&
+            parsedOptions.filter(
+              opt => !whitelist || whitelist.includes(opt.value)
+            ),
           value:
             parsedOptions &&
-            parsedOptions.find(opt => opt.value === parsedProps.settings[o.key])
+            parsedOptions.find(opt => opt.value === parsedSettings[key]),
+          startOptions:
+            parsedOptions &&
+            parsedOptions.filter(opt => opt.value <= parsedSettings[endKey]),
+          endOptions:
+            parsedOptions &&
+            parsedOptions.filter(opt => opt.value >= parsedSettings[startKey]),
+          startValue:
+            parsedOptions &&
+            parsedOptions.find(opt => opt.value === parsedSettings[startKey]),
+          endValue:
+            parsedOptions &&
+            parsedOptions.find(opt => opt.value === parsedSettings[endKey])
         };
       }),
     title: title && title.replace('{location}', locationLabelFull || '...')
@@ -129,7 +146,10 @@ class WidgetContainer extends Component {
       .catch(error => {
         console.info(error);
         if (this._mounted) {
-          this.setState({ error: true, loading: false });
+          this.setState({
+            error: error.message !== `Cancelling ${this.props.widget} fetch`,
+            loading: false
+          });
         }
       });
   };

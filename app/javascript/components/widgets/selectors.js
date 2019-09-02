@@ -158,7 +158,7 @@ export const getLocationData = createSelector(
   }
 );
 
-export const filterWidgets = createSelector(
+export const getWidgets = createSelector(
   [
     getLocationObj,
     selectPolynameWhitelist,
@@ -175,6 +175,9 @@ export const filterWidgets = createSelector(
     }));
 
     if (embed && widget) return widgets.filter(w => w.widget === widget);
+
+    // reduce
+    // add in standard types, forest, land, threshold, years,
 
     return sortBy(
       widgets.filter(w => {
@@ -323,8 +326,6 @@ export const filterWidgets = createSelector(
 //     };
 //   }
 // );
-
-export const getWidgets = createSelector([filterWidgets], widgets => widgets);
 
 export const getWidgetsProps = createStructuredSelector({
   widgets: getWidgets,

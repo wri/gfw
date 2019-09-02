@@ -5,13 +5,14 @@ $settings-items-margin: rem(25px);
 .c-widget-settings {
   width: rem(290px);
   background-color: $white;
-  padding: rem(20px) 0 rem(5px);
+  padding-top: rem(20px);
 
   .settings-option {
     padding: 0 $settings-items-margin $settings-items-margin $settings-items-margin;
 
     &.border {
       border-bottom: 1px solid $border;
+      margin-bottom: $settings-items-margin;
     }
   }
 
@@ -21,10 +22,11 @@ $settings-items-margin: rem(25px);
 
     .label {
       text-transform: uppercase;
+      color: $slate;
     }
   }
 
-  .widget-double-selector {
+  .range-select {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,6 +35,7 @@ $settings-items-margin: rem(25px);
 
     .label {
       margin-right: rem(10px);
+      text-transform: uppercase;
     }
 
     .select-container {
@@ -45,6 +48,21 @@ $settings-items-margin: rem(25px);
     .text-separator {
       margin: 0 10px;
     }
+
+    .container {
+      margin-bottom: 0;
+      max-width: rem(90px);
+    }
+
+    .dd__wrapper {
+      max-width: rem(85px);
+    }
+  }
+
+  .mini-select {
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
 
     .label {
       margin-bottom: 0;

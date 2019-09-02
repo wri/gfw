@@ -17,26 +17,19 @@ class WidgetSettings extends PureComponent {
     getTooltipContentProps: PropTypes.func.isRequired
   };
 
-  config = {
-    label: 'UNIT',
-    key: 'forestChange',
-    options: [],
-    value: {} || '',
-    type: 'selector' || 'multiselector' || 'mini-selector',
-    clearable: false,
-    handleChangeSettings: '',
-    placeholder: '',
-    metaKey: '',
-    border: false
-  };
-
-  renderSettingsSelector = option => {
+  renderOption = option => {
     const {
       type,
       label,
       options,
+      startOptions,
+      endOptions,
       key,
+      startKey,
+      endKey,
       value,
+      startValue,
+      endValue,
       metaKey,
       handleShowInfo,
       handleChangeSettings,
@@ -45,90 +38,71 @@ class WidgetSettings extends PureComponent {
       clearable
     } = option;
 
-    if (type === 'switch') {
-      return (
-        <Switch
-          className="widget-settings-switch"
-          theme="theme-switch-light"
-          label={label}
-          value={value}
-          options={options}
-          onChange={change => handleChangeSettings({ [key]: change.value })}
-          disabled={loading}
-        />
-      );
+    switch (type) {
+      case 'switch':
+        return (
+          <Switch
+            className="widget-settings-selector"
+            theme="theme-switch-light"
+            label={label}
+            value={value && value.value}
+            options={options}
+            onChange={change => handleChangeSettings({ [key]: change })}
+            disabled={loading}
+          />
+        );
+      case 'range-select':
+        return (
+          <div className={type}>
+            <span className="label">{label}</span>
+            <Dropdown
+              className="widget-settings-selector"
+              theme="theme-dropdown-button"
+              value={startValue}
+              options={startOptions}
+              onChange={change =>
+                handleChangeSettings({ [startKey]: change && change.value })
+              }
+              disabled={loading}
+            />
+            <span className="text-separator">to</span>
+            <Dropdown
+              className="widget-settings-selector"
+              theme="theme-dropdown-button"
+              value={endValue}
+              options={endOptions}
+              onChange={change =>
+                handleChangeSettings({ [endKey]: change && change.value })
+              }
+              disabled={loading}
+            />
+          </div>
+        );
+      default:
+        return (
+          options &&
+          !!options.length && (
+            <Dropdown
+              className={cx('widget-settings-selector', type)}
+              theme={cx('theme-select-light', {
+                'theme-dropdown-button': type === 'mini-select'
+              })}
+              label={label}
+              value={value}
+              options={options}
+              onChange={change =>
+                handleChangeSettings({ [key]: change && change.value })
+              }
+              disabled={loading}
+              clearable={clearable}
+              infoAction={metaKey ? () => handleShowInfo(metaKey) : null}
+              optionsAction={handleShowInfo}
+              optionsActionKey="metaKey"
+              noSelectedValue={placeholder}
+            />
+          )
+        );
     }
-
-    return (
-      options &&
-      !!options.length && (
-        <Dropdown
-          className={cx('widget-settings-selector', type)}
-          theme="theme-select-light"
-          label={label}
-          value={value}
-          options={options}
-          onChange={change =>
-            handleChangeSettings({ [key]: change && change.value })
-          }
-          disabled={loading}
-          clearable={clearable}
-          infoAction={metaKey ? () => handleShowInfo(metaKey) : null}
-          optionsAction={handleShowInfo}
-          optionsActionKey="metaKey"
-          noSelectedValue={placeholder}
-        />
-      )
-    );
-  };
-
-  renderDoubleSelector = option => {
-    const {
-      label,
-      options,
-      key,
-      value,
-      metaKey,
-      handleShowInfo,
-      handleChangeSettings,
-      loading,
-      placeholder
-    } = option;
-
-    return (
-      <div className="widget-double-selector">
-        <span>{label}</span>
-        <Dropdown
-          className="widget-settings-selector"
-          theme="theme-dropdown-button"
-          value={value}
-          options={options}
-          onChange={change =>
-            handleChangeSettings({ [key]: change && change.value })
-          }
-          disabled={loading}
-          infoAction={() => handleShowInfo(metaKey)}
-          optionsAction={handleShowInfo}
-          optionsActionKey="metaKey"
-          noSelectedValue={placeholder}
-        />
-        <span className="text-separator">to</span>
-        <Dropdown
-          className="widget-settings-selector"
-          theme="theme-dropdown-button"
-          value={value}
-          options={options}
-          onChange={change =>
-            handleChangeSettings({ [key]: change && change.value })
-          }
-          disabled={loading}
-          infoAction={() => handleShowInfo(metaKey)}
-          optionsAction={handleShowInfo}
-          optionsActionKey="metaKey"
-          noSelectedValue={placeholder}
-        />
-      </div>
-    );
   };
 
   render() {
@@ -143,33 +117,23 @@ class WidgetSettings extends PureComponent {
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
         {options &&
-          options.map(option => {
-            const { type, border, key, options: settingOptions } = option;
-
-            if (settingOptions && settingOptions.length) {
-              const settingParams = {
-                loading,
-                handleChangeSettings,
-                handleShowInfo,
-                options: settingOptions,
-                ...option
-              };
-              let Component = null;
-              if (type === 'selector' || type === 'mini-selector') {
-                Component = this.renderSettingsSelector(settingParams);
-              } else if (type === 'double-selector') {
-                Component = this.renderDoubleSelector(settingParams);
-              }
-
-              return (
-                <div key={key} className={cx('settings-option', { border })}>
-                  {Component}
+          options.map(
+            option =>
+              option.options &&
+              !!option.options.length && (
+                <div
+                  key={option.key}
+                  className={cx('settings-option', { border: option.border })}
+                >
+                  {this.renderOption({
+                    ...option,
+                    loading,
+                    handleChangeSettings,
+                    handleShowInfo
+                  })}
                 </div>
-              );
-            }
-
-            return null;
-          })}
+              )
+          )}
       </div>
     );
   }

@@ -1,9 +1,12 @@
 import axios from 'axios';
 import minBy from 'lodash/minBy';
 import maxBy from 'lodash/maxBy';
+import range from 'lodash/range';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
 import { getForestTypes, getLandCategories } from 'components/widgets/utils';
+import thresholds from 'data/thresholds.json';
+import extentYears from 'data/extent-years.json';
 
 import getWidgetProps from './selectors';
 
@@ -23,7 +26,7 @@ export default {
       label: 'Forest Type',
       options: getForestTypes,
       whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
-      type: 'selector',
+      type: 'select',
       placeholder: 'All tree cover',
       clearable: true
     },
@@ -31,15 +34,32 @@ export default {
       key: 'landCategory',
       label: 'Land Category',
       options: getLandCategories,
-      type: 'selector',
-      placeholder: 'All land categories',
+      type: 'select',
+      placeholder: 'All categories',
       clearable: true,
       border: true
+    },
+    {
+      key: 'extentYear',
+      label: 'extent year',
+      options: extentYears,
+      type: 'switch'
+    },
+    {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      type: 'range-select',
+      border: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      options: thresholds,
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
     }
-    // startYear: true,
-    // endYear: true,
-    // threshold: true,
-    // extentYear: true
   ],
   refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
   type: 'loss',
@@ -100,12 +120,20 @@ export default {
               extent: (loss.data.data && extent.data.data[0].extent) || 0
             };
           }
+          const startYear = minBy(data.loss, 'year').year;
+          const endYear = maxBy(data.loss, 'year').year;
 
           return {
             ...data,
             settings: {
-              startYear: minBy(data.loss, 'year').year,
-              endYear: maxBy(data.loss, 'year').year
+              startYear,
+              endYear
+            },
+            options: {
+              years: range(startYear, endYear + 1, 1).map(y => ({
+                label: y,
+                value: y
+              }))
             }
           };
         })
