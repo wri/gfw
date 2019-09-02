@@ -24,7 +24,8 @@ class WidgetHeader extends PureComponent {
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     handleShowMap: PropTypes.func,
-    handleShowShare: PropTypes.func
+    handleShowShare: PropTypes.func,
+    preventCloseSettings: PropTypes.bool
   };
 
   render() {
@@ -41,7 +42,8 @@ class WidgetHeader extends PureComponent {
       handleShowMap,
       handleShowInfo,
       handleChangeSettings,
-      handleShowShare
+      handleShowShare,
+      preventCloseSettings
     } = this.props;
 
     return (
@@ -50,33 +52,30 @@ class WidgetHeader extends PureComponent {
         <div className="options">
           {!embed &&
             !simple &&
-            datasets &&
+            datasets && (
             <WidgetMapButton
               active={active}
               large={large}
               handleShowMap={handleShowMap}
             />
-          }
+          )}
           {!embed &&
             !simple &&
-            !isEmpty(options) &&
+            !isEmpty(options) && (
             <WidgetSettingsButton
               options={options}
               loading={loading}
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
+              preventCloseSettings={preventCloseSettings}
             />
-          }
+          )}
           <div className="small-options">
             <WidgetInfoButton
               square={simple}
               handleOpenInfo={() => handleShowInfo(metaKey)}
             />
-            {!simple &&
-              <WidgetShareButton
-                handleShowShare={handleShowShare}
-              />
-            }
+            {!simple && <WidgetShareButton handleShowShare={handleShowShare} />}
           </div>
         </div>
       </div>

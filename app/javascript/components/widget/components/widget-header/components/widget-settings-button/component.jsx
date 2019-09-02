@@ -13,7 +13,7 @@ class WidgetSettingsButton extends PureComponent {
   static propTypes = {
     options: PropTypes.array,
     loading: PropTypes.bool,
-    modalClosing: PropTypes.bool,
+    preventCloseSettings: PropTypes.bool,
     handleChangeSettings: PropTypes.func.isRequired,
     handleShowInfo: PropTypes.func.isRequired
   };
@@ -26,7 +26,7 @@ class WidgetSettingsButton extends PureComponent {
     const {
       options,
       loading,
-      modalClosing,
+      preventCloseSettings,
       handleChangeSettings,
       handleShowInfo
     } = this.props;
@@ -45,8 +45,7 @@ class WidgetSettingsButton extends PureComponent {
             this.widgetSettingsRef.evt
           );
           this.widgetSettingsRef.clearEvt();
-
-          if (!modalClosing && !isTargetOnTooltip) {
+          if (!preventCloseSettings && !isTargetOnTooltip) {
             this.setState({ tooltipOpen: false });
           }
         }}

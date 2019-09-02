@@ -66,6 +66,8 @@ export const selectPolynameWhitelist = state =>
 export const selectEmbed = (state, { embed }) => embed;
 export const selectCategory = state =>
   state.location && state.location.query && state.location.query.category;
+export const selectModalClosing = state =>
+  state.modalMeta && state.modalMeta.closing;
 
 export const getWdigetFromQuery = createSelector(
   selectLocationQuery,
@@ -335,5 +337,6 @@ export const getWidgetsProps = createStructuredSelector({
   locationData: getLocationData,
   widgetsData: selectWidgetsData,
   query: selectLocationQuery,
-  emebd: selectEmbed
+  emebd: selectEmbed,
+  modalClosing: selectModalClosing
 });

@@ -35,7 +35,8 @@ class Widget extends PureComponent {
     handleChangeSettings: PropTypes.func,
     handleShowShare: PropTypes.func,
     parseInteraction: PropTypes.func,
-    handleRefetchData: PropTypes.func
+    handleRefetchData: PropTypes.func,
+    preventCloseSettings: PropTypes.bool
   };
 
   render() {
@@ -65,7 +66,8 @@ class Widget extends PureComponent {
       handleChangeSettings,
       handleShowShare,
       handleRefetchData,
-      parseInteraction
+      parseInteraction,
+      preventCloseSettings
     } = this.props;
     const { main } = colors || {};
 
@@ -94,6 +96,7 @@ class Widget extends PureComponent {
           handleShowInfo={handleShowInfo}
           handleChangeSettings={handleChangeSettings}
           handleShowShare={handleShowShare}
+          preventCloseSettings={preventCloseSettings}
         />
         <WidgetBody
           chartType={chartType}

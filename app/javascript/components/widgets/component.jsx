@@ -26,7 +26,8 @@ class Widgets extends PureComponent {
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
     query: PropTypes.object,
-    embed: PropTypes.bool
+    embed: PropTypes.bool,
+    modalClosing: PropTypes.bool
   };
 
   render() {
@@ -45,7 +46,8 @@ class Widgets extends PureComponent {
       setActiveWidget,
       setModalMetaSettings,
       setShareModal,
-      embed
+      embed,
+      modalClosing
     } = this.props;
 
     return (
@@ -99,6 +101,7 @@ class Widgets extends PureComponent {
                   }
                 })
               }
+              preventCloseSettings={modalClosing}
             />
           ))}
         {!loading &&
