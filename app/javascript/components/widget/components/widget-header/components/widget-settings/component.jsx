@@ -53,10 +53,9 @@ class WidgetSettings extends PureComponent {
         );
       case 'range-select':
         return (
-          <div className={type}>
+          <div className={cx('widget-settings-selector', type)}>
             <span className="label">{label}</span>
             <Dropdown
-              className="widget-settings-selector"
               theme="theme-dropdown-button"
               value={startValue}
               options={startOptions}
@@ -67,7 +66,6 @@ class WidgetSettings extends PureComponent {
             />
             <span className="text-separator">to</span>
             <Dropdown
-              className="widget-settings-selector"
               theme="theme-dropdown-button"
               value={endValue}
               options={endOptions}

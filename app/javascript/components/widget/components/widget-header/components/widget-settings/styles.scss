@@ -27,15 +27,14 @@ $settings-items-margin: rem(25px);
   }
 
   .range-select {
-    display: flex;
     justify-content: space-between;
+    flex-direction: row;
     align-items: center;
     padding-top: rem(10px);
     font-size: 13px;
 
     .label {
       margin-right: rem(10px);
-      text-transform: uppercase;
     }
 
     .select-container {
@@ -61,8 +60,8 @@ $settings-items-margin: rem(25px);
 
   .mini-select {
     justify-content: space-between;
-    align-items: center;
     flex-direction: row;
+    align-items: center;
 
     .label {
       margin-bottom: 0;
