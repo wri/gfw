@@ -58,7 +58,7 @@ export const getLinks = createSelector(
   [getWidgets, selectCategory],
   (widgets, activeCategory) => {
     if (!widgets) return null;
-    const widgetCats = flatMap(widgets.map(w => w.config.categories));
+    const widgetCats = flatMap(widgets.map(w => w.categories));
     return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
       category => ({
         label: category.label,
