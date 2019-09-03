@@ -20,11 +20,11 @@ export default {
   analysis: true,
   chartType: 'composedChart',
   colors: 'loss',
-  options: [
+  settingsConfig: [
     {
       key: 'forestType',
       label: 'Forest Type',
-      // options: getForestTypes,
+      options: getForestTypes,
       whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
       type: 'select',
       placeholder: 'All tree cover',
@@ -33,7 +33,7 @@ export default {
     {
       key: 'landCategory',
       label: 'Land Category',
-      // options: getLandCategories,
+      options: getLandCategories,
       type: 'select',
       placeholder: 'All categories',
       clearable: true,

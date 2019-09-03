@@ -74,10 +74,10 @@ export const getPolynameDatasets = ({ options, settings, polynames }) => {
   );
 };
 
-export const getForestTypes = ({ settings, locationType, polynames, adm0 }) =>
+export const getForestTypes = ({ settings, type, polynames, adm0 }) =>
   forestTypes
     .filter(o => {
-      const isGlobal = locationType !== 'global' || o.global;
+      const isGlobal = type !== 'global' || o.global;
       const hasPolyname = !polynames || polynames.includes(o.value);
       const isHidden = o.hidden;
       return isGlobal && hasPolyname && !isHidden;

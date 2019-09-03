@@ -178,9 +178,6 @@ export const getWidgets = createSelector(
 
     if (embed && widget) return widgets.filter(w => w.widget === widget);
 
-    // reduce
-    // add in standard types, forest, land, threshold, years,
-
     return sortBy(
       widgets.filter(w => {
         const { types, admins, whitelists, categories } = w || {};
@@ -210,30 +207,6 @@ export const getWidgets = createSelector(
     );
   }
 );
-
-// export const getIndicator = createSelector(
-//   [getForestType, getLandCategory],
-//   (forestType, landCategory) => {
-//     if (!forestType && !landCategory) return null;
-//     let label = '';
-//     let value = '';
-//     if (forestType && landCategory) {
-//       label = `${forestType.label} in ${landCategory.label}`;
-//       value = `${forestType.value}__${landCategory.value}`;
-//     } else if (landCategory) {
-//       label = landCategory.label;
-//       value = landCategory.value;
-//     } else {
-//       label = forestType.label;
-//       value = forestType.value;
-//     }
-
-//     return {
-//       label,
-//       value
-//     };
-//   }
-// );
 
 export const getWidgetsProps = createStructuredSelector({
   widgets: getWidgets,

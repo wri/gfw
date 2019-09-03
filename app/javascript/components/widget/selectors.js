@@ -4,22 +4,17 @@ const selectProps = state => state;
 const selectDataSettings = state => state.data && state.data.settings;
 const selectDataOptions = state => state.data && state.data.options;
 const selectSettings = state => state.settings;
-const selectOptions = state => state.options;
+const selectSettingsConfig = state => state.settingsConfig;
 const selectTitle = state => state.title;
 const selectLocationName = state => state.locationLabelFull;
+const selectLocation = state => state.location;
+const selectPolynames = state => state.polynames;
 
 export const getWidgetSettings = createSelector(
   [selectSettings, selectDataSettings],
   (settings, dataSettings) => ({
     ...dataSettings,
     ...settings
-  })
-);
-
-export const getParsedProps = createSelector(
-  [selectProps, getWidgetSettings],
-  (props, settings) => ({
-    ...(props.getWidgetProps && props.getWidgetProps({ ...props, settings }))
   })
 );
 
@@ -30,42 +25,102 @@ export const getTitle = createSelector(
 );
 
 export const getOptions = createSelector(
-  [getWidgetSettings, selectOptions, selectDataOptions],
-  (settings, options, dataOptions) =>
-    options &&
-    options.map(o => {
-      const { key, startKey, endKey, options: tempOptions, whitelist } =
-        o || {};
-      const allOptions = (dataOptions && dataOptions[key]) || tempOptions || [];
-      const parsedOptions = allOptions;
-      // typeof allOptions === 'function'
-      //   ? allOptions(settings)
-      //   : allOptions;
+  [
+    getWidgetSettings,
+    selectSettingsConfig,
+    selectDataOptions,
+    selectLocation,
+    selectPolynames
+  ],
+  (settings, settingsConfig, dataOptions, location, polynames) =>
+    settingsConfig &&
+    settingsConfig.map(o => {
+      const { key, startKey, endKey, options, whitelist } = o || {};
+      const mergedOptions = (dataOptions && dataOptions[key]) || options || [];
+      const parsedOptions =
+        typeof mergedOptions === 'function'
+          ? mergedOptions({ settings, ...location, polynames })
+          : mergedOptions;
 
       return {
         ...o,
-        options:
-          parsedOptions &&
-          parsedOptions.filter(
+        ...(parsedOptions && {
+          options: parsedOptions.filter(
             opt => !whitelist || whitelist.includes(opt.value)
           ),
-        value:
-          parsedOptions &&
-          parsedOptions.find(opt => opt.value === settings[key]),
-        startOptions:
-          parsedOptions &&
-          parsedOptions.filter(opt => opt.value <= settings[endKey]),
-        endOptions:
-          parsedOptions &&
-          parsedOptions.filter(opt => opt.value >= settings[startKey]),
-        startValue:
-          parsedOptions &&
-          parsedOptions.find(opt => opt.value === settings[startKey]),
-        endValue:
-          parsedOptions &&
-          parsedOptions.find(opt => opt.value === settings[endKey])
+          value: parsedOptions.find(opt => opt.value === settings[key]),
+          ...(startKey && {
+            startOptions: parsedOptions.filter(
+              opt => opt.value <= settings[endKey]
+            ),
+            startValue: parsedOptions.find(
+              opt => opt.value === settings[startKey]
+            )
+          }),
+          ...(endKey && {
+            endOptions: parsedOptions.filter(
+              opt => opt.value >= settings[startKey]
+            ),
+            endValue: parsedOptions.find(opt => opt.value === settings[endKey])
+          })
+        })
       };
     })
+);
+
+export const getOptionsSelected = createSelector(
+  [getOptions],
+  options =>
+    options &&
+    options.reduce(
+      (obj, option) => ({
+        ...obj,
+        [option.key]: option.options.find(o => o === option.value)
+      }),
+      {}
+    )
+);
+
+export const getForestType = createSelector(
+  getOptionsSelected,
+  optionsSelected => optionsSelected && optionsSelected.forestType
+);
+
+export const getLandCategory = createSelector(
+  getOptionsSelected,
+  optionsSelected => optionsSelected && optionsSelected.landCategory
+);
+
+export const getIndicator = createSelector(
+  [getForestType, getLandCategory],
+  (forestType, landCategory) => {
+    if (!forestType && !landCategory) return null;
+    let label = '';
+    let value = '';
+    if (forestType && landCategory) {
+      label = `${forestType.label} in ${landCategory.label}`;
+      value = `${forestType.value}__${landCategory.value}`;
+    } else if (landCategory) {
+      label = landCategory.label;
+      value = landCategory.value;
+    } else {
+      label = forestType.label;
+      value = forestType.value;
+    }
+
+    return {
+      label,
+      value
+    };
+  }
+);
+
+export const getParsedProps = createSelector(
+  [selectProps, getWidgetSettings, getIndicator],
+  (props, settings, indicator) => ({
+    ...(props.getWidgetProps &&
+      props.getWidgetProps({ ...props, settings, indicator }))
+  })
 );
 
 export const getWidgetProps = () =>
@@ -73,5 +128,7 @@ export const getWidgetProps = () =>
     parsedProps: getParsedProps,
     options: getOptions,
     title: getTitle,
-    settings: getWidgetSettings
+    settings: getWidgetSettings,
+    optionsSelected: getOptionsSelected,
+    indicator: getIndicator
   });
