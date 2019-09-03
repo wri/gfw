@@ -1,16 +1,25 @@
-import * as ParentWidget from '../tree-loss';
-import getProps from './selectors';
-import childConfig from './config';
+import treeLoss from 'components/widgets/forest-change/tree-loss';
+import getWidgetProps from './selectors';
 
-const Component = ParentWidget.Component;
-const getData = ParentWidget.getData;
-const parsePayload = ParentWidget.parsePayload;
-const parentConfig = ParentWidget.config;
-const settings = ParentWidget.settings;
-
-const config = {
-  ...parentConfig,
-  ...childConfig
+export default {
+  ...treeLoss,
+  widget: 'treeLossGlobal',
+  title: 'Global Annual Tree cover loss',
+  sentence: {
+    initial:
+      'From {startYear} to {endYear}, there was a total of {loss} of tree cover loss {location}, equivalent to a {percent} decrease in tree cover since {extentYear} and {emissions} of CO\u2082 emissions.',
+    withInd:
+      'From {startYear} to {endYear}, there was a total of {loss} of tree cover loss {location} within {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear} and {emissions} of CO\u2082 emissions.'
+  },
+  types: ['global'],
+  admins: ['global'],
+  // options: {
+  //   forestTypes: ['ifl'],
+  //   landCategories: ['wdpa'],
+  //   extentYears: true,
+  //   thresholds: true,
+  //   startYears: true,
+  //   endYears: true
+  // },
+  getWidgetProps
 };
-
-export { Component, getProps, parsePayload, getData, config, settings };

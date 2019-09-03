@@ -6,16 +6,16 @@ import { format } from 'd3-format';
 import moment from 'moment';
 import {} from 'utils/calculations';
 import { sortByKey, getColorPalette } from 'utils/data';
-import { yearTicksFormatter } from 'components/widget/utils/data';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
-const getLoss = state => (state.data && state.data.loss) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
+const getLoss = state => state.data && state.data.loss;
+const getExtent = state => state.data && state.data.extent;
 const getSettings = state => state.settings || null;
 const getLocationName = state => state.locationName || null;
 const getIndicator = state => state.indicator || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentence;
+const getSentences = state => state && state.sentence;
 const getCountries = state => state.locationData;
 
 export const parsePayload = payload => {
@@ -190,6 +190,6 @@ export const parseSentence = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
+  config: parseConfig,
   sentence: parseSentence
 });

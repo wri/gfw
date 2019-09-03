@@ -62,7 +62,7 @@ export default {
     }
   ],
   refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
-  type: 'loss',
+  dataType: 'loss',
   metaKey: 'widget_tree_cover_loss',
   datasets: [
     {

@@ -68,6 +68,8 @@ export const selectCategory = state =>
   state.location && state.location.query && state.location.query.category;
 export const selectModalClosing = state =>
   state.modalMeta && state.modalMeta.closing;
+export const selectNonGlobalDatasets = state =>
+  state.widgets && state.widgets.data.selectNonGlobalDatasets;
 
 export const getWdigetFromQuery = createSelector(
   selectLocationQuery,
@@ -217,5 +219,6 @@ export const getWidgetsProps = createStructuredSelector({
   widgetsData: selectWidgetsData,
   query: selectLocationQuery,
   emebd: selectEmbed,
-  modalClosing: selectModalClosing
+  modalClosing: selectModalClosing,
+  nonGlobalDatasets: selectNonGlobalDatasets
 });

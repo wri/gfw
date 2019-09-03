@@ -1,4 +1,5 @@
 import { createStructuredSelector, createSelector } from 'reselect';
+import sortBy from 'lodash/sortBy';
 
 const selectProps = state => state;
 const selectDataSettings = state => state.data && state.data.settings;
@@ -37,10 +38,12 @@ export const getOptions = createSelector(
     settingsConfig.map(o => {
       const { key, startKey, endKey, options, whitelist } = o || {};
       const mergedOptions = (dataOptions && dataOptions[key]) || options || [];
-      const parsedOptions =
+      const parsedOptions = sortBy(
         typeof mergedOptions === 'function'
           ? mergedOptions({ settings, ...location, polynames })
-          : mergedOptions;
+          : mergedOptions,
+        'label'
+      );
 
       return {
         ...o,
@@ -130,5 +133,7 @@ export const getWidgetProps = () =>
     title: getTitle,
     settings: getWidgetSettings,
     optionsSelected: getOptionsSelected,
-    indicator: getIndicator
+    indicator: getIndicator,
+    forestType: getForestType,
+    landCategory: getLandCategory
   });

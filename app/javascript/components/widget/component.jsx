@@ -28,15 +28,18 @@ class Widget extends PureComponent {
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
     sentence: PropTypes.object,
-    statements: PropTypes.array,
-    showAttributionLink: PropTypes.bool,
     handleShowMap: PropTypes.func,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     handleShowShare: PropTypes.func,
     parseInteraction: PropTypes.func,
     handleRefetchData: PropTypes.func,
-    preventCloseSettings: PropTypes.bool
+    preventCloseSettings: PropTypes.bool,
+    dataType: PropTypes.string,
+    nonGlobalDatasets: PropTypes.object,
+    indicator: PropTypes.object,
+    forestType: PropTypes.object,
+    landCategory: PropTypes.object
   };
 
   render() {
@@ -58,16 +61,19 @@ class Widget extends PureComponent {
       data,
       config,
       sentence,
-      statements,
       metaKey,
-      showAttributionLink,
       handleShowMap,
       handleShowInfo,
       handleChangeSettings,
       handleShowShare,
       handleRefetchData,
       parseInteraction,
-      preventCloseSettings
+      preventCloseSettings,
+      dataType,
+      nonGlobalDatasets,
+      indicator,
+      forestType,
+      landCategory
     } = this.props;
     const { main } = colors || {};
 
@@ -113,9 +119,14 @@ class Widget extends PureComponent {
           parseInteraction={parseInteraction}
         />
         <WidgetFooter
-          statements={statements}
+          settings={settings}
+          type={dataType}
+          nonGlobalDatasets={nonGlobalDatasets}
+          indicator={indicator}
+          forestType={forestType}
+          landCategory={landCategory}
+          location={location}
           simple={simple}
-          showAttributionLink={showAttributionLink}
         />
       </div>
     );
