@@ -24,7 +24,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      options: getForestTypes,
+      // options: getForestTypes,
       whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
       type: 'select',
       placeholder: 'All tree cover',
@@ -33,7 +33,7 @@ export default {
     {
       key: 'landCategory',
       label: 'Land Category',
-      options: getLandCategories,
+      // options: getLandCategories,
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
@@ -120,8 +120,10 @@ export default {
               extent: (loss.data.data && extent.data.data[0].extent) || 0
             };
           }
-          const startYear = minBy(data.loss, 'year').year;
-          const endYear = maxBy(data.loss, 'year').year;
+          const startYearObj = minBy(data.loss, 'year');
+          const endYearObj = maxBy(data.loss, 'year');
+          const startYear = (startYearObj && startYearObj.year) || 2001;
+          const endYear = (endYearObj && endYearObj.year) || 2018;
 
           return {
             ...data,
@@ -139,7 +141,7 @@ export default {
         })
       );
   },
-  parseData: getWidgetProps,
+  getWidgetProps,
   parseInteraction: (payload = {}) => {
     const { year } = payload;
 

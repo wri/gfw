@@ -74,24 +74,29 @@ export const getPolynameDatasets = ({ options, settings, polynames }) => {
   );
 };
 
-export const getForestTypes = ({ settings, locationType, polynames, adm0 }) => forestTypes.filter(o => {
-  const isGlobal = locationType !== 'global' || o.global;
-  const hasPolyname = !polynames || polynames.includes(o.value);
-  return isGlobal && hasPolyname;
-}).map(f => ({
-  ...f,
-  label: f.label.includes('{iflYear}')
-    ? f.label.replace('{iflYear}', settings.ifl)
-    : f.label,
-  metaKey: f.metaKey === 'primary_forest'
-    ? `${lowerCase(adm0)}_${f.metaKey}${
-      adm0 === 'IDN' ? 's' : ''
-    }`
-    : f.metaKey
-}));
+export const getForestTypes = ({ settings, locationType, polynames, adm0 }) =>
+  forestTypes
+    .filter(o => {
+      const isGlobal = locationType !== 'global' || o.global;
+      const hasPolyname = !polynames || polynames.includes(o.value);
+      const isHidden = o.hidden;
+      return isGlobal && hasPolyname && !isHidden;
+    })
+    .map(f => ({
+      ...f,
+      label: f.label.includes('{iflYear}')
+        ? f.label.replace('{iflYear}', settings.ifl)
+        : f.label,
+      metaKey:
+        f.metaKey === 'primary_forest'
+          ? `${lowerCase(adm0)}_${f.metaKey}${adm0 === 'IDN' ? 's' : ''}`
+          : f.metaKey
+    }));
 
-export const getLandCategories = ({ locationType, polynames }) => landCategories.filter(o => {
-  const isGlobal = locationType !== 'global' || o.global;
-  const hasPolyname = !polynames || polynames.includes(o.value);
-  return isGlobal && hasPolyname;
-});
+export const getLandCategories = ({ locationType, polynames }) =>
+  landCategories.filter(o => {
+    const isGlobal = locationType !== 'global' || o.global;
+    const hasPolyname = !polynames || polynames.includes(o.value);
+    const isHidden = o.hidden;
+    return isGlobal && hasPolyname && !isHidden;
+  });

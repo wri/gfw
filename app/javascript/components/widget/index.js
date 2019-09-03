@@ -6,63 +6,18 @@ import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 
 import WidgetComponent from './component';
+import { getWidgetProps } from './selectors';
 
-const mapStateToProps = (state, props) => {
-  const { parseData, widget, settings, data: rawData, ...rest } = props;
-  const { settings: dataSettings, options: dataOptions } = rawData || {};
-  const mergedSettings = {
-    ...dataSettings,
-    ...settings
+const makeMapStateToProps = () => {
+  const getWidgetPropsObject = getWidgetProps();
+  const mapStateToProps = (state, props) => {
+    const { parsedProps, ...rest } = getWidgetPropsObject(props);
+    return {
+      ...parsedProps,
+      ...rest
+    };
   };
-  const mergedProps = {
-    ...rest,
-    data: rawData,
-    settings: mergedSettings
-  };
-  const parsedProps = {
-    ...mergedProps,
-    ...(parseData && parseData(mergedProps))
-  };
-  const { title, locationLabelFull, settings: parsedSettings } = parsedProps;
-
-  return {
-    ...parsedProps,
-    options:
-      parsedProps.options &&
-      parsedProps.options.map(o => {
-        const { key, startKey, endKey, options, whitelist } = o || {};
-        const allOptions = (dataOptions && dataOptions[key]) || options || [];
-        const parsedOptions =
-          typeof allOptions === 'function'
-            ? allOptions(parsedProps)
-            : allOptions;
-
-        return {
-          ...o,
-          options:
-            parsedOptions &&
-            parsedOptions.filter(
-              opt => !whitelist || whitelist.includes(opt.value)
-            ),
-          value:
-            parsedOptions &&
-            parsedOptions.find(opt => opt.value === parsedSettings[key]),
-          startOptions:
-            parsedOptions &&
-            parsedOptions.filter(opt => opt.value <= parsedSettings[endKey]),
-          endOptions:
-            parsedOptions &&
-            parsedOptions.filter(opt => opt.value >= parsedSettings[startKey]),
-          startValue:
-            parsedOptions &&
-            parsedOptions.find(opt => opt.value === parsedSettings[startKey]),
-          endValue:
-            parsedOptions &&
-            parsedOptions.find(opt => opt.value === parsedSettings[endKey])
-        };
-      }),
-    title: title && title.replace('{location}', locationLabelFull || '...')
-  };
+  return mapStateToProps;
 };
 
 class WidgetContainer extends Component {
@@ -175,4 +130,4 @@ class WidgetContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps)(WidgetContainer);
+export default connect(makeMapStateToProps)(WidgetContainer);
