@@ -57,7 +57,7 @@ class WidgetContainer extends Component {
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     handleSyncMap: PropTypes.func,
     polynames: PropTypes.array,
-    optionsSelected: PropTypes.array
+    optionsSelected: PropTypes.object
   };
 
   static defaultProps = {

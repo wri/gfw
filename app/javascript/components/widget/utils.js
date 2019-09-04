@@ -51,7 +51,9 @@ export const getPolynameDatasets = ({
   polynames
 }) => {
   const iflYear =
-    optionsSelected && optionsSelected.find(opt => opt.value === settings.ifl);
+    optionsSelected &&
+    optionsSelected.ifl &&
+    optionsSelected.ifl.find(opt => opt.value === settings.ifl);
 
   return (
     polynames &&
