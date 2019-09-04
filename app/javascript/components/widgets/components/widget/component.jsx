@@ -64,37 +64,44 @@ class Widget extends PureComponent {
     } =
       settings || {};
 
-    const widgetDatasets = config.datasets.map(d => ({
-      ...d,
-      opacity: 1,
-      visibility: true,
-      layers:
-        extentYear && !Array.isArray(d.layers)
-          ? [d.layers[extentYear]]
-          : d.layers,
-      ...(((startYear && endYear) || year) && {
-        timelineParams: {
-          startDate: `${startYear || year}-01-01`,
-          endDate: `${endYear || year}-12-31`,
-          trimEndDate: `${endYear || year}-12-31`
+    const widgetDatasets = config.datasets.map(d => {
+      let layerids = d.layers;
+      if (!Array.isArray(d.layers)) {
+        if (extentYear) {
+          layerids = [d.layers[extentYear]];
+        } else if (endYear) {
+          layerids = [d.layers[endYear]];
         }
-      }),
-      ...(weeks && {
-        timelineParams: {
-          startDate: moment(latestDate || null)
-            .subtract(weeks, 'weeks')
-            .format('YYYY-MM-DD'),
-          endDate: moment(latestDate || null).format('YYYY-MM-DD'),
-          trimEndDate: moment(latestDate || null).format('YYYY-MM-DD')
-        }
-      }),
-      ...(threshold && {
-        params: {
-          thresh: threshold,
-          visibility: true
-        }
-      })
-    }));
+      }
+      return {
+        ...d,
+        opacity: 1,
+        visibility: true,
+        layers: layerids,
+        ...(((startYear && endYear) || year) && {
+          timelineParams: {
+            startDate: `${startYear || year}-01-01`,
+            endDate: `${endYear || year}-12-31`,
+            trimEndDate: `${endYear || year}-12-31`
+          }
+        }),
+        ...(weeks && {
+          timelineParams: {
+            startDate: moment(latestDate || null)
+              .subtract(weeks, 'weeks')
+              .format('YYYY-MM-DD'),
+            endDate: moment(latestDate || null).format('YYYY-MM-DD'),
+            trimEndDate: moment(latestDate || null).format('YYYY-MM-DD')
+          }
+        }),
+        ...(threshold && {
+          params: {
+            thresh: threshold,
+            visibility: true
+          }
+        })
+      };
+    });
 
     const iflYear =
       options && options.ifl && options.ifl.find(opt => opt.value === ifl);
