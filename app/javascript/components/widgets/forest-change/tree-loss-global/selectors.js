@@ -11,10 +11,10 @@ import { yearTicksFormatter } from 'components/widgets/utils/data';
 // get list data
 const getLoss = state => state.data && state.data.loss;
 const getExtent = state => state.data && state.data.extent;
-const getSettings = state => state.settings || null;
-const getLocationName = state => state.locationName || null;
-const getIndicator = state => state.indicator || null;
-const getColors = state => state.colors || null;
+const getSettings = state => state.settings;
+const getLocationLabel = state => state.locationLabel;
+const getIndicator = state => state.indicator;
+const getColors = state => state.colors;
 const getSentences = state => state && state.sentence;
 const getCountries = state => state.locationData;
 
@@ -119,7 +119,8 @@ export const parseConfig = createSelector(
     tooltip = tooltip.concat(
       keys
         .map((key, i) => {
-          const country = countries && countries.find(c => c.value === key);
+          const country =
+            countries && Object.values(countries).find(c => c.value === key);
           return {
             key,
             label: (country && country.label) || 'Other',
@@ -151,11 +152,11 @@ export const parseSentence = createSelector(
     getFilteredData,
     getExtent,
     getSettings,
-    getLocationName,
+    getLocationLabel,
     getIndicator,
     getSentences
   ],
-  (data, extent, settings, locationName, indicator, sentences) => {
+  (data, extent, settings, locationLabel, indicator, sentences) => {
     if (!data) return null;
     const { initial, withInd } = sentences;
     const { startYear, endYear, extentYear } = settings;
@@ -169,7 +170,7 @@ export const parseSentence = createSelector(
 
     const params = {
       indicator: indicator && indicator.label.toLowerCase(),
-      location: locationName === 'global' ? 'globally' : locationName,
+      location: locationLabel === 'global' ? 'globally' : locationLabel,
       startYear,
       endYear,
       loss:

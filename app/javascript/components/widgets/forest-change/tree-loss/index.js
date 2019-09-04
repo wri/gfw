@@ -147,8 +147,8 @@ export default {
 
     return {
       updateLayer: true,
-      startYear: year,
-      endYear: year
+      startYear: parseInt(year, 10),
+      endYear: parseInt(year, 10)
     };
   }
 };

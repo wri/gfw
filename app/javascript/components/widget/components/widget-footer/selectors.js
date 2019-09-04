@@ -5,40 +5,66 @@ import { translateText } from 'utils/transifex';
 
 // get list data
 const getSettings = state => state.settings;
-const getType = state => state.type;
+const getDataType = state => state.dataType;
+const getLocationType = state => state.locationType;
 const getNonGlobalDatasets = state => state.nonGlobalDatasets;
 const getIndicator = state => state.indicator;
 const getForestType = state => state.forestType;
 const getLandCategory = state => state.landCategory;
-const getLocation = state => state.location && state.location;
 
 export const getNonGlobalIndicator = createSelector(
   [
     getIndicator,
     getForestType,
     getLandCategory,
-    getLocation,
+    getLocationType,
     getNonGlobalDatasets
   ],
-  (indicator, forestType, landCategory, location, datasets) => {
-    if (!datasets || location.type !== 'global' || !indicator) return null;
-    if (datasets[indicator.value]) {
-      return indicator;
-    } else if (datasets[forestType && forestType.value]) {
-      return forestType;
-    } else if (datasets[landCategory && landCategory.value]) {
-      return landCategory;
+  (indicator, forestType, landCategory, type, datasets) => {
+    if (!datasets || type !== 'global' || !indicator) return null;
+
+    const forestTypeCount = datasets[forestType && forestType.value];
+    const landCategoryCount = datasets[landCategory && landCategory.value];
+
+    const indicators = [];
+    if (forestTypeCount) {
+      indicators.push({
+        label: forestType.label,
+        count: forestTypeCount
+      });
     }
-    return null;
+    if (landCategoryCount) {
+      indicators.push({
+        label: landCategory.label,
+        count: landCategoryCount
+      });
+    }
+
+    return indicators;
   }
 );
 
 // get lists selected
 export const getStatements = createSelector(
-  [getSettings, getType, getNonGlobalDatasets, getNonGlobalIndicator],
-  (settings, type, datasets, indicator) => {
+  [getSettings, getDataType, getNonGlobalIndicator],
+  (settings, type, indicators) => {
     if (!settings) return '';
     const { extentYear, threshold } = settings;
+
+    const indicatorStatements =
+      indicators &&
+      indicators.map(
+        i =>
+          (i
+            ? translateText(
+              '*{indicator} are available in {datasetsCount} countries only',
+              {
+                indicator: i.label.toLowerCase(),
+                datasetsCount: i.count
+              }
+            )
+            : null)
+      );
 
     const statements = compact([
       extentYear
@@ -52,15 +78,7 @@ export const getStatements = createSelector(
           'these estimates do not take tree cover gain into account'
         )
         : null,
-      datasets && indicator
-        ? translateText(
-          '*{indicator} are available in {datasetsCount} countries only',
-          {
-            indicator: indicator.label.toLowerCase(),
-            datasetsCount: datasets[indicator.value]
-          }
-        )
-        : null
+      ...(indicatorStatements || [])
     ]);
 
     return statements;

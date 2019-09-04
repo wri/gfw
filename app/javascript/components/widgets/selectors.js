@@ -69,7 +69,7 @@ export const selectCategory = state =>
 export const selectModalClosing = state =>
   state.modalMeta && state.modalMeta.closing;
 export const selectNonGlobalDatasets = state =>
-  state.widgets && state.widgets.data.selectNonGlobalDatasets;
+  state.widgets && state.widgets.data.nonGlobalDatasets;
 
 export const getWdigetFromQuery = createSelector(
   selectLocationQuery,
@@ -145,7 +145,7 @@ export const getLocationData = createSelector(
       parentData = allLocationData.adm1;
     }
 
-    const locationData = allLocationData[adminLevel];
+    const locationData = allLocationData[adminLevel] || allLocationData.adm0;
     const currentLocation =
       locationData && locationData.find(d => d.value === location[adminLevel]);
 
@@ -155,7 +155,7 @@ export const getLocationData = createSelector(
       parentData: buildLocationDict(parentData),
       location: currentLocation,
       locationData: locationData && buildLocationDict(locationData),
-      locationLabel: currentLocation && currentLocation.label,
+      locationLabel: (currentLocation && currentLocation.label) || 'global',
       childData: children && buildLocationDict(children),
       polynames
     };

@@ -36,6 +36,7 @@ class Widget extends PureComponent {
     handleRefetchData: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
     dataType: PropTypes.string,
+    type: PropTypes.string,
     nonGlobalDatasets: PropTypes.object,
     indicator: PropTypes.object,
     forestType: PropTypes.object,
@@ -70,6 +71,7 @@ class Widget extends PureComponent {
       parseInteraction,
       preventCloseSettings,
       dataType,
+      type,
       nonGlobalDatasets,
       indicator,
       forestType,
@@ -120,7 +122,8 @@ class Widget extends PureComponent {
         />
         <WidgetFooter
           settings={settings}
-          type={dataType}
+          dataType={dataType}
+          locationType={type}
           nonGlobalDatasets={nonGlobalDatasets}
           indicator={indicator}
           forestType={forestType}

@@ -1,4 +1,9 @@
 import treeLoss from 'components/widgets/forest-change/tree-loss';
+
+import { getForestTypes, getLandCategories } from 'components/widgets/utils';
+import thresholds from 'data/thresholds.json';
+import extentYears from 'data/extent-years.json';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -13,13 +18,47 @@ export default {
   },
   types: ['global'],
   admins: ['global'],
-  // options: {
-  //   forestTypes: ['ifl'],
-  //   landCategories: ['wdpa'],
-  //   extentYears: true,
-  //   thresholds: true,
-  //   startYears: true,
-  //   endYears: true
-  // },
+  settingsConfig: [
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      options: getForestTypes,
+      whitelist: ['ifl'],
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      options: getLandCategories,
+      whitelist: ['wdpa'],
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
+    {
+      key: 'extentYear',
+      label: 'extent year',
+      options: extentYears,
+      type: 'switch'
+    },
+    {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      type: 'range-select',
+      border: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      options: thresholds,
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
+    }
+  ],
   getWidgetProps
 };
