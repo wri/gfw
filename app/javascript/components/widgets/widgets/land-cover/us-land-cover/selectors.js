@@ -10,9 +10,8 @@ import { formatNumber } from 'utils/format';
 
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config.sentence || null;
+const getSentences = state => state.config.sentences || null;
 
 export const parsePayload = payload => {
   if (payload) {
@@ -116,8 +115,9 @@ export const parseData = createSelector(
         source: sourceIndex,
         target: targetIndex,
         value: d.area,
-        key: `${sourceIndex}_${targetIndex}`
-        // abs_pct: d.perc_area
+        key: `${sourceIndex}_${targetIndex}`,
+        startKey: d[`from_class_${source}`],
+        endKey: d[`to_class_${source}`]
       };
     });
     const links = Object.values(groupBy(allLinks, 'key')).map(group => {
@@ -139,31 +139,76 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getLocationName, getSettings, getSentences],
-  (data, locationName, settings, sentence) => {
+  [getData, parseData, getSettings, getSentences],
+  (rawdata, data, settings, sentences) => {
     if (isEmpty(data)) return null;
+    const { startYear, endYear, activeData } = settings;
+    const { initial, interaction } = sentences;
+    const { nodes, links, selectedElement } = data;
 
-    const getNodeName = index =>
-      (data.nodes && data.nodes[index] && data.nodes[index].name) || '';
-    // sentence has to avoid same category 'changes', even if that option is the active one (no filtering)
-    const max =
-      data.links &&
-      maxBy(
-        data.links.filter(d => getNodeName(d.source) !== getNodeName(d.target)),
+    let firstCategory;
+    let secondCategory;
+    let amount;
+    let percentage;
+
+    const total = sumBy(rawdata, 'area');
+
+    if (isEmpty(activeData)) {
+      // nothing selected, init sentence
+      firstCategory = selectedElement.target && selectedElement.target.name;
+      secondCategory = selectedElement.source && selectedElement.source.name;
+      amount = formatNumber({ num: selectedElement.value, unit: 'ha' });
+      percentage = formatNumber({
+        num: selectedElement.value / total * 100,
+        unit: '%'
+      });
+    } else if (activeData.source && activeData.target) {
+      // link selected
+      const link = links.find(l => l.key === activeData.key);
+      firstCategory = activeData.source.name;
+      secondCategory = activeData.target.name;
+      const change = link && link.value;
+      amount = formatNumber({ num: change, unit: 'ha' });
+      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+    } else if (activeData.key && activeData.key.includes('start')) {
+      // start node
+      const sourceNode = nodes.find(n => n.key === activeData.key);
+      firstCategory = sourceNode && sourceNode.name;
+      secondCategory = 'other types';
+      const change = sumBy(
+        links.filter(
+          l =>
+            `${l.startKey}-start` === sourceNode.key && l.startKey !== l.endKey
+        ),
         'value'
       );
-    const { startYear, endYear } = settings;
+      amount = formatNumber({ num: change, unit: 'ha' });
+      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+    } else if (activeData.key && activeData.key.includes('end')) {
+      // end node
+      const endNode = nodes.find(n => n.key === activeData.key);
+      firstCategory = 'other types';
+      secondCategory = endNode && endNode.name;
+      const change = sumBy(
+        links.filter(
+          l => `${l.endKey}-end` === endNode.key && l.startKey !== l.endKey
+        ),
+        'value'
+      );
+      amount = formatNumber({ num: change, unit: 'ha' });
+      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+    }
 
     const params = {
       startYear,
       endYear,
-      firstCategory: getNodeName(max.source),
-      secondCategory: getNodeName(max.target),
-      amount: formatNumber({ num: max.value, unit: 'ha' }),
-      percentage: '7.3%'
+      firstCategory,
+      secondCategory,
+      amount,
+      percentage
     };
     return {
-      sentence,
+      sentence: isEmpty(activeData) ? initial : interaction,
       params
     };
   }

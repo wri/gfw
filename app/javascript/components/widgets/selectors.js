@@ -244,10 +244,14 @@ export const filterWidgetsByLocationWhitelist = createSelector(
   (widgets, location) => {
     if (!widgets) return null;
     return widgets.filter(w => {
-      const { whitelists } = w.config;
-      if (!whitelists) return true;
+      const { whitelists, blacklists } = w.config;
+      if (!whitelists && !blacklists) return true;
       const whitelist = whitelists.adm0;
+      const blacklist = blacklists && blacklists.adm1;
       if (!whitelist) return true;
+      if (blacklist) {
+        if (blacklist.includes(location.adm1)) return false;
+      }
       return whitelist.includes(location.adm0);
     });
   }

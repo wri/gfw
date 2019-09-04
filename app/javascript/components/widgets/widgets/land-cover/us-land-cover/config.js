@@ -30,9 +30,16 @@ export default {
   sortOrder: {
     landCover: 101
   },
-  sentence: `From {startYear} to {endYear}, the highest land cover change was found in areas converted from {firstCategory} to
-  {secondCategory}, equivalent to {amount}, which represents {percentage} of all land cover.`,
+  sentences: {
+    initial: `From {startYear} to {endYear}, the highest land cover change was found in areas converted from {firstCategory} to
+    {secondCategory}, equivalent to {amount}, which represents {percentage} of all land cover.`,
+    interaction: `From {startYear} to {endYear}, land cover changing from {firstCategory} to {secondCategory}, was equivalent to {amount}, which
+    represents {percentage} of all land cover.`
+  },
   whitelists: {
     adm0: ['USA']
+  },
+  blacklists: {
+    adm1: [2]
   }
 };
