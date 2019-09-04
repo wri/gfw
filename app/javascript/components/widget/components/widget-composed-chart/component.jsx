@@ -9,6 +9,7 @@ class WidgetComposedChart extends Component {
   static propTypes = {
     data: PropTypes.array,
     config: PropTypes.object,
+    settings: PropTypes.object,
     handleChangeSettings: PropTypes.func,
     parseInteraction: PropTypes.func,
     active: PropTypes.bool,
@@ -16,10 +17,14 @@ class WidgetComposedChart extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    const { data, config } = this.props;
-    const { data: nextData, config: nextConfig } = nextProps;
+    const { data, settings } = this.props;
+    const { data: nextData, settings: nextSettings } = nextProps;
 
-    return !isEqual(data, nextData) || !isEqual(config, nextConfig);
+    return (
+      !isEqual(data, nextData) ||
+      (!isEqual(nextSettings, settings) &&
+        isEqual(nextSettings.interaction, settings.interaction))
+    );
   }
 
   handleMouseMove = debounce(data => {
