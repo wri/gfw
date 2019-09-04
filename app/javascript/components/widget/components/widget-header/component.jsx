@@ -18,7 +18,7 @@ class WidgetHeader extends PureComponent {
     loading: PropTypes.bool,
     embed: PropTypes.bool,
     simple: PropTypes.bool,
-    active: PropTypes.string,
+    active: PropTypes.bool,
     metaKey: PropTypes.string,
     options: PropTypes.array,
     handleShowInfo: PropTypes.func,

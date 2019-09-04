@@ -210,8 +210,18 @@ export const getWidgets = createSelector(
   }
 );
 
+export const getActiveWidget = createSelector(
+  [getWidgets, getWdigetFromQuery],
+  (widgets, activeWidgetKey) => {
+    if (!widgets) return null;
+    if (!activeWidgetKey) return widgets[0];
+    return widgets.find(w => w.widget === activeWidgetKey);
+  }
+);
+
 export const getWidgetsProps = createStructuredSelector({
   widgets: getWidgets,
+  activeWidget: getActiveWidget,
   loading: selectLoading,
   location: getLocation,
   locationObj: getLocationObj,

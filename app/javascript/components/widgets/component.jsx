@@ -25,14 +25,17 @@ class Widgets extends PureComponent {
     setActiveWidget: PropTypes.func.isRequired,
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
+    setMapSettings: PropTypes.func.isRequired,
     query: PropTypes.object,
     embed: PropTypes.bool,
     modalClosing: PropTypes.bool,
-    nonGlobalDatasets: PropTypes.object
+    nonGlobalDatasets: PropTypes.object,
+    activeWidget: PropTypes.object
   };
 
   render() {
     const {
+      activeWidget,
       className,
       noWidgetsMessage,
       loading,
@@ -45,6 +48,7 @@ class Widgets extends PureComponent {
       setWidgetsData,
       setWidgetSettings,
       setActiveWidget,
+      setMapSettings,
       setModalMetaSettings,
       setShareModal,
       embed,
@@ -73,6 +77,7 @@ class Widgets extends PureComponent {
             <Widget
               key={w.widget}
               {...w}
+              active={activeWidget && activeWidget.widget === w.widget}
               embed={embed}
               data={widgetsData && widgetsData[w.widget]}
               settings={{
@@ -87,6 +92,7 @@ class Widgets extends PureComponent {
                 setWidgetSettings({ widget: w.widget, change })
               }
               handleShowMap={() => setActiveWidget(w.widget)}
+              handleSyncMap={setMapSettings}
               handleShowInfo={setModalMetaSettings}
               handleShowShare={() =>
                 setShareModal({

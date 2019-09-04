@@ -4,9 +4,31 @@ import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
+import compact from 'lodash/compact';
+import intersection from 'lodash/intersection';
 
 import WidgetComponent from './component';
 import { getWidgetProps } from './selectors';
+import { getWidgetDatasets, getPolynameDatasets } from './utils';
+
+const mapSyncKeys = [
+  'startYear',
+  'endYear',
+  'threshold',
+  'extentYear',
+  'forestType',
+  'landCategory'
+];
+
+const adminBoundaryLayer = {
+  dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+  layers: [
+    '6f6798e6-39ec-4163-979e-182a74ca65ee',
+    'c5d1e010-383a-4713-9aaa-44f728c0571c'
+  ],
+  opacity: 1,
+  visibility: true
+};
 
 const makeMapStateToProps = () => {
   const getWidgetPropsObject = getWidgetProps();
@@ -22,6 +44,7 @@ const makeMapStateToProps = () => {
 
 class WidgetContainer extends Component {
   static propTypes = {
+    active: PropTypes.bool,
     widget: PropTypes.string.isRequired,
     location: PropTypes.object.isRequired,
     getData: PropTypes.func.isRequired,
@@ -29,7 +52,11 @@ class WidgetContainer extends Component {
     refetchKeys: PropTypes.array,
     error: PropTypes.bool,
     settings: PropTypes.object,
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+    datasets: PropTypes.array,
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    handleSyncMap: PropTypes.func,
+    polynames: PropTypes.array,
+    optionsSelected: PropTypes.array
   };
 
   static defaultProps = {
@@ -57,7 +84,7 @@ class WidgetContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location, settings, refetchKeys } = this.props;
+    const { location, settings, refetchKeys, datasets, active } = this.props;
     const { error } = this.state;
 
     const hasLocationChanged = !isEqual(location, prevProps.location);
@@ -77,6 +104,25 @@ class WidgetContainer extends Component {
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       const params = { ...location, ...settings };
       this.handleGetWidgetData(params);
+    }
+
+    // if widget is active and layers or params change push to map
+    if (active) {
+      const mapSettingsChanged =
+        settings &&
+        intersection(mapSyncKeys, Object.keys(settings)).length &&
+        !isEqual(settings, prevProps.settings);
+      const activeChanged = !isEqual(active, prevProps.active);
+      if (datasets && (mapSettingsChanged || activeChanged)) {
+        this.syncWidgetWithMap();
+      } else if (!datasets && activeChanged) {
+        this.clearMap();
+      }
+    }
+
+    // if widget is no longer active remove layers from map
+    if (!active && !isEqual(active, prevProps.active)) {
+      this.clearMap();
     }
   }
 
@@ -119,6 +165,39 @@ class WidgetContainer extends Component {
     if (this.widgetDataFetch) {
       this.widgetDataFetch.cancel(`Cancelling ${this.props.widget} fetch`);
     }
+  };
+
+  syncWidgetWithMap = () => {
+    const {
+      handleSyncMap,
+      datasets,
+      settings,
+      polynames,
+      optionsSelected
+    } = this.props;
+
+    const widgetDatasets =
+      datasets &&
+      datasets.length &&
+      getWidgetDatasets({ datasets, ...settings });
+
+    const polynameDatasets =
+      polynames &&
+      polynames.length &&
+      getPolynameDatasets({ polynames, optionsSelected, settings });
+
+    const allDatasets = [...compact(polynameDatasets), ...widgetDatasets];
+
+    handleSyncMap({
+      datasets: allDatasets
+    });
+  };
+
+  clearMap = () => {
+    const { handleSyncMap } = this.props;
+    handleSyncMap({
+      datasets: [adminBoundaryLayer]
+    });
   };
 
   render() {
