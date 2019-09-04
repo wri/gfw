@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { isParent } from 'utils/dom';
+import { track } from 'app/analytics';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -11,6 +12,7 @@ import WidgetSettings from '../widget-settings';
 
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
+    widget: PropTypes.string,
     options: PropTypes.array,
     loading: PropTypes.bool,
     preventCloseSettings: PropTypes.bool,
@@ -28,7 +30,8 @@ class WidgetSettingsButton extends PureComponent {
       loading,
       preventCloseSettings,
       handleChangeSettings,
-      handleShowInfo
+      handleShowInfo,
+      widget
     } = this.props;
     const { tooltipOpen } = this.state;
     return (
@@ -51,6 +54,9 @@ class WidgetSettingsButton extends PureComponent {
         }}
         onShow={() => {
           this.setState({ tooltipOpen: true });
+          track('openWidgetSettings', {
+            label: `${widget}`
+          });
         }}
         arrow
         useContext

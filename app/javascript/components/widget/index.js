@@ -6,6 +6,7 @@ import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
 import compact from 'lodash/compact';
 import intersection from 'lodash/intersection';
+import { track } from 'app/analytics';
 
 import WidgetComponent from './component';
 import { getWidgetProps } from './selectors';
@@ -156,9 +157,12 @@ class WidgetContainer extends Component {
   };
 
   handleRefetchData = () => {
-    const { settings, location } = this.props;
+    const { settings, location, widget } = this.props;
     const params = { ...location, ...settings };
     this.handleGetWidgetData(params);
+    track('refetchDataBtn', {
+      label: `Widget: ${widget}`
+    });
   };
 
   cancelWidgetDataFetch = () => {

@@ -93,6 +93,7 @@ class Widget extends PureComponent {
         }}
       >
         <WidgetHeader
+          widget={widget}
           title={title}
           large={large}
           datasets={datasets}

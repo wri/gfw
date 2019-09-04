@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { track } from 'app/analytics';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
@@ -91,7 +92,12 @@ class Widgets extends PureComponent {
               handleChangeSettings={change =>
                 setWidgetSettings({ widget: w.widget, change })
               }
-              handleShowMap={() => setActiveWidget(w.widget)}
+              handleShowMap={() => {
+                setActiveWidget(w.widget);
+                track('viewWidgetOnMap', {
+                  label: `${w.widget} in ${locationObj.locationLabel || ''}`
+                });
+              }}
               handleSyncMap={setMapSettings}
               handleShowInfo={setModalMetaSettings}
               handleShowShare={() =>

@@ -13,6 +13,7 @@ import './styles.scss';
 class WidgetHeader extends PureComponent {
   static propTypes = {
     title: PropTypes.string.isRequired,
+    widget: PropTypes.string,
     large: PropTypes.bool,
     datasets: PropTypes.array,
     loading: PropTypes.bool,
@@ -43,7 +44,8 @@ class WidgetHeader extends PureComponent {
       handleShowInfo,
       handleChangeSettings,
       handleShowShare,
-      preventCloseSettings
+      preventCloseSettings,
+      widget
     } = this.props;
 
     return (
@@ -65,6 +67,7 @@ class WidgetHeader extends PureComponent {
             <WidgetSettingsButton
               options={options}
               loading={loading}
+              widget={widget}
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}
