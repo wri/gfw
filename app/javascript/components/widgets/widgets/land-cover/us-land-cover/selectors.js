@@ -74,11 +74,36 @@ export const parseData = createSelector(
       'value',
       'desc'
     );
-    const nodes = [
-      ...startNodes,
-      ...startNodes.map(n => ({ ...n, key: n.key.replace('start', 'end') }))
+    const uniqueEndNodes = Object.entries(
+      groupBy(data, `to_class_${source}`)
+    ).map(([key, group]) => ({
+      name: categories[key] ? categories[key] : 'Other',
+      key: `${key}-end`,
+      color: categories[key]
+        ? colors.categories[categories[key]]
+        : colors.categories.Other,
+      value: sumBy(group, 'area')
+    }));
+    const endNodes = [
+      // nodes already in startNodes
+      ...startNodes
+        .map(startNode => ({
+          ...startNode,
+          key: startNode.key.replace('start', 'end')
+        }))
+        .filter(
+          startNode => findIndex(uniqueEndNodes, { key: startNode.key }) >= 0
+        ),
+      // 'new' nodes
+      ...uniqueEndNodes.filter(
+        endNode =>
+          findIndex(startNodes, {
+            key: endNode.key.replace('end', 'start')
+          }) === -1
+      )
     ];
 
+    const nodes = [...startNodes, ...endNodes];
     // SANKEY LINKS
     const allLinks = data.map(d => {
       const sourceIndex = findIndex(nodes, {
