@@ -116,7 +116,8 @@ export const getAllLocationData = createSelector(
       return {
         adm0: countryData.countries,
         adm1: countryData.regions,
-        adm2: countryData.subRegions
+        adm2: countryData.subRegions,
+        fao: countryData.faoCountries
       };
     }
 
@@ -165,12 +166,13 @@ export const getLocationData = createSelector(
 export const getWidgets = createSelector(
   [
     getLocationObj,
+    getLocationData,
     selectPolynameWhitelist,
     selectEmbed,
     getWdigetFromQuery,
     selectCategory
   ],
-  (location, polynameWhitelist, embed, widget, category) => {
+  (location, locationData, polynameWhitelist, embed, widget, category) => {
     const { adminLevel, type } = location;
 
     const widgets = Object.values(allWidgets).map(w => ({
@@ -182,7 +184,8 @@ export const getWidgets = createSelector(
 
     return sortBy(
       widgets.filter(w => {
-        const { types, admins, whitelists, categories } = w || {};
+        const { types, admins, whitelists, categories, source } = w || {};
+        const { fao } = locationData || {};
 
         const hasLocation =
           types &&
@@ -190,6 +193,8 @@ export const getWidgets = createSelector(
           admins &&
           admins.includes(adminLevel);
         const adminWhitelist = whitelists && whitelists[adminLevel];
+        const isFAOCountry =
+          source !== 'fao' || (fao && fao.find(f => f.value === location.adm0));
         const matchesAdminWhitelist =
           !adminWhitelist || adminWhitelist.includes(location[adminLevel]);
         const matchesPolynameWhitelist =
@@ -202,7 +207,8 @@ export const getWidgets = createSelector(
           hasLocation &&
           matchesAdminWhitelist &&
           matchesPolynameWhitelist &&
-          hasCategory
+          hasCategory &&
+          isFAOCountry
         );
       }),
       category ? `sortOrder[${category}]` : 'sortOrder.summary'
