@@ -270,10 +270,6 @@ export const getWidgets = createSelector(
         ...(query && query[widget])
       };
 
-      const title =
-        titleTemplate &&
-        titleTemplate.replace('{location}', locationLabelFull || '...');
-
       const dataOptions = rawData && rawData.options;
 
       const settingsConfigParsed = getSettingsConfig({
@@ -304,7 +300,7 @@ export const getWidgets = createSelector(
         ...locationData,
         data: rawData,
         settings,
-        title,
+        title: titleTemplate,
         settingsConfig: settingsConfigParsed,
         optionsSelected,
         indicator,
@@ -312,9 +308,15 @@ export const getWidgets = createSelector(
         statements: footerStatements
       };
 
+      const parsedProps = props.getWidgetProps(props);
+      const { title } = parsedProps || {};
+
       return {
         ...props,
-        ...props.getWidgetProps(props)
+        ...parsedProps,
+        title: title
+          ? title.replace('{location}', locationLabelFull || '...')
+          : ''
       };
     });
   }

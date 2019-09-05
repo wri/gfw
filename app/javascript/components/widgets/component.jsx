@@ -43,7 +43,6 @@ class Widgets extends PureComponent {
       loading,
       widgets,
       location,
-      locationObj,
       setWidgetsData,
       setWidgetSettings,
       setActiveWidget,
@@ -87,7 +86,7 @@ class Widgets extends PureComponent {
                   handleShowMap={() => {
                     setActiveWidget(w.widget);
                     track('viewWidgetOnMap', {
-                      label: `${w.widget} in ${locationObj.locationLabel || ''}`
+                      label: `${w.widget} in ${w.locationLabel || ''}`
                     });
                   }}
                   handleShowInfo={setModalMetaSettings}
