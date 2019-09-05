@@ -17,7 +17,7 @@ import {
   getOptionsSelected,
   getIndicator,
   getStatements
-} from './utils';
+} from './utils/config';
 import allWidgets from './manifest';
 
 const locationTypes = {

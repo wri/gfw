@@ -5,7 +5,7 @@ import compact from 'lodash/compact';
 import moment from 'moment';
 import { translateText } from 'utils/transifex';
 
-import allOptions from './options';
+import allOptions from '../options';
 
 export const getForestTypes = ({
   forestTypes,

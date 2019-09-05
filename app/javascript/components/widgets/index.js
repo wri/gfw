@@ -11,7 +11,7 @@ import { setMapSettings as setMapState } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 import { setShareModal } from 'components/modals/share/share-actions';
 
-import { getWidgetDatasets, getPolynameDatasets } from './utils';
+import { getWidgetDatasets, getPolynameDatasets } from './utils/config';
 import * as ownActions from './actions';
 import reducers, { initialState } from './reducers';
 import Component from './component';
