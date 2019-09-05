@@ -47,25 +47,44 @@ export const parseData = createSelector(
   (data, colors, settings) => {
     if (isEmpty(data)) return null;
     let { source } = settings;
-    const categories = {
-      forest_land: 'Forest',
-      bare: 'Bare',
-      settlement: 'Settlement',
-      cropland: 'Agriculture',
-      grassland: 'Grassland',
-      wetland: 'Wetland'
-    };
-
     if (!source) source = 'ipcc';
+    const categories = {
+      ipcc: {
+        forest_land: 'Forest',
+        bare: 'Bare',
+        settlement: 'Settlement',
+        cropland: 'Agriculture',
+        grassland: 'Grassland',
+        wetland: 'Wetland'
+      },
+      nlcd: {
+        deciduous_forest: 'Deciduous forest',
+        evergreen_forest: 'Evergreen forest',
+        mixed_forest: 'Mixed forest',
+        shrub_scrub: 'Shrub/scrub',
+        grass_herb: 'Grassland/herbaceous',
+        cultivated_crops: 'Cultivated crops',
+        pasture_hay: 'Pasture/hay',
+        developed_open_space: 'Developed open space',
+        developed_low_intensity: 'Developed low intensity',
+        developed_medium_intensity: 'Developed medium intensity',
+        developed_high_intensity: 'Developed high intensity',
+        woody_wetlands: 'Woody wetlands',
+        emergent_herbaceous_wetlands: 'Emergent herbaceous wetlands',
+        barren: 'Barren land (rock/sand/clay)',
+        perennial_ice_snow: 'Perennial ice/snow',
+        open_water: 'Water Body'
+      }
+    };
 
     // SANKEY NODES
     const startNodes = orderBy(
       Object.entries(groupBy(data, `from_class_${source}`)).map(
         ([key, group]) => ({
-          name: categories[key] ? categories[key] : 'Other',
+          name: categories[source][key] ? categories[source][key] : 'Other',
           key: `${key}-start`,
-          color: categories[key]
-            ? colors.categories[categories[key]]
+          color: categories[source][key]
+            ? colors.categories[categories[source][key]]
             : colors.categories.Other,
           value: sumBy(group, 'area')
         })
@@ -76,10 +95,10 @@ export const parseData = createSelector(
     const uniqueEndNodes = Object.entries(
       groupBy(data, `to_class_${source}`)
     ).map(([key, group]) => ({
-      name: categories[key] ? categories[key] : 'Other',
+      name: categories[source][key] ? categories[source][key] : 'Other',
       key: `${key}-end`,
-      color: categories[key]
-        ? colors.categories[categories[key]]
+      color: categories[source][key]
+        ? colors.categories[categories[source][key]]
         : colors.categories.Other,
       value: sumBy(group, 'area')
     }));

@@ -5,5 +5,6 @@ export default {
   startYear: 2001,
   endYear: 2016,
   variable: 'all_data',
-  unit: 'ha'
+  unit: 'ha',
+  source: 'ipcc'
 };

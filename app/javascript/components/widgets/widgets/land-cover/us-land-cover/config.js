@@ -24,8 +24,8 @@ export default {
     startYears: true,
     endYears: true,
     yearValues: [2001, 2006, 2011, 2016],
-    variables: ['all_data', 'changes_only']
-    // TODO: 'custom' object processed in widget-settings-component with title and options
+    variables: ['all_data', 'changes_only'],
+    sources: ['ipcc', 'nlcd']
   },
   sortOrder: {
     landCover: 101
