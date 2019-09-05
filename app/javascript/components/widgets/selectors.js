@@ -6,11 +6,18 @@ import isEmpty from 'lodash/isEmpty';
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
+import { getIsTrase } from 'app/layouts/root/selectors';
+
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
 import { locationLevelToStr } from 'utils/format';
 
-import { getSettingsConfig, getOptionsSelected, getIndicator } from './utils';
+import {
+  getSettingsConfig,
+  getOptionsSelected,
+  getIndicator,
+  getStatements
+} from './utils';
 import allWidgets from './manifest';
 
 const locationTypes = {
@@ -224,12 +231,24 @@ export const getWidgets = createSelector(
     getLocationObj,
     getLocationData,
     selectWidgetsData,
-    selectLocationQuery
+    selectLocationQuery,
+    selectNonGlobalDatasets,
+    getIsTrase
   ],
-  (widgets, locationObj, locationData, widgetsData, query) => {
-    if (isEmpty(widgets) || !locationObj || !locationData || !widgetsData) { return null; }
+  (
+    widgets,
+    locationObj,
+    locationData,
+    widgetsData,
+    query,
+    datasets,
+    isTrase
+  ) => {
+    if (isEmpty(widgets) || !locationObj || !locationData || !widgetsData) {
+      return null;
+    }
 
-    const { locationLabelFull } = locationObj || {};
+    const { locationLabelFull, type } = locationObj || {};
     const { polynames } = locationData || {};
 
     return widgets.map(w => {
@@ -237,7 +256,8 @@ export const getWidgets = createSelector(
         settings: defaultSettings,
         widget,
         settingsConfig,
-        title: titleTemplate
+        title: titleTemplate,
+        dataType
       } =
         w || {};
       const rawData = widgetsData && widgetsData[widget];
@@ -269,6 +289,15 @@ export const getWidgets = createSelector(
       const landCategory = optionsSelected && optionsSelected.landCategory;
       const indicator = getIndicator(forestType, landCategory);
 
+      const footerStatements = getStatements({
+        forestType,
+        landCategory,
+        settings,
+        datasets,
+        type,
+        dataType
+      });
+
       const props = {
         ...w,
         ...locationObj,
@@ -278,7 +307,9 @@ export const getWidgets = createSelector(
         title,
         settingsConfig: settingsConfigParsed,
         optionsSelected,
-        indicator
+        indicator,
+        showAttributionLink: isTrase,
+        statements: footerStatements
       };
 
       return {
@@ -299,15 +330,10 @@ export const getActiveWidget = createSelector(
 );
 
 export const getWidgetsProps = createStructuredSelector({
+  loading: selectLoading,
   widgets: getWidgets,
   activeWidget: getActiveWidget,
-  loading: selectLoading,
   location: getLocation,
-  locationObj: getLocationObj,
-  locationData: getLocationData,
-  widgetsData: selectWidgetsData,
-  query: selectLocationQuery,
   emebd: selectEmbed,
-  modalClosing: selectModalClosing,
-  nonGlobalDatasets: selectNonGlobalDatasets
+  modalClosing: selectModalClosing
 });

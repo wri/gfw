@@ -32,7 +32,6 @@ class Widgets extends PureComponent {
     query: PropTypes.object,
     embed: PropTypes.bool,
     modalClosing: PropTypes.bool,
-    nonGlobalDatasets: PropTypes.object,
     activeWidget: PropTypes.object
   };
 
@@ -51,8 +50,7 @@ class Widgets extends PureComponent {
       setModalMetaSettings,
       setShareModal,
       embed,
-      modalClosing,
-      nonGlobalDatasets
+      modalClosing
     } = this.props;
 
     return (
@@ -109,7 +107,6 @@ class Widgets extends PureComponent {
                     })
                   }
                   preventCloseSettings={modalClosing}
-                  nonGlobalDatasets={nonGlobalDatasets}
                 />
               ))}
             {!loading &&

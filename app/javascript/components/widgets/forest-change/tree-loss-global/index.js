@@ -21,8 +21,7 @@ export default {
       whitelist: ['ifl'],
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true,
-      border: true
+      clearable: true
     },
     {
       key: 'landCategory',

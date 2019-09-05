@@ -6,15 +6,24 @@ import ReactHtmlParser from 'react-html-parser';
 import './styles.scss';
 
 class WidgetFooter extends PureComponent {
+  static propTypes = {
+    simple: PropTypes.bool,
+    statements: PropTypes.array,
+    showAttributionLink: PropTypes.bool
+  };
+
   render() {
     const { statements, simple, showAttributionLink } = this.props;
     const statementsMapped = statements && statements.join(' | ');
 
     return (
       <div className={cx('c-widget-footer', { simple })}>
-        {statementsMapped && !!statementsMapped.length &&
-          <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
-        }
+        {statementsMapped &&
+          !!statementsMapped.length && (
+          <div className="notranslate">
+            {ReactHtmlParser(statementsMapped)}
+          </div>
+        )}
         {showAttributionLink && (
           <span>
             Source:{' '}
@@ -31,11 +40,5 @@ class WidgetFooter extends PureComponent {
     );
   }
 }
-
-WidgetFooter.propTypes = {
-  simple: PropTypes.bool,
-  statements: PropTypes.array,
-  showAttributionLink: PropTypes.bool
-};
 
 export default WidgetFooter;

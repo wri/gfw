@@ -35,12 +35,8 @@ class Widget extends PureComponent {
     parseInteraction: PropTypes.func,
     handleRefetchData: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
-    dataType: PropTypes.string,
-    type: PropTypes.string,
-    nonGlobalDatasets: PropTypes.object,
-    indicator: PropTypes.object,
-    forestType: PropTypes.object,
-    landCategory: PropTypes.object
+    showAttribution: PropTypes.bool,
+    statements: PropTypes.array
   };
 
   render() {
@@ -70,12 +66,8 @@ class Widget extends PureComponent {
       handleRefetchData,
       parseInteraction,
       preventCloseSettings,
-      dataType,
-      type,
-      nonGlobalDatasets,
-      indicator,
-      forestType,
-      landCategory
+      showAttribution,
+      statements
     } = this.props;
     const { main } = colors || {};
 
@@ -122,14 +114,8 @@ class Widget extends PureComponent {
           parseInteraction={parseInteraction}
         />
         <WidgetFooter
-          settings={settings}
-          dataType={dataType}
-          locationType={type}
-          nonGlobalDatasets={nonGlobalDatasets}
-          indicator={indicator}
-          forestType={forestType}
-          landCategory={landCategory}
-          location={location}
+          showAttribution={showAttribution}
+          statements={statements}
           simple={simple}
         />
       </div>

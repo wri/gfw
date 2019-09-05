@@ -1,7 +1,9 @@
 import lowerCase from 'lodash/lowerCase';
 import isEmpty from 'lodash/isEmpty';
 import sortBy from 'lodash/sortBy';
+import compact from 'lodash/compact';
 import moment from 'moment';
+import { translateText } from 'utils/transifex';
 
 import allOptions from './options';
 
@@ -199,4 +201,83 @@ export const getPolynameDatasets = ({
         }))
     )
   );
+};
+
+export const getNonGlobalIndicator = ({
+  forestType,
+  landCategory,
+  type,
+  datasets
+}) => {
+  if (!datasets || type !== 'global') return null;
+
+  const forestTypeCount = datasets[forestType && forestType.value];
+  const landCategoryCount = datasets[landCategory && landCategory.value];
+
+  const indicators = [];
+  if (forestTypeCount) {
+    indicators.push({
+      label: forestType.label,
+      count: forestTypeCount
+    });
+  }
+  if (landCategoryCount) {
+    indicators.push({
+      label: landCategory.label,
+      count: landCategoryCount
+    });
+  }
+
+  return indicators;
+};
+
+export const getStatements = ({
+  settings,
+  type,
+  dataType,
+  landCategory,
+  forestType,
+  datasets
+}) => {
+  if (!settings) return null;
+  const { extentYear, threshold } = settings;
+
+  const indicators = getNonGlobalIndicator({
+    forestType,
+    landCategory,
+    type,
+    datasets
+  });
+
+  const indicatorStatements =
+    indicators &&
+    indicators.map(
+      i =>
+        (i
+          ? translateText(
+            '*{indicator} are available in {datasetsCount} countries only',
+            {
+              indicator: i.label.toLowerCase(),
+              datasetsCount: i.count
+            }
+          )
+          : null)
+    );
+
+  const statements = compact([
+    extentYear
+      ? translateText('{extentYear} tree cover extent', { extentYear })
+      : null,
+    threshold || threshold === 0
+      ? translateText('>{threshold}% tree canopy', { threshold })
+      : null,
+    dataType === 'loss'
+      ? translateText(
+        'these estimates do not take tree cover gain into account'
+      )
+      : null,
+    ...(indicatorStatements || [])
+  ]);
+
+  return statements;
 };
