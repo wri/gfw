@@ -4,9 +4,6 @@ import maxBy from 'lodash/maxBy';
 import range from 'lodash/range';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
-import { getForestTypes, getLandCategories } from 'components/widgets/utils';
-import thresholds from 'data/thresholds.json';
-import extentYears from 'data/extent-years.json';
 
 import getWidgetProps from './selectors';
 
@@ -24,7 +21,6 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      options: getForestTypes,
       whitelist: ['ifl', 'primary_forest', 'mangroves_2016'],
       type: 'select',
       placeholder: 'All tree cover',
@@ -33,7 +29,6 @@ export default {
     {
       key: 'landCategory',
       label: 'Land Category',
-      options: getLandCategories,
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
@@ -42,7 +37,6 @@ export default {
     {
       key: 'extentYear',
       label: 'extent year',
-      options: extentYears,
       type: 'switch'
     },
     {
@@ -56,7 +50,6 @@ export default {
     {
       key: 'threshold',
       label: 'canopy density',
-      options: thresholds,
       type: 'mini-select',
       metaKey: 'widget_canopy_density'
     }

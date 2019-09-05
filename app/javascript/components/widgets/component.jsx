@@ -43,15 +43,11 @@ class Widgets extends PureComponent {
       noWidgetsMessage,
       loading,
       widgets,
-      widgetsData,
-      query,
       location,
       locationObj,
-      locationData,
       setWidgetsData,
       setWidgetSettings,
       setActiveWidget,
-      setMapSettings,
       setModalMetaSettings,
       setShareModal,
       embed,
@@ -85,13 +81,6 @@ class Widgets extends PureComponent {
                   large={w.large && isDesktop}
                   active={activeWidget && activeWidget.widget === w.widget}
                   embed={embed}
-                  data={widgetsData && widgetsData[w.widget]}
-                  settings={{
-                    ...w.settings,
-                    ...(query && query[w.widget])
-                  }}
-                  {...locationObj}
-                  {...locationData}
                   location={location}
                   setWidgetData={data => setWidgetsData({ [w.widget]: data })}
                   handleChangeSettings={change =>
@@ -103,7 +92,6 @@ class Widgets extends PureComponent {
                       label: `${w.widget} in ${locationObj.locationLabel || ''}`
                     });
                   }}
-                  handleSyncMap={setMapSettings}
                   handleShowInfo={setModalMetaSettings}
                   handleShowShare={() =>
                     setShareModal({

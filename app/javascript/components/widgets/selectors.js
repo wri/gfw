@@ -9,6 +9,8 @@ import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/select
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
 import { locationLevelToStr } from 'utils/format';
+
+import { getSettingsConfig, getOptionsSelected, getIndicator } from './utils';
 import allWidgets from './manifest';
 
 const locationTypes = {
@@ -163,7 +165,7 @@ export const getLocationData = createSelector(
   }
 );
 
-export const getWidgets = createSelector(
+export const filterWidgets = createSelector(
   [
     getLocationObj,
     getLocationData,
@@ -213,6 +215,77 @@ export const getWidgets = createSelector(
       }),
       category ? `sortOrder[${category}]` : 'sortOrder.summary'
     );
+  }
+);
+
+export const getWidgets = createSelector(
+  [
+    filterWidgets,
+    getLocationObj,
+    getLocationData,
+    selectWidgetsData,
+    selectLocationQuery
+  ],
+  (widgets, locationObj, locationData, widgetsData, query) => {
+    if (isEmpty(widgets) || !locationObj || !locationData || !widgetsData) { return null; }
+
+    const { locationLabelFull } = locationObj || {};
+    const { polynames } = locationData || {};
+
+    return widgets.map(w => {
+      const {
+        settings: defaultSettings,
+        widget,
+        settingsConfig,
+        title: titleTemplate
+      } =
+        w || {};
+      const rawData = widgetsData && widgetsData[widget];
+
+      const { settings: dataSettings } = rawData || {};
+
+      const settings = {
+        ...defaultSettings,
+        ...dataSettings,
+        ...(query && query[widget])
+      };
+
+      const title =
+        titleTemplate &&
+        titleTemplate.replace('{location}', locationLabelFull || '...');
+
+      const dataOptions = rawData && rawData.options;
+
+      const settingsConfigParsed = getSettingsConfig({
+        settingsConfig,
+        dataOptions,
+        settings,
+        polynames
+      });
+
+      const optionsSelected = getOptionsSelected(settingsConfigParsed);
+
+      const forestType = optionsSelected && optionsSelected.forestType;
+      const landCategory = optionsSelected && optionsSelected.landCategory;
+      const indicator = getIndicator(forestType, landCategory);
+
+      const props = {
+        ...w,
+        ...locationObj,
+        ...locationData,
+        data: rawData,
+        settings,
+        title,
+        settingsConfig: settingsConfigParsed,
+        optionsSelected,
+        indicator
+      };
+
+      return {
+        ...props,
+        ...props.getWidgetProps(props)
+      };
+    });
   }
 );
 

@@ -1,9 +1,5 @@
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 
-import { getForestTypes, getLandCategories } from 'components/widgets/utils';
-import thresholds from 'data/thresholds.json';
-import extentYears from 'data/extent-years.json';
-
 import getWidgetProps from './selectors';
 
 export default {
@@ -22,16 +18,15 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      options: getForestTypes,
       whitelist: ['ifl'],
       type: 'select',
       placeholder: 'All tree cover',
-      clearable: true
+      clearable: true,
+      border: true
     },
     {
       key: 'landCategory',
       label: 'Land Category',
-      options: getLandCategories,
       whitelist: ['wdpa'],
       type: 'select',
       placeholder: 'All categories',
@@ -41,7 +36,6 @@ export default {
     {
       key: 'extentYear',
       label: 'extent year',
-      options: extentYears,
       type: 'switch'
     },
     {
@@ -55,7 +49,6 @@ export default {
     {
       key: 'threshold',
       label: 'canopy density',
-      options: thresholds,
       type: 'mini-select',
       metaKey: 'widget_canopy_density'
     }

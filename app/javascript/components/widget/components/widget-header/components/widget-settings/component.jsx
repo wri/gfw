@@ -10,7 +10,7 @@ import './styles.scss';
 
 class WidgetSettings extends PureComponent {
   static propTypes = {
-    options: PropTypes.array.isRequired,
+    settingsConfig: PropTypes.array.isRequired,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func.isRequired,
     loading: PropTypes.bool,
@@ -105,7 +105,7 @@ class WidgetSettings extends PureComponent {
 
   render() {
     const {
-      options,
+      settingsConfig,
       loading,
       handleChangeSettings,
       handleShowInfo,
@@ -114,8 +114,8 @@ class WidgetSettings extends PureComponent {
 
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
-        {options &&
-          options.map(
+        {settingsConfig &&
+          settingsConfig.map(
             option =>
               option.options &&
               !!option.options.length && (

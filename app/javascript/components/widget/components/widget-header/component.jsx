@@ -21,7 +21,7 @@ class WidgetHeader extends PureComponent {
     simple: PropTypes.bool,
     active: PropTypes.bool,
     metaKey: PropTypes.string,
-    options: PropTypes.array,
+    settingsConfig: PropTypes.array,
     handleShowInfo: PropTypes.func,
     handleChangeSettings: PropTypes.func,
     handleShowMap: PropTypes.func,
@@ -38,7 +38,7 @@ class WidgetHeader extends PureComponent {
       large,
       datasets,
       simple,
-      options,
+      settingsConfig,
       metaKey,
       handleShowMap,
       handleShowInfo,
@@ -63,9 +63,9 @@ class WidgetHeader extends PureComponent {
           )}
           {!embed &&
             !simple &&
-            !isEmpty(options) && (
+            !isEmpty(settingsConfig) && (
             <WidgetSettingsButton
-              options={options}
+              settingsConfig={settingsConfig}
               loading={loading}
               widget={widget}
               handleChangeSettings={handleChangeSettings}

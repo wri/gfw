@@ -13,7 +13,7 @@ import WidgetSettings from '../widget-settings';
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
     widget: PropTypes.string,
-    options: PropTypes.array,
+    settingsConfig: PropTypes.array,
     loading: PropTypes.bool,
     preventCloseSettings: PropTypes.bool,
     handleChangeSettings: PropTypes.func.isRequired,
@@ -26,7 +26,7 @@ class WidgetSettingsButton extends PureComponent {
 
   render() {
     const {
-      options,
+      settingsConfig,
       loading,
       preventCloseSettings,
       handleChangeSettings,
@@ -66,7 +66,7 @@ class WidgetSettingsButton extends PureComponent {
             ref={node => {
               this.widgetSettingsRef = node;
             }}
-            options={options}
+            settingsConfig={settingsConfig}
             loading={loading}
             handleChangeSettings={handleChangeSettings}
             handleShowInfo={handleShowInfo}
