@@ -1,0 +1,43 @@
+@import '~styles/settings.scss';
+
+.l-failed-import-page {
+  background-color: $white;
+  height: 100%;
+
+  .error-message {
+    padding: rem(60px) 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(200px) 0;
+    }
+
+    .error-tree {
+      width: 100%;
+      height: rem(200px);
+      margin-bottom: rem(20px);
+      padding-right: rem(15px);
+    }
+
+    h1 {
+      font-size: rem(50px);
+      color: $slate;
+      margin-bottom: rem(30px);
+      text-align: center;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: rem(60px);
+      }
+    }
+
+    p {
+      font-size: rem(18px);
+      line-height: rem(30px);
+      color: $slate;
+      text-align: center;
+    }
+  }
+}
