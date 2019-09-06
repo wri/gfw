@@ -1,9 +1,7 @@
 import axios from 'axios';
-import minBy from 'lodash/minBy';
-import maxBy from 'lodash/maxBy';
-import range from 'lodash/range';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
+import { getYearsRange } from 'components/widgets/utils/data';
 
 import getWidgetProps from './selectors';
 
@@ -113,10 +111,8 @@ export default {
               extent: (loss.data.data && extent.data.data[0].extent) || 0
             };
           }
-          const startYearObj = minBy(data.loss, 'year');
-          const endYearObj = maxBy(data.loss, 'year');
-          const startYear = (startYearObj && startYearObj.year) || 2001;
-          const endYear = (endYearObj && endYearObj.year) || 2018;
+
+          const { startYear, endYear, range } = getYearsRange(data.loss);
 
           return {
             ...data,
@@ -125,10 +121,7 @@ export default {
               endYear
             },
             options: {
-              years: range(startYear, endYear + 1, 1).map(y => ({
-                label: y,
-                value: y
-              }))
+              years: range
             }
           };
         })

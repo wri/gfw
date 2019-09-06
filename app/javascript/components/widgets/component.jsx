@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import isEmpty from 'lodash/isEmpty';
+import MediaQuery from 'react-responsive';
+
 import { SCREEN_M } from 'utils/constants';
 import { track } from 'app/analytics';
-import MediaQuery from 'react-responsive';
 
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
-
 import Widget from 'components/widget';
 
 import './styles.scss';
@@ -16,7 +17,6 @@ class Widgets extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     loading: PropTypes.bool,
-    noWidgetsMessage: PropTypes.string,
     widgets: PropTypes.array,
     widgetsData: PropTypes.object,
     simple: PropTypes.bool,
@@ -29,7 +29,6 @@ class Widgets extends PureComponent {
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
     setMapSettings: PropTypes.func.isRequired,
-    query: PropTypes.object,
     embed: PropTypes.bool,
     modalClosing: PropTypes.bool,
     activeWidget: PropTypes.object
@@ -39,7 +38,6 @@ class Widgets extends PureComponent {
     const {
       activeWidget,
       className,
-      noWidgetsMessage,
       loading,
       widgets,
       location,
@@ -51,6 +49,7 @@ class Widgets extends PureComponent {
       embed,
       modalClosing
     } = this.props;
+    const hasWidgets = !loading && !isEmpty(widgets);
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -60,12 +59,7 @@ class Widgets extends PureComponent {
               'c-widgets',
               className,
               { simple: this.props.simple },
-              {
-                'no-widgets':
-                  !loading &&
-                  !noWidgetsMessage &&
-                  (!widgets || widgets.length === 0)
-              }
+              { 'no-widgets': !hasWidgets }
             )}
           >
             {loading && <Loader className="widgets-loader large" />}
@@ -108,12 +102,10 @@ class Widgets extends PureComponent {
                   preventCloseSettings={modalClosing}
                 />
               ))}
-            {!loading &&
-              noWidgetsMessage &&
-              (!widgets || widgets.length === 0) && (
+            {!hasWidgets && (
               <NoContent
                 className="no-widgets-message large"
-                message={noWidgetsMessage}
+                message="No data available"
                 icon
               />
             )}

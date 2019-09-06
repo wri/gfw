@@ -6,6 +6,7 @@ import maxBy from 'lodash/maxBy';
 import minBy from 'lodash/minBy';
 import upperCase from 'lodash/upperCase';
 import moment from 'moment';
+import range from 'lodash/range';
 
 const translateMeans = (means, latest) => {
   if (!means || !means.length) return null;
@@ -188,4 +189,20 @@ export const yearTicksFormatter = (tick, startYear, endYear) => {
     return year.format('YYYY');
   }
   return `'${year.format('YY')}`;
+};
+
+export const getYearsRange = (data, interval) => {
+  const startYearObj = minBy(data, 'year');
+  const endYearObj = maxBy(data, 'year');
+  const startYear = startYearObj && startYearObj.year;
+  const endYear = endYearObj && endYearObj.year;
+
+  return {
+    startYear,
+    endYear,
+    range: range(startYear, endYear + 1, interval || 1).map(y => ({
+      label: y,
+      value: y
+    }))
+  };
 };

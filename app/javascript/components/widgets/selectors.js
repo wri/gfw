@@ -58,6 +58,7 @@ const buildLocationDict = locations =>
   );
 
 export const selectLocation = state => state.location && state.location.payload;
+export const selectRouteType = state => state.location && state.location.type;
 export const selectLocationQuery = state =>
   state.location && state.location.query && state.location.query;
 export const selectWidgetsData = state => state.widgets && state.widgets.data;
@@ -86,17 +87,18 @@ export const getWdigetFromQuery = createSelector(
 );
 
 export const getLocation = createSelector(
-  [selectLocation, selectGeostore],
-  (location, geostore) => {
+  [selectLocation, selectGeostore, selectRouteType],
+  (location, geostore, routeType) => {
     if (location.type === 'aoi' && geostore) {
       return {
         ...location,
+        routeType,
         type: 'geostore',
         adm0: geostore.id
       };
     }
 
-    return location;
+    return { ...location, routeType };
   }
 );
 
@@ -162,7 +164,7 @@ export const getLocationData = createSelector(
     return {
       parent,
       parentLabel: parent && parent.label,
-      parentData: buildLocationDict(parentData),
+      parentData: parentData && buildLocationDict(parentData),
       location: currentLocation,
       locationData: locationData && buildLocationDict(locationData),
       locationLabel: (currentLocation && currentLocation.label) || 'global',
@@ -225,6 +227,21 @@ export const filterWidgets = createSelector(
   }
 );
 
+const getLocationPath = (routeType, type, query, params) => ({
+  type: routeType,
+  payload: {
+    type: type === 'global' ? 'country' : type,
+    ...params
+  },
+  query: {
+    ...query,
+    map: {
+      ...(query && query.map),
+      canBound: true
+    }
+  }
+});
+
 export const getWidgets = createSelector(
   [
     filterWidgets,
@@ -233,7 +250,8 @@ export const getWidgets = createSelector(
     selectWidgetsData,
     selectLocationQuery,
     selectNonGlobalDatasets,
-    getIsTrase
+    getIsTrase,
+    selectRouteType
   ],
   (
     widgets,
@@ -242,7 +260,8 @@ export const getWidgets = createSelector(
     widgetsData,
     query,
     datasets,
-    isTrase
+    isTrase,
+    routeType
   ) => {
     if (isEmpty(widgets) || !locationObj || !locationData || !widgetsData) {
       return null;
@@ -298,6 +317,8 @@ export const getWidgets = createSelector(
         ...w,
         ...locationObj,
         ...locationData,
+        getLocationPath: params =>
+          getLocationPath(routeType, type, query, params),
         data: rawData,
         settings,
         title: titleTemplate,
@@ -309,7 +330,8 @@ export const getWidgets = createSelector(
       };
 
       const parsedProps = props.getWidgetProps(props);
-      const { title } = parsedProps || {};
+      const { title: parsedTitle } = parsedProps || {};
+      const title = parsedTitle || titleTemplate;
 
       return {
         ...props,

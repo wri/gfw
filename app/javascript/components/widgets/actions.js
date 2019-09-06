@@ -63,3 +63,24 @@ export const setActiveWidget = createThunkAction(
     });
   }
 );
+
+export const goToWidgetLocation = createThunkAction(
+  'goToWidgetLocation',
+  params => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
+    dispatch({
+      type,
+      payload: {
+        type: payload.type === 'global' ? 'country' : payload.type,
+        ...params
+      },
+      query: {
+        ...query,
+        map: {
+          ...(query && query.map),
+          canBound: true
+        }
+      }
+    });
+  }
+);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { getLossGrouped, getExtentGrouped } from 'services/forest-data';
+import { getYearsRange } from 'components/widgets/utils/data';
 
 import getWidgetProps from './selectors';
 
@@ -13,20 +14,63 @@ export default {
   categories: ['forest-change'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  // options: {
-  //   forestTypes: ['ifl', 'primary_forest'],
-  //   landCategories: true,
-  //   units: ['ha', '%'],
-  //   thresholds: true,
-  //   extentYears: true,
-  //   startYears: true,
-  //   endYears: true
-  // },
+  settingsConfig: [
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      whitelist: ['ifl', 'primary_forest'],
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
+    {
+      key: 'unit',
+      label: 'unit',
+      whitelist: ['%', 'ha'],
+      type: 'switch'
+    },
+    {
+      key: 'extentYear',
+      label: 'extent year',
+      type: 'switch'
+    },
+    {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      type: 'range-select',
+      border: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
+    }
+  ],
   chartType: 'rankedList',
   colors: 'loss',
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss_ranking',
+  refetchKeys: ['threshold', 'extentYear', 'forestType', 'landCategory'],
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     // loss
     {
       dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
@@ -83,9 +127,19 @@ export default {
               };
             });
           }
+
+          const { startYear, endYear, range } = getYearsRange(mappedData);
+
           return {
             loss: mappedData,
-            extent: extentResponse.data.data
+            extent: extentResponse.data.data,
+            settings: {
+              startYear,
+              endYear
+            },
+            options: {
+              years: range
+            }
           };
         })
       );

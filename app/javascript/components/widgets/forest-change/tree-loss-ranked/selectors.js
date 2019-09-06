@@ -11,25 +11,29 @@ import { formatNumber } from 'utils/format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationsData = state => state.locationData;
+const getLocationData = state => state.locationData;
+const getLocation = state => state.location;
 const getColors = state => state.colors;
 const getIndicator = state => state.indicator;
-const getLocationObj = state => state.locationObj;
+const getAdm0 = state => state.adm0;
+const getAdm1 = state => state.adm1;
+const getAdm2 = state => state.adm2;
 const getSentences = state => state && state.sentence;
 const getTitle = state => state.title;
 const getLocationName = state => state.type;
+const getLocationPath = state => state.getLocationPath;
 
 export const getSummedByYearsData = createSelector(
-  [getData, getSettings, getLocationObj],
-  (data, settings, location) => {
+  [getData, getSettings, getAdm1, getAdm2],
+  (data, settings, adm1, adm2) => {
     if (isEmpty(data)) return null;
     const { loss, extent } = data;
     const filteredByYears = loss.filter(
       d => d.year >= settings.startYear && d.year <= settings.endYear
     );
     let regionKey = 'iso';
-    if (location && location.adm1) regionKey = 'adm1';
-    if (location && location.adm2) regionKey = 'adm2';
+    if (adm1) regionKey = 'adm1';
+    if (adm2) regionKey = 'adm2';
     const groupedByRegion = groupBy(filteredByYears, regionKey);
     const regions = Object.keys(groupedByRegion);
     const mappedData = regions.map(i => {
@@ -40,7 +44,7 @@ export const getSummedByYearsData = createSelector(
         isoExtent && isoLoss ? 100 * isoLoss / isoExtent : 0;
 
       return {
-        id: location && location.adm1 ? parseInt(i, 10) : i,
+        id: adm1 ? parseInt(i, 10) : i,
         loss: isoLoss,
         extent: isoExtent,
         percentage: percentageLoss > 100 ? 100 : percentageLoss
@@ -70,14 +74,21 @@ export const sortData = createSelector(
 );
 
 export const parseData = createSelector(
-  [sortData, getSettings, getLocationObj, getLocationsData, getColors],
-  (data, settings, locationObj, meta, colors) => {
-    if (!data || !data.length) return null;
+  [
+    sortData,
+    getSettings,
+    getAdm0,
+    getLocation,
+    getLocationData,
+    getColors,
+    getLocationPath
+  ],
+  (data, settings, adm0, location, parentData, colors, locationPath) => {
+    if (isEmpty(data)) return null;
     let dataTrimmed = [];
-    const { type, query, adm0 } = locationObj || {};
 
     data.forEach(d => {
-      const locationMeta = meta && meta[d.id];
+      const locationMeta = parentData && parentData[d.id];
       if (locationMeta) {
         dataTrimmed.push({
           ...d,
@@ -92,7 +103,7 @@ export const parseData = createSelector(
     if (adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
-        d => d.id === locationObj.value
+        d => d.id === (location && location.value)
       );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
@@ -109,29 +120,16 @@ export const parseData = createSelector(
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: {
-        type,
-        payload: {
-          type: 'country',
-          adm0: d.id
-        },
-        query: {
-          ...query,
-          map: {
-            ...(query && query.map),
-            canBound: true
-          }
-        }
-      },
+      path: locationPath({ adm0: d.id }),
       value: settings.unit === 'ha' ? d.loss : d.percentage
     }));
   }
 );
 
 export const parseSentence = createSelector(
-  [sortData, getSettings, getIndicator, getLocationObj, getSentences],
-  (data, settings, indicator, locationObj, sentences) => {
-    if (!data || !data.length || !locationObj) return null;
+  [sortData, getSettings, getIndicator, getLocation, getSentences],
+  (data, settings, indicator, location, sentences) => {
+    if (!data || !data.length || !location) return null;
     const { startYear, endYear } = settings;
     const {
       initial,
@@ -140,15 +138,14 @@ export const parseSentence = createSelector(
       globalWithIndicator,
       noLoss
     } = sentences;
-    const locationData =
-      locationObj && data.find(l => l.id === locationObj.value);
+    const locationData = location && data.find(l => l.id === location.value);
 
     const loss = locationData && locationData.loss;
     const globalLoss = sumBy(data, 'loss') || 0;
     const globalExtent = sumBy(data, 'extent') || 0;
-    const lossArea = locationObj.label === 'global' ? globalLoss : loss;
+    const lossArea = location.label === 'global' ? globalLoss : loss;
     const areaPercent =
-      locationObj.label === 'global'
+      location.label === 'global'
         ? 100 * globalLoss / globalExtent
         : (locationData && format('.1f')(locationData.percentage)) || 0;
     const lossPercent = loss && locationData ? 100 * loss / globalLoss : 0;
@@ -156,16 +153,14 @@ export const parseSentence = createSelector(
       ? 'region-wide'
       : `${indicator.label.toLowerCase()}`;
     let sentence = !indicator ? initial : withIndicator;
-    if (locationObj.label === 'global') {
+    if (location.label === 'global') {
       sentence = !indicator ? globalInitial : globalWithIndicator;
     }
     if (loss === 0) sentence = noLoss;
     const params = {
       indicator: indicatorName,
       location:
-        locationObj.label === 'global'
-          ? 'globally'
-          : locationObj && locationObj.label,
+        location.label === 'global' ? 'globally' : location && location.label,
       indicator_alt: indicatorName,
       startYear,
       endYear,
