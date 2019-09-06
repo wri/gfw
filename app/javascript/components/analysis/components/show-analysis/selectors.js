@@ -109,8 +109,9 @@ export const getDataFromLayers = createSelector(
             keys &&
             keys.map(k => ({
               label: k.title,
-              value: dataByService[k.key],
-              unit: k.unit
+              value: (value && value[k.key]) || dataByService[k.key] || 0,
+              unit: k.unit || unit,
+              color: k.color
             }));
 
           return {
