@@ -71,7 +71,8 @@ export const parseSentence = createSelector(
     const totalBiomass = data
       .map(d => d[unit])
       .reduce((sum, d) => (d ? sum + d : sum));
-    const emissionType = unit === 'biomassLoss' ? 'carbon' : 'CO\u2082';
+    const emissionType =
+      unit === 'biomassLoss' ? 'aboveground biomass' : 'CO\u2082';
     let indicatorText = '';
     if (indicator && indicator.value === 'mining') {
       indicatorText = ` ${indicator.label.toLowerCase()} regions`;
