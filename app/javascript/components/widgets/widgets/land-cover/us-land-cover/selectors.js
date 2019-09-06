@@ -162,7 +162,7 @@ export const parseSentence = createSelector(
   (rawdata, data, settings, sentences) => {
     if (isEmpty(data)) return null;
     const { startYear, endYear, activeData } = settings;
-    const { initial, interaction } = sentences;
+    const { initial, interaction, noChange } = sentences;
     const { nodes, links, selectedElement } = data;
 
     let firstCategory;
@@ -174,8 +174,8 @@ export const parseSentence = createSelector(
 
     if (isEmpty(activeData)) {
       // nothing selected, init sentence
-      firstCategory = selectedElement.target && selectedElement.target.name;
-      secondCategory = selectedElement.source && selectedElement.source.name;
+      firstCategory = selectedElement.source && selectedElement.source.name;
+      secondCategory = selectedElement.target && selectedElement.target.name;
       amount = formatNumber({ num: selectedElement.value, unit: 'ha' });
       percentage = formatNumber({
         num: selectedElement.value / total * 100,
@@ -226,8 +226,11 @@ export const parseSentence = createSelector(
       amount,
       percentage
     };
+
+    let sentence = isEmpty(activeData) ? initial : interaction;
+    if (firstCategory === secondCategory) sentence = noChange;
     return {
-      sentence: isEmpty(activeData) ? initial : interaction,
+      sentence,
       params
     };
   }
