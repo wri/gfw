@@ -1,5 +1,5 @@
 // // forest change
-// import * as gladAlerts from 'components/widgets/forest-change/glad-alerts';
+import gladAlerts from 'components/widgets/forest-change/glad-alerts';
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import treeLossGlobal from 'components/widgets/forest-change/tree-loss-global';
 import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
@@ -48,7 +48,7 @@ import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 
 export default {
   // forest change
-  // gladAlerts,
+  gladAlerts,
   treeLoss,
   treeLossGlobal,
   treeLossRanked

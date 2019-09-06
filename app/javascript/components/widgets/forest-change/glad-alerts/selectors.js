@@ -10,15 +10,15 @@ import {
   getStdDevData,
   getDatesData,
   getChartConfig
-} from 'components/widget/utils/data';
+} from 'components/widgets/utils/data';
 
 // get list data
-const selectAlerts = state => (state.data && state.data.alerts) || null;
-const selectLatestDates = state => (state.data && state.data.latest) || null;
-const selectColors = state => state.colors || null;
-const selectInteraction = state => state.settings.interaction || null;
-const selectWeeks = state => (state.settings && state.settings.weeks) || null;
-const selectSentence = state => state.config.sentence || null;
+const selectAlerts = state => state.data && state.data.alerts;
+const selectLatestDates = state => state.data && state.data.latest;
+const selectColors = state => state.colors;
+const selectInteraction = state => state.settings.interaction;
+const selectWeeks = state => state.settings && state.settings.weeks;
+const selectSentence = state => state.sentence;
 
 export const parsePayload = payload => {
   const payloadData = payload && payload.find(p => p.name === 'count');
@@ -201,6 +201,6 @@ export const parseSentence = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
+  config: parseConfig,
   sentence: parseSentence
 });

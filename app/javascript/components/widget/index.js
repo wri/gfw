@@ -52,12 +52,8 @@ class WidgetContainer extends Component {
       !error &&
       prevState.error !== undefined &&
       !isEqual(error, prevState.error);
-    const refetchSettings = refetchKeys
-      ? pick(settings, refetchKeys)
-      : settings;
-    const refetchPrevSettings = refetchKeys
-      ? pick(prevProps.settings, refetchKeys)
-      : prevProps.settings;
+    const refetchSettings = pick(settings, refetchKeys);
+    const refetchPrevSettings = pick(prevProps.settings, refetchKeys);
     const hasSettingsChanged = !isEqual(refetchSettings, refetchPrevSettings);
 
     // refetch data if error, settings, or location changes

@@ -7,7 +7,7 @@ import period from 'data/periods.json';
 import extentYear from 'data/extent-years.json';
 import tscDriverGroup from 'data/tsc-loss-groups.json';
 import type from 'data/types.json';
-import week from 'data/weeks.json';
+import weeks from 'data/weeks.json';
 import dataset from 'data/datasets.json';
 import ifl from 'data/ifl.json';
 
@@ -20,7 +20,7 @@ export default {
   extentYear,
   tscDriverGroup,
   type,
-  week,
+  weeks,
   dataset,
   variable,
   ifl
