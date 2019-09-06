@@ -93,6 +93,7 @@ class Widget extends PureComponent {
           embed={embed}
           settingsConfig={settingsConfig}
           metaKey={metaKey}
+          simple={simple}
           handleShowMap={handleShowMap}
           handleShowInfo={handleShowInfo}
           handleChangeSettings={handleChangeSettings}

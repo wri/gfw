@@ -216,10 +216,7 @@ class ShowAnalysis extends PureComponent {
                 <ul className="draw-stats">
                   {data && data.map(d => this.renderStatItem(d))}
                 </ul>
-                {widgets &&
-                    !!widgets.length && (
-                  <Widgets simple analysis widgets={widgets} />
-                )}
+                <Widgets simple analysis />
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>

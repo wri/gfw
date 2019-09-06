@@ -35,16 +35,6 @@
     padding: 0;
     border-radius: 0;
 
-    .container {
-      min-height: rem(150px);
-      margin-bottom: 0;
-
-      .sentence {
-        font-size: rem(13px);
-        margin-bottom: rem(15px);
-      }
-    }
-
     .widget-loader {
       .spinner {
         width: rem(30px);

@@ -47,6 +47,7 @@ class Widgets extends PureComponent {
       setModalMetaSettings,
       setShareModal,
       embed,
+      simple,
       modalClosing
     } = this.props;
     const hasWidgets = !loading && !isEmpty(widgets);
@@ -72,6 +73,7 @@ class Widgets extends PureComponent {
                   large={w.large && isDesktop}
                   active={activeWidget && activeWidget.widget === w.widget}
                   embed={embed}
+                  simple={simple}
                   location={location}
                   setWidgetData={data => setWidgetsData({ [w.widget]: data })}
                   handleChangeSettings={change =>

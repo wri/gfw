@@ -38,10 +38,7 @@ class DashboardsPage extends PureComponent {
     closeMobileMap: PropTypes.func.isRequired,
     links: PropTypes.array,
     widgetAnchor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    noWidgetsMessage: PropTypes.string,
     handleCategoryChange: PropTypes.func,
-    widgets: PropTypes.array,
-    activeWidgetSlug: PropTypes.string,
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     areaLoading: PropTypes.bool
@@ -72,9 +69,6 @@ class DashboardsPage extends PureComponent {
       links,
       widgetAnchor,
       handleCategoryChange,
-      noWidgetsMessage,
-      widgets,
-      activeWidgetSlug,
       locationType,
       activeArea,
       areaLoading
@@ -119,12 +113,7 @@ class DashboardsPage extends PureComponent {
                       isUserDashboard={activeArea && activeArea.userArea}
                     />
                   )}
-                  <Widgets
-                    className="dashboard-widgets"
-                    noWidgetsMessage={noWidgetsMessage}
-                    widgets={widgets}
-                    activeWidget={activeWidgetSlug}
-                  />
+                  <Widgets className="dashboard-widgets" />
                 </div>
                 <div
                   className={`map-panel ${showMapMobile ? '-open-mobile' : ''}`}

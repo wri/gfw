@@ -38,22 +38,6 @@ export const getNoWidgetsMessage = createSelector(
   category => `${upperFirst(category)} data for {location} coming soon`
 );
 
-export const getActiveWidget = createSelector(
-  [getWidgets, selectQuery],
-  (widgets, query) => {
-    if (!widgets || !widgets.length) return null;
-    if (query && query.widget) {
-      return widgets.find(w => w.widget === query.widget);
-    }
-    return widgets[0];
-  }
-);
-
-export const getActiveWidgetSlug = createSelector([getActiveWidget], widget => {
-  if (!widget) return null;
-  return widget.widget;
-});
-
 export const getLinks = createSelector(
   [getWidgets, selectCategory],
   (widgets, activeCategory) => {
@@ -73,9 +57,6 @@ export const getDashboardsProps = createStructuredSelector({
   showMapMobile: selectShowMap,
   category: selectCategory,
   links: getLinks,
-  widgets: getWidgets,
-  activeWidget: getActiveWidget,
-  activeWidgetSlug: getActiveWidgetSlug,
   widgetAnchor: getWidgetAnchor,
   noWidgetsMessage: getNoWidgetsMessage,
   locationType: selectLocationType,

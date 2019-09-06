@@ -148,18 +148,18 @@ export const getWidgetsWithLayerParams = createSelector(
     const layerIds = layers && layers.map(l => l.id);
     const filteredWidgets = widgets.filter(w => {
       const layerIntersection =
-        w.config.datasets &&
-        intersection(flatMap(w.config.datasets.map(d => d.layers)), layerIds);
-      return w.config.analysis && layerIntersection && layerIntersection.length;
+        w.datasets &&
+        intersection(flatMap(w.datasets.map(d => d.layers)), layerIds);
+      return w.analysis && layerIntersection && layerIntersection.length;
     });
     return filteredWidgets.map(w => {
       const widgetLayer =
         layers &&
         layers.find(
           l =>
-            w.config &&
-            w.config.datasets &&
-            flatMap(w.config.datasets.map(d => d.layers)).includes(l.id)
+            w &&
+            w.datasets &&
+            flatMap(w.datasets.map(d => d.layers)).includes(l.id)
         );
       const { params, decodeParams } = widgetLayer || {};
       const startDate =

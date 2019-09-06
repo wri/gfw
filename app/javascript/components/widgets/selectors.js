@@ -74,6 +74,7 @@ export const selectCountryData = state => state.countryData;
 export const selectPolynameWhitelist = state =>
   state.whitelists && state.whitelists.data;
 export const selectEmbed = (state, { embed }) => embed;
+export const selectSimple = (state, { simple }) => simple;
 export const selectCategory = state =>
   state.location && state.location.query && state.location.query.category;
 export const selectModalClosing = state =>
@@ -359,5 +360,6 @@ export const getWidgetsProps = createStructuredSelector({
   activeWidget: getActiveWidget,
   location: getLocation,
   emebd: selectEmbed,
+  simple: selectSimple,
   modalClosing: selectModalClosing
 });

@@ -82,29 +82,23 @@ export const getActiveBoundaryDatasets = createSelector(
   }
 );
 
-export const getWidgetLayers = createSelector(
-  getWidgets,
-  widgets => {
-    const activeWidgets =
-      widgets &&
-      widgets.filter(
-        w => w.config.analysis && w.config.datasets && w.config.datasets.length
-      );
-    return (
-      activeWidgets &&
-      flatMap(
-        activeWidgets.map(w =>
-          flatMap(
-            w.config.datasets.map(
-              d =>
-                (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
-            )
+export const getWidgetLayers = createSelector(getWidgets, widgets => {
+  const activeWidgets =
+    widgets &&
+    widgets.filter(w => w.analysis && w.datasets && w.datasets.length);
+  return (
+    activeWidgets &&
+    flatMap(
+      activeWidgets.map(w =>
+        flatMap(
+          w.datasets.map(
+            d => (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
           )
         )
       )
-    );
-  }
-);
+    )
+  );
+});
 
 export const parseLocation = createSelector(
   [getActiveArea, selectLocation],
