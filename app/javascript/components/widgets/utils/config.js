@@ -50,7 +50,8 @@ export const getSettingsConfig = ({
 }) =>
   settingsConfig &&
   settingsConfig.map(o => {
-    const { key, startKey, endKey, options, whitelist, locationType } = o || {};
+    const { key, startKey, endKey, options, whitelist, locationType, noSort } =
+      o || {};
     let mergedOptions =
       (dataOptions && dataOptions[key]) || options || allOptions[key];
     if (key === 'forestType') {
@@ -71,7 +72,9 @@ export const getSettingsConfig = ({
           locationType
         });
     }
-    const parsedOptions = sortBy(mergedOptions, 'label');
+    const parsedOptions = noSort
+      ? mergedOptions
+      : sortBy(mergedOptions, 'label');
 
     return {
       ...o,

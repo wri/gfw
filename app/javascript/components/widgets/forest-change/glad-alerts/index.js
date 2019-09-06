@@ -30,9 +30,15 @@ export default {
     summary: 6,
     forestChange: 9
   },
-  options: {
-    weeks: [13, 26, 52]
-  },
+  settingsConfig: [
+    {
+      key: 'weeks',
+      label: 'weeks',
+      type: 'select',
+      whitelist: [13, 26, 52],
+      noSort: true
+    }
+  ],
   whitelists: {
     adm0: [
       'ABW',
