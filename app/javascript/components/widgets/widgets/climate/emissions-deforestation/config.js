@@ -8,7 +8,7 @@ export default {
     startYears: true,
     endYears: true,
     thresholds: true,
-    units: ['co2LossByYear', 'cLossByYear']
+    units: ['co2LossByYear', 'biomassLoss']
   },
   datasets: [
     // biomass loss
