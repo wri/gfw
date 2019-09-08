@@ -2,9 +2,12 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
+import flatMap from 'lodash/flatMap';
+import moment from 'moment';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
+import { getActiveLayersWithDates } from 'components/map/selectors';
 
 import { getIsTrase } from 'app/layouts/root/selectors';
 
@@ -16,7 +19,8 @@ import {
   getSettingsConfig,
   getOptionsSelected,
   getIndicator,
-  getStatements
+  getStatements,
+  getLocationPath
 } from './utils/config';
 import allWidgets from './manifest';
 
@@ -75,6 +79,7 @@ export const selectPolynameWhitelist = state =>
   state.whitelists && state.whitelists.data;
 export const selectEmbed = (state, { embed }) => embed;
 export const selectSimple = (state, { simple }) => simple;
+export const selectAnalysis = (state, { analysis }) => analysis;
 export const selectCategory = state =>
   state.location && state.location.query && state.location.query.category;
 export const selectModalClosing = state =>
@@ -182,9 +187,20 @@ export const filterWidgets = createSelector(
     selectPolynameWhitelist,
     selectEmbed,
     getWdigetFromQuery,
-    selectCategory
+    selectCategory,
+    getActiveLayersWithDates,
+    selectAnalysis
   ],
-  (location, locationData, polynameWhitelist, embed, widget, category) => {
+  (
+    location,
+    locationData,
+    polynameWhitelist,
+    embed,
+    widget,
+    category,
+    layers,
+    showAnalysis
+  ) => {
     const { adminLevel, type } = location;
 
     const widgets = Object.values(allWidgets).map(w => ({
@@ -193,12 +209,25 @@ export const filterWidgets = createSelector(
     }));
 
     if (embed && widget) return widgets.filter(w => w.widget === widget);
+    const layerIds = layers && layers.map(l => l.id);
 
     return sortBy(
       widgets.filter(w => {
-        const { types, admins, whitelists, categories, source } = w || {};
+        const {
+          types,
+          admins,
+          whitelists,
+          categories,
+          source,
+          datasets,
+          analysis
+        } =
+          w || {};
         const { fao } = locationData || {};
 
+        const layerIntersection =
+          datasets &&
+          intersection(flatMap(datasets.map(d => d.layers)), layerIds);
         const hasLocation =
           types &&
           types.includes(type) &&
@@ -214,34 +243,22 @@ export const filterWidgets = createSelector(
           !whitelists.indicators ||
           intersection(polynameWhitelist, whitelists.indicators);
         const hasCategory = !category || categories.includes(category);
+        const isAnalysisWidget =
+          !showAnalysis || (analysis && !isEmpty(layerIntersection));
 
         return (
           hasLocation &&
           matchesAdminWhitelist &&
           matchesPolynameWhitelist &&
           hasCategory &&
-          isFAOCountry
+          isFAOCountry &&
+          isAnalysisWidget
         );
       }),
       category ? `sortOrder[${category}]` : 'sortOrder.summary'
     );
   }
 );
-
-const getLocationPath = (routeType, type, query, params) => ({
-  type: routeType,
-  payload: {
-    type: type === 'global' ? 'country' : type,
-    ...params
-  },
-  query: {
-    ...query,
-    map: {
-      ...(query && query.map),
-      canBound: true
-    }
-  }
-});
 
 export const getWidgets = createSelector(
   [
@@ -252,7 +269,8 @@ export const getWidgets = createSelector(
     selectLocationQuery,
     selectNonGlobalDatasets,
     getIsTrase,
-    selectRouteType
+    selectRouteType,
+    getActiveLayersWithDates
   ],
   (
     widgets,
@@ -262,7 +280,8 @@ export const getWidgets = createSelector(
     query,
     datasets,
     isTrase,
-    routeType
+    routeType,
+    layers
   ) => {
     if (isEmpty(widgets) || !locationObj || !locationData || !widgetsData) {
       return null;
@@ -284,10 +303,40 @@ export const getWidgets = createSelector(
 
       const { settings: dataSettings } = rawData || {};
 
+      const widgetLayer =
+        layers &&
+        layers.find(
+          l =>
+            w.datasets && flatMap(w.datasets.map(d => d.layers)).includes(l.id)
+        );
+
+      const { params: layerParams, decodeParams } = widgetLayer || {};
+      const startDate =
+        (layerParams && layerParams.startDate) ||
+        (decodeParams && decodeParams.startDate);
+      const startYear =
+        startDate && parseInt(moment(startDate).format('YYYY'), 10);
+      const endDate =
+        (layerParams && layerParams.endDate) ||
+        (decodeParams && decodeParams.endDate);
+      const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
+
+      const layerSettings = {
+        ...layerParams,
+        ...decodeParams,
+        ...(startYear && {
+          startYear
+        }),
+        ...(endYear && {
+          endYear
+        })
+      };
+
       const settings = {
         ...defaultSettings,
         ...dataSettings,
-        ...(query && query[widget])
+        ...(query && query[widget]),
+        ...layerSettings
       };
 
       const dataOptions = rawData && rawData.options;
@@ -346,20 +395,21 @@ export const getWidgets = createSelector(
 );
 
 export const getActiveWidget = createSelector(
-  [getWidgets, getWdigetFromQuery],
-  (widgets, activeWidgetKey) => {
-    if (!widgets) return null;
+  [getWidgets, getWdigetFromQuery, selectAnalysis],
+  (widgets, activeWidgetKey, analysis) => {
+    if (!widgets || analysis) return null;
     if (!activeWidgetKey) return widgets[0];
     return widgets.find(w => w.widget === activeWidgetKey);
   }
 );
 
-export const getWidgetsProps = createStructuredSelector({
-  loading: selectLoading,
-  widgets: getWidgets,
-  activeWidget: getActiveWidget,
-  location: getLocation,
-  emebd: selectEmbed,
-  simple: selectSimple,
-  modalClosing: selectModalClosing
-});
+export const getWidgetsProps = () =>
+  createStructuredSelector({
+    loading: selectLoading,
+    widgets: getWidgets,
+    activeWidget: getActiveWidget,
+    location: getLocation,
+    emebd: selectEmbed,
+    simple: selectSimple,
+    modalClosing: selectModalClosing
+  });

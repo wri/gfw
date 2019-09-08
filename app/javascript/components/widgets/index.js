@@ -43,6 +43,14 @@ const adminBoundaryLayer = {
   visibility: true
 };
 
+const makeMapStateToProps = () => {
+  const getWidgetPropsObject = getWidgetsProps();
+  const mapStateToProps = (state, props) => ({
+    ...getWidgetPropsObject(state, props)
+  });
+  return mapStateToProps;
+};
+
 class WidgetsContainer extends PureComponent {
   static propTypes = {
     getWidgetsData: PropTypes.func,
@@ -135,4 +143,4 @@ reducerRegistry.registerModule('widgets', {
   initialState
 });
 
-export default connect(getWidgetsProps, actions)(WidgetsContainer);
+export default connect(makeMapStateToProps, actions)(WidgetsContainer);

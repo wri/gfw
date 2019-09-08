@@ -284,3 +284,18 @@ export const getStatements = ({
 
   return statements;
 };
+
+export const getLocationPath = (routeType, type, query, params) => ({
+  type: routeType,
+  payload: {
+    type: type === 'global' ? 'country' : type,
+    ...params
+  },
+  query: {
+    ...query,
+    map: {
+      ...(query && query.map),
+      canBound: true
+    }
+  }
+});

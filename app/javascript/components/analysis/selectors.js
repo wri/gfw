@@ -5,9 +5,9 @@ import groupBy from 'lodash/groupBy';
 import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
-import { getWidgets } from 'components/widgets/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 import { locationLevelToStr } from 'utils/format';
+import { getWidgets } from 'components/widgets/selectors';
 
 import { initialState } from './reducers';
 
@@ -82,14 +82,12 @@ export const getActiveBoundaryDatasets = createSelector(
   }
 );
 
-export const getWidgetLayers = createSelector(getWidgets, widgets => {
-  const activeWidgets =
+export const getWidgetLayers = createSelector(
+  [getWidgets],
+  widgets =>
     widgets &&
-    widgets.filter(w => w.analysis && w.datasets && w.datasets.length);
-  return (
-    activeWidgets &&
     flatMap(
-      activeWidgets.map(w =>
+      widgets.map(w =>
         flatMap(
           w.datasets.map(
             d => (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
@@ -97,8 +95,7 @@ export const getWidgetLayers = createSelector(getWidgets, widgets => {
         )
       )
     )
-  );
-});
+);
 
 export const parseLocation = createSelector(
   [getActiveArea, selectLocation],
