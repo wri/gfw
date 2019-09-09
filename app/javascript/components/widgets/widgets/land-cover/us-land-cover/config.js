@@ -7,7 +7,7 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   metaKey: 'usa_land_cover',
   colors: 'plantations',
-  dataTypes: 'plantations',
+  dataType: 'nlcd_landcover',
   layers: ['plantations_by_type', 'plantations_by_species'],
   datasets: [
     {
@@ -24,7 +24,7 @@ export default {
     startYears: true,
     endYears: true,
     yearValues: [2001, 2006, 2011, 2016],
-    variables: ['all_data', 'changes_only'],
+    variables: ['changes_only', 'all_data'],
     sources: ['ipcc', 'nlcd']
   },
   sortOrder: {

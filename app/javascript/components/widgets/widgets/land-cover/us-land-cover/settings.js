@@ -4,7 +4,7 @@ export default {
   page: 0,
   startYear: 2001,
   endYear: 2016,
-  variable: 'all_data',
+  variable: 'changes_only',
   unit: 'ha',
   source: 'ipcc'
 };
