@@ -316,7 +316,7 @@ class WidgetSettings extends PureComponent {
                 widget,
                 settings,
                 onSettingsChange,
-                'source'
+                'categorization system'
               )}
             {periods && (
               <Dropdown
