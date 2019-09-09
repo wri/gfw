@@ -35,12 +35,13 @@ export default {
     {secondCategory}, equivalent to {amount}, which represents {percentage} of all land cover.`,
     interaction: `From {startYear} to {endYear}, land cover changing from {firstCategory} to {secondCategory}, was equivalent to {amount}, which
     represents {percentage} of all land cover.`,
-    noChange: 'From {startYear} to {endYear}, most land cover remained {firstCategory}, equivalent to {amount}, which represents {percentage} of all land cover.'
+    noChange:
+      'From {startYear} to {endYear}, most land cover remained {firstCategory}, equivalent to {amount}, which represents {percentage} of all land cover.'
   },
   whitelists: {
     adm0: ['USA']
   },
   blacklists: {
-    adm1: [2]
+    adm1: [2, 12]
   }
 };
