@@ -295,6 +295,13 @@ export const parseWidgetsWithOptions = createSelector(
             const configWhitelist = optionsConfig[optionKey];
             let filteredOptions = options[optionKey];
             if (Array.isArray(configWhitelist)) {
+              // USLC widget exception: reversing options without using Arr.reverse()
+              if (configWhitelist.includes('changes_only')) {
+                filteredOptions = filteredOptions.reduce(
+                  (acc, num) => [num, ...acc],
+                  []
+                );
+              }
               filteredOptions = filteredOptions
                 ? filteredOptions.filter(o => configWhitelist.includes(o.value))
                 : optionsConfig[optionKey].map(o => ({
