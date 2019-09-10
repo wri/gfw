@@ -115,7 +115,6 @@
     "coffee-loader": "0.7.3",
     "coffee-script": "1.12.7",
     "constants": "0.0.2",
-    "cw-components": "github:ClimateWatch-Vizzuality/climate-watch-components#1.51.0",
     "d3": "4.11.0",
     "d3-format": "1.2.1",
     "deck.gl": "^7.1.10",
