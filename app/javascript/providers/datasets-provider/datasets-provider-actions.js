@@ -2,6 +2,7 @@ import { createAction, createThunkAction } from 'redux-tools';
 import wriAPISerializer from 'wri-json-api-serializer';
 import flatten from 'lodash/flatten';
 import sortBy from 'lodash/sortBy';
+import chroma from 'chroma-js';
 
 import { getDatasetsProvider } from 'services/datasets';
 import thresholdOptions from 'data/thresholds.json';
@@ -93,7 +94,7 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       l.published
                   )
                   .map((l, i) => {
-                    const { layerConfig } = l;
+                    const { layerConfig, legendConfig } = l;
                     const { position, confirmedOnly, multiConfig } =
                       l.applicationConfig || {};
                     const {
@@ -106,6 +107,10 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                     } = layerConfig;
                     const decodeFunction = decodeLayersConfig[l.id];
                     const decodeClusters = decodeLayersClusters[l.id];
+                    const customColor =
+                      legendConfig &&
+                      legendConfig.items &&
+                      legendConfig.items[0].color;
 
                     // check if has a timeline
                     const hasParamsTimeline =
@@ -115,7 +120,19 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                       decode_config &&
                       decode_config.map(p => p.key).includes('startDate');
                     const timelineConfig = timeline_config && {
-                      ...timeline_config
+                      ...timeline_config,
+                      railStyle: {
+                        background: '#d6d6d9',
+                        borderRadius: '0px'
+                      },
+                      trackStyle: [
+                        {
+                          background: customColor
+                        },
+                        {
+                          background: chroma(customColor).darken(1.3)
+                        }
+                      ]
                     };
 
                     // get params
@@ -162,13 +179,13 @@ export const getDatasets = createThunkAction('getDatasets', () => dispatch => {
                           }),
                           ...(p.min &&
                             p.max && {
-                              options: Array.from(
-                                Array(p.max - p.min + 1).keys()
-                              ).map(o => ({
-                                label: o + p.min,
-                                value: o + p.min
-                              }))
-                            })
+                            options: Array.from(
+                              Array(p.max - p.min + 1).keys()
+                            ).map(o => ({
+                              label: o + p.min,
+                              value: o + p.min
+                            }))
+                          })
                         }))
                       }),
                       // params for sql query

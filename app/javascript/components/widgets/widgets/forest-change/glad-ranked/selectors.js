@@ -50,18 +50,19 @@ export const parseList = createSelector(
     );
     const groupKey = location.payload.adm1 ? 'adm2' : 'adm1';
     const groupedAlerts = groupBy(alertsByDate, groupKey);
+    const totalCounts = sumBy(alertsByDate, 'alerts');
     const mappedData =
       groupedAlerts &&
       Object.keys(groupedAlerts).map(k => {
         const region = meta.find(l => parseInt(k, 10) === l.value);
-        const regionExtent = extent.find(a => a[groupKey] === parseInt(k, 10));
+        const regionExtent = extent.find(
+          a => parseInt(a[groupKey], 10) === parseInt(k, 10)
+        );
         const regionData = groupedAlerts[k];
         const countsArea = sumBy(regionData, 'area_ha') || 0;
         const counts = sumBy(regionData, 'alerts') || 0;
         const countsAreaPerc =
-          countsArea && regionExtent
-            ? countsArea / regionExtent.extent * 100
-            : 0;
+          counts && totalCounts ? counts / totalCounts * 100 : 0;
         const countsPerHa =
           counts && regionExtent ? counts / regionExtent.extent : 0;
         const { payload, query, type } = location;
@@ -132,8 +133,11 @@ export const parseSentence = createSelector(
     const topCount = percentileCount / totalCount * 100;
     const countArea = sumBy(data, 'area') || 0;
     const formatType = countArea < 1 ? '.3r' : '.3s';
+    const timeFrame =
+      options.weeks && options.weeks.find(w => w.value === settings.weeks);
+
     const params = {
-      timeframe: options.weeks.find(w => w.value === settings.weeks).label,
+      timeframe: timeFrame && timeFrame.label,
       count: format(',')(totalCount),
       area: `${format(formatType)(countArea)}ha`,
       topPercent: `${format('.2r')(topCount)}%`,

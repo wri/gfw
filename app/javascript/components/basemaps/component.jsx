@@ -155,10 +155,10 @@ class Basemaps extends React.PureComponent {
       planetPeriodSelected
     } = this.props;
     const { planetTooltipOpen } = this.state;
-    const { url, interval, year, period } = planetBasemapSelected || {};
+    const { name, interval, year, period } = planetBasemapSelected || {};
     const basemap = {
       value: 'planet',
-      url,
+      name,
       interval,
       planetYear: year,
       period
@@ -219,7 +219,7 @@ class Basemaps extends React.PureComponent {
                           (selectedInvertal && selectedInvertal.period) || null,
                         planetYear:
                           (selectedInvertal && selectedInvertal.year) || null,
-                        url: (selectedInvertal && selectedInvertal.url) || ''
+                        name: (selectedInvertal && selectedInvertal.name) || ''
                       });
                     }}
                   />
@@ -242,7 +242,7 @@ class Basemaps extends React.PureComponent {
                             period:
                               (selectedYear && selectedYear.period) || null,
                             planetYear: parseInt(selected, 10),
-                            url: (selectedYear && selectedYear.url) || ''
+                            name: (selectedYear && selectedYear.name) || ''
                           });
                         }}
                         native
@@ -264,7 +264,7 @@ class Basemaps extends React.PureComponent {
                               (selectedPeriod && selectedPeriod.interval) || '',
                             planetYear:
                               (selectedPeriod && selectedPeriod.year) || '',
-                            url: (selectedPeriod && selectedPeriod.url) || ''
+                            name: (selectedPeriod && selectedPeriod.name) || ''
                           });
                         }}
                         native

@@ -25,7 +25,7 @@ export const setMapPromptsSettings = createThunkAction(
       );
       if (stepsKey) {
         track('userPrompt', {
-          label: `${stepsKey}: ${stepIndex + 1}`
+          label: `${stepsKey}: ${(stepIndex || 0) + 1}`
         });
       }
     }

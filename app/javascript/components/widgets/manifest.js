@@ -6,6 +6,7 @@ import * as treeLossRanked from './widgets/forest-change/tree-loss-ranked';
 import * as faoDeforest from './widgets/forest-change/fao-deforest';
 import * as faoReforest from './widgets/forest-change/fao-reforest';
 import * as firesAlerts from './widgets/forest-change/fires-alerts';
+import * as firesRanked from './widgets/forest-change/fires-ranked';
 import * as gladRanked from './widgets/forest-change/glad-ranked';
 import * as treeCoverGain from './widgets/forest-change/tree-cover-gain';
 import * as treeGainLocated from './widgets/forest-change/tree-gain-located';
@@ -30,6 +31,7 @@ import * as treeCoverLocated from './widgets/land-cover/tree-cover-located';
 import * as emissions from './widgets/climate/emissions';
 import * as woodyBiomass from './widgets/climate/whrc-biomass/';
 import * as soilBiomass from './widgets/climate/soil-organic';
+import * as emissionsDeforestation from './widgets/climate/emissions-deforestation';
 import * as emissionsPlantations from './widgets/climate/emissions-plantations';
 import * as futureCarbonGains from './widgets/climate/future-carbon-gains';
 import * as cumulativeEmissions from './widgets/climate/cumulative-emissions';
@@ -51,6 +53,7 @@ export default {
   treeLossGlobal,
   treeLossRanked,
   firesAlerts,
+  firesRanked,
   faoDeforest,
   faoReforest,
   gladRanked,
@@ -73,6 +76,7 @@ export default {
   treeCoverLocated,
   // climate
   emissions,
+  emissionsDeforestation,
   emissionsPlantations,
   woodyBiomass,
   soilBiomass,

@@ -15,13 +15,15 @@ import Button from 'components/ui/button';
 import MapMenu from 'components/map-menu';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
+import FailedImport from 'pages/failed-import';
 
 import 'styles/styles.scss';
 import './styles.scss';
 
 const universalOptions = {
   loading: <Loader className="page-loader" />,
-  minDelay: 200
+  minDelay: 200,
+  error: <FailedImport />
 };
 
 const PageComponent = universal(
@@ -76,16 +78,16 @@ class App extends PureComponent {
             {embed &&
               !isGFW &&
               !isTrase && (
-                <div className="embed-footer">
-                  <p>For more info</p>
-                  <Button
-                    className="embed-btn"
-                    extLink={window.location.href.replace('/embed', '')}
-                  >
+              <div className="embed-footer">
+                <p>For more info</p>
+                <Button
+                  className="embed-btn"
+                  extLink={window.location.href.replace('/embed', '')}
+                >
                     EXPLORE ON GFW
-                  </Button>
-                </div>
-              )}
+                </Button>
+              </div>
+            )}
             <Meta {...metadata} />
             <Cookies />
             {!route.hideFooter && !embed && <Footer />}

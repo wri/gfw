@@ -6,8 +6,9 @@
 
   .date-pickers {
     display: flex;
-    margin: rem(5px) 0 rem(10px) rem(30px);
+    margin: rem(5px) 0 rem(10px);
     align-items: center;
+    justify-content: flex-end;
 
     .datepicker {
       margin: 0 rem(5px);
@@ -16,45 +17,7 @@
   }
 
   .range-slider {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-
-    .range {
-      width: 100%;
-      margin-left: rem(30px);
-      cursor: pointer;
-
-      &.can-play {
-        margin-left: rem(10px);
-      }
-    }
-
-    .control-btn {
-      border-color: transparent;
-      border-style: none;
-      border-width: 0;
-      padding: 0;
-      cursor: pointer;
-      width: rem(20px);
-      margin-top: 2px;
-
-      svg {
-        fill: #4a4a4a;
-        width: rem(20px);
-        height: rem(20px);
-      }
-    }
-
-    .play-btn:focus {
-      outline: none;
-    }
-
-    .rc-slider-mark {
-      width: 94%;
-      margin-left: 3%;
-    }
+    margin-bottom: rem(15px);
   }
 }
 

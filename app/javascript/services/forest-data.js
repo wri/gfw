@@ -36,7 +36,7 @@ const NEW_SQL_QUERIES = {
   faoEcoLive:
     'SELECT fao.country, fao.forempl, fao.femempl, fao.usdrev, fao.usdexp, fao.gdpusd2012, fao.totpop1000, fao.year FROM table_7_economics_livelihood as fao WHERE fao.year = 2000 or fao.year = 2005 or fao.year = 2010 or fao.year = 9999',
   nonGlobalDatasets:
-    'SELECT {polynames} FROM polyname_whitelist WHERE adm1 is null AND adm2 is null',
+    'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   globalLandCover: 'SELECT * FROM global_land_cover_adm2 WHERE {location}',
   getLocationPolynameWhitelist:
     'SELECT {location}, {polynames} FROM polyname_whitelist {WHERE} GROUP BY {location}'
