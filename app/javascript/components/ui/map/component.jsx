@@ -64,8 +64,8 @@ class Map extends Component {
     onViewportChange: () => {},
     onLoad: () => {},
     getCursor: ({ isHovering, isDragging }) => {
-      if (isHovering) return 'pointer';
       if (isDragging) return 'grabbing';
+      if (isHovering) return 'pointer';
       return 'grab';
     }
   };
@@ -102,7 +102,7 @@ class Map extends Component {
       });
     }
 
-    if (!isEqual(bounds, prevBounds)) {
+    if (!isEqual(bounds, prevBounds) && !!bounds.bbox) {
       this.fitBounds();
     }
   }
@@ -225,6 +225,7 @@ class Map extends Component {
           onLoad={this.onLoad}
           getCursor={getCursor}
           transitionInterpolator={new FlyToInterpolator()}
+          preventStyleDiffing
         >
           {loaded &&
             !!this.map &&

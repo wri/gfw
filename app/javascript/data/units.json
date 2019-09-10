@@ -40,6 +40,10 @@
     "value": "cLossByYear"
   },
   {
+    "label": "Biomass loss",
+    "value": "biomassLoss"
+  },
+  {
     "label": "Carbon",
     "value": "cGain"
   }

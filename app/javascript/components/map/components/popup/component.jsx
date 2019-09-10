@@ -107,19 +107,19 @@ class Popup extends Component {
             <div className="popup-table">
               {interactions &&
                 interactions.length > 1 && (
-                  <Dropdown
-                    className="layer-selector"
-                    theme="theme-dropdown-native"
-                    value={selected}
-                    options={interactions}
-                    onChange={setMapInteractionSelected}
-                    native
-                  />
-                )}
+                <Dropdown
+                  className="layer-selector"
+                  theme="theme-dropdown-native"
+                  value={selected}
+                  options={interactions}
+                  onChange={setMapInteractionSelected}
+                  native
+                />
+              )}
               {selected &&
                 interactions.length === 1 && (
-                  <div className="popup-title">{selected.label}</div>
-                )}
+                <div className="popup-title">{selected.label}</div>
+              )}
               {isBoundary ? (
                 <BoundarySentence
                   selected={selected}
