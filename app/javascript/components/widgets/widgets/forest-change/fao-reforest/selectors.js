@@ -95,7 +95,7 @@ export const parseSentence = createSelector(
     const params = {
       location: locationName,
       year: period,
-      rate: `${format(formatType)(rate)}ha/yr`
+      rate: `${format(formatType)(rate)}ha`
     };
 
     return {

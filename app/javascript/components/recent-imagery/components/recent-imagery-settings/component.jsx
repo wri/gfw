@@ -5,8 +5,10 @@ import { format } from 'd3-format';
 import startCase from 'lodash/startCase';
 import { track } from 'app/analytics';
 
+import { Slider } from 'vizzuality-components';
+
 import Icon from 'components/ui/icon';
-import Slider from 'components/ui/slider';
+// import Slider from 'components/ui/slider';
 import Loader from 'components/ui/loader';
 import Dropdown from 'components/ui/dropdown';
 import Button from 'components/ui/button';
@@ -120,42 +122,50 @@ class RecentImagerySettings extends PureComponent {
                 setRecentImagerySettings({ clouds: d });
                 track('recentImageryClouds');
               }}
+              handleStyle={{
+                backgroundColor: 'white',
+                borderRadius: '2px',
+                boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.29)',
+                border: '0px',
+                zIndex: 2
+              }}
+              trackStyle={{ backgroundColor: '#97be32' }}
             />
           </div>
         </div>
         <div className="thumbnails">
           {tiles &&
             !!tiles.length && (
-              <Fragment>
-                <div key="thumbnails-header" className="header">
-                  <div className="description">
-                    <p>
-                      {moment(selected.dateTime)
-                        .format('DD MMM YYYY')
-                        .toUpperCase()}
-                    </p>
-                    <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
-                    <p>{startCase(selected.instrument)}</p>
-                  </div>
-                  <Dropdown
-                    className="band-selector"
-                    theme="theme-dropdown-button"
-                    value={bands}
-                    options={BANDS}
-                    onChange={option => {
-                      resetRecentImageryData();
-                      setRecentImagerySettings({
-                        bands: option === '0' ? 0 : option,
-                        selected: null,
-                        selectedIndex: 0
-                      });
-                      track('recentImageryImageType');
-                    }}
-                    native
-                  />
+            <Fragment>
+              <div key="thumbnails-header" className="header">
+                <div className="description">
+                  <p>
+                    {moment(selected.dateTime)
+                      .format('DD MMM YYYY')
+                      .toUpperCase()}
+                  </p>
+                  <p>{format('.0f')(selected.cloudScore)}% cloud coverage</p>
+                  <p>{startCase(selected.instrument)}</p>
                 </div>
-                <div className="thumbnail-grid">
-                  {tiles &&
+                <Dropdown
+                  className="band-selector"
+                  theme="theme-dropdown-button"
+                  value={bands}
+                  options={BANDS}
+                  onChange={option => {
+                    resetRecentImageryData();
+                    setRecentImagerySettings({
+                      bands: option === '0' ? 0 : option,
+                      selected: null,
+                      selectedIndex: 0
+                    });
+                    track('recentImageryImageType');
+                  }}
+                  native
+                />
+              </div>
+              <div className="thumbnail-grid">
+                {tiles &&
                     !error &&
                     !!tiles.length &&
                     tiles.map((tile, i) => (
@@ -180,9 +190,9 @@ class RecentImagerySettings extends PureComponent {
                         }}
                       />
                     ))}
-                </div>
-              </Fragment>
-            )}
+              </div>
+            </Fragment>
+          )}
           {error && (
             <RefreshButton
               refetchFn={() => {
@@ -196,11 +206,11 @@ class RecentImagerySettings extends PureComponent {
           {!error &&
             (!tiles || !tiles.length) &&
             !loading && (
-              <NoContent
-                className="placeholder"
-                message="We can't find additional images for the selection"
-              />
-            )}
+            <NoContent
+              className="placeholder"
+              message="We can't find additional images for the selection"
+            />
+          )}
           {loading &&
             !error &&
             (!tiles || !tiles.length) && <Loader className="placeholder" />}

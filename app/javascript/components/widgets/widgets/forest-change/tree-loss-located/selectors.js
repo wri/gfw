@@ -30,19 +30,22 @@ export const mapData = createSelector(
           d.loss.filter(l => l.year >= startYear && l.year <= endYear),
           'area'
         ) || 0;
-      const locationExtent = extent.filter(l => l.id === d.id);
+      const locationExtentById = extent.filter(l => l.id === d.id);
+      const locationExtent =
+        locationExtentById &&
+        !!locationExtentById.length &&
+        locationExtentById[0].extent;
       const percentage =
-        (locationExtent &&
-          !!locationExtent.length &&
-          loss / locationExtent[0].extent * 100) ||
-        0;
+        loss && locationExtent ? loss / locationExtent * 100 : 0;
+      const normalPercentage = percentage > 100 ? 100 : percentage;
+
       const { payload, query, type } = location;
 
       return {
         label: (region && region.label) || '',
         loss,
-        percentage,
-        value: settings.unit === 'ha' ? loss : percentage,
+        percentage: normalPercentage,
+        value: settings.unit === 'ha' ? loss : normalPercentage,
         path: {
           type,
           payload: {

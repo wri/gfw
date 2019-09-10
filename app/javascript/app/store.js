@@ -13,7 +13,31 @@ reducerRegistry.registerModule('myGfw', myGfwReduxModule);
 
 const initialReducers = combineReducers(reducerRegistry.getReducers());
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const reduxDevTools =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    maxAge: 10,
+    stateSanitizer: state => ({
+      ...state,
+      datasets: {
+        ...state.datasets,
+        data: 'NOT_SERIALIZED'
+      },
+      ptw: {
+        ...state.ptw,
+        data: 'NOT_SERIALIZED'
+      },
+      countryData: {
+        ...state.countryData,
+        countries: 'NOT_SERIALIZED',
+        gadmCountries: 'NOT_SERIALIZED',
+        faoCountries: 'NOT_SERIALIZED'
+      }
+    })
+  });
+
+const composeEnhancers =
+  (process.env.NODE_ENV === 'development' && reduxDevTools) || compose;
 const middlewares = [thunk, router.middleware];
 
 export default () => {
