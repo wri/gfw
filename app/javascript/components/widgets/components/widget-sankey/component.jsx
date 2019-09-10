@@ -62,7 +62,8 @@ class WidgetSankey extends PureComponent {
         highlight: link => shouldHighlight(link)
       },
       nodeTitles: [startYear, endYear],
-      ...dataConfig
+      ...dataConfig,
+      ...this.props.config // dataConfig in selectors.js
     };
 
     return (
@@ -94,6 +95,7 @@ class WidgetSankey extends PureComponent {
 
 WidgetSankey.propTypes = {
   data: PropTypes.object,
+  config: PropTypes.object,
   dataConfig: PropTypes.object,
   settings: PropTypes.object,
   parsePayload: PropTypes.func,
