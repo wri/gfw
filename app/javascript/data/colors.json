@@ -76,7 +76,24 @@
       "Settlement": "#E9462B",
       "Bare": "#F6F0EA",
       "Water": "#A3DCFF",
-      "Permanent Snow and Ice": "#e0e0e0"
+      "Permanent Snow and Ice": "#e0e0e0",
+
+      "Deciduous forest": "#68ab5f",
+      "Evergreen forest": "#1c5f2c",
+      "Mixed forest": "#b5c58f",
+      "Shrub/scrub": "#ccb879",
+      "Grassland/herbaceous": "#dfdfc2",
+      "Cultivated crops": "#ab6c28",
+      "Pasture/hay": "#dcd939",
+      "Developed open space": "#dec5c5",
+      "Developed low intensity": "#d99282",
+      "Developed medium intensity": "#eb0000",
+      "Developed high intensity": "#ab0000",
+      "Woody wetlands": "#b8d9eb",
+      "Emergent herbaceous wetlands": "#6c9fb8",
+      "Barren land (rock/sand/clay)": "#b3ac9f",
+      "Perennial ice/snow": "#d1def8",
+      "Water Body": "#466b9f"
     }
   },
   "emissions": {

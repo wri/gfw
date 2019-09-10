@@ -36,8 +36,8 @@ function SankeyChart({
         }}
       >
         {config.nodeTitles &&
-          config.nodeTitles.map(t => (
-            <span key={t} style={{ width: `${nodeWidth}px` }}>
+          config.nodeTitles.map((t, i) => (
+            <span key={`${t}-${i}`} style={{ width: `${nodeWidth}px` }}>
               {t}
             </span>
           ))}

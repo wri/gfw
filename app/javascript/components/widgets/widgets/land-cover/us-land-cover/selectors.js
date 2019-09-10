@@ -10,9 +10,8 @@ import { formatNumber } from 'utils/format';
 
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config.sentence || null;
+const getSentences = state => state.config.sentences || null;
 
 export const parsePayload = payload => {
   if (payload) {
@@ -48,25 +47,44 @@ export const parseData = createSelector(
   (data, colors, settings) => {
     if (isEmpty(data)) return null;
     let { source } = settings;
-    const categories = {
-      forest_land: 'Forest',
-      bare: 'Bare',
-      settlement: 'Settlement',
-      cropland: 'Agriculture',
-      grassland: 'Grassland',
-      wetland: 'Wetland'
-    };
-
     if (!source) source = 'ipcc';
+    const categories = {
+      ipcc: {
+        forest_land: 'Forest',
+        bare: 'Bare',
+        settlement: 'Settlement',
+        cropland: 'Agriculture',
+        grassland: 'Grassland',
+        wetland: 'Wetland'
+      },
+      nlcd: {
+        deciduous_forest: 'Deciduous forest',
+        evergreen_forest: 'Evergreen forest',
+        mixed_forest: 'Mixed forest',
+        shrub_scrub: 'Shrub/scrub',
+        grass_herb: 'Grassland/herbaceous',
+        cultivated_crops: 'Cultivated crops',
+        pasture_hay: 'Pasture/hay',
+        developed_open_space: 'Developed open space',
+        developed_low_intensity: 'Developed low intensity',
+        developed_medium_intensity: 'Developed medium intensity',
+        developed_high_intensity: 'Developed high intensity',
+        woody_wetlands: 'Woody wetlands',
+        emergent_herbaceous_wetlands: 'Emergent herbaceous wetlands',
+        barren: 'Barren land (rock/sand/clay)',
+        perennial_ice_snow: 'Perennial ice/snow',
+        open_water: 'Water Body'
+      }
+    };
 
     // SANKEY NODES
     const startNodes = orderBy(
       Object.entries(groupBy(data, `from_class_${source}`)).map(
         ([key, group]) => ({
-          name: categories[key] ? categories[key] : 'Other',
+          name: categories[source][key] ? categories[source][key] : 'Other',
           key: `${key}-start`,
-          color: categories[key]
-            ? colors.categories[categories[key]]
+          color: categories[source][key]
+            ? colors.categories[categories[source][key]]
             : colors.categories.Other,
           value: sumBy(group, 'area')
         })
@@ -74,11 +92,36 @@ export const parseData = createSelector(
       'value',
       'desc'
     );
-    const nodes = [
-      ...startNodes,
-      ...startNodes.map(n => ({ ...n, key: n.key.replace('start', 'end') }))
+    const uniqueEndNodes = Object.entries(
+      groupBy(data, `to_class_${source}`)
+    ).map(([key, group]) => ({
+      name: categories[source][key] ? categories[source][key] : 'Other',
+      key: `${key}-end`,
+      color: categories[source][key]
+        ? colors.categories[categories[source][key]]
+        : colors.categories.Other,
+      value: sumBy(group, 'area')
+    }));
+    const endNodes = [
+      // nodes already in startNodes
+      ...startNodes
+        .map(startNode => ({
+          ...startNode,
+          key: startNode.key.replace('start', 'end')
+        }))
+        .filter(
+          startNode => findIndex(uniqueEndNodes, { key: startNode.key }) >= 0
+        ),
+      // 'new' nodes
+      ...uniqueEndNodes.filter(
+        endNode =>
+          findIndex(startNodes, {
+            key: endNode.key.replace('end', 'start')
+          }) === -1
+      )
     ];
 
+    const nodes = [...startNodes, ...endNodes];
     // SANKEY LINKS
     const allLinks = data.map(d => {
       const sourceIndex = findIndex(nodes, {
@@ -91,8 +134,9 @@ export const parseData = createSelector(
         source: sourceIndex,
         target: targetIndex,
         value: d.area,
-        key: `${sourceIndex}_${targetIndex}`
-        // abs_pct: d.perc_area
+        key: `${sourceIndex}_${targetIndex}`,
+        startKey: d[`from_class_${source}`],
+        endKey: d[`to_class_${source}`]
       };
     });
     const links = Object.values(groupBy(allLinks, 'key')).map(group => {
@@ -114,29 +158,77 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [parseData, getLocationName, getSettings, getSentences],
-  (data, locationName, settings, sentence) => {
+  [getData, parseData, getSettings, getSentences],
+  (rawdata, data, settings, sentences) => {
     if (isEmpty(data)) return null;
+    const { startYear, endYear, activeData } = settings;
+    const { initial, interaction, noChange } = sentences;
+    const { nodes, links, selectedElement } = data;
 
-    const getNodeName = index =>
-      (data.nodes && data.nodes[index] && data.nodes[index].name) || '';
-    // sentence has to avoid same category 'changes', even if that option is the active one (no filtering)
-    const max =
-      data.links &&
-      maxBy(
-        data.links.filter(d => getNodeName(d.source) !== getNodeName(d.target)),
+    let firstCategory;
+    let secondCategory;
+    let amount;
+    let percentage;
+
+    const total = sumBy(rawdata, 'area');
+
+    if (isEmpty(activeData)) {
+      // nothing selected, init sentence
+      firstCategory = selectedElement.source && selectedElement.source.name;
+      secondCategory = selectedElement.target && selectedElement.target.name;
+      amount = formatNumber({ num: selectedElement.value, unit: 'ha' });
+      percentage = formatNumber({
+        num: selectedElement.value / total * 100,
+        unit: '%'
+      });
+    } else if (activeData.source && activeData.target) {
+      // link selected
+      const link = links.find(l => l.key === activeData.key);
+      firstCategory = activeData.source.name;
+      secondCategory = activeData.target.name;
+      const change = link && link.value;
+      amount = formatNumber({ num: change, unit: 'ha' });
+      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+    } else if (activeData.key && activeData.key.includes('start')) {
+      // start node
+      const sourceNode = nodes.find(n => n.key === activeData.key);
+      firstCategory = sourceNode && sourceNode.name;
+      secondCategory = 'other types';
+      const change = sumBy(
+        links.filter(
+          l =>
+            `${l.startKey}-start` === sourceNode.key && l.startKey !== l.endKey
+        ),
         'value'
       );
-    const { startYear, endYear } = settings;
+      amount = formatNumber({ num: change, unit: 'ha' });
+      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+    } else if (activeData.key && activeData.key.includes('end')) {
+      // end node
+      const endNode = nodes.find(n => n.key === activeData.key);
+      firstCategory = 'other types';
+      secondCategory = endNode && endNode.name;
+      const change = sumBy(
+        links.filter(
+          l => `${l.endKey}-end` === endNode.key && l.startKey !== l.endKey
+        ),
+        'value'
+      );
+      amount = formatNumber({ num: change, unit: 'ha' });
+      percentage = formatNumber({ num: change / total * 100, unit: '%' });
+    }
 
     const params = {
       startYear,
       endYear,
-      firstCategory: getNodeName(max.source),
-      secondCategory: getNodeName(max.target),
-      amount: formatNumber({ num: max.value, unit: 'ha' }),
-      percentage: '7.3%'
+      firstCategory,
+      secondCategory,
+      amount,
+      percentage
     };
+
+    let sentence = isEmpty(activeData) ? initial : interaction;
+    if (firstCategory === secondCategory) sentence = noChange;
     return {
       sentence,
       params

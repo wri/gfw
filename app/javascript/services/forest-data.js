@@ -382,7 +382,7 @@ export const getUSLandCover = params => {
     .replace(
       '{select}',
       adm2
-        ? '*'
+        ? '*, class_area as area'
         : 'SUM(class_area) as area, to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
     )
     .replace('{startYear}', startYear)

@@ -121,8 +121,8 @@ export const getOptionsWithYears = createSelector(
     const { startYear, endYear } = settings;
     return {
       ...options,
-      startYears: years.filter(y => y.value <= endYear),
-      endYears: years.filter(y => y.value >= startYear)
+      startYears: years.filter(y => y.value < endYear),
+      endYears: years.filter(y => y.value > startYear)
     };
   }
 );

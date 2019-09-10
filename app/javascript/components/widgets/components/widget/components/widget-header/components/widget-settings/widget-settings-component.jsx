@@ -22,7 +22,7 @@ class WidgetSettings extends PureComponent {
       return (
         <Switch
           theme="theme-switch-light"
-          label={type === 'unit' ? 'UNIT' : 'VARIABLE'}
+          label={String(type).toUpperCase()}
           value={settings[type]}
           options={items}
           onChange={option =>
@@ -103,6 +103,7 @@ class WidgetSettings extends PureComponent {
     const {
       units,
       variables,
+      sources,
       forestTypes,
       landCategories,
       periods,
@@ -308,6 +309,14 @@ class WidgetSettings extends PureComponent {
                 settings,
                 onSettingsChange,
                 'variable'
+              )}
+            {sources &&
+              this.getUnitVariable(
+                sources,
+                widget,
+                settings,
+                onSettingsChange,
+                'categorization system'
               )}
             {periods && (
               <Dropdown
