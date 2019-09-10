@@ -71,10 +71,17 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
   integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
+"@babel/runtime@^7.2.0":
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.0.tgz#4fc1d642a9fd0299754e8b5de62c631cf5568205"
+  integrity sha512-89eSBLJsxNxOERC0Op4vd+0Bqm6wRMqMbFtV3i0/fbaWw/mJ8Q3eBvgX0G4SyrOOLCtbu98HspF8o09MRT+KzQ==
   dependencies:
     regenerator-runtime "^0.13.2"
 
@@ -7746,10 +7753,10 @@ layer-manager@^1.10.0:
     supercluster "^4.1.1"
     wri-json-api-serializer "^1.0.1"
 
-layer-manager@^2.0.0-mapbox:
-  version "2.0.0-mapbox"
-  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-2.0.0-mapbox.tgz#41e2e116d115986e5e847111675b28541b809498"
-  integrity sha512-GCAxujJCdfq2ojC1EqSLzQOgR5vnyleRdDRAlBuP+B4bym96llpWsb0GWjjFctZnrQJgKu3RLMBJ4sJvgmj3QQ==
+layer-manager@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/layer-manager/-/layer-manager-2.0.1.tgz#c1f067533c95465d2edab8b6e35591c7c30116c1"
+  integrity sha512-+6BggiEsPqQcEv0b/XxR7xh6ALWCva0Tz/7gJGdwoquXGfSIvUWTA0JwFYWmrfI139s/s6mkhBlR/ZuCMyBO1A==
   dependencies:
     axios "^0.18.0"
     lodash "^4.17.11"
@@ -11800,9 +11807,9 @@ react-smooth@~1.0.0:
     react-transition-group "^2.5.0"
 
 react-sortable-hoc@^1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/react-sortable-hoc/-/react-sortable-hoc-1.9.1.tgz#ae3d28c3cff87fb862be3ddcde9c76b5b5bd2152"
-  integrity sha512-2VeofjRav8+eZeE5Nm/+b8mrA94rQ+gBsqhXi8pRBSjOWNqslU3ZEm+0XhSlfoXJY2lkgHipfYAUuJbDtCixRg==
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/react-sortable-hoc/-/react-sortable-hoc-1.10.1.tgz#c352f26263acbcff9cf266bc755653a56c983a38"
+  integrity sha512-eVyv5rrK6qY9bG60bboRY78In7OpdRRg+hxp4QMLIjC/UJaFSU7exTYd0764GtXvBqh+b+faYGzren5/ffRYKw==
   dependencies:
     "@babel/runtime" "^7.2.0"
     invariant "^2.2.4"
@@ -14755,10 +14762,10 @@ viewport-mercator-project@^6.1.0:
     "@babel/runtime" "^7.0.0"
     gl-matrix "^3.0.0-0"
 
-vizzuality-components@^3.0.0-beta.8:
-  version "3.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/vizzuality-components/-/vizzuality-components-3.0.0-beta.8.tgz#e3ce59406eb38bc95bcc65bb41e01ca9e530a881"
-  integrity sha512-MDmPRJ8afSW5hUgoFRBIRpraVKpfn+qQbKaw5JEvbtHNp3uUgCN2XZCV1olbvJ7lo4PyWQtCio3xJYyWCZGUBw==
+vizzuality-components@^3.0.0-beta.9:
+  version "3.0.0-beta.9"
+  resolved "https://registry.yarnpkg.com/vizzuality-components/-/vizzuality-components-3.0.0-beta.9.tgz#8c7fb253979a178c9eb556c14cbfdcc1108c7f96"
+  integrity sha512-tPgjspLUyDPnb9VPApjHMVjVdgQjSkeyFR1lTVKPhDYDuvaXPfPNXoqL5Feuo3ab3bl7O3qdPS29hyk9d3M4Nw==
   dependencies:
     array-move "^2.1.0"
     axios "^0.19.0"
