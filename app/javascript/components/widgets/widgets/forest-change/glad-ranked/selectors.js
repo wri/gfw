@@ -50,6 +50,7 @@ export const parseList = createSelector(
     );
     const groupKey = location.payload.adm1 ? 'adm2' : 'adm1';
     const groupedAlerts = groupBy(alertsByDate, groupKey);
+    const totalCounts = sumBy(alertsByDate, 'alerts');
     const mappedData =
       groupedAlerts &&
       Object.keys(groupedAlerts).map(k => {
@@ -61,9 +62,7 @@ export const parseList = createSelector(
         const countsArea = sumBy(regionData, 'area_ha') || 0;
         const counts = sumBy(regionData, 'alerts') || 0;
         const countsAreaPerc =
-          countsArea && regionExtent
-            ? countsArea / regionExtent.extent * 100
-            : 0;
+          counts && totalCounts ? counts / totalCounts * 100 : 0;
         const countsPerHa =
           counts && regionExtent ? counts / regionExtent.extent : 0;
         const { payload, query, type } = location;
