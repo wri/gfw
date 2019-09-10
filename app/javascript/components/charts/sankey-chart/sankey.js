@@ -65,7 +65,7 @@ function SankeyChart({
                   containerWidth={containerWidth}
                   config={{
                     ...config.node,
-                    titlePadding: config.titlePadding,
+                    ...config,
                     nodeWidth
                   }}
                 />

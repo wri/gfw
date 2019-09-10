@@ -157,6 +157,27 @@ export const parseData = createSelector(
   }
 );
 
+export const parseDataConfig = createSelector(
+  [parseData, getSettings],
+  (data, settings) => {
+    if (isEmpty(data)) return null;
+    const { nodes } = data;
+    const { source } = settings;
+    const threshold = 3;
+    const topNNodes = [
+      ...nodes.filter(n => n.key.includes('start')).slice(0, threshold),
+      ...nodes.filter(n => n.key.includes('end')).slice(0, threshold)
+    ];
+    const shouldShowLabel = node => {
+      if (source === 'nlcd') {
+        return findIndex(topNNodes, { key: node.key }) >= 0;
+      }
+      return true;
+    };
+    return { shouldShowLabel };
+  }
+);
+
 export const parseSentence = createSelector(
   [getData, parseData, getSettings, getSentences],
   (rawdata, data, settings, sentences) => {
@@ -238,5 +259,6 @@ export const parseSentence = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
+  dataConfig: parseDataConfig,
   sentence: parseSentence
 });

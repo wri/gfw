@@ -10,6 +10,9 @@ function SankeyNode({ x, y, height, index, payload, config }) {
   const padding = config.padding || 10;
   const rectangleStart = config.titlePadding || 140;
   const minHeight = 1;
+  const showLabel = config.shouldShowLabel
+    ? config.shouldShowLabel(payload)
+    : true;
 
   const tSpans = text => {
     const fontSize = config.fontSize || 12;
@@ -17,7 +20,7 @@ function SankeyNode({ x, y, height, index, payload, config }) {
     const textHeight = config.textHeight || 20;
     const tspanLineHeight = config.tspanLineHeight || 10;
     const startX = isEndNode
-      ? x - width - padding // right text
+      ? x - padding // right text
       : x + width + padding; // left text
     const startY = y + height / 2 - fontSize || 0;
     const charactersPerLine = rectangleStart / 6 - 3; // -3 for the ellipsis
@@ -29,20 +32,23 @@ function SankeyNode({ x, y, height, index, payload, config }) {
       charactersPerLine,
       maxLines
     );
-    return svgTexts
-      .map(
-        (t, i) =>
-          `<tspan
-        x="${startX}"
-        y="${startY +
-          fontSize * lineHeight +
-          i * fontSize * lineHeight -
-          0.5 * (svgTexts.length - 1) * fontSize}"
-      >
-        ${t}
-      </tspan>`
-      )
-      .join('\n');
+    if (showLabel) {
+      return svgTexts
+        .map(
+          (t, i) =>
+            `<tspan
+          x="${startX}"
+          y="${startY +
+            fontSize * lineHeight +
+            i * fontSize * lineHeight -
+            0.5 * (svgTexts.length - 1) * fontSize}"
+        >
+          ${t}
+        </tspan>`
+        )
+        .join('\n');
+    }
+    return '';
   };
 
   return (
