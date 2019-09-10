@@ -125,6 +125,12 @@
     "NODE_ENV": {
       "required": true
     },
+    "NODE_MODULES_CACHE": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
     "PLANET_API_KEY": {
       "required": true
     },
