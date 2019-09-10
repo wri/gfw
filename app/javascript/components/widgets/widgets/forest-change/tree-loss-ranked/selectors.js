@@ -21,24 +21,30 @@ const getTitle = state => state.config.title;
 const getLocationName = state => state.locationName || null;
 
 export const getSummedByYearsData = createSelector(
-  [getData, getSettings],
-  (data, settings) => {
+  [getData, getSettings, getLocation],
+  (data, settings, location) => {
     if (isEmpty(data)) return null;
     const { loss, extent } = data;
     const filteredByYears = loss.filter(
       d => d.year >= settings.startYear && d.year <= settings.endYear
     );
-    const groupedByIso = groupBy(filteredByYears, 'iso');
-    const isos = Object.keys(groupedByIso);
-    const mappedData = isos.map(i => {
-      const isoLoss = Math.round(sumBy(groupedByIso[i], 'loss')) || 0;
-      const isoExtent = Math.round(extent.find(e => e.iso === i).extent) || 1;
+    let regionKey = 'iso';
+    if (location && location.payload.adm1) regionKey = 'adm1';
+    if (location && location.payload.adm2) regionKey = 'adm2';
+    const groupedByRegion = groupBy(filteredByYears, regionKey);
+    const regions = Object.keys(groupedByRegion);
+    const mappedData = regions.map(i => {
+      const isoLoss = Math.round(sumBy(groupedByRegion[i], 'loss')) || 0;
+      const regionExtent = extent.find(e => e[regionKey] === i);
+      const isoExtent = (regionExtent && regionExtent.extent) || 1;
+      const percentageLoss =
+        isoExtent && isoLoss ? 100 * isoLoss / isoExtent : 0;
 
       return {
-        id: i,
+        id: location && location.payload.adm1 ? parseInt(i, 10) : i,
         loss: isoLoss,
         extent: isoExtent,
-        percentage: isoExtent ? 100 * isoLoss / isoExtent : 0
+        percentage: percentageLoss > 100 ? 100 : percentageLoss
       };
     });
     return sortByKey(

@@ -40,7 +40,8 @@ class Header extends PureComponent {
       setModalContactUsOpen,
       loggedIn,
       fullScreen,
-      setQueryToUrl
+      setQueryToUrl,
+      setLangToUrl
     } = this.props;
     const { fullScreenOpen } = this.state;
 
@@ -102,6 +103,7 @@ class Header extends PureComponent {
                       toggleContactUs={setModalContactUsOpen}
                       loggedIn={loggedIn}
                       setQueryToUrl={setQueryToUrl}
+                      setLangToUrl={setLangToUrl}
                     />
                   </div>
                 )}
@@ -125,7 +127,8 @@ Header.propTypes = {
   fullScreen: PropTypes.bool,
   loggedIn: PropTypes.bool,
   hideMenu: PropTypes.bool,
-  setQueryToUrl: PropTypes.func
+  setQueryToUrl: PropTypes.func,
+  setLangToUrl: PropTypes.func
 };
 
 export default Header;

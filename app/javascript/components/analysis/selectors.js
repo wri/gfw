@@ -113,6 +113,7 @@ export const getLayerEndpoints = createSelector(
         .filter(
           l =>
             l.analysisConfig &&
+            !l.analysisDisabled &&
             (!hasWidgetLayers || !widgetLayers.includes(l.id)) &&
             (!l.admLevels || l.admLevels.includes(admLevel))
         )
@@ -133,8 +134,8 @@ export const getLayerEndpoints = createSelector(
             params: {
               ...(analysisConfig.service === 'umd-loss-gain' &&
                 lossLayer && {
-                  ...lossLayer.decodeParams
-                }),
+                ...lossLayer.decodeParams
+              }),
               ...decodeParams,
               ...params,
               query: analysisConfig.query
