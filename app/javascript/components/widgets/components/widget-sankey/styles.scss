@@ -1,0 +1,10 @@
+.c-sankey-chart-widget {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: rem(30px);
+
+  .cover-legend {
+    min-width: 50%;
+  }
+}
