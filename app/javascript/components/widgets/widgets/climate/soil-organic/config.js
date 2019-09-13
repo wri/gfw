@@ -26,6 +26,10 @@ export default {
   },
   sentences: {
     initial:
-      'In 2000, {location} had a soil organic carbon density of {biomassDensity}, and a total carbon storage of {totalBiomass}.'
+      'In 2000, {location} had a soil organic carbon density of {biomassDensity}, and a total carbon storage of {totalBiomass}.',
+    totalbiomass:
+      'Around {value} of the world’s {label} is contained in the top 5 countries.',
+    biomassdensity:
+      'The average {label} of the world’s top 5 countries is {value}.'
   }
 };
