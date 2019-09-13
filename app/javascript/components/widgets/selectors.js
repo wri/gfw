@@ -244,10 +244,14 @@ export const filterWidgetsByLocationWhitelist = createSelector(
   (widgets, location) => {
     if (!widgets) return null;
     return widgets.filter(w => {
-      const { whitelists } = w.config;
-      if (!whitelists) return true;
+      const { whitelists, blacklists } = w.config;
+      if (!whitelists && !blacklists) return true;
       const whitelist = whitelists.adm0;
+      const blacklist = blacklists && blacklists.adm1;
       if (!whitelist) return true;
+      if (blacklist) {
+        if (blacklist.includes(location.adm1)) return false;
+      }
       return whitelist.includes(location.adm0);
     });
   }
@@ -291,6 +295,13 @@ export const parseWidgetsWithOptions = createSelector(
             const configWhitelist = optionsConfig[optionKey];
             let filteredOptions = options[optionKey];
             if (Array.isArray(configWhitelist)) {
+              // USLC widget exception: reversing options without using Arr.reverse()
+              if (configWhitelist.includes('changes_only')) {
+                filteredOptions = filteredOptions.reduce(
+                  (acc, num) => [num, ...acc],
+                  []
+                );
+              }
               filteredOptions = filteredOptions
                 ? filteredOptions.filter(o => configWhitelist.includes(o.value))
                 : optionsConfig[optionKey].map(o => ({

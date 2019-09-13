@@ -17,16 +17,17 @@ class WidgetSettings extends PureComponent {
   }
 
   getUnitVariable = (items, widget, settings, onSettingsChange, type) => {
+    const unit = type === 'categorization system' ? 'source' : type;
     if (items.length <= 1) return null;
     if (items.length === 2) {
       return (
         <Switch
           theme="theme-switch-light"
-          label={type === 'unit' ? 'UNIT' : 'VARIABLE'}
-          value={settings[type]}
+          label={String(type).toUpperCase()}
+          value={settings[unit]}
           options={items}
           onChange={option =>
-            onSettingsChange({ value: { [type]: option }, widget })
+            onSettingsChange({ value: { [unit]: option }, widget })
           }
         />
       );
@@ -35,11 +36,11 @@ class WidgetSettings extends PureComponent {
     return (
       <Dropdown
         theme="theme-select-light"
-        label={type === 'unit' ? 'UNIT' : 'VARIABLE'}
-        value={settings[type]}
+        label={unit === 'unit' ? 'UNIT' : 'VARIABLE'}
+        value={settings[unit]}
         options={items}
         onChange={option =>
-          onSettingsChange({ value: { [type]: option.value }, widget })
+          onSettingsChange({ value: { [unit]: option.value }, widget })
         }
       />
     );
@@ -103,6 +104,7 @@ class WidgetSettings extends PureComponent {
     const {
       units,
       variables,
+      sources,
       forestTypes,
       landCategories,
       periods,
@@ -308,6 +310,14 @@ class WidgetSettings extends PureComponent {
                 settings,
                 onSettingsChange,
                 'variable'
+              )}
+            {sources &&
+              this.getUnitVariable(
+                sources,
+                widget,
+                settings,
+                onSettingsChange,
+                'categorization system'
               )}
             {periods && (
               <Dropdown

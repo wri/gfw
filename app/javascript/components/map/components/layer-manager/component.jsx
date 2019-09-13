@@ -16,6 +16,7 @@ class LayerManagerComponent extends PureComponent {
         {geostore &&
           geostore.id && (
           <Layer
+            key={geostore.id}
             id={geostore.id}
             name="Geojson"
             provider="geojson"
@@ -53,6 +54,7 @@ class LayerManagerComponent extends PureComponent {
         {basemap &&
           basemap.url && (
           <Layer
+            key={basemap.url}
             id="basemap"
             name="Basemap"
             provider="leaflet"
