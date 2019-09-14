@@ -19,6 +19,7 @@ const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
 const selectGeodecriberLoading = state =>
   state.geodescriber && state.geodescriber.loading;
 const selectLocation = state => state.location && state.location.payload;
+const selectSearch = state => state.location && state.location.search;
 const selectAnalysisLocation = state =>
   state.analysis && state.analysis.location;
 const selectEmbed = state =>
@@ -191,5 +192,6 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation,
-  activeArea: getActiveArea
+  activeArea: getActiveArea,
+  search: selectSearch
 });

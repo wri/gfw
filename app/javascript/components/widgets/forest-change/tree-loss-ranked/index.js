@@ -94,8 +94,6 @@ export default {
   },
   settings: {
     threshold: 30,
-    startYear: 2001,
-    endYear: 2018,
     unit: '%',
     extentYear: 2000,
     pageSize: 5,
@@ -129,7 +127,6 @@ export default {
           }
 
           const { startYear, endYear, range } = getYearsRange(mappedData);
-
           return {
             loss: mappedData,
             extent: extentResponse.data.data,

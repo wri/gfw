@@ -270,7 +270,8 @@ export const getWidgets = createSelector(
     selectNonGlobalDatasets,
     getIsTrase,
     selectRouteType,
-    getActiveLayersWithDates
+    getActiveLayersWithDates,
+    selectAnalysis
   ],
   (
     widgets,
@@ -281,7 +282,8 @@ export const getWidgets = createSelector(
     datasets,
     isTrase,
     routeType,
-    layers
+    layers,
+    analysis
   ) => {
     if (isEmpty(widgets) || !locationObj || !locationData || !widgetsData) {
       return null;
@@ -321,6 +323,8 @@ export const getWidgets = createSelector(
         (decodeParams && decodeParams.endDate);
       const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
 
+      const widgetQuerySettings = query && query[widget];
+
       const layerSettings = {
         ...layerParams,
         ...decodeParams,
@@ -329,13 +333,16 @@ export const getWidgets = createSelector(
         }),
         ...(endYear && {
           endYear
+        }),
+        ...(!analysis && {
+          ...widgetQuerySettings
         })
       };
 
       const settings = {
         ...defaultSettings,
         ...dataSettings,
-        ...(query && query[widget]),
+        ...widgetQuerySettings,
         ...layerSettings
       };
 

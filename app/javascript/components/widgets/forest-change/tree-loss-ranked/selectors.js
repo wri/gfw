@@ -78,12 +78,24 @@ export const parseData = createSelector(
     sortData,
     getSettings,
     getAdm0,
+    getAdm1,
+    getAdm2,
     getLocation,
     getLocationData,
     getColors,
     getLocationPath
   ],
-  (data, settings, adm0, location, parentData, colors, locationPath) => {
+  (
+    data,
+    settings,
+    adm0,
+    adm1,
+    adm2,
+    location,
+    parentData,
+    colors,
+    locationPath
+  ) => {
     if (isEmpty(data)) return null;
     let dataTrimmed = [];
 
@@ -120,7 +132,11 @@ export const parseData = createSelector(
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: locationPath({ adm0: d.id }),
+      path: locationPath({
+        adm0: !adm0 || (adm0 && !adm1) ? d.id : adm0,
+        adm1: adm1 && !adm2 ? d.id : adm1,
+        adm2: adm2 ? d.id : null
+      }),
       value: settings.unit === 'ha' ? d.loss : d.percentage
     }));
   }

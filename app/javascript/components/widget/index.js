@@ -47,7 +47,8 @@ class WidgetContainer extends Component {
     const { location, settings, refetchKeys } = this.props;
     const { error } = this.state;
 
-    const hasLocationChanged = !isEqual(location, prevProps.location);
+    const hasLocationChanged =
+      location && !isEqual(location, prevProps.location);
     const hasErrorChanged =
       !error &&
       prevState.error !== undefined &&
@@ -65,7 +66,6 @@ class WidgetContainer extends Component {
 
   componentWillUnmount() {
     this._mounted = false;
-    this.cancelWidgetDataFetch();
   }
 
   handleGetWidgetData = params => {

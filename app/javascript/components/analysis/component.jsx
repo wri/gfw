@@ -24,6 +24,7 @@ class AnalysisComponent extends PureComponent {
     handleCancelAnalysis: PropTypes.func,
     handleFetchAnalysis: PropTypes.func,
     embed: PropTypes.bool,
+    search: PropTypes.string,
     setSubscribeSettings: PropTypes.func,
     setSaveAOISettings: PropTypes.func,
     setShareModal: PropTypes.func
@@ -34,6 +35,7 @@ class AnalysisComponent extends PureComponent {
       className,
       loading,
       location,
+      search,
       activeArea,
       clearAnalysis,
       goToDashboard,
@@ -54,7 +56,7 @@ class AnalysisComponent extends PureComponent {
         location.adm0 ? `/${location.adm0}` : ''
       }${location.adm1 ? `/${location.adm1}` : ''}${
         location.adm2 ? `/${location.adm2}` : ''
-      }`,
+      }${search ? `?${search}` : ''}`,
       ...(embed && {
         extLink: window.location.href.replace('embed/map', 'dashboards'),
         target: '_blank'
