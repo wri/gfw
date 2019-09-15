@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
+import moment from 'moment';
 import ReactHtmlParser from 'react-html-parser';
 import { track } from 'app/analytics';
 
@@ -19,7 +20,8 @@ class ModalMeta extends PureComponent {
     metakey: PropTypes.string,
     tableData: PropTypes.object,
     loading: PropTypes.bool,
-    error: PropTypes.bool
+    error: PropTypes.bool,
+    locationName: PropTypes.string
   };
 
   componentDidMount() {
@@ -45,7 +47,7 @@ class ModalMeta extends PureComponent {
   }
 
   getContent() {
-    const { metaData, tableData, loading, error } = this.props;
+    const { metaData, tableData, loading, error, locationName } = this.props;
     const {
       subtitle,
       overview,
@@ -56,6 +58,12 @@ class ModalMeta extends PureComponent {
       amazon_link
     } =
       metaData || {};
+
+    const parsedCitation =
+      citation &&
+      citation
+        .replace('[selected area name]', locationName)
+        .replace('[date]', moment().format('DD/MM/YYYY'));
 
     return (
       <div className="modal-meta-content">
@@ -99,10 +107,12 @@ class ModalMeta extends PureComponent {
                 <div className="body">{this.parseContent(overview)}</div>
               </div>
             )}
-            {citation && (
+            {parsedCitation && (
               <div className="citation">
                 <h5>Citation</h5>
-                <div className="body">{this.parseContent(citation)}</div>
+                <div className="body">
+                  {this.parseContent(parsedCitation)}
+                </div>
               </div>
             )}
             {(learn_more || download_data || map_service || amazon_link) && (
