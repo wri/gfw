@@ -54,8 +54,7 @@ const buildLocationDict = locations =>
     (dict, next) => ({
       ...dict,
       [next.value]: {
-        label: next.label,
-        value: next.value
+        ...next
       }
     }),
     {}
@@ -124,16 +123,35 @@ export const getLocationObj = createSelector(
 );
 
 export const getAllLocationData = createSelector(
-  [selectLocation, selectCountryData, getAllAreas],
-  (location, countryData, areas) => {
+  [
+    selectLocation,
+    selectCountryData,
+    getAllAreas,
+    selectRouteType,
+    selectLocationQuery
+  ],
+  (location, countryData, areas, routeType, query) => {
     if (isEmpty(areas) && isEmpty(countryData)) return null;
-    const { type } = location;
+    const { type, adm0, adm1 } = location;
 
     if (type === 'global' || type === 'country') {
       return {
-        adm0: countryData.countries,
-        adm1: countryData.regions,
-        adm2: countryData.subRegions,
+        adm0: countryData.countries.map(l => ({
+          ...l,
+          path: getLocationPath(routeType, type, query, { adm0: l.value })
+        })),
+        adm1: countryData.regions.map(l => ({
+          ...l,
+          path: getLocationPath(routeType, type, query, { adm0, adm1: l.value })
+        })),
+        adm2: countryData.subRegions.map(l => ({
+          ...l,
+          path: getLocationPath(routeType, type, query, {
+            adm0,
+            adm1,
+            adm2: l.value
+          })
+        })),
         fao: countryData.faoCountries
       };
     }
@@ -269,7 +287,6 @@ export const getWidgets = createSelector(
     selectLocationQuery,
     selectNonGlobalDatasets,
     getIsTrase,
-    selectRouteType,
     getActiveLayersWithDates,
     selectAnalysis
   ],
@@ -281,7 +298,6 @@ export const getWidgets = createSelector(
     query,
     datasets,
     isTrase,
-    routeType,
     layers,
     analysis
   ) => {
@@ -374,8 +390,6 @@ export const getWidgets = createSelector(
         ...w,
         ...locationObj,
         ...locationData,
-        getLocationPath: params =>
-          getLocationPath(routeType, type, query, params),
         data: rawData,
         settings,
         title: titleTemplate,

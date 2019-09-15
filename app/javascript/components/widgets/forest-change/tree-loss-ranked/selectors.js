@@ -20,8 +20,7 @@ const getAdm1 = state => state.adm1;
 const getAdm2 = state => state.adm2;
 const getSentences = state => state && state.sentence;
 const getTitle = state => state.title;
-const getLocationName = state => state.type;
-const getLocationPath = state => state.getLocationPath;
+const getLocationName = state => state.pe;
 
 export const getSummedByYearsData = createSelector(
   [getData, getSettings, getAdm1, getAdm2],
@@ -74,37 +73,19 @@ export const sortData = createSelector(
 );
 
 export const parseData = createSelector(
-  [
-    sortData,
-    getSettings,
-    getAdm0,
-    getAdm1,
-    getAdm2,
-    getLocation,
-    getLocationData,
-    getColors,
-    getLocationPath
-  ],
-  (
-    data,
-    settings,
-    adm0,
-    adm1,
-    adm2,
-    location,
-    parentData,
-    colors,
-    locationPath
-  ) => {
+  [sortData, getSettings, getAdm0, getLocation, getLocationData, getColors],
+  (data, settings, adm0, location, parentData, colors) => {
     if (isEmpty(data)) return null;
     let dataTrimmed = [];
 
     data.forEach(d => {
       const locationMeta = parentData && parentData[d.id];
+
       if (locationMeta) {
         dataTrimmed.push({
           ...d,
-          label: locationMeta.label
+          label: locationMeta.label,
+          path: locationMeta.path
         });
       }
     });
@@ -132,11 +113,7 @@ export const parseData = createSelector(
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: locationPath({
-        adm0: !adm0 || (adm0 && !adm1) ? d.id : adm0,
-        adm1: adm1 && !adm2 ? d.id : adm1,
-        adm2: adm2 ? d.id : null
-      }),
+      path: d.path,
       value: settings.unit === 'ha' ? d.loss : d.percentage
     }));
   }

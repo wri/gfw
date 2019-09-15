@@ -22,6 +22,14 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
     {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
+    {
       dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
       layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
     }
