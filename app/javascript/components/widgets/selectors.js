@@ -4,6 +4,7 @@ import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import moment from 'moment';
+import qs from 'query-string';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
@@ -63,7 +64,9 @@ const buildLocationDict = locations =>
 export const selectLocation = state => state.location && state.location.payload;
 export const selectRouteType = state => state.location && state.location.type;
 export const selectLocationQuery = state =>
-  state.location && state.location.query && state.location.query;
+  state.location && state.location.query;
+export const selectLocationSearch = state =>
+  state.location && state.location.search;
 export const selectWidgetsData = state => state.widgets && state.widgets.data;
 export const selectGeostore = state => state.geostore && state.geostore.data;
 export const selectLoading = state =>
@@ -285,6 +288,7 @@ export const getWidgets = createSelector(
     getLocationData,
     selectWidgetsData,
     selectLocationQuery,
+    selectLocationSearch,
     selectNonGlobalDatasets,
     getIsTrase,
     getActiveLayersWithDates,
@@ -296,6 +300,7 @@ export const getWidgets = createSelector(
     locationData,
     widgetsData,
     query,
+    search,
     datasets,
     isTrase,
     layers,
@@ -404,9 +409,19 @@ export const getWidgets = createSelector(
       const { title: parsedTitle } = parsedProps || {};
       const title = parsedTitle || titleTemplate;
 
+      const searchObject = qs.parse(search);
+      const widgetQuery = searchObject && searchObject[widget];
+      const locationPath = `${window.location.href}`;
+      const shareUrl = `${locationPath}#${widget}`;
+      const embedUrl = `${window.location.origin}/embed${
+        window.location.pathname
+      }?${`widget=${widget}`}${widgetQuery ? `&${widget}=${widgetQuery}` : ''}`;
+
       return {
         ...props,
         ...parsedProps,
+        shareUrl,
+        embedUrl,
         title: title
           ? title.replace('{location}', locationLabelFull || '...')
           : ''

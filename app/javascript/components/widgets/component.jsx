@@ -88,17 +88,12 @@ class Widgets extends PureComponent {
                   handleShowInfo={setModalMetaSettings}
                   handleShowShare={() =>
                     setShareModal({
-                      title: 'Share this view',
-                      shareUrl: window.location.href.includes('embed')
-                        ? window.location.href.replace('/embed', '')
-                        : window.location.href,
-                      embedUrl: window.location.href.includes('embed')
-                        ? window.location.href
-                        : window.location.href.replace('/map', '/embed/map'),
-                      embedSettings: {
-                        width: 670,
-                        height: 490
-                      }
+                      title: 'Share this widget',
+                      shareUrl: w.shareUrl,
+                      embedUrl: w.embedUrl,
+                      embedSettings: !w.large
+                        ? { width: 315, height: 460 }
+                        : { width: 630, height: 460 }
                     })
                   }
                   preventCloseSettings={modalClosing}
