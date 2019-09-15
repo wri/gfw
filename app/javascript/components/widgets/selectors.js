@@ -360,11 +360,21 @@ export const getWidgets = createSelector(
         })
       };
 
-      const settings = {
+      const mergedSettings = {
         ...defaultSettings,
         ...dataSettings,
         ...widgetQuerySettings,
         ...layerSettings
+      };
+
+      const settings = {
+        ...mergedSettings,
+        ...(mergedSettings.ifl === 2016 && {
+          extentYear: 2010
+        }),
+        ...(mergedSettings.forestType === 'primary_forest' && {
+          extentYear: 2000
+        })
       };
 
       const dataOptions = rawData && rawData.options;
@@ -391,6 +401,16 @@ export const getWidgets = createSelector(
         dataType
       });
 
+      const { ifl } = settings || {};
+
+      const settingsConfigFiltered =
+        settingsConfigParsed &&
+        settingsConfigParsed.filter(
+          o =>
+            o.key !== 'extentYear' ||
+            (ifl !== 2016 && settings.forestType !== 'primary_forest')
+        );
+
       const props = {
         ...w,
         ...locationObj,
@@ -398,7 +418,7 @@ export const getWidgets = createSelector(
         data: rawData,
         settings,
         title: titleTemplate,
-        settingsConfig: settingsConfigParsed,
+        settingsConfig: settingsConfigFiltered,
         optionsSelected,
         indicator,
         showAttributionLink: isTrase,
