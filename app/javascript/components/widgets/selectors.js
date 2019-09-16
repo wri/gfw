@@ -92,9 +92,9 @@ export const getLocationObj = createSelector(
   [getLocation, getGeodescriberTitleFull],
   (location, title) => ({
     ...location,
-    locationLabel: location.type === 'global' ? 'global' : title,
+    locationLabel: location.type === 'global' ? 'globally' : title,
     adminLevel: locationLevelToStr(location),
-    locationLabelFull: location.type === 'global' ? 'global' : title,
+    locationLabelFull: location.type === 'global' ? 'globally' : title,
     isTropical: location && tropicalIsos.includes(location.adm0)
   })
 );
@@ -145,7 +145,7 @@ export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
   (location, allLocationData, polynames) => {
     if (isEmpty(allLocationData)) return null;
-    const { type, adminLevel, locationLabelFull } = location;
+    const { type, adminLevel, locationLabel } = location;
 
     let parent = {};
     let parentData = [];
@@ -173,8 +173,8 @@ export const getLocationData = createSelector(
       location: currentLocation,
       locationData: locationData && buildLocationDict(locationData),
       locationLabel:
-        type === 'geostore'
-          ? lowerFirst(locationLabelFull)
+        type === 'geostore' || type === 'global'
+          ? lowerFirst(locationLabel)
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
       polynames,

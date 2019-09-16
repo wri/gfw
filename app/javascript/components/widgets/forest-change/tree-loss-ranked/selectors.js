@@ -20,7 +20,7 @@ const getAdm1 = state => state.adm1;
 const getAdm2 = state => state.adm2;
 const getSentences = state => state && state.sentence;
 const getTitle = state => state.title;
-const getLocationName = state => state.pe;
+const getLocationName = state => state.locationLabel;
 
 export const getSummedByYearsData = createSelector(
   [getData, getSettings, getAdm1, getAdm2],
@@ -174,7 +174,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.default;
-    if (name === 'global') {
+    if (name === 'globally') {
       selectedTitle = title.global;
     }
     return selectedTitle;
