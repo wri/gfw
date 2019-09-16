@@ -42,6 +42,7 @@ export default {
       layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe']
     }
   ],
+  pendingKeys: ['threshold'],
   refetchKeys: ['threshold'],
   analysis: true,
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
@@ -64,7 +65,8 @@ export default {
       name: 'Umd',
       params,
       slug: 'umd-loss-gain',
-      version: 'v3'
+      version: params.type === 'geostore' ? 'v1' : 'v3',
+      nonAggregate: true
     }).then(response => {
       const loss =
         response.data.data &&

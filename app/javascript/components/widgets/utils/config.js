@@ -52,7 +52,9 @@ export const getSettingsConfig = ({
 }) =>
   settingsConfig &&
   settingsConfig
-    .filter(s => status !== 'pending' || pendingKeys.includes(s.key))
+    .filter(
+      s => status !== 'pending' || (pendingKeys && pendingKeys.includes(s.key))
+    )
     .map(o => {
       const {
         key,
