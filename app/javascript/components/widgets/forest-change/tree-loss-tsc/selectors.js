@@ -5,19 +5,18 @@ import entries from 'lodash/entries';
 import groupBy from 'lodash/groupBy';
 import findIndex from 'lodash/findIndex';
 import { format } from 'd3-format';
-import moment from 'moment';
 import { sortByKey } from 'utils/data';
-import { yearTicksFormatter } from 'components/widget/utils/data';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 import tscLossCategories from 'data/tsc-loss-categories-old.json';
 
 // get list data
-const getLoss = state => (state.data && state.data.loss) || null;
-const getSettings = state => state.settings || null;
-const getLocationName = state => state.locationName || null;
-const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentences;
-const getTitle = state => state.config.title;
+const getLoss = state => state.data && state.data.loss;
+const getSettings = state => state.settings;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
+const getSentences = state => state.sentences;
+const getTitle = state => state.title;
 
 export const getPermCats = createSelector([], () =>
   tscLossCategories.filter(x => x.permanent).map(el => el.value.toString())
@@ -201,11 +200,11 @@ export const parseSentence = createSelector(
       (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
     const permPercent = (permLoss && permLoss / totalLoss * 100) || 0;
 
-    let sentence = locationName === 'global' ? globalInitial : initial;
+    let sentence = locationName === 'globally' ? globalInitial : initial;
     if (!permLoss) sentence = noLoss;
 
     const params = {
-      location: locationName === 'global' ? 'Globally' : locationName,
+      location: locationName === 'globally' ? 'Globally' : locationName,
       startYear,
       endYear,
       permPercent:
@@ -230,35 +229,16 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.initial;
-    if (name === 'global') {
+    if (name === 'globally') {
       selectedTitle = title.global;
     }
     return selectedTitle;
   }
 );
 
-export const parsePayload = payload => {
-  const year = payload && payload[0].payload.year;
-  return {
-    updateLayer: true,
-    startDate:
-      year &&
-      moment()
-        .year(year)
-        .startOf('year')
-        .format('YYYY-MM-DD'),
-    endDate:
-      year &&
-      moment()
-        .year(year)
-        .endOf('year')
-        .format('YYYY-MM-DD')
-  };
-};
-
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
+  config: parseConfig,
   sentence: parseSentence,
   title: parseTitle
 });

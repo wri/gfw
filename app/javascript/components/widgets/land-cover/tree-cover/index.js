@@ -14,13 +14,15 @@ export const getDataAPI = ({ params }) =>
   }).then(response => {
     const { data } = (response && response.data) || {};
     const totalArea = data && data.attributes.areaHa;
-    const exentKey = params.extentYear === 2010 ? '2010' : '';
-    const totalExtent = data && data.attributes[exentKey];
+    const exentKey =
+      params.extentYear === 2010 ? 'treeExtent2010' : 'treeExtent';
+    const totalCover = data && data.attributes[exentKey];
 
     return {
       totalArea,
-      totalExtent,
-      cover: 0
+      totalCover,
+      cover: totalCover,
+      plantations: 0
     };
   });
 
@@ -63,6 +65,14 @@ export default {
   // levels of that type you can see the widget
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     // tree cover
     {
       dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',

@@ -16,7 +16,7 @@ const getSentences = state => state.sentences;
 export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
-    if (!data || isEmpty(data)) return null;
+    if (isEmpty(data)) return null;
     const { startYear, endYear } = settings;
 
     return (

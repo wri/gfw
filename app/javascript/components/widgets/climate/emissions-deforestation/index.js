@@ -12,6 +12,12 @@ export default {
   chartType: 'composedChart',
   settingsConfig: [
     {
+      key: 'unit',
+      label: 'unit',
+      type: 'switch',
+      whitelist: ['co2LossByYear', 'biomassLoss']
+    },
+    {
       key: 'years',
       label: 'years',
       endKey: 'endYear',
@@ -25,7 +31,6 @@ export default {
       type: 'mini-select',
       metaKey: 'widget_canopy_density'
     }
-    // units: ['co2LossByYear', 'biomassLoss']
   ],
   datasets: [
     {
@@ -42,7 +47,7 @@ export default {
       layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe']
     }
   ],
-  pendingKeys: ['threshold'],
+  pendingKeys: ['threshold', 'unit'],
   refetchKeys: ['threshold'],
   analysis: true,
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
@@ -64,14 +69,26 @@ export default {
       ...params,
       name: 'Umd',
       params,
-      slug: 'umd-loss-gain',
+      slug: params.type === 'geostore' ? 'biomass-loss' : 'umd-loss-gain',
       version: params.type === 'geostore' ? 'v1' : 'v3',
       nonAggregate: true
     }).then(response => {
-      const loss =
-        response.data.data &&
-        response.data.data.attributes &&
-        response.data.data.attributes.years;
+      const { attributes: data } =
+        (response && response.data && response.data.data) || {};
+      let loss = [];
+
+      if (params.type === 'geostore') {
+        const biomassData = data.biomassLossByYear;
+        const emissionsData = data.co2LossByYear;
+        loss = Object.keys(biomassData).map(l => ({
+          year: l,
+          emissions: emissionsData[l],
+          biomassLoss: biomassData[l]
+        }));
+      } else {
+        loss = data.years;
+      }
+
       const { startYear, endYear, range } = getYearsRange(loss);
 
       return {

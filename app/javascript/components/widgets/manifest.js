@@ -12,7 +12,7 @@ import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 // import * as treeGainLocated from 'components/widgets/forest-change/tree-gain-located';
 // import * as treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
 // import * as treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
-// import * as treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
+import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 
 // // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -61,8 +61,8 @@ export default {
   // treeGainLocated,
   // treeLossLocated,
   // treeLossPlantations,
-  // treeLossTsc,
-  // // land cover
+  treeLossTsc,
+  // land cover
   treeCover,
   // treeCover2000,
   // treeCover2010,
@@ -74,7 +74,7 @@ export default {
   // intactTreeCover,
   // primaryForest,
   // treeCoverLocated,
-  // // climate
+  // climate
   // emissions,
   emissionsDeforestation
   // emissionsPlantations,
@@ -83,9 +83,9 @@ export default {
   // futureCarbonGains,
   // cumulativeEmissions,
   // carbonStock,
-  // // biodiversity
+  // biodiversity
   // // gladBiodiversity,
-  // // land use
+  // land use
   // economicImpact,
   // forestryEmployment,
   // traseCommodities
