@@ -15,7 +15,7 @@ import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 // import * as treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 
 // // land cover
-// import * as treeCover from 'components/widgets/land-cover/tree-cover';
+import treeCover from 'components/widgets/land-cover/tree-cover';
 // import * as treeCover2000 from 'components/widgets/land-cover/tree-cover-2000';
 // import * as treeCover2010 from 'components/widgets/land-cover/tree-cover-2010';
 // import * as treeCoverRanked from 'components/widgets/land-cover/tree-cover-ranked';
@@ -63,7 +63,7 @@ export default {
   // treeLossPlantations,
   // treeLossTsc,
   // // land cover
-  // treeCover,
+  treeCover,
   // treeCover2000,
   // treeCover2010,
   // treeCoverRanked,

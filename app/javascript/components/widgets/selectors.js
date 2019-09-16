@@ -3,7 +3,6 @@ import sortBy from 'lodash/sortBy';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
-import lowerFirst from 'lodash/lowerFirst';
 import moment from 'moment';
 import qs from 'query-string';
 
@@ -174,7 +173,7 @@ export const getLocationData = createSelector(
       locationData: locationData && buildLocationDict(locationData),
       locationLabel:
         type === 'geostore' || type === 'global'
-          ? lowerFirst(locationLabel)
+          ? locationLabel
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
       polynames,

@@ -5,18 +5,20 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getIndicator = state => state.indicator || null;
+const getIndicator = state => state.indicator;
 const getWhitelist = state => state.whitelists && state.whitelists;
 const getColors = state => state.colors;
-const getSentence = state => state.config.sentence;
-const getTitle = state => state.config.title;
-const getLocationName = state => state.locationName;
+const getSentence = state => state.sentence;
+const getTitle = state => state.title;
+const getLocationName = state => state.locationLabel;
 
 export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
   (whitelist, name) => {
     const hasPlantations =
-      name === 'global' ? true : whitelist && whitelist.includes('plantations');
+      name === 'globally'
+        ? true
+        : whitelist && whitelist.includes('plantations');
     return hasPlantations;
   }
 );
@@ -69,7 +71,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName, getWhitelist],
   (title, name, whitelist) => {
     let selectedTitle = title.default;
-    if (name === 'global') {
+    if (name === 'globally') {
       selectedTitle = title.global;
     } else if (
       whitelist &&
@@ -125,7 +127,7 @@ export const parseSentence = createSelector(
         ? initial + hasPlantationsInd
         : initial + noPlantationsInd;
     }
-    if (locationName === 'global') {
+    if (locationName === 'globally') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
 
