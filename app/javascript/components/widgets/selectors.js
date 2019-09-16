@@ -3,6 +3,7 @@ import sortBy from 'lodash/sortBy';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
+import lowerFirst from 'lodash/lowerFirst';
 import moment from 'moment';
 import qs from 'query-string';
 
@@ -25,36 +26,13 @@ import {
 } from './utils/config';
 import allWidgets from './manifest';
 
-const locationTypes = {
-  country: {
-    label: 'country',
-    value: 'admin'
-  },
-  global: {
-    label: 'global',
-    value: 'global'
-  },
-  geostore: {
-    label: 'your custom area',
-    value: 'geostore'
-  },
-  wdpa: {
-    label: 'your selected protected area',
-    value: 'wdpa'
-  },
-  use: {
-    label: 'your selected area',
-    value: 'use'
-  }
-};
-
 const buildLocationDict = locations =>
   location &&
   locations.length &&
   locations.reduce(
     (dict, next) => ({
       ...dict,
-      [next.value]: {
+      [next.value || next.id]: {
         ...next
       }
     }),
@@ -112,17 +90,13 @@ export const getLocation = createSelector(
 
 export const getLocationObj = createSelector(
   [getLocation, getGeodescriberTitleFull],
-  (location, title) => {
-    const { type } = location;
-
-    return {
-      ...location,
-      locationLabel: locationTypes[type] && locationTypes[type].label,
-      adminLevel: locationLevelToStr(location),
-      locationLabelFull: title,
-      isTropical: location && tropicalIsos.includes(location.adm0)
-    };
-  }
+  (location, title) => ({
+    ...location,
+    locationLabel: location.type === 'global' ? 'global' : title,
+    adminLevel: locationLevelToStr(location),
+    locationLabelFull: location.type === 'global' ? 'global' : title,
+    isTropical: location && tropicalIsos.includes(location.adm0)
+  })
 );
 
 export const getAllLocationData = createSelector(
@@ -136,6 +110,8 @@ export const getAllLocationData = createSelector(
   (location, countryData, areas, routeType, query) => {
     if (isEmpty(areas) && isEmpty(countryData)) return null;
     const { type, adm0, adm1 } = location;
+
+    if (type === 'aoi') { return { adm0: areas.map(a => ({ ...a, value: a.geostore })) }; }
 
     if (type === 'global' || type === 'country') {
       return {
@@ -167,7 +143,7 @@ export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
   (location, allLocationData, polynames) => {
     if (isEmpty(allLocationData)) return null;
-    const { adminLevel } = location;
+    const { type, adminLevel, locationLabelFull } = location;
 
     let parent = {};
     let parentData = [];
@@ -194,9 +170,13 @@ export const getLocationData = createSelector(
       parentData: parentData && buildLocationDict(parentData),
       location: currentLocation,
       locationData: locationData && buildLocationDict(locationData),
-      locationLabel: (currentLocation && currentLocation.label) || 'global',
+      locationLabel:
+        type === 'geostore'
+          ? lowerFirst(locationLabelFull)
+          : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
-      polynames
+      polynames,
+      status: currentLocation && currentLocation.status
     };
   }
 );
@@ -311,7 +291,7 @@ export const getWidgets = createSelector(
     }
 
     const { locationLabelFull, type } = locationObj || {};
-    const { polynames } = locationData || {};
+    const { polynames, status } = locationData || {};
 
     return widgets.map(w => {
       const {
@@ -379,14 +359,18 @@ export const getWidgets = createSelector(
 
       const dataOptions = rawData && rawData.options;
 
-      const settingsConfigParsed = getSettingsConfig({
-        settingsConfig,
-        dataOptions,
-        settings,
-        polynames
-      });
+      const settingsConfigParsed =
+        status !== 'pending'
+          ? getSettingsConfig({
+            settingsConfig,
+            dataOptions,
+            settings,
+            polynames
+          })
+          : [];
 
-      const optionsSelected = getOptionsSelected(settingsConfigParsed);
+      const optionsSelected =
+        settingsConfigParsed && getOptionsSelected(settingsConfigParsed);
 
       const forestType = optionsSelected && optionsSelected.forestType;
       const landCategory = optionsSelected && optionsSelected.landCategory;

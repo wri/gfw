@@ -2,7 +2,10 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import upperFirst from 'lodash/upperFirst';
 import { deburrUpper } from 'utils/data';
 
-import { getGeodescriberDescription } from 'providers/geodescriber-provider/selectors';
+import {
+  getGeodescriberTitleFull,
+  getGeodescriberDescription
+} from 'providers/geodescriber-provider/selectors';
 import {
   getUserAreas,
   getActiveArea
@@ -45,11 +48,11 @@ export const getAreasOptions = createSelector(
 );
 
 export const getDashboardTitle = createSelector(
-  [getActiveArea, selectLocation],
-  (area, location) => {
+  [getActiveArea, selectLocation, getGeodescriberTitleFull],
+  (area, location, geoTitle) => {
     if (!location.adm0) return location.type;
     if (!area || (area && area.userArea)) return null;
-    return area.name;
+    return geoTitle;
   }
 );
 

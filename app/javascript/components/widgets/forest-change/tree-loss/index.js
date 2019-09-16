@@ -2,14 +2,40 @@ import axios from 'axios';
 
 import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
 import { getYearsRange } from 'components/widgets/utils/data';
+import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import getWidgetProps from './selectors';
+
+export const getDataAPI = ({ params }) =>
+  fetchAnalysisEndpoint({
+    ...params,
+    name: 'umd',
+    params,
+    slug: 'umd-loss-gain',
+    version: 'v1',
+    nonAggregate: true
+  }).then(response => {
+    const { data } = (response && response.data) || {};
+    const lossData = data && data.attributes.loss;
+    const loss =
+      lossData &&
+      Object.keys(lossData).map(d => ({
+        area: lossData[d],
+        year: parseInt(d, 10)
+      }));
+    const extent = data.attributes.treeExtent;
+
+    return {
+      loss,
+      extent
+    };
+  });
 
 export default {
   widget: 'treeLoss',
   title: 'Tree cover loss in {location}',
   categories: ['summary', 'forest-change'],
-  types: ['country', 'geostore', 'wdpa', 'use', 'aoi'],
+  types: ['country', 'geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
   analysis: true,
@@ -90,7 +116,13 @@ export default {
     extentYear: 2000,
     ifl: 2000
   },
-  getData: ({ adm0, adm1, adm2, type, ...rest } = {}) => {
+  getData: (params = {}) => {
+    const { adm0, adm1, adm2, type, ...rest } = params || {};
+
+    if (params.type !== 'country' && params.type !== 'global') {
+      return getDataAPI({ params });
+    }
+
     const globalLocation = {
       adm0: type === 'global' ? null : adm0,
       adm1: type === 'global' ? null : adm1,
