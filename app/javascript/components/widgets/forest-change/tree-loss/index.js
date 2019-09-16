@@ -78,6 +78,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
+  pendingKeys: ['threshold', 'years'],
   refetchKeys: ['forestType', 'landCategory', 'threshold', 'ifl', 'extentYear'],
   dataType: 'loss',
   metaKey: 'widget_tree_cover_loss',

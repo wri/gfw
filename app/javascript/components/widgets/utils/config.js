@@ -46,60 +46,72 @@ export const getSettingsConfig = ({
   settingsConfig,
   settings,
   dataOptions,
-  polynames
+  polynames,
+  pendingKeys,
+  status
 }) =>
   settingsConfig &&
-  settingsConfig.map(o => {
-    const { key, startKey, endKey, options, whitelist, locationType, noSort } =
-      o || {};
-    let mergedOptions =
-      (dataOptions && dataOptions[key]) || options || allOptions[key];
-    if (key === 'forestType') {
-      mergedOptions =
-        mergedOptions &&
-        getForestTypes({
-          forestTypes: mergedOptions,
-          settings,
-          polynames,
-          locationType
-        });
-    } else if (key === 'landCategory') {
-      mergedOptions =
-        mergedOptions &&
-        getLandCategories({
-          landCategories: mergedOptions,
-          polynames,
-          locationType
-        });
-    }
-    const parsedOptions = noSort
-      ? mergedOptions
-      : sortBy(mergedOptions, 'label');
+  settingsConfig
+    .filter(s => status !== 'pending' || pendingKeys.includes(s.key))
+    .map(o => {
+      const {
+        key,
+        startKey,
+        endKey,
+        options,
+        whitelist,
+        locationType,
+        noSort
+      } =
+        o || {};
+      let mergedOptions =
+        (dataOptions && dataOptions[key]) || options || allOptions[key];
+      if (key === 'forestType') {
+        mergedOptions =
+          mergedOptions &&
+          getForestTypes({
+            forestTypes: mergedOptions,
+            settings,
+            polynames,
+            locationType
+          });
+      } else if (key === 'landCategory') {
+        mergedOptions =
+          mergedOptions &&
+          getLandCategories({
+            landCategories: mergedOptions,
+            polynames,
+            locationType
+          });
+      }
+      const parsedOptions = noSort
+        ? mergedOptions
+        : sortBy(mergedOptions, 'label');
 
-    return {
-      ...o,
-      ...(parsedOptions && {
-        options: parsedOptions.filter(
-          opt => !whitelist || whitelist.includes(opt.value)
-        ),
-        value: parsedOptions.find(opt => opt.value === settings[key]),
-        ...(startKey && {
-          startOptions: parsedOptions.filter(
-            opt => opt.value <= settings[endKey]
+      return {
+        ...o,
+        ...(parsedOptions && {
+          options: parsedOptions.filter(
+            opt => !whitelist || whitelist.includes(opt.value)
           ),
-          startValue: parsedOptions.find(
-            opt => opt.value === settings[startKey]
-          )
-        }),
-        ...(endKey && {
-          endOptions: parsedOptions.filter(
-            opt => opt.value >= settings[startKey]
-          ),
-          endValue: parsedOptions.find(opt => opt.value === settings[endKey])
+          value: parsedOptions.find(opt => opt.value === settings[key]),
+          ...(startKey && {
+            startOptions: parsedOptions.filter(
+              opt => opt.value <= settings[endKey]
+            ),
+            startValue: parsedOptions.find(
+              opt => opt.value === settings[startKey]
+            )
+          }),
+          ...(endKey && {
+            endOptions: parsedOptions.filter(
+              opt => opt.value >= settings[startKey]
+            ),
+            endValue: parsedOptions.find(opt => opt.value === settings[endKey])
+          })
         })
-      })
-    };
-  });
+      };
+    });
 
 export const getOptionsSelected = options =>
   options &&

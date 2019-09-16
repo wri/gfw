@@ -111,7 +111,9 @@ export const getAllLocationData = createSelector(
     if (isEmpty(areas) && isEmpty(countryData)) return null;
     const { type, adm0, adm1 } = location;
 
-    if (type === 'aoi') { return { adm0: areas.map(a => ({ ...a, value: a.geostore })) }; }
+    if (type === 'aoi') {
+      return { adm0: areas.map(a => ({ ...a, value: a.geostore })) };
+    }
 
     if (type === 'global' || type === 'country') {
       return {
@@ -298,6 +300,7 @@ export const getWidgets = createSelector(
         settings: defaultSettings,
         widget,
         settingsConfig,
+        pendingKeys,
         title: titleTemplate,
         dataType
       } =
@@ -359,15 +362,14 @@ export const getWidgets = createSelector(
 
       const dataOptions = rawData && rawData.options;
 
-      const settingsConfigParsed =
-        status !== 'pending'
-          ? getSettingsConfig({
-            settingsConfig,
-            dataOptions,
-            settings,
-            polynames
-          })
-          : [];
+      const settingsConfigParsed = getSettingsConfig({
+        settingsConfig,
+        dataOptions,
+        settings,
+        polynames,
+        status,
+        pendingKeys
+      });
 
       const optionsSelected =
         settingsConfigParsed && getOptionsSelected(settingsConfigParsed);
