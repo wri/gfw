@@ -244,10 +244,10 @@ export const filterWidgetsByLocation = createSelector(
 );
 
 export const filterWidgetsByCategory = createSelector(
-  [filterWidgetsByLocation, selectCategory, selectAnalysis],
-  (widgets, category, showAnylsis) => {
+  [filterWidgetsByLocation, selectCategory, selectAnalysis, getLocationData],
+  (widgets, category, showAnalysis, locationData) => {
     if (isEmpty(widgets)) return null;
-    if (showAnylsis) return widgets;
+    if (showAnalysis || locationData.status === 'pending') return widgets;
 
     const cat = category || 'summary';
 

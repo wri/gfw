@@ -14,7 +14,8 @@ export const getDataAPI = ({ params }) =>
   }).then(response => {
     const { data } = (response && response.data) || {};
     const totalArea = data && data.attributes.areaHa;
-    const totalExtent = data && data.attributes.treeExtent;
+    const exentKey = params.extentYear === 2010 ? '2010' : '';
+    const totalExtent = data && data.attributes[exentKey];
 
     return {
       totalArea,
@@ -77,7 +78,7 @@ export default {
     landCover: 1
   },
   refetchKeys: ['threshold', 'extentYear', 'landCategory'],
-  pendingKeys: ['threshold'],
+  pendingKeys: ['threshold', 'extentYear'],
   // whitelists for options
   settingsConfig: [
     {
@@ -91,7 +92,8 @@ export default {
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
+      border: true
     },
     {
       key: 'threshold',
