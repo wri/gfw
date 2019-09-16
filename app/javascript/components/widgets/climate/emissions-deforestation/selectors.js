@@ -1,22 +1,24 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
+
 import { formatNumber } from 'utils/format';
-import { yearTicksFormatter } from 'components/widget/utils/data';
+import { yearTicksFormatter } from 'components/widgets/utils/data';
 
 // get list data
-const getData = state => state.data;
-const getSettings = state => state.settings || null;
+const getData = state => state.data && state.data.loss;
+const getSettings = state => state.settings;
 const getColors = state => state.colors;
-const getIndicator = state => state.indicator || null;
-const getLocationName = state => state.locationName || null;
-const getSentences = state => state.config && state.config.sentences;
+const getIndicator = state => state.indicator;
+const getLocationName = state => state.locationLabel;
+const getSentences = state => state.sentences;
 
 export const parseData = createSelector(
   [getData, getSettings],
   (data, settings) => {
     if (!data || isEmpty(data)) return null;
     const { startYear, endYear } = settings;
+
     return (
       data &&
       data.filter(d => d.year >= startYear && d.year <= endYear).map(d => ({
@@ -95,6 +97,6 @@ export const parseSentence = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
+  config: parseConfig,
   sentence: parseSentence
 });

@@ -3,7 +3,7 @@ import replace from 'lodash/replace';
 import upperFirst from 'lodash/upperFirst';
 import flatMap from 'lodash/flatMap';
 
-import { getWidgets } from 'components/widgets/selectors';
+import { filterWidgetsByLocation } from 'components/widgets/selectors';
 import {
   getActiveArea,
   selectAreaLoading
@@ -39,7 +39,7 @@ export const getNoWidgetsMessage = createSelector(
 );
 
 export const getLinks = createSelector(
-  [getWidgets, selectCategory],
+  [filterWidgetsByLocation, selectCategory],
   (widgets, activeCategory) => {
     if (!widgets) return null;
     const widgetCats = flatMap(widgets.map(w => w.categories));

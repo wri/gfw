@@ -183,14 +183,13 @@ export const getLocationData = createSelector(
   }
 );
 
-export const filterWidgets = createSelector(
+export const filterWidgetsByLocation = createSelector(
   [
     getLocationObj,
     getLocationData,
     selectPolynameWhitelist,
     selectEmbed,
     getWdigetFromQuery,
-    selectCategory,
     getActiveLayersWithDates,
     selectAnalysis
   ],
@@ -200,7 +199,6 @@ export const filterWidgets = createSelector(
     polynameWhitelist,
     embed,
     widget,
-    category,
     layers,
     showAnalysis
   ) => {
@@ -214,58 +212,56 @@ export const filterWidgets = createSelector(
     if (embed && widget) return widgets.filter(w => w.widget === widget);
     const layerIds = layers && layers.map(l => l.id);
 
+    return widgets.filter(w => {
+      const { types, admins, whitelists, source, datasets, analysis } = w || {};
+      const { fao } = locationData || {};
+
+      const layerIntersection =
+        datasets &&
+        intersection(flatMap(datasets.map(d => d.layers)), layerIds);
+      const hasLocation =
+        types && types.includes(type) && admins && admins.includes(adminLevel);
+      const adminWhitelist = whitelists && whitelists[adminLevel];
+      const isFAOCountry =
+        source !== 'fao' || (fao && fao.find(f => f.value === location.adm0));
+      const matchesAdminWhitelist =
+        !adminWhitelist || adminWhitelist.includes(location[adminLevel]);
+      const matchesPolynameWhitelist =
+        !whitelists ||
+        !whitelists.indicators ||
+        intersection(polynameWhitelist, whitelists.indicators);
+      const isAnalysisWidget =
+        !showAnalysis || (analysis && !isEmpty(layerIntersection));
+
+      return (
+        hasLocation &&
+        matchesAdminWhitelist &&
+        matchesPolynameWhitelist &&
+        isFAOCountry &&
+        isAnalysisWidget
+      );
+    });
+  }
+);
+
+export const filterWidgetsByCategory = createSelector(
+  [filterWidgetsByLocation, selectCategory, selectAnalysis],
+  (widgets, category, showAnylsis) => {
+    if (isEmpty(widgets)) return null;
+    if (showAnylsis) return widgets;
+
+    const cat = category || 'summary';
+
     return sortBy(
-      widgets.filter(w => {
-        const {
-          types,
-          admins,
-          whitelists,
-          categories,
-          source,
-          datasets,
-          analysis
-        } =
-          w || {};
-        const { fao } = locationData || {};
-
-        const layerIntersection =
-          datasets &&
-          intersection(flatMap(datasets.map(d => d.layers)), layerIds);
-        const hasLocation =
-          types &&
-          types.includes(type) &&
-          admins &&
-          admins.includes(adminLevel);
-        const adminWhitelist = whitelists && whitelists[adminLevel];
-        const isFAOCountry =
-          source !== 'fao' || (fao && fao.find(f => f.value === location.adm0));
-        const matchesAdminWhitelist =
-          !adminWhitelist || adminWhitelist.includes(location[adminLevel]);
-        const matchesPolynameWhitelist =
-          !whitelists ||
-          !whitelists.indicators ||
-          intersection(polynameWhitelist, whitelists.indicators);
-        const hasCategory = !category || categories.includes(category);
-        const isAnalysisWidget =
-          !showAnalysis || (analysis && !isEmpty(layerIntersection));
-
-        return (
-          hasLocation &&
-          matchesAdminWhitelist &&
-          matchesPolynameWhitelist &&
-          hasCategory &&
-          isFAOCountry &&
-          isAnalysisWidget
-        );
-      }),
-      category ? `sortOrder[${category}]` : 'sortOrder.summary'
+      widgets.filter(w => w.categories.includes(cat)),
+      `sortOrder[${cat}]`
     );
   }
 );
 
 export const getWidgets = createSelector(
   [
-    filterWidgets,
+    filterWidgetsByCategory,
     getLocationObj,
     getLocationData,
     selectWidgetsData,

@@ -31,7 +31,7 @@ import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
 // import * as emissions from 'components/widgets/climate/emissions';
 // import * as woodyBiomass from 'components/widgets/climate/whrc-biomass/';
 // import * as soilBiomass from 'components/widgets/climate/soil-organic';
-// // import * as emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
+import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
 // import * as emissionsPlantations from 'components/widgets/climate/emissions-plantations';
 // import * as futureCarbonGains from 'components/widgets/climate/future-carbon-gains';
 // import * as cumulativeEmissions from 'components/widgets/climate/cumulative-emissions';
@@ -51,7 +51,7 @@ export default {
   gladAlerts,
   treeLoss,
   treeLossGlobal,
-  treeLossRanked
+  treeLossRanked,
   // firesAlerts,
   // firesRanked,
   // faoDeforest,
@@ -76,7 +76,7 @@ export default {
   // treeCoverLocated,
   // // climate
   // emissions,
-  // // emissionsDeforestation,
+  emissionsDeforestation
   // emissionsPlantations,
   // woodyBiomass,
   // soilBiomass,
