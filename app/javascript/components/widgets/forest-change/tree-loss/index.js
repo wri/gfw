@@ -6,7 +6,7 @@ import { fetchAnalysisEndpoint } from 'services/analysis';
 
 import getWidgetProps from './selectors';
 
-export const getDataAPI = ({ params }) =>
+export const getDataAPI = params =>
   fetchAnalysisEndpoint({
     ...params,
     name: 'umd',
@@ -25,9 +25,18 @@ export const getDataAPI = ({ params }) =>
       }));
     const extent = data.attributes.treeExtent;
 
+    const { startYear, endYear, range } = getYearsRange(loss);
+
     return {
       loss,
-      extent
+      extent,
+      settings: {
+        startYear,
+        endYear
+      },
+      options: {
+        years: range
+      }
     };
   });
 
@@ -121,7 +130,7 @@ export default {
     const { adm0, adm1, adm2, type, ...rest } = params || {};
 
     if (params.type !== 'country' && params.type !== 'global') {
-      return getDataAPI({ params });
+      return getDataAPI(params);
     }
 
     const globalLocation = {

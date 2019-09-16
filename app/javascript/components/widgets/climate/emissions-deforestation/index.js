@@ -81,7 +81,7 @@ export default {
         const biomassData = data.biomassLossByYear;
         const emissionsData = data.co2LossByYear;
         loss = Object.keys(biomassData).map(l => ({
-          year: l,
+          year: parseInt(l, 10),
           emissions: emissionsData[l],
           biomassLoss: biomassData[l]
         }));
