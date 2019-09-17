@@ -1,7 +1,68 @@
-import Component from 'components/widgets/components/widget-pie-chart-legend';
-import getData from './actions';
-import getProps from './selectors';
-import config from './config';
-import settings from './settings';
+import axios from 'axios';
 
-export { getData, getProps, Component, config, settings };
+import { getSoilOrganicCarbon, getBiomassRanking } from 'services/climate';
+
+import getWidgetProps from './selectors';
+
+export default {
+  widget: 'carbonStock',
+  title: 'Carbon stock in {location}',
+  categories: ['climate'],
+  types: ['country'],
+  admins: ['adm0', 'adm1', 'adm2'],
+  settingsConfig: [
+    {
+      key: 'variable',
+      label: 'Variable',
+      type: 'select',
+      whitelist: ['totalbiomass', 'biomassdensity'],
+      border: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
+    }
+  ],
+  chartType: 'pieChart',
+  colors: 'climate',
+  metaKey: '',
+  sortOrder: {
+    climate: 4
+  },
+  settings: {
+    variable: 'totalbiomass',
+    threshold: 30
+  },
+  sentences:
+    '{location} has a total carbon store of {carbonValue}, with most of the carbon stored in {carbonStored}.',
+  getData: params =>
+    axios
+      .all([
+        getSoilOrganicCarbon({ ...params }),
+        getBiomassRanking({ ...params })
+      ])
+      .then(
+        axios.spread((soilOrganicCarbon, aboveGroundBiomass) => {
+          let level = 'iso';
+          let paramLevel = 'adm0';
+          if (params.adm1) {
+            level = 'admin_1';
+            paramLevel = 'adm1';
+          } else if (params.adm2) {
+            paramLevel = 'adm2';
+          }
+
+          return {
+            soilCarbon: soilOrganicCarbon.data.rows.find(
+              r => r[level] === params[paramLevel]
+            ),
+            aboveGround: aboveGroundBiomass.data.rows.find(
+              r => r[level] === params[paramLevel]
+            )
+          };
+        })
+      ),
+  getWidgetProps
+};

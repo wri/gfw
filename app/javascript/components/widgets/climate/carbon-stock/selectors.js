@@ -6,9 +6,9 @@ import { aboveGroundToBelowGround } from 'utils/calculations';
 const getData = state => state.data;
 const getLocationName = state => state.locationName;
 const getColors = state => state.colors;
-const getSentences = state => state.config && state.config.sentences;
+const getSentences = state => state.sentences;
 const getVariables = state => state.options && state.options.variables;
-const getTitle = state => state.config.title;
+const getTitle = state => state.title;
 const getSettings = state => state.settings;
 
 export const calculateData = createSelector(
