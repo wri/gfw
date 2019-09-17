@@ -16,7 +16,7 @@ const getLocationsMeta = state => state.childLocationData;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getEmbed = state => state.embed || null;
-const getSentences = state => state.config.sentence || null;
+const getSentences = state => state.sentence || null;
 
 const getPlanationKeys = createSelector(
   [getPlantations],

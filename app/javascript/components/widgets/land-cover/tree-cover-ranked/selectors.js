@@ -13,7 +13,7 @@ const getLocationData = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
 const getLocationObject = state => state.locationObject || null;
-const getSentences = state => state.config.sentences || null;
+const getSentences = state => state.sentences || null;
 const getForestType = state => state.forestType || null;
 const getLandCategory = state => state.landCategory || null;
 

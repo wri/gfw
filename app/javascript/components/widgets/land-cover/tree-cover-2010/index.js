@@ -1,22 +1,19 @@
-import * as ParentWidget from '../tree-cover';
+import treeCover from 'components/widgets/land-cover/tree-cover';
 
-import childConfig from './config';
-import childSettings from './settings';
-
-const Component = ParentWidget.Component;
-const parentConfig = ParentWidget.config;
-const parentSettings = ParentWidget.settings;
-const getData = ParentWidget.getData;
-const getProps = ParentWidget.getProps;
-
-const config = {
-  ...parentConfig,
-  ...childConfig
+export default {
+  ...treeCover,
+  widget: 'treeCover2010',
+  datasets: [
+    // tree cover
+    {
+      dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
+      layers: ['78747ea1-34a9-4aa7-b099-bdb8948200f4']
+    }
+  ],
+  analysis: true,
+  hideFromDashboard: true,
+  settings: {
+    threshold: 30,
+    extentYear: 2010
+  }
 };
-
-const settings = {
-  ...parentSettings,
-  ...childSettings
-};
-
-export { getData, getProps, Component, config, settings };

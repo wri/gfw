@@ -6,8 +6,8 @@ import { format } from 'd3-format';
 const getData = state => state.data || null;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentences;
-const getTitle = state => state.config.title;
+const getSentences = state => state.sentences;
+const getTitle = state => state.title;
 
 // get lists selected
 export const parseData = createSelector(

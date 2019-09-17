@@ -16,8 +16,8 @@ const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.childLocationData || null;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentences;
-const getTitle = state => state.config.title;
+const getSentences = state => state.sentences;
+const getTitle = state => state.title;
 
 export const parseList = createSelector(
   [getData, getSettings, getLocation, getLocationsMeta, getColors],
