@@ -16,7 +16,8 @@ class WidgetContainer extends Component {
     refetchKeys: PropTypes.array,
     error: PropTypes.bool,
     settings: PropTypes.object,
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    handleChangeSettings: PropTypes.func
   };
 
   static defaultProps = {
@@ -101,6 +102,10 @@ class WidgetContainer extends Component {
     });
   };
 
+  handleDataHighlight = highlighted => {
+    this.props.handleChangeSettings({ highlighted });
+  };
+
   cancelWidgetDataFetch = () => {
     if (this.widgetDataFetch) {
       this.widgetDataFetch.cancel(`Cancelling ${this.props.widget} fetch`);
@@ -111,7 +116,8 @@ class WidgetContainer extends Component {
     return createElement(WidgetComponent, {
       ...this.props,
       ...this.state,
-      handleRefetchData: this.handleRefetchData
+      handleRefetchData: this.handleRefetchData,
+      handleDataHighlight: this.handleDataHighlight
     });
   }
 }

@@ -32,8 +32,7 @@ class WidgetBody extends PureComponent {
     data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     locationName: PropTypes.string,
     parsePayload: PropTypes.func,
-    handleMouseOver: PropTypes.func,
-    handleMouseOut: PropTypes.func,
+    handleDataHighlight: PropTypes.func,
     handleRefetchData: PropTypes.func
   };
 
@@ -47,8 +46,7 @@ class WidgetBody extends PureComponent {
       data,
       chartType,
       handleRefetchData,
-      handleMouseOver,
-      handleMouseOut
+      handleDataHighlight
     } = this.props;
     const hasData = !isEmpty(data);
     const Component = chartOptions[chartType];
@@ -71,8 +69,8 @@ class WidgetBody extends PureComponent {
           <DynamicSentence
             className="sentence"
             sentence={sentence}
-            handleMouseOver={handleMouseOver}
-            handleMouseOut={handleMouseOut}
+            handleMouseOver={() => handleDataHighlight(true)}
+            handleMouseOut={() => handleDataHighlight(false)}
           />
         )}
         {!error && hasData && Component && <Component {...this.props} />}
