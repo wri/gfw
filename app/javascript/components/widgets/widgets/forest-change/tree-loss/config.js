@@ -30,9 +30,9 @@ export default {
   },
   sentence: {
     initial:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease in tree cover since {extentYear}',
     withIndicator:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear}',
     noLoss:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
     noLossWithIndicator:
