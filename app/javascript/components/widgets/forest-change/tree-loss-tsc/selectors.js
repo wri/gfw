@@ -1,5 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import sum from 'lodash/sum';
 import sumBy from 'lodash/sumBy';
 import entries from 'lodash/entries';
 import groupBy from 'lodash/groupBy';
@@ -114,6 +115,7 @@ export const parseData = createSelector([getFilteredData], data => {
     }, {});
     return {
       year: y,
+      total: sum(Object.values(datakeys)),
       ...datakeys
     };
   });
@@ -137,6 +139,13 @@ export const parseConfig = createSelector(
     let tooltip = [
       {
         key: 'year'
+      },
+      {
+        key: 'total',
+        label: 'Total',
+        unit: 'ha',
+        unitFormat: value =>
+          (value < 1000 ? Math.round(value) : format('.3s')(value))
       }
     ];
     tooltip = tooltip.concat(
