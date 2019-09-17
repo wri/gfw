@@ -5,7 +5,7 @@ import groupBy from 'lodash/groupBy';
 import range from 'lodash/range';
 import moment from 'moment';
 
-import { getDatesData, getChartConfig } from 'components/widget/utils/data';
+import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
 const getAlerts = state => (state.data && state.data.data) || null;
 const getColors = state => state.colors || null;
@@ -216,7 +216,7 @@ export const parsePayload = payload => {
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
+  config: parseConfig,
   sentence: parseSentence,
   settings: getDataSettings
 });
