@@ -12,6 +12,7 @@ export default {
     years: true,
     variables: ['cumulative_emissions', 'cumulative_deforestation']
   },
+  chartType: 'composedChart',
   settingsConfig: [
     {
       key: 'variable',
