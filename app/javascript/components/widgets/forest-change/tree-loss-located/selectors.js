@@ -16,7 +16,7 @@ const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.childLocationData || null;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentences;
+const getSentences = state => state.sentences;
 
 export const mapData = createSelector(
   [getLoss, getExtent, getSettings, getLocation, getLocationsMeta],

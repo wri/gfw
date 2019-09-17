@@ -1,7 +1,86 @@
-import Component from 'components/widgets/components/widget-composed-chart';
-import getData from './actions';
-import getProps from './selectors';
-import config from './config';
-import settings from './settings';
+import axios from 'axios';
+import { getLoss } from 'services/forest-data';
 
-export { getData, getProps, Component, config, settings };
+import getWidgetProps from './selectors';
+
+export default {
+  widget: 'treeLossPlantations',
+  title: 'Forest loss in natural forest in {location}',
+  large: true,
+  categories: ['forest-change'],
+  types: ['country'],
+  admins: ['adm0', 'adm1', 'adm2'],
+  settingsConfig: [
+    {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      years: [2013, 2014, 2015, 2016, 2017, 2018],
+      type: 'range-select',
+      border: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
+    }
+  ],
+  chartType: 'composedChart',
+  colors: 'loss',
+  metaKey: 'widget_plantations_tree_cover_loss',
+  datasets: [
+    {
+      // global plantations
+      dataset: 'bb1dced4-3ae8-4908-9f36-6514ae69713f',
+      layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4']
+    },
+    // loss
+    {
+      dataset: '897ecc76-2308-4c51-aeb3-495de0bdca79',
+      layers: ['c3075c5a-5567-4b09-bc0d-96ed1673f8b6']
+    }
+  ],
+  sortOrder: {
+    forestChange: 2
+  },
+  sentence:
+    'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was equivalent to {value} of CO<sub>2</sub> emissions.',
+  whitelists: {
+    indicators: ['plantations']
+  },
+  settings: {
+    threshold: 30,
+    startYear: 2013,
+    endYear: 2018,
+    extentYear: 2010
+  },
+  getData: params =>
+    axios
+      .all([
+        getLoss({ ...params, forestType: 'plantations' }),
+        getLoss({ ...params, forestType: '' })
+      ])
+      .then(
+        axios.spread((plantationsloss, gadmLoss) => {
+          let data = {};
+          const lossPlantations =
+            plantationsloss.data && plantationsloss.data.data;
+          const totalLoss = gadmLoss.data && gadmLoss.data.data;
+          if (
+            lossPlantations &&
+            totalLoss &&
+            lossPlantations.length &&
+            totalLoss.length
+          ) {
+            data = {
+              lossPlantations,
+              totalLoss
+            };
+          }
+          return data;
+        })
+      ),
+  getWidgetProps
+};
