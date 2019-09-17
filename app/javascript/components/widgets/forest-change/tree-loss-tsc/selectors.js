@@ -26,6 +26,7 @@ export const mergeDataWithCetagories = createSelector(
   [getLoss, getPermCats],
   (data, permCats) => {
     if (isEmpty(data)) return null;
+
     return data.map(d => ({
       ...d,
       permanent: permCats.includes(d.bound1)

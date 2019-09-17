@@ -1,5 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
+import { getYearsRange } from 'components/widgets/utils/data';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtentOld, getLossOld } from 'services/forest-data';
@@ -16,6 +17,11 @@ export default {
   types: ['global', 'country'],
   admins: ['global', 'adm0'],
   settingsConfig: [
+    {
+      key: 'tscDriverGroup',
+      label: 'drivers',
+      type: 'select'
+    },
     {
       key: 'years',
       label: 'years',
@@ -55,9 +61,9 @@ export default {
   },
   settings: {
     tscDriverGroup: 'all',
-    endYear: 2015,
     highlighted: false,
-    extentYear: 2000
+    extentYear: 2000,
+    threshold: 30
   },
   sentences: {
     initial:
@@ -82,7 +88,19 @@ export default {
               extent: (loss.data.data && extent.data.data[0].value) || 0
             };
           }
-          return data;
+
+          const { startYear, range } = getYearsRange(data.loss);
+
+          return {
+            ...data,
+            settings: {
+              startYear,
+              endYear: 2015
+            },
+            options: {
+              years: range.filter(y => y.value <= 2015)
+            }
+          };
         })
       ),
   getWidgetProps,
