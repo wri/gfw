@@ -13,9 +13,14 @@ export default {
   colors: 'climate',
   types: ['country'],
   admins: ['adm0'],
-  options: {
-    units: ['co2Gain', 'cGain']
-  },
+  settingsConfig: [
+    {
+      key: 'unit',
+      label: 'unit',
+      type: 'select',
+      whitelist: ['co2Gain', 'cGain']
+    }
+  ],
   metaKey: 'potential_tree_biomass_gain',
   sortOrder: {
     summary: 1,

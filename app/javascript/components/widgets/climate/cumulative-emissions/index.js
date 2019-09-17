@@ -8,10 +8,6 @@ export default {
   title: 'New York Declaration Forest disturbance tracker',
   large: true,
   categories: ['climate'],
-  options: {
-    years: true,
-    variables: ['cumulative_emissions', 'cumulative_deforestation']
-  },
   chartType: 'composedChart',
   settingsConfig: [
     {

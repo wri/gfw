@@ -11,9 +11,14 @@ export default {
   categories: ['climate'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  options: {
-    variables: ['totalbiomass', 'biomassdensity']
-  },
+  settingsConfig: [
+    {
+      key: 'variable',
+      label: 'variable',
+      type: 'select',
+      whitelist: ['totalbiomass', 'biomassdensity']
+    }
+  ],
   datasets: [
     // soil organis carbon
     {

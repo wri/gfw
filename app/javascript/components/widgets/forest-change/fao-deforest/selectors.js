@@ -9,8 +9,8 @@ const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 const getPeriod = state => state.settings.period || null;
-const getSentences = state => state.config && state.config.sentences;
-const getTitle = state => state.config.title;
+const getSentences = state => state.sentences;
+const getTitle = state => state.title;
 
 export const parseData = createSelector(
   [getData, getLocation, getColors],

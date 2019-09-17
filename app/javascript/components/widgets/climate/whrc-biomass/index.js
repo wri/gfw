@@ -11,10 +11,21 @@ export default {
   categories: ['climate'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  options: {
-    thresholds: true,
-    variables: ['totalbiomass', 'biomassdensity']
-  },
+  settingsConfig: [
+    {
+      key: 'variable',
+      label: 'variable',
+      type: 'select',
+      whitelist: ['totalbiomass', 'biomassdensity'],
+      border: true
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
+    }
+  ],
   chartType: 'rankedList',
   datasets: [
     // above ground woody biomass
