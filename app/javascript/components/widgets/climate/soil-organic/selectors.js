@@ -5,13 +5,13 @@ import { formatNumber } from 'utils/format';
 import { sortByKey } from 'utils/data';
 
 // get list data
-const getData = state => state.data && state.data;
+const getData = state => state.data;
 const getLocationName = state => state.locationName || null;
 const getLocation = state => state.allLocation || null;
 const getLocationDict = state => state.locationDict || null;
 const getLocationObject = state => state.locationObject || null;
-const getSentences = state => state.config && state.config.sentences;
-const getTitle = state => state.config.title;
+const getSentences = state => state.sentences;
+const getTitle = state => state.title;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 
