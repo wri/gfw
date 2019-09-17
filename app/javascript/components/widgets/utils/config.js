@@ -11,13 +11,14 @@ export const getForestTypes = ({
   forestTypes,
   settings,
   locationType,
-  polynames,
+  polynamesWhitelist,
   adm0
 }) =>
   forestTypes
     .filter(o => {
       const isGlobal = locationType !== 'global' || o.global;
-      const hasPolyname = isEmpty(polynames) || polynames.includes(o.value);
+      const hasPolyname =
+        isEmpty(polynamesWhitelist) || polynamesWhitelist.includes(o.value);
       return isGlobal && hasPolyname;
     })
     .map(f => ({
@@ -34,11 +35,12 @@ export const getForestTypes = ({
 export const getLandCategories = ({
   landCategories,
   locationType,
-  polynames
+  polynamesWhitelist
 }) =>
   landCategories.filter(o => {
     const isGlobal = locationType !== 'global' || o.global;
-    const hasPolyname = isEmpty(polynames) || polynames.includes(o.value);
+    const hasPolyname =
+      isEmpty(polynamesWhitelist) || polynamesWhitelist.includes(o.value);
     return isGlobal && hasPolyname;
   });
 
@@ -46,7 +48,7 @@ export const getSettingsConfig = ({
   settingsConfig,
   settings,
   dataOptions,
-  polynames,
+  polynamesWhitelist,
   pendingKeys,
   status
 }) =>
@@ -74,7 +76,7 @@ export const getSettingsConfig = ({
           getForestTypes({
             forestTypes: mergedOptions,
             settings,
-            polynames,
+            polynamesWhitelist,
             locationType
           });
       } else if (key === 'landCategory') {
@@ -82,7 +84,7 @@ export const getSettingsConfig = ({
           mergedOptions &&
           getLandCategories({
             landCategories: mergedOptions,
-            polynames,
+            polynamesWhitelist,
             locationType
           });
       }
@@ -191,15 +193,16 @@ export const getWidgetDatasets = ({
     })
   }));
 
-export const getPolynameDatasets = ({
-  optionsSelected,
-  settings,
-  polynames
-}) => {
+export const getPolynameDatasets = ({ optionsSelected, settings }) => {
+  const { ifl, forestType, landCategory } = settings;
+  const polynames = [
+    ...allOptions.forestType,
+    ...allOptions.landCategory
+  ].filter(p => [forestType, landCategory].includes(p.value));
   const iflYear =
     optionsSelected &&
     optionsSelected.ifl &&
-    optionsSelected.ifl.find(opt => opt.value === settings.ifl);
+    optionsSelected.ifl.find(opt => opt.value === ifl);
 
   return (
     polynames &&
@@ -208,7 +211,7 @@ export const getPolynameDatasets = ({
         polyname.datasets &&
         polyname.datasets.map(d => ({
           opacity: 0.7,
-          visibility: 1,
+          visibility: true,
           ...d,
           sqlParams: iflYear && {
             where: {

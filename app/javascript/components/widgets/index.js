@@ -103,19 +103,13 @@ class WidgetsContainer extends PureComponent {
 
   syncWidgetWithMap = () => {
     const { activeWidget, setMapSettings } = this.props;
-    const { datasets, settings, polynames, optionsSelected } =
-      activeWidget || {};
-
+    const { datasets, settings, optionsSelected } = activeWidget || {};
     const widgetDatasets =
       datasets &&
       datasets.length &&
       getWidgetDatasets({ datasets, ...settings });
 
-    const polynameDatasets =
-      polynames &&
-      polynames.length &&
-      getPolynameDatasets({ polynames, optionsSelected, settings });
-
+    const polynameDatasets = getPolynameDatasets({ optionsSelected, settings });
     const allDatasets = [...compact(polynameDatasets), ...widgetDatasets];
 
     setMapSettings({

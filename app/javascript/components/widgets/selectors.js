@@ -142,7 +142,7 @@ export const getAllLocationData = createSelector(
 
 export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
-  (location, allLocationData, polynames) => {
+  (location, allLocationData, polynamesWhitelist) => {
     if (isEmpty(allLocationData)) return null;
     const { type, adminLevel, locationLabel } = location;
 
@@ -176,7 +176,7 @@ export const getLocationData = createSelector(
           ? locationLabel
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
-      polynames,
+      polynamesWhitelist,
       status: currentLocation && currentLocation.status
     };
   }
@@ -290,7 +290,7 @@ export const getWidgets = createSelector(
     }
 
     const { locationLabelFull, type } = locationObj || {};
-    const { polynames, status } = locationData || {};
+    const { polynamesWhitelist, status } = locationData || {};
 
     return widgets.map(w => {
       const {
@@ -363,7 +363,7 @@ export const getWidgets = createSelector(
         settingsConfig,
         dataOptions,
         settings,
-        polynames,
+        polynamesWhitelist,
         status,
         pendingKeys
       });
