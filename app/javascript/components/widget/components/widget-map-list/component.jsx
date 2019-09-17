@@ -6,13 +6,13 @@ import NumberedList from 'components/widgets/components/widget-numbered-list';
 
 import './styles';
 
-class WidgetTraseCommodities extends PureComponent {
+class WidgetMapList extends PureComponent {
   render() {
     const { data, settings, embed, setWidgetSettings, widget } = this.props;
     const { rankedData } = data;
 
     return (
-      <div className="c-widget-trase-commodities">
+      <div className="c-widget-map-list">
         {data && <WorldMap className="simple-map" {...data} />}
         {rankedData && (
           <NumberedList
@@ -29,7 +29,7 @@ class WidgetTraseCommodities extends PureComponent {
   }
 }
 
-WidgetTraseCommodities.propTypes = {
+WidgetMapList.propTypes = {
   data: PropTypes.object,
   config: PropTypes.object,
   settings: PropTypes.object,
@@ -37,4 +37,4 @@ WidgetTraseCommodities.propTypes = {
   widget: PropTypes.string,
   setWidgetSettings: PropTypes.func
 };
-export default WidgetTraseCommodities;
+export default WidgetMapList;

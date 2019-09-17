@@ -7,7 +7,7 @@ const getData = state => state.data;
 const getSettings = state => state.settings;
 const getLocationObject = state => state.locationObject;
 const getColors = state => state.colors;
-const getSentences = state => state.config.sentences;
+const getSentences = state => state.sentences;
 
 // get lists selected
 export const getFilteredData = createSelector(

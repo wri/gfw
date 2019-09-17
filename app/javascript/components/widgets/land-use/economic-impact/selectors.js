@@ -13,8 +13,7 @@ const getLocationsMeta = state => state.locationData || null;
 const getLocationObject = state => state.locationObject;
 const getLocation = state => state.allLocation || null;
 const getColors = state => state.colors;
-const getSentences = state => state.config.sentence;
-// this allows us to get options from the fetch
+const getSentences = state => state.sentence;
 export const getDataOptions = state => state.data && state.data.options;
 
 // get lists selected

@@ -1,6 +1,6 @@
 @import '~styles/settings.scss';
 
-.c-widget-economic-impact {
+.c-widget-chart-list {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -21,7 +21,7 @@
     }
   }
 
-  .economic-impact-chart {
+  .chart {
     display: none;
     width: 50%;
     min-width: 50%;

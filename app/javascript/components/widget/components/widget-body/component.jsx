@@ -11,6 +11,8 @@ import WidgetComposedChart from 'components/widget/components/widget-composed-ch
 import WidgetHorizontalBarChart from 'components/widget/components/widget-horizontal-bar-chart';
 import WidgetNumberedList from 'components/widget/components/widget-numbered-list';
 import WidgetPieChartLegend from 'components/widget/components/widget-pie-chart-legend';
+import WidgetChartList from 'components/widget/components/widget-chart-list';
+import WidgetMapList from 'components/widget/components/widget-map-list';
 
 import './styles.scss';
 
@@ -18,7 +20,9 @@ const chartOptions = {
   composedChart: WidgetComposedChart,
   horizontalBarChart: WidgetHorizontalBarChart,
   rankedList: WidgetNumberedList,
-  pieChart: WidgetPieChartLegend
+  pieChart: WidgetPieChartLegend,
+  chartList: WidgetChartList,
+  mapList: WidgetMapList
 };
 
 class WidgetBody extends PureComponent {

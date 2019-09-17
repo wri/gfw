@@ -13,13 +13,9 @@ class WidgetEconomicImpact extends PureComponent {
     const { chartData, rankedData } = data;
 
     return (
-      <div className="c-widget-economic-impact">
+      <div className="c-widget-chart-list">
         {data && (
-          <ComposedChart
-            className="economic-impact-chart"
-            data={chartData}
-            config={config}
-          />
+          <ComposedChart className="chart" data={chartData} config={config} />
         )}
         {rankedData && (
           <NumberedList
