@@ -9,8 +9,8 @@ const getLocation = state => state.location || null;
 const getColors = state => state.colors || null;
 const getLocationName = state => state.locationName || null;
 const getPeriod = state => state.settings.period || null;
-const getSentences = state => state.config && state.config.sentences;
-const getTitle = state => state.config.title;
+const getSentences = state => state.sentences;
+const getTitle = state => state.title;
 const getAllLocation = state => state.allLocation || null;
 
 export const getSortedData = createSelector([getData], data => {

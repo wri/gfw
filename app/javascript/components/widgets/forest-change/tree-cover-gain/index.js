@@ -1,7 +1,104 @@
-import Component from 'components/widgets/components/widget-numbered-list';
-import getData from './actions';
-import getProps from './selectors';
-import config from './config';
-import settings from './settings';
+import axios from 'axios';
 
-export { getData, getProps, Component, config, settings };
+import { getGainGrouped } from 'services/forest-data';
+
+import getWidgetProps from './selectors';
+
+export default {
+  widget: 'treeCoverGain',
+  title: {
+    global: 'Global Tree cover gain',
+    initial: 'Tree cover gain in {location} compared to other areas'
+  },
+  categories: ['summary', 'forest-change'],
+  types: ['global', 'country'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
+  settingsConfig: [
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      whitelist: ['ifl', 'primary_forest'],
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    }
+  ],
+  chartType: 'rankedList',
+  colors: 'gain',
+  metaKey: 'widget_tree_cover_gain',
+  datasets: [
+    // gain
+    {
+      dataset: '70e2549c-d722-44a6-a8d7-4a385d78565e',
+      layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4']
+    }
+  ],
+  analysis: true,
+  sortOrder: {
+    summary: 3,
+    forestChange: 7
+  },
+  sentences: {
+    globalInitial:
+      'From 2001 to 2012, {gain} of tree cover was gained {location}.',
+    globalWithIndicator:
+      'From 2001 to 2012, {gain} of tree cover was gained within {indicator} {location}.',
+    initial:
+      'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} of the {parent} total.',
+    withIndicator:
+      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of the {parent} total.',
+    regionInitial:
+      'From 2001 to 2012, {location} gained {gain} of tree cover {indicator} equal to {gainPercent} of all tree cover gain in {parent}.',
+    regionWithIndicator:
+      'From 2001 to 2012, {location} gained {gain} of tree cover in {indicator} equal to {gainPercent} of all tree cover gain in {parent}.'
+  },
+  settings: {
+    threshold: 50,
+    unit: 'ha',
+    pageSize: 5,
+    page: 0,
+    ifl: 2000
+  },
+  getData: params => {
+    const { adm0, adm1, adm2, ...rest } = params || {};
+    const parentLocation = {
+      adm0: adm0 && !adm1 ? null : adm0,
+      adm1: adm1 && !adm2 ? null : adm1,
+      adm2: null
+    };
+    return axios.all([getGainGrouped({ ...rest, ...parentLocation })]).then(
+      axios.spread(gainResponse => {
+        let groupKey = 'iso';
+        if (adm1) groupKey = 'adm1';
+        if (adm2) groupKey = 'adm2';
+        const gainData = gainResponse.data.data;
+        let mappedData = [];
+        if (gainData && gainData.length) {
+          mappedData = gainData.map(item => {
+            const gain = item.gain || 0;
+            const extent = item.extent || 0;
+            return {
+              id:
+                groupKey !== 'iso'
+                  ? parseInt(item[groupKey], 10)
+                  : item[groupKey],
+              gain,
+              extent,
+              percentage: extent ? 100 * gain / extent : 0
+            };
+          });
+        }
+        return mappedData;
+      })
+    );
+  },
+  getWidgetProps
+};

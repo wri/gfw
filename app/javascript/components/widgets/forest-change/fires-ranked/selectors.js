@@ -17,7 +17,7 @@ const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.childLocationData || null;
 const getLocationName = state => state.locationName || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config.sentences || null;
+const getSentences = state => state.sentences || null;
 
 export const parseList = createSelector(
   [

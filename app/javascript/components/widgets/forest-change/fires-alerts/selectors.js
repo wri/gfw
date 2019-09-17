@@ -13,13 +13,13 @@ import {
   getChartConfig
 } from 'components/widget/utils/data';
 
-const getAlerts = state => (state.data && state.data.alerts) || null;
-const getLatest = state => (state.data && state.data.latest) || null;
+const getAlerts = state => state.data && state.data.alerts;
+const getLatest = state => state.data && state.data.latest;
 const getColors = state => state.colors || null;
 const getInteraction = state => state.settings.interaction || null;
 const getWeeks = state => state.settings.weeks || null;
 const getDataset = state => state.settings.dataset || null;
-const getSentences = state => state.config.sentence || null;
+const getSentences = state => state.sentence || null;
 
 export const getData = createSelector(
   [getAlerts, getDataset],
@@ -191,6 +191,6 @@ export const parsePayload = payload => {
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseConfig,
+  config: parseConfig,
   sentence: parseSentence
 });
