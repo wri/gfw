@@ -1,10 +1,10 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
+import sum from 'lodash/sum';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 import moment from 'moment';
-import {} from 'utils/calculations';
 import { sortByKey, getColorPalette } from 'utils/data';
 import { yearTicksFormatter } from 'components/widgets/utils/data';
 
@@ -73,6 +73,7 @@ export const parseData = createSelector(
   [getFilteredData, getTopIsos],
   (data, isos) => {
     if (isEmpty(data)) return null;
+
     const allCountries = Object.keys(groupBy(data, 'iso'));
     const topData = data.filter(d => isos.indexOf(d.iso) > -1);
     let otherData = [];
@@ -90,7 +91,8 @@ export const parseData = createSelector(
 
       return {
         year: y,
-        ...datakeys
+        ...datakeys,
+        total: sum(Object.values(datakeys))
       };
     });
   }
@@ -114,6 +116,12 @@ export const parseConfig = createSelector(
     let tooltip = [
       {
         key: 'year'
+      },
+      {
+        key: 'total',
+        label: 'Total',
+        unit: 'ha',
+        unitFormat: value => format('.3s')(value)
       }
     ];
     tooltip = tooltip.concat(
