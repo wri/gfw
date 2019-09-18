@@ -66,4 +66,23 @@
       text-align: center;
     }
   }
+
+  .video {
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(40px);
+
+    .video-btn {
+      display: inline-block;
+      margin-right: rem(10px);
+    }
+
+    .video-msg {
+      margin: 0;
+      text-transform: uppercase;
+      color: $slate-dark;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
 }
