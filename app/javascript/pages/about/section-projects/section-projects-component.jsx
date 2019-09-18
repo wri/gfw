@@ -43,20 +43,21 @@ class SectionProjects extends PureComponent {
           </MediaQuery>
           <div className="column small-12 large-6 project-side">
             <h3>WHAT IS GLOBAL FOREST WATCH</h3>
-            <div className="video">
-              <Button
-                theme="square"
-                className="video-btn"
-                onClick={() =>
-                  setModalVideoData({
-                    open: true,
-                    data: {
-                      src:
-                        '//www.youtube.com/embed/lTG-0brb98I?rel=0&autoplay=1&showinfo=0&controls=0&modestbranding=1'
-                    }
-                  })
-                }
-              >
+            <div
+              className="video-btn"
+              onClick={() =>
+                setModalVideoData({
+                  open: true,
+                  data: {
+                    src:
+                      '//www.youtube.com/embed/lTG-0brb98I?rel=0&autoplay=1&showinfo=0&controls=0&modestbranding=1'
+                  }
+                })
+              }
+              role="button"
+              tabIndex={0}
+            >
+              <Button theme="square" className="video-icon">
                 <Icon icon={playIcon} />
               </Button>
               <p className="video-msg">Watch this 2 minute video</p>

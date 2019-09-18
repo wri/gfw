@@ -38,12 +38,13 @@ class Page extends PureComponent {
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
           bgImage={bgImage}
         >
-          <div className="subscribe-btn">
-            <Button
-              theme="square"
-              className="subscribe-icon"
-              onClick={() => setModalNewsletterOpen(true)}
-            >
+          <div
+            className="subscribe-btn"
+            onClick={() => setModalNewsletterOpen(true)}
+            role="button"
+            tabIndex={0}
+          >
+            <Button theme="square" className="subscribe-icon">
               <Icon icon={mailIcon} />
             </Button>
             <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>

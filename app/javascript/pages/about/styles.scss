@@ -4,6 +4,9 @@
   border-bottom: solid 1px $grey-dark;
 
   .subscribe-btn {
+    width: fit-content;
+    cursor: pointer;
+
     .subscribe-icon {
       margin-top: rem(15px);
       display: inline-block;
