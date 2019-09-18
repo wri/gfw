@@ -6,14 +6,14 @@ import { sortByKey } from 'utils/data';
 
 // get list data
 const getData = state => state.data;
-const getLocationName = state => state.locationLabel || null;
-const getAdm0 = state => state.adm0 || null;
-const getLocationDict = state => state.locationDict || null;
-const getLocationObject = state => state.locationObject || null;
+const getLocationName = state => state.locationLabel;
+const getAdm0 = state => state.adm0;
+const getLocationDict = state => state.childData;
+const getLocationObject = state => state.location;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
-const getColors = state => state.colors || null;
-const getSettings = state => state.settings || null;
+const getColors = state => state.colors;
+const getSettings = state => state.settings;
 
 const getSortedData = createSelector(
   [getData, getSettings],
@@ -66,7 +66,8 @@ export const parseData = createSelector(
 
     return dataTrimmed.map((d, i) => ({
       ...d,
-      label: locationsDict[d[key]],
+      label: locationsDict[d[key]] && locationsDict[d[key]].label,
+      path: locationsDict[d[key]] && locationsDict[d[key]].path,
       color: colors.carbon[0],
       key: `${d.iso}-${i}`,
       value: d[settings.variable],

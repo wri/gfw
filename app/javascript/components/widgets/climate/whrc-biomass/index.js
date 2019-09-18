@@ -26,6 +26,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
+  refetchKeys: ['variable', 'threshold'],
   chartType: 'rankedList',
   datasets: [
     {
@@ -51,7 +52,11 @@ export default {
   },
   sentences: {
     initial:
-      'In 2000, {location} had an aboveground live woody biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.'
+      'In 2000, {location} had an aboveground live woody biomass density of {biomassDensity}, and a total biomass of {totalBiomass}.',
+    totalbiomass:
+      'Around {value} of the world’s {label} is contained in the top 5 countries.',
+    biomassdensity:
+      'The average {label} of the world’s top 5 countries is {value}.'
   },
   settings: {
     threshold: 30,
@@ -64,6 +69,6 @@ export default {
     variable: 'totalbiomass'
   },
   getData: params =>
-    getBiomassRanking({ ...params }).then(res => res.data && res.data.rows),
+    getBiomassRanking(params).then(res => res.data && res.data.rows),
   getWidgetProps
 };
