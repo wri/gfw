@@ -6,15 +6,15 @@ import { format } from 'd3-format';
 import sumBy from 'lodash/sumBy';
 
 // get list data
-const getData = state => state.data || null;
-const getSettings = state => state.settings || null;
-const getLocationData = state => state.locationData || null;
-const getColors = state => state.colors || null;
-const getIndicator = state => state.indicator || null;
-const getLocationObject = state => state.locationObject || null;
-const getSentences = state => state.sentences || null;
-const getForestType = state => state.forestType || null;
-const getLandCategory = state => state.landCategory || null;
+const getData = state => state.data;
+const getSettings = state => state.settings;
+const getLocationData = state => state.locationData;
+const getColors = state => state.colors;
+const getIndicator = state => state.indicator;
+const getLocationObject = state => state.location;
+const getSentences = state => state.sentences;
+const getForestType = state => state.forestType;
+const getLandCategory = state => state.landCategory;
 
 export const getSortedData = createSelector(
   [getData, getSettings],

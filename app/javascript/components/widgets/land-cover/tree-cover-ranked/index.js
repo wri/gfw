@@ -38,7 +38,8 @@ export default {
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
+      border: true
     },
     {
       key: 'threshold',
@@ -69,6 +70,7 @@ export default {
     summary: 1,
     landCover: 1
   },
+  refetchKeys: ['threshold', 'extentYear', 'forestType', 'landCategory'],
   settings: {
     threshold: 30,
     unit: '%',

@@ -8,16 +8,16 @@ import { format } from 'd3-format';
 import { sortByKey } from 'utils/data';
 import endsWith from 'lodash/endsWith';
 
-const getPlantations = state => (state.data && state.data.plantations) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
-const getSettings = state => state.settings || null;
-const getAdm0 = state => state.adm0 || null;
-const getAdm1 = state => state.adm1 || null;
-const getLocationsMeta = state => state.childLocationData;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
-const getEmbed = state => state.embed || null;
-const getSentences = state => state.sentence || null;
+const getPlantations = state => state.data && state.data.plantations;
+const getExtent = state => state.data && state.data.extent;
+const getSettings = state => state.settings;
+const getAdm0 = state => state.adm0;
+const getAdm1 = state => state.adm1;
+const getLocationsMeta = state => state.childData;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
+const getEmbed = state => state.embed;
+const getSentences = state => state.sentence;
 
 const getPlanationKeys = createSelector(
   [getPlantations],

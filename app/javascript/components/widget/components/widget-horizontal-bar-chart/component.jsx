@@ -5,13 +5,7 @@ import HorizontalBarChart from 'components/charts/horizontal-bar-chart';
 
 class WidgetHorizontalBarChart extends PureComponent {
   render() {
-    const {
-      data,
-      settings,
-      config,
-      handleChangeSettings,
-      simple
-    } = this.props;
+    const { data, settings, config, handleChangeSettings, simple } = this.props;
 
     return (
       <HorizontalBarChart
@@ -19,7 +13,9 @@ class WidgetHorizontalBarChart extends PureComponent {
         data={data}
         config={config}
         settings={settings}
-        handlePageChange={change => handleChangeSettings({ page: change })}
+        handlePageChange={change =>
+          handleChangeSettings({ page: settings.page + change })
+        }
         simple={simple}
       />
     );

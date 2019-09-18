@@ -14,18 +14,17 @@ export default {
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
-      key: 'forestType',
-      label: 'Forest Type',
-      type: 'select',
-      placeholder: 'All tree cover'
-    },
-    {
       key: 'landCategory',
       label: 'Land Category',
       type: 'select',
       placeholder: 'All categories',
       clearable: true,
       border: true
+    },
+    {
+      key: 'threshold',
+      label: 'threshold',
+      type: 'mini-select'
     }
   ],
   chartType: 'pieChart',
