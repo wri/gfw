@@ -26,6 +26,14 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     // fires
     {
       dataset: '0f0ea013-20ac-4f4b-af56-c57e99f39e08',

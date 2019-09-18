@@ -20,12 +20,26 @@ export default {
   categories: ['land-use'],
   types: ['country'],
   admins: ['adm0'],
-  options: {
-    startYears: true,
-    endYears: true,
-    units: ['t', '%'],
-    commodities: true
-  },
+  settingsConfig: [
+    {
+      key: 'unit',
+      label: 'unit',
+      type: 'select',
+      whitelist: ['t', '%']
+    },
+    {
+      key: 'commodities',
+      label: 'commodities',
+      type: 'select'
+    },
+    {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      type: 'range-select'
+    }
+  ],
   chartType: 'mapList',
   dataType: 'trase',
   colors: 'extent',

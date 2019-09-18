@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import WorldMap from 'components/world-map';
-import NumberedList from 'components/widgets/components/widget-numbered-list';
+import NumberedList from 'components/widget/components/widget-numbered-list';
 
 import './styles';
 

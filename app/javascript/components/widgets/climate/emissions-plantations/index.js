@@ -37,6 +37,14 @@ export default {
   ],
   chartType: 'pieChart',
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     // biomass loss
     {
       dataset: 'a9cc6ec0-5c1c-4e36-9b26-b4ee0b50587b',

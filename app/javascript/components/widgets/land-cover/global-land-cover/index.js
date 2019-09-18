@@ -8,12 +8,17 @@ export default {
   categories: ['land-cover'],
   types: ['country'],
   admins: ['adm0', 'adm1'],
-  options: {
-    years: [2015]
-  },
   chartType: 'pieChart',
   analysis: true,
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     {
       dataset: '588f2f1f-cc62-46aa-9859-befa031412ca',
       layers: ['c09767f5-0ff0-419b-a21b-1b0b06f4745f']

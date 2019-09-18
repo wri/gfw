@@ -29,6 +29,14 @@ export default {
   },
   chartType: 'composedChart',
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     // potential carbon gains
     {
       dataset: 'b7a34457-1d8a-456e-af46-876e0b42fb96',

@@ -12,14 +12,35 @@ export default {
   categories: ['land-cover'],
   types: ['global', 'country'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  options: {
-    landCategories: true,
-    thresholds: true
-  },
+  settingsConfig: [
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    }
+  ],
   chartType: 'pieChart',
   colors: 'extent',
   metaKey: 'widget_ifl',
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     {
       // ifl
       dataset: '13e28550-3fc9-45ec-bb00-5a48a82b77e1',

@@ -12,10 +12,19 @@ export default {
   categories: ['land-use'],
   types: ['country'],
   admins: ['adm0'],
-  options: {
-    years: true,
-    units: ['net_usd', 'net_perc']
-  },
+  settingsConfig: [
+    {
+      key: 'years',
+      label: 'years',
+      type: 'select'
+    },
+    {
+      key: 'unit',
+      label: 'unit',
+      type: 'switch',
+      whitelist: ['net_usd', 'net_perc']
+    }
+  ],
   chartType: 'chartList',
   dataType: 'fao',
   colors: 'employment',

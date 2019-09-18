@@ -12,14 +12,50 @@ export default {
   dataType: 'extent',
   chartType: 'rankedList',
   metaKey: 'widget_forest_cover_ranking',
-  options: {
-    units: ['ha', '%'],
-    forestTypes: ['ifl'],
-    landCategories: true,
-    thresholds: true,
-    extentYears: true
-  },
+  settingsConfig: [
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      whitelist: ['ifl'],
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true
+    },
+    {
+      key: 'unit',
+      label: 'unit',
+      type: 'select',
+      whitelist: ['ha', '%']
+    },
+    {
+      key: 'extentYear',
+      label: 'extent year',
+      type: 'switch'
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
+    }
+  ],
   datasets: [
+    {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
     // tree cover
     {
       dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',

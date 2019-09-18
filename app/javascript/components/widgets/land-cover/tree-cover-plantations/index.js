@@ -13,6 +13,14 @@ export default {
   chartType: 'pieChart',
   datasets: [
     {
+      dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
+      layers: [
+        '6f6798e6-39ec-4163-979e-182a74ca65ee',
+        'c5d1e010-383a-4713-9aaa-44f728c0571c'
+      ],
+      boundary: true
+    },
+    {
       // global plantations
       dataset: 'bb1dced4-3ae8-4908-9f36-6514ae69713f',
       layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4']
