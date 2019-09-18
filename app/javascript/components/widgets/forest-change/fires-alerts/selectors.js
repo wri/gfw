@@ -11,7 +11,7 @@ import {
   getStdDevData,
   getDatesData,
   getChartConfig
-} from 'components/widget/utils/data';
+} from 'components/widgets/utils/data';
 
 const getAlerts = state => state.data && state.data.alerts;
 const getLatest = state => state.data && state.data.latest;
