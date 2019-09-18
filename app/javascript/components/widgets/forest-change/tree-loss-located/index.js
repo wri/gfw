@@ -2,6 +2,8 @@ import { getExtentGrouped, getLossGrouped } from 'services/forest-data';
 import groupBy from 'lodash/groupBy';
 import axios from 'axios';
 
+import { getYearsRange } from 'components/widgets/utils/data';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -57,6 +59,7 @@ export default {
   chartType: 'rankedList',
   colors: 'loss',
   layers: ['loss'],
+  refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
   datasets: [
     {
       dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
@@ -126,9 +129,19 @@ export default {
             };
           });
         }
+
+        const { startYear, endYear, range } = getYearsRange(lossMappedData);
+
         return {
           lossByRegion: lossMappedData,
-          extent: extentMappedData
+          extent: extentMappedData,
+          settings: {
+            startYear,
+            endYear
+          },
+          options: {
+            years: range
+          }
         };
       })
     ),

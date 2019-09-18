@@ -7,17 +7,17 @@ import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 
 // get list data
-const getData = state => (state.data && state.data.alerts) || null;
-const getLatestDates = state => (state.data && state.data.latest) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
-const getSettings = state => state.settings || null;
-const getOptions = state => state.options || null;
-const getIndicator = state => state.indicator || null;
-const getAdm1 = state => state.adm1 || null;
-const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
-const getSentences = state => state.sentences || null;
+const getData = state => state.data && state.data.alerts;
+const getLatestDates = state => state.data && state.data.latest;
+const getExtent = state => state.data && state.data.extent;
+const getSettings = state => state.settings;
+const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
+const getAdm1 = state => state.adm1;
+const getLocationsMeta = state => state.childData;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
+const getSentences = state => state.sentences;
 
 export const parseList = createSelector(
   [
@@ -54,7 +54,7 @@ export const parseList = createSelector(
     const mappedData =
       groupedAlerts &&
       Object.keys(groupedAlerts).map(k => {
-        const region = meta.find(l => parseInt(k, 10) === l.value);
+        const region = meta[k];
         const regionExtent = extent.find(
           a => parseInt(a[groupKey], 10) === parseInt(k, 10)
         );
@@ -90,14 +90,13 @@ export const parseSentence = createSelector(
   [
     parseData,
     parseList,
-    getSettings,
-    getOptions,
+    getOptionsSelected,
     getIndicator,
     getLocationName,
     getSentences
   ],
-  (data, sortedList, settings, options, indicator, locationName, sentences) => {
-    if (!data || !options || !locationName) return '';
+  (data, sortedList, optionsSelected, indicator, locationName, sentences) => {
+    if (!data || !optionsSelected || !locationName) return '';
     const { initial, withInd } = sentences;
     const totalCount = sumBy(data, 'count') || 0;
     let percentileCount = 0;
@@ -113,8 +112,7 @@ export const parseSentence = createSelector(
     const topCount = percentileCount / totalCount * 100;
     const countArea = sumBy(data, 'area') || 0;
     const formatType = countArea < 1 ? '.3r' : '.3s';
-    const timeFrame =
-      options.weeks && options.weeks.find(w => w.value === settings.weeks);
+    const timeFrame = optionsSelected.weeks;
 
     const params = {
       timeframe: timeFrame && timeFrame.label,

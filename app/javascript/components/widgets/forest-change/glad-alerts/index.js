@@ -41,7 +41,7 @@ export default {
   settingsConfig: [
     {
       key: 'weeks',
-      label: 'weeks',
+      label: 'show data for the last',
       type: 'select',
       whitelist: [13, 26, 52],
       noSort: true

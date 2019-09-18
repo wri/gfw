@@ -8,16 +8,16 @@ import sumBy from 'lodash/sumBy';
 import moment from 'moment';
 
 // get list data
-const getData = state => (state.data && state.data.alerts) || null;
-const getLatestDates = state => (state.data && state.data.latest) || null;
-const getSettings = state => state.settings || null;
-const getOptions = state => state.options || null;
-const getIndicator = state => state.indicator || null;
-const getAdm1 = state => state.adm1 || null;
-const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
-const getSentences = state => state.sentences || null;
+const getData = state => state.data && state.data.alerts;
+const getLatestDates = state => state.data && state.data.latest;
+const getSettings = state => state.settings;
+const getOptionsSelected = state => state.optionsSelected;
+const getIndicator = state => state.indicator;
+const getAdm1 = state => state.adm1;
+const getLocationsMeta = state => state.childData;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
+const getSentences = state => state.sentences;
 
 export const parseList = createSelector(
   [getData, getLatestDates, getSettings, getAdm1, getLocationsMeta, getColors],
@@ -45,7 +45,7 @@ export const parseList = createSelector(
     const totalCounts = sumBy(alertsByDate, 'count');
     const mappedData = Object.keys(groupedAlerts).map(k => {
       const locationId = parseInt(k, 10);
-      const region = meta.find(l => locationId === l.value);
+      const region = meta[locationId];
       const regionData = groupedAlerts[locationId];
       const counts = sumBy(regionData, 'count');
       const countsPerc = counts && totalCounts ? counts / totalCounts * 100 : 0;
@@ -75,19 +75,18 @@ export const parseSentence = createSelector(
   [
     parseData,
     getSettings,
-    getOptions,
+    getOptionsSelected,
     getIndicator,
     getLocationName,
     getSentences
   ],
-  (data, settings, options, indicator, locationName, sentences) => {
-    if (!data || !options || !locationName) return '';
+  (data, settings, optionsSelected, indicator, locationName, sentences) => {
+    if (!data || !optionsSelected || !locationName) return '';
     const { initial, withInd } = sentences;
     const topRegion = data[0].label;
     const topRegionCount = data[0].count;
     const topRegionPerc = data[0].value;
-    const timeFrame =
-      options.weeks && options.weeks.find(w => w.value === settings.weeks);
+    const timeFrame = optionsSelected.weeks;
 
     const params = {
       timeframe: timeFrame && timeFrame.label,

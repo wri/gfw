@@ -6,15 +6,14 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getGain = state => (state.data && state.data.gain) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
-const getSettings = state => state.settings || null;
-const getOptions = state => state.options || null;
-const getIndicator = state => state.indicator || null;
-const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
-const getSentences = state => state.sentences || null;
+const getGain = state => state.data && state.data.gain;
+const getExtent = state => state.data && state.data.extent;
+const getSettings = state => state.settings;
+const getIndicator = state => state.indicator;
+const getLocationsMeta = state => state.childData;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
+const getSentences = state => state.sentences;
 
 export const getSortedData = createSelector(
   [getGain, getExtent, getSettings, getLocationsMeta, getColors],
@@ -22,7 +21,7 @@ export const getSortedData = createSelector(
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
-      const region = meta.find(l => parseInt(d.id, 10) === l.value);
+      const region = meta[d.id];
       if (region) {
         const locationExtent = extent.find(l => l.id === parseInt(d.id, 10));
         const percentage = locationExtent
@@ -52,13 +51,12 @@ export const parseSentence = createSelector(
     getSortedData,
     parseData,
     getSettings,
-    getOptions,
     getIndicator,
     getLocationName,
     getSentences
   ],
-  (data, sortedData, settings, options, indicator, locationName, sentences) => {
-    if (!data || !options || !locationName) return null;
+  (data, sortedData, settings, indicator, locationName, sentences) => {
+    if (!data || !locationName) return null;
     const {
       initial,
       withIndicator,

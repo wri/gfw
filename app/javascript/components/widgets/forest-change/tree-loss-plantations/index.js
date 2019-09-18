@@ -12,15 +12,6 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
-      key: 'years',
-      label: 'years',
-      endKey: 'endYear',
-      startKey: 'startYear',
-      years: [2013, 2014, 2015, 2016, 2017, 2018],
-      type: 'range-select',
-      border: true
-    },
-    {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',

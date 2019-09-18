@@ -7,14 +7,13 @@ import { formatNumber } from 'utils/format';
 import { format } from 'd3-format';
 
 // get list data
-const getLoss = state => (state.data && state.data.lossByRegion) || null;
-const getExtent = state => (state.data && state.data.extent) || null;
-const getSettings = state => state.settings || null;
-const getOptions = state => state.options || null;
-const getIndicator = state => state.indicator || null;
-const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
+const getLoss = state => state.data && state.data.lossByRegion;
+const getExtent = state => state.data && state.data.extent;
+const getSettings = state => state.settings;
+const getIndicator = state => state.indicator;
+const getLocationsMeta = state => state.childData;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 
 export const mapData = createSelector(
@@ -23,7 +22,7 @@ export const mapData = createSelector(
     if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
     const mappedData = data.map(d => {
-      const region = meta.find(l => d.id === l.value);
+      const region = meta[d.id];
       const loss =
         sumBy(
           d.loss.filter(l => l.year >= startYear && l.year <= endYear),
@@ -68,13 +67,12 @@ export const parseSentence = createSelector(
     mapData,
     parseData,
     getSettings,
-    getOptions,
     getIndicator,
     getLocationName,
     getSentences
   ],
-  (data, sortedData, settings, options, indicator, locationName, sentences) => {
-    if (!data || !options || !locationName || !sortedData) return '';
+  (data, sortedData, settings, indicator, locationName, sentences) => {
+    if (!data || !locationName || !sortedData) return '';
     const {
       initial,
       withIndicator,

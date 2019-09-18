@@ -29,22 +29,18 @@ export default {
       border: true
     },
     {
-      key: 'unit',
-      label: 'unit',
-      type: 'switch',
-      whitelist: ['%', 'ha']
-    },
-    {
       key: 'weeks',
-      label: 'weeks',
+      label: 'show data for the last',
       type: 'select',
-      whitelist: [13, 26, 52],
+      whitelist: [4, 13, 26, 52],
       noSort: true
     },
     {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch'
+      key: 'unit',
+      label: 'unit',
+      type: 'switch',
+      whitelist: ['%', 'ha'],
+      border: true
     },
     {
       key: 'threshold',
@@ -53,6 +49,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
+  refetchKeys: ['forestType', 'landCategory', 'extentYear', 'threshold'],
   chartType: 'rankedList',
   metaKey: 'widget_deforestation_alert_location',
   colors: 'loss',

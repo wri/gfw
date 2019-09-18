@@ -172,23 +172,6 @@ export const parseSentence = createSelector(
   }
 );
 
-export const parsePayload = payload => {
-  const payloadData = payload && payload.find(p => p.name === 'count');
-  const payloadValues = payloadData && payloadData.payload;
-  if (payloadValues) {
-    const startDate = moment()
-      .year(payloadValues.year)
-      .week(payloadValues.week);
-
-    return {
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: startDate.add(7, 'days'),
-      ...payloadValues
-    };
-  }
-  return {};
-};
-
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,

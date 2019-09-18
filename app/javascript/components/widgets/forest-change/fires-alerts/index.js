@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 import { fetchFiresAlerts, fetchFiresLatest } from 'services/alerts';
 
@@ -11,16 +12,19 @@ export default {
   categories: ['summary', 'forest-change'],
   settingsConfig: [
     {
-      key: 'period',
-      label: 'period',
+      key: 'dataset',
+      label: 'fires dataset',
       type: 'select'
     },
     {
-      key: 'dataset',
-      label: 'dataset',
-      type: 'select'
+      key: 'weeks',
+      label: 'show data for the last',
+      type: 'select',
+      whitelist: [13, 26, 52],
+      noSort: true
     }
   ],
+  refetchKeys: ['dataset'],
   visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
@@ -273,5 +277,19 @@ export default {
         return { alerts: data, latest } || {};
       })
     ),
-  getWidgetProps
+  getWidgetProps,
+  parseInteraction: payload => {
+    if (payload) {
+      const startDate = moment()
+        .year(payload.year)
+        .week(payload.week);
+
+      return {
+        startDate: startDate.format('YYYY-MM-DD'),
+        endDate: startDate.add(7, 'days'),
+        ...payload
+      };
+    }
+    return {};
+  }
 };
