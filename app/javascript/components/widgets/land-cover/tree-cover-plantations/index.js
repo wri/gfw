@@ -26,7 +26,7 @@ export default {
       layers: ['b8fb6cc8-6893-4ae0-8499-1ca9f1ababf4']
     }
   ],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   metaKey: 'widget_plantation_extent',
   sortOrder: {
     landCover: 100

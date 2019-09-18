@@ -12,7 +12,7 @@ export default {
     'There were {count} GLAD alerts reported in the week of the {date}. This was {status} compared to the same week in previous years.',
   metaKey: 'widget_deforestation_graph',
   large: true,
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   colors: 'loss',
   chartType: 'composedChart',
   source: 'gadm',

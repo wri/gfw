@@ -21,7 +21,7 @@ export default {
       type: 'select'
     }
   ],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   types: ['country'],
   admins: ['adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',

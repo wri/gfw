@@ -51,7 +51,7 @@ export default {
       layers: ['b32a2f15-25e8-4ecc-98e0-68782ab1c0fe']
     }
   ],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   colors: 'climate',
   metaKey: 'tree_biomass_loss',
   sortOrder: {

@@ -49,7 +49,7 @@ export default {
   ],
   pendingKeys: ['threshold', 'unit'],
   refetchKeys: ['threshold'],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   metaKey: 'widget_carbon_emissions_tree_cover_loss',
   dataType: 'loss',
   colors: 'climate',

@@ -42,7 +42,7 @@ export default {
       layers: ['f10bded4-94e2-40b6-8602-ae5bdfc07c08']
     }
   ],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   colors: 'climate',
   metaKey: 'aboveground_biomass',
   sortOrder: {

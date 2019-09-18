@@ -49,7 +49,7 @@ export default {
       layers: ['3b22a574-2507-4b4a-a247-80057c1a1ad4']
     }
   ],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   sortOrder: {
     summary: 3,
     forestChange: 7

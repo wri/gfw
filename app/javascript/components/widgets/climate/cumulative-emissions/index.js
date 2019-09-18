@@ -22,7 +22,7 @@ export default {
       type: 'select'
     }
   ],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   datasets: [
     {
       dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',

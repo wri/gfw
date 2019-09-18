@@ -43,7 +43,7 @@ export default {
       layers: ['fffa76d3-5008-48b7-afeb-2c7054548f2e']
     }
   ],
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   sentences: {
     initial:
       'In {location}, potential carbon sequestration may reach {amount} of {variable} by {maxYear}.'

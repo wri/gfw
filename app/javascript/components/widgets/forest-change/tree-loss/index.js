@@ -47,7 +47,7 @@ export default {
   types: ['country', 'geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   large: true,
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
   colors: 'loss',
   settingsConfig: [

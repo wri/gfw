@@ -10,8 +10,7 @@ export default {
       layers: ['78747ea1-34a9-4aa7-b099-bdb8948200f4']
     }
   ],
-  analysis: true,
-  hideFromDashboard: true,
+  visible: ['analysis'],
   settings: {
     threshold: 30,
     extentYear: 2010

@@ -35,7 +35,7 @@ export default {
     }
   ],
   chartType: 'rankedList',
-  analysis: true,
+  visible: ['dashboard', 'analysis'],
   colors: 'climate',
   metaKey: 'soil_organic_carbon',
   sortOrder: {
