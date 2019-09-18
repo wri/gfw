@@ -9,9 +9,9 @@ const EMISSIONS_KEYS = ['Total including LUCF', 'Land-Use Change and Forestry'];
 
 // get list data
 const getData = state => state.data || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
-const getSentences = state => state.config && state.config.sentences;
+const getSentences = state => state.sentences;
 
 const getSortedData = createSelector([getData], data => {
   if (!data || isEmpty(data)) return null;

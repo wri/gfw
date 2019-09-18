@@ -4,8 +4,8 @@ import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 
 const getData = state => state.data || null;
-const getLocation = state => state.allLocation || null;
-const getLocationName = state => state.locationName || null;
+const getAdm0 = state => state.adm0 || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getSettings = state => state.settings || null;
 const getPeriod = state => state.settings.period || null;
@@ -13,13 +13,13 @@ const getSentences = state => state.sentences;
 const getTitle = state => state.title;
 
 export const parseData = createSelector(
-  [getData, getLocation, getColors],
-  (data, location, colors) => {
+  [getData, getAdm0, getColors],
+  (data, adm0, colors) => {
     if (!data || !data.rank) return null;
     const { rank } = data;
     let dataTrimmed = rank;
-    if (location.country) {
-      const locationIndex = findIndex(rank, d => d.iso === location.country);
+    if (adm0) {
+      const locationIndex = findIndex(rank, d => d.iso === adm0);
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
       if (locationIndex < 2) {
@@ -32,23 +32,11 @@ export const parseData = createSelector(
       }
       dataTrimmed = rank.slice(trimStart, trimEnd);
     }
-    const { query, type } = location;
 
     return dataTrimmed.map(d => ({
       ...d,
       label: d.name,
       color: colors.main,
-      path: {
-        type,
-        payload: { type: 'country', adm0: d.iso },
-        query: {
-          ...query,
-          map: {
-            ...(query && query.map),
-            canBound: true
-          }
-        }
-      },
       value: d.deforest
     }));
   }

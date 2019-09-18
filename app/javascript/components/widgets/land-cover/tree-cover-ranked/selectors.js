@@ -8,7 +8,6 @@ import sumBy from 'lodash/sumBy';
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.allLocation || null;
 const getLocationData = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
@@ -33,15 +32,8 @@ export const getSortedData = createSelector(
 );
 
 export const parseData = createSelector(
-  [
-    getSortedData,
-    getSettings,
-    getLocation,
-    getLocationObject,
-    getLocationData,
-    getColors
-  ],
-  (data, settings, location, locationObject, meta, colors) => {
+  [getSortedData, getSettings, getLocationObject, getLocationData, getColors],
+  (data, settings, locationObject, meta, colors) => {
     if (!data || !data.length || !locationObject || !meta) return null;
     const locationIndex = findIndex(
       data,
@@ -58,28 +50,13 @@ export const parseData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
-    const { query, payload, type } = location;
     return dataTrimmed.map(d => {
-      const locationData = meta && meta.find(l => d.id === l.value);
+      const locationData = meta && meta[d.id];
 
       return {
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        path: {
-          type,
-          payload: {
-            ...payload,
-            adm0: locationData && locationData.value
-          },
-          query: {
-            ...query,
-            map: {
-              ...(query && query.map),
-              canBound: true
-            }
-          }
-        },
         value: settings.unit === 'ha' ? d.extent : d.percentage
       };
     });

@@ -13,9 +13,9 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.allLocation || null;
+const getAdm1 = state => state.adm1 || null;
 const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.sentences || null;
 
@@ -25,11 +25,11 @@ export const parseList = createSelector(
     getLatestDates,
     getExtent,
     getSettings,
-    getLocation,
+    getAdm1,
     getLocationsMeta,
     getColors
   ],
-  (data, latest, extent, settings, location, meta, colors) => {
+  (data, latest, extent, settings, adm1, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
     const latestWeek = moment(latest)
       .subtract(1, 'weeks')
@@ -48,7 +48,7 @@ export const parseList = createSelector(
             .subtract(settings.weeks, 'weeks')
         )
     );
-    const groupKey = location.payload.adm1 ? 'adm2' : 'adm1';
+    const groupKey = adm1 ? 'adm2' : 'adm1';
     const groupedAlerts = groupBy(alertsByDate, groupKey);
     const totalCounts = sumBy(alertsByDate, 'alerts');
     const mappedData =
@@ -65,7 +65,6 @@ export const parseList = createSelector(
           counts && totalCounts ? counts / totalCounts * 100 : 0;
         const countsPerHa =
           counts && regionExtent ? counts / regionExtent.extent : 0;
-        const { payload, query, type } = location;
 
         return {
           id: k,
@@ -75,26 +74,7 @@ export const parseList = createSelector(
           count: counts,
           area: countsArea,
           value: settings.unit === 'ha' ? countsArea : countsAreaPerc,
-          label: (region && region.label) || '',
-          path: {
-            type,
-            payload: {
-              ...payload,
-              ...(payload.adm1 && {
-                adm2: parseInt(k, 10)
-              }),
-              ...(!payload.adm1 && {
-                adm1: parseInt(k, 10)
-              })
-            },
-            query: {
-              ...query,
-              map: {
-                ...(query && query.map),
-                canBound: true
-              }
-            }
-          }
+          label: (region && region.label) || ''
         };
       });
     return sortBy(mappedData, 'area').reverse();

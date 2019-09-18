@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import { formatNumber } from 'utils/format';
 
 const getData = state => state.data;
-const getLocationName = state => state.locationName;
+const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;

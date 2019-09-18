@@ -12,15 +12,14 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.sentences;
 
 export const mapData = createSelector(
-  [getLoss, getExtent, getSettings, getLocation, getLocationsMeta],
-  (data, extent, settings, location, meta) => {
+  [getLoss, getExtent, getSettings, getLocationsMeta],
+  (data, extent, settings, meta) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const { startYear, endYear } = settings;
     const mappedData = data.map(d => {
@@ -39,32 +38,11 @@ export const mapData = createSelector(
         loss && locationExtent ? loss / locationExtent * 100 : 0;
       const normalPercentage = percentage > 100 ? 100 : percentage;
 
-      const { payload, query, type } = location;
-
       return {
         label: (region && region.label) || '',
         loss,
         percentage: normalPercentage,
-        value: settings.unit === 'ha' ? loss : normalPercentage,
-        path: {
-          type,
-          payload: {
-            ...payload,
-            ...(payload.adm1 && {
-              adm2: d.id
-            }),
-            ...(!payload.adm1 && {
-              adm1: d.id
-            })
-          },
-          query: {
-            ...query,
-            map: {
-              ...(query && query.map),
-              canBound: true
-            }
-          }
-        }
+        value: settings.unit === 'ha' ? loss : normalPercentage
       };
     });
 

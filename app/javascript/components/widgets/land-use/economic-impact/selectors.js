@@ -11,7 +11,6 @@ const getDataSettings = state => state.data && state.data.settings;
 const getSettings = state => state.settings;
 const getLocationsMeta = state => state.locationData || null;
 const getLocationObject = state => state.locationObject;
-const getLocation = state => state.allLocation || null;
 const getColors = state => state.colors;
 const getSentences = state => state.sentence;
 export const getDataOptions = state => state.data && state.data.options;
@@ -98,15 +97,8 @@ export const chartData = createSelector(
 );
 
 export const rankData = createSelector(
-  [
-    getSortedData,
-    getSettings,
-    getLocationsMeta,
-    getLocationObject,
-    getColors,
-    getLocation
-  ],
-  (data, settings, meta, locationObject, colors, location) => {
+  [getSortedData, getSettings, getLocationsMeta, getLocationObject, getColors],
+  (data, settings, meta, locationObject, colors) => {
     if (!data || !data.length || !locationObject) return null;
     const locationIndex = findIndex(data, d => d.iso === locationObject.value);
     let trimStart = locationIndex - 2;
@@ -120,27 +112,12 @@ export const rankData = createSelector(
       trimEnd = data.length;
     }
     const dataTrimmed = data.slice(trimStart, trimEnd);
-    const { query, type, payload } = location || {};
     return dataTrimmed.map(d => {
-      const locationData = meta && meta.find(l => d.iso === l.value);
+      const locationData = meta && meta[d.iso];
       return {
         ...d,
         label: (locationData && locationData.label) || '',
         color: colors.main,
-        path: {
-          type,
-          payload: {
-            ...payload,
-            adm0: locationData && locationData.value
-          },
-          query: {
-            ...query,
-            map: {
-              ...(query && query.map),
-              canBound: true
-            }
-          }
-        },
         value: settings.unit === 'net_usd' ? d.net_usd : d.net_perc
       };
     });

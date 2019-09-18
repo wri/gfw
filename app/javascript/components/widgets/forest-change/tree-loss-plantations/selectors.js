@@ -11,9 +11,9 @@ const getLossPlantations = state =>
   (state.data && state.data.lossPlantations) || null;
 const getTotalLoss = state => (state.data && state.data.totalLoss) || null;
 const getSettings = state => state.settings || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
-const getSentence = state => state.config && state.config.sentence;
+const getSentence = state => state.sentence;
 
 // get lists selected
 export const parseData = createSelector(

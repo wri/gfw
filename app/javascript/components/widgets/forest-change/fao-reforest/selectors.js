@@ -5,13 +5,12 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 const getData = state => state.data || null;
-const getLocation = state => state.location || null;
+const getAdm0 = state => state.adm0 || null;
 const getColors = state => state.colors || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getPeriod = state => state.settings.period || null;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
-const getAllLocation = state => state.allLocation || null;
 
 export const getSortedData = createSelector([getData], data => {
   if (!data || !data.length) return null;
@@ -22,12 +21,12 @@ export const getSortedData = createSelector([getData], data => {
 });
 
 export const parseData = createSelector(
-  [getSortedData, getAllLocation, getColors],
-  (data, location, colors) => {
+  [getSortedData, getAdm0, getColors],
+  (data, adm0, colors) => {
     if (!data || !data.length) return null;
     let dataTrimmed = data;
-    if (location.country) {
-      const locationIndex = findIndex(data, d => d.iso === location.country);
+    if (adm0) {
+      const locationIndex = findIndex(data, d => d.iso === adm0);
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
       if (locationIndex < 2) {
@@ -40,44 +39,22 @@ export const parseData = createSelector(
       }
       dataTrimmed = data.slice(trimStart, trimEnd);
     }
-    const { query, type } = location;
 
     return dataTrimmed.map(d => ({
       ...d,
       label: d.name,
       color: colors.main,
-      path: {
-        type,
-        payload: {
-          type: 'country',
-          adm0: d.iso
-        },
-        query: {
-          ...query,
-          map: {
-            ...(query && query.map),
-            canBound: true
-          }
-        }
-      },
       value: d.rate
     }));
   }
 );
 
 export const parseSentence = createSelector(
-  [
-    getSortedData,
-    parseData,
-    getPeriod,
-    getSentences,
-    getLocationName,
-    getLocation
-  ],
-  (sortedData, data, period, sentences, locationName, location) => {
+  [getSortedData, parseData, getPeriod, getSentences, getLocationName, getAdm0],
+  (sortedData, data, period, sentences, locationName, adm0) => {
     if (!data || !data.length) return null;
     const { initial, noReforest, globalInitial } = sentences;
-    const countryData = data.find(d => location.adm0 === d.iso) || null;
+    const countryData = data.find(d => adm0 === d.iso) || null;
 
     let globalRate = 0;
     Object.keys(sortedData).forEach(k => {

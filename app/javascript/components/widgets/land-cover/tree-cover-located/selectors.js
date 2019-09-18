@@ -12,54 +12,26 @@ const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
 const getLandCategory = state => state.landCategory || null;
 const getForestType = state => state.forestType || null;
-const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
 
 export const parseList = createSelector(
-  [getData, getSettings, getLocation, getLocationsMeta, getColors],
-  (data, settings, location, meta, colors) => {
+  [getData, getSettings, getLocationsMeta, getColors],
+  (data, settings, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
       const regionMeta = meta.find(l => d.id === l.value);
       if (regionMeta) {
-        const { payload, query, type } = location;
         dataMapped.push({
           label: (regionMeta && regionMeta.label) || '',
           extent: d.extent,
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
-          path: {
-            type,
-            payload: {
-              ...payload,
-              type: 'country',
-              ...(!payload.adm0 && {
-                adm0: d.id
-              }),
-              ...(payload.adm1 && {
-                adm2: d.id
-              }),
-              ...(payload.adm0 &&
-                !payload.adm1 && {
-                adm1: d.id
-              })
-            },
-            query: {
-              ...(query && query),
-              map: {
-                ...(query &&
-                  query.map && {
-                  ...query.map,
-                  canBound: true
-                })
-              }
-            }
-          },
+          path: d.path,
           color: colors.main
         });
       }

@@ -11,9 +11,10 @@ import endsWith from 'lodash/endsWith';
 const getPlantations = state => (state.data && state.data.plantations) || null;
 const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.allLocation || null;
+const getAdm0 = state => state.adm0 || null;
+const getAdm1 = state => state.adm1 || null;
 const getLocationsMeta = state => state.childLocationData;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getEmbed = state => state.embed || null;
 const getSentences = state => state.sentence || null;
@@ -30,20 +31,20 @@ export const parseData = createSelector(
     getExtent,
     getPlanationKeys,
     getLocationsMeta,
-    getLocation,
+    getAdm0,
+    getAdm1,
     getEmbed
   ],
-  (plantations, extent, plantationKeys, meta, location, embed) => {
+  (plantations, extent, plantationKeys, meta, adm0, adm1, embed) => {
     if (isEmpty(plantations) || isEmpty(meta) || isEmpty(extent)) return null;
     let groupKey = 'iso';
-    if (location.payload.adm0) groupKey = 'adm1';
-    if (location.payload.adm1) groupKey = 'adm2';
+    if (adm0) groupKey = 'adm1';
+    if (adm1) groupKey = 'adm2';
     const groupedByRegion = groupBy(plantations, groupKey);
     const regionData = Object.keys(groupedByRegion).map(r => {
       const yKeys = {};
       const regionId = parseInt(r, 10);
-      const regionLabel =
-        meta && meta.find(region => region.value === regionId);
+      const regionLabel = meta && meta[regionId];
       const totalRegionPlantations =
         sumBy(groupedByRegion[regionId], 'intersection_area') || 0;
       const regionExtent = extent.find(
@@ -59,31 +60,11 @@ export const parseData = createSelector(
         yKeys[key] = pPercentage || 0;
         yKeys[`${key} label`] = key;
       });
-      const { payload, query, type } = location;
 
       return {
         region: regionLabel && regionLabel.label,
         ...yKeys,
         total: totalRegionPlantations / totalArea * 100,
-        path: {
-          type,
-          payload: {
-            ...payload,
-            ...(payload.adm1 && {
-              adm2: regionId
-            }),
-            ...(!payload.adm1 && {
-              adm1: regionId
-            })
-          },
-          query: {
-            ...query,
-            map: {
-              ...(query && query.map),
-              canBound: true
-            }
-          }
-        },
         extLink: embed
       };
     });

@@ -9,7 +9,7 @@ import globalLandCoverCategories from 'data/global-land-cover-categories.json';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationName = state => state.locationName;
+const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 

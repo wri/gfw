@@ -4,7 +4,7 @@ import { formatNumber } from 'utils/format';
 import { aboveGroundToBelowGround } from 'utils/calculations';
 
 const getData = state => state.data;
-const getLocationName = state => state.locationName;
+const getLocationName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 const getVariables = state => state.options && state.options.variables;

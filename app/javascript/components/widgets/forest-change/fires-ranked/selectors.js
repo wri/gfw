@@ -13,24 +13,16 @@ const getLatestDates = state => (state.data && state.data.latest) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.allLocation || null;
+const getAdm1 = state => state.adm1 || null;
 const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.sentences || null;
 
 export const parseList = createSelector(
-  [
-    getData,
-    getLatestDates,
-    getSettings,
-    getLocation,
-    getLocationsMeta,
-    getColors
-  ],
-  (data, latest, settings, location, meta, colors) => {
+  [getData, getLatestDates, getSettings, getAdm1, getLocationsMeta, getColors],
+  (data, latest, settings, adm1, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
-    const { payload, query, type } = location;
     const latestWeek = moment(latest)
       .subtract(1, 'weeks')
       .week();
@@ -48,7 +40,7 @@ export const parseList = createSelector(
             .subtract(settings.weeks, 'weeks')
         )
     );
-    const groupedAlerts = groupBy(alertsByDate, payload.adm1 ? 'adm2' : 'adm1');
+    const groupedAlerts = groupBy(alertsByDate, adm1 ? 'adm2' : 'adm1');
 
     const totalCounts = sumBy(alertsByDate, 'count');
     const mappedData = Object.keys(groupedAlerts).map(k => {
@@ -67,26 +59,7 @@ export const parseList = createSelector(
         percentage: `${format('.2r')(countsPerc)}%`,
         count: counts,
         value: countsPerc,
-        label: (region && region.label) || '',
-        path: {
-          type,
-          payload: {
-            ...payload,
-            ...(payload.adm1 && {
-              adm2: locationId
-            }),
-            ...(!payload.adm1 && {
-              adm1: locationId
-            })
-          },
-          query: {
-            ...query,
-            map: {
-              ...(query && query.map),
-              canBound: true
-            }
-          }
-        }
+        label: (region && region.label) || ''
       };
     });
     return sortBy(mappedData, 'area').reverse();

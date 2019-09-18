@@ -8,15 +8,14 @@ import { formatNumber } from 'utils/format';
 // get list data
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocation = state => state.location || null;
+const getAdm0 = state => state.adm0 || null;
 const getLocationsMeta = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
 const getLocationObject = state => state.locationObject || null;
-const getLocationName = state => state.locationName || null;
-const getSentences = state => state.config.sentences || null;
-const getTitle = state => state.config.title;
-const getAllLocation = state => state.allLocation || null;
+const getLocationName = state => state.locationLabel || null;
+const getSentences = state => state.sentences || null;
+const getTitle = state => state.title;
 
 const haveData = (data, locationObject) =>
   locationObject && data && data.find(item => item.id === locationObject.value);
@@ -40,23 +39,13 @@ export const parseData = createSelector(
   [
     getSortedData,
     getSettings,
-    getLocation,
-    getAllLocation,
+    getAdm0,
     getLocationObject,
     getLocationName,
     getLocationsMeta,
     getColors
   ],
-  (
-    data,
-    settings,
-    location,
-    allLocation,
-    locationObject,
-    currentLabel,
-    meta,
-    colors
-  ) => {
+  (data, settings, adm0, locationObject, currentLabel, meta, colors) => {
     if (
       !data ||
       !data.length ||
@@ -69,7 +58,7 @@ export const parseData = createSelector(
 
     let dataTrimmed = [];
     data.forEach(d => {
-      const locationMeta = meta && meta.find(l => d.id === l.value);
+      const locationMeta = meta && meta[d.id];
       if (locationMeta) {
         dataTrimmed.push({
           ...d,
@@ -81,7 +70,7 @@ export const parseData = createSelector(
       ...d,
       rank: i + 1
     }));
-    if (location.adm0) {
+    if (adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
         d => d.id === locationObject.value
@@ -98,35 +87,10 @@ export const parseData = createSelector(
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-    const { payload, query, type } = allLocation;
-    const { adm1, adm2 } = payload || {};
 
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: {
-        type,
-        payload: {
-          ...payload,
-          type: 'country',
-          ...(!adm1 && {
-            adm0: d.id
-          }),
-          ...(adm1 && {
-            adm1: adm2 ? adm1 : d.id
-          }),
-          ...(adm2 && {
-            adm2: d.id
-          })
-        },
-        query: {
-          ...query,
-          map: {
-            ...(query && query.map),
-            canBound: true
-          }
-        }
-      },
       value: settings.unit === 'ha' ? d.gain : d.percentage
     }));
   }

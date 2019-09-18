@@ -11,15 +11,14 @@ const getExtent = state => (state.data && state.data.extent) || null;
 const getSettings = state => state.settings || null;
 const getOptions = state => state.options || null;
 const getIndicator = state => state.indicator || null;
-const getLocation = state => state.allLocation || null;
 const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.sentences || null;
 
 export const getSortedData = createSelector(
-  [getGain, getExtent, getSettings, getLocation, getLocationsMeta, getColors],
-  (data, extent, settings, location, meta, colors) => {
+  [getGain, getExtent, getSettings, getLocationsMeta, getColors],
+  (data, extent, settings, meta, colors) => {
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
@@ -29,32 +28,12 @@ export const getSortedData = createSelector(
         const percentage = locationExtent
           ? d.gain / locationExtent.extent * 100
           : 0;
-        const { payload, query, type } = location;
 
         dataMapped.push({
           label: (region && region.label) || '',
           gain: d.gain,
           percentage,
           value: settings.unit === 'ha' ? d.gain : percentage,
-          path: {
-            type,
-            payload: {
-              ...payload,
-              ...(payload.adm1 && {
-                adm2: d.id
-              }),
-              ...(!payload.adm1 && {
-                adm1: d.id
-              })
-            },
-            query: {
-              ...query,
-              map: {
-                ...(query && query.map),
-                canBound: true
-              }
-            }
-          },
           color: colors.main
         });
       }

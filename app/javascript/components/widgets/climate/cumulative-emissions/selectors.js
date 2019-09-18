@@ -10,7 +10,7 @@ import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 const getAlerts = state => (state.data && state.data.data) || null;
 const getColors = state => state.colors || null;
 const getInteractionData = state => state.settings.interaction || null;
-const getSentences = state => state.config.sentences || null;
+const getSentences = state => state.sentences || null;
 const getSettings = state => state.settings;
 
 const getDataSettings = state => state.data && state.data.settings;

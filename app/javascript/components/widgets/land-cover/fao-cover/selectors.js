@@ -4,7 +4,7 @@ import { format } from 'd3-format';
 
 // get list data
 const getData = state => state.data || null;
-const getLocationName = state => state.locationName || null;
+const getLocationName = state => state.locationLabel || null;
 const getColors = state => state.colors || null;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;

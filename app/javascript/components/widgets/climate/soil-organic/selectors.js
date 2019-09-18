@@ -6,8 +6,8 @@ import { sortByKey } from 'utils/data';
 
 // get list data
 const getData = state => state.data;
-const getLocationName = state => state.locationName || null;
-const getLocation = state => state.allLocation || null;
+const getLocationName = state => state.locationLabel || null;
+const getAdm0 = state => state.adm0 || null;
 const getLocationDict = state => state.locationDict || null;
 const getLocationObject = state => state.locationObject || null;
 const getSentences = state => state.sentences;
@@ -27,12 +27,12 @@ export const parseData = createSelector(
   [
     getSortedData,
     getColors,
-    getLocation,
+    getAdm0,
     getLocationDict,
     getLocationObject,
     getSettings
   ],
-  (data, colors, location, locationsDict, locationObj, settings) => {
+  (data, colors, adm0, locationsDict, locationObj, settings) => {
     if (isEmpty(data) || !locationsDict) return null;
 
     let dataTrimmed = data.map((d, i) => ({
@@ -45,7 +45,7 @@ export const parseData = createSelector(
     else if (data[0].admin_1) key = 'admin_1';
     else key = 'iso';
 
-    if (location.payload.adm0) {
+    if (adm0) {
       const locationIndex = locationObj
         ? findIndex(data, d => d[key] === locationObj.value)
         : -1;
@@ -63,24 +63,12 @@ export const parseData = createSelector(
       }
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
-    const { query, type } = location;
 
     return dataTrimmed.map((d, i) => ({
       ...d,
       label: locationsDict[d[key]],
       color: colors.carbon[0],
       key: `${d.iso}-${i}`,
-      path: {
-        type,
-        payload: { type: 'country', adm0: d.iso },
-        query: {
-          ...query,
-          map: {
-            ...(query && query.map),
-            canBound: true
-          }
-        }
-      },
       value: d[settings.variable],
       unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha'
     }));

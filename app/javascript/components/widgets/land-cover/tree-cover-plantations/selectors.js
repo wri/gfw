@@ -8,7 +8,7 @@ import endsWith from 'lodash/endsWith';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocatonName = state => state.locationName;
+const getLocatonName = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 

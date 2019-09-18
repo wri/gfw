@@ -5,8 +5,8 @@ import { formatNumber } from 'utils/format';
 
 const getData = state => state.data || null;
 const getSettings = state => state.settings || null;
-const getLocationName = state => state.locationName || null;
-const getSentences = state => state.config && state.config.sentences;
+const getLocationName = state => state.locationLabel || null;
+const getSentences = state => state.sentences;
 const getColors = state => state.colors || null;
 
 export const parseData = createSelector(
