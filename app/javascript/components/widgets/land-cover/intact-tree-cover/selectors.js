@@ -60,7 +60,7 @@ export const parseSentence = createSelector(
       indicator && indicator.label ? indicator.label.toLowerCase() : null;
 
     const params = {
-      location: locationName !== 'global' ? `${locationName}'s` : locationName,
+      location: locationName !== 'globally' ? `${locationName}'s` : 'global',
       indicator: indicatorLabel,
       percentage:
         intactPercentage < 0.1
@@ -84,7 +84,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.initial;
-    if (name === 'global') {
+    if (name === 'globally') {
       selectedTitle = title.global;
     }
     return selectedTitle;

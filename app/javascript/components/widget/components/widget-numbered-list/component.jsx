@@ -14,7 +14,9 @@ class WidgetNumberedList extends PureComponent {
           ...settings,
           format: settings.unit === '%' ? '.2r' : '.3s'
         }}
-        handlePageChange={change => handleChangeSettings({ page: change })}
+        handlePageChange={change =>
+          handleChangeSettings({ page: settings.page + change })
+        }
         linksExt={embed}
       />
     );

@@ -147,8 +147,8 @@ export const getLocationData = createSelector(
     const { type, adminLevel, locationLabel } = location;
 
     let parent = {};
-    let parentData = [];
-    let children = [];
+    let parentData = allLocationData.adm0;
+    let children = allLocationData.adm0;
     if (adminLevel === 'adm0') {
       parent = { label: 'global', value: 'global' };
       children = allLocationData.adm1;
@@ -159,6 +159,7 @@ export const getLocationData = createSelector(
     } else if (adminLevel === 'adm2') {
       parent = allLocationData.adm1.find(d => d.value === location.adm1);
       parentData = allLocationData.adm1;
+      children = [];
     }
 
     const locationData = allLocationData[adminLevel] || allLocationData.adm0;

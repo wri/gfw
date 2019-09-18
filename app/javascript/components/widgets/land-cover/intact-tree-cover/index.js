@@ -17,8 +17,7 @@ export default {
       key: 'forestType',
       label: 'Forest Type',
       type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
+      placeholder: 'All tree cover'
     },
     {
       key: 'landCategory',
@@ -64,6 +63,7 @@ export default {
     extentYear: 2010,
     ifl: 2016
   },
+  refetchKeys: ['forestType', 'threshold', 'extentYear'],
   sentences: {
     initial:
       'As of 2016, {percentage} of {location} tree cover was <b>intact forest</b>.',

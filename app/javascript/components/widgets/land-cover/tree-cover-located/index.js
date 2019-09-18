@@ -36,7 +36,8 @@ export default {
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
+      border: true
     },
     {
       key: 'threshold',
@@ -45,6 +46,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
+  refetchKeys: ['extentYear', 'forestType', 'landCategory', 'threshold'],
   chartType: 'rankedList',
   colors: 'extent',
   metaKey: 'widget_forest_location',

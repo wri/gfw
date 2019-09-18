@@ -6,15 +6,14 @@ import { sortByKey } from 'utils/data';
 import { format } from 'd3-format';
 
 // get list data
-const getData = state => state.data || null;
-const getSettings = state => state.settings || null;
-const getOptions = state => state.options || null;
-const getIndicator = state => state.indicator || null;
-const getLandCategory = state => state.landCategory || null;
-const getForestType = state => state.forestType || null;
-const getLocationsMeta = state => state.childLocationData || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
+const getData = state => state.data;
+const getSettings = state => state.settings;
+const getIndicator = state => state.indicator;
+const getLandCategory = state => state.landCategory;
+const getForestType = state => state.forestType;
+const getLocationsMeta = state => state.childData;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
 
@@ -24,14 +23,14 @@ export const parseList = createSelector(
     if (isEmpty(data) || isEmpty(meta)) return null;
     const dataMapped = [];
     data.forEach(d => {
-      const regionMeta = meta.find(l => d.id === l.value);
+      const regionMeta = meta[d.id];
       if (regionMeta) {
         dataMapped.push({
           label: (regionMeta && regionMeta.label) || '',
           extent: d.extent,
           percentage: d.percentage,
           value: settings.unit === 'ha' ? d.extent : d.percentage,
-          path: d.path,
+          path: regionMeta.path,
           color: colors.main
         });
       }
@@ -50,7 +49,6 @@ export const parseSentence = createSelector(
     parseList,
     parseData,
     getSettings,
-    getOptions,
     getIndicator,
     getForestType,
     getLandCategory,
@@ -61,14 +59,13 @@ export const parseSentence = createSelector(
     sortedList,
     data,
     settings,
-    options,
     indicator,
     forestType,
     landCategory,
     locationName,
     sentences
   ) => {
-    if (!data || !options || !locationName) return null;
+    if (!data || !locationName) return null;
     const {
       initial,
       hasIndicator,
@@ -119,7 +116,7 @@ export const parseSentence = createSelector(
         : `${format('.2r')(avgExtentPercentage)}%`;
 
     const params = {
-      location: locationName === 'global' ? 'Globally' : locationName,
+      location: locationName === 'globally' ? 'Globally' : locationName,
       region: topRegion.label,
       indicator: indicator && indicator.label.toLowerCase(),
       percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
@@ -131,23 +128,24 @@ export const parseSentence = createSelector(
 
     let sentence = noCover;
     if (params.percentage !== '0%' && settings.unit === '%') {
-      sentence = locationName === 'global' ? percGlobalInitial : percInitial;
+      sentence = locationName === 'globally' ? percGlobalInitial : percInitial;
       if (landCategory && !forestType) {
         sentence =
-          locationName === 'global' ? percGlobalLandCatOnly : percLandCatOnly;
+          locationName === 'globally' ? percGlobalLandCatOnly : percLandCatOnly;
       } else if (indicator) {
         sentence =
-          locationName === 'global'
+          locationName === 'globally'
             ? percGlobalWithIndicator
             : percHasIndicator;
       }
     } else if (params.percentage !== '0%' && settings.unit === 'ha') {
-      sentence = locationName === 'global' ? globalInitial : initial;
+      sentence = locationName === 'globally' ? globalInitial : initial;
       if (landCategory && !forestType) {
-        sentence = locationName === 'global' ? globalLandCatOnly : landCatOnly;
+        sentence =
+          locationName === 'globally' ? globalLandCatOnly : landCatOnly;
       } else if (indicator) {
         sentence =
-          locationName === 'global' ? globalWithIndicator : hasIndicator;
+          locationName === 'globally' ? globalWithIndicator : hasIndicator;
       }
     }
     return {
@@ -161,7 +159,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.initial;
-    if (name === 'global') {
+    if (name === 'globally') {
       selectedTitle = title.global;
     }
     return selectedTitle;
