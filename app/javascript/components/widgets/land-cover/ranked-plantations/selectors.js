@@ -45,16 +45,16 @@ export const parseData = createSelector(
       const yKeys = {};
       const regionId = parseInt(r, 10);
       const regionLabel = meta && meta[regionId];
+      const regionGroup = groupedByRegion && groupedByRegion[regionId];
       const totalRegionPlantations =
-        sumBy(groupedByRegion[regionId], 'intersection_area') || 0;
+        sumBy(regionGroup, 'intersection_area') || 0;
       const regionExtent = extent.find(
         e => parseInt(e[groupKey], 10) === regionId
       );
       const totalArea = regionExtent && regionExtent.total_area;
       plantationKeys.forEach(key => {
-        const labelFromKey = groupedByRegion[regionId].find(
-          p => p.plantations === key
-        );
+        const labelFromKey =
+          regionGroup && regionGroup.find(p => p.plantations === key);
         const pExtent = labelFromKey && labelFromKey.intersection_area;
         const pPercentage = pExtent / totalRegionPlantations * 100;
         yKeys[key] = pPercentage || 0;
@@ -64,6 +64,7 @@ export const parseData = createSelector(
       return {
         region: regionLabel && regionLabel.label,
         ...yKeys,
+        path: regionLabel && regionLabel.path,
         total: totalRegionPlantations / totalArea * 100,
         extLink: embed
       };

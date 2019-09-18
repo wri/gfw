@@ -113,7 +113,6 @@ export const parseData = createSelector(
     return dataTrimmed.map(d => ({
       ...d,
       color: colors.main,
-      path: d.path,
       value: settings.unit === 'ha' ? d.loss : d.percentage
     }));
   }
