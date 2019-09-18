@@ -16,9 +16,7 @@ export const isoHasPlantations = createSelector(
   [getWhitelist, getLocationName],
   (whitelist, name) => {
     const hasPlantations =
-      name === 'globally'
-        ? true
-        : whitelist && whitelist.includes('plantations');
+      name === 'global' ? true : whitelist && whitelist.includes('plantations');
     return hasPlantations;
   }
 );
@@ -71,7 +69,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName, getWhitelist],
   (title, name, whitelist) => {
     let selectedTitle = title.default;
-    if (name === 'globally') {
+    if (name === 'global') {
       selectedTitle = title.global;
     } else if (
       whitelist &&
@@ -110,7 +108,7 @@ export const parseSentence = createSelector(
     const percentCover = 100 * top / bottom;
     const params = {
       year: settings.extentYear,
-      location: locationName === 'globally' ? 'global' : locationName,
+      location: locationName,
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%',
@@ -127,7 +125,7 @@ export const parseSentence = createSelector(
         ? initial + hasPlantationsInd
         : initial + noPlantationsInd;
     }
-    if (locationName === 'globally') {
+    if (locationName === 'global') {
       sentence = indicator ? globalWithIndicator : globalInitial;
     }
 

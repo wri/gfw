@@ -27,6 +27,7 @@ export default {
   sortOrder: {
     forestChange: 5
   },
+  refetchKeys: ['period'],
   sentences: {
     globalInitial:
       'According to the FAO, the {location} rate of deforestation in {year} was {rate} per year.',

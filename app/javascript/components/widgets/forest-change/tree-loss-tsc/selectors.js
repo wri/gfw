@@ -210,11 +210,11 @@ export const parseSentence = createSelector(
       (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
     const permPercent = (permLoss && permLoss / totalLoss * 100) || 0;
 
-    let sentence = locationName === 'globally' ? globalInitial : initial;
+    let sentence = locationName === 'global' ? globalInitial : initial;
     if (!permLoss) sentence = noLoss;
 
     const params = {
-      location: locationName === 'globally' ? 'Globally' : locationName,
+      location: locationName === 'global' ? 'Globally' : locationName,
       startYear,
       endYear,
       permPercent:
@@ -239,7 +239,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.initial;
-    if (name === 'globally') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;

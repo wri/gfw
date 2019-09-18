@@ -27,10 +27,10 @@ export default {
       label: 'Land Category',
       type: 'select',
       placeholder: 'All categories',
-      clearable: true,
-      border: true
+      clearable: true
     }
   ],
+  refetchKeys: ['forestType', 'landCategory'],
   chartType: 'rankedList',
   colors: 'gain',
   metaKey: 'widget_tree_cover_gain',

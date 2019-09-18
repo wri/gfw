@@ -80,7 +80,7 @@ export const parseSentence = createSelector(
         primaryPercent >= 0.1 ? `${format('.2r')(primaryPercent)}%` : '< 0.1%'
     };
     let sentence = forest_primary > 0 ? initial : noPrimary;
-    if (locationName === 'globally') {
+    if (locationName === 'global') {
       sentence = forest_primary > 0 ? globalInitial : globalNoPrimary;
     }
     return {
@@ -94,7 +94,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.initial;
-    if (name === 'globally') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;

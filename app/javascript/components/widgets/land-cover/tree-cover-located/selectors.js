@@ -116,7 +116,7 @@ export const parseSentence = createSelector(
         : `${format('.2r')(avgExtentPercentage)}%`;
 
     const params = {
-      location: locationName === 'globally' ? 'Globally' : locationName,
+      location: locationName === 'global' ? 'Globally' : locationName,
       region: topRegion.label,
       indicator: indicator && indicator.label.toLowerCase(),
       percentage: topExtent ? `${format('.2r')(topExtent)}%` : '0%',
@@ -128,24 +128,23 @@ export const parseSentence = createSelector(
 
     let sentence = noCover;
     if (params.percentage !== '0%' && settings.unit === '%') {
-      sentence = locationName === 'globally' ? percGlobalInitial : percInitial;
+      sentence = locationName === 'global' ? percGlobalInitial : percInitial;
       if (landCategory && !forestType) {
         sentence =
-          locationName === 'globally' ? percGlobalLandCatOnly : percLandCatOnly;
+          locationName === 'global' ? percGlobalLandCatOnly : percLandCatOnly;
       } else if (indicator) {
         sentence =
-          locationName === 'globally'
+          locationName === 'global'
             ? percGlobalWithIndicator
             : percHasIndicator;
       }
     } else if (params.percentage !== '0%' && settings.unit === 'ha') {
-      sentence = locationName === 'globally' ? globalInitial : initial;
+      sentence = locationName === 'global' ? globalInitial : initial;
       if (landCategory && !forestType) {
-        sentence =
-          locationName === 'globally' ? globalLandCatOnly : landCatOnly;
+        sentence = locationName === 'global' ? globalLandCatOnly : landCatOnly;
       } else if (indicator) {
         sentence =
-          locationName === 'globally' ? globalWithIndicator : hasIndicator;
+          locationName === 'global' ? globalWithIndicator : hasIndicator;
       }
     }
     return {
@@ -159,7 +158,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.initial;
-    if (name === 'globally') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;

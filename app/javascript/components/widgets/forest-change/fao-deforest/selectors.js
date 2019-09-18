@@ -3,12 +3,12 @@ import findIndex from 'lodash/findIndex';
 import sumBy from 'lodash/sumBy';
 import { format } from 'd3-format';
 
-const getData = state => state.data || null;
-const getAdm0 = state => state.adm0 || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
-const getSettings = state => state.settings || null;
-const getPeriod = state => state.settings.period || null;
+const getData = state => state.data;
+const getAdm0 = state => state.adm0;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
+const getSettings = state => state.settings;
+const getPeriod = state => state.settings.period;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
 

@@ -24,6 +24,7 @@ export default {
   sortOrder: {
     forestChange: 8
   },
+  refetchKeys: ['period'],
   colors: 'gain',
   sentences: {
     globalInitial:

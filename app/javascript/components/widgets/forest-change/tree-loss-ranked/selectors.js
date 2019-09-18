@@ -173,7 +173,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.default;
-    if (name === 'globally') {
+    if (name === 'global') {
       selectedTitle = title.global;
     }
     return selectedTitle;
