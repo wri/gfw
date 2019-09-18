@@ -6,7 +6,7 @@ import { format } from 'd3-format';
 const getData = state => state.data;
 const getSettings = state => state.settings;
 const getIndicator = state => state.indicator;
-const getWhitelist = state => state.whitelists && state.whitelists;
+const getWhitelist = state => state.polynamesWhitelist;
 const getColors = state => state.colors;
 const getSentence = state => state.sentence;
 const getTitle = state => state.title;
@@ -110,7 +110,7 @@ export const parseSentence = createSelector(
     const percentCover = 100 * top / bottom;
     const params = {
       year: settings.extentYear,
-      location: locationName || 'global',
+      location: locationName === 'globally' ? 'global' : locationName,
       indicator: indicator && indicator.label.toLowerCase(),
       percentage:
         percentCover >= 0.1 ? `${format('.2r')(percentCover)}%` : '< 0.1%',

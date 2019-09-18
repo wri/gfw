@@ -3,9 +3,9 @@ import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 
 // get list data
-const getData = state => state.data || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
+const getData = state => state.data;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 const getTitle = state => state.title;
 
@@ -71,7 +71,7 @@ export const parseSentence = createSelector(
         : extent / area_ha * 100;
 
     const params = {
-      location: locationName !== 'global' ? locationName : 'globally',
+      location: locationName,
       extent:
         extent < 1
           ? `${format('.3r')(extent)}ha`
@@ -80,7 +80,7 @@ export const parseSentence = createSelector(
         primaryPercent >= 0.1 ? `${format('.2r')(primaryPercent)}%` : '< 0.1%'
     };
     let sentence = forest_primary > 0 ? initial : noPrimary;
-    if (locationName === 'global') {
+    if (locationName === 'globally') {
       sentence = forest_primary > 0 ? globalInitial : globalNoPrimary;
     }
     return {
@@ -94,7 +94,7 @@ export const parseTitle = createSelector(
   [getTitle, getLocationName],
   (title, name) => {
     let selectedTitle = title.initial;
-    if (name === 'global') {
+    if (name === 'globally') {
       selectedTitle = title.global;
     }
     return selectedTitle;

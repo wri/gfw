@@ -12,7 +12,7 @@ const getAdm0 = state => state.adm0 || null;
 const getLocationsMeta = state => state.locationData || null;
 const getColors = state => state.colors || null;
 const getIndicator = state => state.indicator || null;
-const getLocationObject = state => state.locationObject || null;
+const getLocationObject = state => state.location || null;
 const getLocationName = state => state.locationLabel || null;
 const getSentences = state => state.sentences || null;
 const getTitle = state => state.title;
@@ -73,7 +73,7 @@ export const parseData = createSelector(
     if (adm0) {
       const locationIndex = findIndex(
         dataTrimmed,
-        d => d.id === locationObject.value
+        d => d.id === locationObject && locationObject.value
       );
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
