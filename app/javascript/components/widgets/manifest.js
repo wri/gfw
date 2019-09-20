@@ -26,6 +26,7 @@ import globalLandCover from 'components/widgets/land-cover/global-land-cover';
 import intactTreeCover from 'components/widgets/land-cover/intact-tree-cover';
 import primaryForest from 'components/widgets/land-cover/primary-forest';
 import treeCoverLocated from 'components/widgets/land-cover/tree-cover-located';
+import USLandCover from 'components/widgets/land-cover/us-land-cover';
 
 // // Climate
 import emissions from 'components/widgets/climate/emissions';
@@ -44,7 +45,6 @@ import carbonStock from 'components/widgets/climate/carbon-stock';
 import economicImpact from 'components/widgets/land-use/economic-impact';
 import forestryEmployment from 'components/widgets/land-use/forestry-employment';
 import traseCommodities from 'components/widgets/land-use/trase-commodities';
-import USLandCover from 'components/widgets/land-use/us-land-cover';
 
 export default {
   // forest change
