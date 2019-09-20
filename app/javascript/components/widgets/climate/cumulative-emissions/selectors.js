@@ -7,14 +7,11 @@ import moment from 'moment';
 
 import { getDatesData, getChartConfig } from 'components/widgets/utils/data';
 
-const getAlerts = state => (state.data && state.data.data) || null;
-const getColors = state => state.colors || null;
-const getInteractionData = state => state.settings.interaction || null;
-const getSentences = state => state.sentences || null;
+const getAlerts = state => state.data && state.data.data;
+const getColors = state => state.colors;
+const getInteractionData = state => state.settings.interaction;
+const getSentences = state => state.sentences;
 const getSettings = state => state.settings;
-
-const getDataSettings = state => state.data && state.data.settings;
-export const getDataOptions = state => state.data && state.data.options;
 
 const TARGET_EMISSIONS = 265000000;
 const TARGET_DEFORESTATION = 988880;
@@ -197,26 +194,8 @@ export const parseSentence = createSelector(
   }
 );
 
-export const parsePayload = payload => {
-  const payloadData = payload && payload.find(p => p.name === 'count');
-  const payloadValues = payloadData && payloadData.payload;
-  if (payloadValues) {
-    const startDate = moment()
-      .year(payloadValues.year)
-      .week(payloadValues.week);
-
-    return {
-      startDate: startDate.format('YYYY-MM-DD'),
-      endDate: startDate.add(7, 'days'),
-      ...payloadValues
-    };
-  }
-  return {};
-};
-
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence,
-  settings: getDataSettings
+  sentence: parseSentence
 });

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getCumulative } from 'services/climate';
+import moment from 'moment';
 
 import getWidgetProps from './selectors';
 
@@ -13,15 +14,16 @@ export default {
     {
       key: 'variable',
       label: 'Variable',
-      type: 'select',
+      type: 'switch',
       whitelist: ['cumulative_emissions', 'cumulative_deforestation']
     },
     {
-      key: 'years',
+      key: 'year',
       label: 'years',
       type: 'select'
     }
   ],
+  refetchKeys: ['variable'],
   visible: ['dashboard', 'analysis'],
   datasets: [
     {
@@ -77,11 +79,11 @@ across previous years, indicated by the grey shading.`
     ]
   },
   settings: {
-    years: 2018,
+    year: 2018,
     variable: 'cumulative_deforestation'
   },
   getData: params =>
-    axios.all([...getCumulative({ ...params })]).then(
+    axios.all([...getCumulative(params)]).then(
       axios.spread((y2015, y2016, y2017, y2018) => {
         const years = [2015, 2016, 2017, 2018].map(year => ({
           label: year,
@@ -96,9 +98,23 @@ across previous years, indicated by the grey shading.`
 
         return {
           data,
-          options: { years }
+          options: { year: years }
         };
       })
     ),
-  getWidgetProps
+  getWidgetProps,
+  parseInteraction: payload => {
+    if (payload) {
+      const startDate = moment()
+        .year(payload.year)
+        .week(payload.week);
+
+      return {
+        startDate: startDate.format('YYYY-MM-DD'),
+        endDate: startDate.add(7, 'days'),
+        ...payload
+      };
+    }
+    return {};
+  }
 };

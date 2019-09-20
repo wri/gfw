@@ -1,5 +1,7 @@
 import { getMeta, getGas } from 'services/emissions';
 
+import getWidgetProps from './selectors';
+
 export default {
   widget: 'emissions',
   title: 'Historical emissions in {location}',
@@ -35,5 +37,6 @@ export default {
         }).then(getGasResponse => getGasResponse.data);
       }
       return {};
-    })
+    }),
+  getWidgetProps
 };

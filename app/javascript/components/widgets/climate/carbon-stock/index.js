@@ -14,7 +14,7 @@ export default {
     {
       key: 'variable',
       label: 'Variable',
-      type: 'select',
+      type: 'switch',
       whitelist: ['totalbiomass', 'biomassdensity'],
       border: true
     },
@@ -35,6 +35,7 @@ export default {
     variable: 'totalbiomass',
     threshold: 30
   },
+  refetchKeys: ['threshold'],
   sentences:
     '{location} has a total carbon store of {carbonValue}, with most of the carbon stored in {carbonStored}.',
   getData: params =>

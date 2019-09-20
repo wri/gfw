@@ -35,6 +35,7 @@ export default {
       metaKey: 'widget_canopy_density'
     }
   ],
+  refetchKeys: ['threshold'],
   chartType: 'pieChart',
   datasets: [
     {
@@ -86,7 +87,17 @@ export default {
             maxPlantations &&
             Math.max(maxAdmin.year, maxPlantations.year);
 
-          return { adminData, plantData, years: range(2013, maxYear + 1) };
+          return {
+            adminData,
+            plantData,
+            options: {
+              years: range(2013, maxYear + 1).map(y => ({ label: y, value: y }))
+            },
+            settings: {
+              startYear: 2013,
+              endYear: maxYear
+            }
+          };
         })
       ),
   getWidgetProps

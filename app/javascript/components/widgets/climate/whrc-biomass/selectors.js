@@ -8,7 +8,8 @@ import { sortByKey } from 'utils/data';
 const getData = state => state.data;
 const getLocationName = state => state.locationLabel;
 const getAdm0 = state => state.adm0;
-const getLocationDict = state => state.childData;
+const getLocationDict = state =>
+  (state.adm0 ? state.locationData : state.childData);
 const getLocationObject = state => state.location;
 const getTitle = state => state.title;
 const getSentences = state => state.sentences;
@@ -77,8 +78,8 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, getLocationName, getSentences, getLocationDict, getSettings],
-  (data, location, sentences, locationsDict, settings) => {
+  [getData, getLocationName, getSentences, getLocationObject, getSettings],
+  (data, location, sentences, locationObj, settings) => {
     if (!sentences || isEmpty(data)) return null;
 
     if (location === 'global') {
@@ -115,9 +116,8 @@ export const parseSentence = createSelector(
         }
       };
     }
-    const iso =
-      locationsDict &&
-      Object.keys(locationsDict).find(key => locationsDict[key] === location);
+
+    const iso = locationObj && locationObj.value;
     const region =
       data &&
       data.find(item => {
