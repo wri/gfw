@@ -15,7 +15,7 @@ export default {
     {
       key: 'variable',
       label: 'variable',
-      type: 'select',
+      type: 'switch',
       whitelist: ['totalbiomass', 'biomassdensity']
     }
   ],

@@ -431,7 +431,7 @@ export const getWidgets = createSelector(
         statements: footerStatements
       };
 
-      const parsedProps = props.getWidgetProps(props);
+      const parsedProps = props.getWidgetProps && props.getWidgetProps(props);
       const { title: parsedTitle } = parsedProps || {};
       const title = parsedTitle || titleTemplate;
 

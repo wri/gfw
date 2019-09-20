@@ -33,7 +33,7 @@ export default {
     {
       key: 'unit',
       label: 'unit',
-      type: 'select',
+      type: 'switch',
       whitelist: ['ha', '%']
     },
     {
