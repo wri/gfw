@@ -4,6 +4,7 @@ import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 import moment from 'moment';
+import camelCase from 'lodash/camelCase';
 import qs from 'query-string';
 
 import { getAllAreas } from 'providers/areas-provider/selectors';
@@ -275,7 +276,7 @@ export const filterWidgetsByCategory = createSelector(
 
     return sortBy(
       widgets.filter(w => w.categories.includes(cat)),
-      `sortOrder[${cat}]`
+      `sortOrder[${camelCase(cat)}]`
     );
   }
 );
