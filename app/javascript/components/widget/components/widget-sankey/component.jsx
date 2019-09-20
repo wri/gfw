@@ -10,22 +10,30 @@ import SankeyChart from 'components/charts/sankey-chart/sankey';
 import './styles';
 
 class WidgetSankey extends PureComponent {
+  static propTypes = {
+    data: PropTypes.object,
+    config: PropTypes.object,
+    settings: PropTypes.object,
+    parseInteraction: PropTypes.func,
+    handleChangeSettings: PropTypes.func
+  };
+
   handleOnClick = debounce(data => {
-    const { parsePayload, setWidgetsSettings, widget } = this.props;
-    if (parsePayload) {
+    const { parseInteraction, handleChangeSettings } = this.props;
+    if (parseInteraction) {
       const { payload } = data;
-      const activeData = parsePayload(payload);
-      setWidgetsSettings({ widget, data: { ...activeData } });
+      const activeData = parseInteraction(payload);
+      handleChangeSettings({ interaction: activeData });
     }
   }, 100);
 
   handleOutsideClick = debounce(() => {
-    const { setWidgetsSettings, widget } = this.props;
-    setWidgetsSettings({ widget, data: {} });
+    const { handleChangeSettings } = this.props;
+    handleChangeSettings({ interaction: {} });
   }, 100);
 
   render() {
-    const { data, dataConfig, settings } = this.props;
+    const { data, config, settings } = this.props;
     const { unit, startYear, endYear } = settings;
     const { selectedElement } = data;
     const selected = !isEmpty(settings.activeData)
@@ -48,7 +56,7 @@ class WidgetSankey extends PureComponent {
       ); // end node hovering, highlight link
     };
 
-    const config = {
+    const configMerged = {
       tooltip: {
         scale: 1 / 1000,
         unit: unit || 'ha'
@@ -62,8 +70,7 @@ class WidgetSankey extends PureComponent {
         highlight: link => shouldHighlight(link)
       },
       nodeTitles: [startYear, endYear],
-      ...dataConfig,
-      ...this.props.config // dataConfig in selectors.js
+      ...config
     };
 
     return (
@@ -72,11 +79,9 @@ class WidgetSankey extends PureComponent {
           <div className="c-sankey-chart-widget">
             <SankeyChart
               data={data}
-              config={config}
+              config={configMerged}
               height={300}
               nodeWidth={50}
-              // handleMouseOver={this.handleMouseMove}
-              // handleMouseLeave={this.handleMouseLeave}
               handleOnClick={this.handleOnClick}
               handleOutsideClick={this.handleOutsideClick}
               margin={{
@@ -92,15 +97,5 @@ class WidgetSankey extends PureComponent {
     );
   }
 }
-
-WidgetSankey.propTypes = {
-  data: PropTypes.object,
-  config: PropTypes.object,
-  dataConfig: PropTypes.object,
-  settings: PropTypes.object,
-  parsePayload: PropTypes.func,
-  setWidgetsSettings: PropTypes.func,
-  widget: PropTypes.string
-};
 
 export default WidgetSankey;

@@ -13,6 +13,7 @@ import WidgetNumberedList from 'components/widget/components/widget-numbered-lis
 import WidgetPieChartLegend from 'components/widget/components/widget-pie-chart-legend';
 import WidgetChartList from 'components/widget/components/widget-chart-list';
 import WidgetMapList from 'components/widget/components/widget-map-list';
+import WidgetSankey from 'components/widget/components/widget-sankey';
 
 import './styles.scss';
 
@@ -22,7 +23,8 @@ const chartOptions = {
   rankedList: WidgetNumberedList,
   pieChart: WidgetPieChartLegend,
   chartList: WidgetChartList,
-  mapList: WidgetMapList
+  mapList: WidgetMapList,
+  sankey: WidgetSankey
 };
 
 class WidgetBody extends PureComponent {

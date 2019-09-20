@@ -233,8 +233,8 @@ export const filterWidgetsByLocation = createSelector(
       const adminWhitelist = whitelists && whitelists[adminLevel];
 
       const adminBlacklist = blacklists && blacklists[adminLevel];
-      const matchesBlacklist =
-        !adminBlacklist || adminBlacklist.includes(adminLevel);
+      const notInBlacklist =
+        !adminBlacklist || !adminBlacklist.includes(adminLevel);
 
       const isFAOCountry =
         source !== 'fao' || (fao && fao.find(f => f.value === location.adm0));
@@ -257,7 +257,7 @@ export const filterWidgetsByLocation = createSelector(
         matchesPolynameWhitelist &&
         isFAOCountry &&
         isWidgetVisible &&
-        !matchesBlacklist
+        notInBlacklist
       );
     });
   }

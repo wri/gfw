@@ -8,23 +8,10 @@ import findIndex from 'lodash/findIndex';
 
 import { formatNumber } from 'utils/format';
 
-const getData = state => state.data || null;
-const getSettings = state => state.settings || null;
-const getColors = state => state.colors || null;
-const getSentences = state => state.config.sentences || null;
-
-export const parsePayload = payload => {
-  if (payload) {
-    const { source, target, key } = payload;
-    return {
-      updateLayer: true,
-      source,
-      target,
-      key
-    };
-  }
-  return {};
-};
+const getData = state => state.data;
+const getSettings = state => state.settings;
+const getColors = state => state.colors;
+const getSentences = state => state.sentences;
 
 export const cleanData = createSelector(
   [getData, getSettings],
@@ -182,8 +169,8 @@ export const parseSentence = createSelector(
   [getData, parseData, getSettings, getSentences],
   (rawdata, data, settings, sentences) => {
     if (isEmpty(data)) return null;
-    const { startYear, endYear, activeData } = settings;
-    const { initial, interaction, noChange } = sentences;
+    const { startYear, endYear, interaction } = settings;
+    const { initial, interaction: interactionSentence, noChange } = sentences;
     const { nodes, links, selectedElement } = data;
 
     let firstCategory;
@@ -193,7 +180,7 @@ export const parseSentence = createSelector(
 
     const total = sumBy(rawdata, 'area');
 
-    if (isEmpty(activeData)) {
+    if (isEmpty(interaction)) {
       // nothing selected, init sentence
       firstCategory = selectedElement.source && selectedElement.source.name;
       secondCategory = selectedElement.target && selectedElement.target.name;
@@ -202,17 +189,17 @@ export const parseSentence = createSelector(
         num: selectedElement.value / total * 100,
         unit: '%'
       });
-    } else if (activeData.source && activeData.target) {
+    } else if (interaction.source && interaction.target) {
       // link selected
-      const link = links.find(l => l.key === activeData.key);
-      firstCategory = activeData.source.name;
-      secondCategory = activeData.target.name;
+      const link = links.find(l => l.key === interaction.key);
+      firstCategory = interaction.source.name;
+      secondCategory = interaction.target.name;
       const change = link && link.value;
       amount = formatNumber({ num: change, unit: 'ha' });
       percentage = formatNumber({ num: change / total * 100, unit: '%' });
-    } else if (activeData.key && activeData.key.includes('start')) {
+    } else if (interaction.key && interaction.key.includes('start')) {
       // start node
-      const sourceNode = nodes.find(n => n.key === activeData.key);
+      const sourceNode = nodes.find(n => n.key === interaction.key);
       firstCategory = sourceNode && sourceNode.name;
       secondCategory = 'other types';
       const change = sumBy(
@@ -224,9 +211,9 @@ export const parseSentence = createSelector(
       );
       amount = formatNumber({ num: change, unit: 'ha' });
       percentage = formatNumber({ num: change / total * 100, unit: '%' });
-    } else if (activeData.key && activeData.key.includes('end')) {
+    } else if (interaction.key && interaction.key.includes('end')) {
       // end node
-      const endNode = nodes.find(n => n.key === activeData.key);
+      const endNode = nodes.find(n => n.key === interaction.key);
       firstCategory = 'other types';
       secondCategory = endNode && endNode.name;
       const change = sumBy(
@@ -248,7 +235,7 @@ export const parseSentence = createSelector(
       percentage
     };
 
-    let sentence = isEmpty(activeData) ? initial : interaction;
+    let sentence = isEmpty(interaction) ? initial : interactionSentence;
     if (firstCategory === secondCategory) sentence = noChange;
     return {
       sentence,
@@ -259,6 +246,6 @@ export const parseSentence = createSelector(
 
 export default createStructuredSelector({
   data: parseData,
-  dataConfig: parseDataConfig,
+  config: parseDataConfig,
   sentence: parseSentence
 });

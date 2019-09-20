@@ -14,7 +14,7 @@ export default {
   chartType: 'sankey',
   dataType: 'nlcd_landcover',
   layers: ['plantations_by_type', 'plantations_by_species'],
-  refetchKeys: ['source'],
+  refetchKeys: ['source', 'startYear', 'endYear'],
   datasets: [
     {
       dataset: 'd95bcd10-bdaf-4787-83a8-f8293af1c2f4',
@@ -52,7 +52,7 @@ export default {
   sortOrder: {
     landCover: 101
   },
-  settins: {
+  settings: {
     startYear: 2001,
     endYear: 2016,
     variable: 'changes_only',
@@ -78,5 +78,17 @@ export default {
       const data = response.data.rows;
       return data;
     }),
-  getWidgetProps
+  getWidgetProps,
+  parseInteraction: payload => {
+    if (payload) {
+      const { source, target, key } = payload;
+      return {
+        updateLayer: true,
+        source,
+        target,
+        key
+      };
+    }
+    return {};
+  }
 };
