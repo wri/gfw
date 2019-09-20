@@ -411,7 +411,9 @@ export const getWidgets = createSelector(
         settingsConfigParsed.filter(
           o =>
             o.key !== 'extentYear' ||
-            (ifl !== 2016 && settings.forestType !== 'primary_forest')
+            (ifl !== 2016 &&
+              settings.forestType !== 'primary_forest' &&
+              settings.forestType !== 'ifl')
         );
 
       const props = {
