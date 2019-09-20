@@ -6,15 +6,16 @@ import { sortByKey } from 'utils/data';
 import { formatNumber } from 'utils/format';
 
 // get list data
-const getData = state => state.data || null;
-const getSettings = state => state.settings || null;
-const getAdm0 = state => state.adm0 || null;
-const getLocationsMeta = state => state.locationData || null;
-const getColors = state => state.colors || null;
-const getIndicator = state => state.indicator || null;
-const getLocationObject = state => state.location || null;
-const getLocationName = state => state.locationLabel || null;
-const getSentences = state => state.sentences || null;
+const getData = state => state.data;
+const getSettings = state => state.settings;
+const getAdm0 = state => state.adm0;
+const getLocationsMeta = state =>
+  (state.adm0 ? state.locationData : state.childData);
+const getColors = state => state.colors;
+const getIndicator = state => state.indicator;
+const getLocationObject = state => state.location;
+const getLocationName = state => state.locationLabel;
+const getSentences = state => state.sentences;
 const getTitle = state => state.title;
 
 const haveData = (data, locationObject) =>
