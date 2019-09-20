@@ -121,8 +121,8 @@ export const parseSentence = createSelector(
     const region =
       data &&
       data.find(item => {
-        if (item.admin_2) return String(item.admin_2) === iso;
-        else if (item.admin_1) return String(item.admin_1) === iso;
+        if (item.admin_2) return item.admin_2 === iso;
+        else if (item.admin_1) return item.admin_1 === iso;
         return item.iso === iso;
       });
     if (!region) return null;
