@@ -16,9 +16,8 @@ export const clearGeodescriber = createAction('clearGeodescriber');
 
 export const getGeodescriber = createThunkAction(
   'getGeodescriber',
-  params => (dispatch, getState) => {
-    const { geodescriber } = getState();
-    if (!isEmpty(params) && geodescriber && !geodescriber.loading) {
+  params => dispatch => {
+    if (!isEmpty(params)) {
       dispatch(setGeodescriberLoading({ loading: true, error: false }));
       getGeodescriberService(params)
         .then(response => {
@@ -34,19 +33,16 @@ export const getGeodescriber = createThunkAction(
 
 export const getAdminGeodescriber = createThunkAction(
   'getAdminGeodescriber',
-  location => (dispatch, getState) => {
-    const { geodescriber } = getState();
-    if (geodescriber && !geodescriber.loading) {
-      dispatch(setGeodescriberLoading({ loading: true, error: false }));
-      getAdminStats({ ...location, threshold: 30, extentYear: 2010 })
-        .then(response => {
-          dispatch(setGeodescriber(response));
-        })
-        .catch(error => {
-          dispatch(setGeodescriberLoading({ loading: false, error: true }));
-          console.info(error);
-        });
-    }
+  location => dispatch => {
+    dispatch(setGeodescriberLoading({ loading: true, error: false }));
+    getAdminStats({ ...location, threshold: 30, extentYear: 2010 })
+      .then(response => {
+        dispatch(setGeodescriber(response));
+      })
+      .catch(error => {
+        dispatch(setGeodescriberLoading({ loading: false, error: true }));
+        console.info(error);
+      });
   }
 );
 
