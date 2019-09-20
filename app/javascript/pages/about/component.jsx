@@ -15,7 +15,7 @@ import Partners from 'pages/about/section-partners';
 import How from 'pages/about/section-how';
 import Contact from 'pages/about/section-contact';
 
-import playIcon from 'assets/icons/play.svg';
+import mailIcon from 'assets/icons/mail.svg';
 import bgImage from './header-bg';
 import './styles.scss';
 
@@ -30,11 +30,12 @@ const sectionComponents = {
 class AboutPage extends PureComponent {
   static propTypes = {
     sections: PropTypes.object,
-    setModalVideoData: PropTypes.func.isRequired
+    setModalVideoData: PropTypes.func.isRequired,
+    setModalNewsletterOpen: PropTypes.func.isRequired
   };
 
   render() {
-    const { sections, setModalVideoData } = this.props;
+    const { sections, setModalVideoData, setModalNewsletterOpen } = this.props;
     return (
       <div className="l-about-page">
         <Cover
@@ -42,30 +43,23 @@ class AboutPage extends PureComponent {
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
           bgImage={bgImage}
         >
-          <div className="video">
-            <Button
-              theme="square"
-              className="video-btn"
-              onClick={() =>
-                setModalVideoData({
-                  open: true,
-                  data: {
-                    src:
-                      '//www.youtube.com/embed/lTG-0brb98I?rel=0&autoplay=1&showinfo=0&controls=0&modestbranding=1'
-                  }
-                })
-              }
-            >
-              <Icon icon={playIcon} />
+          <div
+            className="subscribe-btn"
+            onClick={() => setModalNewsletterOpen(true)}
+            role="button"
+            tabIndex={0}
+          >
+            <Button theme="square" className="subscribe-icon">
+              <Icon icon={mailIcon} />
             </Button>
-            <p className="video-msg">GFW in 2&#39;</p>
+            <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
           </div>
         </Cover>
         <SubnavMenu
           className="about-links"
           links={Object.values(sections || {})}
         />
-        <Projects />
+        <Projects setModalVideoData={setModalVideoData} />
         {sections &&
           Object.keys(sections).map(s => {
             const section = sections[s];

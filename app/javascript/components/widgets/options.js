@@ -10,6 +10,7 @@ import type from 'data/types.json';
 import weeks from 'data/weeks.json';
 import dataset from 'data/datasets.json';
 import ifl from 'data/ifl.json';
+import source from 'data/sources.json';
 
 export default {
   forestType: forestType.filter(f => !f.hidden),
@@ -23,5 +24,6 @@ export default {
   weeks,
   dataset,
   variable,
+  source,
   ifl
 };

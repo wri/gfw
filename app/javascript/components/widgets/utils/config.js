@@ -296,6 +296,11 @@ export const getStatements = ({
         'these estimates do not take tree cover gain into account'
       )
       : null,
+    dataType === 'nlcd_landcover'
+      ? translateText(
+        '*raw NLCD categories have been re-classed to match IPCC categories'
+      )
+      : null,
     ...(indicatorStatements || [])
   ]);
 

@@ -103,8 +103,8 @@ export const parseSentence = createSelector(
           : formatNumber({ num: avgBiomDensity, unit: 'tC/ha' });
 
       const labels = {
-        biomassdensity: 'biomass density',
-        totalbiomass: 'total biomass'
+        biomassdensity: 'soil organic carbon density',
+        totalbiomass: 'total carbon storage'
       };
 
       return {

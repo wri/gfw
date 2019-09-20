@@ -44,6 +44,7 @@ import carbonStock from 'components/widgets/climate/carbon-stock';
 import economicImpact from 'components/widgets/land-use/economic-impact';
 import forestryEmployment from 'components/widgets/land-use/forestry-employment';
 import traseCommodities from 'components/widgets/land-use/trase-commodities';
+import USLandCover from 'components/widgets/land-use/us-land-cover';
 
 export default {
   // forest change
@@ -67,6 +68,7 @@ export default {
   treeCover2010,
   treeCoverRanked,
   rankedPlantations,
+  USLandCover,
   treeCoverPlantations,
   faoCover,
   globalLandCover,

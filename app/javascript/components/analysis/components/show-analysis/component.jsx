@@ -68,7 +68,7 @@ class ShowAnalysis extends PureComponent {
       <div className="value" style={{ color }}>
         {Array.isArray(value) && value.length ? (
           value.map(v => (
-            <strong key={`${v.label}-${v.value}`}>
+            <strong key={`${v.label}-${v.value}`} style={{ color: v.color }}>
               {formatNumber({
                 num: v.value,
                 unit: v.unit || unit
