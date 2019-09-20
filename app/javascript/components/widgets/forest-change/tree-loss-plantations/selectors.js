@@ -7,12 +7,11 @@ import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'utils/data';
 
 // get list data
-const getLossPlantations = state =>
-  (state.data && state.data.lossPlantations) || null;
-const getTotalLoss = state => (state.data && state.data.totalLoss) || null;
-const getSettings = state => state.settings || null;
-const getLocationName = state => state.locationLabel || null;
-const getColors = state => state.colors || null;
+const getLossPlantations = state => state.data && state.data.lossPlantations;
+const getTotalLoss = state => state.data && state.data.totalLoss;
+const getSettings = state => state.settings;
+const getLocationName = state => state.locationLabel;
+const getColors = state => state.colors;
 const getSentence = state => state.sentence;
 
 // get lists selected
@@ -69,6 +68,15 @@ export const parseConfig = createSelector([getColors], colors => {
     },
     unit: 'ha',
     tooltip: [
+      {
+        key: 'year'
+      },
+      {
+        key: 'totalLoss',
+        label: 'Total',
+        unit: 'ha',
+        unitFormat: value => format('.3s')(value)
+      },
       {
         key: 'outsideAreaLoss',
         label: 'Natural forest',

@@ -5,7 +5,7 @@ import { format } from 'd3-format';
 // get list data
 const getData = state => state.data;
 const getSettings = state => state.settings;
-const getLocationObject = state => state.locationObject;
+const getLocationObject = state => state.location;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 
@@ -14,7 +14,6 @@ export const getFilteredData = createSelector(
   [getData, getLocationObject],
   (data, locationObject) => {
     if (isEmpty(data) || !locationObject) return null;
-
     return data
       .filter(
         item => item.country === locationObject.value && item.year !== 9999
@@ -32,13 +31,13 @@ export const getFilteredData = createSelector(
 export const parseData = createSelector(
   [getFilteredData, getSettings, getColors],
   (data, settings, colors) => {
-    if (isEmpty(data)) return { noContent: true };
+    if (isEmpty(data)) return [{ noContent: true }];
 
     const { year } = settings;
     const selectedFAO = data.filter(item => item.year === year);
     const { male, female } =
       selectedFAO && selectedFAO.length && selectedFAO[0];
-    if (!female) return { noContent: true };
+    if (!female) return [{ noContent: true }];
 
     const total = male + female;
     const formatedData = [

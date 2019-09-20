@@ -7,7 +7,7 @@ import PieChartLegend from 'components/charts/components/pie-chart-legend';
 
 import './styles';
 
-class WidgetTreeCover extends PureComponent {
+class WidgetPieChart extends PureComponent {
   render() {
     const { data, settings, simple } = this.props;
 
@@ -43,10 +43,10 @@ class WidgetTreeCover extends PureComponent {
   }
 }
 
-WidgetTreeCover.propTypes = {
+WidgetPieChart.propTypes = {
   data: PropTypes.array,
   simple: PropTypes.bool,
   settings: PropTypes.object.isRequired
 };
 
-export default WidgetTreeCover;
+export default WidgetPieChart;

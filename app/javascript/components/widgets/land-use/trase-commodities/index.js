@@ -1,7 +1,10 @@
 import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
+import range from 'lodash/range';
 
 import { fetchTraseContexts, fetchTraseLocationData } from 'services/trase';
+
+import getWidgetProps from './selectors';
 
 const TRASE_COUNTRY_NAMES = {
   BRA: 'BRAZIL',
@@ -20,17 +23,18 @@ export default {
   categories: ['land-use'],
   types: ['country'],
   admins: ['adm0'],
+  refetchKeys: ['commodity', 'startYear', 'endYear'],
   settingsConfig: [
+    {
+      key: 'commodity',
+      label: 'commodity',
+      type: 'select'
+    },
     {
       key: 'unit',
       label: 'unit',
       type: 'switch',
       whitelist: ['t', '%']
-    },
-    {
-      key: 'commodities',
-      label: 'commodities',
-      type: 'select'
     },
     {
       key: 'years',
@@ -88,29 +92,38 @@ export default {
 
         const minYear = selectedContext.years[0];
         const maxYear = selectedContext.years[selectedContext.years.length - 1];
-        const yearsRange = [minYear, maxYear];
 
         return fetchTraseLocationData(
           selectedContext.id,
           selectedContext.worldMap.countryColumnId,
           startYear,
           endYear
-        ).then(data => ({
-          data: {
-            context: selectedContext,
-            topNodes: data.data.data
-          },
-          options: {
-            yearsRange,
-            commodities: commoditiesForLocation
-          },
-          settings: {
-            startYear: !startYear || startYear < minYear ? minYear : startYear,
-            endYear: !endYear || endYear > maxYear ? maxYear : endYear,
-            commodity: selectedCommodity
-          }
-        }));
+        ).then(data => {
+          const newStartYear =
+            !startYear || startYear < minYear ? minYear : startYear;
+          const newEndYear = !endYear || endYear > maxYear ? maxYear : endYear;
+
+          return {
+            data: {
+              context: selectedContext,
+              topNodes: data.data.data
+            },
+            options: {
+              years: range(newStartYear, newEndYear + 1, 1).map(y => ({
+                label: y,
+                value: y
+              })),
+              commodity: commoditiesForLocation
+            },
+            settings: {
+              startYear: newStartYear,
+              endYear: newEndYear,
+              commodity: selectedCommodity
+            }
+          };
+        });
       }
       return {};
-    })
+    }),
+  getWidgetProps
 };

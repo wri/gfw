@@ -12,12 +12,25 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   settingsConfig: [
     {
+      key: 'years',
+      label: 'years',
+      endKey: 'endYear',
+      startKey: 'startYear',
+      options: [2013, 2014, 2015, 2016, 2017, 2018].map(y => ({
+        label: y,
+        value: y
+      })),
+      type: 'range-select',
+      border: true
+    },
+    {
       key: 'threshold',
       label: 'canopy density',
       type: 'mini-select',
       metaKey: 'widget_canopy_density'
     }
   ],
+  refetchKeys: ['threshold'],
   chartType: 'composedChart',
   colors: 'loss',
   metaKey: 'widget_plantations_tree_cover_loss',

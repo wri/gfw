@@ -39,7 +39,8 @@ export default {
     {
       key: 'extentYear',
       label: 'extent year',
-      type: 'switch'
+      type: 'switch',
+      border: true
     },
     {
       key: 'years',

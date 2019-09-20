@@ -38,9 +38,6 @@ import futureCarbonGains from 'components/widgets/climate/future-carbon-gains';
 import cumulativeEmissions from 'components/widgets/climate/cumulative-emissions';
 import carbonStock from 'components/widgets/climate/carbon-stock';
 
-// // Biodiversity
-// import gladBiodiversity from 'components/widgets/biodiversity/glad-biodiversity';
-
 // // Land Use
 import economicImpact from 'components/widgets/land-use/economic-impact';
 import forestryEmployment from 'components/widgets/land-use/forestry-employment';
@@ -84,8 +81,6 @@ export default {
   futureCarbonGains,
   cumulativeEmissions,
   carbonStock,
-  // biodiversity
-  // gladBiodiversity,
   // land use
   economicImpact,
   forestryEmployment,

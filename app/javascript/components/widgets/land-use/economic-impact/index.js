@@ -14,8 +14,8 @@ export default {
   admins: ['adm0'],
   settingsConfig: [
     {
-      key: 'years',
-      label: 'years',
+      key: 'year',
+      label: 'year',
       type: 'select'
     },
     {
@@ -177,7 +177,7 @@ export default {
       const payload = {
         data: rows || {},
         options: {
-          years
+          year: years
         },
         settings: {
           year: years.includes(year) ? year.value : years[0].value

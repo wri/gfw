@@ -7,8 +7,17 @@ import NumberedList from 'components/widget/components/widget-numbered-list';
 import './styles';
 
 class WidgetMapList extends PureComponent {
+  static propTypes = {
+    data: PropTypes.object,
+    config: PropTypes.object,
+    settings: PropTypes.object,
+    embed: PropTypes.bool,
+    widget: PropTypes.string,
+    handleChangeSettings: PropTypes.func
+  };
+
   render() {
-    const { data, settings, embed, setWidgetSettings, widget } = this.props;
+    const { data, settings, embed, handleChangeSettings, widget } = this.props;
     const { rankedData } = data;
 
     return (
@@ -21,7 +30,7 @@ class WidgetMapList extends PureComponent {
             settings={settings}
             linkExt={embed}
             widget={widget}
-            setWidgetSettings={setWidgetSettings}
+            handleChangeSettings={handleChangeSettings}
           />
         )}
       </div>
@@ -29,12 +38,4 @@ class WidgetMapList extends PureComponent {
   }
 }
 
-WidgetMapList.propTypes = {
-  data: PropTypes.object,
-  config: PropTypes.object,
-  settings: PropTypes.object,
-  embed: PropTypes.bool,
-  widget: PropTypes.string,
-  setWidgetSettings: PropTypes.func
-};
 export default WidgetMapList;

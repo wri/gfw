@@ -7,13 +7,11 @@ import { formatUSD } from 'utils/format';
 
 // get list data
 const getData = state => state.data && state.data.data;
-const getDataSettings = state => state.data && state.data.settings;
 const getSettings = state => state.settings;
-const getLocationsMeta = state => state.locationData || null;
-const getLocationObject = state => state.locationObject;
+const getLocationsMeta = state => state.locationData;
+const getLocationObject = state => state.location;
 const getColors = state => state.colors;
 const getSentences = state => state.sentence;
-export const getDataOptions = state => state.data && state.data.options;
 
 // get lists selected
 export const getFilteredData = createSelector(
@@ -183,6 +181,5 @@ export const parseSentence = createSelector(
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
-  sentence: parseSentence,
-  settings: getDataSettings
+  sentence: parseSentence
 });

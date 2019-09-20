@@ -23,8 +23,9 @@ export default {
     },
     {
       key: 'threshold',
-      label: 'threshold',
-      type: 'mini-select'
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
     }
   ],
   chartType: 'pieChart',

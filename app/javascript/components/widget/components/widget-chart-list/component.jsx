@@ -7,7 +7,7 @@ import NumberedList from 'components/numbered-list';
 
 import './styles';
 
-class WidgetEconomicImpact extends PureComponent {
+class WidgetChartList extends PureComponent {
   render() {
     const { data, config, settings, embed } = this.props;
     const { chartData, rankedData } = data;
@@ -35,10 +35,10 @@ class WidgetEconomicImpact extends PureComponent {
   }
 }
 
-WidgetEconomicImpact.propTypes = {
+WidgetChartList.propTypes = {
   data: PropTypes.object,
   config: PropTypes.object,
   settings: PropTypes.object,
   embed: PropTypes.bool
 };
-export default WidgetEconomicImpact;
+export default WidgetChartList;

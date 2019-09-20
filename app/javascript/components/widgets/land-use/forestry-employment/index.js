@@ -8,42 +8,12 @@ export default {
   categories: ['land-use'],
   types: ['country'],
   admins: ['adm0'],
-  options: {
-    years: [1990, 2000, 2005, 2010]
-  },
   settingsConfig: [
     {
-      key: 'forestType',
-      label: 'Forest Type',
-      whitelist: ['ifl'],
-      type: 'select',
-      placeholder: 'All tree cover',
-      clearable: true
-    },
-    {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      placeholder: 'All categories',
-      clearable: true,
-      border: true
-    },
-    {
-      key: 'unit',
-      label: 'unit',
-      type: 'switch',
-      whitelist: ['ha', '%']
-    },
-    {
-      key: 'extentYear',
-      label: 'extent year',
-      type: 'switch'
-    },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density'
+      key: 'year',
+      label: 'year',
+      options: [1990, 2000, 2005, 2010].map(y => ({ label: y, value: y })),
+      type: 'select'
     }
   ],
   chartType: 'pieChart',
