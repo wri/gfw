@@ -67,33 +67,31 @@ export const getAreas = createThunkAction(
 export const getArea = createThunkAction(
   'getArea',
   id => (dispatch, getState) => {
-    const { areas, myGfw } = getState();
-    if (areas && !areas.loading) {
-      const { data: userData } = myGfw || {};
-      dispatch(setAreasLoading({ loading: true, error: false }));
-      getAreaProvider(id)
-        .then(response => {
-          const { data } = response.data;
-          if (data) {
-            dispatch(
-              setArea({
-                id: data.id,
-                ...data.attributes,
-                userArea: userData && userData.id === data.attributes.userId
-              })
-            );
-          }
-          dispatch(setAreasLoading({ loading: false, error: false }));
-        })
-        .catch(error => {
+    const { myGfw } = getState();
+    const { data: userData } = myGfw || {};
+    dispatch(setAreasLoading({ loading: true, error: false }));
+    getAreaProvider(id)
+      .then(response => {
+        const { data } = response.data;
+        if (data) {
           dispatch(
-            setAreasLoading({ loading: false, error: error.response.status })
+            setArea({
+              id: data.id,
+              ...data.attributes,
+              userArea: userData && userData.id === data.attributes.userId
+            })
           );
-          if (error.response.status !== 401) {
-            console.info(error);
-          }
-        });
-    }
+        }
+        dispatch(setAreasLoading({ loading: false, error: false }));
+      })
+      .catch(error => {
+        dispatch(
+          setAreasLoading({ loading: false, error: error.response.status })
+        );
+        if (error.response.status !== 401) {
+          console.info(error);
+        }
+      });
   }
 );
 

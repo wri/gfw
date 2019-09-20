@@ -18,7 +18,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl'],
+      whitelist: ['ifl', 'primary_forest'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true

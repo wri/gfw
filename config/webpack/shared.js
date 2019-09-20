@@ -71,7 +71,8 @@ module.exports = {
       styles: 'styles',
       router: 'router',
       utils: 'utils',
-      'lodash-es': 'lodash'
+      'lodash-es': 'lodash',
+      'react-dom': '@hot-loader/react-dom'
     }
   },
   resolveLoader: { modules: ['node_modules'] },

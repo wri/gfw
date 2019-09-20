@@ -91,6 +91,7 @@
     "@deck.gl/core": "^7.1.10",
     "@deck.gl/mapbox": "^7.1.10",
     "@fullpage/react-fullpage": "^0.1.13",
+    "@hot-loader/react-dom": "^16.9.0",
     "@loaders.gl/images": "^1.1.6",
     "@luma.gl/constants": "^7.1.1",
     "@mapbox/mapbox-gl-draw": "^1.1.1",

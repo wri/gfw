@@ -10,24 +10,21 @@ export const setWidgetsLoading = createAction('setWidgetsLoading');
 
 export const getWidgetsData = createThunkAction(
   'getWidgetsData',
-  () => (dispatch, getState) => {
-    const { widgets } = getState();
-    if (widgets && !widgets.loading) {
-      dispatch(setWidgetsLoading({ loading: true, error: false }));
-      getNonGlobalDatasets()
-        .then(response => {
-          const { rows } = response.data;
-          dispatch(
-            setWidgetsData({
-              nonGlobalDatasets: rows && rows[0]
-            })
-          );
-        })
-        .catch(error => {
-          dispatch(setWidgetsLoading({ error: true, loading: false }));
-          console.info(error);
-        });
-    }
+  () => dispatch => {
+    dispatch(setWidgetsLoading({ loading: true, error: false }));
+    getNonGlobalDatasets()
+      .then(response => {
+        const { rows } = response.data;
+        dispatch(
+          setWidgetsData({
+            nonGlobalDatasets: rows && rows[0]
+          })
+        );
+      })
+      .catch(error => {
+        dispatch(setWidgetsLoading({ error: true, loading: false }));
+        console.info(error);
+      });
   }
 );
 
