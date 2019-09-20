@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
+import { handlePageTrack } from 'app/analytics';
+
 import treeImage from 'assets/icons/error.svg';
 import Search from 'components/ui/search';
 import Button from 'components/ui/button';
@@ -27,10 +29,10 @@ class SearchPage extends PureComponent {
     this.fetchSearchResults(search);
   };
 
-  fetchSearchResults = debounce(
-    query => this.props.getSearch({ query, page: 1 }),
-    300
-  );
+  fetchSearchResults = debounce(query => {
+    this.props.getSearch({ query, page: 1 });
+    handlePageTrack(true);
+  }, 300);
 
   render() {
     const { data, isDesktop, loading } = this.props;

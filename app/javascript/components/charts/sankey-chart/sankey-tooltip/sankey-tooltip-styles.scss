@@ -1,0 +1,72 @@
+@import '~styles/settings.scss';
+
+.c-sankey-tooltip {
+  background: $black;
+  opacity: 0.8;
+  letter-spacing: -0.1px;
+  font-size: $font-size-s;
+  min-width: 180px;
+  max-width: 300px;
+  padding: 15px;
+  box-shadow: 0 5px 15px 0 rgba(17, 55, 80, 0.15);
+  border-radius: 4px;
+
+  .tp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: $white;
+
+    .tp-targetName {
+      padding-right: 16px;
+    }
+
+    .tp-unit {
+      color: $grey-dark;
+    }
+  }
+
+  .tp-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5px;
+
+    .tp-legend {
+      display: flex;
+      justify-content: flex-start;
+
+      .tp-label-dot {
+        border-radius: 50%;
+        width: 10px;
+        min-width: 10px;
+        height: 10px;
+        margin-right: 5px;
+        margin-top: 3px;
+        display: block;
+      }
+
+      .tp-label-name {
+        margin-right: 30px;
+        color: $white;
+      }
+    }
+
+    .tp-label-value {
+      color: $grey-dark;
+      text-align: right;
+      min-width: max-content;
+    }
+  }
+
+  .tooltip-children {
+    color: $grey-dark;
+  }
+
+  .focus {
+    @extend .tp-label-value;
+
+    margin-top: 10px;
+  }
+}
