@@ -75,9 +75,11 @@ class WidgetContainer extends Component {
     getData({ ...params, token: this.widgetDataFetch.token })
       .then(data => {
         setWidgetData(data);
-        if (this._mounted) {
-          this.setState({ loading: false, error: false });
-        }
+        setTimeout(() => {
+          if (this._mounted) {
+            this.setState({ loading: false, error: false });
+          }
+        }, 200);
       })
       .catch(error => {
         console.info(error);
