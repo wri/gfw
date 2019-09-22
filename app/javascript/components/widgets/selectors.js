@@ -231,7 +231,7 @@ export const filterWidgetsByLocation = createSelector(
         intersection(flatMap(datasets.map(d => d.layers)), layerIds);
       const hasLocation =
         types && types.includes(type) && admins && admins.includes(adminLevel);
-      const adminWhitelist = whitelists && whitelists[adminLevel];
+      const adminWhitelist = whitelists && whitelists.adm0;
 
       const adminBlacklist = blacklists && blacklists[adminLevel];
       const notInBlacklist =
@@ -240,11 +240,16 @@ export const filterWidgetsByLocation = createSelector(
       const isFAOCountry =
         source !== 'fao' || (fao && fao.find(f => f.value === location.adm0));
       const matchesAdminWhitelist =
-        !adminWhitelist || adminWhitelist.includes(location[adminLevel]);
+        !adminWhitelist || adminWhitelist.includes(location.adm0);
+      const polynameIntersection =
+        whitelists &&
+        whitelists.indicators &&
+        intersection(polynameWhitelist, whitelists.indicators);
       const matchesPolynameWhitelist =
         !whitelists ||
         !whitelists.indicators ||
-        intersection(polynameWhitelist, whitelists.indicators);
+        (polynameIntersection && polynameIntersection.length);
+
       const isWidgetVisible =
         !visible ||
         (showAnalysis &&
