@@ -16,6 +16,7 @@ const getIndicator = state => state.indicator;
 const getLocationObject = state => state.location;
 const getLocationName = state => state.locationLabel;
 const getSentences = state => state.sentences;
+const getAdminLevel = state => state.adminLevel;
 const getTitle = state => state.title;
 
 const haveData = (data, locationObject) =>
@@ -103,9 +104,10 @@ export const parseSentence = createSelector(
     getIndicator,
     getLocationObject,
     getLocationName,
-    getSentences
+    getSentences,
+    getAdminLevel
   ],
-  (data, indicator, locationObject, currentLabel, sentences) => {
+  (data, indicator, locationObject, currentLabel, sentences, adminLevel) => {
     if (
       !data ||
       !data.length ||
@@ -126,8 +128,6 @@ export const parseSentence = createSelector(
     const gain = locationData ? locationData.gain : sumBy(data, 'gain') || 0;
     const gainPercent = gain ? 100 * gain / sumBy(data, 'gain') || 0 : 0;
     const areaPercent = (locationData && locationData.percentage) || 0;
-
-    const adminLevel = locationObject.adminLevel || 'global';
 
     const params = {
       location: currentLabel === 'global' ? 'globally' : currentLabel,
