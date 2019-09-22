@@ -119,7 +119,7 @@ export default {
           }));
         }
         const lossData = lossGrouped.data.data;
-        let lossMappedData = {};
+        let lossMappedData = [];
         if (lossData && lossData.length) {
           const lossByRegion = groupBy(lossData, groupKey);
           lossMappedData = Object.keys(lossByRegion).map(d => {
@@ -131,7 +131,8 @@ export default {
           });
         }
 
-        const { startYear, endYear, range } = getYearsRange(lossMappedData);
+        const { startYear, endYear, range } =
+          lossMappedData[0] && getYearsRange(lossMappedData[0].loss);
 
         return {
           lossByRegion: lossMappedData,
