@@ -1,5 +1,6 @@
 import { getLoss } from 'services/forest-data';
 import axios from 'axios';
+import max from 'lodash/max';
 import maxBy from 'lodash/maxBy';
 import range from 'lodash/range';
 
@@ -83,9 +84,10 @@ export default {
           const maxAdmin = maxBy(adminData, 'year');
           const maxPlantations = maxBy(plantData, 'year');
           const maxYear =
-            maxAdmin &&
-            maxPlantations &&
-            Math.max(maxAdmin.year, maxPlantations.year);
+            (maxAdmin &&
+              maxPlantations &&
+              max([maxAdmin.year, maxPlantations.year])) ||
+            2018;
 
           return {
             adminData,
