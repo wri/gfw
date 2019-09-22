@@ -23,8 +23,7 @@ export default {
     landUse: 3
   },
   settings: {
-    year: 2010,
-    unit: ''
+    year: 2010
   },
   colors: 'employment',
   sentences: {

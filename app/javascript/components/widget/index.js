@@ -16,7 +16,6 @@ class WidgetContainer extends Component {
     refetchKeys: PropTypes.array,
     error: PropTypes.bool,
     settings: PropTypes.object,
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     handleChangeSettings: PropTypes.func
   };
 
@@ -36,12 +35,10 @@ class WidgetContainer extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const { location, settings, data } = this.props;
+    const { location, settings } = this.props;
     const params = { ...location, ...settings };
 
-    if (!data || data.noContent) {
-      this.handleGetWidgetData(params);
-    }
+    this.handleGetWidgetData(params);
   }
 
   componentDidUpdate(prevProps, prevState) {
