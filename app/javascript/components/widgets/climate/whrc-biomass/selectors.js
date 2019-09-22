@@ -8,8 +8,7 @@ import { sortByKey } from 'utils/data';
 const getData = state => state.data;
 const getLocationName = state => state.locationLabel;
 const getAdm0 = state => state.adm0;
-const getLocationDict = state =>
-  (state.adm0 ? state.locationData : state.childData);
+const getLocationDict = state => state.locationData;
 const getLocationObject = state => state.location;
 const getTitle = state => state.title;
 const getSentences = state => state.sentences;
@@ -70,7 +69,7 @@ export const parseData = createSelector(
       label: locationsDict[d[key]] && locationsDict[d[key]].label,
       color: colors.carbon[0],
       path: locationsDict[d[key]] && locationsDict[d[key]].path,
-      key: `${d.iso}-${i}`,
+      id: `${d.iso}-${i}`,
       value: d[settings.variable],
       unit: settings.variable === 'totalbiomass' ? 't' : 't/ha'
     }));

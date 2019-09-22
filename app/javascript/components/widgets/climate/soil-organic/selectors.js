@@ -70,7 +70,7 @@ export const parseData = createSelector(
       label: locationsDict[d[key]] && locationsDict[d[key]].label,
       path: locationsDict[d[key]] && locationsDict[d[key]].path,
       color: colors.carbon[0],
-      key: `${d.iso}-${i}`,
+      id: `${d.iso}-${i}`,
       value: d[settings.variable],
       unit: settings.variable === 'totalbiomass' ? 'tC' : 'tC/ha'
     }));
