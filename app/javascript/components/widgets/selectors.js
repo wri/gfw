@@ -265,9 +265,19 @@ export const filterWidgetsByLocation = createSelector(
 );
 
 export const filterWidgetsByCategory = createSelector(
-  [filterWidgetsByLocation, selectCategory, selectAnalysis, getLocationData],
-  (widgets, category, showAnalysis, locationData) => {
+  [
+    filterWidgetsByLocation,
+    selectCategory,
+    selectAnalysis,
+    getLocationData,
+    selectEmbed,
+    getWdigetFromQuery
+  ],
+  (widgets, category, showAnalysis, locationData, embed, widget) => {
     if (isEmpty(widgets)) return null;
+
+    if (embed && widget) return widgets.filter(w => w.widget === widget);
+
     if (showAnalysis || (locationData && locationData.status === 'pending')) {
       return widgets;
     }
@@ -355,9 +365,6 @@ export const getWidgets = createSelector(
         }),
         ...(endYear && {
           endYear
-        }),
-        ...(!analysis && {
-          ...widgetQuerySettings
         })
       };
 
@@ -365,7 +372,9 @@ export const getWidgets = createSelector(
         ...defaultSettings,
         ...dataSettings,
         ...widgetQuerySettings,
-        ...layerSettings
+        ...(analysis && {
+          ...layerSettings
+        })
       };
 
       const settings = {
