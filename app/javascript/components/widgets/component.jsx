@@ -31,16 +31,17 @@ class Widgets extends PureComponent {
     setMapSettings: PropTypes.func.isRequired,
     embed: PropTypes.bool,
     modalClosing: PropTypes.bool,
-    activeWidget: PropTypes.object
+    activeWidget: PropTypes.object,
+    noDataMessage: PropTypes.string
   };
 
   render() {
     const {
       activeWidget,
       className,
-      loading,
       widgets,
       location,
+      loading,
       setWidgetsData,
       setWidgetSettings,
       setActiveWidget,
@@ -48,9 +49,10 @@ class Widgets extends PureComponent {
       setShareModal,
       embed,
       simple,
-      modalClosing
+      modalClosing,
+      noDataMessage
     } = this.props;
-    const hasWidgets = !loading && !isEmpty(widgets);
+    const hasWidgets = !isEmpty(widgets);
 
     return (
       <MediaQuery minWidth={SCREEN_M}>
@@ -99,10 +101,11 @@ class Widgets extends PureComponent {
                   preventCloseSettings={modalClosing}
                 />
               ))}
-            {!hasWidgets && (
+            {!loading &&
+              !hasWidgets && (
               <NoContent
                 className="no-widgets-message large"
-                message="No data available"
+                message={noDataMessage}
                 icon
               />
             )}

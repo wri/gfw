@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
+import lowerCase from 'lodash/lowerCase';
 import flatMap from 'lodash/flatMap';
 import moment from 'moment';
 import camelCase from 'lodash/camelCase';
@@ -479,6 +480,15 @@ export const getActiveWidget = createSelector(
   }
 );
 
+export const getNoDataMessage = createSelector(
+  [getGeodescriberTitleFull, selectCategory],
+  (title, category) => {
+    if (!title || !category) return 'No data available';
+    if (!category) return `No data available for ${title}`;
+    return `No ${lowerCase(category)} data avilable for ${title}`;
+  }
+);
+
 export const getWidgetsProps = () =>
   createStructuredSelector({
     loading: selectLoading,
@@ -487,5 +497,6 @@ export const getWidgetsProps = () =>
     location: getLocation,
     emebd: selectEmbed,
     simple: selectSimple,
-    modalClosing: selectModalClosing
+    modalClosing: selectModalClosing,
+    noDataMessage: getNoDataMessage
   });
