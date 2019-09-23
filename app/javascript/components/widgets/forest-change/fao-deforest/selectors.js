@@ -45,7 +45,7 @@ export const parseData = createSelector(
 export const parseSentence = createSelector(
   [getData, getLocationName, getSettings, getPeriod, getSentences],
   (data, currentLabel, settings, period, sentences) => {
-    if (!data || !data.fao) return '';
+    if (!data || !data.fao) return null;
     const {
       initial,
       noDeforest,

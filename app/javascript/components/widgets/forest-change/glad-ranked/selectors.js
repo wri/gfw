@@ -96,7 +96,7 @@ export const parseSentence = createSelector(
     getSentences
   ],
   (data, sortedList, optionsSelected, indicator, locationName, sentences) => {
-    if (!data || !optionsSelected || !locationName) return '';
+    if (!data || !optionsSelected || !locationName) return null;
     const { initial, withInd } = sentences;
     const totalCount = sumBy(data, 'count') || 0;
     let percentileCount = 0;

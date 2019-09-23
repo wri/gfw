@@ -73,7 +73,7 @@ export const parseSentence = createSelector(
     getSentences
   ],
   (data, sortedData, settings, indicator, locationName, sentences) => {
-    if (!data || !locationName || !sortedData) return '';
+    if (!data || !locationName || !sortedData) return null;
     const {
       initial,
       withIndicator,

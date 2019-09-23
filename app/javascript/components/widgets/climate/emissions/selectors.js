@@ -97,7 +97,7 @@ export const parseConfig = createSelector([getColors], colors => {
 export const parseSentence = createSelector(
   [getSortedData, getLocationName, getSentences],
   (sortedData, locationName, sentences) => {
-    if (!sortedData || !sortedData.data.length) return '';
+    if (!sortedData || !sortedData.data.length) return null;
     const { positive, negative } = sentences;
     const { data, total } = sortedData;
     const emissionsCount = data[0].emissions

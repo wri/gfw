@@ -72,15 +72,8 @@ export const parseData = createSelector([parseList], data => {
 });
 
 export const parseSentence = createSelector(
-  [
-    parseData,
-    getSettings,
-    getOptionsSelected,
-    getIndicator,
-    getLocationName,
-    getSentences
-  ],
-  (data, settings, optionsSelected, indicator, locationName, sentences) => {
+  [parseData, getOptionsSelected, getIndicator, getLocationName, getSentences],
+  (data, optionsSelected, indicator, locationName, sentences) => {
     if (!data || !optionsSelected || !locationName) return '';
     const { initial, withInd } = sentences;
     const topRegion = data[0].label;
