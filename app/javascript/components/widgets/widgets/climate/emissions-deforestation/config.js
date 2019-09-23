@@ -1,3 +1,5 @@
+import tropicalIsos from 'data/tropical-isos.json';
+
 export default {
   widget: 'emissionsDeforestation',
   title: 'Emissions from biomass loss in {location}',
@@ -23,6 +25,9 @@ export default {
   colors: 'climate',
   sortOrder: {
     climate: 2
+  },
+  whitelists: {
+    adm0: tropicalIsos
   },
   sentences:
     'Between {startYear} and {endYear}, a total of {value} of {type} ({annualAvg} per year) was released into the atmosphere as a result of tree cover loss in {location}.'
