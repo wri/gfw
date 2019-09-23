@@ -90,9 +90,11 @@ export const getWidgetLayers = createSelector(
     flatMap(
       widgets.map(w =>
         flatMap(
-          w.datasets.map(
-            d => (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
-          )
+          w.datasets &&
+            w.datasets.map(
+              d =>
+                (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
+            )
         )
       )
     )
