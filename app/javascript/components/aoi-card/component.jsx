@@ -26,27 +26,62 @@ const counts = {
 
 class AoICard extends PureComponent {
   static propTypes = {
-    index: PropTypes.number,
     id: PropTypes.string,
     name: PropTypes.string,
     tags: PropTypes.array,
     image: PropTypes.string,
     application: PropTypes.string,
     createdAt: PropTypes.string,
-    simple: PropTypes.bool
+    simple: PropTypes.bool,
+    deforestationAlerts: PropTypes.bool,
+    fireAlerts: PropTypes.bool,
+    monthlySummary: PropTypes.bool
   };
 
   render() {
     const {
-      index,
       id,
       image,
       tags,
       name,
       application,
       createdAt,
-      simple
+      simple,
+      deforestationAlerts,
+      fireAlerts,
+      monthlySummary
     } = this.props;
+
+    const subStatus = [
+      {
+        label: 'forest change alerts',
+        subscribed: deforestationAlerts
+      },
+      {
+        label: 'fire alerts',
+        subscribed: fireAlerts
+      },
+      {
+        label: 'mothly summary',
+        subscribed: monthlySummary
+      }
+    ].filter(s => s.subscribed);
+
+    const isSubscribed = deforestationAlerts || fireAlerts || monthlySummary;
+    const subscribedToAll = deforestationAlerts && fireAlerts && monthlySummary;
+
+    let subscriptionMessage = 'subscribed to';
+    if (subscribedToAll) {
+      subscriptionMessage = 'subscribed to all notifications';
+    } else if (isSubscribed) {
+      subStatus.forEach((s, i) => {
+        if (s.subscribed) {
+          subscriptionMessage = subscriptionMessage.concat(
+            ` ${s.label}${i === subStatus.length - 1 ? '' : ' and'}`
+          );
+        }
+      });
+    }
 
     return (
       <div key={id} className={cx('c-aoi-card', { simple })}>
@@ -69,10 +104,10 @@ class AoICard extends PureComponent {
                 <p>{tags.join(', ')}</p>
               </div>
             )}
-            {(index + 1) % 3 === 0 && ( // TODO: get subscribed status from API
+            {(deforestationAlerts || fireAlerts || monthlySummary) && (
               <div className="subscribed">
                 <Icon icon={subscribedIcon} className="subscribed-icon" />
-                <p>Subscribed</p>
+                <p>{subscriptionMessage}</p>
               </div>
             )}
           </div>
