@@ -149,7 +149,7 @@ class MapMenuMyGFW extends PureComponent {
                     '--active': active,
                     '--inactive': activeArea && !active
                   })}
-                  onClick={() => viewArea(area.id)}
+                  onClick={() => viewArea({ areaId: area.id })}
                   role="button"
                   tabIndex={0}
                   key={area.id}

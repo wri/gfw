@@ -79,7 +79,7 @@ export const saveAOI = createThunkAction(
             dispatch(setArea({ id, ...attributes, userArea: true }));
             dispatch(setSaveAOISaving({ saving: false, error: false }));
             if (viewAfterSave) {
-              dispatch(viewArea(id));
+              dispatch(viewArea({ areaId: id }));
             }
           }
         })

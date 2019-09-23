@@ -97,21 +97,22 @@ export const getArea = createThunkAction(
 
 export const viewArea = createThunkAction(
   'viewArea',
-  areaId => (dispatch, getState) => {
+  ({ areaId, locationType }) => (dispatch, getState) => {
     const { location } = getState();
+
     if (areaId && location) {
       const { query, type } = location;
       const { mainMap, map } = query || {};
 
       dispatch({
-        type,
+        type: locationType || type,
         payload: {
           type: 'aoi',
           adm0: areaId
         },
         query: {
           ...query,
-          ...(type === 'location/MAP' && {
+          ...((type === 'location/MAP' || locationType === 'location/MAP') && {
             mainMap: {
               ...mainMap,
               showAnalysis: true

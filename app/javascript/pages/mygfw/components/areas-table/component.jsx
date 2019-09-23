@@ -173,7 +173,12 @@ class AreasTable extends PureComponent {
                   <Button
                     className="area-link"
                     theme="theme-button-clear"
-                    onClick={() => viewArea(area.id)}
+                    onClick={() =>
+                      viewArea({
+                        areaId: area.id,
+                        locationType: 'location/MAP'
+                      })
+                    }
                   >
                     <Icon className="link-icon" icon={mapIcon} />
                     view on map

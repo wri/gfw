@@ -31,7 +31,7 @@ export const getDataFromLayers = createSelector(
           !l.isBoundary &&
           !l.isRecentImagery &&
           l.analysisConfig &&
-          !widgetLayers.includes(l.id) &&
+          (!widgetLayers || !widgetLayers.includes(l.id)) &&
           (!l.admLevels || l.admLevels.includes(admLevel))
       )
       .map(l => {
