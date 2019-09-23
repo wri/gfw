@@ -1,5 +1,7 @@
 import { fetchAnalysisEndpoint } from 'services/analysis';
 
+import tropicalIsos from 'data/tropical-isos.json';
+
 import { getYearsRange } from 'components/widgets/utils/data';
 import getWidgetProps from './selectors';
 
@@ -63,6 +65,9 @@ export default {
     threshold: 30,
     startYear: 2001,
     endYear: 2018
+  },
+  whitelists: {
+    adm0: tropicalIsos
   },
   getData: params =>
     fetchAnalysisEndpoint({

@@ -4,6 +4,8 @@ import max from 'lodash/max';
 import maxBy from 'lodash/maxBy';
 import range from 'lodash/range';
 
+import tropicalIsos from 'data/tropical-isos.json';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -64,7 +66,8 @@ export default {
       'From {startYear} to {endYear}, a total of {emissions} of {variable} emissions were released from tree cover loss in {location} natural forests.'
   },
   whitelists: {
-    indicators: ['plantations']
+    indicators: ['plantations'],
+    adm0: tropicalIsos
   },
   settings: {
     forestType: 'ifl',

@@ -323,7 +323,10 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
         if (l.isBoundary) zIndex = 1050 - i;
         return {
           ...l,
-          zIndex
+          zIndex,
+          ...(l.isRecentImagery && {
+            id: l.params.url
+          })
         };
       }),
     'zIndex'
