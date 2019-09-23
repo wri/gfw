@@ -216,10 +216,14 @@ class Header extends PureComponent {
                     <p>{tags.join(', ')}</p>
                   </div>
                 )}
-                <div className="subscribed">
-                  <Icon icon={subscribedIcon} className="subscribed-icon" />
-                  <p>Subscribed</p>
-                </div>
+                {(activeArea.deforestationAlerts ||
+                    activeArea.monthlySummary ||
+                    activeArea.fireAlerts) && (
+                  <div className="subscribed">
+                    <Icon icon={subscribedIcon} className="subscribed-icon" />
+                    <p>Subscribed</p>
+                  </div>
+                )}
               </div>
             </div>
           )}

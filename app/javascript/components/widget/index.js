@@ -14,7 +14,6 @@ class WidgetContainer extends Component {
     getData: PropTypes.func.isRequired,
     setWidgetData: PropTypes.func.isRequired,
     refetchKeys: PropTypes.array,
-    error: PropTypes.bool,
     settings: PropTypes.object,
     handleChangeSettings: PropTypes.func
   };
