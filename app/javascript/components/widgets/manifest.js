@@ -1,51 +1,47 @@
-// forest change
-import * as gladAlerts from './widgets/forest-change/glad-alerts';
-import * as treeLoss from './widgets/forest-change/tree-loss';
-import * as treeLossGlobal from './widgets/forest-change/tree-loss-global';
-import * as treeLossRanked from './widgets/forest-change/tree-loss-ranked';
-import * as faoDeforest from './widgets/forest-change/fao-deforest';
-import * as faoReforest from './widgets/forest-change/fao-reforest';
-import * as firesAlerts from './widgets/forest-change/fires-alerts';
-import * as firesRanked from './widgets/forest-change/fires-ranked';
-import * as gladRanked from './widgets/forest-change/glad-ranked';
-import * as treeCoverGain from './widgets/forest-change/tree-cover-gain';
-import * as treeGainLocated from './widgets/forest-change/tree-gain-located';
-import * as treeLossLocated from './widgets/forest-change/tree-loss-located';
-import * as treeLossPlantations from './widgets/forest-change/tree-loss-plantations';
-import * as treeLossTsc from './widgets/forest-change/tree-loss-tsc';
+// // forest change
+import gladAlerts from 'components/widgets/forest-change/glad-alerts';
+import treeLoss from 'components/widgets/forest-change/tree-loss';
+import treeLossGlobal from 'components/widgets/forest-change/tree-loss-global';
+import treeLossRanked from 'components/widgets/forest-change/tree-loss-ranked';
+import faoDeforest from 'components/widgets/forest-change/fao-deforest';
+import faoReforest from 'components/widgets/forest-change/fao-reforest';
+import firesAlerts from 'components/widgets/forest-change/fires-alerts';
+import firesRanked from 'components/widgets/forest-change/fires-ranked';
+import gladRanked from 'components/widgets/forest-change/glad-ranked';
+import treeCoverGain from 'components/widgets/forest-change/tree-cover-gain';
+import treeGainLocated from 'components/widgets/forest-change/tree-gain-located';
+import treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
+import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
+import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 
-// land cover
-import * as treeCover from './widgets/land-cover/tree-cover';
-import * as treeCover2000 from './widgets/land-cover/tree-cover-2000';
-import * as treeCover2010 from './widgets/land-cover/tree-cover-2010';
-import * as treeCoverRanked from './widgets/land-cover/tree-cover-ranked';
-import * as treeCoverPlantations from './widgets/land-cover/tree-cover-plantations';
-import * as rankedPlantations from './widgets/land-cover/ranked-plantations';
-import * as USLandCover from './widgets/land-cover/us-land-cover';
-import * as faoCover from './widgets/land-cover/fao-cover';
-import * as globalLandCover from './widgets/land-cover/global-land-cover';
-import * as intactTreeCover from './widgets/land-cover/intact-tree-cover';
-import * as primaryForest from './widgets/land-cover/primary-forest';
-import * as treeCoverLocated from './widgets/land-cover/tree-cover-located';
+// // land cover
+import treeCover from 'components/widgets/land-cover/tree-cover';
+import treeCover2000 from 'components/widgets/land-cover/tree-cover-2000';
+import treeCover2010 from 'components/widgets/land-cover/tree-cover-2010';
+import treeCoverRanked from 'components/widgets/land-cover/tree-cover-ranked';
+import treeCoverPlantations from 'components/widgets/land-cover/tree-cover-plantations';
+import rankedPlantations from 'components/widgets/land-cover/ranked-plantations';
+import faoCover from 'components/widgets/land-cover/fao-cover';
+import globalLandCover from 'components/widgets/land-cover/global-land-cover';
+import intactTreeCover from 'components/widgets/land-cover/intact-tree-cover';
+import primaryForest from 'components/widgets/land-cover/primary-forest';
+import treeCoverLocated from 'components/widgets/land-cover/tree-cover-located';
+import USLandCover from 'components/widgets/land-cover/us-land-cover';
 
-// Climate
-import * as emissions from './widgets/climate/emissions';
-import * as woodyBiomass from './widgets/climate/whrc-biomass/';
-import * as soilBiomass from './widgets/climate/soil-organic';
-import * as emissionsDeforestation from './widgets/climate/emissions-deforestation';
-import * as emissionsPlantations from './widgets/climate/emissions-plantations';
-import * as futureCarbonGains from './widgets/climate/future-carbon-gains';
-import * as cumulativeEmissions from './widgets/climate/cumulative-emissions';
-import * as carbonStock from './widgets/climate/carbon-stock';
+// // Climate
+import emissions from 'components/widgets/climate/emissions';
+import woodyBiomass from 'components/widgets/climate/whrc-biomass/';
+import soilBiomass from 'components/widgets/climate/soil-organic';
+import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
+import emissionsPlantations from 'components/widgets/climate/emissions-plantations';
+import futureCarbonGains from 'components/widgets/climate/future-carbon-gains';
+import cumulativeEmissions from 'components/widgets/climate/cumulative-emissions';
+import carbonStock from 'components/widgets/climate/carbon-stock';
 
-// Biodiversity
-// import * as gladBiodiversity from './widgets/biodiversity/glad-biodiversity';
-
-// Land Use
-import * as economicImpact from './widgets/land-use/economic-impact';
-import * as forestryEmployment from './widgets/land-use/forestry-employment';
-
-import * as traseCommodities from './widgets/land-use/trase-commodities';
+// // Land Use
+import economicImpact from 'components/widgets/land-use/economic-impact';
+import forestryEmployment from 'components/widgets/land-use/forestry-employment';
+import traseCommodities from 'components/widgets/land-use/trase-commodities';
 
 export default {
   // forest change
@@ -85,8 +81,6 @@ export default {
   futureCarbonGains,
   cumulativeEmissions,
   carbonStock,
-  // biodiversity
-  // gladBiodiversity,
   // land use
   economicImpact,
   forestryEmployment,

@@ -34,9 +34,8 @@ class ShowAnalysis extends PureComponent {
     setMenuSettings: PropTypes.func,
     showDownloads: PropTypes.bool,
     hasLayers: PropTypes.bool,
-    hasWidgetLayers: PropTypes.bool,
+    widgetLayers: PropTypes.array,
     downloadUrls: PropTypes.array,
-    widgets: PropTypes.array,
     zoomLevel: PropTypes.number,
     showAnalysisDisclaimer: PropTypes.bool,
     activeArea: PropTypes.object
@@ -102,15 +101,14 @@ class ShowAnalysis extends PureComponent {
       showDownloads,
       downloadUrls,
       hasLayers,
-      hasWidgetLayers,
+      widgetLayers,
       zoomLevel,
-      widgets,
       showAnalysisDisclaimer,
       activeArea,
       analysisTitle,
       analysisDescription
     } = this.props;
-    const hasWidgets = hasWidgetLayers && widgets && !!widgets.length;
+    const hasWidgets = widgetLayers && !!widgetLayers.length;
 
     return (
       <div className="c-show-analysis">
@@ -144,11 +142,7 @@ class ShowAnalysis extends PureComponent {
                         : window.location.href,
                       embedUrl: window.location.href.includes('embed')
                         ? window.location.href
-                        : window.location.href.replace('/map', '/embed/map'),
-                      embedSettings: {
-                        width: 670,
-                        height: 490
-                      }
+                        : window.location.href.replace('/map', '/embed/map')
                     })
                   }
                   tooltip={{ text: 'Share analysis' }}
@@ -216,10 +210,7 @@ class ShowAnalysis extends PureComponent {
                 <ul className="draw-stats">
                   {data && data.map(d => this.renderStatItem(d))}
                 </ul>
-                {widgets &&
-                    !!widgets.length && (
-                  <Widgets simple analysis widgets={widgets} />
-                )}
+                <Widgets simple analysis />
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>

@@ -1,0 +1,78 @@
+@import '~styles/settings.scss';
+
+$settings-items-margin: rem(25px);
+
+.c-widget-settings {
+  width: rem(290px);
+  background-color: $white;
+  padding-top: rem(20px);
+
+  .settings-option {
+    padding: 0 $settings-items-margin $settings-items-margin $settings-items-margin;
+
+    &.border {
+      border-bottom: 1px solid $border;
+      margin-bottom: $settings-items-margin;
+    }
+  }
+
+  .widget-settings-selector {
+    display: flex;
+    flex-direction: column;
+
+    .label {
+      text-transform: uppercase;
+      color: $slate;
+    }
+  }
+
+  .range-select {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    font-size: 13px;
+
+    .label {
+      margin-right: rem(10px);
+    }
+
+    .select-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .text-separator {
+      margin: 0 10px;
+    }
+
+    .container {
+      margin-bottom: 0;
+      max-width: rem(90px);
+    }
+
+    .dd__wrapper {
+      max-width: rem(85px);
+    }
+  }
+
+  .mini-select {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+
+    .label {
+      margin-bottom: 0;
+    }
+
+    .container {
+      margin-bottom: 0;
+      max-width: rem(90px);
+    }
+
+    .dd__wrapper {
+      max-width: rem(85px);
+    }
+  }
+}

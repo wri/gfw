@@ -32,7 +32,7 @@ const getLocation = (adm0, adm1, adm2) =>
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2 }) => {
+export const fetchGladAlerts = ({ adm0, adm1, adm2 } = {}) => {
   let glad_summary_table = GLAD_ISO_DATASET;
   if (adm2) {
     glad_summary_table = GLAD_ADM2_DATASET;

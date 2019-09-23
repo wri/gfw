@@ -5,9 +5,9 @@ import groupBy from 'lodash/groupBy';
 import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
-import { parseWidgetsWithOptions } from 'components/widgets/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 import { locationLevelToStr } from 'utils/format';
+import { getWidgets } from 'components/widgets/selectors';
 
 import { initialState } from './reducers';
 
@@ -19,6 +19,7 @@ const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
 const selectGeodecriberLoading = state =>
   state.geodescriber && state.geodescriber.loading;
 const selectLocation = state => state.location && state.location.payload;
+const selectSearch = state => state.location && state.location.search;
 const selectAnalysisLocation = state =>
   state.analysis && state.analysis.location;
 const selectEmbed = state =>
@@ -83,27 +84,18 @@ export const getActiveBoundaryDatasets = createSelector(
 );
 
 export const getWidgetLayers = createSelector(
-  parseWidgetsWithOptions,
-  widgets => {
-    const activeWidgets =
-      widgets &&
-      widgets.filter(
-        w => w.config.analysis && w.config.datasets && w.config.datasets.length
-      );
-    return (
-      activeWidgets &&
-      flatMap(
-        activeWidgets.map(w =>
-          flatMap(
-            w.config.datasets.map(
-              d =>
-                (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
-            )
+  [getWidgets],
+  widgets =>
+    widgets &&
+    flatMap(
+      widgets.map(w =>
+        flatMap(
+          w.datasets.map(
+            d => (Array.isArray(d.layers) ? d.layers : Object.values(d.layers))
           )
         )
       )
-    );
-  }
+    )
 );
 
 export const parseLocation = createSelector(
@@ -200,5 +192,6 @@ export const getAnalysisProps = createStructuredSelector({
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,
   analysisLocation: selectAnalysisLocation,
-  activeArea: getActiveArea
+  activeArea: getActiveArea,
+  search: selectSearch
 });

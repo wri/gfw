@@ -100,4 +100,5 @@ reducerRegistry.registerModule('countryData', {
   reducers,
   initialState
 });
+
 export default connect(mapStateToProps, actions)(CountryDataProvider);

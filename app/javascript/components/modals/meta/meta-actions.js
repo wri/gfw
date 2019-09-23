@@ -40,6 +40,7 @@ export const setModalMetaClosed = createThunkAction(
   'setModalMetaClosed',
   () => dispatch => {
     dispatch(setModalMetaClosing(true));
+    dispatch(setModalMetaSettings(''));
     setTimeout(() => {
       dispatch(setModalMetaClosing(false));
     }, 500);

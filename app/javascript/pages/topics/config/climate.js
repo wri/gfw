@@ -34,7 +34,7 @@ import arrowsMedium from 'pages/topics/assets/climate/animations/arrow-medium.sv
 import arrowsLarge from 'pages/topics/assets/climate/animations/arrow-large.svg';
 
 // NYC tracker widget config
-import nycWidgetConfig from 'components/widgets/widgets/climate/cumulative-emissions/config';
+import nycWidgetConfig from 'components/widgets/climate/cumulative-emissions';
 
 const nycWidgetIsos = nycWidgetConfig.whitelists.adm0;
 

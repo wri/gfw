@@ -6,7 +6,7 @@ import { buildFullLocationName } from 'utils/format';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import { selectActiveLang } from 'app/layouts/root/selectors';
-import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
 
 const adminSentences = {
   default:
@@ -93,13 +93,13 @@ export const getAdminLocationName = createSelector(
 );
 
 export const getGeodescriberTitle = createSelector(
-  [selectGeodescriber, selectLocation, getAdminLocationName, getAreaName],
-  (geodescriber, location, adminTitle, areasName) => {
+  [selectGeodescriber, selectLocation, getAdminLocationName, getActiveArea],
+  (geodescriber, location, adminTitle, activeArea) => {
     if (isEmpty(geodescriber)) return {};
 
-    if (location.type === 'aoi') {
+    if (location.type === 'aoi' && activeArea && activeArea.userArea) {
       return {
-        sentence: areasName
+        sentence: activeArea.name
       };
     }
 
@@ -111,7 +111,7 @@ export const getGeodescriberTitle = createSelector(
       };
     }
 
-    // if an admin we needs to calculate the params
+    // if an admin we need to calculate the params
     return {
       sentence: adminTitle
     };

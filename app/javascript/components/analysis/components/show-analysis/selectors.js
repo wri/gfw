@@ -1,16 +1,8 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import moment from 'moment';
-import flatMap from 'lodash/flatMap';
-import intersection from 'lodash/intersection';
 
 import { locationLevelToStr } from 'utils/format';
 
-import {
-  getActiveLayers,
-  getMapZoom,
-  getActiveLayersWithDates
-} from 'components/map/selectors';
-import { parseWidgetsWithOptions } from 'components/widgets/selectors';
+import { getActiveLayers, getMapZoom } from 'components/map/selectors';
 import { getWidgetLayers, getLoading } from 'components/analysis/selectors';
 import {
   getGeodescriberTitle,
@@ -144,63 +136,6 @@ export const showAnalysisDisclaimer = createSelector(
   }
 );
 
-// get widgets related to map layers and use them to build the layers
-export const getWidgetsWithLayerParams = createSelector(
-  [parseWidgetsWithOptions, getActiveLayersWithDates],
-  (widgets, layers) => {
-    if (!widgets || !widgets.length || !layers || !layers.length) return null;
-    const layerIds = layers && layers.map(l => l.id);
-    const filteredWidgets = widgets.filter(w => {
-      const layerIntersection =
-        w.config.datasets &&
-        intersection(flatMap(w.config.datasets.map(d => d.layers)), layerIds);
-      return w.config.analysis && layerIntersection && layerIntersection.length;
-    });
-    return filteredWidgets.map(w => {
-      const widgetLayer =
-        layers &&
-        layers.find(
-          l =>
-            w.config &&
-            w.config.datasets &&
-            flatMap(w.config.datasets.map(d => d.layers)).includes(l.id)
-        );
-      const { params, decodeParams } = widgetLayer || {};
-      const startDate =
-        (params && params.startDate) ||
-        (decodeParams && decodeParams.startDate);
-      const startYear =
-        startDate && parseInt(moment(startDate).format('YYYY'), 10);
-      const endDate =
-        (params && params.endDate) || (decodeParams && decodeParams.endDate);
-      const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
-
-      // fix for 2018 data not being ready. please remove once active
-      const newSettings = {
-        ...params,
-        ...decodeParams,
-        ...(startYear && {
-          startYear
-        }),
-        ...(endYear && {
-          endYear
-        })
-      };
-
-      return {
-        ...w,
-        settings: {
-          ...w.settings,
-          ...newSettings,
-          ...(newSettings.endYear > w.settings.endYear && {
-            endYear: w.settings.endYear
-          })
-        }
-      };
-    });
-  }
-);
-
 export const getShowAnalysisProps = createStructuredSelector({
   data: getDataFromLayers,
   loading: getLoading,
@@ -208,7 +143,7 @@ export const getShowAnalysisProps = createStructuredSelector({
   downloadUrls: getDownloadLinks,
   error: selectError,
   showAnalysisDisclaimer,
-  widgets: getWidgetsWithLayerParams,
+  widgetLayers: getWidgetLayers,
   zoomLevel: getMapZoom,
   analysisTitle: getGeodescriberTitle,
   analysisDescription: getGeodescriberDescription
