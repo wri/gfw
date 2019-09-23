@@ -107,7 +107,7 @@ class AoICard extends PureComponent {
             {(deforestationAlerts || fireAlerts || monthlySummary) && (
               <div className="subscribed">
                 <Icon icon={subscribedIcon} className="subscribed-icon" />
-                <p>{subscriptionMessage}</p>
+                <p>{simple ? subscriptionMessage : 'subscribed'}</p>
               </div>
             )}
           </div>
