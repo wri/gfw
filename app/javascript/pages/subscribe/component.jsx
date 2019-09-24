@@ -1,14 +1,11 @@
 import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-// import isEqual from 'lodash/isEqual';
-import remove from 'lodash/remove';
 
-import { getLanguages } from 'utils/lang';
-import LayerToggle from 'components/map/components/legend/components/layer-toggle';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
+import Checkbox from 'components/ui/checkbox';
 
 import './styles.scss';
 
@@ -31,9 +28,7 @@ function reducer(state, action) {
 function SubscribePage(props) {
   const {
     metadata,
-    datasets,
     activeDatasets,
-    setModalMetaSettings,
     saveSubscription,
     userData,
     saving,
@@ -87,15 +82,6 @@ function SubscribePage(props) {
   /*
   Helper functions
   */
-  const onToggleLayer = dataset => {
-    const shoudlRemove = activeDatasets.includes(dataset);
-    setSubscribeSettings({
-      datasets: shoudlRemove
-        ? remove(activeDatasets, d => d !== dataset)
-        : [...activeDatasets, dataset]
-    });
-  };
-
   const validateEmail = address => {
     // eslint-disable-next-line
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -108,6 +94,15 @@ function SubscribePage(props) {
     validateEmail(state.email) &&
     state.name &&
     state.lang;
+
+  const subscriptions = [
+    { label: 'Innovations in Monitoring', value: 'monitoring' },
+    { label: 'Fires', value: 'fires' },
+    { label: 'Forest Watcher Mobile App', value: 'fwapp' },
+    { label: 'Climate and Biodiversity', value: 'climate' },
+    { label: 'Agricultural Supply Chains', value: 'supplychains' },
+    { label: 'Small Grants Fund and Tech Fellowship', value: 'sgf' }
+  ];
 
   return (
     <div className="l-subscribe-page">
@@ -123,7 +118,7 @@ function SubscribePage(props) {
             </h3>
           </div>
           <div className={cx('field', { error: state.nameError })}>
-            <span>Name*</span>
+            <span>First Name*</span>
             <input
               value={state.name}
               onChange={e =>
@@ -134,22 +129,17 @@ function SubscribePage(props) {
               }
             />
           </div>
-          <div className="field">
-            <span>
-              Select the forest change alerts you would like to receive*
-            </span>
-            <div className="datasets">
-              {datasets &&
-                datasets.map(d => (
-                  <LayerToggle
-                    key={d.id}
-                    data={d}
-                    onInfoClick={setModalMetaSettings}
-                    onToggle={() => onToggleLayer(d.subscriptionKey)}
-                    showSubtitle
-                  />
-                ))}
-            </div>
+          <div className={cx('field', { error: state.nameError })}>
+            <span>Last Name*</span>
+            <input
+              value={state.name}
+              onChange={e =>
+                dispatch({
+                  type: 'name',
+                  payload: { name: e.target.value, nameError: !e.target.value }
+                })
+              }
+            />
           </div>
           <div className={cx('field', { error: state.emailError })}>
             <span>Email*</span>
@@ -167,16 +157,52 @@ function SubscribePage(props) {
             />
           </div>
           <div className="field">
-            <span>Language*</span>
+            <span>Organization</span>
+            <input
+              value={state.name}
+              onChange={e =>
+                dispatch({
+                  type: 'name',
+                  payload: { name: e.target.value, nameError: !e.target.value }
+                })
+              }
+            />
+          </div>
+          <div className={cx('field', { error: state.cityError })}>
+            <span>City*</span>
+            <input
+              value={state.name}
+              onChange={e =>
+                dispatch({
+                  type: 'name',
+                  payload: { name: e.target.value, nameError: !e.target.value }
+                })
+              }
+            />
+          </div>
+          <div className="field">
+            <span>Country*</span>
             <Dropdown
               theme="theme-dropdown-native-form"
-              options={getLanguages()}
+              options={[
+                { label: 'Spain', value: 'ES' },
+                { label: 'United Kingdom', value: 'UK' }
+              ]}
               value={state.lang}
               onChange={newLang =>
                 dispatch({ type: 'language', payload: { lang: newLang } })
               }
               native
             />
+          </div>
+          <div className="field">
+            <span>I&#39;m interested in (check all that apply)*</span>
+            {subscriptions.map(sub => (
+              <div className="form-checkbox">
+                <Checkbox className="prompts-checkbox" value />
+                {sub.label}
+              </div>
+            ))}
           </div>
           <div className="save-subscription">
             {error ? (
@@ -211,9 +237,7 @@ SubscribePage.propTypes = {
   metadata: PropTypes.object,
   setSubscribeSettings: PropTypes.func,
   saveSubscription: PropTypes.func,
-  datasets: PropTypes.array,
   userData: PropTypes.object,
-  setModalMetaSettings: PropTypes.func,
   activeDatasets: PropTypes.array,
   lang: PropTypes.string,
   locationName: PropTypes.string,
