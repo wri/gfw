@@ -235,7 +235,7 @@ export const routes = {
   [SUBSCRIBE]: {
     path: '/subscribe',
     controller: 'subscribe',
-    component: 'error'
+    component: 'subscribe'
   }
 };
 
