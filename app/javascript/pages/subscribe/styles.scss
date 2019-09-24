@@ -9,16 +9,49 @@
   }
 
   .field {
+    margin: auto;
     display: flex;
-    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
     margin-bottom: rem(30px);
 
     span {
-      margin-bottom: rem(10px);
+      margin-right: rem(20px);
+      text-transform: uppercase;
+      color: $slate-light;
+      font-size: rem(12px);
+      font-weight: 500;
+      line-height: 18px;
+    }
+
+    .form-input {
+      min-width: rem(340px);
+      align-self: flex-end;
     }
 
     &.error {
       color: $error;
+    }
+
+    .select-wrapper {
+      max-width: unset;
+    }
+  }
+
+  .form-list {
+    display: flex;
+    flex-direction: column;
+
+    .form-checkbox-item {
+      display: flex;
+      align-items: center;
+      margin: rem(12px) auto rem(12px) 0;
+      font-size: rem(14px);
+      line-height: 24px;
+
+      .form-checkbox {
+        margin-right: rem(20px);
+      }
     }
   }
 
@@ -55,23 +88,6 @@
 
       &.error {
         background-color: $error;
-      }
-    }
-  }
-
-  .datasets {
-    > * {
-      margin-bottom: rem(15px);
-    }
-
-    @media screen and (min-width: $screen-m) {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      > * {
-        width: 48%;
-        margin-bottom: rem(15px);
       }
     }
   }

@@ -117,92 +117,112 @@ function SubscribePage(props) {
                 'Try refreshing the page or check your connection.'}
             </h3>
           </div>
-          <div className={cx('field', { error: state.nameError })}>
-            <span>First Name*</span>
-            <input
-              value={state.name}
-              onChange={e =>
-                dispatch({
-                  type: 'name',
-                  payload: { name: e.target.value, nameError: !e.target.value }
-                })
-              }
-            />
-          </div>
-          <div className={cx('field', { error: state.nameError })}>
-            <span>Last Name*</span>
-            <input
-              value={state.name}
-              onChange={e =>
-                dispatch({
-                  type: 'name',
-                  payload: { name: e.target.value, nameError: !e.target.value }
-                })
-              }
-            />
-          </div>
-          <div className={cx('field', { error: state.emailError })}>
-            <span>Email*</span>
-            <input
-              value={state.email}
-              onChange={e =>
-                dispatch({
-                  type: 'email',
-                  payload: {
-                    email: e.target.value,
-                    emailError: !validateEmail(e.target.value)
-                  }
-                })
-              }
-            />
-          </div>
-          <div className="field">
-            <span>Organization</span>
-            <input
-              value={state.name}
-              onChange={e =>
-                dispatch({
-                  type: 'name',
-                  payload: { name: e.target.value, nameError: !e.target.value }
-                })
-              }
-            />
-          </div>
-          <div className={cx('field', { error: state.cityError })}>
-            <span>City*</span>
-            <input
-              value={state.name}
-              onChange={e =>
-                dispatch({
-                  type: 'name',
-                  payload: { name: e.target.value, nameError: !e.target.value }
-                })
-              }
-            />
-          </div>
-          <div className="field">
-            <span>Country*</span>
-            <Dropdown
-              theme="theme-dropdown-native-form"
-              options={[
-                { label: 'Spain', value: 'ES' },
-                { label: 'United Kingdom', value: 'UK' }
-              ]}
-              value={state.lang}
-              onChange={newLang =>
-                dispatch({ type: 'language', payload: { lang: newLang } })
-              }
-              native
-            />
-          </div>
-          <div className="field">
-            <span>I&#39;m interested in (check all that apply)*</span>
-            {subscriptions.map(sub => (
-              <div className="form-checkbox">
-                <Checkbox className="prompts-checkbox" value />
-                {sub.label}
-              </div>
-            ))}
+          <div className="suscribe-form column small-12 medium-8 medium-offset-1">
+            <div className={cx('field', { error: state.nameError })}>
+              <span>First Name*</span>
+              <input
+                className="form-input"
+                value={state.name}
+                onChange={e =>
+                  dispatch({
+                    type: 'name',
+                    payload: {
+                      name: e.target.value,
+                      nameError: !e.target.value
+                    }
+                  })
+                }
+              />
+            </div>
+            <div className={cx('field', { error: state.nameError })}>
+              <span>Last Name*</span>
+              <input
+                className="form-input"
+                value={state.name}
+                onChange={e =>
+                  dispatch({
+                    type: 'name',
+                    payload: {
+                      name: e.target.value,
+                      nameError: !e.target.value
+                    }
+                  })
+                }
+              />
+            </div>
+            <div className={cx('field', { error: state.emailError })}>
+              <span>Email*</span>
+              <input
+                className="form-input"
+                value={state.email}
+                onChange={e =>
+                  dispatch({
+                    type: 'email',
+                    payload: {
+                      email: e.target.value,
+                      emailError: !validateEmail(e.target.value)
+                    }
+                  })
+                }
+              />
+            </div>
+            <div className="field">
+              <span>Organization</span>
+              <input
+                className="form-input"
+                value={state.name}
+                onChange={e =>
+                  dispatch({
+                    type: 'name',
+                    payload: {
+                      name: e.target.value,
+                      nameError: !e.target.value
+                    }
+                  })
+                }
+              />
+            </div>
+            <div className={cx('field', { error: state.cityError })}>
+              <span>City*</span>
+              <input
+                className="form-input"
+                value={state.name}
+                onChange={e =>
+                  dispatch({
+                    type: 'name',
+                    payload: {
+                      name: e.target.value,
+                      nameError: !e.target.value
+                    }
+                  })
+                }
+              />
+            </div>
+            <div className="field">
+              <span>Country*</span>
+              <Dropdown
+                className="form-input"
+                theme="theme-dropdown-native-form"
+                options={[
+                  { label: 'Spain', value: 'ES' },
+                  { label: 'United Kingdom', value: 'UK' }
+                ]}
+                value={state.lang}
+                onChange={newLang =>
+                  dispatch({ type: 'language', payload: { lang: newLang } })
+                }
+                native
+              />
+            </div>
+            <div className="field form-list small-12 medium-8 medium-offset-1">
+              <span>I&#39;m interested in (check all that apply)*</span>
+              {subscriptions.map(sub => (
+                <div className="form-checkbox-item">
+                  <Checkbox className="form-checkbox" value />
+                  {sub.label}
+                </div>
+              ))}
+            </div>
           </div>
           <div className="save-subscription">
             {error ? (
