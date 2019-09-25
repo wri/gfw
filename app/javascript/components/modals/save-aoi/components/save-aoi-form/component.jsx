@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
+import htmlToImage from 'html-to-image';
 
 import Checkbox from 'components/ui/checkbox-v2';
 import Dropdown from 'components/ui/dropdown';
@@ -9,12 +10,12 @@ import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
+import ImageMap from 'components/map-recent-image';
 
 import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/singleB.png';
 import screenImg2x from 'assets/images/aois/singleB@2x.png';
 
-import placeholderAreaBg from './aoi-placeholder-bg.png';
 import './styles.scss';
 
 function validateEmail(email) {
@@ -70,6 +71,12 @@ function reducer(state, action) {
         monthlySummary: !state.monthlySummary
       };
     }
+    case 'image': {
+      return {
+        ...state,
+        image: payload
+      };
+    }
     case 'activeArea': {
       const { activeArea, email, lang } = payload;
       const { name, tags, fireAlerts, deforestationAlerts, monthlySummary } =
@@ -104,6 +111,7 @@ function SaveAOIForm(props) {
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
+    loading: true,
     name: props.locationName || '',
     tags: [],
     email: props.email || '',
@@ -112,7 +120,8 @@ function SaveAOIForm(props) {
     lang: props.lang,
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
-    monthlySummary: props.monthlySummary || false
+    monthlySummary: props.monthlySummary || false,
+    image: null
   });
 
   useEffect(
@@ -173,16 +182,29 @@ function SaveAOIForm(props) {
     nameError,
     fireAlerts,
     deforestationAlerts,
-    monthlySummary
+    monthlySummary,
+    image
   } = form;
-  const canSubmit = validateEmail(email) && name && lang;
+  const canSubmit = validateEmail(email) && name && lang && image;
 
   return (
     <div className="c-form c-save-aoi-form">
-      <img
-        className="area-image"
-        src={placeholderAreaBg}
-        alt="aoi screenshot"
+      <ImageMap
+        className="aoi-map"
+        onLoad={node => {
+          if (!image) {
+            htmlToImage
+              .toBlob(node)
+              .then(blob => {
+                const imageFile = new File([blob], 'png', {
+                  type: 'image/png',
+                  name: encodeURIComponent(name)
+                });
+                dispatch({ type: 'image', payload: imageFile });
+              })
+              .catch(err => console.error(err));
+          }
+        }}
       />
       <div className={cx('field', { error: nameError })}>
         <span className="form-title">Name this area for later reference</span>

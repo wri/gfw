@@ -9,6 +9,12 @@ $desktop-padding: rem(50px);
     height: rem(200px);
   }
 
+  .aoi-map {
+    height: 300px;
+    position: relative;
+    margin-bottom: rem(30px);
+  }
+
   .field {
     display: flex;
     flex-direction: column;

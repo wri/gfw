@@ -9,13 +9,16 @@
     flex-direction: row;
   }
 
-  img {
+  .aoi-thumb {
     width: 100%;
     min-width: 100%;
     height: rem(120px);
     background: $border;
     margin-right: rem(15px);
     margin-bottom: rem(20px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
     @media screen and (min-width: $screen-m) {
       width: rem(140px);
@@ -119,7 +122,7 @@
       max-width: rem(150px);
     }
 
-    img {
+    .aoi-thumb {
       width: rem(76px);
       height: rem(76px);
       min-width: rem(76px);

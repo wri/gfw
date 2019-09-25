@@ -10,7 +10,6 @@ import Icon from 'components/ui/icon/icon-component';
 import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
 
-import aoiBg from './aoi-bg.png';
 import './styles.scss';
 
 const createdMeta = {
@@ -51,7 +50,6 @@ class AoICard extends PureComponent {
       fireAlerts,
       monthlySummary
     } = this.props;
-
     const subStatus = [
       {
         label: 'forest change alerts',
@@ -85,7 +83,10 @@ class AoICard extends PureComponent {
 
     return (
       <div key={id} className={cx('c-aoi-card', { simple })}>
-        <img src={image || aoiBg} alt={name} />
+        <div
+          className="aoi-thumb"
+          style={{ backgroundImage: `url(${image})` }}
+        />
         <div className="item-body">
           <p className="title">{name}</p>
           {!simple && (
