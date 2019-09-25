@@ -1,0 +1,12 @@
+@import '~styles/settings';
+
+.c-recent-image-map {
+  position: relative;
+  width: 100%;
+  height: 300px;
+
+  .tile-loader {
+    background-color: $white;
+    opacity: 1;
+  }
+}
