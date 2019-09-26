@@ -51,12 +51,22 @@ export const saveAOI = createThunkAction(
         id: activeAreaId,
         application: application || 'gfw',
         geostore: geostoreId,
-        iso: {
-          region: isCountry ? adm1 : null,
-          subRegion: isCountry ? adm2 : null,
-          country: isCountry ? adm0 : null
-        },
-        use: {},
+        ...(type === 'country' && {
+          iso: {
+            region: isCountry ? adm1 : null,
+            subRegion: isCountry ? adm2 : null,
+            country: isCountry ? adm0 : null
+          }
+        }),
+        ...(type === 'use' && {
+          use: {
+            id: adm1,
+            name: adm0
+          }
+        }),
+        ...(type === 'wdpa' && {
+          wdpaid: parseInt(adm0, 10)
+        }),
         fireAlerts,
         deforestationAlerts,
         monthlySummary,
