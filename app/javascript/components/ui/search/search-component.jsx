@@ -18,13 +18,6 @@ class Search extends Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.input !== this.props.input) {
-      // eslint-disable-next-line
-      this.setState({ search: prevProps.input });
-    }
-  }
-
   handleChange = value => {
     this.setState({ search: value });
     this.debouncedChange();

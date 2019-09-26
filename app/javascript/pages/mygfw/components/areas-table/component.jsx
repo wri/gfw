@@ -128,7 +128,7 @@ class AreasTable extends PureComponent {
                   })
                 }
               />
-              <Pill
+              {/* <Pill
                 className="filter-tag"
                 active={this.state.sortBy === 'GLADS'}
                 label="GLAD alerts"
@@ -147,7 +147,7 @@ class AreasTable extends PureComponent {
                     sortBy: this.state.sortBy === 'VIIRS' ? '' : 'VIIRS'
                   })
                 }
-              />
+              /> */}
             </div>
           </div>
           <div className="column small-12 medium-3">
