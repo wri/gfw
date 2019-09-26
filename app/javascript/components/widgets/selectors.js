@@ -264,11 +264,12 @@ export const filterWidgetsByLocation = createSelector(
         (polynameIntersection && polynameIntersection.length);
 
       const isWidgetVisible =
-        !visible ||
+        (!showAnalysis && !visible) ||
         (showAnalysis &&
+          visible &&
           visible.includes('analysis') &&
           !isEmpty(layerIntersection)) ||
-        (!showAnalysis && visible.includes('dashboard'));
+        (!showAnalysis && visible && visible.includes('dashboard'));
 
       return (
         hasLocation &&

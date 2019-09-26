@@ -27,15 +27,12 @@ export const getDataAPI = ({ params }) =>
   });
 
 export default {
-  // key for url and state
   widget: 'treeCover',
-  // title for header
   title: {
     default: 'Tree cover in {location}',
     global: 'Global tree cover',
     withPlantations: 'Forest cover in {location}'
   },
-  // sentences for header
   sentence: {
     globalInitial:
       'As of {year}, {percentage} of {location} land cover was tree cover.',
@@ -47,24 +44,16 @@ export default {
     hasPlantationsInd: "<b>'s</b> natural forest was in {indicator}.",
     noPlantationsInd: "<b>'s</b> tree cover was in {indicator}."
   },
-  // meta key for info button
   metaKey: 'widget_tree_cover',
   chartType: 'pieChart',
-  // full width or not
   large: false,
-  // internal category for colors and filters
   colors: 'extent',
-  // data source for filtering
   source: 'gadm',
-  // data source for filtering
   dataType: 'extent',
-  // categories to show widget on
   categories: ['summary', 'land-cover'],
-  // types widget is available for
   types: ['global', 'country', 'geostore'],
-  // levels of that type you can see the widget
   admins: ['global', 'adm0', 'adm1', 'adm2'],
-  visible: ['dashboards'],
+  visible: ['dashboard'],
   datasets: [
     {
       dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
@@ -74,7 +63,6 @@ export default {
       ],
       boundary: true
     },
-    // tree cover
     {
       dataset: '044f4af8-be72-4999-b7dd-13434fc4a394',
       layers: {
@@ -83,14 +71,12 @@ export default {
       }
     }
   ],
-  // position
   sortOrder: {
     summary: 4,
     landCover: 1
   },
   refetchKeys: ['threshold', 'extentYear', 'landCategory'],
   pendingKeys: ['threshold', 'extentYear'],
-  // whitelists for options
   settingsConfig: [
     {
       key: 'landCategory',
