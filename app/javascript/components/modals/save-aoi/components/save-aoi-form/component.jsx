@@ -2,7 +2,6 @@ import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
-import htmlToImage from 'html-to-image';
 
 import Checkbox from 'components/ui/checkbox-v2';
 import Dropdown from 'components/ui/dropdown';
@@ -71,12 +70,6 @@ function reducer(state, action) {
         monthlySummary: !state.monthlySummary
       };
     }
-    case 'image': {
-      return {
-        ...state,
-        image: payload
-      };
-    }
     case 'activeArea': {
       const { activeArea, email, lang } = payload;
       const { name, tags, fireAlerts, deforestationAlerts, monthlySummary } =
@@ -120,8 +113,7 @@ function SaveAOIForm(props) {
     lang: props.lang,
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
-    monthlySummary: props.monthlySummary || false,
-    image: null
+    monthlySummary: props.monthlySummary || false
   });
 
   useEffect(
@@ -182,29 +174,15 @@ function SaveAOIForm(props) {
     nameError,
     fireAlerts,
     deforestationAlerts,
-    monthlySummary,
-    image
+    monthlySummary
   } = form;
-  const canSubmit = validateEmail(email) && name && lang && image;
+  const canSubmit = validateEmail(email) && name && lang;
 
   return (
     <div className="c-form c-save-aoi-form">
       <ImageMap
         className="aoi-map"
-        onLoad={node => {
-          if (!image) {
-            htmlToImage
-              .toBlob(node)
-              .then(blob => {
-                const imageFile = new File([blob], 'png', {
-                  type: 'image/png',
-                  name: encodeURIComponent(name)
-                });
-                dispatch({ type: 'image', payload: imageFile });
-              })
-              .catch(err => console.error(err));
-          }
-        }}
+        geostoreId={activeArea && activeArea.geostore}
       />
       <div className={cx('field', { error: nameError })}>
         <span className="form-title">Name this area for later reference</span>

@@ -6,6 +6,7 @@ import cx from 'classnames';
 import { formatNumber } from 'utils/format';
 
 import Icon from 'components/ui/icon/icon-component';
+import MapArea from 'components/map-recent-image';
 
 import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
@@ -28,19 +29,18 @@ class AoICard extends PureComponent {
     id: PropTypes.string,
     name: PropTypes.string,
     tags: PropTypes.array,
-    image: PropTypes.string,
     application: PropTypes.string,
     createdAt: PropTypes.string,
     simple: PropTypes.bool,
     deforestationAlerts: PropTypes.bool,
     fireAlerts: PropTypes.bool,
-    monthlySummary: PropTypes.bool
+    monthlySummary: PropTypes.bool,
+    geostore: PropTypes.string
   };
 
   render() {
     const {
       id,
-      image,
       tags,
       name,
       application,
@@ -48,7 +48,8 @@ class AoICard extends PureComponent {
       simple,
       deforestationAlerts,
       fireAlerts,
-      monthlySummary
+      monthlySummary,
+      geostore
     } = this.props;
     const subStatus = [
       {
@@ -83,10 +84,7 @@ class AoICard extends PureComponent {
 
     return (
       <div key={id} className={cx('c-aoi-card', { simple })}>
-        <div
-          className="aoi-thumb"
-          style={{ backgroundImage: `url(${image})` }}
-        />
+        <MapArea className="aoi-card-map" geostoreId={geostore} />
         <div className="item-body">
           <p className="title">{name}</p>
           {!simple && (
