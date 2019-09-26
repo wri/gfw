@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import cx from 'classnames';
+import Dotdotdot from 'react-dotdotdot';
 
 import { formatNumber } from 'utils/format';
 
@@ -20,8 +21,8 @@ const createdMeta = {
 };
 
 const counts = {
-  GLAD: 12352,
-  Fires: 221176
+  GLAD: 0,
+  Fires: 0
 };
 
 class AoICard extends PureComponent {
@@ -82,6 +83,8 @@ class AoICard extends PureComponent {
       });
     }
 
+    const hasActivityData = !!counts.GLAD || !!counts.Fires;
+
     return (
       <div key={id} className={cx('c-aoi-card', { simple })}>
         <MapGeostore
@@ -90,7 +93,9 @@ class AoICard extends PureComponent {
           padding={simple ? 15 : 25}
         />
         <div className="item-body">
-          <p className="title">{name}</p>
+          <Dotdotdot clamp={2} className="title">
+            {name}
+          </Dotdotdot>
           {!simple && (
             <span className="created">
               {createdMeta[application].replace(
@@ -114,7 +119,8 @@ class AoICard extends PureComponent {
               </div>
             )}
           </div>
-          {!simple && (
+          {!simple &&
+            hasActivityData && (
             <div className="activity">
               <span className="activity-intro">Last weeks activity:</span>
               <span className="glad">
@@ -124,7 +130,7 @@ class AoICard extends PureComponent {
                     unit: 'counts'
                   })}
                 </span>{' '}
-                GLAD alerts
+                  GLAD alerts
               </span>
               <span className="viirs">
                 <span className="activity-data">
@@ -133,7 +139,7 @@ class AoICard extends PureComponent {
                     unit: 'counts'
                   })}
                 </span>{' '}
-                VIIRS alerts
+                  VIIRS alerts
               </span>
             </div>
           )}
