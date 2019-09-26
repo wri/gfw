@@ -24,6 +24,7 @@
   .my-gfw-container {
     padding: rem(30px) 0;
     position: relative;
+    min-height: rem(300px);
 
     @media screen and (min-width: $screen-m) {
       padding: rem(50px) 0;
@@ -34,7 +35,7 @@
     }
 
     .no-areas {
-      padding: rem(30px) 0 rem(100px);
+      padding: rem(30px) 0 rem(50px);
 
       .areas-image {
         width: 100%;
