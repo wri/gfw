@@ -99,10 +99,8 @@ class MapGeostore extends Component {
 
   onLoad = ({ map }) => {
     map.on('render', () => {
-      if (map.areTilesLoaded()) {
-        setTimeout(() => {
-          this.setState({ loading: false });
-        }, 0);
+      if (map.areTilesLoaded() && this.mounted) {
+        this.setState({ loading: false });
         map.off('render');
       }
     });
@@ -123,16 +121,18 @@ class MapGeostore extends Component {
       { padding: this.props.padding }
     );
 
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        longitude,
-        latitude,
-        zoom,
-        transitionDuration: 0,
-        transitionInterruption: TRANSITION_EVENTS.UPDATE
-      }
-    });
+    if (this.mounted) {
+      this.setState({
+        viewport: {
+          ...this.state.viewport,
+          longitude,
+          latitude,
+          zoom,
+          transitionDuration: 0,
+          transitionInterruption: TRANSITION_EVENTS.UPDATE
+        }
+      });
+    }
   };
 
   render() {
@@ -207,13 +207,13 @@ class MapGeostore extends Component {
                   />
                 )}
                 <Layer
-                  id="https://tiles.planet.com/basemaps/v1/planet-tiles/global_quarterly_2019q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=6c3405821fb84e659550848226615428"
+                  key={basemap.url}
+                  id={basemap.url}
                   name="Basemap"
                   provider="leaflet"
                   layerConfig={{
                     body: {
-                      url:
-                        'https://tiles.planet.com/basemaps/v1/planet-tiles/global_quarterly_2019q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=6c3405821fb84e659550848226615428'
+                      url: basemap.url
                     }
                   }}
                   zIndex={100}

@@ -3,8 +3,19 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import basemaps from 'components/map/basemaps';
 
 export const getBasemaps = () => basemaps;
-export const getLatestPlanetBasemap = state =>
-  state.planet && state.planet.data && state.planet.data[0];
+export const getPlanetBasemaps = state =>
+  state.planet && state.planet.data && state.planet.data;
+
+export const getLatestPlanetBasemap = createSelector(
+  [getPlanetBasemaps],
+  planetBasemaps => {
+    if (!planetBasemaps || !planetBasemaps.length) return null;
+    const quarterlyBasemaps = planetBasemaps.filter(
+      b => b.interval === '3 mons'
+    );
+    return quarterlyBasemaps[quarterlyBasemaps.length - 1];
+  }
+);
 
 export const getBasemap = createSelector(
   [getBasemaps, getLatestPlanetBasemap],
