@@ -12,17 +12,32 @@ import './styles.scss';
 class PendingDashboardMessage extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
+    areaId: PropTypes.string,
     isUserDashboard: PropTypes.bool
   };
 
   state = {
-    visible: true
+    visible: true,
+    hiddenAreas: JSON.parse(localStorage.getItem('hiddenPendingAreas')) || []
+  };
+
+  handleHidePanel = () => {
+    const { areaId } = this.props;
+
+    this.setState({ visible: false });
+
+    const hiddenAreaIds =
+      JSON.parse(localStorage.getItem('hiddenPendingAreas')) || [];
+    localStorage.setItem(
+      'hiddenPendingAreas',
+      JSON.stringify([...hiddenAreaIds, areaId])
+    );
   };
 
   render() {
-    const { className, isUserDashboard } = this.props;
+    const { className, isUserDashboard, areaId } = this.props;
 
-    return this.state.visible ? (
+    return this.state.visible && !this.state.hiddenAreas.includes(areaId) ? (
       <div className={cx('c-pending-dashboard', className)}>
         <div className="message">
           <div>
@@ -54,10 +69,7 @@ class PendingDashboardMessage extends PureComponent {
           </div>
           <Icon icon={satelliteDetailed} className="satellite-detailed" />
         </div>
-        <Button
-          className="accept-btn"
-          onClick={() => this.setState({ visible: false })}
-        >
+        <Button className="accept-btn" onClick={this.handleHidePanel}>
           Got it!
         </Button>
       </div>

@@ -111,6 +111,7 @@ class DashboardsPage extends PureComponent {
                     <PendingDashboard
                       className="pending-message"
                       isUserDashboard={activeArea && activeArea.userArea}
+                      areaId={activeArea && activeArea.id}
                     />
                   )}
                   <Widgets className="dashboard-widgets" />
