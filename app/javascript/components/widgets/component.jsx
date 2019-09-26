@@ -102,7 +102,8 @@ class Widgets extends PureComponent {
                 />
               ))}
             {!loading &&
-              !hasWidgets && (
+              !hasWidgets &&
+              !simple && (
               <NoContent
                 className="no-widgets-message large"
                 message={noDataMessage}
