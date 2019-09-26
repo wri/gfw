@@ -9,6 +9,7 @@ import ProfileModal from 'components/modals/profile';
 
 import AreasProvider from 'providers/areas-provider';
 import CountryDataProvider from 'providers/country-data-provider';
+import PlanetBasemapsProvider from 'providers/planet-provider';
 
 import SaveAOIModal from 'components/modals/save-aoi';
 import UserProfile from './components/user-profile';
@@ -97,6 +98,7 @@ class MyGFWPage extends PureComponent {
         </div>
         <AreasProvider />
         <CountryDataProvider />
+        <PlanetBasemapsProvider />
         <SaveAOIModal canDelete />
         <ShareModal />
         <ProfileModal />

@@ -152,74 +152,76 @@ class MapGeostore extends Component {
           !loading && (
           <p className="error-msg">we had trouble finding a recent image</p>
         )}
-        <Map
-          mapStyle={basemap.mapStyle}
-          viewport={viewport}
-          attributionControl={false}
-          onLoad={this.onLoad}
-          dragPan={false}
-          dragRotate={false}
-          scrollZoom={false}
-          doubleClickZoom={false}
-          touchZoom={false}
-          touchRotate={false}
-          keyboard={false}
-          getCursor={() => 'default'}
-          reuseMaps
-        >
-          {map => (
-            <LayerManager map={map} plugin={PluginMapboxGl}>
-              {geostore && (
+        {basemap && (
+          <Map
+            mapStyle={basemap.mapStyle}
+            viewport={viewport}
+            attributionControl={false}
+            onLoad={this.onLoad}
+            dragPan={false}
+            dragRotate={false}
+            scrollZoom={false}
+            doubleClickZoom={false}
+            touchZoom={false}
+            touchRotate={false}
+            keyboard={false}
+            getCursor={() => 'default'}
+            reuseMaps
+          >
+            {map => (
+              <LayerManager map={map} plugin={PluginMapboxGl}>
+                {geostore && (
+                  <Layer
+                    id={geostore.id}
+                    name="Geojson"
+                    provider="geojson"
+                    layerConfig={{
+                      data: geostore.geojson,
+                      body: {
+                        vectorLayers: [
+                          {
+                            type: 'fill',
+                            paint: {
+                              'fill-color': 'transparent'
+                            }
+                          },
+                          {
+                            type: 'line',
+                            paint: {
+                              'line-color': '#C0FF24',
+                              'line-width': 3,
+                              'line-offset': 2
+                            }
+                          },
+                          {
+                            type: 'line',
+                            paint: {
+                              'line-color': '#000',
+                              'line-width': 2
+                            }
+                          }
+                        ]
+                      }
+                    }}
+                    zIndex={1060}
+                  />
+                )}
                 <Layer
-                  id={geostore.id}
-                  name="Geojson"
-                  provider="geojson"
+                  id="https://tiles.planet.com/basemaps/v1/planet-tiles/global_quarterly_2019q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=6c3405821fb84e659550848226615428"
+                  name="Basemap"
+                  provider="leaflet"
                   layerConfig={{
-                    data: geostore.geojson,
                     body: {
-                      vectorLayers: [
-                        {
-                          type: 'fill',
-                          paint: {
-                            'fill-color': 'transparent'
-                          }
-                        },
-                        {
-                          type: 'line',
-                          paint: {
-                            'line-color': '#C0FF24',
-                            'line-width': 3,
-                            'line-offset': 2
-                          }
-                        },
-                        {
-                          type: 'line',
-                          paint: {
-                            'line-color': '#000',
-                            'line-width': 2
-                          }
-                        }
-                      ]
+                      url:
+                        'https://tiles.planet.com/basemaps/v1/planet-tiles/global_quarterly_2019q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=6c3405821fb84e659550848226615428'
                     }
                   }}
-                  zIndex={1060}
+                  zIndex={100}
                 />
-              )}
-              <Layer
-                id="https://tiles.planet.com/basemaps/v1/planet-tiles/global_quarterly_2019q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=6c3405821fb84e659550848226615428"
-                name="Basemap"
-                provider="leaflet"
-                layerConfig={{
-                  body: {
-                    url:
-                      'https://tiles.planet.com/basemaps/v1/planet-tiles/global_quarterly_2019q2_mosaic/gmap/{z}/{x}/{y}.png?api_key=6c3405821fb84e659550848226615428'
-                  }
-                }}
-                zIndex={100}
-              />
-            </LayerManager>
-          )}
-        </Map>
+              </LayerManager>
+            )}
+          </Map>
+        )}
       </div>
     );
   }
