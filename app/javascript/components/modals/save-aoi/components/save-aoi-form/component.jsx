@@ -1,10 +1,8 @@
 import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
 import Checkbox from 'components/ui/checkbox-v2';
-import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -16,12 +14,6 @@ import screenImg1x from 'assets/images/aois/singleB.png';
 import screenImg2x from 'assets/images/aois/singleB@2x.png';
 
 import './styles.scss';
-
-function validateEmail(email) {
-  // eslint-disable-next-line
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 
 function reducer(state, action) {
   const { payload } = action;
@@ -37,19 +29,6 @@ function reducer(state, action) {
       return {
         ...state,
         tags: payload
-      };
-    }
-    case 'email': {
-      return {
-        ...state,
-        email: payload,
-        emailError: !validateEmail(payload)
-      };
-    }
-    case 'lang': {
-      return {
-        ...state,
-        lang: payload
       };
     }
     case 'fireAlerts': {
@@ -71,15 +50,14 @@ function reducer(state, action) {
       };
     }
     case 'activeArea': {
-      const { activeArea, email, lang } = payload;
+      const { activeArea } = payload;
       const { name, tags, fireAlerts, deforestationAlerts, monthlySummary } =
-        activeArea.attributes || activeArea || {};
+        activeArea || {};
+
       return {
         ...state,
         name,
         tags,
-        email,
-        lang,
         fireAlerts,
         deforestationAlerts,
         monthlySummary
@@ -108,10 +86,7 @@ function SaveAOIForm(props) {
     loading: true,
     name: props.locationName || '',
     tags: [],
-    email: props.email || '',
-    emailError: false,
     nameError: false,
-    lang: props.lang || 'en',
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
     monthlySummary: props.monthlySummary || false
@@ -120,10 +95,10 @@ function SaveAOIForm(props) {
   useEffect(
     () => {
       if (activeArea) {
-        dispatch({ type: 'activeArea', payload: { activeArea, lang, email } });
+        dispatch({ type: 'activeArea', payload: { activeArea } });
       }
     },
-    [activeArea, lang, email]
+    [activeArea]
   );
 
   const renderSaveAOI = () => {
@@ -167,17 +142,14 @@ function SaveAOIForm(props) {
   };
 
   const {
-    lang,
     name,
-    email,
     tags,
-    emailError,
     nameError,
     fireAlerts,
     deforestationAlerts,
     monthlySummary
   } = form;
-  const canSubmit = validateEmail(email) && name && lang;
+  const canSubmit = name;
 
   return (
     <div className="c-form c-save-aoi-form">
@@ -212,27 +184,8 @@ function SaveAOIForm(props) {
         />
         <p>
           We will send you email updates about alerts and forest cover change in
-          your selected area.
+          your selected area, based on your user profile.
         </p>
-      </div>
-      <div className={cx('field', { error: emailError })}>
-        <span className="form-title">Email</span>
-        <input
-          className="text-input"
-          value={email}
-          onChange={e => dispatch({ type: 'email', payload: e.target.value })}
-        />
-      </div>
-      <div className="field">
-        <span className="form-title">Language*</span>
-        <Dropdown
-          className="dropdown-input"
-          theme="theme-dropdown-native-form"
-          options={getLanguages()}
-          value={lang}
-          onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
-          native
-        />
       </div>
       <div className="field">
         <Checkbox
@@ -263,9 +216,7 @@ SaveAOIForm.propTypes = {
   saveAOI: PropTypes.func,
   deleteAOI: PropTypes.func,
   userData: PropTypes.object,
-  lang: PropTypes.string,
   locationName: PropTypes.string,
-  email: PropTypes.string,
   error: PropTypes.bool,
   saving: PropTypes.bool,
   activeArea: PropTypes.object,

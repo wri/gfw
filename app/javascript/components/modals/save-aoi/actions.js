@@ -28,8 +28,6 @@ export const saveAOI = createThunkAction(
   'saveAOI',
   ({
     name,
-    email,
-    lang,
     tags,
     fireAlerts,
     deforestationAlerts,
@@ -53,11 +51,6 @@ export const saveAOI = createThunkAction(
         id: activeAreaId,
         application: application || 'gfw',
         geostore: geostoreId,
-        resource: {
-          type: 'EMAIL',
-          content: email
-        },
-        language: lang,
         iso: {
           region: isCountry ? adm1 : null,
           subRegion: isCountry ? adm2 : null,

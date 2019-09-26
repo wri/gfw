@@ -73,12 +73,7 @@ class ModalSaveAOI extends PureComponent {
             )}
             {!loading &&
               loggedIn && (
-              <SaveAOIForm
-                {...this.props}
-                email={userData.email}
-                lang={userData.language}
-                geostoreId={geostoreId}
-              />
+              <SaveAOIForm {...this.props} geostoreId={geostoreId} />
             )}
           </div>
         </div>
