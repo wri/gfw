@@ -9,6 +9,7 @@ import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
 import AoICard from 'components/aoi-card';
 import Pill from 'components/ui/pill';
+import NoContent from 'components/ui/no-content';
 import Dropdown from 'components/ui/dropdown';
 import Search from 'components/ui/search';
 
@@ -161,8 +162,7 @@ class AreasTable extends PureComponent {
             </div>
           </div>
         </div>
-        {orderedAreas &&
-          !!orderedAreas.length &&
+        {orderedAreas && !!orderedAreas.length ? (
           orderedAreas.map((area, i) => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
@@ -213,7 +213,17 @@ class AreasTable extends PureComponent {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="row no-content-row">
+            <div className="column small-12">
+              <NoContent
+                className="no-areas-msg"
+                message="No areas with that search"
+              />
+            </div>
+          </div>
+        )}
       </div>
     );
   }

@@ -90,4 +90,9 @@
     height: 100%;
     align-items: flex-end;
   }
+
+  .no-content-row {
+    position: relative;
+    min-height: rem(200px);
+  }
 }
