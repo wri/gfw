@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 import { getDayRange } from 'utils/dates';
 
 import { selectActiveLang } from 'app/layouts/root/selectors';
+import { getActiveArea } from 'providers/areas-provider/selectors';
 
 import { initialState } from './reducers';
 import basemaps from './basemaps';
@@ -335,20 +336,32 @@ export const getAllLayers = createSelector(getLayerGroups, layerGroups => {
 
 // all layers for importing by other components
 export const getActiveLayers = createSelector(
-  [getAllLayers, selectGeostore, selectLocation],
-  (layers, geostore, location) => {
+  [getAllLayers, selectGeostore, selectLocation, getActiveArea],
+  (layers, geostore, location, activeArea) => {
     if (isEmpty(layers)) return [];
     const filteredLayers = layers.filter(l => !l.confirmedOnly);
     if (!geostore || !geostore.id) return filteredLayers;
     const { type, adm0 } = location || {};
     const isAoI = type === 'aoi' && adm0;
 
+    const geojson = {
+      ...geostore.geojson,
+      ...(activeArea && {
+        features: [
+          {
+            ...geostore.geojson.features[0],
+            properties: activeArea
+          }
+        ]
+      })
+    };
+
     return filteredLayers.concat({
       id: geostore.id,
-      name: 'Geojson',
+      name: isAoI ? 'Area of Interest' : 'Geojson',
       provider: 'geojson',
       layerConfig: {
-        data: geostore.geojson,
+        data: geojson,
         body: {
           vectorLayers: [
             {
@@ -375,6 +388,11 @@ export const getActiveLayers = createSelector(
           ]
         }
       },
+      ...(isAoI && {
+        interactionConfig: {
+          output: []
+        }
+      }),
       zIndex: 1060
     });
   }
@@ -459,12 +477,14 @@ export const getInteractions = createSelector(
     if (isEmpty(interactions)) return null;
     return Object.keys(interactions).map(i => {
       const layer = activeLayers.find(l => l.id === i);
+
       return {
         data: interactions[i].data,
         geometry: interactions[i].geometry,
         layer,
         label: layer && layer.name,
         value: layer && layer.id,
+        aoi: layer.name === 'Area of Interest',
         article:
           layer && layer.interactionConfig && layer.interactionConfig.article
       };

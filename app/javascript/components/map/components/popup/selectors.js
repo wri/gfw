@@ -25,6 +25,11 @@ export const getIsBoundary = createSelector(
     interaction && interaction.layer && interaction.layer.isBoundary
 );
 
+export const getIsArea = createSelector(
+  getInteractionSelected,
+  interaction => interaction && interaction.aoi
+);
+
 export const getShouldZoomToShape = createSelector(
   [getInteractionSelected, getMap],
   (selected, map) => {
@@ -79,8 +84,8 @@ export const getCardData = createSelector(
           ...obj,
           ...(renderKey &&
             value && {
-              [renderKey]: `${prefix || ''}${value}`
-            })
+            [renderKey]: `${prefix || ''}${value}`
+          })
         };
         return newObj;
       }, {});
@@ -154,5 +159,6 @@ export const getPopupProps = createStructuredSelector({
   activeDatasets: getActiveDatasetsFromState,
   search: getSearch,
   isBoundary: getIsBoundary,
+  isArea: getIsArea,
   zoomToShape: getShouldZoomToShape
 });
