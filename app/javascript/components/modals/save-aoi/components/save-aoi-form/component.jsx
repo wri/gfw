@@ -9,12 +9,12 @@ import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
+import MapGeostore from 'components/map-geostore';
 
 import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/singleB.png';
 import screenImg2x from 'assets/images/aois/singleB@2x.png';
 
-import placeholderAreaBg from './aoi-placeholder-bg.png';
 import './styles.scss';
 
 function validateEmail(email) {
@@ -104,6 +104,7 @@ function SaveAOIForm(props) {
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
+    loading: true,
     name: props.locationName || '',
     tags: [],
     email: props.email || '',
@@ -179,10 +180,10 @@ function SaveAOIForm(props) {
 
   return (
     <div className="c-form c-save-aoi-form">
-      <img
-        className="area-image"
-        src={placeholderAreaBg}
-        alt="aoi screenshot"
+      <MapGeostore
+        className="aoi-map"
+        geostoreId={activeArea && activeArea.geostore}
+        padding={50}
       />
       <div className={cx('field', { error: nameError })}>
         <span className="form-title">Name this area for later reference</span>

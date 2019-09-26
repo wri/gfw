@@ -32,7 +32,7 @@ export const getAreaTags = createSelector([getUserAreas], areas => {
 
   return sortBy(
     uniq(flatMap(areas.map(area => area.tags))).map(t => ({
-      label: t.length > 15 ? t.substring(0, 15).concat('...') : t,
+      label: t && t.length > 15 ? t.substring(0, 15).concat('...') : t,
       value: t
     })),
     'label'

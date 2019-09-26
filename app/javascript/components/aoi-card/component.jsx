@@ -6,11 +6,11 @@ import cx from 'classnames';
 import { formatNumber } from 'utils/format';
 
 import Icon from 'components/ui/icon/icon-component';
+import MapGeostore from 'components/map-geostore';
 
 import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
 
-import aoiBg from './aoi-bg.png';
 import './styles.scss';
 
 const createdMeta = {
@@ -29,19 +29,18 @@ class AoICard extends PureComponent {
     id: PropTypes.string,
     name: PropTypes.string,
     tags: PropTypes.array,
-    image: PropTypes.string,
     application: PropTypes.string,
     createdAt: PropTypes.string,
     simple: PropTypes.bool,
     deforestationAlerts: PropTypes.bool,
     fireAlerts: PropTypes.bool,
-    monthlySummary: PropTypes.bool
+    monthlySummary: PropTypes.bool,
+    geostore: PropTypes.string
   };
 
   render() {
     const {
       id,
-      image,
       tags,
       name,
       application,
@@ -49,9 +48,9 @@ class AoICard extends PureComponent {
       simple,
       deforestationAlerts,
       fireAlerts,
-      monthlySummary
+      monthlySummary,
+      geostore
     } = this.props;
-
     const subStatus = [
       {
         label: 'forest change alerts',
@@ -85,7 +84,11 @@ class AoICard extends PureComponent {
 
     return (
       <div key={id} className={cx('c-aoi-card', { simple })}>
-        <img src={image || aoiBg} alt={name} />
+        <MapGeostore
+          className="aoi-card-map"
+          geostoreId={geostore}
+          padding={simple ? 15 : 25}
+        />
         <div className="item-body">
           <p className="title">{name}</p>
           {!simple && (

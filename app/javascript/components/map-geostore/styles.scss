@@ -1,0 +1,25 @@
+@import '~styles/settings';
+
+.c-recent-image-map {
+  position: relative;
+  width: 100%;
+  height: 300px;
+
+  .tile-loader {
+    background-color: $white;
+    opacity: 1;
+  }
+
+  .error-msg {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: rem(25px);
+    position: absolute;
+    z-index: 1;
+    background: $border;
+  }
+}
