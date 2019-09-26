@@ -334,7 +334,7 @@ export const getWidgets = createSelector(
     layers,
     analysis
   ) => {
-    if (isEmpty(widgets) || !locationObj || !locationData || !widgetsData) {
+    if (isEmpty(widgets) || !locationObj || !widgetsData) {
       return null;
     }
 
