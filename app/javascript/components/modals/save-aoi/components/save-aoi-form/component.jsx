@@ -9,7 +9,7 @@ import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
-import ImageMap from 'components/map-recent-image';
+import MapGeostore from 'components/map-geostore';
 
 import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/singleB.png';
@@ -180,7 +180,7 @@ function SaveAOIForm(props) {
 
   return (
     <div className="c-form c-save-aoi-form">
-      <ImageMap
+      <MapGeostore
         className="aoi-map"
         geostoreId={activeArea && activeArea.geostore}
       />

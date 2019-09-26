@@ -25,7 +25,7 @@ const DEFAULT_VIEWPORT = {
   lng: 0
 };
 
-class MapArea extends Component {
+class MapGeostore extends Component {
   static propTypes = {
     basemap: PropTypes.object,
     geostoreId: PropTypes.string,
@@ -222,4 +222,4 @@ class MapArea extends Component {
   }
 }
 
-export default MapArea;
+export default MapGeostore;

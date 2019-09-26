@@ -6,7 +6,7 @@ import cx from 'classnames';
 import { formatNumber } from 'utils/format';
 
 import Icon from 'components/ui/icon/icon-component';
-import MapArea from 'components/map-recent-image';
+import MapGeostore from 'components/map-geostore';
 
 import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
@@ -84,7 +84,7 @@ class AoICard extends PureComponent {
 
     return (
       <div key={id} className={cx('c-aoi-card', { simple })}>
-        <MapArea className="aoi-card-map" geostoreId={geostore} />
+        <MapGeostore className="aoi-card-map" geostoreId={geostore} />
         <div className="item-body">
           <p className="title">{name}</p>
           {!simple && (
