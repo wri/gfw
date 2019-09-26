@@ -100,7 +100,8 @@ function SaveAOIForm(props) {
     deleteAOI,
     viewAfterSave,
     clearAfterDelete,
-    canDelete
+    canDelete,
+    geostoreId
   } = props;
 
   const [form, dispatch] = useReducer(reducer, {
@@ -182,7 +183,7 @@ function SaveAOIForm(props) {
     <div className="c-form c-save-aoi-form">
       <MapGeostore
         className="aoi-map"
-        geostoreId={activeArea && activeArea.geostore}
+        geostoreId={(activeArea && activeArea.geostore) || geostoreId}
         padding={50}
       />
       <div className={cx('field', { error: nameError })}>
@@ -273,7 +274,8 @@ SaveAOIForm.propTypes = {
   canDelete: PropTypes.bool,
   fireAlerts: PropTypes.bool,
   deforestationAlerts: PropTypes.bool,
-  monthlySummary: PropTypes.bool
+  monthlySummary: PropTypes.bool,
+  geostoreId: PropTypes.string
 };
 
 export default SaveAOIForm;

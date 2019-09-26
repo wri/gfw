@@ -21,7 +21,8 @@ class ModalSaveAOI extends PureComponent {
     onAfterSave: PropTypes.func,
     onAferDelete: PropTypes.func,
     userData: PropTypes.object,
-    error: PropTypes.bool
+    error: PropTypes.bool,
+    geostoreId: PropTypes.string
   };
 
   componentDidUpdate(prevProps) {
@@ -40,7 +41,7 @@ class ModalSaveAOI extends PureComponent {
   };
 
   render() {
-    const { title, open, userData, loading } = this.props;
+    const { title, open, userData, loading, geostoreId } = this.props;
     const loggedIn = !isEmpty(userData);
 
     return (
@@ -76,6 +77,7 @@ class ModalSaveAOI extends PureComponent {
                 {...this.props}
                 email={userData.email}
                 lang={userData.language}
+                geostoreId={geostoreId}
               />
             )}
           </div>

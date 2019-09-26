@@ -15,6 +15,8 @@ const selectSaving = state => state.modalSaveAOI && state.modalSaveAOI.saving;
 const selectError = state => state.modalSaveAOI && state.modalSaveAOI.error;
 const selectUserData = state => (state.myGfw && state.myGfw.data) || {};
 const selectLocation = state => state.location && state.location.payload;
+const selectGeostoreId = state =>
+  state.geostore && state.geostore.data && state.geostore.data.id;
 
 export const getSaveAOISettings = createSelector(
   [selectSaveAOIUrlState],
@@ -63,5 +65,6 @@ export const getModalAOIProps = createStructuredSelector({
   error: selectError,
   userData: selectUserData,
   location: selectLocation,
-  locationName: getGeodescriberTitleFull
+  locationName: getGeodescriberTitleFull,
+  geostoreId: selectGeostoreId
 });
