@@ -244,9 +244,11 @@ export const filterWidgetsByLocation = createSelector(
         );
       const hasLocation =
         types && types.includes(type) && admins && admins.includes(adminLevel);
-      const adminWhitelist = whitelists && whitelists.adm0;
+      const adminWhitelist =
+        type === 'country' && whitelists && whitelists.adm0;
 
-      const adminBlacklist = blacklists && blacklists[adminLevel];
+      const adminBlacklist =
+        type === 'country' && blacklists && blacklists[adminLevel];
       const notInBlacklist =
         !adminBlacklist || !adminBlacklist.includes(adminLevel);
 
