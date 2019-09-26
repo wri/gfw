@@ -29,11 +29,12 @@ class MapGeostore extends Component {
   static propTypes = {
     basemap: PropTypes.object,
     geostoreId: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    padding: PropTypes.number
   };
 
   static defaultProps = {
-    bounds: {}
+    padding: 25
   };
 
   state = {
@@ -74,24 +75,26 @@ class MapGeostore extends Component {
   }
 
   handleGetGeostore = () => {
-    this.setState({ error: false });
-    getGeostoreProvider({ type: 'geostore', adm0: this.props.geostoreId })
-      .then(response => {
-        if (this.mounted) {
-          const { data } = response.data || {};
-          const geostore = buildGeostore(
-            { id: data.id, ...data.attributes },
-            this.props
-          );
-          this.setState({ geostore });
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        if (this.mounted) {
-          this.setState({ error: true });
-        }
-      });
+    if (this.mounted) {
+      this.setState({ error: false });
+      getGeostoreProvider({ type: 'geostore', adm0: this.props.geostoreId })
+        .then(response => {
+          if (this.mounted) {
+            const { data } = response.data || {};
+            const geostore = buildGeostore(
+              { id: data.id, ...data.attributes },
+              this.props
+            );
+            this.setState({ geostore });
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          if (this.mounted) {
+            this.setState({ error: true });
+          }
+        });
+    }
   };
 
   onLoad = ({ map }) => {
@@ -117,7 +120,7 @@ class MapGeostore extends Component {
 
     const { longitude, latitude, zoom } = new WebMercatorViewport(v).fitBounds(
       [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
-      { padding: 25 }
+      { padding: this.props.padding }
     );
 
     this.setState({

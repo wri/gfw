@@ -84,7 +84,11 @@ class AoICard extends PureComponent {
 
     return (
       <div key={id} className={cx('c-aoi-card', { simple })}>
-        <MapGeostore className="aoi-card-map" geostoreId={geostore} />
+        <MapGeostore
+          className="aoi-card-map"
+          geostoreId={geostore}
+          padding={simple ? 15 : 25}
+        />
         <div className="item-body">
           <p className="title">{name}</p>
           {!simple && (

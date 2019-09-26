@@ -1,9 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import {
-  getGeostoreProvider,
-  getGeostoreKey
-} from '../../components/map-geostore/node_modules/services/geostore';
-import { buildGeostore } from '../../components/map-geostore/node_modules/utils/geoms';
+import { getGeostoreProvider, getGeostoreKey } from 'services/geostore';
+import { buildGeostore } from 'utils/geoms';
 
 export const setGeostoreLoading = createAction('setGeostoreLoading');
 export const setGeostore = createAction('setGeostore');
