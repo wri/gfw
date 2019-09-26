@@ -43,8 +43,10 @@ class AreasTable extends PureComponent {
     } = this.props;
     const { activeTags, search } = this.state;
 
-    const selectedTags = tags.filter(t => activeTags.includes(t.value));
-    const unselectedTags = tags.filter(t => !activeTags.includes(t.value));
+    const selectedTags =
+      activeTags && tags.filter(t => activeTags.includes(t.value));
+    const unselectedTags =
+      activeTags && tags.filter(t => !activeTags.includes(t.value));
     const filteredAreas =
       selectedTags && selectedTags.length && areas && areas.length
         ? areas.filter(a => !!intersection(a.tags, activeTags).length)

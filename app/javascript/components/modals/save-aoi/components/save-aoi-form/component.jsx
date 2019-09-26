@@ -111,7 +111,7 @@ function SaveAOIForm(props) {
     email: props.email || '',
     emailError: false,
     nameError: false,
-    lang: props.lang,
+    lang: props.lang || 'en',
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
     monthlySummary: props.monthlySummary || false

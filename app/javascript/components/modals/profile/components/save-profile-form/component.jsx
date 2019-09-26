@@ -98,16 +98,15 @@ function reducer(state, action) {
 
 function SaveProfileForm(props) {
   const { userData, countries, saving, error, saveProfile } = props;
-
   const [form, dispatch] = useReducer(reducer, {
     name: userData.fullName,
     email: userData.email,
     emailError: false,
     nameError: false,
-    lang: userData.language,
+    lang: userData.language || 'en',
     sector: userData.sector,
-    primaryResponsibilities: userData.primaryResponsibilities,
-    howDoYouUse: userData.howDoYouUse,
+    primaryResponsibilities: userData.primaryResponsibilities || [],
+    howDoYouUse: userData.howDoYouUse || [],
     state: userData.state,
     city: userData.city,
     country: userData.country,
@@ -208,7 +207,9 @@ function SaveProfileForm(props) {
           options={responsibilities.map(r => ({ label: r, value: r }))}
           value={primaryResponsibilities}
           onChange={newResponsibility => {
-            const hasResp = primaryResponsibilities.includes(newResponsibility);
+            const hasResp =
+              primaryResponsibilities &&
+              primaryResponsibilities.includes(newResponsibility);
             const newResp = hasResp
               ? primaryResponsibilities.filter(r => r !== newResponsibility)
               : primaryResponsibilities.concat(newResponsibility);
@@ -229,7 +230,8 @@ function SaveProfileForm(props) {
           options={howDoYouUseOptions.map(r => ({ label: r, value: r }))}
           value={howDoYouUse}
           onChange={newHowDoYouUse => {
-            const hasHowDo = howDoYouUse.includes(newHowDoYouUse);
+            const hasHowDo =
+              howDoYouUse && howDoYouUse.includes(newHowDoYouUse);
             const newHowDo = hasHowDo
               ? howDoYouUse.filter(r => r !== newHowDoYouUse)
               : howDoYouUse.concat(newHowDoYouUse);
