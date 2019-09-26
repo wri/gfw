@@ -7,7 +7,8 @@ import {
   getAreaTags
 } from 'providers/areas-provider/selectors';
 
-const selectLoading = state => state.mapMenu && state.mapMenu.loading;
+const selectLoading = state =>
+  state.areas && state.myGfw && (state.areas.loading || state.myGfw.loading);
 const selectLoggedIn = state => state.myGfw && !isEmpty(state.myGfw.data);
 const selectLocation = state => state.location && state.location.payload;
 

@@ -11,6 +11,8 @@ import Button from 'components/ui/button/button-component';
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
+import Loader from 'components/ui/loader';
+
 import editIcon from 'assets/icons/edit.svg';
 import logoutIcon from 'assets/icons/logout.svg';
 import screenImg1x from 'assets/images/aois/singleA.png';
@@ -28,7 +30,8 @@ class MapMenuMyGFW extends PureComponent {
     onEditClick: PropTypes.func,
     clearArea: PropTypes.func,
     location: PropTypes.object,
-    tags: PropTypes.array
+    tags: PropTypes.array,
+    loading: PropTypes.bool
   };
 
   state = {
@@ -205,12 +208,15 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   render() {
-    const { loggedIn, areas, isDesktop } = this.props;
+    const { loggedIn, areas, isDesktop, loading } = this.props;
 
     return (
       <div className="c-map-menu-my-gfw">
-        {loggedIn ? this.renderMyGFW() : this.renderLoginWindow()}
-        {(!loggedIn || !(areas && areas.length > 0)) &&
+        {loading && <Loader />}
+        {!loading && loggedIn && this.renderMyGFW()}
+        {!loading && !loggedIn && this.renderLoginWindow()}
+        {!loading &&
+          (!loggedIn || !(areas && areas.length > 0)) &&
           isDesktop && (
           <img
             className={cx('my-gfw-login-image', { '--login': !loggedIn })}
