@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
 import intersection from 'lodash/intersection';
+import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
 import flatMap from 'lodash/flatMap';
@@ -229,7 +230,18 @@ export const filterWidgetsByLocation = createSelector(
 
       const layerIntersection =
         datasets &&
-        intersection(flatMap(datasets.map(d => d.layers)), layerIds);
+        intersection(
+          compact(
+            flatMap(
+              datasets.filter(d => !d.boundary).map(d => {
+                const layersArray = Array.isArray(d.layers) && d.layers;
+
+                return layersArray;
+              })
+            )
+          ),
+          layerIds
+        );
       const hasLocation =
         types && types.includes(type) && admins && admins.includes(adminLevel);
       const adminWhitelist = whitelists && whitelists.adm0;

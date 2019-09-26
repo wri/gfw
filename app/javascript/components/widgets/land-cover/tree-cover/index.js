@@ -64,6 +64,7 @@ export default {
   types: ['global', 'country', 'geostore'],
   // levels of that type you can see the widget
   admins: ['global', 'adm0', 'adm1', 'adm2'],
+  visible: ['dashboards'],
   datasets: [
     {
       dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
