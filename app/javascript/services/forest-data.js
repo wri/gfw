@@ -369,7 +369,7 @@ export const getLossOld = ({
 };
 
 export const getUSLandCover = params => {
-  const { adm1, adm2, startYear, endYear, download } = params;
+  const { adm0, adm1, adm2, startYear, endYear, download } = params;
   let admQuery = '';
   if (adm1 && !adm2) {
     // adm1
@@ -394,7 +394,12 @@ export const getUSLandCover = params => {
         ? ''
         : 'GROUP BY to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
     );
-
-  if (download) return url.concat('&format=csv&filename=us-land-cover-ha');
+  if (download) {
+    return url.concat(
+      `&format=csv&filename=land_cover_in_ha_in_${adm0}${
+        adm1 ? `_${adm1}` : ''
+      }${adm2 ? `_${adm2}` : ''}_from_${startYear}_to_${endYear}`
+    );
+  }
   return request.get(url);
 };
