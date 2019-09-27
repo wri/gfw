@@ -27,14 +27,17 @@ class WidgetHeader extends PureComponent {
     const { downloadLink } = this.props;
 
     return (
-      <Button
-        className={cx('download-button')}
-        theme="theme-button-small square"
-        tooltip={{ text: 'download data' }}
-        extLink={downloadLink}
-      >
-        <Icon icon={downloadIcon} className="download-icon" />
-      </Button>
+      <Fragment>
+        <Button
+          className={cx('download-button')}
+          theme="theme-button-small square"
+          tooltip={{ text: 'Download data for this view' }}
+          extLink={downloadLink}
+        >
+          <Icon icon={downloadIcon} className="download-icon" />
+        </Button>
+        <div className="separator" />
+      </Fragment>
     );
   };
 
@@ -85,7 +88,8 @@ class WidgetHeader extends PureComponent {
       setWidgetSettings,
       widget,
       options,
-      setModalMetaSettings
+      setModalMetaSettings,
+      downloadLink
     } = this.props;
     const { tooltipOpen } = this.state;
     return (
@@ -138,7 +142,7 @@ class WidgetHeader extends PureComponent {
             <Icon icon={settingsIcon} className="settings-icon" />
           </Button>
         </Tooltip>
-        <div className="separator" />
+        {!downloadLink && <div className="separator" />}
       </Fragment>
     );
   };
