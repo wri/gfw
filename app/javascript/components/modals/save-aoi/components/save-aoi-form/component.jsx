@@ -10,8 +10,8 @@ import InputTags from 'components/input-tags';
 import MapGeostore from 'components/map-geostore';
 
 import deleteIcon from 'assets/icons/delete.svg';
-import screenImg1x from 'assets/images/aois/singleB.png';
-import screenImg2x from 'assets/images/aois/singleB@2x.png';
+import screenImg1x from 'assets/images/aois/alert-email.png';
+import screenImg2x from 'assets/images/aois/alert-email@2x.png';
 
 import './styles.scss';
 

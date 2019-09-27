@@ -10,11 +10,12 @@ import ProfileModal from 'components/modals/profile';
 import AreasProvider from 'providers/areas-provider';
 import CountryDataProvider from 'providers/country-data-provider';
 import PlanetBasemapsProvider from 'providers/planet-provider';
+import DashboardImage from 'assets/images/aois/aoi-dashboard-small.png';
+import DashboardImageLarge from 'assets/images/aois/aoi-dashboard-small@2x.png';
 
 import SaveAOIModal from 'components/modals/save-aoi';
 import UserProfile from './components/user-profile';
 import AreasTable from './components/areas-table';
-import NoAreasImage from './assets/no-areas@2x.png';
 import './styles.scss';
 
 class MyGFWPage extends PureComponent {
@@ -73,8 +74,10 @@ class MyGFWPage extends PureComponent {
                     <div className="column small-12 medium-5">
                       <img
                         className="areas-image"
-                        srcSet={`${NoAreasImage} 2x, ${NoAreasImage} 1x`}
-                        src={`${NoAreasImage} 1x`}
+                        srcSet={`${DashboardImageLarge} 2x, ${
+                          DashboardImage
+                        } 1x`}
+                        src={`${DashboardImage} 1x`}
                         alt="no areas"
                       />
                     </div>

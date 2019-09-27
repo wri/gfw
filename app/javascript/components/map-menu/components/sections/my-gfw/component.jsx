@@ -15,8 +15,8 @@ import Loader from 'components/ui/loader';
 
 import editIcon from 'assets/icons/edit.svg';
 import logoutIcon from 'assets/icons/logout.svg';
-import screenImg1x from 'assets/images/aois/singleA.png';
-import screenImg2x from 'assets/images/aois/singleA@2x.png';
+import screenImg1x from 'assets/images/aois/aoi-dashboard.png';
+import screenImg2x from 'assets/images/aois/aoi-dashboard@2x.png';
 
 import './styles.scss';
 
