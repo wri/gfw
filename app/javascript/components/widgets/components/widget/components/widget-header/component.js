@@ -12,6 +12,7 @@ import settingsIcon from 'assets/icons/settings.svg';
 import shareIcon from 'assets/icons/share.svg';
 import infoIcon from 'assets/icons/info.svg';
 import mapIcon from 'assets/icons/map-button.svg';
+import downloadIcon from 'assets/icons/download.svg';
 
 import WidgetSettings from './components/widget-settings';
 
@@ -20,6 +21,21 @@ import './styles.scss';
 class WidgetHeader extends PureComponent {
   state = {
     tooltipOpen: false
+  };
+
+  renderDownloadButton = () => {
+    const { downloadLink } = this.props;
+
+    return (
+      <Button
+        className={cx('download-button')}
+        theme="theme-button-small square"
+        tooltip={{ text: 'download data' }}
+        extLink={downloadLink}
+      >
+        <Icon icon={downloadIcon} className="download-icon" />
+      </Button>
+    );
   };
 
   renderMapButton = () => {
@@ -156,7 +172,15 @@ class WidgetHeader extends PureComponent {
   };
 
   render() {
-    const { title, settings, options, embed, config, simple } = this.props;
+    const {
+      title,
+      settings,
+      options,
+      embed,
+      config,
+      simple,
+      downloadLink
+    } = this.props;
 
     return (
       <div className={cx('c-widget-header', { simple })}>
@@ -174,6 +198,7 @@ class WidgetHeader extends PureComponent {
             config.options &&
             !config.hideSettings &&
             this.renderSettingsButton()}
+          {downloadLink && this.renderDownloadButton()}
           <div className="small-options">
             {this.renderMetadataButton()}
             {!simple && this.renderShareButton()}
@@ -202,7 +227,8 @@ WidgetHeader.propTypes = {
   simple: PropTypes.bool,
   setWidgetSettings: PropTypes.func,
   setActiveWidget: PropTypes.func,
-  metakey: PropTypes.string
+  metakey: PropTypes.string,
+  downloadLink: PropTypes.string
 };
 
 export default WidgetHeader;
