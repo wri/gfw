@@ -12,12 +12,38 @@ import './styles.scss';
 function reducer(state, action) {
   const { type, payload } = action;
   switch (type) {
-    case 'name':
-      return { ...state, name: payload.name, nameError: payload.nameError };
+    case 'firstName':
+      return {
+        ...state,
+        firstName: payload.name,
+        firstNameError: payload.nameError
+      };
+    case 'lastName':
+      return {
+        ...state,
+        lastName: payload.name,
+        lastNameError: payload.nameError
+      };
     case 'email':
       return { ...state, email: payload.email, emailError: payload.emailError };
-    case 'language':
-      return { ...state, lang: payload.lang };
+    case 'organization':
+      return { ...state, organization: payload.organization };
+    case 'city':
+      return { ...state, city: payload.city, cityError: payload.cityError };
+    case 'country':
+      return {
+        ...state,
+        country: payload.country,
+        countryError: payload.countryError
+      };
+    case 'subscriptions':
+      return {
+        ...state,
+        subscriptions: {
+          ...state.subscriptions,
+          [payload.sub]: !state.subscriptions[payload.sub]
+        }
+      };
     case 'reset':
       return { ...state, ...payload };
     default:
@@ -37,7 +63,6 @@ function SubscribePage(props) {
     setSubscribeSettings,
     activeMapDatasets,
     lang: propsLang,
-    locationName: propsName,
     email: propsEmail
   } = props;
 
@@ -55,7 +80,6 @@ function SubscribePage(props) {
       dispatch({
         type: 'reset',
         payload: {
-          name: propsName,
           email: propsEmail,
           lang: propsLang,
           emailError: false,
@@ -63,18 +87,36 @@ function SubscribePage(props) {
         }
       });
     },
-    [propsName, propsEmail, propsLang]
+    [propsEmail, propsLang]
   );
+
+  const subscriptions = [
+    { label: 'Innovations in Monitoring', value: 'monitoring' },
+    { label: 'Fires', value: 'fires' },
+    { label: 'Forest Watcher Mobile App', value: 'fwapp' },
+    { label: 'Climate and Biodiversity', value: 'climate' },
+    { label: 'Agricultural Supply Chains', value: 'supplychains' },
+    { label: 'Small Grants Fund and Tech Fellowship', value: 'sgf' }
+  ];
 
   /*
   State
   */
   const initialState = {
-    name: propsName,
+    firstName: '',
+    firstNameError: false,
+    lastName: '',
+    lastNameError: false,
     email: propsEmail,
-    lang: propsLang,
     emailError: false,
-    nameError: false
+    organization: '',
+    city: '',
+    cityError: false,
+    country: null,
+    subscriptions: subscriptions.reduce(
+      (acc, sub) => ({ ...acc, [sub.label]: true }),
+      {}
+    )
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -89,20 +131,12 @@ function SubscribePage(props) {
   };
 
   const canSubmit =
-    activeDatasets &&
-    activeDatasets.length &&
     validateEmail(state.email) &&
-    state.name &&
-    state.lang;
-
-  const subscriptions = [
-    { label: 'Innovations in Monitoring', value: 'monitoring' },
-    { label: 'Fires', value: 'fires' },
-    { label: 'Forest Watcher Mobile App', value: 'fwapp' },
-    { label: 'Climate and Biodiversity', value: 'climate' },
-    { label: 'Agricultural Supply Chains', value: 'supplychains' },
-    { label: 'Small Grants Fund and Tech Fellowship', value: 'sgf' }
-  ];
+    !!state.firstName &&
+    !!state.lastName &&
+    !!state.city &&
+    !!state.country &&
+    Object.values(state.subscriptions).filter(sub => sub).length > 0;
 
   return (
     <div className="l-subscribe-page">
@@ -118,14 +152,14 @@ function SubscribePage(props) {
             </h3>
           </div>
           <div className="suscribe-form column small-12 medium-8 medium-offset-1">
-            <div className={cx('field', { error: state.nameError })}>
+            <div className={cx('field', { error: state.firstNameError })}>
               <span>First Name*</span>
               <input
                 className="form-input"
-                value={state.name}
+                value={state.firstName}
                 onChange={e =>
                   dispatch({
-                    type: 'name',
+                    type: 'firstName',
                     payload: {
                       name: e.target.value,
                       nameError: !e.target.value
@@ -134,14 +168,14 @@ function SubscribePage(props) {
                 }
               />
             </div>
-            <div className={cx('field', { error: state.nameError })}>
+            <div className={cx('field', { error: state.lastNameError })}>
               <span>Last Name*</span>
               <input
                 className="form-input"
-                value={state.name}
+                value={state.lastName}
                 onChange={e =>
                   dispatch({
-                    type: 'name',
+                    type: 'lastName',
                     payload: {
                       name: e.target.value,
                       nameError: !e.target.value
@@ -170,14 +204,11 @@ function SubscribePage(props) {
               <span>Organization</span>
               <input
                 className="form-input"
-                value={state.name}
+                value={state.organization}
                 onChange={e =>
                   dispatch({
-                    type: 'name',
-                    payload: {
-                      name: e.target.value,
-                      nameError: !e.target.value
-                    }
+                    type: 'organization',
+                    payload: { organization: e.target.value }
                   })
                 }
               />
@@ -186,30 +217,37 @@ function SubscribePage(props) {
               <span>City*</span>
               <input
                 className="form-input"
-                value={state.name}
+                value={state.city}
                 onChange={e =>
                   dispatch({
-                    type: 'name',
+                    type: 'city',
                     payload: {
-                      name: e.target.value,
-                      nameError: !e.target.value
+                      city: e.target.value,
+                      cityError: !e.target.value
                     }
                   })
                 }
               />
             </div>
-            <div className="field">
+            <div className={cx('field', { error: state.countryError })}>
               <span>Country*</span>
               <Dropdown
                 className="form-input"
                 theme="theme-dropdown-native-form"
                 options={[
+                  { label: 'Select country', value: '' },
                   { label: 'Spain', value: 'ES' },
                   { label: 'United Kingdom', value: 'UK' }
                 ]}
-                value={state.lang}
-                onChange={newLang =>
-                  dispatch({ type: 'language', payload: { lang: newLang } })
+                value={state.country}
+                onChange={country =>
+                  dispatch({
+                    type: 'country',
+                    payload: {
+                      country,
+                      countryError: !country
+                    }
+                  })
                 }
                 native
               />
@@ -217,10 +255,22 @@ function SubscribePage(props) {
             <div className="field form-list small-12 medium-8 medium-offset-1">
               <span>I&#39;m interested in (check all that apply)*</span>
               {subscriptions.map(sub => (
-                <div className="form-checkbox-item">
-                  <Checkbox className="form-checkbox" value />
+                <button
+                  className="form-checkbox-item"
+                  key={sub.label}
+                  onClick={() =>
+                    dispatch({
+                      type: 'subscriptions',
+                      payload: { sub: sub.label }
+                    })
+                  }
+                >
+                  <Checkbox
+                    className="form-checkbox"
+                    value={state.subscriptions[sub.label]}
+                  />
                   {sub.label}
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -260,7 +310,6 @@ SubscribePage.propTypes = {
   userData: PropTypes.object,
   activeDatasets: PropTypes.array,
   lang: PropTypes.string,
-  locationName: PropTypes.string,
   email: PropTypes.string,
   error: PropTypes.bool,
   saving: PropTypes.bool,

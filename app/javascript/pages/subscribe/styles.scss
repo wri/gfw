@@ -8,6 +8,18 @@
     margin: rem(50px) 0;
   }
 
+  input {
+    height: rem(40px);
+    border: solid 1px $border;
+    padding: 0 rem(10px);
+    border-radius: rem(4px);
+    font-size: rem(14px);
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   .field {
     margin: auto;
     display: flex;
@@ -29,12 +41,17 @@
       align-self: flex-end;
     }
 
-    &.error {
-      color: $error;
-    }
-
     .select-wrapper {
       max-width: unset;
+    }
+
+    &.error {
+      color: $error;
+
+      input,
+      .select-wrapper {
+        border-color: $error;
+      }
     }
   }
 
@@ -48,22 +65,11 @@
       margin: rem(12px) auto rem(12px) 0;
       font-size: rem(14px);
       line-height: 24px;
+      text-align: left;
 
       .form-checkbox {
         margin-right: rem(20px);
       }
-    }
-  }
-
-  input {
-    height: rem(40px);
-    border: solid 1px $border;
-    padding: 0 rem(10px);
-    border-radius: rem(4px);
-    font-size: rem(14px);
-
-    &:focus {
-      outline: none;
     }
   }
 
