@@ -4,7 +4,7 @@ export default {
   // title for header
   title: {
     default: 'Tree cover in {location}',
-    global: 'Global forest cover',
+    global: 'Global tree cover',
     withPlantations: 'Forest cover in {location}'
   },
   // sentences for header

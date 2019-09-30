@@ -55,7 +55,7 @@ class LayerManagerComponent extends PureComponent {
           basemap.url && (
           <Layer
             key={basemap.url}
-            id="basemap"
+            id={basemap.url}
             name="Basemap"
             provider="leaflet"
             layerConfig={{
