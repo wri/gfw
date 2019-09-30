@@ -54,40 +54,27 @@ function reducer(state, action) {
 function SubscribePage(props) {
   const {
     metadata,
-    activeDatasets,
     saveSubscription,
-    userData,
     saving,
     error,
-    location,
-    setSubscribeSettings,
-    activeMapDatasets,
-    lang: propsLang,
     email: propsEmail
   } = props;
 
   useEffect(
     () => {
-      if (activeMapDatasets && activeMapDatasets.length) {
-        setSubscribeSettings({ datasets: activeMapDatasets });
+      if (propsEmail) {
+        dispatch({
+          type: 'reset',
+          payload: {
+            email: propsEmail,
+            emailError: false,
+            firstNameError: false,
+            lastNameError: false
+          }
+        });
       }
     },
-    [activeMapDatasets, setSubscribeSettings]
-  );
-
-  useEffect(
-    () => {
-      dispatch({
-        type: 'reset',
-        payload: {
-          email: propsEmail,
-          lang: propsLang,
-          emailError: false,
-          nameError: false
-        }
-      });
-    },
-    [propsEmail, propsLang]
+    [propsEmail]
   );
 
   const subscriptions = [
@@ -107,12 +94,12 @@ function SubscribePage(props) {
     firstNameError: false,
     lastName: '',
     lastNameError: false,
-    email: propsEmail,
+    email: propsEmail || '',
     emailError: false,
     organization: '',
     city: '',
     cityError: false,
-    country: null,
+    country: '',
     subscriptions: subscriptions.reduce(
       (acc, sub) => ({ ...acc, [sub.label]: true }),
       {}
@@ -141,7 +128,7 @@ function SubscribePage(props) {
   return (
     <div className="l-subscribe-page">
       <div className="row">
-        <div className="column small-12 medium-8 medium-offset-2">
+        <div className="column small-8 small-offset-2 medium-8 medium-offset-2">
           <div className="subscribe-header">
             <h1>
               {(metadata && metadata.title) || 'Sorry, something went wrong.'}
@@ -252,10 +239,10 @@ function SubscribePage(props) {
                 native
               />
             </div>
-            <div className="field form-list small-12 medium-8 medium-offset-1">
+            <div className="field form-list small-8 small-offset-2 medium-8 medium-offset-1">
               <span>I&#39;m interested in (check all that apply)*</span>
               {subscriptions.map(sub => (
-                <div className="form-checkbox-item">
+                <div className="form-checkbox-item" key={sub.value}>
                   <Checkbox
                     className="form-checkbox"
                     checked={state.subscriptions[sub.label]}
@@ -283,10 +270,7 @@ function SubscribePage(props) {
               className={cx('submit-btn', { error }, { saving })}
               onClick={() =>
                 saveSubscription({
-                  ...state,
-                  datasets: activeDatasets,
-                  userData,
-                  ...location
+                  ...state
                 })
               }
               disabled={!canSubmit}
@@ -302,16 +286,10 @@ function SubscribePage(props) {
 
 SubscribePage.propTypes = {
   metadata: PropTypes.object,
-  setSubscribeSettings: PropTypes.func,
   saveSubscription: PropTypes.func,
-  userData: PropTypes.object,
-  activeDatasets: PropTypes.array,
-  lang: PropTypes.string,
   email: PropTypes.string,
   error: PropTypes.bool,
-  saving: PropTypes.bool,
-  location: PropTypes.object,
-  activeMapDatasets: PropTypes.array
+  saving: PropTypes.bool
 };
 
 export default SubscribePage;

@@ -1,20 +1,18 @@
 import { connect } from 'react-redux';
 import reducerRegistry from 'app/registry';
 
-import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
-import * as actions from 'components/modals/subscribe/actions';
-import reducers, { initialState } from 'components/modals/subscribe/reducers';
-import { getModalSubscribeProps } from 'components/modals/subscribe/selectors';
+import * as actions from './actions';
+import reducers, { initialState } from './reducers';
+import { getModalSubscribeProps } from './selectors';
 import PageComponent from './component';
 
-reducerRegistry.registerModule('modalSubscribe', {
+reducerRegistry.registerModule('subscriptionForm', {
   actions,
   reducers,
   initialState
 });
 export default connect(getModalSubscribeProps, {
-  ...actions,
-  setModalMetaSettings
+  ...actions
 })(PageComponent);
 
 // export default PageComponent;
