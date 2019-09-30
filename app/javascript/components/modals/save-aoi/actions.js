@@ -32,6 +32,7 @@ export const saveAOI = createThunkAction(
     fireAlerts,
     deforestationAlerts,
     monthlySummary,
+    webhookUrl,
     activeArea,
     viewAfterSave
   }) => (dispatch, getState) => {
@@ -68,6 +69,7 @@ export const saveAOI = createThunkAction(
           wdpaid: parseInt(adm0, 10)
         }),
         fireAlerts,
+        webhookUrl,
         deforestationAlerts,
         monthlySummary,
         tags: tags || [],

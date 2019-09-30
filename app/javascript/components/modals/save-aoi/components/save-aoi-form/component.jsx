@@ -49,9 +49,22 @@ function reducer(state, action) {
         monthlySummary: !state.monthlySummary
       };
     }
+    case 'webhookUrl': {
+      return {
+        ...state,
+        webhookUrl: payload
+      };
+    }
     case 'activeArea': {
       const { activeArea } = payload;
-      const { name, tags, fireAlerts, deforestationAlerts, monthlySummary } =
+      const {
+        name,
+        tags,
+        fireAlerts,
+        deforestationAlerts,
+        monthlySummary,
+        webhookUrl
+      } =
         activeArea || {};
 
       return {
@@ -60,7 +73,8 @@ function reducer(state, action) {
         tags,
         fireAlerts,
         deforestationAlerts,
-        monthlySummary
+        monthlySummary,
+        webhookUrl
       };
     }
     default:
@@ -89,7 +103,8 @@ function SaveAOIForm(props) {
     nameError: false,
     fireAlerts: props.fireAlerts || false,
     deforestationAlerts: props.deforestationAlerts || false,
-    monthlySummary: props.monthlySummary || false
+    monthlySummary: props.monthlySummary || false,
+    webhookUrl: props.webhookUrl || ''
   });
 
   useEffect(
@@ -147,7 +162,8 @@ function SaveAOIForm(props) {
     nameError,
     fireAlerts,
     deforestationAlerts,
-    monthlySummary
+    monthlySummary,
+    webhookUrl
   } = form;
   const canSubmit = name;
 
@@ -174,6 +190,16 @@ function SaveAOIForm(props) {
           tags={tags}
           className="aoi-tags-input"
           onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
+        />
+      </div>
+      <div className={cx('field')}>
+        <span className="form-title">Add a webhook url</span>
+        <input
+          className="text-input"
+          value={webhookUrl}
+          onChange={e =>
+            dispatch({ type: 'webhookUrl', payload: e.target.value })
+          }
         />
       </div>
       <div className={cx('field', 'field-image')}>
@@ -226,6 +252,7 @@ SaveAOIForm.propTypes = {
   fireAlerts: PropTypes.bool,
   deforestationAlerts: PropTypes.bool,
   monthlySummary: PropTypes.bool,
+  webhookUrl: PropTypes.string,
   geostoreId: PropTypes.string
 };
 
