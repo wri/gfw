@@ -5,7 +5,7 @@ import cx from 'classnames';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
-import Checkbox from 'components/ui/checkbox';
+import Checkbox from 'components/ui/checkbox-v2';
 
 import './styles.scss';
 
@@ -255,22 +255,19 @@ function SubscribePage(props) {
             <div className="field form-list small-12 medium-8 medium-offset-1">
               <span>I&#39;m interested in (check all that apply)*</span>
               {subscriptions.map(sub => (
-                <button
-                  className="form-checkbox-item"
-                  key={sub.label}
-                  onClick={() =>
-                    dispatch({
-                      type: 'subscriptions',
-                      payload: { sub: sub.label }
-                    })
-                  }
-                >
+                <div className="form-checkbox-item">
                   <Checkbox
                     className="form-checkbox"
-                    value={state.subscriptions[sub.label]}
+                    checked={state.subscriptions[sub.label]}
+                    onChange={() =>
+                      dispatch({
+                        type: 'subscriptions',
+                        payload: { sub: sub.label }
+                      })
+                    }
+                    label={sub.label}
                   />
-                  {sub.label}
-                </button>
+                </div>
               ))}
             </div>
           </div>

@@ -62,7 +62,8 @@
     .form-checkbox-item {
       display: flex;
       align-items: center;
-      margin: rem(12px) auto rem(12px) 0;
+      margin: 0;
+      margin-right: auto;
       font-size: rem(14px);
       line-height: 24px;
       text-align: left;
