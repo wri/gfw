@@ -32,13 +32,15 @@ class MapGeostore extends Component {
     className: PropTypes.string,
     padding: PropTypes.number,
     width: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    cursor: PropTypes.string
   };
 
   static defaultProps = {
     padding: 25,
     height: 140,
-    width: 140
+    width: 140,
+    cursor: 'default'
   };
 
   state = {
@@ -140,7 +142,7 @@ class MapGeostore extends Component {
   };
 
   render() {
-    const { basemap, className, width, height } = this.props;
+    const { basemap, className, width, height, cursor } = this.props;
     const { loading, viewport, geostore, error } = this.state;
 
     return (
@@ -177,7 +179,7 @@ class MapGeostore extends Component {
             touchZoom={false}
             touchRotate={false}
             keyboard={false}
-            getCursor={() => 'default'}
+            getCursor={() => cursor}
             reuseMaps
           >
             {map => (

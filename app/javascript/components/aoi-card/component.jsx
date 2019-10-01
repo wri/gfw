@@ -89,6 +89,7 @@ class AoICard extends PureComponent {
           className="aoi-card-map"
           geostoreId={geostore}
           padding={simple ? 15 : 25}
+          cursor="pointer"
         />
         <div className="item-body">
           <Dotdotdot clamp={2} className="title">
