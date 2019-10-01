@@ -74,7 +74,7 @@ export const parseData = createSelector([parseList], data => {
 export const parseSentence = createSelector(
   [parseData, getOptionsSelected, getIndicator, getLocationName, getSentences],
   (data, optionsSelected, indicator, locationName, sentences) => {
-    if (!data || !optionsSelected || !locationName) return '';
+    if (!data || !optionsSelected || !locationName) return null;
     const { initial, withInd } = sentences;
     const topRegion = data[0].label;
     const topRegionCount = data[0].count;
