@@ -31,7 +31,8 @@ class MapMenuMyGFW extends PureComponent {
     clearArea: PropTypes.func,
     location: PropTypes.object,
     tags: PropTypes.array,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    userData: PropTypes.object
   };
 
   state = {
@@ -180,7 +181,8 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   renderMyGFW() {
-    const { areas } = this.props;
+    const { areas, userData } = this.props;
+    const { email, fullName } = userData || {};
 
     return (
       <div className="my-gfw">
@@ -191,8 +193,13 @@ class MapMenuMyGFW extends PureComponent {
         </div>
         <div className="my-gfw-footer">
           <Link to="/my-gfw" className="edit-button">
-            Update profile
-            <Icon icon={editIcon} className="edit-icon" />
+            {fullName && <span className="name">{fullName}</span>}
+            {email && (
+              <span className="email">
+                <i>{email}</i>
+              </span>
+            )}
+            {!fullName && !email && <span>view profile</span>}
           </Link>
           <Button
             theme="theme-button-clear"

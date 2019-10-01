@@ -85,7 +85,27 @@
         bottom: 0;
       }
 
-      .edit-button,
+      .edit-button {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: $slate;
+        font-size: 12px;
+        line-height: 14px;
+        text-transform: initial;
+        font-weight: 400;
+        margin-left: rem(16px);
+
+        .name {
+          margin-bottom: rem(10px);
+          font-weight: 500;
+        }
+
+        .email {
+          font-style: italic;
+        }
+      }
+
       .logout-button {
         color: $slate;
         font-size: 12px;
@@ -93,23 +113,11 @@
         text-transform: initial;
         font-weight: 400;
 
-        &.edit-button {
-          margin-left: rem(15px);
-
-          @media screen and (min-width: $screen-m) {
-            margin-left: rem(20px);
-          }
-        }
-
         svg {
           position: relative;
           width: rem(16px);
           height: rem(16px);
           left: rem(4px);
-
-          &.edit-icon {
-            top: rem(2px);
-          }
         }
       }
     }
