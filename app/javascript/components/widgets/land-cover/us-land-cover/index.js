@@ -78,6 +78,8 @@ export default {
       const data = response.data.rows;
       return data;
     }),
+  getDownloadLink: ({ adm0, adm1, adm2, settings } = {}) =>
+    getUSLandCover({ adm0, adm1, adm2, ...settings, download: true }),
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

@@ -209,7 +209,9 @@ export const filterWidgetsByLocation = createSelector(
 
     const widgets = Object.values(allWidgets).map(w => ({
       ...w,
-      colors: colors[w.colors]
+      ...(w.colors && {
+        colors: colors[w.colors]
+      })
     }));
 
     if (embed && widget) return widgets.filter(w => w.widget === widget);
@@ -465,6 +467,10 @@ export const getWidgets = createSelector(
       const { title: parsedTitle } = parsedProps || {};
       const title = parsedTitle || titleTemplate;
 
+      const downloadLink =
+        props.getDownloadLink &&
+        props.getDownloadLink({ ...props, ...parsedProps });
+
       const searchObject = qs.parse(search);
       const widgetQuery = searchObject && searchObject[widget];
       const locationPath = `${window.location.href}`;
@@ -478,6 +484,7 @@ export const getWidgets = createSelector(
         ...parsedProps,
         shareUrl,
         embedUrl,
+        downloadLink,
         title: title
           ? title.replace('{location}', locationLabelFull || '...')
           : ''

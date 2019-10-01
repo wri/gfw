@@ -84,7 +84,7 @@ class MapControlsButtons extends PureComponent {
       : datasets.concat({
         dataset: recentImageryDataset.dataset,
         layers: [recentImageryDataset.layer],
-        visibility: 1,
+        visibility: true,
         opacity: 1,
         isRecentImagery: true
       });

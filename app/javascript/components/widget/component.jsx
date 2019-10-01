@@ -37,7 +37,8 @@ class Widget extends PureComponent {
     handleRefetchData: PropTypes.func,
     preventCloseSettings: PropTypes.bool,
     showAttribution: PropTypes.bool,
-    statements: PropTypes.array
+    statements: PropTypes.array,
+    downloadLink: PropTypes.string
   };
 
   render() {
@@ -69,7 +70,8 @@ class Widget extends PureComponent {
       parseInteraction,
       preventCloseSettings,
       showAttribution,
-      statements
+      statements,
+      downloadLink
     } = this.props;
     const { main } = colors || {};
 
@@ -101,6 +103,7 @@ class Widget extends PureComponent {
           handleChangeSettings={handleChangeSettings}
           handleShowShare={handleShowShare}
           preventCloseSettings={preventCloseSettings}
+          downloadLink={downloadLink}
         />
         <WidgetBody
           chartType={chartType}

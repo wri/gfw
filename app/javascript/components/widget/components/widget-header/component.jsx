@@ -7,6 +7,7 @@ import WidgetMapButton from './components/widget-map-button';
 import WidgetSettingsButton from './components/widget-settings-button';
 import WidgetInfoButton from './components/widget-info-button';
 import WidgetShareButton from './components/widget-share-button';
+import WidgetDownloadButton from './components/widget-download-button';
 
 import './styles.scss';
 
@@ -26,7 +27,8 @@ class WidgetHeader extends PureComponent {
     handleChangeSettings: PropTypes.func,
     handleShowMap: PropTypes.func,
     handleShowShare: PropTypes.func,
-    preventCloseSettings: PropTypes.bool
+    preventCloseSettings: PropTypes.bool,
+    downloadLink: PropTypes.string
   };
 
   render() {
@@ -45,7 +47,8 @@ class WidgetHeader extends PureComponent {
       handleChangeSettings,
       handleShowShare,
       preventCloseSettings,
-      widget
+      widget,
+      downloadLink
     } = this.props;
 
     return (
@@ -61,6 +64,7 @@ class WidgetHeader extends PureComponent {
               handleShowMap={handleShowMap}
             />
           )}
+          {downloadLink && <WidgetDownloadButton downloadLink={downloadLink} />}
           {!embed &&
             !simple &&
             !isEmpty(settingsConfig) && (
