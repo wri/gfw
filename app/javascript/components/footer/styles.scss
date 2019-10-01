@@ -3,21 +3,10 @@
 .c-footer {
   font-family: $font-family-1;
   background: #eceee8;
+  margin-top: rem(30px);
 
   .footer-subscribe {
     background-color: #fff;
-  }
-
-  .footer-subscribe-wrapper {
-    width: 100%;
-    height: rem(110px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .footer-subscribe-button {
-      width: rem(260px);
-    }
   }
 
   .footer-main {
