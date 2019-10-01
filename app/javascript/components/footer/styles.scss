@@ -22,10 +22,9 @@
 
   .footer-main {
     .footer-links {
-      margin-top: rem(30px);
+      padding-top: rem(30px);
 
-      a,
-      button {
+      li a {
         font-size: 14px;
         line-height: 1.86;
         letter-spacing: 0.1px;
@@ -97,17 +96,24 @@
         padding-bottom: rem(30px);
 
         @media screen and (min-width: $screen-m) {
-          justify-content: flex-end;
+          justify-content: space-between;
           margin-top: rem(30px);
         }
 
-        button {
+        .contact-btn {
           font-size: rem(12px);
           color: #aaa;
+          cursor: pointer;
 
           &:hover {
             color: darken(#aaa, 20%);
           }
+        }
+
+        .subscribe-btn {
+          height: rem(36px);
+          width: rem(300px);
+          font-size: rem(14px);
         }
       }
     }
