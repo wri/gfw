@@ -10,6 +10,8 @@ import Icon from 'components/ui/icon';
 import settingsIcon from 'assets/icons/settings.svg';
 import WidgetSettings from '../widget-settings';
 
+import './styles.scss';
+
 class WidgetSettingsButton extends PureComponent {
   static propTypes = {
     widget: PropTypes.string,
