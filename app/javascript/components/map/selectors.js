@@ -226,7 +226,7 @@ export const getDatasetsWithConfig = createSelector(
             opacity,
             bbox,
             color: d.color,
-            active: layers && layers.includes(l.id),
+            active: layers && layers.length && layers.includes(l.id),
             ...(!isEmpty(l.params) && {
               params: {
                 ...l.params,
