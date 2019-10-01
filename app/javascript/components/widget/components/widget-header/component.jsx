@@ -51,23 +51,26 @@ class WidgetHeader extends PureComponent {
       downloadLink
     } = this.props;
 
+    const showSettingsBtn = !embed && !simple && !isEmpty(settingsConfig);
+    const showDownloadBtn = !embed && !simple && downloadLink;
+    const showMapBtn = !embed && !simple && datasets;
+    const showSeparator = showSettingsBtn || showDownloadBtn || showMapBtn;
+
     return (
       <div className={cx('c-widget-header', { simple })}>
         <div className="title">{title}</div>
         <div className="options">
-          {!embed &&
-            !simple &&
-            datasets && (
+          {showMapBtn && (
             <WidgetMapButton
               active={active}
               large={large}
               handleShowMap={handleShowMap}
             />
           )}
-          {downloadLink && <WidgetDownloadButton downloadLink={downloadLink} />}
-          {!embed &&
-            !simple &&
-            !isEmpty(settingsConfig) && (
+          {showDownloadBtn && (
+            <WidgetDownloadButton downloadLink={downloadLink} />
+          )}
+          {showSettingsBtn && (
             <WidgetSettingsButton
               settingsConfig={settingsConfig}
               loading={loading}
@@ -77,6 +80,7 @@ class WidgetHeader extends PureComponent {
               preventCloseSettings={preventCloseSettings}
             />
           )}
+          {showSeparator && <span className="separator" />}
           <div className="small-options">
             <WidgetInfoButton
               square={simple}
