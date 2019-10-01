@@ -111,7 +111,6 @@ class Contact extends PureComponent {
           label="TOOL"
           options={tools}
           component={renderSelect}
-          validate={[placeHolderValidator]}
           placeholder="Select a tool that applies (optional)"
         />
         <Field
