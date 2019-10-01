@@ -34,37 +34,61 @@ const topics = [
     key: 'report-a-bug-or-error-on-gfw',
     name: 'Report a bug or error on GFW',
     placeholder:
-      'Explain the bug or error and tell us where on the website you encountered it. What browser (e.g., Chrome version 50.0.2661.94 m) and operating system (e.g., Windows 8.1) do you use?'
+      "Please tell us what browser (e.g., Chrome version 50.0.2661.94 m) and operating system (e.g., Windows 8.1) you're using, including version numbers."
   },
   {
     key: 'provide-feedback',
     name: 'Provide feedback',
-    placeholder:
-      'Tell us about your experience with GFW! Examples: How can we improve GFW? Why did you visit GFW? How do you use GFW? If and how is the information provided by GFW useful for your work? Are there any additional features and/or data that would be useful?  Was anything confusing or difficult to use?  Etc...'
-  },
-  {
-    key: 'media-request',
-    name: 'Media request',
-    placeholder: 'How can we help you?'
+    placeholder: ''
   },
   {
     key: 'data-related-inquiry',
     name: 'Data-related inquiry or suggestion',
-    placeholder: 'How can we help you?'
+    placeholder: ''
   },
   {
     key: 'general-inquiry',
     name: 'General inquiry',
-    placeholder: 'How can we help you?'
+    placeholder: ''
   }
 ];
+
+const tools = [
+  {
+    key: 'GFW',
+    name: 'Global Forest Watch'
+  },
+  {
+    key: 'GFW-pro',
+    name: 'GFW Pro'
+  },
+  {
+    key: 'FW',
+    name: 'Forest Watcher'
+  },
+  {
+    key: 'blog',
+    name: 'GFW Blog'
+  },
+  {
+    key: 'mapbuilder',
+    name: 'GFW MapBuilder'
+  }
+];
+
+// eslint-disable-next-line no-confusing-arrow
+const placeHolderValidator = value =>
+  value && value === 'placeholder' ? 'Select a topic' : undefined;
 
 class Contact extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { data, handleSubmit, submitting } = this.props;
     const activeTopic =
-      data && topics.find(t => t.key === data.values && data.values.topic);
+      data &&
+      data.values &&
+      data.values.topic &&
+      topics.find(t => t.key === data.values.topic);
     return (
       <form className="c-form" onSubmit={handleSubmit}>
         <Field
@@ -79,6 +103,16 @@ class Contact extends PureComponent {
           label="TOPIC *"
           options={topics}
           component={renderSelect}
+          validate={[placeHolderValidator]}
+          placeholder="Select a topic"
+        />
+        <Field
+          name="tool"
+          label="TOOL"
+          options={tools}
+          component={renderSelect}
+          validate={[placeHolderValidator]}
+          placeholder="Select a tool that applies (optional)"
         />
         <Field
           name="message"
@@ -86,9 +120,9 @@ class Contact extends PureComponent {
           placeholder={activeTopic && activeTopic.placeholder}
           component={renderTextarea}
         />
-        <h4>Interested in testing new features on GFW?</h4>
+        <h4>Interested in testing new features?</h4>
         <div className="radio">
-          <p>Sign up and become and official GFW tester</p>
+          <p>Sign up and become and official GFW tester!</p>
           <Field
             id="signup-true"
             name="signup"
