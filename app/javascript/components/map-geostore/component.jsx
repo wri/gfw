@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 import cx from 'classnames';
+import ContentLoader from 'react-content-loader';
 
-import Loader from 'components/ui/loader';
 import Map from 'components/ui/map';
 
 import { getGeostoreProvider } from 'services/geostore';
@@ -30,11 +30,15 @@ class MapGeostore extends Component {
     basemap: PropTypes.object,
     geostoreId: PropTypes.string,
     className: PropTypes.string,
-    padding: PropTypes.number
+    padding: PropTypes.number,
+    width: PropTypes.number,
+    height: PropTypes.number
   };
 
   static defaultProps = {
-    padding: 25
+    padding: 25,
+    height: 140,
+    width: 140
   };
 
   state = {
@@ -136,7 +140,7 @@ class MapGeostore extends Component {
   };
 
   render() {
-    const { basemap, className } = this.props;
+    const { basemap, className, width, height } = this.props;
     const { loading, viewport, geostore, error } = this.state;
 
     return (
@@ -147,7 +151,15 @@ class MapGeostore extends Component {
           this.mapContainer = r;
         }}
       >
-        {loading && <Loader className="tile-loader" />}
+        {loading && (
+          <ContentLoader
+            width={width}
+            height={height}
+            style={{ width: '100%' }}
+          >
+            <rect x="0" y="0" width={width} height="100%" />
+          </ContentLoader>
+        )}
         {error &&
           !loading && (
           <p className="error-msg">we had trouble finding a recent image</p>

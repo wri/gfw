@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  align-items: center;
 
   @media screen and (min-width: $screen-m) {
     flex-direction: row;
@@ -15,7 +14,6 @@
     min-width: 100%;
     height: rem(120px);
     background: $border;
-    margin-right: rem(15px);
     margin-bottom: rem(20px);
 
     .tile-loader {
@@ -23,6 +21,7 @@
     }
 
     @media screen and (min-width: $screen-m) {
+      margin-right: rem(15px);
       width: rem(140px);
       min-width: rem(140px);
       height: rem(140px);
@@ -116,6 +115,15 @@
         color: $fires;
       }
 
+      .glad,
+      .viirs {
+        min-width: rem(100px);
+
+        svg {
+          margin-top: rem(6px);
+        }
+      }
+
       .activity-data {
         font-size: rem(16px);
         font-weight: 500;
@@ -124,6 +132,8 @@
   }
 
   &.simple {
+    align-items: center;
+
     .item-body {
       max-width: rem(150px);
     }

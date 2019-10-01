@@ -1,8 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import cx from 'classnames';
 import Dotdotdot from 'react-dotdotdot';
+import ContentLoader from 'react-content-loader';
 
 import { formatNumber } from 'utils/format';
 
@@ -20,14 +21,8 @@ const createdMeta = {
   map: 'Created {date} on Map Builder'
 };
 
-const counts = {
-  GLAD: 0,
-  Fires: 0
-};
-
 class AoICard extends PureComponent {
   static propTypes = {
-    id: PropTypes.string,
     name: PropTypes.string,
     tags: PropTypes.array,
     application: PropTypes.string,
@@ -36,12 +31,13 @@ class AoICard extends PureComponent {
     deforestationAlerts: PropTypes.bool,
     fireAlerts: PropTypes.bool,
     monthlySummary: PropTypes.bool,
-    geostore: PropTypes.string
+    geostore: PropTypes.string,
+    loading: PropTypes.bool,
+    alerts: PropTypes.object
   };
 
   render() {
     const {
-      id,
       tags,
       name,
       application,
@@ -50,8 +46,12 @@ class AoICard extends PureComponent {
       deforestationAlerts,
       fireAlerts,
       monthlySummary,
-      geostore
+      geostore,
+      loading,
+      alerts
     } = this.props;
+    const { glads, fires } = alerts || {};
+
     const subStatus = [
       {
         label: 'forest change alerts',
@@ -83,10 +83,8 @@ class AoICard extends PureComponent {
       });
     }
 
-    const hasActivityData = !!counts.GLAD || !!counts.Fires;
-
     return (
-      <div key={id} className={cx('c-aoi-card', { simple })}>
+      <div className={cx('c-aoi-card', { simple })}>
         <MapGeostore
           className="aoi-card-map"
           geostoreId={geostore}
@@ -119,27 +117,42 @@ class AoICard extends PureComponent {
               </div>
             )}
           </div>
-          {!simple &&
-            hasActivityData && (
+          {!simple && (
             <div className="activity">
               <span className="activity-intro">Last weeks activity:</span>
               <span className="glad">
-                <span className="activity-data">
-                  {formatNumber({
-                    num: counts.GLAD,
-                    unit: 'counts'
-                  })}
-                </span>{' '}
-                  GLAD alerts
+                {!loading ? (
+                  <Fragment>
+                    <span className="activity-data notranslate">
+                      {formatNumber({
+                        num: glads || 0,
+                        unit: 'counts'
+                      })}
+                    </span>{' '}
+                    GLAD alerts
+                  </Fragment>
+                ) : (
+                  <ContentLoader width="100" height="15">
+                    <rect x="0" y="0" rx="2" ry="2" width="100" height="15" />
+                  </ContentLoader>
+                )}
               </span>
               <span className="viirs">
-                <span className="activity-data">
-                  {formatNumber({
-                    num: counts.Fires,
-                    unit: 'counts'
-                  })}
-                </span>{' '}
-                  VIIRS alerts
+                {!loading ? (
+                  <Fragment>
+                    <span className="activity-data notranslate">
+                      {formatNumber({
+                        num: fires || 0,
+                        unit: 'counts'
+                      })}
+                    </span>{' '}
+                    VIIRS alerts
+                  </Fragment>
+                ) : (
+                  <ContentLoader width="100" height="15">
+                    <rect x="0" y="0" rx="2" ry="2" width="100" height="15" />
+                  </ContentLoader>
+                )}
               </span>
             </div>
           )}

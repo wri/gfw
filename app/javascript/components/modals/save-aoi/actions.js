@@ -69,7 +69,9 @@ export const saveAOI = createThunkAction(
           wdpaid: parseInt(adm0, 10)
         }),
         fireAlerts,
-        webhookUrl,
+        ...(webhookUrl && {
+          webhookUrl
+        }),
         deforestationAlerts,
         monthlySummary,
         tags: tags || [],

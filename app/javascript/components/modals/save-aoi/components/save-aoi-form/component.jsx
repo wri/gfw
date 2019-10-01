@@ -173,6 +173,8 @@ function SaveAOIForm(props) {
         className="aoi-map"
         geostoreId={(activeArea && activeArea.geostore) || geostoreId}
         padding={50}
+        height={300}
+        width={600}
       />
       <div className={cx('field', { error: nameError })}>
         <span className="form-title">Name this area for later reference</span>

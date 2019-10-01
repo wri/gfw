@@ -6,9 +6,11 @@
   height: 300px;
   background-color: $border;
 
-  .tile-loader {
+  svg {
     background-color: $border;
     opacity: 1;
+    position: absolute;
+    z-index: 1;
   }
 
   .error-msg {

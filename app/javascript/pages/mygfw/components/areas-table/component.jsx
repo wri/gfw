@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import intersection from 'lodash/intersection';
+import moment from 'moment';
 import sortBy from 'lodash/sortBy';
 import { deburrUpper } from 'utils/data';
 import Link from 'redux-first-router-link';
+
+import { getLatestAlerts } from 'services/alerts';
 
 import Icon from 'components/ui/icon';
 import Button from 'components/ui/button';
@@ -31,8 +34,38 @@ class AreasTable extends PureComponent {
   state = {
     activeTags: [],
     sortBy: '',
-    search: ''
+    search: '',
+    alerts: {}
   };
+
+  componentDidMount() {
+    const { areas } = this.props;
+    if (areas) {
+      areas.forEach(area => {
+        getLatestAlerts({
+          geostoreId: area.geostore,
+          params: {
+            startDate: moment
+              .utc()
+              .subtract(2, 'weeks')
+              .format('YYYY-MM-DD'),
+            endDate: moment.utc().format('YYYY-MM-DD')
+          }
+        })
+          .then(alerts => {
+            this.setState({
+              alerts: {
+                ...this.state.alerts,
+                [area.id]: alerts
+              }
+            });
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      });
+    }
+  }
 
   render() {
     const {
@@ -44,14 +77,32 @@ class AreasTable extends PureComponent {
     } = this.props;
     const { activeTags, search } = this.state;
 
+    const areasWithAlerts =
+      areas &&
+      areas.map(area => {
+        const alerts = this.state.alerts[area.id];
+
+        return {
+          ...area,
+          ...(alerts && {
+            alerts: {
+              ...this.state.alerts[area.id]
+            }
+          })
+        };
+      });
+
     const selectedTags =
       activeTags && tags.filter(t => activeTags.includes(t.value));
     const unselectedTags =
       activeTags && tags.filter(t => !activeTags.includes(t.value));
     const filteredAreas =
-      selectedTags && selectedTags.length && areas && areas.length
-        ? areas.filter(a => !!intersection(a.tags, activeTags).length)
-        : areas;
+      selectedTags &&
+      selectedTags.length &&
+      areasWithAlerts &&
+      areasWithAlerts.length
+        ? areasWithAlerts.filter(a => !!intersection(a.tags, activeTags).length)
+        : areasWithAlerts;
     const filterAreasBySearch =
       filteredAreas && filteredAreas.length && search
         ? filteredAreas.filter(a =>
@@ -129,26 +180,26 @@ class AreasTable extends PureComponent {
                   })
                 }
               />
-              {/* <Pill
+              <Pill
                 className="filter-tag"
-                active={this.state.sortBy === 'GLADS'}
+                active={this.state.sortBy === 'glads'}
                 label="GLAD alerts"
                 onClick={() =>
                   this.setState({
-                    sortBy: this.state.sortBy === 'GLADS' ? '' : 'GLADS'
+                    sortBy: this.state.sortBy === 'glads' ? '' : 'glads'
                   })
                 }
               />
               <Pill
                 className="filter-tag"
-                active={this.state.sortBy === 'VIIRS'}
+                active={this.state.sortBy === 'fires'}
                 label="VIIRS alerts"
                 onClick={() =>
                   this.setState({
-                    sortBy: this.state.sortBy === 'VIIRS' ? '' : 'VIIRS'
+                    sortBy: this.state.sortBy === 'fires' ? '' : 'fires'
                   })
                 }
-              /> */}
+              />
             </div>
           </div>
           <div className="column small-12 medium-3">
@@ -163,11 +214,11 @@ class AreasTable extends PureComponent {
           </div>
         </div>
         {orderedAreas && !!orderedAreas.length ? (
-          orderedAreas.map((area, i) => (
+          orderedAreas.map(area => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
                 <Link to={`/dashboards/aoi/${area.id}`}>
-                  <AoICard index={i} {...area} />
+                  <AoICard {...area} loading={!area.alerts} />
                 </Link>
               </div>
               <div className="column small-12 medium-3">

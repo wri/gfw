@@ -1,6 +1,9 @@
 import request from 'utils/request';
 import moment from 'moment';
+import axios from 'axios';
 import { getIndicator } from 'utils/strings';
+
+import { fetchAnalysisEndpoint } from './analysis';
 
 const REQUEST_URL = process.env.GFW_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -31,6 +34,38 @@ const getLocation = (adm0, adm1, adm2) =>
   `iso = '${adm0}'${adm1 ? ` AND adm1 = ${adm1}` : ''}${
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
+
+export const getLatestAlerts = ({ geostoreId, params }) =>
+  axios
+    .all([
+      fetchAnalysisEndpoint({
+        type: 'geostore',
+        adm0: geostoreId,
+        params,
+        name: 'glad-alerts',
+        slug: 'glad-alerts',
+        version: 'v1'
+      }),
+      fetchAnalysisEndpoint({
+        type: 'geostore',
+        adm0: geostoreId,
+        params,
+        name: 'viirs-alerts',
+        slug: 'viirs-active-fires',
+        version: 'v1'
+      })
+    ])
+    .then(
+      axios.spread((gladsResponse, firesResponse) => {
+        const { value: glads } = gladsResponse.data.data.attributes || {};
+        const { value: fires } = firesResponse.data.data.attributes || {};
+
+        return {
+          glads,
+          fires
+        };
+      })
+    );
 
 export const fetchGladAlerts = ({ adm0, adm1, adm2 } = {}) => {
   let glad_summary_table = GLAD_ISO_DATASET;
