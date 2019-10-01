@@ -61,6 +61,10 @@
         margin-bottom: 0;
       }
     }
+
+    .widgets-loader {
+      min-height: rem(150px);
+    }
   }
 
   &.no-widgets {
