@@ -287,6 +287,7 @@ export const parseWidgetsWithOptions = createSelector(
     return widgets.map(w => {
       const optionsConfig = w.config.options;
       const optionKeys = optionsConfig && Object.keys(optionsConfig);
+
       return {
         ...w,
         ...(optionsConfig && {
