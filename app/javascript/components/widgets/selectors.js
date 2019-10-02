@@ -69,9 +69,10 @@ export const selectModalClosing = state =>
 export const selectNonGlobalDatasets = state =>
   state.widgets && state.widgets.data.nonGlobalDatasets;
 
-export const getWdigetFromQuery = createSelector(
-  selectLocationQuery,
-  query => query && query.widget
+export const getWidgetFromLocation = createSelector(
+  [selectLocation, selectLocationQuery],
+  (location, query) =>
+    (location && location.widgetSlug) || (query && query.widget)
 );
 
 export const getLocation = createSelector(
@@ -192,7 +193,7 @@ export const filterWidgetsByLocation = createSelector(
     getLocationData,
     selectPolynameWhitelist,
     selectEmbed,
-    getWdigetFromQuery,
+    getWidgetFromLocation,
     getActiveLayersWithDates,
     selectAnalysis
   ],
@@ -294,7 +295,7 @@ export const filterWidgetsByCategory = createSelector(
     selectAnalysis,
     getLocationData,
     selectEmbed,
-    getWdigetFromQuery
+    getWidgetFromLocation
   ],
   (widgets, category, showAnalysis, locationData, embed, widget) => {
     if (isEmpty(widgets)) return null;
@@ -343,7 +344,7 @@ export const getWidgets = createSelector(
       return null;
     }
 
-    const { locationLabelFull, type } = locationObj || {};
+    const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
     const { polynamesWhitelist, status } = locationData || {};
 
     return widgets.map(w => {
@@ -475,9 +476,11 @@ export const getWidgets = createSelector(
       const widgetQuery = searchObject && searchObject[widget];
       const locationPath = `${window.location.href}`;
       const shareUrl = `${locationPath}#${widget}`;
-      const embedUrl = `${window.location.origin}/embed${
-        window.location.pathname
-      }?${`widget=${widget}`}${widgetQuery ? `&${widget}=${widgetQuery}` : ''}`;
+      const embedUrl = `${window.location.origin}/embed/widget/${widget}/${
+        type
+      }${adm0 ? `/${adm0}` : ''}${adm1 ? `/${adm1}` : ''}${
+        adm2 ? `/${adm2}` : ''
+      }${widgetQuery ? `?${widget}=${widgetQuery}` : ''}`;
 
       return {
         ...props,
@@ -494,7 +497,7 @@ export const getWidgets = createSelector(
 );
 
 export const getActiveWidget = createSelector(
-  [getWidgets, getWdigetFromQuery, selectAnalysis],
+  [getWidgets, getWidgetFromLocation, selectAnalysis],
   (widgets, activeWidgetKey, analysis) => {
     if (!widgets || analysis) return null;
     if (!activeWidgetKey) return widgets[0];

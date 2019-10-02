@@ -17,6 +17,14 @@ Gfw::Application.routes.draw do
     "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}?widget=#{params[:widget]}&#{req.query_string}" }
   get '/country/embed/:widget/:adm0/:adm1/:adm2', to: redirect { |params, req|
     "/embed/dashboards/country/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?widget=#{params[:widget]}&#{req.query_string}" }
+  get '/embed/dashboards/:type', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}?#{req.query_string}" }
+  get '/embed/dashboards/:type/:adm0', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}/#{params[:adm0]}?#{req.query_string}" }
+  get '/embed/dashboards/:type/:adm0/:adm1', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}/#{params[:adm0]}/#{params[:adm1]}?#{req.query_string}" }
+  get '/embed/dashboards/:type/:adm0/:adm1/:adm2', to: redirect { |params, req|
+    "/embed/widget/#{req.query_parameters[:widget]}/#{params[:type]}/#{params[:adm0]}/#{params[:adm1]}/#{params[:adm2]}?#{req.query_string}" }
   get '/country/*all', to: redirect { |params, req| "/dashboards#{req.fullpath}" }
   get '/countries' => redirect('/dashboards/global')
   get '/countries/*all' => redirect('/dashboards/global')
@@ -39,14 +47,17 @@ Gfw::Application.routes.draw do
   get '/map' => 'map#index'
   get '/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map#index'
   get '/map/*all' => 'map#index'
-  get '/embed/map' => 'map#index'
-  get '/embed/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map#index'
-  get '/embed/map/*all' => 'map#index'
 
   # dashboards
   get '/dashboards' => redirect('/dashboards/global')
   get '/dashboards(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#index'
-  get '/embed/dashboards/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
+
+  # Embeds
+  get '/embed/map' => 'map#index'
+  get '/embed/map(/:type)(/:adm0)(/:adm1)(/:adm2)' => 'map#index'
+  get '/embed/map/*all' => 'map#index'
+  get '/embed/widget/:slug/:type(/:adm0)(/:adm1)(/:adm2)' => 'dashboards#embed'
+
 
   # about
   get '/about' => 'about#index'
@@ -63,12 +74,12 @@ Gfw::Application.routes.draw do
   get '/stories' => 'stories#index'
   get '/stories/*all' => 'stories#index'
 
+  # My GFW
+  get '/my-gfw' => 'mygfw#index'
+
   # Small Grunts Fund
   get '/grants-and-fellowships' => 'grants_and_fellowships#index'
   get '/grants-and-fellowships/*all' => 'grants_and_fellowships#index'
-
-  # connect
-  get '/my-gfw' => 'mygfw#index'
 
   # static
   get '/browser-support' => 'browser_support#index'
