@@ -63,7 +63,7 @@ class NavAlt extends PureComponent {
   };
 
   render() {
-    const { isDesktop, showSubmenu } = this.props;
+    const { isDesktop, showSubmenu, loggedIn } = this.props;
     const { showLang, showMore, languages, lang } = this.state;
     const activeLang = languages && languages.find(l => l.value === lang);
     const showMorePanel = showMore || showSubmenu;
@@ -114,7 +114,10 @@ class NavAlt extends PureComponent {
                 activeClassName="-active"
               >
                 My GFW
-                <Icon icon={myGfwIcon} />
+                <Icon
+                  icon={myGfwIcon}
+                  className={cx({ 'logged-in': loggedIn })}
+                />
               </NavLink>
             </li>
           </Fragment>
