@@ -37,6 +37,7 @@ class Header extends PureComponent {
     setSaveAOISettings: PropTypes.func,
     title: PropTypes.string,
     activeArea: PropTypes.object,
+    firstArea: PropTypes.object,
     errorMsg: PropTypes.string
   };
 
@@ -60,6 +61,7 @@ class Header extends PureComponent {
       setSaveAOISettings,
       title,
       activeArea,
+      firstArea,
       errorMsg
     } = this.props;
     const isCountryDashboard =
@@ -122,6 +124,16 @@ class Header extends PureComponent {
                 <Link className="breadcrumb-link" to="/dashboards/global">
                   <Icon icon={arrowIcon} className="breadcrumb-icon" />
                   Go to Global dashboard
+                </Link>
+              )}
+              {isCountryDashboard &&
+                !!firstArea && (
+                <Link
+                  className="breadcrumb-link"
+                  to={`/dashboards/aoi/${firstArea.id}`}
+                >
+                  <Icon icon={arrowIcon} className="breadcrumb-icon" />
+                    Go to Areas dashboard
                 </Link>
               )}
               {title && (

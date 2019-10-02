@@ -64,6 +64,11 @@ export const getAdminMetadata = createSelector(
   }
 );
 
+export const getFirstUserArea = createSelector(
+  [getUserAreas],
+  areas => areas && !!areas.length && areas[0]
+);
+
 export const getAdm0Data = createSelector(
   [getAdminMetadata],
   data => data && data.adm0
@@ -180,5 +185,6 @@ export const getHeaderProps = createStructuredSelector({
   selectorMeta: getSelectorMeta,
   shareMeta: getShareMeta,
   title: getDashboardTitle,
-  activeArea: getActiveArea
+  activeArea: getActiveArea,
+  firstArea: getFirstUserArea
 });

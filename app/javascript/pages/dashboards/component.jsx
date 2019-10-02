@@ -143,7 +143,7 @@ class DashboardsPage extends PureComponent {
                 <GeodescriberProvider />
               </Fragment>
             )}
-            {isAreaDashboard && <AreasProvider />}
+            <AreasProvider />
           </div>
         )}
       </MediaQuery>
