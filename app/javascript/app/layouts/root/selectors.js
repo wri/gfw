@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 
 import { buildFullLocationName } from 'utils/format';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
 const selectLoggedIn = state => state.myGfw && !isEmpty(state.myGfw.data);
 const selectMyGFWLoading = state => state.myGfw && state.myGfw.loading;
@@ -39,13 +40,20 @@ export const getMetadata = createSelector(
     selectLocation,
     selectedCountries,
     selectedRegions,
-    selectedSubRegion
+    selectedSubRegion,
+    getGeodescriberTitleFull
   ],
-  (route, location, adm0s, adm1s, adm2s) => {
+  (route, location, adm0s, adm1s, adm2s, geoTitle) => {
     const { type, adm0, adm1, adm2 } = location;
     const metadata = window.metadata[route && route.controller];
 
     if (!type) return metadata;
+    if (type === 'aoi') {
+      return {
+        title: geoTitle || ''
+      };
+    }
+
     if (
       type === 'country' &&
       ((adm0 && (!adm0s || !adm0s.length)) ||

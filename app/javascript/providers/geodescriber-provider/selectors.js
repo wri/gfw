@@ -5,7 +5,6 @@ import { format } from 'd3-format';
 import { buildFullLocationName } from 'utils/format';
 import tropicalIsos from 'data/tropical-isos.json';
 
-import { selectActiveLang } from 'app/layouts/root/selectors';
 import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
 
 const adminSentences = {
@@ -38,6 +37,14 @@ export const selectCountryData = state =>
     adm1: state.countryData.regions,
     adm2: state.countryData.subRegions
   };
+
+export const selectActiveLang = state =>
+  (state.location &&
+    state.location &&
+    state.location.query &&
+    state.location.query.lang) ||
+  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
+  'en';
 
 export const getAreaName = createSelector(
   [getAllAreas, selectLocation],
