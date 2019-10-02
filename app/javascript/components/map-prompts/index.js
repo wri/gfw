@@ -59,7 +59,11 @@ class MapPromptsContainer extends PureComponent {
 
   getStepsData = () => {
     const { stepsKey } = this.props;
-    const { setMapPromptsSettings } = this.props;
+    const {
+      setMapPromptsSettings,
+      setAnalysisView,
+      clearAnalysisView
+    } = this.props;
 
     const allSteps = {
       mapTour: {
@@ -383,6 +387,87 @@ class MapPromptsContainer extends PureComponent {
           }
         ]
       },
+      areaOfInterestTour: {
+        title: 'Create an area of interest',
+        steps: [
+          {
+            target: '.subnav-link-analysis',
+            content:
+              'Click the Analysis tab, where you can upload or draw or a custom shape on the map.',
+            disableBeacon: true,
+            placement: 'right',
+            actions: {
+              prev: () => {
+                this.props.setMainMapSettings({
+                  showAnalysis: false
+                });
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+                clearAnalysisView();
+              },
+              next: () => {
+                this.props.setMainMapSettings({
+                  showAnalysis: true
+                });
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+              }
+            }
+          },
+          {
+            target: '.draw-upload-tab',
+            content:
+              'Zoom the map to your desired location and click this button to draw or upload a shape. An analysis will be automatically triggered after you finish.',
+            disableBeacon: true,
+            placement: 'right',
+            actions: {
+              prev: () => {
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+                this.props.setMainMapSettings({
+                  showAnalysis: false
+                });
+              }
+            }
+          },
+          {
+            target: '.analysis-boundary-menu',
+            content:
+              'Alternatively, you can click anywhere on the map to prompt an analysis on that area. You can analyze countries and regions (political boundaries) as well as river basins and terrestrial ecoregions. Let’s perform an analysis on a country, for example.',
+            disableBeacon: true,
+            placement: 'right',
+            delay: 3000,
+            actions: {
+              prev: () => {
+                this.props.setMainMapSettings({
+                  showAnalysis: true
+                });
+                this.props.setAnalysisSettings({
+                  showDraw: false
+                });
+                clearAnalysisView();
+              },
+              next: () => {
+                setAnalysisView({ type: 'country', adm0: 'BRA' });
+              }
+            }
+          },
+          {
+            target: '.analysis-actions',
+            delay: 600,
+            content:
+              'After you perform an analysis on any area, click on the Save in My GFW button to save the area for future reference.',
+            disableBeacon: true,
+            placement: 'right',
+            prev: () => {
+              clearAnalysisView();
+            }
+          }
+        ]
+      },
       topicsClimate: {
         title: 'Climate',
         steps: [
@@ -489,7 +574,9 @@ MapPromptsContainer.propTypes = {
   recentActive: PropTypes.bool,
   showPrompts: PropTypes.bool,
   activeCategories: PropTypes.array,
-  datasetIds: PropTypes.array
+  datasetIds: PropTypes.array,
+  setAnalysisView: PropTypes.func,
+  clearAnalysisView: PropTypes.func
 };
 
 reducerRegistry.registerModule('mapPrompts', {

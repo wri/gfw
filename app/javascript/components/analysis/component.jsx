@@ -135,7 +135,7 @@ class AnalysisComponent extends PureComponent {
             )}
             {(!activeArea || (activeArea && !activeArea.userArea)) && (
               <Button
-                className="analysis-action-btn"
+                className="analysis-action-btn save-to-mygfw-btn"
                 onClick={() => {
                   setSaveAOISettings({ open: true });
                 }}

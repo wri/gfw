@@ -32,7 +32,8 @@ class MapMenuMyGFW extends PureComponent {
     location: PropTypes.object,
     tags: PropTypes.array,
     loading: PropTypes.bool,
-    userData: PropTypes.object
+    userData: PropTypes.object,
+    setMapPromptsSettings: PropTypes.func
   };
 
   state = {
@@ -59,7 +60,7 @@ class MapMenuMyGFW extends PureComponent {
   }
 
   renderNoAreas() {
-    const { isDesktop } = this.props;
+    const { isDesktop, setMapPromptsSettings } = this.props;
     return (
       <div className="aoi-header">
         {isDesktop && (
@@ -72,7 +73,19 @@ class MapMenuMyGFW extends PureComponent {
           in-depth analysis of the area, as well as receiving email
           notifications when new deforestation alerts are available.
         </p>
-        <Button theme="theme-button-small">Learn how</Button>
+        <Button
+          theme="theme-button-small"
+          onClick={() =>
+            setMapPromptsSettings({
+              open: true,
+              stepsKey: 'areaOfInterestTour',
+              stepIndex: 0,
+              force: true
+            })
+          }
+        >
+          Learn how
+        </Button>
       </div>
     );
   }
