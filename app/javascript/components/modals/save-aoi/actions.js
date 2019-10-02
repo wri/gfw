@@ -52,11 +52,11 @@ export const saveAOI = createThunkAction(
         id: activeAreaId,
         application: application || 'gfw',
         geostore: geostoreId,
-        ...(type === 'country' && {
-          iso: {
-            region: isCountry ? adm1 : null,
-            subRegion: isCountry ? adm2 : null,
-            country: isCountry ? adm0 : null
+        ...(isCountry && {
+          admin: {
+            adm0,
+            adm1,
+            adm2
           }
         }),
         ...(type === 'use' && {
