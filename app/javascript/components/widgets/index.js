@@ -56,7 +56,8 @@ class WidgetsContainer extends PureComponent {
     getWidgetsData: PropTypes.func,
     location: PropTypes.object,
     activeWidget: PropTypes.object,
-    setMapSettings: PropTypes.func
+    setMapSettings: PropTypes.func,
+    embed: PropTypes.bool
   };
 
   state = {
@@ -64,12 +65,12 @@ class WidgetsContainer extends PureComponent {
   };
 
   componentDidMount() {
-    const { getWidgetsData, location, activeWidget } = this.props;
+    const { getWidgetsData, location, activeWidget, embed } = this.props;
     if (location.type === 'global') {
       getWidgetsData();
     }
 
-    if (activeWidget && activeWidget.datasets) {
+    if (!embed && activeWidget && activeWidget.datasets) {
       this.syncWidgetWithMap();
     }
 
@@ -79,14 +80,14 @@ class WidgetsContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { getWidgetsData, activeWidget } = this.props;
+    const { getWidgetsData, activeWidget, embed } = this.props;
 
     if (location.type === 'global' && prevProps.location.type !== 'global') {
       getWidgetsData();
     }
 
     // if widget is active and layers or params change push to map
-    if (activeWidget) {
+    if (!embed && activeWidget) {
       const { settings, datasets } = activeWidget || {};
       const mapSettingsChanged =
         settings &&
@@ -104,7 +105,11 @@ class WidgetsContainer extends PureComponent {
     }
 
     // if widget is no longer activeWidget remove layers from map
-    if (!activeWidget && !isEqual(activeWidget, prevProps.activeWidget)) {
+    if (
+      !embed &&
+      !activeWidget &&
+      !isEqual(activeWidget, prevProps.activeWidget)
+    ) {
       this.clearMap();
     }
   }
