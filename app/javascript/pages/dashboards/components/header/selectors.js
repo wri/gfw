@@ -66,7 +66,7 @@ export const getAdminMetadata = createSelector(
 
 export const getFirstUserArea = createSelector(
   [getUserAreas],
-  areas => areas && !!areas.length && areas[0]
+  areas => (areas && areas.length ? areas[0] : null)
 );
 
 export const getAdm0Data = createSelector(
