@@ -8,7 +8,7 @@
   min-height: rem(250px);
 
   @media screen and(min-width: $screen-l) {
-    padding: rem(70px) rem(30px) rem(50px) 0;
+    padding: rem(60px) rem(30px) rem(50px) 0;
     min-height: rem(350px);
   }
 
@@ -58,6 +58,31 @@
       margin-bottom: 0;
     }
 
+    .breadcrumb-link {
+      display: flex;
+      align-items: center;
+      color: $green-gfw;
+      font-size: rem(12px);
+      margin-bottom: rem(30px);
+      font-weight: 400;
+
+      .breadcrumb-icon {
+        fill: $green-gfw;
+        transform: rotate(90deg);
+        margin-right: rem(5px);
+        width: rem(12px);
+        height: rem(12px);
+      }
+
+      &:hover {
+        color: darken($green-gfw, 10%);
+
+        .breadcrumb-icon {
+          fill: darken($green-gfw, 10%);
+        }
+      }
+    }
+
     h1 {
       color: $white;
       font-weight: 300;
@@ -80,7 +105,6 @@
   }
 
   .metadata {
-    margin-bottom: rem(25px);
     margin-left: rem(30px);
     display: flex;
     flex-direction: column;
@@ -117,7 +141,7 @@
     color: rgba($white, 0.9);
     font-size: rem(18px);
     font-weight: 400;
-    margin-top: rem(10px);
+    margin-top: rem(25px);
     margin-bottom: rem(20px);
     min-height: rem(90px);
 

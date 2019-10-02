@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import Link from 'redux-first-router-link';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -13,6 +14,7 @@ import tagIcon from 'assets/icons/tag.svg';
 import downloadIcon from 'assets/icons/download.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
 import pencilIcon from 'assets/icons/pencil.svg';
+import arrowIcon from 'assets/icons/arrow-down.svg';
 import './styles.scss';
 
 class Header extends PureComponent {
@@ -116,6 +118,12 @@ class Header extends PureComponent {
         <div className="row">
           <div className="columns small-12 medium-10">
             <div className="select-container">
+              {isAreaDashboard && (
+                <Link className="breadcrumb-link" to="/dashboards/global">
+                  <Icon icon={arrowIcon} className="breadcrumb-icon" />
+                  Go to Global dashboard
+                </Link>
+              )}
               {title && (
                 <h3 className={cx({ global: title === 'global' })}>{title}</h3>
               )}
