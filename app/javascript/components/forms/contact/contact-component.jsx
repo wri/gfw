@@ -124,7 +124,6 @@ export default reduxForm({
   form: 'contact',
   validate,
   initialValues: {
-    topic: 'provide-feedback',
     signup: 'false'
   }
 })(Contact);
