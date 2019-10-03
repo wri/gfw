@@ -119,8 +119,15 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [sortData, getSettings, getIndicator, getLocation, getSentences],
-  (data, settings, indicator, location, sentences) => {
+  [
+    sortData,
+    getSettings,
+    getIndicator,
+    getLocation,
+    getSentences,
+    getLocationData
+  ],
+  (data, settings, indicator, location, sentences, meta) => {
     if (!data || !data.length || !location) return null;
     const { startYear, endYear } = settings;
     const {
@@ -149,8 +156,18 @@ export const parseSentence = createSelector(
       sentence = !indicator ? globalInitial : globalWithIndicator;
     }
     if (loss === 0) sentence = noLoss;
+
+    const topRegionData = data[0];
+    const topRegion = meta && topRegionData && meta[topRegionData.id];
+
     const params = {
       indicator: indicatorName,
+      topLocationLabel: topRegion && topRegion.label,
+      topLocationPerc:
+        topRegionData &&
+        formatNumber({ num: topRegionData.percentage, unit: '%' }),
+      topLocationLoss:
+        topRegionData && formatNumber({ num: topRegionData.loss, unit: 'ha' }),
       location:
         location.label === 'global' ? 'globally' : location && location.label,
       indicator_alt: indicatorName,

@@ -83,14 +83,14 @@ export default {
   },
   sentence: {
     globalInitial:
-      'From {startYear} to {endYear}, {loss} of tree cover was lost {location}, equivalent to a {localPercent} decrease since {extentYear}.',
+      'From {startYear} to {endYear}, {topLocationLabel} had the highest relative tree cover loss in the world, eqivalent to a loss of {topLocationLoss}, which represents {topLocationPerc} of the tree cover in the year {extentYear}.',
     globalWithIndicator:
-      'From {startYear} to {endYear}, {loss} of tree cover was lost {location}, within {indicator} equivalent to a {localPercent} decrease since {extentYear}',
+      'From {startYear} to {endYear}, {topLocationLabel} within {indicator} had the highest relative tree cover loss in the world, eqivalent to a loss of {topLocationLoss}, which represents {topLocationPerc} of the tree cover in the year {extentYear}.',
     initial:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of the global total.',
+      'From {startYear} to {endYear}, {location} lost {loss} of relative tree cover, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of the global total.',
     withIndicator:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of the global total.',
-    noLoss: 'There was no tree cover loss identified in {location}.'
+      'From {startYear} to {endYear}, {location} lost {loss} of tree relative cover in {indicator}, equivalent to a {localPercent} decrease since {extentYear} and {globalPercent} of the global total.',
+    noLoss: 'There was no relative tree cover loss identified in {location}.'
   },
   settings: {
     threshold: 30,
