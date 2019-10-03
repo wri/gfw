@@ -30,7 +30,7 @@ class ModalContactUs extends PureComponent {
         title={
           showConfirm
             ? 'Thank you for contacting Global Forest Watch! Check your inbox for a confirmation email.'
-            : 'Contact us.'
+            : 'Contact us'
         }
         className="c-contact-us"
       >

@@ -22,6 +22,9 @@ const validate = values => {
   if (!values.topic) {
     errors.topic = true;
   }
+  if (!values.tool) {
+    errors.tool = true;
+  }
   if (!values.message) {
     errors.message = true;
   }
@@ -31,10 +34,10 @@ const validate = values => {
 
 const topics = [
   {
-    key: 'report-a-bug-or-error-on-gfw',
-    name: 'Report a bug or error on GFW',
+    key: 'report-a-bug-or-error',
+    name: 'Report a bug or error',
     placeholder:
-      "Please tell us what browser (e.g., Chrome version 50.0.2661.94 m) and operating system (e.g., Windows 8.1) you're using, including version numbers."
+      "Please tell us what browser and operating system you're using, including version numbers."
   },
   {
     key: 'provide-feedback',
@@ -55,15 +58,15 @@ const topics = [
 
 const tools = [
   {
-    key: 'GFW',
+    key: 'gfw',
     name: 'Global Forest Watch'
   },
   {
-    key: 'GFW-pro',
+    key: 'gfw-pro',
     name: 'GFW Pro'
   },
   {
-    key: 'FW',
+    key: 'fw',
     name: 'Forest Watcher'
   },
   {
@@ -71,7 +74,7 @@ const tools = [
     name: 'GFW Blog'
   },
   {
-    key: 'mapbuilder',
+    key: 'map-builder',
     name: 'GFW MapBuilder'
   }
 ];
@@ -79,6 +82,9 @@ const tools = [
 // eslint-disable-next-line no-confusing-arrow
 const placeHolderValidator = value =>
   value && value === 'placeholder' ? 'Select a topic' : undefined;
+// eslint-disable-next-line no-confusing-arrow
+const toolValidator = value =>
+  value && value === 'placeholder' ? 'Select a tool' : undefined;
 
 class Contact extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
@@ -108,10 +114,11 @@ class Contact extends PureComponent {
         />
         <Field
           name="tool"
-          label="TOOL"
+          label="TOOL *"
           options={tools}
           component={renderSelect}
-          placeholder="Select a tool that applies (optional)"
+          validate={[toolValidator]}
+          placeholder="Select a tool that applies"
         />
         <Field
           name="message"
