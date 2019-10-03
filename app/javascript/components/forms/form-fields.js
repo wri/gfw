@@ -38,13 +38,21 @@ export const renderSelect = ({
   input,
   label,
   options,
+  placeholder,
   meta: { touched, error }
 }) => (
   <div className={`field select ${touched && error ? 'error' : ''}`}>
     <label>{label}</label>
     <div>
-      <Field name={input.name} component="select">
-        {options.map((option, i) => {
+      <Field
+        name={input.name}
+        component="select"
+        value={placeholder ? 'placeholder' : options[0].key}
+      >
+        {(placeholder
+          ? [{ name: placeholder, key: 'placeholder' }, ...options]
+          : options
+        ).map((option, i) => {
           return (
             <option key={i} value={option.key}>
               {option.name}
