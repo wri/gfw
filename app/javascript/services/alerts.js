@@ -20,7 +20,7 @@ const QUERIES = {
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   firesGrouped:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  viirsAlerts: '{location}?group=true&period={period}&thresh=0',
+  viirsAlerts: '&group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
   alertsLatest:
@@ -170,7 +170,7 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
 };
 
 export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
-  const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${
+  const url = `${REQUEST_URL}/viirs-active-fires?geostore=${adm0}${
     QUERIES.viirsAlerts
   }`
     .replace('{location}', !adm2 ? getLocationQuery(adm0, adm1, adm2) : '')

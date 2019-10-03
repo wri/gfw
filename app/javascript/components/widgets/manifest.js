@@ -13,6 +13,7 @@ import treeGainLocated from 'components/widgets/forest-change/tree-gain-located'
 import treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
 import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
+import fires from 'components/widgets/forest-change/fires';
 
 // // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -50,6 +51,7 @@ export default {
   treeLossGlobal,
   treeLossRanked,
   firesAlerts,
+  fires,
   firesRanked,
   faoDeforest,
   faoReforest,
