@@ -28,5 +28,10 @@ export default {
     category: 'Widget Settings',
     action: 'User opens settings menu',
     label: '[widget]'
+  },
+  publicArea: {
+    category: 'Areas of interest',
+    action: 'Visit a shared area of interest',
+    label: '[areaId]'
   }
 };

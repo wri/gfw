@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Sticky from 'react-stickynode';
+import isEqual from 'lodash/isEqual';
 import { SCREEN_M } from 'utils/constants';
 import { track } from 'app/analytics';
 import MediaQuery from 'react-responsive';
@@ -43,6 +44,21 @@ class DashboardsPage extends PureComponent {
     activeArea: PropTypes.object,
     areaLoading: PropTypes.bool
   };
+
+  componentDidUpdate(prevProps) {
+    const { activeArea } = this.props;
+    const { activeArea: prevActiveArea } = prevProps;
+
+    if (
+      activeArea &&
+      !activeArea.userArea &&
+      !isEqual(activeArea, prevActiveArea)
+    ) {
+      track('publicArea', {
+        label: activeArea.id
+      });
+    }
+  }
 
   renderMap = () => {
     const { showMapMobile, closeMobileMap } = this.props;
