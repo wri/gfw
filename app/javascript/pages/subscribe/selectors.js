@@ -9,9 +9,11 @@ const selectLoading = state =>
   (state.datasets && state.datasets.loading) ||
   (state.myGfw && state.myGfw.loading);
 const selectSaving = state =>
-  state.modalSubscribe && state.modalSubscribe.saving;
-const selectSaved = state => state.modalSubscribe && state.modalSubscribe.saved;
-const selectError = state => state.modalSubscribe && state.modalSubscribe.error;
+  state.subscriptionForm && state.subscriptionForm.saving;
+const selectSaved = state =>
+  state.subscriptionForm && state.subscriptionForm.saved;
+const selectError = state =>
+  state.subscriptionForm && state.subscriptionForm.error;
 const selectCountries = state =>
   state.countryData && state.countryData.countries;
 
@@ -33,7 +35,7 @@ export const getEmail = createSelector(
   settings => settings.email
 );
 
-export const getModalSubscribeProps = createStructuredSelector({
+export const getSubscriptionFormProps = createStructuredSelector({
   name: getName,
   email: getEmail,
   loading: selectLoading,

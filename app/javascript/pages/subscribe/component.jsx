@@ -288,7 +288,8 @@ function SubscribePage(props) {
               }
               disabled={!canSubmit}
             >
-              {saving ? <Loader className="saving-btn-loader" /> : 'SAVE'}
+              SAVE
+              {saving && <Loader className="saving-btn-loader" />}
             </Button>
           </div>
         </div>

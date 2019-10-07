@@ -3,7 +3,6 @@ import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { postNewsletterSubscription } from 'services/subscriptions';
 
 export const setSubscribeSaving = createAction('setSubscribeSaving');
-export const setSubscribeSaved = createAction('setSubscribeSaved');
 export const resetSubscribe = createAction('resetSubscribe');
 export const clearSubscribeError = createAction('clearSubscribeError');
 
@@ -45,11 +44,17 @@ export const saveSubscription = createThunkAction(
       };
 
       postNewsletterSubscription(
-        JSON.stringify(postData),
+        postData,
         'https://connect.wri.org/l/120942/2019-07-18/4d6vw2'
       )
         .then(() => {
-          dispatch(setSubscribeSaved());
+          dispatch(
+            setSubscribeSaving({
+              saving: false,
+              error: false
+            })
+          );
+          dispatch({ type: 'location/THANKYOU' });
         })
         .catch(error => {
           dispatch(

@@ -19,7 +19,6 @@ export const postNewsletterSubscription = (data, url) =>
     headers: {
       'content-type': 'application/json'
     },
-    withCredentials: true,
     data,
     url
   });
