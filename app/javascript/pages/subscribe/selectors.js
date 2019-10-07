@@ -12,6 +12,8 @@ const selectSaving = state =>
   state.modalSubscribe && state.modalSubscribe.saving;
 const selectSaved = state => state.modalSubscribe && state.modalSubscribe.saved;
 const selectError = state => state.modalSubscribe && state.modalSubscribe.error;
+const selectCountries = state =>
+  state.countryData && state.countryData.countries;
 
 export const getSubscribeSettings = createSelector(
   [selectSubscribeUrlState],
@@ -38,5 +40,6 @@ export const getModalSubscribeProps = createStructuredSelector({
   userData: selectUserData,
   saving: selectSaving,
   saved: selectSaved,
-  error: selectError
+  error: selectError,
+  countries: selectCountries
 });

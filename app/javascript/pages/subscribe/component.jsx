@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import CountryDataProvider from 'providers/country-data-provider';
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
@@ -57,7 +58,8 @@ function SubscribePage(props) {
     saveSubscription,
     saving,
     error,
-    email: propsEmail
+    email: propsEmail,
+    countries
   } = props;
 
   useEffect(
@@ -75,6 +77,15 @@ function SubscribePage(props) {
       }
     },
     [propsEmail]
+  );
+
+  useEffect(
+    () => {
+      if (countries && countries.length) {
+        dispatch({ type: 'reset', payload: { countries } });
+      }
+    },
+    [countries]
   );
 
   const subscriptions = [
@@ -127,6 +138,7 @@ function SubscribePage(props) {
 
   return (
     <div className="l-subscribe-page">
+      <CountryDataProvider />
       <div className="row">
         <div className="column small-8 small-offset-2 medium-8 medium-offset-2">
           <div className="subscribe-header">
@@ -221,11 +233,12 @@ function SubscribePage(props) {
               <Dropdown
                 className="form-input"
                 theme="theme-dropdown-native-form"
-                options={[
-                  { label: 'Select country', value: '' },
-                  { label: 'Spain', value: 'ES' },
-                  { label: 'United Kingdom', value: 'UK' }
-                ]}
+                options={
+                  state.countries && [
+                    { label: 'Select country', value: '' },
+                    ...state.countries
+                  ]
+                }
                 value={state.country}
                 onChange={country =>
                   dispatch({
@@ -289,7 +302,8 @@ SubscribePage.propTypes = {
   saveSubscription: PropTypes.func,
   email: PropTypes.string,
   error: PropTypes.bool,
-  saving: PropTypes.bool
+  saving: PropTypes.bool,
+  countries: PropTypes.array
 };
 
 export default SubscribePage;
