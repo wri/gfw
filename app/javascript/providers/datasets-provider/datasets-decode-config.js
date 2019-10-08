@@ -363,26 +363,49 @@ const decodes = {
     float year = 2000.0 + yearInt;
     float threshold = color.b * 255.;
 
+    float rStart = 244.;
+    float gStart = 209.;
+    float bStart = 101.;
+
+    float rEnd = 190.;
+    float gEnd = 42.;
+    float bEnd = 61.;
+
+    float colR = (rCol * 255. * ((rEnd - rStart) / 255.)) + rStart;
+    float colG = (rCol * 255. * ((gEnd - gStart) / 255.)) + gStart;
+    float colB = (rCol * 255. * ((bEnd - bStart) / 255.)) + bStart;
+
     // map to years
     if (year >= startYear && year <= endYear && year >= 2001. && threshold >= thresh) {
-      color.r = 1.;
-      color.g = 1. - rCol;
-      color.b = 0.;
+      color.r = colR / 255.;
+      color.g = colG / 255.;
+      color.b = colB / 255.;
     } else {
       alpha = 0.;
     }
   `,
   cumulativeCarbonGain: `
-    float rCol = color.r;
-    float bCol = color.b;
-    // float alphaCol = color.b * 255.;
-    float threshold = color.g * 255.;
+    float rCol = color.r * 255.;
+    float gCol = color.g;
+    float threshold = gCol * 255.;
+
+    float rStart = 244.;
+    float gStart = 209.;
+    float bStart = 101.;
+
+    float rEnd = 34.;
+    float gEnd = 118.;
+    float bEnd = 63.;
+
+    float colR = (rCol * ((rEnd - rStart) / 255.)) + rStart;
+    float colG = (rCol * ((gEnd - gStart) / 255.)) + gStart;
+    float colB = (rCol * ((bEnd - bStart) / 255.)) + bStart;
 
     // map to years
     if (threshold >= thresh) {
-      color.r = 1. - rCol;
-      color.g = 0.8;
-      color.b = 0.;
+      color.r = colR / 255.;
+      color.g = colG / 255.;
+      color.b = colB / 255.;
     } else {
       alpha = 0.;
     }
