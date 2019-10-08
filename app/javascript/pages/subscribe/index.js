@@ -14,5 +14,3 @@ reducerRegistry.registerModule('subscriptionForm', {
 export default connect(getSubscriptionFormProps, {
   ...actions
 })(PageComponent);
-
-// export default PageComponent;
