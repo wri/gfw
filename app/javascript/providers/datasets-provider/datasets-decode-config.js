@@ -356,6 +356,21 @@ const decodes = {
     } else {
       alpha = 0.;
     }
+  `,
+  grossCarbonEmissions: `
+    float rCol = color.r;
+    float yearInt = color.g * 255.;
+    float year = 2000.0 + yearInt;
+    float threshold = color.b * 255.;
+
+    // map to years
+    if (year >= startYear && year <= endYear && year >= 2001. && threshold >= thresh) {
+      color.r = 1.;
+      color.g = 1. - rCol;
+      color.b = 0.;
+    } else {
+      alpha = 0.;
+    }
   `
 };
 
@@ -371,5 +386,6 @@ export default {
   'f10bded4-94e2-40b6-8602-ae5bdfc07c08': decodes.woodyBiomass,
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
   '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terrai,
-  '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover
+  '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover,
+  'ee23d901-a491-4bc7-af7c-293d0ba50950': decodes.grossCarbonEmissions
 };
