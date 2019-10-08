@@ -40,7 +40,10 @@ export const saveSubscription = createThunkAction(
         company: organization,
         city,
         country,
-        subscriptions
+        subscriptions: Object.entries(subscriptions)
+          .filter(([, val]) => val)
+          .map(([key]) => key)
+          .join(', ')
       };
 
       postNewsletterSubscription(
