@@ -371,6 +371,21 @@ const decodes = {
     } else {
       alpha = 0.;
     }
+  `,
+  cumulativeCarbonGain: `
+    float rCol = color.r;
+    float bCol = color.b;
+    // float alphaCol = color.b * 255.;
+    float threshold = color.g * 255.;
+
+    // map to years
+    if (threshold >= thresh) {
+      color.r = 1. - rCol;
+      color.g = 0.8;
+      color.b = 0.;
+    } else {
+      alpha = 0.;
+    }
   `
 };
 
@@ -387,5 +402,6 @@ export default {
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
   '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terrai,
   '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover,
-  'ee23d901-a491-4bc7-af7c-293d0ba50950': decodes.grossCarbonEmissions
+  'ee23d901-a491-4bc7-af7c-293d0ba50950': decodes.grossCarbonEmissions,
+  'e369f6a9-95a3-477a-8ed0-08fa934487a2': decodes.cumulativeCarbonGain
 };
