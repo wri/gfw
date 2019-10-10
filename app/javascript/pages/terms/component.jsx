@@ -19,16 +19,18 @@ class ThankyouPage extends PureComponent {
             </h2>
             <p>
               Welcome to the WRI family of environmental data platforms. This
-              document lets the user of these Services (“You”, “Your”) know what
+              document lets the user of these Services (“You“, “Your“) know what
               you get when you use our websites, and what We expect in return.
+            </p>
+            <p>
               The Services available through Resource Watch, Global Forest
               Watch, Forest Watcher, and The Partnership for Resilience and
               Preparedness, and their associated websites, resourcewatch.org,
               globalforestwatch.org, and prepdata.org, (collectively referred to
               as the “Services”) are owned and operated by the World Resources
-              Institute (“WRI,” “We,” “Our” or “Us”). By using the Services, You
+              Institute (“WRI,” “We,” “Our“ or “Us”). By using the Services, You
               agree to be bound by these Terms of Service and any future updates
-              (collectively, the <strong>“Terms”</strong>).
+              (collectively, the “Terms“).
             </p>
             <ol className="num-list">
               <li>
@@ -69,7 +71,21 @@ class ThankyouPage extends PureComponent {
                 <ol className="alpha-list">
                   <li>
                     In order to use many of the Services, You must register for
-                    an account.
+                    an account. WRI reserves the right to reject any account
+                    registration request, in its sole discretion.{' '}
+                  </li>
+                  <li>
+                    When You request to open an account in the Global Forest
+                    Watch Pro application (pro.globalforestwatch.org), the
+                    following conditions must be met: (1) You are applying on
+                    behalf of an organization or entity that works with and is
+                    actively involved in commodity supply chains and/or their
+                    financing; (2) You are authorized to act on behalf of such
+                    organization or entity; (3) the application is sent from a
+                    valid email from the organization or entity; and (4) no
+                    other application or registration for this organization or
+                    entity exists. WRI may request additional information in
+                    order to confirm these conditions are met.
                   </li>
                   <li>
                     When You use Our application program interfaces (“API(s)”),
@@ -150,7 +166,8 @@ class ThankyouPage extends PureComponent {
               </li>
               <li>
                 <h3>
-                  FOREST WATCHER CONTENT AND GLOBAL FOREST WATCH PRO CONTENT
+                  FOREST WATCHER CONTENT AND GLOBAL FOREST WATCH PRO ACCOUNTS
+                  AND CONTENT
                 </h3>
                 <ol className="alpha-list">
                   <li>
@@ -158,7 +175,7 @@ class ThankyouPage extends PureComponent {
                     application or Forest Watcher website,
                     (forestwatcher.globalforestwatch.org), or Global Forest
                     Watch Pro application (pro.globalforestwatch.org)
-                    (“Watcher/Pro Content”), the Watcher/Pro Content is
+                    (“Watcher/Pro Content“), the Watcher/Pro Content is
                     considered confidential information. We will not access, use
                     or disclose the Watcher/Pro Content except as reasonably
                     necessary to provide customer support to You or otherwise
@@ -202,7 +219,7 @@ class ThankyouPage extends PureComponent {
                   <li>
                     WHEN USING THE SERVICES YOU MAY BE EXPOSED TO USER
                     SUBMISSIONS AND OTHER THIRD PARTY CONTENT (“NON-WRI
-                    CONTENT”), AND SOME OF THIS CONTENT MAY BE INACCURATE,
+                    CONTENT“), AND SOME OF THIS CONTENT MAY BE INACCURATE,
                     OFFENSIVE, INDECENT, OR OTHERWISE OBJECTIONABLE. WE DO NOT
                     ENDORSE ANY NON-WRI CONTENT. UNDER NO CIRCUMSTANCES WILL WRI
                     BE LIABLE FOR OR IN CONNECTION WITH THE NON-WRI CONTENT,
@@ -299,7 +316,7 @@ class ThankyouPage extends PureComponent {
                     $250,000, then we each appoint one arbitrator, and those two
                     arbitrators choose a third.  We agree that the arbitrators
                     will not have the power to award either of us any damages
-                    that are not consistent with Section 5 (Disclaimers and
+                    that are not consistent with Section 6 (Disclaimers and
                     Limitations) of these Terms. The arbitration will be in
                     Washington, DC, USA, and will be conducted in English.
                     Unless we agree or one of us shows its essential, there will
