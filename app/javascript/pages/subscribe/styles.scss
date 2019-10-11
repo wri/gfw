@@ -111,7 +111,7 @@
     flex-direction: column;
 
     @media screen and (min-width: $screen-m) {
-      margin-top: rem(30px);
+      margin-top: rem(10px);
       align-items: center;
       min-width: rem(340px);
     }
@@ -127,7 +127,7 @@
     .submit-btn {
       position: relative;
       min-width: rem(200px);
-      margin-top: rem(15px);
+      margin-bottom: rem(25px);
 
       @media screen and (min-width: $screen-m) {
         margin-left: rem(15px);

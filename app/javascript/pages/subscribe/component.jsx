@@ -281,11 +281,6 @@ function SubscribePage(props) {
       <div className="row">
         <div className="column small-12 medium-8 medium-offset-2">
           <div className="save-subscription">
-            {error && (
-              <p className="error-message">
-                This service is currently unavailable. Please try again later.
-              </p>
-            )}
             <Button
               className={cx('submit-btn', { error }, { saving })}
               onClick={() =>
@@ -298,6 +293,11 @@ function SubscribePage(props) {
               SUBSCRIBE
               {saving && <Loader className="saving-btn-loader" />}
             </Button>
+            {error && (
+              <p className="error-message">
+                This service is currently unavailable. Please try again later.
+              </p>
+            )}
           </div>
         </div>
       </div>
