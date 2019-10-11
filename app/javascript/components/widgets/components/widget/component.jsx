@@ -114,7 +114,7 @@ class Widget extends PureComponent {
             polyname.datasets &&
             polyname.datasets.map(d => ({
               opacity: 0.7,
-              visibility: 1,
+              visibility: true,
               ...d,
               sqlParams: iflYear && {
                 where: {
