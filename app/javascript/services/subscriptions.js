@@ -16,9 +16,6 @@ export const postSubscription = data =>
 export const postNewsletterSubscription = (data, url) =>
   axios({
     method: 'POST',
-    headers: {
-      'content-type': 'application/json'
-    },
     data,
     url
   });

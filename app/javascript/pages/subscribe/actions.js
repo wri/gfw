@@ -40,7 +40,7 @@ export const saveSubscription = createThunkAction(
         company: organization,
         city,
         country,
-        subscriptions: Object.entries(subscriptions)
+        gfw_interests: Object.entries(subscriptions)
           .filter(([, val]) => val)
           .map(([key]) => key)
           .join(', ')
