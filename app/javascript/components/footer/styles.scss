@@ -78,6 +78,7 @@
 
       .footer-contact-us {
         display: flex;
+        flex-direction: column;
         margin-top: rem(20px);
         border-bottom: solid 1px #aaa;
         margin-bottom: rem(30px);
@@ -85,6 +86,7 @@
 
         @media screen and (min-width: $screen-m) {
           justify-content: space-between;
+          flex-direction: row;
           margin-top: rem(30px);
         }
 
@@ -92,6 +94,14 @@
           font-size: rem(12px);
           color: #aaa;
           cursor: pointer;
+          margin-bottom: rem(10px);
+          height: rem(30px);
+          text-align: left;
+
+          @media screen and (min-width: $screen-m) {
+            text-align: center;
+            margin-bottom: 0;
+          }
 
           &:hover {
             color: darken(#aaa, 20%);
