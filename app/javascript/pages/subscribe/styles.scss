@@ -5,6 +5,10 @@
   height: 100%;
   padding: rem(30px) 0 rem(60px);
 
+  @media screen and (min-width: $screen-m) {
+    padding: rem(30px) 0 rem(90px);
+  }
+
   .subscribe-header {
     margin-bottom: rem(40px);
 
@@ -32,7 +36,7 @@
     flex-direction: column;
 
     @media screen and (min-width: $screen-m) {
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       flex-direction: row;
     }
@@ -45,12 +49,18 @@
       font-weight: 500;
       line-height: 18px;
       margin-bottom: rem(10px);
+      width: rem(85px);
+
+      @media screen and (min-width: $screen-m) {
+        text-align: right;
+      }
     }
 
     .form-input {
       @media screen and (min-width: $screen-m) {
         align-self: flex-end;
         min-width: rem(340px);
+        max-width: rem(340px);
       }
     }
 
@@ -71,6 +81,15 @@
   .form-list {
     display: flex;
     flex-direction: column;
+    // margin-left: rem(85px);
+    // justify-content: center;
+    // align-items: center;
+    width: rem(340px);
+
+    span {
+      width: auto;
+      text-align: left;
+    }
 
     .form-checkbox-item {
       display: flex;
@@ -93,9 +112,7 @@
 
     @media screen and (min-width: $screen-m) {
       margin-top: rem(30px);
-      justify-content: flex-end;
       align-items: center;
-      flex-direction: row;
       min-width: rem(340px);
     }
 
@@ -109,7 +126,7 @@
 
     .submit-btn {
       position: relative;
-      min-width: rem(150px);
+      min-width: rem(200px);
       margin-top: rem(15px);
 
       @media screen and (min-width: $screen-m) {

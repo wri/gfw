@@ -153,7 +153,7 @@ function SubscribePage(props) {
         </div>
       </div>
       <div className="row">
-        <div className="suscribe-form column small-12 medium-8 medium-offset-1">
+        <div className="suscribe-form column small-12 medium-8 medium-offset-2">
           <div className={cx('field', { error: state.firstNameError })}>
             <span>First Name*</span>
             <input
@@ -255,35 +255,36 @@ function SubscribePage(props) {
               native
             />
           </div>
-          <div className="field form-list">
-            <span>I&#39;m interested in (check all that apply)*</span>
-            {subscriptions.map(sub => (
-              <div className="form-checkbox-item" key={sub.value}>
-                <Checkbox
-                  className="form-checkbox"
-                  checked={state.subscriptions[sub.label]}
-                  onChange={() =>
-                    dispatch({
-                      type: 'subscriptions',
-                      payload: { sub: sub.label }
-                    })
-                  }
-                  label={sub.label}
-                />
-              </div>
-            ))}
+          <div className="field">
+            <span className="blank-label" />
+            <div className="form-list">
+              <span>I&#39;m interested in (check all that apply)*</span>
+              {subscriptions.map(sub => (
+                <div className="form-checkbox-item" key={sub.value}>
+                  <Checkbox
+                    className="form-checkbox"
+                    checked={state.subscriptions[sub.label]}
+                    onChange={() =>
+                      dispatch({
+                        type: 'subscriptions',
+                        payload: { sub: sub.label }
+                      })
+                    }
+                    label={sub.label}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
       <div className="row">
-        <div className="column small-12">
+        <div className="column small-12 medium-8 medium-offset-2">
           <div className="save-subscription">
-            {error ? (
+            {error && (
               <p className="error-message">
                 This service is currently unavailable. Please try again later.
               </p>
-            ) : (
-              <p>You can always change these settings in MyGFW</p>
             )}
             <Button
               className={cx('submit-btn', { error }, { saving })}
@@ -294,7 +295,7 @@ function SubscribePage(props) {
               }
               disabled={!canSubmit}
             >
-              SAVE
+              SUBSCRIBE
               {saving && <Loader className="saving-btn-loader" />}
             </Button>
           </div>
