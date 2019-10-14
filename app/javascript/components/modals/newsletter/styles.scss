@@ -1,0 +1,45 @@
+@import '~styles/settings.scss';
+$mobile-padding: rem(20px);
+$desktop-padding: rem(40px);
+
+.c-newsletter {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 2.5rem $mobile-padding $mobile-padding;
+  border-bottom: 66px solid transparent;
+  outline: none;
+  margin: 0 auto;
+  max-width: 700px;
+  color: #333;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+  line-height: 1.25;
+
+  @media screen and (min-width: $screen-m) {
+    padding: 2.5rem $desktop-padding $desktop-padding;
+  }
+
+  .c-button {
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-weight: 300;
+    font-size: rem(36px);
+    color: $slate;
+    margin-bottom: rem(20px);
+  }
+
+  .subtitle {
+    margin-top: 0.3125rem;
+    font-size: rem(18px);
+    line-height: rem(25px);
+    margin-bottom: rem(40px);
+  }
+}

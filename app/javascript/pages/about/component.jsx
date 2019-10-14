@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'redux-first-router-link';
+// import Link from 'redux-first-router-link';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
@@ -31,11 +31,12 @@ const sectionComponents = {
 class AboutPage extends PureComponent {
   static propTypes = {
     sections: PropTypes.object,
-    setModalVideoData: PropTypes.func.isRequired
+    setModalVideoData: PropTypes.func.isRequired,
+    setModalNewsletterOpen: PropTypes.func.isRequired
   };
 
   render() {
-    const { sections, setModalVideoData } = this.props;
+    const { sections, setModalVideoData, setModalNewsletterOpen } = this.props;
     return (
       <div className="l-about-page">
         <Cover
@@ -43,12 +44,17 @@ class AboutPage extends PureComponent {
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
           bgImage={bgImage}
         >
-          <Link className="subscribe-btn" to="/subscribe">
+          <div
+            className="subscribe-btn"
+            onClick={() => setModalNewsletterOpen(true)}
+            role="button"
+            tabIndex={0}
+          >
             <Button theme="square" className="subscribe-icon">
               <Icon icon={mailIcon} />
             </Button>
             <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
-          </Link>
+          </div>
         </Cover>
         <SubnavMenu
           className="about-links"
