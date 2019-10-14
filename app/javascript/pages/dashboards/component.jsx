@@ -26,7 +26,6 @@ import ScrollTo from 'components/scroll-to';
 
 import closeIcon from 'assets/icons/close.svg';
 
-import PendingDashboard from './components/pending-dashboard';
 import Map from './components/map';
 import Header from './components/header';
 import MapControls from './components/map-controls';
@@ -121,13 +120,6 @@ class DashboardsPage extends PureComponent {
                         }
                       }))}
                       checkActive
-                    />
-                  )}
-                  {activeArea && (
-                    <PendingDashboard
-                      className="pending-message"
-                      isUserDashboard={activeArea && activeArea.userArea}
-                      areaId={activeArea && activeArea.id}
                     />
                   )}
                   <Widgets className="dashboard-widgets" />
