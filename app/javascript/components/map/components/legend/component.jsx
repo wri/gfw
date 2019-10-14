@@ -71,8 +71,7 @@ class MapLegend extends Component {
               } =
                   lg || {};
 
-              const activeLayer =
-                  (layers && layers.find(l => l.active)) || [];
+              const activeLayer = layers && layers.find(l => l.active);
               const {
                 params,
                 moreInfo,

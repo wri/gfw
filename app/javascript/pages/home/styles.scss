@@ -26,6 +26,26 @@
     background-color: rgba($slate, 0.7);
   }
 
+  .subscribe-btn {
+    position: relative;
+    z-index: 1;
+    width: fit-content;
+    cursor: pointer;
+
+    .subscribe-icon {
+      margin-top: rem(15px);
+      display: inline-block;
+      margin-right: rem(10px);
+    }
+
+    .subscribe-msg {
+      color: $white;
+      font-weight: 500;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+  }
+
   .home-video {
     position: absolute;
     top: 0;

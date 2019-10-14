@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+// import Link from 'redux-first-router-link';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';

@@ -110,7 +110,7 @@
     "deck.gl": "^7.1.10",
     "dotenv": "4.0.0",
     "downshift": "1.30.0",
-    "eslint-plugin-react-hooks": "^1.6.1",
+    "eslint-plugin-react-hooks": "^2.0.1",
     "glob": "7.1.2",
     "history": "4.7.2",
     "install": "0.10.1",

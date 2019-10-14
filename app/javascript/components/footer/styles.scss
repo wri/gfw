@@ -8,24 +8,11 @@
     background-color: #fff;
   }
 
-  .footer-subscribe-wrapper {
-    width: 100%;
-    height: rem(110px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .footer-subscribe-button {
-      width: rem(260px);
-    }
-  }
-
   .footer-main {
     .footer-links {
-      margin-top: rem(30px);
+      padding-top: rem(30px);
 
-      a,
-      button {
+      li a {
         font-size: 14px;
         line-height: 1.86;
         letter-spacing: 0.1px;
@@ -91,23 +78,40 @@
 
       .footer-contact-us {
         display: flex;
+        flex-direction: column;
         margin-top: rem(20px);
         border-bottom: solid 1px #aaa;
         margin-bottom: rem(30px);
         padding-bottom: rem(30px);
 
         @media screen and (min-width: $screen-m) {
-          justify-content: flex-end;
+          justify-content: space-between;
+          flex-direction: row;
           margin-top: rem(30px);
         }
 
-        button {
+        .contact-btn {
           font-size: rem(12px);
           color: #aaa;
+          cursor: pointer;
+          margin-bottom: rem(10px);
+          height: rem(30px);
+          text-align: left;
+
+          @media screen and (min-width: $screen-m) {
+            text-align: center;
+            margin-bottom: 0;
+          }
 
           &:hover {
             color: darken(#aaa, 20%);
           }
+        }
+
+        .subscribe-btn {
+          height: rem(36px);
+          width: rem(300px);
+          font-size: rem(14px);
         }
       }
     }
