@@ -71,8 +71,7 @@ class MapLegend extends Component {
               } =
                   lg || {};
 
-              const activeLayer =
-                  (layers && layers.find(l => l.active)) || [];
+              const activeLayer = layers && layers.find(l => l.active);
               const {
                 params,
                 moreInfo,
@@ -147,13 +146,13 @@ class MapLegend extends Component {
                   {(isSelectorLayer || isMultiSelectorLayer) &&
                       selectorLayerConfig && (
                       <LayerSelectorMenu
-                      className="layer-selector"
-                      layerGroup={lg}
-                      name={name}
-                      multi={isMultiSelectorLayer}
-                      onChange={onChangeLayer}
-                      {...selectorLayerConfig}
-                    />
+                        className="layer-selector"
+                        layerGroup={lg}
+                        name={name}
+                        multi={isMultiSelectorLayer}
+                        onChange={onChangeLayer}
+                        {...selectorLayerConfig}
+                      />
                   )}
                   {statementConfig && (
                     <LayerStatement
