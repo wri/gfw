@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'redux-first-router-link';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
@@ -42,10 +43,12 @@ class AboutPage extends PureComponent {
           description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
           bgImage={bgImage}
         >
-          <Button theme="square" className="subscribe-icon" link="/subscribe">
-            <Icon icon={mailIcon} />
+          <Link className="subscribe-btn" to="/subscribe">
+            <Button theme="square" className="subscribe-icon">
+              <Icon icon={mailIcon} />
+            </Button>
             <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
-          </Button>
+          </Link>
         </Cover>
         <SubnavMenu
           className="about-links"
