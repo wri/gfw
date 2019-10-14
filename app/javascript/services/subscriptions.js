@@ -12,3 +12,10 @@ export const postSubscription = data =>
     data,
     url: REQUEST_URL
   });
+
+export const postNewsletterSubscription = (data, url) =>
+  axios({
+    method: 'POST',
+    data,
+    url
+  });

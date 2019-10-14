@@ -3,13 +3,7 @@ import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
 import { setModalNewsletterOpen } from 'components/modals/newsletter/actions';
 import Component from './component';
 
-const mapStateToProps = ({ modalContactus, modalNewsletter }) => ({
-  openContactUs:
-    modalContactus && modalContactus.settings && modalContactus.settings.open,
-  openNewsletter: modalNewsletter && modalNewsletter.open
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   setModalContactUsOpen,
   setModalNewsletterOpen
 })(Component);
