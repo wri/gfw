@@ -1,15 +1,12 @@
 import { connect } from 'react-redux';
 import { setModalContactUsOpen } from 'components/modals/contact-us/actions';
-import { setModalNewsletterOpen } from 'components/modals/newsletter/actions';
 import Component from './component';
 
-const mapStateToProps = ({ modalContactus, modalNewsletter }) => ({
+const mapStateToProps = ({ modalContactus }) => ({
   openContactUs:
-    modalContactus && modalContactus.settings && modalContactus.settings.open,
-  openNewsletter: modalNewsletter && modalNewsletter.open
+    modalContactus && modalContactus.settings && modalContactus.settings.open
 });
 
 export default connect(mapStateToProps, {
-  setModalContactUsOpen,
-  setModalNewsletterOpen
+  setModalContactUsOpen
 })(Component);

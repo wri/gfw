@@ -17,8 +17,12 @@ const sectionComponents = {
   apply: Apply
 };
 
-class Page extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+class SGFPage extends PureComponent {
+  static propTypes = {
+    section: PropTypes.object,
+    links: PropTypes.array
+  };
+
   render() {
     const { section } = this.props;
     const SectionComponent =
@@ -41,9 +45,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  section: PropTypes.object,
-  links: PropTypes.array
-};
-
-export default Page;
+export default SGFPage;
