@@ -2,13 +2,16 @@ import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { getLanguages } from 'utils/lang';
+import { validateEmail } from 'utils/format';
+
 import Checkbox from 'components/ui/checkbox-v2';
 import Loader from 'components/ui/loader';
+import Dropdown from 'components/ui/dropdown';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 import MapGeostore from 'components/map-geostore';
-
 import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/alert-email.png';
 import screenImg2x from 'assets/images/aois/alert-email@2x.png';
@@ -25,10 +28,23 @@ function reducer(state, action) {
         nameError: !payload
       };
     }
+    case 'email': {
+      return {
+        ...state,
+        email: payload,
+        emailError: !validateEmail(payload)
+      };
+    }
     case 'tags': {
       return {
         ...state,
         tags: payload
+      };
+    }
+    case 'lang': {
+      return {
+        ...state,
+        lang: payload
       };
     }
     case 'fireAlerts': {
@@ -56,7 +72,7 @@ function reducer(state, action) {
       };
     }
     case 'activeArea': {
-      const { activeArea } = payload;
+      const { activeArea, email, lang } = payload;
       const {
         name,
         tags,
@@ -70,6 +86,8 @@ function reducer(state, action) {
       return {
         ...state,
         name,
+        email,
+        lang,
         tags,
         fireAlerts,
         deforestationAlerts,
@@ -99,6 +117,9 @@ function SaveAOIForm(props) {
   const [form, dispatch] = useReducer(reducer, {
     loading: true,
     name: props.locationName || '',
+    email: props.email || userData.email,
+    emailError: false,
+    lang: props.lang,
     tags: [],
     nameError: false,
     fireAlerts: props.fireAlerts || false,
@@ -110,10 +131,10 @@ function SaveAOIForm(props) {
   useEffect(
     () => {
       if (activeArea) {
-        dispatch({ type: 'activeArea', payload: { activeArea } });
+        dispatch({ type: 'activeArea', payload: { activeArea, lang, email } });
       }
     },
-    [activeArea]
+    [activeArea, lang, email]
   );
 
   const renderSaveAOI = () => {
@@ -158,14 +179,17 @@ function SaveAOIForm(props) {
 
   const {
     name,
+    email,
+    emailError,
     tags,
+    lang,
     nameError,
     fireAlerts,
     deforestationAlerts,
     monthlySummary,
     webhookUrl
   } = form;
-  const canSubmit = name;
+  const canSubmit = validateEmail(email) && name && lang;
 
   return (
     <div className="c-form c-save-aoi-form">
@@ -215,6 +239,25 @@ function SaveAOIForm(props) {
           your selected area, based on your user profile.
         </p>
       </div>
+      <div className={cx('field', { error: emailError })}>
+        <span className="form-title">Email</span>
+        <input
+          className="text-input"
+          value={email}
+          onChange={e => dispatch({ type: 'email', payload: e.target.value })}
+        />
+      </div>
+      <div className="field">
+        <span className="form-title">Language*</span>
+        <Dropdown
+          className="dropdown-input"
+          theme="theme-dropdown-native-form"
+          options={getLanguages()}
+          value={lang}
+          onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
+          native
+        />
+      </div>
       <div className="field">
         <Checkbox
           className="form-checkbox"
@@ -246,6 +289,7 @@ SaveAOIForm.propTypes = {
   userData: PropTypes.object,
   locationName: PropTypes.string,
   error: PropTypes.bool,
+  lang: PropTypes.string,
   saving: PropTypes.bool,
   activeArea: PropTypes.object,
   viewAfterSave: PropTypes.bool,
@@ -255,7 +299,8 @@ SaveAOIForm.propTypes = {
   deforestationAlerts: PropTypes.bool,
   monthlySummary: PropTypes.bool,
   webhookUrl: PropTypes.string,
-  geostoreId: PropTypes.string
+  geostoreId: PropTypes.string,
+  email: PropTypes.string
 };
 
 export default SaveAOIForm;
