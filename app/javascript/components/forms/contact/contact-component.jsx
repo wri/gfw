@@ -76,6 +76,10 @@ const tools = [
   {
     key: 'map-builder',
     name: 'GFW MapBuilder'
+  },
+  {
+    key: 'not-applicable',
+    name: 'Not applicable'
   }
 ];
 
@@ -128,7 +132,7 @@ class Contact extends PureComponent {
         />
         <h4>Interested in testing new features?</h4>
         <div className="radio">
-          <p>Sign up and become and official GFW tester!</p>
+          <p>Sign up to become an official GFW tester!</p>
           <Field
             id="signup-true"
             name="signup"

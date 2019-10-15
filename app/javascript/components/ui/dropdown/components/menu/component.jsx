@@ -53,7 +53,7 @@ const Menu = props => {
 
 Menu.propTypes = {
   isOpen: PropTypes.bool,
-  activeValue: PropTypes.object,
+  activeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   items: PropTypes.array,
   showGroup: PropTypes.string,

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+// import Link from 'redux-first-router-link';
 
 import Cover from 'components/cover';
 import SubnavMenu from 'components/subnav-menu';
@@ -27,8 +28,13 @@ const sectionComponents = {
   contact: Contact
 };
 
-class Page extends PureComponent {
-  // eslint-disable-line react/prefer-stateless-function
+class AboutPage extends PureComponent {
+  static propTypes = {
+    sections: PropTypes.object,
+    setModalVideoData: PropTypes.func.isRequired,
+    setModalNewsletterOpen: PropTypes.func.isRequired
+  };
+
   render() {
     const { sections, setModalVideoData, setModalNewsletterOpen } = this.props;
     return (
@@ -76,10 +82,4 @@ class Page extends PureComponent {
   }
 }
 
-Page.propTypes = {
-  sections: PropTypes.object.isRequired,
-  setModalVideoData: PropTypes.func.isRequired,
-  setModalNewsletterOpen: PropTypes.func
-};
-
-export default Page;
+export default AboutPage;
