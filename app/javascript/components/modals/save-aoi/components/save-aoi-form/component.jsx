@@ -120,7 +120,7 @@ function SaveAOIForm(props) {
     name: props.locationName || '',
     email: props.email || userData.email,
     emailError: false,
-    lang: props.lang,
+    lang: props.lang || 'en',
     tags: [],
     nameError: false,
     fireAlerts: props.fireAlerts || false,
@@ -187,8 +187,8 @@ function SaveAOIForm(props) {
     nameError,
     fireAlerts,
     deforestationAlerts,
-    monthlySummary,
-    webhookUrl
+    monthlySummary
+    // webhookUrl
   } = form;
   const canSubmit = validateEmail(email) && name && lang;
 
@@ -219,16 +219,6 @@ function SaveAOIForm(props) {
           onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
         />
       </div>
-      <div className={cx('field')}>
-        <label className="form-title">Add a webhook url</label>
-        <input
-          className="text-input"
-          value={webhookUrl}
-          onChange={e =>
-            dispatch({ type: 'webhookUrl', payload: e.target.value })
-          }
-        />
-      </div>
       <div className={cx('field', 'field-image')}>
         <img
           src={screenImg1x}
@@ -248,6 +238,16 @@ function SaveAOIForm(props) {
           onChange={e => dispatch({ type: 'email', payload: e.target.value })}
         />
       </div>
+      {/* <div className={cx('field')}>
+        <label className="form-title">Add a webhook url</label>
+        <input
+          className="text-input"
+          value={webhookUrl}
+          onChange={e =>
+            dispatch({ type: 'webhookUrl', payload: e.target.value })
+          }
+        />
+      </div> */}
       <div className="field">
         <label className="form-title">Language*</label>
         <Dropdown
