@@ -38,7 +38,7 @@ export const saveAOI = createThunkAction(
   }) => (dispatch, getState) => {
     const { modalSaveAOI, location, geostore } = getState();
     if (modalSaveAOI && !modalSaveAOI.saving) {
-      dispatch(setSaveAOISaving({ saving: true, error: false }));
+      dispatch(setSaveAOISaving({ saving: true, error: false, saved: false }));
 
       const { data: geostoreData } = geostore || {};
       const { id: geostoreId } = geostoreData || {};
@@ -84,7 +84,9 @@ export const saveAOI = createThunkAction(
             const area = response.data.data;
             const { id, attributes } = area || {};
             dispatch(setArea({ id, ...attributes, userArea: true }));
-            dispatch(setSaveAOISaving({ saving: false, error: false }));
+            dispatch(
+              setSaveAOISaving({ saving: false, error: false, saved: true })
+            );
             if (viewAfterSave) {
               dispatch(viewArea({ areaId: id }));
             }
@@ -94,6 +96,7 @@ export const saveAOI = createThunkAction(
           dispatch(
             setSaveAOISaving({
               saving: false,
+              saved: false,
               error: true
             })
           );
@@ -107,7 +110,7 @@ export const deleteAOI = createThunkAction(
   'deleteAOI',
   ({ id, clearAfterDelete }) => (dispatch, getState) => {
     const { data: areas } = getState().areas || {};
-    dispatch(setSaveAOISaving({ saving: true, error: false }));
+    dispatch(setSaveAOISaving({ saving: true, error: false, deleted: false }));
 
     deleteAreaProvider(id)
       .then(response => {
@@ -117,7 +120,9 @@ export const deleteAOI = createThunkAction(
           response.status < 300
         ) {
           dispatch(setAreas(areas.filter(a => a.id !== id)));
-          dispatch(setSaveAOISaving({ saving: false, error: false }));
+          dispatch(
+            setSaveAOISaving({ saving: false, error: false, deleted: true })
+          );
           if (clearAfterDelete) {
             dispatch(clearArea());
           }
@@ -127,7 +132,8 @@ export const deleteAOI = createThunkAction(
         dispatch(
           setSaveAOISaving({
             saving: false,
-            error: true
+            error: true,
+            deleted: false
           })
         );
         console.info(error);
