@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-for */
 import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -201,7 +202,7 @@ function SaveAOIForm(props) {
         width={600}
       />
       <div className={cx('field', { error: nameError })}>
-        <span className="form-title">Name this area for later reference</span>
+        <label className="form-title">Name this area for later reference</label>
         <input
           className="text-input"
           value={name}
@@ -209,9 +210,9 @@ function SaveAOIForm(props) {
         />
       </div>
       <div className={cx('field', { error: nameError })}>
-        <span className="form-title">
+        <label className="form-title">
           Assign tags to organize and group areas
-        </span>
+        </label>
         <InputTags
           tags={tags}
           className="aoi-tags-input"
@@ -219,7 +220,7 @@ function SaveAOIForm(props) {
         />
       </div>
       <div className={cx('field')}>
-        <span className="form-title">Add a webhook url</span>
+        <label className="form-title">Add a webhook url</label>
         <input
           className="text-input"
           value={webhookUrl}
@@ -240,7 +241,7 @@ function SaveAOIForm(props) {
         </p>
       </div>
       <div className={cx('field', { error: emailError })}>
-        <span className="form-title">Email</span>
+        <label className="form-title">Email</label>
         <input
           className="text-input"
           value={email}
@@ -248,7 +249,7 @@ function SaveAOIForm(props) {
         />
       </div>
       <div className="field">
-        <span className="form-title">Language*</span>
+        <label className="form-title">Language*</label>
         <Dropdown
           className="dropdown-input"
           theme="theme-dropdown-native-form"
@@ -264,12 +265,14 @@ function SaveAOIForm(props) {
           onChange={() => dispatch({ type: 'fireAlerts' })}
           checked={fireAlerts}
           label={'As soon as fires are detected'}
+          subLabel="Data updated daily"
         />
         <Checkbox
           className="form-checkbox"
           onChange={() => dispatch({ type: 'deforestationAlerts' })}
           checked={deforestationAlerts}
           label={'As soon as forest change is detected'}
+          subLabel="Data updated weekly for the tropics, annual outside the tropics"
         />
         <Checkbox
           className="form-checkbox"
