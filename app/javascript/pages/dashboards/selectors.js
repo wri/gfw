@@ -1,6 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import replace from 'lodash/replace';
 import upperFirst from 'lodash/upperFirst';
+import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 
 import { filterWidgetsByLocation } from 'components/widgets/selectors';
@@ -41,7 +42,9 @@ export const getNoWidgetsMessage = createSelector(
 export const getLinks = createSelector(
   [filterWidgetsByLocation, selectCategory, getActiveArea],
   (widgets, activeCategory, activeArea) => {
-    if (!widgets || (activeArea && activeArea.status === 'pending')) { return null; }
+    if (!widgets || (activeArea && isEmpty(activeArea.admin))) {
+      return null;
+    }
     const widgetCats = flatMap(widgets.map(w => w.categories));
     return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
       category => ({

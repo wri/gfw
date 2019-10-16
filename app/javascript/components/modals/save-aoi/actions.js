@@ -44,7 +44,8 @@ export const saveAOI = createThunkAction(
       const { id: geostoreId } = geostoreData || {};
       const { payload: { type, adm0, adm1, adm2 } } = location || {};
       const isCountry = type === 'country';
-      const { id: activeAreaId, application } = activeArea || {};
+      const { id: activeAreaId, application, admin, use, wdpa } =
+        activeArea || {};
       const method = activeArea && activeArea.userArea ? 'patch' : 'post';
 
       const postData = {
@@ -52,6 +53,9 @@ export const saveAOI = createThunkAction(
         id: activeAreaId,
         application: application || 'gfw',
         geostore: geostoreId,
+        admin,
+        use,
+        wdpa,
         ...(isCountry && {
           admin: {
             adm0,

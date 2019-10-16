@@ -9,7 +9,7 @@ import moment from 'moment';
 import camelCase from 'lodash/camelCase';
 import qs from 'query-string';
 
-import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveLayersWithDates } from 'components/map/selectors';
 
@@ -76,14 +76,27 @@ export const getWidgetFromLocation = createSelector(
 );
 
 export const getLocation = createSelector(
-  [selectLocation, selectGeostore, selectRouteType],
-  (location, geostore, routeType) => {
+  [selectLocation, selectGeostore, selectRouteType, getActiveArea],
+  (location, geostore, routeType, activeArea) => {
+    const { admin } = activeArea || {};
+
+    if (!isEmpty(admin) && location.type === 'aoi') {
+      return {
+        ...location,
+        routeType,
+        type: 'country',
+        isAoI: true,
+        ...admin
+      };
+    }
+
     if (location.type === 'aoi' && geostore) {
       return {
         ...location,
         routeType,
         type: 'geostore',
-        adm0: geostore.id
+        adm0: geostore.id,
+        isAoI: true
       };
     }
 
@@ -104,7 +117,7 @@ export const getLocationObj = createSelector(
 
 export const getAllLocationData = createSelector(
   [
-    selectLocation,
+    getLocation,
     selectCountryData,
     getAllAreas,
     selectRouteType,
@@ -112,9 +125,9 @@ export const getAllLocationData = createSelector(
   ],
   (location, countryData, areas, routeType, query) => {
     if (isEmpty(areas) && isEmpty(countryData)) return null;
-    const { type, adm0, adm1 } = location;
+    const { type, adm0, adm1, isAoI } = location;
 
-    if (type === 'aoi') {
+    if (isAoI && type !== 'country') {
       return { adm0: areas.map(a => ({ ...a, value: a.geostore })) };
     }
 
@@ -148,7 +161,7 @@ export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
   (location, allLocationData, polynamesWhitelist) => {
     if (isEmpty(allLocationData)) return null;
-    const { type, adminLevel, locationLabel } = location;
+    const { type, adminLevel, locationLabel, isAoI } = location;
 
     let parent = {};
     let parentData = allLocationData.adm0;
@@ -177,7 +190,7 @@ export const getLocationData = createSelector(
       location: currentLocation || { label: 'global', value: 'global' },
       locationData: locationData && buildLocationDict(locationData),
       locationLabel:
-        type === 'geostore' || type === 'global'
+        type === 'geostore' || type === 'global' || isAoI
           ? locationLabel
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),

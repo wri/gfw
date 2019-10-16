@@ -88,8 +88,6 @@ class DashboardsPage extends PureComponent {
       activeArea,
       areaLoading
     } = this.props;
-    const isCountryDashboard =
-      locationType === 'country' || locationType === 'global';
     const isAreaDashboard = locationType === 'aoi';
 
     return (
@@ -141,12 +139,8 @@ class DashboardsPage extends PureComponent {
                 {widgetAnchor && <ScrollTo target={widgetAnchor} />}
                 <DatasetsProvider />
                 <LatestProvider />
-                {isCountryDashboard && (
-                  <Fragment>
-                    <CountryDataProvider />
-                    <WhitelistsProvider />
-                  </Fragment>
-                )}
+                <CountryDataProvider />
+                <WhitelistsProvider />
                 <GeostoreProvider />
                 <GeodescriberProvider />
               </Fragment>

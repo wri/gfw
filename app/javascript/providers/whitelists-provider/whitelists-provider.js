@@ -5,12 +5,23 @@ import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 import { CancelToken } from 'axios';
 
+import { getActiveArea } from 'providers/areas-provider/selectors';
+
 import * as actions from './whitelists-provider-actions';
 import reducers, { initialState } from './whitelists-provider-reducers';
 
-const mapStateToProps = ({ location }) => ({
-  location: location && location.payload
-});
+const mapStateToProps = state => {
+  const { location } = state;
+  const activeArea = getActiveArea(state);
+  const { admin } = activeArea || {};
+
+  return {
+    location: {
+      ...location.payload,
+      ...admin
+    }
+  };
+};
 
 class WhitelistProvider extends PureComponent {
   componentDidMount() {

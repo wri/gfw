@@ -4,12 +4,23 @@ import PropTypes from 'prop-types';
 import reducerRegistry from 'app/registry';
 import { CancelToken } from 'axios';
 
+import { getActiveArea } from 'providers/areas-provider/selectors';
+
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = ({ location }) => ({
-  location: location && location.payload
-});
+const mapStateToProps = state => {
+  const { location } = state;
+  const activeArea = getActiveArea(state);
+  const { admin } = activeArea || {};
+
+  return {
+    location: {
+      ...location.payload,
+      ...admin
+    }
+  };
+};
 
 class CountryDataProvider extends PureComponent {
   componentDidMount() {

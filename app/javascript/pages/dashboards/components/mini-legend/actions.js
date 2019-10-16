@@ -17,7 +17,8 @@ export const setMainMapView = createThunkAction(
         ...query,
         map: {
           ...map,
-          datasets
+          datasets,
+          canBound: true
         },
         mainMap: {
           ...mainMap,
