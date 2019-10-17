@@ -138,19 +138,27 @@ class ApplicationController < ActionController::Base
   def check_location
     if !params[:adm0] && params[:type] && params[:type] != 'global'
       redirect_to action: "index"
-
     elsif params[:type] == 'aoi' && params[:adm0]
-      @location = Areas.find_area_name(params[:adm0])
-    elsif params[:adm0]
-      if params[:adm2]
-        @location = Gadm36.find_adm2_by_adm0_id(params[:adm0], params[:adm1], params[:adm2])
-      elsif params[:adm1]
-        @location = Gadm36.find_adm1_by_adm0_id(params[:adm0], params[:adm1])
+      @area = Areas.find_area_name(params[:adm0])
+      if @area["admin"]["adm0"]
+        check_admin_location(@area["admin"])
       else
-        @location = Gadm36.find_adm0_by_adm0_id(params[:adm0])
+        @location = @area
       end
+    elsif params[:adm0]
+      check_admin_location(params)
     end
     set_title
+  end
+
+  def check_admin_location(admins)
+    if admins["adm2"] != nil
+      @location = Gadm36.find_adm2_by_adm0_id(admins["adm0"], admins["adm1"], admins["adm2"])
+    elsif admins["adm1"] != nil
+      @location = Gadm36.find_adm1_by_adm0_id(admins["adm0"], admins["adm1"])
+    else
+      @location = Gadm36.find_adm0_by_adm0_id(admins["adm0"])
+    end
   end
 
   def set_title
@@ -160,7 +168,7 @@ class ApplicationController < ActionController::Base
       @location_title = params[:type] ? (@meta[:title] || params[:type].capitalize) : nil
       @desc = params[:type] ? @meta[:desc] : nil
     else
-      if params[:type] == 'aoi'
+      if params[:type] == 'aoi' && !@area["admin"]["adm0"]
         @location_title = @location["title"]
         @desc = @location["description"]
       elsif params[:adm2]
