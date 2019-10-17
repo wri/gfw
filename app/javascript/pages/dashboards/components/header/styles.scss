@@ -24,6 +24,10 @@
     > * {
       margin-left: rem(5px);
 
+      &:first-child {
+        margin-right: rem(8px);
+      }
+
       svg {
         fill: $white;
         margin-top: rem(-5px);

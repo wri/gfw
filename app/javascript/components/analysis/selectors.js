@@ -6,6 +6,7 @@ import flatMap from 'lodash/flatMap';
 
 import { getAllLayers, getActiveDatasets } from 'components/map/selectors';
 import { getActiveArea } from 'providers/areas-provider/selectors';
+import { getDataLocation } from 'utils/location';
 import { locationLevelToStr } from 'utils/format';
 import { getWidgets } from 'components/widgets/selectors';
 
@@ -18,7 +19,6 @@ const selectDatasetsLoading = state => state.datasets && state.datasets.loading;
 const selectGeostoreLoading = state => state.geostore && state.geostore.loading;
 const selectGeodecriberLoading = state =>
   state.geodescriber && state.geodescriber.loading;
-const selectLocation = state => state.location && state.location.payload;
 const selectSearch = state => state.location && state.location.search;
 const selectAnalysisLocation = state =>
   state.analysis && state.analysis.location;
@@ -100,20 +100,8 @@ export const getWidgetLayers = createSelector(
     )
 );
 
-export const parseLocation = createSelector(
-  [getActiveArea, selectLocation],
-  (activeArea, location) =>
-    (location.type === 'aoi' && activeArea
-      ? {
-        ...location,
-        type: 'geostore',
-        adm0: activeArea.geostore
-      }
-      : location)
-);
-
 export const getLayerEndpoints = createSelector(
-  [getAllLayers, parseLocation, getWidgetLayers],
+  [getAllLayers, getDataLocation, getWidgetLayers],
   (layers, location, widgetLayers) => {
     if (!layers || !layers.length) return null;
 
@@ -188,8 +176,8 @@ export const getAnalysisProps = createStructuredSelector({
   loading: getLoading,
   error: selectError,
   embed: selectEmbed,
-  location: parseLocation,
   endpoints: getLayerEndpoints,
+  location: getDataLocation,
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,
   widgetLayers: getWidgetLayers,

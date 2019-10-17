@@ -1,4 +1,4 @@
-import * as actions from './whitelists-provider-actions';
+import * as actions from './actions';
 
 export const initialState = {
   loading: false,

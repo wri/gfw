@@ -12,6 +12,7 @@ import SaveAOIModal from 'components/modals/save-aoi';
 
 import tagIcon from 'assets/icons/tag.svg';
 import downloadIcon from 'assets/icons/download.svg';
+import saveUserIcon from 'assets/icons/save-user.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
 import pencilIcon from 'assets/icons/pencil.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -99,6 +100,18 @@ class Header extends PureComponent {
                 onClick={() => setSaveAOISettings({ open: true })}
               >
                 <Icon icon={pencilIcon} />
+              </Button>
+            )}
+            {location.type === 'country' && (
+              <Button
+                className="theme-button-medium theme-button-clear square"
+                tooltip={{
+                  text: 'Save as an area of interest',
+                  position: 'bottom'
+                }}
+                onClick={() => setSaveAOISettings({ open: true })}
+              >
+                <Icon icon={saveUserIcon} />
               </Button>
             )}
             {isCountryDashboard && (

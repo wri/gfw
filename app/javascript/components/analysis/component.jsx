@@ -109,7 +109,8 @@ class AnalysisComponent extends PureComponent {
           location.type &&
           location.adm0 && (
           <div className="analysis-actions">
-            {location.type === 'country' && (
+            {location.type === 'country' &&
+                !location.areaId && (
               <Button
                 className="analysis-action-btn"
                 theme="theme-button-light"
@@ -120,7 +121,7 @@ class AnalysisComponent extends PureComponent {
                   })
                 }
               >
-                  DASHBOARD
+                    DASHBOARD
               </Button>
             )}
             {activeArea && (

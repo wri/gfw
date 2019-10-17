@@ -5,6 +5,7 @@ import { format } from 'd3-format';
 import { buildFullLocationName } from 'utils/format';
 import tropicalIsos from 'data/tropical-isos.json';
 
+import { getDataLocation } from 'utils/location';
 import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
 
 const adminSentences = {
@@ -30,7 +31,6 @@ export const selectGeodescriber = state =>
   state.geodescriber && state.geodescriber.data;
 export const selectLoading = state =>
   state.geodescriber && state.geodescriber.loading;
-export const selectLocation = state => state.location && state.location.payload;
 export const selectCountryData = state =>
   state.countryData && {
     adm0: state.countryData.countries,
@@ -47,7 +47,7 @@ export const selectActiveLang = state =>
   'en';
 
 export const getAreaName = createSelector(
-  [getAllAreas, selectLocation],
+  [getAllAreas, getDataLocation],
   (areas, location) => {
     if (!areas || !areas.length || location.type !== 'aoi') return null;
     const activeArea = areas.find(a => a.id === location.adm0);
@@ -72,7 +72,7 @@ export const getAdm2Data = createSelector(
 );
 
 export const getAdminsSelected = createSelector(
-  [getAdm0Data, getAdm1Data, getAdm2Data, selectLocation],
+  [getAdm0Data, getAdm1Data, getAdm2Data, getDataLocation],
   (adm0s, adm1s, adm2s, location) => {
     const adm0 = (adm0s && adm0s.find(i => i.value === location.adm0)) || null;
     const adm1 = (adm1s && adm1s.find(i => i.value === location.adm1)) || null;
@@ -94,17 +94,21 @@ export const getAdminsSelected = createSelector(
 );
 
 export const getAdminLocationName = createSelector(
-  [selectLocation, getAdm0Data, getAdm1Data, getAdm2Data],
+  [getDataLocation, getAdm0Data, getAdm1Data, getAdm2Data],
   (location, adm0s, adm1s, adm2s) =>
     buildFullLocationName(location, { adm0s, adm1s, adm2s })
 );
 
 export const getGeodescriberTitle = createSelector(
-  [selectGeodescriber, selectLocation, getAdminLocationName, getActiveArea],
+  [selectGeodescriber, getDataLocation, getAdminLocationName, getActiveArea],
   (geodescriber, location, adminTitle, activeArea) => {
     if (isEmpty(geodescriber)) return {};
 
-    if (location.type === 'aoi' && activeArea && activeArea.userArea) {
+    if (
+      (location.type === 'aoi' || location.areaId) &&
+      activeArea &&
+      activeArea.userArea
+    ) {
       return {
         sentence: activeArea.name
       };
@@ -141,7 +145,7 @@ export const getGeodescriberTitleFull = createSelector(
 );
 
 export const getAdminDescription = createSelector(
-  [getAdminsSelected, selectGeodescriber, selectLocation],
+  [getAdminsSelected, selectGeodescriber, getDataLocation],
   (locationNames, data, locationObj) => {
     if (
       !['global', 'country'].includes(locationObj.type) ||
@@ -219,7 +223,7 @@ export const getAdminDescription = createSelector(
 );
 
 export const getGeodescriberDescription = createSelector(
-  [selectGeodescriber, selectLocation, getAdminDescription],
+  [selectGeodescriber, getDataLocation, getAdminDescription],
   (geodescriber, location, adminSentence) => {
     if (isEmpty(geodescriber)) return {};
 
@@ -238,7 +242,7 @@ export const getGeodescriberDescription = createSelector(
 
 export const getGeodescriberProps = createStructuredSelector({
   loading: selectLoading,
-  location: selectLocation,
+  location: getDataLocation,
   geojson: selectGeojson,
   lang: selectActiveLang
 });
