@@ -33,5 +33,10 @@ export default {
     category: 'Areas of interest',
     action: 'Visit a shared area of interest',
     label: '[areaId]'
+  },
+  switchDashboardType: {
+    category: 'Areas of interest',
+    action: 'User changes between global and areas dashboard',
+    label: 'changes to [type]'
   }
 };
