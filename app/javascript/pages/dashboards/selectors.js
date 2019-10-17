@@ -1,5 +1,4 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import replace from 'lodash/replace';
 import upperFirst from 'lodash/upperFirst';
 import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
@@ -28,11 +27,16 @@ export const getEmbed = createSelector(
   location => location && location.routesMap[location.type].embed
 );
 
-export const getWidgetAnchor = () => {
-  const widgetHash =
-    window.location.hash && replace(window.location.hash, '#', '');
-  return document.getElementById(widgetHash);
-};
+export const getWidgetAnchor = createSelector(
+  [selectQuery, filterWidgetsByLocation],
+  (query, widgets) => {
+    const { scrollTo } = query || {};
+    const hasWidget =
+      widgets && widgets.length && widgets.find(w => w.widget === scrollTo);
+
+    return hasWidget && document.getElementById(scrollTo);
+  }
+);
 
 export const getNoWidgetsMessage = createSelector(
   [selectCategory],
@@ -64,5 +68,6 @@ export const getDashboardsProps = createStructuredSelector({
   noWidgetsMessage: getNoWidgetsMessage,
   locationType: selectLocationType,
   activeArea: getActiveArea,
-  areaLoading: selectAreaLoading
+  areaLoading: selectAreaLoading,
+  widgets: filterWidgetsByLocation
 });

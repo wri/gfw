@@ -41,7 +41,8 @@ class DashboardsPage extends PureComponent {
     handleCategoryChange: PropTypes.func,
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
-    areaLoading: PropTypes.bool
+    areaLoading: PropTypes.bool,
+    clearScrollTo: PropTypes.func
   };
 
   componentDidUpdate(prevProps) {
@@ -86,7 +87,8 @@ class DashboardsPage extends PureComponent {
       handleCategoryChange,
       locationType,
       activeArea,
-      areaLoading
+      areaLoading,
+      clearScrollTo
     } = this.props;
     const isAreaDashboard = locationType === 'aoi';
 
@@ -136,7 +138,9 @@ class DashboardsPage extends PureComponent {
                 <MapControls className="map-controls" />
                 <Share />
                 <ModalMeta />
-                {widgetAnchor && <ScrollTo target={widgetAnchor} />}
+                {widgetAnchor && (
+                  <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
+                )}
                 <DatasetsProvider />
                 <LatestProvider />
                 <CountryDataProvider />

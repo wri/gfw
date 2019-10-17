@@ -461,8 +461,16 @@ export const getWidgets = createSelector(
 
       const searchObject = qs.parse(search);
       const widgetQuery = searchObject && searchObject[widget];
-      const locationPath = `${window.location.href}`;
-      const shareUrl = `${locationPath}#${widget}`;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?${
+        searchObject
+          ? qs.stringify({
+            ...searchObject,
+            widget,
+            showMap: false,
+            scrollTo: widget
+          })
+          : ''
+      }`;
       const embedUrl = `${window.location.origin}/embed/widget/${widget}/${
         type
       }${adm0 ? `/${adm0}` : ''}${adm1 ? `/${adm1}` : ''}${
