@@ -45,7 +45,7 @@ class ModalSaveAOI extends PureComponent {
   };
 
   renderConfirmation = () => {
-    const { activeArea, deleted } = this.props;
+    const { deleted } = this.props;
     const message = deleted
       ? 'This area of interest has been deleted from your My GFW.'
       : 'This area of interest has been added to your My GFW. If you subscribed to alerts please check your email and click on the link to confirm your subscription.';
@@ -55,15 +55,6 @@ class ModalSaveAOI extends PureComponent {
         {!deleted && <Icon icon={successIcon} className="icon-confirmation" />}
         <p>{message}</p>
         <div className="confirmation-actions">
-          {!deleted && (
-            <Button
-              className="link-btn"
-              theme="theme-button-light"
-              link={`/dashboards/aoi/${activeArea && activeArea.id}`}
-            >
-              VIEW DASHBOARD
-            </Button>
-          )}
           <Button className="close-btn" onClick={this.handleCloseModal}>
             GOT IT!
           </Button>

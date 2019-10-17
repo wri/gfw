@@ -6,7 +6,7 @@ import { buildFullLocationName } from 'utils/format';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import { getDataLocation } from 'utils/location';
-import { getAllAreas, getActiveArea } from 'providers/areas-provider/selectors';
+import { getActiveArea } from 'providers/areas-provider/selectors';
 
 const adminSentences = {
   default:
@@ -45,16 +45,6 @@ export const selectActiveLang = state =>
     state.location.query.lang) ||
   JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
   'en';
-
-export const getAreaName = createSelector(
-  [getAllAreas, getDataLocation],
-  (areas, location) => {
-    if (!areas || !areas.length || location.type !== 'aoi') return null;
-    const activeArea = areas.find(a => a.id === location.adm0);
-
-    return activeArea && activeArea.name;
-  }
-);
 
 export const getAdm0Data = createSelector(
   [selectCountryData],
