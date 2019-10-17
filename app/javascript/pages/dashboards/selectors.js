@@ -34,7 +34,7 @@ export const getWidgetAnchor = createSelector(
     const hasWidget =
       widgets && widgets.length && widgets.find(w => w.widget === scrollTo);
 
-    return hasWidget && document.getElementById(scrollTo);
+    return hasWidget ? document.getElementById(scrollTo) : null;
   }
 );
 
