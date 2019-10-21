@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
 
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
@@ -27,7 +26,7 @@ export const getDataLocation = createSelector(
       type: 'geostore',
       adm0: geostore && geostore.id,
       ...(admin &&
-        !isEmpty(admin) && {
+        admin.adm0 && {
         type: 'country',
         ...admin
       }),
