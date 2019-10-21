@@ -140,7 +140,7 @@ class ApplicationController < ActionController::Base
       redirect_to action: "index"
     elsif params[:type] == 'aoi' && params[:adm0]
       @area = Areas.find_area_name(params[:adm0])
-      if @area["admin"]["adm0"]
+      if @area && @area["admin"] && @area["admin"]["adm0"]
         check_admin_location(@area["admin"])
       else
         @location = @area
