@@ -73,7 +73,7 @@ function reducer(state, action) {
       };
     }
     case 'activeArea': {
-      const { activeArea } = payload;
+      const { activeArea, userData } = payload;
       const {
         name,
         tags,
@@ -85,12 +85,13 @@ function reducer(state, action) {
         lang
       } =
         activeArea || {};
+      const { email: userEmail, lang: userLang } = userData || {};
 
       return {
         ...state,
         name,
-        email,
-        lang,
+        email: email || userEmail,
+        lang: lang || userLang || 'en',
         tags,
         fireAlerts,
         deforestationAlerts,
@@ -122,7 +123,7 @@ function SaveAOIForm(props) {
     name: props.locationName || '',
     email: props.email || userData.email,
     emailError: false,
-    lang: props.lang || 'en',
+    lang: props.lang || userData.lang || 'en',
     tags: [],
     nameError: false,
     fireAlerts: props.fireAlerts || false,
@@ -134,10 +135,10 @@ function SaveAOIForm(props) {
   useEffect(
     () => {
       if (activeArea) {
-        dispatch({ type: 'activeArea', payload: { activeArea } });
+        dispatch({ type: 'activeArea', payload: { activeArea, userData } });
       }
     },
-    [activeArea]
+    [activeArea, userData]
   );
 
   const renderSaveAOI = () => {
@@ -197,7 +198,9 @@ function SaveAOIForm(props) {
     deforestationAlerts,
     monthlySummary
   } = form;
-  const canSubmit = validateEmail(email) && name && lang;
+  const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
+  const canSubmit =
+    (hasSubscription ? validateEmail(email) : true) && name && lang;
 
   return (
     <div className="c-form c-save-aoi-form">
