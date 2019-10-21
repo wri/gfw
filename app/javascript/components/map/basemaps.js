@@ -38,7 +38,7 @@ export default {
       'mapbox://styles/resourcewatch/cjww8drml27wc1cn3mk2872h9?fresh=true',
     url:
       'https://production-api.globalforestwatch.org/v2/landsat-tiles/{year}/{z}/{x}/{y}',
-    availableYears: [2017, 2017, 2016, 2015, 2014, 2013],
+    availableYears: [2017, 2016, 2015, 2014, 2013],
     defaultYear: 2017
   },
   planet: {
