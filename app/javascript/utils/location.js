@@ -37,7 +37,8 @@ export const getDataLocation = createSelector(
       ...(use &&
         use.id && {
         type: 'use',
-        use: use.id
+        adm0: use.name,
+        adm1: use.id
       })
     };
   }

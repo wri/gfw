@@ -490,7 +490,7 @@ export const getInteractions = createSelector(
         layer,
         label: layer && layer.name,
         value: layer && layer.id,
-        aoi: layer.name === 'Area of Interest',
+        aoi: layer && layer.name === 'Area of Interest',
         article:
           layer && layer.interactionConfig && layer.interactionConfig.article
       };
