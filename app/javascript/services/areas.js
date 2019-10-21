@@ -57,7 +57,10 @@ export const setAreasProvider = (body, method) => {
   return axios({
     method,
     url,
-    data: body,
+    data: {
+      ...body,
+      language: body.lang
+    },
     withCredentials: true
   });
 };
