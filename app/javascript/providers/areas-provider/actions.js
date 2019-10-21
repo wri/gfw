@@ -12,41 +12,24 @@ export const getAreas = createThunkAction(
     const { location } = getState();
     dispatch(setAreasLoading({ loading: true, error: false }));
     getAreasProvider()
-      .then(response => {
+      .then(areas => {
         const { type, adm0 } = location.payload || {};
-        const { data } = response.data;
-        if (data && !!data.length) {
-          dispatch(
-            setAreas(
-              data.map(d => ({
-                id: d.id,
-                ...d.attributes,
-                userArea: true
-              }))
-            )
-          );
-          if (type === 'aoi' && adm0 && !data.find(d => d.id === adm0)) {
+        if (areas && !!areas.length) {
+          dispatch(setAreas(areas));
+          if (type === 'aoi' && adm0 && !areas.find(d => d.id === adm0)) {
             getAreaProvider(adm0)
               .then(area => {
-                const { data: areaData } = area.data;
-                dispatch(
-                  setArea({
-                    id: areaData.id,
-                    ...areaData.attributes
-                  })
-                );
+                dispatch(setArea(area));
                 dispatch(setAreasLoading({ loading: false, error: false }));
               })
               .catch(error => {
                 dispatch(
                   setAreasLoading({
                     loading: false,
-                    error: error.response.status
+                    error: true
                   })
                 );
-                if (error.response.status !== 401) {
-                  console.info(error);
-                }
+                console.info(error);
               });
           } else {
             dispatch(setAreasLoading({ loading: false, error: false }));
@@ -56,9 +39,7 @@ export const getAreas = createThunkAction(
         }
       })
       .catch(error => {
-        dispatch(
-          setAreasLoading({ loading: false, error: error.response.status })
-        );
+        dispatch(setAreasLoading({ loading: false, error: true }));
         console.info(error);
       });
   }
@@ -71,17 +52,13 @@ export const getArea = createThunkAction(
     const { data: userData } = myGfw || {};
     dispatch(setAreasLoading({ loading: true, error: false }));
     getAreaProvider(id)
-      .then(response => {
-        const { data } = response.data;
-        if (data) {
-          dispatch(
-            setArea({
-              id: data.id,
-              ...data.attributes,
-              userArea: userData && userData.id === data.attributes.userId
-            })
-          );
-        }
+      .then(area => {
+        dispatch(
+          setArea({
+            ...area,
+            userArea: userData && userData.id === area.userId
+          })
+        );
         dispatch(setAreasLoading({ loading: false, error: false }));
       })
       .catch(error => {

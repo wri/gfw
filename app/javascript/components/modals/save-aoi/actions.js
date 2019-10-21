@@ -1,7 +1,7 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 
-import { setAreasProvider, deleteAreaProvider } from 'services/areas';
+import { setAreasWithSubscription, deleteAreaProvider } from 'services/areas';
 import {
   setArea,
   setAreas,
@@ -29,6 +29,8 @@ export const saveAOI = createThunkAction(
   ({
     name,
     tags,
+    email,
+    lang,
     fireAlerts,
     deforestationAlerts,
     monthlySummary,
@@ -47,12 +49,22 @@ export const saveAOI = createThunkAction(
       const { id: activeAreaId, application, admin, use, wdpa } =
         activeArea || {};
       const method = activeArea && activeArea.userArea ? 'patch' : 'post';
+      const hasSubscription =
+        fireAlerts || deforestationAlerts || monthlySummary;
 
       const postData = {
         name,
+        type,
         id: activeAreaId,
         application: application || 'gfw',
         geostore: geostoreId,
+        ...(hasSubscription && {
+          email,
+          lang,
+          deforestationAlerts,
+          monthlySummary,
+          fireAlerts
+        }),
         admin,
         use,
         wdpa,
@@ -72,28 +84,21 @@ export const saveAOI = createThunkAction(
         ...(type === 'wdpa' && {
           wdpaid: parseInt(adm0, 10)
         }),
-        fireAlerts,
         ...(webhookUrl && {
           webhookUrl
         }),
-        deforestationAlerts,
-        monthlySummary,
         tags: tags || [],
         public: true
       };
 
-      setAreasProvider(postData, method)
-        .then(response => {
-          if (response.data && response.data.data) {
-            const area = response.data.data;
-            const { id, attributes } = area || {};
-            dispatch(setArea({ id, ...attributes, userArea: true }));
-            dispatch(
-              setSaveAOISaving({ saving: false, error: false, saved: true })
-            );
-            if (viewAfterSave) {
-              dispatch(viewArea({ areaId: id }));
-            }
+      setAreasWithSubscription(postData, method)
+        .then(area => {
+          dispatch(setArea(area));
+          dispatch(
+            setSaveAOISaving({ saving: false, error: false, saved: true })
+          );
+          if (viewAfterSave) {
+            dispatch(viewArea({ areaId: area.id }));
           }
         })
         .catch(error => {
@@ -112,11 +117,11 @@ export const saveAOI = createThunkAction(
 
 export const deleteAOI = createThunkAction(
   'deleteAOI',
-  ({ id, clearAfterDelete }) => (dispatch, getState) => {
+  ({ id, webhookUrl, clearAfterDelete }) => (dispatch, getState) => {
     const { data: areas } = getState().areas || {};
     dispatch(setSaveAOISaving({ saving: true, error: false, deleted: false }));
 
-    deleteAreaProvider(id)
+    deleteAreaProvider({ id, webhookUrl })
       .then(response => {
         if (
           response.status &&

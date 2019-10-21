@@ -73,14 +73,16 @@ function reducer(state, action) {
       };
     }
     case 'activeArea': {
-      const { activeArea, email, lang } = payload;
+      const { activeArea } = payload;
       const {
         name,
         tags,
         fireAlerts,
         deforestationAlerts,
         monthlySummary,
-        webhookUrl
+        webhookUrl,
+        email,
+        lang
       } =
         activeArea || {};
 
@@ -132,10 +134,10 @@ function SaveAOIForm(props) {
   useEffect(
     () => {
       if (activeArea) {
-        dispatch({ type: 'activeArea', payload: { activeArea, lang, email } });
+        dispatch({ type: 'activeArea', payload: { activeArea } });
       }
     },
-    [activeArea, lang, email]
+    [activeArea]
   );
 
   const renderSaveAOI = () => {
@@ -152,7 +154,13 @@ function SaveAOIForm(props) {
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
-            onClick={() => deleteAOI({ id: activeArea.id, clearAfterDelete })}
+            onClick={() =>
+              deleteAOI({
+                webhookUrl: activeArea.webhookUrl,
+                id: activeArea.id,
+                clearAfterDelete
+              })
+            }
           >
             <Icon icon={deleteIcon} className="delete-icon" />
             Delete Area
@@ -188,7 +196,6 @@ function SaveAOIForm(props) {
     fireAlerts,
     deforestationAlerts,
     monthlySummary
-    // webhookUrl
   } = form;
   const canSubmit = validateEmail(email) && name && lang;
 
