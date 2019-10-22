@@ -12,6 +12,7 @@ import qs from 'query-string';
 import { getAllAreas } from 'providers/areas-provider/selectors';
 import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 import { getActiveLayersWithDates } from 'components/map/selectors';
+import { getDataLocation } from 'utils/location';
 
 import { getIsTrase } from 'app/layouts/root/selectors';
 
@@ -75,24 +76,8 @@ export const getWidgetFromLocation = createSelector(
     (location && location.widgetSlug) || (query && query.widget)
 );
 
-export const getLocation = createSelector(
-  [selectLocation, selectGeostore, selectRouteType],
-  (location, geostore, routeType) => {
-    if (location.type === 'aoi' && geostore) {
-      return {
-        ...location,
-        routeType,
-        type: 'geostore',
-        adm0: geostore.id
-      };
-    }
-
-    return { ...location, routeType };
-  }
-);
-
 export const getLocationObj = createSelector(
-  [getLocation, getGeodescriberTitleFull],
+  [getDataLocation, getGeodescriberTitleFull],
   (location, title) => ({
     ...location,
     locationLabel: location.type === 'global' ? 'global' : title,
@@ -104,17 +89,17 @@ export const getLocationObj = createSelector(
 
 export const getAllLocationData = createSelector(
   [
-    selectLocation,
+    getDataLocation,
     selectCountryData,
     getAllAreas,
     selectRouteType,
     selectLocationQuery
   ],
-  (location, countryData, areas, routeType, query) => {
+  (dataLocation, countryData, areas, routeType, query) => {
     if (isEmpty(areas) && isEmpty(countryData)) return null;
-    const { type, adm0, adm1 } = location;
+    const { type, adm0, adm1, areaId } = dataLocation;
 
-    if (type === 'aoi') {
+    if (areaId && type !== 'country') {
       return { adm0: areas.map(a => ({ ...a, value: a.geostore })) };
     }
 
@@ -146,9 +131,9 @@ export const getAllLocationData = createSelector(
 
 export const getLocationData = createSelector(
   [getLocationObj, getAllLocationData, selectPolynameWhitelist],
-  (location, allLocationData, polynamesWhitelist) => {
+  (locationObj, allLocationData, polynamesWhitelist) => {
     if (isEmpty(allLocationData)) return null;
-    const { type, adminLevel, locationLabel } = location;
+    const { type, adminLevel, locationLabel, adm0, adm1, areaId } = locationObj;
 
     let parent = {};
     let parentData = allLocationData.adm0;
@@ -157,18 +142,19 @@ export const getLocationData = createSelector(
       parent = { label: 'global', value: 'global' };
       children = allLocationData.adm1;
     } else if (adminLevel === 'adm1') {
-      parent = allLocationData.adm0.find(d => d.value === location.adm0);
+      parent = allLocationData.adm0.find(d => d.value === adm0);
       parentData = allLocationData.adm0;
       children = allLocationData.adm2;
     } else if (adminLevel === 'adm2') {
-      parent = allLocationData.adm1.find(d => d.value === location.adm1);
+      parent = allLocationData.adm1.find(d => d.value === adm1);
       parentData = allLocationData.adm1;
       children = [];
     }
 
     const locationData = allLocationData[adminLevel] || allLocationData.adm0;
     const currentLocation =
-      locationData && locationData.find(d => d.value === location[adminLevel]);
+      locationData &&
+      locationData.find(d => d.value === locationObj[adminLevel]);
 
     return {
       parent,
@@ -177,7 +163,7 @@ export const getLocationData = createSelector(
       location: currentLocation || { label: 'global', value: 'global' },
       locationData: locationData && buildLocationDict(locationData),
       locationLabel:
-        type === 'geostore' || type === 'global'
+        type === 'geostore' || type === 'global' || areaId
           ? locationLabel
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),
@@ -306,7 +292,8 @@ export const filterWidgetsByCategory = createSelector(
       return widgets;
     }
 
-    const cat = category || 'summary';
+    const cat =
+      locationData && !locationData.areaId && category ? category : 'summary';
 
     return sortBy(
       widgets.filter(w => w.categories.includes(cat)),
@@ -474,8 +461,16 @@ export const getWidgets = createSelector(
 
       const searchObject = qs.parse(search);
       const widgetQuery = searchObject && searchObject[widget];
-      const locationPath = `${window.location.href}`;
-      const shareUrl = `${locationPath}#${widget}`;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?${
+        searchObject
+          ? qs.stringify({
+            ...searchObject,
+            widget,
+            showMap: false,
+            scrollTo: widget
+          })
+          : ''
+      }`;
       const embedUrl = `${window.location.origin}/embed/widget/${widget}/${
         type
       }${adm0 ? `/${adm0}` : ''}${adm1 ? `/${adm1}` : ''}${
@@ -519,7 +514,7 @@ export const getWidgetsProps = () =>
     loading: selectLoading,
     widgets: getWidgets,
     activeWidget: getActiveWidget,
-    location: getLocation,
+    location: getDataLocation,
     emebd: selectEmbed,
     simple: selectSimple,
     modalClosing: selectModalClosing,

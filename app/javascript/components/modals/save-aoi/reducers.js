@@ -2,7 +2,9 @@ import * as actions from './actions';
 
 export const initialState = {
   saving: false,
+  saved: false,
   error: false,
+  deleted: false,
   settings: {
     open: false,
     activeAreaId: null
@@ -12,7 +14,9 @@ export const initialState = {
 const setSaveAOISaving = (state, { payload }) => ({
   ...state,
   saving: payload.saving,
-  error: payload.error
+  saved: payload.saved,
+  error: payload.error,
+  deleted: payload.deleted
 });
 
 const resetSaveAOI = () => ({

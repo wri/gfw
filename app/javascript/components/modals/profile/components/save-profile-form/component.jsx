@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { getLanguages } from 'utils/lang';
 import cx from 'classnames';
 
+import { validateEmail } from 'utils/format';
+
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
 import Button from 'components/ui/button';
@@ -11,12 +13,6 @@ import Checkbox from 'components/ui/checkbox-v2';
 import formConfig from './config';
 
 import './styles.scss';
-
-function validateEmail(email) {
-  // eslint-disable-next-line
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 
 function reducer(state, action) {
   const { payload } = action;

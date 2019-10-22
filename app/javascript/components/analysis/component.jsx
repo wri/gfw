@@ -7,6 +7,7 @@ import Button from 'components/ui/button/button-component';
 import Loader from 'components/ui/loader';
 import ChoseAnalysis from 'components/analysis/components/chose-analysis';
 import ShowAnalysis from 'components/analysis/components/show-analysis';
+import NoContent from 'components/ui/no-content';
 
 import './styles.scss';
 
@@ -62,6 +63,7 @@ class AnalysisComponent extends PureComponent {
         target: '_blank'
       })
     };
+    const isDeletedAoI = location.areaId && !activeArea;
 
     return (
       <Fragment>
@@ -69,8 +71,16 @@ class AnalysisComponent extends PureComponent {
           {loading && (
             <Loader className={cx('analysis-loader', { fetching: loading })} />
           )}
+          {!loading &&
+            isDeletedAoI && (
+            <NoContent
+              className="deleted-area-message"
+              message="This area has been deleted."
+            />
+          )}
           {location.type &&
             location.adm0 &&
+            !isDeletedAoI &&
             (loading || (!loading && error)) && (
             <div className={cx('cancel-analysis', { fetching: loading })}>
               {!loading &&
@@ -91,7 +101,9 @@ class AnalysisComponent extends PureComponent {
               {!loading && error && <p className="error-message">{error}</p>}
             </div>
           )}
-          {location.type && location.adm0 ? (
+          {location.type &&
+            location.adm0 &&
+            !isDeletedAoI && (
             <ShowAnalysis
               clearAnalysis={clearAnalysis}
               goToDashboard={goToDashboard}
@@ -100,16 +112,19 @@ class AnalysisComponent extends PureComponent {
               hasWidgetLayers={hasWidgetLayers}
               analysis
             />
-          ) : (
-            <ChoseAnalysis />
           )}
+          {!location.type &&
+            !location.adm0 &&
+            !isDeletedAoI && <ChoseAnalysis />}
         </div>
         {!loading &&
           !error &&
           location.type &&
+          !isDeletedAoI &&
           location.adm0 && (
           <div className="analysis-actions">
-            {location.type === 'country' && (
+            {location.type === 'country' &&
+                !location.areaId && (
               <Button
                 className="analysis-action-btn"
                 theme="theme-button-light"
@@ -120,7 +135,7 @@ class AnalysisComponent extends PureComponent {
                   })
                 }
               >
-                  DASHBOARD
+                    DASHBOARD
               </Button>
             )}
             {activeArea && (

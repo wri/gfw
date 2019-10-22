@@ -24,6 +24,10 @@
     > * {
       margin-left: rem(5px);
 
+      &:first-child {
+        margin-right: rem(8px);
+      }
+
       svg {
         fill: $white;
         margin-top: rem(-5px);
@@ -63,6 +67,7 @@
       align-items: center;
       color: $green-gfw;
       font-size: rem(12px);
+      width: fit-content;
       margin-bottom: rem(30px);
       font-weight: 400;
 

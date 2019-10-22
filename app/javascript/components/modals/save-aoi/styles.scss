@@ -1,7 +1,7 @@
 @import '~styles/settings.scss';
 
 .c-modal-save-aoi {
-  min-height: rem(200px);
+  min-height: rem(100px);
 
   .save-aoi-body {
     margin-bottom: rem(20px);
@@ -10,5 +10,35 @@
   .login-intro {
     margin-bottom: rem(20px);
     max-width: rem(300px);
+  }
+
+  .confirmation-message {
+    max-width: rem(400px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .icon-confirmation {
+      width: rem(100px);
+      height: rem(100px);
+      margin-bottom: rem(30px);
+    }
+
+    p {
+      margin-bottom: rem(30px);
+      text-align: center;
+    }
+
+    .confirmation-actions {
+      display: flex;
+      justify-content: space-around;
+
+      .link-btn,
+      .close-btn {
+        width: auto;
+        min-width: rem(140px);
+        margin: 0 rem(10px);
+      }
+    }
   }
 }

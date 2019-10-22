@@ -24,6 +24,7 @@ export const BROWSER_SUPPORT = 'location/BROWSER_SUPPORT';
 export const UNACCEPTABLE = 'location/UNACCEPTABLE';
 export const INTERNAL_ERROR = 'location/INTERNAL_ERROR';
 export const SEARCH = 'location/SEARCH';
+export const SUBSCRIBE = 'location/SUBSCRIBE';
 
 const routeChangeThunk = (dispatch, getState) => {
   const { location } = getState() || {};
@@ -236,6 +237,11 @@ export const routes = {
     path: '/search/:query?/:page?',
     component: 'search',
     controller: 'search'
+  },
+  [SUBSCRIBE]: {
+    path: '/subscribe',
+    controller: 'subscribe',
+    component: 'subscribe'
   }
 };
 

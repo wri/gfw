@@ -1,14 +1,18 @@
+/* eslint-disable jsx-a11y/label-has-for */
 import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+import { getLanguages } from 'utils/lang';
+import { validateEmail } from 'utils/format';
+
 import Checkbox from 'components/ui/checkbox-v2';
 import Loader from 'components/ui/loader';
+import Dropdown from 'components/ui/dropdown';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import InputTags from 'components/input-tags';
 import MapGeostore from 'components/map-geostore';
-
 import deleteIcon from 'assets/icons/delete.svg';
 import screenImg1x from 'assets/images/aois/alert-email.png';
 import screenImg2x from 'assets/images/aois/alert-email@2x.png';
@@ -25,10 +29,23 @@ function reducer(state, action) {
         nameError: !payload
       };
     }
+    case 'email': {
+      return {
+        ...state,
+        email: payload,
+        emailError: !validateEmail(payload)
+      };
+    }
     case 'tags': {
       return {
         ...state,
         tags: payload
+      };
+    }
+    case 'lang': {
+      return {
+        ...state,
+        lang: payload
       };
     }
     case 'fireAlerts': {
@@ -56,20 +73,25 @@ function reducer(state, action) {
       };
     }
     case 'activeArea': {
-      const { activeArea } = payload;
+      const { activeArea, userData } = payload;
       const {
         name,
         tags,
         fireAlerts,
         deforestationAlerts,
         monthlySummary,
-        webhookUrl
+        webhookUrl,
+        email,
+        lang
       } =
         activeArea || {};
+      const { email: userEmail, lang: userLang } = userData || {};
 
       return {
         ...state,
         name,
+        email: email || userEmail,
+        lang: lang || userLang || 'en',
         tags,
         fireAlerts,
         deforestationAlerts,
@@ -99,6 +121,9 @@ function SaveAOIForm(props) {
   const [form, dispatch] = useReducer(reducer, {
     loading: true,
     name: props.locationName || '',
+    email: props.email || userData.email,
+    emailError: false,
+    lang: props.lang || userData.lang || 'en',
     tags: [],
     nameError: false,
     fireAlerts: props.fireAlerts || false,
@@ -110,10 +135,10 @@ function SaveAOIForm(props) {
   useEffect(
     () => {
       if (activeArea) {
-        dispatch({ type: 'activeArea', payload: { activeArea } });
+        dispatch({ type: 'activeArea', payload: { activeArea, userData } });
       }
     },
-    [activeArea]
+    [activeArea, userData]
   );
 
   const renderSaveAOI = () => {
@@ -130,7 +155,13 @@ function SaveAOIForm(props) {
           <Button
             className="delete-aoi"
             theme="theme-button-clear"
-            onClick={() => deleteAOI({ id: activeArea.id, clearAfterDelete })}
+            onClick={() =>
+              deleteAOI({
+                webhookUrl: activeArea.webhookUrl,
+                id: activeArea.id,
+                clearAfterDelete
+              })
+            }
           >
             <Icon icon={deleteIcon} className="delete-icon" />
             Delete Area
@@ -158,14 +189,18 @@ function SaveAOIForm(props) {
 
   const {
     name,
+    email,
+    emailError,
     tags,
+    lang,
     nameError,
     fireAlerts,
     deforestationAlerts,
-    monthlySummary,
-    webhookUrl
+    monthlySummary
   } = form;
-  const canSubmit = name;
+  const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
+  const canSubmit =
+    (hasSubscription ? validateEmail(email) : true) && name && lang;
 
   return (
     <div className="c-form c-save-aoi-form">
@@ -177,7 +212,7 @@ function SaveAOIForm(props) {
         width={600}
       />
       <div className={cx('field', { error: nameError })}>
-        <span className="form-title">Name this area for later reference</span>
+        <label className="form-title">Name this area for later reference</label>
         <input
           className="text-input"
           value={name}
@@ -185,23 +220,13 @@ function SaveAOIForm(props) {
         />
       </div>
       <div className={cx('field', { error: nameError })}>
-        <span className="form-title">
+        <label className="form-title">
           Assign tags to organize and group areas
-        </span>
+        </label>
         <InputTags
           tags={tags}
           className="aoi-tags-input"
           onChange={newTags => dispatch({ type: 'tags', payload: newTags })}
-        />
-      </div>
-      <div className={cx('field')}>
-        <span className="form-title">Add a webhook url</span>
-        <input
-          className="text-input"
-          value={webhookUrl}
-          onChange={e =>
-            dispatch({ type: 'webhookUrl', payload: e.target.value })
-          }
         />
       </div>
       <div className={cx('field', 'field-image')}>
@@ -215,18 +240,49 @@ function SaveAOIForm(props) {
           your selected area, based on your user profile.
         </p>
       </div>
+      <div className={cx('field', { error: emailError })}>
+        <label className="form-title">Email</label>
+        <input
+          className="text-input"
+          value={email}
+          onChange={e => dispatch({ type: 'email', payload: e.target.value })}
+        />
+      </div>
+      {/* <div className={cx('field')}>
+        <label className="form-title">Add a webhook url</label>
+        <input
+          className="text-input"
+          value={webhookUrl}
+          onChange={e =>
+            dispatch({ type: 'webhookUrl', payload: e.target.value })
+          }
+        />
+      </div> */}
+      <div className="field">
+        <label className="form-title">Language*</label>
+        <Dropdown
+          className="dropdown-input"
+          theme="theme-dropdown-native-form"
+          options={getLanguages()}
+          value={lang}
+          onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
+          native
+        />
+      </div>
       <div className="field">
         <Checkbox
           className="form-checkbox"
           onChange={() => dispatch({ type: 'fireAlerts' })}
           checked={fireAlerts}
           label={'As soon as fires are detected'}
+          subLabel="Data updated daily"
         />
         <Checkbox
           className="form-checkbox"
           onChange={() => dispatch({ type: 'deforestationAlerts' })}
           checked={deforestationAlerts}
           label={'As soon as forest change is detected'}
+          subLabel="Data updated weekly for the tropics, annual outside the tropics"
         />
         <Checkbox
           className="form-checkbox"
@@ -246,6 +302,7 @@ SaveAOIForm.propTypes = {
   userData: PropTypes.object,
   locationName: PropTypes.string,
   error: PropTypes.bool,
+  lang: PropTypes.string,
   saving: PropTypes.bool,
   activeArea: PropTypes.object,
   viewAfterSave: PropTypes.bool,
@@ -255,7 +312,8 @@ SaveAOIForm.propTypes = {
   deforestationAlerts: PropTypes.bool,
   monthlySummary: PropTypes.bool,
   webhookUrl: PropTypes.string,
-  geostoreId: PropTypes.string
+  geostoreId: PropTypes.string,
+  email: PropTypes.string
 };
 
 export default SaveAOIForm;

@@ -38,7 +38,11 @@ class AreasTable extends PureComponent {
     alerts: {}
   };
 
+  mounted = false;
+
   componentDidMount() {
+    this.mounted = true;
+
     const { areas } = this.props;
     if (areas) {
       areas.forEach(area => {
@@ -53,18 +57,24 @@ class AreasTable extends PureComponent {
           }
         })
           .then(alerts => {
-            this.setState({
-              alerts: {
-                ...this.state.alerts,
-                [area.id]: alerts
-              }
-            });
+            if (this.mounted) {
+              this.setState({
+                alerts: {
+                  ...this.state.alerts,
+                  [area.id]: alerts
+                }
+              });
+            }
           })
           .catch(err => {
             console.error(err);
           });
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {

@@ -14,6 +14,7 @@ import treeLossLocated from 'components/widgets/forest-change/tree-loss-located'
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
 import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 import fires from 'components/widgets/forest-change/fires';
+import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
 
 // // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -61,6 +62,7 @@ export default {
   treeLossLocated,
   treeLossPlantations,
   treeLossTsc,
+  treeCoverGainSimple,
   // land cover
   treeCover,
   treeCover2000,

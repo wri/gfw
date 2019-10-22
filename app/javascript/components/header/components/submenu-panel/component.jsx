@@ -7,6 +7,7 @@ import Icon from 'components/ui/icon';
 import Search from 'components/ui/search';
 
 import moreIcon from 'assets/icons/more.svg';
+import myGfwIcon from 'assets/icons/mygfw.svg';
 
 import MyGfwLogin from 'components/mygfw-login';
 import DropdownMenu from '../dropdown-menu';
@@ -39,7 +40,6 @@ class Header extends PureComponent {
       navMain,
       activeLang,
       languages,
-      myGfwLinks,
       handleLangSelect,
       loggedIn,
       toggleContactUs,
@@ -71,6 +71,18 @@ class Header extends PureComponent {
                 options={navMain}
                 hideMenu={hideMenu}
               />
+              <NavLink
+                className="nav-link my-gfw-link"
+                to="/my-gfw"
+                activeClassName="active"
+                onClick={() => hideMenu()}
+              >
+                My GFW
+                <Icon
+                  icon={myGfwIcon}
+                  className={cx({ 'logged-in': loggedIn })}
+                />
+              </NavLink>
             </div>
           )}
           {isMobile && (
@@ -86,17 +98,11 @@ class Header extends PureComponent {
               />
             </div>
           )}
-          {isMobile && (
+          {isMobile &&
+            !loggedIn && (
             <div className="menu-section">
               <h4>My GFW</h4>
-              {loggedIn ? (
-                <DropdownMenu
-                  className="sub-menu -plain"
-                  options={myGfwLinks}
-                />
-              ) : (
-                <MyGfwLogin plain />
-              )}
+              <MyGfwLogin plain />
             </div>
           )}
           <div className="menu-section">
@@ -181,7 +187,6 @@ Header.propTypes = {
   navMain: PropTypes.array,
   activeLang: PropTypes.object,
   languages: PropTypes.array,
-  myGfwLinks: PropTypes.array,
   hideMenu: PropTypes.func,
   handleLangSelect: PropTypes.func,
   toggleContactUs: PropTypes.func,

@@ -37,6 +37,16 @@ class NavAlt extends PureComponent {
       showLang: false,
       showMore: false
     };
+
+    this.mounted = false;
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -85,7 +95,11 @@ class NavAlt extends PureComponent {
                 <Fragment>
                   <button
                     className="menu-link lang-btn notranslate"
-                    onClick={() => this.setState({ showLang: !showLang })}
+                    onClick={() => {
+                      if (this.mounted) {
+                        this.setState({ showLang: !showLang });
+                      }
+                    }}
                   >
                     {(activeLang && activeLang.label) || 'English'}
                     <Icon

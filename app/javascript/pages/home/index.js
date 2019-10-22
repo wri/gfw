@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { setModalNewsletterOpen } from 'components/modals/newsletter/actions';
 import * as actions from 'components/modals/video/video-actions';
 import PageComponent from './component';
 
@@ -11,4 +12,6 @@ const mapStateToProps = ({ news }) => ({
   ...config
 });
 
-export default connect(mapStateToProps, actions)(PageComponent);
+export default connect(mapStateToProps, { ...actions, setModalNewsletterOpen })(
+  PageComponent
+);

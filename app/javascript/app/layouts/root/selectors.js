@@ -64,7 +64,7 @@ export const getMetadata = createSelector(
     }
     const metadataByType = window.metadata[type];
     let title = '';
-    if (location.type && location.type === 'country') {
+    if (location && location.type === 'country') {
       title = `${buildFullLocationName(location, {
         adm0s,
         adm1s,

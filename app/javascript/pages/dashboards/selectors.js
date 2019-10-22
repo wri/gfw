@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
-import replace from 'lodash/replace';
 import upperFirst from 'lodash/upperFirst';
+import isEmpty from 'lodash/isEmpty';
 import flatMap from 'lodash/flatMap';
 
 import { filterWidgetsByLocation } from 'components/widgets/selectors';
@@ -27,11 +27,16 @@ export const getEmbed = createSelector(
   location => location && location.routesMap[location.type].embed
 );
 
-export const getWidgetAnchor = () => {
-  const widgetHash =
-    window.location.hash && replace(window.location.hash, '#', '');
-  return document.getElementById(widgetHash);
-};
+export const getWidgetAnchor = createSelector(
+  [selectQuery, filterWidgetsByLocation],
+  (query, widgets) => {
+    const { scrollTo } = query || {};
+    const hasWidget =
+      widgets && widgets.length && widgets.find(w => w.widget === scrollTo);
+
+    return hasWidget ? document.getElementById(scrollTo) : null;
+  }
+);
 
 export const getNoWidgetsMessage = createSelector(
   [selectCategory],
@@ -41,7 +46,9 @@ export const getNoWidgetsMessage = createSelector(
 export const getLinks = createSelector(
   [filterWidgetsByLocation, selectCategory, getActiveArea],
   (widgets, activeCategory, activeArea) => {
-    if (!widgets || (activeArea && activeArea.status === 'pending')) { return null; }
+    if (!widgets || (activeArea && isEmpty(activeArea.admin))) {
+      return null;
+    }
     const widgetCats = flatMap(widgets.map(w => w.categories));
     return CATEGORIES.filter(c => widgetCats.includes(c.value)).map(
       category => ({
@@ -61,5 +68,6 @@ export const getDashboardsProps = createStructuredSelector({
   noWidgetsMessage: getNoWidgetsMessage,
   locationType: selectLocationType,
   activeArea: getActiveArea,
-  areaLoading: selectAreaLoading
+  areaLoading: selectAreaLoading,
+  widgets: filterWidgetsByLocation
 });

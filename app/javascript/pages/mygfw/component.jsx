@@ -9,7 +9,6 @@ import ProfileModal from 'components/modals/profile';
 
 import AreasProvider from 'providers/areas-provider';
 import CountryDataProvider from 'providers/country-data-provider';
-import PlanetBasemapsProvider from 'providers/planet-provider';
 import DashboardImage from 'assets/images/aois/aoi-dashboard-small.png';
 import DashboardImageLarge from 'assets/images/aois/aoi-dashboard-small@2x.png';
 
@@ -104,7 +103,6 @@ class MyGFWPage extends PureComponent {
         </div>
         <AreasProvider />
         <CountryDataProvider />
-        <PlanetBasemapsProvider />
         <SaveAOIModal canDelete />
         <ShareModal />
         <ProfileModal />

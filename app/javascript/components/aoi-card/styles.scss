@@ -15,6 +15,7 @@
     height: rem(120px);
     background: $border;
     margin-bottom: rem(20px);
+    overflow: hidden;
 
     .tile-loader {
       background-color: $border;

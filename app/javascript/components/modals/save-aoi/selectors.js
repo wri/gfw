@@ -12,6 +12,8 @@ const selectLoading = state =>
   (state.datasets && state.datasets.loading) ||
   (state.myGfw && state.myGfw.loading);
 const selectSaving = state => state.modalSaveAOI && state.modalSaveAOI.saving;
+const selectDeleted = state => state.modalSaveAOI && state.modalSaveAOI.deleted;
+const selectSaved = state => state.modalSaveAOI && state.modalSaveAOI.saved;
 const selectError = state => state.modalSaveAOI && state.modalSaveAOI.error;
 const selectUserData = state => (state.myGfw && state.myGfw.data) || {};
 const selectLocation = state => state.location && state.location.payload;
@@ -47,8 +49,14 @@ export const getActiveArea = createSelector(
 );
 
 export const getModalTitle = createSelector(
-  [getActiveArea, selectUserData],
-  (activeArea, userData) => {
+  [getActiveArea, selectUserData, selectSaved, selectDeleted],
+  (activeArea, userData, saved, deleted) => {
+    if (deleted) {
+      return 'Area of Interest Deleted';
+    }
+    if (saved) {
+      return 'Area of Interest Saved';
+    }
     if (activeArea && activeArea.userArea && !isEmpty(userData)) {
       return 'Edit Area of Interest';
     }
@@ -58,6 +66,8 @@ export const getModalTitle = createSelector(
 
 export const getModalAOIProps = createStructuredSelector({
   saving: selectSaving,
+  saved: selectSaved,
+  deleted: selectDeleted,
   loading: selectLoading,
   activeArea: getActiveArea,
   title: getModalTitle,

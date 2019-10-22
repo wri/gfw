@@ -108,3 +108,18 @@ export const closeMobileMap = createThunkAction(
     });
   }
 );
+
+export const clearScrollTo = createThunkAction(
+  'clearScrollTo',
+  () => (dispatch, getState) => {
+    const { query, type, payload } = getState().location;
+    dispatch({
+      type,
+      payload,
+      query: {
+        ...query,
+        scrollTo: false
+      }
+    });
+  }
+);

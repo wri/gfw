@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'redux-first-router-link';
+import { track } from 'app/analytics';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -12,6 +13,7 @@ import SaveAOIModal from 'components/modals/save-aoi';
 
 import tagIcon from 'assets/icons/tag.svg';
 import downloadIcon from 'assets/icons/download.svg';
+import saveUserIcon from 'assets/icons/save-user.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
 import pencilIcon from 'assets/icons/pencil.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
@@ -101,6 +103,18 @@ class Header extends PureComponent {
                 <Icon icon={pencilIcon} />
               </Button>
             )}
+            {location.type === 'country' && (
+              <Button
+                className="theme-button-medium theme-button-clear square"
+                tooltip={{
+                  text: 'Save as an area of interest',
+                  position: 'bottom'
+                }}
+                onClick={() => setSaveAOISettings({ open: true })}
+              >
+                <Icon icon={saveUserIcon} />
+              </Button>
+            )}
             {isCountryDashboard && (
               <Button
                 className="theme-button-medium theme-button-clear square"
@@ -121,7 +135,13 @@ class Header extends PureComponent {
           <div className="columns small-12 medium-10">
             <div className="select-container">
               {isAreaDashboard && (
-                <Link className="breadcrumb-link" to="/dashboards/global">
+                <Link
+                  className="breadcrumb-link"
+                  to="/dashboards/global"
+                  onClick={() =>
+                    track('switchDashboardType', { label: 'changes to global' })
+                  }
+                >
                   <Icon icon={arrowIcon} className="breadcrumb-icon" />
                   Go to Global dashboard
                 </Link>
@@ -131,6 +151,11 @@ class Header extends PureComponent {
                 <Link
                   className="breadcrumb-link"
                   to={`/dashboards/aoi/${firstArea.id}`}
+                  onClick={() =>
+                    track('switchDashboardType', {
+                      label: 'changes to areas'
+                    })
+                  }
                 >
                   <Icon icon={arrowIcon} className="breadcrumb-icon" />
                     Go to Areas dashboard

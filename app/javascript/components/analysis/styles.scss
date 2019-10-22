@@ -13,6 +13,12 @@
     }
   }
 
+  .deleted-area-message {
+    position: relative;
+    width: 100%;
+    min-height: rem(180px);
+  }
+
   .cancel-analysis {
     position: absolute;
     top: 0;

@@ -89,6 +89,9 @@ Gfw::Application.routes.draw do
   # search
   get '/search(/:query)(/:page)' => 'search#index'
 
+  # subscribe
+  get '/subscribe' => 'subscribe#index'
+
   #cache
   get '/cache/keys' => 'cache#keys'
   post '/cache/add' => 'cache#add'

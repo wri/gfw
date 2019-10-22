@@ -16,7 +16,6 @@ import { PluginMapboxGl } from 'layer-manager';
 import { TRANSITION_EVENTS } from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project';
 
-// Styles
 import './styles.scss';
 
 const DEFAULT_VIEWPORT = {

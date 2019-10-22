@@ -26,7 +26,6 @@ import ScrollTo from 'components/scroll-to';
 
 import closeIcon from 'assets/icons/close.svg';
 
-import PendingDashboard from './components/pending-dashboard';
 import Map from './components/map';
 import Header from './components/header';
 import MapControls from './components/map-controls';
@@ -42,7 +41,8 @@ class DashboardsPage extends PureComponent {
     handleCategoryChange: PropTypes.func,
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
-    areaLoading: PropTypes.bool
+    areaLoading: PropTypes.bool,
+    clearScrollTo: PropTypes.func
   };
 
   componentDidUpdate(prevProps) {
@@ -87,10 +87,9 @@ class DashboardsPage extends PureComponent {
       handleCategoryChange,
       locationType,
       activeArea,
-      areaLoading
+      areaLoading,
+      clearScrollTo
     } = this.props;
-    const isCountryDashboard =
-      locationType === 'country' || locationType === 'global';
     const isAreaDashboard = locationType === 'aoi';
 
     return (
@@ -123,13 +122,6 @@ class DashboardsPage extends PureComponent {
                       checkActive
                     />
                   )}
-                  {activeArea && (
-                    <PendingDashboard
-                      className="pending-message"
-                      isUserDashboard={activeArea && activeArea.userArea}
-                      areaId={activeArea && activeArea.id}
-                    />
-                  )}
                   <Widgets className="dashboard-widgets" />
                 </div>
                 <div
@@ -146,15 +138,13 @@ class DashboardsPage extends PureComponent {
                 <MapControls className="map-controls" />
                 <Share />
                 <ModalMeta />
-                {widgetAnchor && <ScrollTo target={widgetAnchor} />}
+                {widgetAnchor && (
+                  <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
+                )}
                 <DatasetsProvider />
                 <LatestProvider />
-                {isCountryDashboard && (
-                  <Fragment>
-                    <CountryDataProvider />
-                    <WhitelistsProvider />
-                  </Fragment>
-                )}
+                <CountryDataProvider />
+                <WhitelistsProvider />
                 <GeostoreProvider />
                 <GeodescriberProvider />
               </Fragment>

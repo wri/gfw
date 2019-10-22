@@ -5,11 +5,13 @@ import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 import { CancelToken } from 'axios';
 
-import * as actions from './whitelists-provider-actions';
-import reducers, { initialState } from './whitelists-provider-reducers';
+import { getDataLocation } from 'utils/location';
 
-const mapStateToProps = ({ location }) => ({
-  location: location && location.payload
+import * as actions from './actions';
+import reducers, { initialState } from './reducers';
+
+const mapStateToProps = state => ({
+  location: getDataLocation(state)
 });
 
 class WhitelistProvider extends PureComponent {
