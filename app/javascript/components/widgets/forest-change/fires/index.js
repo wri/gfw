@@ -17,6 +17,7 @@ export default {
     summary: 7,
     forestChange: 11
   },
+  visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',
   sentences: {
     initial: '{count} active fires detected in {location} in the last 7 days.'
@@ -35,8 +36,8 @@ export default {
       boundary: true
     },
     {
-      dataset: 'e663eb09-04de-4f39-b871-35c6c2ed10b5',
-      layers: ['dd5df87f-39c2-4aeb-a462-3ef969b20b66']
+      dataset: '0f0ea013-20ac-4f4b-af56-c57e99f39e08',
+      layers: ['5371d0c0-4e5f-45f7-9ff2-fe538914f7a3']
     }
   ],
   getData: params => {
