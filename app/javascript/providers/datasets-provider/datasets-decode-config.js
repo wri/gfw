@@ -422,8 +422,14 @@ const decodes = {
     // map to years
     if (threshold >= thresh) {
       vec3 colorA = vec3(rStart, gStart, bStart);
-      vec3 colorB = vec3(rEnd, gEnd, bEnd);
-      color = mix(colorA, colorB, rCol);
+      vec3 colorB = vec3(rMiddle, gMiddle, bMiddle);
+      vec3 colorC = vec3(rEnd, gEnd, bEnd);
+
+      if (rCol >= 0.5) {
+        color = mix(colorB, colorC, rCol);
+      } else {
+        color = mix(colorA, colorB, rCol);
+      }
     } else {
       alpha = 0.;
     }
