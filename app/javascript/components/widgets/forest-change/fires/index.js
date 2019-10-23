@@ -62,6 +62,7 @@ export default {
         return data;
       });
     }
+
     return fetchFireAlertsByGeostore(params.geostore.geojson).then(
       response => response.data.rows
     );

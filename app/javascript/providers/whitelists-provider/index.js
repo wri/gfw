@@ -16,8 +16,8 @@ const mapStateToProps = state => ({
 
 class WhitelistProvider extends PureComponent {
   componentDidMount() {
-    const { location: { adm0, adm1, adm2 } } = this.props;
-    if (adm0) {
+    const { location: { type, adm0, adm1, adm2 } } = this.props;
+    if (type === 'country' && adm0) {
       this.handleFetchWhitelist({ adm0, adm1, adm2 });
     }
   }
