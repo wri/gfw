@@ -33,7 +33,7 @@ class WidgetBody extends PureComponent {
     loading: PropTypes.bool,
     error: PropTypes.bool,
     simple: PropTypes.bool,
-    chartType: PropTypes.string.isRequired,
+    chartType: PropTypes.string,
     sentence: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
     locationName: PropTypes.string,
