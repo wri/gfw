@@ -13,7 +13,6 @@ const translateMeans = (means, latest) => {
   const currentWeek = moment(latest).isoWeek();
   const firstHalf = means.slice(0, currentWeek);
   const secondHalf = means.slice(currentWeek);
-
   return secondHalf.concat(firstHalf);
 };
 
@@ -67,7 +66,7 @@ export const getMeansData = (data, latest) => {
   const pastYear = data.slice(-52);
   const parsedData = pastYear.map((d, i) => ({
     ...d,
-    mean: translatedMeans[i]
+    mean: translatedMeans[i] || 0
   }));
   return parsedData;
 };

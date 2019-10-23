@@ -39,6 +39,7 @@ export default {
     summary: 6,
     forestChange: 9
   },
+  pendingKeys: ['weeks'],
   settingsConfig: [
     {
       key: 'weeks',
