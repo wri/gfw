@@ -15,6 +15,7 @@ import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plan
 import treeLossTsc from 'components/widgets/forest-change/tree-loss-tsc';
 import fires from 'components/widgets/forest-change/fires';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
+import glads from 'components/widgets/forest-change/glads';
 
 // // land cover
 import treeCover from 'components/widgets/land-cover/tree-cover';
@@ -47,6 +48,7 @@ import traseCommodities from 'components/widgets/land-use/trase-commodities';
 
 export default {
   // forest change
+  glads,
   gladAlerts,
   treeLoss,
   treeLossGlobal,
