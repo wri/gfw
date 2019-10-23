@@ -25,4 +25,14 @@
     z-index: 1;
     background: $border;
   }
+
+  &.small {
+    .error-msg {
+      padding: rem(3px);
+
+      p {
+        font-size: rem(11px);
+      }
+    }
+  }
 }
