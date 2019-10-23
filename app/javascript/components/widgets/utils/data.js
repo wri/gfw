@@ -66,7 +66,7 @@ export const getMeansData = (data, latest) => {
   const pastYear = data.slice(-52);
   const parsedData = pastYear.map((d, i) => ({
     ...d,
-    mean: translatedMeans[i] || 0
+    mean: (translatedMeans && translatedMeans[i]) || 0
   }));
   return parsedData;
 };
