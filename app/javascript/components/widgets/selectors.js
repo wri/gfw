@@ -289,7 +289,7 @@ export const filterWidgetsByCategory = createSelector(
     if (embed && widget) return widgets.filter(w => w.widget === widget);
 
     if (showAnalysis || (locationData && locationData.status === 'pending')) {
-      return widgets;
+      return sortBy(widgets, 'sortOrder.summary');
     }
 
     const cat =
