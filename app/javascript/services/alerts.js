@@ -6,6 +6,7 @@ import { getIndicator } from 'utils/strings';
 import { fetchAnalysisEndpoint } from './analysis';
 
 const REQUEST_URL = process.env.GFW_API;
+const CARTO_URL = process.env.CARTO_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
 const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
@@ -20,7 +21,7 @@ const QUERIES = {
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   firesGrouped:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  viirsAlerts: '{location}?group=true&period={period}&thresh=0',
+  viirsAlerts: '&group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
   alertsLatest:
@@ -170,12 +171,23 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
 };
 
 export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
-  const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${
+  const url = `${REQUEST_URL}/viirs-active-fires?geostore=${adm0}${
     QUERIES.viirsAlerts
   }`
     .replace('{location}', !adm2 ? getLocationQuery(adm0, adm1, adm2) : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
+};
+
+export const fetchFireAlertsByGeostore = geojson => {
+  const QUERY =
+    "SELECT COUNT(pt.*) AS count, acq_date as date FROM vnp14imgtdl_nrt_global_7d pt WHERE ST_Intersects(ST_SetSRID(ST_GeomFromGeoJSON('{geometry}'), 4326), pt.the_geom) AND (confidence='normal' OR confidence = 'nominal') GROUP BY acq_date";
+  return request.get(
+    `${CARTO_URL}/sql?q=${QUERY.replace(
+      '{geometry}',
+      JSON.stringify(geojson.features[0].geometry)
+    )}`
+  );
 };
 
 export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {
@@ -245,84 +257,4 @@ export const fetchGLADLatest = params => {
         })
       );
     });
-};
-
-export const fetchFormaLatest = () => {
-  const url = `${REQUEST_URL}/forma250gfw/latest`;
-  return request.get(url, 3600, 'formaRequest').catch(error => {
-    console.error('Error in formaRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: {
-            attributes: {
-              latest: lastFriday
-            },
-            id: null,
-            type: 'forma250gfw'
-          }
-        }
-      })
-    );
-  });
-};
-
-export const fetchTerraiLatest = () => {
-  const url = `${REQUEST_URL}/terrai-alerts/latest`;
-  return request.get(url, 3600, 'terraRequest').catch(error => {
-    console.error('Error in terraRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: [
-            {
-              attributes: { date: lastFriday },
-              id: null,
-              type: 'terrai-alerts'
-            }
-          ]
-        }
-      })
-    );
-  });
-};
-
-export const fetchSADLatest = () => {
-  const url = `${REQUEST_URL}/v2/imazon-alerts/latest`;
-  return request.get(url, 3600, 'sadRequest').catch(error => {
-    console.error('Error in sadRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: [
-            {
-              attributes: { latest: `${lastFriday}T00:00:00Z` },
-              id: undefined,
-              type: 'imazon-latest'
-            }
-          ]
-        }
-      })
-    );
-  });
-};
-
-export const fetchGranChacoLatest = () => {
-  const url = `${REQUEST_URL}/v2/guira-loss/latest`;
-  return request.get(url, 3600, 'granChacoRequest').catch(error => {
-    console.error('Error in granChacoRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: [
-            {
-              attributes: { latest: `${lastFriday}T00:00:00Z` },
-              id: undefined,
-              type: 'imazon-latest'
-            }
-          ]
-        }
-      })
-    );
-  });
 };

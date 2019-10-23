@@ -1,6 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 
+import { fetchAnalysisEndpoint } from 'services/analysis';
 import { fetchGladAlerts, fetchGLADLatest } from 'services/alerts';
 
 import getWidgetProps from './selectors';
@@ -18,7 +19,7 @@ export default {
   source: 'gadm',
   dataType: 'loss',
   categories: ['summary', 'forest-change'],
-  types: ['country'],
+  types: ['country', 'geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1', 'adm2'],
   datasets: [
     {
@@ -38,6 +39,7 @@ export default {
     summary: 6,
     forestChange: 9
   },
+  pendingKeys: ['weeks'],
   settingsConfig: [
     {
       key: 'weeks',
@@ -185,16 +187,48 @@ export default {
     period: 'week',
     weeks: 13
   },
-  getData: params =>
-    axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
+  getData: params => {
+    if (params.type !== 'country') {
+      return fetchAnalysisEndpoint({
+        ...params,
+        params,
+        name: 'glad-alerts',
+        slug: 'glad-alerts',
+        version: 'v1',
+        aggregate: true,
+        aggregateBy: 'week'
+      }).then(response => {
+        const alerts = response.data.data.attributes.value;
+        const latest = alerts && alerts[0];
+        const latestDate =
+          latest &&
+          moment()
+            .year(latest.year)
+            .week(latest.week)
+            .day('5')
+            .format('YYYY-MM-DD');
+
+        return {
+          alerts: alerts.map(d => ({
+            ...d,
+            alerts: d.count
+          })),
+          latest: latestDate,
+          settings: { latestDate }
+        };
+      });
+    }
+
+    return axios.all([fetchGladAlerts(params), fetchGLADLatest(params)]).then(
       axios.spread((alerts, latest) => {
+        const gladsData = alerts && alerts.data.data;
         let data = {};
-        if (alerts && alerts.data && latest) {
+        if (gladsData && latest) {
           const latestDate =
             latest && latest.attributes && latest.attributes.updatedAt;
 
           data = {
-            alerts: alerts.data.data,
+            alerts: gladsData,
             latest: latestDate,
             settings: { latestDate }
           };
@@ -202,7 +236,8 @@ export default {
 
         return data;
       })
-    ),
+    );
+  },
   getWidgetProps,
   parseInteraction: payload => {
     if (payload) {

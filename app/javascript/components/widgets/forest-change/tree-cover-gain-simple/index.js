@@ -8,6 +8,21 @@ export default {
   categories: ['summary', 'forest-change'],
   types: ['geostore', 'wdpa', 'use'],
   admins: ['adm0', 'adm1'],
+  settingsConfig: [
+    {
+      key: 'extentYear',
+      label: 'extent year',
+      type: 'switch'
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      metaKey: 'widget_canopy_density'
+    }
+  ],
+  pendingKeys: ['threshold', 'extentYear'],
+  refetchKeys: ['threshold', 'extentYear'],
   datasets: [
     {
       dataset: 'fdc8dc1b-2728-4a79-b23f-b09485052b8d',
@@ -28,7 +43,12 @@ export default {
     summary: 3,
     forestChange: 7
   },
-  sentence: 'There was {gain} tree cover gain in {location} since <b>2000</b>.',
+  settings: {
+    threshold: 30,
+    extentYear: 2000
+  },
+  sentence:
+    'From 2001 to 2012, {location} gained {gain} of tree cover equal to {gainPercent} is its total area.',
   getData: params =>
     fetchAnalysisEndpoint({
       ...params,
@@ -36,13 +56,17 @@ export default {
       params,
       slug: 'umd-loss-gain',
       version: 'v1',
-      nonAggregate: true
+      aggregate: false
     }).then(response => {
       const { data } = (response && response.data) || {};
       const gain = data && data.attributes.gain;
+      const extent =
+        data &&
+        data.attributes[`treeExtent${params.extentYear === 2010 ? 2010 : ''}`];
 
       return {
-        gain
+        gain,
+        extent
       };
     }),
   getWidgetProps

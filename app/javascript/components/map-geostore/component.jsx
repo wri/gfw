@@ -32,7 +32,8 @@ class MapGeostore extends Component {
     padding: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
-    cursor: PropTypes.string
+    cursor: PropTypes.string,
+    small: PropTypes.string
   };
 
   static defaultProps = {
@@ -141,13 +142,13 @@ class MapGeostore extends Component {
   };
 
   render() {
-    const { basemap, className, width, height, cursor } = this.props;
+    const { basemap, className, width, height, cursor, small } = this.props;
     const { loading, viewport, geostore, error } = this.state;
 
     return (
       <div
         id="recent-image-map"
-        className={cx('c-recent-image-map', className)}
+        className={cx('c-recent-image-map', className, { small })}
         ref={r => {
           this.mapContainer = r;
         }}

@@ -15,7 +15,8 @@ class WidgetContainer extends Component {
     setWidgetData: PropTypes.func.isRequired,
     refetchKeys: PropTypes.array,
     settings: PropTypes.object,
-    handleChangeSettings: PropTypes.func
+    handleChangeSettings: PropTypes.func,
+    geostore: PropTypes.object
   };
 
   static defaultProps = {
@@ -66,12 +67,12 @@ class WidgetContainer extends Component {
   }
 
   handleGetWidgetData = params => {
-    const { getData, setWidgetData } = this.props;
+    const { getData, setWidgetData, geostore } = this.props;
     this.cancelWidgetDataFetch();
     this.widgetDataFetch = CancelToken.source();
 
     this.setState({ loading: true, error: false });
-    getData({ ...params, token: this.widgetDataFetch.token })
+    getData({ ...params, geostore, token: this.widgetDataFetch.token })
       .then(data => {
         setWidgetData(data);
         setTimeout(() => {

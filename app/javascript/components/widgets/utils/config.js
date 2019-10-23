@@ -177,11 +177,11 @@ export const getWidgetDatasets = ({
       }),
       ...(weeks && {
         timelineParams: {
-          startDate: moment(latestDate || null)
+          startDate: moment(latestDate || undefined)
             .subtract(weeks, 'weeks')
             .format('YYYY-MM-DD'),
-          endDate: moment(latestDate || null).format('YYYY-MM-DD'),
-          trimEndDate: moment(latestDate || null).format('YYYY-MM-DD')
+          endDate: moment(latestDate || undefined).format('YYYY-MM-DD'),
+          trimEndDate: moment(latestDate || undefined).format('YYYY-MM-DD')
         }
       }),
       ...(threshold && {

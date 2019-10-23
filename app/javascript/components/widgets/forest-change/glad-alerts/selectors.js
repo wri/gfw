@@ -88,7 +88,7 @@ export const getData = createSelector(
         zeroFilledData.push(
           yearDataByWeek[i]
             ? yearDataByWeek[i][0]
-            : { count: 0, week: i, year: parseInt(d, 10) }
+            : { alerts: 0, count: 0, week: i, year: parseInt(d, 10) }
         );
       }
     });
@@ -99,7 +99,7 @@ export const getData = createSelector(
 export const getMeans = createSelector(
   [getData, selectLatestDates],
   (data, latest) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
     return getMeansData(data, latest);
   }
 );

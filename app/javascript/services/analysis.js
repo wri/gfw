@@ -22,7 +22,8 @@ const buildAnalysisUrl = ({
   adm1,
   adm2,
   params,
-  nonAggregate
+  aggregate,
+  aggregateBy
 }) => {
   const location = getLocationUrl({ adm0, adm1, adm2 });
   const { startDate, endDate, threshold, query, number_of_days } = params;
@@ -49,8 +50,9 @@ const buildAnalysisUrl = ({
       ...(geostore && {
         geostore
       }),
-      ...(nonAggregate && {
-        aggregate_values: false
+      aggregate_values: aggregate ? 'True' : false,
+      ...(aggregateBy && {
+        aggregate_by: aggregateBy
       }),
       ...(query && {
         [query.param]: query.value
