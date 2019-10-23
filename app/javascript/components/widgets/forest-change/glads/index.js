@@ -13,8 +13,8 @@ export default {
   type: 'loss',
   colors: 'loss',
   sortOrder: {
-    summary: 7,
-    forestChange: 11
+    summary: 8,
+    forestChange: 12
   },
   visible: ['dashboard', 'analysis'],
   chartType: 'composedChart',

@@ -92,6 +92,7 @@ export const getData = createSelector(
         );
       }
     });
+
     return zeroFilledData;
   }
 );
@@ -99,7 +100,8 @@ export const getData = createSelector(
 export const getMeans = createSelector(
   [getData, selectLatestDates],
   (data, latest) => {
-    if (!data) return null;
+    if (!data || isEmpty(data)) return null;
+
     return getMeansData(data, latest);
   }
 );
