@@ -10,7 +10,6 @@ export default {
   admins: ['adm0', 'adm1', 'adm2'],
   types: ['country', 'geostore'],
   metaKey: 'widget_fire_alert_location',
-  layers: ['viirs_fires_alerts'],
   type: 'fires',
   colors: 'fires',
   sortOrder: {

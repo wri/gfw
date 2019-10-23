@@ -10,7 +10,7 @@ export const getDataAPI = ({ params }) =>
     params,
     slug: 'umd-loss-gain',
     version: 'v1',
-    nonAggregate: true
+    aggregate: false
   }).then(response => {
     const { data } = (response && response.data) || {};
     const totalArea = data && data.attributes.areaHa;

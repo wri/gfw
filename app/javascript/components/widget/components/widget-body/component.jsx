@@ -55,6 +55,7 @@ class WidgetBody extends PureComponent {
       handleDataHighlight
     } = this.props;
     const hasData = !isEmpty(data);
+    const hasSentence = !isEmpty(sentence);
     const Component = chartOptions[chartType];
 
     return (
@@ -63,6 +64,7 @@ class WidgetBody extends PureComponent {
         {!loading &&
           !error &&
           !hasData &&
+          !hasSentence &&
           Component && (
           <NoContent
             message={`No data in selection for ${locationName || '...'}`}
@@ -71,7 +73,7 @@ class WidgetBody extends PureComponent {
         {!loading && error && <RefreshButton refetchFn={handleRefetchData} />}
         {!error &&
           sentence &&
-          hasData && (
+          hasSentence && (
           <DynamicSentence
             className="sentence"
             sentence={sentence}

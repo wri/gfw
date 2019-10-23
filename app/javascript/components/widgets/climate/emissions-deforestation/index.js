@@ -76,7 +76,7 @@ export default {
       params,
       slug: params.type === 'geostore' ? 'biomass-loss' : 'umd-loss-gain',
       version: params.type === 'geostore' ? 'v1' : 'v3',
-      nonAggregate: true
+      aggregate: false
     }).then(response => {
       const { attributes: data } =
         (response && response.data && response.data.data) || {};
