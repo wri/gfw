@@ -1,4 +1,4 @@
-import { fetchViirsAlerts, fetchFiresStats } from 'services/alerts';
+import { fetchFiresStats, fetchFireAlertsByGeostore } from 'services/alerts';
 import moment from 'moment';
 
 import getWidgetProps from './selectors';
@@ -8,7 +8,7 @@ export default {
   title: 'Fires in {location}',
   categories: ['forest-change', 'summary'],
   admins: ['adm0', 'adm1', 'adm2'],
-  types: ['country', 'geostore'],
+  types: ['geostore', 'wdpa', 'use'],
   metaKey: 'widget_fire_alert_location',
   type: 'fires',
   colors: 'fires',
@@ -62,8 +62,8 @@ export default {
         return data;
       });
     }
-    return fetchViirsAlerts({ ...params, dates }).then(
-      response => response.data.data
+    return fetchFireAlertsByGeostore(params.geostore.geojson).then(
+      response => response.data.rows
     );
   },
   getWidgetProps

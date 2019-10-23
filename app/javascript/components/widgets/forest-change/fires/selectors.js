@@ -2,9 +2,9 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import moment from 'moment';
 import { format } from 'd3-format';
 import isEmpty from 'lodash/isEmpty';
-import { sortByKey } from 'utils/data';
+import sumBy from 'lodash/sumBy';
+import { buildDateArray } from 'utils/dates';
 
-// get list data
 const getData = state => state.data;
 const getCurrentLocation = state => state.locationLabel;
 const getColors = state => state.colors;
@@ -12,26 +12,23 @@ const getSentences = state => state.sentences;
 
 export const filterData = createSelector([getData], data => {
   if (!data || isEmpty(data)) return null;
+  const startDate = moment().subtract(1, 'week');
+  const endDate = moment();
 
-  let sortedData = [];
-  if (Array.isArray(data)) {
-    sortedData = isEmpty(data)
-      ? [{ value: 0 }]
-      : sortByKey(
-        data
-          .filter(item => item.attributes.day !== null)
-          .map(item => item.attributes),
-        'day',
-        false
-      );
-  } else {
-    sortedData = [{ value: data.attributes.value }];
-  }
-  return sortedData;
+  const weekData = buildDateArray(startDate, endDate).map(d => {
+    const dayData = data.find(fd => moment(fd.date).format('YYYY-MM-DD') === d);
+
+    return {
+      day: dayData ? moment(dayData.date).format('YYYY-MM-DD') : d,
+      count: dayData ? dayData.count : 0
+    };
+  });
+
+  return weekData;
 });
 
 export const parseData = createSelector([filterData], data => {
-  if (!data || data.length <= 1) return null;
+  if (!data || data.length < 1) return null;
   return data;
 });
 
@@ -66,7 +63,7 @@ export const parseConfig = createSelector(
       xKey: 'day',
       yKeys: {
         lines: {
-          value: {
+          count: {
             stroke: 'url(#firesGradient)',
             type: 'monotone'
           }
@@ -80,7 +77,13 @@ export const parseConfig = createSelector(
       },
       tooltip: [
         {
-          key: 'value'
+          key: 'day',
+          unitFormat: value => moment(value).format('Do MMM YYYY')
+        },
+        {
+          key: 'count',
+          unitFormatter: value =>
+            (Number.isInteger(value) ? format(',')(value) : value)
         }
       ]
     };
@@ -91,10 +94,7 @@ export const parseSentence = createSelector(
   [filterData, getCurrentLocation, getSentences],
   (data, currentLabel, sentences) => {
     const { initial } = sentences;
-    const firesCount =
-      (data &&
-        data.map(item => item.value).reduce((sum, item) => sum + item)) ||
-      'No';
+    const firesCount = (data && sumBy(data, 'count')) || 'No';
     const params = {
       location: currentLabel,
       count: Number.isInteger(firesCount) ? format(',')(firesCount) : firesCount

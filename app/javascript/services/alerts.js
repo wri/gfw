@@ -6,6 +6,7 @@ import { getIndicator } from 'utils/strings';
 import { fetchAnalysisEndpoint } from './analysis';
 
 const REQUEST_URL = process.env.GFW_API;
+const CARTO_URL = process.env.CARTO_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
 const GLAD_ADM1_DATASET = process.env.GLAD_ADM1_DATASET;
 const GLAD_ADM2_DATASET = process.env.GLAD_ADM2_DATASET;
@@ -176,6 +177,17 @@ export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
     .replace('{location}', !adm2 ? getLocationQuery(adm0, adm1, adm2) : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
+};
+
+export const fetchFireAlertsByGeostore = geojson => {
+  const QUERY =
+    "SELECT COUNT(pt.*) AS count, acq_date as date FROM vnp14imgtdl_nrt_global_7d pt WHERE ST_Intersects(ST_SetSRID(ST_GeomFromGeoJSON('{geometry}'), 4326), pt.the_geom) AND (confidence='normal' OR confidence = 'nominal') GROUP BY acq_date";
+  return request.get(
+    `${CARTO_URL}/sql?q=${QUERY.replace(
+      '{geometry}',
+      JSON.stringify(geojson.features[0].geometry)
+    )}`
+  );
 };
 
 export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {

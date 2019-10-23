@@ -32,7 +32,8 @@ class Widgets extends PureComponent {
     embed: PropTypes.bool,
     modalClosing: PropTypes.bool,
     activeWidget: PropTypes.object,
-    noDataMessage: PropTypes.string
+    noDataMessage: PropTypes.string,
+    geostore: PropTypes.object
   };
 
   render() {
@@ -50,7 +51,8 @@ class Widgets extends PureComponent {
       embed,
       simple,
       modalClosing,
-      noDataMessage
+      noDataMessage,
+      geostore
     } = this.props;
     const hasWidgets = !isEmpty(widgets);
 
@@ -77,6 +79,7 @@ class Widgets extends PureComponent {
                   embed={embed}
                   simple={simple}
                   location={location}
+                  geostore={geostore}
                   setWidgetData={data => setWidgetsData({ [w.widget]: data })}
                   handleChangeSettings={change =>
                     setWidgetSettings({ widget: w.widget, change })

@@ -518,5 +518,6 @@ export const getWidgetsProps = () =>
     emebd: selectEmbed,
     simple: selectSimple,
     modalClosing: selectModalClosing,
-    noDataMessage: getNoDataMessage
+    noDataMessage: getNoDataMessage,
+    geostore: selectGeostore
   });
