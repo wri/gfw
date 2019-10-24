@@ -5,16 +5,22 @@ import { CancelToken } from 'axios';
 import isEqual from 'lodash/isEqual';
 import reducerRegistry from 'app/registry';
 
+import { getDataLocation } from 'utils/location';
+
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 
-const mapStateToProps = ({ location, areas }) => ({
-  location: location && location.payload,
-  activeArea:
-    areas &&
-    areas.data &&
-    areas.data.find(a => a.id === (location && location.payload.adm0))
-});
+const mapStateToProps = state => {
+  const { location, areas } = state;
+
+  return {
+    location: getDataLocation(state),
+    activeArea:
+      areas &&
+      areas.data &&
+      areas.data.find(a => a.id === (location && location.payload.adm0))
+  };
+};
 
 class GeostoreProvider extends PureComponent {
   componentDidMount() {

@@ -30,7 +30,7 @@ export const saveAOI = createThunkAction(
     name,
     tags,
     email,
-    lang,
+    language,
     fireAlerts,
     deforestationAlerts,
     monthlySummary,
@@ -46,7 +46,14 @@ export const saveAOI = createThunkAction(
       const { id: geostoreId } = geostoreData || {};
       const { payload: { type, adm0, adm1, adm2 } } = location || {};
       const isCountry = type === 'country';
-      const { id: activeAreaId, application, admin, use, wdpa } =
+      const {
+        id: activeAreaId,
+        application,
+        admin,
+        use,
+        wdpa,
+        subscriptionId
+      } =
         activeArea || {};
       const method = activeArea && activeArea.userArea ? 'patch' : 'post';
       const hasSubscription =
@@ -56,11 +63,12 @@ export const saveAOI = createThunkAction(
         name,
         type,
         id: activeAreaId,
+        subscriptionId,
         application: application || 'gfw',
         geostore: geostoreId,
         ...(hasSubscription && {
           email,
-          lang,
+          language,
           deforestationAlerts,
           monthlySummary,
           fireAlerts
@@ -117,11 +125,11 @@ export const saveAOI = createThunkAction(
 
 export const deleteAOI = createThunkAction(
   'deleteAOI',
-  ({ id, webhookUrl, clearAfterDelete }) => (dispatch, getState) => {
+  ({ id, subscriptionId, clearAfterDelete }) => (dispatch, getState) => {
     const { data: areas } = getState().areas || {};
     dispatch(setSaveAOISaving({ saving: true, error: false, deleted: false }));
 
-    deleteAreaProvider({ id, webhookUrl })
+    deleteAreaProvider({ id, subscriptionId })
       .then(response => {
         if (
           response.status &&

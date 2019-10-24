@@ -27,13 +27,13 @@ const DEFAULT_VIEWPORT = {
 class MapGeostore extends Component {
   static propTypes = {
     basemap: PropTypes.object,
-    geostoreId: PropTypes.string,
     className: PropTypes.string,
     padding: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
     cursor: PropTypes.string,
-    small: PropTypes.string
+    small: PropTypes.string,
+    location: PropTypes.object
   };
 
   static defaultProps = {
@@ -54,17 +54,17 @@ class MapGeostore extends Component {
 
   componentDidMount() {
     this.mounted = true;
-    const { geostoreId } = this.props;
-    if (geostoreId) {
+    const { location } = this.props;
+    if (location && location.adm0) {
       this.handleGetGeostore();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { geostoreId } = this.props;
-    const { geostoreId: prevGeostoreId } = prevProps;
+    const { location } = this.props;
+    const { location: prevLocation } = prevProps;
 
-    if (geostoreId && !isEqual(geostoreId, prevGeostoreId)) {
+    if (location && !isEqual(location, prevLocation)) {
       this.handleGetGeostore();
     }
 
@@ -83,7 +83,7 @@ class MapGeostore extends Component {
   handleGetGeostore = () => {
     if (this.mounted) {
       this.setState({ error: false });
-      getGeostoreProvider({ type: 'geostore', adm0: this.props.geostoreId })
+      getGeostoreProvider(this.props.location)
         .then(response => {
           if (this.mounted) {
             const { data } = response.data || {};

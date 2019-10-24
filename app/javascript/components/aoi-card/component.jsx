@@ -33,7 +33,10 @@ class AoICard extends PureComponent {
     monthlySummary: PropTypes.bool,
     geostore: PropTypes.string,
     loading: PropTypes.bool,
-    alerts: PropTypes.object
+    alerts: PropTypes.object,
+    admin: PropTypes.object,
+    use: PropTypes.object,
+    wdpaid: PropTypes.number
   };
 
   render() {
@@ -48,7 +51,10 @@ class AoICard extends PureComponent {
       monthlySummary,
       geostore,
       loading,
-      alerts
+      alerts,
+      admin,
+      use,
+      wdpaid
     } = this.props;
     const { glads, fires } = alerts || {};
 
@@ -87,7 +93,25 @@ class AoICard extends PureComponent {
       <div className={cx('c-aoi-card', { simple })}>
         <MapGeostore
           className="aoi-card-map"
-          geostoreId={geostore}
+          location={{
+            type: 'geostore',
+            adm0: geostore,
+            ...(admin &&
+              admin.adm0 && {
+              type: 'country',
+              ...admin
+            }),
+            ...(use &&
+              use.id && {
+              type: 'use',
+              adm0: use.name,
+              adm1: use.id
+            }),
+            ...(wdpaid && {
+              type: 'wdpa',
+              adm0: wdpaid
+            })
+          }}
           padding={simple ? 15 : 25}
           cursor="pointer"
           small={simple}

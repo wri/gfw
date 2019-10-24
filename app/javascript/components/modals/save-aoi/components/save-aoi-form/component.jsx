@@ -42,10 +42,10 @@ function reducer(state, action) {
         tags: payload
       };
     }
-    case 'lang': {
+    case 'language': {
       return {
         ...state,
-        lang: payload
+        language: payload
       };
     }
     case 'fireAlerts': {
@@ -82,16 +82,16 @@ function reducer(state, action) {
         monthlySummary,
         webhookUrl,
         email,
-        lang
+        language
       } =
         activeArea || {};
-      const { email: userEmail, lang: userLang } = userData || {};
+      const { email: userEmail, language: userLang } = userData || {};
 
       return {
         ...state,
         name,
         email: email || userEmail,
-        lang: lang || userLang || 'en',
+        language: language || userLang || 'en',
         tags,
         fireAlerts,
         deforestationAlerts,
@@ -123,7 +123,7 @@ function SaveAOIForm(props) {
     name: props.locationName || '',
     email: props.email || userData.email,
     emailError: false,
-    lang: props.lang || userData.lang || 'en',
+    language: props.language || userData.language || 'en',
     tags: [],
     nameError: false,
     fireAlerts: props.fireAlerts || false,
@@ -157,7 +157,7 @@ function SaveAOIForm(props) {
             theme="theme-button-clear"
             onClick={() =>
               deleteAOI({
-                webhookUrl: activeArea.webhookUrl,
+                subscriptionId: activeArea.subscriptionId,
                 id: activeArea.id,
                 clearAfterDelete
               })
@@ -192,7 +192,7 @@ function SaveAOIForm(props) {
     email,
     emailError,
     tags,
-    lang,
+    language,
     nameError,
     fireAlerts,
     deforestationAlerts,
@@ -200,7 +200,7 @@ function SaveAOIForm(props) {
   } = form;
   const hasSubscription = fireAlerts || deforestationAlerts || monthlySummary;
   const canSubmit =
-    (hasSubscription ? validateEmail(email) : true) && name && lang;
+    (hasSubscription ? validateEmail(email) : true) && name && language;
 
   return (
     <div className="c-form c-save-aoi-form">
@@ -264,8 +264,8 @@ function SaveAOIForm(props) {
           className="dropdown-input"
           theme="theme-dropdown-native-form"
           options={getLanguages()}
-          value={lang}
-          onChange={newLang => dispatch({ type: 'lang', payload: newLang })}
+          value={language}
+          onChange={newLang => dispatch({ type: 'language', payload: newLang })}
           native
         />
       </div>
@@ -302,7 +302,7 @@ SaveAOIForm.propTypes = {
   userData: PropTypes.object,
   locationName: PropTypes.string,
   error: PropTypes.bool,
-  lang: PropTypes.string,
+  language: PropTypes.string,
   saving: PropTypes.bool,
   activeArea: PropTypes.object,
   viewAfterSave: PropTypes.bool,

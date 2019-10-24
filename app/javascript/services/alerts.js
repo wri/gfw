@@ -36,20 +36,18 @@ const getLocation = (adm0, adm1, adm2) =>
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
 
-export const getLatestAlerts = ({ geostoreId, params }) =>
+export const getLatestAlerts = ({ location, params }) =>
   axios
     .all([
       fetchAnalysisEndpoint({
-        type: 'geostore',
-        adm0: geostoreId,
+        ...location,
         params,
         name: 'glad-alerts',
         slug: 'glad-alerts',
         version: 'v1'
       }),
       fetchAnalysisEndpoint({
-        type: 'geostore',
-        adm0: geostoreId,
+        ...location,
         params,
         name: 'viirs-alerts',
         slug: 'viirs-active-fires',

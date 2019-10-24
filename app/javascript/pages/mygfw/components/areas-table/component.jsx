@@ -107,8 +107,27 @@ class AreasTable extends PureComponent {
     if (areas) {
       areas.forEach(area => {
         if (!alerts[area.id]) {
+          const { admin, geostore, use, wdpaid } = area;
           getLatestAlerts({
-            geostoreId: area.geostore,
+            location: {
+              type: 'geostore',
+              adm0: geostore,
+              ...(admin &&
+                admin.adm0 && {
+                type: 'country',
+                ...admin
+              }),
+              ...(use &&
+                use.id && {
+                type: 'use',
+                adm0: use.name,
+                adm1: use.id
+              }),
+              ...(wdpaid && {
+                type: 'wdpa',
+                adm0: wdpaid
+              })
+            },
             params: {
               startDate: moment
                 .utc()

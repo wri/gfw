@@ -21,18 +21,81 @@ export const getAreasProvider = () =>
         const { data: areas } = areasResponse.data || {};
         const { data: subs } = subscriptionsResponse.data || {};
 
-        return areas.map(area => {
-          const sub = subs.find(s => s.id === area.attributes.subscriptionId);
-          const { resource, language } = (sub && sub.attributes) || {};
+        const subsParsed = subs.map(sub => {
+          const { id, attributes } = sub;
+          const {
+            datasets,
+            language,
+            name,
+            resource,
+            params: { geostore, iso, use, useid, wdpaid },
+            application,
+            userId,
+            createdAt
+          } = attributes;
+          const deforestationAlerts =
+            datasets.includes('umd-loss-gain') ||
+            datasets.includes('glad-alerts');
+          const fireAlerts = datasets.includes('viirs-active-fires');
 
           return {
-            id: area.id,
-            ...area.attributes,
-            userArea: true,
+            id,
+            name,
+            language,
             email: resource && resource.content,
-            lang: language
+            subscriptionId: id,
+            application: application || 'gfw',
+            status: 'pending',
+            public: true,
+            userId,
+            deforestationAlerts,
+            fireAlerts,
+            monthlySummary: false,
+            geostore,
+            ...(iso &&
+              iso.country && {
+              admin: {
+                adm0: iso && iso.country,
+                adm1: iso && iso.region,
+                adm2: iso && iso.subRegion
+              }
+            }),
+            ...(use &&
+              useid && {
+              use: {
+                id: useid,
+                name: use
+              }
+            }),
+            ...(wdpaid && {
+              wdpaid
+            }),
+            userArea: true,
+            createdAt
           };
         });
+
+        const areasWithSubs = areas.map(area => {
+          const sub = subsParsed.find(
+            s => s.subscriptionId === area.attributes.subscriptionId
+          );
+
+          return {
+            ...sub,
+            ...area.attributes,
+            id: area.id,
+            userArea: true
+          };
+        });
+
+        const areaSubIds = areasWithSubs
+          .filter(a => a.subscriptionId)
+          .map(a => a.subscriptionId);
+        const subsWithoutAreas = subsParsed.filter(
+          s => !areaSubIds.includes(s.id)
+        );
+
+        return [...areasWithSubs, ...subsWithoutAreas];
       })
     );
 
@@ -50,17 +113,14 @@ export const getAreaProvider = id =>
       };
     });
 
-export const setAreasProvider = (body, method) => {
+export const setAreasProvider = (data, method) => {
   const url =
-    method === 'post' ? REQUEST_URL : REQUEST_URL.concat(`/${body.id}`);
+    method === 'post' ? REQUEST_URL : REQUEST_URL.concat(`/${data.id}`);
 
   return axios({
     method,
     url,
-    data: {
-      ...body,
-      language: body.lang
-    },
+    data,
     withCredentials: true
   });
 };
@@ -71,10 +131,13 @@ export const setAreasWithSubscription = (body = {}, method) => {
     deforestationAlerts,
     fireAlerts,
     monthlySummary,
-    subscriptionId
+    subscriptionId,
+    id
   } = body;
-
-  if (deforestationAlerts || fireAlerts || monthlySummary) {
+  if (
+    (deforestationAlerts || fireAlerts || monthlySummary) &&
+    subscriptionId !== id
+  ) {
     return saveSubscription(body, subscriptionId ? 'patch' : 'post')
       .then(subscriptionResponse => {
         const { data: subData } = subscriptionResponse.data || {};
@@ -88,7 +151,7 @@ export const setAreasWithSubscription = (body = {}, method) => {
             ...data.attributes,
             id: data.id,
             email: resource && resource.content,
-            lang: language,
+            language,
             subscriptionId: subData.id,
             userArea: true
           };
@@ -122,6 +185,10 @@ export const setAreasWithSubscription = (body = {}, method) => {
 };
 
 export const deleteAreaProvider = ({ id, subscriptionId }) => {
+  if (subscriptionId && id === subscriptionId) {
+    return deleteSubscription(subscriptionId);
+  }
+
   if (subscriptionId) {
     return deleteSubscription(subscriptionId).then(() => {
       axios.delete(REQUEST_URL.concat(`/${id}`), {
@@ -130,9 +197,13 @@ export const deleteAreaProvider = ({ id, subscriptionId }) => {
     });
   }
 
-  return axios.delete(REQUEST_URL.concat(`/${id}`), {
-    withCredentials: true
-  });
+  if (id) {
+    return axios.delete(REQUEST_URL.concat(`/${id}`), {
+      withCredentials: true
+    });
+  }
+
+  return false;
 };
 
 export const saveSubscription = (
@@ -141,7 +212,7 @@ export const saveSubscription = (
     email,
     type,
     admin,
-    lang,
+    language,
     deforestationAlerts,
     fireAlerts,
     subscriptionId
@@ -158,7 +229,7 @@ export const saveSubscription = (
       type: 'EMAIL',
       content: email
     },
-    language: lang,
+    language,
     datasets: compact([
       deforestationAlerts ? 'glad-alerts' : null,
       fireAlerts ? 'viirs-active-fires' : null,
