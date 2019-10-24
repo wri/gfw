@@ -1,9 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import intersection from 'lodash/intersection';
 import { logout } from 'utils/auth';
 import Link from 'redux-first-router-link';
+import slice from 'lodash/slice';
 
 import AoICard from 'components/aoi-card';
 import MyGFWLogin from 'components/mygfw-login';
@@ -12,6 +13,7 @@ import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon/icon-component';
 import Pill from 'components/ui/pill';
 import Loader from 'components/ui/loader';
+import Paginate from 'components/paginate';
 
 import editIcon from 'assets/icons/edit.svg';
 import logoutIcon from 'assets/icons/logout.svg';
@@ -37,8 +39,37 @@ class MapMenuMyGFW extends PureComponent {
   };
 
   state = {
-    activeTags: []
+    activeTags: [],
+    areas: [],
+    selectedTags: [],
+    unselectedTags: [],
+    pageSize: 6,
+    pageNum: 0
   };
+
+  static getDerivedStateFromProps(prevProps, prevState) {
+    const { areas, tags } = prevProps;
+    const { activeTags, pageSize, pageNum } = prevState;
+
+    const selectedTags = tags.filter(t => activeTags.includes(t.value));
+    const unselectedTags = tags.filter(t => !activeTags.includes(t.value));
+    const filteredAreas =
+      selectedTags && selectedTags.length && areas && areas.length
+        ? areas.filter(a => !!intersection(a.tags, activeTags).length)
+        : areas;
+
+    const areasTrimmed = slice(
+      filteredAreas,
+      pageSize * pageNum,
+      pageSize * (pageNum + 1)
+    );
+
+    return {
+      selectedTags,
+      unselectedTags,
+      areas: areasTrimmed
+    };
+  }
 
   renderLoginWindow() {
     const { isDesktop } = this.props;
@@ -93,20 +124,19 @@ class MapMenuMyGFW extends PureComponent {
   renderAreas() {
     const {
       isDesktop,
-      areas,
       activeArea,
       viewArea,
       onEditClick,
-      tags
+      areas: allAreas
     } = this.props;
-    const { activeTags } = this.state;
-
-    const selectedTags = tags.filter(t => activeTags.includes(t.value));
-    const unselectedTags = tags.filter(t => !activeTags.includes(t.value));
-    const filteredAreas =
-      selectedTags && selectedTags.length && areas && areas.length
-        ? areas.filter(a => !!intersection(a.tags, activeTags).length)
-        : areas;
+    const {
+      activeTags,
+      areas,
+      selectedTags,
+      unselectedTags,
+      pageSize,
+      pageNum
+    } = this.state;
 
     return (
       <div>
@@ -157,37 +187,52 @@ class MapMenuMyGFW extends PureComponent {
           </div>
         </div>
         <div className="aoi-items">
-          {filteredAreas &&
-            filteredAreas.map((area, i) => {
-              const active = activeArea && activeArea.id === area.id;
-              return (
-                <div
-                  className={cx('aoi-item', {
-                    '--active': active,
-                    '--inactive': activeArea && !active
-                  })}
-                  onClick={() => viewArea({ areaId: area.id })}
-                  role="button"
-                  tabIndex={0}
-                  key={area.id}
-                >
-                  <AoICard index={i} {...area} simple />
-                  {active && (
-                    <Button
-                      className="edit-button"
-                      theme="square theme-button-clear"
-                      onClick={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onEditClick({ open: true });
-                      }}
-                    >
-                      <Icon icon={editIcon} className="info-icon" />
-                    </Button>
-                  )}
-                </div>
-              );
-            })}
+          <Fragment>
+            {areas &&
+              areas.map((area, i) => {
+                const active = activeArea && activeArea.id === area.id;
+                return (
+                  <div
+                    className={cx('aoi-item', {
+                      '--active': active,
+                      '--inactive': activeArea && !active
+                    })}
+                    onClick={() => viewArea({ areaId: area.id })}
+                    role="button"
+                    tabIndex={0}
+                    key={area.id}
+                  >
+                    <AoICard index={i} {...area} simple />
+                    {active && (
+                      <Button
+                        className="edit-button"
+                        theme="square theme-button-clear"
+                        onClick={e => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          onEditClick({ open: true });
+                        }}
+                      >
+                        <Icon icon={editIcon} className="info-icon" />
+                      </Button>
+                    )}
+                  </div>
+                );
+              })}
+            {allAreas.length > pageSize && (
+              <Paginate
+                className="areas-pagination"
+                settings={{
+                  page: pageNum,
+                  pageSize
+                }}
+                count={allAreas.length}
+                onClickChange={increment =>
+                  this.setState({ pageNum: pageNum + increment })
+                }
+              />
+            )}
+          </Fragment>
         </div>
       </div>
     );

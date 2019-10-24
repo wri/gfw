@@ -9,7 +9,6 @@
   svg {
     background-color: $border;
     opacity: 1;
-    position: absolute;
     z-index: 1;
   }
 
@@ -29,10 +28,7 @@
   &.small {
     .error-msg {
       padding: rem(3px);
-
-      p {
-        font-size: rem(11px);
-      }
+      font-size: rem(11px);
     }
   }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import intersection from 'lodash/intersection';
 import moment from 'moment';
 import sortBy from 'lodash/sortBy';
+import slice from 'lodash/slice';
 import { deburrUpper } from 'utils/data';
 import Link from 'redux-first-router-link';
 
@@ -15,6 +16,7 @@ import Pill from 'components/ui/pill';
 import NoContent from 'components/ui/no-content';
 import Dropdown from 'components/ui/dropdown';
 import Search from 'components/ui/search';
+import Paginate from 'components/paginate';
 
 import mapIcon from 'assets/icons/view-map.svg';
 import editIcon from 'assets/icons/edit.svg';
@@ -33,70 +35,32 @@ class AreasTable extends PureComponent {
 
   state = {
     activeTags: [],
+    areas: [],
+    selectedTags: [],
+    unselectedTags: [],
     sortBy: '',
     search: '',
-    alerts: {}
+    alerts: {},
+    pageSize: 6,
+    pageNum: 0
   };
 
   mounted = false;
 
-  componentDidMount() {
-    this.mounted = true;
-
-    const { areas } = this.props;
-    if (areas) {
-      areas.forEach(area => {
-        getLatestAlerts({
-          geostoreId: area.geostore,
-          params: {
-            startDate: moment
-              .utc()
-              .subtract(2, 'weeks')
-              .format('YYYY-MM-DD'),
-            endDate: moment.utc().format('YYYY-MM-DD')
-          }
-        })
-          .then(alerts => {
-            if (this.mounted) {
-              this.setState({
-                alerts: {
-                  ...this.state.alerts,
-                  [area.id]: alerts
-                }
-              });
-            }
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-  render() {
-    const {
-      areas,
-      tags,
-      viewArea,
-      setSaveAOISettings,
-      setShareModal
-    } = this.props;
-    const { activeTags, search } = this.state;
+  static getDerivedStateFromProps(prevProps, prevState) {
+    const { areas, tags } = prevProps;
+    const { activeTags, search, pageSize, pageNum } = prevState;
 
     const areasWithAlerts =
       areas &&
       areas.map(area => {
-        const alerts = this.state.alerts[area.id];
+        const alerts = prevState.alerts[area.id];
 
         return {
           ...area,
           ...(alerts && {
             alerts: {
-              ...this.state.alerts[area.id]
+              ...prevState.alerts[area.id]
             }
           })
         };
@@ -119,12 +83,78 @@ class AreasTable extends PureComponent {
           deburrUpper(a.name).includes(deburrUpper(search))
         )
         : filteredAreas;
-    const sortedAreas = sortBy(
-      filterAreasBySearch,
-      this.state.sortBy || 'name'
-    );
+    const sortedAreas = sortBy(filterAreasBySearch, prevState.sortBy || 'name');
     const orderedAreas =
-      this.state.sortBy === 'createdAt' ? sortedAreas.reverse() : sortedAreas;
+      prevState.sortBy === 'createdAt' ? sortedAreas.reverse() : sortedAreas;
+
+    const areasTrimmed = slice(
+      orderedAreas,
+      pageSize * pageNum,
+      pageSize * (pageNum + 1)
+    );
+
+    return {
+      areas: areasTrimmed,
+      selectedTags,
+      unselectedTags
+    };
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+    const { areas, alerts } = this.state;
+
+    if (areas) {
+      areas.forEach(area => {
+        if (!alerts[area.id]) {
+          getLatestAlerts({
+            geostoreId: area.geostore,
+            params: {
+              startDate: moment
+                .utc()
+                .subtract(2, 'weeks')
+                .format('YYYY-MM-DD'),
+              endDate: moment.utc().format('YYYY-MM-DD')
+            }
+          })
+            .then(alertsResponse => {
+              if (this.mounted) {
+                this.setState({
+                  alerts: {
+                    ...this.state.alerts,
+                    [area.id]: alertsResponse
+                  }
+                });
+              }
+            })
+            .catch(err => {
+              console.error(err);
+            });
+        }
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  render() {
+    const {
+      viewArea,
+      setSaveAOISettings,
+      setShareModal,
+      areas: allAreas
+    } = this.props;
+    const {
+      activeTags,
+      search,
+      pageSize,
+      pageNum,
+      areas,
+      selectedTags,
+      unselectedTags
+    } = this.state;
 
     const hasSelectedTags = selectedTags && !!selectedTags.length;
     const hasUnselectedTags = unselectedTags && !!unselectedTags.length;
@@ -223,8 +253,8 @@ class AreasTable extends PureComponent {
             </div>
           </div>
         </div>
-        {orderedAreas && !!orderedAreas.length ? (
-          orderedAreas.map(area => (
+        {areas && !!areas.length ? (
+          areas.map(area => (
             <div key={area.id} className="row area-row">
               <div className="column small-12 medium-9">
                 <Link to={`/dashboards/aoi/${area.id}`}>
@@ -284,6 +314,18 @@ class AreasTable extends PureComponent {
               />
             </div>
           </div>
+        )}
+        {allAreas.length > pageSize && (
+          <Paginate
+            settings={{
+              page: pageNum,
+              pageSize
+            }}
+            count={allAreas.length}
+            onClickChange={increment =>
+              this.setState({ pageNum: pageNum + increment })
+            }
+          />
         )}
       </div>
     );

@@ -180,7 +180,6 @@ class MapGeostore extends Component {
             touchRotate={false}
             keyboard={false}
             getCursor={() => cursor}
-            reuseMaps
           >
             {map => (
               <LayerManager map={map} plugin={PluginMapboxGl}>
