@@ -63,7 +63,9 @@ export const saveAOI = createThunkAction(
         name,
         type,
         id: activeAreaId,
-        subscriptionId,
+        ...(subscriptionId && {
+          subscriptionId
+        }),
         application: application || 'gfw',
         geostore: geostoreId,
         ...(hasSubscription && {

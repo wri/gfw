@@ -20,7 +20,7 @@ function InputTags(props) {
       if (e.key === ',' && val) {
         e.preventDefault();
       }
-      if (tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
+      if (tags && tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
         return;
       }
       setTags([...tags, val]);

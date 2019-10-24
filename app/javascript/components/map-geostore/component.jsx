@@ -32,7 +32,7 @@ class MapGeostore extends Component {
     width: PropTypes.number,
     height: PropTypes.number,
     cursor: PropTypes.string,
-    small: PropTypes.string,
+    small: PropTypes.bool,
     location: PropTypes.object
   };
 

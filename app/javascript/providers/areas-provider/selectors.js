@@ -36,7 +36,7 @@ export const getAreaTags = createSelector([getUserAreas], areas => {
       value: t
     })),
     'label'
-  );
+  ).filter(t => t.value && t.label);
 });
 
 export const getAreasProps = createStructuredSelector({

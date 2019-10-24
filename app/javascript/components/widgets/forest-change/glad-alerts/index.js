@@ -209,10 +209,12 @@ export default {
             .format('YYYY-MM-DD');
 
         return {
-          alerts: alerts.map(d => ({
-            ...d,
-            alerts: d.count
-          })),
+          alerts:
+            alerts &&
+            alerts.map(d => ({
+              ...d,
+              alerts: d.count
+            })),
           latest: latestDate,
           settings: { latestDate }
         };

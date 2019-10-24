@@ -4,6 +4,7 @@ import moment from 'moment';
 import cx from 'classnames';
 import Dotdotdot from 'react-dotdotdot';
 import ContentLoader from 'react-content-loader';
+import { getLatestAlerts } from 'services/alerts';
 
 import { formatNumber } from 'utils/format';
 
@@ -31,12 +32,71 @@ class AoICard extends PureComponent {
     deforestationAlerts: PropTypes.bool,
     fireAlerts: PropTypes.bool,
     monthlySummary: PropTypes.bool,
-    geostore: PropTypes.string,
-    loading: PropTypes.bool,
-    alerts: PropTypes.object,
-    admin: PropTypes.object,
-    use: PropTypes.object,
-    wdpaid: PropTypes.number
+    location: PropTypes.object,
+    onFetchAlerts: PropTypes.object
+  };
+
+  state = {
+    alerts: {},
+    loading: true,
+    error: false
+  };
+
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+
+    this.getAlerts();
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  getAlerts = () => {
+    const { location, onFetchAlerts } = this.props;
+    this.setState({ loading: true });
+    getLatestAlerts({
+      location,
+      params: {
+        startDate: moment
+          .utc()
+          .subtract(2, 'weeks')
+          .format('YYYY-MM-DD'),
+        endDate: moment.utc().format('YYYY-MM-DD')
+      }
+    })
+      .then(alertsResponse => {
+        if (this.mounted) {
+          this.setState({
+            alerts: alertsResponse,
+            loading: false
+          });
+          if (onFetchAlerts) {
+            onFetchAlerts(alertsResponse);
+          }
+        }
+      })
+      .catch(err => {
+        if (this.mounted) {
+          this.setState({
+            alerts: {
+              glads: 0,
+              fires: 0,
+              error: true
+            },
+            loading: false
+          });
+          if (onFetchAlerts) {
+            onFetchAlerts({
+              glads: 0,
+              fires: 0
+            });
+          }
+        }
+        console.error(err);
+      });
   };
 
   render() {
@@ -49,14 +109,9 @@ class AoICard extends PureComponent {
       deforestationAlerts,
       fireAlerts,
       monthlySummary,
-      geostore,
-      loading,
-      alerts,
-      admin,
-      use,
-      wdpaid
+      location
     } = this.props;
-    const { glads, fires } = alerts || {};
+    const { loading, alerts: { glads, fires, error: dataError } } = this.state;
 
     const subStatus = [
       {
@@ -93,25 +148,7 @@ class AoICard extends PureComponent {
       <div className={cx('c-aoi-card', { simple })}>
         <MapGeostore
           className="aoi-card-map"
-          location={{
-            type: 'geostore',
-            adm0: geostore,
-            ...(admin &&
-              admin.adm0 && {
-              type: 'country',
-              ...admin
-            }),
-            ...(use &&
-              use.id && {
-              type: 'use',
-              adm0: use.name,
-              adm1: use.id
-            }),
-            ...(wdpaid && {
-              type: 'wdpa',
-              adm0: wdpaid
-            })
-          }}
+          location={location}
           padding={simple ? 15 : 25}
           cursor="pointer"
           small={simple}
@@ -146,40 +183,64 @@ class AoICard extends PureComponent {
           {!simple && (
             <div className="activity">
               <span className="activity-intro">Last weeks activity:</span>
-              <span className="glad">
-                {!loading ? (
-                  <Fragment>
-                    <span className="activity-data notranslate">
-                      {formatNumber({
-                        num: glads || 0,
-                        unit: 'counts'
-                      })}
-                    </span>{' '}
-                    GLAD alerts
-                  </Fragment>
-                ) : (
-                  <ContentLoader width="100" height="15">
-                    <rect x="0" y="0" rx="2" ry="2" width="100" height="15" />
-                  </ContentLoader>
-                )}
-              </span>
-              <span className="viirs">
-                {!loading ? (
-                  <Fragment>
-                    <span className="activity-data notranslate">
-                      {formatNumber({
-                        num: fires || 0,
-                        unit: 'counts'
-                      })}
-                    </span>{' '}
-                    VIIRS alerts
-                  </Fragment>
-                ) : (
-                  <ContentLoader width="100" height="15">
-                    <rect x="0" y="0" rx="2" ry="2" width="100" height="15" />
-                  </ContentLoader>
-                )}
-              </span>
+              {!loading &&
+                dataError && (
+                <span className="data-error-msg">
+                    Sorry, we had trouble finding your alerts!
+                </span>
+              )}
+              {!dataError && (
+                <Fragment>
+                  <span className="glad">
+                    {!loading ? (
+                      <Fragment>
+                        <span className="activity-data notranslate">
+                          {formatNumber({
+                            num: glads || 0,
+                            unit: 'counts'
+                          })}
+                        </span>{' '}
+                        GLAD alerts
+                      </Fragment>
+                    ) : (
+                      <ContentLoader width="100" height="15">
+                        <rect
+                          x="0"
+                          y="0"
+                          rx="2"
+                          ry="2"
+                          width="100"
+                          height="15"
+                        />
+                      </ContentLoader>
+                    )}
+                  </span>
+                  <span className="viirs">
+                    {!loading ? (
+                      <Fragment>
+                        <span className="activity-data notranslate">
+                          {formatNumber({
+                            num: fires || 0,
+                            unit: 'counts'
+                          })}
+                        </span>{' '}
+                        VIIRS alerts
+                      </Fragment>
+                    ) : (
+                      <ContentLoader width="100" height="15">
+                        <rect
+                          x="0"
+                          y="0"
+                          rx="2"
+                          ry="2"
+                          width="100"
+                          height="15"
+                        />
+                      </ContentLoader>
+                    )}
+                  </span>
+                </Fragment>
+              )}
             </div>
           )}
         </div>

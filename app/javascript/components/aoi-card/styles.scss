@@ -88,6 +88,7 @@
       align-items: center;
       flex-wrap: wrap;
       font-size: rem(12px);
+      height: rem(26px);
       color: $slate;
 
       @media screen and (min-width: $screen-m) {
@@ -114,6 +115,11 @@
 
       .viirs {
         color: $fires;
+      }
+
+      .data-error-msg {
+        color: $error;
+        font-weight: 500;
       }
 
       .glad,

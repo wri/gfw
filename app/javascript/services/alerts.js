@@ -183,7 +183,9 @@ export const fetchFireAlertsByGeostore = geojson => {
   return request.get(
     `${CARTO_URL}/sql?q=${QUERY.replace(
       '{geometry}',
-      JSON.stringify(geojson.features[0].geometry)
+      JSON.stringify(
+        geojson && geojson.features && geojson.features[0].geometry
+      )
     )}`
   );
 };
