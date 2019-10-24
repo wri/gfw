@@ -33,7 +33,7 @@ class AoICard extends PureComponent {
     fireAlerts: PropTypes.bool,
     monthlySummary: PropTypes.bool,
     location: PropTypes.object,
-    onFetchAlerts: PropTypes.object
+    onFetchAlerts: PropTypes.func
   };
 
   state = {

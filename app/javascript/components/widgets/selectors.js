@@ -483,6 +483,7 @@ export const getWidgets = createSelector(
         shareUrl,
         embedUrl,
         downloadLink,
+        rawData,
         title: title
           ? title.replace('{location}', locationLabelFull || '...')
           : ''

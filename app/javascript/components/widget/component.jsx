@@ -26,6 +26,7 @@ class Widget extends PureComponent {
     error: PropTypes.bool,
     locationLabelFull: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    rawData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     config: PropTypes.object,
     sentence: PropTypes.object,
     handleShowMap: PropTypes.func,
@@ -58,6 +59,7 @@ class Widget extends PureComponent {
       error,
       locationLabelFull,
       data,
+      rawData,
       config,
       sentence,
       metaKey,
@@ -112,6 +114,7 @@ class Widget extends PureComponent {
           simple={simple}
           locationName={locationLabelFull}
           data={data}
+          rawData={rawData}
           settings={settings}
           sentence={sentence}
           config={config}

@@ -92,7 +92,11 @@ Item.propTypes = {
   handleSelectGroup: PropTypes.func,
   optionsAction: PropTypes.func,
   optionsActionKey: PropTypes.string,
-  activeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  activeValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.number
+  ]),
   activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
