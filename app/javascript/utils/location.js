@@ -3,12 +3,11 @@ import { createSelector } from 'reselect';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
 export const selectLocation = state => state.location;
-export const selectGeostore = state => state.geostore && state.geostore.data;
 export const selectAdminData = state => state.geostore && state.geostore.data;
 
 export const getDataLocation = createSelector(
-  [getActiveArea, selectLocation, selectGeostore],
-  (area, location, geostore) => {
+  [getActiveArea, selectLocation],
+  (area, location) => {
     const { payload, type: routeType } = location;
     const newLocation = {
       ...payload,
@@ -19,27 +18,11 @@ export const getDataLocation = createSelector(
     };
 
     if (!area) return newLocation;
-    const { admin, wdpaid, use } = area;
+    const { location: areaLocation } = area;
 
     return {
       ...newLocation,
-      type: 'geostore',
-      adm0: geostore && geostore.id,
-      ...(admin &&
-        admin.adm0 && {
-        type: 'country',
-        ...admin
-      }),
-      ...(wdpaid && {
-        type: 'wdpa',
-        adm0: wdpaid
-      }),
-      ...(use &&
-        use.id && {
-        type: 'use',
-        adm0: use.name,
-        adm1: use.id
-      })
+      ...areaLocation
     };
   }
 );
