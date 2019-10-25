@@ -51,8 +51,9 @@ class MapMenuMyGFW extends PureComponent {
     const { areas, tags } = prevProps;
     const { activeTags, pageSize, pageNum } = prevState;
 
-    const selectedTags = tags.filter(t => activeTags.includes(t.value));
-    const unselectedTags = tags.filter(t => !activeTags.includes(t.value));
+    const selectedTags = tags && tags.filter(t => activeTags.includes(t.value));
+    const unselectedTags =
+      tags && tags.filter(t => !activeTags.includes(t.value));
     const filteredAreas =
       selectedTags && selectedTags.length && areas && areas.length
         ? areas.filter(a => !!intersection(a.tags, activeTags).length)
