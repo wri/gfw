@@ -98,7 +98,8 @@ export const viewArea = createThunkAction(
           map: {
             ...map,
             canBound: true,
-            ...(!map.datasets && {
+            ...(map &&
+              !map.datasets && {
               datasets: [
                 // admin boundaries
                 {
