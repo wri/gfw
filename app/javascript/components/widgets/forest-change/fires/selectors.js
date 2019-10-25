@@ -5,13 +5,14 @@ import isEmpty from 'lodash/isEmpty';
 import sumBy from 'lodash/sumBy';
 import { buildDateArray } from 'utils/dates';
 
-const getData = state => state.data;
+const getData = state => state.data && state.data.fires;
 const getCurrentLocation = state => state.locationLabel;
 const getColors = state => state.colors;
 const getSentences = state => state.sentences;
 
 export const filterData = createSelector([getData], data => {
-  if (!data || isEmpty(data)) return null;
+  if (!data || isEmpty(data) || typeof data === 'number') return null;
+
   const startDate = moment().subtract(1, 'week');
   const endDate = moment();
 
@@ -94,10 +95,12 @@ export const parseSentence = createSelector(
   [filterData, getCurrentLocation, getSentences],
   (data, currentLabel, sentences) => {
     const { initial } = sentences;
-    const firesCount = (data && sumBy(data, 'count')) || 'No';
+    const firesCount =
+      typeof data === 'number' ? data : (data && sumBy(data, 'count')) || 0;
+    const count = firesCount > 0 ? count : 'No';
     const params = {
       location: currentLabel,
-      count: Number.isInteger(firesCount) ? format(',')(firesCount) : firesCount
+      count: Number.isInteger(count) ? format(',')(count) : count
     };
     return { sentence: initial, params };
   }
