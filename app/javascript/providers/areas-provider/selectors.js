@@ -23,7 +23,9 @@ export const getActiveArea = createSelector(
   (location, areas) => {
     if (isEmpty(areas)) return null;
 
-    return areas.find(a => a.id === location.adm0);
+    return areas.find(
+      a => a.id === location.adm0 || a.subscriptionId === location.adm0
+    );
   }
 );
 
