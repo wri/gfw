@@ -13,46 +13,34 @@ class DashboardPromptsContainer extends PureComponent {
     const { stepsKey } = this.props;
 
     const allSteps = {
-      dashboard: {
+      viewNationalDashboards: {
         title: 'Select a country or subnational area',
         steps: [
           {
             target: '.select-container',
             content: 'View dashboards for countries and subnational areas.',
-            disableBeacon: true,
-            actions: {
-              learnHow: () => {}
-            }
-          }
-        ],
-        settings: {
-          disableOverlay: true
-        }
-      },
-      analyses: {
-        title: 'Explore analyses',
-        steps: [
-          {
-            target: '.select-container',
-            content: 'Explore available analyses for different topics.',
-            disableBeacon: true,
-            actions: {
-              learnHow: () => {}
-            }
+            disableBeacon: true
           }
         ]
       },
-      settings: {
+      dashboardAnalyses: {
+        title: 'Explore analyses',
+        steps: [
+          {
+            target: '.c-subnav-menu',
+            content: 'Explore available analyses for different topics.',
+            disableBeacon: true
+          }
+        ]
+      },
+      widgetSettings: {
         title: 'Change widget settings',
         steps: [
           {
-            target: '.select-container',
+            target: '.c-widget-settings-button',
             content:
               'Customize analyses by filtering data, selecting the time range and more.',
-            disableBeacon: true,
-            actions: {
-              learnHow: () => {}
-            }
+            disableBeacon: true
           }
         ]
       },
@@ -63,10 +51,7 @@ class DashboardPromptsContainer extends PureComponent {
             target: '.select-container',
             content:
               'Share this analysis by copying a link or embedding your map view in another website.',
-            disableBeacon: true,
-            actions: {
-              learnHow: () => {}
-            }
+            disableBeacon: true
           }
         ]
       },

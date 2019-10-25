@@ -23,6 +23,7 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
+import DashboardPrompts from 'components/prompts/dashboard-prompts';
 
 import closeIcon from 'assets/icons/close.svg';
 
@@ -42,8 +43,21 @@ class DashboardsPage extends PureComponent {
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     areaLoading: PropTypes.bool,
-    clearScrollTo: PropTypes.func
+    embed: PropTypes.bool,
+    clearScrollTo: PropTypes.func,
+    setDashboardPromptsSettings: PropTypes.func
   };
+
+  componentDidMount() {
+    const { locationType, setDashboardPromptsSettings } = this.props;
+    if (locationType === 'global' || locationType === 'country') {
+      setDashboardPromptsSettings({
+        open: true,
+        stepIndex: 0,
+        stepsKey: 'viewNationalDashboards'
+      });
+    }
+  }
 
   componentDidUpdate(prevProps) {
     const { activeArea } = this.props;
@@ -88,7 +102,8 @@ class DashboardsPage extends PureComponent {
       locationType,
       activeArea,
       areaLoading,
-      clearScrollTo
+      clearScrollTo,
+      embed
     } = this.props;
     const isAreaDashboard = locationType === 'aoi';
 
@@ -150,6 +165,7 @@ class DashboardsPage extends PureComponent {
               </Fragment>
             )}
             <AreasProvider />
+            {!embed && isDesktop && <DashboardPrompts />}
           </div>
         )}
       </MediaQuery>
