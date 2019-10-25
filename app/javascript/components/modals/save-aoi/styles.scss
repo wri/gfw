@@ -1,5 +1,11 @@
 @import '~styles/settings.scss';
 
+.save-aoi-modal-confirmed {
+  .modal-title {
+    text-align: center;
+  }
+}
+
 .c-modal-save-aoi {
   min-height: rem(100px);
 

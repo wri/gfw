@@ -81,6 +81,7 @@ class ModalSaveAOI extends PureComponent {
         contentLabel={title}
         onRequestClose={this.handleCloseModal}
         title={title}
+        className={(saved || deleted) && 'save-aoi-modal-confirmed'}
       >
         <div className="c-modal-save-aoi">
           <div className="save-aoi-body">
