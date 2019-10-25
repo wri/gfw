@@ -83,9 +83,9 @@ class AreasTable extends PureComponent {
 
     // get tags based on areas available
     const selectedTags =
-      activeTags && tags.filter(t => activeTags.includes(t.value));
+      activeTags && tags && tags.filter(t => activeTags.includes(t.value));
     const unselectedTags =
-      activeTags && tags.filter(t => !activeTags.includes(t.value));
+      activeTags && tags && tags.filter(t => !activeTags.includes(t.value));
 
     // filter areas based on tags selected
     const filteredAreas =
