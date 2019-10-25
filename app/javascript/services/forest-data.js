@@ -1,4 +1,4 @@
-import request from 'utils/request';
+import axios from 'axios';
 import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
 import { getIndicator } from 'utils/strings';
@@ -137,32 +137,39 @@ const getWHEREQuery = params => {
 };
 
 // summed loss for single location
-export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
+export const getLoss = ({ adm0, adm1, adm2, tsc, token, ...params }) => {
   const { loss, lossTsc } = NEW_SQL_QUERIES;
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // disaggregated loss for child of location
-export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
+export const getLossGrouped = ({ adm0, adm1, adm2, token, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
     NEW_SQL_QUERIES.lossGrouped
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // summed extent for single location
-export const getExtent = ({ adm0, adm1, adm2, extentYear, ...params }) => {
+export const getExtent = ({
+  adm0,
+  adm1,
+  adm2,
+  extentYear,
+  token,
+  ...params
+}) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${NEW_SQL_QUERIES.extent}`
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // disaggregated extent for child of location
@@ -171,6 +178,7 @@ export const getExtentGrouped = ({
   adm1,
   adm2,
   extentYear,
+  token,
   ...params
 }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
@@ -180,7 +188,7 @@ export const getExtentGrouped = ({
     .replace('{extentYear}', getExtentYear(extentYear))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // total area for a given of polyname in location
@@ -190,6 +198,7 @@ export const getAreaIntersection = ({
   adm2,
   forestType,
   landCategory,
+  token,
   ...params
 }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
@@ -209,7 +218,7 @@ export const getAreaIntersection = ({
       })
     );
 
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // total area for a given of polyname in location
@@ -219,6 +228,7 @@ export const getAreaIntersectionGrouped = ({
   adm2,
   forestType,
   landCategory,
+  token,
   ...params
 }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
@@ -238,86 +248,86 @@ export const getAreaIntersectionGrouped = ({
       })
     );
 
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // summed gain for single location
-export const getGain = ({ adm0, adm1, adm2, ...params }) => {
+export const getGain = ({ adm0, adm1, adm2, token, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     NEW_SQL_QUERIES.gain
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // disaggregated gain for child of location
-export const getGainGrouped = ({ adm0, adm1, adm2, ...params }) => {
+export const getGainGrouped = ({ adm0, adm1, adm2, token, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
     NEW_SQL_QUERIES.gainGrouped
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
-export const getFAO = ({ adm0 }) => {
+export const getFAO = ({ adm0, token }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.fao}`.replace(
     '{location}',
     adm0 ? `country = '${adm0}'` : '1 = 1'
   );
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
-export const getFAOExtent = ({ period }) => {
+export const getFAOExtent = ({ period, token }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoExtent}`.replace(
     '{period}',
     period
   );
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
-export const getFAODeforest = ({ adm0 }) => {
+export const getFAODeforest = ({ adm0, token }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforest}`.replace(
     '{location}',
     adm0 ? `WHERE fao.country = '${adm0}'` : ''
   );
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
-export const getFAODeforestRank = ({ period }) => {
+export const getFAODeforestRank = ({ period, token }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoDeforestRank}`.replace(
     '{year}',
     period
   );
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
-export const getFAOEcoLive = () => {
+export const getFAOEcoLive = token => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.faoEcoLive}`;
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 export const getNonGlobalDatasets = () => {
   const url = `${CARTO_REQUEST_URL}${
     NEW_SQL_QUERIES.nonGlobalDatasets
   }`.replace('{polynames}', buildPolynameSelects());
-  return request.get(url);
+  return axios.get(url);
 };
 
-export const getGlobalLandCover = ({ adm0, adm1, adm2 }) => {
+export const getGlobalLandCover = ({ adm0, adm1, adm2, token }) => {
   const url = `${CARTO_REQUEST_URL}${NEW_SQL_QUERIES.globalLandCover}`.replace(
     '{location}',
     getLocationQuery(adm0, adm1, adm2)
   );
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
-export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2 }) => {
+export const getLocationPolynameWhitelist = ({ adm0, adm1, adm2, token }) => {
   const url = `${CARTO_REQUEST_URL}${
     NEW_SQL_QUERIES.getLocationPolynameWhitelist
   }`
     .replace(/{location}/g, getLocationSelect({ adm0, adm1, adm2 }))
     .replace('{polynames}', buildPolynameSelects())
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2 }));
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 // OLD TABLE FETCHES PRE 2018 DATA
@@ -343,14 +353,15 @@ export const getExtentOld = ({
   forestType,
   landCategory,
   threshold,
-  extentYear
+  extentYear,
+  token
 }) => {
   const url = `${REQUEST_URL_OLD}${SQL_QUERIES_OLD.extent}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory))
     .replace('{extentYear}', getExtentYearOld(extentYear));
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 export const getLossOld = ({
@@ -359,13 +370,14 @@ export const getLossOld = ({
   adm2,
   forestType,
   landCategory,
-  threshold
+  threshold,
+  token
 }) => {
   const url = `${REQUEST_URL_OLD}${SQL_QUERIES_OLD.loss}`
     .replace('{location}', getLocationQuery(adm0, adm1, adm2))
     .replace('{threshold}', threshold || 30)
     .replace('{indicator}', getIndicator(forestType, landCategory));
-  return request.get(url);
+  return axios.get(url, { cancelToken: token });
 };
 
 export const getUSLandCover = params => {
@@ -394,6 +406,7 @@ export const getUSLandCover = params => {
         ? ''
         : 'GROUP BY to_class_ipcc, from_class_nlcd, to_class_nlcd, from_class_ipcc'
     );
+
   if (download) {
     return url.concat(
       `&format=csv&filename=land_cover_in_ha_in_${adm0}${
@@ -401,5 +414,5 @@ export const getUSLandCover = params => {
       }${adm2 ? `_${adm2}` : ''}_from_${startYear}_to_${endYear}`
     );
   }
-  return request.get(url);
+  return axios.get(url);
 };

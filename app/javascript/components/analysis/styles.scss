@@ -13,6 +13,12 @@
     }
   }
 
+  .deleted-area-message {
+    position: relative;
+    width: 100%;
+    min-height: rem(180px);
+  }
+
   .cancel-analysis {
     position: absolute;
     top: 0;
@@ -67,10 +73,7 @@
   display: flex;
   justify-content: space-between;
 
-  .analysis-action-btn {
-    font-size: rem(14px);
-    font-weight: 500;
-    height: rem(30px);
+  > * {
     width: 100%;
 
     &:first-child {
@@ -80,6 +83,14 @@
     &:last-child {
       margin-left: rem(5px);
     }
+  }
+
+  .analysis-action-btn {
+    font-size: rem(14px);
+    font-weight: 500;
+    height: rem(30px);
+    width: 100%;
+    padding: 0;
   }
 
   @media screen and (min-width: $screen-m) {

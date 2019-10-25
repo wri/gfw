@@ -1,7 +1,0 @@
-#prodes_wgs84 {
-  polygon-fill:#F69;
-  polygon-opacity: 1;
-  line-opacity: 1;
-  line-color: #F69;
-  line-width: 0.1;
-}

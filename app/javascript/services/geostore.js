@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { getGoogleLangCode } from 'utils/lang';
+
 const REQUEST_URL = `${process.env.GFW_API}`;
 const QUERIES = {
   geostore: '/geostore',
@@ -37,3 +39,16 @@ export const getGeostoreKey = geojson => {
     url
   });
 };
+
+export const getGeodescriberService = ({ geojson, lang, token }) =>
+  // for now we are forcing english until API works
+  axios({
+    method: 'post',
+    url: `${REQUEST_URL}/geodescriber/geom?lang=${getGoogleLangCode(
+      lang
+    )}&template=true&app=gfw`,
+    data: {
+      geojson
+    },
+    cancelToken: token
+  });

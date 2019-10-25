@@ -1,0 +1,35 @@
+@import '~styles/settings.scss';
+
+.c-widget-map-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: rem(30px);
+
+  @media screen and (min-width: $screen-m) {
+    flex-direction: row;
+  }
+
+  .locations-list {
+    width: 100%;
+
+    @media screen and (min-width: $screen-m) {
+      width: 35%;
+    }
+  }
+
+  .simple-map {
+    width: 100%;
+    min-width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    @media screen and (min-width: $screen-m) {
+      width: 65%;
+      min-width: 65%;
+      margin-right: rem(20px);
+    }
+  }
+}

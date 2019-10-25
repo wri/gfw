@@ -2,33 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { track } from 'app/analytics';
-import reducerRegistry from 'app/registry';
 
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 import * as mapActions from 'components/map/actions';
 
-import reducers, { initialState } from './reducers';
-import * as ownActions from './actions';
 import { getBasemapsProps } from './selectors';
 import BasemapsComponent from './component';
 
 const actions = {
   setModalMetaSettings,
-  ...mapActions,
-  ...ownActions
+  ...mapActions
 };
 
 class BasemapsContainer extends React.Component {
   static propTypes = {
+    activeLabels: PropTypes.object,
+    basemaps: PropTypes.object,
+    labels: PropTypes.array,
     activeDatasets: PropTypes.array,
     activeBoundaries: PropTypes.object,
     setMapSettings: PropTypes.func.isRequired
   };
-
-  componentDidMount() {
-    this.props.getPlanetBasemaps();
-  }
 
   selectBasemap = basemap => {
     const { setMapSettings } = this.props;
@@ -88,19 +83,6 @@ class BasemapsContainer extends React.Component {
     );
   }
 }
-
-BasemapsContainer.propTypes = {
-  activeLabels: PropTypes.object,
-  basemaps: PropTypes.object,
-  labels: PropTypes.array,
-  getPlanetBasemaps: PropTypes.func
-};
-
-reducerRegistry.registerModule('basemaps', {
-  actions: ownActions,
-  reducers,
-  initialState
-});
 
 export default withTooltipEvt(
   connect(getBasemapsProps, actions)(BasemapsContainer)

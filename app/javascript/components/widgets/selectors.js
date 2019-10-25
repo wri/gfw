@@ -1,362 +1,531 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sortBy from 'lodash/sortBy';
-import uniq from 'lodash/uniq';
-import concat from 'lodash/concat';
+import intersection from 'lodash/intersection';
+import compact from 'lodash/compact';
+import isEmpty from 'lodash/isEmpty';
 import lowerCase from 'lodash/lowerCase';
+import flatMap from 'lodash/flatMap';
+import moment from 'moment';
+import camelCase from 'lodash/camelCase';
+import qs from 'query-string';
+
+import { getAllAreas } from 'providers/areas-provider/selectors';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
+import { getActiveLayersWithDates } from 'components/map/selectors';
+import { getDataLocation } from 'utils/location';
+
+import { getIsTrase } from 'app/layouts/root/selectors';
 
 import tropicalIsos from 'data/tropical-isos.json';
 import colors from 'data/colors.json';
 import { locationLevelToStr } from 'utils/format';
-import allOptions from './options';
+
+import {
+  getSettingsConfig,
+  getOptionsSelected,
+  getIndicator,
+  getStatements,
+  getLocationPath
+} from './utils/config';
 import allWidgets from './manifest';
 
+const buildLocationDict = locations =>
+  location &&
+  locations.length &&
+  locations.reduce(
+    (dict, next) => ({
+      ...dict,
+      [next.value || next.id]: {
+        ...next
+      }
+    }),
+    {}
+  );
+
 export const selectLocation = state => state.location && state.location.payload;
-export const selectAnalysis = (state, { analysis }) => analysis;
-export const selectAllLocation = state => state.location;
-export const selectLocationType = state =>
-  state.location && state.location.payload && state.location.payload.type;
-export const selectWidgetFromQuery = state =>
-  state.location && state.location.query && state.location.query.widget;
-export const selectEmbed = (state, { embed }) => embed;
+export const selectRouteType = state => state.location && state.location.type;
+export const selectLocationQuery = state =>
+  state.location && state.location.query;
+export const selectLocationSearch = state =>
+  state.location && state.location.search;
+export const selectWidgetsData = state => state.widgets && state.widgets.data;
 export const selectGeostore = state => state.geostore && state.geostore.data;
-export const selecteNoWidgetsMessage = (state, { noWidgetsMessage }) =>
-  noWidgetsMessage;
-export const selectWidgets = state => state.widgets && state.widgets.widgets;
-export const selectLoading = state =>
+export const selectLoadingFilterData = state =>
   state.countryData &&
   state.whitelists &&
+  state.areas &&
   (state.countryData.countriesLoading ||
     state.countryData.regionsLoading ||
     state.countryData.subRegionsLoading ||
+    state.areas.loading ||
     state.whitelists.loading);
-export const selectWhitelists = state =>
+export const selectLoadingMeta = state =>
+  state.geostore &&
+  state.geodescriber &&
+  (state.geostore.loading || state.geodescriber.loading);
+export const selectCountryData = state => state.countryData;
+export const selectPolynameWhitelist = state =>
   state.whitelists && state.whitelists.data;
-export const selectCountryData = state =>
-  (state.countryData
-    ? {
-      adm0: state.countryData.countries,
-      adm1: state.countryData.regions,
-      adm2: state.countryData.subRegions,
-      fao: state.countryData.faoCountries
-    }
-    : {});
+export const selectEmbed = (state, { embed }) => embed;
+export const selectSimple = (state, { simple }) => simple;
+export const selectAnalysis = (state, { analysis }) => analysis;
+export const selectCategory = state =>
+  state.location && state.location.query && state.location.query.category;
+export const selectModalClosing = state =>
+  state.modalMeta && state.modalMeta.closing;
+export const selectNonGlobalDatasets = state =>
+  state.widgets && state.widgets.data.nonGlobalDatasets;
 
-const locationTypes = {
-  country: {
-    label: 'country',
-    value: 'admin'
-  },
-  global: {
-    label: 'global',
-    value: 'global'
-  },
-  geostore: {
-    label: 'your custom area',
-    value: 'geostore'
-  },
-  wdpa: {
-    label: 'your selected protected area',
-    value: 'wdpa'
-  },
-  use: {
-    label: 'your selected area',
-    value: 'use'
-  }
-};
-
-export const getOptions = createSelector([], () => {
-  const optionsMeta = {};
-  Object.keys(allOptions).forEach(oKey => {
-    optionsMeta[oKey] =
-      oKey === 'weeks' ? allOptions[oKey] : sortBy(allOptions[oKey], 'label');
-  });
-  return optionsMeta;
-});
-
-export const getAdminLevel = createSelector([selectLocation], location =>
-  locationLevelToStr(location)
+export const getWidgetFromLocation = createSelector(
+  [selectLocation, selectLocationQuery],
+  (location, query) =>
+    (location && location.widgetSlug) || (query && query.widget)
 );
 
-export const getLocationData = createSelector(
-  [selectLocationType, selectCountryData],
-  (type, countryData) => {
-    if (type === 'country' || type === 'global') return countryData;
+export const getLocationObj = createSelector(
+  [getDataLocation, getGeodescriberTitleFull],
+  (location, title) => ({
+    ...location,
+    locationLabel: location.type === 'global' ? 'global' : title,
+    adminLevel: locationLevelToStr(location),
+    locationLabelFull: location.type === 'global' ? 'global' : title,
+    isTropical: location && tropicalIsos.includes(location.adm0)
+  })
+);
+
+export const getAllLocationData = createSelector(
+  [
+    getDataLocation,
+    selectCountryData,
+    getAllAreas,
+    selectRouteType,
+    selectLocationQuery
+  ],
+  (dataLocation, countryData, areas, routeType, query) => {
+    if (isEmpty(areas) && isEmpty(countryData)) return null;
+    const { type, adm0, adm1, areaId } = dataLocation;
+
+    if (areaId && type !== 'country') {
+      return { adm0: areas.map(a => ({ ...a, value: a.geostore })) };
+    }
+
+    if (type === 'global' || type === 'country') {
+      return {
+        adm0: countryData.countries.map(l => ({
+          ...l,
+          path: getLocationPath(routeType, type, query, { adm0: l.value })
+        })),
+        adm1: countryData.regions.map(l => ({
+          ...l,
+          path: getLocationPath(routeType, type, query, { adm0, adm1: l.value })
+        })),
+        adm2: countryData.subRegions.map(l => ({
+          ...l,
+          path: getLocationPath(routeType, type, query, {
+            adm0,
+            adm1,
+            adm2: l.value
+          })
+        })),
+        fao: countryData.faoCountries
+      };
+    }
+
     return {};
   }
 );
 
-export const getActiveLocationData = createSelector(
-  [getLocationData, selectLocation],
-  (locationData, location) => {
-    if (location.adm2) return locationData.adm2;
-    return locationData[location.adm1 ? 'adm1' : 'adm0'];
-  }
-);
+export const getLocationData = createSelector(
+  [getLocationObj, getAllLocationData, selectPolynameWhitelist],
+  (locationObj, allLocationData, polynamesWhitelist) => {
+    if (isEmpty(allLocationData)) return null;
+    const { type, adminLevel, locationLabel, adm0, adm1, areaId } = locationObj;
 
-export const getChildLocationData = createSelector(
-  [getLocationData, selectLocation],
-  (locationData, location) => {
-    if (location.adm2) return null;
-    if (!location.adm0) return locationData.adm0;
-    return locationData[location.adm1 ? 'adm2' : 'adm1'];
-  }
-);
-
-export const getParentLocationData = createSelector(
-  [getLocationData, selectLocation],
-  (locationData, location) => {
-    if (!location.adm1 && !location.adm2) return null;
-    return locationData[location.adm2 ? 'adm1' : 'adm0'];
-  }
-);
-
-export const getLocationDict = createSelector(
-  [getLocationData, selectLocation],
-  (locationData, location) => {
-    let values;
-    if (location.adm2) values = locationData.adm2;
-    else if (location.adm1) values = locationData.adm1;
-    else values = locationData.adm0;
-
-    return (
-      values &&
-      values.length &&
-      values.reduce(
-        (dict, next) => ({
-          ...dict,
-          [next.value]: next.label
-        }),
-        {}
-      )
-    );
-  }
-);
-
-export const getLocationObject = createSelector(
-  [getAdminLevel, getActiveLocationData, selectLocation, getParentLocationData],
-  (adminLevel, adms, location, parent) => {
-    if (location.type !== 'country') {
-      return locationTypes[location.type];
-    }
-
-    const locationObject =
-      location.adm0 && adms
-        ? adms.find(a => a.value === location[adminLevel])
-        : { label: location.type, value: location.type };
-    let parentObject = {};
-
+    let parent = {};
+    let parentData = allLocationData.adm0;
+    let children = allLocationData.adm0;
     if (adminLevel === 'adm0') {
-      parentObject = { label: 'global', value: 'global' };
+      parent = { label: 'global', value: 'global' };
+      children = allLocationData.adm1;
     } else if (adminLevel === 'adm1') {
-      parentObject = (parent &&
-        parent.find(a => a.value === location.adm0)) || {
-        label: location.type,
-        value: location.type
-      };
+      parent = allLocationData.adm0.find(d => d.value === adm0);
+      parentData = allLocationData.adm0;
+      children = allLocationData.adm2;
     } else if (adminLevel === 'adm2') {
-      parentObject = (parent &&
-        parent.find(a => a.value === location.adm1)) || {
-        label: location.type,
-        value: location.type
-      };
+      parent = allLocationData.adm1.find(d => d.value === adm1);
+      parentData = allLocationData.adm1;
+      children = [];
     }
 
-    const returnObject = {
-      parentLabel: parentObject.label,
-      parentValue: parentObject.value,
-      ...locationObject,
-      adminLevel
+    const locationData = allLocationData[adminLevel] || allLocationData.adm0;
+    const currentLocation =
+      locationData &&
+      locationData.find(d => d.value === locationObj[adminLevel]);
+
+    return {
+      parent,
+      parentLabel: parent && parent.label,
+      parentData: parentData && buildLocationDict(parentData),
+      location: currentLocation || { label: 'global', value: 'global' },
+      locationData: locationData && buildLocationDict(locationData),
+      locationLabel:
+        type === 'geostore' || type === 'global' || areaId
+          ? locationLabel
+          : currentLocation && currentLocation.label,
+      childData: children && buildLocationDict(children),
+      polynamesWhitelist,
+      status: currentLocation && currentLocation.status
     };
-
-    return returnObject;
-  }
-);
-
-export const getLocationName = createSelector(
-  [getLocationObject, selectLocationType],
-  (location, type) => (location && location.label) || type
-);
-
-export const getFAOLocationData = createSelector(
-  [selectCountryData],
-  countryData => countryData.faoCountries
-);
-
-export const isTropicalLocation = createSelector([selectLocation], location =>
-  tropicalIsos.includes(location && location.adm0)
-);
-
-export const getNoWidgetsMessage = createSelector(
-  [getLocationName, selecteNoWidgetsMessage],
-  (locationName, message) =>
-    message && locationName && message.replace('{location}', locationName)
-);
-
-export const parseWidgets = createSelector(
-  [selectWidgetFromQuery, selectEmbed],
-  (widgetQuery, embed) => {
-    const widgets = Object.values(allWidgets);
-    const filteredWidgets = embed
-      ? widgets.filter(w => w.config.widget === widgetQuery)
-      : widgets;
-    return (
-      filteredWidgets &&
-      filteredWidgets.length &&
-      filteredWidgets.map(w => ({
-        ...w,
-        widget: w.config && w.config.widget,
-        colors: colors[w.config && w.config.colors]
-      }))
-    );
   }
 );
 
 export const filterWidgetsByLocation = createSelector(
-  [parseWidgets, selectLocationType, getAdminLevel],
-  (widgets, type, adminLevel) => {
-    if (!widgets || !type) return null;
+  [
+    getLocationObj,
+    getLocationData,
+    selectPolynameWhitelist,
+    selectEmbed,
+    getWidgetFromLocation,
+    getActiveLayersWithDates,
+    selectAnalysis
+  ],
+  (
+    location,
+    locationData,
+    polynameWhitelist,
+    embed,
+    widget,
+    layers,
+    showAnalysis
+  ) => {
+    const { adminLevel, type } = location;
+
+    const widgets = Object.values(allWidgets).map(w => ({
+      ...w,
+      ...(w.colors && {
+        colors: colors[w.colors]
+      })
+    }));
+
+    if (embed && widget) return widgets.filter(w => w.widget === widget);
+    const layerIds = layers && layers.map(l => l.id);
+
     return widgets.filter(w => {
-      const { types, admins } = w.config || {};
+      const {
+        types,
+        admins,
+        whitelists,
+        blacklists,
+        source,
+        datasets,
+        visible
+      } =
+        w || {};
+      const { fao } = locationData || {};
+
+      const layerIntersection =
+        datasets &&
+        intersection(
+          compact(
+            flatMap(
+              datasets.filter(d => !d.boundary).map(d => {
+                const layersArray = Array.isArray(d.layers) && d.layers;
+
+                return layersArray;
+              })
+            )
+          ),
+          layerIds
+        );
+      const hasLocation =
+        types && types.includes(type) && admins && admins.includes(adminLevel);
+      const adminWhitelist =
+        type === 'country' && whitelists && whitelists.adm0;
+
+      const adminBlacklist =
+        type === 'country' && blacklists && blacklists[adminLevel];
+      const notInBlacklist =
+        !adminBlacklist || !adminBlacklist.includes(adminLevel);
+
+      const isFAOCountry =
+        source !== 'fao' || (fao && fao.find(f => f.value === location.adm0));
+      const matchesAdminWhitelist =
+        !adminWhitelist || adminWhitelist.includes(location.adm0);
+      const polynameIntersection =
+        whitelists &&
+        whitelists.indicators &&
+        intersection(polynameWhitelist, whitelists.indicators);
+      const matchesPolynameWhitelist =
+        !whitelists ||
+        !whitelists.indicators ||
+        (polynameIntersection && polynameIntersection.length);
+
+      const isWidgetVisible =
+        (!showAnalysis && !visible) ||
+        (showAnalysis &&
+          visible &&
+          visible.includes('analysis') &&
+          !isEmpty(layerIntersection)) ||
+        (!showAnalysis && visible && visible.includes('dashboard'));
+
       return (
-        types && types.includes(type) && admins && admins.includes(adminLevel)
+        hasLocation &&
+        matchesAdminWhitelist &&
+        matchesPolynameWhitelist &&
+        isFAOCountry &&
+        isWidgetVisible &&
+        notInBlacklist
       );
     });
   }
 );
 
-export const filterWidgetsByLocationType = createSelector(
-  [filterWidgetsByLocation, selectLocation, getFAOLocationData],
-  (widgets, location, faoCountries) => {
-    if (!widgets) return null;
-    const isFAOCountry =
-      faoCountries && faoCountries.find(f => f.value === location.adm0);
-    return widgets.filter(w => {
-      const { source, types } = w.config || {};
-      const isFao = source === 'fao';
-      const hasType = types.includes(location.type);
-      return hasType && (!isFAOCountry || isFao);
-    });
-  }
-);
-
-export const filterWidgetsByLocationWhitelist = createSelector(
-  [filterWidgetsByLocationType, selectLocation],
-  (widgets, location) => {
-    if (!widgets) return null;
-    return widgets.filter(w => {
-      const { whitelists, blacklists } = w.config;
-      if (!whitelists && !blacklists) return true;
-      const whitelist = whitelists.adm0;
-      const blacklist = blacklists && blacklists.adm1;
-      if (!whitelist) return true;
-      if (blacklist) {
-        if (blacklist.includes(location.adm1)) return false;
-      }
-      return whitelist.includes(location.adm0);
-    });
-  }
-);
-
-export const filterWidgetsByIndicatorWhitelist = createSelector(
-  [filterWidgetsByLocationWhitelist, selectWhitelists],
-  (widgets, indicatorWhitelist) => {
-    if (!widgets) return null;
-
-    return widgets.filter(w => {
-      const { indicators } = w.config.whitelists || {};
-      if (!indicators) return true;
-      const totalIndicators = concat(indicators, indicatorWhitelist).length;
-      const reducedIndicators = uniq(concat(indicators, indicatorWhitelist))
-        .length;
-      return totalIndicators !== reducedIndicators;
-    });
-  }
-);
-
-// once we know which widgets we can render, lets pass them all static props
-export const parseWidgetsWithOptions = createSelector(
+export const filterWidgetsByCategory = createSelector(
   [
-    filterWidgetsByIndicatorWhitelist,
-    getOptions,
-    selectWhitelists,
-    selectLocation
+    filterWidgetsByLocation,
+    selectCategory,
+    selectAnalysis,
+    getLocationData,
+    selectEmbed,
+    getWidgetFromLocation
   ],
-  (widgets, options, polynameWhitelist, location) => {
-    if (!widgets) return null;
+  (widgets, category, showAnalysis, locationData, embed, widget) => {
+    if (isEmpty(widgets)) return null;
+
+    if (embed && widget) return widgets.filter(w => w.widget === widget);
+
+    if (showAnalysis || (locationData && locationData.status === 'pending')) {
+      return sortBy(widgets, 'sortOrder.summary');
+    }
+
+    const cat =
+      locationData && !locationData.areaId && category ? category : 'summary';
+
+    return sortBy(
+      widgets.filter(w => w.categories.includes(cat)),
+      `sortOrder[${camelCase(cat)}]`
+    );
+  }
+);
+
+export const getWidgets = createSelector(
+  [
+    filterWidgetsByCategory,
+    getLocationObj,
+    getLocationData,
+    selectWidgetsData,
+    selectLocationQuery,
+    selectLocationSearch,
+    selectNonGlobalDatasets,
+    getIsTrase,
+    getActiveLayersWithDates,
+    selectAnalysis
+  ],
+  (
+    widgets,
+    locationObj,
+    locationData,
+    widgetsData,
+    query,
+    search,
+    datasets,
+    isTrase,
+    layers,
+    analysis
+  ) => {
+    if (isEmpty(widgets) || !locationObj || !widgetsData) {
+      return null;
+    }
+
+    const { locationLabelFull, type, adm0, adm1, adm2 } = locationObj || {};
+    const { polynamesWhitelist, status } = locationData || {};
 
     return widgets.map(w => {
-      const optionsConfig = w.config.options;
-      const optionKeys = optionsConfig && Object.keys(optionsConfig);
+      const {
+        settings: defaultSettings,
+        widget,
+        settingsConfig,
+        pendingKeys,
+        title: titleTemplate,
+        dataType
+      } =
+        w || {};
+      const rawData = widgetsData && widgetsData[widget];
+
+      const { settings: dataSettings } = rawData || {};
+
+      const widgetLayer =
+        layers &&
+        layers.find(
+          l =>
+            w.datasets && flatMap(w.datasets.map(d => d.layers)).includes(l.id)
+        );
+
+      const { params: layerParams, decodeParams } = widgetLayer || {};
+      const startDate =
+        (layerParams && layerParams.startDate) ||
+        (decodeParams && decodeParams.startDate);
+      const startYear =
+        startDate && parseInt(moment(startDate).format('YYYY'), 10);
+      const endDate =
+        (layerParams && layerParams.endDate) ||
+        (decodeParams && decodeParams.endDate);
+      const endYear = endDate && parseInt(moment(endDate).format('YYYY'), 10);
+
+      const widgetQuerySettings = query && query[widget];
+
+      const layerSettings = {
+        ...layerParams,
+        ...decodeParams,
+        ...(startYear && {
+          startYear
+        }),
+        ...(endYear && {
+          endYear
+        })
+      };
+
+      const mergedSettings = {
+        ...defaultSettings,
+        ...dataSettings,
+        ...widgetQuerySettings,
+        ...(analysis && {
+          ...layerSettings
+        })
+      };
+
+      const settings = {
+        ...mergedSettings,
+        ...(mergedSettings.ifl === 2016 && {
+          extentYear: 2010
+        }),
+        ...(mergedSettings.forestType === 'primary_forest' && {
+          extentYear: 2000
+        })
+      };
+
+      const dataOptions = rawData && rawData.options;
+
+      const settingsConfigParsed = getSettingsConfig({
+        settingsConfig,
+        dataOptions,
+        settings,
+        polynamesWhitelist,
+        status,
+        pendingKeys
+      });
+
+      const optionsSelected =
+        settingsConfigParsed && getOptionsSelected(settingsConfigParsed);
+
+      const forestType = optionsSelected && optionsSelected.forestType;
+      const landCategory = optionsSelected && optionsSelected.landCategory;
+      const indicator = getIndicator(forestType, landCategory);
+
+      const footerStatements = getStatements({
+        forestType,
+        landCategory,
+        settings,
+        datasets,
+        type,
+        dataType
+      });
+
+      const { ifl } = settings || {};
+
+      const settingsConfigFiltered =
+        settingsConfigParsed &&
+        settingsConfigParsed.filter(
+          o =>
+            o.key !== 'extentYear' ||
+            (ifl !== 2016 &&
+              settings.forestType !== 'primary_forest' &&
+              settings.forestType !== 'ifl')
+        );
+
+      const props = {
+        ...w,
+        ...locationObj,
+        ...locationData,
+        data: rawData,
+        settings,
+        title: titleTemplate,
+        settingsConfig: settingsConfigFiltered,
+        optionsSelected,
+        indicator,
+        showAttributionLink: isTrase,
+        statements: footerStatements
+      };
+
+      const parsedProps = props.getWidgetProps && props.getWidgetProps(props);
+      const { title: parsedTitle } = parsedProps || {};
+      const title = parsedTitle || titleTemplate;
+
+      const downloadLink =
+        props.getDownloadLink &&
+        props.getDownloadLink({ ...props, ...parsedProps });
+
+      const searchObject = qs.parse(search);
+      const widgetQuery = searchObject && searchObject[widget];
+      const shareUrl = `${window.location.origin}${window.location.pathname}?${
+        searchObject
+          ? qs.stringify({
+            ...searchObject,
+            widget,
+            showMap: false,
+            scrollTo: widget
+          })
+          : ''
+      }`;
+      const embedUrl = `${window.location.origin}/embed/widget/${widget}/${
+        type
+      }${adm0 ? `/${adm0}` : ''}${adm1 ? `/${adm1}` : ''}${
+        adm2 ? `/${adm2}` : ''
+      }${widgetQuery ? `?${widget}=${widgetQuery}` : ''}`;
 
       return {
-        ...w,
-        ...(optionsConfig && {
-          options: optionKeys.reduce((obj, optionKey) => {
-            const polynamesOptions = ['forestTypes', 'landCategories'];
-            const configWhitelist = optionsConfig[optionKey];
-            let filteredOptions = options[optionKey];
-            if (Array.isArray(configWhitelist)) {
-              // USLC widget exception: reversing options without using Arr.reverse()
-              if (configWhitelist.includes('changes_only')) {
-                filteredOptions = filteredOptions.reduce(
-                  (acc, num) => [num, ...acc],
-                  []
-                );
-              }
-              filteredOptions = filteredOptions
-                ? filteredOptions.filter(o => configWhitelist.includes(o.value))
-                : optionsConfig[optionKey].map(o => ({
-                  label: o,
-                  value: o
-                }));
-            }
-
-            if (polynamesOptions.includes(optionKey)) {
-              // some horrible an inexcusable filters for forest types and land categories
-              filteredOptions =
-                location.type === 'global'
-                  ? filteredOptions.filter(o => o.global)
-                  : filteredOptions;
-              filteredOptions =
-                polynameWhitelist && polynameWhitelist.length
-                  ? filteredOptions.filter(o =>
-                    polynameWhitelist.includes(o.value)
-                  )
-                  : filteredOptions;
-              filteredOptions = filteredOptions.map(i => ({
-                ...i,
-                metaKey:
-                  i.metaKey === 'primary_forest'
-                    ? `${lowerCase(location.adm0)}_${i.metaKey}${
-                      location.adm0 === 'IDN' ? 's' : ''
-                    }`
-                    : i.metaKey
-              }));
-            }
-
-            return {
-              ...obj,
-              [optionKey]: filteredOptions
-            };
-          }, {})
-        })
+        ...props,
+        ...parsedProps,
+        shareUrl,
+        embedUrl,
+        downloadLink,
+        rawData,
+        title: title
+          ? title.replace('{location}', locationLabelFull || '...')
+          : ''
       };
     });
   }
 );
 
-export const getWidgetsProps = createStructuredSelector({
-  loading: selectLoading,
-  whitelists: selectWhitelists,
-  whitelist: selectWhitelists,
-  allLocation: selectAllLocation,
-  location: selectLocation,
-  locationType: selectLocationType,
-  locationData: getActiveLocationData,
-  locationObject: getLocationObject,
-  locationName: getLocationName,
-  locationDict: getLocationDict,
-  childLocationData: getChildLocationData,
-  noWidgetsMessage: getNoWidgetsMessage,
-  isTropical: isTropicalLocation
-});
+export const getActiveWidget = createSelector(
+  [getWidgets, getWidgetFromLocation, selectAnalysis],
+  (widgets, activeWidgetKey, analysis) => {
+    if (!widgets || analysis) return null;
+    if (!activeWidgetKey) return widgets[0];
+    return widgets.find(w => w.widget === activeWidgetKey);
+  }
+);
+
+export const getNoDataMessage = createSelector(
+  [getGeodescriberTitleFull, selectCategory],
+  (title, category) => {
+    if (!title || !category) return 'No data available';
+    if (!category) return `No data available for ${title}`;
+    return `No ${lowerCase(category)} data avilable for ${title}`;
+  }
+);
+
+export const getWidgetsProps = () =>
+  createStructuredSelector({
+    loadingData: selectLoadingFilterData,
+    loadingMeta: selectLoadingMeta,
+    widgets: getWidgets,
+    activeWidget: getActiveWidget,
+    location: getDataLocation,
+    emebd: selectEmbed,
+    simple: selectSimple,
+    modalClosing: selectModalClosing,
+    noDataMessage: getNoDataMessage,
+    geostore: selectGeostore
+  });

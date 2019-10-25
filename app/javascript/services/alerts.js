@@ -1,6 +1,9 @@
 import request from 'utils/request';
 import moment from 'moment';
+import axios from 'axios';
 import { getIndicator } from 'utils/strings';
+
+import { fetchAnalysisEndpoint } from './analysis';
 
 const REQUEST_URL = process.env.GFW_API;
 const GLAD_ISO_DATASET = process.env.GLAD_ISO_DATASET;
@@ -17,7 +20,7 @@ const QUERIES = {
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
   firesGrouped:
     "SELECT iso, adm1, adm2, week, year, alerts as count, area_ha, polyname FROM data WHERE {location} AND polyname = '{polyname}' AND fire_type = '{dataset}'",
-  viirsAlerts: '{location}?group=true&period={period}&thresh=0',
+  viirsAlerts: '&group=true&period={period}&thresh=0',
   firesStats:
     '{location}?period={period}&aggregate_by=day&aggregate_values=true&fire_type=viirs',
   alertsLatest:
@@ -32,7 +35,37 @@ const getLocation = (adm0, adm1, adm2) =>
     adm2 ? ` AND adm2 = ${adm2}` : ''
   }`;
 
-export const fetchGladAlerts = ({ adm0, adm1, adm2 }) => {
+export const getLatestAlerts = ({ location, params }) =>
+  axios
+    .all([
+      fetchAnalysisEndpoint({
+        ...location,
+        params,
+        name: 'glad-alerts',
+        slug: 'glad-alerts',
+        version: 'v1'
+      }),
+      fetchAnalysisEndpoint({
+        ...location,
+        params,
+        name: 'viirs-alerts',
+        slug: 'viirs-active-fires',
+        version: 'v1'
+      })
+    ])
+    .then(
+      axios.spread((gladsResponse, firesResponse) => {
+        const { value: glads } = gladsResponse.data.data.attributes || {};
+        const { value: fires } = firesResponse.data.data.attributes || {};
+
+        return {
+          glads,
+          fires
+        };
+      })
+    );
+
+export const fetchGladAlerts = ({ adm0, adm1, adm2 } = {}) => {
   let glad_summary_table = GLAD_ISO_DATASET;
   if (adm2) {
     glad_summary_table = GLAD_ADM2_DATASET;
@@ -135,13 +168,22 @@ export const fetchFiresLatest = ({ adm1, adm2 }) => {
 };
 
 export const fetchViirsAlerts = ({ adm0, adm1, adm2, dates }) => {
-  const url = `${REQUEST_URL}/viirs-active-fires/${!adm2 ? 'admin/' : ''}${
+  const url = `${REQUEST_URL}/viirs-active-fires?geostore=${adm0}${
     QUERIES.viirsAlerts
   }`
     .replace('{location}', !adm2 ? getLocationQuery(adm0, adm1, adm2) : '')
     .replace('{period}', `${dates[1]},${dates[0]}`);
   return request.get(url);
 };
+
+export const fetchFireAlertsByGeostore = params =>
+  fetchAnalysisEndpoint({
+    ...params,
+    params,
+    name: 'viirs-alerts',
+    slug: 'viirs-active-fires',
+    version: 'v1'
+  });
 
 export const fetchFiresStats = ({ adm0, adm1, adm2, dates }) => {
   const url = `${REQUEST_URL}/fire-alerts/summary-stats/admin/${
@@ -210,84 +252,4 @@ export const fetchGLADLatest = params => {
         })
       );
     });
-};
-
-export const fetchFormaLatest = () => {
-  const url = `${REQUEST_URL}/forma250gfw/latest`;
-  return request.get(url, 3600, 'formaRequest').catch(error => {
-    console.error('Error in formaRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: {
-            attributes: {
-              latest: lastFriday
-            },
-            id: null,
-            type: 'forma250gfw'
-          }
-        }
-      })
-    );
-  });
-};
-
-export const fetchTerraiLatest = () => {
-  const url = `${REQUEST_URL}/terrai-alerts/latest`;
-  return request.get(url, 3600, 'terraRequest').catch(error => {
-    console.error('Error in terraRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: [
-            {
-              attributes: { date: lastFriday },
-              id: null,
-              type: 'terrai-alerts'
-            }
-          ]
-        }
-      })
-    );
-  });
-};
-
-export const fetchSADLatest = () => {
-  const url = `${REQUEST_URL}/v2/imazon-alerts/latest`;
-  return request.get(url, 3600, 'sadRequest').catch(error => {
-    console.error('Error in sadRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: [
-            {
-              attributes: { latest: `${lastFriday}T00:00:00Z` },
-              id: undefined,
-              type: 'imazon-latest'
-            }
-          ]
-        }
-      })
-    );
-  });
-};
-
-export const fetchGranChacoLatest = () => {
-  const url = `${REQUEST_URL}/v2/guira-loss/latest`;
-  return request.get(url, 3600, 'granChacoRequest').catch(error => {
-    console.error('Error in granChacoRequest:', error);
-    return new Promise(resolve =>
-      resolve({
-        data: {
-          data: [
-            {
-              attributes: { latest: `${lastFriday}T00:00:00Z` },
-              id: undefined,
-              type: 'imazon-latest'
-            }
-          ]
-        }
-      })
-    );
-  });
 };

@@ -1,0 +1,38 @@
+@import '~styles/settings.scss';
+
+.c-widget-body {
+  position: relative;
+  height: 100%;
+  min-height: rem(300px);
+  margin-bottom: rem(10px);
+
+  .sentence {
+    margin-bottom: rem(30px);
+
+    &.interactive {
+      height: rem(160px);
+
+      @media screen and (min-width: 360px) {
+        height: rem(110px);
+      }
+
+      @media screen and (min-width: $screen-m) {
+        height: rem(90px);
+      }
+
+      @media screen and (min-width: $screen-l) {
+        height: rem(70px);
+      }
+    }
+  }
+
+  &.simple {
+    min-height: rem(80px);
+    margin-bottom: 0;
+
+    .sentence {
+      font-size: rem(13px);
+      margin-bottom: rem(15px);
+    }
+  }
+}

@@ -4,8 +4,33 @@ import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginMapboxGl } from 'layer-manager';
 
 class LayerManagerComponent extends PureComponent {
+  static propTypes = {
+    loading: PropTypes.bool,
+    layers: PropTypes.array,
+    basemap: PropTypes.object,
+    setMapLoading: PropTypes.func,
+    map: PropTypes.object
+  };
+
   render() {
-    const { layers, geostore, setMapLoading, basemap, map } = this.props;
+    const { layers, setMapLoading, basemap, map } = this.props;
+
+    const basemapLayer =
+      basemap && basemap.url
+        ? {
+          id: basemap.url,
+          name: 'Basemap',
+          provider: 'leaflet',
+          layerConfig: {
+            body: {
+              url: basemap.url
+            }
+          },
+          zIndex: 100
+        }
+        : null;
+
+    const allLayers = [basemapLayer].concat(layers).filter(l => l);
 
     return (
       <LayerManager
@@ -13,71 +38,10 @@ class LayerManagerComponent extends PureComponent {
         plugin={PluginMapboxGl}
         onLayerLoading={loading => setMapLoading(loading)}
       >
-        {geostore &&
-          geostore.id && (
-          <Layer
-            key={geostore.id}
-            id={geostore.id}
-            name="Geojson"
-            provider="geojson"
-            params={{
-              id: geostore.id
-            }}
-            layerConfig={{
-              data: geostore.geojson,
-              body: {
-                vectorLayers: [
-                  {
-                    id: `${geostore.id}-fill`,
-                    type: 'fill',
-                    source: geostore.id,
-                    paint: {
-                      'fill-color': 'transparent'
-                    }
-                  },
-                  {
-                    id: `${geostore.id}-line`,
-                    type: 'line',
-                    source: geostore.id,
-                    paint: {
-                      'line-color': '#000',
-                      'line-width': 2
-                    }
-                  }
-                ]
-              }
-            }}
-            zIndex={1060}
-          />
-        )}
-        {layers && layers.map(l => <Layer key={l.id} {...l} />)}
-        {basemap &&
-          basemap.url && (
-          <Layer
-            key={basemap.url}
-            id={basemap.url}
-            name="Basemap"
-            provider="leaflet"
-            layerConfig={{
-              body: {
-                url: basemap.url
-              }
-            }}
-            zIndex={100}
-          />
-        )}
+        {allLayers && allLayers.map(l => <Layer key={l.id} {...l} />)}
       </LayerManager>
     );
   }
 }
-
-LayerManagerComponent.propTypes = {
-  loading: PropTypes.bool,
-  layers: PropTypes.array,
-  basemap: PropTypes.object,
-  geostore: PropTypes.object,
-  setMapLoading: PropTypes.func,
-  map: PropTypes.object
-};
 
 export default LayerManagerComponent;

@@ -11,8 +11,26 @@ import Card from 'components/ui/card';
 
 import DataTable from './components/data-table';
 import BoundarySentence from './components/boundary-sentence';
+import AreaSentence from './components/area-sentence';
 
 class Popup extends Component {
+  static propTypes = {
+    clearMapInteractions: PropTypes.func,
+    setMapInteractionSelected: PropTypes.func,
+    latlng: PropTypes.object,
+    selected: PropTypes.object,
+    interactions: PropTypes.array,
+    tableData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    isBoundary: PropTypes.bool,
+    isArea: PropTypes.bool,
+    cardData: PropTypes.object,
+    activeDatasets: PropTypes.array,
+    onSelectBoundary: PropTypes.func,
+    setMapSettings: PropTypes.func,
+    zoomToShape: PropTypes.bool,
+    buttons: PropTypes.array
+  };
+
   componentDidUpdate(prevProps) {
     const { interactions, activeDatasets } = this.props;
     if (
@@ -70,6 +88,7 @@ class Popup extends Component {
       onSelectBoundary,
       setMapSettings,
       isBoundary,
+      isArea,
       zoomToShape,
       buttons
     } = this.props;
@@ -120,33 +139,40 @@ class Popup extends Component {
                 interactions.length === 1 && (
                 <div className="popup-title">{selected.label}</div>
               )}
-              {isBoundary ? (
+              {isBoundary && (
                 <BoundarySentence
                   selected={selected}
                   data={tableData}
                   onSelectBoundary={onSelectBoundary}
                 />
-              ) : (
-                <DataTable data={tableData} />
               )}
+              {isArea && (
+                <AreaSentence
+                  selected={selected}
+                  data={tableData}
+                  onSelectBoundary={onSelectBoundary}
+                />
+              )}
+              {!isBoundary && !isArea && <DataTable data={tableData} />}
               <div className="popup-footer">
-                {zoomToShape ? (
+                {zoomToShape && (
                   <Button onClick={() => this.handleClickZoom(selected)}>
                     Zoom
                   </Button>
-                ) : (
-                  buttons &&
-                  buttons.map(p => (
-                    <Button
-                      key={p.label}
-                      onClick={() => {
-                        this.handleClickAction(selected, p.action);
-                      }}
-                    >
-                      {p.label}
-                    </Button>
-                  ))
                 )}
+                {!zoomToShape &&
+                  !selected.aoi &&
+                  (buttons &&
+                    buttons.map(p => (
+                      <Button
+                        key={p.label}
+                        onClick={() => {
+                          this.handleClickAction(selected, p.action);
+                        }}
+                      >
+                        {p.label}
+                      </Button>
+                    )))}
               </div>
             </div>
           )}
@@ -155,21 +181,5 @@ class Popup extends Component {
     ) : null;
   }
 }
-
-Popup.propTypes = {
-  clearMapInteractions: PropTypes.func,
-  setMapInteractionSelected: PropTypes.func,
-  latlng: PropTypes.object,
-  selected: PropTypes.object,
-  interactions: PropTypes.array,
-  tableData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  isBoundary: PropTypes.bool,
-  cardData: PropTypes.object,
-  activeDatasets: PropTypes.array,
-  onSelectBoundary: PropTypes.func,
-  setMapSettings: PropTypes.func,
-  zoomToShape: PropTypes.bool,
-  buttons: PropTypes.array
-};
 
 export default Popup;

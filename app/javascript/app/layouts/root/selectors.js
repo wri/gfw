@@ -3,8 +3,10 @@ import isEmpty from 'lodash/isEmpty';
 import upperFirst from 'lodash/upperFirst';
 
 import { buildFullLocationName } from 'utils/format';
+import { getGeodescriberTitleFull } from 'providers/geodescriber-provider/selectors';
 
 const selectLoggedIn = state => state.myGfw && !isEmpty(state.myGfw.data);
+const selectMyGFWLoading = state => state.myGfw && state.myGfw.loading;
 const selectLocation = state => state.location && state.location.payload;
 const selectedCountries = state =>
   state.countryData && state.countryData.countries;
@@ -14,6 +16,13 @@ const selectedSubRegion = state =>
 const selectQuery = state => state.location && state.location.query;
 const selectPageLocation = state =>
   state.location && state.location.routesMap[state.location.type];
+export const selectActiveLang = state =>
+  (state.location &&
+    state.location &&
+    state.location.query &&
+    state.location.query.lang) ||
+  JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
+  'en';
 
 export const getIsGFW = createSelector(
   selectQuery,
@@ -31,13 +40,20 @@ export const getMetadata = createSelector(
     selectLocation,
     selectedCountries,
     selectedRegions,
-    selectedSubRegion
+    selectedSubRegion,
+    getGeodescriberTitleFull
   ],
-  (route, location, adm0s, adm1s, adm2s) => {
+  (route, location, adm0s, adm1s, adm2s, geoTitle) => {
     const { type, adm0, adm1, adm2 } = location;
     const metadata = window.metadata[route && route.controller];
 
     if (!type) return metadata;
+    if (type === 'aoi') {
+      return {
+        title: geoTitle || ''
+      };
+    }
+
     if (
       type === 'country' &&
       ((adm0 && (!adm0s || !adm0s.length)) ||
@@ -48,7 +64,7 @@ export const getMetadata = createSelector(
     }
     const metadataByType = window.metadata[type];
     let title = '';
-    if (location.type && location.type === 'country') {
+    if (location && location.type === 'country') {
       title = `${buildFullLocationName(location, {
         adm0s,
         adm1s,
@@ -72,5 +88,6 @@ export const getPageProps = createStructuredSelector({
   route: selectPageLocation,
   metadata: getMetadata,
   isGFW: getIsGFW,
+  myGfwLoading: selectMyGFWLoading,
   isTrase: getIsTrase
 });

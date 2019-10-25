@@ -118,7 +118,11 @@ class MapComponent extends Component {
     }
 
     // reset canBound after fitting bounds
-    if (this.state.bounds && !isEqual(this.state.bounds, prevState.bounds)) {
+    if (
+      canBound &&
+      this.state.bounds &&
+      !isEqual(this.state.bounds, prevState.bounds)
+    ) {
       setMapSettings({ canBound: false, bbox: [] });
       // eslint-disable-next-line
       this.setState({ bounds: {} });
@@ -179,7 +183,9 @@ class MapComponent extends Component {
     this.setRoads();
 
     // Listeners
-    this.map.on('style.load', this.onStyleLoad);
+    if (this.map) {
+      this.map.on('style.load', this.onStyleLoad);
+    }
   };
 
   onClick = e => {

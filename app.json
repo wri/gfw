@@ -14,9 +14,6 @@
     "AWS_ACCESS_KEY_ID": {
       "required": true
     },
-    "AWS_HOST": {
-      "required": true
-    },
     "AWS_REGION": {
       "required": true
     },
@@ -35,9 +32,6 @@
     "BUILDPACK_URL": {
       "required": true
     },
-    "CACHE_VERSION": {
-      "required": true
-    },
     "CARTO_API": {
       "required": true
     },
@@ -48,9 +42,6 @@
       "required": true
     },
     "FEATURE_ENV": {
-      "required": true
-    },
-    "FEEDBACK_MAIL": {
       "required": true
     },
     "FIRES_ADM1_DATASET": {
@@ -77,15 +68,6 @@
     "GFW_API": {
       "required": true
     },
-    "GFW_API_OLD": {
-      "required": true
-    },
-    "GFW_ASSETS_URL": {
-      "required": true
-    },
-    "GFW_BLOG_HOST": {
-      "required": true
-    },
     "GFW_DEVELOPERS_URL": {
       "required": true
     },
@@ -104,19 +86,7 @@
     "GOOGLE_CUSTOM_SEARCH_CX": {
       "required": true
     },
-    "GOOGLE_MAPS_API_KEY": {
-      "required": true
-    },
     "GOOGLE_SEARCH_API_KEY": {
-      "required": true
-    },
-    "LANDSTAD_KEY": {
-      "required": true
-    },
-    "LAYER_SPEC": {
-      "required": true
-    },
-    "MAPBOX_TOKEN": {
       "required": true
     },
     "MapboxAccessToken": {
@@ -143,31 +113,10 @@
     "RESOURCE_WATCH_API": {
       "required": true
     },
-    "S3_BUCKET_NAME": {
-      "required": true
-    },
-    "S3_DATA_BUCKET_NAME": {
-      "required": true
-    },
-    "SENTINEL_KEY": {
-      "required": true
-    },
     "SMTP_PASSWORD": {
       "required": true
     },
     "SMTP_USERNAME": {
-      "required": true
-    },
-    "SPARKPOST_SMTP_HOST": {
-      "required": true
-    },
-    "SPARKPOST_SMTP_PASSWORD": {
-      "required": true
-    },
-    "SPARKPOST_SMTP_PORT": {
-      "required": true
-    },
-    "SPARKPOST_SMTP_USERNAME": {
       "required": true
     },
     "TRANSIFEX_RESOURCE_API_TOKEN": {

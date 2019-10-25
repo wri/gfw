@@ -13,9 +13,9 @@ import Footer from 'components/footer';
 import Cookies from 'components/cookies';
 import Button from 'components/ui/button';
 import MapMenu from 'components/map-menu';
+import ErrorPage from 'pages/error';
 import MyGFWProvider from 'providers/mygfw-provider';
 import gfwLogo from 'assets/logos/gfw.png';
-import FailedImport from 'pages/failed-import';
 
 import 'styles/styles.scss';
 import './styles.scss';
@@ -23,7 +23,12 @@ import './styles.scss';
 const universalOptions = {
   loading: <Loader className="page-loader" />,
   minDelay: 200,
-  error: <FailedImport />
+  error: (
+    <ErrorPage
+      title="Sorry, something went wrong."
+      desc="Try refreshing the page or check your connection."
+    />
+  )
 };
 
 const PageComponent = universal(
@@ -39,7 +44,14 @@ class App extends PureComponent {
   }
 
   render() {
-    const { route, loggedIn, metadata, isGFW, isTrase } = this.props;
+    const {
+      route,
+      loggedIn,
+      metadata,
+      isGFW,
+      isTrase,
+      myGfwLoading
+    } = this.props;
     const { component, embed, fullScreen } = route;
     const isMapPage = component === 'map';
 
@@ -72,7 +84,9 @@ class App extends PureComponent {
                 sections={route.sections}
                 isTrase={isTrase}
                 isDesktop={isDesktop}
-                metadata={metadata}
+                {...metadata}
+                loggedIn={loggedIn}
+                myGfwLoading={myGfwLoading}
               />
             </div>
             {!embed && <MyGFWProvider />}
@@ -103,6 +117,7 @@ App.propTypes = {
   route: PropTypes.object.isRequired,
   loggedIn: PropTypes.bool,
   isGFW: PropTypes.bool,
+  myGfwLoading: PropTypes.bool,
   isTrase: PropTypes.bool,
   metadata: PropTypes.object
 };

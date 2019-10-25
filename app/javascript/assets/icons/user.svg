@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.3 (81716) - https://sketch.com -->
+    <title>Icons/24px/User</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Icons/24px/User" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M18.0975,15.6465 L20,19.451 L4,19.451 L5.903,15.6465 C7.37,14.375 9.555,13.5655 12.0005,13.5655 C14.445,13.5655 16.63,14.375 18.098,15.6465 L18.0975,15.6465 Z M11.991,12.292 C10.058,12.292 8.4915,10.4355 8.4915,8.146 C8.4915,5.8565 10.058,4 11.991,4 C13.924,4 15.4915,5.8565 15.4915,8.146 C15.4915,10.4355 13.924,12.292 11.991,12.292 Z" id="user" fill="#333333"></path>
+    </g>
+</svg>

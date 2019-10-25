@@ -22,30 +22,42 @@ import './composed-chart-styles.scss';
 
 class CustomComposedChart extends PureComponent {
   findMaxValue = (data, config) => {
-    const { yKeys } = config;
+    const { yKeys } = config || {};
     const maxValues = [];
-    Object.keys(yKeys).forEach(key => {
-      Object.keys(yKeys[key]).forEach(subKey => {
-        const maxValue =
-          yKeys[key][subKey].stackId === 1
-            ? // Total sum of values if graph is a stacked bar chart
-            {
-              [subKey]: max(
-                data.map(d =>
-                  Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+    if (yKeys) {
+      Object.keys(yKeys).forEach(key => {
+        Object.keys(yKeys[key]).forEach(subKey => {
+          const maxValue =
+            yKeys[key][subKey].stackId === 1
+              ? // Total sum of values if graph is a stacked bar chart
+              {
+                [subKey]: max(
+                  data.map(d =>
+                    Object.keys(yKeys[key]).reduce((acc, k) => acc + d[k], 0)
+                  )
                 )
-              )
-            }
-            : maxBy(data, subKey);
-        if (maxValue) {
-          maxValues.push(maxValue[subKey]);
-        }
+              }
+              : maxBy(data, subKey);
+          if (maxValue) {
+            maxValues.push(maxValue[subKey]);
+          }
+        });
       });
-    });
-    return max(maxValues);
+      return max(maxValues);
+    }
+
+    return null;
   };
 
   render() {
+    const {
+      className,
+      data,
+      config,
+      simple,
+      handleMouseMove,
+      handleMouseLeave
+    } = this.props;
     const {
       xKey,
       yKeys,
@@ -57,17 +69,10 @@ class CustomComposedChart extends PureComponent {
       unitFormat,
       height,
       margin
-    } = this.props.config;
-    const {
-      className,
-      data,
-      config,
-      simple,
-      handleMouseMove,
-      handleMouseLeave
-    } = this.props;
+    } =
+      config || {};
 
-    const { lines, bars, areas } = yKeys;
+    const { lines, bars, areas } = yKeys || {};
     const maxYValue = this.findMaxValue(data, config);
 
     return (

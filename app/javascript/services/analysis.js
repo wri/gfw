@@ -21,7 +21,9 @@ const buildAnalysisUrl = ({
   adm0,
   adm1,
   adm2,
-  params
+  params,
+  aggregate,
+  aggregateBy
 }) => {
   const location = getLocationUrl({ adm0, adm1, adm2 });
   const { startDate, endDate, threshold, query, number_of_days } = params;
@@ -35,24 +37,25 @@ const buildAnalysisUrl = ({
 
   const thresh = params.thresh || threshold ? params.thresh || threshold : '';
   const geostore = type === 'geostore' ? adm0 : '';
-  const hasParams = period || thresh || geostore || hasParams;
 
-  const queryParams = hasParams
-    ? qs.stringify({
-      ...(period && {
-        period
-      }),
-      ...(thresh && {
-        thresh
-      }),
-      ...(geostore && {
-        geostore
-      }),
-      ...(query && {
-        [query.param]: query.value
-      })
+  const queryParams = qs.stringify({
+    ...(period && {
+      period
+    }),
+    ...(thresh && {
+      thresh
+    }),
+    ...(geostore && {
+      geostore
+    }),
+    aggregate_values: aggregate ? 'True' : false,
+    ...(aggregateBy && {
+      aggregate_by: aggregateBy
+    }),
+    ...(query && {
+      [query.param]: query.value
     })
-    : '';
+  });
 
   return urlTemplate
     .replace('{version}', version || 'v1')

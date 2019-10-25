@@ -55,11 +55,30 @@ export const setExploreView = createThunkAction(
 
 export const setAnalysisView = createThunkAction(
   'setAnalysisView',
-  () => (dispatch, getState) => {
+  params => (dispatch, getState) => {
     const { query, type, payload } = getState().location || {};
     dispatch({
       type,
-      payload,
+      payload: {
+        ...payload,
+        ...params
+      },
+      query: {
+        ...query,
+        mainMap: {
+          showAnalysis: true
+        }
+      }
+    });
+  }
+);
+
+export const clearAnalysisView = createThunkAction(
+  'clearAnalysisView',
+  () => (dispatch, getState) => {
+    const { query, type } = getState().location || {};
+    dispatch({
+      type,
       query: {
         ...query,
         mainMap: {

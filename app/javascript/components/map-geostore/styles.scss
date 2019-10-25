@@ -1,0 +1,35 @@
+@import '~styles/settings';
+
+.c-recent-image-map {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: $border;
+
+  svg {
+    background-color: $border;
+    opacity: 1;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .error-msg {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: rem(25px);
+    position: absolute;
+    z-index: 1;
+    background: $border;
+  }
+
+  &.small {
+    .error-msg {
+      padding: rem(3px);
+      font-size: rem(11px);
+    }
+  }
+}

@@ -1,11 +1,47 @@
 @import '~styles/settings';
 
 .c-show-analysis {
-  width: 100%;
-  padding: rem(20px);
-  min-height: rem(260px);
   height: 100%;
+  width: 100%;
   padding-bottom: rem(60px);
+
+  .show-analysis-body {
+    width: 100%;
+    height: 100%;
+    min-height: rem(260px);
+    padding: rem(20px);
+  }
+
+  .save-aois-disclaimer {
+    background-color: $border;
+    padding: 0;
+
+    .content {
+      padding: rem(20px);
+      padding-bottom: 0;
+
+      h3 {
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: rem(12px);
+        color: $slate-light;
+      }
+
+      p {
+        font-size: rem(12px);
+        color: $slate-light;
+        margin: rem(10px) 0;
+      }
+
+      a {
+        cursor: pointer;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+  }
 
   .draw-title {
     font-size: 14px;
@@ -30,6 +66,13 @@
         justify-content: flex-start;
         align-items: flex-start;
         text-align: left;
+      }
+
+      .analysis-title {
+        font-size: rem(14px);
+        font-weight: 500;
+        color: $slate-light;
+        line-height: 1.1;
       }
 
       &.left {
@@ -61,6 +104,15 @@
     }
   }
 
+  .analysis-desc {
+    font-size: rem(13px);
+    color: $slate-light;
+    line-height: 1.6;
+    border-bottom: solid 1px $border;
+    padding-bottom: rem(15px);
+    margin-bottom: rem(15px);
+  }
+
   .results {
     position: relative;
     height: calc(100% - 41px);
@@ -73,8 +125,6 @@
     }
 
     .disclaimers {
-      padding-top: rem(20px);
-
       p {
         font-size: rem(12px);
         margin-bottom: rem(15px);
@@ -133,13 +183,6 @@
         margin-left: rem(2px);
         letter-spacing: normal;
       }
-    }
-
-    &:first-child,
-    &:last-child {
-      border-bottom: solid 1px $border;
-      padding-bottom: rem(15px);
-      margin-bottom: rem(15px);
     }
   }
 }

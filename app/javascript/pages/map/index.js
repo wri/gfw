@@ -44,7 +44,8 @@ class MainMapContainer extends PureComponent {
       setMainMapSettings,
       oneClickAnalysis,
       analysisActive,
-      geostoreId
+      geostoreId,
+      location
     } = this.props;
 
     // set analysis view if interaction changes
@@ -59,6 +60,10 @@ class MainMapContainer extends PureComponent {
 
     if (!analysisActive && geostoreId && geostoreId !== prevProps.geostoreId) {
       setMainMapSettings({ showAnalysis: true });
+    }
+
+    if (location.type === 'aoi' && location.type !== prevProps.location.type) {
+      this.props.setMenuSettings({ menuSection: 'my-gfw' });
     }
   }
 

@@ -5,7 +5,8 @@ import isEqual from 'lodash/isEqual';
 import { CancelToken } from 'axios';
 import reducerRegistry from 'app/registry';
 
-import { setSubscribeSettings } from 'components/modals/subscribe/actions';
+import { setSaveAOISettings } from 'components/modals/save-aoi/actions';
+import { setShareModal } from 'components/modals/share/share-actions';
 import * as actions from './actions';
 import reducers, { initialState } from './reducers';
 import { getAnalysisProps } from './selectors';
@@ -34,7 +35,7 @@ class AnalysisContainer extends PureComponent {
       endpoints &&
       endpoints.length
     ) {
-      this.handleFetchAnalysis(location, endpoints);
+      this.handleFetchAnalysis(endpoints);
     }
   }
 
@@ -49,7 +50,7 @@ class AnalysisContainer extends PureComponent {
       (!isEqual(endpoints, prevProps.endpoints) ||
         !isEqual(location, prevProps.location))
     ) {
-      this.handleFetchAnalysis(location, endpoints);
+      this.handleFetchAnalysis(endpoints);
     }
   }
 
@@ -59,14 +60,14 @@ class AnalysisContainer extends PureComponent {
     }
   }
 
-  handleFetchAnalysis = (location, endpoints) => {
+  handleFetchAnalysis = endpoints => {
     if (this.analysisFetch) {
       this.analysisFetch.cancel();
     }
     this.analysisFetch = CancelToken.source();
     this.props.getAnalysis({
       endpoints,
-      ...location,
+      ...this.props.location,
       token: this.analysisFetch.token
     });
   };
@@ -95,6 +96,8 @@ reducerRegistry.registerModule('analysis', {
   initialState
 });
 
-export default connect(getAnalysisProps, { ...actions, setSubscribeSettings })(
-  AnalysisContainer
-);
+export default connect(getAnalysisProps, {
+  ...actions,
+  setSaveAOISettings,
+  setShareModal
+})(AnalysisContainer);
