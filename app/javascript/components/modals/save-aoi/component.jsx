@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import cx from 'classnames';
 
 import MyGFWLogin from 'components/mygfw-login';
 import Loader from 'components/ui/loader';
@@ -81,7 +82,11 @@ class ModalSaveAOI extends PureComponent {
         contentLabel={title}
         onRequestClose={this.handleCloseModal}
         title={title}
-        className={(saved || deleted) && 'save-aoi-modal-confirmed'}
+        className={cx(
+          'save-aoi-modal-wrapper',
+          { confirmed: saved || deleted },
+          { 'hide-title': loading }
+        )}
       >
         <div className="c-modal-save-aoi">
           <div className="save-aoi-body">

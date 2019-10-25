@@ -1,8 +1,20 @@
 @import '~styles/settings.scss';
 
-.save-aoi-modal-confirmed {
+.save-aoi-modal-wrapper {
   .modal-title {
-    text-align: center;
+    opacity: 1;
+  }
+
+  &.confirmed {
+    .modal-title {
+      text-align: center;
+    }
+  }
+
+  &.hide-title {
+    .modal-title {
+      opacity: 0;
+    }
   }
 }
 
