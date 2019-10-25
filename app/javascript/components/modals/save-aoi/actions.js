@@ -56,8 +56,6 @@ export const saveAOI = createThunkAction(
       } =
         activeArea || {};
       const method = activeArea && activeArea.userArea ? 'patch' : 'post';
-      const hasSubscription =
-        fireAlerts || deforestationAlerts || monthlySummary;
 
       const postData = {
         name,
@@ -68,13 +66,11 @@ export const saveAOI = createThunkAction(
         }),
         application: application || 'gfw',
         geostore: geostoreId,
-        ...(hasSubscription && {
-          email,
-          language,
-          deforestationAlerts,
-          monthlySummary,
-          fireAlerts
-        }),
+        email,
+        language,
+        deforestationAlerts,
+        monthlySummary,
+        fireAlerts,
         admin,
         use,
         wdpa,

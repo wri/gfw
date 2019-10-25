@@ -8,7 +8,7 @@ export const initialState = {
 };
 
 const setAreaLocation = area => {
-  const { geostore, admin, use, wdpaid } = area;
+  const { geostore, admin, use, wdpaid } = area || {};
   return {
     type: 'geostore',
     adm0: geostore,

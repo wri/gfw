@@ -171,9 +171,14 @@ export const setAreasWithSubscription = (body = {}, method) => {
           userArea: true
         }))
       )
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(() =>
+        setAreasProvider(body, method).then(response => ({
+          ...response.data.data.attributes,
+          id: response.data.data.id,
+          subscriptionId: null,
+          userArea: true
+        }))
+      );
   }
 
   return setAreasProvider(body, method).then(areaData => ({
@@ -190,11 +195,17 @@ export const deleteAreaProvider = ({ id, subscriptionId }) => {
   }
 
   if (subscriptionId) {
-    return deleteSubscription(subscriptionId).then(() => {
-      axios.delete(REQUEST_URL.concat(`/${id}`), {
-        withCredentials: true
-      });
-    });
+    return deleteSubscription(subscriptionId)
+      .then(() =>
+        axios.delete(REQUEST_URL.concat(`/${id}`), {
+          withCredentials: true
+        })
+      )
+      .catch(() =>
+        axios.delete(REQUEST_URL.concat(`/${id}`), {
+          withCredentials: true
+        })
+      );
   }
 
   if (id) {
