@@ -162,7 +162,7 @@ class MapMenuMyGFW extends PureComponent {
             {unselectedTags &&
               !!unselectedTags.length && (
               <Dropdown
-                className="country-dropdown"
+                className="aoi-tags-dropdown"
                 theme="theme-dropdown-button theme-dropdown-button-small"
                 placeholder={
                   activeTags && activeTags.length > 0

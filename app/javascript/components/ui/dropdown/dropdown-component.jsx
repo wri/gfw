@@ -67,7 +67,12 @@ class Dropdown extends PureComponent {
     buildInputProps: PropTypes.func,
     checkModalClosing: PropTypes.func,
     items: PropTypes.array,
-    activeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    activeValue: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+      PropTypes.array,
+      PropTypes.number
+    ]),
     activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     highlightedIndex: PropTypes.number,
     native: PropTypes.bool,

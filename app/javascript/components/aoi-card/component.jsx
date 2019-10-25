@@ -78,7 +78,7 @@ class AoICard extends PureComponent {
           }
         }
       })
-      .catch(err => {
+      .catch(() => {
         if (this.mounted) {
           this.setState({
             alerts: {
@@ -95,7 +95,6 @@ class AoICard extends PureComponent {
             });
           }
         }
-        console.error(err);
       });
   };
 
