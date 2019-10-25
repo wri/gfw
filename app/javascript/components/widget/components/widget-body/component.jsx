@@ -31,6 +31,7 @@ class WidgetBody extends PureComponent {
   static propTypes = {
     settings: PropTypes.object,
     loading: PropTypes.bool,
+    metaLoading: PropTypes.bool,
     error: PropTypes.bool,
     simple: PropTypes.bool,
     chartType: PropTypes.string,
@@ -46,6 +47,7 @@ class WidgetBody extends PureComponent {
   render() {
     const {
       loading,
+      metaLoading,
       error,
       simple,
       locationName,
@@ -63,10 +65,11 @@ class WidgetBody extends PureComponent {
 
     return (
       <div className={cx('c-widget-body', { simple })}>
-        {loading && <Loader className="widget-loader" />}
+        {(loading || metaLoading) && <Loader className="widget-loader" />}
         {!loading &&
+          !metaLoading &&
           !error &&
-          !hasRawData &&
+          !hasData &&
           !hasSentence &&
           Component && (
           <NoContent
@@ -75,8 +78,8 @@ class WidgetBody extends PureComponent {
         )}
         {!loading && error && <RefreshButton refetchFn={handleRefetchData} />}
         {!error &&
+          !metaLoading &&
           sentence &&
-          hasRawData &&
           hasSentence && (
           <DynamicSentence
             className="sentence"
@@ -87,6 +90,7 @@ class WidgetBody extends PureComponent {
         )}
         {!error &&
           hasData &&
+          !metaLoading &&
           hasRawData &&
           Component && <Component {...this.props} />}
       </div>

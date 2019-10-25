@@ -10,8 +10,7 @@ const getLocationName = state => state.locationLabel;
 export const parseSentence = createSelector(
   [getGain, getExtent, getSentence, getLocationName],
   (gain, extent, sentence, location) => {
-    if (!gain && !extent) return null;
-    const gainPerc = gain / extent * 100;
+    const gainPerc = (gain && extent && gain / extent * 100) || 0;
 
     const params = {
       gain: formatNumber({ num: gain, unit: 'ha' }),

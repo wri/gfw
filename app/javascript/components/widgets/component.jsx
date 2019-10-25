@@ -16,7 +16,8 @@ import './styles.scss';
 class Widgets extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
-    loading: PropTypes.bool,
+    loadingData: PropTypes.bool,
+    loadingMeta: PropTypes.bool,
     widgets: PropTypes.array,
     widgetsData: PropTypes.object,
     simple: PropTypes.bool,
@@ -42,7 +43,8 @@ class Widgets extends PureComponent {
       className,
       widgets,
       location,
-      loading,
+      loadingData,
+      loadingMeta,
       setWidgetsData,
       setWidgetSettings,
       setActiveWidget,
@@ -67,8 +69,8 @@ class Widgets extends PureComponent {
               { 'no-widgets': !hasWidgets }
             )}
           >
-            {loading && <Loader className="widgets-loader large" />}
-            {!loading &&
+            {loadingData && <Loader className="widgets-loader large" />}
+            {!loadingData &&
               widgets &&
               widgets.map(w => (
                 <Widget
@@ -80,6 +82,7 @@ class Widgets extends PureComponent {
                   simple={simple}
                   location={location}
                   geostore={geostore}
+                  metaLoading={loadingMeta || loadingData}
                   setWidgetData={data => setWidgetsData({ [w.widget]: data })}
                   handleChangeSettings={change =>
                     setWidgetSettings({ widget: w.widget, change })
@@ -104,7 +107,7 @@ class Widgets extends PureComponent {
                   preventCloseSettings={modalClosing}
                 />
               ))}
-            {!loading &&
+            {!loadingData &&
               !hasWidgets &&
               !simple && (
               <NoContent

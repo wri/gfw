@@ -23,6 +23,7 @@ class Widget extends PureComponent {
     chartType: PropTypes.string,
     metaKey: PropTypes.string,
     loading: PropTypes.bool,
+    metaLoading: PropTypes.bool,
     error: PropTypes.bool,
     locationLabelFull: PropTypes.string,
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
@@ -56,6 +57,7 @@ class Widget extends PureComponent {
       settingsConfig,
       chartType,
       loading,
+      metaLoading,
       error,
       locationLabelFull,
       data,
@@ -110,6 +112,7 @@ class Widget extends PureComponent {
         <WidgetBody
           chartType={chartType}
           loading={loading}
+          metaLoading={metaLoading}
           error={error}
           simple={simple}
           locationName={locationLabelFull}
@@ -123,11 +126,14 @@ class Widget extends PureComponent {
           handleChangeSettings={handleChangeSettings}
           parseInteraction={parseInteraction}
         />
-        <WidgetFooter
-          showAttribution={showAttribution}
-          statements={statements}
-          simple={simple}
-        />
+        {sentence &&
+          data && (
+          <WidgetFooter
+            showAttribution={showAttribution}
+            statements={statements}
+            simple={simple}
+          />
+        )}
       </div>
     );
   }

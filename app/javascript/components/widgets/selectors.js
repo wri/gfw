@@ -50,13 +50,19 @@ export const selectLocationSearch = state =>
   state.location && state.location.search;
 export const selectWidgetsData = state => state.widgets && state.widgets.data;
 export const selectGeostore = state => state.geostore && state.geostore.data;
-export const selectLoading = state =>
+export const selectLoadingFilterData = state =>
   state.countryData &&
   state.whitelists &&
+  state.areas &&
   (state.countryData.countriesLoading ||
     state.countryData.regionsLoading ||
     state.countryData.subRegionsLoading ||
+    state.areas.loading ||
     state.whitelists.loading);
+export const selectLoadingMeta = state =>
+  state.geostore &&
+  state.geodescriber &&
+  (state.geostore.loading || state.geodescriber.loading);
 export const selectCountryData = state => state.countryData;
 export const selectPolynameWhitelist = state =>
   state.whitelists && state.whitelists.data;
@@ -512,7 +518,8 @@ export const getNoDataMessage = createSelector(
 
 export const getWidgetsProps = () =>
   createStructuredSelector({
-    loading: selectLoading,
+    loadingData: selectLoadingFilterData,
+    loadingMeta: selectLoadingMeta,
     widgets: getWidgets,
     activeWidget: getActiveWidget,
     location: getDataLocation,

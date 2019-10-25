@@ -60,10 +60,6 @@ class WidgetsContainer extends PureComponent {
     embed: PropTypes.bool
   };
 
-  state = {
-    loading: true
-  };
-
   componentDidMount() {
     const { getWidgetsData, location, activeWidget, embed } = this.props;
     if (location.type === 'global') {
@@ -73,10 +69,6 @@ class WidgetsContainer extends PureComponent {
     if (!embed && activeWidget && activeWidget.datasets) {
       this.syncWidgetWithMap();
     }
-
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 500);
   }
 
   componentDidUpdate(prevProps) {
@@ -139,8 +131,7 @@ class WidgetsContainer extends PureComponent {
 
   render() {
     return createElement(Component, {
-      ...this.props,
-      ...this.state
+      ...this.props
     });
   }
 }
