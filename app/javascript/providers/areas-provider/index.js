@@ -25,7 +25,7 @@ class AreasProvider extends PureComponent {
       this.handleGetAreas();
     }
 
-    if (!loading && !loggedIn && location.type === 'aoi') {
+    if (!loading && !loggedIn && isEmpty(areas) && location.type === 'aoi') {
       getArea(location.adm0);
     }
   }
