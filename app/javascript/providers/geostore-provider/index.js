@@ -54,15 +54,10 @@ class GeostoreProvider extends PureComponent {
   }
 
   handleGetGeostore = () => {
-    const { activeArea } = this.props;
     this.cancelGeostoreFetch();
     this.geostoreFetch = CancelToken.source();
     this.props.getGeostore({
       ...this.props.location,
-      ...(activeArea && {
-        type: 'geostore',
-        adm0: activeArea.geostore
-      }),
       token: this.geostoreFetch.token
     });
   };
