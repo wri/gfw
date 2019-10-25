@@ -45,7 +45,7 @@ class ShowAnalysis extends PureComponent {
       <div className="value" style={{ color }}>
         {Array.isArray(value) && value.length ? (
           value.map(v => (
-            <strong key={`${v.label}-${v.value}`}>
+            <strong key={`${v.label}-${v.value}`} style={{ color: v.color }}>
               {formatNumber({
                 num: v.value,
                 unit: v.unit || unit
@@ -148,59 +148,59 @@ class ShowAnalysis extends PureComponent {
           {!hasLayers &&
             !hasWidgets &&
             !loading && (
-              <NoContent>
+            <NoContent>
                 Select a{' '}
-                <button
-                  onClick={() =>
-                    setMenuSettings({
-                      menuSection: 'datasets',
-                      datasetCategory: 'forestChange'
-                    })
-                  }
-                >
+              <button
+                onClick={() =>
+                  setMenuSettings({
+                    menuSection: 'datasets',
+                    datasetCategory: 'forestChange'
+                  })
+                }
+              >
                   forest change
-                </button>{' '}
+              </button>{' '}
                 data layer to analyze.
-              </NoContent>
-            )}
+            </NoContent>
+          )}
           {(hasLayers || hasWidgets) &&
             !loading &&
             !error && (
-              <Fragment>
-                <ul className="draw-stats">
-                  {data && data.map(d => this.renderStatItem(d))}
-                </ul>
-                {widgets &&
+            <Fragment>
+              <ul className="draw-stats">
+                {data && data.map(d => this.renderStatItem(d))}
+              </ul>
+              {widgets &&
                   !!widgets.length && (
-                    <Widgets simple analysis widgets={widgets} />
-                  )}
-                <div className="disclaimers">
-                  {zoomLevel < 11 && (
-                    <p>
+                  <Widgets simple analysis widgets={widgets} />
+              )}
+              <div className="disclaimers">
+                {zoomLevel < 11 && (
+                  <p>
                       This algorithm approximates the results by sampling the
                       selected area. Results are more accurate at closer zoom
                       levels.
-                    </p>
-                  )}
-                  {showAnalysisDisclaimer && (
-                    <p>
-                      <b>NOTE:</b> tree cover loss and gain statistics cannot be
+                  </p>
+                )}
+                {showAnalysisDisclaimer && (
+                  <p>
+                    <b>NOTE:</b> tree cover loss and gain statistics cannot be
                       compared against each other.{' '}
-                      <button
-                        onClick={() =>
-                          setModalSources({
-                            open: true,
-                            source: 'lossDisclaimer'
-                          })
-                        }
-                      >
+                    <button
+                      onClick={() =>
+                        setModalSources({
+                          open: true,
+                          source: 'lossDisclaimer'
+                        })
+                      }
+                    >
                         Learn more.
-                      </button>
-                    </p>
-                  )}
-                </div>
-              </Fragment>
-            )}
+                    </button>
+                  </p>
+                )}
+              </div>
+            </Fragment>
+          )}
         </div>
         {showDownloads && (
           <DownloadData

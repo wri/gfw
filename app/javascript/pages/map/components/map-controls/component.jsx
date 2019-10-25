@@ -84,7 +84,7 @@ class MapControlsButtons extends PureComponent {
       : datasets.concat({
         dataset: recentImageryDataset.dataset,
         layers: [recentImageryDataset.layer],
-        visibility: 1,
+        visibility: true,
         opacity: 1,
         isRecentImagery: true
       });
@@ -163,13 +163,13 @@ class MapControlsButtons extends PureComponent {
               <span className="basemaps-btn-label">{activeBasemap.label}</span>
               {(activeBasemap.year || // satellite
                 activeBasemap.planetYear) && ( // planet imagery
-                  <span className="basemaps-btn-label-small">
-                    {activeBasemap.year ||
+                <span className="basemaps-btn-label-small">
+                  {activeBasemap.year ||
                     (activeBasemap.period // YYYY
                       ? `${activeBasemap.planetYear}/${activeBasemap.period}` // YYYY/mmm
                       : activeBasemap.planetYear)}
-                  </span>
-                )}
+                </span>
+              )}
             </div>
           </div>
         ) : (

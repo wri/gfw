@@ -28,7 +28,7 @@
     ]
   },
   {
-    "label": "Primary Forests (2001)",
+    "label": "Primary Forests (2001, tropics only)",
     "value": "primary_forest",
     "metaKey": "primary_forest",
     "global": true,

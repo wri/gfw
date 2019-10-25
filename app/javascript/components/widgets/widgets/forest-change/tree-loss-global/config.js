@@ -10,7 +10,7 @@ export default {
   types: ['global'],
   admins: ['global'],
   options: {
-    forestTypes: ['ifl'],
+    forestTypes: ['ifl', 'primary_forest'],
     landCategories: ['wdpa'],
     extentYears: true,
     thresholds: true,

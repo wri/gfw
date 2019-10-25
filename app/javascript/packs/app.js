@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'app';
-import { AppContainer } from 'react-hot-loader';
+import { AppContainer, setConfig } from 'react-hot-loader';
+
+setConfig({
+  pureSFC: true
+});
 
 const render = Component => {
   ReactDOM.render(

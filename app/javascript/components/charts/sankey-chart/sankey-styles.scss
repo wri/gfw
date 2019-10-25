@@ -1,0 +1,26 @@
+@import '~styles/settings.scss';
+
+.c-sankey-chart {
+  .node-titles {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      text-align: center;
+      font-weight: 500;
+      font-size: rem(14px);
+    }
+  }
+
+  .sankey > svg {
+    padding-bottom: 1em;
+  }
+
+  .link {
+    cursor: pointer;
+
+    &:hover {
+      stroke-opacity: 0.3;
+    }
+  }
+}
