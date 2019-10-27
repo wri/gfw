@@ -40,7 +40,8 @@ class Widget extends PureComponent {
     preventCloseSettings: PropTypes.bool,
     showAttribution: PropTypes.bool,
     statements: PropTypes.array,
-    downloadLink: PropTypes.string
+    downloadLink: PropTypes.string,
+    onClickWidget: PropTypes.func
   };
 
   render() {
@@ -75,11 +76,13 @@ class Widget extends PureComponent {
       preventCloseSettings,
       showAttribution,
       statements,
-      downloadLink
+      downloadLink,
+      onClickWidget
     } = this.props;
     const { main } = colors || {};
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         id={widget}
         className={cx('c-widget', { large }, { embed }, { simple })}
@@ -91,6 +94,7 @@ class Widget extends PureComponent {
             boxShadow: `0 0px 0px 1px ${main}`
           })
         }}
+        onClick={() => onClickWidget(this.props)}
       >
         <WidgetHeader
           widget={widget}

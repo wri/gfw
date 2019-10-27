@@ -43,7 +43,7 @@ class DashboardPromptsContainer extends PureComponent {
         title: 'Change widget settings',
         steps: [
           {
-            target: '.c-widget-settings',
+            target: '.widget-settings-btn-active',
             content:
               'Customize analyses by filtering data, selecting the time range and more.',
             disableBeacon: true
@@ -67,17 +67,14 @@ class DashboardPromptsContainer extends PureComponent {
           disableOverlay: true
         }
       },
-      stats: {
+      downloadDashboardStats: {
         title: 'Download stats',
         steps: [
           {
-            target: '.select-container',
+            target: '.c-dashboard-download-btn',
             content:
               'Download tree cover, tree cover loss and tree cover gain statistics.',
-            disableBeacon: true,
-            actions: {
-              learnHow: () => {}
-            }
+            disableBeacon: true
           }
         ],
         settings: {

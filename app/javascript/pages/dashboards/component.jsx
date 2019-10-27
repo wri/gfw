@@ -48,6 +48,10 @@ class DashboardsPage extends PureComponent {
     setDashboardPromptsSettings: PropTypes.func
   };
 
+  state = {
+    scrollY: 0
+  };
+
   componentDidMount() {
     const { locationType, setDashboardPromptsSettings } = this.props;
     if (locationType === 'global' || locationType === 'country') {
@@ -57,11 +61,15 @@ class DashboardsPage extends PureComponent {
         stepsKey: 'viewNationalDashboards'
       });
     }
+
+    window.addEventListener('scroll', this.listenToScroll);
   }
 
-  componentDidUpdate(prevProps) {
-    const { activeArea } = this.props;
+  componentDidUpdate(prevProps, prevState) {
+    const { activeArea, setDashboardPromptsSettings } = this.props;
     const { activeArea: prevActiveArea } = prevProps;
+    const { scrollY } = this.state;
+    const { scrollY: prevScrollY } = prevState;
 
     if (
       activeArea &&
@@ -72,7 +80,26 @@ class DashboardsPage extends PureComponent {
         label: activeArea.id
       });
     }
+
+    if (scrollY === 0 && prevScrollY > scrollY) {
+      // show download prompts
+      setDashboardPromptsSettings({
+        open: true,
+        stepIndex: 0,
+        stepsKey: 'downloadDashboardStats'
+      });
+    }
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.listenToScroll);
+  }
+
+  listenToScroll = () => {
+    this.setState({
+      scrollY: window.pageYOffset
+    });
+  };
 
   renderMap = () => {
     const { showMapMobile, closeMobileMap } = this.props;
@@ -105,6 +132,7 @@ class DashboardsPage extends PureComponent {
       clearScrollTo,
       embed
     } = this.props;
+
     const isAreaDashboard = locationType === 'aoi';
 
     return (

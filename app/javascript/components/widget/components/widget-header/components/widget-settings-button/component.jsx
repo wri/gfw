@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { isParent } from 'utils/dom';
 import { track } from 'app/analytics';
+import cx from 'classnames';
 
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
@@ -17,6 +18,7 @@ class WidgetSettingsButton extends PureComponent {
     widget: PropTypes.string,
     settingsConfig: PropTypes.array,
     loading: PropTypes.bool,
+    active: PropTypes.bool,
     preventCloseSettings: PropTypes.bool,
     handleChangeSettings: PropTypes.func.isRequired,
     handleShowInfo: PropTypes.func.isRequired
@@ -33,12 +35,15 @@ class WidgetSettingsButton extends PureComponent {
       preventCloseSettings,
       handleChangeSettings,
       handleShowInfo,
-      widget
+      widget,
+      active
     } = this.props;
     const { tooltipOpen } = this.state;
     return (
       <Tooltip
-        className="c-widget-settings-button"
+        className={cx('c-widget-settings-button', {
+          'widget-settings-btn-active': active
+        })}
         theme="widget-tooltip-theme light"
         position="bottom-right"
         offset={-95}

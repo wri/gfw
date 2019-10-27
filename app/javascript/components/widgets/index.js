@@ -7,6 +7,7 @@ import compact from 'lodash/compact';
 
 import reducerRegistry from 'app/registry';
 
+import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 import { setMapSettings as setMapState } from 'components/map/actions';
 import { setModalMetaSettings } from 'components/modals/meta/meta-actions';
 import { setShareModal } from 'components/modals/share/share-actions';
@@ -21,6 +22,7 @@ const actions = {
   ...ownActions,
   setMapSettings: setMapState,
   setModalMetaSettings,
+  setDashboardPromptsSettings,
   setShareModal
 };
 
@@ -57,7 +59,8 @@ class WidgetsContainer extends PureComponent {
     location: PropTypes.object,
     activeWidget: PropTypes.object,
     setMapSettings: PropTypes.func,
-    embed: PropTypes.bool
+    embed: PropTypes.bool,
+    setDashboardPromptsSettings: PropTypes.func
   };
 
   componentDidMount() {
@@ -129,9 +132,20 @@ class WidgetsContainer extends PureComponent {
     });
   };
 
+  handleClickWidget = widget => {
+    if (widget.active && !this.props.embed) {
+      this.props.setDashboardPromptsSettings({
+        open: true,
+        stepIndex: 0,
+        stepsKey: 'widgetSettings'
+      });
+    }
+  };
+
   render() {
     return createElement(Component, {
-      ...this.props
+      ...this.props,
+      handleClickWidget: this.handleClickWidget
     });
   }
 }
