@@ -15,7 +15,7 @@ class WidgetShareButton extends PureComponent {
     const { handleShowShare } = this.props;
     return (
       <Button
-        className="theme-button-small square"
+        className="c-widget-share-btn theme-button-small square"
         onClick={handleShowShare}
         tooltip={{ text: 'Share or embed this widget' }}
       >

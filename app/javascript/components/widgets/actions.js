@@ -47,7 +47,7 @@ export const setWidgetSettings = createThunkAction(
       setDashboardPromptsSettings({
         open: true,
         stepIndex: 0,
-        stepsKey: 'widgetSettings'
+        stepsKey: 'shareWidget'
       })
     );
   }

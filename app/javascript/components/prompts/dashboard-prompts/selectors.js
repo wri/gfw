@@ -5,9 +5,11 @@ import { getShowRecentImagery } from 'pages/map/selectors';
 import { initialState } from './reducers';
 
 const getDashboardPromptsState = state =>
-  state.location && state.location.query && state.location.query.mapPrompts;
+  state.location &&
+  state.location.query &&
+  state.location.query.dashboardPrompts;
 export const selectShowDashboardPrompts = state =>
-  state.mapPrompts && state.mapPrompts.showPrompts;
+  state.dashboardPrompts && state.dashboardPrompts.showPrompts;
 
 export const getDashboardPromptsSettings = createSelector(
   [getDashboardPromptsState],

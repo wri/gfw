@@ -21,7 +21,10 @@ class DashboardPromptsContainer extends PureComponent {
             content: 'View dashboards for countries and subnational areas.',
             disableBeacon: true
           }
-        ]
+        ],
+        settings: {
+          disableOverlay: true
+        }
       },
       dashboardAnalyses: {
         title: 'Explore analyses',
@@ -31,29 +34,38 @@ class DashboardPromptsContainer extends PureComponent {
             content: 'Explore available analyses for different topics.',
             disableBeacon: true
           }
-        ]
+        ],
+        settings: {
+          disableOverlay: true
+        }
       },
       widgetSettings: {
         title: 'Change widget settings',
         steps: [
           {
-            target: '.c-widget-settings-button',
+            target: '.c-widget-settings',
             content:
               'Customize analyses by filtering data, selecting the time range and more.',
             disableBeacon: true
           }
-        ]
+        ],
+        settings: {
+          disableOverlay: true
+        }
       },
-      share: {
+      shareWidget: {
         title: 'Share widget',
         steps: [
           {
-            target: '.select-container',
+            target: '.c-widget-share-btn',
             content:
               'Share this analysis by copying a link or embedding your map view in another website.',
             disableBeacon: true
           }
-        ]
+        ],
+        settings: {
+          disableOverlay: true
+        }
       },
       stats: {
         title: 'Download stats',
@@ -67,7 +79,10 @@ class DashboardPromptsContainer extends PureComponent {
               learnHow: () => {}
             }
           }
-        ]
+        ],
+        settings: {
+          disableOverlay: true
+        }
       }
     };
 
