@@ -43,13 +43,15 @@ export const setWidgetSettings = createThunkAction(
     track('changeWidgetSettings', {
       label: `${widget}`
     });
-    dispatch(
-      setDashboardPromptsSettings({
-        open: true,
-        stepIndex: 0,
-        stepsKey: 'shareWidget'
-      })
-    );
+    if (!change.interaction) {
+      dispatch(
+        setDashboardPromptsSettings({
+          open: true,
+          stepIndex: 0,
+          stepsKey: 'shareWidget'
+        })
+      );
+    }
   }
 );
 
