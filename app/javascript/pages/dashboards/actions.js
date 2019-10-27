@@ -1,5 +1,6 @@
 import { createThunkAction } from 'redux-tools';
 import { getLocationFromData } from 'utils/format';
+import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
 export const handleCategoryChange = createThunkAction(
   'handleCategoryChange',
@@ -91,6 +92,14 @@ export const handleLocationChange = createThunkAction(
         }
       }
     });
+
+    dispatch(
+      setDashboardPromptsSettings({
+        open: true,
+        stepIndex: 0,
+        stepsKey: 'dashboardAnalyses'
+      })
+    );
   }
 );
 

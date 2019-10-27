@@ -23,6 +23,7 @@ import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import ModalMeta from 'components/modals/meta';
 import ScrollTo from 'components/scroll-to';
+import DashboardPrompts from 'components/prompts/dashboard-prompts';
 
 import closeIcon from 'assets/icons/close.svg';
 
@@ -42,12 +43,33 @@ class DashboardsPage extends PureComponent {
     locationType: PropTypes.string,
     activeArea: PropTypes.object,
     areaLoading: PropTypes.bool,
-    clearScrollTo: PropTypes.func
+    embed: PropTypes.bool,
+    clearScrollTo: PropTypes.func,
+    setDashboardPromptsSettings: PropTypes.func
   };
 
-  componentDidUpdate(prevProps) {
-    const { activeArea } = this.props;
+  state = {
+    scrollY: 0
+  };
+
+  componentDidMount() {
+    const { locationType, setDashboardPromptsSettings } = this.props;
+    if (locationType === 'global' || locationType === 'country') {
+      setDashboardPromptsSettings({
+        open: true,
+        stepIndex: 0,
+        stepsKey: 'viewNationalDashboards'
+      });
+    }
+
+    window.addEventListener('scroll', this.listenToScroll);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { activeArea, setDashboardPromptsSettings } = this.props;
     const { activeArea: prevActiveArea } = prevProps;
+    const { scrollY } = this.state;
+    const { scrollY: prevScrollY } = prevState;
 
     if (
       activeArea &&
@@ -58,7 +80,26 @@ class DashboardsPage extends PureComponent {
         label: activeArea.id
       });
     }
+
+    if (scrollY === 0 && prevScrollY > scrollY) {
+      // show download prompts
+      setDashboardPromptsSettings({
+        open: true,
+        stepIndex: 0,
+        stepsKey: 'downloadDashboardStats'
+      });
+    }
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.listenToScroll);
+  }
+
+  listenToScroll = () => {
+    this.setState({
+      scrollY: window.pageYOffset
+    });
+  };
 
   renderMap = () => {
     const { showMapMobile, closeMobileMap } = this.props;
@@ -88,8 +129,10 @@ class DashboardsPage extends PureComponent {
       locationType,
       activeArea,
       areaLoading,
-      clearScrollTo
+      clearScrollTo,
+      embed
     } = this.props;
+
     const isAreaDashboard = locationType === 'aoi';
 
     return (
@@ -150,6 +193,7 @@ class DashboardsPage extends PureComponent {
               </Fragment>
             )}
             <AreasProvider />
+            {!embed && isDesktop && <DashboardPrompts />}
           </div>
         )}
       </MediaQuery>

@@ -78,6 +78,7 @@ class WidgetHeader extends PureComponent {
               handleChangeSettings={handleChangeSettings}
               handleShowInfo={handleShowInfo}
               preventCloseSettings={preventCloseSettings}
+              active={active}
             />
           )}
           {showSeparator && <span className="separator" />}

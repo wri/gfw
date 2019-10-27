@@ -14,6 +14,7 @@ const getLocationsMeta = state =>
 const getColors = state => state.colors;
 const getIndicator = state => state.indicator;
 const getLocationObject = state => state.location;
+const getParentLabel = state => state.parentLabel;
 const getLocationName = state => state.locationLabel;
 const getSentences = state => state.sentences;
 const getAdminLevel = state => state.adminLevel;
@@ -105,9 +106,18 @@ export const parseSentence = createSelector(
     getLocationObject,
     getLocationName,
     getSentences,
-    getAdminLevel
+    getAdminLevel,
+    getParentLabel
   ],
-  (data, indicator, locationObject, currentLabel, sentences, adminLevel) => {
+  (
+    data,
+    indicator,
+    locationObject,
+    currentLabel,
+    sentences,
+    adminLevel,
+    parentLabel
+  ) => {
     if (
       !data ||
       !data.length ||
@@ -135,7 +145,7 @@ export const parseSentence = createSelector(
       indicator: (indicator && indicator.label.toLowerCase()) || 'region-wide',
       percent: formatNumber({ num: areaPercent, unit: '%' }),
       gainPercent: formatNumber({ num: gainPercent, unit: '%' }),
-      parent: locationObject.parentLabel || null
+      parent: parentLabel || null
     };
 
     let sentence = indicator ? withIndicator : initial;

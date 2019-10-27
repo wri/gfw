@@ -3,6 +3,7 @@ import { track } from 'app/analytics';
 
 import { setComponentStateToUrl } from 'utils/stateToUrl';
 import { getNonGlobalDatasets } from 'services/forest-data';
+import { setDashboardPromptsSettings } from 'components/prompts/dashboard-prompts/actions';
 
 // widgets
 export const setWidgetsData = createAction('setWidgetsData');
@@ -42,6 +43,15 @@ export const setWidgetSettings = createThunkAction(
     track('changeWidgetSettings', {
       label: `${widget}`
     });
+    if (!change.interaction) {
+      dispatch(
+        setDashboardPromptsSettings({
+          open: true,
+          stepIndex: 0,
+          stepsKey: 'shareWidget'
+        })
+      );
+    }
   }
 );
 

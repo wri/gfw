@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { track } from 'app/analytics';
-
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 
@@ -19,28 +17,16 @@ class WidgetMapButton extends PureComponent {
   };
 
   render() {
-    const {
-      active,
-      large,
-      handleShowMap
-    } = this.props;
+    const { active, large, handleShowMap } = this.props;
 
     return (
       <Button
         className={cx('c-widget-map-button', { '-active': active })}
-        theme={cx(
-          'theme-button-small',
-          { small: !large },
-          { square: !large }
-        )}
+        theme={cx('theme-button-small', { small: !large }, { square: !large })}
         tooltip={{ text: active ? 'Currently displayed' : 'Show on map' }}
         onClick={handleShowMap}
       >
-        {large ? (
-          'SHOW ON MAP'
-        ) : (
-          <Icon icon={mapIcon} className="map-icon" />
-        )}
+        {large ? 'SHOW ON MAP' : <Icon icon={mapIcon} className="map-icon" />}
       </Button>
     );
   }

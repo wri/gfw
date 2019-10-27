@@ -30,6 +30,7 @@ class Widgets extends PureComponent {
     setModalMetaSettings: PropTypes.func.isRequired,
     setShareModal: PropTypes.func.isRequired,
     setMapSettings: PropTypes.func.isRequired,
+    handleClickWidget: PropTypes.func.isRequired,
     embed: PropTypes.bool,
     modalClosing: PropTypes.bool,
     activeWidget: PropTypes.object,
@@ -54,7 +55,8 @@ class Widgets extends PureComponent {
       simple,
       modalClosing,
       noDataMessage,
-      geostore
+      geostore,
+      handleClickWidget
     } = this.props;
     const hasWidgets = !isEmpty(widgets);
 
@@ -105,6 +107,7 @@ class Widgets extends PureComponent {
                     })
                   }
                   preventCloseSettings={modalClosing}
+                  onClickWidget={handleClickWidget}
                 />
               ))}
             {!loadingData &&

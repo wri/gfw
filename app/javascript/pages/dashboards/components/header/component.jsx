@@ -117,7 +117,7 @@ class Header extends PureComponent {
             )}
             {isCountryDashboard && (
               <Button
-                className="theme-button-medium theme-button-clear square"
+                className="c-dashboard-download-btn theme-button-medium theme-button-clear square"
                 extLink={downloadLink}
                 tooltip={{
                   text: `Download the data${

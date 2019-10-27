@@ -88,18 +88,19 @@ export const parseSentence = createSelector(
     const avgLoss = (sumBy(data, 'loss') || 0) / data.length;
     let percentileLoss = 0;
     let percentileLength = 0;
+
     while (
       data &&
       sortedData &&
       percentileLength < data.length &&
       percentileLoss / totalLoss < 0.5 &&
-      percentileLength !== 10
+      percentileLength <= 10
     ) {
       const percentile = sortedData[percentileLength];
       if (percentile) {
         percentileLoss += percentile.loss;
-        percentileLength += 1;
       }
+      percentileLength += 1;
     }
 
     const topLoss = percentileLoss / totalLoss * 100 || 0;

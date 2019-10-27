@@ -69,7 +69,8 @@ class CustomComposedChart extends PureComponent {
       unitFormat,
       height,
       margin
-    } = config || {};
+    } =
+      config || {};
 
     const { lines, bars, areas } = yKeys || {};
     const maxYValue = this.findMaxValue(data, config);
