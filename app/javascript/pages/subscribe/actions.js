@@ -40,6 +40,8 @@ export const saveSubscription = createThunkAction(
         company: organization,
         city,
         country,
+        success_location: 'https://www.globalforestwatch.org/thank-you',
+        error_location: 'https://www.globalforestwatch.org/thank-you',
         gfw_interests: Object.entries(subscriptions)
           .filter(([, val]) => val)
           .map(([key]) => key)
