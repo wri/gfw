@@ -24,8 +24,7 @@ import './styles.scss';
 
 class Footer extends PureComponent {
   static propTypes = {
-    setModalContactUsOpen: PropTypes.func,
-    setModalNewsletterOpen: PropTypes.func
+    setModalContactUsOpen: PropTypes.func
   };
 
   render() {
@@ -107,12 +106,11 @@ class Footer extends PureComponent {
                     >
                       CONTACT US
                     </button>
-                    <Button
-                      className="subscribe-btn"
-                      onClick={() => this.props.setModalNewsletterOpen(true)}
-                    >
-                      Subscribe to the GFW newsletter
-                    </Button>
+                    <NavLink to="/subscribe">
+                      <Button className="subscribe-btn">
+                        Subscribe to the GFW newsletter
+                      </Button>
+                    </NavLink>
                   </div>
                 </div>
               </div>
