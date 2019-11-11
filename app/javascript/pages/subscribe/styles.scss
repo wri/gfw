@@ -81,10 +81,10 @@
   .form-list {
     display: flex;
     flex-direction: column;
-    // margin-left: rem(85px);
-    // justify-content: center;
-    // align-items: center;
-    width: rem(340px);
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(340px);
+    }
 
     span {
       width: auto;
