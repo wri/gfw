@@ -62,13 +62,23 @@ export const saveSubscription = createThunkAction(
           dispatch({ type: 'location/THANKYOU' });
         })
         .catch(error => {
-          dispatch(
-            setSubscribeSaving({
-              saving: false,
-              error: true
-            })
-          );
-          console.info(error);
+          if (!error.response) {
+            dispatch({ type: 'location/THANKYOU' });
+            dispatch(
+              setSubscribeSaving({
+                saving: false,
+                error: false
+              })
+            );
+          } else {
+            dispatch(
+              setSubscribeSaving({
+                saving: false,
+                error: true
+              })
+            );
+            console.info(error);
+          }
         });
     }
   }
