@@ -8,8 +8,6 @@ import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
 
-import Newsletter from 'components/modals/newsletter';
-
 import wri from 'assets/logos/wri.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import facebook from 'assets/icons/social/facebook.svg';
@@ -203,7 +201,6 @@ class Footer extends PureComponent {
                 </div>
               </div>
             </div>
-            <Newsletter />
           </div>
         )}
       </MediaQuery>
