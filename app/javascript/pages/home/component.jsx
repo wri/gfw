@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
-// import Link from 'redux-first-router-link';
+import Link from 'redux-first-router-link';
 import cx from 'classnames';
 
 import NewsProvider from 'providers/news-provider';
@@ -29,8 +29,7 @@ class HomePage extends PureComponent {
     news: PropTypes.array,
     newsLoading: PropTypes.bool,
     uses: PropTypes.array.isRequired,
-    isDesktop: PropTypes.bool,
-    setModalNewsletterOpen: PropTypes.func
+    isDesktop: PropTypes.bool
   };
 
   state = {
@@ -38,15 +37,7 @@ class HomePage extends PureComponent {
   };
 
   render() {
-    const {
-      summary,
-      uses,
-      apps,
-      news,
-      newsLoading,
-      isDesktop,
-      setModalNewsletterOpen
-    } = this.props;
+    const { summary, uses, apps, news, newsLoading, isDesktop } = this.props;
 
     return (
       <div className="l-home-page">
@@ -94,17 +85,12 @@ class HomePage extends PureComponent {
                   STOP VIDEO
                 </Button>
               )}
-              <div
-                className="subscribe-btn"
-                onClick={() => setModalNewsletterOpen(true)}
-                role="button"
-                tabIndex={0}
-              >
+              <Link className="subscribe-btn" to="/subscribe">
                 <Button theme="square" className="subscribe-icon">
                   <Icon icon={mailIcon} />
                 </Button>
                 <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
-              </div>
+              </Link>
             </Fragment>
           )}
         </Cover>
