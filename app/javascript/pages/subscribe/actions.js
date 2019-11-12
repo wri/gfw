@@ -26,6 +26,7 @@ export const saveSubscription = createThunkAction(
       dispatch(setSubscribeSaving({ saving: true, error: false }));
       const {
         city,
+        comments,
         country,
         email,
         firstName,
@@ -42,6 +43,7 @@ export const saveSubscription = createThunkAction(
         country,
         success_location: 'https://www.globalforestwatch.org/thank-you',
         error_location: 'https://www.globalforestwatch.org/thank-you',
+        pardot_extra_field: comments,
         gfw_interests: Object.entries(subscriptions)
           .filter(([, val]) => val)
           .map(([key]) => key)

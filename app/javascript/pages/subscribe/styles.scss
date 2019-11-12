@@ -35,6 +35,10 @@
     margin-bottom: rem(30px);
     flex-direction: column;
 
+    &.hidden {
+      display: none;
+    }
+
     @media screen and (min-width: $screen-m) {
       justify-content: center;
       align-items: center;
