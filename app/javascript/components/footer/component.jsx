@@ -8,8 +8,6 @@ import Icon from 'components/ui/icon';
 import Carousel from 'components/ui/carousel';
 import Button from 'components/ui/button';
 
-import Newsletter from 'components/modals/newsletter';
-
 import wri from 'assets/logos/wri.svg';
 import arrowIcon from 'assets/icons/arrow-down.svg';
 import facebook from 'assets/icons/social/facebook.svg';
@@ -24,8 +22,7 @@ import './styles.scss';
 
 class Footer extends PureComponent {
   static propTypes = {
-    setModalContactUsOpen: PropTypes.func,
-    setModalNewsletterOpen: PropTypes.func
+    setModalContactUsOpen: PropTypes.func
   };
 
   render() {
@@ -107,12 +104,11 @@ class Footer extends PureComponent {
                     >
                       CONTACT US
                     </button>
-                    <Button
-                      className="subscribe-btn"
-                      onClick={() => this.props.setModalNewsletterOpen(true)}
-                    >
-                      Subscribe to the GFW newsletter
-                    </Button>
+                    <NavLink to="/subscribe">
+                      <Button className="subscribe-btn">
+                        Subscribe to the GFW newsletter
+                      </Button>
+                    </NavLink>
                   </div>
                 </div>
               </div>
@@ -205,7 +201,6 @@ class Footer extends PureComponent {
                 </div>
               </div>
             </div>
-            <Newsletter />
           </div>
         )}
       </MediaQuery>

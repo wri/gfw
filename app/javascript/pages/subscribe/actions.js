@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux-tools';
 import { setComponentStateToUrl } from 'utils/stateToUrl';
-import { postNewsletterSubscription } from 'services/subscriptions';
+import { postNewsletterSubscription } from 'services/newsletter';
 
 export const setSubscribeSaving = createAction('setSubscribeSaving');
 export const resetSubscribe = createAction('resetSubscribe');
@@ -26,6 +26,7 @@ export const saveSubscription = createThunkAction(
       dispatch(setSubscribeSaving({ saving: true, error: false }));
       const {
         city,
+        comments,
         country,
         email,
         firstName,
@@ -40,6 +41,9 @@ export const saveSubscription = createThunkAction(
         company: organization,
         city,
         country,
+        success_location: 'https://www.globalforestwatch.org/thank-you',
+        error_location: 'https://www.globalforestwatch.org/thank-you',
+        pardot_extra_field: comments,
         gfw_interests: Object.entries(subscriptions)
           .filter(([, val]) => val)
           .map(([key]) => key)
@@ -60,13 +64,23 @@ export const saveSubscription = createThunkAction(
           dispatch({ type: 'location/THANKYOU' });
         })
         .catch(error => {
-          dispatch(
-            setSubscribeSaving({
-              saving: false,
-              error: true
-            })
-          );
-          console.info(error);
+          if (!error.response) {
+            dispatch({ type: 'location/THANKYOU' });
+            dispatch(
+              setSubscribeSaving({
+                saving: false,
+                error: false
+              })
+            );
+          } else {
+            dispatch(
+              setSubscribeSaving({
+                saving: false,
+                error: true
+              })
+            );
+            console.info(error);
+          }
         });
     }
   }
