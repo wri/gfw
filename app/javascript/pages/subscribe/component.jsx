@@ -115,7 +115,7 @@ function SubscribePage(props) {
     comments: '',
     country: '',
     subscriptions: subscriptions.reduce(
-      (acc, sub) => ({ ...acc, [sub.label]: true }),
+      (acc, sub) => ({ ...acc, [sub.label]: false }),
       {}
     )
   };
