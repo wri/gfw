@@ -31,6 +31,8 @@ function reducer(state, action) {
       return { ...state, organization: payload.organization };
     case 'city':
       return { ...state, city: payload.city, cityError: payload.cityError };
+    case 'comments':
+      return { ...state, comments: payload.comments };
     case 'country':
       return {
         ...state,
@@ -110,9 +112,10 @@ function SubscribePage(props) {
     organization: '',
     city: '',
     cityError: false,
+    comments: '',
     country: '',
     subscriptions: subscriptions.reduce(
-      (acc, sub) => ({ ...acc, [sub.label]: true }),
+      (acc, sub) => ({ ...acc, [sub.label]: false }),
       {}
     )
   };
@@ -226,6 +229,21 @@ function SubscribePage(props) {
                   payload: {
                     city: e.target.value,
                     cityError: !e.target.value
+                  }
+                })
+              }
+            />
+          </div>
+          <div className={cx('field', 'hidden')}>
+            <span>Comments*</span>
+            <input
+              className="form-input"
+              value={state.comments}
+              onChange={e =>
+                dispatch({
+                  type: 'comments',
+                  payload: {
+                    comments: e.target.value
                   }
                 })
               }
