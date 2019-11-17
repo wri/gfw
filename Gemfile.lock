@@ -946,7 +946,7 @@ GEM
     netrc (0.11.0)
     newrelic_rpm (5.5.0.348)
     nio4r (2.3.1)
-    nokogiri (1.10.4)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
     os (1.0.0)
     ovirt-engine-sdk (4.2.5)
@@ -1150,7 +1150,7 @@ DEPENDENCIES
   jquery-rails
   mini_magick
   newrelic_rpm
-  nokogiri (~> 1.10.4)
+  nokogiri (~> 1.10.5)
   puma
   rack-reverse-proxy (~> 0.12.0)
   rails (= 5.2.2.1)
