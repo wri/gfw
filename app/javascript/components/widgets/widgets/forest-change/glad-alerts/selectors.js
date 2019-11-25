@@ -49,7 +49,7 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some(item => item.alerts > 0)
+          [year]: next.some(item => item.alert__count > 0)
         };
       },
       {}
@@ -82,6 +82,7 @@ export const getData = createSelector(
       }
     });
     const zeroFilledData = [];
+
     years.forEach(d => {
       const yearDataByWeek = groupBy(groupedByYear[d], 'week');
       for (let i = 1; i <= yearLengths[d]; i += 1) {

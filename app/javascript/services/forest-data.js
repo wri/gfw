@@ -94,7 +94,7 @@ const getRequestUrl = (adm0, adm1, adm2, grouped) => {
   return REQUEST_URL.replace('{dataset}', dataset);
 };
 
-const getWHEREQuery = params => {
+export const getWHEREQuery = params => {
   const allPolynames = forestTypes
     .concat(landCategories)
     .filter(p => !p.hidden);
