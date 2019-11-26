@@ -114,12 +114,12 @@ export const getWHEREQuery = params => {
       );
 
       const polynameString = `
-        ${isPolyname ? `${params[p]} is not "0"` : ''}${
+        ${isPolyname ? `${polynameMeta.tableKey} is not "0"` : ''}${
   isPolyname &&
         polynameMeta &&
         polynameMeta.default &&
         polynameMeta.categories
-    ? ` AND ${params[p]} ${polynameMeta.comparison || '='} '${
+    ? ` AND ${polynameMeta.tableKey} ${polynameMeta.comparison || '='} '${
       polynameMeta.default
     }'`
     : ''
