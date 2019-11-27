@@ -66,7 +66,6 @@ export const parseData = createSelector(
     ) {
       return null;
     }
-    // console.log(currentLabel, locationObject, data);
 
     let dataTrimmed = [];
     data.forEach(d => {

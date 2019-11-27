@@ -86,17 +86,58 @@ export const getAnalysis = createThunkAction(
 
 export const uploadShape = createThunkAction(
   'uploadShape',
-  shape => (dispatch, getState) => {
-    dispatch(setAnalysisLoading({ loading: true, error: '', data: {} }));
-    uploadShapeFile(shape)
+  ({ shape, onUploadProgress, onCheckingProgress }) => (dispatch, getState) => {
+    dispatch(
+      setAnalysisLoading({
+        checkingShape: true,
+        uploadingShape: false,
+        loading: false,
+        error: '',
+        data: {}
+      })
+    );
+
+    uploadShapeFile(shape, onCheckingProgress)
       .then(response => {
         if (response && response.data && response.data.data) {
+          // if ogr thinks its ok lets check number of features > 1000
           const features = response.data
             ? response.data.data.attributes.features
             : null;
-          if (features && features.length < uploadFileConfig.featureLimit) {
-            const geojson = features.filter(g => g.geometry).reduce(union);
-            getGeostoreKey(geojson.geometry)
+          const geojson = features.filter(g => g.geometry).reduce(union);
+
+          if (features && features.length > uploadFileConfig.featureLimit) {
+            dispatch(
+              setAnalysisLoading({
+                checkingShape: false,
+                error: 'Too many features',
+                errorMessage:
+                  'We cannot support an analysis for a file with more than 1000 features'
+              })
+            );
+          } else if (
+            geojson.geometry.type === 'Point' ||
+            geojson.geometry.type === 'Line'
+          ) {
+            // check the shape is a polygon
+            dispatch(
+              setAnalysisLoading({
+                checkingShape: false,
+                error: 'Please upload polygon data',
+                errorMessage:
+                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported'
+              })
+            );
+          } else {
+            // shape has the right number of features and is a polygon so lets upload it
+            dispatch(
+              setAnalysisLoading({
+                uploadingShape: true,
+                checkingShape: false
+              })
+            );
+
+            getGeostoreKey(geojson.geometry, onUploadProgress)
               .then(geostore => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
@@ -121,7 +162,7 @@ export const uploadShape = createThunkAction(
                   });
                   dispatch(
                     setAnalysisLoading({
-                      loading: false,
+                      uploadingShape: false,
                       error: '',
                       errorMessage: ''
                     })
@@ -129,15 +170,24 @@ export const uploadShape = createThunkAction(
                 }
               })
               .catch(error => {
+                const fileName = shape.name && shape.name.split('.');
+                const fileType = fileName[fileName.length - 1];
+
+                const errorMessage =
+                  (error.response &&
+                    error.response.data &&
+                    error.response.data.errors &&
+                    error.response.data.errors[0].detail) ||
+                  error.message ||
+                  'error with shape';
+
                 dispatch(
                   setAnalysisLoading({
                     loading: false,
-                    error: 'error with shape',
-                    errorMessage:
-                      (error.response.data &&
-                        error.response.data.errors &&
-                        error.response.data.errors[0].detail) ||
-                      'error with shape'
+                    checkingShape: false,
+                    uploadingShape: false,
+                    error: `Invalid .${fileType} file format`,
+                    errorMessage
                   })
                 );
                 console.info(error);
@@ -146,15 +196,25 @@ export const uploadShape = createThunkAction(
         }
       })
       .catch(error => {
+        const fileName = shape.name && shape.name.split('.');
+        const fileType = fileName[fileName.length - 1];
+
+        const errorMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.errors &&
+            error.response.data.errors[0].detail) ||
+          error.message ||
+          'error with shape';
+
         dispatch(
+          // set error from ogr regarding file format and problem
           setAnalysisLoading({
             loading: false,
-            error: 'error with shape',
-            errorMessage:
-              (error.response.data &&
-                error.response.data.errors &&
-                error.response.data.errors[0].detail) ||
-              'error with shape'
+            checkingShape: false,
+            uploadingShape: false,
+            error: `Invalid .${fileType} file format`,
+            errorMessage
           })
         );
         console.info(error);

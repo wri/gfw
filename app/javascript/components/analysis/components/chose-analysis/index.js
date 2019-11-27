@@ -28,6 +28,12 @@ class ChoseAnalysisContainer extends PureComponent {
     setAnalysisLoading: PropTypes.func
   };
 
+  state = {
+    uploadStatus: 0,
+    checkingStatus: 0,
+    file: null
+  };
+
   selectBoundaries = boundaryId => {
     const {
       setMapSettings,
@@ -72,12 +78,64 @@ class ChoseAnalysisContainer extends PureComponent {
     }
   };
 
+  onUploadProgress = e => {
+    this.setState({ uploadStatus: e.loaded / e.total * 100 });
+  };
+
+  onCheckingProgress = e => {
+    this.setState({ checkingStatus: e.loaded / e.total * 100 });
+  };
+
+  onDropAccepted = files => {
+    const { uploadShape } = this.props;
+    const file = files && files[0];
+    this.setState({ file });
+    uploadShape({
+      shape: file,
+      onUploadProgress: this.onUploadProgress,
+      onCheckingProgress: this.onCheckingProgress
+    });
+  };
+
+  onDropRejected = files => {
+    const { setAnalysisLoading } = this.props;
+    const file = files && files[0];
+
+    if (files && file && files.length > 1) {
+      setAnalysisLoading({
+        error: 'Multiple files not supported',
+        errorMessage:
+          'Only single files of .zip, .csv, .json, .geojson, .kml and .kmz fles are supported.'
+      });
+    } else if (file && !uploadConfig.types.includes(file.type)) {
+      setAnalysisLoading({
+        error: 'Invalid file type',
+        errorMessage:
+          'Only .zip, .csv, .json, .geojson, .kml and .kmz fles are supported.'
+      });
+    } else if (file && file.size > uploadConfig.sizeLimit) {
+      setAnalysisLoading({
+        error: 'File too large',
+        errorMessage:
+          'The recommended maximum fle size is 1MB. Anything larger than that may not work properly.'
+      });
+    } else {
+      setAnalysisLoading({
+        error: 'Error attaching file',
+        errorMessage: 'Please contact us for support.'
+      });
+    }
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
+      file: this.state.file,
+      uploadStatus: (this.state.checkingStatus + this.state.uploadStatus) / 2,
       selectBoundaries: this.selectBoundaries,
       uploadShape: this.uploadShape,
-      onDrop: this.onDrop,
+      onDropAccepted: this.onDropAccepted,
+      onDropRejected: this.onDropRejected,
       uploadConfig
     });
   }
