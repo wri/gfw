@@ -17,6 +17,28 @@ export const setAnalysisLoading = createAction('setAnalysisLoading');
 export const clearAnalysisError = createAction('clearAnalysisError');
 export const clearAnalysisData = createAction('clearAnalysisData');
 
+const getErrorMessage = (error, file) => {
+  const fileName = file.name && file.name.split('.');
+  const fileType = fileName[fileName.length - 1];
+
+  const title =
+    error.response && error.response.status >= 500
+      ? "The service can't be reached"
+      : `Invalid .${fileType} file format`;
+  const desc =
+    (error.response &&
+      error.response.data &&
+      error.response.data.errors &&
+      error.response.data.errors[0].detail) ||
+    error.message ||
+    'It’s quite likely because our service is down, but can you also please check your Internet connection?';
+
+  return {
+    title,
+    desc
+  };
+};
+
 // url action
 export const setAnalysisSettings = createThunkAction(
   'setAnalysisSettings',
@@ -161,23 +183,14 @@ export const uploadShape = createThunkAction(
                 }
               })
               .catch(error => {
-                const fileName = shape.name && shape.name.split('.');
-                const fileType = fileName[fileName.length - 1];
-
-                const errorMessage =
-                  (error.response &&
-                    error.response.data &&
-                    error.response.data.errors &&
-                    error.response.data.errors[0].detail) ||
-                  error.message ||
-                  'error with shape';
+                const errorMessage = getErrorMessage(error, shape);
 
                 dispatch(
                   setAnalysisLoading({
                     loading: false,
                     uploading: false,
-                    error: `Invalid .${fileType} file format`,
-                    errorMessage
+                    error: errorMessage.title,
+                    errorMessage: errorMessage.desc
                   })
                 );
                 console.info(error);
@@ -186,24 +199,15 @@ export const uploadShape = createThunkAction(
         }
       })
       .catch(error => {
-        const fileName = shape.name && shape.name.split('.');
-        const fileType = fileName[fileName.length - 1];
+        const errorMessage = getErrorMessage(error, shape);
 
-        const errorMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.errors &&
-            error.response.data.errors[0].detail) ||
-          error.message ||
-          'error with shape';
-
-        if (errorMessage !== 'cancel upload shape') {
+        if (errorMessage.title !== 'cancel upload shape') {
           dispatch(
             setAnalysisLoading({
               loading: false,
               uploading: false,
-              error: `Invalid .${fileType} file format`,
-              errorMessage
+              error: errorMessage.title,
+              errorMessage: errorMessage.desc
             })
           );
         }
