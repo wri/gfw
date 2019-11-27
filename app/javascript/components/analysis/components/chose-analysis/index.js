@@ -61,13 +61,25 @@ class ChoseAnalysisContainer extends PureComponent {
     }
   };
 
-  onCheckProgress = e => {
-    this.setState({ uploadStatus: e.loaded / e.total * 50 });
+  handleCheckUpload = e => {
+    this.setState({ uploadStatus: e.loaded / e.total * 25 });
   };
 
-  onUploadProgress = e => {
+  handleCheckDownload = e => {
     this.setState({
-      uploadStatus: this.state.uploadStatus + e.loaded / e.total * 50
+      uploadStatus: 25 + e.loaded / e.total * 25
+    });
+  };
+
+  handleGeostoreUpload = e => {
+    this.setState({
+      uploadStatus: 50 + e.loaded / e.total * 25
+    });
+  };
+
+  handleGeostoreDownload = e => {
+    this.setState({
+      uploadStatus: 75 + e.loaded / e.total * 25
     });
   };
 
@@ -114,8 +126,10 @@ class ChoseAnalysisContainer extends PureComponent {
     this.uploadShape = CancelToken.source();
     this.props.uploadShape({
       shape: file,
-      onUploadProgress: this.onUploadProgress,
-      onCheckProgress: this.onCheckProgress,
+      onCheckUpload: this.handleCheckUpload,
+      onCheckDownload: this.handleCheckDownload,
+      onGeostoreUpload: this.handleGeostoreUpload,
+      onGeostoreDownload: this.handleGeostoreDownload,
       token: this.uploadShape.token
     });
   };

@@ -108,10 +108,14 @@ export const getAnalysis = createThunkAction(
 
 export const uploadShape = createThunkAction(
   'uploadShape',
-  ({ shape, onUploadProgress, onCheckProgress, token }) => (
-    dispatch,
-    getState
-  ) => {
+  ({
+    shape,
+    onCheckUpload,
+    onCheckDownload,
+    onGeostoreUpload,
+    onGeostoreDownload,
+    token
+  }) => (dispatch, getState) => {
     dispatch(
       setAnalysisLoading({
         uploading: true,
@@ -121,14 +125,18 @@ export const uploadShape = createThunkAction(
       })
     );
 
-    uploadShapeFile(shape, onCheckProgress, token)
+    uploadShapeFile(shape, onCheckUpload, onCheckDownload, token)
       .then(response => {
         if (response && response.data && response.data.data) {
           const features = response.data
             ? response.data.data.attributes.features
             : null;
-          const geojson = features.filter(g => g.geometry).reduce(union);
-          if (features && features.length > uploadFileConfig.featureLimit) {
+          const tooManyFeatures =
+            features && features.length > uploadFileConfig.featureLimit;
+          const geojson =
+            !tooManyFeatures && features.filter(g => g.geometry).reduce(union);
+
+          if (tooManyFeatures) {
             dispatch(
               setAnalysisLoading({
                 uploading: false,
@@ -150,36 +158,42 @@ export const uploadShape = createThunkAction(
               })
             );
           } else {
-            getGeostoreKey(geojson.geometry, onUploadProgress)
+            getGeostoreKey(
+              geojson.geometry,
+              onGeostoreUpload,
+              onGeostoreDownload
+            )
               .then(geostore => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
                   const { query, type } = getState().location || {};
-                  dispatch({
-                    type,
-                    payload: {
-                      type: 'geostore',
-                      adm0: id
-                    },
-                    ...(query && {
-                      query: {
-                        ...query,
-                        ...(query.map && {
-                          map: {
-                            ...query.map,
-                            canBound: true
-                          }
-                        })
-                      }
-                    })
-                  });
-                  dispatch(
-                    setAnalysisLoading({
-                      uploading: false,
-                      error: '',
-                      errorMessage: ''
-                    })
-                  );
+                  setTimeout(() => {
+                    dispatch({
+                      type,
+                      payload: {
+                        type: 'geostore',
+                        adm0: id
+                      },
+                      ...(query && {
+                        query: {
+                          ...query,
+                          ...(query.map && {
+                            map: {
+                              ...query.map,
+                              canBound: true
+                            }
+                          })
+                        }
+                      })
+                    });
+                    dispatch(
+                      setAnalysisLoading({
+                        uploading: false,
+                        error: '',
+                        errorMessage: ''
+                      })
+                    );
+                  }, 300);
                 }
               })
               .catch(error => {
