@@ -61,8 +61,14 @@ class ChoseAnalysisContainer extends PureComponent {
     }
   };
 
+  onCheckProgress = e => {
+    this.setState({ uploadStatus: e.loaded / e.total * 50 });
+  };
+
   onUploadProgress = e => {
-    this.setState({ uploadStatus: e.loaded / e.total * 100 });
+    this.setState({
+      uploadStatus: this.state.uploadStatus + e.loaded / e.total * 50
+    });
   };
 
   onDropAccepted = files => {
@@ -109,6 +115,7 @@ class ChoseAnalysisContainer extends PureComponent {
     this.props.uploadShape({
       shape: file,
       onUploadProgress: this.onUploadProgress,
+      onCheckProgress: this.onCheckProgress,
       token: this.uploadShape.token
     });
   };
