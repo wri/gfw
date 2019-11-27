@@ -24,10 +24,6 @@ const selectEmbed = state =>
   state.location.pathname.includes('/embed');
 const selectError = state => state.analysis && state.analysis.error;
 const selectDatasets = state => state.datasets && state.datasets.data;
-const selectCheckingShape = state =>
-  state.analysis && state.analysis.checkingShape;
-const selectUploadingShape = state =>
-  state.analysis && state.analysis.uploadingShape;
 
 export const getLoading = createSelector(
   [selectAnalysisLoading, selectDatasetsLoading, selectGeostoreLoading],
@@ -176,8 +172,6 @@ export const getLayerEndpoints = createSelector(
 
 export const getAnalysisProps = createStructuredSelector({
   loading: getLoading,
-  checkingShape: selectCheckingShape,
-  uploadingShape: selectUploadingShape,
   error: selectError,
   embed: selectEmbed,
   location: selectLocation,

@@ -30,7 +30,6 @@ class ChoseAnalysisContainer extends PureComponent {
 
   state = {
     uploadStatus: 0,
-    checkingStatus: 0,
     file: null
   };
 
@@ -61,39 +60,17 @@ class ChoseAnalysisContainer extends PureComponent {
     }
   };
 
-  onDrop = files => {
-    const { uploadShape, setAnalysisLoading } = this.props;
-    if (files && files.length) {
-      const file = files[0];
-      if (file.size > uploadConfig.sizeLimit) {
-        setAnalysisLoading({
-          error: `File larger than ${uploadConfig.sizeLimit / 1000000}MB`,
-          errorMessage: ''
-        });
-      } else {
-        uploadShape(file);
-      }
-    } else {
-      setAnalysisLoading({ error: 'Invalid file type', errorMessage: '' });
-    }
-  };
-
   onUploadProgress = e => {
     this.setState({ uploadStatus: e.loaded / e.total * 100 });
-  };
-
-  onCheckingProgress = e => {
-    this.setState({ checkingStatus: e.loaded / e.total * 100 });
   };
 
   onDropAccepted = files => {
     const { uploadShape } = this.props;
     const file = files && files[0];
-    this.setState({ file });
+    this.setState({ file, uploadStatus: 0 });
     uploadShape({
       shape: file,
-      onUploadProgress: this.onUploadProgress,
-      onCheckingProgress: this.onCheckingProgress
+      onUploadProgress: this.onUploadProgress
     });
   };
 
@@ -105,7 +82,7 @@ class ChoseAnalysisContainer extends PureComponent {
       setAnalysisLoading({
         error: 'Multiple files not supported',
         errorMessage:
-          'Only single files of .zip, .csv, .json, .geojson, .kml and .kmz fles are supported.'
+          'Only single files of type .zip, .csv, .json, .geojson, .kml and .kmz fles are supported.'
       });
     } else if (file && !uploadConfig.types.includes(file.type)) {
       setAnalysisLoading({
@@ -130,12 +107,11 @@ class ChoseAnalysisContainer extends PureComponent {
   render() {
     return createElement(Component, {
       ...this.props,
-      file: this.state.file,
-      uploadStatus: (this.state.checkingStatus + this.state.uploadStatus) / 2,
+      ...this.state,
       selectBoundaries: this.selectBoundaries,
-      uploadShape: this.uploadShape,
       onDropAccepted: this.onDropAccepted,
       onDropRejected: this.onDropRejected,
+      uploadStatus: this.state.checkingStatus,
       uploadConfig
     });
   }

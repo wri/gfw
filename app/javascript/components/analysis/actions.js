@@ -86,30 +86,27 @@ export const getAnalysis = createThunkAction(
 
 export const uploadShape = createThunkAction(
   'uploadShape',
-  ({ shape, onUploadProgress, onCheckingProgress }) => (dispatch, getState) => {
+  ({ shape, onUploadProgress }) => (dispatch, getState) => {
     dispatch(
       setAnalysisLoading({
-        checkingShape: true,
-        uploadingShape: false,
+        uploading: true,
         loading: false,
         error: '',
         data: {}
       })
     );
 
-    uploadShapeFile(shape, onCheckingProgress)
+    uploadShapeFile(shape, onUploadProgress)
       .then(response => {
         if (response && response.data && response.data.data) {
-          // if ogr thinks its ok lets check number of features > 1000
           const features = response.data
             ? response.data.data.attributes.features
             : null;
           const geojson = features.filter(g => g.geometry).reduce(union);
-
           if (features && features.length > uploadFileConfig.featureLimit) {
             dispatch(
               setAnalysisLoading({
-                checkingShape: false,
+                uploading: false,
                 error: 'Too many features',
                 errorMessage:
                   'We cannot support an analysis for a file with more than 1000 features'
@@ -117,27 +114,18 @@ export const uploadShape = createThunkAction(
             );
           } else if (
             geojson.geometry.type === 'Point' ||
-            geojson.geometry.type === 'Line'
+            geojson.geometry.type === 'LineString'
           ) {
-            // check the shape is a polygon
             dispatch(
               setAnalysisLoading({
-                checkingShape: false,
+                uploading: false,
                 error: 'Please upload polygon data',
                 errorMessage:
                   'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported'
               })
             );
           } else {
-            // shape has the right number of features and is a polygon so lets upload it
-            dispatch(
-              setAnalysisLoading({
-                uploadingShape: true,
-                checkingShape: false
-              })
-            );
-
-            getGeostoreKey(geojson.geometry, onUploadProgress)
+            getGeostoreKey(geojson.geometry)
               .then(geostore => {
                 if (geostore && geostore.data && geostore.data.data) {
                   const { id } = geostore.data.data;
@@ -162,7 +150,7 @@ export const uploadShape = createThunkAction(
                   });
                   dispatch(
                     setAnalysisLoading({
-                      uploadingShape: false,
+                      uploading: false,
                       error: '',
                       errorMessage: ''
                     })
@@ -184,8 +172,7 @@ export const uploadShape = createThunkAction(
                 dispatch(
                   setAnalysisLoading({
                     loading: false,
-                    checkingShape: false,
-                    uploadingShape: false,
+                    uploading: false,
                     error: `Invalid .${fileType} file format`,
                     errorMessage
                   })
@@ -211,8 +198,7 @@ export const uploadShape = createThunkAction(
           // set error from ogr regarding file format and problem
           setAnalysisLoading({
             loading: false,
-            checkingShape: false,
-            uploadingShape: false,
+            uploading: false,
             error: `Invalid .${fileType} file format`,
             errorMessage
           })

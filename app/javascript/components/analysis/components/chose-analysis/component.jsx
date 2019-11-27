@@ -33,12 +33,11 @@ class ChoseAnalysis extends PureComponent {
     error: PropTypes.string,
     errorMessage: PropTypes.string,
     uploadConfig: PropTypes.object,
+    uploading: PropTypes.bool,
+    uploadStatus: PropTypes.number,
+    handleCancelAnalysis: PropTypes.func,
     drawing: PropTypes.bool,
     setMapSettings: PropTypes.func,
-    checkingShape: PropTypes.bool,
-    uploadingShape: PropTypes.bool,
-    handleCancelAnalysis: PropTypes.func,
-    uploadStatus: PropTypes.number,
     file: PropTypes.object
   };
 
@@ -111,12 +110,11 @@ class ChoseAnalysis extends PureComponent {
       onDropRejected,
       handleCancelAnalysis,
       uploadConfig,
-      checkingShape,
-      uploadingShape,
+      uploading,
       uploadStatus,
       file
     } = this.props;
-    const uploading = checkingShape || uploadingShape;
+    const hasError = error && errorMessage;
 
     return (
       <div className="draw-menu">
@@ -138,27 +136,21 @@ class ChoseAnalysis extends PureComponent {
         </Button>
         <div className="draw-menu-separator">or</div>
         <Dropzone
-          className={cx(
-            'draw-menu-input',
-            { error },
-            { 'error-message': errorMessage },
-            { uploading }
-          )}
+          className={cx('draw-menu-input', { error }, { uploading })}
           onDropAccepted={onDropAccepted}
           onDropRejected={onDropRejected}
           maxSize={uploadConfig.sizeLimit}
           accept={uploadConfig.types}
           multiple={false}
         >
-          {error &&
-            errorMessage && (
+          {hasError &&
+            !uploading && (
             <Fragment>
               <p className="error-title">{error}</p>
               <p className="small-text error-desc">{errorMessage}</p>
             </Fragment>
           )}
-          {!error &&
-            !errorMessage &&
+          {!hasError &&
             !uploading && (
             <Fragment>
               <p>
@@ -168,16 +160,14 @@ class ChoseAnalysis extends PureComponent {
               <p className="small-text">{'Recommended file size < 1 MB'}</p>
             </Fragment>
           )}
-          {!error &&
-            !errorMessage &&
+          {!hasError &&
             uploading && (
             <div className="uploading-shape">
               <p className="file-name">
                 {(file && file.name) || 'example.zip'}
               </p>
-              <p className="file-size">{`Uploading ${(file &&
-                  format('.2s')(file.size)) ||
-                  '345k'}B`}</p>
+              <p className="file-size">{`Uploading ${file &&
+                  format('.2s')(file.size)}B`}</p>
               <div className="upload-bar">
                 <div className="loading-bar">
                   <span className="full-bar" />
