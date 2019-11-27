@@ -86,7 +86,7 @@ export const getAnalysis = createThunkAction(
 
 export const uploadShape = createThunkAction(
   'uploadShape',
-  ({ shape, onUploadProgress }) => (dispatch, getState) => {
+  ({ shape, onUploadProgress, token }) => (dispatch, getState) => {
     dispatch(
       setAnalysisLoading({
         uploading: true,
@@ -96,7 +96,7 @@ export const uploadShape = createThunkAction(
       })
     );
 
-    uploadShapeFile(shape, onUploadProgress)
+    uploadShapeFile(shape, onUploadProgress, token)
       .then(response => {
         if (response && response.data && response.data.data) {
           const features = response.data
@@ -194,15 +194,17 @@ export const uploadShape = createThunkAction(
           error.message ||
           'error with shape';
 
-        dispatch(
-          // set error from ogr regarding file format and problem
-          setAnalysisLoading({
-            loading: false,
-            uploading: false,
-            error: `Invalid .${fileType} file format`,
-            errorMessage
-          })
-        );
+        if (errorMessage !== 'cancel upload shape') {
+          dispatch(
+            // set error from ogr regarding file format and problem
+            setAnalysisLoading({
+              loading: false,
+              uploading: false,
+              error: `Invalid .${fileType} file format`,
+              errorMessage
+            })
+          );
+        }
         console.info(error);
       });
   }

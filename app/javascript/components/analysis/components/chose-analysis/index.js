@@ -1,6 +1,7 @@
 import { createElement, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { CancelToken } from 'axios';
 
 import * as ownActions from 'components/analysis/actions';
 import * as modalActions from 'components/modals/sources/actions';
@@ -65,13 +66,9 @@ class ChoseAnalysisContainer extends PureComponent {
   };
 
   onDropAccepted = files => {
-    const { uploadShape } = this.props;
     const file = files && files[0];
     this.setState({ file, uploadStatus: 0 });
-    uploadShape({
-      shape: file,
-      onUploadProgress: this.onUploadProgress
-    });
+    this.handleUploadShape(file);
   };
 
   onDropRejected = files => {
@@ -104,6 +101,31 @@ class ChoseAnalysisContainer extends PureComponent {
     }
   };
 
+  handleUploadShape = file => {
+    if (this.uploadShape) {
+      this.uploadShape.cancel();
+    }
+    this.uploadShape = CancelToken.source();
+    this.props.uploadShape({
+      shape: file,
+      onUploadProgress: this.onUploadProgress,
+      token: this.uploadShape.token
+    });
+  };
+
+  handleCancelUpload = () => {
+    const { setAnalysisLoading } = this.props;
+    if (this.uploadShape) {
+      this.uploadShape.cancel('cancel upload shape');
+    }
+    setAnalysisLoading({
+      uploading: false,
+      loading: false,
+      error: '',
+      errorMessage: ''
+    });
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
@@ -111,7 +133,7 @@ class ChoseAnalysisContainer extends PureComponent {
       selectBoundaries: this.selectBoundaries,
       onDropAccepted: this.onDropAccepted,
       onDropRejected: this.onDropRejected,
-      uploadStatus: this.state.checkingStatus,
+      handleCancelUpload: this.handleCancelUpload,
       uploadConfig
     });
   }

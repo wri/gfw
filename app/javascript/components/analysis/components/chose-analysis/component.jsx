@@ -35,7 +35,7 @@ class ChoseAnalysis extends PureComponent {
     uploadConfig: PropTypes.object,
     uploading: PropTypes.bool,
     uploadStatus: PropTypes.number,
-    handleCancelAnalysis: PropTypes.func,
+    handleCancelUpload: PropTypes.func,
     drawing: PropTypes.bool,
     setMapSettings: PropTypes.func,
     file: PropTypes.object
@@ -108,7 +108,7 @@ class ChoseAnalysis extends PureComponent {
       error,
       onDropAccepted,
       onDropRejected,
-      handleCancelAnalysis,
+      handleCancelUpload,
       uploadConfig,
       uploading,
       uploadStatus,
@@ -142,6 +142,7 @@ class ChoseAnalysis extends PureComponent {
           maxSize={uploadConfig.sizeLimit}
           accept={uploadConfig.types}
           multiple={false}
+          disabled={uploading}
         >
           {hasError &&
             !uploading && (
@@ -173,13 +174,13 @@ class ChoseAnalysis extends PureComponent {
                   <span className="full-bar" />
                   <span
                     className="status-bar"
-                    style={{ width: uploadStatus }}
+                    style={{ width: `${uploadStatus}%` }}
                   />
                 </div>
                 <Button
                   theme="theme-button-clear"
                   className="cancel-upload-btn"
-                  onClick={handleCancelAnalysis}
+                  onClick={handleCancelUpload}
                 >
                   <Icon className="cancel-upload-icon" icon={closeIcon} />
                 </Button>
