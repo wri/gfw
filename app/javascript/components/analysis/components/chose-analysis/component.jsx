@@ -168,10 +168,7 @@ class ChoseAnalysis extends PureComponent {
           {!hasError &&
             uploading && (
             <div className="uploading-shape">
-              <p className="file-name">
-                {'bowen_brook_timber_treatments_proposed_03_07_2013.zip' ||
-                    (file && file.name)}
-              </p>
+              <p className="file-name">{file && file.name}</p>
               <p className="file-size">{`Uploading ${(file &&
                   format('.2s')(file.size)) ||
                   0}B`}</p>

@@ -128,12 +128,16 @@ export const uploadShape = createThunkAction(
     uploadShapeFile(shape, onCheckUpload, onCheckDownload, token)
       .then(response => {
         if (response && response.data && response.data.data) {
-          const { attributes: geojsonShape } =
-            response.data && response.data.data && response.data.data;
+          const { attributes: geojsonShape } = response.data.data;
 
           // check feature length first to make sure we don't regret it
           const { features } = geojsonShape || {};
           const featureCount = features && features.length;
+
+          // now lets flatten any features into a single multi polygon for consistency
+          const geojson = combine(geojsonShape);
+          const { geometry } =
+            geojson && geojson.features && geojson.features[0];
 
           if (features && featureCount > uploadFileConfig.featureLimit) {
             dispatch(
@@ -141,86 +145,80 @@ export const uploadShape = createThunkAction(
                 uploading: false,
                 error: 'Too many features',
                 errorMessage:
-                  'We cannot support an analysis for a file with more than 1000 features'
+                  'We cannot support an analysis for a file with more than 1000 features.'
               })
             );
-
-            return false;
-          }
-
-          // if there is only one feature lets check to make sure it isnt a line or a point
-          if (
+          } else if (
             features &&
             featureCount === 1 &&
-            ['Point', 'LineString'].includes(features[0].geometry.type)
+            ['Point', 'LineString'].includes(geometry.type)
           ) {
             dispatch(
               setAnalysisLoading({
                 uploading: false,
                 error: 'Please upload polygon data',
                 errorMessage:
-                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported'
+                  'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported.'
               })
             );
+          } else {
+            getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
+              .then(geostore => {
+                if (geostore && geostore.data && geostore.data.data) {
+                  const { id } = geostore.data.data;
+                  const { query, type } = getState().location || {};
+                  setTimeout(() => {
+                    dispatch({
+                      type,
+                      payload: {
+                        type: 'geostore',
+                        adm0: id
+                      },
+                      ...(query && {
+                        query: {
+                          ...query,
+                          ...(query.map && {
+                            map: {
+                              ...query.map,
+                              canBound: true
+                            }
+                          })
+                        }
+                      })
+                    });
+                    dispatch(
+                      setAnalysisLoading({
+                        uploading: false,
+                        error: '',
+                        errorMessage: ''
+                      })
+                    );
+                  }, 300);
+                }
+              })
+              .catch(error => {
+                const errorMessage = getErrorMessage(error, shape);
 
-            return false;
+                dispatch(
+                  setAnalysisLoading({
+                    loading: false,
+                    uploading: false,
+                    error: errorMessage.title,
+                    errorMessage: errorMessage.desc
+                  })
+                );
+                console.info(error);
+              });
           }
-
-          // now lets flatten any features into a single multi polygon for consistency
-          const geojson = combine(geojsonShape);
-          const { geometry } =
-            geojson && geojson.features && geojson.features[0];
-
-          getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
-            .then(geostore => {
-              if (geostore && geostore.data && geostore.data.data) {
-                const { id } = geostore.data.data;
-                const { query, type } = getState().location || {};
-                setTimeout(() => {
-                  dispatch({
-                    type,
-                    payload: {
-                      type: 'geostore',
-                      adm0: id
-                    },
-                    ...(query && {
-                      query: {
-                        ...query,
-                        ...(query.map && {
-                          map: {
-                            ...query.map,
-                            canBound: true
-                          }
-                        })
-                      }
-                    })
-                  });
-                  dispatch(
-                    setAnalysisLoading({
-                      uploading: false,
-                      error: '',
-                      errorMessage: ''
-                    })
-                  );
-                }, 300);
-              }
+        } else {
+          dispatch(
+            setAnalysisLoading({
+              uploading: false,
+              error: 'File is empty',
+              errorMessage: 'Please attach a file that contains geometric data.'
             })
-            .catch(error => {
-              const errorMessage = getErrorMessage(error, shape);
-
-              dispatch(
-                setAnalysisLoading({
-                  loading: false,
-                  uploading: false,
-                  error: errorMessage.title,
-                  errorMessage: errorMessage.desc
-                })
-              );
-              console.info(error);
-            });
+          );
         }
-
-        return false;
       })
       .catch(error => {
         const errorMessage = getErrorMessage(error, shape);
