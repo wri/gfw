@@ -114,7 +114,7 @@ class ApplicationController < ActionController::Base
         keywords: 'GFW, forests, forest data, data, forest news, forest alerts, conservation, forest updates, forest watch, deforestation, deforesting, tree cover loss, forest loss'
       },
       subscribe: {
-        title: 'Stay Updated on the World‘s Forests',
+        title: "Stay Updated on the World's Forests",
         desc: 'Subscribe to monthly GFW newsletters and updates based on your interests.',
         keywords: 'GFW, newsletter'
       }
