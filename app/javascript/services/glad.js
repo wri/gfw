@@ -2,18 +2,9 @@ import axios from 'axios';
 import moment from 'moment';
 import { getWHEREQuery } from 'services/forest-data';
 
-// ISO
-// const GLAD_ADM0_SUMMARY = 'ec9a2221-830d-40ff-ae65-358726c4fa29';
-const GLAD_ADM0_WEEKLY = '3170421d-ee32-4f9d-b4b0-a76bac33cd26';
-
-// Adm1
-// const GLAD_ADM1_SUMMARY = '674573eb-249c-4f65-aefa-65e4f58aad6f';
-const GLAD_ADM1_WEEKLY = '181a6e5d-7548-4471-a74c-fbab4456239a';
-
-// Adm2
-// const GLAD_ADM2_SUMMARY = 'd9dc9bc5-36ce-4c64-819a-c778eed33526';
-const GLAD_ADM2_WEEKLY = '79683341-dc3d-4d80-8a47-b82153943da2';
-// const GLAD_ADM2_DAILY = 'c78b4379-8030-4940-bd04-b07baee47146';
+const GLAD_ADM0_WEEKLY = process.env.GLAD_ADM0_WEEKLY;
+const GLAD_ADM1_WEEKLY = process.env.GLAD_ADM1_WEEKLY;
+const GLAD_ADM2_WEEKLY = process.env.GLAD_ADM2_WEEKLY;
 
 const QUERIES = {
   gladIntersectionAlerts:
@@ -40,19 +31,17 @@ export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     gladIntersectionAlerts
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return axios
-    .get(url)
-    .then(
-      response =>
-        response.data &&
-        response.data.data &&
-        response.data.data.map(d => ({
-          ...d,
-          week: parseInt(d.alert__week, 10),
-          year: parseInt(d.alert__year, 10),
-          count: d.alert__count
-        }))
-    );
+  return axios.get(url).then(
+    response =>
+      response.data &&
+      response.data.data &&
+      response.data.data.map(d => ({
+        ...d,
+        week: parseInt(d.alert__week, 10),
+        year: parseInt(d.alert__year, 10),
+        count: d.alert__count
+      }))
+  );
 };
 
 // Latest Dates for Alerts
