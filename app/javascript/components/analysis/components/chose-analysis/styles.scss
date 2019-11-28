@@ -195,6 +195,9 @@
       .file-name {
         font-size: rem(12px);
         margin-bottom: rem(3px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .file-size {

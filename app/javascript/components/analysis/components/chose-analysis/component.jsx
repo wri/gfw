@@ -136,7 +136,11 @@ class ChoseAnalysis extends PureComponent {
         </Button>
         <div className="draw-menu-separator">or</div>
         <Dropzone
-          className={cx('draw-menu-input', { error }, { uploading })}
+          className={cx(
+            'draw-menu-input',
+            { error: error && errorMessage },
+            { uploading }
+          )}
           onDropAccepted={onDropAccepted}
           onDropRejected={onDropRejected}
           maxSize={uploadConfig.sizeLimit}
@@ -165,16 +169,18 @@ class ChoseAnalysis extends PureComponent {
             uploading && (
             <div className="uploading-shape">
               <p className="file-name">
-                {(file && file.name) || 'example.zip'}
+                {'bowen_brook_timber_treatments_proposed_03_07_2013.zip' ||
+                    (file && file.name)}
               </p>
-              <p className="file-size">{`Uploading ${file &&
-                  format('.2s')(file.size)}B`}</p>
+              <p className="file-size">{`Uploading ${(file &&
+                  format('.2s')(file.size)) ||
+                  0}B`}</p>
               <div className="upload-bar">
                 <div className="loading-bar">
                   <span className="full-bar" />
                   <span
                     className="status-bar"
-                    style={{ width: `${uploadStatus}%` }}
+                    style={{ width: `${uploadStatus || 0}%` }}
                   />
                 </div>
                 <Button

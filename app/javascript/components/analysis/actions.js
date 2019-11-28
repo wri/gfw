@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux-tools';
-import union from 'turf-union';
+import combine from 'turf-combine';
 import compact from 'lodash/compact';
 import { DASHBOARDS } from 'router';
 import { track } from 'app/analytics';
@@ -128,15 +128,14 @@ export const uploadShape = createThunkAction(
     uploadShapeFile(shape, onCheckUpload, onCheckDownload, token)
       .then(response => {
         if (response && response.data && response.data.data) {
-          const features = response.data
-            ? response.data.data.attributes.features
-            : null;
-          const tooManyFeatures =
-            features && features.length > uploadFileConfig.featureLimit;
-          const geojson =
-            !tooManyFeatures && features.filter(g => g.geometry).reduce(union);
+          const { attributes: geojsonShape } =
+            response.data && response.data.data && response.data.data;
 
-          if (tooManyFeatures) {
+          // check feature length first to make sure we don't regret it
+          const { features } = geojsonShape || {};
+          const featureCount = features && features.length;
+
+          if (features && featureCount > uploadFileConfig.featureLimit) {
             dispatch(
               setAnalysisLoading({
                 uploading: false,
@@ -145,9 +144,15 @@ export const uploadShape = createThunkAction(
                   'We cannot support an analysis for a file with more than 1000 features'
               })
             );
-          } else if (
-            geojson.geometry.type === 'Point' ||
-            geojson.geometry.type === 'LineString'
+
+            return false;
+          }
+
+          // if there is only one feature lets check to make sure it isnt a line or a point
+          if (
+            features &&
+            featureCount === 1 &&
+            ['Point', 'LineString'].includes(features[0].geometry.type)
           ) {
             dispatch(
               setAnalysisLoading({
@@ -157,60 +162,65 @@ export const uploadShape = createThunkAction(
                   'Map analysis counts alerts or hectares inside of polygons. Point and line data are not supported'
               })
             );
-          } else {
-            getGeostoreKey(
-              geojson.geometry,
-              onGeostoreUpload,
-              onGeostoreDownload
-            )
-              .then(geostore => {
-                if (geostore && geostore.data && geostore.data.data) {
-                  const { id } = geostore.data.data;
-                  const { query, type } = getState().location || {};
-                  setTimeout(() => {
-                    dispatch({
-                      type,
-                      payload: {
-                        type: 'geostore',
-                        adm0: id
-                      },
-                      ...(query && {
-                        query: {
-                          ...query,
-                          ...(query.map && {
-                            map: {
-                              ...query.map,
-                              canBound: true
-                            }
-                          })
-                        }
-                      })
-                    });
-                    dispatch(
-                      setAnalysisLoading({
-                        uploading: false,
-                        error: '',
-                        errorMessage: ''
-                      })
-                    );
-                  }, 300);
-                }
-              })
-              .catch(error => {
-                const errorMessage = getErrorMessage(error, shape);
 
-                dispatch(
-                  setAnalysisLoading({
-                    loading: false,
-                    uploading: false,
-                    error: errorMessage.title,
-                    errorMessage: errorMessage.desc
-                  })
-                );
-                console.info(error);
-              });
+            return false;
           }
+
+          // now lets flatten any features into a single multi polygon for consistency
+          const geojson = combine(geojsonShape);
+          const { geometry } =
+            geojson && geojson.features && geojson.features[0];
+
+          getGeostoreKey(geometry, onGeostoreUpload, onGeostoreDownload)
+            .then(geostore => {
+              if (geostore && geostore.data && geostore.data.data) {
+                const { id } = geostore.data.data;
+                const { query, type } = getState().location || {};
+                setTimeout(() => {
+                  dispatch({
+                    type,
+                    payload: {
+                      type: 'geostore',
+                      adm0: id
+                    },
+                    ...(query && {
+                      query: {
+                        ...query,
+                        ...(query.map && {
+                          map: {
+                            ...query.map,
+                            canBound: true
+                          }
+                        })
+                      }
+                    })
+                  });
+                  dispatch(
+                    setAnalysisLoading({
+                      uploading: false,
+                      error: '',
+                      errorMessage: ''
+                    })
+                  );
+                }, 300);
+              }
+            })
+            .catch(error => {
+              const errorMessage = getErrorMessage(error, shape);
+
+              dispatch(
+                setAnalysisLoading({
+                  loading: false,
+                  uploading: false,
+                  error: errorMessage.title,
+                  errorMessage: errorMessage.desc
+                })
+              );
+              console.info(error);
+            });
         }
+
+        return false;
       })
       .catch(error => {
         const errorMessage = getErrorMessage(error, shape);
