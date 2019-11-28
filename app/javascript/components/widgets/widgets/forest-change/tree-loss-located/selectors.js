@@ -107,8 +107,8 @@ export const parseSentence = createSelector(
     const { startYear, endYear } = settings;
     const totalLoss = sumBy(data, 'loss') || 0;
     const topRegion = (sortedData && sortedData.length && sortedData[0]) || {};
-    const avgLossPercentage = sumBy(data, 'percentage') || 0 / data.length;
-    const avgLoss = sumBy(data, 'loss') || 0 / data.length;
+    const avgLossPercentage = (sumBy(data, 'percentage') || 0) / data.length;
+    const avgLoss = (sumBy(data, 'loss') || 0) / data.length;
     let percentileLoss = 0;
     let percentileLength = 0;
 
@@ -117,13 +117,13 @@ export const parseSentence = createSelector(
       sortedData &&
       percentileLength < data.length &&
       percentileLoss / totalLoss < 0.5 &&
-      percentileLength !== 10
+      percentileLength <= 10
     ) {
       const percentile = sortedData[percentileLength];
       if (percentile) {
         percentileLoss += percentile.loss;
-        percentileLength += 1;
       }
+      percentileLength += 1;
     }
 
     const topLoss = percentileLoss / totalLoss * 100 || 0;
