@@ -69,6 +69,11 @@ class Header extends PureComponent {
     const isCountryDashboard =
       location.type === 'country' || location.type === 'global';
     const isAreaDashboard = location.type === 'aoi';
+    const isAreaAndCountryDashboard =
+      !isCountryDashboard &&
+      activeArea &&
+      activeArea.admin &&
+      activeArea.admin.adm0;
     const showMetaControls =
       !loading && (!isAreaDashboard || (isAreaDashboard && activeArea));
     const { tags } = activeArea || {};
@@ -115,7 +120,7 @@ class Header extends PureComponent {
                 <Icon icon={saveUserIcon} />
               </Button>
             )}
-            {isCountryDashboard && (
+            {(isCountryDashboard || isAreaAndCountryDashboard) && (
               <Button
                 className="c-dashboard-download-btn theme-button-medium theme-button-clear square"
                 extLink={downloadLink}

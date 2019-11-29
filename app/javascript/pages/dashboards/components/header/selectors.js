@@ -97,10 +97,15 @@ export const getForestAtlasLink = createSelector(
 );
 
 export const getDownloadLink = createSelector(
-  [selectLocation],
-  location =>
-    `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${location.adm0 ||
-      'global'}.xlsx`
+  [selectLocation, getActiveArea],
+  (location, area) => {
+    const { admin } = area || {};
+    const { adm0 } = admin || {};
+
+    return `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${adm0 ||
+      location.adm0 ||
+      'global'}.xlsx`;
+  }
 );
 
 export const getAdminsSelected = createSelector(
