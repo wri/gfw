@@ -6,6 +6,8 @@ import Dotdotdot from 'react-dotdotdot';
 import ContentLoader from 'react-content-loader';
 import { getLatestAlerts } from 'services/alerts';
 
+import applicationsMeta from 'data/applications.json';
+
 import { formatNumber } from 'utils/format';
 
 import Icon from 'components/ui/icon/icon-component';
@@ -15,12 +17,6 @@ import tagIcon from 'assets/icons/tag.svg';
 import subscribedIcon from 'assets/icons/subscribed.svg';
 
 import './styles.scss';
-
-const createdMeta = {
-  gfw: 'Created {date}',
-  fw: 'Create {date} on Forest Watcher',
-  map: 'Created {date} on Map Builder'
-};
 
 class AoICard extends PureComponent {
   static propTypes = {
@@ -142,6 +138,12 @@ class AoICard extends PureComponent {
         }
       });
     }
+    const applicationName = applicationsMeta[application];
+    const createdMetaTemplate = `Created ${moment(createdAt).format(
+      'MMM DD YYYY'
+    )}${
+      application !== 'gfw' && applicationName ? ` on ${applicationName}` : ''
+    }`;
 
     return (
       <div className={cx('c-aoi-card', { simple })}>
@@ -156,14 +158,7 @@ class AoICard extends PureComponent {
           <Dotdotdot clamp={2} className="title">
             {name}
           </Dotdotdot>
-          {!simple && (
-            <span className="created">
-              {createdMeta[application].replace(
-                '{date}',
-                moment(createdAt).format('MMM DD YYYY')
-              )}
-            </span>
-          )}
+          {!simple && <span className="created">{createdMetaTemplate}</span>}
           <div className="meta">
             {tags &&
               tags.length > 0 && (
