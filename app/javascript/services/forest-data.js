@@ -120,7 +120,15 @@ export const getWHEREQuery = params => {
       );
 
       const polynameString = `
-        ${isPolyname ? `${polynameMeta.tableKey} is not "0"` : ''}${
+        ${
+  isPolyname && polynameMeta.tableKey.includes('is__')
+    ? `${polynameMeta.tableKey} = 'true'`
+    : ''
+}${
+  isPolyname && !polynameMeta.tableKey.includes('is__')
+    ? `${polynameMeta.tableKey} is not '0'`
+    : ''
+}${
   isPolyname &&
         polynameMeta &&
         polynameMeta.default &&
@@ -131,7 +139,9 @@ export const getWHEREQuery = params => {
     : ''
 }${
   !isPolyname
-    ? `${p} = ${typeof value === 'number' ? value : `'${value}'`}`
+    ? `${p === 'threshold' ? 'treecover_density__threshold' : p} = ${
+      typeof value === 'number' ? value : `'${value}'`
+    }`
     : ''
 }${isLast ? '' : ' AND '}`;
 
@@ -148,7 +158,16 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return request.get(url);
+  return request.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        year: d.treecover_loss__year,
+        area: d.treecover_loss__ha,
+        emissions: d.aboveground_biomass_loss__Mg
+      }))
+    }
+  }));
 };
 
 // disaggregated loss for child of location
@@ -159,7 +178,16 @@ export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return request.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        year: d.treecover_loss__year,
+        area: d.treecover_loss__ha,
+        emissions: d.aboveground_biomass_loss__Mg
+      }))
+    }
+  }));
 };
 
 // summed extent for single location
