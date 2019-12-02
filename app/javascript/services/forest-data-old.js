@@ -3,25 +3,19 @@ import forestTypes from 'data/forest-types.json';
 import landCategories from 'data/land-categories.json';
 import { getIndicator } from 'utils/strings';
 
-// contains everything summed without years inc gain and extent
-// const ADM0_SUMMARY = process.env.ANNUAL_ADM0_SUMMARY;
-// const ADM1_SUMMARY = process.env.ANNUAL_ADM1_SUMMARY;
-// const ADM2_SUMMARY = process.env.ANNUAL_ADM2_SUMMARY;
-
-// contains yearly data for loss
-const ADM0_CHANGE = process.env.ANNUAL_ADM0_CHANGE;
-const ADM1_CHANGE = process.env.ANNUAL_ADM1_CHANGE;
-const ADM2_CHANGE = process.env.ANNUAL_ADM2_CHANGE;
+const ADM0_DATASET = process.env.GADM36_ADM0_DATASET;
+const ADM1_DATASET = process.env.GADM36_ADM1_DATASET;
+const ADM2_DATASET = process.env.GADM36_ADM2_DATASET;
 
 const CARTO_REQUEST_URL = `${process.env.CARTO_API}/sql?q=`;
 
 const NEW_SQL_QUERIES = {
   loss:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY treecover_loss__year ORDER BY treecover_loss__year',
+    'SELECT year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.carbon_emissions) as emissions FROM data {WHERE} GROUP BY nested(year_data.year)',
   lossTsc:
     'SELECT tcs as bound1, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.carbon_emissions) as emissions FROM data {WHERE} GROUP BY bound1, nested(year_data.year)',
   lossGrouped:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.carbon_emissions) as emissions FROM data {WHERE} GROUP BY {location}, nested(year_data.year) ORDER BY {location}',
   extent:
     'SELECT SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE}',
   extentGrouped:
@@ -61,9 +55,9 @@ const ALLOWED_PARAMS = [
 
 // quyery building helpers
 const getAdmDatasetId = (adm0, adm1, adm2, grouped) => {
-  if (adm2 || (adm1 && grouped)) return ADM2_CHANGE;
-  if (adm1 || (adm0 && grouped)) return ADM1_CHANGE;
-  return ADM0_CHANGE;
+  if (adm2 || (adm1 && grouped)) return ADM2_DATASET;
+  if (adm1 || (adm0 && grouped)) return ADM1_DATASET;
+  return ADM0_DATASET;
 };
 
 const getExtentYear = year => `extent_${year || 2010}`;
