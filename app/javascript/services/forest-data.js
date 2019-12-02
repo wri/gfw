@@ -4,9 +4,9 @@ import landCategories from 'data/land-categories.json';
 import { getIndicator } from 'utils/strings';
 
 // contains everything summed without years inc gain and extent
-// const ADM0_SUMMARY = process.env.ANNUAL_ADM0_SUMMARY;
-// const ADM1_SUMMARY = process.env.ANNUAL_ADM1_SUMMARY;
-// const ADM2_SUMMARY = process.env.ANNUAL_ADM2_SUMMARY;
+const ADM0_SUMMARY = process.env.ANNUAL_ADM0_SUMMARY;
+const ADM1_SUMMARY = process.env.ANNUAL_ADM1_SUMMARY;
+const ADM2_SUMMARY = process.env.ANNUAL_ADM2_SUMMARY;
 
 // contains yearly data for loss
 const ADM0_CHANGE = process.env.ANNUAL_ADM0_CHANGE;
@@ -23,7 +23,7 @@ const NEW_SQL_QUERIES = {
   lossGrouped:
     'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   extent:
-    'SELECT SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE}',
+    'SELECT SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
     'SELECT {location}, SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain: 'SELECT SUM(total_gain) as gain FROM data {WHERE}',
@@ -60,13 +60,16 @@ const ALLOWED_PARAMS = [
 ];
 
 // quyery building helpers
-const getAdmDatasetId = (adm0, adm1, adm2, grouped) => {
+const getAdmDatasetId = (adm0, adm1, adm2, grouped, summary) => {
+  if (summary && (adm2 || (adm1 && grouped))) return ADM2_SUMMARY;
+  if (summary && (adm1 || (adm0 && grouped))) return ADM1_SUMMARY;
+  if (summary) return ADM0_SUMMARY;
+
+  // else return change datasets
   if (adm2 || (adm1 && grouped)) return ADM2_CHANGE;
   if (adm1 || (adm0 && grouped)) return ADM1_CHANGE;
   return ADM0_CHANGE;
 };
-
-const getExtentYear = year => `extent_${year || 2010}`;
 
 const getLocationSelect = ({ adm1, adm2 }) =>
   `iso${adm1 ? ', adm1' : ''}${adm2 ? ', adm2' : ''}`;
@@ -94,8 +97,8 @@ const buildPolynameSelects = () => {
   return polyString;
 };
 
-const getRequestUrl = (adm0, adm1, adm2, grouped) => {
-  const dataset = getAdmDatasetId(adm0, adm1, adm2, grouped);
+const getRequestUrl = (adm0, adm1, adm2, grouped, summary) => {
+  const dataset = getAdmDatasetId(adm0, adm1, adm2, grouped, summary);
   const REQUEST_URL = `${process.env.GFW_API}/query/{dataset}?sql=`;
   return REQUEST_URL.replace('{dataset}', dataset);
 };
@@ -192,11 +195,21 @@ export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
 
 // summed extent for single location
 export const getExtent = ({ adm0, adm1, adm2, extentYear, ...params }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2)}${NEW_SQL_QUERIES.extent}`
-    .replace('{extentYear}', getExtentYear(extentYear))
+  const url = `${getRequestUrl(adm0, adm1, adm2, false, true)}${
+    NEW_SQL_QUERIES.extent
+  }`
+    .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return request.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        extent: d[`treecover_extent_${extentYear}__ha`],
+        total_area: d.area__ha
+      }))
+    }
+  }));
 };
 
 // disaggregated extent for child of location
@@ -207,11 +220,11 @@ export const getExtentGrouped = ({
   extentYear,
   ...params
 }) => {
-  const url = `${getRequestUrl(adm0, adm1, adm2, true)}${
+  const url = `${getRequestUrl(adm0, adm1, adm2, true, true)}${
     NEW_SQL_QUERIES.extentGrouped
   }`
     .replace(/{location}/g, getLocationSelectGrouped({ adm0, adm1, adm2 }))
-    .replace('{extentYear}', getExtentYear(extentYear))
+    .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
   return request.get(url);
