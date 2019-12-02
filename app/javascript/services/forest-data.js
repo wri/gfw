@@ -21,11 +21,11 @@ const NEW_SQL_QUERIES = {
   lossTsc:
     'SELECT tcs as bound1, year_data.year as year, SUM(year_data.area_loss) as area, SUM(year_data.carbon_emissions) as emissions FROM data {WHERE} GROUP BY bound1, nested(year_data.year)',
   lossGrouped:
-    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT treecover_loss__year, SUM(aboveground_biomass_loss__Mg) as aboveground_biomass_loss__Mg, SUM(aboveground_co2_emissions__Mg) AS aboveground_co2_emissions__Mg, SUM(treecover_loss__ha) AS treecover_loss__ha FROM data {WHERE} GROUP BY treecover_loss__year, {location} ORDER BY treecover_loss__year, {location}',
   extent:
     'SELECT SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE}',
   extentGrouped:
-    'SELECT {location}, SUM({extentYear}) as extent, SUM(total_area) as total_area FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
+    'SELECT {location}, SUM(treecover_extent_{extentYear}__ha) as treecover_extent_{extentYear}__ha, SUM(area__ha) as area__ha FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
   gain: 'SELECT SUM(total_gain) as gain FROM data {WHERE}',
   gainGrouped:
     'SELECT {location}, SUM(total_gain) as gain, SUM(extent_2000) as extent FROM data {WHERE} GROUP BY {location} ORDER BY {location}',
@@ -162,6 +162,7 @@ export const getLoss = ({ adm0, adm1, adm2, tsc, ...params }) => {
     tsc ? lossTsc : loss
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
   return request.get(url).then(response => ({
+    ...response,
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -182,6 +183,7 @@ export const getLossGrouped = ({ adm0, adm1, adm2, ...params }) => {
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
   return request.get(url).then(response => ({
+    ...response,
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -202,6 +204,7 @@ export const getExtent = ({ adm0, adm1, adm2, extentYear, ...params }) => {
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
   return request.get(url).then(response => ({
+    ...response,
     data: {
       data: response.data.data.map(d => ({
         ...d,
@@ -227,7 +230,16 @@ export const getExtentGrouped = ({
     .replace(/{extentYear}/g, extentYear)
     .replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
 
-  return request.get(url);
+  return request.get(url).then(response => ({
+    ...response,
+    data: {
+      data: response.data.data.map(d => ({
+        ...d,
+        extent: d[`treecover_extent_${extentYear}__ha`],
+        total_area: d.area__ha
+      }))
+    }
+  }));
 };
 
 // total area for a given of polyname in location
