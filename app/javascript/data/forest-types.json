@@ -30,6 +30,19 @@
     ]
   },
   {
+    "label": "Intact Forest Landscapes (2016)",
+    "value": "ifl_2016",
+    "tableKey": "intact_forest_landscapes_2016",
+    "metaKey": "intact_forest_landscapes_change",
+    "global": true,
+    "datasets": [
+      {
+        "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
+        "layers": ["fd44b976-62e6-4072-8218-8abf6e254ed8"]
+      }
+    ]
+  },
+  {
     "label": "Primary Forests (2001, tropics only)",
     "value": "primary_forest",
     "tableKey": "is__regional_primary_forest",

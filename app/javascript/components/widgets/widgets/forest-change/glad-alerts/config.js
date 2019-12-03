@@ -40,7 +40,7 @@ export default {
   // whitelists for options
   options: {
     weeks: [13, 26, 52],
-    forestTypes: true,
+    forestTypes: ['plantations', 'ifl_2016', 'primary_forest'],
     landCategories: true
   },
   // custom whitelists for locations
