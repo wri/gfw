@@ -57,5 +57,11 @@
       }
     ],
     "hidden": true
+  },
+  {
+    "label": "Tree cover loss driver category",
+    "value": "tsc",
+    "tableKey": "tcs_driver__type",
+    "hidden": true
   }
 ]

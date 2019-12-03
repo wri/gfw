@@ -1,4 +1,4 @@
-import { getExtent, getAreaIntersection } from 'services/forest-data';
+import { getExtent, getAreaIntersection } from 'services/analysis-cached';
 import axios from 'axios';
 
 export default ({ params }) =>
