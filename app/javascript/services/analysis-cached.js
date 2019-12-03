@@ -101,22 +101,20 @@ export const getWHEREQuery = params => {
       const polynameMeta = allPolynames.find(
         pname => pname.value === params[p]
       );
+      const tableKey =
+        polynameMeta && (polynameMeta.gladTableKey || polynameMeta.tableKey);
 
       const polynameString = `
         ${
-  isPolyname && polynameMeta.tableKey.includes('is__')
-    ? `${polynameMeta.tableKey} = 'true'`
-    : ''
+  isPolyname && tableKey.includes('is__') ? `${tableKey} = 'true'` : ''
 }${
-  isPolyname && !polynameMeta.tableKey.includes('is__')
-    ? `${polynameMeta.tableKey} is not '0'`
-    : ''
+  isPolyname && !tableKey.includes('is__') ? `${tableKey} is not '0'` : ''
 }${
   isPolyname &&
         polynameMeta &&
         polynameMeta.default &&
         polynameMeta.categories
-    ? ` AND ${polynameMeta.tableKey} ${polynameMeta.comparison || '='} '${
+    ? ` AND ${tableKey} ${polynameMeta.comparison || '='} '${
       polynameMeta.default
     }'`
     : ''
