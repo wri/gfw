@@ -1,0 +1,154 @@
+@import '~styles/settings.scss';
+
+.l-subscribe-page {
+  background-color: $white;
+  height: 100%;
+  padding: rem(30px) 0 rem(60px);
+
+  @media screen and (min-width: $screen-m) {
+    padding: rem(30px) 0 rem(90px);
+  }
+
+  .subscribe-header {
+    margin-bottom: rem(40px);
+
+    @media screen and (min-width: $screen-m) {
+      margin: rem(50px) 0;
+    }
+  }
+
+  input {
+    height: rem(40px);
+    border: solid 1px $border;
+    padding: 0 rem(10px);
+    border-radius: rem(4px);
+    font-size: rem(14px);
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .field {
+    margin: auto;
+    display: flex;
+    margin-bottom: rem(30px);
+    flex-direction: column;
+
+    &.hidden {
+      display: none;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+    }
+
+    span {
+      margin-right: rem(20px);
+      text-transform: uppercase;
+      color: $slate-light;
+      font-size: rem(12px);
+      font-weight: 500;
+      line-height: 18px;
+      margin-bottom: rem(10px);
+      width: rem(85px);
+
+      @media screen and (min-width: $screen-m) {
+        text-align: right;
+      }
+    }
+
+    .form-input {
+      @media screen and (min-width: $screen-m) {
+        align-self: flex-end;
+        min-width: rem(340px);
+        max-width: rem(340px);
+      }
+    }
+
+    .select-wrapper {
+      max-width: unset;
+    }
+
+    &.error {
+      color: $error;
+
+      input,
+      .select-wrapper {
+        border-color: $error;
+      }
+    }
+  }
+
+  .form-list {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(340px);
+    }
+
+    span {
+      width: auto;
+      text-align: left;
+    }
+
+    .form-checkbox-item {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      margin-right: auto;
+      font-size: rem(14px);
+      line-height: 24px;
+      text-align: left;
+
+      .form-checkbox {
+        margin-right: rem(20px);
+      }
+    }
+  }
+
+  .save-subscription {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: $screen-m) {
+      margin-top: rem(10px);
+      align-items: center;
+      min-width: rem(340px);
+    }
+
+    p {
+      color: $warm-grey;
+    }
+
+    .error-message {
+      color: $error;
+    }
+
+    .submit-btn {
+      position: relative;
+      min-width: rem(200px);
+      margin-bottom: rem(25px);
+
+      @media screen and (min-width: $screen-m) {
+        margin-left: rem(15px);
+        max-width: rem(290px);
+      }
+
+      &.error {
+        background-color: $error;
+      }
+    }
+  }
+
+  .saving-btn-loader {
+    > div {
+      width: rem(20px);
+      height: rem(20px);
+      border-width: 2px;
+    }
+  }
+}

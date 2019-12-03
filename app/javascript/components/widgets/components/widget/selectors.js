@@ -10,9 +10,12 @@ import landCategories from 'data/land-categories.json';
 import forestTypes from 'data/forest-types.json';
 
 export const selectAllPropsAndState = (state, ownProps) => ownProps;
+export const selectLocation = (state, { location }) => location;
 export const selectWidgetSettings = (state, { settings }) => settings;
 export const selectWidgetConfig = (state, { config }) => config;
 export const selectWidgetOptions = (state, { options }) => options;
+export const selectDownloadLink = (state, { getDownloadLink }) =>
+  getDownloadLink;
 export const selectWidgetUrlState = (state, { widget }) =>
   state.location && state.location.query && state.location.query[widget];
 export const selectWidgetFromState = (state, { widget }) =>
@@ -83,9 +86,11 @@ export const getWidgetLoading = createSelector(
 export const getRangeYears = createSelector(
   [getWidgetStateData, selectWidgetConfig],
   (data, config) => {
-    const { startYears, endYears, yearsRange } = config.options || {};
+    const { startYears, endYears, yearsRange, yearValues } =
+      config.options || {};
     if (!startYears || !endYears || isEmpty(data)) return null;
     let years =
+      yearValues ||
       data.years ||
       (yearsRange && range(yearsRange[0], yearsRange[1] + 1)) ||
       [];
@@ -119,8 +124,8 @@ export const getOptionsWithYears = createSelector(
     const { startYear, endYear } = settings;
     return {
       ...options,
-      startYears: years.filter(y => y.value <= endYear),
-      endYears: years.filter(y => y.value >= startYear)
+      startYears: years.filter(y => y.value < endYear),
+      endYears: years.filter(y => y.value > startYear)
     };
   }
 );
@@ -231,6 +236,13 @@ export const getWidgetPropsFromState = createSelector(
   })
 );
 
+export const getWidgetDownloadLink = createSelector(
+  [selectWidgetSettings, selectDownloadLink, selectLocation],
+  (settings, getDownloadLink, location) =>
+    getDownloadLink &&
+    getDownloadLink({ params: { ...settings, ...location, download: true } })
+);
+
 export const getWidgetTitle = createSelector(
   [getWidgetPropsFromState],
   props => props && props.title
@@ -266,5 +278,6 @@ export const getWidgetProps = () =>
     polynames: getPolynames,
     indicator: getIndicator,
     options: getOptionsWithYears,
-    active: selectWidgetActive
+    active: selectWidgetActive,
+    downloadLink: getWidgetDownloadLink
   });

@@ -72,13 +72,13 @@ const Item = props => {
       )}
       {groupParent &&
         showGroup !== groupParent && (
-          <Icon
-            icon={arrowDownIcon}
-            className={`group-icon ${
-              showGroup === groupParent ? 'selected' : ''
-            }`}
-          />
-        )}
+        <Icon
+          icon={arrowDownIcon}
+          className={`group-icon ${
+            showGroup === groupParent ? 'selected' : ''
+          }`}
+        />
+      )}
     </div>
   );
 };
@@ -92,7 +92,7 @@ Item.propTypes = {
   handleSelectGroup: PropTypes.func,
   optionsAction: PropTypes.func,
   optionsActionKey: PropTypes.string,
-  activeValue: PropTypes.object,
+  activeValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   activeLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 

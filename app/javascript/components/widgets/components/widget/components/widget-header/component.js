@@ -26,6 +26,24 @@ class WidgetHeader extends PureComponent {
     tooltipOpen: false
   };
 
+  renderDownloadButton = () => {
+    const { downloadLink } = this.props;
+
+    return (
+      <Fragment>
+        <Button
+          className={cx('download-button')}
+          theme="theme-button-small square"
+          tooltip={{ text: 'Download data for this view' }}
+          extLink={downloadLink}
+        >
+          <Icon icon={downloadIcon} className="download-icon" />
+        </Button>
+        <div className="separator" />
+      </Fragment>
+    );
+  };
+
   renderMapButton = () => {
     const {
       widget,
@@ -73,7 +91,8 @@ class WidgetHeader extends PureComponent {
       setWidgetSettings,
       widget,
       options,
-      setModalMetaSettings
+      setModalMetaSettings,
+      downloadLink
     } = this.props;
     const { tooltipOpen } = this.state;
     return (
@@ -126,7 +145,7 @@ class WidgetHeader extends PureComponent {
             <Icon icon={settingsIcon} className="settings-icon" />
           </Button>
         </Tooltip>
-        <div className="separator" />
+        {!downloadLink && <div className="separator" />}
       </Fragment>
     );
   };
@@ -218,7 +237,8 @@ class WidgetHeader extends PureComponent {
       embed,
       config,
       simple,
-      getDataURL
+      getDataURL,
+      downloadLink
     } = this.props;
 
     return (
@@ -237,6 +257,7 @@ class WidgetHeader extends PureComponent {
             config.options &&
             !config.hideSettings &&
             this.renderSettingsButton()}
+          {downloadLink && this.renderDownloadButton()}
           <div className="small-options">
             {this.renderMetadataButton()}
             {getDataURL && this.renderDownloadButton()}
@@ -268,7 +289,8 @@ WidgetHeader.propTypes = {
   setWidgetSettings: PropTypes.func,
   setActiveWidget: PropTypes.func,
   metakey: PropTypes.string,
-  getDataURL: PropTypes.func
+  getDataURL: PropTypes.func,
+  downloadLink: PropTypes.string
 };
 
 export default WidgetHeader;

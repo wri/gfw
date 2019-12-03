@@ -1,0 +1,51 @@
+@import '~styles/settings.scss';
+
+$checkbox-size: rem(25px);
+
+.c-checkbox-v2 {
+  input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    width: $checkbox-size;
+    height: $checkbox-size;
+    border: 1px solid $border;
+
+    /* Adjusts the position of the checkboxes on the text baseline */
+    vertical-align: rem(-2px);
+
+    /* Set here so that Windows' High-Contrast Mode can override */
+    color: $green-gfw;
+    margin-right: rem(10px);
+    cursor: pointer;
+  }
+
+  input[type=checkbox]::-ms-check {
+    display: none;
+  }
+
+  input[type=checkbox]::before {
+    content: "✔";
+    position: absolute;
+    font-size: $checkbox-size;
+    right: rem(2px);
+    top: rem(-4px);
+    visibility: hidden;
+  }
+
+  input[type=checkbox]:checked::before {
+    /* Use `visibility` instead of `display` to avoid recalculating layout */
+    visibility: visible;
+  }
+
+  input[type=checkbox]:disabled {
+    border-color: black;
+    background: #ddd;
+    color: gray;
+  }
+
+  label {
+    display: flex;
+    margin: rem(15px) 0;
+  }
+}
