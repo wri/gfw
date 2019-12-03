@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getExtent, getLoss, getLossGrouped } from 'services/forest-data';
+import { getExtent, getLoss, getLossGrouped } from 'services/analysis-cached';
 
 const getGlobalLocation = params => ({
   adm0: params.type === 'global' ? null : params.adm0,

@@ -1,5 +1,5 @@
 import { fetchGladIntersectionAlerts, fetchGLADLatest } from 'services/alerts';
-import { getExtentGrouped } from 'services/forest-data';
+import { getExtentGrouped } from 'services/analysis-cached';
 import axios from 'axios';
 
 export const getData = ({ params }) =>

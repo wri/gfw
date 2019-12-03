@@ -2,6 +2,7 @@
   {
     "label": "Plantations",
     "value": "plantations",
+    "tableKey": "gfw_plantation__type",
     "metaKey": "gfw_plantations",
     "global": true,
     "categories": ["Unknown", "Wood fiber / Timber", "Oil Palm ", "Fruit", "Rubber", "Other", "Fruit Mix", "Unknown Mix", "Oil Palm Mix", "Rubber Mix", "Wood fiber / Timber Mix", "Recently Cleared"],
@@ -15,6 +16,7 @@
   {
     "label": "Intact Forest Landscapes ({iflYear})",
     "value": "ifl",
+    "tableKey": "is__intact_forest_landscape",
     "metaKey": "intact_forest_landscapes_change",
     "global": true,
     "default": 2016,
@@ -28,8 +30,21 @@
     ]
   },
   {
+    "label": "Intact Forest Landscapes (2016)",
+    "value": "ifl_2016",
+    "tableKey": "intact_forest_landscapes_2016",
+    "metaKey": "intact_forest_landscapes_change",
+    "datasets": [
+      {
+        "dataset": "13e28550-3fc9-45ec-bb00-5a48a82b77e1",
+        "layers": ["fd44b976-62e6-4072-8218-8abf6e254ed8"]
+      }
+    ]
+  },
+  {
     "label": "Primary Forests (2001, tropics only)",
     "value": "primary_forest",
+    "tableKey": "is__regional_primary_forest",
     "metaKey": "primary_forest",
     "global": true,
     "datasets": [
@@ -42,6 +57,7 @@
   {
     "label": "Mangrove forests",
     "value": "mangroves_2016",
+    "tableKey": "is__mangroves_2016",
     "metaKey": "mangrove_2010_gmw",
     "global": true,
     "datasets": [
@@ -52,6 +68,12 @@
         ]
       }
     ],
+    "hidden": true
+  },
+  {
+    "label": "Tree cover loss driver category",
+    "value": "tsc",
+    "tableKey": "tcs_driver__type",
     "hidden": true
   }
 ]

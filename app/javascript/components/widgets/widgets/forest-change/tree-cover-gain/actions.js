@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getGainGrouped } from 'services/forest-data';
+import { getGainGrouped } from 'services/analysis-cached';
 
 export const getData = ({ params }) => {
   const { adm0, adm1, adm2, ...rest } = params || {};

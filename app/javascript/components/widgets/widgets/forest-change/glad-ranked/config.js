@@ -5,7 +5,7 @@ export default {
   types: ['country'],
   admins: ['adm0', 'adm1'],
   options: {
-    forestTypes: true,
+    forestTypes: ['plantations', 'ifl_2016', 'primary_forest'],
     landCategories: ['mining', 'wdpa', 'landmark'],
     thresholds: true,
     units: ['%', 'ha'],
