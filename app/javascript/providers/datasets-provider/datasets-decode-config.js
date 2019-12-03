@@ -407,17 +407,17 @@ const decodes = {
     float gCol = color.g;
     float threshold = gCol * 255.;
 
-    float rStart = 13. / 255.;
-    float gStart = 46. / 255.;
-    float bStart = 25. / 255.;
+    float rStart = 0. / 255.;
+    float gStart = 105. / 255.;
+    float bStart = 42. / 255.;
 
-    float rMiddle = 96. / 255.;
-    float gMiddle = 82. / 255.;
-    float bMiddle = 40. / 255.;
+    float rMiddle = 250. / 255.;
+    float gMiddle = 247. / 255.;
+    float bMiddle = 202. / 255.;
 
-    float rEnd = 75. / 255.;
-    float gEnd = 16. / 255.;
-    float bEnd = 24. / 255.;
+    float rEnd = 166. / 255.;
+    float gEnd = 0. / 255.;
+    float bEnd = 0. / 255.;
 
     // map to years
     if (threshold >= thresh) {
@@ -449,7 +449,7 @@ export default {
   '66203fea-2e58-4a55-b222-1dae075cf95d': decodes.forma,
   '790b46ce-715a-4173-8f2c-53980073acb6': decodes.terrai,
   '220080ec-1641-489c-96c4-4885ed618bf3': decodes.braLandCover,
-  'ee23d901-a491-4bc7-af7c-293d0ba50950': decodes.grossCarbonEmissions,
-  'e369f6a9-95a3-477a-8ed0-08fa934487a2': decodes.cumulativeCarbonGain,
-  '24e4cbba-31ab-4c1e-bf20-529b0f80bd66': decodes.netCarbonFlux
+  'f22f44fb-9af6-4580-978f-f48fdc0a3e3c': decodes.grossCarbonEmissions,
+  '3c26f54b-f3c5-49eb-be48-3005987d4be2': decodes.cumulativeCarbonGain,
+  'b6499f2d-225e-41aa-acb5-2d73d1227f38': decodes.netCarbonFlux
 };
