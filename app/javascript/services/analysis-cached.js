@@ -65,12 +65,14 @@ const getLocationSelectGrouped = ({ adm0, adm1 }) =>
   `iso${adm0 ? ', adm1' : ''}${adm1 ? ', adm2' : ''}`;
 
 const buildPolynameSelects = () => {
-  const allPolynames = forestTypes.concat(landCategories);
+  const allPolynames = forestTypes
+    .concat(landCategories)
+    .filter(p => !p.hidden);
   let polyString = '';
   allPolynames.forEach((p, i) => {
     const isLast = i === allPolynames.length - 1;
     polyString = polyString.concat(
-      `COUNT(${p.tableKey}) as ${p.tableKey}${isLast ? '' : ', '}`
+      `SUM(${p.value}) as ${p.value}${isLast ? '' : ', '}`
     );
   });
 

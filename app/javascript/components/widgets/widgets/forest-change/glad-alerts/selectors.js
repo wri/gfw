@@ -49,7 +49,7 @@ export const getData = createSelector(
         const { year } = next[0];
         return {
           ...acc,
-          [year]: next.some(item => item.alert__count > 0)
+          [year]: next.some(item => item.alerts > 0)
         };
       },
       {}

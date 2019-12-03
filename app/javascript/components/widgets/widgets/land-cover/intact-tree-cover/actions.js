@@ -1,4 +1,4 @@
-import { getExtent } from 'services/forest-data';
+import { getExtent } from 'services/analysis-cached';
 import axios from 'axios';
 
 export default ({ params }) =>

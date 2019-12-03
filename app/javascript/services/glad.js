@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { getWHEREQuery } from 'services/forest-data';
+import { getWHEREQuery } from 'services/analysis-cached';
 
 const GLAD_ADM0_WEEKLY = process.env.GLAD_ADM0_WEEKLY;
 const GLAD_ADM1_WEEKLY = process.env.GLAD_ADM1_WEEKLY;
@@ -31,17 +31,17 @@ export const fetchGladAlerts = ({ adm0, adm1, adm2, tsc, ...params }) => {
   const url = `${getRequestUrl(adm0, adm1, adm2)}${
     gladIntersectionAlerts
   }`.replace('{WHERE}', getWHEREQuery({ iso: adm0, adm1, adm2, ...params }));
-  return axios.get(url).then(
-    response =>
-      response.data &&
-      response.data.data &&
-      response.data.data.map(d => ({
+  return axios.get(url).then(response => ({
+    data: {
+      data: response.data.data.map(d => ({
         ...d,
         week: parseInt(d.alert__week, 10),
         year: parseInt(d.alert__year, 10),
-        count: d.alert__count
+        count: d.alert__count,
+        alerts: d.alert__count
       }))
-  );
+    }
+  }));
 };
 
 // Latest Dates for Alerts
