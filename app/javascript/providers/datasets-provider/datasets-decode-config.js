@@ -407,28 +407,80 @@ const decodes = {
     float gCol = color.g;
     float threshold = gCol * 255.;
 
-    float rStart = 0. / 255.;
-    float gStart = 105. / 255.;
-    float bStart = 42. / 255.;
+    float rVal = rCol * 5001.;
 
-    float rMiddle = 250. / 255.;
-    float gMiddle = 247. / 255.;
-    float bMiddle = 202. / 255.;
+    float r1 = 0. / 255.;
+    float g1 = 105. / 255.;
+    float b1 = 42. / 255.;
+    float col1 = 0.;
+    vec3 color1 = vec3(r1, g1, b1);
 
-    float rEnd = 166. / 255.;
-    float gEnd = 0. / 255.;
-    float bEnd = 0. / 255.;
+    float r2 = 68. / 255.;
+    float g2 = 140. / 255.;
+    float b2 = 53. / 255.;
+    float col2 = 886.;
+    vec3 color2 = vec3(r2, g2, b2);
+
+    float r3 = 125. / 255.;
+    float g3 = 179. / 255.;
+    float b3 = 68. / 255.;
+    float col3 = 992.;
+    vec3 color3 = vec3(r3, g3, b3);
+
+    float r4 = 190. / 255.;
+    float g4 = 214. / 255.;
+    float b4 = 92. / 255.;
+    float col4 = 1091.;
+    vec3 color4 = vec3(r4, g4, b4);
+
+    float r5 = 250. / 255.;
+    float g5 = 247. / 255.;
+    float b5 = 202. / 255.;
+    float col5 = 1116.;
+    vec3 color5 = vec3(r5, g5, b5);
+
+    float r6 = 245. / 255.;
+    float g6 = 193. / 255.;
+    float b6 = 95. / 255.;
+    float col6 = 1119.5;
+    vec3 color6 = vec3(r6, g6, b6);
+
+    float r7 = 227. / 255.;
+    float g7 = 134. / 255.;
+    float b7 = 64. / 255.;
+    float col7 = 1129.9;
+    vec3 color7 = vec3(r7, g7, b7);
+
+    float r8 = 199. / 255.;
+    float g8 = 78. / 255.;
+    float b8 = 34. / 255.;
+    float col8 = 1255.;
+    vec3 color8 = vec3(r8, g8, b8);
+
+    float r9 = 166. / 255.;
+    float g9 = 0. / 255.;
+    float b9 = 0. / 255.;
+    float col9 = 3885.;
+    vec3 color9 = vec3(r9, g9, b9);
 
     // map to years
     if (threshold >= thresh) {
-      vec3 colorA = vec3(rStart, gStart, bStart);
-      vec3 colorB = vec3(rMiddle, gMiddle, bMiddle);
-      vec3 colorC = vec3(rEnd, gEnd, bEnd);
-
-      if (rCol >= 0.5) {
-        color = mix(colorB, colorC, rCol);
+      if (rVal <= col2) {
+        color = mix(color1, color2, rCol);
+      } else if (rVal <= col3) {
+        color = mix(color2, color3, rCol);
+      } else if (rVal <= col4) {
+        color = mix(color3, color4, rCol);
+      } else if (rVal <= col5) {
+        color = mix(color4, color5, rCol);
+      } else if (rVal <= col6) {
+        color = mix(color5, color6, rCol);
+      } else if (rVal <= col7) {
+        color = mix(color6, color7, rCol);
+      } else if (rVal <= col8) {
+        color = mix(color7, color8, rCol);
       } else {
-        color = mix(colorA, colorB, rCol);
+        color = mix(color8, color9, rCol);
       }
     } else {
       alpha = 0.;
