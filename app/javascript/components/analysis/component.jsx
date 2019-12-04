@@ -28,13 +28,17 @@ class AnalysisComponent extends PureComponent {
     search: PropTypes.string,
     setSubscribeSettings: PropTypes.func,
     setSaveAOISettings: PropTypes.func,
-    setShareModal: PropTypes.func
+    setShareModal: PropTypes.func,
+    checkingShape: PropTypes.bool,
+    uploadingShape: PropTypes.bool
   };
 
   render() {
     const {
       className,
       loading,
+      checkingShape,
+      uploadingShape,
       location,
       search,
       activeArea,
@@ -115,7 +119,13 @@ class AnalysisComponent extends PureComponent {
           )}
           {!location.type &&
             !location.adm0 &&
-            !isDeletedAoI && <ChoseAnalysis />}
+            !isDeletedAoI && (
+            <ChoseAnalysis
+              checkingShape={checkingShape}
+              uploadingShape={uploadingShape}
+              handleCancelAnalysis={handleCancelAnalysis}
+            />
+          )}
         </div>
         {!loading &&
           !error &&
